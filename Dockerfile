@@ -1,7 +1,7 @@
 FROM polyaxon/polyaxon-npm-base
 
 # This dockerfile is intended for dev only purposes
-LABEL maintainer="mourad mourafiq <mourad@polyaxon.com>"
+LABEL maintainer="Polyaxon, Inc. <contact@polyaxon.com>"
 
 RUN apt-get -y update && \
     apt-get -y install nginx && \

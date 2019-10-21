@@ -2,7 +2,7 @@
 FROM golang:1.12.5 as builder
 
 # This dockerfile is intended for dev only purposes
-LABEL maintainer="mourad mourafiq <mourad@polyaxon.com>"
+LABEL maintainer="Polyaxon, Inc. <contact@polyaxon.com>"
 
 WORKDIR /workspace
 # Copy the Go Modules manifests
