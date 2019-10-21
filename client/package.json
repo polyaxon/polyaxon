@@ -14,7 +14,7 @@
     "build": "npm run clean && webpack --env.prod --config webpack.config.prod.js && npm run uglify_js && npm run uglify_css && npm run copy"
   },
   "author": "mourad mourafiq",
-  "license": "MPL-2.0",
+  "license": "Apache 2.0",
   "devDependencies": {
     "@types/history": "4.7.2",
     "@types/js-cookie": "2.1.0",

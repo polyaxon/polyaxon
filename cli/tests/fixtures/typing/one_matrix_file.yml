@@ -1,0 +1,23 @@
+---
+version: 0.6
+
+kind: job
+
+inputs:
+  - name: input1
+    type: str
+    value: [MeanSquaredError, AbsoluteDifference]
+    is_optional: true
+
+parallel:
+  algorithm:
+    kind: random
+    matrix:
+      loss:
+        values: "{{ input1 }}"
+
+container:
+  image: my_image
+  command: ["/bin/sh", "-c"]
+  args: [train --loss="{{ loss }}"]
+...

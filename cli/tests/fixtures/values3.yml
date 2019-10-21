@@ -1,0 +1,88 @@
+rbac:
+  enabled: true
+
+ingress:
+  enabled: true
+
+serviceType: ClusterIP
+environment: staging
+user:
+  password: root
+
+
+postgresql:
+  enabled: true
+  postgresUser: polyaxon
+  postgresPassword: polyaxon
+  postgresDatabase: postgres
+
+nodeSelector:
+  polyaxon: core
+
+api:
+  replicas: 3
+
+scheduler:
+  replicas: 3
+
+hpsearch:
+  replicas: 3
+
+eventsHandlers:
+  replicas: 3
+
+k8sEventsHandlers:
+  replicas: 3
+
+eventMonitors:
+  replicas: 3
+
+persistence:
+  data:
+    data1:
+      mountPath: "/tmp/data"
+      hostPath: "/tmp/data"
+    data2:
+      mountPath: "/tmp/data"
+      existingClaim: "data-2-pvc"
+    data3:
+      mountPath: "/tmp/data"
+      existingClaim: "data-3-pvc"
+      readOnly: true
+  outputs:
+    outputs1:
+      mountPath: "/tmp/outputs"
+      hostPath: "/tmp/outputs"
+    outputs2:
+      mountPath: "/tmp/outputs"
+      existingClaim: "outputs-2-pvc"
+    outputs3:
+      mountPath: "/tmp/outputs"
+      existingClaim: "outputs-3-pvc"
+
+email:
+  host: "smtp.gmail.com"
+  port: 587
+  useTls: true
+  hostUser: "foo"
+  hostPassword: "bar"
+
+hostName: 123.123.123.123
+allowedHosts:
+  - foo.bar.com
+  - 123.123.12.3
+
+rabbitmq-ha:
+  enabled: false
+
+docker-registry:
+  enabled: false
+
+broker: redis
+
+redis:
+  enabled: false
+
+externalServices:
+  redis:
+    host: 35.226.163.84

@@ -1,0 +1,27 @@
+---
+version: 0.6
+
+kind: job
+
+container:
+  image: image
+  command: [/bin/bash, -c]
+  args:
+    - {{arg1}}
+    - {{arg2}}
+
+---
+version: 0.6
+
+kind: job
+
+container:
+  image: {{image}}
+
+---
+version: 0.6
+
+kind: job
+
+container:
+  image: image

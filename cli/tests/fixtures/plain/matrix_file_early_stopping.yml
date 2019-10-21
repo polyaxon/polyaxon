@@ -1,0 +1,29 @@
+---
+version: 0.6
+
+kind: job
+
+parallel:
+  concurrency: 2
+
+  algorithm:
+    kind: random
+    n_experiments: 300
+    matrix:
+      lr:
+        kind: linspace
+        value: 0.01:0.1:5
+      loss:
+        kind: choice
+        value: [MeanSquaredError, AbsoluteDifference]
+
+  early_stopping:
+  - kind: metric_early_stopping
+    metric: loss
+    value: 0.01
+    optimization: maximize
+
+container:
+  image: foo:latest
+  command: train --lr={{ lr }} --loss={{ loss }}
+...

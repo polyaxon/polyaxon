@@ -1,0 +1,175 @@
+rbac:
+  enabled: true
+
+environment: staging
+
+ingress:
+  enabled: true
+
+serviceType: ClusterIP
+
+user:
+  password: test
+
+persistence:
+  data:
+    data1:
+      mountPath: "/data/1"
+      existingClaim: polyaxon-pvc-data
+    data2:
+      mountPath: "/data/2"
+      existingClaim: "data-2-pvc"
+  repos:
+    existingClaim: polyaxon-pvc-repos
+  upload:
+    existingClaim: polyaxon-pvc-upload
+  logs:
+    store: gcs
+    bucket: gs://test-logs
+    secret: gcs-secret
+    secretKey: gcs-secret.json
+    mountPath:
+    mountPath:
+    store: azure
+    bucket: wasbs://logs@test.blob.core.windows.net/
+    secret: az-secret
+    secretKey: az-secret.json
+  outputs:
+    gcs-outputs:
+      store: gcs
+      bucket: gs://test-outputs
+      secret: gcs-secret
+      secretKey: gcs-secret.json
+    azure-outputs:
+      store: azure
+      bucket: wasbs://outputs@test.blob.core.windows.net/
+      secret: az-secret
+      secretKey: az-secret.json
+
+nodeSelector:
+  polyaxon: core
+
+api:
+  replicas: 1
+  imageTag: latest
+  imagePullPolicy: Always
+  service:
+    name: api
+    externalPort: 80
+    internalPort: 80
+    nodePort: 31811
+    annotations: {foo: "bar"}
+
+
+streams:
+  imageTag: latest
+  imagePullPolicy: Always
+
+scheduler:
+  concurrency: 10
+  replicas: 1
+  imageTag: latest
+  imagePullPolicy: Always
+  celery:
+    taskTrackStarted: false
+    brokerPoolLimit: 2
+    confirmPublish: false
+    workerPrefetchMultiplier: 2
+    workerMaxTasksPerChild: 2
+    workerMaxMemoryPerChild: 2
+    taskAlwaysEager: true
+
+hpsearch:
+  replicas: 1
+  imageTag: latest
+  imagePullPolicy: Always
+  celery:
+    taskTrackStarted: True
+    brokerPoolLimit: 1
+    confirmPublish: True
+    workerPrefetchMultiplier: 1
+    workerMaxTasksPerChild: 1
+    workerMaxMemoryPerChild: 1
+
+eventsHandlers:
+  replicas: 1
+  imageTag: latest
+  imagePullPolicy: Always
+  celery:
+    taskTrackStarted: true
+    brokerPoolLimit: 3
+    confirmPublish: true
+    workerPrefetchMultiplier: 3
+    workerMaxTasksPerChild: 3
+    workerMaxMemoryPerChild: 3
+
+k8sEventsHandlers:
+  replicas: 1
+  imageTag: latest
+  imagePullPolicy: Always
+  celery:
+    taskTrackStarted: true
+    brokerPoolLimit: 4
+    confirmPublish: true
+    workerPrefetchMultiplier: 4
+    workerMaxTasksPerChild: 4
+    workerMaxMemoryPerChild: 4
+
+beat:
+  imageTag: latest
+  imagePullPolicy: Always
+
+crons:
+  imageTag: latest
+  imagePullPolicy: Always
+
+eventMonitors:
+  replicas: 1
+  namespace:
+    imageTag: latest
+    imagePullPolicy: Always
+
+  statuses:
+    imageTag: latest
+    imagePullPolicy: Always
+
+resourcesDaemon:
+  imageTag: latest
+  imagePullPolicy: Always
+
+hooks:
+  loadFixtures: true
+  imageTag: latest
+  imagePullPolicy: Always
+
+tablesHook:
+  imageTag: latest
+
+timeZone: 'Europe/Berlin'
+
+reposAccessToken: sdfdsfdsfsdfsdfsdfsdf
+hostName: 19.3.50.12
+allowedHosts:
+  - 127.0.0.1
+  - 123.123.12.3
+logLevel: INFO
+adminModels: ['build_jobs', 'experiments']
+
+trackerBackend: "noop"
+
+dirs:
+  nvidia:
+    lib: ""  # e.g. "/usr/lib/nvidia-384"
+    bin: ""  # e.g. "/usr/lib/nvidia-384/bin"
+    libcuda: ""  # e.g. "/usr/lib/x86_64-linux-gnu/libcuda.so.1"
+
+mountPaths:
+  nvidia:
+    lib: ""
+    bin: ""
+    libcuda: ""
+
+rabbitmq-ha:
+  enabled: false
+
+broker: redis

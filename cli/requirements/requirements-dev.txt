@@ -1,0 +1,4 @@
+-r requirements-base.txt
+
+-e git+https://github.com/polyaxon/polyaxon-dockerizer.git@master#egg=polyaxon-dockerizer==0.0.9
+-e git+https://github.com/polyaxon/polyaxon-sdks.git@master#egg=polyaxon-sdk==1.0&subdirectory=python/http_client/v1

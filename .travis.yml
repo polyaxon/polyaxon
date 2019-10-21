@@ -1,59 +1,119 @@
 esudo: required
 dist: xenial
 language: python
-python:
-  - "3.6"
 
-env:
-  global:
-    - DJANGO_SETTINGS_MODULE=polyaxon.settings
-    - PYTHONPATH=$HOME/builds/polyaxon
-    - PIP_USE_MIRRORS=true
+jobs:
+  include:
+    - language: python
+      python: "3.7"
+      services:
+      - postgresql
+      - redis-server
+      env:
+      - DJANGO_SETTINGS_MODULE=polyaxon.settings
+      - PYTHONPATH=$HOME/builds/polyaxon
+      - PIP_USE_MIRRORS=true
+      install:
+      # http://conda.pydata.org/docs/travis.html
+      - sudo apt-get update
+      - wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
+      - bash miniconda.sh -b -p $HOME/miniconda
+      - export PATH="$HOME/miniconda/bin:$PATH"
+      - hash -r
+      - conda config --set always_yes yes --set changeps1 no
+      - conda config --add channels conda-forge
+      - conda update -q conda
+      # Useful for debugging any issues with conda
+      - conda info -a
+      - conda create -q -n test-environment python=$TRAVIS_PYTHON_VERSION numpy=1.15.4 scipy pytest-cov h5py uwsgi=2.0.18
+      - source activate test-environment
+      - pip install -r platform/core/requirements/requirements-test.txt
+      - pip install codecov
+      before_script:
+      - psql -c "CREATE DATABASE travis_ci_test;" -U postgres
+      - cp config/local.json platform/core/polyaxon/polyaxon/env_vars/local.json
+      script:
+      - py.test tests;
 
-  matrix:
-    - OP="prospector"
-    - OP="tests"
+    - language: python
+      python: "3.7"
+      services:
+      - postgresql
+      - redis-server
+      env:
+      - DJANGO_SETTINGS_MODULE=polyaxon.settings
+      - PYTHONPATH=$HOME/builds/polyaxon
+      - PIP_USE_MIRRORS=true
+      install:
+      # http://conda.pydata.org/docs/travis.html
+      - sudo apt-get update
+      - wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
+      - bash miniconda.sh -b -p $HOME/miniconda
+      - export PATH="$HOME/miniconda/bin:$PATH"
+      - hash -r
+      - conda config --set always_yes yes --set changeps1 no
+      - conda config --add channels conda-forge
+      - conda update -q conda
+      # Useful for debugging any issues with conda
+      - conda info -a
+      - conda create -q -n test-environment python=$TRAVIS_PYTHON_VERSION numpy=1.15.4 scipy pytest-cov h5py uwsgi=2.0.18
+      - source activate test-environment
+      - pip install -r platform/core/requirements/requirements-test.txt
+      - pip install codecov
+      before_script:
+      - psql -c "CREATE DATABASE travis_ci_test;" -U postgres
+      - cp config/local.json platform/core/polyaxon/polyaxon/env_vars/local.json
+      script:
+      - prospector -X polyaxon && prospector -X tests;
 
-services:
-  - postgresql
-  - redis-server
+    - language: python
+      python: "2.7"
+      install:
+      # http://conda.pydata.org/docs/travis.html
+      - sudo apt-get update
+      - wget https://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh -O miniconda.sh;
+      - bash miniconda.sh -b -p $HOME/miniconda
+      - export PATH="$HOME/miniconda/bin:$PATH"
+      - hash -r
+      - conda config --set always_yes yes --set changeps1 no
+      - conda update -q conda
+      # Useful for debugging any issues with conda
+      - conda info -a
+      - conda create -q -n test-environment python=$TRAVIS_PYTHON_VERSION numpy six pytest-cov
+      - source activate test-environment
+      - pip install -r requirements/requirements-test.txt
+      - pip install codecov
+      before_script:
+      - psql -c "CREATE DATABASE travis_ci_test;" -U postgres
+      - cp config/local.json platform/core/polyaxon/polyaxon/env_vars/local.json
+      script:
+      - pytest tests
+      - prospector
 
-addons:
-  postgresql: "9.6"
+    - language: python
+      python: "3.6"
+      install:
+      # http://conda.pydata.org/docs/travis.html
+      - sudo apt-get update
+      - wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
+      - bash miniconda.sh -b -p $HOME/miniconda
+      - export PATH="$HOME/miniconda/bin:$PATH"
+      - hash -r
+      - conda config --set always_yes yes --set changeps1 no
+      - conda update -q conda
+      # Useful for debugging any issues with conda
+      - conda info -a
+      - conda create -q -n test-environment python=$TRAVIS_PYTHON_VERSION numpy six pytest-cov
+      - source activate test-environment
+      - pip install -r requirements/requirements-test.txt
+      - pip install codecov
+      before_script:
+      - psql -c "CREATE DATABASE travis_ci_test;" -U postgres
+      - cp config/local.json platform/core/polyaxon/polyaxon/env_vars/local.json
+      script:
+      - pytest tests
+      - prospector
 
-before_install:
-  - if [[ "$OP" == "prospector" ]]; then
-      ./config/build_docker.sh "$TRAVIS_BRANCH";
-    fi
-
-install:
-  # http://conda.pydata.org/docs/travis.html
-  - sudo apt-get update
-  - wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
-  - bash miniconda.sh -b -p $HOME/miniconda
-  - export PATH="$HOME/miniconda/bin:$PATH"
-  - hash -r
-  - conda config --set always_yes yes --set changeps1 no
-  - conda config --add channels conda-forge
-  - conda update -q conda
-  # Useful for debugging any issues with conda
-  - conda info -a
-
-  - conda create -q -n test-environment python=$TRAVIS_PYTHON_VERSION numpy=1.15.4 scipy pytest-cov h5py uwsgi=2.0.18
-  - source activate test-environment
-  - pip install -r requirements/requirements-test.txt
-  - pip install codecov
-
-before_script:
-  - psql -c "CREATE DATABASE travis_ci_test;" -U postgres
-  - cp config/local.json polyaxon/polyaxon/env_vars/local.json
-
-script:
-  - if [[ "$OP" == "prospector" ]]; then
-      prospector -X polyaxon && prospector -X tests;
-    else
-      py.test tests;
-    fi
 
 notifications:
   slack:

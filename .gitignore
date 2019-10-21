@@ -103,7 +103,6 @@ ENV/
 
 # data
 big_data/
-examples/data/
 data/
 
 # environment vars
@@ -134,3 +133,6 @@ lastfailed
 
 # Ignore local.env.ts
 dev.env.ts
+
+# IDE
+.vscode

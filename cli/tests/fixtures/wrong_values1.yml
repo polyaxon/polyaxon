@@ -1,0 +1,15 @@
+rbac:
+  enabled: true
+
+ingress:
+  enabled: true
+
+serviceType: ClusterIP
+
+environment: staging
+
+user:
+  password: root
+
+postgresql:
+  enabled: true  # Error

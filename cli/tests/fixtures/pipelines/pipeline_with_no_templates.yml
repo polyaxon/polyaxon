@@ -1,0 +1,25 @@
+---
+version: 0.6
+
+kind: pipeline
+
+name: test-pipeline
+
+tags: [native]
+
+ops:
+  - name: job1
+    template: {name: job-template}
+    params:
+      input1: s3://foo
+  - name: job2
+    template: {name: job-template}
+    params:
+      input1: s3://bar
+    dependencies: [job1]
+  - name: experiment1
+    template: {name: experiment-template}
+    dependencies: [job2]
+  - name: experiment2
+    template: {name: experiment-template}
+    dependencies: [experiment1]
