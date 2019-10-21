@@ -1,0 +1,37 @@
+apiVersion: core.polyaxon.com/v1alpha1
+kind: PolyaxonKF
+metadata:
+  name: polyaxon-tf-sample
+  labels:
+    app: polyaxon-experiment
+    app.kubernetes.io/component: polyaxon-dashboard
+    app.kubernetes.io/instance: 6c3906d4b732467c8ac27fc0ce6a0sdf
+    app.kubernetes.io/managed-by: polyaxon
+    app.kubernetes.io/name: polyaxon-tensorboard
+    app.kubernetes.io/part-of: polyaxon-runner
+    app.kubernetes.io/version: 0.5.3
+    job_name: root.quick-start.tensorboards.1
+    job_uuid: 6c3906d4b732467c8ac27fc0ce6a0sdf
+    project_name: root.quick-start
+    project_uuid: 4838a1c65592423c9b88a0581915bc91
+    role: polyaxon-worker
+    type: polyaxon-runner
+spec:
+  kfKind: TFJob
+  replicaSpecs:
+    PS:
+      replicas: 2
+      restartPolicy: Never
+      template:
+        spec:
+          containers:
+            - name: tensorflow
+              image: kubeflow/tf-dist-mnist-test:2.0
+    Worker:
+      replicas: 4
+      restartPolicy: Never
+      template:
+        spec:
+          containers:
+            - name: tensorflow
+              image: kubeflow/tf-dist-mnist-test:2.0

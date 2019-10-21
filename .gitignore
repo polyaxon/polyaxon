@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .pytest_cache/
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -8,9 +9,6 @@ __pycache__/
 
 # temp files
 *~
-
-# C extensions
-*.so
 
 # Distribution / packaging
 .Python
@@ -63,6 +61,10 @@ coverage.xml
 .settings/
 .idea/
 .DS_Store
+# editor and IDE paraphernalia
+.vscode
+*.swp
+*.swo
 
 # fab files
 fabsettings.py
@@ -134,5 +136,20 @@ lastfailed
 # Ignore local.env.ts
 dev.env.ts
 
-# IDE
-.vscode
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+bin
+
+# Test binary, build with `go test -c`
+*.test
+
+# Output of the go coverage tool, specifically when used with LiteIDE
+*.out
+
+# Kubernetes Generated files - skip generated files, except for vendored files
+
+!vendor/**/zz_generated.*

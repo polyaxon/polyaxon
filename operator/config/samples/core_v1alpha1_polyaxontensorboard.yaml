@@ -1,0 +1,69 @@
+apiVersion: core.polyaxon.com/v1alpha1
+kind: PolyaxonTensorboard
+metadata:
+  name: polyaxontensorboard-sample
+  labels:
+    app: polyaxon-tensorboard
+    app.kubernetes.io/component: polyaxon-dashboard
+    app.kubernetes.io/instance: 6c3906d4b732467c8ac27fc0ce6a0sdf
+    app.kubernetes.io/managed-by: polyaxon
+    app.kubernetes.io/name: polyaxon-tensorboard
+    app.kubernetes.io/part-of: polyaxon-runner
+    app.kubernetes.io/version: 0.5.3
+    job_name: root.quick-start.tensorboards.1
+    job_uuid: 6c3906d4b732467c8ac27fc0ce6a0sdf
+    project_name: root.quick-start
+    project_uuid: 4838a1c65592423c9b88a0581915bc91
+    role: polyaxon-dashboard
+    type: polyaxon-runner
+spec:
+  template:
+    spec:
+      containers:
+      - args:
+        - tensorboard --logdir=/outputs/root/quick-start --port=6006
+        command:
+        - /bin/sh
+        - -c
+        env:
+        - name: POLYAXON_K8S_NAMESPACE
+          value: polyaxon
+        - name: POLYAXON_API_HTTP_HOST
+          value: http://polyaxon-polyaxon-api:80
+        - name: POLYAXON_API_WS_HOST
+          value: ws://polyaxon-polyaxon-api:80
+        - name: POLYAXON_IN_CLUSTER
+          value: "true"
+        - name: POLYAXON_IS_MANAGED
+          value: "true"
+        - name: POLYAXON_API_VERSION
+          value: v1
+        - name: POLYAXON_INTERNAL_HEADER
+          value: X-POLYAXON-INTERNAL
+        - name: POLYAXON_INTERNAL_HEADER_SERVICE
+          value: runner
+        - name: POLYAXON_LOGS_PATH
+          value: /polyaxon-logs/root/quick-start/tensorboards/1
+        - name: POLYAXON_RUN_OUTPUTS_PATH
+          value: /outputs/root/quick-start/tensorboards/1
+        - name: POLYAXON_RUN_DATA_PATHS
+          value: '{"data": "/data"}'
+        - name: POLYAXON_TENSORBOARD_INFO
+          value: '{"app.kubernetes.io/name": "polyaxon-tensorboard", "app.kubernetes.io/instance":
+            "6c3906d4b732467c8ac27fc0ce6a0sdf", "app.kubernetes.io/version": "0.5.3",
+            "app.kubernetes.io/part-of": "polyaxon-runner", "app.kubernetes.io/component":
+            "polyaxon-dashboard", "app.kubernetes.io/managed-by": "polyaxon", "project_name":
+            "root.quick-start", "project_uuid": "4838a1c65592423c9b88a0581915bc91",
+            "job_name": "root.quick-start.tensorboards.1", "job_uuid": "6c3906d4b732467c8ac27fc0ce6a0sdf",
+            "role": "polyaxon-dashboard", "type": "polyaxon-runner", "app": "polyaxon-tensorboard"}'
+        - name: NVIDIA_VISIBLE_DEVICES
+          value: none
+        image: tensorflow/tensorflow:1.11.0-py3
+        imagePullPolicy: IfNotPresent
+        name: polyaxon-plugin-job
+        ports:
+        - containerPort: 6006
+          protocol: TCP
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
