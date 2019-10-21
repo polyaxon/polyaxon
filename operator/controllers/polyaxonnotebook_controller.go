@@ -29,11 +29,11 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/client"
 
 	"github.com/go-logr/logr"
-	corev1alpha1 "github.com/polyaxon/polyaxon-operator/api/v1alpha1"
-	"github.com/polyaxon/polyaxon-operator/controllers/utils"
+	corev1alpha1 "github.com/polyaxon/polyaxon/operator/api/v1alpha1"
+	"github.com/polyaxon/polyaxon/operator/controllers/utils"
 
 	openapiRuntime "github.com/go-openapi/runtime"
-	polyaxonSDK "github.com/polyaxon/polyaxon-sdks/go/http_client/v1/service_client"
+	polyaxonSDK "github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_client"
 )
 
 const (

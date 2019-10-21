@@ -1,6 +1,6 @@
 version: "2"
 domain: polyaxon.com
-repo: github.com/polyaxon/polyaxon-operator
+repo: github.com/polyaxon/polyaxon/operator
 resources:
 - group: core
   version: v1alpha1

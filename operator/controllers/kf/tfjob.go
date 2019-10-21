@@ -21,7 +21,7 @@ import (
 
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
-	corev1alpha1 "github.com/polyaxon/polyaxon-operator/api/v1alpha1"
+	corev1alpha1 "github.com/polyaxon/polyaxon/operator/api/v1alpha1"
 
 	kfcommonv1 "github.com/kubeflow/tf-operator/pkg/apis/common/v1"
 	tfjobv1 "github.com/kubeflow/tf-operator/pkg/apis/tensorflow/v1"

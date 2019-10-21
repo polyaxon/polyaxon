@@ -22,7 +22,7 @@ import (
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
-	corev1alpha1 "github.com/polyaxon/polyaxon-operator/api/v1alpha1"
+	corev1alpha1 "github.com/polyaxon/polyaxon/operator/api/v1alpha1"
 
 	mpijobv1 "github.com/kubeflow/mpi-operator/pkg/apis/kubeflow/v1alpha2"
 	kfcommonv1 "github.com/kubeflow/tf-operator/pkg/apis/common/v1"

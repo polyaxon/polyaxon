@@ -22,12 +22,11 @@ import (
 
 	netContext "golang.org/x/net/context"
 
-	corev1alpha1 "github.com/polyaxon/polyaxon-operator/api/v1alpha1"
+	"github.com/go-openapi/strfmt"
+	corev1alpha1 "github.com/polyaxon/polyaxon/operator/api/v1alpha1"
 
-	"github.com/polyaxon/polyaxon-sdks/go/http_client/v1/service_client/build_service"
-	"github.com/polyaxon/polyaxon-sdks/go/http_client/v1/service_client/experiment_service"
-	"github.com/polyaxon/polyaxon-sdks/go/http_client/v1/service_client/job_service"
-	"github.com/polyaxon/polyaxon-sdks/go/http_client/v1/service_model"
+	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_client/runs_v1"
+	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_model"
 )
 
 const (
@@ -55,64 +54,28 @@ func (r *PolyaxonJobReconciler) syncStatus(instance *corev1alpha1.PolyaxonJob) e
 	lastCond := instance.Status.Conditions[len(instance.Status.Conditions)-1]
 	status := strings.ToLower(string(lastCond.Type))
 
-	if jobName[2] == "builds" {
-		return r.createBuildStatus(jobName[0], jobName[1], jobName[3], status)
-	} else if jobName[2] == "jobs" {
-		return r.createJobStatus(jobName[0], jobName[1], jobName[3], status)
-	} else if jobName[2] == "experiments" {
-		return r.createExperimentStatus(jobName[0], jobName[1], jobName[3], status)
-	}
-	return nil
+	return r.createJobStatus(jobName[0], jobName[1], jobName[3], status, lastCond)
 }
 
-func (r *PolyaxonJobReconciler) createBuildStatus(owner, project, id, status string) error {
+func (r *PolyaxonJobReconciler) createJobStatus(owner, project, uuid, status string, statusCond corev1alpha1.PolyaxonBaseJobCondition) error {
 	ctx, cancel := netContext.WithTimeout(netContext.Background(), apiServerDefaultTimeout)
 	defer cancel()
 
-	params := &build_service.CreateBuildStatusParams{
+	params := &runs_v1.CreateRunStatusParams{
 		Owner:   owner,
 		Project: project,
-		ID:      id,
-		Body: &service_model.V1EntityStatusRequest{
-			Status: status,
+		UUID:    uuid,
+		Body: &service_model.V1StatusCondition{
+			LastTransitionTime: strfmt.DateTime(statusCond.LastTransitionTime.Time),
+			LastUpdateTime:     strfmt.DateTime(statusCond.LastUpdateTime.Time),
+			Message:            statusCond.Message,
+			Reason:             statusCond.Reason,
+			Status:             string(statusCond.Status),
+			Type:               string(statusCond.Type),
 		},
 		Context: ctx,
 	}
-	_, err := r.PlxClient.BuildService.CreateBuildStatus(params, r.PlxToken)
-	return err
-}
-
-func (r *PolyaxonJobReconciler) createJobStatus(owner, project, id, status string) error {
-	ctx, cancel := netContext.WithTimeout(netContext.Background(), apiServerDefaultTimeout)
-	defer cancel()
-
-	params := &job_service.CreateJobStatusParams{
-		Owner:   owner,
-		Project: project,
-		ID:      id,
-		Body: &service_model.V1EntityStatusRequest{
-			Status: status,
-		},
-		Context: ctx,
-	}
-	_, err := r.PlxClient.JobService.CreateJobStatus(params, r.PlxToken)
-	return err
-}
-
-func (r *PolyaxonJobReconciler) createExperimentStatus(owner, project, id, status string) error {
-	ctx, cancel := netContext.WithTimeout(netContext.Background(), apiServerDefaultTimeout)
-	defer cancel()
-
-	params := &experiment_service.CreateExperimentStatusParams{
-		Owner:   owner,
-		Project: project,
-		ID:      id,
-		Body: &service_model.V1EntityStatusRequest{
-			Status: status,
-		},
-		Context: ctx,
-	}
-	_, err := r.PlxClient.ExperimentService.CreateExperimentStatus(params, r.PlxToken)
+	_, err := r.PlxClient.RunsV1.CreateRunStatus(params, r.PlxToken)
 	return err
 }
 

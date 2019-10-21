@@ -27,9 +27,9 @@ import (
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 
-	corev1alpha1 "github.com/polyaxon/polyaxon-operator/api/v1alpha1"
-	"github.com/polyaxon/polyaxon-operator/controllers/kf"
-	"github.com/polyaxon/polyaxon-operator/controllers/utils"
+	corev1alpha1 "github.com/polyaxon/polyaxon/operator/api/v1alpha1"
+	"github.com/polyaxon/polyaxon/operator/controllers/kf"
+	"github.com/polyaxon/polyaxon/operator/controllers/utils"
 
 	mpijobv1 "github.com/kubeflow/mpi-operator/pkg/apis/kubeflow/v1alpha2"
 	pytorchjobv1 "github.com/kubeflow/pytorch-operator/pkg/apis/pytorch/v1"
@@ -37,7 +37,7 @@ import (
 	tfjobv1 "github.com/kubeflow/tf-operator/pkg/apis/tensorflow/v1"
 
 	openapiRuntime "github.com/go-openapi/runtime"
-	polyaxonSDK "github.com/polyaxon/polyaxon-sdks/go/http_client/v1/service_client"
+	polyaxonSDK "github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_client"
 )
 
 // PolyaxonKFReconciler reconciles a PolyaxonKF object

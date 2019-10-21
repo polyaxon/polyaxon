@@ -20,8 +20,8 @@ import (
 	"flag"
 	"os"
 
-	corev1alpha1 "github.com/polyaxon/polyaxon-operator/api/v1alpha1"
-	"github.com/polyaxon/polyaxon-operator/controllers"
+	corev1alpha1 "github.com/polyaxon/polyaxon/operator/api/v1alpha1"
+	"github.com/polyaxon/polyaxon/operator/controllers"
 	appsv1 "k8s.io/api/apps/v1"
 	batchv1 "k8s.io/api/batch/v1"
 	corev1 "k8s.io/api/core/v1"
@@ -40,7 +40,7 @@ import (
 	httpRuntime "github.com/go-openapi/runtime"
 	httptransport "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/strfmt"
-	polyaxonSDK "github.com/polyaxon/polyaxon-sdks/go/http_client/v1/service_client"
+	polyaxonSDK "github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_client"
 	// +kubebuilder:scaffold:imports
 )
 

@@ -19,7 +19,7 @@ package controllers
 import (
 	"context"
 
-	corev1alpha1 "github.com/polyaxon/polyaxon-operator/api/v1alpha1"
+	corev1alpha1 "github.com/polyaxon/polyaxon/operator/api/v1alpha1"
 )
 
 func (r *PolyaxonNotebookReconciler) addFinalizer(instance *corev1alpha1.PolyaxonNotebook) error {
