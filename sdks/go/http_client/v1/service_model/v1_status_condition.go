@@ -46,7 +46,7 @@ type V1StatusCondition struct {
 	Reason string `json:"reason,omitempty"`
 
 	// Status state
-	Status bool `json:"status,omitempty"`
+	Status string `json:"status,omitempty"`
 
 	// Status type
 	Type string `json:"type,omitempty"`

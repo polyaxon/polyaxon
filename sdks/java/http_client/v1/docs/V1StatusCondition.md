@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **type** | **String** |  |  [optional]
-**status** | **Boolean** |  |  [optional]
+**status** | **String** |  |  [optional]
 **reason** | **String** |  |  [optional]
 **message** | **String** |  |  [optional]
 **lastUpdateTime** | [**OffsetDateTime**](OffsetDateTime.md) |  |  [optional]

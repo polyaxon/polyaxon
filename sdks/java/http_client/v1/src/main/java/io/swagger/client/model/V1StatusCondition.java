@@ -48,7 +48,7 @@ public class V1StatusCondition {
   private String type = null;
 
   @SerializedName("status")
-  private Boolean status = null;
+  private String status = null;
 
   @SerializedName("reason")
   private String reason = null;
@@ -80,7 +80,7 @@ public class V1StatusCondition {
     this.type = type;
   }
 
-  public V1StatusCondition status(Boolean status) {
+  public V1StatusCondition status(String status) {
     this.status = status;
     return this;
   }
@@ -90,11 +90,11 @@ public class V1StatusCondition {
    * @return status
   **/
   @ApiModelProperty(value = "")
-  public Boolean isStatus() {
+  public String getStatus() {
     return status;
   }
 
-  public void setStatus(Boolean status) {
+  public void setStatus(String status) {
     this.status = status;
   }
 

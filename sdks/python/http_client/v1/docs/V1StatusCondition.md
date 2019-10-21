@@ -4,7 +4,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **type** | **str** |  | [optional] 
-**status** | **bool** |  | [optional] 
+**status** | **str** |  | [optional] 
 **reason** | **str** |  | [optional] 
 **message** | **str** |  | [optional] 
 **last_update_time** | **datetime** |  | [optional] 

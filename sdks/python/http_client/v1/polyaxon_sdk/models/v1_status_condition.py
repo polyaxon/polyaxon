@@ -48,7 +48,7 @@ class V1StatusCondition(object):
     """
     swagger_types = {
         'type': 'str',
-        'status': 'bool',
+        'status': 'str',
         'reason': 'str',
         'message': 'str',
         'last_update_time': 'datetime',
@@ -115,7 +115,7 @@ class V1StatusCondition(object):
 
 
         :return: The status of this V1StatusCondition.  # noqa: E501
-        :rtype: bool
+        :rtype: str
         """
         return self._status
 
@@ -125,7 +125,7 @@ class V1StatusCondition(object):
 
 
         :param status: The status of this V1StatusCondition.  # noqa: E501
-        :type: bool
+        :type: str
         """
 
         self._status = status

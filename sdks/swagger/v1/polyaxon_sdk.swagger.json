@@ -2784,8 +2784,7 @@
           "title": "Status type"
         },
         "status": {
-          "type": "boolean",
-          "format": "boolean",
+          "type": "string",
           "title": "Status state"
         },
         "reason": {

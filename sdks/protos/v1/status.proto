@@ -12,7 +12,7 @@ message StatusCondition {
     string type = 1;
 
     // Status state
-    bool status = 2;
+    string status = 2;
 
     // Status reason
     string reason = 3;

@@ -85,7 +85,7 @@
         obj['type'] = ApiClient.convertToType(data['type'], 'String');
       }
       if (data.hasOwnProperty('status')) {
-        obj['status'] = ApiClient.convertToType(data['status'], 'Boolean');
+        obj['status'] = ApiClient.convertToType(data['status'], 'String');
       }
       if (data.hasOwnProperty('reason')) {
         obj['reason'] = ApiClient.convertToType(data['reason'], 'String');
@@ -108,7 +108,7 @@
    */
   exports.prototype['type'] = undefined;
   /**
-   * @member {Boolean} status
+   * @member {String} status
    */
   exports.prototype['status'] = undefined;
   /**

@@ -4,7 +4,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **type** | **String** |  | [optional] 
-**status** | **Boolean** |  | [optional] 
+**status** | **String** |  | [optional] 
 **reason** | **String** |  | [optional] 
 **message** | **String** |  | [optional] 
 **last_update_time** | **Date** |  | [optional] 

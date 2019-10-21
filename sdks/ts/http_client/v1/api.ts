@@ -572,10 +572,10 @@ export interface V1StatusCondition {
     type?: string;
     /**
      * 
-     * @type {boolean}
+     * @type {string}
      * @memberof V1StatusCondition
      */
-    status?: boolean;
+    status?: string;
     /**
      * 
      * @type {string}
