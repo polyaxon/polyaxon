@@ -1,0 +1,53 @@
+syntax = "proto3";
+
+package v1;
+
+import "google/protobuf/timestamp.proto";
+
+import "v1/base.proto";
+
+
+// Code Reference specification
+message CodeReference {
+    // UUID
+    string uuid = 1;
+
+    // Optional commit of the code ref
+    string commit = 2;
+
+    // Optional head of the code ref
+    google.protobuf.Timestamp updated_at = 3;
+
+    // Optional branch of the code ref
+    string status = 4;
+
+    // Optional git url for this code ref
+    string git_url = 5;
+
+    // Optional whether this code ref is dirty
+    bool is_dirty = 6;
+}
+
+// Request data to create/update CodeReference
+message CodeRefBodyRequest {
+    // Owner of the code ref
+    EntityResourceRequest entity = 1;
+
+    // Code ref object
+    CodeReference code_reference = 2;
+}
+
+ // Contains list runs
+ message ListCodeRefsResponse {
+    // Count of the entities
+    int32 count = 1;
+
+    // List of all entities
+    repeated CodeReference results = 2;
+
+    // Previous page
+    string previous = 3;
+
+    // Next page
+    string next = 4;
+}

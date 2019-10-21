@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/struct.proto";
+import "protoc-gen-swagger/options/annotations.proto";
+
+// Version specification
+message Version {
+    // Min version
+    string min_version = 1;
+
+    // Latest version
+    string latest_version = 2;
+}
+
+message Versions {
+    string current_version = 1;
+    Version cli = 2;
+    Version platform = 3;
+    Version agent = 4;
+}
+
+message LogHandler {
+    string dsn = 1;
+    string environment = 2;
+}

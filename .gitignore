@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 .pytest_cache/
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -9,6 +8,9 @@ __pycache__/
 
 # temp files
 *~
+
+# C extensions
+*.so
 
 # Distribution / packaging
 .Python
@@ -61,10 +63,6 @@ coverage.xml
 .settings/
 .idea/
 .DS_Store
-# editor and IDE paraphernalia
-.vscode
-*.swp
-*.swo
 
 # fab files
 fabsettings.py
@@ -105,6 +103,7 @@ ENV/
 
 # data
 big_data/
+examples/data/
 data/
 
 # environment vars

@@ -1,0 +1,56 @@
+syntax = "proto3";
+
+package v1;
+
+import "google/protobuf/any.proto";
+import "google/protobuf/timestamp.proto";
+
+
+// Status condition specification
+message StatusCondition {
+    // Status type
+    string type = 1;
+
+    // Status state
+    bool status = 2;
+
+    // Status reason
+    string reason = 3;
+
+    // Status message
+    string message = 4;
+
+    // last update time
+    google.protobuf.Timestamp last_update_time = 5;
+
+    // last transition time
+    google.protobuf.Timestamp last_transition_time = 6;
+
+}
+
+// Status specification
+message Status {
+    // The uuid of the run
+    string uuid = 1;
+
+    // The current status
+    string status = 2;
+
+    // The status conditions timeline
+    repeated StatusCondition status_conditions = 3;
+}
+
+// Request data to create/update entity status
+message EntityStatusBodyRequest {
+    // Owner of the namespace
+    string owner = 1;
+
+    // Project where the experiement will be assigned
+    string project = 2;
+
+    // Unique integer identifier of the entity
+    string uuid = 3;
+
+    // Status to set
+    Status status = 4;
+}

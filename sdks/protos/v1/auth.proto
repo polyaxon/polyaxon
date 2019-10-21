@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package v1;
+
+import "google/api/annotations.proto";
+import "protoc-gen-swagger/options/annotations.proto";
+
+// Auth specification
+message Auth {
+    // UUID
+    string token = 1;
+}
+
+// Login
+message CredsBodyRequest{
+    // User username or email
+    string username = 1;
+
+    // Project where the experiement will be assigned
+    string password = 2;
+}
