@@ -14,7 +14,7 @@
 
 IMG := polyaxon/polyaxon-proto-build
 VERSION := v1
-DOCKER_RUN := docker run -it --rm -v ${PWD}:/polyaxon $(IMG)
+DOCKER_RUN := docker run -it --rm -v ${PWD}:/sdks $(IMG)
 PROTOC := $(DOCKER_RUN) protoc
 PYTHON := $(DOCKER_RUN) python
 GO := $(DOCKER_RUN) go

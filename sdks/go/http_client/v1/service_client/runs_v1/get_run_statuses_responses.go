@@ -27,7 +27,7 @@ import (
 
 	strfmt "github.com/go-openapi/strfmt"
 
-	service_model "github.com/polyaxon/polyaxon-sdks/go/http_client/v1/service_model"
+	service_model "github.com/polyaxon/sdks/go/http_client/v1/service_model"
 )
 
 // GetRunStatusesReader is a Reader for the GetRunStatuses structure.

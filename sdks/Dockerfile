@@ -11,7 +11,7 @@ RUN apt-get -y update && \
 
 # Install Go
 RUN mkdir -p /goroot && \
-  curl https://dl.google.com/go/go1.12.7.linux-amd64.tar.gz | tar xvzf - -C /goroot --strip-components=1
+  curl https://dl.google.com/go/go1.13.3.linux-amd64.tar.gz | tar xvzf - -C /goroot --strip-components=1
 
 # Set environment variables.
 ENV GOROOT /goroot
@@ -39,4 +39,4 @@ RUN go install github.com/go-swagger/go-swagger/cmd/swagger
 # Install Python gRPC tools.
 RUN python -m pip install grpcio grpcio-tools
 
-WORKDIR /polyaxon
+WORKDIR /sdks

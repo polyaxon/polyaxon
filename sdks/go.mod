@@ -1,4 +1,4 @@
-module github.com/polyaxon/polyaxon-sdks
+module github.com/polyaxon/sdks
 
 go 1.12
 
