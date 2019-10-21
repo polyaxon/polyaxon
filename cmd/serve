@@ -5,12 +5,12 @@ source $DIR/environment
 $DIR/check
 if [ $? -eq 0 ]; then
     if [ -z "$1" ]; then
-        docker-compose run --publish 8000:8000 --rm --name=polyaxon_server web python3 ./polyaxon/manage.py runserver 0.0.0.0:8000
+        docker-compose run --publish 8000:8000 --rm --name=polyaxon_server api python3 ./polyaxon/manage.py runserver 0.0.0.0:8000
     elif [ "$1" = "npm" ]; then
-        docker-compose run -w /polyaxon/client --publish 8001:8001 --rm --name=polyaxon_npm_server web npm run dev
+        docker-compose run -w /polyaxon/client --publish 8001:8001 --rm --name=polyaxon_npm_server api npm run dev
     elif [ "$1" = "uwsgi" ]; then
-        docker-compose run --publish 8000:8000 --rm --name=polyaxon_server web uwsgi --ini web/uwsgi.web.ini
+        docker-compose run --publish 8000:8000 --rm --name=polyaxon_server api uwsgi --ini web/uwsgi.web.ini
     elif [ "$1" = "nginx" ]; then
-        docker-compose run --publish 8000:80 --publish 9000:443 --rm --name=polyaxon_server web /bin/bash ./web/start.sh
+        docker-compose run --publish 8000:80 --publish 9000:443 --rm --name=polyaxon_server api /bin/bash ./web/start.sh
     fi
 fi

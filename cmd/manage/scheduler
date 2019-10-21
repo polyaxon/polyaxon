@@ -1,8 +1,9 @@
 #!/bin/bash
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+DIR=$DIR/..
 source $DIR/environment
 
 $DIR/check
 if [ $? -eq 0 ]; then
-    docker-compose run --rm --name=polyaxon_manage web /bin/bash
+    cmd/python/worker platform/scheduler polyaxon/manage.py $*
 fi

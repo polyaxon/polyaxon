@@ -1,8 +1,9 @@
 #!/bin/bash
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+DIR=$DIR/..
 source $DIR/environment
 
 $DIR/check
 if [ $? -eq 0 ]; then
-    $DIR/manage dumpdata --indent 4 --natural-primary --natural-foreign $* > polyaxon/polyaxon/fixtures/$*.json
+    docker-compose run --rm --name=polyaxon_beat worker /bin/bash ./polyaxon/start.sh beat --loglevel=DEBUG
 fi
