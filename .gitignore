@@ -18,6 +18,7 @@ docker/environment/
 build/
 develop-eggs/
 dist/
+pydist/
 downloads/
 eggs/
 .eggs/
@@ -109,13 +110,14 @@ data/
 local.json
 
 # project
-logs/*
+logs/
+/wheels/*
 setup.log
 reports/
 media/
-static/debug_toolbar
-static/rest_framework
-static/css
+/**/static/debug_toolbar
+/**/static/rest_framework
+/**/static/css
 
 # npm modules and transpiled typescript files
 client/dist/
@@ -127,7 +129,7 @@ deploy/npm-debug.log
 /examples/polyaxon-logs/
 
 # don't ignore static dist
-!/static/dist
+!/polyaxon/static/dist
 lastfailed
 
 # Ignore local.env.ts
