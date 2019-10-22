@@ -211,7 +211,6 @@ def run(
             description=description,
             tags=tags,
             specification=specification,
-            ttl=ttl,
             upload=upload,
             log=log,
             can_upload=all([upload, project]),

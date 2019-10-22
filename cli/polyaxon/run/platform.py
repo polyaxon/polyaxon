@@ -21,19 +21,15 @@ import sys
 
 import click
 
+from urllib3.exceptions import HTTPError
+
 from polyaxon_sdk import V1Run
+from polyaxon_sdk.rest import ApiException
 
 from polyaxon.cli.runs import logs as run_logs
 from polyaxon.cli.upload import upload as upload_cmd
 from polyaxon.client import PolyaxonClient
-from polyaxon.exceptions import (
-    PolyaxonClientException,
-    PolyaxonHTTPError,
-    PolyaxonShouldExitError,
-)
 from polyaxon.managers.run import RunManager
-from polyaxon.schemas.ops.termination import TerminationConfig
-from polyaxon.schemas.polyflow.ops import OpConfig
 from polyaxon.utils import cache
 from polyaxon.utils.formatting import Printer
 
@@ -46,33 +42,20 @@ def run(
     description,
     tags,
     specification,
-    ttl,
     upload,
     log,
     can_upload,
 ):
     def run_experiment():
         click.echo("Creating a run.")
-        termination = TerminationConfig(ttl=ttl)
-        op = OpConfig(
-            name=name,
-            description=description,
-            tags=tags,
-            _template=specification.config,
-            termination=termination,
-            nocache=True,
-        )
         run = V1Run(content=specification.config_dump)
+        import pdb; pdb.set_trace()
         try:
             polyaxon_client = PolyaxonClient()
             response = polyaxon_client.runs_v1.create_run(owner, project_name, run)
             cache.cache(config_manager=RunManager, response=response)
             Printer.print_success("A new run `{}` was created".format(response.uuid))
-        except (
-            PolyaxonHTTPError,
-            PolyaxonShouldExitError,
-            PolyaxonClientException,
-        ) as e:
+        except (ApiException, HTTPError) as e:
             Printer.print_error("Could not create op.")
             Printer.print_error("Error message `{}`.".format(e))
             sys.exit(1)
@@ -94,5 +77,5 @@ def run(
 
     # Check if we need to invoke logs
     if log and logs_cmd:
-        ctx.obj = {"project": "{}/{}".format(user, project_name)}
+        ctx.obj = {"project": "{}/{}".format(owner, project_name)}
         ctx.invoke(logs_cmd)

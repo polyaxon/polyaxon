@@ -66,6 +66,8 @@ def login(token, username, password):
             )
             access_auth = polyaxon_client.auth_v1.login(body=body)
         except (ApiException, HTTPError) as e:
+            AuthConfigManager.purge()
+            CliConfigManager.purge()
             Printer.print_error("Could not login.")
             Printer.print_error("Error Message `{}`.".format(e))
             sys.exit(1)
