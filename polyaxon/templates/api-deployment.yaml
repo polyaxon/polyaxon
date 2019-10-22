@@ -1,4 +1,4 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ template "polyaxon.fullname" . }}-api
@@ -21,6 +21,10 @@ metadata:
     app.kubernetes.io/managed-by: "helm"
 spec:
   replicas: {{ .Values.api.replicas }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ template "polyaxon.fullname" . }}-api
+      app.kubernetes.io/instance: {{ .Release.Name }}
   template:
     metadata:
       annotations:
@@ -32,6 +36,8 @@ spec:
         release: "{{ .Release.Name }}"
         type: {{ .Values.types.core }}
         role: {{ .Values.roles.api }}
+        app.kubernetes.io/name: {{ template "polyaxon.fullname" . }}-api
+        app.kubernetes.io/instance: {{ .Release.Name }}
     spec:
 {{ include "securityContext" . | indent 6 }}
 {{ include "config.scheduling" . | indent 6 }}
@@ -113,7 +119,7 @@ spec:
           httpGet:
             path: /healthz/
             port: {{ .Values.streams.service.internalPort }}
-            scheme: {{ .Values.api.service.scheme | default "HTTP" }}
+            scheme: {{ .Values.streams.service.scheme | default "HTTP" }}
           initialDelaySeconds: 100
           periodSeconds: 30
           successThreshold: 1
@@ -123,7 +129,7 @@ spec:
           httpGet:
             path: /healthz/
             port: {{ .Values.streams.service.internalPort }}
-            scheme: {{ .Values.api.service.scheme | default "HTTP" }}
+            scheme: {{ .Values.streams.service.scheme | default "HTTP" }}
           initialDelaySeconds: 150
           periodSeconds: 30
           successThreshold: 1

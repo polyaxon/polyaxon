@@ -1,4 +1,4 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ template "polyaxon.fullname" . }}-monitors
@@ -21,6 +21,10 @@ metadata:
     app.kubernetes.io/managed-by: "helm"
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ template "polyaxon.fullname" . }}-monitors
+      app.kubernetes.io/instance: {{ .Release.Name }}
   template:
     metadata:
       annotations:
@@ -32,6 +36,8 @@ spec:
         release: "{{ .Release.Name }}"
         type: {{ .Values.types.core }}
         role: {{ .Values.roles.log }}
+        app.kubernetes.io/name: {{ template "polyaxon.fullname" . }}-monitors
+        app.kubernetes.io/instance: {{ .Release.Name }}
     spec:
 {{ include "securityContext" . | indent 6 }}
 {{ include "config.scheduling" . | indent 6 }}

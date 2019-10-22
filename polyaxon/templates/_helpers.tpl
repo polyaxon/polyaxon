@@ -17,15 +17,3 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 {{- define "k8s.minor" -}}
 {{ .Capabilities.KubeVersion.Minor |  trimSuffix "+" }}
 {{- end -}}
-
-
-{{/*
-Return the appropriate apiVersion for networkpolicy.
-*/}}
-{{- define "networkPolicy.apiVersion" -}}
-{{- if and (ge (int (include "k8s.minor" .)) 4) (le (int (include "k8s.minor" .)) 6) -}}
-"extensions/v1beta1"
-{{- else if ge (int (.Capabilities.KubeVersion.Minor)) 7 -}}
-"networking.k8s.io/v1"
-{{- end -}}
-{{- end -}}
