@@ -22,6 +22,7 @@ import (
 
 	corev1alpha1 "github.com/polyaxon/polyaxon/operator/api/v1alpha1"
 	"github.com/polyaxon/polyaxon/operator/controllers"
+	"github.com/polyaxon/polyaxon/operator/controllers/config"
 	appsv1 "k8s.io/api/apps/v1"
 	batchv1 "k8s.io/api/batch/v1"
 	corev1 "k8s.io/api/core/v1"
@@ -63,10 +64,17 @@ func init() {
 	_ = corev1.AddToScheme(scheme)
 	_ = appsv1.AddToScheme(scheme)
 	_ = batchv1.AddToScheme(scheme)
-	_ = tfjobv1.AddToScheme(scheme)
-	_ = pytorchjobv1.AddToScheme(scheme)
-	_ = mpijobv1.AddToScheme(scheme)
 	_ = corev1alpha1.AddToScheme(scheme)
+
+	if config.GetBoolEnv(config.TFfJobEnabled, false) {
+		tfjobv1.AddToScheme(scheme)
+	}
+	if config.GetBoolEnv(config.PytorchJobEnabled, false) {
+		pytorchjobv1.AddToScheme(scheme)
+	}
+	if config.GetBoolEnv(config.MpiJobEnabled, false) {
+		mpijobv1.AddToScheme(scheme)
+	}
 	// +kubebuilder:scaffold:scheme
 }
 
@@ -129,15 +137,19 @@ func main() {
 		setupLog.Error(err, "unable to create controller", "controller", "PolyaxonJob")
 		os.Exit(1)
 	}
-	if err = (&controllers.PolyaxonKFReconciler{
-		Client:    mgr.GetClient(),
-		Log:       ctrl.Log.WithName("controllers").WithName("PolyaxonKF"),
-		Scheme:    mgr.GetScheme(),
-		PlxClient: plxClient,
-		PlxToken:  plxToken,
-	}).SetupWithManager(mgr); err != nil {
-		setupLog.Error(err, "unable to create controller", "controller", "PolyaxonKF")
-		os.Exit(1)
+
+	if config.KFEnabled() {
+
+		if err = (&controllers.PolyaxonKFReconciler{
+			Client:    mgr.GetClient(),
+			Log:       ctrl.Log.WithName("controllers").WithName("PolyaxonKF"),
+			Scheme:    mgr.GetScheme(),
+			PlxClient: plxClient,
+			PlxToken:  plxToken,
+		}).SetupWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "PolyaxonKF")
+			os.Exit(1)
+		}
 	}
 	// +kubebuilder:scaffold:builder
 

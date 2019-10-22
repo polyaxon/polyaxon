@@ -9,9 +9,11 @@ spec:
   group: core.polyaxon.com
   names:
     kind: PolyaxonTensorboard
+    listKind: PolyaxonTensorboardList
     plural: polyaxontensorboards
     shortNames:
     - plxtb
+    singular: polyaxontensorboard
   scope: Namespaced
   subresources:
     status: {}

@@ -9,9 +9,11 @@ spec:
   group: core.polyaxon.com
   names:
     kind: PolyaxonNotebook
+    listKind: PolyaxonNotebookList
     plural: polyaxonnotebooks
     shortNames:
     - plxnb
+    singular: polyaxonnotebook
   scope: Namespaced
   subresources:
     status: {}

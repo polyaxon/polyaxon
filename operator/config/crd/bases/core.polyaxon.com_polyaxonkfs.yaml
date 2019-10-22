@@ -9,9 +9,11 @@ spec:
   group: core.polyaxon.com
   names:
     kind: PolyaxonKF
+    listKind: PolyaxonKFList
     plural: polyaxonkfs
     shortNames:
     - plxkf
+    singular: polyaxonkf
   scope: Namespaced
   subresources:
     status: {}

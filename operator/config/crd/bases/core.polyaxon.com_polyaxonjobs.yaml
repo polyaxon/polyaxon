@@ -9,9 +9,11 @@ spec:
   group: core.polyaxon.com
   names:
     kind: PolyaxonJob
+    listKind: PolyaxonJobList
     plural: polyaxonjobs
     shortNames:
     - plxjob
+    singular: polyaxonjob
   scope: Namespaced
   subresources:
     status: {}
