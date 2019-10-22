@@ -49,7 +49,6 @@ def run(
     def run_experiment():
         click.echo("Creating a run.")
         run = V1Run(content=specification.config_dump)
-        import pdb; pdb.set_trace()
         try:
             polyaxon_client = PolyaxonClient()
             response = polyaxon_client.runs_v1.create_run(owner, project_name, run)
