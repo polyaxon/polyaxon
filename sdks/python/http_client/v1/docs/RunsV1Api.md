@@ -341,7 +341,7 @@ api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
 owner = 'owner_example' # str | Owner of the namespace
 project = 'project_example' # str | Project where the experiement will be assigned
 uuid = 'uuid_example' # str | Unique integer identifier of the entity
-body = polyaxon_sdk.V1StatusCondition() # V1StatusCondition | Status to set
+body = polyaxon_sdk.V1EntityStatusBodyRequest() # V1EntityStatusBodyRequest | 
 
 try:
     # Create new run status
@@ -358,7 +358,7 @@ Name | Type | Description  | Notes
  **owner** | **str**| Owner of the namespace | 
  **project** | **str**| Project where the experiement will be assigned | 
  **uuid** | **str**| Unique integer identifier of the entity | 
- **body** | [**V1StatusCondition**](V1StatusCondition.md)| Status to set | 
+ **body** | [**V1EntityStatusBodyRequest**](V1EntityStatusBodyRequest.md)|  | 
 
 ### Return type
 

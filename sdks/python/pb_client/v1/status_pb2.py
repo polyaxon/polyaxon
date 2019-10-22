@@ -38,7 +38,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='v1',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\x0fv1/status.proto\x12\x02v1\x1a\x19google/protobuf/any.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\xc0\x01\n\x0fStatusCondition\x12\x0c\n\x04type\x18\x01 \x01(\t\x12\x0e\n\x06status\x18\x02 \x01(\t\x12\x0e\n\x06reason\x18\x03 \x01(\t\x12\x0f\n\x07message\x18\x04 \x01(\t\x12\x34\n\x10last_update_time\x18\x05 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x38\n\x14last_transition_time\x18\x06 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"V\n\x06Status\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\x0e\n\x06status\x18\x02 \x01(\t\x12.\n\x11status_conditions\x18\x03 \x03(\x0b\x32\x13.v1.StatusCondition\"v\n\x17\x45ntityStatusBodyRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0f\n\x07project\x18\x02 \x01(\t\x12\x0c\n\x04uuid\x18\x03 \x01(\t\x12-\n\x10status_condition\x18\x04 \x01(\x0b\x32\x13.v1.StatusConditionb\x06proto3')
+  serialized_pb=_b('\n\x0fv1/status.proto\x12\x02v1\x1a\x19google/protobuf/any.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\xc0\x01\n\x0fStatusCondition\x12\x0c\n\x04type\x18\x01 \x01(\t\x12\x0e\n\x06status\x18\x02 \x01(\t\x12\x0e\n\x06reason\x18\x03 \x01(\t\x12\x0f\n\x07message\x18\x04 \x01(\t\x12\x34\n\x10last_update_time\x18\x05 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x38\n\x14last_transition_time\x18\x06 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"V\n\x06Status\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\x0e\n\x06status\x18\x02 \x01(\t\x12.\n\x11status_conditions\x18\x03 \x03(\x0b\x32\x13.v1.StatusCondition\"o\n\x17\x45ntityStatusBodyRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0f\n\x07project\x18\x02 \x01(\t\x12\x0c\n\x04uuid\x18\x03 \x01(\t\x12&\n\tcondition\x18\x04 \x01(\x0b\x32\x13.v1.StatusConditionb\x06proto3')
   ,
   dependencies=[google_dot_protobuf_dot_any__pb2.DESCRIPTOR,google_dot_protobuf_dot_timestamp__pb2.DESCRIPTOR,])
 
@@ -185,7 +185,7 @@ _ENTITYSTATUSBODYREQUEST = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='status_condition', full_name='v1.EntityStatusBodyRequest.status_condition', index=3,
+      name='condition', full_name='v1.EntityStatusBodyRequest.condition', index=3,
       number=4, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
@@ -204,13 +204,13 @@ _ENTITYSTATUSBODYREQUEST = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=366,
-  serialized_end=484,
+  serialized_end=477,
 )
 
 _STATUSCONDITION.fields_by_name['last_update_time'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
 _STATUSCONDITION.fields_by_name['last_transition_time'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
 _STATUS.fields_by_name['status_conditions'].message_type = _STATUSCONDITION
-_ENTITYSTATUSBODYREQUEST.fields_by_name['status_condition'].message_type = _STATUSCONDITION
+_ENTITYSTATUSBODYREQUEST.fields_by_name['condition'].message_type = _STATUSCONDITION
 DESCRIPTOR.message_types_by_name['StatusCondition'] = _STATUSCONDITION
 DESCRIPTOR.message_types_by_name['Status'] = _STATUS
 DESCRIPTOR.message_types_by_name['EntityStatusBodyRequest'] = _ENTITYSTATUSBODYREQUEST

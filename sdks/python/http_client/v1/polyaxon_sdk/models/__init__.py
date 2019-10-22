@@ -35,6 +35,7 @@ from polyaxon_sdk.models.v1_auth import V1Auth
 from polyaxon_sdk.models.v1_code_reference import V1CodeReference
 from polyaxon_sdk.models.v1_creds_body_request import V1CredsBodyRequest
 from polyaxon_sdk.models.v1_entity_resource_request import V1EntityResourceRequest
+from polyaxon_sdk.models.v1_entity_status_body_request import V1EntityStatusBodyRequest
 from polyaxon_sdk.models.v1_list_code_refs_response import V1ListCodeRefsResponse
 from polyaxon_sdk.models.v1_list_projects_response import V1ListProjectsResponse
 from polyaxon_sdk.models.v1_list_runs_response import V1ListRunsResponse

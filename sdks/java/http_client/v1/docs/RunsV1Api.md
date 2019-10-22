@@ -349,7 +349,7 @@ RunsV1Api apiInstance = new RunsV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
 String project = "project_example"; // String | Project where the experiement will be assigned
 String uuid = "uuid_example"; // String | Unique integer identifier of the entity
-V1StatusCondition body = new V1StatusCondition(); // V1StatusCondition | Status to set
+V1EntityStatusBodyRequest body = new V1EntityStatusBodyRequest(); // V1EntityStatusBodyRequest | 
 try {
     V1Status result = apiInstance.createRunStatus(owner, project, uuid, body);
     System.out.println(result);
@@ -366,7 +366,7 @@ Name | Type | Description  | Notes
  **owner** | **String**| Owner of the namespace |
  **project** | **String**| Project where the experiement will be assigned |
  **uuid** | **String**| Unique integer identifier of the entity |
- **body** | [**V1StatusCondition**](V1StatusCondition.md)| Status to set |
+ **body** | [**V1EntityStatusBodyRequest**](V1EntityStatusBodyRequest.md)|  |
 
 ### Return type
 

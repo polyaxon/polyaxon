@@ -165,6 +165,7 @@ Class | Method | HTTP request | Description
  - [V1CodeReference](docs/V1CodeReference.md)
  - [V1CredsBodyRequest](docs/V1CredsBodyRequest.md)
  - [V1EntityResourceRequest](docs/V1EntityResourceRequest.md)
+ - [V1EntityStatusBodyRequest](docs/V1EntityStatusBodyRequest.md)
  - [V1ListCodeRefsResponse](docs/V1ListCodeRefsResponse.md)
  - [V1ListProjectsResponse](docs/V1ListProjectsResponse.md)
  - [V1ListRunsResponse](docs/V1ListRunsResponse.md)

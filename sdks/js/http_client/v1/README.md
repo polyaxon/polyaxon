@@ -180,6 +180,7 @@ Class | Method | HTTP request | Description
  - [PolyaxonSdk.V1CodeReference](docs/V1CodeReference.md)
  - [PolyaxonSdk.V1CredsBodyRequest](docs/V1CredsBodyRequest.md)
  - [PolyaxonSdk.V1EntityResourceRequest](docs/V1EntityResourceRequest.md)
+ - [PolyaxonSdk.V1EntityStatusBodyRequest](docs/V1EntityStatusBodyRequest.md)
  - [PolyaxonSdk.V1ListCodeRefsResponse](docs/V1ListCodeRefsResponse.md)
  - [PolyaxonSdk.V1ListProjectsResponse](docs/V1ListProjectsResponse.md)
  - [PolyaxonSdk.V1ListRunsResponse](docs/V1ListRunsResponse.md)

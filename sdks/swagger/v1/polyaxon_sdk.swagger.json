@@ -2154,11 +2154,10 @@
           },
           {
             "name": "body",
-            "description": "Status to set",
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/v1StatusCondition"
+              "$ref": "#/definitions/v1EntityStatusBodyRequest"
             }
           }
         ],
@@ -2498,6 +2497,28 @@
         }
       },
       "title": "Request data to get/delete entity"
+    },
+    "v1EntityStatusBodyRequest": {
+      "type": "object",
+      "properties": {
+        "owner": {
+          "type": "string",
+          "title": "Owner of the namespace"
+        },
+        "project": {
+          "type": "string",
+          "title": "Project where the experiement will be assigned"
+        },
+        "uuid": {
+          "type": "string",
+          "title": "Unique integer identifier of the entity"
+        },
+        "condition": {
+          "$ref": "#/definitions/v1StatusCondition",
+          "title": "Status to set"
+        }
+      },
+      "title": "Request data to create/update entity status"
     },
     "v1ListCodeRefsResponse": {
       "type": "object",
