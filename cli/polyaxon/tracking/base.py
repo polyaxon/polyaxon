@@ -23,7 +23,7 @@ import os
 import sys
 import time
 
-from hestia.env_var_keys import POLYAXON_KEYS_JOB_INFO
+from hestia.env_var_keys import POLYAXON_KEYS_JOB_INSTANCE
 from polystores.stores.manager import StoreManager
 
 from polyaxon import settings
@@ -96,7 +96,7 @@ class BaseTracker(object):
     def get_notebook_job_info(self):
         ensure_is_managed()
 
-        info = os.getenv(POLYAXON_KEYS_JOB_INFO, None)
+        info = os.getenv(POLYAXON_KEYS_JOB_INSTANCE, None)
         try:
             return json.loads(info) if info else None
         except (ValueError, TypeError):

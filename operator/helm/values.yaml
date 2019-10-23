@@ -1,0 +1,12 @@
+api:
+   host: https://api.polyaxon.com
+   token: token-default-value
+
+rbac:
+  create: true
+
+types:
+  agent: "polyaxon-agent"
+
+roles:
+  config: "polyaxon-config"

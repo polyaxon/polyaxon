@@ -50,14 +50,6 @@ from polyaxon.utils.validation import validate_tags
 )
 @click.option("--tags", type=str, help="Tags of this run, comma separated values.")
 @click.option("--description", type=str, help="The description to give to this run.")
-@click.option("--ttl", type=int, help="TTL for this run after it's done.")
-@click.option(
-    "--debug",
-    is_flag=True,
-    default=False,
-    help="Enable debug mode for this run. "
-    "N.B. you should pass a TTL to specify the how long the run should live.",
-)
 @click.option(
     "--upload",
     "-u",
@@ -96,8 +88,6 @@ def run(
     name,
     tags,
     description,
-    ttl,
-    debug,
     upload,
     log,
     local,
@@ -153,17 +143,8 @@ def run(
     if not file:
         file = ""
 
-    if debug and not ttl:
-        Printer.print_error("Debug mode requires a ttl to properly set a sleep time.")
-        sys.exit(1)
-
-    debug_ttl = None
-    if debug and ttl:
-        debug_ttl = ttl
-        ttl = None
-
     specification = check_polyaxonfile(
-        file, params=params, debug_ttl=debug_ttl, log=False, profile=profile
+        file, params=params, profile=profile, log=False
     )
 
     owner, project_name = get_project_or_local(project)

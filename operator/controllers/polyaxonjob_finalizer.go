@@ -18,6 +18,7 @@ package controllers
 
 import (
 	"context"
+	corev1 "k8s.io/api/core/v1"
 
 	corev1alpha1 "github.com/polyaxon/polyaxon/operator/api/v1alpha1"
 )
@@ -28,6 +29,21 @@ func (r *PolyaxonJobReconciler) addFinalizer(ctx context.Context, instance *core
 }
 
 func (r *PolyaxonJobReconciler) handleFinalizer(ctx context.Context, instance *corev1alpha1.PolyaxonJob) error {
+	log := r.Log
+
+	if !instance.IsDone() {
+		log.Info("Instance was probably stopped", "Append final status", "Stopping")
+		r.syncStatus(
+			instance,
+			corev1alpha1.NewPlxBaseJobCondition(
+				corev1alpha1.JobStopped,
+				corev1.ConditionTrue,
+				"PolyaxonJobStopped",
+				"Job stopped in finalizer",
+			),
+		)
+	}
+
 	if !instance.HasFinalizer() {
 		return nil
 	}

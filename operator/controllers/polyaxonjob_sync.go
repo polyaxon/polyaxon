@@ -35,7 +35,12 @@ const (
 
 // TODO: move this logic to sdk as a high level client
 
-func (r *PolyaxonJobReconciler) syncStatus(instance *corev1alpha1.PolyaxonJob) error {
+func (r *PolyaxonJobReconciler) instanceSyncStatus(instance *corev1alpha1.PolyaxonJob) error {
+	lastCond := instance.Status.Conditions[len(instance.Status.Conditions)-1]
+	return r.syncStatus(instance, lastCond)
+}
+
+func (r *PolyaxonJobReconciler) syncStatus(instance *corev1alpha1.PolyaxonJob, statusCond corev1alpha1.PolyaxonBaseJobCondition) error {
 	log := r.Log
 
 	log.Info("Job sync status", "Syncing", instance.GetName())
@@ -51,13 +56,11 @@ func (r *PolyaxonJobReconciler) syncStatus(instance *corev1alpha1.PolyaxonJob) e
 		return nil
 	}
 
-	lastCond := instance.Status.Conditions[len(instance.Status.Conditions)-1]
-	status := strings.ToLower(string(lastCond.Type))
-
-	return r.createJobStatus(jobName[0], jobName[1], jobName[3], status, lastCond)
+	return r.createJobStatus(jobName[0], jobName[1], jobName[3], statusCond)
 }
 
-func (r *PolyaxonJobReconciler) createJobStatus(owner, project, uuid, status string, statusCond corev1alpha1.PolyaxonBaseJobCondition) error {
+func (r *PolyaxonJobReconciler) createJobStatus(owner, project, uuid string, statusCond corev1alpha1.PolyaxonBaseJobCondition) error {
+	log := r.Log
 	ctx, cancel := netContext.WithTimeout(netContext.Background(), apiServerDefaultTimeout)
 	defer cancel()
 
@@ -65,17 +68,20 @@ func (r *PolyaxonJobReconciler) createJobStatus(owner, project, uuid, status str
 		Owner:   owner,
 		Project: project,
 		UUID:    uuid,
-		Body: &service_model.V1StatusCondition{
-			LastTransitionTime: strfmt.DateTime(statusCond.LastTransitionTime.Time),
-			LastUpdateTime:     strfmt.DateTime(statusCond.LastUpdateTime.Time),
-			Message:            statusCond.Message,
-			Reason:             statusCond.Reason,
-			Status:             string(statusCond.Status),
-			Type:               string(statusCond.Type),
+		Body: &service_model.V1EntityStatusBodyRequest{
+			Condition: &service_model.V1StatusCondition{
+				LastTransitionTime: strfmt.DateTime(statusCond.LastTransitionTime.Time),
+				LastUpdateTime:     strfmt.DateTime(statusCond.LastUpdateTime.Time),
+				Message:            statusCond.Message,
+				Reason:             statusCond.Reason,
+				Status:             string(statusCond.Status),
+				Type:               string(statusCond.Type),
+			},
 		},
 		Context: ctx,
 	}
 	_, err := r.PlxClient.RunsV1.CreateRunStatus(params, r.PlxToken)
+	log.Info("Create run status error", "API status errored", err)
 	return err
 }
 

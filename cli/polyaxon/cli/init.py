@@ -32,23 +32,23 @@ from polyaxon.managers.ignore import IgnoreManager
 from polyaxon.managers.project import ProjectManager
 from polyaxon.schemas.polyaxonfile import PolyaxonFile
 from polyaxon.utils import constants, indentation
-from polyaxon.utils.files import create_init_file
+from polyaxon.utils.files import create_init_file, create_debug_file
 from polyaxon.utils.formatting import Printer
 
 
 def create_polyaxonfile():
-    if os.path.isfile(constants.INIT_FILE):
+    if os.path.isfile(constants.INIT_FILE_PATH):
         try:
-            _ = PolyaxonFile(constants.INIT_FILE).specification  # noqa
+            _ = PolyaxonFile(constants.INIT_FILE_PATH).specification  # noqa
             Printer.print_success("A valid polyaxonfile.yaml was found in the project.")
         except Exception as e:
             Printer.print_error("A Polyaxonfile was found but it is not valid.")
             Printer.print_error("Error message `{}`.".format(e))
             sys.exit(1)
     else:
-        create_init_file(constants.INIT_FILE_RUN)
+        create_init_file(constants.INIT_FILE)
         # if we are here the file was not created
-        if not os.path.isfile(constants.INIT_FILE):
+        if not os.path.isfile(constants.INIT_FILE_PATH):
             Printer.print_error(
                 "Something went wrong, init command did not create a file.\n"
                 "Possible reasons: you don't have enough rights to create the file."
@@ -56,7 +56,25 @@ def create_polyaxonfile():
             sys.exit(1)
 
         Printer.print_success(
-            "{} was created successfully.".format(constants.INIT_FILE)
+            "{} was created successfully.".format(constants.INIT_FILE_PATH)
+        )
+
+
+def create_debug_polyaxonfile():
+    if os.path.isfile(constants.DEBUG_FILE_PATH):
+        Printer.print_success("A polyaxonfile.debug.yaml was found in the project.")
+    else:
+        create_debug_file(constants.DEBUG_FILE)
+        # if we are here the file was not created
+        if not os.path.isfile(constants.DEBUG_FILE_PATH):
+            Printer.print_error(
+                "Something went wrong, init command did not create a debug file.\n"
+                "Possible reasons: you don't have enough rights to create the file."
+            )
+            sys.exit(1)
+
+        Printer.print_success(
+            "{} was created successfully.".format(constants.DEBUG_FILE_PATH)
         )
 
 
@@ -138,3 +156,4 @@ def init(project, polyaxonfile, purge):
 
     if polyaxonfile:
         create_polyaxonfile()
+        create_debug_polyaxonfile()

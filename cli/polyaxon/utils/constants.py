@@ -36,36 +36,28 @@ var
 ./.polyaxon
 """
 
-INIT_FILE = "polyaxonfile.yaml"
+INIT_FILE_PATH = "polyaxonfile.yaml"
+DEBUG_FILE_PATH = "polyaxonfile.debug.yaml"
 
-INIT_FILE_MODEL_TEMPLATE = """---
+INIT_FILE_TEMPLATE = """---
 version: 1
 
-kind: experiment
+kind: job
 
-logging:
-  level: INFO
-
-model:
-  # set you model
+container:
+  # image: # image to use
+  # command: # Command to use
 """
 
-INIT_FILE_RUN_TEMPLATE = """---
-version: 1
-
-kind: experiment
-
-build:
-  # image: # Image name to use
-
-run:
-  # cmd: # Command to use
+DEBUG_FILE_TEMPLATE = """---
+container:
+  # command: sleep 120 
 """
 
-INIT_FILE_MODEL = "model"
-INIT_FILE_RUN = "run"
+INIT_FILE = "init"
+DEBUG_FILE = "debug"
 
-INIT_FILE_TEMPLATES = {
-    INIT_FILE_MODEL: INIT_FILE_MODEL_TEMPLATE,
-    INIT_FILE_RUN: INIT_FILE_RUN_TEMPLATE,
+PLX_FILE_TEMPLATES = {
+    INIT_FILE: INIT_FILE_TEMPLATE,
+    DEBUG_FILE: DEBUG_FILE_TEMPLATE,
 }

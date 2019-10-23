@@ -94,7 +94,7 @@ spec:
           value: /root/quick-start/builds/811653/_heartbeat
         - name: POLYAXON_INTERNAL_RECONCILE_URL
           value: /root/quick-start/builds/811653/_reconcile
-        - name: POLYAXON_POD_ID
+        - name: POLYAXON_K8S_POD_ID
           valueFrom:
             fieldRef:
               apiVersion: v1

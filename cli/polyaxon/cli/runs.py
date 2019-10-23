@@ -377,12 +377,12 @@ def stop(ctx, yes):
 
     \b
     ```bash
-    $ polyaxon run stop
+    $ polyaxon runs stop
     ```
 
     \b
     ```bash
-    $ polyaxon run --uid=8aac02e3a62a4f0aaa257c59da5eab80 stop
+    $ polyaxon runs --uid=8aac02e3a62a4f0aaa257c59da5eab80 stop
     ```
     """
     owner, project_name, run_uuid = get_project_run_or_local(
@@ -434,7 +434,7 @@ def restart(ctx, copy, file, u):  # pylint:disable=redefined-builtin
 
     \b
     ```bash
-    $ polyaxon run --uid=1 restart
+    $ polyaxon run --uid=8aac02e3a62a4f0aaa257c59da5eab80 restart
     ```
     """
     content = None
@@ -489,7 +489,7 @@ def resume(ctx, file, u):  # pylint:disable=redefined-builtin
 
     \b
     ```bash
-    $ polyaxon run --run=1 resume
+    $ polyaxon runs --uid=8aac02e3a62a4f0aaa257c59da5eab80 resume
     ```
     """
     content = None
@@ -528,19 +528,12 @@ def statuses(ctx):
 
     \b
     ```bash
-    $ polyaxon run statuses
+    $ polyaxon runs statuses
     ```
 
     \b
     ```bash
-    $ polyaxon run -xp 1 statuses
-    ```
-
-    Examples getting run job statuses:
-
-    \b
-    ```bash
-    $ polyaxon run statuses -j 3
+    $ polyaxon runs -uid=8aac02e3a62a4f0aaa257c59da5eab80 statuses
     ```
     """
 
@@ -591,28 +584,14 @@ def resources(ctx, gpu):
 
     \b
     ```bash
-    $ polyaxon run -xp 19 resources
+    $ polyaxon runs -uid=8aac02e3a62a4f0aaa257c59da5eab80 resources
     ```
 
     For GPU resources
 
     \b
     ```bash
-    $ polyaxon run -xp 19 resources --gpu
-    ```
-
-    Examples for getting run job resources:
-
-    \b
-    ```bash
-    $ polyaxon run -xp 19 resources -j 1
-    ```
-
-    For GPU resources
-
-    \b
-    ```bash
-    $ polyaxon run -xp 19 resources -j 1 --gpu
+    $ polyaxon runs -uid=8aac02e3a62a4f0aaa257c59da5eab80 resources --gpu
     ```
     """
 
@@ -667,14 +646,7 @@ def logs(ctx, past, follow, hide_time):
 
     \b
     ```bash
-    $ polyaxon run -xp 10 -p mnist logs
-    ```
-
-    Examples for getting run job logs:
-
-    \b
-    ```bash
-    $ polyaxon run -xp 1 -j 1 logs
+    $ polyaxon runs -uid=8aac02e3a62a4f0aaa257c59da5eab80 -p mnist logs
     ```
     """
 
@@ -732,7 +704,7 @@ def outputs(ctx):
 
     \b
     ```bash
-    $ polyaxon run -xp 1 outputs
+    $ polyaxon runs -uid=8aac02e3a62a4f0aaa257c59da5eab80 outputs
     ```
     """
     owner, project_name, run_uuid = get_project_run_or_local(
@@ -759,7 +731,7 @@ def code(ctx):
 
     \b
     ```bash
-    $ polyaxon run -xp 1 code
+    $ polyaxon runs -uid=8aac02e3a62a4f0aaa257c59da5eab80 code
     ```
     """
     owner, project_name, run_uuid = get_project_run_or_local(
@@ -798,12 +770,12 @@ def bookmark(ctx):
 
     \b
     ```bash
-    $ polyaxon run bookmark
+    $ polyaxon runs bookmark
     ```
 
     \b
     ```bash
-    $ polyaxon run -xp 2 bookmark
+    $ polyaxon runs -uid=8aac02e3a62a4f0aaa257c59da5eab80 bookmark
     ```
     """
     owner, project_name, run_uuid = get_project_run_or_local(
@@ -832,12 +804,12 @@ def unbookmark(ctx):
 
     \b
     ```bash
-    $ polyaxon run unbookmark
+    $ polyaxon runs unbookmark
     ```
 
     \b
     ```bash
-    $ polyaxon run -xp 2 unbookmark
+    $ polyaxon runs -uid=8aac02e3a62a4f0aaa257c59da5eab80 unbookmark
     ```
     """
     owner, project_name, run_uuid = get_project_run_or_local(

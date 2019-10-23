@@ -5,7 +5,7 @@
     "version": "1.14.4",
     "contact": {
       "name": "Polyaxon sdk",
-      "url": "https://github.com/polyaxon/polyaxon-sdks",
+      "url": "https://github.com/polyaxon/polyaxon",
       "email": "contact@polyaxon.com"
     }
   },

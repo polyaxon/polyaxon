@@ -114,7 +114,7 @@ func (r *PolyaxonJobReconciler) reconcileJob(ctx context.Context, instance *core
 		justCreated = true
 		instance.LogStarting()
 		err = r.Status().Update(ctx, instance)
-		r.syncStatus(instance)
+		r.instanceSyncStatus(instance)
 	} else if err != nil {
 		return err
 	}
@@ -134,7 +134,7 @@ func (r *PolyaxonJobReconciler) reconcileJob(ctx context.Context, instance *core
 		if err != nil {
 			return err
 		}
-		r.syncStatus(instance)
+		r.instanceSyncStatus(instance)
 	}
 
 	return nil

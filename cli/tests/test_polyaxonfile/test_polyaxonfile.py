@@ -99,51 +99,6 @@ class TestPolyaxonfiles(TestCase):
             )
             polyaxonfile.get_op_specification(params="foo")
 
-    def test_passing_debug_ttl_overrides_polyaxonfiles(self):
-        polyaxonfile = PolyaxonFile(
-            os.path.abspath("tests/fixtures/plain/simple_job.yml")
-        )
-        spec = polyaxonfile.get_op_specification(debug_ttl=100)
-        spec = get_specification(spec.generate_run_data())
-        spec = spec.apply_context()
-        assert spec.version == 0.6
-        assert spec.tags is None
-        assert spec.termination.ttl == 100
-        assert spec.container.image == "python-with-boto3"
-        assert spec.container.command == "python download-s3-bucket"
-        assert spec.container.args is None
-        assert spec.environment is not None
-        assert spec.resources.to_dict() == {
-            "requests": {"nvidia.com/gpu": 1},
-            "limits": {"nvidia.com/gpu": 1},
-        }
-        assert spec.is_job is True
-
-    def test_passing_wrong_debug_ttl_raises(self):
-        with self.assertRaises(PolyaxonfileError):
-            polyaxonfile = PolyaxonFile(
-                os.path.abspath("tests/fixtures/plain/simple_job.yml")
-            )
-            polyaxonfile.get_op_specification(debug_ttl="foo")
-
-    def test_passing_wrong_kind_with_debug_ttl_raises(self):
-        with self.assertRaises(PolyaxonfileError):
-            polyaxonfile = PolyaxonFile(
-                os.path.abspath("tests/fixtures/plain/matrix_file.yml")
-            )
-            polyaxonfile.get_op_specification(debug_ttl=120)
-
-        with self.assertRaises(PolyaxonfileError):
-            polyaxonfile = PolyaxonFile(
-                os.path.abspath(
-                    "tests/fixtures/plain/tensorboard_with_custom_environment.yml"
-                )
-            )
-            polyaxonfile.get_op_specification(debug_ttl=120)
-
-        with self.assertRaises(PolyaxonfileError):
-            PolyaxonFile(os.path.abspath("tests/fixtures/plain/non_existing_file.yml"))
-
     def test_job_file_with_init_passes(self):
         plxfile = PolyaxonFile(
             os.path.abspath("tests/fixtures/plain/job_file_with_init.yml")

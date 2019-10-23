@@ -54,11 +54,21 @@ def unix_style_path(path):
 
 
 def create_init_file(init_file_type):
-    if os.path.exists(constants.INIT_FILE):
+    if os.path.exists(constants.INIT_FILE_PATH):
         return False
 
-    with open(constants.INIT_FILE, "w") as f:
-        f.write(constants.INIT_FILE_TEMPLATES[init_file_type])
+    with open(constants.INIT_FILE_PATH, "w") as f:
+        f.write(constants.PLX_FILE_TEMPLATES[init_file_type])
+
+    return True
+
+
+def create_debug_file(debug_file_type):
+    if os.path.exists(constants.DEBUG_FILE_PATH):
+        return False
+
+    with open(constants.DEBUG_FILE_PATH, "w") as f:
+        f.write(constants.PLX_FILE_TEMPLATES[debug_file_type])
 
     return True
 

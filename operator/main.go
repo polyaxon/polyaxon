@@ -83,12 +83,22 @@ func main() {
 	var enableLeaderElection bool
 	var host string
 	var token string
+
+	// Allow to pass by env and override by flag
+	if config.GetStrEnv(config.AgentToken, "") != "" {
+		token = config.GetStrEnv(config.AgentToken, "")
+	}
+
+	if config.GetStrEnv(config.AgentAPIHostgo, "") != "" {
+		host = config.GetStrEnv(config.AgentAPIHostgo, "")
+	}
+
 	flag.StringVar(&metricsAddr, "metrics-addr", ":8080", "The address the metric endpoint binds to.")
 	flag.BoolVar(&enableLeaderElection, "enable-leader-election", false,
 		"Enable leader election for controller manager. Enabling this will ensure there is only one active controller manager.")
-	flag.StringVar(&host, "host", "34.83.68.117",
+	flag.StringVar(&host, "host", host,
 		"Polyaxon host.")
-	flag.StringVar(&token, "token", "df1f3989735e45d482b168a0299959fd656e325f8f2f4277b553bb40417192eb",
+	flag.StringVar(&token, "token", token,
 		"Polyaxon token.")
 	flag.Parse()
 

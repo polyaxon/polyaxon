@@ -5,7 +5,7 @@ import json
 import os
 import uuid
 
-from hestia.env_var_keys import POLYAXON_KEYS_JOB_INFO, POLYAXON_KEYS_PARAMS
+from hestia.env_var_keys import POLYAXON_KEYS_JOB_INSTANCE, POLYAXON_KEYS_PARAMS
 from tests.utils import TestEnvVarsCase
 
 from polyaxon import settings
@@ -63,22 +63,15 @@ class TestExperimentTracking(TestEnvVarsCase):
             Run.get_experiment_info()
 
     def test_empty_experiment_info(self):
-        self.check_empty_value(POLYAXON_KEYS_JOB_INFO, Run.get_experiment_info)
+        self.check_empty_value(POLYAXON_KEYS_JOB_INSTANCE, Run.get_experiment_info)
 
     def test_non_dict_experiment_info(self):
-        self.check_non_dict_value(POLYAXON_KEYS_JOB_INFO, Run.get_experiment_info)
+        self.check_non_dict_value(POLYAXON_KEYS_JOB_INSTANCE, Run.get_experiment_info)
 
     def test_dict_experiment_info(self):
-        experiment_info = {
-            "project_name": "project_bar",
-            "experiment_group_name": None,
-            "experiment_name": "project_bar.1",
-            "project_uuid": uuid.uuid4().hex,
-            "experiment_group_uuid": None,
-            "experiment_uuid": uuid.uuid4().hex,
-        }
+        experiment_info = "user.project_bar.runs.{}".format(uuid.uuid4().hex)
         self.check_valid_dict_value(
-            POLYAXON_KEYS_JOB_INFO, Run.get_experiment_info, experiment_info
+            POLYAXON_KEYS_JOB_INSTANCE, Run.get_experiment_info, experiment_info
         )
 
     def test_task_info_checks_is_managed(self):

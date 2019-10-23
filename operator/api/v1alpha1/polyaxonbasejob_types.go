@@ -121,8 +121,8 @@ const (
 	JobStopped PolyaxonBaseJobConditionType = "Stopped"
 )
 
-// newPlxBaseJobCondition makes a new instance of PlxBaseJobcondition
-func newPlxBaseJobCondition(conditionType PolyaxonBaseJobConditionType, status corev1.ConditionStatus, reason, message string) PolyaxonBaseJobCondition {
+// NewPlxBaseJobCondition makes a new instance of PlxBaseJobcondition
+func NewPlxBaseJobCondition(conditionType PolyaxonBaseJobConditionType, status corev1.ConditionStatus, reason, message string) PolyaxonBaseJobCondition {
 	return PolyaxonBaseJobCondition{
 		Type:               conditionType,
 		Status:             status,
@@ -135,7 +135,7 @@ func newPlxBaseJobCondition(conditionType PolyaxonBaseJobConditionType, status c
 
 // getOrUpdatePlxBaseJobCondition get new or updated version of current confition or returns nil if nothing changed
 func getOrUpdatePlxBaseJobCondition(currentCond *PolyaxonBaseJobCondition, conditionType PolyaxonBaseJobConditionType, status corev1.ConditionStatus, reason, message string) *PolyaxonBaseJobCondition {
-	newCond := newPlxBaseJobCondition(conditionType, status, reason, message)
+	newCond := NewPlxBaseJobCondition(conditionType, status, reason, message)
 
 	// Do nothing if condition doesn't change
 	if currentCond != nil && currentCond.Status == newCond.Status && currentCond.Reason == newCond.Reason {

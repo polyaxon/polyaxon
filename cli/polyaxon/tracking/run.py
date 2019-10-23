@@ -22,7 +22,7 @@ import os
 
 from datetime import datetime
 
-from hestia.env_var_keys import POLYAXON_KEYS_JOB_INFO, POLYAXON_KEYS_PARAMS
+from hestia.env_var_keys import POLYAXON_KEYS_JOB_INSTANCE, POLYAXON_KEYS_PARAMS
 
 from polyaxon import settings
 from polyaxon.client.handlers.conf import setup_logging
@@ -345,7 +345,7 @@ class Run(BaseTracker):
         """
         ensure_is_managed()
 
-        info = os.getenv(POLYAXON_KEYS_JOB_INFO, None)
+        info = os.getenv(POLYAXON_KEYS_JOB_INSTANCE, None)
         try:
             return json.loads(info) if info else None
         except (ValueError, TypeError):

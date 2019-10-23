@@ -66,7 +66,7 @@ class PolyaxonFile(object):
                 if os.path.isfile(filepath):
                     return filepath
 
-    def get_op_specification(self, params=None, debug_ttl=False, profile=None):
+    def get_op_specification(self, params=None, profile=None):
         op_data = OpConfig(version=self.specification.version, kind=kinds.OPERATION)
         if params:
             if not isinstance(params, Mapping):
@@ -76,29 +76,6 @@ class PolyaxonFile(object):
             op_data.params = params
         if profile:
             op_data.profile = profile
-        if debug_ttl:
-            if not isinstance(debug_ttl, int):
-                raise PolyaxonfileError(
-                    "Debug TTL `{}` must be a valid integer".format(debug_ttl)
-                )
-            op_data.termination = TerminationConfig(ttl=debug_ttl)
-
-        debug_cond = debug_ttl and not (
-            self.specification.is_job
-            or self.specification.is_service
-            or (
-                self.specification.is_operation
-                and not (
-                    self.specification.is_template_job
-                    or self.specification.is_template_job
-                )
-            )
-        )
-        if debug_cond:
-            raise PolyaxonfileError(
-                "You can only trigger debug mode on a job/service specification, "
-                "received instead a `{}` specification.".format(self.specification.kind)
-            )
 
         if self.specification.is_operation:
             specification = get_specification(
