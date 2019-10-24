@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-IMG := polyaxon/polyaxon-proto-build
+IMG := polyaxon/polyaxon-sdks
 VERSION := v1
 DOCKER_RUN := docker run -it --rm -v ${PWD}:/sdks $(IMG)
 PROTOC := $(DOCKER_RUN) protoc

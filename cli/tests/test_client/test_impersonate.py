@@ -29,7 +29,7 @@ class TestImpersonate(TestCase):
 
     @patch("polyaxon_sdk.RunsV1Api.impersonate_token")
     @patch("polyaxon.client.utils.create_context_auth")
-    def test_login_eun_ephemeral_token(self, create_context, impersonate_token):
+    def test_login_impersonate(self, create_context, impersonate_token):
 
         impersonate(owner="owner", project="project", run_uuid=uuid.uuid4().hex)
         assert impersonate_token.call_count == 1
