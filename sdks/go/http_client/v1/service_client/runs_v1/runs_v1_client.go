@@ -437,7 +437,7 @@ func (a *Client) ImpersonateToken(params *ImpersonateTokenParams, authInfo runti
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "ImpersonateToken",
 		Method:             "POST",
-		PathPattern:        "/api/v1/{owner}/{project}/runs/{uuid}/impersonatetoken",
+		PathPattern:        "/api/v1/{owner}/{project}/runs/{uuid}/impersonate",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https", "ws", "wss"},

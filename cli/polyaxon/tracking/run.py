@@ -22,10 +22,9 @@ import os
 
 from datetime import datetime
 
-from hestia.env_var_keys import POLYAXON_KEYS_JOB_INSTANCE, POLYAXON_KEYS_PARAMS
-
 from polyaxon import settings
 from polyaxon.client.handlers.conf import setup_logging
+from polyaxon.env_vars.keys import POLYAXON_KEYS_JOB_INSTANCE, POLYAXON_KEYS_PARAMS
 from polyaxon.exceptions import PolyaxonClientException
 from polyaxon.tracking.base import BaseTracker
 from polyaxon.tracking.is_managed import ensure_is_managed

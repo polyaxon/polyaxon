@@ -2904,7 +2904,7 @@ export const RunsV1ApiFetchParamCreator = function (configuration?: Configuratio
             if (uuid === null || uuid === undefined) {
                 throw new RequiredError('uuid','Required parameter uuid was null or undefined when calling impersonateToken.');
             }
-            const localVarPath = `/api/v1/{owner}/{project}/runs/{uuid}/impersonatetoken`
+            const localVarPath = `/api/v1/{owner}/{project}/runs/{uuid}/impersonate`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)))
                 .replace(`{${"uuid"}}`, encodeURIComponent(String(uuid)));

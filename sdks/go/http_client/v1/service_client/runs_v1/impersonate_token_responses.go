@@ -76,7 +76,7 @@ type ImpersonateTokenOK struct {
 }
 
 func (o *ImpersonateTokenOK) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/impersonatetoken][%d] impersonateTokenOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/impersonate][%d] impersonateTokenOK  %+v", 200, o.Payload)
 }
 
 func (o *ImpersonateTokenOK) GetPayload() *service_model.V1Auth {
@@ -109,7 +109,7 @@ type ImpersonateTokenForbidden struct {
 }
 
 func (o *ImpersonateTokenForbidden) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/impersonatetoken][%d] impersonateTokenForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/impersonate][%d] impersonateTokenForbidden  %+v", 403, o.Payload)
 }
 
 func (o *ImpersonateTokenForbidden) GetPayload() interface{} {
@@ -140,7 +140,7 @@ type ImpersonateTokenNotFound struct {
 }
 
 func (o *ImpersonateTokenNotFound) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/impersonatetoken][%d] impersonateTokenNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/impersonate][%d] impersonateTokenNotFound  %+v", 404, o.Payload)
 }
 
 func (o *ImpersonateTokenNotFound) GetPayload() string {

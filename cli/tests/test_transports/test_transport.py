@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from hestia.auth import AuthenticationTypes
 from tests.test_transports.utils import BaseTestCaseTransport
 
 from polyaxon.client.transport import Transport
 from polyaxon.schemas.cli.client_configuration import ClientConfig
+from polyaxon.services.auth import AuthenticationTypes
 
 
 class TestTransport(BaseTestCaseTransport):

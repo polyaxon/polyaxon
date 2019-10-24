@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from hestia.env_var_keys import (
+from tests.utils import TestEnvVarsCase
+
+from polyaxon import settings
+from polyaxon.env_vars.keys import (
     POLYAXON_KEYS_ARTIFACTS_PATHS,
     POLYAXON_KEYS_LOG_LEVEL,
     POLYAXON_KEYS_OUTPUTS_PATH,
 )
-from tests.utils import TestEnvVarsCase
-
-from polyaxon import settings
 from polyaxon.exceptions import PolyaxonClientException
 from polyaxon.tracking import paths
 

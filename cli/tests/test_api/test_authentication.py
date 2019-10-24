@@ -5,8 +5,7 @@ from unittest import TestCase
 
 import pytest
 
-from hestia.env_var_keys import POLYAXON_KEYS_AUTH_TOKEN, POLYAXON_KEYS_AUTH_USERNAME
-
+from polyaxon.env_vars.keys import POLYAXON_KEYS_AUTH_TOKEN, POLYAXON_KEYS_AUTH_USERNAME
 from polyaxon.schemas.api.authentication import AccessTokenConfig, CredentialsConfig
 
 

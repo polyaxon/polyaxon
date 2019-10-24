@@ -1897,7 +1897,7 @@
         ]
       }
     },
-    "/api/v1/{owner}/{project}/runs/{uuid}/impersonatetoken": {
+    "/api/v1/{owner}/{project}/runs/{uuid}/impersonate": {
       "post": {
         "summary": "Impersonate run token",
         "operationId": "ImpersonateToken",

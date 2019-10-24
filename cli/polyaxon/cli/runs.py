@@ -42,7 +42,6 @@ from polyaxon.utils.formatting import (
     list_dicts_to_tabulate,
 )
 from polyaxon.utils.log_handler import get_logs_handler
-
 from polyaxon.utils.query_params import get_query_params
 from polyaxon.utils.validation import validate_tags
 

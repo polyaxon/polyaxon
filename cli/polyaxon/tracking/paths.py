@@ -20,12 +20,11 @@ from __future__ import absolute_import, division, print_function
 import json
 import os
 
-from hestia.env_var_keys import (
+from polyaxon import settings
+from polyaxon.env_vars.keys import (
     POLYAXON_KEYS_ARTIFACTS_PATHS,
     POLYAXON_KEYS_OUTPUTS_PATH,
 )
-
-from polyaxon import settings
 from polyaxon.tracking.is_managed import ensure_is_managed
 from polyaxon.tracking.no_op import check_no_op
 

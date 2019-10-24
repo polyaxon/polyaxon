@@ -266,7 +266,7 @@ service RunsV1 {
     // Impersonate run token
     rpc ImpersonateToken(EntityResourceRequest) returns (Auth) {
         option (google.api.http) = {
-            post: "/api/v1/{owner}/{project}/runs/{uuid}/impersonatetoken"
+            post: "/api/v1/{owner}/{project}/runs/{uuid}/impersonate"
         };
     }
 

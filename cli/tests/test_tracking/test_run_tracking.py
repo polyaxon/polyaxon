@@ -5,10 +5,10 @@ import json
 import os
 import uuid
 
-from hestia.env_var_keys import POLYAXON_KEYS_JOB_INSTANCE, POLYAXON_KEYS_PARAMS
 from tests.utils import TestEnvVarsCase
 
 from polyaxon import settings
+from polyaxon.env_vars.keys import POLYAXON_KEYS_JOB_INSTANCE, POLYAXON_KEYS_PARAMS
 from polyaxon.exceptions import PolyaxonClientException
 from polyaxon.tracking.run import Run
 

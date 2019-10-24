@@ -23,11 +23,11 @@ import os
 import sys
 import time
 
-from hestia.env_var_keys import POLYAXON_KEYS_JOB_INSTANCE
 from polystores.stores.manager import StoreManager
 
 from polyaxon import settings
 from polyaxon.client import PolyaxonClient
+from polyaxon.env_vars.keys import POLYAXON_KEYS_JOB_INSTANCE
 from polyaxon.exceptions import PolyaxonClientException
 from polyaxon.logger import logger
 from polyaxon.tracking.is_managed import ensure_is_managed

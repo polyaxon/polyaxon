@@ -34,10 +34,7 @@ from polyaxon.utils.formatting import Printer, dict_tabulate
 
 
 def check_polyaxonfile(
-    file,  # pylint:disable=redefined-builtin
-    params=None,
-    profile=None,
-    log=True,
+    file, params=None, profile=None, log=True  # pylint:disable=redefined-builtin
 ):
     file = to_list(file)
     exists = [os.path.isfile(f) for f in file]
@@ -55,9 +52,7 @@ def check_polyaxonfile(
 
     try:
         plx_file = PolyaxonFile(file)
-        plx_file = plx_file.get_op_specification(
-            params=parsed_params, profile=profile
-        )
+        plx_file = plx_file.get_op_specification(params=parsed_params, profile=profile)
         if log:
             Printer.print_success("Polyaxonfile valid")
         return plx_file

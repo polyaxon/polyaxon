@@ -1,16 +1,13 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-import os
-
 from unittest import TestCase
 
-from hestia.env_var_keys import (
+from polyaxon.env_vars.keys import (
     POLYAXON_KEYS_API_HOST,
     POLYAXON_KEYS_DEBUG,
     POLYAXON_KEYS_VERIFY_SSL,
 )
-
 from polyaxon.schemas.cli.client_configuration import ClientConfig
 
 

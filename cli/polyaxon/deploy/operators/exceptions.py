@@ -26,10 +26,9 @@ class OperatorException(Exception):
         self.stdout = stdout.read() if stdout else None
         self.stderr = stderr.read()
         if stdout:
-            self.message = (
-                "`{}` command {} failed with exit status {}\nstdout:\n{}\nstderr:\n{}".format(
-                    self.cmd, self.args, self.return_code, self.stdout, self.stderr
-            ))
+            self.message = "`{}` command {} failed with exit status {}\nstdout:\n{}\nstderr:\n{}".format(
+                self.cmd, self.args, self.return_code, self.stdout, self.stderr
+            )
         else:
             self.message = "`{}` command {} failed with exit status {}\nstderr:\n{}".format(
                 self.cmd, self.args, self.return_code, self.stderr

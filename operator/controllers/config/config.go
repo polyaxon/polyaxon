@@ -13,7 +13,7 @@ const (
 	MpiJobEnabled = "POLYAXON_MPIJOB_ENABLED"
 
 	// AgentToken is Polyaxon's token for this agent
-	AgentToken = "POLYAXON_SECRET_AGENT_TOKEN"
+	AgentToken = "POLYAXON_AUTH_TOKEN"
 
 	// AgentAPIHostgo is Polyaxon's api for this agent
 	AgentAPIHostgo = "POLYAXON_AGENT_API_HOST"

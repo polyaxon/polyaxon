@@ -1688,7 +1688,7 @@ public class RunsV1Api {
         Object localVarPostBody = null;
 
         // create path and map variables
-        String localVarPath = "/api/v1/{owner}/{project}/runs/{uuid}/impersonatetoken"
+        String localVarPath = "/api/v1/{owner}/{project}/runs/{uuid}/impersonate"
             .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()))
             .replaceAll("\\{" + "project" + "\\}", apiClient.escapeString(project.toString()))
             .replaceAll("\\{" + "uuid" + "\\}", apiClient.escapeString(uuid.toString()));

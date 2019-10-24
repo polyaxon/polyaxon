@@ -37,7 +37,9 @@ class PolyaxonClient(object):
         self._config.token = token or settings.AUTH_CONFIG.token
 
         self._transport = None
-        self.api_client = polyaxon_sdk.ApiClient(self.config.sdk_config)
+        self.api_client = polyaxon_sdk.ApiClient(
+            self.config.sdk_config, **self.config.client_header
+        )
         self._projects_v1 = None
         self._runs_v1 = None
         self._auth_v1 = None
@@ -51,6 +53,9 @@ class PolyaxonClient(object):
         self._auth_v1 = None
         self._users_v1 = None
         self._versions_v1 = None
+        self.api_client = polyaxon_sdk.ApiClient(
+            self.config.sdk_config, **self.config.client_header
+        )
 
     def set_health_check(self, url):
         self.transport.set_health_check(url)

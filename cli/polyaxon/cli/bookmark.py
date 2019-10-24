@@ -73,9 +73,7 @@ def projects(ctx, limit, offset):
     try:
         params = get_query_params(limit=limit, offset=offset)
         polyaxon_client = PolyaxonClient()
-        response = polyaxon_client.projects_v1.list_bookmarked_projects(
-            user, **params
-        )
+        response = polyaxon_client.projects_v1.list_bookmarked_projects(user, **params)
     except (ApiException, HTTPError) as e:
         Printer.print_error(
             "Could not get bookmarked projects for user `{}`.".format(user)
@@ -128,9 +126,7 @@ def runs(ctx, limit, offset):
     try:
         params = get_query_params(limit=limit, offset=offset)
         polyaxon_client = PolyaxonClient()
-        response = polyaxon_client.runs_v1.list_bookmarked_runs(
-            user, **params
-        )
+        response = polyaxon_client.runs_v1.list_bookmarked_runs(user, **params)
     except (ApiException, HTTPError) as e:
         Printer.print_error(
             "Could not get bookmarked experiments for user `{}`.".format(user)

@@ -24,13 +24,13 @@ import sys
 import tempfile
 import time
 
-from hestia.env_var_keys import POLYAXON_KEYS_NO_OP
 from polyaxon_dockerizer import build as dockerizer_build
 from polyaxon_dockerizer import constants as dockerizer_constants
 from polyaxon_dockerizer import generate as dockerizer_generate
 
 from polyaxon import settings
 from polyaxon.deploy.operators.docker import DockerOperator
+from polyaxon.env_vars.keys import POLYAXON_KEYS_NO_OP
 from polyaxon.exceptions import (
     PolyaxonClientException,
     PolyaxonConfigurationError,

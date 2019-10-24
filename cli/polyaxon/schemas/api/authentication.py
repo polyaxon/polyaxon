@@ -17,9 +17,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from hestia.env_var_keys import POLYAXON_KEYS_AUTH_TOKEN, POLYAXON_KEYS_AUTH_USERNAME
 from marshmallow import EXCLUDE, fields
 
+from polyaxon.env_vars.keys import POLYAXON_KEYS_AUTH_TOKEN, POLYAXON_KEYS_AUTH_USERNAME
 from polyaxon.schemas.base import BaseConfig, BaseSchema
 
 

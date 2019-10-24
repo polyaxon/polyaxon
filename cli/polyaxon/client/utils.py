@@ -20,11 +20,11 @@ from __future__ import absolute_import, division, print_function
 import json
 import os
 
-from hestia.contexts import CONTEXT_MOUNT_AUTH
 from polyaxon_sdk.rest import ApiException
 from urllib3.exceptions import HTTPError
 
 from polyaxon.client import PolyaxonClient
+from polyaxon.containers.contexts import CONTEXT_MOUNT_AUTH
 from polyaxon.exceptions import PolyaxonClientException
 from polyaxon.logger import logger
 from polyaxon.schemas.api.authentication import AccessTokenConfig
@@ -54,4 +54,6 @@ def impersonate(owner, project, run_uuid):
         access_token = AccessTokenConfig(token=response.token)
         create_context_auth(access_token)
     except (ApiException, HTTPError) as e:
-        PolyaxonClientException("This worker is not allowed to run this job %s." % e)
+        raise PolyaxonClientException(
+            "This worker is not allowed to run this job %s." % e
+        )

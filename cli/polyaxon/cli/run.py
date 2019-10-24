@@ -143,9 +143,7 @@ def run(
     if not file:
         file = ""
 
-    specification = check_polyaxonfile(
-        file, params=params, profile=profile, log=False
-    )
+    specification = check_polyaxonfile(file, params=params, profile=profile, log=False)
 
     owner, project_name = get_project_or_local(project)
     tags = validate_tags(tags)

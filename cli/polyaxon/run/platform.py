@@ -21,10 +21,9 @@ import sys
 
 import click
 
-from urllib3.exceptions import HTTPError
-
 from polyaxon_sdk import V1Run
 from polyaxon_sdk.rest import ApiException
+from urllib3.exceptions import HTTPError
 
 from polyaxon.cli.runs import logs as run_logs
 from polyaxon.cli.upload import upload as upload_cmd

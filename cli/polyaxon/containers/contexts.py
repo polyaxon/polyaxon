@@ -1,0 +1,9 @@
+CONTEXT_MOUNT_CODE = "/plx-context/code"
+CONTEXT_MOUNT_BUILD = "/plx-context/build"
+CONTEXT_MOUNT_CONFIGS = "/plx-context/.configs"
+CONTEXT_MOUNT_AUTH = "{}/.polyaxonauth".format(CONTEXT_MOUNT_CONFIGS)
+CONTEXT_MOUNT_OUTPUTS = "/plx-context/outputs"
+CONTEXT_MOUNT_LOGS = "/plx-context/logs"
+CONTEXT_MOUNT_ARTIFACTS = "/plx-context/artifacts/{}"
+CONTEXT_MOUNT_SHM = "/dev/shm"
+CONTEXT_MOUNT_DOCKER = "/var/run/docker.sock"

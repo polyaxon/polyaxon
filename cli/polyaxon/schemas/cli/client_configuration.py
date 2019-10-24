@@ -19,8 +19,9 @@ from __future__ import absolute_import, division, print_function
 
 import polyaxon_sdk
 
-from hestia.auth import AuthenticationTypes
-from hestia.env_var_keys import (
+from marshmallow import EXCLUDE, fields
+
+from polyaxon.env_vars.keys import (
     POLYAXON_KEYS_API_HOST,
     POLYAXON_KEYS_API_VERSION,
     POLYAXON_KEYS_ASSERT_HOSTNAME,
@@ -34,18 +35,20 @@ from hestia.env_var_keys import (
     POLYAXON_KEYS_INTERVAL,
     POLYAXON_KEYS_IS_LOCAL,
     POLYAXON_KEYS_IS_MANAGED,
+    POLYAXON_KEYS_IS_OFFLINE,
+    POLYAXON_KEYS_K8S_NAMESPACE,
+    POLYAXON_KEYS_K8S_POD_ID,
     POLYAXON_KEYS_KEY_FILE,
     POLYAXON_KEYS_LOG_LEVEL,
     POLYAXON_KEYS_NO_OP,
     POLYAXON_KEYS_SSL_CA_CERT,
     POLYAXON_KEYS_TIMEOUT,
     POLYAXON_KEYS_VERIFY_SSL,
-    POLYAXON_KEYS_IS_OFFLINE)
-from marshmallow import EXCLUDE, fields
-
+)
 from polyaxon.exceptions import PolyaxonClientException
 from polyaxon.managers.auth import AuthConfigManager
 from polyaxon.schemas.base import BaseConfig, BaseSchema
+from polyaxon.services.auth import AuthenticationTypes
 
 
 class ClientSchema(BaseSchema):
@@ -76,6 +79,9 @@ class ClientSchema(BaseSchema):
 
     header = fields.Str(allow_none=True, data_key=POLYAXON_KEYS_HEADER)
     header_service = fields.Str(allow_none=True, data_key=POLYAXON_KEYS_HEADER_SERVICE)
+
+    pod_id = fields.Str(allow_none=True, data_key=POLYAXON_KEYS_K8S_POD_ID)
+    namespace = fields.Str(allow_none=True, data_key=POLYAXON_KEYS_K8S_NAMESPACE)
 
     @staticmethod
     def schema_config():
@@ -114,6 +120,8 @@ class ClientConfig(BaseConfig):
         connection_pool_maxsize=None,
         header=None,
         header_service=None,
+        pod_id=None,
+        namespace=None,
         **kwargs
     ):
 
@@ -137,12 +145,15 @@ class ClientConfig(BaseConfig):
         self.header_service = header_service
         self.timeout = timeout or 20
         self.interval = interval or 5
+        self.pod_id = pod_id
+        self.namespace = namespace
         self.authentication_type = authentication_type or AuthenticationTypes.TOKEN
 
-        self.client_header = None
+        self.client_header = {}
 
         if all([self.header, self.header_service]):
-            self.client_header = {self.header: self.header_service}
+            self.client_header["header_name"] = self.header
+            self.client_header["header_value"] = self.header_service
 
         self.base_url = self.BASE_URL.format(self.host, self.version)
 

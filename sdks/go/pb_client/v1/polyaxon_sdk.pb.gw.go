@@ -5627,7 +5627,7 @@ var (
 
 	pattern_RunsV1_CreateRunCodeRef_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6}, []string{"api", "v1", "entity.owner", "entity.project", "runs", "entity.uuid", "coderef"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_RunsV1_ImpersonateToken_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6}, []string{"api", "v1", "owner", "project", "runs", "uuid", "impersonatetoken"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_RunsV1_ImpersonateToken_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6}, []string{"api", "v1", "owner", "project", "runs", "uuid", "impersonate"}, "", runtime.AssumeColonVerbOpt(true)))
 )
 
 var (

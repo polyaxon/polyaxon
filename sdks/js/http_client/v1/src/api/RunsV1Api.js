@@ -804,7 +804,7 @@
       var returnType = V1Auth;
 
       return this.apiClient.callApi(
-        '/api/v1/{owner}/{project}/runs/{uuid}/impersonatetoken', 'POST',
+        '/api/v1/{owner}/{project}/runs/{uuid}/impersonate', 'POST',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );

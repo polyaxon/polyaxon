@@ -35,7 +35,7 @@ setup(
     author="Polyaxon, Inc.",
     author_email="contact@polyaxon.com",
     url="https://github.com/polyaxon/polyaxon-cli",
-    license='Apache 2.0',
+    license="Apache 2.0",
     platforms="any",
     packages=find_packages(),
     keywords=[
@@ -68,7 +68,7 @@ setup(
         "polyaxon-dockerizer==0.0.9",
         "sentry-sdk==0.12.3",
         "tabulate==0.8.2",
-        "hestia==0.5.3",
+        "hestia==0.5.5",
         "Jinja2==2.10.3",
         "marshmallow==3.0.0rc5",
         "numpy>=1.15.2",

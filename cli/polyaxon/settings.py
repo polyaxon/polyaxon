@@ -21,15 +21,15 @@ import os
 
 import rhea
 
-from hestia.contexts import CONTEXT_MOUNT_AUTH
-from hestia.env_var_keys import (
+from hestia.user_path import polyaxon_user_path
+from marshmallow import EXCLUDE, RAISE
+
+from polyaxon.containers.contexts import CONTEXT_MOUNT_AUTH
+from polyaxon.env_vars.keys import (
     POLYAXON_KEYS_HASH_LENGTH,
     POLYAXON_KEYS_HEALTH_CHECK_URL,
     POLYAXON_KEYS_RECONCILE_URL,
 )
-from hestia.user_path import polyaxon_user_path
-from marshmallow import EXCLUDE, RAISE
-
 from polyaxon.schemas.api.authentication import AccessTokenConfig
 from polyaxon.schemas.cli.client_configuration import ClientConfig
 
@@ -44,6 +44,7 @@ USER_CLIENT_CONFIG_PATH = os.path.join(USER_POLYAXON_PATH, ".polyaxonclient")
 
 auth_config = rhea.Rhea.read_configs(
     [
+        os.environ,
         rhea.ConfigSpec(TMP_AUTH_PATH, config_type=".json", check_if_exists=False),
         rhea.ConfigSpec(USER_AUTH_PATH, config_type=".json", check_if_exists=False),
         rhea.ConfigSpec(CONTEXT_MOUNT_AUTH, config_type=".json", check_if_exists=False),

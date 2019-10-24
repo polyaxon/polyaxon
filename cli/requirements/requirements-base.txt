@@ -2,7 +2,7 @@ click==7.0
 click-completion==0.5.1
 pathlib==1.0.1
 tabulate==0.8.2
-hestia==0.5.3
+hestia==0.5.5
 Jinja2==2.10.3
 marshmallow==3.0.0rc5
 numpy>=1.15.2
