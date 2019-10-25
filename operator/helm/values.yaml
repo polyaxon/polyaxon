@@ -3,7 +3,7 @@ api:
    token: token-default-value
 
 rbac:
-  create: true
+  enabled: true
 
 types:
   agent: "polyaxon-agent"

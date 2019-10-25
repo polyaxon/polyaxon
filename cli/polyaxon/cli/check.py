@@ -27,8 +27,8 @@ import click
 from hestia.list_utils import to_list
 
 from polyaxon.logger import clean_outputs
+from polyaxon.polyaxonfile import PolyaxonFile
 from polyaxon.run.params import parse_params
-from polyaxon.schemas.polyaxonfile import PolyaxonFile
 from polyaxon.utils import constants
 from polyaxon.utils.formatting import Printer, dict_tabulate
 

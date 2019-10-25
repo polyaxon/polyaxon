@@ -62,17 +62,19 @@ class V1Run(object):
         'is_managed': 'str',
         'content': 'str',
         'status': 'str',
+        'kind': 'str',
         'readme': 'str',
         'bookmarked': 'bool',
         'inputs': 'dict(str, str)',
         'outputs': 'dict(str, str)',
         'run_env': 'dict(str, str)',
+        'is_resume': 'bool',
         'is_clone': 'bool',
+        'cloning_strategy': 'str',
         'pipeline': 'str',
         'original': 'str',
         'pipeline_name': 'str',
-        'original_name': 'str',
-        'cloning_strategy': 'str'
+        'original_name': 'str'
     }
 
     attribute_map = {
@@ -91,20 +93,22 @@ class V1Run(object):
         'is_managed': 'is_managed',
         'content': 'content',
         'status': 'status',
+        'kind': 'kind',
         'readme': 'readme',
         'bookmarked': 'bookmarked',
         'inputs': 'inputs',
         'outputs': 'outputs',
         'run_env': 'run_env',
+        'is_resume': 'is_resume',
         'is_clone': 'is_clone',
+        'cloning_strategy': 'cloning_strategy',
         'pipeline': 'pipeline',
         'original': 'original',
         'pipeline_name': 'pipeline_name',
-        'original_name': 'original_name',
-        'cloning_strategy': 'cloning_strategy'
+        'original_name': 'original_name'
     }
 
-    def __init__(self, uuid=None, name=None, description=None, tags=None, deleted=None, user=None, owner=None, project=None, created_at=None, updated_at=None, started_at=None, finished_at=None, is_managed=None, content=None, status=None, readme=None, bookmarked=None, inputs=None, outputs=None, run_env=None, is_clone=None, pipeline=None, original=None, pipeline_name=None, original_name=None, cloning_strategy=None):  # noqa: E501
+    def __init__(self, uuid=None, name=None, description=None, tags=None, deleted=None, user=None, owner=None, project=None, created_at=None, updated_at=None, started_at=None, finished_at=None, is_managed=None, content=None, status=None, kind=None, readme=None, bookmarked=None, inputs=None, outputs=None, run_env=None, is_resume=None, is_clone=None, cloning_strategy=None, pipeline=None, original=None, pipeline_name=None, original_name=None):  # noqa: E501
         """V1Run - a model defined in Swagger"""  # noqa: E501
 
         self._uuid = None
@@ -122,17 +126,19 @@ class V1Run(object):
         self._is_managed = None
         self._content = None
         self._status = None
+        self._kind = None
         self._readme = None
         self._bookmarked = None
         self._inputs = None
         self._outputs = None
         self._run_env = None
+        self._is_resume = None
         self._is_clone = None
+        self._cloning_strategy = None
         self._pipeline = None
         self._original = None
         self._pipeline_name = None
         self._original_name = None
-        self._cloning_strategy = None
         self.discriminator = None
 
         if uuid is not None:
@@ -165,6 +171,8 @@ class V1Run(object):
             self.content = content
         if status is not None:
             self.status = status
+        if kind is not None:
+            self.kind = kind
         if readme is not None:
             self.readme = readme
         if bookmarked is not None:
@@ -175,8 +183,12 @@ class V1Run(object):
             self.outputs = outputs
         if run_env is not None:
             self.run_env = run_env
+        if is_resume is not None:
+            self.is_resume = is_resume
         if is_clone is not None:
             self.is_clone = is_clone
+        if cloning_strategy is not None:
+            self.cloning_strategy = cloning_strategy
         if pipeline is not None:
             self.pipeline = pipeline
         if original is not None:
@@ -185,8 +197,6 @@ class V1Run(object):
             self.pipeline_name = pipeline_name
         if original_name is not None:
             self.original_name = original_name
-        if cloning_strategy is not None:
-            self.cloning_strategy = cloning_strategy
 
     @property
     def uuid(self):
@@ -504,6 +514,27 @@ class V1Run(object):
         self._status = status
 
     @property
+    def kind(self):
+        """Gets the kind of this V1Run.  # noqa: E501
+
+
+        :return: The kind of this V1Run.  # noqa: E501
+        :rtype: str
+        """
+        return self._kind
+
+    @kind.setter
+    def kind(self, kind):
+        """Sets the kind of this V1Run.
+
+
+        :param kind: The kind of this V1Run.  # noqa: E501
+        :type: str
+        """
+
+        self._kind = kind
+
+    @property
     def readme(self):
         """Gets the readme of this V1Run.  # noqa: E501
 
@@ -609,6 +640,27 @@ class V1Run(object):
         self._run_env = run_env
 
     @property
+    def is_resume(self):
+        """Gets the is_resume of this V1Run.  # noqa: E501
+
+
+        :return: The is_resume of this V1Run.  # noqa: E501
+        :rtype: bool
+        """
+        return self._is_resume
+
+    @is_resume.setter
+    def is_resume(self, is_resume):
+        """Sets the is_resume of this V1Run.
+
+
+        :param is_resume: The is_resume of this V1Run.  # noqa: E501
+        :type: bool
+        """
+
+        self._is_resume = is_resume
+
+    @property
     def is_clone(self):
         """Gets the is_clone of this V1Run.  # noqa: E501
 
@@ -628,6 +680,27 @@ class V1Run(object):
         """
 
         self._is_clone = is_clone
+
+    @property
+    def cloning_strategy(self):
+        """Gets the cloning_strategy of this V1Run.  # noqa: E501
+
+
+        :return: The cloning_strategy of this V1Run.  # noqa: E501
+        :rtype: str
+        """
+        return self._cloning_strategy
+
+    @cloning_strategy.setter
+    def cloning_strategy(self, cloning_strategy):
+        """Sets the cloning_strategy of this V1Run.
+
+
+        :param cloning_strategy: The cloning_strategy of this V1Run.  # noqa: E501
+        :type: str
+        """
+
+        self._cloning_strategy = cloning_strategy
 
     @property
     def pipeline(self):
@@ -712,27 +785,6 @@ class V1Run(object):
         """
 
         self._original_name = original_name
-
-    @property
-    def cloning_strategy(self):
-        """Gets the cloning_strategy of this V1Run.  # noqa: E501
-
-
-        :return: The cloning_strategy of this V1Run.  # noqa: E501
-        :rtype: str
-        """
-        return self._cloning_strategy
-
-    @cloning_strategy.setter
-    def cloning_strategy(self, cloning_strategy):
-        """Sets the cloning_strategy of this V1Run.
-
-
-        :param cloning_strategy: The cloning_strategy of this V1Run.  # noqa: E501
-        :type: str
-        """
-
-        self._cloning_strategy = cloning_strategy
 
     def to_dict(self):
         """Returns the model properties as a dict"""

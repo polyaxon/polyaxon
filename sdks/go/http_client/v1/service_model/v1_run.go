@@ -57,11 +57,17 @@ type V1Run struct {
 	// Optional inputs of this entity
 	Inputs map[string]string `json:"inputs,omitempty"`
 
-	// Id instance is clone
+	// Is clone
 	IsClone bool `json:"is_clone,omitempty"`
 
 	// Optional flag to tell if this entity is managed by the platform
 	IsManaged string `json:"is_managed,omitempty"`
+
+	// Is resume
+	IsResume bool `json:"is_resume,omitempty"`
+
+	// Optional run kind
+	Kind string `json:"kind,omitempty"`
 
 	// Optional name
 	Name string `json:"name,omitempty"`

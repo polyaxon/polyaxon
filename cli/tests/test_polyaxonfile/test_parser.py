@@ -5,8 +5,8 @@ from unittest import TestCase
 
 import pytest
 
-from polyaxon.schemas.specs import JobSpecification
-from polyaxon.schemas.specs.libs.parser import Parser
+from polyaxon.specs import JobSpecification
+from polyaxon.specs.libs.parser import Parser
 
 
 @pytest.mark.polyaxonfile_mark

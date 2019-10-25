@@ -8,6 +8,7 @@ from unittest import TestCase
 import pytest
 
 from polyaxon.exceptions import PolyaxonfileError
+from polyaxon.polyaxonfile import PolyaxonFile
 from polyaxon.schemas.ops.environments import EnvironmentConfig
 from polyaxon.schemas.ops.init import InitConfig
 from polyaxon.schemas.ops.parallel import (
@@ -24,8 +25,7 @@ from polyaxon.schemas.ops.parallel.matrix import (
     MatrixLinSpaceConfig,
 )
 from polyaxon.schemas.ops.termination import TerminationConfig
-from polyaxon.schemas.polyaxonfile import PolyaxonFile
-from polyaxon.schemas.specs import JobSpecification, get_specification
+from polyaxon.specs import JobSpecification, get_specification
 
 
 @pytest.mark.polyaxonfile_mark

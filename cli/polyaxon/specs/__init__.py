@@ -20,12 +20,12 @@ from __future__ import absolute_import, division, print_function
 import rhea
 
 from polyaxon.exceptions import PolyaxonConfigurationError, PolyaxonfileError
-from polyaxon.schemas.specs import kinds
-from polyaxon.schemas.specs.base import BaseSpecification
-from polyaxon.schemas.specs.job import JobSpecification
-from polyaxon.schemas.specs.operation import OperationSpecification
-from polyaxon.schemas.specs.pipelines import PipelineSpecification
-from polyaxon.schemas.specs.service import ServiceSpecification
+from polyaxon import kinds
+from polyaxon.specs.base import BaseSpecification
+from polyaxon.specs.job import JobSpecification
+from polyaxon.specs.operation import OperationSpecification
+from polyaxon.specs.pipelines import PipelineSpecification
+from polyaxon.specs.service import ServiceSpecification
 
 SPECIFICATION_BY_KIND = {
     kinds.JOB: JobSpecification,

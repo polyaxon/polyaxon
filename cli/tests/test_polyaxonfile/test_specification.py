@@ -14,14 +14,14 @@ from tests.utils import assert_equal_dict
 from polyaxon.exceptions import PolyaxonConfigurationError, PolyaxonfileError
 from polyaxon.schemas.ops.environments import EnvironmentConfig
 from polyaxon.schemas.ops.io import IOTypes
-from polyaxon.schemas.specs import (
+from polyaxon.schemas.utils import TaskType
+from polyaxon.specs import (
     JobSpecification,
     OperationSpecification,
     PipelineSpecification,
     ServiceSpecification,
     get_specification,
 )
-from polyaxon.schemas.utils import TaskType
 
 
 @pytest.mark.polyaxonfile_mark

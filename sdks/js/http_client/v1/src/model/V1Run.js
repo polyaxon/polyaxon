@@ -88,6 +88,8 @@
 
 
 
+
+
   };
 
   /**
@@ -146,6 +148,9 @@
       if (data.hasOwnProperty('status')) {
         obj['status'] = ApiClient.convertToType(data['status'], 'String');
       }
+      if (data.hasOwnProperty('kind')) {
+        obj['kind'] = ApiClient.convertToType(data['kind'], 'String');
+      }
       if (data.hasOwnProperty('readme')) {
         obj['readme'] = ApiClient.convertToType(data['readme'], 'String');
       }
@@ -161,8 +166,14 @@
       if (data.hasOwnProperty('run_env')) {
         obj['run_env'] = ApiClient.convertToType(data['run_env'], {'String': 'String'});
       }
+      if (data.hasOwnProperty('is_resume')) {
+        obj['is_resume'] = ApiClient.convertToType(data['is_resume'], 'Boolean');
+      }
       if (data.hasOwnProperty('is_clone')) {
         obj['is_clone'] = ApiClient.convertToType(data['is_clone'], 'Boolean');
+      }
+      if (data.hasOwnProperty('cloning_strategy')) {
+        obj['cloning_strategy'] = ApiClient.convertToType(data['cloning_strategy'], 'String');
       }
       if (data.hasOwnProperty('pipeline')) {
         obj['pipeline'] = ApiClient.convertToType(data['pipeline'], 'String');
@@ -175,9 +186,6 @@
       }
       if (data.hasOwnProperty('original_name')) {
         obj['original_name'] = ApiClient.convertToType(data['original_name'], 'String');
-      }
-      if (data.hasOwnProperty('cloning_strategy')) {
-        obj['cloning_strategy'] = ApiClient.convertToType(data['cloning_strategy'], 'String');
       }
     }
     return obj;
@@ -244,6 +252,10 @@
    */
   exports.prototype['status'] = undefined;
   /**
+   * @member {String} kind
+   */
+  exports.prototype['kind'] = undefined;
+  /**
    * @member {String} readme
    */
   exports.prototype['readme'] = undefined;
@@ -264,9 +276,17 @@
    */
   exports.prototype['run_env'] = undefined;
   /**
+   * @member {Boolean} is_resume
+   */
+  exports.prototype['is_resume'] = undefined;
+  /**
    * @member {Boolean} is_clone
    */
   exports.prototype['is_clone'] = undefined;
+  /**
+   * @member {String} cloning_strategy
+   */
+  exports.prototype['cloning_strategy'] = undefined;
   /**
    * @member {String} pipeline
    */
@@ -283,10 +303,6 @@
    * @member {String} original_name
    */
   exports.prototype['original_name'] = undefined;
-  /**
-   * @member {String} cloning_strategy
-   */
-  exports.prototype['cloning_strategy'] = undefined;
 
 
 

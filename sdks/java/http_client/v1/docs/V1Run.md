@@ -19,17 +19,19 @@ Name | Type | Description | Notes
 **isManaged** | **String** |  |  [optional]
 **content** | **String** |  |  [optional]
 **status** | **String** |  |  [optional]
+**kind** | **String** |  |  [optional]
 **readme** | **String** |  |  [optional]
 **bookmarked** | **Boolean** |  |  [optional]
 **inputs** | **Map&lt;String, String&gt;** |  |  [optional]
 **outputs** | **Map&lt;String, String&gt;** |  |  [optional]
 **runEnv** | **Map&lt;String, String&gt;** |  |  [optional]
+**isResume** | **Boolean** |  |  [optional]
 **isClone** | **Boolean** |  |  [optional]
+**cloningStrategy** | **String** |  |  [optional]
 **pipeline** | **String** |  |  [optional]
 **original** | **String** |  |  [optional]
 **pipelineName** | **String** |  |  [optional]
 **originalName** | **String** |  |  [optional]
-**cloningStrategy** | **String** |  |  [optional]
 
 
 

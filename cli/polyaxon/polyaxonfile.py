@@ -25,10 +25,10 @@ import rhea
 
 from hestia.list_utils import to_list
 
+from polyaxon import kinds
 from polyaxon.exceptions import PolyaxonfileError
-from polyaxon.schemas.ops.termination import TerminationConfig
 from polyaxon.schemas.polyflow.ops import OpConfig
-from polyaxon.schemas.specs import get_specification, kinds
+from polyaxon.specs import get_specification
 
 DEFAULT_POLYAXON_FILE_NAME = [
     "polyaxon",

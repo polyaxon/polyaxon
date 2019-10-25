@@ -93,6 +93,9 @@ public class V1Run {
   @SerializedName("status")
   private String status = null;
 
+  @SerializedName("kind")
+  private String kind = null;
+
   @SerializedName("readme")
   private String readme = null;
 
@@ -108,8 +111,14 @@ public class V1Run {
   @SerializedName("run_env")
   private Map<String, String> runEnv = null;
 
+  @SerializedName("is_resume")
+  private Boolean isResume = null;
+
   @SerializedName("is_clone")
   private Boolean isClone = null;
+
+  @SerializedName("cloning_strategy")
+  private String cloningStrategy = null;
 
   @SerializedName("pipeline")
   private String pipeline = null;
@@ -122,9 +131,6 @@ public class V1Run {
 
   @SerializedName("original_name")
   private String originalName = null;
-
-  @SerializedName("cloning_strategy")
-  private String cloningStrategy = null;
 
   public V1Run uuid(String uuid) {
     this.uuid = uuid;
@@ -404,6 +410,24 @@ public class V1Run {
     this.status = status;
   }
 
+  public V1Run kind(String kind) {
+    this.kind = kind;
+    return this;
+  }
+
+   /**
+   * Get kind
+   * @return kind
+  **/
+  @ApiModelProperty(value = "")
+  public String getKind() {
+    return kind;
+  }
+
+  public void setKind(String kind) {
+    this.kind = kind;
+  }
+
   public V1Run readme(String readme) {
     this.readme = readme;
     return this;
@@ -518,6 +542,24 @@ public class V1Run {
     this.runEnv = runEnv;
   }
 
+  public V1Run isResume(Boolean isResume) {
+    this.isResume = isResume;
+    return this;
+  }
+
+   /**
+   * Get isResume
+   * @return isResume
+  **/
+  @ApiModelProperty(value = "")
+  public Boolean isIsResume() {
+    return isResume;
+  }
+
+  public void setIsResume(Boolean isResume) {
+    this.isResume = isResume;
+  }
+
   public V1Run isClone(Boolean isClone) {
     this.isClone = isClone;
     return this;
@@ -534,6 +576,24 @@ public class V1Run {
 
   public void setIsClone(Boolean isClone) {
     this.isClone = isClone;
+  }
+
+  public V1Run cloningStrategy(String cloningStrategy) {
+    this.cloningStrategy = cloningStrategy;
+    return this;
+  }
+
+   /**
+   * Get cloningStrategy
+   * @return cloningStrategy
+  **/
+  @ApiModelProperty(value = "")
+  public String getCloningStrategy() {
+    return cloningStrategy;
+  }
+
+  public void setCloningStrategy(String cloningStrategy) {
+    this.cloningStrategy = cloningStrategy;
   }
 
   public V1Run pipeline(String pipeline) {
@@ -608,24 +668,6 @@ public class V1Run {
     this.originalName = originalName;
   }
 
-  public V1Run cloningStrategy(String cloningStrategy) {
-    this.cloningStrategy = cloningStrategy;
-    return this;
-  }
-
-   /**
-   * Get cloningStrategy
-   * @return cloningStrategy
-  **/
-  @ApiModelProperty(value = "")
-  public String getCloningStrategy() {
-    return cloningStrategy;
-  }
-
-  public void setCloningStrategy(String cloningStrategy) {
-    this.cloningStrategy = cloningStrategy;
-  }
-
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -651,22 +693,24 @@ public class V1Run {
         Objects.equals(this.isManaged, v1Run.isManaged) &&
         Objects.equals(this.content, v1Run.content) &&
         Objects.equals(this.status, v1Run.status) &&
+        Objects.equals(this.kind, v1Run.kind) &&
         Objects.equals(this.readme, v1Run.readme) &&
         Objects.equals(this.bookmarked, v1Run.bookmarked) &&
         Objects.equals(this.inputs, v1Run.inputs) &&
         Objects.equals(this.outputs, v1Run.outputs) &&
         Objects.equals(this.runEnv, v1Run.runEnv) &&
+        Objects.equals(this.isResume, v1Run.isResume) &&
         Objects.equals(this.isClone, v1Run.isClone) &&
+        Objects.equals(this.cloningStrategy, v1Run.cloningStrategy) &&
         Objects.equals(this.pipeline, v1Run.pipeline) &&
         Objects.equals(this.original, v1Run.original) &&
         Objects.equals(this.pipelineName, v1Run.pipelineName) &&
-        Objects.equals(this.originalName, v1Run.originalName) &&
-        Objects.equals(this.cloningStrategy, v1Run.cloningStrategy);
+        Objects.equals(this.originalName, v1Run.originalName);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(uuid, name, description, tags, deleted, user, owner, project, createdAt, updatedAt, startedAt, finishedAt, isManaged, content, status, readme, bookmarked, inputs, outputs, runEnv, isClone, pipeline, original, pipelineName, originalName, cloningStrategy);
+    return Objects.hash(uuid, name, description, tags, deleted, user, owner, project, createdAt, updatedAt, startedAt, finishedAt, isManaged, content, status, kind, readme, bookmarked, inputs, outputs, runEnv, isResume, isClone, cloningStrategy, pipeline, original, pipelineName, originalName);
   }
 
 
@@ -690,17 +734,19 @@ public class V1Run {
     sb.append("    isManaged: ").append(toIndentedString(isManaged)).append("\n");
     sb.append("    content: ").append(toIndentedString(content)).append("\n");
     sb.append("    status: ").append(toIndentedString(status)).append("\n");
+    sb.append("    kind: ").append(toIndentedString(kind)).append("\n");
     sb.append("    readme: ").append(toIndentedString(readme)).append("\n");
     sb.append("    bookmarked: ").append(toIndentedString(bookmarked)).append("\n");
     sb.append("    inputs: ").append(toIndentedString(inputs)).append("\n");
     sb.append("    outputs: ").append(toIndentedString(outputs)).append("\n");
     sb.append("    runEnv: ").append(toIndentedString(runEnv)).append("\n");
+    sb.append("    isResume: ").append(toIndentedString(isResume)).append("\n");
     sb.append("    isClone: ").append(toIndentedString(isClone)).append("\n");
+    sb.append("    cloningStrategy: ").append(toIndentedString(cloningStrategy)).append("\n");
     sb.append("    pipeline: ").append(toIndentedString(pipeline)).append("\n");
     sb.append("    original: ").append(toIndentedString(original)).append("\n");
     sb.append("    pipelineName: ").append(toIndentedString(pipelineName)).append("\n");
     sb.append("    originalName: ").append(toIndentedString(originalName)).append("\n");
-    sb.append("    cloningStrategy: ").append(toIndentedString(cloningStrategy)).append("\n");
     sb.append("}");
     return sb.toString();
   }

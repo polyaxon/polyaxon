@@ -161,6 +161,12 @@
       //expect(instance).to.be();
     });
 
+    it('should have the property kind (base name: "kind")', function() {
+      // uncomment below and update the code to test the property kind
+      //var instance = new PolyaxonSdk.V1Run();
+      //expect(instance).to.be();
+    });
+
     it('should have the property readme (base name: "readme")', function() {
       // uncomment below and update the code to test the property readme
       //var instance = new PolyaxonSdk.V1Run();
@@ -191,8 +197,20 @@
       //expect(instance).to.be();
     });
 
+    it('should have the property is_resume (base name: "is_resume")', function() {
+      // uncomment below and update the code to test the property is_resume
+      //var instance = new PolyaxonSdk.V1Run();
+      //expect(instance).to.be();
+    });
+
     it('should have the property is_clone (base name: "is_clone")', function() {
       // uncomment below and update the code to test the property is_clone
+      //var instance = new PolyaxonSdk.V1Run();
+      //expect(instance).to.be();
+    });
+
+    it('should have the property cloning_strategy (base name: "cloning_strategy")', function() {
+      // uncomment below and update the code to test the property cloning_strategy
       //var instance = new PolyaxonSdk.V1Run();
       //expect(instance).to.be();
     });
@@ -217,12 +235,6 @@
 
     it('should have the property original_name (base name: "original_name")', function() {
       // uncomment below and update the code to test the property original_name
-      //var instance = new PolyaxonSdk.V1Run();
-      //expect(instance).to.be();
-    });
-
-    it('should have the property cloning_strategy (base name: "cloning_strategy")', function() {
-      // uncomment below and update the code to test the property cloning_strategy
       //var instance = new PolyaxonSdk.V1Run();
       //expect(instance).to.be();
     });

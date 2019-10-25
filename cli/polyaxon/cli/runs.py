@@ -59,8 +59,9 @@ def get_run_details(run):  # pylint:disable=redefined-outer-name
         Printer.print_header("Run inputs:")
         dict_tabulate(run.outputs)
 
+    response = Printer.add_status_color(run.to_dict())
     response = dict_to_tabulate(
-        run.to_dict(),
+        response,
         humanize_values=True,
         exclude_attrs=[
             "project",
@@ -75,7 +76,7 @@ def get_run_details(run):  # pylint:disable=redefined-outer-name
     )
 
     Printer.print_header("Run info:")
-    dict_tabulate(Printer.add_status_color(response))
+    dict_tabulate(response)
 
 
 @click.group()

@@ -17,9 +17,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+from polyaxon import kinds
 from polyaxon.schemas.ops.service import ServiceConfig
-from polyaxon.schemas.specs import kinds
-from polyaxon.schemas.specs.base import BaseSpecification
+from polyaxon.specs.base import BaseSpecification
 
 
 class ServiceSpecification(BaseSpecification):

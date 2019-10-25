@@ -30,7 +30,7 @@ from polyaxon.client import PolyaxonClient
 from polyaxon.logger import clean_outputs
 from polyaxon.managers.ignore import IgnoreManager
 from polyaxon.managers.project import ProjectManager
-from polyaxon.schemas.polyaxonfile import PolyaxonFile
+from polyaxon.polyaxonfile import PolyaxonFile
 from polyaxon.utils import constants, indentation
 from polyaxon.utils.files import create_debug_file, create_init_file
 from polyaxon.utils.formatting import Printer

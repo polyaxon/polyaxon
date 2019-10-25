@@ -56,32 +56,36 @@ message Run {
     // Optional latest status of this entity
     string status = 15;
 
+    // Optional run kind
+    string kind = 16;
+
     // Optional a readme text describing this entity
-    string readme = 16;
+    string readme = 17;
 
     // Optional if this entity was bookmarked
-    bool bookmarked = 17;
+    bool bookmarked = 18;
 
     // Optional inputs of this entity
-    map<string, string> inputs = 18;
+    map<string, string> inputs = 19;
 
     // Optional outputs of this entity
-    map<string, string> outputs = 19;
+    map<string, string> outputs = 20;
 
     // Optional run environment tracked
-    map<string, string> run_env = 20;
+    map<string, string> run_env = 21;
 
-    // Id instance is clone
-    bool is_clone = 21;
+    // Is resume
+    bool is_resume = 22;
+    // Is clone
+    bool is_clone = 23;
+    // Optional if this run was restarted/copied/resumed
+    string cloning_strategy = 24;
 
     // Optional uuid of the original run and pipeline
-    string pipeline = 22;
-    string original = 23;
-    string pipeline_name = 24;
-    string original_name = 25;
-
-    // Optional if this run was restarted/copied/resumed
-    string cloning_strategy = 26;
+    string pipeline = 25;
+    string original = 26;
+    string pipeline_name = 27;
+    string original_name = 28;
 }
 
 

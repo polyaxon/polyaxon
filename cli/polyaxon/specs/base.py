@@ -27,14 +27,14 @@ import rhea
 from hestia.list_utils import to_list
 from marshmallow import ValidationError
 
+from polyaxon import kinds
 from polyaxon.exceptions import PolyaxonConfigurationError, PolyaxonfileError
 from polyaxon.pkg import SCHEMA_VERSION
 from polyaxon.schemas.ops import params as ops_params
 from polyaxon.schemas.ops.io import IOTypes
 from polyaxon.schemas.ops.operators import ForConfig, IfConfig
 from polyaxon.schemas.ops.params import ParamSpec
-from polyaxon.schemas.specs import kinds
-from polyaxon.schemas.specs.libs.parser import Parser
+from polyaxon.specs.libs.parser import Parser
 
 
 class EnvironmentSpecificationMixin(object):

@@ -18,17 +18,19 @@ Name | Type | Description | Notes
 **is_managed** | **str** |  | [optional] 
 **content** | **str** |  | [optional] 
 **status** | **str** |  | [optional] 
+**kind** | **str** |  | [optional] 
 **readme** | **str** |  | [optional] 
 **bookmarked** | **bool** |  | [optional] 
 **inputs** | **dict(str, str)** |  | [optional] 
 **outputs** | **dict(str, str)** |  | [optional] 
 **run_env** | **dict(str, str)** |  | [optional] 
+**is_resume** | **bool** |  | [optional] 
 **is_clone** | **bool** |  | [optional] 
+**cloning_strategy** | **str** |  | [optional] 
 **pipeline** | **str** |  | [optional] 
 **original** | **str** |  | [optional] 
 **pipeline_name** | **str** |  | [optional] 
 **original_name** | **str** |  | [optional] 
-**cloning_strategy** | **str** |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

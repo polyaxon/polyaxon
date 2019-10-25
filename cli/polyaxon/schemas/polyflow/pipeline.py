@@ -19,6 +19,7 @@ from __future__ import absolute_import, division, print_function
 
 from marshmallow import fields, validate
 
+from polyaxon import kinds
 from polyaxon.exceptions import PolyaxonSchemaError
 from polyaxon.pkg import SCHEMA_VERSION
 from polyaxon.schemas.base import BaseOneOfSchema
@@ -29,7 +30,6 @@ from polyaxon.schemas.ops.service import ServiceConfig, ServiceSchema
 from polyaxon.schemas.polyflow import dags
 from polyaxon.schemas.polyflow.ops import OpSchema
 from polyaxon.schemas.polyflow.schedule import ScheduleSchema
-from polyaxon.schemas.specs import kinds
 
 
 class PipelineSchema(BaseOpSchema):

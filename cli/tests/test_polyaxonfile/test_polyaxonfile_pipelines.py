@@ -8,8 +8,8 @@ from unittest import TestCase
 import pytest
 
 from polyaxon.exceptions import PolyaxonSchemaError
-from polyaxon.schemas.polyaxonfile import PolyaxonFile
-from polyaxon.schemas.specs import OperationSpecification, get_specification
+from polyaxon.polyaxonfile import PolyaxonFile
+from polyaxon.specs import OperationSpecification, get_specification
 
 
 @pytest.mark.polyaxonfile_mark

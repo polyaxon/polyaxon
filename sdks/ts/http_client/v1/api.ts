@@ -501,6 +501,12 @@ export interface V1Run {
      * @type {string}
      * @memberof V1Run
      */
+    kind?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1Run
+     */
     readme?: string;
     /**
      * 
@@ -531,7 +537,19 @@ export interface V1Run {
      * @type {boolean}
      * @memberof V1Run
      */
+    is_resume?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof V1Run
+     */
     is_clone?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1Run
+     */
+    cloning_strategy?: string;
     /**
      * 
      * @type {string}
@@ -556,12 +574,6 @@ export interface V1Run {
      * @memberof V1Run
      */
     original_name?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1Run
-     */
-    cloning_strategy?: string;
 }
 
 /**

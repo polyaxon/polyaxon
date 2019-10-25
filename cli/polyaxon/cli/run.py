@@ -25,11 +25,11 @@ from polyaxon.cli.check import check_polyaxonfile
 from polyaxon.cli.getters.project import get_project_or_local
 from polyaxon.exceptions import PolyaxonSchemaError
 from polyaxon.logger import clean_outputs
+from polyaxon.polyaxonfile import PolyaxonFile
 from polyaxon.run.conda import run as conda_run
 from polyaxon.run.docker import run as docker_run
 from polyaxon.run.platform import run as platform_run
-from polyaxon.schemas.polyaxonfile import PolyaxonFile
-from polyaxon.schemas.specs import get_specification
+from polyaxon.specs import get_specification
 from polyaxon.utils.formatting import Printer
 from polyaxon.utils.validation import validate_tags
 

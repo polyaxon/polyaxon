@@ -7,7 +7,7 @@ from unittest import TestCase
 
 import pytest
 
-from polyaxon.schemas.polyaxonfile import (
+from polyaxon.polyaxonfile import (
     DEFAULT_POLYAXON_FILE_EXTENSION,
     DEFAULT_POLYAXON_FILE_NAME,
     PolyaxonFile,

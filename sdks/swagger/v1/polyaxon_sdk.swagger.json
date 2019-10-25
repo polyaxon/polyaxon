@@ -2721,6 +2721,10 @@
           "type": "string",
           "title": "Optional latest status of this entity"
         },
+        "kind": {
+          "type": "string",
+          "title": "Optional run kind"
+        },
         "readme": {
           "type": "string",
           "title": "Optional a readme text describing this entity"
@@ -2751,10 +2755,19 @@
           },
           "title": "Optional run environment tracked"
         },
+        "is_resume": {
+          "type": "boolean",
+          "format": "boolean",
+          "title": "Is resume"
+        },
         "is_clone": {
           "type": "boolean",
           "format": "boolean",
-          "title": "Id instance is clone"
+          "title": "Is clone"
+        },
+        "cloning_strategy": {
+          "type": "string",
+          "title": "Optional if this run was restarted/copied/resumed"
         },
         "pipeline": {
           "type": "string",
@@ -2768,10 +2781,6 @@
         },
         "original_name": {
           "type": "string"
-        },
-        "cloning_strategy": {
-          "type": "string",
-          "title": "Optional if this run was restarted/copied/resumed"
         }
       },
       "title": "Run specification"
