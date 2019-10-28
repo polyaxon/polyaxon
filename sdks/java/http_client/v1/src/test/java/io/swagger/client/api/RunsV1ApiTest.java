@@ -30,10 +30,10 @@ package io.swagger.client.api;
 import io.swagger.client.ApiException;
 import io.swagger.client.model.V1Auth;
 import io.swagger.client.model.V1CodeReference;
-import io.swagger.client.model.V1EntityResourceRequest;
 import io.swagger.client.model.V1EntityStatusBodyRequest;
 import io.swagger.client.model.V1ListCodeRefsResponse;
 import io.swagger.client.model.V1ListRunsResponse;
+import io.swagger.client.model.V1ProjectEntityResourceRequest;
 import io.swagger.client.model.V1Run;
 import io.swagger.client.model.V1Status;
 import io.swagger.client.model.V1Uuids;
@@ -286,7 +286,7 @@ public class RunsV1ApiTest {
         String owner = null;
         String project = null;
         String uuid = null;
-        V1EntityResourceRequest body = null;
+        V1ProjectEntityResourceRequest body = null;
         Object response = api.invalidateRun(owner, project, uuid, body);
 
         // TODO: test validations
@@ -459,7 +459,7 @@ public class RunsV1ApiTest {
         String owner = null;
         String project = null;
         String uuid = null;
-        V1EntityResourceRequest body = null;
+        V1ProjectEntityResourceRequest body = null;
         Object response = api.startRunTensorboard(owner, project, uuid, body);
 
         // TODO: test validations

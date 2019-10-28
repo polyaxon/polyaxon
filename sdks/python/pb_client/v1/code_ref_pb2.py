@@ -38,7 +38,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='v1',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\x11v1/code_ref.proto\x12\x02v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\rv1/base.proto\"\x90\x01\n\rCodeReference\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\x0e\n\x06\x63ommit\x18\x02 \x01(\t\x12.\n\nupdated_at\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x0e\n\x06status\x18\x04 \x01(\t\x12\x0f\n\x07git_url\x18\x05 \x01(\t\x12\x10\n\x08is_dirty\x18\x06 \x01(\x08\"j\n\x12\x43odeRefBodyRequest\x12)\n\x06\x65ntity\x18\x01 \x01(\x0b\x32\x19.v1.EntityResourceRequest\x12)\n\x0e\x63ode_reference\x18\x02 \x01(\x0b\x32\x11.v1.CodeReference\"i\n\x14ListCodeRefsResponse\x12\r\n\x05\x63ount\x18\x01 \x01(\x05\x12\"\n\x07results\x18\x02 \x03(\x0b\x32\x11.v1.CodeReference\x12\x10\n\x08previous\x18\x03 \x01(\t\x12\x0c\n\x04next\x18\x04 \x01(\tb\x06proto3')
+  serialized_pb=_b('\n\x11v1/code_ref.proto\x12\x02v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\rv1/base.proto\"\x90\x01\n\rCodeReference\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\x0e\n\x06\x63ommit\x18\x02 \x01(\t\x12.\n\nupdated_at\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x0e\n\x06status\x18\x04 \x01(\t\x12\x0f\n\x07git_url\x18\x05 \x01(\t\x12\x10\n\x08is_dirty\x18\x06 \x01(\x08\"q\n\x12\x43odeRefBodyRequest\x12\x30\n\x06\x65ntity\x18\x01 \x01(\x0b\x32 .v1.ProjectEntityResourceRequest\x12)\n\x0e\x63ode_reference\x18\x02 \x01(\x0b\x32\x11.v1.CodeReference\"i\n\x14ListCodeRefsResponse\x12\r\n\x05\x63ount\x18\x01 \x01(\x05\x12\"\n\x07results\x18\x02 \x03(\x0b\x32\x11.v1.CodeReference\x12\x10\n\x08previous\x18\x03 \x01(\t\x12\x0c\n\x04next\x18\x04 \x01(\tb\x06proto3')
   ,
   dependencies=[google_dot_protobuf_dot_timestamp__pb2.DESCRIPTOR,v1_dot_base__pb2.DESCRIPTOR,])
 
@@ -145,7 +145,7 @@ _CODEREFBODYREQUEST = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=220,
-  serialized_end=326,
+  serialized_end=333,
 )
 
 
@@ -196,12 +196,12 @@ _LISTCODEREFSRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=328,
-  serialized_end=433,
+  serialized_start=335,
+  serialized_end=440,
 )
 
 _CODEREFERENCE.fields_by_name['updated_at'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
-_CODEREFBODYREQUEST.fields_by_name['entity'].message_type = v1_dot_base__pb2._ENTITYRESOURCEREQUEST
+_CODEREFBODYREQUEST.fields_by_name['entity'].message_type = v1_dot_base__pb2._PROJECTENTITYRESOURCEREQUEST
 _CODEREFBODYREQUEST.fields_by_name['code_reference'].message_type = _CODEREFERENCE
 _LISTCODEREFSRESPONSE.fields_by_name['results'].message_type = _CODEREFERENCE
 DESCRIPTOR.message_types_by_name['CodeReference'] = _CODEREFERENCE

@@ -72,10 +72,10 @@ type V1Run struct {
 	// Optional name
 	Name string `json:"name,omitempty"`
 
-	// original
+	// Optional uuid of the original run
 	Original string `json:"original,omitempty"`
 
-	// original name
+	// Optional name of the original run
 	OriginalName string `json:"original_name,omitempty"`
 
 	// Optional outputs of this entity
@@ -84,10 +84,10 @@ type V1Run struct {
 	// Required name of owner of this entity
 	Owner string `json:"owner,omitempty"`
 
-	// Optional uuid of the original run and pipeline
+	// Optional uuid of the pipeline
 	Pipeline string `json:"pipeline,omitempty"`
 
-	// pipeline name
+	// Optional name of the pipeline
 	PipelineName string `json:"pipeline_name,omitempty"`
 
 	// Required project name

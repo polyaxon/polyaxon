@@ -21,6 +21,15 @@ message OwnerResourceRequest {
     string owner = 1;
 }
 
+// Request data to get/delete entity
+message OwnerEntityResourceRequest {
+    // Owner of the namespace
+    string owner = 1;
+
+    // Unique integer identifier of the entity
+    string uuid = 2;
+}
+
 // Request data with owner/project namespace
 message ProjectResourceRequest {
     // Owner of the namespace
@@ -47,7 +56,7 @@ message ProjectResourceUuidsBodyRequest {
 }
 
 // Request data to get/delete entity
-message EntityResourceRequest {
+message ProjectEntityResourceRequest {
     // Owner of the namespace
     string owner = 1;
 

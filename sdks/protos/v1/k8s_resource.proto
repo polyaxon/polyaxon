@@ -1,0 +1,66 @@
+syntax = "proto3";
+
+package v1;
+
+import "google/protobuf/timestamp.proto";
+
+// K8S resource specification
+message K8SResource {
+    // UUID
+    string uuid = 1;
+
+    // Optional name
+    string name = 2;
+
+    // Optional description
+    string description = 3;
+
+    // Optional a readme text describing this entity
+    string readme = 4;
+
+    // Optional Tags of this entity
+    repeated string tags = 5;
+
+    // Optional time when the entityt was created
+    google.protobuf.Timestamp created_at = 6;
+
+    // Optional last time the entity was updated
+    google.protobuf.Timestamp updated_at = 7;
+
+    // Optional a flag to freeze an access
+    bool frozen = 8;
+
+    // Optional a flag to disable an access
+    bool disabled = 9;
+
+    //Optional a mount path to specifiy where to mount this resource
+    string mount_path = 10;
+
+    // Optional the k8s secret to use
+    repeated string items = 11;
+}
+
+ // Request data to create/update k8s resource
+ message K8SResourceBodyRequest {
+    // Owner of the namespace
+    string owner = 1;
+
+    // Artifact store body
+    K8SResource k8s_resource = 2;
+ }
+
+
+// Contains list k8s resources
+message ListK8SResourcesResponse {
+    // Count of the entities
+    int32 count = 1;
+
+    // List of all entities
+    repeated K8SResource results = 2;
+
+    // Previous page
+    string previous = 3;
+
+    // Next page
+    string next = 4;
+}

@@ -30,7 +30,6 @@ _sym_db = _symbol_database.Default()
 
 
 from google.api import annotations_pb2 as google_dot_api_dot_annotations__pb2
-from google.protobuf import struct_pb2 as google_dot_protobuf_dot_struct__pb2
 from protoc_gen_swagger.options import annotations_pb2 as protoc__gen__swagger_dot_options_dot_annotations__pb2
 
 
@@ -39,9 +38,9 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='v1',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\x10v1/version.proto\x12\x02v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a,protoc-gen-swagger/options/annotations.proto\"6\n\x07Version\x12\x13\n\x0bmin_version\x18\x01 \x01(\t\x12\x16\n\x0elatest_version\x18\x02 \x01(\t\"x\n\x08Versions\x12\x17\n\x0f\x63urrent_version\x18\x01 \x01(\t\x12\x18\n\x03\x63li\x18\x02 \x01(\x0b\x32\x0b.v1.Version\x12\x1d\n\x08platform\x18\x03 \x01(\x0b\x32\x0b.v1.Version\x12\x1a\n\x05\x61gent\x18\x04 \x01(\x0b\x32\x0b.v1.Version\".\n\nLogHandler\x12\x0b\n\x03\x64sn\x18\x01 \x01(\t\x12\x13\n\x0b\x65nvironment\x18\x02 \x01(\tb\x06proto3')
+  serialized_pb=_b('\n\x10v1/version.proto\x12\x02v1\x1a\x1cgoogle/api/annotations.proto\x1a,protoc-gen-swagger/options/annotations.proto\"6\n\x07Version\x12\x13\n\x0bmin_version\x18\x01 \x01(\t\x12\x16\n\x0elatest_version\x18\x02 \x01(\t\"x\n\x08Versions\x12\x17\n\x0f\x63urrent_version\x18\x01 \x01(\t\x12\x18\n\x03\x63li\x18\x02 \x01(\x0b\x32\x0b.v1.Version\x12\x1d\n\x08platform\x18\x03 \x01(\x0b\x32\x0b.v1.Version\x12\x1a\n\x05\x61gent\x18\x04 \x01(\x0b\x32\x0b.v1.Version\".\n\nLogHandler\x12\x0b\n\x03\x64sn\x18\x01 \x01(\t\x12\x13\n\x0b\x65nvironment\x18\x02 \x01(\tb\x06proto3')
   ,
-  dependencies=[google_dot_api_dot_annotations__pb2.DESCRIPTOR,google_dot_protobuf_dot_struct__pb2.DESCRIPTOR,protoc__gen__swagger_dot_options_dot_annotations__pb2.DESCRIPTOR,])
+  dependencies=[google_dot_api_dot_annotations__pb2.DESCRIPTOR,protoc__gen__swagger_dot_options_dot_annotations__pb2.DESCRIPTOR,])
 
 
 
@@ -79,8 +78,8 @@ _VERSION = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=130,
-  serialized_end=184,
+  serialized_start=100,
+  serialized_end=154,
 )
 
 
@@ -131,8 +130,8 @@ _VERSIONS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=186,
-  serialized_end=306,
+  serialized_start=156,
+  serialized_end=276,
 )
 
 
@@ -169,8 +168,8 @@ _LOGHANDLER = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=308,
-  serialized_end=354,
+  serialized_start=278,
+  serialized_end=324,
 )
 
 _VERSIONS.fields_by_name['cli'].message_type = _VERSION

@@ -1,0 +1,48 @@
+syntax = "proto3";
+
+package v1;
+
+import "google/protobuf/timestamp.proto";
+
+// Search specification
+message Search {
+    // UUID
+    string uuid = 1;
+
+    // Optional name
+    string name = 2;
+
+    // Optional Search query
+    string query = 3;
+
+    // Optional Search meta
+    string meta = 4;
+}
+
+ // Request data to create/update artifacts store
+ message SearchBodyRequest {
+    // Owner of the namespace
+    string owner = 1;
+
+    // Project under namesapce
+    string project = 2;
+
+    // Artifact store body
+    Search search = 3;
+ }
+
+
+// Contains list artifacts stores
+message ListSearchesResponse {
+    // Count of the entities
+    int32 count = 1;
+
+    // List of all entities
+    repeated Search results = 2;
+
+    // Previous page
+    string previous = 3;
+
+    // Next page
+    string next = 4;
+}

@@ -751,7 +751,7 @@ var project = "project_example"; // String | Project where the experiement will 
 
 var uuid = "uuid_example"; // String | Unique integer identifier of the entity
 
-var body = new PolyaxonSdk.V1EntityResourceRequest(); // V1EntityResourceRequest | 
+var body = new PolyaxonSdk.V1ProjectEntityResourceRequest(); // V1ProjectEntityResourceRequest | 
 
 
 var callback = function(error, data, response) {
@@ -771,7 +771,7 @@ Name | Type | Description  | Notes
  **owner** | **String**| Owner of the namespace | 
  **project** | **String**| Project where the experiement will be assigned | 
  **uuid** | **String**| Unique integer identifier of the entity | 
- **body** | [**V1EntityResourceRequest**](V1EntityResourceRequest.md)|  | 
+ **body** | [**V1ProjectEntityResourceRequest**](V1ProjectEntityResourceRequest.md)|  | 
 
 ### Return type
 
@@ -1291,7 +1291,7 @@ var project = "project_example"; // String | Project where the experiement will 
 
 var uuid = "uuid_example"; // String | Unique integer identifier of the entity
 
-var body = new PolyaxonSdk.V1EntityResourceRequest(); // V1EntityResourceRequest | 
+var body = new PolyaxonSdk.V1ProjectEntityResourceRequest(); // V1ProjectEntityResourceRequest | 
 
 
 var callback = function(error, data, response) {
@@ -1311,7 +1311,7 @@ Name | Type | Description  | Notes
  **owner** | **String**| Owner of the namespace | 
  **project** | **String**| Project where the experiement will be assigned | 
  **uuid** | **String**| Unique integer identifier of the entity | 
- **body** | [**V1EntityResourceRequest**](V1EntityResourceRequest.md)|  | 
+ **body** | [**V1ProjectEntityResourceRequest**](V1ProjectEntityResourceRequest.md)|  | 
 
 ### Return type
 

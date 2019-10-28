@@ -37,7 +37,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='v1',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\rv1/base.proto\x12\x02v1\x1a\x19google/protobuf/any.proto\"6\n\x02KV\x12\x0b\n\x03key\x18\x01 \x01(\t\x12#\n\x05value\x18\x02 \x01(\x0b\x32\x14.google.protobuf.Any\"#\n\x13UserResourceRequest\x12\x0c\n\x04user\x18\x01 \x01(\t\"%\n\x14OwnerResourceRequest\x12\r\n\x05owner\x18\x01 \x01(\t\"8\n\x16ProjectResourceRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0f\n\x07project\x18\x02 \x01(\t\"\x16\n\x05Uuids\x12\r\n\x05uuids\x18\x01 \x03(\t\"[\n\x1fProjectResourceUuidsBodyRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0f\n\x07project\x18\x02 \x01(\t\x12\x18\n\x05uuids\x18\x03 \x01(\x0b\x32\t.v1.Uuids\"E\n\x15\x45ntityResourceRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0f\n\x07project\x18\x02 \x01(\t\x12\x0c\n\x04uuid\x18\x03 \x01(\t\"b\n\x16UserResouceListRequest\x12\x0c\n\x04user\x18\x01 \x01(\t\x12\x0e\n\x06offset\x18\x02 \x01(\x05\x12\r\n\x05limit\x18\x03 \x01(\x05\x12\x0c\n\x04sort\x18\x04 \x01(\t\x12\r\n\x05query\x18\x05 \x01(\t\"d\n\x17OwnerResouceListRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0e\n\x06offset\x18\x02 \x01(\x05\x12\r\n\x05limit\x18\x03 \x01(\x05\x12\x0c\n\x04sort\x18\x04 \x01(\t\x12\r\n\x05query\x18\x05 \x01(\t\"x\n\x1aProjectResourceListRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0f\n\x07project\x18\x02 \x01(\t\x12\x0e\n\x06offset\x18\x03 \x01(\x05\x12\r\n\x05limit\x18\x04 \x01(\x05\x12\x0c\n\x04sort\x18\x05 \x01(\t\x12\r\n\x05query\x18\x06 \x01(\tb\x06proto3')
+  serialized_pb=_b('\n\rv1/base.proto\x12\x02v1\x1a\x19google/protobuf/any.proto\"6\n\x02KV\x12\x0b\n\x03key\x18\x01 \x01(\t\x12#\n\x05value\x18\x02 \x01(\x0b\x32\x14.google.protobuf.Any\"#\n\x13UserResourceRequest\x12\x0c\n\x04user\x18\x01 \x01(\t\"%\n\x14OwnerResourceRequest\x12\r\n\x05owner\x18\x01 \x01(\t\"9\n\x1aOwnerEntityResourceRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0c\n\x04uuid\x18\x02 \x01(\t\"8\n\x16ProjectResourceRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0f\n\x07project\x18\x02 \x01(\t\"\x16\n\x05Uuids\x12\r\n\x05uuids\x18\x01 \x03(\t\"[\n\x1fProjectResourceUuidsBodyRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0f\n\x07project\x18\x02 \x01(\t\x12\x18\n\x05uuids\x18\x03 \x01(\x0b\x32\t.v1.Uuids\"L\n\x1cProjectEntityResourceRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0f\n\x07project\x18\x02 \x01(\t\x12\x0c\n\x04uuid\x18\x03 \x01(\t\"b\n\x16UserResouceListRequest\x12\x0c\n\x04user\x18\x01 \x01(\t\x12\x0e\n\x06offset\x18\x02 \x01(\x05\x12\r\n\x05limit\x18\x03 \x01(\x05\x12\x0c\n\x04sort\x18\x04 \x01(\t\x12\r\n\x05query\x18\x05 \x01(\t\"d\n\x17OwnerResouceListRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0e\n\x06offset\x18\x02 \x01(\x05\x12\r\n\x05limit\x18\x03 \x01(\x05\x12\x0c\n\x04sort\x18\x04 \x01(\t\x12\r\n\x05query\x18\x05 \x01(\t\"x\n\x1aProjectResourceListRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0f\n\x07project\x18\x02 \x01(\t\x12\x0e\n\x06offset\x18\x03 \x01(\x05\x12\r\n\x05limit\x18\x04 \x01(\x05\x12\x0c\n\x04sort\x18\x05 \x01(\t\x12\r\n\x05query\x18\x06 \x01(\tb\x06proto3')
   ,
   dependencies=[google_dot_protobuf_dot_any__pb2.DESCRIPTOR,])
 
@@ -144,6 +144,44 @@ _OWNERRESOURCEREQUEST = _descriptor.Descriptor(
 )
 
 
+_OWNERENTITYRESOURCEREQUEST = _descriptor.Descriptor(
+  name='OwnerEntityResourceRequest',
+  full_name='v1.OwnerEntityResourceRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='owner', full_name='v1.OwnerEntityResourceRequest.owner', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='uuid', full_name='v1.OwnerEntityResourceRequest.uuid', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=180,
+  serialized_end=237,
+)
+
+
 _PROJECTRESOURCEREQUEST = _descriptor.Descriptor(
   name='ProjectResourceRequest',
   full_name='v1.ProjectResourceRequest',
@@ -177,8 +215,8 @@ _PROJECTRESOURCEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=180,
-  serialized_end=236,
+  serialized_start=239,
+  serialized_end=295,
 )
 
 
@@ -208,8 +246,8 @@ _UUIDS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=238,
-  serialized_end=260,
+  serialized_start=297,
+  serialized_end=319,
 )
 
 
@@ -253,34 +291,34 @@ _PROJECTRESOURCEUUIDSBODYREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=262,
-  serialized_end=353,
+  serialized_start=321,
+  serialized_end=412,
 )
 
 
-_ENTITYRESOURCEREQUEST = _descriptor.Descriptor(
-  name='EntityResourceRequest',
-  full_name='v1.EntityResourceRequest',
+_PROJECTENTITYRESOURCEREQUEST = _descriptor.Descriptor(
+  name='ProjectEntityResourceRequest',
+  full_name='v1.ProjectEntityResourceRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='owner', full_name='v1.EntityResourceRequest.owner', index=0,
+      name='owner', full_name='v1.ProjectEntityResourceRequest.owner', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='project', full_name='v1.EntityResourceRequest.project', index=1,
+      name='project', full_name='v1.ProjectEntityResourceRequest.project', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='uuid', full_name='v1.EntityResourceRequest.uuid', index=2,
+      name='uuid', full_name='v1.ProjectEntityResourceRequest.uuid', index=2,
       number=3, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -298,8 +336,8 @@ _ENTITYRESOURCEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=355,
-  serialized_end=424,
+  serialized_start=414,
+  serialized_end=490,
 )
 
 
@@ -357,8 +395,8 @@ _USERRESOUCELISTREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=426,
-  serialized_end=524,
+  serialized_start=492,
+  serialized_end=590,
 )
 
 
@@ -416,8 +454,8 @@ _OWNERRESOUCELISTREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=526,
-  serialized_end=626,
+  serialized_start=592,
+  serialized_end=692,
 )
 
 
@@ -482,8 +520,8 @@ _PROJECTRESOURCELISTREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=628,
-  serialized_end=748,
+  serialized_start=694,
+  serialized_end=814,
 )
 
 _KV.fields_by_name['value'].message_type = google_dot_protobuf_dot_any__pb2._ANY
@@ -491,10 +529,11 @@ _PROJECTRESOURCEUUIDSBODYREQUEST.fields_by_name['uuids'].message_type = _UUIDS
 DESCRIPTOR.message_types_by_name['KV'] = _KV
 DESCRIPTOR.message_types_by_name['UserResourceRequest'] = _USERRESOURCEREQUEST
 DESCRIPTOR.message_types_by_name['OwnerResourceRequest'] = _OWNERRESOURCEREQUEST
+DESCRIPTOR.message_types_by_name['OwnerEntityResourceRequest'] = _OWNERENTITYRESOURCEREQUEST
 DESCRIPTOR.message_types_by_name['ProjectResourceRequest'] = _PROJECTRESOURCEREQUEST
 DESCRIPTOR.message_types_by_name['Uuids'] = _UUIDS
 DESCRIPTOR.message_types_by_name['ProjectResourceUuidsBodyRequest'] = _PROJECTRESOURCEUUIDSBODYREQUEST
-DESCRIPTOR.message_types_by_name['EntityResourceRequest'] = _ENTITYRESOURCEREQUEST
+DESCRIPTOR.message_types_by_name['ProjectEntityResourceRequest'] = _PROJECTENTITYRESOURCEREQUEST
 DESCRIPTOR.message_types_by_name['UserResouceListRequest'] = _USERRESOUCELISTREQUEST
 DESCRIPTOR.message_types_by_name['OwnerResouceListRequest'] = _OWNERRESOUCELISTREQUEST
 DESCRIPTOR.message_types_by_name['ProjectResourceListRequest'] = _PROJECTRESOURCELISTREQUEST
@@ -521,6 +560,13 @@ OwnerResourceRequest = _reflection.GeneratedProtocolMessageType('OwnerResourceRe
   })
 _sym_db.RegisterMessage(OwnerResourceRequest)
 
+OwnerEntityResourceRequest = _reflection.GeneratedProtocolMessageType('OwnerEntityResourceRequest', (_message.Message,), {
+  'DESCRIPTOR' : _OWNERENTITYRESOURCEREQUEST,
+  '__module__' : 'v1.base_pb2'
+  # @@protoc_insertion_point(class_scope:v1.OwnerEntityResourceRequest)
+  })
+_sym_db.RegisterMessage(OwnerEntityResourceRequest)
+
 ProjectResourceRequest = _reflection.GeneratedProtocolMessageType('ProjectResourceRequest', (_message.Message,), {
   'DESCRIPTOR' : _PROJECTRESOURCEREQUEST,
   '__module__' : 'v1.base_pb2'
@@ -542,12 +588,12 @@ ProjectResourceUuidsBodyRequest = _reflection.GeneratedProtocolMessageType('Proj
   })
 _sym_db.RegisterMessage(ProjectResourceUuidsBodyRequest)
 
-EntityResourceRequest = _reflection.GeneratedProtocolMessageType('EntityResourceRequest', (_message.Message,), {
-  'DESCRIPTOR' : _ENTITYRESOURCEREQUEST,
+ProjectEntityResourceRequest = _reflection.GeneratedProtocolMessageType('ProjectEntityResourceRequest', (_message.Message,), {
+  'DESCRIPTOR' : _PROJECTENTITYRESOURCEREQUEST,
   '__module__' : 'v1.base_pb2'
-  # @@protoc_insertion_point(class_scope:v1.EntityResourceRequest)
+  # @@protoc_insertion_point(class_scope:v1.ProjectEntityResourceRequest)
   })
-_sym_db.RegisterMessage(EntityResourceRequest)
+_sym_db.RegisterMessage(ProjectEntityResourceRequest)
 
 UserResouceListRequest = _reflection.GeneratedProtocolMessageType('UserResouceListRequest', (_message.Message,), {
   'DESCRIPTOR' : _USERRESOUCELISTREQUEST,

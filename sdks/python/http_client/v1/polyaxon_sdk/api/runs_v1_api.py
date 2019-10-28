@@ -1441,7 +1441,7 @@ class RunsV1Api(object):
         :param str owner: Owner of the namespace (required)
         :param str project: Project where the experiement will be assigned (required)
         :param str uuid: Unique integer identifier of the entity (required)
-        :param V1EntityResourceRequest body: (required)
+        :param V1ProjectEntityResourceRequest body: (required)
         :return: object
                  If the method is called asynchronously,
                  returns the request thread.
@@ -1465,7 +1465,7 @@ class RunsV1Api(object):
         :param str owner: Owner of the namespace (required)
         :param str project: Project where the experiement will be assigned (required)
         :param str uuid: Unique integer identifier of the entity (required)
-        :param V1EntityResourceRequest body: (required)
+        :param V1ProjectEntityResourceRequest body: (required)
         :return: object
                  If the method is called asynchronously,
                  returns the request thread.
@@ -2498,7 +2498,7 @@ class RunsV1Api(object):
         :param str owner: Owner of the namespace (required)
         :param str project: Project where the experiement will be assigned (required)
         :param str uuid: Unique integer identifier of the entity (required)
-        :param V1EntityResourceRequest body: (required)
+        :param V1ProjectEntityResourceRequest body: (required)
         :return: object
                  If the method is called asynchronously,
                  returns the request thread.
@@ -2522,7 +2522,7 @@ class RunsV1Api(object):
         :param str owner: Owner of the namespace (required)
         :param str project: Project where the experiement will be assigned (required)
         :param str uuid: Unique integer identifier of the entity (required)
-        :param V1EntityResourceRequest body: (required)
+        :param V1ProjectEntityResourceRequest body: (required)
         :return: object
                  If the method is called asynchronously,
                  returns the request thread.

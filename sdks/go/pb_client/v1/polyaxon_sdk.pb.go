@@ -44,107 +44,163 @@ const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 func init() { proto.RegisterFile("v1/polyaxon_sdk.proto", fileDescriptor_5f2d65d1ab5d9ce0) }
 
 var fileDescriptor_5f2d65d1ab5d9ce0 = []byte{
-	// 1587 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xbc, 0x98, 0xdd, 0x76, 0xd3, 0xc6,
-	0x16, 0xc7, 0x8f, 0x0d, 0xe4, 0x63, 0x13, 0x27, 0xce, 0xf0, 0xb1, 0x82, 0x03, 0xc1, 0x88, 0x00,
-	0x27, 0x3e, 0x44, 0x8a, 0x9d, 0xc0, 0xe1, 0xf8, 0x74, 0xb5, 0x4d, 0x42, 0x1a, 0xd2, 0x86, 0x8f,
-	0x9a, 0x84, 0xd5, 0xd2, 0xae, 0x95, 0xca, 0xd2, 0xc4, 0x16, 0xb1, 0x35, 0x42, 0x33, 0x32, 0x31,
-	0x81, 0xd2, 0xf6, 0xa6, 0x37, 0xbd, 0x6a, 0xaf, 0xda, 0xeb, 0x5e, 0xf4, 0xb2, 0x7d, 0x96, 0xbe,
-	0x42, 0x1f, 0xa4, 0x6b, 0x46, 0x33, 0x8a, 0x03, 0x91, 0x23, 0xec, 0xb6, 0x57, 0xc9, 0x8c, 0x46,
-	0xff, 0xdf, 0xde, 0xdb, 0x7b, 0x66, 0xf6, 0x16, 0x9c, 0x69, 0x15, 0x0d, 0x8f, 0x34, 0xda, 0xe6,
-	0x2e, 0x71, 0xb7, 0xa8, 0xbd, 0xa3, 0x7b, 0x3e, 0x61, 0x04, 0xa5, 0x5b, 0xc5, 0xdc, 0xf9, 0x1a,
-	0x21, 0xb5, 0x06, 0x36, 0x4c, 0xcf, 0x31, 0x4c, 0xd7, 0x25, 0xcc, 0x64, 0x0e, 0x71, 0x69, 0xb8,
-	0x22, 0x37, 0x29, 0x9f, 0x8a, 0x51, 0x35, 0xd8, 0x36, 0x70, 0xd3, 0x63, 0x6d, 0xf9, 0xf0, 0xba,
-	0xf8, 0x63, 0xcd, 0xd6, 0xb0, 0x3b, 0x4b, 0x9f, 0x99, 0xb5, 0x1a, 0xf6, 0x0d, 0xe2, 0x89, 0xd7,
-	0x0f, 0x91, 0xca, 0xb4, 0x8a, 0x46, 0xd5, 0xa4, 0x58, 0x0e, 0xc7, 0x5b, 0x45, 0xc3, 0x22, 0x36,
-	0xde, 0xf2, 0xf1, 0xb6, 0x9c, 0x1a, 0x69, 0x15, 0x0d, 0x3f, 0x70, 0xe5, 0x28, 0xcb, 0x6d, 0xf6,
-	0xc9, 0x13, 0x6c, 0xb1, 0x8e, 0x99, 0x16, 0xf6, 0xa9, 0x43, 0xdc, 0x0e, 0x4d, 0x33, 0x60, 0xf5,
-	0x8e, 0x61, 0x40, 0xb1, 0x2f, 0x87, 0x63, 0xad, 0xa2, 0x41, 0x99, 0xc9, 0x02, 0x69, 0x42, 0xe9,
-	0xd7, 0x73, 0x30, 0x50, 0x09, 0x5c, 0xfa, 0xa8, 0x88, 0x9a, 0x80, 0xd6, 0x1d, 0xca, 0x96, 0x08,
-	0xd9, 0x69, 0x9a, 0xfe, 0x0e, 0xb6, 0xf9, 0x3c, 0xca, 0xe9, 0xad, 0xa2, 0xbe, 0x49, 0xb1, 0x5f,
-	0xc1, 0x94, 0x04, 0x16, 0xe6, 0x4b, 0x2a, 0xf8, 0x69, 0x80, 0x29, 0xcb, 0x9d, 0xe6, 0xcf, 0xc4,
-	0x44, 0xe0, 0xd2, 0x0a, 0xa6, 0x1e, 0x71, 0x29, 0xd6, 0xae, 0x7c, 0xf3, 0xfb, 0x1f, 0x3f, 0xa4,
-	0x2f, 0xa2, 0x0b, 0x22, 0x80, 0xdc, 0x45, 0xa9, 0x48, 0x8d, 0x3d, 0x6e, 0xca, 0x4b, 0xee, 0x11,
-	0x45, 0x4f, 0x20, 0xcb, 0x5f, 0x5d, 0xf4, 0xad, 0xba, 0xd3, 0xea, 0x19, 0x36, 0x2d, 0x60, 0x53,
-	0xe8, 0xbc, 0x82, 0x99, 0xa1, 0xde, 0x41, 0x56, 0x13, 0x86, 0xd4, 0x9b, 0x68, 0x8a, 0xeb, 0x3c,
-	0x08, 0xa3, 0x28, 0x30, 0x7e, 0x12, 0xce, 0x7f, 0x04, 0xe7, 0x0a, 0xba, 0xac, 0x38, 0x7b, 0xe4,
-	0x99, 0xcb, 0xf5, 0xf7, 0xe4, 0x0f, 0x12, 0x92, 0x8c, 0x86, 0x43, 0x19, 0xfa, 0x1c, 0x86, 0x97,
-	0x7d, 0x6c, 0x32, 0x5c, 0x09, 0x5c, 0x84, 0xb8, 0x5e, 0x25, 0x70, 0x97, 0x88, 0xdd, 0x56, 0x8c,
-	0x41, 0x39, 0xa7, 0x95, 0x84, 0xec, 0x75, 0xed, 0xca, 0x11, 0xb2, 0x96, 0x90, 0x2b, 0x1f, 0xf3,
-	0x03, 0x17, 0x7d, 0x06, 0x03, 0xab, 0x98, 0x5b, 0x87, 0xce, 0x71, 0x99, 0x15, 0x97, 0x39, 0xac,
-	0xad, 0x3c, 0x79, 0x83, 0x30, 0x2b, 0x08, 0xd7, 0xd0, 0x51, 0x84, 0xbd, 0x20, 0x70, 0xec, 0x97,
-	0xe8, 0x0b, 0x18, 0xde, 0xf4, 0xec, 0x24, 0xa6, 0xdf, 0x14, 0xc2, 0x73, 0xb9, 0x99, 0xa3, 0x84,
-	0x79, 0xfe, 0x0a, 0xf1, 0xd0, 0xfc, 0x2d, 0x18, 0x7a, 0x60, 0x32, 0xab, 0x9e, 0x14, 0x50, 0x7a,
-	0x5b, 0x40, 0x13, 0x86, 0x6f, 0xe3, 0x06, 0x0e, 0x5d, 0xe8, 0x12, 0xa2, 0xb3, 0x7a, 0xb8, 0x93,
-	0x75, 0xb5, 0x93, 0xf5, 0x15, 0xbe, 0x93, 0x55, 0xc4, 0x0a, 0x09, 0x23, 0xf6, 0x0a, 0x20, 0xc2,
-	0x51, 0x74, 0xf9, 0x90, 0xec, 0xda, 0x0c, 0x1c, 0x9b, 0x76, 0xba, 0x18, 0x47, 0x5e, 0x10, 0x64,
-	0xfd, 0x48, 0xb2, 0x2d, 0x78, 0xe5, 0x13, 0xdc, 0x00, 0x8a, 0x3c, 0x18, 0x7c, 0xc8, 0x88, 0xd7,
-	0xa3, 0xb7, 0x2a, 0x03, 0x0b, 0x89, 0xbc, 0x35, 0x28, 0x23, 0x1e, 0xda, 0x83, 0x21, 0x49, 0xec,
-	0xd3, 0x61, 0x05, 0x3f, 0x6a, 0x57, 0x71, 0xaa, 0x72, 0xf7, 0x15, 0x64, 0xd6, 0xdc, 0x96, 0xd9,
-	0x70, 0x54, 0x96, 0xf6, 0xe0, 0xf4, 0xff, 0x05, 0xf7, 0x86, 0x36, 0x97, 0xcc, 0x69, 0x27, 0xe2,
-	0x95, 0x53, 0x05, 0xf4, 0x6d, 0x0a, 0x46, 0x0f, 0x58, 0xd0, 0x67, 0x10, 0x6e, 0x09, 0x63, 0x4a,
-	0xda, 0x51, 0x79, 0xde, 0x61, 0x85, 0x0c, 0xc5, 0x73, 0x18, 0x5c, 0x26, 0x5e, 0x9b, 0x07, 0x61,
-	0xa2, 0x23, 0x08, 0x31, 0xfb, 0x69, 0x5d, 0x70, 0x3e, 0xd0, 0xde, 0x8b, 0x38, 0x58, 0xac, 0xd7,
-	0x15, 0x4e, 0x0e, 0x5f, 0x0b, 0x81, 0x9c, 0x0d, 0x23, 0x61, 0x11, 0xaf, 0x1d, 0xee, 0xb2, 0xaf,
-	0x52, 0x00, 0x15, 0x4c, 0x99, 0xe9, 0xb3, 0x84, 0xfc, 0xfb, 0x82, 0xbf, 0xa6, 0x2d, 0xf5, 0xc1,
-	0xf7, 0x43, 0x62, 0x68, 0xc2, 0x97, 0x30, 0x5c, 0xc1, 0x34, 0x68, 0xe2, 0x84, 0x06, 0xdc, 0x13,
-	0x06, 0xdc, 0xd1, 0x16, 0xfb, 0x33, 0x20, 0x68, 0xca, 0x83, 0xb8, 0x05, 0x20, 0x6f, 0xaf, 0x1e,
-	0xd3, 0xf0, 0x86, 0x30, 0xc8, 0xd0, 0x66, 0x93, 0xa5, 0xa1, 0xbc, 0xda, 0x38, 0x97, 0x47, 0x9e,
-	0xf8, 0xff, 0x10, 0xd7, 0x0f, 0x61, 0x68, 0x17, 0x4e, 0xaa, 0xe2, 0xa0, 0x47, 0xb0, 0x3c, 0xd2,
-	0x35, 0x3d, 0x19, 0x58, 0x15, 0x0e, 0xe8, 0x05, 0x64, 0x36, 0xdd, 0x6a, 0x7f, 0x6c, 0xb9, 0xcd,
-	0x0a, 0x09, 0xf7, 0x7c, 0x10, 0xf1, 0xd0, 0x77, 0x29, 0x38, 0xf5, 0x50, 0x26, 0xfa, 0x06, 0x76,
-	0x29, 0xf1, 0xab, 0xc4, 0xf4, 0xed, 0x5e, 0x8c, 0x58, 0x12, 0x46, 0xbc, 0xa3, 0xfd, 0x37, 0x99,
-	0x11, 0x6c, 0x9f, 0x66, 0x84, 0x89, 0x1f, 0x9e, 0x3f, 0x48, 0x1e, 0xbf, 0x7d, 0x5a, 0xf3, 0xae,
-	0xb0, 0xe6, 0x56, 0xe1, 0x66, 0x2f, 0xd6, 0x10, 0x0f, 0x11, 0x18, 0x0d, 0x2b, 0x91, 0x87, 0xa2,
-	0xa4, 0xc4, 0xb4, 0x9b, 0x11, 0xc0, 0x1f, 0x85, 0x0b, 0x55, 0x1e, 0x20, 0x3d, 0xe9, 0xa5, 0x23,
-	0xe5, 0x03, 0x18, 0x8b, 0x0a, 0xab, 0x50, 0x0a, 0x4d, 0xee, 0x13, 0xc3, 0x99, 0xce, 0xad, 0xdf,
-	0xc9, 0xfc, 0x9f, 0x60, 0xce, 0x6b, 0x6f, 0xc9, 0xe4, 0x11, 0x7f, 0xa1, 0xfc, 0x5c, 0x26, 0x36,
-	0xae, 0xe0, 0xed, 0xae, 0x7e, 0x4e, 0xa8, 0xfa, 0x51, 0x2d, 0x8e, 0x6a, 0x48, 0xb9, 0xed, 0x50,
-	0xc2, 0x6d, 0xc7, 0x5b, 0x01, 0x1f, 0x6f, 0xa3, 0x1f, 0x53, 0x90, 0x8d, 0xbc, 0x96, 0xa2, 0xe8,
-	0x2c, 0xa7, 0xc8, 0x41, 0xa7, 0xc7, 0xe3, 0x1d, 0xf3, 0xd8, 0xc7, 0xae, 0x85, 0xb5, 0xc7, 0x02,
-	0xbb, 0xd1, 0xd7, 0xb9, 0x2b, 0x6d, 0x29, 0x8f, 0xaa, 0xfe, 0x24, 0xd4, 0x46, 0x3e, 0x64, 0xd7,
-	0x9a, 0x1e, 0xf6, 0x29, 0x71, 0x4d, 0x86, 0x37, 0xc8, 0x0e, 0xee, 0xba, 0x37, 0x87, 0xf8, 0xa3,
-	0xc5, 0x80, 0xd5, 0xa3, 0x5f, 0xa3, 0x98, 0xf0, 0x06, 0xde, 0x87, 0x94, 0xbe, 0xce, 0x00, 0xc8,
-	0xbb, 0x96, 0xb7, 0x2d, 0x0d, 0x18, 0xe1, 0xd1, 0x56, 0x33, 0x61, 0x42, 0xdc, 0xe7, 0x62, 0x87,
-	0x34, 0x11, 0xd1, 0x8f, 0xa3, 0x96, 0xc7, 0x77, 0x2d, 0xca, 0x20, 0x69, 0x8f, 0x2c, 0xed, 0x9f,
-	0x86, 0x5d, 0x8b, 0x7c, 0xfd, 0x9e, 0xd9, 0xc4, 0x3d, 0x13, 0xaf, 0x0a, 0x62, 0x1e, 0x4d, 0xc5,
-	0x12, 0x5d, 0x21, 0xdf, 0x86, 0xb3, 0x07, 0xfb, 0xb2, 0xc8, 0xd5, 0x6e, 0xed, 0x52, 0x3c, 0x77,
-	0x46, 0x70, 0x2f, 0xa3, 0x4b, 0xb1, 0xfd, 0x99, 0x32, 0x00, 0xb5, 0xe0, 0x74, 0x67, 0x8f, 0xd6,
-	0x27, 0xf8, 0xdf, 0x02, 0xac, 0xa1, 0x7c, 0x5c, 0xaf, 0x16, 0x71, 0xb7, 0x21, 0x13, 0x66, 0xbc,
-	0xd4, 0x08, 0xd3, 0x5d, 0x0e, 0x3a, 0xd3, 0xfd, 0x64, 0xc7, 0xbc, 0x36, 0x27, 0xf4, 0x0b, 0xda,
-	0xc5, 0xd8, 0x80, 0xca, 0x36, 0x6a, 0x50, 0x4e, 0xa0, 0x4f, 0x00, 0x56, 0xb1, 0x32, 0x34, 0xf4,
-	0xea, 0xb5, 0x2a, 0xee, 0x50, 0xd0, 0x25, 0x01, 0x9a, 0x44, 0xe7, 0x62, 0x93, 0x17, 0x61, 0xc8,
-	0x84, 0x7d, 0xd4, 0x5b, 0x79, 0x60, 0x08, 0xe1, 0x99, 0xdc, 0x54, 0x9c, 0xb0, 0xce, 0x53, 0xe2,
-	0xe5, 0xbe, 0x03, 0x36, 0x8c, 0x88, 0x66, 0xaa, 0x17, 0x4a, 0x29, 0x31, 0x65, 0x1b, 0x32, 0x61,
-	0x8b, 0x93, 0x24, 0x52, 0x71, 0x97, 0x8d, 0x0c, 0x5a, 0xa1, 0x4b, 0xd0, 0x08, 0x8c, 0xca, 0x54,
-	0xeb, 0x07, 0x24, 0xf3, 0x5b, 0xbb, 0x14, 0x7f, 0xb4, 0xa8, 0x4a, 0xca, 0x87, 0x71, 0x59, 0x49,
-	0xad, 0xec, 0x7a, 0xd8, 0x77, 0x9a, 0xd8, 0xfd, 0xdb, 0x98, 0xaa, 0x8a, 0x7a, 0x0a, 0x63, 0x6a,
-	0x2b, 0xf7, 0xe3, 0x65, 0x41, 0x10, 0xa7, 0x35, 0x2d, 0x9e, 0x18, 0x15, 0x30, 0x01, 0x8c, 0xef,
-	0x97, 0x4f, 0xfd, 0x40, 0xaf, 0x0b, 0xe8, 0xd5, 0xc2, 0x74, 0x3c, 0xb4, 0xa3, 0x6e, 0xda, 0x81,
-	0xb1, 0x15, 0xd7, 0xac, 0x36, 0xd4, 0xaf, 0xb9, 0xbc, 0xd6, 0x13, 0x54, 0x7e, 0xe2, 0xd1, 0xce,
-	0xc7, 0x43, 0x2d, 0x07, 0x35, 0x20, 0x7b, 0xdb, 0xa1, 0x7f, 0x19, 0xad, 0xd0, 0x95, 0x56, 0xfa,
-	0x18, 0x06, 0xf8, 0x35, 0xf6, 0xa8, 0x88, 0x56, 0xe1, 0xc4, 0x3a, 0xa9, 0x39, 0x2e, 0x12, 0xdf,
-	0x8d, 0x96, 0x7d, 0x7c, 0xb0, 0xe9, 0xdb, 0xbf, 0xf1, 0xa6, 0x84, 0xf0, 0x84, 0x76, 0x4a, 0x09,
-	0xf3, 0x33, 0x8f, 0x1a, 0x8c, 0xdf, 0x99, 0xe5, 0x54, 0xa1, 0x74, 0x17, 0x06, 0xf9, 0x89, 0xca,
-	0xaf, 0xb4, 0x25, 0x18, 0xac, 0x61, 0xc6, 0x47, 0x28, 0xc6, 0xcc, 0x50, 0x97, 0xaf, 0xd0, 0xce,
-	0x08, 0xdd, 0x31, 0x94, 0x39, 0xa0, 0x5b, 0xfa, 0x2d, 0x05, 0xf0, 0x28, 0xfc, 0x32, 0xc8, 0x25,
-	0xef, 0xc2, 0xc9, 0x55, 0xcc, 0xd4, 0x44, 0xac, 0xec, 0x08, 0x97, 0x55, 0xab, 0xb4, 0x09, 0x21,
-	0x8d, 0x50, 0x56, 0x49, 0xb7, 0xd4, 0xfb, 0x1b, 0x90, 0x59, 0xc5, 0x6c, 0x9d, 0xd4, 0xee, 0x98,
-	0xae, 0xdd, 0xe8, 0x62, 0xe7, 0xa8, 0xb8, 0x0d, 0xa2, 0x75, 0xda, 0xa4, 0x90, 0x3c, 0x83, 0xa2,
-	0x28, 0x34, 0x48, 0x6d, 0xab, 0x1e, 0x3e, 0x5c, 0xfa, 0x25, 0xfd, 0xfd, 0xe2, 0xcf, 0x69, 0x54,
-	0x85, 0x91, 0x07, 0xf2, 0xcb, 0x6c, 0x9e, 0xda, 0x3b, 0xda, 0x87, 0x07, 0xc7, 0x68, 0xba, 0xce,
-	0x98, 0x47, 0xcb, 0x86, 0x51, 0x73, 0x58, 0x3d, 0xa8, 0xea, 0x16, 0x69, 0x46, 0x9f, 0x72, 0xa3,
-	0x7f, 0x72, 0xa7, 0x2d, 0xe2, 0x32, 0xd3, 0x62, 0xef, 0xab, 0x19, 0xbe, 0xae, 0x34, 0x50, 0xd4,
-	0x8b, 0x0b, 0xfa, 0x42, 0xe1, 0x78, 0x2a, 0x7d, 0xec, 0x78, 0x29, 0x6b, 0x7a, 0x5e, 0xc3, 0xb1,
-	0xc4, 0x47, 0x59, 0xe3, 0x09, 0x25, 0x6e, 0xf9, 0x8d, 0x99, 0x4a, 0x19, 0x8e, 0x2d, 0xcc, 0xcd,
-	0xa3, 0x79, 0x28, 0x7e, 0x4a, 0x82, 0xbc, 0x4d, 0xdc, 0x6b, 0x2c, 0x5f, 0x37, 0x5b, 0x38, 0xef,
-	0x61, 0xbf, 0xe9, 0x50, 0x1e, 0x8f, 0x3c, 0x23, 0x79, 0xd3, 0xb2, 0x30, 0xa5, 0x79, 0x56, 0xc7,
-	0x79, 0x5f, 0xa6, 0x9a, 0x5e, 0x99, 0xe1, 0xef, 0x2e, 0x20, 0x0d, 0x26, 0x54, 0xfa, 0xe5, 0x6d,
-	0x82, 0x69, 0xde, 0x25, 0x2c, 0x8f, 0x77, 0x1d, 0xca, 0x74, 0x34, 0x00, 0xc7, 0x7f, 0x4a, 0xa7,
-	0x06, 0x1f, 0x5f, 0x84, 0x0b, 0x30, 0xb0, 0xe8, 0x39, 0x1f, 0xe1, 0x36, 0x3a, 0x35, 0x94, 0xce,
-	0x65, 0x78, 0xd2, 0x10, 0xdf, 0x79, 0x2e, 0x4c, 0xc9, 0xa7, 0xab, 0x23, 0x00, 0xd1, 0x82, 0x7f,
-	0x55, 0x07, 0x44, 0x9c, 0xe7, 0xff, 0x0c, 0x00, 0x00, 0xff, 0xff, 0x56, 0xc4, 0x50, 0x50, 0xc7,
-	0x16, 0x00, 0x00,
+	// 2490 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xbc, 0x9a, 0xcd, 0x77, 0xdb, 0xc6,
+	0x11, 0xc0, 0x0b, 0x25, 0x91, 0xe4, 0x31, 0xf5, 0xb5, 0x92, 0x53, 0x85, 0xfe, 0xa2, 0xe1, 0x6f,
+	0xc6, 0x26, 0x4d, 0x58, 0x71, 0x55, 0xb6, 0x2f, 0x89, 0x24, 0xbb, 0xb2, 0x6b, 0x3b, 0x71, 0x29,
+	0xdb, 0xaf, 0xcd, 0xeb, 0x7b, 0x2a, 0x44, 0xae, 0x28, 0x58, 0x24, 0x96, 0xc6, 0x2e, 0x68, 0xd3,
+	0x8a, 0xeb, 0x38, 0x69, 0x9a, 0x43, 0xfa, 0x72, 0x68, 0x2e, 0x49, 0xcf, 0x3d, 0xf4, 0xd0, 0x4b,
+	0xcf, 0xfd, 0x33, 0xda, 0x7b, 0x0f, 0xed, 0x1f, 0xd2, 0xb7, 0x5f, 0x20, 0x40, 0x09, 0x02, 0x28,
+	0xa8, 0x3d, 0x49, 0x58, 0x2c, 0xe7, 0x37, 0x33, 0x3b, 0xb3, 0x3b, 0xbb, 0x58, 0x38, 0xd6, 0xad,
+	0x94, 0x3b, 0xa4, 0xd5, 0xb3, 0x9f, 0x13, 0x77, 0x9d, 0x36, 0xb6, 0x4b, 0x1d, 0x8f, 0x30, 0x82,
+	0x46, 0xba, 0x95, 0xfc, 0x89, 0x26, 0x21, 0xcd, 0x16, 0x2e, 0xdb, 0x1d, 0xa7, 0x6c, 0xbb, 0x2e,
+	0x61, 0x36, 0x73, 0x88, 0x4b, 0x65, 0x8f, 0xfc, 0x71, 0xf5, 0x56, 0x3c, 0x6d, 0xf8, 0x9b, 0x65,
+	0xdc, 0xee, 0xb0, 0x9e, 0x7a, 0x79, 0x45, 0xfc, 0xa9, 0x5f, 0x6d, 0x62, 0xf7, 0x2a, 0x7d, 0x66,
+	0x37, 0x9b, 0xd8, 0x2b, 0x93, 0x8e, 0xf8, 0xf9, 0x1e, 0xa2, 0xe6, 0xbb, 0x95, 0xb2, 0xed, 0x31,
+	0x67, 0xd3, 0xae, 0x33, 0xba, 0x4e, 0x19, 0xf1, 0xb0, 0x7a, 0x33, 0xd7, 0xad, 0x94, 0xb7, 0x08,
+	0x65, 0xeb, 0x76, 0xbd, 0x8e, 0xa9, 0xee, 0xcf, 0x75, 0xde, 0x5e, 0xa4, 0xeb, 0x1e, 0xa6, 0xc4,
+	0xf7, 0xea, 0xba, 0xf3, 0x44, 0xb7, 0x52, 0xde, 0xb0, 0xa9, 0x7e, 0x9c, 0xe9, 0x56, 0xca, 0x75,
+	0xd2, 0xc0, 0xeb, 0x1e, 0xde, 0x54, 0x4d, 0xb9, 0x6e, 0xa5, 0xec, 0xf9, 0xae, 0x7a, 0x9a, 0xe6,
+	0xa6, 0x7b, 0xe4, 0x09, 0xae, 0xb3, 0x50, 0x4b, 0x17, 0x7b, 0xd4, 0x21, 0x6e, 0x48, 0xa6, 0xed,
+	0xb3, 0xad, 0xd0, 0xa3, 0x4f, 0xb1, 0xa7, 0x1e, 0xa7, 0xba, 0x95, 0x32, 0xc5, 0xb6, 0x57, 0xdf,
+	0x0a, 0x37, 0x30, 0x9b, 0xf9, 0x4a, 0x55, 0xeb, 0x9b, 0x3c, 0x8c, 0xd6, 0x7c, 0x97, 0x3e, 0xae,
+	0xa0, 0x36, 0xa0, 0x7b, 0x0e, 0x65, 0xcb, 0x84, 0x6c, 0xb7, 0x6d, 0x6f, 0x1b, 0x37, 0x78, 0x3b,
+	0xca, 0x97, 0xba, 0x95, 0xd2, 0x23, 0x8a, 0xbd, 0x1a, 0x37, 0xa6, 0x8e, 0x79, 0x97, 0x1a, 0x7e,
+	0xea, 0x63, 0xca, 0xf2, 0x73, 0xfc, 0x9d, 0x68, 0xf0, 0x5d, 0x5a, 0xc3, 0xb4, 0x43, 0x5c, 0x8a,
+	0xcd, 0xf3, 0x9f, 0xff, 0xe3, 0x3f, 0xdf, 0x8e, 0x9c, 0x46, 0x27, 0xc5, 0xc0, 0x70, 0x9b, 0x95,
+	0x44, 0x5a, 0xde, 0xe1, 0xba, 0xbd, 0xe4, 0x26, 0x52, 0xf4, 0x04, 0xa6, 0xf9, 0x4f, 0x97, 0xbc,
+	0xfa, 0x96, 0xd3, 0x3d, 0x30, 0xec, 0x9c, 0x80, 0x9d, 0x42, 0x27, 0x34, 0xcc, 0x96, 0xf2, 0xa2,
+	0xac, 0x36, 0x8c, 0xeb, 0x5f, 0xa2, 0x53, 0x5c, 0xce, 0x03, 0xe9, 0xd6, 0x9a, 0x1a, 0xa0, 0x64,
+	0xce, 0xbb, 0x82, 0x73, 0x1e, 0x9d, 0xd5, 0x9c, 0x1d, 0xf2, 0xcc, 0xe5, 0xf2, 0x77, 0xd4, 0x08,
+	0x49, 0x52, 0xb9, 0xe5, 0x50, 0x86, 0x7e, 0x0d, 0x47, 0x56, 0x3c, 0x6c, 0x33, 0x5c, 0xf3, 0x5d,
+	0x84, 0xb8, 0xbc, 0x9a, 0xef, 0x2e, 0x93, 0x46, 0x4f, 0x33, 0xc6, 0x54, 0x9b, 0x69, 0x09, 0xb1,
+	0x57, 0xcc, 0xf3, 0x09, 0x62, 0xeb, 0x42, 0x5c, 0xf5, 0x0d, 0xcf, 0x77, 0xd1, 0x06, 0x8c, 0xae,
+	0x62, 0xae, 0x1d, 0x2a, 0x84, 0x4c, 0xb9, 0xe5, 0x32, 0x87, 0xf5, 0xb4, 0x41, 0xbb, 0x40, 0x57,
+	0x05, 0xe8, 0x22, 0x4a, 0x02, 0xed, 0xf8, 0xbe, 0xd3, 0x78, 0x89, 0x7e, 0x03, 0x47, 0x1e, 0x75,
+	0x1a, 0x69, 0x2c, 0xb8, 0x21, 0x04, 0x5f, 0xcb, 0x5f, 0x4e, 0x12, 0xcc, 0xe3, 0x5a, 0x08, 0x97,
+	0x56, 0xac, 0xc3, 0xf8, 0x03, 0x9b, 0xd5, 0xb7, 0xd2, 0x02, 0xac, 0x61, 0x01, 0x0c, 0x8e, 0xdc,
+	0xc4, 0x2d, 0x2c, 0x4d, 0x48, 0xf6, 0xd4, 0xdb, 0x25, 0x39, 0x5f, 0x94, 0xf4, 0x7c, 0x51, 0xba,
+	0xc5, 0xe7, 0x0b, 0xed, 0xb8, 0x62, 0x4a, 0xc7, 0xbd, 0x02, 0x08, 0xa8, 0x14, 0x9d, 0xdd, 0x23,
+	0xd6, 0x1e, 0xf9, 0x4e, 0x83, 0x86, 0x2d, 0x8d, 0x23, 0x2f, 0x08, 0x72, 0x29, 0x91, 0xdc, 0x10,
+	0xbc, 0xea, 0x5b, 0x5c, 0x01, 0x8a, 0x9e, 0xc1, 0xd8, 0x1a, 0x23, 0x9d, 0x6c, 0x46, 0xeb, 0xb0,
+	0x2c, 0xa6, 0x32, 0xba, 0x4c, 0x19, 0xe9, 0xa0, 0x1d, 0x18, 0x57, 0xe0, 0x8c, 0x76, 0x6b, 0x78,
+	0x52, 0xaa, 0x71, 0xaa, 0xb6, 0xfa, 0xf7, 0x06, 0x4c, 0xdc, 0x71, 0xbb, 0x76, 0xcb, 0xd1, 0x41,
+	0x7b, 0x70, 0xe3, 0x7f, 0x22, 0xf8, 0xef, 0x99, 0xd7, 0xd2, 0x19, 0xef, 0x04, 0xd8, 0xaa, 0x51,
+	0x44, 0x5f, 0x19, 0x30, 0x19, 0x51, 0x24, 0xa3, 0x33, 0x16, 0x85, 0x32, 0x96, 0x99, 0x14, 0xfd,
+	0x21, 0x2d, 0x94, 0x4b, 0x5e, 0xc0, 0xd8, 0x0a, 0xe9, 0xf4, 0xb8, 0x2f, 0xe6, 0xb9, 0x06, 0xca,
+	0x09, 0x31, 0x59, 0x76, 0x4f, 0x70, 0x7e, 0x66, 0x7e, 0x10, 0x70, 0xb0, 0xe8, 0x5f, 0xd2, 0x38,
+	0xf5, 0x38, 0xe0, 0x02, 0xd5, 0x2a, 0x3d, 0x51, 0x27, 0x9d, 0x9e, 0xcc, 0xbd, 0xcf, 0x0c, 0x80,
+	0x1a, 0xa6, 0xcc, 0xf6, 0x58, 0x4a, 0xfe, 0xc7, 0x82, 0x7f, 0xc7, 0x5c, 0xce, 0xc0, 0xf7, 0x24,
+	0x51, 0xaa, 0xf0, 0x5b, 0x38, 0x52, 0xc3, 0xd4, 0x6f, 0xe3, 0x94, 0x0a, 0x7c, 0x24, 0x14, 0xb8,
+	0x6d, 0x2e, 0x65, 0x53, 0xc0, 0x6f, 0xab, 0x59, 0xfa, 0x25, 0x80, 0x5a, 0xda, 0xb2, 0x45, 0xe3,
+	0x7b, 0x42, 0xaf, 0xb2, 0x79, 0x35, 0x5d, 0x34, 0xaa, 0xe5, 0x8f, 0xe3, 0xf9, 0x00, 0x10, 0xef,
+	0xff, 0x8b, 0xf7, 0x24, 0x13, 0xbd, 0x82, 0xa3, 0xba, 0x8e, 0xc8, 0xc6, 0x57, 0xb3, 0xbf, 0x59,
+	0x4a, 0xc7, 0xd7, 0xa5, 0x06, 0xfa, 0xc2, 0x80, 0x89, 0x47, 0xee, 0xc6, 0xa1, 0xe8, 0xa0, 0x72,
+	0xb0, 0x98, 0x72, 0x42, 0xf0, 0x03, 0x2c, 0xfa, 0xd6, 0x80, 0xd9, 0x35, 0x95, 0x05, 0x0f, 0xb1,
+	0x4b, 0x89, 0xb7, 0x41, 0x6c, 0xaf, 0x91, 0x41, 0x97, 0x65, 0xa1, 0xcb, 0x4f, 0xcd, 0x1f, 0xa5,
+	0xd3, 0x85, 0xf5, 0xa1, 0x65, 0x99, 0x1c, 0x46, 0x11, 0x7d, 0x63, 0x00, 0x52, 0x53, 0xf5, 0xe1,
+	0x28, 0xf5, 0xbe, 0x50, 0x6a, 0xb1, 0x78, 0xe3, 0x20, 0x4a, 0x91, 0x0e, 0xea, 0xc2, 0xa4, 0xac,
+	0x68, 0xd6, 0x44, 0x69, 0x8a, 0x69, 0x0a, 0x5d, 0x80, 0xf7, 0x90, 0xfd, 0x75, 0x90, 0xa0, 0x52,
+	0xda, 0xe5, 0x4a, 0x51, 0x7c, 0x98, 0x0a, 0xea, 0x34, 0x29, 0x0a, 0x1d, 0xef, 0xcf, 0x14, 0xb2,
+	0x25, 0x3c, 0x59, 0x84, 0x99, 0x3f, 0x16, 0xcc, 0xeb, 0xe6, 0x90, 0x4c, 0xee, 0xff, 0x2f, 0x0c,
+	0x6d, 0xef, 0x0a, 0x69, 0xe0, 0x1a, 0xde, 0x4c, 0x63, 0xef, 0xbc, 0x2e, 0x4b, 0xf5, 0x6f, 0x82,
+	0xd2, 0x54, 0xa5, 0x28, 0x4a, 0x99, 0xa2, 0x7c, 0xcb, 0xe1, 0xe1, 0x4d, 0xf4, 0xbd, 0x01, 0xd3,
+	0x81, 0xf5, 0x4a, 0x28, 0x7a, 0x9b, 0x53, 0xd4, 0x43, 0xd8, 0xf2, 0x99, 0x50, 0x3b, 0xf6, 0xb0,
+	0x5b, 0xc7, 0xe6, 0x27, 0x02, 0xfb, 0x30, 0xd3, 0x8c, 0xad, 0x74, 0xa9, 0x4e, 0xea, 0x7d, 0x90,
+	0x94, 0x8d, 0x7a, 0x30, 0x7d, 0xa7, 0xdd, 0xc1, 0x1e, 0x25, 0xae, 0xcd, 0xf0, 0x43, 0xb2, 0x8d,
+	0xd3, 0xe4, 0xef, 0x38, 0xef, 0xb1, 0xe4, 0xb3, 0xad, 0x60, 0x70, 0x2a, 0x29, 0x97, 0xf0, 0x3e,
+	0xcb, 0x7a, 0x3d, 0x01, 0xa0, 0x28, 0x7c, 0x53, 0xd4, 0x82, 0x1c, 0x77, 0xba, 0x6e, 0x91, 0xf1,
+	0xf1, 0x31, 0x17, 0xb6, 0xc7, 0x16, 0x25, 0x18, 0x23, 0xdd, 0x3d, 0x7e, 0x4f, 0xa4, 0x15, 0x52,
+	0xfa, 0xa8, 0x8d, 0xc3, 0x53, 0xb9, 0x27, 0x52, 0x3f, 0xff, 0xc8, 0x6e, 0xe3, 0x03, 0x13, 0x2f,
+	0x08, 0x62, 0x01, 0x9d, 0x8a, 0x25, 0xba, 0x42, 0x7c, 0x0f, 0xde, 0x8e, 0xee, 0xfa, 0x02, 0x53,
+	0xf7, 0xdb, 0x8c, 0xc5, 0x73, 0x2f, 0x0b, 0xee, 0x59, 0x74, 0x26, 0x76, 0xf7, 0xa7, 0x15, 0x40,
+	0x5d, 0x98, 0x0b, 0xef, 0x00, 0x33, 0x82, 0x2f, 0x09, 0xb0, 0x89, 0x0a, 0x71, 0x3b, 0xc1, 0x80,
+	0xbb, 0x09, 0x13, 0x32, 0xf0, 0x95, 0x0c, 0x19, 0xf5, 0xea, 0x21, 0x1c, 0xf5, 0x47, 0x43, 0xed,
+	0xe6, 0x35, 0x21, 0xbf, 0x68, 0x9e, 0x8e, 0x75, 0xa8, 0xda, 0xa4, 0x8d, 0xa9, 0x06, 0xf4, 0x4b,
+	0x80, 0x55, 0xac, 0x15, 0x95, 0x56, 0x0d, 0x94, 0x81, 0x7b, 0x82, 0xce, 0x08, 0xd0, 0x71, 0xf4,
+	0x4e, 0x6c, 0xf0, 0x22, 0x0c, 0x13, 0x72, 0x7b, 0x36, 0x94, 0x05, 0x65, 0x21, 0xf8, 0x72, 0xfe,
+	0x54, 0x9c, 0xe0, 0x12, 0x0f, 0x89, 0x97, 0x7d, 0x03, 0x1a, 0x90, 0x13, 0x7b, 0xb4, 0x83, 0x50,
+	0xac, 0xd4, 0x94, 0x4d, 0x98, 0x90, 0x5b, 0xa6, 0x34, 0x9e, 0x8a, 0x5b, 0x82, 0x94, 0xd3, 0x8a,
+	0xfb, 0x38, 0x8d, 0xc0, 0xa4, 0x0a, 0xb5, 0x2c, 0x20, 0x15, 0xdf, 0xe6, 0x99, 0xf8, 0xa9, 0x45,
+	0xd7, 0x60, 0x1e, 0xcc, 0xa8, 0x1a, 0xec, 0xd6, 0xf3, 0x0e, 0xf6, 0x9c, 0x36, 0x76, 0xff, 0x67,
+	0x4c, 0x5d, 0x78, 0x3d, 0x85, 0x29, 0x9d, 0xca, 0x59, 0xac, 0x2c, 0x0a, 0xe2, 0x39, 0xd3, 0x8c,
+	0x27, 0x06, 0x45, 0x8e, 0x0f, 0x33, 0xfd, 0x4a, 0x2b, 0x0b, 0xf4, 0x8a, 0x80, 0x5e, 0x28, 0x9e,
+	0x8b, 0x87, 0x86, 0x6a, 0xab, 0x6d, 0x98, 0xba, 0xe5, 0xda, 0x1b, 0x2d, 0x3d, 0x9a, 0x2b, 0x77,
+	0x0e, 0x04, 0x55, 0x07, 0x48, 0xe6, 0x89, 0x78, 0x68, 0xdd, 0x41, 0x2d, 0x98, 0xbe, 0xe9, 0xd0,
+	0x43, 0xa3, 0x15, 0xf7, 0xa5, 0x59, 0xff, 0x1c, 0x83, 0x99, 0x25, 0x7d, 0xde, 0xb8, 0xc6, 0xc7,
+	0x95, 0x2f, 0x45, 0x5f, 0x19, 0xf0, 0x43, 0x39, 0x5f, 0x86, 0xdf, 0xa4, 0x58, 0x24, 0x4e, 0xeb,
+	0x39, 0x73, 0x40, 0x66, 0x30, 0x75, 0x96, 0x84, 0x56, 0x97, 0xd0, 0x85, 0x41, 0xad, 0x06, 0x0e,
+	0x3d, 0xf5, 0x9a, 0xf1, 0x12, 0x66, 0xf7, 0x10, 0x97, 0x51, 0x89, 0x5d, 0xf3, 0x77, 0x9c, 0x12,
+	0xbc, 0x7e, 0x9a, 0x93, 0x13, 0x78, 0x54, 0x16, 0x3a, 0x29, 0x0a, 0x80, 0x48, 0x5b, 0x78, 0x9a,
+	0x42, 0xbb, 0x5f, 0x07, 0xfb, 0xeb, 0x44, 0x6a, 0x75, 0x52, 0xb7, 0xc8, 0x06, 0xf4, 0x1c, 0x66,
+	0x56, 0xf1, 0x80, 0x35, 0xf2, 0x70, 0x51, 0xb8, 0x60, 0xef, 0x12, 0x65, 0x2f, 0x15, 0xd4, 0x84,
+	0x89, 0x2e, 0x26, 0x7a, 0x5f, 0x9d, 0x31, 0x7d, 0x6f, 0xc0, 0x9c, 0x9c, 0xfe, 0xb3, 0xdb, 0xaf,
+	0xb6, 0xbd, 0xf9, 0x1b, 0xc9, 0xf0, 0xa8, 0xfd, 0xea, 0xa8, 0x6d, 0xd0, 0x2b, 0xdf, 0x19, 0x30,
+	0x2b, 0xd6, 0x8c, 0x43, 0x53, 0xcd, 0x3a, 0x2c, 0xd5, 0x5e, 0xc1, 0x9c, 0x5c, 0x67, 0x86, 0x1c,
+	0xb3, 0xb8, 0x5c, 0x56, 0xe3, 0x56, 0x4c, 0x3b, 0x6e, 0xd6, 0x77, 0x63, 0x30, 0x75, 0x77, 0x71,
+	0x6d, 0x85, 0xb8, 0x9b, 0x4e, 0xf3, 0xbe, 0xdd, 0xe1, 0x49, 0xfd, 0xda, 0x80, 0x63, 0x3c, 0x2b,
+	0xc2, 0xed, 0x29, 0x52, 0xfa, 0x84, 0xce, 0xa6, 0xbb, 0x8b, 0x6b, 0x5a, 0xdf, 0x7e, 0x2a, 0xc5,
+	0x1e, 0xf6, 0x6e, 0x2f, 0xd2, 0xf5, 0xba, 0xc0, 0xac, 0xb7, 0xed, 0x8e, 0x4e, 0xe7, 0x67, 0x30,
+	0x33, 0xa8, 0x42, 0x26, 0xfc, 0x45, 0x81, 0x3f, 0x83, 0x4e, 0x27, 0xe0, 0x51, 0x0f, 0x66, 0x65,
+	0x1e, 0x47, 0xd1, 0x62, 0x62, 0x0d, 0x49, 0x0e, 0x07, 0xca, 0xd4, 0xc0, 0xbb, 0xe0, 0x80, 0x22,
+	0x09, 0x56, 0xcd, 0x85, 0xbf, 0xc8, 0x20, 0x0f, 0xa6, 0x56, 0x71, 0xc4, 0xe4, 0xc4, 0x38, 0xd8,
+	0x85, 0x8e, 0x9d, 0x36, 0x07, 0xdd, 0xac, 0xf2, 0xf6, 0x0f, 0x06, 0x20, 0x99, 0xb7, 0x11, 0xee,
+	0x50, 0xe6, 0xde, 0x11, 0xcc, 0x95, 0xfc, 0xf5, 0x44, 0x66, 0xe4, 0x03, 0x94, 0xcc, 0x88, 0xa8,
+	0x0b, 0xbe, 0x36, 0x60, 0x46, 0xa4, 0x6a, 0x66, 0x6d, 0xac, 0x43, 0xd0, 0xe6, 0x53, 0x40, 0x32,
+	0x3b, 0x87, 0x1a, 0x93, 0xb8, 0xdc, 0x54, 0x43, 0x53, 0x4c, 0x39, 0x34, 0xd6, 0xbf, 0x47, 0x21,
+	0x77, 0x77, 0x71, 0x6d, 0x0d, 0xd7, 0x3d, 0x2c, 0xf6, 0x7d, 0x2f, 0xe4, 0xc7, 0xb0, 0xa0, 0x2d,
+	0x73, 0x4e, 0xee, 0xda, 0x17, 0x85, 0x35, 0xa2, 0x92, 0xab, 0xf2, 0xb1, 0x03, 0x93, 0x11, 0x76,
+	0x26, 0xee, 0x59, 0xc1, 0x3d, 0x89, 0x8e, 0xef, 0xc3, 0x45, 0x9e, 0x3e, 0x0a, 0x08, 0x31, 0x87,
+	0x0a, 0x84, 0x8a, 0xa0, 0xbc, 0x6b, 0xee, 0x47, 0x19, 0x18, 0xf0, 0x6d, 0xc8, 0xc9, 0x0c, 0x94,
+	0xc0, 0xe1, 0xd3, 0x4f, 0xd5, 0xa8, 0xc8, 0xdc, 0xcf, 0xa3, 0x2a, 0xf5, 0xbe, 0x34, 0x60, 0x2a,
+	0x48, 0x3d, 0x05, 0x1c, 0xca, 0xc0, 0x5b, 0x02, 0xf6, 0x41, 0xbe, 0xbc, 0x2f, 0x2c, 0x31, 0xca,
+	0x7f, 0x67, 0xc0, 0xa4, 0xce, 0xb9, 0x0c, 0x6a, 0x58, 0x19, 0xd5, 0xf0, 0x61, 0x2a, 0x48, 0xb6,
+	0x94, 0xee, 0x4f, 0xd8, 0x29, 0x14, 0x53, 0x8c, 0x82, 0xf5, 0xd7, 0x31, 0x40, 0x35, 0xdc, 0xa4,
+	0x0e, 0xf3, 0x7a, 0x4b, 0xe2, 0x83, 0xb9, 0x28, 0x6c, 0xbf, 0x54, 0x85, 0x6d, 0xf4, 0xd5, 0x30,
+	0x19, 0x77, 0x9b, 0x50, 0xa6, 0x05, 0x06, 0x91, 0x1f, 0x5b, 0x57, 0x79, 0xb8, 0xe9, 0x50, 0xe6,
+	0xf5, 0xd4, 0x47, 0xfb, 0xa0, 0xac, 0xfd, 0x54, 0x9e, 0x47, 0x0c, 0x6a, 0x98, 0x45, 0x87, 0xd8,
+	0xac, 0xdf, 0xa5, 0x03, 0xea, 0xe9, 0xa2, 0x36, 0xca, 0x47, 0xef, 0x70, 0x40, 0x5f, 0x78, 0x38,
+	0x3c, 0x26, 0xa3, 0xaf, 0x82, 0xc3, 0xf2, 0x64, 0x5a, 0xf5, 0x68, 0xe8, 0xd6, 0x02, 0xdf, 0xc1,
+	0xad, 0xe2, 0x01, 0xbb, 0x13, 0x03, 0x62, 0x10, 0xae, 0xce, 0x47, 0xd0, 0xa5, 0x64, 0x77, 0xf7,
+	0xd7, 0x43, 0x55, 0xc7, 0x1e, 0xdc, 0x64, 0xbd, 0x1e, 0x2e, 0xa4, 0xa0, 0x86, 0x2f, 0x6a, 0xc8,
+	0xac, 0x88, 0x78, 0xe1, 0x6b, 0x5d, 0xba, 0x66, 0xd6, 0xc6, 0x3a, 0x04, 0x6d, 0x3e, 0x33, 0x74,
+	0xb9, 0x3a, 0xe4, 0xb8, 0xc4, 0x25, 0xaa, 0x1a, 0x9f, 0x62, 0xea, 0xf1, 0xb1, 0xfe, 0x35, 0x0a,
+	0x13, 0xab, 0x0e, 0x0b, 0x65, 0xea, 0x8e, 0x5c, 0x15, 0x83, 0xc6, 0xcc, 0x39, 0x1a, 0x3b, 0x87,
+	0x37, 0x1d, 0x36, 0x98, 0x9e, 0x1e, 0x4c, 0x45, 0xe0, 0xd9, 0xc8, 0xbb, 0x2e, 0x8e, 0xec, 0x45,
+	0x46, 0x44, 0x7f, 0x21, 0x08, 0xa8, 0xc3, 0x84, 0x83, 0x5e, 0x15, 0xf7, 0x65, 0x44, 0x87, 0x5d,
+	0xae, 0x8a, 0x7d, 0xda, 0xb0, 0x59, 0x18, 0x7b, 0x4f, 0x25, 0xe2, 0x50, 0x95, 0x80, 0x9f, 0x07,
+	0xab, 0xe2, 0x81, 0xcc, 0xbb, 0x29, 0x58, 0xef, 0xef, 0x5e, 0x13, 0xa3, 0xac, 0x84, 0x40, 0x7f,
+	0xad, 0x97, 0xc4, 0x2c, 0x3a, 0x58, 0xd9, 0x74, 0xe8, 0xea, 0xf5, 0x30, 0xbd, 0xe3, 0xe3, 0xd2,
+	0x4c, 0x0d, 0x40, 0x31, 0xcd, 0x00, 0x58, 0x7f, 0x7f, 0x0b, 0xc6, 0xd7, 0xc4, 0xfd, 0xac, 0xc7,
+	0x15, 0xc4, 0xe4, 0xa7, 0x06, 0xf9, 0x8c, 0x93, 0x2f, 0x2a, 0x05, 0x47, 0xe1, 0xfa, 0x17, 0xc9,
+	0x59, 0xd5, 0x3f, 0x65, 0xa2, 0x9a, 0x82, 0x21, 0x27, 0x23, 0x5c, 0x4a, 0x41, 0xc7, 0xc4, 0x37,
+	0x2e, 0xf1, 0xff, 0xee, 0x4f, 0x5f, 0xa2, 0x39, 0xb8, 0xa0, 0x91, 0x42, 0x7c, 0x75, 0x54, 0xfe,
+	0x87, 0x5a, 0x70, 0x64, 0x15, 0x2b, 0x4d, 0x53, 0x7f, 0xdd, 0x93, 0x38, 0x95, 0x45, 0xe8, 0x72,
+	0x32, 0x4e, 0x07, 0x36, 0x85, 0x9c, 0x8c, 0xeb, 0xf4, 0x46, 0x7d, 0x28, 0x28, 0xd5, 0xfc, 0xb5,
+	0x34, 0x14, 0x75, 0xa7, 0x4e, 0x46, 0x92, 0x36, 0xd1, 0x83, 0xa3, 0x22, 0x8e, 0x87, 0x66, 0x5a,
+	0x07, 0x67, 0xee, 0x40, 0x4e, 0x06, 0x6e, 0x6a, 0xcf, 0xc6, 0xc5, 0xad, 0xf2, 0x72, 0x31, 0xbd,
+	0x97, 0xad, 0x5f, 0xc0, 0xe8, 0x92, 0xcf, 0x78, 0xe8, 0xae, 0xc2, 0x5b, 0xf7, 0x48, 0xd3, 0x71,
+	0x91, 0xb8, 0x3c, 0xb7, 0xe2, 0xe1, 0xe8, 0xe5, 0x96, 0xfe, 0x87, 0xb9, 0x53, 0x82, 0x32, 0x6f,
+	0xce, 0x6a, 0x8a, 0x4f, 0xb1, 0x47, 0xcb, 0x8c, 0x6c, 0x63, 0xb7, 0x6a, 0x14, 0xad, 0xfb, 0x30,
+	0xf6, 0x88, 0xb7, 0x3c, 0xae, 0xa0, 0x65, 0x18, 0x5b, 0xc5, 0x8c, 0x3f, 0xa1, 0x18, 0x9d, 0xa5,
+	0x5c, 0xde, 0xc3, 0x3c, 0x26, 0xe4, 0x4e, 0xa1, 0x89, 0x88, 0x5c, 0xeb, 0x6f, 0x06, 0xc0, 0x63,
+	0x79, 0x5f, 0x92, 0x8b, 0xbc, 0x0f, 0x47, 0x57, 0x31, 0xd3, 0x0d, 0xb1, 0x62, 0x73, 0x5c, 0xac,
+	0xee, 0x65, 0xce, 0x0b, 0xd1, 0x08, 0x4d, 0x6b, 0xd1, 0x5d, 0xfd, 0xfb, 0x87, 0x30, 0xb1, 0x8a,
+	0xd9, 0x3d, 0xd2, 0xbc, 0x6d, 0xbb, 0x8d, 0xd6, 0x3e, 0x7a, 0x8a, 0x49, 0xab, 0xdf, 0xcf, 0x3c,
+	0x2e, 0x44, 0x1e, 0x43, 0x81, 0x17, 0x5a, 0xa4, 0xb9, 0xbe, 0x25, 0x5f, 0x2e, 0xff, 0x65, 0xe4,
+	0x8f, 0x4b, 0x7f, 0x1e, 0x41, 0x1b, 0x90, 0x7b, 0xa0, 0xae, 0xbd, 0x16, 0x68, 0x63, 0xdb, 0xfc,
+	0x79, 0xf4, 0x19, 0x9d, 0xdb, 0x62, 0xac, 0x43, 0xab, 0x65, 0x3e, 0xaf, 0x6c, 0xf9, 0x1b, 0xa5,
+	0x3a, 0x69, 0x07, 0xf7, 0x64, 0x83, 0x7f, 0xf2, 0x73, 0x75, 0xe2, 0x32, 0xbb, 0xce, 0x3e, 0xd4,
+	0x2d, 0xbc, 0x9f, 0x35, 0x5a, 0x29, 0x55, 0x16, 0x4a, 0x0b, 0xc5, 0x37, 0x8d, 0x91, 0x37, 0xde,
+	0xb4, 0xa6, 0xed, 0x4e, 0xa7, 0xe5, 0xd4, 0xc5, 0x8d, 0xd7, 0xf2, 0x13, 0x4a, 0xdc, 0xea, 0xae,
+	0x96, 0x5a, 0x15, 0xde, 0x58, 0xb8, 0x76, 0x1d, 0x5d, 0x87, 0xca, 0xaf, 0x88, 0x5f, 0x68, 0x10,
+	0xf7, 0x22, 0x2b, 0x6c, 0xd9, 0x5d, 0x5c, 0xe8, 0x60, 0xaf, 0xed, 0x50, 0xee, 0x8f, 0x02, 0x23,
+	0x05, 0x39, 0xbf, 0x15, 0xd8, 0x16, 0x2e, 0x04, 0xfb, 0x8f, 0xda, 0x65, 0xfe, 0xdb, 0x05, 0x64,
+	0xc2, 0xbc, 0x8e, 0xc5, 0x42, 0x83, 0x60, 0x5a, 0x70, 0x09, 0x2b, 0xe0, 0xe7, 0x0e, 0x65, 0x25,
+	0x34, 0x0a, 0x6f, 0xfe, 0x69, 0xc4, 0x18, 0xfb, 0xe4, 0x34, 0x9c, 0x84, 0xd1, 0xa5, 0x8e, 0x73,
+	0x17, 0xf7, 0xd0, 0xec, 0xf8, 0x48, 0x7e, 0x82, 0x07, 0x0d, 0xf1, 0x9c, 0x17, 0x42, 0x95, 0xc2,
+	0xc8, 0x46, 0x0e, 0x20, 0xe8, 0xf0, 0x83, 0x8d, 0x51, 0xe1, 0xe7, 0xeb, 0xff, 0x0d, 0x00, 0x00,
+	0xff, 0xff, 0xa8, 0xc4, 0x74, 0x8d, 0x24, 0x2c, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -168,21 +224,21 @@ type RunsV1Client interface {
 	// Create new run
 	CreateRun(ctx context.Context, in *RunBodyRequest, opts ...grpc.CallOption) (*Run, error)
 	// Get run
-	GetRun(ctx context.Context, in *EntityResourceRequest, opts ...grpc.CallOption) (*Run, error)
+	GetRun(ctx context.Context, in *ProjectEntityResourceRequest, opts ...grpc.CallOption) (*Run, error)
 	// Update run
 	UpdateRun(ctx context.Context, in *RunBodyRequest, opts ...grpc.CallOption) (*Run, error)
 	// Patch run
 	PatchRun(ctx context.Context, in *RunBodyRequest, opts ...grpc.CallOption) (*Run, error)
 	// Delete run
-	DeleteRun(ctx context.Context, in *EntityResourceRequest, opts ...grpc.CallOption) (*empty.Empty, error)
+	DeleteRun(ctx context.Context, in *ProjectEntityResourceRequest, opts ...grpc.CallOption) (*empty.Empty, error)
 	// Delete runs
 	DeleteRuns(ctx context.Context, in *ProjectResourceUuidsBodyRequest, opts ...grpc.CallOption) (*empty.Empty, error)
 	// Stop run
-	StopRun(ctx context.Context, in *EntityResourceRequest, opts ...grpc.CallOption) (*empty.Empty, error)
+	StopRun(ctx context.Context, in *ProjectEntityResourceRequest, opts ...grpc.CallOption) (*empty.Empty, error)
 	// Stop runs
 	StopRuns(ctx context.Context, in *ProjectResourceUuidsBodyRequest, opts ...grpc.CallOption) (*empty.Empty, error)
 	// Invalidate run
-	InvalidateRun(ctx context.Context, in *EntityResourceRequest, opts ...grpc.CallOption) (*empty.Empty, error)
+	InvalidateRun(ctx context.Context, in *ProjectEntityResourceRequest, opts ...grpc.CallOption) (*empty.Empty, error)
 	// Invalidate runs
 	InvalidateRuns(ctx context.Context, in *ProjectResourceUuidsBodyRequest, opts ...grpc.CallOption) (*empty.Empty, error)
 	// Restart run with copy
@@ -192,27 +248,27 @@ type RunsV1Client interface {
 	// Resume run
 	ResumeRun(ctx context.Context, in *EntityRunBodyRequest, opts ...grpc.CallOption) (*Run, error)
 	// Archive run
-	ArchiveRun(ctx context.Context, in *EntityResourceRequest, opts ...grpc.CallOption) (*empty.Empty, error)
+	ArchiveRun(ctx context.Context, in *ProjectEntityResourceRequest, opts ...grpc.CallOption) (*empty.Empty, error)
 	// Restore run
-	RestoreRun(ctx context.Context, in *EntityResourceRequest, opts ...grpc.CallOption) (*empty.Empty, error)
+	RestoreRun(ctx context.Context, in *ProjectEntityResourceRequest, opts ...grpc.CallOption) (*empty.Empty, error)
 	// Bookmark run
-	BookmarkRun(ctx context.Context, in *EntityResourceRequest, opts ...grpc.CallOption) (*empty.Empty, error)
+	BookmarkRun(ctx context.Context, in *ProjectEntityResourceRequest, opts ...grpc.CallOption) (*empty.Empty, error)
 	// Unbookmark run
-	UnbookmarkRun(ctx context.Context, in *EntityResourceRequest, opts ...grpc.CallOption) (*empty.Empty, error)
+	UnbookmarkRun(ctx context.Context, in *ProjectEntityResourceRequest, opts ...grpc.CallOption) (*empty.Empty, error)
 	// Start run tensorboard
-	StartRunTensorboard(ctx context.Context, in *EntityResourceRequest, opts ...grpc.CallOption) (*empty.Empty, error)
+	StartRunTensorboard(ctx context.Context, in *ProjectEntityResourceRequest, opts ...grpc.CallOption) (*empty.Empty, error)
 	// Stop run tensorboard
-	StopRunTensorboard(ctx context.Context, in *EntityResourceRequest, opts ...grpc.CallOption) (*empty.Empty, error)
+	StopRunTensorboard(ctx context.Context, in *ProjectEntityResourceRequest, opts ...grpc.CallOption) (*empty.Empty, error)
 	// Get run status
-	GetRunStatuses(ctx context.Context, in *EntityResourceRequest, opts ...grpc.CallOption) (*Status, error)
+	GetRunStatuses(ctx context.Context, in *ProjectEntityResourceRequest, opts ...grpc.CallOption) (*Status, error)
 	// Create new run status
 	CreateRunStatus(ctx context.Context, in *EntityStatusBodyRequest, opts ...grpc.CallOption) (*Status, error)
 	// Get run code ref
-	GetRunCodeRefs(ctx context.Context, in *EntityResourceRequest, opts ...grpc.CallOption) (*ListCodeRefsResponse, error)
+	GetRunCodeRefs(ctx context.Context, in *ProjectEntityResourceRequest, opts ...grpc.CallOption) (*ListCodeRefsResponse, error)
 	// Get run code ref
 	CreateRunCodeRef(ctx context.Context, in *CodeRefBodyRequest, opts ...grpc.CallOption) (*CodeReference, error)
 	// Impersonate run token
-	ImpersonateToken(ctx context.Context, in *EntityResourceRequest, opts ...grpc.CallOption) (*Auth, error)
+	ImpersonateToken(ctx context.Context, in *ProjectEntityResourceRequest, opts ...grpc.CallOption) (*Auth, error)
 }
 
 type runsV1Client struct {
@@ -259,7 +315,7 @@ func (c *runsV1Client) CreateRun(ctx context.Context, in *RunBodyRequest, opts .
 	return out, nil
 }
 
-func (c *runsV1Client) GetRun(ctx context.Context, in *EntityResourceRequest, opts ...grpc.CallOption) (*Run, error) {
+func (c *runsV1Client) GetRun(ctx context.Context, in *ProjectEntityResourceRequest, opts ...grpc.CallOption) (*Run, error) {
 	out := new(Run)
 	err := c.cc.Invoke(ctx, "/v1.RunsV1/GetRun", in, out, opts...)
 	if err != nil {
@@ -286,7 +342,7 @@ func (c *runsV1Client) PatchRun(ctx context.Context, in *RunBodyRequest, opts ..
 	return out, nil
 }
 
-func (c *runsV1Client) DeleteRun(ctx context.Context, in *EntityResourceRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
+func (c *runsV1Client) DeleteRun(ctx context.Context, in *ProjectEntityResourceRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
 	out := new(empty.Empty)
 	err := c.cc.Invoke(ctx, "/v1.RunsV1/DeleteRun", in, out, opts...)
 	if err != nil {
@@ -304,7 +360,7 @@ func (c *runsV1Client) DeleteRuns(ctx context.Context, in *ProjectResourceUuidsB
 	return out, nil
 }
 
-func (c *runsV1Client) StopRun(ctx context.Context, in *EntityResourceRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
+func (c *runsV1Client) StopRun(ctx context.Context, in *ProjectEntityResourceRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
 	out := new(empty.Empty)
 	err := c.cc.Invoke(ctx, "/v1.RunsV1/StopRun", in, out, opts...)
 	if err != nil {
@@ -322,7 +378,7 @@ func (c *runsV1Client) StopRuns(ctx context.Context, in *ProjectResourceUuidsBod
 	return out, nil
 }
 
-func (c *runsV1Client) InvalidateRun(ctx context.Context, in *EntityResourceRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
+func (c *runsV1Client) InvalidateRun(ctx context.Context, in *ProjectEntityResourceRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
 	out := new(empty.Empty)
 	err := c.cc.Invoke(ctx, "/v1.RunsV1/InvalidateRun", in, out, opts...)
 	if err != nil {
@@ -367,7 +423,7 @@ func (c *runsV1Client) ResumeRun(ctx context.Context, in *EntityRunBodyRequest, 
 	return out, nil
 }
 
-func (c *runsV1Client) ArchiveRun(ctx context.Context, in *EntityResourceRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
+func (c *runsV1Client) ArchiveRun(ctx context.Context, in *ProjectEntityResourceRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
 	out := new(empty.Empty)
 	err := c.cc.Invoke(ctx, "/v1.RunsV1/ArchiveRun", in, out, opts...)
 	if err != nil {
@@ -376,7 +432,7 @@ func (c *runsV1Client) ArchiveRun(ctx context.Context, in *EntityResourceRequest
 	return out, nil
 }
 
-func (c *runsV1Client) RestoreRun(ctx context.Context, in *EntityResourceRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
+func (c *runsV1Client) RestoreRun(ctx context.Context, in *ProjectEntityResourceRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
 	out := new(empty.Empty)
 	err := c.cc.Invoke(ctx, "/v1.RunsV1/RestoreRun", in, out, opts...)
 	if err != nil {
@@ -385,7 +441,7 @@ func (c *runsV1Client) RestoreRun(ctx context.Context, in *EntityResourceRequest
 	return out, nil
 }
 
-func (c *runsV1Client) BookmarkRun(ctx context.Context, in *EntityResourceRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
+func (c *runsV1Client) BookmarkRun(ctx context.Context, in *ProjectEntityResourceRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
 	out := new(empty.Empty)
 	err := c.cc.Invoke(ctx, "/v1.RunsV1/BookmarkRun", in, out, opts...)
 	if err != nil {
@@ -394,7 +450,7 @@ func (c *runsV1Client) BookmarkRun(ctx context.Context, in *EntityResourceReques
 	return out, nil
 }
 
-func (c *runsV1Client) UnbookmarkRun(ctx context.Context, in *EntityResourceRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
+func (c *runsV1Client) UnbookmarkRun(ctx context.Context, in *ProjectEntityResourceRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
 	out := new(empty.Empty)
 	err := c.cc.Invoke(ctx, "/v1.RunsV1/UnbookmarkRun", in, out, opts...)
 	if err != nil {
@@ -403,7 +459,7 @@ func (c *runsV1Client) UnbookmarkRun(ctx context.Context, in *EntityResourceRequ
 	return out, nil
 }
 
-func (c *runsV1Client) StartRunTensorboard(ctx context.Context, in *EntityResourceRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
+func (c *runsV1Client) StartRunTensorboard(ctx context.Context, in *ProjectEntityResourceRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
 	out := new(empty.Empty)
 	err := c.cc.Invoke(ctx, "/v1.RunsV1/StartRunTensorboard", in, out, opts...)
 	if err != nil {
@@ -412,7 +468,7 @@ func (c *runsV1Client) StartRunTensorboard(ctx context.Context, in *EntityResour
 	return out, nil
 }
 
-func (c *runsV1Client) StopRunTensorboard(ctx context.Context, in *EntityResourceRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
+func (c *runsV1Client) StopRunTensorboard(ctx context.Context, in *ProjectEntityResourceRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
 	out := new(empty.Empty)
 	err := c.cc.Invoke(ctx, "/v1.RunsV1/StopRunTensorboard", in, out, opts...)
 	if err != nil {
@@ -421,7 +477,7 @@ func (c *runsV1Client) StopRunTensorboard(ctx context.Context, in *EntityResourc
 	return out, nil
 }
 
-func (c *runsV1Client) GetRunStatuses(ctx context.Context, in *EntityResourceRequest, opts ...grpc.CallOption) (*Status, error) {
+func (c *runsV1Client) GetRunStatuses(ctx context.Context, in *ProjectEntityResourceRequest, opts ...grpc.CallOption) (*Status, error) {
 	out := new(Status)
 	err := c.cc.Invoke(ctx, "/v1.RunsV1/GetRunStatuses", in, out, opts...)
 	if err != nil {
@@ -439,7 +495,7 @@ func (c *runsV1Client) CreateRunStatus(ctx context.Context, in *EntityStatusBody
 	return out, nil
 }
 
-func (c *runsV1Client) GetRunCodeRefs(ctx context.Context, in *EntityResourceRequest, opts ...grpc.CallOption) (*ListCodeRefsResponse, error) {
+func (c *runsV1Client) GetRunCodeRefs(ctx context.Context, in *ProjectEntityResourceRequest, opts ...grpc.CallOption) (*ListCodeRefsResponse, error) {
 	out := new(ListCodeRefsResponse)
 	err := c.cc.Invoke(ctx, "/v1.RunsV1/GetRunCodeRefs", in, out, opts...)
 	if err != nil {
@@ -457,7 +513,7 @@ func (c *runsV1Client) CreateRunCodeRef(ctx context.Context, in *CodeRefBodyRequ
 	return out, nil
 }
 
-func (c *runsV1Client) ImpersonateToken(ctx context.Context, in *EntityResourceRequest, opts ...grpc.CallOption) (*Auth, error) {
+func (c *runsV1Client) ImpersonateToken(ctx context.Context, in *ProjectEntityResourceRequest, opts ...grpc.CallOption) (*Auth, error) {
 	out := new(Auth)
 	err := c.cc.Invoke(ctx, "/v1.RunsV1/ImpersonateToken", in, out, opts...)
 	if err != nil {
@@ -477,21 +533,21 @@ type RunsV1Server interface {
 	// Create new run
 	CreateRun(context.Context, *RunBodyRequest) (*Run, error)
 	// Get run
-	GetRun(context.Context, *EntityResourceRequest) (*Run, error)
+	GetRun(context.Context, *ProjectEntityResourceRequest) (*Run, error)
 	// Update run
 	UpdateRun(context.Context, *RunBodyRequest) (*Run, error)
 	// Patch run
 	PatchRun(context.Context, *RunBodyRequest) (*Run, error)
 	// Delete run
-	DeleteRun(context.Context, *EntityResourceRequest) (*empty.Empty, error)
+	DeleteRun(context.Context, *ProjectEntityResourceRequest) (*empty.Empty, error)
 	// Delete runs
 	DeleteRuns(context.Context, *ProjectResourceUuidsBodyRequest) (*empty.Empty, error)
 	// Stop run
-	StopRun(context.Context, *EntityResourceRequest) (*empty.Empty, error)
+	StopRun(context.Context, *ProjectEntityResourceRequest) (*empty.Empty, error)
 	// Stop runs
 	StopRuns(context.Context, *ProjectResourceUuidsBodyRequest) (*empty.Empty, error)
 	// Invalidate run
-	InvalidateRun(context.Context, *EntityResourceRequest) (*empty.Empty, error)
+	InvalidateRun(context.Context, *ProjectEntityResourceRequest) (*empty.Empty, error)
 	// Invalidate runs
 	InvalidateRuns(context.Context, *ProjectResourceUuidsBodyRequest) (*empty.Empty, error)
 	// Restart run with copy
@@ -501,27 +557,27 @@ type RunsV1Server interface {
 	// Resume run
 	ResumeRun(context.Context, *EntityRunBodyRequest) (*Run, error)
 	// Archive run
-	ArchiveRun(context.Context, *EntityResourceRequest) (*empty.Empty, error)
+	ArchiveRun(context.Context, *ProjectEntityResourceRequest) (*empty.Empty, error)
 	// Restore run
-	RestoreRun(context.Context, *EntityResourceRequest) (*empty.Empty, error)
+	RestoreRun(context.Context, *ProjectEntityResourceRequest) (*empty.Empty, error)
 	// Bookmark run
-	BookmarkRun(context.Context, *EntityResourceRequest) (*empty.Empty, error)
+	BookmarkRun(context.Context, *ProjectEntityResourceRequest) (*empty.Empty, error)
 	// Unbookmark run
-	UnbookmarkRun(context.Context, *EntityResourceRequest) (*empty.Empty, error)
+	UnbookmarkRun(context.Context, *ProjectEntityResourceRequest) (*empty.Empty, error)
 	// Start run tensorboard
-	StartRunTensorboard(context.Context, *EntityResourceRequest) (*empty.Empty, error)
+	StartRunTensorboard(context.Context, *ProjectEntityResourceRequest) (*empty.Empty, error)
 	// Stop run tensorboard
-	StopRunTensorboard(context.Context, *EntityResourceRequest) (*empty.Empty, error)
+	StopRunTensorboard(context.Context, *ProjectEntityResourceRequest) (*empty.Empty, error)
 	// Get run status
-	GetRunStatuses(context.Context, *EntityResourceRequest) (*Status, error)
+	GetRunStatuses(context.Context, *ProjectEntityResourceRequest) (*Status, error)
 	// Create new run status
 	CreateRunStatus(context.Context, *EntityStatusBodyRequest) (*Status, error)
 	// Get run code ref
-	GetRunCodeRefs(context.Context, *EntityResourceRequest) (*ListCodeRefsResponse, error)
+	GetRunCodeRefs(context.Context, *ProjectEntityResourceRequest) (*ListCodeRefsResponse, error)
 	// Get run code ref
 	CreateRunCodeRef(context.Context, *CodeRefBodyRequest) (*CodeReference, error)
 	// Impersonate run token
-	ImpersonateToken(context.Context, *EntityResourceRequest) (*Auth, error)
+	ImpersonateToken(context.Context, *ProjectEntityResourceRequest) (*Auth, error)
 }
 
 // UnimplementedRunsV1Server can be embedded to have forward compatible implementations.
@@ -540,7 +596,7 @@ func (*UnimplementedRunsV1Server) ListRuns(ctx context.Context, req *ProjectReso
 func (*UnimplementedRunsV1Server) CreateRun(ctx context.Context, req *RunBodyRequest) (*Run, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateRun not implemented")
 }
-func (*UnimplementedRunsV1Server) GetRun(ctx context.Context, req *EntityResourceRequest) (*Run, error) {
+func (*UnimplementedRunsV1Server) GetRun(ctx context.Context, req *ProjectEntityResourceRequest) (*Run, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetRun not implemented")
 }
 func (*UnimplementedRunsV1Server) UpdateRun(ctx context.Context, req *RunBodyRequest) (*Run, error) {
@@ -549,19 +605,19 @@ func (*UnimplementedRunsV1Server) UpdateRun(ctx context.Context, req *RunBodyReq
 func (*UnimplementedRunsV1Server) PatchRun(ctx context.Context, req *RunBodyRequest) (*Run, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method PatchRun not implemented")
 }
-func (*UnimplementedRunsV1Server) DeleteRun(ctx context.Context, req *EntityResourceRequest) (*empty.Empty, error) {
+func (*UnimplementedRunsV1Server) DeleteRun(ctx context.Context, req *ProjectEntityResourceRequest) (*empty.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteRun not implemented")
 }
 func (*UnimplementedRunsV1Server) DeleteRuns(ctx context.Context, req *ProjectResourceUuidsBodyRequest) (*empty.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteRuns not implemented")
 }
-func (*UnimplementedRunsV1Server) StopRun(ctx context.Context, req *EntityResourceRequest) (*empty.Empty, error) {
+func (*UnimplementedRunsV1Server) StopRun(ctx context.Context, req *ProjectEntityResourceRequest) (*empty.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StopRun not implemented")
 }
 func (*UnimplementedRunsV1Server) StopRuns(ctx context.Context, req *ProjectResourceUuidsBodyRequest) (*empty.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StopRuns not implemented")
 }
-func (*UnimplementedRunsV1Server) InvalidateRun(ctx context.Context, req *EntityResourceRequest) (*empty.Empty, error) {
+func (*UnimplementedRunsV1Server) InvalidateRun(ctx context.Context, req *ProjectEntityResourceRequest) (*empty.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method InvalidateRun not implemented")
 }
 func (*UnimplementedRunsV1Server) InvalidateRuns(ctx context.Context, req *ProjectResourceUuidsBodyRequest) (*empty.Empty, error) {
@@ -576,37 +632,37 @@ func (*UnimplementedRunsV1Server) RestartRun(ctx context.Context, req *EntityRun
 func (*UnimplementedRunsV1Server) ResumeRun(ctx context.Context, req *EntityRunBodyRequest) (*Run, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ResumeRun not implemented")
 }
-func (*UnimplementedRunsV1Server) ArchiveRun(ctx context.Context, req *EntityResourceRequest) (*empty.Empty, error) {
+func (*UnimplementedRunsV1Server) ArchiveRun(ctx context.Context, req *ProjectEntityResourceRequest) (*empty.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ArchiveRun not implemented")
 }
-func (*UnimplementedRunsV1Server) RestoreRun(ctx context.Context, req *EntityResourceRequest) (*empty.Empty, error) {
+func (*UnimplementedRunsV1Server) RestoreRun(ctx context.Context, req *ProjectEntityResourceRequest) (*empty.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RestoreRun not implemented")
 }
-func (*UnimplementedRunsV1Server) BookmarkRun(ctx context.Context, req *EntityResourceRequest) (*empty.Empty, error) {
+func (*UnimplementedRunsV1Server) BookmarkRun(ctx context.Context, req *ProjectEntityResourceRequest) (*empty.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method BookmarkRun not implemented")
 }
-func (*UnimplementedRunsV1Server) UnbookmarkRun(ctx context.Context, req *EntityResourceRequest) (*empty.Empty, error) {
+func (*UnimplementedRunsV1Server) UnbookmarkRun(ctx context.Context, req *ProjectEntityResourceRequest) (*empty.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UnbookmarkRun not implemented")
 }
-func (*UnimplementedRunsV1Server) StartRunTensorboard(ctx context.Context, req *EntityResourceRequest) (*empty.Empty, error) {
+func (*UnimplementedRunsV1Server) StartRunTensorboard(ctx context.Context, req *ProjectEntityResourceRequest) (*empty.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StartRunTensorboard not implemented")
 }
-func (*UnimplementedRunsV1Server) StopRunTensorboard(ctx context.Context, req *EntityResourceRequest) (*empty.Empty, error) {
+func (*UnimplementedRunsV1Server) StopRunTensorboard(ctx context.Context, req *ProjectEntityResourceRequest) (*empty.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StopRunTensorboard not implemented")
 }
-func (*UnimplementedRunsV1Server) GetRunStatuses(ctx context.Context, req *EntityResourceRequest) (*Status, error) {
+func (*UnimplementedRunsV1Server) GetRunStatuses(ctx context.Context, req *ProjectEntityResourceRequest) (*Status, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetRunStatuses not implemented")
 }
 func (*UnimplementedRunsV1Server) CreateRunStatus(ctx context.Context, req *EntityStatusBodyRequest) (*Status, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateRunStatus not implemented")
 }
-func (*UnimplementedRunsV1Server) GetRunCodeRefs(ctx context.Context, req *EntityResourceRequest) (*ListCodeRefsResponse, error) {
+func (*UnimplementedRunsV1Server) GetRunCodeRefs(ctx context.Context, req *ProjectEntityResourceRequest) (*ListCodeRefsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetRunCodeRefs not implemented")
 }
 func (*UnimplementedRunsV1Server) CreateRunCodeRef(ctx context.Context, req *CodeRefBodyRequest) (*CodeReference, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateRunCodeRef not implemented")
 }
-func (*UnimplementedRunsV1Server) ImpersonateToken(ctx context.Context, req *EntityResourceRequest) (*Auth, error) {
+func (*UnimplementedRunsV1Server) ImpersonateToken(ctx context.Context, req *ProjectEntityResourceRequest) (*Auth, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ImpersonateToken not implemented")
 }
 
@@ -687,7 +743,7 @@ func _RunsV1_CreateRun_Handler(srv interface{}, ctx context.Context, dec func(in
 }
 
 func _RunsV1_GetRun_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(EntityResourceRequest)
+	in := new(ProjectEntityResourceRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -699,7 +755,7 @@ func _RunsV1_GetRun_Handler(srv interface{}, ctx context.Context, dec func(inter
 		FullMethod: "/v1.RunsV1/GetRun",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RunsV1Server).GetRun(ctx, req.(*EntityResourceRequest))
+		return srv.(RunsV1Server).GetRun(ctx, req.(*ProjectEntityResourceRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -741,7 +797,7 @@ func _RunsV1_PatchRun_Handler(srv interface{}, ctx context.Context, dec func(int
 }
 
 func _RunsV1_DeleteRun_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(EntityResourceRequest)
+	in := new(ProjectEntityResourceRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -753,7 +809,7 @@ func _RunsV1_DeleteRun_Handler(srv interface{}, ctx context.Context, dec func(in
 		FullMethod: "/v1.RunsV1/DeleteRun",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RunsV1Server).DeleteRun(ctx, req.(*EntityResourceRequest))
+		return srv.(RunsV1Server).DeleteRun(ctx, req.(*ProjectEntityResourceRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -777,7 +833,7 @@ func _RunsV1_DeleteRuns_Handler(srv interface{}, ctx context.Context, dec func(i
 }
 
 func _RunsV1_StopRun_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(EntityResourceRequest)
+	in := new(ProjectEntityResourceRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -789,7 +845,7 @@ func _RunsV1_StopRun_Handler(srv interface{}, ctx context.Context, dec func(inte
 		FullMethod: "/v1.RunsV1/StopRun",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RunsV1Server).StopRun(ctx, req.(*EntityResourceRequest))
+		return srv.(RunsV1Server).StopRun(ctx, req.(*ProjectEntityResourceRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -813,7 +869,7 @@ func _RunsV1_StopRuns_Handler(srv interface{}, ctx context.Context, dec func(int
 }
 
 func _RunsV1_InvalidateRun_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(EntityResourceRequest)
+	in := new(ProjectEntityResourceRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -825,7 +881,7 @@ func _RunsV1_InvalidateRun_Handler(srv interface{}, ctx context.Context, dec fun
 		FullMethod: "/v1.RunsV1/InvalidateRun",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RunsV1Server).InvalidateRun(ctx, req.(*EntityResourceRequest))
+		return srv.(RunsV1Server).InvalidateRun(ctx, req.(*ProjectEntityResourceRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -903,7 +959,7 @@ func _RunsV1_ResumeRun_Handler(srv interface{}, ctx context.Context, dec func(in
 }
 
 func _RunsV1_ArchiveRun_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(EntityResourceRequest)
+	in := new(ProjectEntityResourceRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -915,13 +971,13 @@ func _RunsV1_ArchiveRun_Handler(srv interface{}, ctx context.Context, dec func(i
 		FullMethod: "/v1.RunsV1/ArchiveRun",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RunsV1Server).ArchiveRun(ctx, req.(*EntityResourceRequest))
+		return srv.(RunsV1Server).ArchiveRun(ctx, req.(*ProjectEntityResourceRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _RunsV1_RestoreRun_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(EntityResourceRequest)
+	in := new(ProjectEntityResourceRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -933,13 +989,13 @@ func _RunsV1_RestoreRun_Handler(srv interface{}, ctx context.Context, dec func(i
 		FullMethod: "/v1.RunsV1/RestoreRun",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RunsV1Server).RestoreRun(ctx, req.(*EntityResourceRequest))
+		return srv.(RunsV1Server).RestoreRun(ctx, req.(*ProjectEntityResourceRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _RunsV1_BookmarkRun_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(EntityResourceRequest)
+	in := new(ProjectEntityResourceRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -951,13 +1007,13 @@ func _RunsV1_BookmarkRun_Handler(srv interface{}, ctx context.Context, dec func(
 		FullMethod: "/v1.RunsV1/BookmarkRun",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RunsV1Server).BookmarkRun(ctx, req.(*EntityResourceRequest))
+		return srv.(RunsV1Server).BookmarkRun(ctx, req.(*ProjectEntityResourceRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _RunsV1_UnbookmarkRun_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(EntityResourceRequest)
+	in := new(ProjectEntityResourceRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -969,13 +1025,13 @@ func _RunsV1_UnbookmarkRun_Handler(srv interface{}, ctx context.Context, dec fun
 		FullMethod: "/v1.RunsV1/UnbookmarkRun",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RunsV1Server).UnbookmarkRun(ctx, req.(*EntityResourceRequest))
+		return srv.(RunsV1Server).UnbookmarkRun(ctx, req.(*ProjectEntityResourceRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _RunsV1_StartRunTensorboard_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(EntityResourceRequest)
+	in := new(ProjectEntityResourceRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -987,13 +1043,13 @@ func _RunsV1_StartRunTensorboard_Handler(srv interface{}, ctx context.Context, d
 		FullMethod: "/v1.RunsV1/StartRunTensorboard",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RunsV1Server).StartRunTensorboard(ctx, req.(*EntityResourceRequest))
+		return srv.(RunsV1Server).StartRunTensorboard(ctx, req.(*ProjectEntityResourceRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _RunsV1_StopRunTensorboard_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(EntityResourceRequest)
+	in := new(ProjectEntityResourceRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -1005,13 +1061,13 @@ func _RunsV1_StopRunTensorboard_Handler(srv interface{}, ctx context.Context, de
 		FullMethod: "/v1.RunsV1/StopRunTensorboard",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RunsV1Server).StopRunTensorboard(ctx, req.(*EntityResourceRequest))
+		return srv.(RunsV1Server).StopRunTensorboard(ctx, req.(*ProjectEntityResourceRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _RunsV1_GetRunStatuses_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(EntityResourceRequest)
+	in := new(ProjectEntityResourceRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -1023,7 +1079,7 @@ func _RunsV1_GetRunStatuses_Handler(srv interface{}, ctx context.Context, dec fu
 		FullMethod: "/v1.RunsV1/GetRunStatuses",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RunsV1Server).GetRunStatuses(ctx, req.(*EntityResourceRequest))
+		return srv.(RunsV1Server).GetRunStatuses(ctx, req.(*ProjectEntityResourceRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1047,7 +1103,7 @@ func _RunsV1_CreateRunStatus_Handler(srv interface{}, ctx context.Context, dec f
 }
 
 func _RunsV1_GetRunCodeRefs_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(EntityResourceRequest)
+	in := new(ProjectEntityResourceRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -1059,7 +1115,7 @@ func _RunsV1_GetRunCodeRefs_Handler(srv interface{}, ctx context.Context, dec fu
 		FullMethod: "/v1.RunsV1/GetRunCodeRefs",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RunsV1Server).GetRunCodeRefs(ctx, req.(*EntityResourceRequest))
+		return srv.(RunsV1Server).GetRunCodeRefs(ctx, req.(*ProjectEntityResourceRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1083,7 +1139,7 @@ func _RunsV1_CreateRunCodeRef_Handler(srv interface{}, ctx context.Context, dec 
 }
 
 func _RunsV1_ImpersonateToken_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(EntityResourceRequest)
+	in := new(ProjectEntityResourceRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -1095,7 +1151,7 @@ func _RunsV1_ImpersonateToken_Handler(srv interface{}, ctx context.Context, dec 
 		FullMethod: "/v1.RunsV1/ImpersonateToken",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RunsV1Server).ImpersonateToken(ctx, req.(*EntityResourceRequest))
+		return srv.(RunsV1Server).ImpersonateToken(ctx, req.(*ProjectEntityResourceRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1823,6 +1879,1780 @@ var _ProjectsV1_serviceDesc = grpc.ServiceDesc{
 	Metadata: "v1/polyaxon_sdk.proto",
 }
 
+// ArtifactsStoresV1Client is the client API for ArtifactsStoresV1 service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
+type ArtifactsStoresV1Client interface {
+	// List artifact stores namess
+	ListArtifactsStoreNames(ctx context.Context, in *OwnerResouceListRequest, opts ...grpc.CallOption) (*ListArtifactsStoresResponse, error)
+	// List artifact stores
+	ListArtifactsStores(ctx context.Context, in *OwnerResouceListRequest, opts ...grpc.CallOption) (*ListArtifactsStoresResponse, error)
+	// Create artifact store
+	CreateArtifactsStore(ctx context.Context, in *ArtifactsStoreBodyRequest, opts ...grpc.CallOption) (*ArtifactsStore, error)
+	// Get artifact store
+	GetArtifactsStore(ctx context.Context, in *OwnerEntityResourceRequest, opts ...grpc.CallOption) (*ArtifactsStore, error)
+	// Update artifact store
+	UpdateArtifactsStore(ctx context.Context, in *ArtifactsStoreBodyRequest, opts ...grpc.CallOption) (*ArtifactsStore, error)
+	// Patch artifact store
+	PatchArtifactsStore(ctx context.Context, in *ArtifactsStoreBodyRequest, opts ...grpc.CallOption) (*ArtifactsStore, error)
+	// Delete artifact store
+	DeleteArtifactsStore(ctx context.Context, in *OwnerEntityResourceRequest, opts ...grpc.CallOption) (*empty.Empty, error)
+}
+
+type artifactsStoresV1Client struct {
+	cc *grpc.ClientConn
+}
+
+func NewArtifactsStoresV1Client(cc *grpc.ClientConn) ArtifactsStoresV1Client {
+	return &artifactsStoresV1Client{cc}
+}
+
+func (c *artifactsStoresV1Client) ListArtifactsStoreNames(ctx context.Context, in *OwnerResouceListRequest, opts ...grpc.CallOption) (*ListArtifactsStoresResponse, error) {
+	out := new(ListArtifactsStoresResponse)
+	err := c.cc.Invoke(ctx, "/v1.ArtifactsStoresV1/ListArtifactsStoreNames", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *artifactsStoresV1Client) ListArtifactsStores(ctx context.Context, in *OwnerResouceListRequest, opts ...grpc.CallOption) (*ListArtifactsStoresResponse, error) {
+	out := new(ListArtifactsStoresResponse)
+	err := c.cc.Invoke(ctx, "/v1.ArtifactsStoresV1/ListArtifactsStores", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *artifactsStoresV1Client) CreateArtifactsStore(ctx context.Context, in *ArtifactsStoreBodyRequest, opts ...grpc.CallOption) (*ArtifactsStore, error) {
+	out := new(ArtifactsStore)
+	err := c.cc.Invoke(ctx, "/v1.ArtifactsStoresV1/CreateArtifactsStore", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *artifactsStoresV1Client) GetArtifactsStore(ctx context.Context, in *OwnerEntityResourceRequest, opts ...grpc.CallOption) (*ArtifactsStore, error) {
+	out := new(ArtifactsStore)
+	err := c.cc.Invoke(ctx, "/v1.ArtifactsStoresV1/GetArtifactsStore", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *artifactsStoresV1Client) UpdateArtifactsStore(ctx context.Context, in *ArtifactsStoreBodyRequest, opts ...grpc.CallOption) (*ArtifactsStore, error) {
+	out := new(ArtifactsStore)
+	err := c.cc.Invoke(ctx, "/v1.ArtifactsStoresV1/UpdateArtifactsStore", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *artifactsStoresV1Client) PatchArtifactsStore(ctx context.Context, in *ArtifactsStoreBodyRequest, opts ...grpc.CallOption) (*ArtifactsStore, error) {
+	out := new(ArtifactsStore)
+	err := c.cc.Invoke(ctx, "/v1.ArtifactsStoresV1/PatchArtifactsStore", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *artifactsStoresV1Client) DeleteArtifactsStore(ctx context.Context, in *OwnerEntityResourceRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
+	out := new(empty.Empty)
+	err := c.cc.Invoke(ctx, "/v1.ArtifactsStoresV1/DeleteArtifactsStore", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// ArtifactsStoresV1Server is the server API for ArtifactsStoresV1 service.
+type ArtifactsStoresV1Server interface {
+	// List artifact stores namess
+	ListArtifactsStoreNames(context.Context, *OwnerResouceListRequest) (*ListArtifactsStoresResponse, error)
+	// List artifact stores
+	ListArtifactsStores(context.Context, *OwnerResouceListRequest) (*ListArtifactsStoresResponse, error)
+	// Create artifact store
+	CreateArtifactsStore(context.Context, *ArtifactsStoreBodyRequest) (*ArtifactsStore, error)
+	// Get artifact store
+	GetArtifactsStore(context.Context, *OwnerEntityResourceRequest) (*ArtifactsStore, error)
+	// Update artifact store
+	UpdateArtifactsStore(context.Context, *ArtifactsStoreBodyRequest) (*ArtifactsStore, error)
+	// Patch artifact store
+	PatchArtifactsStore(context.Context, *ArtifactsStoreBodyRequest) (*ArtifactsStore, error)
+	// Delete artifact store
+	DeleteArtifactsStore(context.Context, *OwnerEntityResourceRequest) (*empty.Empty, error)
+}
+
+// UnimplementedArtifactsStoresV1Server can be embedded to have forward compatible implementations.
+type UnimplementedArtifactsStoresV1Server struct {
+}
+
+func (*UnimplementedArtifactsStoresV1Server) ListArtifactsStoreNames(ctx context.Context, req *OwnerResouceListRequest) (*ListArtifactsStoresResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListArtifactsStoreNames not implemented")
+}
+func (*UnimplementedArtifactsStoresV1Server) ListArtifactsStores(ctx context.Context, req *OwnerResouceListRequest) (*ListArtifactsStoresResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListArtifactsStores not implemented")
+}
+func (*UnimplementedArtifactsStoresV1Server) CreateArtifactsStore(ctx context.Context, req *ArtifactsStoreBodyRequest) (*ArtifactsStore, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateArtifactsStore not implemented")
+}
+func (*UnimplementedArtifactsStoresV1Server) GetArtifactsStore(ctx context.Context, req *OwnerEntityResourceRequest) (*ArtifactsStore, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetArtifactsStore not implemented")
+}
+func (*UnimplementedArtifactsStoresV1Server) UpdateArtifactsStore(ctx context.Context, req *ArtifactsStoreBodyRequest) (*ArtifactsStore, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateArtifactsStore not implemented")
+}
+func (*UnimplementedArtifactsStoresV1Server) PatchArtifactsStore(ctx context.Context, req *ArtifactsStoreBodyRequest) (*ArtifactsStore, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PatchArtifactsStore not implemented")
+}
+func (*UnimplementedArtifactsStoresV1Server) DeleteArtifactsStore(ctx context.Context, req *OwnerEntityResourceRequest) (*empty.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteArtifactsStore not implemented")
+}
+
+func RegisterArtifactsStoresV1Server(s *grpc.Server, srv ArtifactsStoresV1Server) {
+	s.RegisterService(&_ArtifactsStoresV1_serviceDesc, srv)
+}
+
+func _ArtifactsStoresV1_ListArtifactsStoreNames_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(OwnerResouceListRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ArtifactsStoresV1Server).ListArtifactsStoreNames(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/v1.ArtifactsStoresV1/ListArtifactsStoreNames",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ArtifactsStoresV1Server).ListArtifactsStoreNames(ctx, req.(*OwnerResouceListRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ArtifactsStoresV1_ListArtifactsStores_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(OwnerResouceListRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ArtifactsStoresV1Server).ListArtifactsStores(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/v1.ArtifactsStoresV1/ListArtifactsStores",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ArtifactsStoresV1Server).ListArtifactsStores(ctx, req.(*OwnerResouceListRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ArtifactsStoresV1_CreateArtifactsStore_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ArtifactsStoreBodyRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ArtifactsStoresV1Server).CreateArtifactsStore(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/v1.ArtifactsStoresV1/CreateArtifactsStore",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ArtifactsStoresV1Server).CreateArtifactsStore(ctx, req.(*ArtifactsStoreBodyRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ArtifactsStoresV1_GetArtifactsStore_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(OwnerEntityResourceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ArtifactsStoresV1Server).GetArtifactsStore(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/v1.ArtifactsStoresV1/GetArtifactsStore",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ArtifactsStoresV1Server).GetArtifactsStore(ctx, req.(*OwnerEntityResourceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ArtifactsStoresV1_UpdateArtifactsStore_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ArtifactsStoreBodyRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ArtifactsStoresV1Server).UpdateArtifactsStore(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/v1.ArtifactsStoresV1/UpdateArtifactsStore",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ArtifactsStoresV1Server).UpdateArtifactsStore(ctx, req.(*ArtifactsStoreBodyRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ArtifactsStoresV1_PatchArtifactsStore_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ArtifactsStoreBodyRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ArtifactsStoresV1Server).PatchArtifactsStore(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/v1.ArtifactsStoresV1/PatchArtifactsStore",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ArtifactsStoresV1Server).PatchArtifactsStore(ctx, req.(*ArtifactsStoreBodyRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ArtifactsStoresV1_DeleteArtifactsStore_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(OwnerEntityResourceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ArtifactsStoresV1Server).DeleteArtifactsStore(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/v1.ArtifactsStoresV1/DeleteArtifactsStore",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ArtifactsStoresV1Server).DeleteArtifactsStore(ctx, req.(*OwnerEntityResourceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+var _ArtifactsStoresV1_serviceDesc = grpc.ServiceDesc{
+	ServiceName: "v1.ArtifactsStoresV1",
+	HandlerType: (*ArtifactsStoresV1Server)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "ListArtifactsStoreNames",
+			Handler:    _ArtifactsStoresV1_ListArtifactsStoreNames_Handler,
+		},
+		{
+			MethodName: "ListArtifactsStores",
+			Handler:    _ArtifactsStoresV1_ListArtifactsStores_Handler,
+		},
+		{
+			MethodName: "CreateArtifactsStore",
+			Handler:    _ArtifactsStoresV1_CreateArtifactsStore_Handler,
+		},
+		{
+			MethodName: "GetArtifactsStore",
+			Handler:    _ArtifactsStoresV1_GetArtifactsStore_Handler,
+		},
+		{
+			MethodName: "UpdateArtifactsStore",
+			Handler:    _ArtifactsStoresV1_UpdateArtifactsStore_Handler,
+		},
+		{
+			MethodName: "PatchArtifactsStore",
+			Handler:    _ArtifactsStoresV1_PatchArtifactsStore_Handler,
+		},
+		{
+			MethodName: "DeleteArtifactsStore",
+			Handler:    _ArtifactsStoresV1_DeleteArtifactsStore_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "v1/polyaxon_sdk.proto",
+}
+
+// K8SConfigMapsV1Client is the client API for K8SConfigMapsV1 service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
+type K8SConfigMapsV1Client interface {
+	// List k8s config map namess
+	ListK8SConfigMapNames(ctx context.Context, in *OwnerResouceListRequest, opts ...grpc.CallOption) (*ListK8SResourcesResponse, error)
+	// List k8s config maps
+	ListK8SConfigMaps(ctx context.Context, in *OwnerResouceListRequest, opts ...grpc.CallOption) (*ListK8SResourcesResponse, error)
+	// Create k8s config map
+	CreateK8SConfigMaps(ctx context.Context, in *K8SResourceBodyRequest, opts ...grpc.CallOption) (*K8SResource, error)
+	// Get k8s config map
+	GetK8SConfigMap(ctx context.Context, in *OwnerEntityResourceRequest, opts ...grpc.CallOption) (*K8SResource, error)
+	// Update k8s config map
+	UpdateK8SConfigMap(ctx context.Context, in *K8SResourceBodyRequest, opts ...grpc.CallOption) (*K8SResource, error)
+	// Patch k8s config map
+	PatchK8SConfigMap(ctx context.Context, in *K8SResourceBodyRequest, opts ...grpc.CallOption) (*K8SResource, error)
+	// Delete k8s config map
+	DeleteK8SConfigMap(ctx context.Context, in *OwnerEntityResourceRequest, opts ...grpc.CallOption) (*empty.Empty, error)
+}
+
+type k8SConfigMapsV1Client struct {
+	cc *grpc.ClientConn
+}
+
+func NewK8SConfigMapsV1Client(cc *grpc.ClientConn) K8SConfigMapsV1Client {
+	return &k8SConfigMapsV1Client{cc}
+}
+
+func (c *k8SConfigMapsV1Client) ListK8SConfigMapNames(ctx context.Context, in *OwnerResouceListRequest, opts ...grpc.CallOption) (*ListK8SResourcesResponse, error) {
+	out := new(ListK8SResourcesResponse)
+	err := c.cc.Invoke(ctx, "/v1.K8SConfigMapsV1/ListK8SConfigMapNames", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *k8SConfigMapsV1Client) ListK8SConfigMaps(ctx context.Context, in *OwnerResouceListRequest, opts ...grpc.CallOption) (*ListK8SResourcesResponse, error) {
+	out := new(ListK8SResourcesResponse)
+	err := c.cc.Invoke(ctx, "/v1.K8SConfigMapsV1/ListK8SConfigMaps", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *k8SConfigMapsV1Client) CreateK8SConfigMaps(ctx context.Context, in *K8SResourceBodyRequest, opts ...grpc.CallOption) (*K8SResource, error) {
+	out := new(K8SResource)
+	err := c.cc.Invoke(ctx, "/v1.K8SConfigMapsV1/CreateK8SConfigMaps", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *k8SConfigMapsV1Client) GetK8SConfigMap(ctx context.Context, in *OwnerEntityResourceRequest, opts ...grpc.CallOption) (*K8SResource, error) {
+	out := new(K8SResource)
+	err := c.cc.Invoke(ctx, "/v1.K8SConfigMapsV1/GetK8SConfigMap", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *k8SConfigMapsV1Client) UpdateK8SConfigMap(ctx context.Context, in *K8SResourceBodyRequest, opts ...grpc.CallOption) (*K8SResource, error) {
+	out := new(K8SResource)
+	err := c.cc.Invoke(ctx, "/v1.K8SConfigMapsV1/UpdateK8SConfigMap", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *k8SConfigMapsV1Client) PatchK8SConfigMap(ctx context.Context, in *K8SResourceBodyRequest, opts ...grpc.CallOption) (*K8SResource, error) {
+	out := new(K8SResource)
+	err := c.cc.Invoke(ctx, "/v1.K8SConfigMapsV1/PatchK8SConfigMap", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *k8SConfigMapsV1Client) DeleteK8SConfigMap(ctx context.Context, in *OwnerEntityResourceRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
+	out := new(empty.Empty)
+	err := c.cc.Invoke(ctx, "/v1.K8SConfigMapsV1/DeleteK8SConfigMap", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// K8SConfigMapsV1Server is the server API for K8SConfigMapsV1 service.
+type K8SConfigMapsV1Server interface {
+	// List k8s config map namess
+	ListK8SConfigMapNames(context.Context, *OwnerResouceListRequest) (*ListK8SResourcesResponse, error)
+	// List k8s config maps
+	ListK8SConfigMaps(context.Context, *OwnerResouceListRequest) (*ListK8SResourcesResponse, error)
+	// Create k8s config map
+	CreateK8SConfigMaps(context.Context, *K8SResourceBodyRequest) (*K8SResource, error)
+	// Get k8s config map
+	GetK8SConfigMap(context.Context, *OwnerEntityResourceRequest) (*K8SResource, error)
+	// Update k8s config map
+	UpdateK8SConfigMap(context.Context, *K8SResourceBodyRequest) (*K8SResource, error)
+	// Patch k8s config map
+	PatchK8SConfigMap(context.Context, *K8SResourceBodyRequest) (*K8SResource, error)
+	// Delete k8s config map
+	DeleteK8SConfigMap(context.Context, *OwnerEntityResourceRequest) (*empty.Empty, error)
+}
+
+// UnimplementedK8SConfigMapsV1Server can be embedded to have forward compatible implementations.
+type UnimplementedK8SConfigMapsV1Server struct {
+}
+
+func (*UnimplementedK8SConfigMapsV1Server) ListK8SConfigMapNames(ctx context.Context, req *OwnerResouceListRequest) (*ListK8SResourcesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListK8SConfigMapNames not implemented")
+}
+func (*UnimplementedK8SConfigMapsV1Server) ListK8SConfigMaps(ctx context.Context, req *OwnerResouceListRequest) (*ListK8SResourcesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListK8SConfigMaps not implemented")
+}
+func (*UnimplementedK8SConfigMapsV1Server) CreateK8SConfigMaps(ctx context.Context, req *K8SResourceBodyRequest) (*K8SResource, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateK8SConfigMaps not implemented")
+}
+func (*UnimplementedK8SConfigMapsV1Server) GetK8SConfigMap(ctx context.Context, req *OwnerEntityResourceRequest) (*K8SResource, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetK8SConfigMap not implemented")
+}
+func (*UnimplementedK8SConfigMapsV1Server) UpdateK8SConfigMap(ctx context.Context, req *K8SResourceBodyRequest) (*K8SResource, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateK8SConfigMap not implemented")
+}
+func (*UnimplementedK8SConfigMapsV1Server) PatchK8SConfigMap(ctx context.Context, req *K8SResourceBodyRequest) (*K8SResource, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PatchK8SConfigMap not implemented")
+}
+func (*UnimplementedK8SConfigMapsV1Server) DeleteK8SConfigMap(ctx context.Context, req *OwnerEntityResourceRequest) (*empty.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteK8SConfigMap not implemented")
+}
+
+func RegisterK8SConfigMapsV1Server(s *grpc.Server, srv K8SConfigMapsV1Server) {
+	s.RegisterService(&_K8SConfigMapsV1_serviceDesc, srv)
+}
+
+func _K8SConfigMapsV1_ListK8SConfigMapNames_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(OwnerResouceListRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(K8SConfigMapsV1Server).ListK8SConfigMapNames(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/v1.K8SConfigMapsV1/ListK8SConfigMapNames",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(K8SConfigMapsV1Server).ListK8SConfigMapNames(ctx, req.(*OwnerResouceListRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _K8SConfigMapsV1_ListK8SConfigMaps_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(OwnerResouceListRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(K8SConfigMapsV1Server).ListK8SConfigMaps(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/v1.K8SConfigMapsV1/ListK8SConfigMaps",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(K8SConfigMapsV1Server).ListK8SConfigMaps(ctx, req.(*OwnerResouceListRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _K8SConfigMapsV1_CreateK8SConfigMaps_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(K8SResourceBodyRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(K8SConfigMapsV1Server).CreateK8SConfigMaps(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/v1.K8SConfigMapsV1/CreateK8SConfigMaps",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(K8SConfigMapsV1Server).CreateK8SConfigMaps(ctx, req.(*K8SResourceBodyRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _K8SConfigMapsV1_GetK8SConfigMap_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(OwnerEntityResourceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(K8SConfigMapsV1Server).GetK8SConfigMap(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/v1.K8SConfigMapsV1/GetK8SConfigMap",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(K8SConfigMapsV1Server).GetK8SConfigMap(ctx, req.(*OwnerEntityResourceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _K8SConfigMapsV1_UpdateK8SConfigMap_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(K8SResourceBodyRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(K8SConfigMapsV1Server).UpdateK8SConfigMap(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/v1.K8SConfigMapsV1/UpdateK8SConfigMap",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(K8SConfigMapsV1Server).UpdateK8SConfigMap(ctx, req.(*K8SResourceBodyRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _K8SConfigMapsV1_PatchK8SConfigMap_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(K8SResourceBodyRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(K8SConfigMapsV1Server).PatchK8SConfigMap(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/v1.K8SConfigMapsV1/PatchK8SConfigMap",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(K8SConfigMapsV1Server).PatchK8SConfigMap(ctx, req.(*K8SResourceBodyRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _K8SConfigMapsV1_DeleteK8SConfigMap_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(OwnerEntityResourceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(K8SConfigMapsV1Server).DeleteK8SConfigMap(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/v1.K8SConfigMapsV1/DeleteK8SConfigMap",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(K8SConfigMapsV1Server).DeleteK8SConfigMap(ctx, req.(*OwnerEntityResourceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+var _K8SConfigMapsV1_serviceDesc = grpc.ServiceDesc{
+	ServiceName: "v1.K8SConfigMapsV1",
+	HandlerType: (*K8SConfigMapsV1Server)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "ListK8SConfigMapNames",
+			Handler:    _K8SConfigMapsV1_ListK8SConfigMapNames_Handler,
+		},
+		{
+			MethodName: "ListK8SConfigMaps",
+			Handler:    _K8SConfigMapsV1_ListK8SConfigMaps_Handler,
+		},
+		{
+			MethodName: "CreateK8SConfigMaps",
+			Handler:    _K8SConfigMapsV1_CreateK8SConfigMaps_Handler,
+		},
+		{
+			MethodName: "GetK8SConfigMap",
+			Handler:    _K8SConfigMapsV1_GetK8SConfigMap_Handler,
+		},
+		{
+			MethodName: "UpdateK8SConfigMap",
+			Handler:    _K8SConfigMapsV1_UpdateK8SConfigMap_Handler,
+		},
+		{
+			MethodName: "PatchK8SConfigMap",
+			Handler:    _K8SConfigMapsV1_PatchK8SConfigMap_Handler,
+		},
+		{
+			MethodName: "DeleteK8SConfigMap",
+			Handler:    _K8SConfigMapsV1_DeleteK8SConfigMap_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "v1/polyaxon_sdk.proto",
+}
+
+// K8SSecretsV1Client is the client API for K8SSecretsV1 service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
+type K8SSecretsV1Client interface {
+	// List k8s secret namess
+	ListK8SSecretNames(ctx context.Context, in *OwnerResouceListRequest, opts ...grpc.CallOption) (*ListK8SResourcesResponse, error)
+	// List k8s secrets
+	ListK8SSecrets(ctx context.Context, in *OwnerResouceListRequest, opts ...grpc.CallOption) (*ListK8SResourcesResponse, error)
+	// Create k8s secret
+	CreateK8SSecrets(ctx context.Context, in *K8SResourceBodyRequest, opts ...grpc.CallOption) (*K8SResource, error)
+	// Get k8s secret
+	GetK8SSecret(ctx context.Context, in *OwnerEntityResourceRequest, opts ...grpc.CallOption) (*K8SResource, error)
+	// Update k8s secret
+	UpdateK8SSecret(ctx context.Context, in *K8SResourceBodyRequest, opts ...grpc.CallOption) (*K8SResource, error)
+	// Patch k8s secret
+	PatchK8SSecret(ctx context.Context, in *K8SResourceBodyRequest, opts ...grpc.CallOption) (*K8SResource, error)
+	// Delete k8s config map
+	DeleteK8SSecret(ctx context.Context, in *OwnerEntityResourceRequest, opts ...grpc.CallOption) (*empty.Empty, error)
+}
+
+type k8SSecretsV1Client struct {
+	cc *grpc.ClientConn
+}
+
+func NewK8SSecretsV1Client(cc *grpc.ClientConn) K8SSecretsV1Client {
+	return &k8SSecretsV1Client{cc}
+}
+
+func (c *k8SSecretsV1Client) ListK8SSecretNames(ctx context.Context, in *OwnerResouceListRequest, opts ...grpc.CallOption) (*ListK8SResourcesResponse, error) {
+	out := new(ListK8SResourcesResponse)
+	err := c.cc.Invoke(ctx, "/v1.K8SSecretsV1/ListK8SSecretNames", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *k8SSecretsV1Client) ListK8SSecrets(ctx context.Context, in *OwnerResouceListRequest, opts ...grpc.CallOption) (*ListK8SResourcesResponse, error) {
+	out := new(ListK8SResourcesResponse)
+	err := c.cc.Invoke(ctx, "/v1.K8SSecretsV1/ListK8SSecrets", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *k8SSecretsV1Client) CreateK8SSecrets(ctx context.Context, in *K8SResourceBodyRequest, opts ...grpc.CallOption) (*K8SResource, error) {
+	out := new(K8SResource)
+	err := c.cc.Invoke(ctx, "/v1.K8SSecretsV1/CreateK8SSecrets", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *k8SSecretsV1Client) GetK8SSecret(ctx context.Context, in *OwnerEntityResourceRequest, opts ...grpc.CallOption) (*K8SResource, error) {
+	out := new(K8SResource)
+	err := c.cc.Invoke(ctx, "/v1.K8SSecretsV1/GetK8SSecret", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *k8SSecretsV1Client) UpdateK8SSecret(ctx context.Context, in *K8SResourceBodyRequest, opts ...grpc.CallOption) (*K8SResource, error) {
+	out := new(K8SResource)
+	err := c.cc.Invoke(ctx, "/v1.K8SSecretsV1/UpdateK8SSecret", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *k8SSecretsV1Client) PatchK8SSecret(ctx context.Context, in *K8SResourceBodyRequest, opts ...grpc.CallOption) (*K8SResource, error) {
+	out := new(K8SResource)
+	err := c.cc.Invoke(ctx, "/v1.K8SSecretsV1/PatchK8SSecret", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *k8SSecretsV1Client) DeleteK8SSecret(ctx context.Context, in *OwnerEntityResourceRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
+	out := new(empty.Empty)
+	err := c.cc.Invoke(ctx, "/v1.K8SSecretsV1/DeleteK8SSecret", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// K8SSecretsV1Server is the server API for K8SSecretsV1 service.
+type K8SSecretsV1Server interface {
+	// List k8s secret namess
+	ListK8SSecretNames(context.Context, *OwnerResouceListRequest) (*ListK8SResourcesResponse, error)
+	// List k8s secrets
+	ListK8SSecrets(context.Context, *OwnerResouceListRequest) (*ListK8SResourcesResponse, error)
+	// Create k8s secret
+	CreateK8SSecrets(context.Context, *K8SResourceBodyRequest) (*K8SResource, error)
+	// Get k8s secret
+	GetK8SSecret(context.Context, *OwnerEntityResourceRequest) (*K8SResource, error)
+	// Update k8s secret
+	UpdateK8SSecret(context.Context, *K8SResourceBodyRequest) (*K8SResource, error)
+	// Patch k8s secret
+	PatchK8SSecret(context.Context, *K8SResourceBodyRequest) (*K8SResource, error)
+	// Delete k8s config map
+	DeleteK8SSecret(context.Context, *OwnerEntityResourceRequest) (*empty.Empty, error)
+}
+
+// UnimplementedK8SSecretsV1Server can be embedded to have forward compatible implementations.
+type UnimplementedK8SSecretsV1Server struct {
+}
+
+func (*UnimplementedK8SSecretsV1Server) ListK8SSecretNames(ctx context.Context, req *OwnerResouceListRequest) (*ListK8SResourcesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListK8SSecretNames not implemented")
+}
+func (*UnimplementedK8SSecretsV1Server) ListK8SSecrets(ctx context.Context, req *OwnerResouceListRequest) (*ListK8SResourcesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListK8SSecrets not implemented")
+}
+func (*UnimplementedK8SSecretsV1Server) CreateK8SSecrets(ctx context.Context, req *K8SResourceBodyRequest) (*K8SResource, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateK8SSecrets not implemented")
+}
+func (*UnimplementedK8SSecretsV1Server) GetK8SSecret(ctx context.Context, req *OwnerEntityResourceRequest) (*K8SResource, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetK8SSecret not implemented")
+}
+func (*UnimplementedK8SSecretsV1Server) UpdateK8SSecret(ctx context.Context, req *K8SResourceBodyRequest) (*K8SResource, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateK8SSecret not implemented")
+}
+func (*UnimplementedK8SSecretsV1Server) PatchK8SSecret(ctx context.Context, req *K8SResourceBodyRequest) (*K8SResource, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PatchK8SSecret not implemented")
+}
+func (*UnimplementedK8SSecretsV1Server) DeleteK8SSecret(ctx context.Context, req *OwnerEntityResourceRequest) (*empty.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteK8SSecret not implemented")
+}
+
+func RegisterK8SSecretsV1Server(s *grpc.Server, srv K8SSecretsV1Server) {
+	s.RegisterService(&_K8SSecretsV1_serviceDesc, srv)
+}
+
+func _K8SSecretsV1_ListK8SSecretNames_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(OwnerResouceListRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(K8SSecretsV1Server).ListK8SSecretNames(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/v1.K8SSecretsV1/ListK8SSecretNames",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(K8SSecretsV1Server).ListK8SSecretNames(ctx, req.(*OwnerResouceListRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _K8SSecretsV1_ListK8SSecrets_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(OwnerResouceListRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(K8SSecretsV1Server).ListK8SSecrets(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/v1.K8SSecretsV1/ListK8SSecrets",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(K8SSecretsV1Server).ListK8SSecrets(ctx, req.(*OwnerResouceListRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _K8SSecretsV1_CreateK8SSecrets_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(K8SResourceBodyRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(K8SSecretsV1Server).CreateK8SSecrets(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/v1.K8SSecretsV1/CreateK8SSecrets",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(K8SSecretsV1Server).CreateK8SSecrets(ctx, req.(*K8SResourceBodyRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _K8SSecretsV1_GetK8SSecret_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(OwnerEntityResourceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(K8SSecretsV1Server).GetK8SSecret(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/v1.K8SSecretsV1/GetK8SSecret",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(K8SSecretsV1Server).GetK8SSecret(ctx, req.(*OwnerEntityResourceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _K8SSecretsV1_UpdateK8SSecret_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(K8SResourceBodyRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(K8SSecretsV1Server).UpdateK8SSecret(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/v1.K8SSecretsV1/UpdateK8SSecret",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(K8SSecretsV1Server).UpdateK8SSecret(ctx, req.(*K8SResourceBodyRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _K8SSecretsV1_PatchK8SSecret_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(K8SResourceBodyRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(K8SSecretsV1Server).PatchK8SSecret(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/v1.K8SSecretsV1/PatchK8SSecret",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(K8SSecretsV1Server).PatchK8SSecret(ctx, req.(*K8SResourceBodyRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _K8SSecretsV1_DeleteK8SSecret_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(OwnerEntityResourceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(K8SSecretsV1Server).DeleteK8SSecret(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/v1.K8SSecretsV1/DeleteK8SSecret",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(K8SSecretsV1Server).DeleteK8SSecret(ctx, req.(*OwnerEntityResourceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+var _K8SSecretsV1_serviceDesc = grpc.ServiceDesc{
+	ServiceName: "v1.K8SSecretsV1",
+	HandlerType: (*K8SSecretsV1Server)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "ListK8SSecretNames",
+			Handler:    _K8SSecretsV1_ListK8SSecretNames_Handler,
+		},
+		{
+			MethodName: "ListK8SSecrets",
+			Handler:    _K8SSecretsV1_ListK8SSecrets_Handler,
+		},
+		{
+			MethodName: "CreateK8SSecrets",
+			Handler:    _K8SSecretsV1_CreateK8SSecrets_Handler,
+		},
+		{
+			MethodName: "GetK8SSecret",
+			Handler:    _K8SSecretsV1_GetK8SSecret_Handler,
+		},
+		{
+			MethodName: "UpdateK8SSecret",
+			Handler:    _K8SSecretsV1_UpdateK8SSecret_Handler,
+		},
+		{
+			MethodName: "PatchK8SSecret",
+			Handler:    _K8SSecretsV1_PatchK8SSecret_Handler,
+		},
+		{
+			MethodName: "DeleteK8SSecret",
+			Handler:    _K8SSecretsV1_DeleteK8SSecret_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "v1/polyaxon_sdk.proto",
+}
+
+// RegsitryAccessesV1Client is the client API for RegsitryAccessesV1 service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
+type RegsitryAccessesV1Client interface {
+	// List registry access names
+	ListRegsitryAccessNames(ctx context.Context, in *OwnerResouceListRequest, opts ...grpc.CallOption) (*ListHostAccessesResponse, error)
+	// List registry access
+	ListRegsitryAccesses(ctx context.Context, in *OwnerResouceListRequest, opts ...grpc.CallOption) (*ListHostAccessesResponse, error)
+	// Create registry access
+	CreateRegsitryAccess(ctx context.Context, in *HostAccessBodyRequest, opts ...grpc.CallOption) (*HostAccess, error)
+	// Get registry access
+	GetRegsitryAccess(ctx context.Context, in *OwnerEntityResourceRequest, opts ...grpc.CallOption) (*HostAccess, error)
+	// Update registry access
+	UpdateRegsitryAccess(ctx context.Context, in *HostAccessBodyRequest, opts ...grpc.CallOption) (*HostAccess, error)
+	// Patch registry access
+	PatchRegsitryAccess(ctx context.Context, in *HostAccessBodyRequest, opts ...grpc.CallOption) (*HostAccess, error)
+	// Delete registry access
+	DeleteRegsitryAccess(ctx context.Context, in *OwnerEntityResourceRequest, opts ...grpc.CallOption) (*empty.Empty, error)
+}
+
+type regsitryAccessesV1Client struct {
+	cc *grpc.ClientConn
+}
+
+func NewRegsitryAccessesV1Client(cc *grpc.ClientConn) RegsitryAccessesV1Client {
+	return &regsitryAccessesV1Client{cc}
+}
+
+func (c *regsitryAccessesV1Client) ListRegsitryAccessNames(ctx context.Context, in *OwnerResouceListRequest, opts ...grpc.CallOption) (*ListHostAccessesResponse, error) {
+	out := new(ListHostAccessesResponse)
+	err := c.cc.Invoke(ctx, "/v1.RegsitryAccessesV1/ListRegsitryAccessNames", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *regsitryAccessesV1Client) ListRegsitryAccesses(ctx context.Context, in *OwnerResouceListRequest, opts ...grpc.CallOption) (*ListHostAccessesResponse, error) {
+	out := new(ListHostAccessesResponse)
+	err := c.cc.Invoke(ctx, "/v1.RegsitryAccessesV1/ListRegsitryAccesses", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *regsitryAccessesV1Client) CreateRegsitryAccess(ctx context.Context, in *HostAccessBodyRequest, opts ...grpc.CallOption) (*HostAccess, error) {
+	out := new(HostAccess)
+	err := c.cc.Invoke(ctx, "/v1.RegsitryAccessesV1/CreateRegsitryAccess", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *regsitryAccessesV1Client) GetRegsitryAccess(ctx context.Context, in *OwnerEntityResourceRequest, opts ...grpc.CallOption) (*HostAccess, error) {
+	out := new(HostAccess)
+	err := c.cc.Invoke(ctx, "/v1.RegsitryAccessesV1/GetRegsitryAccess", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *regsitryAccessesV1Client) UpdateRegsitryAccess(ctx context.Context, in *HostAccessBodyRequest, opts ...grpc.CallOption) (*HostAccess, error) {
+	out := new(HostAccess)
+	err := c.cc.Invoke(ctx, "/v1.RegsitryAccessesV1/UpdateRegsitryAccess", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *regsitryAccessesV1Client) PatchRegsitryAccess(ctx context.Context, in *HostAccessBodyRequest, opts ...grpc.CallOption) (*HostAccess, error) {
+	out := new(HostAccess)
+	err := c.cc.Invoke(ctx, "/v1.RegsitryAccessesV1/PatchRegsitryAccess", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *regsitryAccessesV1Client) DeleteRegsitryAccess(ctx context.Context, in *OwnerEntityResourceRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
+	out := new(empty.Empty)
+	err := c.cc.Invoke(ctx, "/v1.RegsitryAccessesV1/DeleteRegsitryAccess", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// RegsitryAccessesV1Server is the server API for RegsitryAccessesV1 service.
+type RegsitryAccessesV1Server interface {
+	// List registry access names
+	ListRegsitryAccessNames(context.Context, *OwnerResouceListRequest) (*ListHostAccessesResponse, error)
+	// List registry access
+	ListRegsitryAccesses(context.Context, *OwnerResouceListRequest) (*ListHostAccessesResponse, error)
+	// Create registry access
+	CreateRegsitryAccess(context.Context, *HostAccessBodyRequest) (*HostAccess, error)
+	// Get registry access
+	GetRegsitryAccess(context.Context, *OwnerEntityResourceRequest) (*HostAccess, error)
+	// Update registry access
+	UpdateRegsitryAccess(context.Context, *HostAccessBodyRequest) (*HostAccess, error)
+	// Patch registry access
+	PatchRegsitryAccess(context.Context, *HostAccessBodyRequest) (*HostAccess, error)
+	// Delete registry access
+	DeleteRegsitryAccess(context.Context, *OwnerEntityResourceRequest) (*empty.Empty, error)
+}
+
+// UnimplementedRegsitryAccessesV1Server can be embedded to have forward compatible implementations.
+type UnimplementedRegsitryAccessesV1Server struct {
+}
+
+func (*UnimplementedRegsitryAccessesV1Server) ListRegsitryAccessNames(ctx context.Context, req *OwnerResouceListRequest) (*ListHostAccessesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListRegsitryAccessNames not implemented")
+}
+func (*UnimplementedRegsitryAccessesV1Server) ListRegsitryAccesses(ctx context.Context, req *OwnerResouceListRequest) (*ListHostAccessesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListRegsitryAccesses not implemented")
+}
+func (*UnimplementedRegsitryAccessesV1Server) CreateRegsitryAccess(ctx context.Context, req *HostAccessBodyRequest) (*HostAccess, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateRegsitryAccess not implemented")
+}
+func (*UnimplementedRegsitryAccessesV1Server) GetRegsitryAccess(ctx context.Context, req *OwnerEntityResourceRequest) (*HostAccess, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetRegsitryAccess not implemented")
+}
+func (*UnimplementedRegsitryAccessesV1Server) UpdateRegsitryAccess(ctx context.Context, req *HostAccessBodyRequest) (*HostAccess, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateRegsitryAccess not implemented")
+}
+func (*UnimplementedRegsitryAccessesV1Server) PatchRegsitryAccess(ctx context.Context, req *HostAccessBodyRequest) (*HostAccess, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PatchRegsitryAccess not implemented")
+}
+func (*UnimplementedRegsitryAccessesV1Server) DeleteRegsitryAccess(ctx context.Context, req *OwnerEntityResourceRequest) (*empty.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteRegsitryAccess not implemented")
+}
+
+func RegisterRegsitryAccessesV1Server(s *grpc.Server, srv RegsitryAccessesV1Server) {
+	s.RegisterService(&_RegsitryAccessesV1_serviceDesc, srv)
+}
+
+func _RegsitryAccessesV1_ListRegsitryAccessNames_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(OwnerResouceListRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RegsitryAccessesV1Server).ListRegsitryAccessNames(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/v1.RegsitryAccessesV1/ListRegsitryAccessNames",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RegsitryAccessesV1Server).ListRegsitryAccessNames(ctx, req.(*OwnerResouceListRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _RegsitryAccessesV1_ListRegsitryAccesses_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(OwnerResouceListRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RegsitryAccessesV1Server).ListRegsitryAccesses(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/v1.RegsitryAccessesV1/ListRegsitryAccesses",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RegsitryAccessesV1Server).ListRegsitryAccesses(ctx, req.(*OwnerResouceListRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _RegsitryAccessesV1_CreateRegsitryAccess_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(HostAccessBodyRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RegsitryAccessesV1Server).CreateRegsitryAccess(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/v1.RegsitryAccessesV1/CreateRegsitryAccess",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RegsitryAccessesV1Server).CreateRegsitryAccess(ctx, req.(*HostAccessBodyRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _RegsitryAccessesV1_GetRegsitryAccess_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(OwnerEntityResourceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RegsitryAccessesV1Server).GetRegsitryAccess(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/v1.RegsitryAccessesV1/GetRegsitryAccess",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RegsitryAccessesV1Server).GetRegsitryAccess(ctx, req.(*OwnerEntityResourceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _RegsitryAccessesV1_UpdateRegsitryAccess_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(HostAccessBodyRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RegsitryAccessesV1Server).UpdateRegsitryAccess(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/v1.RegsitryAccessesV1/UpdateRegsitryAccess",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RegsitryAccessesV1Server).UpdateRegsitryAccess(ctx, req.(*HostAccessBodyRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _RegsitryAccessesV1_PatchRegsitryAccess_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(HostAccessBodyRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RegsitryAccessesV1Server).PatchRegsitryAccess(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/v1.RegsitryAccessesV1/PatchRegsitryAccess",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RegsitryAccessesV1Server).PatchRegsitryAccess(ctx, req.(*HostAccessBodyRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _RegsitryAccessesV1_DeleteRegsitryAccess_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(OwnerEntityResourceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RegsitryAccessesV1Server).DeleteRegsitryAccess(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/v1.RegsitryAccessesV1/DeleteRegsitryAccess",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RegsitryAccessesV1Server).DeleteRegsitryAccess(ctx, req.(*OwnerEntityResourceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+var _RegsitryAccessesV1_serviceDesc = grpc.ServiceDesc{
+	ServiceName: "v1.RegsitryAccessesV1",
+	HandlerType: (*RegsitryAccessesV1Server)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "ListRegsitryAccessNames",
+			Handler:    _RegsitryAccessesV1_ListRegsitryAccessNames_Handler,
+		},
+		{
+			MethodName: "ListRegsitryAccesses",
+			Handler:    _RegsitryAccessesV1_ListRegsitryAccesses_Handler,
+		},
+		{
+			MethodName: "CreateRegsitryAccess",
+			Handler:    _RegsitryAccessesV1_CreateRegsitryAccess_Handler,
+		},
+		{
+			MethodName: "GetRegsitryAccess",
+			Handler:    _RegsitryAccessesV1_GetRegsitryAccess_Handler,
+		},
+		{
+			MethodName: "UpdateRegsitryAccess",
+			Handler:    _RegsitryAccessesV1_UpdateRegsitryAccess_Handler,
+		},
+		{
+			MethodName: "PatchRegsitryAccess",
+			Handler:    _RegsitryAccessesV1_PatchRegsitryAccess_Handler,
+		},
+		{
+			MethodName: "DeleteRegsitryAccess",
+			Handler:    _RegsitryAccessesV1_DeleteRegsitryAccess_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "v1/polyaxon_sdk.proto",
+}
+
+// GitAccessesV1Client is the client API for GitAccessesV1 service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
+type GitAccessesV1Client interface {
+	// List git access names
+	ListGitAccessNames(ctx context.Context, in *OwnerResouceListRequest, opts ...grpc.CallOption) (*ListHostAccessesResponse, error)
+	// List git accesses
+	ListGitAccesses(ctx context.Context, in *OwnerResouceListRequest, opts ...grpc.CallOption) (*ListHostAccessesResponse, error)
+	// Create git accesses
+	CreateGitAccess(ctx context.Context, in *HostAccessBodyRequest, opts ...grpc.CallOption) (*HostAccess, error)
+	// Get git access
+	GetGitAccess(ctx context.Context, in *OwnerEntityResourceRequest, opts ...grpc.CallOption) (*HostAccess, error)
+	// Update git access
+	UpdateGitAccess(ctx context.Context, in *HostAccessBodyRequest, opts ...grpc.CallOption) (*HostAccess, error)
+	// Patch git access
+	PatchGitAccess(ctx context.Context, in *HostAccessBodyRequest, opts ...grpc.CallOption) (*HostAccess, error)
+	// Delete git access
+	DeleteGitAccess(ctx context.Context, in *OwnerEntityResourceRequest, opts ...grpc.CallOption) (*empty.Empty, error)
+}
+
+type gitAccessesV1Client struct {
+	cc *grpc.ClientConn
+}
+
+func NewGitAccessesV1Client(cc *grpc.ClientConn) GitAccessesV1Client {
+	return &gitAccessesV1Client{cc}
+}
+
+func (c *gitAccessesV1Client) ListGitAccessNames(ctx context.Context, in *OwnerResouceListRequest, opts ...grpc.CallOption) (*ListHostAccessesResponse, error) {
+	out := new(ListHostAccessesResponse)
+	err := c.cc.Invoke(ctx, "/v1.GitAccessesV1/ListGitAccessNames", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *gitAccessesV1Client) ListGitAccesses(ctx context.Context, in *OwnerResouceListRequest, opts ...grpc.CallOption) (*ListHostAccessesResponse, error) {
+	out := new(ListHostAccessesResponse)
+	err := c.cc.Invoke(ctx, "/v1.GitAccessesV1/ListGitAccesses", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *gitAccessesV1Client) CreateGitAccess(ctx context.Context, in *HostAccessBodyRequest, opts ...grpc.CallOption) (*HostAccess, error) {
+	out := new(HostAccess)
+	err := c.cc.Invoke(ctx, "/v1.GitAccessesV1/CreateGitAccess", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *gitAccessesV1Client) GetGitAccess(ctx context.Context, in *OwnerEntityResourceRequest, opts ...grpc.CallOption) (*HostAccess, error) {
+	out := new(HostAccess)
+	err := c.cc.Invoke(ctx, "/v1.GitAccessesV1/GetGitAccess", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *gitAccessesV1Client) UpdateGitAccess(ctx context.Context, in *HostAccessBodyRequest, opts ...grpc.CallOption) (*HostAccess, error) {
+	out := new(HostAccess)
+	err := c.cc.Invoke(ctx, "/v1.GitAccessesV1/UpdateGitAccess", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *gitAccessesV1Client) PatchGitAccess(ctx context.Context, in *HostAccessBodyRequest, opts ...grpc.CallOption) (*HostAccess, error) {
+	out := new(HostAccess)
+	err := c.cc.Invoke(ctx, "/v1.GitAccessesV1/PatchGitAccess", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *gitAccessesV1Client) DeleteGitAccess(ctx context.Context, in *OwnerEntityResourceRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
+	out := new(empty.Empty)
+	err := c.cc.Invoke(ctx, "/v1.GitAccessesV1/DeleteGitAccess", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// GitAccessesV1Server is the server API for GitAccessesV1 service.
+type GitAccessesV1Server interface {
+	// List git access names
+	ListGitAccessNames(context.Context, *OwnerResouceListRequest) (*ListHostAccessesResponse, error)
+	// List git accesses
+	ListGitAccesses(context.Context, *OwnerResouceListRequest) (*ListHostAccessesResponse, error)
+	// Create git accesses
+	CreateGitAccess(context.Context, *HostAccessBodyRequest) (*HostAccess, error)
+	// Get git access
+	GetGitAccess(context.Context, *OwnerEntityResourceRequest) (*HostAccess, error)
+	// Update git access
+	UpdateGitAccess(context.Context, *HostAccessBodyRequest) (*HostAccess, error)
+	// Patch git access
+	PatchGitAccess(context.Context, *HostAccessBodyRequest) (*HostAccess, error)
+	// Delete git access
+	DeleteGitAccess(context.Context, *OwnerEntityResourceRequest) (*empty.Empty, error)
+}
+
+// UnimplementedGitAccessesV1Server can be embedded to have forward compatible implementations.
+type UnimplementedGitAccessesV1Server struct {
+}
+
+func (*UnimplementedGitAccessesV1Server) ListGitAccessNames(ctx context.Context, req *OwnerResouceListRequest) (*ListHostAccessesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListGitAccessNames not implemented")
+}
+func (*UnimplementedGitAccessesV1Server) ListGitAccesses(ctx context.Context, req *OwnerResouceListRequest) (*ListHostAccessesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListGitAccesses not implemented")
+}
+func (*UnimplementedGitAccessesV1Server) CreateGitAccess(ctx context.Context, req *HostAccessBodyRequest) (*HostAccess, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateGitAccess not implemented")
+}
+func (*UnimplementedGitAccessesV1Server) GetGitAccess(ctx context.Context, req *OwnerEntityResourceRequest) (*HostAccess, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetGitAccess not implemented")
+}
+func (*UnimplementedGitAccessesV1Server) UpdateGitAccess(ctx context.Context, req *HostAccessBodyRequest) (*HostAccess, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateGitAccess not implemented")
+}
+func (*UnimplementedGitAccessesV1Server) PatchGitAccess(ctx context.Context, req *HostAccessBodyRequest) (*HostAccess, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PatchGitAccess not implemented")
+}
+func (*UnimplementedGitAccessesV1Server) DeleteGitAccess(ctx context.Context, req *OwnerEntityResourceRequest) (*empty.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteGitAccess not implemented")
+}
+
+func RegisterGitAccessesV1Server(s *grpc.Server, srv GitAccessesV1Server) {
+	s.RegisterService(&_GitAccessesV1_serviceDesc, srv)
+}
+
+func _GitAccessesV1_ListGitAccessNames_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(OwnerResouceListRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GitAccessesV1Server).ListGitAccessNames(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/v1.GitAccessesV1/ListGitAccessNames",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GitAccessesV1Server).ListGitAccessNames(ctx, req.(*OwnerResouceListRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _GitAccessesV1_ListGitAccesses_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(OwnerResouceListRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GitAccessesV1Server).ListGitAccesses(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/v1.GitAccessesV1/ListGitAccesses",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GitAccessesV1Server).ListGitAccesses(ctx, req.(*OwnerResouceListRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _GitAccessesV1_CreateGitAccess_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(HostAccessBodyRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GitAccessesV1Server).CreateGitAccess(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/v1.GitAccessesV1/CreateGitAccess",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GitAccessesV1Server).CreateGitAccess(ctx, req.(*HostAccessBodyRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _GitAccessesV1_GetGitAccess_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(OwnerEntityResourceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GitAccessesV1Server).GetGitAccess(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/v1.GitAccessesV1/GetGitAccess",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GitAccessesV1Server).GetGitAccess(ctx, req.(*OwnerEntityResourceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _GitAccessesV1_UpdateGitAccess_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(HostAccessBodyRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GitAccessesV1Server).UpdateGitAccess(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/v1.GitAccessesV1/UpdateGitAccess",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GitAccessesV1Server).UpdateGitAccess(ctx, req.(*HostAccessBodyRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _GitAccessesV1_PatchGitAccess_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(HostAccessBodyRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GitAccessesV1Server).PatchGitAccess(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/v1.GitAccessesV1/PatchGitAccess",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GitAccessesV1Server).PatchGitAccess(ctx, req.(*HostAccessBodyRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _GitAccessesV1_DeleteGitAccess_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(OwnerEntityResourceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GitAccessesV1Server).DeleteGitAccess(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/v1.GitAccessesV1/DeleteGitAccess",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GitAccessesV1Server).DeleteGitAccess(ctx, req.(*OwnerEntityResourceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+var _GitAccessesV1_serviceDesc = grpc.ServiceDesc{
+	ServiceName: "v1.GitAccessesV1",
+	HandlerType: (*GitAccessesV1Server)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "ListGitAccessNames",
+			Handler:    _GitAccessesV1_ListGitAccessNames_Handler,
+		},
+		{
+			MethodName: "ListGitAccesses",
+			Handler:    _GitAccessesV1_ListGitAccesses_Handler,
+		},
+		{
+			MethodName: "CreateGitAccess",
+			Handler:    _GitAccessesV1_CreateGitAccess_Handler,
+		},
+		{
+			MethodName: "GetGitAccess",
+			Handler:    _GitAccessesV1_GetGitAccess_Handler,
+		},
+		{
+			MethodName: "UpdateGitAccess",
+			Handler:    _GitAccessesV1_UpdateGitAccess_Handler,
+		},
+		{
+			MethodName: "PatchGitAccess",
+			Handler:    _GitAccessesV1_PatchGitAccess_Handler,
+		},
+		{
+			MethodName: "DeleteGitAccess",
+			Handler:    _GitAccessesV1_DeleteGitAccess_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "v1/polyaxon_sdk.proto",
+}
+
+// SearchV1Client is the client API for SearchV1 service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
+type SearchV1Client interface {
+	// List searches
+	ListSearches(ctx context.Context, in *ProjectResourceListRequest, opts ...grpc.CallOption) (*ListSearchesResponse, error)
+	// Create search
+	CreateSearch(ctx context.Context, in *SearchBodyRequest, opts ...grpc.CallOption) (*Search, error)
+	// Get search
+	GetSearch(ctx context.Context, in *ProjectEntityResourceRequest, opts ...grpc.CallOption) (*Search, error)
+	// Update search
+	UpdateSearch(ctx context.Context, in *SearchBodyRequest, opts ...grpc.CallOption) (*Search, error)
+	// Patch search
+	PatchSearch(ctx context.Context, in *SearchBodyRequest, opts ...grpc.CallOption) (*Search, error)
+	// Delete search
+	DeleteSearch(ctx context.Context, in *ProjectEntityResourceRequest, opts ...grpc.CallOption) (*empty.Empty, error)
+}
+
+type searchV1Client struct {
+	cc *grpc.ClientConn
+}
+
+func NewSearchV1Client(cc *grpc.ClientConn) SearchV1Client {
+	return &searchV1Client{cc}
+}
+
+func (c *searchV1Client) ListSearches(ctx context.Context, in *ProjectResourceListRequest, opts ...grpc.CallOption) (*ListSearchesResponse, error) {
+	out := new(ListSearchesResponse)
+	err := c.cc.Invoke(ctx, "/v1.SearchV1/ListSearches", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *searchV1Client) CreateSearch(ctx context.Context, in *SearchBodyRequest, opts ...grpc.CallOption) (*Search, error) {
+	out := new(Search)
+	err := c.cc.Invoke(ctx, "/v1.SearchV1/CreateSearch", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *searchV1Client) GetSearch(ctx context.Context, in *ProjectEntityResourceRequest, opts ...grpc.CallOption) (*Search, error) {
+	out := new(Search)
+	err := c.cc.Invoke(ctx, "/v1.SearchV1/GetSearch", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *searchV1Client) UpdateSearch(ctx context.Context, in *SearchBodyRequest, opts ...grpc.CallOption) (*Search, error) {
+	out := new(Search)
+	err := c.cc.Invoke(ctx, "/v1.SearchV1/UpdateSearch", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *searchV1Client) PatchSearch(ctx context.Context, in *SearchBodyRequest, opts ...grpc.CallOption) (*Search, error) {
+	out := new(Search)
+	err := c.cc.Invoke(ctx, "/v1.SearchV1/PatchSearch", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *searchV1Client) DeleteSearch(ctx context.Context, in *ProjectEntityResourceRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
+	out := new(empty.Empty)
+	err := c.cc.Invoke(ctx, "/v1.SearchV1/DeleteSearch", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// SearchV1Server is the server API for SearchV1 service.
+type SearchV1Server interface {
+	// List searches
+	ListSearches(context.Context, *ProjectResourceListRequest) (*ListSearchesResponse, error)
+	// Create search
+	CreateSearch(context.Context, *SearchBodyRequest) (*Search, error)
+	// Get search
+	GetSearch(context.Context, *ProjectEntityResourceRequest) (*Search, error)
+	// Update search
+	UpdateSearch(context.Context, *SearchBodyRequest) (*Search, error)
+	// Patch search
+	PatchSearch(context.Context, *SearchBodyRequest) (*Search, error)
+	// Delete search
+	DeleteSearch(context.Context, *ProjectEntityResourceRequest) (*empty.Empty, error)
+}
+
+// UnimplementedSearchV1Server can be embedded to have forward compatible implementations.
+type UnimplementedSearchV1Server struct {
+}
+
+func (*UnimplementedSearchV1Server) ListSearches(ctx context.Context, req *ProjectResourceListRequest) (*ListSearchesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListSearches not implemented")
+}
+func (*UnimplementedSearchV1Server) CreateSearch(ctx context.Context, req *SearchBodyRequest) (*Search, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateSearch not implemented")
+}
+func (*UnimplementedSearchV1Server) GetSearch(ctx context.Context, req *ProjectEntityResourceRequest) (*Search, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetSearch not implemented")
+}
+func (*UnimplementedSearchV1Server) UpdateSearch(ctx context.Context, req *SearchBodyRequest) (*Search, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateSearch not implemented")
+}
+func (*UnimplementedSearchV1Server) PatchSearch(ctx context.Context, req *SearchBodyRequest) (*Search, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PatchSearch not implemented")
+}
+func (*UnimplementedSearchV1Server) DeleteSearch(ctx context.Context, req *ProjectEntityResourceRequest) (*empty.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteSearch not implemented")
+}
+
+func RegisterSearchV1Server(s *grpc.Server, srv SearchV1Server) {
+	s.RegisterService(&_SearchV1_serviceDesc, srv)
+}
+
+func _SearchV1_ListSearches_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ProjectResourceListRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SearchV1Server).ListSearches(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/v1.SearchV1/ListSearches",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SearchV1Server).ListSearches(ctx, req.(*ProjectResourceListRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SearchV1_CreateSearch_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SearchBodyRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SearchV1Server).CreateSearch(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/v1.SearchV1/CreateSearch",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SearchV1Server).CreateSearch(ctx, req.(*SearchBodyRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SearchV1_GetSearch_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ProjectEntityResourceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SearchV1Server).GetSearch(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/v1.SearchV1/GetSearch",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SearchV1Server).GetSearch(ctx, req.(*ProjectEntityResourceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SearchV1_UpdateSearch_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SearchBodyRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SearchV1Server).UpdateSearch(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/v1.SearchV1/UpdateSearch",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SearchV1Server).UpdateSearch(ctx, req.(*SearchBodyRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SearchV1_PatchSearch_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SearchBodyRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SearchV1Server).PatchSearch(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/v1.SearchV1/PatchSearch",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SearchV1Server).PatchSearch(ctx, req.(*SearchBodyRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SearchV1_DeleteSearch_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ProjectEntityResourceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SearchV1Server).DeleteSearch(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/v1.SearchV1/DeleteSearch",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SearchV1Server).DeleteSearch(ctx, req.(*ProjectEntityResourceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+var _SearchV1_serviceDesc = grpc.ServiceDesc{
+	ServiceName: "v1.SearchV1",
+	HandlerType: (*SearchV1Server)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "ListSearches",
+			Handler:    _SearchV1_ListSearches_Handler,
+		},
+		{
+			MethodName: "CreateSearch",
+			Handler:    _SearchV1_CreateSearch_Handler,
+		},
+		{
+			MethodName: "GetSearch",
+			Handler:    _SearchV1_GetSearch_Handler,
+		},
+		{
+			MethodName: "UpdateSearch",
+			Handler:    _SearchV1_UpdateSearch_Handler,
+		},
+		{
+			MethodName: "PatchSearch",
+			Handler:    _SearchV1_PatchSearch_Handler,
+		},
+		{
+			MethodName: "DeleteSearch",
+			Handler:    _SearchV1_DeleteSearch_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "v1/polyaxon_sdk.proto",
+}
+
 // AuthV1Client is the client API for AuthV1 service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
@@ -1915,7 +3745,7 @@ func NewUsersV1Client(cc *grpc.ClientConn) UsersV1Client {
 
 func (c *usersV1Client) GetUser(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*User, error) {
 	out := new(User)
-	err := c.cc.Invoke(ctx, "/v1.UsersV1/getUser", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/v1.UsersV1/GetUser", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -1963,7 +3793,7 @@ var _UsersV1_serviceDesc = grpc.ServiceDesc{
 	HandlerType: (*UsersV1Server)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "getUser",
+			MethodName: "GetUser",
 			Handler:    _UsersV1_GetUser_Handler,
 		},
 	},

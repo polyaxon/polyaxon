@@ -81,10 +81,16 @@ message Run {
     // Optional if this run was restarted/copied/resumed
     string cloning_strategy = 24;
 
-    // Optional uuid of the original run and pipeline
+    // Optional uuid of the pipeline
     string pipeline = 25;
+
+    // Optional uuid of the original run
     string original = 26;
+
+    // Optional name of the pipeline
     string pipeline_name = 27;
+
+    // Optional name of the original run
     string original_name = 28;
 }
 
@@ -104,7 +110,7 @@ message RunBodyRequest{
 // Request data to update run
 message EntityRunBodyRequest{
     // Enitity Run
-    EntityResourceRequest entity = 1;
+    ProjectEntityResourceRequest entity = 1;
 
     // Run object
     Run run = 2;

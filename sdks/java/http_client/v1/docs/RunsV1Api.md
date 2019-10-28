@@ -750,7 +750,7 @@ RunsV1Api apiInstance = new RunsV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
 String project = "project_example"; // String | Project where the experiement will be assigned
 String uuid = "uuid_example"; // String | Unique integer identifier of the entity
-V1EntityResourceRequest body = new V1EntityResourceRequest(); // V1EntityResourceRequest | 
+V1ProjectEntityResourceRequest body = new V1ProjectEntityResourceRequest(); // V1ProjectEntityResourceRequest | 
 try {
     Object result = apiInstance.invalidateRun(owner, project, uuid, body);
     System.out.println(result);
@@ -767,7 +767,7 @@ Name | Type | Description  | Notes
  **owner** | **String**| Owner of the namespace |
  **project** | **String**| Project where the experiement will be assigned |
  **uuid** | **String**| Unique integer identifier of the entity |
- **body** | [**V1EntityResourceRequest**](V1EntityResourceRequest.md)|  |
+ **body** | [**V1ProjectEntityResourceRequest**](V1ProjectEntityResourceRequest.md)|  |
 
 ### Return type
 
@@ -1285,7 +1285,7 @@ RunsV1Api apiInstance = new RunsV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
 String project = "project_example"; // String | Project where the experiement will be assigned
 String uuid = "uuid_example"; // String | Unique integer identifier of the entity
-V1EntityResourceRequest body = new V1EntityResourceRequest(); // V1EntityResourceRequest | 
+V1ProjectEntityResourceRequest body = new V1ProjectEntityResourceRequest(); // V1ProjectEntityResourceRequest | 
 try {
     Object result = apiInstance.startRunTensorboard(owner, project, uuid, body);
     System.out.println(result);
@@ -1302,7 +1302,7 @@ Name | Type | Description  | Notes
  **owner** | **String**| Owner of the namespace |
  **project** | **String**| Project where the experiement will be assigned |
  **uuid** | **String**| Unique integer identifier of the entity |
- **body** | [**V1EntityResourceRequest**](V1EntityResourceRequest.md)|  |
+ **body** | [**V1ProjectEntityResourceRequest**](V1ProjectEntityResourceRequest.md)|  |
 
 ### Return type
 

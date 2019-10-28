@@ -31,7 +31,7 @@ message CodeReference {
 // Request data to create/update CodeReference
 message CodeRefBodyRequest {
     // Owner of the code ref
-    EntityResourceRequest entity = 1;
+    ProjectEntityResourceRequest entity = 1;
 
     // Code ref object
     CodeReference code_reference = 2;

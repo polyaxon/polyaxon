@@ -19,8 +19,14 @@ from __future__ import absolute_import
 # flake8: noqa
 
 # import apis into api package
+from polyaxon_sdk.api.artifacts_stores_v1_api import ArtifactsStoresV1Api
 from polyaxon_sdk.api.auth_v1_api import AuthV1Api
+from polyaxon_sdk.api.git_accesses_v1_api import GitAccessesV1Api
+from polyaxon_sdk.api.k8_s_config_maps_v1_api import K8SConfigMapsV1Api
+from polyaxon_sdk.api.k8_s_secrets_v1_api import K8SSecretsV1Api
 from polyaxon_sdk.api.projects_v1_api import ProjectsV1Api
+from polyaxon_sdk.api.regsitry_accesses_v1_api import RegsitryAccessesV1Api
 from polyaxon_sdk.api.runs_v1_api import RunsV1Api
+from polyaxon_sdk.api.search_v1_api import SearchV1Api
 from polyaxon_sdk.api.users_v1_api import UsersV1Api
 from polyaxon_sdk.api.versions_v1_api import VersionsV1Api

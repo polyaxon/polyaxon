@@ -43,10 +43,10 @@ import java.io.IOException;
 
 import io.swagger.client.model.V1Auth;
 import io.swagger.client.model.V1CodeReference;
-import io.swagger.client.model.V1EntityResourceRequest;
 import io.swagger.client.model.V1EntityStatusBodyRequest;
 import io.swagger.client.model.V1ListCodeRefsResponse;
 import io.swagger.client.model.V1ListRunsResponse;
+import io.swagger.client.model.V1ProjectEntityResourceRequest;
 import io.swagger.client.model.V1Run;
 import io.swagger.client.model.V1Status;
 import io.swagger.client.model.V1Uuids;
@@ -1828,7 +1828,7 @@ public class RunsV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call invalidateRunCall(String owner, String project, String uuid, V1EntityResourceRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call invalidateRunCall(String owner, String project, String uuid, V1ProjectEntityResourceRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -1873,7 +1873,7 @@ public class RunsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call invalidateRunValidateBeforeCall(String owner, String project, String uuid, V1EntityResourceRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call invalidateRunValidateBeforeCall(String owner, String project, String uuid, V1ProjectEntityResourceRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
@@ -1911,7 +1911,7 @@ public class RunsV1Api {
      * @return Object
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public Object invalidateRun(String owner, String project, String uuid, V1EntityResourceRequest body) throws ApiException {
+    public Object invalidateRun(String owner, String project, String uuid, V1ProjectEntityResourceRequest body) throws ApiException {
         ApiResponse<Object> resp = invalidateRunWithHttpInfo(owner, project, uuid, body);
         return resp.getData();
     }
@@ -1926,7 +1926,7 @@ public class RunsV1Api {
      * @return ApiResponse&lt;Object&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<Object> invalidateRunWithHttpInfo(String owner, String project, String uuid, V1EntityResourceRequest body) throws ApiException {
+    public ApiResponse<Object> invalidateRunWithHttpInfo(String owner, String project, String uuid, V1ProjectEntityResourceRequest body) throws ApiException {
         com.squareup.okhttp.Call call = invalidateRunValidateBeforeCall(owner, project, uuid, body, null, null);
         Type localVarReturnType = new TypeToken<Object>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
@@ -1943,7 +1943,7 @@ public class RunsV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call invalidateRunAsync(String owner, String project, String uuid, V1EntityResourceRequest body, final ApiCallback<Object> callback) throws ApiException {
+    public com.squareup.okhttp.Call invalidateRunAsync(String owner, String project, String uuid, V1ProjectEntityResourceRequest body, final ApiCallback<Object> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -3172,7 +3172,7 @@ public class RunsV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call startRunTensorboardCall(String owner, String project, String uuid, V1EntityResourceRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call startRunTensorboardCall(String owner, String project, String uuid, V1ProjectEntityResourceRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -3217,7 +3217,7 @@ public class RunsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call startRunTensorboardValidateBeforeCall(String owner, String project, String uuid, V1EntityResourceRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call startRunTensorboardValidateBeforeCall(String owner, String project, String uuid, V1ProjectEntityResourceRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
@@ -3255,7 +3255,7 @@ public class RunsV1Api {
      * @return Object
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public Object startRunTensorboard(String owner, String project, String uuid, V1EntityResourceRequest body) throws ApiException {
+    public Object startRunTensorboard(String owner, String project, String uuid, V1ProjectEntityResourceRequest body) throws ApiException {
         ApiResponse<Object> resp = startRunTensorboardWithHttpInfo(owner, project, uuid, body);
         return resp.getData();
     }
@@ -3270,7 +3270,7 @@ public class RunsV1Api {
      * @return ApiResponse&lt;Object&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<Object> startRunTensorboardWithHttpInfo(String owner, String project, String uuid, V1EntityResourceRequest body) throws ApiException {
+    public ApiResponse<Object> startRunTensorboardWithHttpInfo(String owner, String project, String uuid, V1ProjectEntityResourceRequest body) throws ApiException {
         com.squareup.okhttp.Call call = startRunTensorboardValidateBeforeCall(owner, project, uuid, body, null, null);
         Type localVarReturnType = new TypeToken<Object>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
@@ -3287,7 +3287,7 @@ public class RunsV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call startRunTensorboardAsync(String owner, String project, String uuid, V1EntityResourceRequest body, final ApiCallback<Object> callback) throws ApiException {
+    public com.squareup.okhttp.Call startRunTensorboardAsync(String owner, String project, String uuid, V1ProjectEntityResourceRequest body, final ApiCallback<Object> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
