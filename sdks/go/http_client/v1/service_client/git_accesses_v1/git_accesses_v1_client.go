@@ -43,7 +43,7 @@ type Client struct {
 /*
 CreateGitAccess lists runs
 */
-func (a *Client) CreateGitAccess(params *CreateGitAccessParams, authInfo runtime.ClientAuthInfoWriter) (*CreateGitAccessOK, error) {
+func (a *Client) CreateGitAccess(params *CreateGitAccessParams, authInfo runtime.ClientAuthInfoWriter) (*CreateGitAccessOK, *CreateGitAccessNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewCreateGitAccessParams()
@@ -55,7 +55,7 @@ func (a *Client) CreateGitAccess(params *CreateGitAccessParams, authInfo runtime
 		PathPattern:        "/api/v1/{owner}/git_accesses",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https", "ws", "wss"},
+		Schemes:            []string{"http", "https"},
 		Params:             params,
 		Reader:             &CreateGitAccessReader{formats: a.formats},
 		AuthInfo:           authInfo,
@@ -63,22 +63,23 @@ func (a *Client) CreateGitAccess(params *CreateGitAccessParams, authInfo runtime
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	success, ok := result.(*CreateGitAccessOK)
-	if ok {
-		return success, nil
+	switch value := result.(type) {
+	case *CreateGitAccessOK:
+		return value, nil, nil
+	case *CreateGitAccessNoContent:
+		return nil, value, nil
 	}
-	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for CreateGitAccess: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for git_accesses_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
 /*
 DeleteGitAccess patches run
 */
-func (a *Client) DeleteGitAccess(params *DeleteGitAccessParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteGitAccessOK, error) {
+func (a *Client) DeleteGitAccess(params *DeleteGitAccessParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteGitAccessOK, *DeleteGitAccessNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewDeleteGitAccessParams()
@@ -90,7 +91,7 @@ func (a *Client) DeleteGitAccess(params *DeleteGitAccessParams, authInfo runtime
 		PathPattern:        "/api/v1/{owner}/git_accesses/{uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https", "ws", "wss"},
+		Schemes:            []string{"http", "https"},
 		Params:             params,
 		Reader:             &DeleteGitAccessReader{formats: a.formats},
 		AuthInfo:           authInfo,
@@ -98,22 +99,23 @@ func (a *Client) DeleteGitAccess(params *DeleteGitAccessParams, authInfo runtime
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	success, ok := result.(*DeleteGitAccessOK)
-	if ok {
-		return success, nil
+	switch value := result.(type) {
+	case *DeleteGitAccessOK:
+		return value, nil, nil
+	case *DeleteGitAccessNoContent:
+		return nil, value, nil
 	}
-	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for DeleteGitAccess: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for git_accesses_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
 /*
 GetGitAccess creates new run
 */
-func (a *Client) GetGitAccess(params *GetGitAccessParams, authInfo runtime.ClientAuthInfoWriter) (*GetGitAccessOK, error) {
+func (a *Client) GetGitAccess(params *GetGitAccessParams, authInfo runtime.ClientAuthInfoWriter) (*GetGitAccessOK, *GetGitAccessNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetGitAccessParams()
@@ -125,7 +127,7 @@ func (a *Client) GetGitAccess(params *GetGitAccessParams, authInfo runtime.Clien
 		PathPattern:        "/api/v1/{owner}/git_accesses/{uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https", "ws", "wss"},
+		Schemes:            []string{"http", "https"},
 		Params:             params,
 		Reader:             &GetGitAccessReader{formats: a.formats},
 		AuthInfo:           authInfo,
@@ -133,22 +135,23 @@ func (a *Client) GetGitAccess(params *GetGitAccessParams, authInfo runtime.Clien
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	success, ok := result.(*GetGitAccessOK)
-	if ok {
-		return success, nil
+	switch value := result.(type) {
+	case *GetGitAccessOK:
+		return value, nil, nil
+	case *GetGitAccessNoContent:
+		return nil, value, nil
 	}
-	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for GetGitAccess: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for git_accesses_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
 /*
 ListGitAccessNames lists bookmarked runs for user
 */
-func (a *Client) ListGitAccessNames(params *ListGitAccessNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListGitAccessNamesOK, error) {
+func (a *Client) ListGitAccessNames(params *ListGitAccessNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListGitAccessNamesOK, *ListGitAccessNamesNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewListGitAccessNamesParams()
@@ -160,7 +163,7 @@ func (a *Client) ListGitAccessNames(params *ListGitAccessNamesParams, authInfo r
 		PathPattern:        "/api/v1/{owner}/git_accesses/names",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https", "ws", "wss"},
+		Schemes:            []string{"http", "https"},
 		Params:             params,
 		Reader:             &ListGitAccessNamesReader{formats: a.formats},
 		AuthInfo:           authInfo,
@@ -168,22 +171,23 @@ func (a *Client) ListGitAccessNames(params *ListGitAccessNamesParams, authInfo r
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	success, ok := result.(*ListGitAccessNamesOK)
-	if ok {
-		return success, nil
+	switch value := result.(type) {
+	case *ListGitAccessNamesOK:
+		return value, nil, nil
+	case *ListGitAccessNamesNoContent:
+		return nil, value, nil
 	}
-	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for ListGitAccessNames: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for git_accesses_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
 /*
 ListGitAccesses lists archived runs for user
 */
-func (a *Client) ListGitAccesses(params *ListGitAccessesParams, authInfo runtime.ClientAuthInfoWriter) (*ListGitAccessesOK, error) {
+func (a *Client) ListGitAccesses(params *ListGitAccessesParams, authInfo runtime.ClientAuthInfoWriter) (*ListGitAccessesOK, *ListGitAccessesNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewListGitAccessesParams()
@@ -195,7 +199,7 @@ func (a *Client) ListGitAccesses(params *ListGitAccessesParams, authInfo runtime
 		PathPattern:        "/api/v1/{owner}/git_accesses",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https", "ws", "wss"},
+		Schemes:            []string{"http", "https"},
 		Params:             params,
 		Reader:             &ListGitAccessesReader{formats: a.formats},
 		AuthInfo:           authInfo,
@@ -203,22 +207,23 @@ func (a *Client) ListGitAccesses(params *ListGitAccessesParams, authInfo runtime
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	success, ok := result.(*ListGitAccessesOK)
-	if ok {
-		return success, nil
+	switch value := result.(type) {
+	case *ListGitAccessesOK:
+		return value, nil, nil
+	case *ListGitAccessesNoContent:
+		return nil, value, nil
 	}
-	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for ListGitAccesses: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for git_accesses_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
 /*
 PatchGitAccess updates run
 */
-func (a *Client) PatchGitAccess(params *PatchGitAccessParams, authInfo runtime.ClientAuthInfoWriter) (*PatchGitAccessOK, error) {
+func (a *Client) PatchGitAccess(params *PatchGitAccessParams, authInfo runtime.ClientAuthInfoWriter) (*PatchGitAccessOK, *PatchGitAccessNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewPatchGitAccessParams()
@@ -230,7 +235,7 @@ func (a *Client) PatchGitAccess(params *PatchGitAccessParams, authInfo runtime.C
 		PathPattern:        "/api/v1/{owner}/git_accesses/{host_access.uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https", "ws", "wss"},
+		Schemes:            []string{"http", "https"},
 		Params:             params,
 		Reader:             &PatchGitAccessReader{formats: a.formats},
 		AuthInfo:           authInfo,
@@ -238,22 +243,23 @@ func (a *Client) PatchGitAccess(params *PatchGitAccessParams, authInfo runtime.C
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	success, ok := result.(*PatchGitAccessOK)
-	if ok {
-		return success, nil
+	switch value := result.(type) {
+	case *PatchGitAccessOK:
+		return value, nil, nil
+	case *PatchGitAccessNoContent:
+		return nil, value, nil
 	}
-	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for PatchGitAccess: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for git_accesses_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
 /*
 UpdateGitAccess gets run
 */
-func (a *Client) UpdateGitAccess(params *UpdateGitAccessParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateGitAccessOK, error) {
+func (a *Client) UpdateGitAccess(params *UpdateGitAccessParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateGitAccessOK, *UpdateGitAccessNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewUpdateGitAccessParams()
@@ -265,7 +271,7 @@ func (a *Client) UpdateGitAccess(params *UpdateGitAccessParams, authInfo runtime
 		PathPattern:        "/api/v1/{owner}/git_accesses/{host_access.uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https", "ws", "wss"},
+		Schemes:            []string{"http", "https"},
 		Params:             params,
 		Reader:             &UpdateGitAccessReader{formats: a.formats},
 		AuthInfo:           authInfo,
@@ -273,15 +279,16 @@ func (a *Client) UpdateGitAccess(params *UpdateGitAccessParams, authInfo runtime
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	success, ok := result.(*UpdateGitAccessOK)
-	if ok {
-		return success, nil
+	switch value := result.(type) {
+	case *UpdateGitAccessOK:
+		return value, nil, nil
+	case *UpdateGitAccessNoContent:
+		return nil, value, nil
 	}
-	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for UpdateGitAccess: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for git_accesses_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 

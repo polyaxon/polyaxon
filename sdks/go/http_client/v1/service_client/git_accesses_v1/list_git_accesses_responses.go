@@ -44,6 +44,12 @@ func (o *ListGitAccessesReader) ReadResponse(response runtime.ClientResponse, co
 			return nil, err
 		}
 		return result, nil
+	case 204:
+		result := NewListGitAccessesNoContent()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return result, nil
 	case 403:
 		result := NewListGitAccessesForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -95,6 +101,37 @@ func (o *ListGitAccessesOK) readResponse(response runtime.ClientResponse, consum
 	return nil
 }
 
+// NewListGitAccessesNoContent creates a ListGitAccessesNoContent with default headers values
+func NewListGitAccessesNoContent() *ListGitAccessesNoContent {
+	return &ListGitAccessesNoContent{}
+}
+
+/*ListGitAccessesNoContent handles this case with default header values.
+
+No content.
+*/
+type ListGitAccessesNoContent struct {
+	Payload interface{}
+}
+
+func (o *ListGitAccessesNoContent) Error() string {
+	return fmt.Sprintf("[GET /api/v1/{owner}/git_accesses][%d] listGitAccessesNoContent  %+v", 204, o.Payload)
+}
+
+func (o *ListGitAccessesNoContent) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *ListGitAccessesNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	// response payload
+	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
 // NewListGitAccessesForbidden creates a ListGitAccessesForbidden with default headers values
 func NewListGitAccessesForbidden() *ListGitAccessesForbidden {
 	return &ListGitAccessesForbidden{}
@@ -136,14 +173,14 @@ func NewListGitAccessesNotFound() *ListGitAccessesNotFound {
 Resource does not exist.
 */
 type ListGitAccessesNotFound struct {
-	Payload string
+	Payload interface{}
 }
 
 func (o *ListGitAccessesNotFound) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/git_accesses][%d] listGitAccessesNotFound  %+v", 404, o.Payload)
 }
 
-func (o *ListGitAccessesNotFound) GetPayload() string {
+func (o *ListGitAccessesNotFound) GetPayload() interface{} {
 	return o.Payload
 }
 

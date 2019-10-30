@@ -44,6 +44,12 @@ func (o *ListBookmarkedProjectsReader) ReadResponse(response runtime.ClientRespo
 			return nil, err
 		}
 		return result, nil
+	case 204:
+		result := NewListBookmarkedProjectsNoContent()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return result, nil
 	case 403:
 		result := NewListBookmarkedProjectsForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -95,6 +101,37 @@ func (o *ListBookmarkedProjectsOK) readResponse(response runtime.ClientResponse,
 	return nil
 }
 
+// NewListBookmarkedProjectsNoContent creates a ListBookmarkedProjectsNoContent with default headers values
+func NewListBookmarkedProjectsNoContent() *ListBookmarkedProjectsNoContent {
+	return &ListBookmarkedProjectsNoContent{}
+}
+
+/*ListBookmarkedProjectsNoContent handles this case with default header values.
+
+No content.
+*/
+type ListBookmarkedProjectsNoContent struct {
+	Payload interface{}
+}
+
+func (o *ListBookmarkedProjectsNoContent) Error() string {
+	return fmt.Sprintf("[GET /api/v1/bookmarks/{user}/projects][%d] listBookmarkedProjectsNoContent  %+v", 204, o.Payload)
+}
+
+func (o *ListBookmarkedProjectsNoContent) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *ListBookmarkedProjectsNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	// response payload
+	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
 // NewListBookmarkedProjectsForbidden creates a ListBookmarkedProjectsForbidden with default headers values
 func NewListBookmarkedProjectsForbidden() *ListBookmarkedProjectsForbidden {
 	return &ListBookmarkedProjectsForbidden{}
@@ -136,14 +173,14 @@ func NewListBookmarkedProjectsNotFound() *ListBookmarkedProjectsNotFound {
 Resource does not exist.
 */
 type ListBookmarkedProjectsNotFound struct {
-	Payload string
+	Payload interface{}
 }
 
 func (o *ListBookmarkedProjectsNotFound) Error() string {
 	return fmt.Sprintf("[GET /api/v1/bookmarks/{user}/projects][%d] listBookmarkedProjectsNotFound  %+v", 404, o.Payload)
 }
 
-func (o *ListBookmarkedProjectsNotFound) GetPayload() string {
+func (o *ListBookmarkedProjectsNotFound) GetPayload() interface{} {
 	return o.Payload
 }
 

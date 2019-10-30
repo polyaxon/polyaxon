@@ -76,7 +76,7 @@ public class GitAccessesV1ApiTest {
     public void deleteGitAccessTest() throws ApiException {
         String owner = null;
         String uuid = null;
-        Object response = api.deleteGitAccess(owner, uuid);
+        api.deleteGitAccess(owner, uuid);
 
         // TODO: test validations
     }

@@ -42,6 +42,12 @@ func (o *UnbookmarkProjectReader) ReadResponse(response runtime.ClientResponse, 
 			return nil, err
 		}
 		return result, nil
+	case 204:
+		result := NewUnbookmarkProjectNoContent()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return result, nil
 	case 403:
 		result := NewUnbookmarkProjectForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -70,18 +76,39 @@ func NewUnbookmarkProjectOK() *UnbookmarkProjectOK {
 A successful response.
 */
 type UnbookmarkProjectOK struct {
-	Payload interface{}
 }
 
 func (o *UnbookmarkProjectOK) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/unbookmark][%d] unbookmarkProjectOK  %+v", 200, o.Payload)
-}
-
-func (o *UnbookmarkProjectOK) GetPayload() interface{} {
-	return o.Payload
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/unbookmark][%d] unbookmarkProjectOK ", 200)
 }
 
 func (o *UnbookmarkProjectOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	return nil
+}
+
+// NewUnbookmarkProjectNoContent creates a UnbookmarkProjectNoContent with default headers values
+func NewUnbookmarkProjectNoContent() *UnbookmarkProjectNoContent {
+	return &UnbookmarkProjectNoContent{}
+}
+
+/*UnbookmarkProjectNoContent handles this case with default header values.
+
+No content.
+*/
+type UnbookmarkProjectNoContent struct {
+	Payload interface{}
+}
+
+func (o *UnbookmarkProjectNoContent) Error() string {
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/unbookmark][%d] unbookmarkProjectNoContent  %+v", 204, o.Payload)
+}
+
+func (o *UnbookmarkProjectNoContent) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *UnbookmarkProjectNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
 	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
@@ -132,14 +159,14 @@ func NewUnbookmarkProjectNotFound() *UnbookmarkProjectNotFound {
 Resource does not exist.
 */
 type UnbookmarkProjectNotFound struct {
-	Payload string
+	Payload interface{}
 }
 
 func (o *UnbookmarkProjectNotFound) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/unbookmark][%d] unbookmarkProjectNotFound  %+v", 404, o.Payload)
 }
 
-func (o *UnbookmarkProjectNotFound) GetPayload() string {
+func (o *UnbookmarkProjectNotFound) GetPayload() interface{} {
 	return o.Payload
 }
 

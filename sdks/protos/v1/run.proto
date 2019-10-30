@@ -76,8 +76,10 @@ message Run {
 
     // Is resume
     bool is_resume = 22;
+
     // Is clone
     bool is_clone = 23;
+
     // Optional if this run was restarted/copied/resumed
     string cloning_strategy = 24;
 

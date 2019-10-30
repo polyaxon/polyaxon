@@ -44,6 +44,12 @@ func (o *LoginReader) ReadResponse(response runtime.ClientResponse, consumer run
 			return nil, err
 		}
 		return result, nil
+	case 204:
+		result := NewLoginNoContent()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return result, nil
 	case 403:
 		result := NewLoginForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -95,6 +101,37 @@ func (o *LoginOK) readResponse(response runtime.ClientResponse, consumer runtime
 	return nil
 }
 
+// NewLoginNoContent creates a LoginNoContent with default headers values
+func NewLoginNoContent() *LoginNoContent {
+	return &LoginNoContent{}
+}
+
+/*LoginNoContent handles this case with default header values.
+
+No content.
+*/
+type LoginNoContent struct {
+	Payload interface{}
+}
+
+func (o *LoginNoContent) Error() string {
+	return fmt.Sprintf("[POST /api/v1/users/token][%d] loginNoContent  %+v", 204, o.Payload)
+}
+
+func (o *LoginNoContent) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *LoginNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	// response payload
+	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
 // NewLoginForbidden creates a LoginForbidden with default headers values
 func NewLoginForbidden() *LoginForbidden {
 	return &LoginForbidden{}
@@ -136,14 +173,14 @@ func NewLoginNotFound() *LoginNotFound {
 Resource does not exist.
 */
 type LoginNotFound struct {
-	Payload string
+	Payload interface{}
 }
 
 func (o *LoginNotFound) Error() string {
 	return fmt.Sprintf("[POST /api/v1/users/token][%d] loginNotFound  %+v", 404, o.Payload)
 }
 
-func (o *LoginNotFound) GetPayload() string {
+func (o *LoginNotFound) GetPayload() interface{} {
 	return o.Payload
 }
 

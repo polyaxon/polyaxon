@@ -42,6 +42,12 @@ func (o *StopRunReader) ReadResponse(response runtime.ClientResponse, consumer r
 			return nil, err
 		}
 		return result, nil
+	case 204:
+		result := NewStopRunNoContent()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return result, nil
 	case 403:
 		result := NewStopRunForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -70,18 +76,39 @@ func NewStopRunOK() *StopRunOK {
 A successful response.
 */
 type StopRunOK struct {
-	Payload interface{}
 }
 
 func (o *StopRunOK) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/stop][%d] stopRunOK  %+v", 200, o.Payload)
-}
-
-func (o *StopRunOK) GetPayload() interface{} {
-	return o.Payload
+	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/stop][%d] stopRunOK ", 200)
 }
 
 func (o *StopRunOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	return nil
+}
+
+// NewStopRunNoContent creates a StopRunNoContent with default headers values
+func NewStopRunNoContent() *StopRunNoContent {
+	return &StopRunNoContent{}
+}
+
+/*StopRunNoContent handles this case with default header values.
+
+No content.
+*/
+type StopRunNoContent struct {
+	Payload interface{}
+}
+
+func (o *StopRunNoContent) Error() string {
+	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/stop][%d] stopRunNoContent  %+v", 204, o.Payload)
+}
+
+func (o *StopRunNoContent) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *StopRunNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
 	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
@@ -132,14 +159,14 @@ func NewStopRunNotFound() *StopRunNotFound {
 Resource does not exist.
 */
 type StopRunNotFound struct {
-	Payload string
+	Payload interface{}
 }
 
 func (o *StopRunNotFound) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/stop][%d] stopRunNotFound  %+v", 404, o.Payload)
 }
 
-func (o *StopRunNotFound) GetPayload() string {
+func (o *StopRunNotFound) GetPayload() interface{} {
 	return o.Payload
 }
 

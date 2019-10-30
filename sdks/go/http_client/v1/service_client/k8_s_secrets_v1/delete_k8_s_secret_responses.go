@@ -42,6 +42,12 @@ func (o *DeleteK8SSecretReader) ReadResponse(response runtime.ClientResponse, co
 			return nil, err
 		}
 		return result, nil
+	case 204:
+		result := NewDeleteK8SSecretNoContent()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return result, nil
 	case 403:
 		result := NewDeleteK8SSecretForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -70,18 +76,39 @@ func NewDeleteK8SSecretOK() *DeleteK8SSecretOK {
 A successful response.
 */
 type DeleteK8SSecretOK struct {
-	Payload interface{}
 }
 
 func (o *DeleteK8SSecretOK) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/{owner}/k8s_secrets/{uuid}][%d] deleteK8SSecretOK  %+v", 200, o.Payload)
-}
-
-func (o *DeleteK8SSecretOK) GetPayload() interface{} {
-	return o.Payload
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/k8s_secrets/{uuid}][%d] deleteK8SSecretOK ", 200)
 }
 
 func (o *DeleteK8SSecretOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	return nil
+}
+
+// NewDeleteK8SSecretNoContent creates a DeleteK8SSecretNoContent with default headers values
+func NewDeleteK8SSecretNoContent() *DeleteK8SSecretNoContent {
+	return &DeleteK8SSecretNoContent{}
+}
+
+/*DeleteK8SSecretNoContent handles this case with default header values.
+
+No content.
+*/
+type DeleteK8SSecretNoContent struct {
+	Payload interface{}
+}
+
+func (o *DeleteK8SSecretNoContent) Error() string {
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/k8s_secrets/{uuid}][%d] deleteK8SSecretNoContent  %+v", 204, o.Payload)
+}
+
+func (o *DeleteK8SSecretNoContent) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *DeleteK8SSecretNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
 	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
@@ -132,14 +159,14 @@ func NewDeleteK8SSecretNotFound() *DeleteK8SSecretNotFound {
 Resource does not exist.
 */
 type DeleteK8SSecretNotFound struct {
-	Payload string
+	Payload interface{}
 }
 
 func (o *DeleteK8SSecretNotFound) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/{owner}/k8s_secrets/{uuid}][%d] deleteK8SSecretNotFound  %+v", 404, o.Payload)
 }
 
-func (o *DeleteK8SSecretNotFound) GetPayload() string {
+func (o *DeleteK8SSecretNotFound) GetPayload() interface{} {
 	return o.Payload
 }
 

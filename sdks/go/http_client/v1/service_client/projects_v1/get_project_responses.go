@@ -44,6 +44,12 @@ func (o *GetProjectReader) ReadResponse(response runtime.ClientResponse, consume
 			return nil, err
 		}
 		return result, nil
+	case 204:
+		result := NewGetProjectNoContent()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return result, nil
 	case 403:
 		result := NewGetProjectForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -95,6 +101,37 @@ func (o *GetProjectOK) readResponse(response runtime.ClientResponse, consumer ru
 	return nil
 }
 
+// NewGetProjectNoContent creates a GetProjectNoContent with default headers values
+func NewGetProjectNoContent() *GetProjectNoContent {
+	return &GetProjectNoContent{}
+}
+
+/*GetProjectNoContent handles this case with default header values.
+
+No content.
+*/
+type GetProjectNoContent struct {
+	Payload interface{}
+}
+
+func (o *GetProjectNoContent) Error() string {
+	return fmt.Sprintf("[GET /api/v1/{owner}/{project}][%d] getProjectNoContent  %+v", 204, o.Payload)
+}
+
+func (o *GetProjectNoContent) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *GetProjectNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	// response payload
+	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
 // NewGetProjectForbidden creates a GetProjectForbidden with default headers values
 func NewGetProjectForbidden() *GetProjectForbidden {
 	return &GetProjectForbidden{}
@@ -136,14 +173,14 @@ func NewGetProjectNotFound() *GetProjectNotFound {
 Resource does not exist.
 */
 type GetProjectNotFound struct {
-	Payload string
+	Payload interface{}
 }
 
 func (o *GetProjectNotFound) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/{project}][%d] getProjectNotFound  %+v", 404, o.Payload)
 }
 
-func (o *GetProjectNotFound) GetPayload() string {
+func (o *GetProjectNotFound) GetPayload() interface{} {
 	return o.Payload
 }
 

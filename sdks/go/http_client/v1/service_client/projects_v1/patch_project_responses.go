@@ -44,6 +44,12 @@ func (o *PatchProjectReader) ReadResponse(response runtime.ClientResponse, consu
 			return nil, err
 		}
 		return result, nil
+	case 204:
+		result := NewPatchProjectNoContent()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return result, nil
 	case 403:
 		result := NewPatchProjectForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -95,6 +101,37 @@ func (o *PatchProjectOK) readResponse(response runtime.ClientResponse, consumer 
 	return nil
 }
 
+// NewPatchProjectNoContent creates a PatchProjectNoContent with default headers values
+func NewPatchProjectNoContent() *PatchProjectNoContent {
+	return &PatchProjectNoContent{}
+}
+
+/*PatchProjectNoContent handles this case with default header values.
+
+No content.
+*/
+type PatchProjectNoContent struct {
+	Payload interface{}
+}
+
+func (o *PatchProjectNoContent) Error() string {
+	return fmt.Sprintf("[PATCH /api/v1/{owner}/{project.name}][%d] patchProjectNoContent  %+v", 204, o.Payload)
+}
+
+func (o *PatchProjectNoContent) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *PatchProjectNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	// response payload
+	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
 // NewPatchProjectForbidden creates a PatchProjectForbidden with default headers values
 func NewPatchProjectForbidden() *PatchProjectForbidden {
 	return &PatchProjectForbidden{}
@@ -136,14 +173,14 @@ func NewPatchProjectNotFound() *PatchProjectNotFound {
 Resource does not exist.
 */
 type PatchProjectNotFound struct {
-	Payload string
+	Payload interface{}
 }
 
 func (o *PatchProjectNotFound) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/{owner}/{project.name}][%d] patchProjectNotFound  %+v", 404, o.Payload)
 }
 
-func (o *PatchProjectNotFound) GetPayload() string {
+func (o *PatchProjectNotFound) GetPayload() interface{} {
 	return o.Payload
 }
 

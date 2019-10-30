@@ -42,6 +42,12 @@ func (o *DeleteRunReader) ReadResponse(response runtime.ClientResponse, consumer
 			return nil, err
 		}
 		return result, nil
+	case 204:
+		result := NewDeleteRunNoContent()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return result, nil
 	case 403:
 		result := NewDeleteRunForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -70,18 +76,39 @@ func NewDeleteRunOK() *DeleteRunOK {
 A successful response.
 */
 type DeleteRunOK struct {
-	Payload interface{}
 }
 
 func (o *DeleteRunOK) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/runs/{uuid}][%d] deleteRunOK  %+v", 200, o.Payload)
-}
-
-func (o *DeleteRunOK) GetPayload() interface{} {
-	return o.Payload
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/runs/{uuid}][%d] deleteRunOK ", 200)
 }
 
 func (o *DeleteRunOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	return nil
+}
+
+// NewDeleteRunNoContent creates a DeleteRunNoContent with default headers values
+func NewDeleteRunNoContent() *DeleteRunNoContent {
+	return &DeleteRunNoContent{}
+}
+
+/*DeleteRunNoContent handles this case with default header values.
+
+No content.
+*/
+type DeleteRunNoContent struct {
+	Payload interface{}
+}
+
+func (o *DeleteRunNoContent) Error() string {
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/runs/{uuid}][%d] deleteRunNoContent  %+v", 204, o.Payload)
+}
+
+func (o *DeleteRunNoContent) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *DeleteRunNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
 	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
@@ -132,14 +159,14 @@ func NewDeleteRunNotFound() *DeleteRunNotFound {
 Resource does not exist.
 */
 type DeleteRunNotFound struct {
-	Payload string
+	Payload interface{}
 }
 
 func (o *DeleteRunNotFound) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/runs/{uuid}][%d] deleteRunNotFound  %+v", 404, o.Payload)
 }
 
-func (o *DeleteRunNotFound) GetPayload() string {
+func (o *DeleteRunNotFound) GetPayload() interface{} {
 	return o.Payload
 }
 

@@ -42,6 +42,12 @@ func (o *StartRunTensorboardReader) ReadResponse(response runtime.ClientResponse
 			return nil, err
 		}
 		return result, nil
+	case 204:
+		result := NewStartRunTensorboardNoContent()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return result, nil
 	case 403:
 		result := NewStartRunTensorboardForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -70,18 +76,39 @@ func NewStartRunTensorboardOK() *StartRunTensorboardOK {
 A successful response.
 */
 type StartRunTensorboardOK struct {
-	Payload interface{}
 }
 
 func (o *StartRunTensorboardOK) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/tensorboard/start][%d] startRunTensorboardOK  %+v", 200, o.Payload)
-}
-
-func (o *StartRunTensorboardOK) GetPayload() interface{} {
-	return o.Payload
+	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/tensorboard/start][%d] startRunTensorboardOK ", 200)
 }
 
 func (o *StartRunTensorboardOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	return nil
+}
+
+// NewStartRunTensorboardNoContent creates a StartRunTensorboardNoContent with default headers values
+func NewStartRunTensorboardNoContent() *StartRunTensorboardNoContent {
+	return &StartRunTensorboardNoContent{}
+}
+
+/*StartRunTensorboardNoContent handles this case with default header values.
+
+No content.
+*/
+type StartRunTensorboardNoContent struct {
+	Payload interface{}
+}
+
+func (o *StartRunTensorboardNoContent) Error() string {
+	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/tensorboard/start][%d] startRunTensorboardNoContent  %+v", 204, o.Payload)
+}
+
+func (o *StartRunTensorboardNoContent) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *StartRunTensorboardNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
 	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
@@ -132,14 +159,14 @@ func NewStartRunTensorboardNotFound() *StartRunTensorboardNotFound {
 Resource does not exist.
 */
 type StartRunTensorboardNotFound struct {
-	Payload string
+	Payload interface{}
 }
 
 func (o *StartRunTensorboardNotFound) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/tensorboard/start][%d] startRunTensorboardNotFound  %+v", 404, o.Payload)
 }
 
-func (o *StartRunTensorboardNotFound) GetPayload() string {
+func (o *StartRunTensorboardNotFound) GetPayload() interface{} {
 	return o.Payload
 }
 

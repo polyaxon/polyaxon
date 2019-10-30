@@ -44,6 +44,12 @@ func (o *ResumeRunReader) ReadResponse(response runtime.ClientResponse, consumer
 			return nil, err
 		}
 		return result, nil
+	case 204:
+		result := NewResumeRunNoContent()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return result, nil
 	case 403:
 		result := NewResumeRunForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -95,6 +101,37 @@ func (o *ResumeRunOK) readResponse(response runtime.ClientResponse, consumer run
 	return nil
 }
 
+// NewResumeRunNoContent creates a ResumeRunNoContent with default headers values
+func NewResumeRunNoContent() *ResumeRunNoContent {
+	return &ResumeRunNoContent{}
+}
+
+/*ResumeRunNoContent handles this case with default header values.
+
+No content.
+*/
+type ResumeRunNoContent struct {
+	Payload interface{}
+}
+
+func (o *ResumeRunNoContent) Error() string {
+	return fmt.Sprintf("[POST /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/resume][%d] resumeRunNoContent  %+v", 204, o.Payload)
+}
+
+func (o *ResumeRunNoContent) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *ResumeRunNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	// response payload
+	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
 // NewResumeRunForbidden creates a ResumeRunForbidden with default headers values
 func NewResumeRunForbidden() *ResumeRunForbidden {
 	return &ResumeRunForbidden{}
@@ -136,14 +173,14 @@ func NewResumeRunNotFound() *ResumeRunNotFound {
 Resource does not exist.
 */
 type ResumeRunNotFound struct {
-	Payload string
+	Payload interface{}
 }
 
 func (o *ResumeRunNotFound) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/resume][%d] resumeRunNotFound  %+v", 404, o.Payload)
 }
 
-func (o *ResumeRunNotFound) GetPayload() string {
+func (o *ResumeRunNotFound) GetPayload() interface{} {
 	return o.Payload
 }
 

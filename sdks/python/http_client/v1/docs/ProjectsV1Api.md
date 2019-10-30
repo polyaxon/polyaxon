@@ -16,13 +16,13 @@ Method | HTTP request | Description
 [**list_project_names**](ProjectsV1Api.md#list_project_names) | **GET** /api/v1/{owner}/projects/names | List archived runs for user
 [**list_projects**](ProjectsV1Api.md#list_projects) | **GET** /api/v1/{owner}/projects/list | List bookmarked runs for user
 [**patch_project**](ProjectsV1Api.md#patch_project) | **PATCH** /api/v1/{owner}/{project.name} | Delete run
-[**restore_experiment**](ProjectsV1Api.md#restore_experiment) | **POST** /api/v1/{owner}/{project}/restore | Stop runs
+[**restore_project**](ProjectsV1Api.md#restore_project) | **POST** /api/v1/{owner}/{project}/restore | Stop runs
 [**unbookmark_project**](ProjectsV1Api.md#unbookmark_project) | **DELETE** /api/v1/{owner}/{project}/unbookmark | Invalidate runs
 [**update_project**](ProjectsV1Api.md#update_project) | **PUT** /api/v1/{owner}/{project.name} | Patch run
 
 
 # **archive_project**
-> object archive_project(owner, project)
+> archive_project(owner, project)
 
 Stop run
 
@@ -47,8 +47,7 @@ project = 'project_example' # str | Project under namesapce
 
 try:
     # Stop run
-    api_response = api_instance.archive_project(owner, project)
-    pprint(api_response)
+    api_instance.archive_project(owner, project)
 except ApiException as e:
     print("Exception when calling ProjectsV1Api->archive_project: %s\n" % e)
 ```
@@ -62,7 +61,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**object**
+void (empty response body)
 
 ### Authorization
 
@@ -76,7 +75,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **bookmark_project**
-> object bookmark_project(owner, project)
+> bookmark_project(owner, project)
 
 Invalidate run
 
@@ -101,8 +100,7 @@ project = 'project_example' # str | Project under namesapce
 
 try:
     # Invalidate run
-    api_response = api_instance.bookmark_project(owner, project)
-    pprint(api_response)
+    api_instance.bookmark_project(owner, project)
 except ApiException as e:
     print("Exception when calling ProjectsV1Api->bookmark_project: %s\n" % e)
 ```
@@ -116,7 +114,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**object**
+void (empty response body)
 
 ### Authorization
 
@@ -184,7 +182,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **delete_project**
-> object delete_project(owner, project)
+> delete_project(owner, project)
 
 Delete runs
 
@@ -209,8 +207,7 @@ project = 'project_example' # str | Project under namesapce
 
 try:
     # Delete runs
-    api_response = api_instance.delete_project(owner, project)
-    pprint(api_response)
+    api_instance.delete_project(owner, project)
 except ApiException as e:
     print("Exception when calling ProjectsV1Api->delete_project: %s\n" % e)
 ```
@@ -224,7 +221,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**object**
+void (empty response body)
 
 ### Authorization
 
@@ -238,7 +235,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **disable_project_ci**
-> object disable_project_ci(owner, project)
+> disable_project_ci(owner, project)
 
 Restart run
 
@@ -263,8 +260,7 @@ project = 'project_example' # str | Project under namesapce
 
 try:
     # Restart run
-    api_response = api_instance.disable_project_ci(owner, project)
-    pprint(api_response)
+    api_instance.disable_project_ci(owner, project)
 except ApiException as e:
     print("Exception when calling ProjectsV1Api->disable_project_ci: %s\n" % e)
 ```
@@ -278,7 +274,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**object**
+void (empty response body)
 
 ### Authorization
 
@@ -292,7 +288,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **enable_project_ci**
-> object enable_project_ci(owner, project)
+> enable_project_ci(owner, project)
 
 Restart run with copy
 
@@ -317,8 +313,7 @@ project = 'project_example' # str | Project under namesapce
 
 try:
     # Restart run with copy
-    api_response = api_instance.enable_project_ci(owner, project)
-    pprint(api_response)
+    api_instance.enable_project_ci(owner, project)
 except ApiException as e:
     print("Exception when calling ProjectsV1Api->enable_project_ci: %s\n" % e)
 ```
@@ -332,7 +327,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**object**
+void (empty response body)
 
 ### Authorization
 
@@ -695,8 +690,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **restore_experiment**
-> object restore_experiment(owner, project)
+# **restore_project**
+> restore_project(owner, project)
 
 Stop runs
 
@@ -721,10 +716,9 @@ project = 'project_example' # str | Project under namesapce
 
 try:
     # Stop runs
-    api_response = api_instance.restore_experiment(owner, project)
-    pprint(api_response)
+    api_instance.restore_project(owner, project)
 except ApiException as e:
-    print("Exception when calling ProjectsV1Api->restore_experiment: %s\n" % e)
+    print("Exception when calling ProjectsV1Api->restore_project: %s\n" % e)
 ```
 
 ### Parameters
@@ -736,7 +730,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**object**
+void (empty response body)
 
 ### Authorization
 
@@ -750,7 +744,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **unbookmark_project**
-> object unbookmark_project(owner, project)
+> unbookmark_project(owner, project)
 
 Invalidate runs
 
@@ -775,8 +769,7 @@ project = 'project_example' # str | Project under namesapce
 
 try:
     # Invalidate runs
-    api_response = api_instance.unbookmark_project(owner, project)
-    pprint(api_response)
+    api_instance.unbookmark_project(owner, project)
 except ApiException as e:
     print("Exception when calling ProjectsV1Api->unbookmark_project: %s\n" % e)
 ```
@@ -790,7 +783,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**object**
+void (empty response body)
 
 ### Authorization
 

@@ -44,6 +44,12 @@ func (o *ImpersonateTokenReader) ReadResponse(response runtime.ClientResponse, c
 			return nil, err
 		}
 		return result, nil
+	case 204:
+		result := NewImpersonateTokenNoContent()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return result, nil
 	case 403:
 		result := NewImpersonateTokenForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -95,6 +101,37 @@ func (o *ImpersonateTokenOK) readResponse(response runtime.ClientResponse, consu
 	return nil
 }
 
+// NewImpersonateTokenNoContent creates a ImpersonateTokenNoContent with default headers values
+func NewImpersonateTokenNoContent() *ImpersonateTokenNoContent {
+	return &ImpersonateTokenNoContent{}
+}
+
+/*ImpersonateTokenNoContent handles this case with default header values.
+
+No content.
+*/
+type ImpersonateTokenNoContent struct {
+	Payload interface{}
+}
+
+func (o *ImpersonateTokenNoContent) Error() string {
+	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/impersonate][%d] impersonateTokenNoContent  %+v", 204, o.Payload)
+}
+
+func (o *ImpersonateTokenNoContent) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *ImpersonateTokenNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	// response payload
+	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
 // NewImpersonateTokenForbidden creates a ImpersonateTokenForbidden with default headers values
 func NewImpersonateTokenForbidden() *ImpersonateTokenForbidden {
 	return &ImpersonateTokenForbidden{}
@@ -136,14 +173,14 @@ func NewImpersonateTokenNotFound() *ImpersonateTokenNotFound {
 Resource does not exist.
 */
 type ImpersonateTokenNotFound struct {
-	Payload string
+	Payload interface{}
 }
 
 func (o *ImpersonateTokenNotFound) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/impersonate][%d] impersonateTokenNotFound  %+v", 404, o.Payload)
 }
 
-func (o *ImpersonateTokenNotFound) GetPayload() string {
+func (o *ImpersonateTokenNotFound) GetPayload() interface{} {
 	return o.Payload
 }
 

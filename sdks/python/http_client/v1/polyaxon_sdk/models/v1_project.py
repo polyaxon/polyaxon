@@ -49,54 +49,74 @@ class V1Project(object):
     swagger_types = {
         'uuid': 'str',
         'user': 'str',
+        'owner': 'str',
         'name': 'str',
         'description': 'str',
+        'tags': 'list[str]',
         'created_at': 'datetime',
         'updated_at': 'datetime',
         'is_public': 'str',
-        'bookmarked': 'bool'
+        'deleted': 'bool',
+        'bookmarked': 'bool',
+        'readme': 'str'
     }
 
     attribute_map = {
         'uuid': 'uuid',
         'user': 'user',
+        'owner': 'owner',
         'name': 'name',
         'description': 'description',
+        'tags': 'tags',
         'created_at': 'created_at',
         'updated_at': 'updated_at',
         'is_public': 'is_public',
-        'bookmarked': 'bookmarked'
+        'deleted': 'deleted',
+        'bookmarked': 'bookmarked',
+        'readme': 'readme'
     }
 
-    def __init__(self, uuid=None, user=None, name=None, description=None, created_at=None, updated_at=None, is_public=None, bookmarked=None):  # noqa: E501
+    def __init__(self, uuid=None, user=None, owner=None, name=None, description=None, tags=None, created_at=None, updated_at=None, is_public=None, deleted=None, bookmarked=None, readme=None):  # noqa: E501
         """V1Project - a model defined in Swagger"""  # noqa: E501
 
         self._uuid = None
         self._user = None
+        self._owner = None
         self._name = None
         self._description = None
+        self._tags = None
         self._created_at = None
         self._updated_at = None
         self._is_public = None
+        self._deleted = None
         self._bookmarked = None
+        self._readme = None
         self.discriminator = None
 
         if uuid is not None:
             self.uuid = uuid
         if user is not None:
             self.user = user
+        if owner is not None:
+            self.owner = owner
         if name is not None:
             self.name = name
         if description is not None:
             self.description = description
+        if tags is not None:
+            self.tags = tags
         if created_at is not None:
             self.created_at = created_at
         if updated_at is not None:
             self.updated_at = updated_at
         if is_public is not None:
             self.is_public = is_public
+        if deleted is not None:
+            self.deleted = deleted
         if bookmarked is not None:
             self.bookmarked = bookmarked
+        if readme is not None:
+            self.readme = readme
 
     @property
     def uuid(self):
@@ -141,6 +161,27 @@ class V1Project(object):
         self._user = user
 
     @property
+    def owner(self):
+        """Gets the owner of this V1Project.  # noqa: E501
+
+
+        :return: The owner of this V1Project.  # noqa: E501
+        :rtype: str
+        """
+        return self._owner
+
+    @owner.setter
+    def owner(self, owner):
+        """Sets the owner of this V1Project.
+
+
+        :param owner: The owner of this V1Project.  # noqa: E501
+        :type: str
+        """
+
+        self._owner = owner
+
+    @property
     def name(self):
         """Gets the name of this V1Project.  # noqa: E501
 
@@ -181,6 +222,27 @@ class V1Project(object):
         """
 
         self._description = description
+
+    @property
+    def tags(self):
+        """Gets the tags of this V1Project.  # noqa: E501
+
+
+        :return: The tags of this V1Project.  # noqa: E501
+        :rtype: list[str]
+        """
+        return self._tags
+
+    @tags.setter
+    def tags(self, tags):
+        """Sets the tags of this V1Project.
+
+
+        :param tags: The tags of this V1Project.  # noqa: E501
+        :type: list[str]
+        """
+
+        self._tags = tags
 
     @property
     def created_at(self):
@@ -246,6 +308,27 @@ class V1Project(object):
         self._is_public = is_public
 
     @property
+    def deleted(self):
+        """Gets the deleted of this V1Project.  # noqa: E501
+
+
+        :return: The deleted of this V1Project.  # noqa: E501
+        :rtype: bool
+        """
+        return self._deleted
+
+    @deleted.setter
+    def deleted(self, deleted):
+        """Sets the deleted of this V1Project.
+
+
+        :param deleted: The deleted of this V1Project.  # noqa: E501
+        :type: bool
+        """
+
+        self._deleted = deleted
+
+    @property
     def bookmarked(self):
         """Gets the bookmarked of this V1Project.  # noqa: E501
 
@@ -265,6 +348,27 @@ class V1Project(object):
         """
 
         self._bookmarked = bookmarked
+
+    @property
+    def readme(self):
+        """Gets the readme of this V1Project.  # noqa: E501
+
+
+        :return: The readme of this V1Project.  # noqa: E501
+        :rtype: str
+        """
+        return self._readme
+
+    @readme.setter
+    def readme(self, readme):
+        """Sets the readme of this V1Project.
+
+
+        :param readme: The readme of this V1Project.  # noqa: E501
+        :type: str
+        """
+
+        self._readme = readme
 
     def to_dict(self):
         """Returns the model properties as a dict"""

@@ -44,6 +44,12 @@ func (o *UpdateK8SSecretReader) ReadResponse(response runtime.ClientResponse, co
 			return nil, err
 		}
 		return result, nil
+	case 204:
+		result := NewUpdateK8SSecretNoContent()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return result, nil
 	case 403:
 		result := NewUpdateK8SSecretForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -95,6 +101,37 @@ func (o *UpdateK8SSecretOK) readResponse(response runtime.ClientResponse, consum
 	return nil
 }
 
+// NewUpdateK8SSecretNoContent creates a UpdateK8SSecretNoContent with default headers values
+func NewUpdateK8SSecretNoContent() *UpdateK8SSecretNoContent {
+	return &UpdateK8SSecretNoContent{}
+}
+
+/*UpdateK8SSecretNoContent handles this case with default header values.
+
+No content.
+*/
+type UpdateK8SSecretNoContent struct {
+	Payload interface{}
+}
+
+func (o *UpdateK8SSecretNoContent) Error() string {
+	return fmt.Sprintf("[PUT /api/v1/{owner}/k8s_secrets/{k8s_resource.uuid}][%d] updateK8SSecretNoContent  %+v", 204, o.Payload)
+}
+
+func (o *UpdateK8SSecretNoContent) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *UpdateK8SSecretNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	// response payload
+	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
 // NewUpdateK8SSecretForbidden creates a UpdateK8SSecretForbidden with default headers values
 func NewUpdateK8SSecretForbidden() *UpdateK8SSecretForbidden {
 	return &UpdateK8SSecretForbidden{}
@@ -136,14 +173,14 @@ func NewUpdateK8SSecretNotFound() *UpdateK8SSecretNotFound {
 Resource does not exist.
 */
 type UpdateK8SSecretNotFound struct {
-	Payload string
+	Payload interface{}
 }
 
 func (o *UpdateK8SSecretNotFound) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/{owner}/k8s_secrets/{k8s_resource.uuid}][%d] updateK8SSecretNotFound  %+v", 404, o.Payload)
 }
 
-func (o *UpdateK8SSecretNotFound) GetPayload() string {
+func (o *UpdateK8SSecretNotFound) GetPayload() interface{} {
 	return o.Payload
 }
 

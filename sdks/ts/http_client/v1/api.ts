@@ -154,6 +154,12 @@ export interface V1ArtifactsStore {
     disabled?: boolean;
     /**
      * 
+     * @type {boolean}
+     * @memberof V1ArtifactsStore
+     */
+    deleted?: boolean;
+    /**
+     * 
      * @type {string}
      * @memberof V1ArtifactsStore
      */
@@ -368,6 +374,18 @@ export interface V1HostAccess {
     disabled?: boolean;
     /**
      * 
+     * @type {boolean}
+     * @memberof V1HostAccess
+     */
+    insecure?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof V1HostAccess
+     */
+    deleted?: boolean;
+    /**
+     * 
      * @type {string}
      * @memberof V1HostAccess
      */
@@ -430,6 +448,12 @@ export interface V1K8SResource {
     updated_at?: Date;
     /**
      * 
+     * @type {string}
+     * @memberof V1K8SResource
+     */
+    k8s_ref?: string;
+    /**
+     * 
      * @type {boolean}
      * @memberof V1K8SResource
      */
@@ -440,6 +464,12 @@ export interface V1K8SResource {
      * @memberof V1K8SResource
      */
     disabled?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof V1K8SResource
+     */
+    deleted?: boolean;
     /**
      * 
      * @type {string}
@@ -721,6 +751,12 @@ export interface V1Project {
      * @type {string}
      * @memberof V1Project
      */
+    owner?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1Project
+     */
     name?: string;
     /**
      * 
@@ -728,6 +764,12 @@ export interface V1Project {
      * @memberof V1Project
      */
     description?: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof V1Project
+     */
+    tags?: Array<string>;
     /**
      * 
      * @type {Date}
@@ -751,7 +793,19 @@ export interface V1Project {
      * @type {boolean}
      * @memberof V1Project
      */
+    deleted?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof V1Project
+     */
     bookmarked?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1Project
+     */
+    readme?: string;
 }
 
 /**
@@ -976,16 +1030,42 @@ export interface V1Search {
     name?: string;
     /**
      * 
-     * @type {string}
+     * @type {V1SearchDefinition}
      * @memberof V1Search
+     */
+    definition?: V1SearchDefinition;
+}
+
+/**
+ * 
+ * @export
+ * @interface V1SearchDefinition
+ */
+export interface V1SearchDefinition {
+    /**
+     * 
+     * @type {string}
+     * @memberof V1SearchDefinition
      */
     query?: string;
     /**
      * 
      * @type {string}
-     * @memberof V1Search
+     * @memberof V1SearchDefinition
      */
-    meta?: string;
+    sort?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1SearchDefinition
+     */
+    groupby?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1SearchDefinition
+     */
+    columns?: string;
 }
 
 /**
@@ -1544,12 +1624,12 @@ export const ArtifactsStoresV1ApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteArtifactsStore(owner: string, uuid: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
+        deleteArtifactsStore(owner: string, uuid: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
             const localVarFetchArgs = ArtifactsStoresV1ApiFetchParamCreator(configuration).deleteArtifactsStore(owner, uuid, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
-                        return response.json();
+                        return response;
                     } else {
                         throw response;
                     }
@@ -2379,12 +2459,12 @@ export const GitAccessesV1ApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteGitAccess(owner: string, uuid: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
+        deleteGitAccess(owner: string, uuid: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
             const localVarFetchArgs = GitAccessesV1ApiFetchParamCreator(configuration).deleteGitAccess(owner, uuid, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
-                        return response.json();
+                        return response;
                     } else {
                         throw response;
                     }
@@ -3097,12 +3177,12 @@ export const K8SConfigMapsV1ApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteK8SConfigMap(owner: string, uuid: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
+        deleteK8SConfigMap(owner: string, uuid: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
             const localVarFetchArgs = K8SConfigMapsV1ApiFetchParamCreator(configuration).deleteK8SConfigMap(owner, uuid, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
-                        return response.json();
+                        return response;
                     } else {
                         throw response;
                     }
@@ -3815,12 +3895,12 @@ export const K8SSecretsV1ApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteK8SSecret(owner: string, uuid: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
+        deleteK8SSecret(owner: string, uuid: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
             const localVarFetchArgs = K8SSecretsV1ApiFetchParamCreator(configuration).deleteK8SSecret(owner, uuid, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
-                        return response.json();
+                        return response;
                     } else {
                         throw response;
                     }
@@ -4738,14 +4818,14 @@ export const ProjectsV1ApiFetchParamCreator = function (configuration?: Configur
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        restoreExperiment(owner: string, project: string, options: any = {}): FetchArgs {
+        restoreProject(owner: string, project: string, options: any = {}): FetchArgs {
             // verify required parameter 'owner' is not null or undefined
             if (owner === null || owner === undefined) {
-                throw new RequiredError('owner','Required parameter owner was null or undefined when calling restoreExperiment.');
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling restoreProject.');
             }
             // verify required parameter 'project' is not null or undefined
             if (project === null || project === undefined) {
-                throw new RequiredError('project','Required parameter project was null or undefined when calling restoreExperiment.');
+                throw new RequiredError('project','Required parameter project was null or undefined when calling restoreProject.');
             }
             const localVarPath = `/api/v1/{owner}/{project}/restore`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
@@ -4885,12 +4965,12 @@ export const ProjectsV1ApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        archiveProject(owner: string, project: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
+        archiveProject(owner: string, project: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
             const localVarFetchArgs = ProjectsV1ApiFetchParamCreator(configuration).archiveProject(owner, project, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
-                        return response.json();
+                        return response;
                     } else {
                         throw response;
                     }
@@ -4905,12 +4985,12 @@ export const ProjectsV1ApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        bookmarkProject(owner: string, project: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
+        bookmarkProject(owner: string, project: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
             const localVarFetchArgs = ProjectsV1ApiFetchParamCreator(configuration).bookmarkProject(owner, project, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
-                        return response.json();
+                        return response;
                     } else {
                         throw response;
                     }
@@ -4945,12 +5025,12 @@ export const ProjectsV1ApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteProject(owner: string, project: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
+        deleteProject(owner: string, project: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
             const localVarFetchArgs = ProjectsV1ApiFetchParamCreator(configuration).deleteProject(owner, project, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
-                        return response.json();
+                        return response;
                     } else {
                         throw response;
                     }
@@ -4965,12 +5045,12 @@ export const ProjectsV1ApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        disableProjectCI(owner: string, project: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
+        disableProjectCI(owner: string, project: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
             const localVarFetchArgs = ProjectsV1ApiFetchParamCreator(configuration).disableProjectCI(owner, project, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
-                        return response.json();
+                        return response;
                     } else {
                         throw response;
                     }
@@ -4985,12 +5065,12 @@ export const ProjectsV1ApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        enableProjectCI(owner: string, project: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
+        enableProjectCI(owner: string, project: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
             const localVarFetchArgs = ProjectsV1ApiFetchParamCreator(configuration).enableProjectCI(owner, project, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
-                        return response.json();
+                        return response;
                     } else {
                         throw response;
                     }
@@ -5138,12 +5218,12 @@ export const ProjectsV1ApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        restoreExperiment(owner: string, project: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
-            const localVarFetchArgs = ProjectsV1ApiFetchParamCreator(configuration).restoreExperiment(owner, project, options);
+        restoreProject(owner: string, project: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+            const localVarFetchArgs = ProjectsV1ApiFetchParamCreator(configuration).restoreProject(owner, project, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
-                        return response.json();
+                        return response;
                     } else {
                         throw response;
                     }
@@ -5158,12 +5238,12 @@ export const ProjectsV1ApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        unbookmarkProject(owner: string, project: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
+        unbookmarkProject(owner: string, project: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
             const localVarFetchArgs = ProjectsV1ApiFetchParamCreator(configuration).unbookmarkProject(owner, project, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
-                        return response.json();
+                        return response;
                     } else {
                         throw response;
                     }
@@ -5353,8 +5433,8 @@ export const ProjectsV1ApiFactory = function (configuration?: Configuration, fet
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        restoreExperiment(owner: string, project: string, options?: any) {
-            return ProjectsV1ApiFp(configuration).restoreExperiment(owner, project, options)(fetch, basePath);
+        restoreProject(owner: string, project: string, options?: any) {
+            return ProjectsV1ApiFp(configuration).restoreProject(owner, project, options)(fetch, basePath);
         },
         /**
          * 
@@ -5567,8 +5647,8 @@ export class ProjectsV1Api extends BaseAPI {
      * @throws {RequiredError}
      * @memberof ProjectsV1Api
      */
-    public restoreExperiment(owner: string, project: string, options?: any) {
-        return ProjectsV1ApiFp(this.configuration).restoreExperiment(owner, project, options)(this.fetch, this.basePath);
+    public restoreProject(owner: string, project: string, options?: any) {
+        return ProjectsV1ApiFp(this.configuration).restoreProject(owner, project, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -5993,12 +6073,12 @@ export const RegsitryAccessesV1ApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteRegsitryAccess(owner: string, uuid: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
+        deleteRegsitryAccess(owner: string, uuid: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
             const localVarFetchArgs = RegsitryAccessesV1ApiFetchParamCreator(configuration).deleteRegsitryAccess(owner, uuid, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
-                        return response.json();
+                        return response;
                     } else {
                         throw response;
                     }
@@ -7589,7 +7669,7 @@ export const RunsV1ApiFetchParamCreator = function (configuration?: Configuratio
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)))
                 .replace(`{${"uuid"}}`, encodeURIComponent(String(uuid)));
             const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'DELETE' }, options);
+            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -7788,12 +7868,12 @@ export const RunsV1ApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        archiveRun(owner: string, project: string, uuid: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
+        archiveRun(owner: string, project: string, uuid: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
             const localVarFetchArgs = RunsV1ApiFetchParamCreator(configuration).archiveRun(owner, project, uuid, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
-                        return response.json();
+                        return response;
                     } else {
                         throw response;
                     }
@@ -7809,12 +7889,12 @@ export const RunsV1ApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        bookmarkRun(owner: string, project: string, uuid: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
+        bookmarkRun(owner: string, project: string, uuid: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
             const localVarFetchArgs = RunsV1ApiFetchParamCreator(configuration).bookmarkRun(owner, project, uuid, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
-                        return response.json();
+                        return response;
                     } else {
                         throw response;
                     }
@@ -7917,12 +7997,12 @@ export const RunsV1ApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteRun(owner: string, project: string, uuid: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
+        deleteRun(owner: string, project: string, uuid: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
             const localVarFetchArgs = RunsV1ApiFetchParamCreator(configuration).deleteRun(owner, project, uuid, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
-                        return response.json();
+                        return response;
                     } else {
                         throw response;
                     }
@@ -7938,12 +8018,12 @@ export const RunsV1ApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteRuns(owner: string, project: string, body: V1Uuids, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
+        deleteRuns(owner: string, project: string, body: V1Uuids, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
             const localVarFetchArgs = RunsV1ApiFetchParamCreator(configuration).deleteRuns(owner, project, body, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
-                        return response.json();
+                        return response;
                     } else {
                         throw response;
                     }
@@ -8044,12 +8124,12 @@ export const RunsV1ApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        invalidateRun(owner: string, project: string, uuid: string, body: V1ProjectEntityResourceRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
+        invalidateRun(owner: string, project: string, uuid: string, body: V1ProjectEntityResourceRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
             const localVarFetchArgs = RunsV1ApiFetchParamCreator(configuration).invalidateRun(owner, project, uuid, body, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
-                        return response.json();
+                        return response;
                     } else {
                         throw response;
                     }
@@ -8065,12 +8145,12 @@ export const RunsV1ApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        invalidateRuns(owner: string, project: string, body: V1Uuids, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
+        invalidateRuns(owner: string, project: string, body: V1Uuids, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
             const localVarFetchArgs = RunsV1ApiFetchParamCreator(configuration).invalidateRuns(owner, project, body, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
-                        return response.json();
+                        return response;
                     } else {
                         throw response;
                     }
@@ -8200,12 +8280,12 @@ export const RunsV1ApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        restoreRun(owner: string, project: string, uuid: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
+        restoreRun(owner: string, project: string, uuid: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
             const localVarFetchArgs = RunsV1ApiFetchParamCreator(configuration).restoreRun(owner, project, uuid, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
-                        return response.json();
+                        return response;
                     } else {
                         throw response;
                     }
@@ -8244,12 +8324,12 @@ export const RunsV1ApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        startRunTensorboard(owner: string, project: string, uuid: string, body: V1ProjectEntityResourceRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
+        startRunTensorboard(owner: string, project: string, uuid: string, body: V1ProjectEntityResourceRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
             const localVarFetchArgs = RunsV1ApiFetchParamCreator(configuration).startRunTensorboard(owner, project, uuid, body, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
-                        return response.json();
+                        return response;
                     } else {
                         throw response;
                     }
@@ -8265,12 +8345,12 @@ export const RunsV1ApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        stopRun(owner: string, project: string, uuid: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
+        stopRun(owner: string, project: string, uuid: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
             const localVarFetchArgs = RunsV1ApiFetchParamCreator(configuration).stopRun(owner, project, uuid, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
-                        return response.json();
+                        return response;
                     } else {
                         throw response;
                     }
@@ -8286,12 +8366,12 @@ export const RunsV1ApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        stopRunTensorboard(owner: string, project: string, uuid: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
+        stopRunTensorboard(owner: string, project: string, uuid: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
             const localVarFetchArgs = RunsV1ApiFetchParamCreator(configuration).stopRunTensorboard(owner, project, uuid, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
-                        return response.json();
+                        return response;
                     } else {
                         throw response;
                     }
@@ -8307,12 +8387,12 @@ export const RunsV1ApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        stopRuns(owner: string, project: string, body: V1Uuids, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
+        stopRuns(owner: string, project: string, body: V1Uuids, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
             const localVarFetchArgs = RunsV1ApiFetchParamCreator(configuration).stopRuns(owner, project, body, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
-                        return response.json();
+                        return response;
                     } else {
                         throw response;
                     }
@@ -8328,12 +8408,12 @@ export const RunsV1ApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        unbookmarkRun(owner: string, project: string, uuid: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
+        unbookmarkRun(owner: string, project: string, uuid: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
             const localVarFetchArgs = RunsV1ApiFetchParamCreator(configuration).unbookmarkRun(owner, project, uuid, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
-                        return response.json();
+                        return response;
                     } else {
                         throw response;
                     }
@@ -9491,12 +9571,12 @@ export const SearchV1ApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteSearch(owner: string, project: string, uuid: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
+        deleteSearch(owner: string, project: string, uuid: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
             const localVarFetchArgs = SearchV1ApiFetchParamCreator(configuration).deleteSearch(owner, project, uuid, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
-                        return response.json();
+                        return response;
                     } else {
                         throw response;
                     }

@@ -44,6 +44,12 @@ func (o *GetUserReader) ReadResponse(response runtime.ClientResponse, consumer r
 			return nil, err
 		}
 		return result, nil
+	case 204:
+		result := NewGetUserNoContent()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return result, nil
 	case 403:
 		result := NewGetUserForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -95,6 +101,37 @@ func (o *GetUserOK) readResponse(response runtime.ClientResponse, consumer runti
 	return nil
 }
 
+// NewGetUserNoContent creates a GetUserNoContent with default headers values
+func NewGetUserNoContent() *GetUserNoContent {
+	return &GetUserNoContent{}
+}
+
+/*GetUserNoContent handles this case with default header values.
+
+No content.
+*/
+type GetUserNoContent struct {
+	Payload interface{}
+}
+
+func (o *GetUserNoContent) Error() string {
+	return fmt.Sprintf("[GET /api/v1/users][%d] getUserNoContent  %+v", 204, o.Payload)
+}
+
+func (o *GetUserNoContent) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *GetUserNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	// response payload
+	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
 // NewGetUserForbidden creates a GetUserForbidden with default headers values
 func NewGetUserForbidden() *GetUserForbidden {
 	return &GetUserForbidden{}
@@ -136,14 +173,14 @@ func NewGetUserNotFound() *GetUserNotFound {
 Resource does not exist.
 */
 type GetUserNotFound struct {
-	Payload string
+	Payload interface{}
 }
 
 func (o *GetUserNotFound) Error() string {
 	return fmt.Sprintf("[GET /api/v1/users][%d] getUserNotFound  %+v", 404, o.Payload)
 }
 
-func (o *GetUserNotFound) GetPayload() string {
+func (o *GetUserNotFound) GetPayload() interface{} {
 	return o.Payload
 }
 

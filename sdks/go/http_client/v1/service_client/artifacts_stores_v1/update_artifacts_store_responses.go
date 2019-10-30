@@ -44,6 +44,12 @@ func (o *UpdateArtifactsStoreReader) ReadResponse(response runtime.ClientRespons
 			return nil, err
 		}
 		return result, nil
+	case 204:
+		result := NewUpdateArtifactsStoreNoContent()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return result, nil
 	case 403:
 		result := NewUpdateArtifactsStoreForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -95,6 +101,37 @@ func (o *UpdateArtifactsStoreOK) readResponse(response runtime.ClientResponse, c
 	return nil
 }
 
+// NewUpdateArtifactsStoreNoContent creates a UpdateArtifactsStoreNoContent with default headers values
+func NewUpdateArtifactsStoreNoContent() *UpdateArtifactsStoreNoContent {
+	return &UpdateArtifactsStoreNoContent{}
+}
+
+/*UpdateArtifactsStoreNoContent handles this case with default header values.
+
+No content.
+*/
+type UpdateArtifactsStoreNoContent struct {
+	Payload interface{}
+}
+
+func (o *UpdateArtifactsStoreNoContent) Error() string {
+	return fmt.Sprintf("[PUT /api/v1/{owner}/artifacts_stores/{artifact_store.uuid}][%d] updateArtifactsStoreNoContent  %+v", 204, o.Payload)
+}
+
+func (o *UpdateArtifactsStoreNoContent) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *UpdateArtifactsStoreNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	// response payload
+	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
 // NewUpdateArtifactsStoreForbidden creates a UpdateArtifactsStoreForbidden with default headers values
 func NewUpdateArtifactsStoreForbidden() *UpdateArtifactsStoreForbidden {
 	return &UpdateArtifactsStoreForbidden{}
@@ -136,14 +173,14 @@ func NewUpdateArtifactsStoreNotFound() *UpdateArtifactsStoreNotFound {
 Resource does not exist.
 */
 type UpdateArtifactsStoreNotFound struct {
-	Payload string
+	Payload interface{}
 }
 
 func (o *UpdateArtifactsStoreNotFound) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/{owner}/artifacts_stores/{artifact_store.uuid}][%d] updateArtifactsStoreNotFound  %+v", 404, o.Payload)
 }
 
-func (o *UpdateArtifactsStoreNotFound) GetPayload() string {
+func (o *UpdateArtifactsStoreNotFound) GetPayload() interface{} {
 	return o.Payload
 }
 

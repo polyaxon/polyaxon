@@ -43,7 +43,7 @@ type Client struct {
 /*
 GetLogHandler lists archived runs for user
 */
-func (a *Client) GetLogHandler(params *GetLogHandlerParams, authInfo runtime.ClientAuthInfoWriter) (*GetLogHandlerOK, error) {
+func (a *Client) GetLogHandler(params *GetLogHandlerParams, authInfo runtime.ClientAuthInfoWriter) (*GetLogHandlerOK, *GetLogHandlerNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetLogHandlerParams()
@@ -55,7 +55,7 @@ func (a *Client) GetLogHandler(params *GetLogHandlerParams, authInfo runtime.Cli
 		PathPattern:        "/api/v1/log_handler",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https", "ws", "wss"},
+		Schemes:            []string{"http", "https"},
 		Params:             params,
 		Reader:             &GetLogHandlerReader{formats: a.formats},
 		AuthInfo:           authInfo,
@@ -63,22 +63,23 @@ func (a *Client) GetLogHandler(params *GetLogHandlerParams, authInfo runtime.Cli
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	success, ok := result.(*GetLogHandlerOK)
-	if ok {
-		return success, nil
+	switch value := result.(type) {
+	case *GetLogHandlerOK:
+		return value, nil, nil
+	case *GetLogHandlerNoContent:
+		return nil, value, nil
 	}
-	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for GetLogHandler: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for versions_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
 /*
 GetVersions lists bookmarked runs for user
 */
-func (a *Client) GetVersions(params *GetVersionsParams, authInfo runtime.ClientAuthInfoWriter) (*GetVersionsOK, error) {
+func (a *Client) GetVersions(params *GetVersionsParams, authInfo runtime.ClientAuthInfoWriter) (*GetVersionsOK, *GetVersionsNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetVersionsParams()
@@ -90,7 +91,7 @@ func (a *Client) GetVersions(params *GetVersionsParams, authInfo runtime.ClientA
 		PathPattern:        "/api/v1/versions",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https", "ws", "wss"},
+		Schemes:            []string{"http", "https"},
 		Params:             params,
 		Reader:             &GetVersionsReader{formats: a.formats},
 		AuthInfo:           authInfo,
@@ -98,15 +99,16 @@ func (a *Client) GetVersions(params *GetVersionsParams, authInfo runtime.ClientA
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	success, ok := result.(*GetVersionsOK)
-	if ok {
-		return success, nil
+	switch value := result.(type) {
+	case *GetVersionsOK:
+		return value, nil, nil
+	case *GetVersionsNoContent:
+		return nil, value, nil
 	}
-	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for GetVersions: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for versions_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 

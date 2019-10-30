@@ -44,6 +44,12 @@ func (o *ListArchivedProjectsReader) ReadResponse(response runtime.ClientRespons
 			return nil, err
 		}
 		return result, nil
+	case 204:
+		result := NewListArchivedProjectsNoContent()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return result, nil
 	case 403:
 		result := NewListArchivedProjectsForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -95,6 +101,37 @@ func (o *ListArchivedProjectsOK) readResponse(response runtime.ClientResponse, c
 	return nil
 }
 
+// NewListArchivedProjectsNoContent creates a ListArchivedProjectsNoContent with default headers values
+func NewListArchivedProjectsNoContent() *ListArchivedProjectsNoContent {
+	return &ListArchivedProjectsNoContent{}
+}
+
+/*ListArchivedProjectsNoContent handles this case with default header values.
+
+No content.
+*/
+type ListArchivedProjectsNoContent struct {
+	Payload interface{}
+}
+
+func (o *ListArchivedProjectsNoContent) Error() string {
+	return fmt.Sprintf("[GET /api/v1/archives/{user}/projects][%d] listArchivedProjectsNoContent  %+v", 204, o.Payload)
+}
+
+func (o *ListArchivedProjectsNoContent) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *ListArchivedProjectsNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	// response payload
+	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
 // NewListArchivedProjectsForbidden creates a ListArchivedProjectsForbidden with default headers values
 func NewListArchivedProjectsForbidden() *ListArchivedProjectsForbidden {
 	return &ListArchivedProjectsForbidden{}
@@ -136,14 +173,14 @@ func NewListArchivedProjectsNotFound() *ListArchivedProjectsNotFound {
 Resource does not exist.
 */
 type ListArchivedProjectsNotFound struct {
-	Payload string
+	Payload interface{}
 }
 
 func (o *ListArchivedProjectsNotFound) Error() string {
 	return fmt.Sprintf("[GET /api/v1/archives/{user}/projects][%d] listArchivedProjectsNotFound  %+v", 404, o.Payload)
 }
 
-func (o *ListArchivedProjectsNotFound) GetPayload() string {
+func (o *ListArchivedProjectsNotFound) GetPayload() interface{} {
 	return o.Payload
 }
 

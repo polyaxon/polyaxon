@@ -22,6 +22,7 @@ package service_model
 import (
 	strfmt "github.com/go-openapi/strfmt"
 
+	"github.com/go-openapi/errors"
 	"github.com/go-openapi/swag"
 )
 
@@ -29,14 +30,11 @@ import (
 // swagger:model v1Search
 type V1Search struct {
 
-	// Optional Search meta
-	Meta string `json:"meta,omitempty"`
+	// Optional Search definition
+	Definition *V1SearchDefinition `json:"definition,omitempty"`
 
 	// Optional name
 	Name string `json:"name,omitempty"`
-
-	// Optional Search query
-	Query string `json:"query,omitempty"`
 
 	// UUID
 	UUID string `json:"uuid,omitempty"`
@@ -44,6 +42,33 @@ type V1Search struct {
 
 // Validate validates this v1 search
 func (m *V1Search) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.validateDefinition(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *V1Search) validateDefinition(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Definition) { // not required
+		return nil
+	}
+
+	if m.Definition != nil {
+		if err := m.Definition.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("definition")
+			}
+			return err
+		}
+	}
+
 	return nil
 }
 

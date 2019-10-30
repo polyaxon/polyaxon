@@ -35,6 +35,9 @@ type V1K8SResource struct {
 	// Format: date-time
 	CreatedAt strfmt.DateTime `json:"created_at,omitempty"`
 
+	// Optional if the entity has been deleted
+	Deleted bool `json:"deleted,omitempty"`
+
 	// Optional description
 	Description string `json:"description,omitempty"`
 
@@ -46,6 +49,9 @@ type V1K8SResource struct {
 
 	// Optional the k8s secret to use
 	Items []string `json:"items"`
+
+	// Optional the k8s ref
+	K8sRef string `json:"k8s_ref,omitempty"`
 
 	// Optional a mount path to specifiy where to mount this resource
 	MountPath string `json:"mount_path,omitempty"`

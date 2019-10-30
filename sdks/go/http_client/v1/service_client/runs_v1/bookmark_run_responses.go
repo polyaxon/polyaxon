@@ -42,6 +42,12 @@ func (o *BookmarkRunReader) ReadResponse(response runtime.ClientResponse, consum
 			return nil, err
 		}
 		return result, nil
+	case 204:
+		result := NewBookmarkRunNoContent()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return result, nil
 	case 403:
 		result := NewBookmarkRunForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -70,18 +76,39 @@ func NewBookmarkRunOK() *BookmarkRunOK {
 A successful response.
 */
 type BookmarkRunOK struct {
-	Payload interface{}
 }
 
 func (o *BookmarkRunOK) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/bookmark][%d] bookmarkRunOK  %+v", 200, o.Payload)
-}
-
-func (o *BookmarkRunOK) GetPayload() interface{} {
-	return o.Payload
+	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/bookmark][%d] bookmarkRunOK ", 200)
 }
 
 func (o *BookmarkRunOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	return nil
+}
+
+// NewBookmarkRunNoContent creates a BookmarkRunNoContent with default headers values
+func NewBookmarkRunNoContent() *BookmarkRunNoContent {
+	return &BookmarkRunNoContent{}
+}
+
+/*BookmarkRunNoContent handles this case with default header values.
+
+No content.
+*/
+type BookmarkRunNoContent struct {
+	Payload interface{}
+}
+
+func (o *BookmarkRunNoContent) Error() string {
+	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/bookmark][%d] bookmarkRunNoContent  %+v", 204, o.Payload)
+}
+
+func (o *BookmarkRunNoContent) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *BookmarkRunNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
 	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
@@ -132,14 +159,14 @@ func NewBookmarkRunNotFound() *BookmarkRunNotFound {
 Resource does not exist.
 */
 type BookmarkRunNotFound struct {
-	Payload string
+	Payload interface{}
 }
 
 func (o *BookmarkRunNotFound) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/bookmark][%d] bookmarkRunNotFound  %+v", 404, o.Payload)
 }
 
-func (o *BookmarkRunNotFound) GetPayload() string {
+func (o *BookmarkRunNotFound) GetPayload() interface{} {
 	return o.Payload
 }
 

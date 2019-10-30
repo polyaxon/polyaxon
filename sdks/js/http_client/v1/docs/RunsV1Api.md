@@ -27,7 +27,7 @@ Method | HTTP request | Description
 [**resumeRun**](RunsV1Api.md#resumeRun) | **POST** /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/resume | Resume run
 [**startRunTensorboard**](RunsV1Api.md#startRunTensorboard) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/tensorboard/start | Start run tensorboard
 [**stopRun**](RunsV1Api.md#stopRun) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/stop | Stop run
-[**stopRunTensorboard**](RunsV1Api.md#stopRunTensorboard) | **DELETE** /api/v1/{owner}/{project}/runs/{uuid}/tensorboard/stop | Stop run tensorboard
+[**stopRunTensorboard**](RunsV1Api.md#stopRunTensorboard) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/tensorboard/stop | Stop run tensorboard
 [**stopRuns**](RunsV1Api.md#stopRuns) | **POST** /api/v1/{owner}/{project}/runs/stop | Stop runs
 [**unbookmarkRun**](RunsV1Api.md#unbookmarkRun) | **DELETE** /api/v1/{owner}/{project}/runs/{uuid}/unbookmark | Unbookmark run
 [**updateRun**](RunsV1Api.md#updateRun) | **PUT** /api/v1/{owner}/{project}/runs/{run.uuid} | Update run
@@ -35,7 +35,7 @@ Method | HTTP request | Description
 
 <a name="archiveRun"></a>
 # **archiveRun**
-> Object archiveRun(owner, project, uuid)
+> archiveRun(owner, project, uuid)
 
 Archive run
 
@@ -63,7 +63,7 @@ var callback = function(error, data, response) {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully. Returned data: ' + data);
+    console.log('API called successfully.');
   }
 };
 apiInstance.archiveRun(owner, project, uuid, callback);
@@ -79,7 +79,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 
@@ -92,7 +92,7 @@ Name | Type | Description  | Notes
 
 <a name="bookmarkRun"></a>
 # **bookmarkRun**
-> Object bookmarkRun(owner, project, uuid)
+> bookmarkRun(owner, project, uuid)
 
 Bookmark run
 
@@ -120,7 +120,7 @@ var callback = function(error, data, response) {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully. Returned data: ' + data);
+    console.log('API called successfully.');
   }
 };
 apiInstance.bookmarkRun(owner, project, uuid, callback);
@@ -136,7 +136,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 
@@ -386,7 +386,7 @@ Name | Type | Description  | Notes
 
 <a name="deleteRun"></a>
 # **deleteRun**
-> Object deleteRun(owner, project, uuid)
+> deleteRun(owner, project, uuid)
 
 Delete run
 
@@ -414,7 +414,7 @@ var callback = function(error, data, response) {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully. Returned data: ' + data);
+    console.log('API called successfully.');
   }
 };
 apiInstance.deleteRun(owner, project, uuid, callback);
@@ -430,7 +430,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 
@@ -443,7 +443,7 @@ Name | Type | Description  | Notes
 
 <a name="deleteRuns"></a>
 # **deleteRuns**
-> Object deleteRuns(owner, project, body)
+> deleteRuns(owner, project, body)
 
 Delete runs
 
@@ -471,7 +471,7 @@ var callback = function(error, data, response) {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully. Returned data: ' + data);
+    console.log('API called successfully.');
   }
 };
 apiInstance.deleteRuns(owner, project, body, callback);
@@ -487,7 +487,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 
@@ -728,7 +728,7 @@ Name | Type | Description  | Notes
 
 <a name="invalidateRun"></a>
 # **invalidateRun**
-> Object invalidateRun(owner, project, uuid, body)
+> invalidateRun(owner, project, uuid, body)
 
 Invalidate run
 
@@ -758,7 +758,7 @@ var callback = function(error, data, response) {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully. Returned data: ' + data);
+    console.log('API called successfully.');
   }
 };
 apiInstance.invalidateRun(owner, project, uuid, body, callback);
@@ -775,7 +775,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 
@@ -788,7 +788,7 @@ Name | Type | Description  | Notes
 
 <a name="invalidateRuns"></a>
 # **invalidateRuns**
-> Object invalidateRuns(owner, project, body)
+> invalidateRuns(owner, project, body)
 
 Invalidate runs
 
@@ -816,7 +816,7 @@ var callback = function(error, data, response) {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully. Returned data: ' + data);
+    console.log('API called successfully.');
   }
 };
 apiInstance.invalidateRuns(owner, project, body, callback);
@@ -832,7 +832,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 
@@ -1151,7 +1151,7 @@ Name | Type | Description  | Notes
 
 <a name="restoreRun"></a>
 # **restoreRun**
-> Object restoreRun(owner, project, uuid)
+> restoreRun(owner, project, uuid)
 
 Restore run
 
@@ -1179,7 +1179,7 @@ var callback = function(error, data, response) {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully. Returned data: ' + data);
+    console.log('API called successfully.');
   }
 };
 apiInstance.restoreRun(owner, project, uuid, callback);
@@ -1195,7 +1195,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 
@@ -1268,7 +1268,7 @@ Name | Type | Description  | Notes
 
 <a name="startRunTensorboard"></a>
 # **startRunTensorboard**
-> Object startRunTensorboard(owner, project, uuid, body)
+> startRunTensorboard(owner, project, uuid, body)
 
 Start run tensorboard
 
@@ -1298,7 +1298,7 @@ var callback = function(error, data, response) {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully. Returned data: ' + data);
+    console.log('API called successfully.');
   }
 };
 apiInstance.startRunTensorboard(owner, project, uuid, body, callback);
@@ -1315,7 +1315,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 
@@ -1328,7 +1328,7 @@ Name | Type | Description  | Notes
 
 <a name="stopRun"></a>
 # **stopRun**
-> Object stopRun(owner, project, uuid)
+> stopRun(owner, project, uuid)
 
 Stop run
 
@@ -1356,7 +1356,7 @@ var callback = function(error, data, response) {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully. Returned data: ' + data);
+    console.log('API called successfully.');
   }
 };
 apiInstance.stopRun(owner, project, uuid, callback);
@@ -1372,7 +1372,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 
@@ -1385,7 +1385,7 @@ Name | Type | Description  | Notes
 
 <a name="stopRunTensorboard"></a>
 # **stopRunTensorboard**
-> Object stopRunTensorboard(owner, project, uuid)
+> stopRunTensorboard(owner, project, uuid)
 
 Stop run tensorboard
 
@@ -1413,7 +1413,7 @@ var callback = function(error, data, response) {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully. Returned data: ' + data);
+    console.log('API called successfully.');
   }
 };
 apiInstance.stopRunTensorboard(owner, project, uuid, callback);
@@ -1429,7 +1429,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 
@@ -1442,7 +1442,7 @@ Name | Type | Description  | Notes
 
 <a name="stopRuns"></a>
 # **stopRuns**
-> Object stopRuns(owner, project, body)
+> stopRuns(owner, project, body)
 
 Stop runs
 
@@ -1470,7 +1470,7 @@ var callback = function(error, data, response) {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully. Returned data: ' + data);
+    console.log('API called successfully.');
   }
 };
 apiInstance.stopRuns(owner, project, body, callback);
@@ -1486,7 +1486,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 
@@ -1499,7 +1499,7 @@ Name | Type | Description  | Notes
 
 <a name="unbookmarkRun"></a>
 # **unbookmarkRun**
-> Object unbookmarkRun(owner, project, uuid)
+> unbookmarkRun(owner, project, uuid)
 
 Unbookmark run
 
@@ -1527,7 +1527,7 @@ var callback = function(error, data, response) {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully. Returned data: ' + data);
+    console.log('API called successfully.');
   }
 };
 apiInstance.unbookmarkRun(owner, project, uuid, callback);
@@ -1543,7 +1543,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 

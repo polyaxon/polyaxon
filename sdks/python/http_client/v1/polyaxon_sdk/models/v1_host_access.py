@@ -56,6 +56,8 @@ class V1HostAccess(object):
         'updated_at': 'datetime',
         'frozen': 'bool',
         'disabled': 'bool',
+        'insecure': 'bool',
+        'deleted': 'bool',
         'k8s_secret': 'str',
         'host': 'str'
     }
@@ -70,11 +72,13 @@ class V1HostAccess(object):
         'updated_at': 'updated_at',
         'frozen': 'frozen',
         'disabled': 'disabled',
+        'insecure': 'insecure',
+        'deleted': 'deleted',
         'k8s_secret': 'k8s_secret',
         'host': 'host'
     }
 
-    def __init__(self, uuid=None, name=None, description=None, readme=None, tags=None, created_at=None, updated_at=None, frozen=None, disabled=None, k8s_secret=None, host=None):  # noqa: E501
+    def __init__(self, uuid=None, name=None, description=None, readme=None, tags=None, created_at=None, updated_at=None, frozen=None, disabled=None, insecure=None, deleted=None, k8s_secret=None, host=None):  # noqa: E501
         """V1HostAccess - a model defined in Swagger"""  # noqa: E501
 
         self._uuid = None
@@ -86,6 +90,8 @@ class V1HostAccess(object):
         self._updated_at = None
         self._frozen = None
         self._disabled = None
+        self._insecure = None
+        self._deleted = None
         self._k8s_secret = None
         self._host = None
         self.discriminator = None
@@ -108,6 +114,10 @@ class V1HostAccess(object):
             self.frozen = frozen
         if disabled is not None:
             self.disabled = disabled
+        if insecure is not None:
+            self.insecure = insecure
+        if deleted is not None:
+            self.deleted = deleted
         if k8s_secret is not None:
             self.k8s_secret = k8s_secret
         if host is not None:
@@ -301,6 +311,48 @@ class V1HostAccess(object):
         """
 
         self._disabled = disabled
+
+    @property
+    def insecure(self):
+        """Gets the insecure of this V1HostAccess.  # noqa: E501
+
+
+        :return: The insecure of this V1HostAccess.  # noqa: E501
+        :rtype: bool
+        """
+        return self._insecure
+
+    @insecure.setter
+    def insecure(self, insecure):
+        """Sets the insecure of this V1HostAccess.
+
+
+        :param insecure: The insecure of this V1HostAccess.  # noqa: E501
+        :type: bool
+        """
+
+        self._insecure = insecure
+
+    @property
+    def deleted(self):
+        """Gets the deleted of this V1HostAccess.  # noqa: E501
+
+
+        :return: The deleted of this V1HostAccess.  # noqa: E501
+        :rtype: bool
+        """
+        return self._deleted
+
+    @deleted.setter
+    def deleted(self, deleted):
+        """Sets the deleted of this V1HostAccess.
+
+
+        :param deleted: The deleted of this V1HostAccess.  # noqa: E501
+        :type: bool
+        """
+
+        self._deleted = deleted
 
     @property
     def k8s_secret(self):

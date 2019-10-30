@@ -169,7 +169,7 @@ Class | Method | HTTP request | Description
 *PolyaxonSdk.ProjectsV1Api* | [**listProjectNames**](docs/ProjectsV1Api.md#listProjectNames) | **GET** /api/v1/{owner}/projects/names | List archived runs for user
 *PolyaxonSdk.ProjectsV1Api* | [**listProjects**](docs/ProjectsV1Api.md#listProjects) | **GET** /api/v1/{owner}/projects/list | List bookmarked runs for user
 *PolyaxonSdk.ProjectsV1Api* | [**patchProject**](docs/ProjectsV1Api.md#patchProject) | **PATCH** /api/v1/{owner}/{project.name} | Delete run
-*PolyaxonSdk.ProjectsV1Api* | [**restoreExperiment**](docs/ProjectsV1Api.md#restoreExperiment) | **POST** /api/v1/{owner}/{project}/restore | Stop runs
+*PolyaxonSdk.ProjectsV1Api* | [**restoreProject**](docs/ProjectsV1Api.md#restoreProject) | **POST** /api/v1/{owner}/{project}/restore | Stop runs
 *PolyaxonSdk.ProjectsV1Api* | [**unbookmarkProject**](docs/ProjectsV1Api.md#unbookmarkProject) | **DELETE** /api/v1/{owner}/{project}/unbookmark | Invalidate runs
 *PolyaxonSdk.ProjectsV1Api* | [**updateProject**](docs/ProjectsV1Api.md#updateProject) | **PUT** /api/v1/{owner}/{project.name} | Patch run
 *PolyaxonSdk.RegsitryAccessesV1Api* | [**createRegsitryAccess**](docs/RegsitryAccessesV1Api.md#createRegsitryAccess) | **POST** /api/v1/{owner}/registry_accesses | List runs
@@ -202,7 +202,7 @@ Class | Method | HTTP request | Description
 *PolyaxonSdk.RunsV1Api* | [**resumeRun**](docs/RunsV1Api.md#resumeRun) | **POST** /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/resume | Resume run
 *PolyaxonSdk.RunsV1Api* | [**startRunTensorboard**](docs/RunsV1Api.md#startRunTensorboard) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/tensorboard/start | Start run tensorboard
 *PolyaxonSdk.RunsV1Api* | [**stopRun**](docs/RunsV1Api.md#stopRun) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/stop | Stop run
-*PolyaxonSdk.RunsV1Api* | [**stopRunTensorboard**](docs/RunsV1Api.md#stopRunTensorboard) | **DELETE** /api/v1/{owner}/{project}/runs/{uuid}/tensorboard/stop | Stop run tensorboard
+*PolyaxonSdk.RunsV1Api* | [**stopRunTensorboard**](docs/RunsV1Api.md#stopRunTensorboard) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/tensorboard/stop | Stop run tensorboard
 *PolyaxonSdk.RunsV1Api* | [**stopRuns**](docs/RunsV1Api.md#stopRuns) | **POST** /api/v1/{owner}/{project}/runs/stop | Stop runs
 *PolyaxonSdk.RunsV1Api* | [**unbookmarkRun**](docs/RunsV1Api.md#unbookmarkRun) | **DELETE** /api/v1/{owner}/{project}/runs/{uuid}/unbookmark | Unbookmark run
 *PolyaxonSdk.RunsV1Api* | [**updateRun**](docs/RunsV1Api.md#updateRun) | **PUT** /api/v1/{owner}/{project}/runs/{run.uuid} | Update run
@@ -238,6 +238,7 @@ Class | Method | HTTP request | Description
  - [PolyaxonSdk.V1ProjectEntityResourceRequest](docs/V1ProjectEntityResourceRequest.md)
  - [PolyaxonSdk.V1Run](docs/V1Run.md)
  - [PolyaxonSdk.V1Search](docs/V1Search.md)
+ - [PolyaxonSdk.V1SearchDefinition](docs/V1SearchDefinition.md)
  - [PolyaxonSdk.V1Status](docs/V1Status.md)
  - [PolyaxonSdk.V1StatusCondition](docs/V1StatusCondition.md)
  - [PolyaxonSdk.V1User](docs/V1User.md)

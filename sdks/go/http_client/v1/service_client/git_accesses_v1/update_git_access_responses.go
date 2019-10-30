@@ -44,6 +44,12 @@ func (o *UpdateGitAccessReader) ReadResponse(response runtime.ClientResponse, co
 			return nil, err
 		}
 		return result, nil
+	case 204:
+		result := NewUpdateGitAccessNoContent()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return result, nil
 	case 403:
 		result := NewUpdateGitAccessForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -95,6 +101,37 @@ func (o *UpdateGitAccessOK) readResponse(response runtime.ClientResponse, consum
 	return nil
 }
 
+// NewUpdateGitAccessNoContent creates a UpdateGitAccessNoContent with default headers values
+func NewUpdateGitAccessNoContent() *UpdateGitAccessNoContent {
+	return &UpdateGitAccessNoContent{}
+}
+
+/*UpdateGitAccessNoContent handles this case with default header values.
+
+No content.
+*/
+type UpdateGitAccessNoContent struct {
+	Payload interface{}
+}
+
+func (o *UpdateGitAccessNoContent) Error() string {
+	return fmt.Sprintf("[PUT /api/v1/{owner}/git_accesses/{host_access.uuid}][%d] updateGitAccessNoContent  %+v", 204, o.Payload)
+}
+
+func (o *UpdateGitAccessNoContent) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *UpdateGitAccessNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	// response payload
+	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
 // NewUpdateGitAccessForbidden creates a UpdateGitAccessForbidden with default headers values
 func NewUpdateGitAccessForbidden() *UpdateGitAccessForbidden {
 	return &UpdateGitAccessForbidden{}
@@ -136,14 +173,14 @@ func NewUpdateGitAccessNotFound() *UpdateGitAccessNotFound {
 Resource does not exist.
 */
 type UpdateGitAccessNotFound struct {
-	Payload string
+	Payload interface{}
 }
 
 func (o *UpdateGitAccessNotFound) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/{owner}/git_accesses/{host_access.uuid}][%d] updateGitAccessNotFound  %+v", 404, o.Payload)
 }
 
-func (o *UpdateGitAccessNotFound) GetPayload() string {
+func (o *UpdateGitAccessNotFound) GetPayload() interface{} {
 	return o.Payload
 }
 

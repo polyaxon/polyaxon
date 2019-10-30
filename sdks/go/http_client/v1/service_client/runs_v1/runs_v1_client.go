@@ -43,7 +43,7 @@ type Client struct {
 /*
 ArchiveRun archives run
 */
-func (a *Client) ArchiveRun(params *ArchiveRunParams, authInfo runtime.ClientAuthInfoWriter) (*ArchiveRunOK, error) {
+func (a *Client) ArchiveRun(params *ArchiveRunParams, authInfo runtime.ClientAuthInfoWriter) (*ArchiveRunOK, *ArchiveRunNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewArchiveRunParams()
@@ -55,7 +55,7 @@ func (a *Client) ArchiveRun(params *ArchiveRunParams, authInfo runtime.ClientAut
 		PathPattern:        "/api/v1/{owner}/{project}/runs/{uuid}/archive",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https", "ws", "wss"},
+		Schemes:            []string{"http", "https"},
 		Params:             params,
 		Reader:             &ArchiveRunReader{formats: a.formats},
 		AuthInfo:           authInfo,
@@ -63,22 +63,23 @@ func (a *Client) ArchiveRun(params *ArchiveRunParams, authInfo runtime.ClientAut
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	success, ok := result.(*ArchiveRunOK)
-	if ok {
-		return success, nil
+	switch value := result.(type) {
+	case *ArchiveRunOK:
+		return value, nil, nil
+	case *ArchiveRunNoContent:
+		return nil, value, nil
 	}
-	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for ArchiveRun: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for runs_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
 /*
 BookmarkRun bookmarks run
 */
-func (a *Client) BookmarkRun(params *BookmarkRunParams, authInfo runtime.ClientAuthInfoWriter) (*BookmarkRunOK, error) {
+func (a *Client) BookmarkRun(params *BookmarkRunParams, authInfo runtime.ClientAuthInfoWriter) (*BookmarkRunOK, *BookmarkRunNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewBookmarkRunParams()
@@ -90,7 +91,7 @@ func (a *Client) BookmarkRun(params *BookmarkRunParams, authInfo runtime.ClientA
 		PathPattern:        "/api/v1/{owner}/{project}/runs/{uuid}/bookmark",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https", "ws", "wss"},
+		Schemes:            []string{"http", "https"},
 		Params:             params,
 		Reader:             &BookmarkRunReader{formats: a.formats},
 		AuthInfo:           authInfo,
@@ -98,22 +99,23 @@ func (a *Client) BookmarkRun(params *BookmarkRunParams, authInfo runtime.ClientA
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	success, ok := result.(*BookmarkRunOK)
-	if ok {
-		return success, nil
+	switch value := result.(type) {
+	case *BookmarkRunOK:
+		return value, nil, nil
+	case *BookmarkRunNoContent:
+		return nil, value, nil
 	}
-	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for BookmarkRun: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for runs_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
 /*
 CopyRun restarts run with copy
 */
-func (a *Client) CopyRun(params *CopyRunParams, authInfo runtime.ClientAuthInfoWriter) (*CopyRunOK, error) {
+func (a *Client) CopyRun(params *CopyRunParams, authInfo runtime.ClientAuthInfoWriter) (*CopyRunOK, *CopyRunNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewCopyRunParams()
@@ -125,7 +127,7 @@ func (a *Client) CopyRun(params *CopyRunParams, authInfo runtime.ClientAuthInfoW
 		PathPattern:        "/api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/copy",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https", "ws", "wss"},
+		Schemes:            []string{"http", "https"},
 		Params:             params,
 		Reader:             &CopyRunReader{formats: a.formats},
 		AuthInfo:           authInfo,
@@ -133,22 +135,23 @@ func (a *Client) CopyRun(params *CopyRunParams, authInfo runtime.ClientAuthInfoW
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	success, ok := result.(*CopyRunOK)
-	if ok {
-		return success, nil
+	switch value := result.(type) {
+	case *CopyRunOK:
+		return value, nil, nil
+	case *CopyRunNoContent:
+		return nil, value, nil
 	}
-	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for CopyRun: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for runs_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
 /*
 CreateRun creates new run
 */
-func (a *Client) CreateRun(params *CreateRunParams, authInfo runtime.ClientAuthInfoWriter) (*CreateRunOK, error) {
+func (a *Client) CreateRun(params *CreateRunParams, authInfo runtime.ClientAuthInfoWriter) (*CreateRunOK, *CreateRunNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewCreateRunParams()
@@ -160,7 +163,7 @@ func (a *Client) CreateRun(params *CreateRunParams, authInfo runtime.ClientAuthI
 		PathPattern:        "/api/v1/{owner}/{project}/runs/create",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https", "ws", "wss"},
+		Schemes:            []string{"http", "https"},
 		Params:             params,
 		Reader:             &CreateRunReader{formats: a.formats},
 		AuthInfo:           authInfo,
@@ -168,22 +171,23 @@ func (a *Client) CreateRun(params *CreateRunParams, authInfo runtime.ClientAuthI
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	success, ok := result.(*CreateRunOK)
-	if ok {
-		return success, nil
+	switch value := result.(type) {
+	case *CreateRunOK:
+		return value, nil, nil
+	case *CreateRunNoContent:
+		return nil, value, nil
 	}
-	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for CreateRun: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for runs_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
 /*
 CreateRunCodeRef gets run code ref
 */
-func (a *Client) CreateRunCodeRef(params *CreateRunCodeRefParams, authInfo runtime.ClientAuthInfoWriter) (*CreateRunCodeRefOK, error) {
+func (a *Client) CreateRunCodeRef(params *CreateRunCodeRefParams, authInfo runtime.ClientAuthInfoWriter) (*CreateRunCodeRefOK, *CreateRunCodeRefNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewCreateRunCodeRefParams()
@@ -195,7 +199,7 @@ func (a *Client) CreateRunCodeRef(params *CreateRunCodeRefParams, authInfo runti
 		PathPattern:        "/api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/coderef",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https", "ws", "wss"},
+		Schemes:            []string{"http", "https"},
 		Params:             params,
 		Reader:             &CreateRunCodeRefReader{formats: a.formats},
 		AuthInfo:           authInfo,
@@ -203,22 +207,23 @@ func (a *Client) CreateRunCodeRef(params *CreateRunCodeRefParams, authInfo runti
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	success, ok := result.(*CreateRunCodeRefOK)
-	if ok {
-		return success, nil
+	switch value := result.(type) {
+	case *CreateRunCodeRefOK:
+		return value, nil, nil
+	case *CreateRunCodeRefNoContent:
+		return nil, value, nil
 	}
-	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for CreateRunCodeRef: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for runs_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
 /*
 CreateRunStatus creates new run status
 */
-func (a *Client) CreateRunStatus(params *CreateRunStatusParams, authInfo runtime.ClientAuthInfoWriter) (*CreateRunStatusOK, error) {
+func (a *Client) CreateRunStatus(params *CreateRunStatusParams, authInfo runtime.ClientAuthInfoWriter) (*CreateRunStatusOK, *CreateRunStatusNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewCreateRunStatusParams()
@@ -230,7 +235,7 @@ func (a *Client) CreateRunStatus(params *CreateRunStatusParams, authInfo runtime
 		PathPattern:        "/api/v1/{owner}/{project}/runs/{uuid}/statuses",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https", "ws", "wss"},
+		Schemes:            []string{"http", "https"},
 		Params:             params,
 		Reader:             &CreateRunStatusReader{formats: a.formats},
 		AuthInfo:           authInfo,
@@ -238,22 +243,23 @@ func (a *Client) CreateRunStatus(params *CreateRunStatusParams, authInfo runtime
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	success, ok := result.(*CreateRunStatusOK)
-	if ok {
-		return success, nil
+	switch value := result.(type) {
+	case *CreateRunStatusOK:
+		return value, nil, nil
+	case *CreateRunStatusNoContent:
+		return nil, value, nil
 	}
-	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for CreateRunStatus: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for runs_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
 /*
 DeleteRun deletes run
 */
-func (a *Client) DeleteRun(params *DeleteRunParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteRunOK, error) {
+func (a *Client) DeleteRun(params *DeleteRunParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteRunOK, *DeleteRunNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewDeleteRunParams()
@@ -265,7 +271,7 @@ func (a *Client) DeleteRun(params *DeleteRunParams, authInfo runtime.ClientAuthI
 		PathPattern:        "/api/v1/{owner}/{project}/runs/{uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https", "ws", "wss"},
+		Schemes:            []string{"http", "https"},
 		Params:             params,
 		Reader:             &DeleteRunReader{formats: a.formats},
 		AuthInfo:           authInfo,
@@ -273,22 +279,23 @@ func (a *Client) DeleteRun(params *DeleteRunParams, authInfo runtime.ClientAuthI
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	success, ok := result.(*DeleteRunOK)
-	if ok {
-		return success, nil
+	switch value := result.(type) {
+	case *DeleteRunOK:
+		return value, nil, nil
+	case *DeleteRunNoContent:
+		return nil, value, nil
 	}
-	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for DeleteRun: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for runs_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
 /*
 DeleteRuns deletes runs
 */
-func (a *Client) DeleteRuns(params *DeleteRunsParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteRunsOK, error) {
+func (a *Client) DeleteRuns(params *DeleteRunsParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteRunsOK, *DeleteRunsNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewDeleteRunsParams()
@@ -300,7 +307,7 @@ func (a *Client) DeleteRuns(params *DeleteRunsParams, authInfo runtime.ClientAut
 		PathPattern:        "/api/v1/{owner}/{project}/runs/delete",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https", "ws", "wss"},
+		Schemes:            []string{"http", "https"},
 		Params:             params,
 		Reader:             &DeleteRunsReader{formats: a.formats},
 		AuthInfo:           authInfo,
@@ -308,22 +315,23 @@ func (a *Client) DeleteRuns(params *DeleteRunsParams, authInfo runtime.ClientAut
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	success, ok := result.(*DeleteRunsOK)
-	if ok {
-		return success, nil
+	switch value := result.(type) {
+	case *DeleteRunsOK:
+		return value, nil, nil
+	case *DeleteRunsNoContent:
+		return nil, value, nil
 	}
-	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for DeleteRuns: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for runs_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
 /*
 GetRun gets run
 */
-func (a *Client) GetRun(params *GetRunParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunOK, error) {
+func (a *Client) GetRun(params *GetRunParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunOK, *GetRunNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetRunParams()
@@ -335,7 +343,7 @@ func (a *Client) GetRun(params *GetRunParams, authInfo runtime.ClientAuthInfoWri
 		PathPattern:        "/api/v1/{owner}/{project}/runs/{uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https", "ws", "wss"},
+		Schemes:            []string{"http", "https"},
 		Params:             params,
 		Reader:             &GetRunReader{formats: a.formats},
 		AuthInfo:           authInfo,
@@ -343,22 +351,23 @@ func (a *Client) GetRun(params *GetRunParams, authInfo runtime.ClientAuthInfoWri
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	success, ok := result.(*GetRunOK)
-	if ok {
-		return success, nil
+	switch value := result.(type) {
+	case *GetRunOK:
+		return value, nil, nil
+	case *GetRunNoContent:
+		return nil, value, nil
 	}
-	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for GetRun: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for runs_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
 /*
 GetRunCodeRefs gets run code ref
 */
-func (a *Client) GetRunCodeRefs(params *GetRunCodeRefsParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunCodeRefsOK, error) {
+func (a *Client) GetRunCodeRefs(params *GetRunCodeRefsParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunCodeRefsOK, *GetRunCodeRefsNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetRunCodeRefsParams()
@@ -370,7 +379,7 @@ func (a *Client) GetRunCodeRefs(params *GetRunCodeRefsParams, authInfo runtime.C
 		PathPattern:        "/api/v1/{owner}/{project}/runs/{uuid}/coderef",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https", "ws", "wss"},
+		Schemes:            []string{"http", "https"},
 		Params:             params,
 		Reader:             &GetRunCodeRefsReader{formats: a.formats},
 		AuthInfo:           authInfo,
@@ -378,22 +387,23 @@ func (a *Client) GetRunCodeRefs(params *GetRunCodeRefsParams, authInfo runtime.C
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	success, ok := result.(*GetRunCodeRefsOK)
-	if ok {
-		return success, nil
+	switch value := result.(type) {
+	case *GetRunCodeRefsOK:
+		return value, nil, nil
+	case *GetRunCodeRefsNoContent:
+		return nil, value, nil
 	}
-	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for GetRunCodeRefs: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for runs_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
 /*
 GetRunStatuses gets run status
 */
-func (a *Client) GetRunStatuses(params *GetRunStatusesParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunStatusesOK, error) {
+func (a *Client) GetRunStatuses(params *GetRunStatusesParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunStatusesOK, *GetRunStatusesNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetRunStatusesParams()
@@ -405,7 +415,7 @@ func (a *Client) GetRunStatuses(params *GetRunStatusesParams, authInfo runtime.C
 		PathPattern:        "/api/v1/{owner}/{project}/runs/{uuid}/statuses",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https", "ws", "wss"},
+		Schemes:            []string{"http", "https"},
 		Params:             params,
 		Reader:             &GetRunStatusesReader{formats: a.formats},
 		AuthInfo:           authInfo,
@@ -413,22 +423,23 @@ func (a *Client) GetRunStatuses(params *GetRunStatusesParams, authInfo runtime.C
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	success, ok := result.(*GetRunStatusesOK)
-	if ok {
-		return success, nil
+	switch value := result.(type) {
+	case *GetRunStatusesOK:
+		return value, nil, nil
+	case *GetRunStatusesNoContent:
+		return nil, value, nil
 	}
-	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for GetRunStatuses: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for runs_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
 /*
 ImpersonateToken impersonates run token
 */
-func (a *Client) ImpersonateToken(params *ImpersonateTokenParams, authInfo runtime.ClientAuthInfoWriter) (*ImpersonateTokenOK, error) {
+func (a *Client) ImpersonateToken(params *ImpersonateTokenParams, authInfo runtime.ClientAuthInfoWriter) (*ImpersonateTokenOK, *ImpersonateTokenNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewImpersonateTokenParams()
@@ -440,7 +451,7 @@ func (a *Client) ImpersonateToken(params *ImpersonateTokenParams, authInfo runti
 		PathPattern:        "/api/v1/{owner}/{project}/runs/{uuid}/impersonate",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https", "ws", "wss"},
+		Schemes:            []string{"http", "https"},
 		Params:             params,
 		Reader:             &ImpersonateTokenReader{formats: a.formats},
 		AuthInfo:           authInfo,
@@ -448,22 +459,23 @@ func (a *Client) ImpersonateToken(params *ImpersonateTokenParams, authInfo runti
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	success, ok := result.(*ImpersonateTokenOK)
-	if ok {
-		return success, nil
+	switch value := result.(type) {
+	case *ImpersonateTokenOK:
+		return value, nil, nil
+	case *ImpersonateTokenNoContent:
+		return nil, value, nil
 	}
-	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for ImpersonateToken: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for runs_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
 /*
 InvalidateRun invalidates run
 */
-func (a *Client) InvalidateRun(params *InvalidateRunParams, authInfo runtime.ClientAuthInfoWriter) (*InvalidateRunOK, error) {
+func (a *Client) InvalidateRun(params *InvalidateRunParams, authInfo runtime.ClientAuthInfoWriter) (*InvalidateRunOK, *InvalidateRunNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewInvalidateRunParams()
@@ -475,7 +487,7 @@ func (a *Client) InvalidateRun(params *InvalidateRunParams, authInfo runtime.Cli
 		PathPattern:        "/api/v1/{owner}/{project}/runs/{uuid}/invalidate",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https", "ws", "wss"},
+		Schemes:            []string{"http", "https"},
 		Params:             params,
 		Reader:             &InvalidateRunReader{formats: a.formats},
 		AuthInfo:           authInfo,
@@ -483,22 +495,23 @@ func (a *Client) InvalidateRun(params *InvalidateRunParams, authInfo runtime.Cli
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	success, ok := result.(*InvalidateRunOK)
-	if ok {
-		return success, nil
+	switch value := result.(type) {
+	case *InvalidateRunOK:
+		return value, nil, nil
+	case *InvalidateRunNoContent:
+		return nil, value, nil
 	}
-	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for InvalidateRun: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for runs_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
 /*
 InvalidateRuns invalidates runs
 */
-func (a *Client) InvalidateRuns(params *InvalidateRunsParams, authInfo runtime.ClientAuthInfoWriter) (*InvalidateRunsOK, error) {
+func (a *Client) InvalidateRuns(params *InvalidateRunsParams, authInfo runtime.ClientAuthInfoWriter) (*InvalidateRunsOK, *InvalidateRunsNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewInvalidateRunsParams()
@@ -510,7 +523,7 @@ func (a *Client) InvalidateRuns(params *InvalidateRunsParams, authInfo runtime.C
 		PathPattern:        "/api/v1/{owner}/{project}/runs/invalidate",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https", "ws", "wss"},
+		Schemes:            []string{"http", "https"},
 		Params:             params,
 		Reader:             &InvalidateRunsReader{formats: a.formats},
 		AuthInfo:           authInfo,
@@ -518,22 +531,23 @@ func (a *Client) InvalidateRuns(params *InvalidateRunsParams, authInfo runtime.C
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	success, ok := result.(*InvalidateRunsOK)
-	if ok {
-		return success, nil
+	switch value := result.(type) {
+	case *InvalidateRunsOK:
+		return value, nil, nil
+	case *InvalidateRunsNoContent:
+		return nil, value, nil
 	}
-	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for InvalidateRuns: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for runs_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
 /*
 ListArchivedRuns lists archived runs for user
 */
-func (a *Client) ListArchivedRuns(params *ListArchivedRunsParams, authInfo runtime.ClientAuthInfoWriter) (*ListArchivedRunsOK, error) {
+func (a *Client) ListArchivedRuns(params *ListArchivedRunsParams, authInfo runtime.ClientAuthInfoWriter) (*ListArchivedRunsOK, *ListArchivedRunsNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewListArchivedRunsParams()
@@ -545,7 +559,7 @@ func (a *Client) ListArchivedRuns(params *ListArchivedRunsParams, authInfo runti
 		PathPattern:        "/api/v1/archives/{user}/runs",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https", "ws", "wss"},
+		Schemes:            []string{"http", "https"},
 		Params:             params,
 		Reader:             &ListArchivedRunsReader{formats: a.formats},
 		AuthInfo:           authInfo,
@@ -553,22 +567,23 @@ func (a *Client) ListArchivedRuns(params *ListArchivedRunsParams, authInfo runti
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	success, ok := result.(*ListArchivedRunsOK)
-	if ok {
-		return success, nil
+	switch value := result.(type) {
+	case *ListArchivedRunsOK:
+		return value, nil, nil
+	case *ListArchivedRunsNoContent:
+		return nil, value, nil
 	}
-	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for ListArchivedRuns: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for runs_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
 /*
 ListBookmarkedRuns lists bookmarked runs for user
 */
-func (a *Client) ListBookmarkedRuns(params *ListBookmarkedRunsParams, authInfo runtime.ClientAuthInfoWriter) (*ListBookmarkedRunsOK, error) {
+func (a *Client) ListBookmarkedRuns(params *ListBookmarkedRunsParams, authInfo runtime.ClientAuthInfoWriter) (*ListBookmarkedRunsOK, *ListBookmarkedRunsNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewListBookmarkedRunsParams()
@@ -580,7 +595,7 @@ func (a *Client) ListBookmarkedRuns(params *ListBookmarkedRunsParams, authInfo r
 		PathPattern:        "/api/v1/bookmarks/{user}/runs",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https", "ws", "wss"},
+		Schemes:            []string{"http", "https"},
 		Params:             params,
 		Reader:             &ListBookmarkedRunsReader{formats: a.formats},
 		AuthInfo:           authInfo,
@@ -588,22 +603,23 @@ func (a *Client) ListBookmarkedRuns(params *ListBookmarkedRunsParams, authInfo r
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	success, ok := result.(*ListBookmarkedRunsOK)
-	if ok {
-		return success, nil
+	switch value := result.(type) {
+	case *ListBookmarkedRunsOK:
+		return value, nil, nil
+	case *ListBookmarkedRunsNoContent:
+		return nil, value, nil
 	}
-	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for ListBookmarkedRuns: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for runs_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
 /*
 ListRuns lists runs
 */
-func (a *Client) ListRuns(params *ListRunsParams, authInfo runtime.ClientAuthInfoWriter) (*ListRunsOK, error) {
+func (a *Client) ListRuns(params *ListRunsParams, authInfo runtime.ClientAuthInfoWriter) (*ListRunsOK, *ListRunsNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewListRunsParams()
@@ -615,7 +631,7 @@ func (a *Client) ListRuns(params *ListRunsParams, authInfo runtime.ClientAuthInf
 		PathPattern:        "/api/v1/{owner}/{project}/runs/list",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https", "ws", "wss"},
+		Schemes:            []string{"http", "https"},
 		Params:             params,
 		Reader:             &ListRunsReader{formats: a.formats},
 		AuthInfo:           authInfo,
@@ -623,22 +639,23 @@ func (a *Client) ListRuns(params *ListRunsParams, authInfo runtime.ClientAuthInf
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	success, ok := result.(*ListRunsOK)
-	if ok {
-		return success, nil
+	switch value := result.(type) {
+	case *ListRunsOK:
+		return value, nil, nil
+	case *ListRunsNoContent:
+		return nil, value, nil
 	}
-	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for ListRuns: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for runs_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
 /*
 PatchRun patches run
 */
-func (a *Client) PatchRun(params *PatchRunParams, authInfo runtime.ClientAuthInfoWriter) (*PatchRunOK, error) {
+func (a *Client) PatchRun(params *PatchRunParams, authInfo runtime.ClientAuthInfoWriter) (*PatchRunOK, *PatchRunNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewPatchRunParams()
@@ -650,7 +667,7 @@ func (a *Client) PatchRun(params *PatchRunParams, authInfo runtime.ClientAuthInf
 		PathPattern:        "/api/v1/{owner}/{project}/runs/{run.uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https", "ws", "wss"},
+		Schemes:            []string{"http", "https"},
 		Params:             params,
 		Reader:             &PatchRunReader{formats: a.formats},
 		AuthInfo:           authInfo,
@@ -658,22 +675,23 @@ func (a *Client) PatchRun(params *PatchRunParams, authInfo runtime.ClientAuthInf
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	success, ok := result.(*PatchRunOK)
-	if ok {
-		return success, nil
+	switch value := result.(type) {
+	case *PatchRunOK:
+		return value, nil, nil
+	case *PatchRunNoContent:
+		return nil, value, nil
 	}
-	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for PatchRun: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for runs_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
 /*
 RestartRun restarts run
 */
-func (a *Client) RestartRun(params *RestartRunParams, authInfo runtime.ClientAuthInfoWriter) (*RestartRunOK, error) {
+func (a *Client) RestartRun(params *RestartRunParams, authInfo runtime.ClientAuthInfoWriter) (*RestartRunOK, *RestartRunNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewRestartRunParams()
@@ -685,7 +703,7 @@ func (a *Client) RestartRun(params *RestartRunParams, authInfo runtime.ClientAut
 		PathPattern:        "/api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/restart",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https", "ws", "wss"},
+		Schemes:            []string{"http", "https"},
 		Params:             params,
 		Reader:             &RestartRunReader{formats: a.formats},
 		AuthInfo:           authInfo,
@@ -693,22 +711,23 @@ func (a *Client) RestartRun(params *RestartRunParams, authInfo runtime.ClientAut
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	success, ok := result.(*RestartRunOK)
-	if ok {
-		return success, nil
+	switch value := result.(type) {
+	case *RestartRunOK:
+		return value, nil, nil
+	case *RestartRunNoContent:
+		return nil, value, nil
 	}
-	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for RestartRun: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for runs_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
 /*
 RestoreRun restores run
 */
-func (a *Client) RestoreRun(params *RestoreRunParams, authInfo runtime.ClientAuthInfoWriter) (*RestoreRunOK, error) {
+func (a *Client) RestoreRun(params *RestoreRunParams, authInfo runtime.ClientAuthInfoWriter) (*RestoreRunOK, *RestoreRunNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewRestoreRunParams()
@@ -720,7 +739,7 @@ func (a *Client) RestoreRun(params *RestoreRunParams, authInfo runtime.ClientAut
 		PathPattern:        "/api/v1/{owner}/{project}/runs/{uuid}/restore",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https", "ws", "wss"},
+		Schemes:            []string{"http", "https"},
 		Params:             params,
 		Reader:             &RestoreRunReader{formats: a.formats},
 		AuthInfo:           authInfo,
@@ -728,22 +747,23 @@ func (a *Client) RestoreRun(params *RestoreRunParams, authInfo runtime.ClientAut
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	success, ok := result.(*RestoreRunOK)
-	if ok {
-		return success, nil
+	switch value := result.(type) {
+	case *RestoreRunOK:
+		return value, nil, nil
+	case *RestoreRunNoContent:
+		return nil, value, nil
 	}
-	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for RestoreRun: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for runs_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
 /*
 ResumeRun resumes run
 */
-func (a *Client) ResumeRun(params *ResumeRunParams, authInfo runtime.ClientAuthInfoWriter) (*ResumeRunOK, error) {
+func (a *Client) ResumeRun(params *ResumeRunParams, authInfo runtime.ClientAuthInfoWriter) (*ResumeRunOK, *ResumeRunNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewResumeRunParams()
@@ -755,7 +775,7 @@ func (a *Client) ResumeRun(params *ResumeRunParams, authInfo runtime.ClientAuthI
 		PathPattern:        "/api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/resume",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https", "ws", "wss"},
+		Schemes:            []string{"http", "https"},
 		Params:             params,
 		Reader:             &ResumeRunReader{formats: a.formats},
 		AuthInfo:           authInfo,
@@ -763,22 +783,23 @@ func (a *Client) ResumeRun(params *ResumeRunParams, authInfo runtime.ClientAuthI
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	success, ok := result.(*ResumeRunOK)
-	if ok {
-		return success, nil
+	switch value := result.(type) {
+	case *ResumeRunOK:
+		return value, nil, nil
+	case *ResumeRunNoContent:
+		return nil, value, nil
 	}
-	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for ResumeRun: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for runs_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
 /*
 StartRunTensorboard starts run tensorboard
 */
-func (a *Client) StartRunTensorboard(params *StartRunTensorboardParams, authInfo runtime.ClientAuthInfoWriter) (*StartRunTensorboardOK, error) {
+func (a *Client) StartRunTensorboard(params *StartRunTensorboardParams, authInfo runtime.ClientAuthInfoWriter) (*StartRunTensorboardOK, *StartRunTensorboardNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewStartRunTensorboardParams()
@@ -790,7 +811,7 @@ func (a *Client) StartRunTensorboard(params *StartRunTensorboardParams, authInfo
 		PathPattern:        "/api/v1/{owner}/{project}/runs/{uuid}/tensorboard/start",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https", "ws", "wss"},
+		Schemes:            []string{"http", "https"},
 		Params:             params,
 		Reader:             &StartRunTensorboardReader{formats: a.formats},
 		AuthInfo:           authInfo,
@@ -798,22 +819,23 @@ func (a *Client) StartRunTensorboard(params *StartRunTensorboardParams, authInfo
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	success, ok := result.(*StartRunTensorboardOK)
-	if ok {
-		return success, nil
+	switch value := result.(type) {
+	case *StartRunTensorboardOK:
+		return value, nil, nil
+	case *StartRunTensorboardNoContent:
+		return nil, value, nil
 	}
-	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for StartRunTensorboard: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for runs_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
 /*
 StopRun stops run
 */
-func (a *Client) StopRun(params *StopRunParams, authInfo runtime.ClientAuthInfoWriter) (*StopRunOK, error) {
+func (a *Client) StopRun(params *StopRunParams, authInfo runtime.ClientAuthInfoWriter) (*StopRunOK, *StopRunNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewStopRunParams()
@@ -825,7 +847,7 @@ func (a *Client) StopRun(params *StopRunParams, authInfo runtime.ClientAuthInfoW
 		PathPattern:        "/api/v1/{owner}/{project}/runs/{uuid}/stop",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https", "ws", "wss"},
+		Schemes:            []string{"http", "https"},
 		Params:             params,
 		Reader:             &StopRunReader{formats: a.formats},
 		AuthInfo:           authInfo,
@@ -833,22 +855,23 @@ func (a *Client) StopRun(params *StopRunParams, authInfo runtime.ClientAuthInfoW
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	success, ok := result.(*StopRunOK)
-	if ok {
-		return success, nil
+	switch value := result.(type) {
+	case *StopRunOK:
+		return value, nil, nil
+	case *StopRunNoContent:
+		return nil, value, nil
 	}
-	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for StopRun: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for runs_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
 /*
 StopRunTensorboard stops run tensorboard
 */
-func (a *Client) StopRunTensorboard(params *StopRunTensorboardParams, authInfo runtime.ClientAuthInfoWriter) (*StopRunTensorboardOK, error) {
+func (a *Client) StopRunTensorboard(params *StopRunTensorboardParams, authInfo runtime.ClientAuthInfoWriter) (*StopRunTensorboardOK, *StopRunTensorboardNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewStopRunTensorboardParams()
@@ -856,11 +879,11 @@ func (a *Client) StopRunTensorboard(params *StopRunTensorboardParams, authInfo r
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "StopRunTensorboard",
-		Method:             "DELETE",
+		Method:             "POST",
 		PathPattern:        "/api/v1/{owner}/{project}/runs/{uuid}/tensorboard/stop",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https", "ws", "wss"},
+		Schemes:            []string{"http", "https"},
 		Params:             params,
 		Reader:             &StopRunTensorboardReader{formats: a.formats},
 		AuthInfo:           authInfo,
@@ -868,22 +891,23 @@ func (a *Client) StopRunTensorboard(params *StopRunTensorboardParams, authInfo r
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	success, ok := result.(*StopRunTensorboardOK)
-	if ok {
-		return success, nil
+	switch value := result.(type) {
+	case *StopRunTensorboardOK:
+		return value, nil, nil
+	case *StopRunTensorboardNoContent:
+		return nil, value, nil
 	}
-	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for StopRunTensorboard: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for runs_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
 /*
 StopRuns stops runs
 */
-func (a *Client) StopRuns(params *StopRunsParams, authInfo runtime.ClientAuthInfoWriter) (*StopRunsOK, error) {
+func (a *Client) StopRuns(params *StopRunsParams, authInfo runtime.ClientAuthInfoWriter) (*StopRunsOK, *StopRunsNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewStopRunsParams()
@@ -895,7 +919,7 @@ func (a *Client) StopRuns(params *StopRunsParams, authInfo runtime.ClientAuthInf
 		PathPattern:        "/api/v1/{owner}/{project}/runs/stop",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https", "ws", "wss"},
+		Schemes:            []string{"http", "https"},
 		Params:             params,
 		Reader:             &StopRunsReader{formats: a.formats},
 		AuthInfo:           authInfo,
@@ -903,22 +927,23 @@ func (a *Client) StopRuns(params *StopRunsParams, authInfo runtime.ClientAuthInf
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	success, ok := result.(*StopRunsOK)
-	if ok {
-		return success, nil
+	switch value := result.(type) {
+	case *StopRunsOK:
+		return value, nil, nil
+	case *StopRunsNoContent:
+		return nil, value, nil
 	}
-	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for StopRuns: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for runs_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
 /*
 UnbookmarkRun unbookmarks run
 */
-func (a *Client) UnbookmarkRun(params *UnbookmarkRunParams, authInfo runtime.ClientAuthInfoWriter) (*UnbookmarkRunOK, error) {
+func (a *Client) UnbookmarkRun(params *UnbookmarkRunParams, authInfo runtime.ClientAuthInfoWriter) (*UnbookmarkRunOK, *UnbookmarkRunNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewUnbookmarkRunParams()
@@ -930,7 +955,7 @@ func (a *Client) UnbookmarkRun(params *UnbookmarkRunParams, authInfo runtime.Cli
 		PathPattern:        "/api/v1/{owner}/{project}/runs/{uuid}/unbookmark",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https", "ws", "wss"},
+		Schemes:            []string{"http", "https"},
 		Params:             params,
 		Reader:             &UnbookmarkRunReader{formats: a.formats},
 		AuthInfo:           authInfo,
@@ -938,22 +963,23 @@ func (a *Client) UnbookmarkRun(params *UnbookmarkRunParams, authInfo runtime.Cli
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	success, ok := result.(*UnbookmarkRunOK)
-	if ok {
-		return success, nil
+	switch value := result.(type) {
+	case *UnbookmarkRunOK:
+		return value, nil, nil
+	case *UnbookmarkRunNoContent:
+		return nil, value, nil
 	}
-	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for UnbookmarkRun: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for runs_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
 /*
 UpdateRun updates run
 */
-func (a *Client) UpdateRun(params *UpdateRunParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateRunOK, error) {
+func (a *Client) UpdateRun(params *UpdateRunParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateRunOK, *UpdateRunNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewUpdateRunParams()
@@ -965,7 +991,7 @@ func (a *Client) UpdateRun(params *UpdateRunParams, authInfo runtime.ClientAuthI
 		PathPattern:        "/api/v1/{owner}/{project}/runs/{run.uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https", "ws", "wss"},
+		Schemes:            []string{"http", "https"},
 		Params:             params,
 		Reader:             &UpdateRunReader{formats: a.formats},
 		AuthInfo:           authInfo,
@@ -973,15 +999,16 @@ func (a *Client) UpdateRun(params *UpdateRunParams, authInfo runtime.ClientAuthI
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	success, ok := result.(*UpdateRunOK)
-	if ok {
-		return success, nil
+	switch value := result.(type) {
+	case *UpdateRunOK:
+		return value, nil, nil
+	case *UpdateRunNoContent:
+		return nil, value, nil
 	}
-	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for UpdateRun: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for runs_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 

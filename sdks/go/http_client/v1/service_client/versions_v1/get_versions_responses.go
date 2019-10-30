@@ -44,6 +44,12 @@ func (o *GetVersionsReader) ReadResponse(response runtime.ClientResponse, consum
 			return nil, err
 		}
 		return result, nil
+	case 204:
+		result := NewGetVersionsNoContent()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return result, nil
 	case 403:
 		result := NewGetVersionsForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -95,6 +101,37 @@ func (o *GetVersionsOK) readResponse(response runtime.ClientResponse, consumer r
 	return nil
 }
 
+// NewGetVersionsNoContent creates a GetVersionsNoContent with default headers values
+func NewGetVersionsNoContent() *GetVersionsNoContent {
+	return &GetVersionsNoContent{}
+}
+
+/*GetVersionsNoContent handles this case with default header values.
+
+No content.
+*/
+type GetVersionsNoContent struct {
+	Payload interface{}
+}
+
+func (o *GetVersionsNoContent) Error() string {
+	return fmt.Sprintf("[GET /api/v1/versions][%d] getVersionsNoContent  %+v", 204, o.Payload)
+}
+
+func (o *GetVersionsNoContent) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *GetVersionsNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	// response payload
+	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
 // NewGetVersionsForbidden creates a GetVersionsForbidden with default headers values
 func NewGetVersionsForbidden() *GetVersionsForbidden {
 	return &GetVersionsForbidden{}
@@ -136,14 +173,14 @@ func NewGetVersionsNotFound() *GetVersionsNotFound {
 Resource does not exist.
 */
 type GetVersionsNotFound struct {
-	Payload string
+	Payload interface{}
 }
 
 func (o *GetVersionsNotFound) Error() string {
 	return fmt.Sprintf("[GET /api/v1/versions][%d] getVersionsNotFound  %+v", 404, o.Payload)
 }
 
-func (o *GetVersionsNotFound) GetPayload() string {
+func (o *GetVersionsNotFound) GetPayload() interface{} {
 	return o.Payload
 }
 

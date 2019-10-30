@@ -42,6 +42,12 @@ func (o *DeleteArtifactsStoreReader) ReadResponse(response runtime.ClientRespons
 			return nil, err
 		}
 		return result, nil
+	case 204:
+		result := NewDeleteArtifactsStoreNoContent()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return result, nil
 	case 403:
 		result := NewDeleteArtifactsStoreForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -70,18 +76,39 @@ func NewDeleteArtifactsStoreOK() *DeleteArtifactsStoreOK {
 A successful response.
 */
 type DeleteArtifactsStoreOK struct {
-	Payload interface{}
 }
 
 func (o *DeleteArtifactsStoreOK) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/{owner}/artifacts_stores/{uuid}][%d] deleteArtifactsStoreOK  %+v", 200, o.Payload)
-}
-
-func (o *DeleteArtifactsStoreOK) GetPayload() interface{} {
-	return o.Payload
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/artifacts_stores/{uuid}][%d] deleteArtifactsStoreOK ", 200)
 }
 
 func (o *DeleteArtifactsStoreOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	return nil
+}
+
+// NewDeleteArtifactsStoreNoContent creates a DeleteArtifactsStoreNoContent with default headers values
+func NewDeleteArtifactsStoreNoContent() *DeleteArtifactsStoreNoContent {
+	return &DeleteArtifactsStoreNoContent{}
+}
+
+/*DeleteArtifactsStoreNoContent handles this case with default header values.
+
+No content.
+*/
+type DeleteArtifactsStoreNoContent struct {
+	Payload interface{}
+}
+
+func (o *DeleteArtifactsStoreNoContent) Error() string {
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/artifacts_stores/{uuid}][%d] deleteArtifactsStoreNoContent  %+v", 204, o.Payload)
+}
+
+func (o *DeleteArtifactsStoreNoContent) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *DeleteArtifactsStoreNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
 	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
@@ -132,14 +159,14 @@ func NewDeleteArtifactsStoreNotFound() *DeleteArtifactsStoreNotFound {
 Resource does not exist.
 */
 type DeleteArtifactsStoreNotFound struct {
-	Payload string
+	Payload interface{}
 }
 
 func (o *DeleteArtifactsStoreNotFound) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/{owner}/artifacts_stores/{uuid}][%d] deleteArtifactsStoreNotFound  %+v", 404, o.Payload)
 }
 
-func (o *DeleteArtifactsStoreNotFound) GetPayload() string {
+func (o *DeleteArtifactsStoreNotFound) GetPayload() interface{} {
 	return o.Payload
 }
 

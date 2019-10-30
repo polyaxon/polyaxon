@@ -42,6 +42,12 @@ func (o *DeleteSearchReader) ReadResponse(response runtime.ClientResponse, consu
 			return nil, err
 		}
 		return result, nil
+	case 204:
+		result := NewDeleteSearchNoContent()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return result, nil
 	case 403:
 		result := NewDeleteSearchForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -70,18 +76,39 @@ func NewDeleteSearchOK() *DeleteSearchOK {
 A successful response.
 */
 type DeleteSearchOK struct {
-	Payload interface{}
 }
 
 func (o *DeleteSearchOK) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/searches/{uuid}][%d] deleteSearchOK  %+v", 200, o.Payload)
-}
-
-func (o *DeleteSearchOK) GetPayload() interface{} {
-	return o.Payload
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/searches/{uuid}][%d] deleteSearchOK ", 200)
 }
 
 func (o *DeleteSearchOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	return nil
+}
+
+// NewDeleteSearchNoContent creates a DeleteSearchNoContent with default headers values
+func NewDeleteSearchNoContent() *DeleteSearchNoContent {
+	return &DeleteSearchNoContent{}
+}
+
+/*DeleteSearchNoContent handles this case with default header values.
+
+No content.
+*/
+type DeleteSearchNoContent struct {
+	Payload interface{}
+}
+
+func (o *DeleteSearchNoContent) Error() string {
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/searches/{uuid}][%d] deleteSearchNoContent  %+v", 204, o.Payload)
+}
+
+func (o *DeleteSearchNoContent) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *DeleteSearchNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
 	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
@@ -132,14 +159,14 @@ func NewDeleteSearchNotFound() *DeleteSearchNotFound {
 Resource does not exist.
 */
 type DeleteSearchNotFound struct {
-	Payload string
+	Payload interface{}
 }
 
 func (o *DeleteSearchNotFound) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/searches/{uuid}][%d] deleteSearchNotFound  %+v", 404, o.Payload)
 }
 
-func (o *DeleteSearchNotFound) GetPayload() string {
+func (o *DeleteSearchNotFound) GetPayload() interface{} {
 	return o.Payload
 }
 

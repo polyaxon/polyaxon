@@ -44,6 +44,12 @@ func (o *UpdateProjectReader) ReadResponse(response runtime.ClientResponse, cons
 			return nil, err
 		}
 		return result, nil
+	case 204:
+		result := NewUpdateProjectNoContent()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return result, nil
 	case 403:
 		result := NewUpdateProjectForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -95,6 +101,37 @@ func (o *UpdateProjectOK) readResponse(response runtime.ClientResponse, consumer
 	return nil
 }
 
+// NewUpdateProjectNoContent creates a UpdateProjectNoContent with default headers values
+func NewUpdateProjectNoContent() *UpdateProjectNoContent {
+	return &UpdateProjectNoContent{}
+}
+
+/*UpdateProjectNoContent handles this case with default header values.
+
+No content.
+*/
+type UpdateProjectNoContent struct {
+	Payload interface{}
+}
+
+func (o *UpdateProjectNoContent) Error() string {
+	return fmt.Sprintf("[PUT /api/v1/{owner}/{project.name}][%d] updateProjectNoContent  %+v", 204, o.Payload)
+}
+
+func (o *UpdateProjectNoContent) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *UpdateProjectNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	// response payload
+	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
 // NewUpdateProjectForbidden creates a UpdateProjectForbidden with default headers values
 func NewUpdateProjectForbidden() *UpdateProjectForbidden {
 	return &UpdateProjectForbidden{}
@@ -136,14 +173,14 @@ func NewUpdateProjectNotFound() *UpdateProjectNotFound {
 Resource does not exist.
 */
 type UpdateProjectNotFound struct {
-	Payload string
+	Payload interface{}
 }
 
 func (o *UpdateProjectNotFound) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/{owner}/{project.name}][%d] updateProjectNotFound  %+v", 404, o.Payload)
 }
 
-func (o *UpdateProjectNotFound) GetPayload() string {
+func (o *UpdateProjectNotFound) GetPayload() interface{} {
 	return o.Payload
 }
 

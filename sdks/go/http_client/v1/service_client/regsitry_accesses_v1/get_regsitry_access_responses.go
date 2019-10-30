@@ -44,6 +44,12 @@ func (o *GetRegsitryAccessReader) ReadResponse(response runtime.ClientResponse, 
 			return nil, err
 		}
 		return result, nil
+	case 204:
+		result := NewGetRegsitryAccessNoContent()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return result, nil
 	case 403:
 		result := NewGetRegsitryAccessForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -95,6 +101,37 @@ func (o *GetRegsitryAccessOK) readResponse(response runtime.ClientResponse, cons
 	return nil
 }
 
+// NewGetRegsitryAccessNoContent creates a GetRegsitryAccessNoContent with default headers values
+func NewGetRegsitryAccessNoContent() *GetRegsitryAccessNoContent {
+	return &GetRegsitryAccessNoContent{}
+}
+
+/*GetRegsitryAccessNoContent handles this case with default header values.
+
+No content.
+*/
+type GetRegsitryAccessNoContent struct {
+	Payload interface{}
+}
+
+func (o *GetRegsitryAccessNoContent) Error() string {
+	return fmt.Sprintf("[GET /api/v1/{owner}/registry_accesses/{uuid}][%d] getRegsitryAccessNoContent  %+v", 204, o.Payload)
+}
+
+func (o *GetRegsitryAccessNoContent) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *GetRegsitryAccessNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	// response payload
+	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
 // NewGetRegsitryAccessForbidden creates a GetRegsitryAccessForbidden with default headers values
 func NewGetRegsitryAccessForbidden() *GetRegsitryAccessForbidden {
 	return &GetRegsitryAccessForbidden{}
@@ -136,14 +173,14 @@ func NewGetRegsitryAccessNotFound() *GetRegsitryAccessNotFound {
 Resource does not exist.
 */
 type GetRegsitryAccessNotFound struct {
-	Payload string
+	Payload interface{}
 }
 
 func (o *GetRegsitryAccessNotFound) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/registry_accesses/{uuid}][%d] getRegsitryAccessNotFound  %+v", 404, o.Payload)
 }
 
-func (o *GetRegsitryAccessNotFound) GetPayload() string {
+func (o *GetRegsitryAccessNotFound) GetPayload() interface{} {
 	return o.Payload
 }
 

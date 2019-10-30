@@ -42,6 +42,12 @@ func (o *DeleteGitAccessReader) ReadResponse(response runtime.ClientResponse, co
 			return nil, err
 		}
 		return result, nil
+	case 204:
+		result := NewDeleteGitAccessNoContent()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return result, nil
 	case 403:
 		result := NewDeleteGitAccessForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -70,18 +76,39 @@ func NewDeleteGitAccessOK() *DeleteGitAccessOK {
 A successful response.
 */
 type DeleteGitAccessOK struct {
-	Payload interface{}
 }
 
 func (o *DeleteGitAccessOK) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/{owner}/git_accesses/{uuid}][%d] deleteGitAccessOK  %+v", 200, o.Payload)
-}
-
-func (o *DeleteGitAccessOK) GetPayload() interface{} {
-	return o.Payload
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/git_accesses/{uuid}][%d] deleteGitAccessOK ", 200)
 }
 
 func (o *DeleteGitAccessOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	return nil
+}
+
+// NewDeleteGitAccessNoContent creates a DeleteGitAccessNoContent with default headers values
+func NewDeleteGitAccessNoContent() *DeleteGitAccessNoContent {
+	return &DeleteGitAccessNoContent{}
+}
+
+/*DeleteGitAccessNoContent handles this case with default header values.
+
+No content.
+*/
+type DeleteGitAccessNoContent struct {
+	Payload interface{}
+}
+
+func (o *DeleteGitAccessNoContent) Error() string {
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/git_accesses/{uuid}][%d] deleteGitAccessNoContent  %+v", 204, o.Payload)
+}
+
+func (o *DeleteGitAccessNoContent) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *DeleteGitAccessNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
 	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
@@ -132,14 +159,14 @@ func NewDeleteGitAccessNotFound() *DeleteGitAccessNotFound {
 Resource does not exist.
 */
 type DeleteGitAccessNotFound struct {
-	Payload string
+	Payload interface{}
 }
 
 func (o *DeleteGitAccessNotFound) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/{owner}/git_accesses/{uuid}][%d] deleteGitAccessNotFound  %+v", 404, o.Payload)
 }
 
-func (o *DeleteGitAccessNotFound) GetPayload() string {
+func (o *DeleteGitAccessNotFound) GetPayload() interface{} {
 	return o.Payload
 }
 

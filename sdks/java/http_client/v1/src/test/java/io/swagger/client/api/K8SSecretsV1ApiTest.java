@@ -76,7 +76,7 @@ public class K8SSecretsV1ApiTest {
     public void deleteK8SSecretTest() throws ApiException {
         String owner = null;
         String uuid = null;
-        Object response = api.deleteK8SSecret(owner, uuid);
+        api.deleteK8SSecret(owner, uuid);
 
         // TODO: test validations
     }

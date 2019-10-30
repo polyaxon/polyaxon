@@ -27,14 +27,14 @@ Method | HTTP request | Description
 [**resume_run**](RunsV1Api.md#resume_run) | **POST** /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/resume | Resume run
 [**start_run_tensorboard**](RunsV1Api.md#start_run_tensorboard) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/tensorboard/start | Start run tensorboard
 [**stop_run**](RunsV1Api.md#stop_run) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/stop | Stop run
-[**stop_run_tensorboard**](RunsV1Api.md#stop_run_tensorboard) | **DELETE** /api/v1/{owner}/{project}/runs/{uuid}/tensorboard/stop | Stop run tensorboard
+[**stop_run_tensorboard**](RunsV1Api.md#stop_run_tensorboard) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/tensorboard/stop | Stop run tensorboard
 [**stop_runs**](RunsV1Api.md#stop_runs) | **POST** /api/v1/{owner}/{project}/runs/stop | Stop runs
 [**unbookmark_run**](RunsV1Api.md#unbookmark_run) | **DELETE** /api/v1/{owner}/{project}/runs/{uuid}/unbookmark | Unbookmark run
 [**update_run**](RunsV1Api.md#update_run) | **PUT** /api/v1/{owner}/{project}/runs/{run.uuid} | Update run
 
 
 # **archive_run**
-> object archive_run(owner, project, uuid)
+> archive_run(owner, project, uuid)
 
 Archive run
 
@@ -60,8 +60,7 @@ uuid = 'uuid_example' # str | Unique integer identifier of the entity
 
 try:
     # Archive run
-    api_response = api_instance.archive_run(owner, project, uuid)
-    pprint(api_response)
+    api_instance.archive_run(owner, project, uuid)
 except ApiException as e:
     print("Exception when calling RunsV1Api->archive_run: %s\n" % e)
 ```
@@ -76,7 +75,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**object**
+void (empty response body)
 
 ### Authorization
 
@@ -90,7 +89,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **bookmark_run**
-> object bookmark_run(owner, project, uuid)
+> bookmark_run(owner, project, uuid)
 
 Bookmark run
 
@@ -116,8 +115,7 @@ uuid = 'uuid_example' # str | Unique integer identifier of the entity
 
 try:
     # Bookmark run
-    api_response = api_instance.bookmark_run(owner, project, uuid)
-    pprint(api_response)
+    api_instance.bookmark_run(owner, project, uuid)
 except ApiException as e:
     print("Exception when calling RunsV1Api->bookmark_run: %s\n" % e)
 ```
@@ -132,7 +130,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**object**
+void (empty response body)
 
 ### Authorization
 
@@ -376,7 +374,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **delete_run**
-> object delete_run(owner, project, uuid)
+> delete_run(owner, project, uuid)
 
 Delete run
 
@@ -402,8 +400,7 @@ uuid = 'uuid_example' # str | Unique integer identifier of the entity
 
 try:
     # Delete run
-    api_response = api_instance.delete_run(owner, project, uuid)
-    pprint(api_response)
+    api_instance.delete_run(owner, project, uuid)
 except ApiException as e:
     print("Exception when calling RunsV1Api->delete_run: %s\n" % e)
 ```
@@ -418,7 +415,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**object**
+void (empty response body)
 
 ### Authorization
 
@@ -432,7 +429,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **delete_runs**
-> object delete_runs(owner, project, body)
+> delete_runs(owner, project, body)
 
 Delete runs
 
@@ -458,8 +455,7 @@ body = polyaxon_sdk.V1Uuids() # V1Uuids | Uuids of the entities
 
 try:
     # Delete runs
-    api_response = api_instance.delete_runs(owner, project, body)
-    pprint(api_response)
+    api_instance.delete_runs(owner, project, body)
 except ApiException as e:
     print("Exception when calling RunsV1Api->delete_runs: %s\n" % e)
 ```
@@ -474,7 +470,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**object**
+void (empty response body)
 
 ### Authorization
 
@@ -712,7 +708,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **invalidate_run**
-> object invalidate_run(owner, project, uuid, body)
+> invalidate_run(owner, project, uuid, body)
 
 Invalidate run
 
@@ -739,8 +735,7 @@ body = polyaxon_sdk.V1ProjectEntityResourceRequest() # V1ProjectEntityResourceRe
 
 try:
     # Invalidate run
-    api_response = api_instance.invalidate_run(owner, project, uuid, body)
-    pprint(api_response)
+    api_instance.invalidate_run(owner, project, uuid, body)
 except ApiException as e:
     print("Exception when calling RunsV1Api->invalidate_run: %s\n" % e)
 ```
@@ -756,7 +751,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**object**
+void (empty response body)
 
 ### Authorization
 
@@ -770,7 +765,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **invalidate_runs**
-> object invalidate_runs(owner, project, body)
+> invalidate_runs(owner, project, body)
 
 Invalidate runs
 
@@ -796,8 +791,7 @@ body = polyaxon_sdk.V1Uuids() # V1Uuids | Uuids of the entities
 
 try:
     # Invalidate runs
-    api_response = api_instance.invalidate_runs(owner, project, body)
-    pprint(api_response)
+    api_instance.invalidate_runs(owner, project, body)
 except ApiException as e:
     print("Exception when calling RunsV1Api->invalidate_runs: %s\n" % e)
 ```
@@ -812,7 +806,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**object**
+void (empty response body)
 
 ### Authorization
 
@@ -1124,7 +1118,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **restore_run**
-> object restore_run(owner, project, uuid)
+> restore_run(owner, project, uuid)
 
 Restore run
 
@@ -1150,8 +1144,7 @@ uuid = 'uuid_example' # str | Unique integer identifier of the entity
 
 try:
     # Restore run
-    api_response = api_instance.restore_run(owner, project, uuid)
-    pprint(api_response)
+    api_instance.restore_run(owner, project, uuid)
 except ApiException as e:
     print("Exception when calling RunsV1Api->restore_run: %s\n" % e)
 ```
@@ -1166,7 +1159,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**object**
+void (empty response body)
 
 ### Authorization
 
@@ -1238,7 +1231,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **start_run_tensorboard**
-> object start_run_tensorboard(owner, project, uuid, body)
+> start_run_tensorboard(owner, project, uuid, body)
 
 Start run tensorboard
 
@@ -1265,8 +1258,7 @@ body = polyaxon_sdk.V1ProjectEntityResourceRequest() # V1ProjectEntityResourceRe
 
 try:
     # Start run tensorboard
-    api_response = api_instance.start_run_tensorboard(owner, project, uuid, body)
-    pprint(api_response)
+    api_instance.start_run_tensorboard(owner, project, uuid, body)
 except ApiException as e:
     print("Exception when calling RunsV1Api->start_run_tensorboard: %s\n" % e)
 ```
@@ -1282,7 +1274,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**object**
+void (empty response body)
 
 ### Authorization
 
@@ -1296,7 +1288,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **stop_run**
-> object stop_run(owner, project, uuid)
+> stop_run(owner, project, uuid)
 
 Stop run
 
@@ -1322,8 +1314,7 @@ uuid = 'uuid_example' # str | Unique integer identifier of the entity
 
 try:
     # Stop run
-    api_response = api_instance.stop_run(owner, project, uuid)
-    pprint(api_response)
+    api_instance.stop_run(owner, project, uuid)
 except ApiException as e:
     print("Exception when calling RunsV1Api->stop_run: %s\n" % e)
 ```
@@ -1338,7 +1329,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**object**
+void (empty response body)
 
 ### Authorization
 
@@ -1352,7 +1343,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **stop_run_tensorboard**
-> object stop_run_tensorboard(owner, project, uuid)
+> stop_run_tensorboard(owner, project, uuid)
 
 Stop run tensorboard
 
@@ -1378,8 +1369,7 @@ uuid = 'uuid_example' # str | Unique integer identifier of the entity
 
 try:
     # Stop run tensorboard
-    api_response = api_instance.stop_run_tensorboard(owner, project, uuid)
-    pprint(api_response)
+    api_instance.stop_run_tensorboard(owner, project, uuid)
 except ApiException as e:
     print("Exception when calling RunsV1Api->stop_run_tensorboard: %s\n" % e)
 ```
@@ -1394,7 +1384,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**object**
+void (empty response body)
 
 ### Authorization
 
@@ -1408,7 +1398,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **stop_runs**
-> object stop_runs(owner, project, body)
+> stop_runs(owner, project, body)
 
 Stop runs
 
@@ -1434,8 +1424,7 @@ body = polyaxon_sdk.V1Uuids() # V1Uuids | Uuids of the entities
 
 try:
     # Stop runs
-    api_response = api_instance.stop_runs(owner, project, body)
-    pprint(api_response)
+    api_instance.stop_runs(owner, project, body)
 except ApiException as e:
     print("Exception when calling RunsV1Api->stop_runs: %s\n" % e)
 ```
@@ -1450,7 +1439,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**object**
+void (empty response body)
 
 ### Authorization
 
@@ -1464,7 +1453,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **unbookmark_run**
-> object unbookmark_run(owner, project, uuid)
+> unbookmark_run(owner, project, uuid)
 
 Unbookmark run
 
@@ -1490,8 +1479,7 @@ uuid = 'uuid_example' # str | Unique integer identifier of the entity
 
 try:
     # Unbookmark run
-    api_response = api_instance.unbookmark_run(owner, project, uuid)
-    pprint(api_response)
+    api_instance.unbookmark_run(owner, project, uuid)
 except ApiException as e:
     print("Exception when calling RunsV1Api->unbookmark_run: %s\n" % e)
 ```
@@ -1506,7 +1494,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**object**
+void (empty response body)
 
 ### Authorization
 

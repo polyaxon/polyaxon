@@ -49,34 +49,29 @@ class V1Search(object):
     swagger_types = {
         'uuid': 'str',
         'name': 'str',
-        'query': 'str',
-        'meta': 'str'
+        'definition': 'V1SearchDefinition'
     }
 
     attribute_map = {
         'uuid': 'uuid',
         'name': 'name',
-        'query': 'query',
-        'meta': 'meta'
+        'definition': 'definition'
     }
 
-    def __init__(self, uuid=None, name=None, query=None, meta=None):  # noqa: E501
+    def __init__(self, uuid=None, name=None, definition=None):  # noqa: E501
         """V1Search - a model defined in Swagger"""  # noqa: E501
 
         self._uuid = None
         self._name = None
-        self._query = None
-        self._meta = None
+        self._definition = None
         self.discriminator = None
 
         if uuid is not None:
             self.uuid = uuid
         if name is not None:
             self.name = name
-        if query is not None:
-            self.query = query
-        if meta is not None:
-            self.meta = meta
+        if definition is not None:
+            self.definition = definition
 
     @property
     def uuid(self):
@@ -121,46 +116,25 @@ class V1Search(object):
         self._name = name
 
     @property
-    def query(self):
-        """Gets the query of this V1Search.  # noqa: E501
+    def definition(self):
+        """Gets the definition of this V1Search.  # noqa: E501
 
 
-        :return: The query of this V1Search.  # noqa: E501
-        :rtype: str
+        :return: The definition of this V1Search.  # noqa: E501
+        :rtype: V1SearchDefinition
         """
-        return self._query
+        return self._definition
 
-    @query.setter
-    def query(self, query):
-        """Sets the query of this V1Search.
-
-
-        :param query: The query of this V1Search.  # noqa: E501
-        :type: str
-        """
-
-        self._query = query
-
-    @property
-    def meta(self):
-        """Gets the meta of this V1Search.  # noqa: E501
+    @definition.setter
+    def definition(self, definition):
+        """Sets the definition of this V1Search.
 
 
-        :return: The meta of this V1Search.  # noqa: E501
-        :rtype: str
-        """
-        return self._meta
-
-    @meta.setter
-    def meta(self, meta):
-        """Sets the meta of this V1Search.
-
-
-        :param meta: The meta of this V1Search.  # noqa: E501
-        :type: str
+        :param definition: The definition of this V1Search.  # noqa: E501
+        :type: V1SearchDefinition
         """
 
-        self._meta = meta
+        self._definition = definition
 
     def to_dict(self):
         """Returns the model properties as a dict"""

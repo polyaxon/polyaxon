@@ -78,7 +78,7 @@ public class SearchV1ApiTest {
         String owner = null;
         String project = null;
         String uuid = null;
-        Object response = api.deleteSearch(owner, project, uuid);
+        api.deleteSearch(owner, project, uuid);
 
         // TODO: test validations
     }

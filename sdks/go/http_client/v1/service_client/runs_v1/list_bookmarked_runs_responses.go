@@ -44,6 +44,12 @@ func (o *ListBookmarkedRunsReader) ReadResponse(response runtime.ClientResponse,
 			return nil, err
 		}
 		return result, nil
+	case 204:
+		result := NewListBookmarkedRunsNoContent()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return result, nil
 	case 403:
 		result := NewListBookmarkedRunsForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -95,6 +101,37 @@ func (o *ListBookmarkedRunsOK) readResponse(response runtime.ClientResponse, con
 	return nil
 }
 
+// NewListBookmarkedRunsNoContent creates a ListBookmarkedRunsNoContent with default headers values
+func NewListBookmarkedRunsNoContent() *ListBookmarkedRunsNoContent {
+	return &ListBookmarkedRunsNoContent{}
+}
+
+/*ListBookmarkedRunsNoContent handles this case with default header values.
+
+No content.
+*/
+type ListBookmarkedRunsNoContent struct {
+	Payload interface{}
+}
+
+func (o *ListBookmarkedRunsNoContent) Error() string {
+	return fmt.Sprintf("[GET /api/v1/bookmarks/{user}/runs][%d] listBookmarkedRunsNoContent  %+v", 204, o.Payload)
+}
+
+func (o *ListBookmarkedRunsNoContent) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *ListBookmarkedRunsNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	// response payload
+	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
 // NewListBookmarkedRunsForbidden creates a ListBookmarkedRunsForbidden with default headers values
 func NewListBookmarkedRunsForbidden() *ListBookmarkedRunsForbidden {
 	return &ListBookmarkedRunsForbidden{}
@@ -136,14 +173,14 @@ func NewListBookmarkedRunsNotFound() *ListBookmarkedRunsNotFound {
 Resource does not exist.
 */
 type ListBookmarkedRunsNotFound struct {
-	Payload string
+	Payload interface{}
 }
 
 func (o *ListBookmarkedRunsNotFound) Error() string {
 	return fmt.Sprintf("[GET /api/v1/bookmarks/{user}/runs][%d] listBookmarkedRunsNotFound  %+v", 404, o.Payload)
 }
 
-func (o *ListBookmarkedRunsNotFound) GetPayload() string {
+func (o *ListBookmarkedRunsNotFound) GetPayload() interface{} {
 	return o.Payload
 }
 

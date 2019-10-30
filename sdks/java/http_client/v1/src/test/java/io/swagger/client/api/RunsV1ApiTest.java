@@ -67,7 +67,7 @@ public class RunsV1ApiTest {
         String owner = null;
         String project = null;
         String uuid = null;
-        Object response = api.archiveRun(owner, project, uuid);
+        api.archiveRun(owner, project, uuid);
 
         // TODO: test validations
     }
@@ -85,7 +85,7 @@ public class RunsV1ApiTest {
         String owner = null;
         String project = null;
         String uuid = null;
-        Object response = api.bookmarkRun(owner, project, uuid);
+        api.bookmarkRun(owner, project, uuid);
 
         // TODO: test validations
     }
@@ -178,7 +178,7 @@ public class RunsV1ApiTest {
         String owner = null;
         String project = null;
         String uuid = null;
-        Object response = api.deleteRun(owner, project, uuid);
+        api.deleteRun(owner, project, uuid);
 
         // TODO: test validations
     }
@@ -196,7 +196,7 @@ public class RunsV1ApiTest {
         String owner = null;
         String project = null;
         V1Uuids body = null;
-        Object response = api.deleteRuns(owner, project, body);
+        api.deleteRuns(owner, project, body);
 
         // TODO: test validations
     }
@@ -287,7 +287,7 @@ public class RunsV1ApiTest {
         String project = null;
         String uuid = null;
         V1ProjectEntityResourceRequest body = null;
-        Object response = api.invalidateRun(owner, project, uuid, body);
+        api.invalidateRun(owner, project, uuid, body);
 
         // TODO: test validations
     }
@@ -305,7 +305,7 @@ public class RunsV1ApiTest {
         String owner = null;
         String project = null;
         V1Uuids body = null;
-        Object response = api.invalidateRuns(owner, project, body);
+        api.invalidateRuns(owner, project, body);
 
         // TODO: test validations
     }
@@ -422,7 +422,7 @@ public class RunsV1ApiTest {
         String owner = null;
         String project = null;
         String uuid = null;
-        Object response = api.restoreRun(owner, project, uuid);
+        api.restoreRun(owner, project, uuid);
 
         // TODO: test validations
     }
@@ -460,7 +460,7 @@ public class RunsV1ApiTest {
         String project = null;
         String uuid = null;
         V1ProjectEntityResourceRequest body = null;
-        Object response = api.startRunTensorboard(owner, project, uuid, body);
+        api.startRunTensorboard(owner, project, uuid, body);
 
         // TODO: test validations
     }
@@ -478,7 +478,7 @@ public class RunsV1ApiTest {
         String owner = null;
         String project = null;
         String uuid = null;
-        Object response = api.stopRun(owner, project, uuid);
+        api.stopRun(owner, project, uuid);
 
         // TODO: test validations
     }
@@ -496,7 +496,7 @@ public class RunsV1ApiTest {
         String owner = null;
         String project = null;
         String uuid = null;
-        Object response = api.stopRunTensorboard(owner, project, uuid);
+        api.stopRunTensorboard(owner, project, uuid);
 
         // TODO: test validations
     }
@@ -514,7 +514,7 @@ public class RunsV1ApiTest {
         String owner = null;
         String project = null;
         V1Uuids body = null;
-        Object response = api.stopRuns(owner, project, body);
+        api.stopRuns(owner, project, body);
 
         // TODO: test validations
     }
@@ -532,7 +532,7 @@ public class RunsV1ApiTest {
         String owner = null;
         String project = null;
         String uuid = null;
-        Object response = api.unbookmarkRun(owner, project, uuid);
+        api.unbookmarkRun(owner, project, uuid);
 
         // TODO: test validations
     }

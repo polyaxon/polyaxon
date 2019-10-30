@@ -43,7 +43,7 @@ type Client struct {
 /*
 CreateK8SConfigMaps lists runs
 */
-func (a *Client) CreateK8SConfigMaps(params *CreateK8SConfigMapsParams, authInfo runtime.ClientAuthInfoWriter) (*CreateK8SConfigMapsOK, error) {
+func (a *Client) CreateK8SConfigMaps(params *CreateK8SConfigMapsParams, authInfo runtime.ClientAuthInfoWriter) (*CreateK8SConfigMapsOK, *CreateK8SConfigMapsNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewCreateK8SConfigMapsParams()
@@ -55,7 +55,7 @@ func (a *Client) CreateK8SConfigMaps(params *CreateK8SConfigMapsParams, authInfo
 		PathPattern:        "/api/v1/{owner}/k8s_config_maps",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https", "ws", "wss"},
+		Schemes:            []string{"http", "https"},
 		Params:             params,
 		Reader:             &CreateK8SConfigMapsReader{formats: a.formats},
 		AuthInfo:           authInfo,
@@ -63,22 +63,23 @@ func (a *Client) CreateK8SConfigMaps(params *CreateK8SConfigMapsParams, authInfo
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	success, ok := result.(*CreateK8SConfigMapsOK)
-	if ok {
-		return success, nil
+	switch value := result.(type) {
+	case *CreateK8SConfigMapsOK:
+		return value, nil, nil
+	case *CreateK8SConfigMapsNoContent:
+		return nil, value, nil
 	}
-	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for CreateK8SConfigMaps: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for k8_s_config_maps_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
 /*
 DeleteK8SConfigMap patches run
 */
-func (a *Client) DeleteK8SConfigMap(params *DeleteK8SConfigMapParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteK8SConfigMapOK, error) {
+func (a *Client) DeleteK8SConfigMap(params *DeleteK8SConfigMapParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteK8SConfigMapOK, *DeleteK8SConfigMapNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewDeleteK8SConfigMapParams()
@@ -90,7 +91,7 @@ func (a *Client) DeleteK8SConfigMap(params *DeleteK8SConfigMapParams, authInfo r
 		PathPattern:        "/api/v1/{owner}/k8s_config_maps/{uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https", "ws", "wss"},
+		Schemes:            []string{"http", "https"},
 		Params:             params,
 		Reader:             &DeleteK8SConfigMapReader{formats: a.formats},
 		AuthInfo:           authInfo,
@@ -98,22 +99,23 @@ func (a *Client) DeleteK8SConfigMap(params *DeleteK8SConfigMapParams, authInfo r
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	success, ok := result.(*DeleteK8SConfigMapOK)
-	if ok {
-		return success, nil
+	switch value := result.(type) {
+	case *DeleteK8SConfigMapOK:
+		return value, nil, nil
+	case *DeleteK8SConfigMapNoContent:
+		return nil, value, nil
 	}
-	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for DeleteK8SConfigMap: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for k8_s_config_maps_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
 /*
 GetK8SConfigMap creates new run
 */
-func (a *Client) GetK8SConfigMap(params *GetK8SConfigMapParams, authInfo runtime.ClientAuthInfoWriter) (*GetK8SConfigMapOK, error) {
+func (a *Client) GetK8SConfigMap(params *GetK8SConfigMapParams, authInfo runtime.ClientAuthInfoWriter) (*GetK8SConfigMapOK, *GetK8SConfigMapNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetK8SConfigMapParams()
@@ -125,7 +127,7 @@ func (a *Client) GetK8SConfigMap(params *GetK8SConfigMapParams, authInfo runtime
 		PathPattern:        "/api/v1/{owner}/k8s_config_maps/{uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https", "ws", "wss"},
+		Schemes:            []string{"http", "https"},
 		Params:             params,
 		Reader:             &GetK8SConfigMapReader{formats: a.formats},
 		AuthInfo:           authInfo,
@@ -133,22 +135,23 @@ func (a *Client) GetK8SConfigMap(params *GetK8SConfigMapParams, authInfo runtime
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	success, ok := result.(*GetK8SConfigMapOK)
-	if ok {
-		return success, nil
+	switch value := result.(type) {
+	case *GetK8SConfigMapOK:
+		return value, nil, nil
+	case *GetK8SConfigMapNoContent:
+		return nil, value, nil
 	}
-	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for GetK8SConfigMap: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for k8_s_config_maps_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
 /*
 ListK8SConfigMapNames lists bookmarked runs for user
 */
-func (a *Client) ListK8SConfigMapNames(params *ListK8SConfigMapNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListK8SConfigMapNamesOK, error) {
+func (a *Client) ListK8SConfigMapNames(params *ListK8SConfigMapNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListK8SConfigMapNamesOK, *ListK8SConfigMapNamesNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewListK8SConfigMapNamesParams()
@@ -160,7 +163,7 @@ func (a *Client) ListK8SConfigMapNames(params *ListK8SConfigMapNamesParams, auth
 		PathPattern:        "/api/v1/{owner}/k8s_config_maps/names",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https", "ws", "wss"},
+		Schemes:            []string{"http", "https"},
 		Params:             params,
 		Reader:             &ListK8SConfigMapNamesReader{formats: a.formats},
 		AuthInfo:           authInfo,
@@ -168,22 +171,23 @@ func (a *Client) ListK8SConfigMapNames(params *ListK8SConfigMapNamesParams, auth
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	success, ok := result.(*ListK8SConfigMapNamesOK)
-	if ok {
-		return success, nil
+	switch value := result.(type) {
+	case *ListK8SConfigMapNamesOK:
+		return value, nil, nil
+	case *ListK8SConfigMapNamesNoContent:
+		return nil, value, nil
 	}
-	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for ListK8SConfigMapNames: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for k8_s_config_maps_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
 /*
 ListK8SConfigMaps lists archived runs for user
 */
-func (a *Client) ListK8SConfigMaps(params *ListK8SConfigMapsParams, authInfo runtime.ClientAuthInfoWriter) (*ListK8SConfigMapsOK, error) {
+func (a *Client) ListK8SConfigMaps(params *ListK8SConfigMapsParams, authInfo runtime.ClientAuthInfoWriter) (*ListK8SConfigMapsOK, *ListK8SConfigMapsNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewListK8SConfigMapsParams()
@@ -195,7 +199,7 @@ func (a *Client) ListK8SConfigMaps(params *ListK8SConfigMapsParams, authInfo run
 		PathPattern:        "/api/v1/{owner}/k8s_config_maps",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https", "ws", "wss"},
+		Schemes:            []string{"http", "https"},
 		Params:             params,
 		Reader:             &ListK8SConfigMapsReader{formats: a.formats},
 		AuthInfo:           authInfo,
@@ -203,22 +207,23 @@ func (a *Client) ListK8SConfigMaps(params *ListK8SConfigMapsParams, authInfo run
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	success, ok := result.(*ListK8SConfigMapsOK)
-	if ok {
-		return success, nil
+	switch value := result.(type) {
+	case *ListK8SConfigMapsOK:
+		return value, nil, nil
+	case *ListK8SConfigMapsNoContent:
+		return nil, value, nil
 	}
-	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for ListK8SConfigMaps: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for k8_s_config_maps_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
 /*
 PatchK8SConfigMap updates run
 */
-func (a *Client) PatchK8SConfigMap(params *PatchK8SConfigMapParams, authInfo runtime.ClientAuthInfoWriter) (*PatchK8SConfigMapOK, error) {
+func (a *Client) PatchK8SConfigMap(params *PatchK8SConfigMapParams, authInfo runtime.ClientAuthInfoWriter) (*PatchK8SConfigMapOK, *PatchK8SConfigMapNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewPatchK8SConfigMapParams()
@@ -230,7 +235,7 @@ func (a *Client) PatchK8SConfigMap(params *PatchK8SConfigMapParams, authInfo run
 		PathPattern:        "/api/v1/{owner}/k8s_config_maps/{k8s_resource.uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https", "ws", "wss"},
+		Schemes:            []string{"http", "https"},
 		Params:             params,
 		Reader:             &PatchK8SConfigMapReader{formats: a.formats},
 		AuthInfo:           authInfo,
@@ -238,22 +243,23 @@ func (a *Client) PatchK8SConfigMap(params *PatchK8SConfigMapParams, authInfo run
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	success, ok := result.(*PatchK8SConfigMapOK)
-	if ok {
-		return success, nil
+	switch value := result.(type) {
+	case *PatchK8SConfigMapOK:
+		return value, nil, nil
+	case *PatchK8SConfigMapNoContent:
+		return nil, value, nil
 	}
-	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for PatchK8SConfigMap: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for k8_s_config_maps_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
 /*
 UpdateK8SConfigMap gets run
 */
-func (a *Client) UpdateK8SConfigMap(params *UpdateK8SConfigMapParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateK8SConfigMapOK, error) {
+func (a *Client) UpdateK8SConfigMap(params *UpdateK8SConfigMapParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateK8SConfigMapOK, *UpdateK8SConfigMapNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewUpdateK8SConfigMapParams()
@@ -265,7 +271,7 @@ func (a *Client) UpdateK8SConfigMap(params *UpdateK8SConfigMapParams, authInfo r
 		PathPattern:        "/api/v1/{owner}/k8s_config_maps/{k8s_resource.uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https", "ws", "wss"},
+		Schemes:            []string{"http", "https"},
 		Params:             params,
 		Reader:             &UpdateK8SConfigMapReader{formats: a.formats},
 		AuthInfo:           authInfo,
@@ -273,15 +279,16 @@ func (a *Client) UpdateK8SConfigMap(params *UpdateK8SConfigMapParams, authInfo r
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	success, ok := result.(*UpdateK8SConfigMapOK)
-	if ok {
-		return success, nil
+	switch value := result.(type) {
+	case *UpdateK8SConfigMapOK:
+		return value, nil, nil
+	case *UpdateK8SConfigMapNoContent:
+		return nil, value, nil
 	}
-	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for UpdateK8SConfigMap: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for k8_s_config_maps_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 

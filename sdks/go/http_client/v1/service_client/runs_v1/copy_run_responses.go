@@ -44,6 +44,12 @@ func (o *CopyRunReader) ReadResponse(response runtime.ClientResponse, consumer r
 			return nil, err
 		}
 		return result, nil
+	case 204:
+		result := NewCopyRunNoContent()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return result, nil
 	case 403:
 		result := NewCopyRunForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -95,6 +101,37 @@ func (o *CopyRunOK) readResponse(response runtime.ClientResponse, consumer runti
 	return nil
 }
 
+// NewCopyRunNoContent creates a CopyRunNoContent with default headers values
+func NewCopyRunNoContent() *CopyRunNoContent {
+	return &CopyRunNoContent{}
+}
+
+/*CopyRunNoContent handles this case with default header values.
+
+No content.
+*/
+type CopyRunNoContent struct {
+	Payload interface{}
+}
+
+func (o *CopyRunNoContent) Error() string {
+	return fmt.Sprintf("[POST /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/copy][%d] copyRunNoContent  %+v", 204, o.Payload)
+}
+
+func (o *CopyRunNoContent) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *CopyRunNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	// response payload
+	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
 // NewCopyRunForbidden creates a CopyRunForbidden with default headers values
 func NewCopyRunForbidden() *CopyRunForbidden {
 	return &CopyRunForbidden{}
@@ -136,14 +173,14 @@ func NewCopyRunNotFound() *CopyRunNotFound {
 Resource does not exist.
 */
 type CopyRunNotFound struct {
-	Payload string
+	Payload interface{}
 }
 
 func (o *CopyRunNotFound) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/copy][%d] copyRunNotFound  %+v", 404, o.Payload)
 }
 
-func (o *CopyRunNotFound) GetPayload() string {
+func (o *CopyRunNotFound) GetPayload() interface{} {
 	return o.Payload
 }
 

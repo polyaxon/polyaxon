@@ -44,6 +44,12 @@ func (o *CreateGitAccessReader) ReadResponse(response runtime.ClientResponse, co
 			return nil, err
 		}
 		return result, nil
+	case 204:
+		result := NewCreateGitAccessNoContent()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return result, nil
 	case 403:
 		result := NewCreateGitAccessForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -95,6 +101,37 @@ func (o *CreateGitAccessOK) readResponse(response runtime.ClientResponse, consum
 	return nil
 }
 
+// NewCreateGitAccessNoContent creates a CreateGitAccessNoContent with default headers values
+func NewCreateGitAccessNoContent() *CreateGitAccessNoContent {
+	return &CreateGitAccessNoContent{}
+}
+
+/*CreateGitAccessNoContent handles this case with default header values.
+
+No content.
+*/
+type CreateGitAccessNoContent struct {
+	Payload interface{}
+}
+
+func (o *CreateGitAccessNoContent) Error() string {
+	return fmt.Sprintf("[POST /api/v1/{owner}/git_accesses][%d] createGitAccessNoContent  %+v", 204, o.Payload)
+}
+
+func (o *CreateGitAccessNoContent) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *CreateGitAccessNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	// response payload
+	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
 // NewCreateGitAccessForbidden creates a CreateGitAccessForbidden with default headers values
 func NewCreateGitAccessForbidden() *CreateGitAccessForbidden {
 	return &CreateGitAccessForbidden{}
@@ -136,14 +173,14 @@ func NewCreateGitAccessNotFound() *CreateGitAccessNotFound {
 Resource does not exist.
 */
 type CreateGitAccessNotFound struct {
-	Payload string
+	Payload interface{}
 }
 
 func (o *CreateGitAccessNotFound) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/git_accesses][%d] createGitAccessNotFound  %+v", 404, o.Payload)
 }
 
-func (o *CreateGitAccessNotFound) GetPayload() string {
+func (o *CreateGitAccessNotFound) GetPayload() interface{} {
 	return o.Payload
 }
 

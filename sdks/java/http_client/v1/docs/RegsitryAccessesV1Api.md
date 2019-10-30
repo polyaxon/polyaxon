@@ -70,7 +70,7 @@ Name | Type | Description  | Notes
 
 <a name="deleteRegsitryAccess"></a>
 # **deleteRegsitryAccess**
-> Object deleteRegsitryAccess(owner, uuid)
+> deleteRegsitryAccess(owner, uuid)
 
 Patch run
 
@@ -95,8 +95,7 @@ RegsitryAccessesV1Api apiInstance = new RegsitryAccessesV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
 String uuid = "uuid_example"; // String | Unique integer identifier of the entity
 try {
-    Object result = apiInstance.deleteRegsitryAccess(owner, uuid);
-    System.out.println(result);
+    apiInstance.deleteRegsitryAccess(owner, uuid);
 } catch (ApiException e) {
     System.err.println("Exception when calling RegsitryAccessesV1Api#deleteRegsitryAccess");
     e.printStackTrace();
@@ -112,7 +111,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 

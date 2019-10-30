@@ -43,7 +43,7 @@ type Client struct {
 /*
 CreateRegsitryAccess lists runs
 */
-func (a *Client) CreateRegsitryAccess(params *CreateRegsitryAccessParams, authInfo runtime.ClientAuthInfoWriter) (*CreateRegsitryAccessOK, error) {
+func (a *Client) CreateRegsitryAccess(params *CreateRegsitryAccessParams, authInfo runtime.ClientAuthInfoWriter) (*CreateRegsitryAccessOK, *CreateRegsitryAccessNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewCreateRegsitryAccessParams()
@@ -55,7 +55,7 @@ func (a *Client) CreateRegsitryAccess(params *CreateRegsitryAccessParams, authIn
 		PathPattern:        "/api/v1/{owner}/registry_accesses",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https", "ws", "wss"},
+		Schemes:            []string{"http", "https"},
 		Params:             params,
 		Reader:             &CreateRegsitryAccessReader{formats: a.formats},
 		AuthInfo:           authInfo,
@@ -63,22 +63,23 @@ func (a *Client) CreateRegsitryAccess(params *CreateRegsitryAccessParams, authIn
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	success, ok := result.(*CreateRegsitryAccessOK)
-	if ok {
-		return success, nil
+	switch value := result.(type) {
+	case *CreateRegsitryAccessOK:
+		return value, nil, nil
+	case *CreateRegsitryAccessNoContent:
+		return nil, value, nil
 	}
-	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for CreateRegsitryAccess: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for regsitry_accesses_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
 /*
 DeleteRegsitryAccess patches run
 */
-func (a *Client) DeleteRegsitryAccess(params *DeleteRegsitryAccessParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteRegsitryAccessOK, error) {
+func (a *Client) DeleteRegsitryAccess(params *DeleteRegsitryAccessParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteRegsitryAccessOK, *DeleteRegsitryAccessNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewDeleteRegsitryAccessParams()
@@ -90,7 +91,7 @@ func (a *Client) DeleteRegsitryAccess(params *DeleteRegsitryAccessParams, authIn
 		PathPattern:        "/api/v1/{owner}/registry_accesses/{uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https", "ws", "wss"},
+		Schemes:            []string{"http", "https"},
 		Params:             params,
 		Reader:             &DeleteRegsitryAccessReader{formats: a.formats},
 		AuthInfo:           authInfo,
@@ -98,22 +99,23 @@ func (a *Client) DeleteRegsitryAccess(params *DeleteRegsitryAccessParams, authIn
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	success, ok := result.(*DeleteRegsitryAccessOK)
-	if ok {
-		return success, nil
+	switch value := result.(type) {
+	case *DeleteRegsitryAccessOK:
+		return value, nil, nil
+	case *DeleteRegsitryAccessNoContent:
+		return nil, value, nil
 	}
-	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for DeleteRegsitryAccess: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for regsitry_accesses_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
 /*
 GetRegsitryAccess creates new run
 */
-func (a *Client) GetRegsitryAccess(params *GetRegsitryAccessParams, authInfo runtime.ClientAuthInfoWriter) (*GetRegsitryAccessOK, error) {
+func (a *Client) GetRegsitryAccess(params *GetRegsitryAccessParams, authInfo runtime.ClientAuthInfoWriter) (*GetRegsitryAccessOK, *GetRegsitryAccessNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetRegsitryAccessParams()
@@ -125,7 +127,7 @@ func (a *Client) GetRegsitryAccess(params *GetRegsitryAccessParams, authInfo run
 		PathPattern:        "/api/v1/{owner}/registry_accesses/{uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https", "ws", "wss"},
+		Schemes:            []string{"http", "https"},
 		Params:             params,
 		Reader:             &GetRegsitryAccessReader{formats: a.formats},
 		AuthInfo:           authInfo,
@@ -133,22 +135,23 @@ func (a *Client) GetRegsitryAccess(params *GetRegsitryAccessParams, authInfo run
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	success, ok := result.(*GetRegsitryAccessOK)
-	if ok {
-		return success, nil
+	switch value := result.(type) {
+	case *GetRegsitryAccessOK:
+		return value, nil, nil
+	case *GetRegsitryAccessNoContent:
+		return nil, value, nil
 	}
-	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for GetRegsitryAccess: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for regsitry_accesses_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
 /*
 ListRegsitryAccessNames lists bookmarked runs for user
 */
-func (a *Client) ListRegsitryAccessNames(params *ListRegsitryAccessNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListRegsitryAccessNamesOK, error) {
+func (a *Client) ListRegsitryAccessNames(params *ListRegsitryAccessNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListRegsitryAccessNamesOK, *ListRegsitryAccessNamesNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewListRegsitryAccessNamesParams()
@@ -160,7 +163,7 @@ func (a *Client) ListRegsitryAccessNames(params *ListRegsitryAccessNamesParams, 
 		PathPattern:        "/api/v1/{owner}/registry_accesses/names",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https", "ws", "wss"},
+		Schemes:            []string{"http", "https"},
 		Params:             params,
 		Reader:             &ListRegsitryAccessNamesReader{formats: a.formats},
 		AuthInfo:           authInfo,
@@ -168,22 +171,23 @@ func (a *Client) ListRegsitryAccessNames(params *ListRegsitryAccessNamesParams, 
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	success, ok := result.(*ListRegsitryAccessNamesOK)
-	if ok {
-		return success, nil
+	switch value := result.(type) {
+	case *ListRegsitryAccessNamesOK:
+		return value, nil, nil
+	case *ListRegsitryAccessNamesNoContent:
+		return nil, value, nil
 	}
-	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for ListRegsitryAccessNames: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for regsitry_accesses_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
 /*
 ListRegsitryAccesses lists archived runs for user
 */
-func (a *Client) ListRegsitryAccesses(params *ListRegsitryAccessesParams, authInfo runtime.ClientAuthInfoWriter) (*ListRegsitryAccessesOK, error) {
+func (a *Client) ListRegsitryAccesses(params *ListRegsitryAccessesParams, authInfo runtime.ClientAuthInfoWriter) (*ListRegsitryAccessesOK, *ListRegsitryAccessesNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewListRegsitryAccessesParams()
@@ -195,7 +199,7 @@ func (a *Client) ListRegsitryAccesses(params *ListRegsitryAccessesParams, authIn
 		PathPattern:        "/api/v1/{owner}/registry_accesses",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https", "ws", "wss"},
+		Schemes:            []string{"http", "https"},
 		Params:             params,
 		Reader:             &ListRegsitryAccessesReader{formats: a.formats},
 		AuthInfo:           authInfo,
@@ -203,22 +207,23 @@ func (a *Client) ListRegsitryAccesses(params *ListRegsitryAccessesParams, authIn
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	success, ok := result.(*ListRegsitryAccessesOK)
-	if ok {
-		return success, nil
+	switch value := result.(type) {
+	case *ListRegsitryAccessesOK:
+		return value, nil, nil
+	case *ListRegsitryAccessesNoContent:
+		return nil, value, nil
 	}
-	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for ListRegsitryAccesses: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for regsitry_accesses_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
 /*
 PatchRegsitryAccess updates run
 */
-func (a *Client) PatchRegsitryAccess(params *PatchRegsitryAccessParams, authInfo runtime.ClientAuthInfoWriter) (*PatchRegsitryAccessOK, error) {
+func (a *Client) PatchRegsitryAccess(params *PatchRegsitryAccessParams, authInfo runtime.ClientAuthInfoWriter) (*PatchRegsitryAccessOK, *PatchRegsitryAccessNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewPatchRegsitryAccessParams()
@@ -230,7 +235,7 @@ func (a *Client) PatchRegsitryAccess(params *PatchRegsitryAccessParams, authInfo
 		PathPattern:        "/api/v1/{owner}/registry_accesses/{host_access.uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https", "ws", "wss"},
+		Schemes:            []string{"http", "https"},
 		Params:             params,
 		Reader:             &PatchRegsitryAccessReader{formats: a.formats},
 		AuthInfo:           authInfo,
@@ -238,22 +243,23 @@ func (a *Client) PatchRegsitryAccess(params *PatchRegsitryAccessParams, authInfo
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	success, ok := result.(*PatchRegsitryAccessOK)
-	if ok {
-		return success, nil
+	switch value := result.(type) {
+	case *PatchRegsitryAccessOK:
+		return value, nil, nil
+	case *PatchRegsitryAccessNoContent:
+		return nil, value, nil
 	}
-	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for PatchRegsitryAccess: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for regsitry_accesses_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
 /*
 UpdateRegsitryAccess gets run
 */
-func (a *Client) UpdateRegsitryAccess(params *UpdateRegsitryAccessParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateRegsitryAccessOK, error) {
+func (a *Client) UpdateRegsitryAccess(params *UpdateRegsitryAccessParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateRegsitryAccessOK, *UpdateRegsitryAccessNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewUpdateRegsitryAccessParams()
@@ -265,7 +271,7 @@ func (a *Client) UpdateRegsitryAccess(params *UpdateRegsitryAccessParams, authIn
 		PathPattern:        "/api/v1/{owner}/registry_accesses/{host_access.uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https", "ws", "wss"},
+		Schemes:            []string{"http", "https"},
 		Params:             params,
 		Reader:             &UpdateRegsitryAccessReader{formats: a.formats},
 		AuthInfo:           authInfo,
@@ -273,15 +279,16 @@ func (a *Client) UpdateRegsitryAccess(params *UpdateRegsitryAccessParams, authIn
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	success, ok := result.(*UpdateRegsitryAccessOK)
-	if ok {
-		return success, nil
+	switch value := result.(type) {
+	case *UpdateRegsitryAccessOK:
+		return value, nil, nil
+	case *UpdateRegsitryAccessNoContent:
+		return nil, value, nil
 	}
-	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for UpdateRegsitryAccess: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for regsitry_accesses_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 

@@ -42,6 +42,12 @@ func (o *DeleteRegsitryAccessReader) ReadResponse(response runtime.ClientRespons
 			return nil, err
 		}
 		return result, nil
+	case 204:
+		result := NewDeleteRegsitryAccessNoContent()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return result, nil
 	case 403:
 		result := NewDeleteRegsitryAccessForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -70,18 +76,39 @@ func NewDeleteRegsitryAccessOK() *DeleteRegsitryAccessOK {
 A successful response.
 */
 type DeleteRegsitryAccessOK struct {
-	Payload interface{}
 }
 
 func (o *DeleteRegsitryAccessOK) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/{owner}/registry_accesses/{uuid}][%d] deleteRegsitryAccessOK  %+v", 200, o.Payload)
-}
-
-func (o *DeleteRegsitryAccessOK) GetPayload() interface{} {
-	return o.Payload
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/registry_accesses/{uuid}][%d] deleteRegsitryAccessOK ", 200)
 }
 
 func (o *DeleteRegsitryAccessOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	return nil
+}
+
+// NewDeleteRegsitryAccessNoContent creates a DeleteRegsitryAccessNoContent with default headers values
+func NewDeleteRegsitryAccessNoContent() *DeleteRegsitryAccessNoContent {
+	return &DeleteRegsitryAccessNoContent{}
+}
+
+/*DeleteRegsitryAccessNoContent handles this case with default header values.
+
+No content.
+*/
+type DeleteRegsitryAccessNoContent struct {
+	Payload interface{}
+}
+
+func (o *DeleteRegsitryAccessNoContent) Error() string {
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/registry_accesses/{uuid}][%d] deleteRegsitryAccessNoContent  %+v", 204, o.Payload)
+}
+
+func (o *DeleteRegsitryAccessNoContent) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *DeleteRegsitryAccessNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
 	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
@@ -132,14 +159,14 @@ func NewDeleteRegsitryAccessNotFound() *DeleteRegsitryAccessNotFound {
 Resource does not exist.
 */
 type DeleteRegsitryAccessNotFound struct {
-	Payload string
+	Payload interface{}
 }
 
 func (o *DeleteRegsitryAccessNotFound) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/{owner}/registry_accesses/{uuid}][%d] deleteRegsitryAccessNotFound  %+v", 404, o.Payload)
 }
 
-func (o *DeleteRegsitryAccessNotFound) GetPayload() string {
+func (o *DeleteRegsitryAccessNotFound) GetPayload() interface{} {
 	return o.Payload
 }
 

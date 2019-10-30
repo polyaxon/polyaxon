@@ -44,6 +44,12 @@ func (o *ListK8SConfigMapNamesReader) ReadResponse(response runtime.ClientRespon
 			return nil, err
 		}
 		return result, nil
+	case 204:
+		result := NewListK8SConfigMapNamesNoContent()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return result, nil
 	case 403:
 		result := NewListK8SConfigMapNamesForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -95,6 +101,37 @@ func (o *ListK8SConfigMapNamesOK) readResponse(response runtime.ClientResponse, 
 	return nil
 }
 
+// NewListK8SConfigMapNamesNoContent creates a ListK8SConfigMapNamesNoContent with default headers values
+func NewListK8SConfigMapNamesNoContent() *ListK8SConfigMapNamesNoContent {
+	return &ListK8SConfigMapNamesNoContent{}
+}
+
+/*ListK8SConfigMapNamesNoContent handles this case with default header values.
+
+No content.
+*/
+type ListK8SConfigMapNamesNoContent struct {
+	Payload interface{}
+}
+
+func (o *ListK8SConfigMapNamesNoContent) Error() string {
+	return fmt.Sprintf("[GET /api/v1/{owner}/k8s_config_maps/names][%d] listK8SConfigMapNamesNoContent  %+v", 204, o.Payload)
+}
+
+func (o *ListK8SConfigMapNamesNoContent) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *ListK8SConfigMapNamesNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	// response payload
+	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
 // NewListK8SConfigMapNamesForbidden creates a ListK8SConfigMapNamesForbidden with default headers values
 func NewListK8SConfigMapNamesForbidden() *ListK8SConfigMapNamesForbidden {
 	return &ListK8SConfigMapNamesForbidden{}
@@ -136,14 +173,14 @@ func NewListK8SConfigMapNamesNotFound() *ListK8SConfigMapNamesNotFound {
 Resource does not exist.
 */
 type ListK8SConfigMapNamesNotFound struct {
-	Payload string
+	Payload interface{}
 }
 
 func (o *ListK8SConfigMapNamesNotFound) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/k8s_config_maps/names][%d] listK8SConfigMapNamesNotFound  %+v", 404, o.Payload)
 }
 
-func (o *ListK8SConfigMapNamesNotFound) GetPayload() string {
+func (o *ListK8SConfigMapNamesNotFound) GetPayload() interface{} {
 	return o.Payload
 }
 

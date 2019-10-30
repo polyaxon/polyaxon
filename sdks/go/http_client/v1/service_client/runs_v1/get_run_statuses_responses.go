@@ -44,6 +44,12 @@ func (o *GetRunStatusesReader) ReadResponse(response runtime.ClientResponse, con
 			return nil, err
 		}
 		return result, nil
+	case 204:
+		result := NewGetRunStatusesNoContent()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return result, nil
 	case 403:
 		result := NewGetRunStatusesForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -95,6 +101,37 @@ func (o *GetRunStatusesOK) readResponse(response runtime.ClientResponse, consume
 	return nil
 }
 
+// NewGetRunStatusesNoContent creates a GetRunStatusesNoContent with default headers values
+func NewGetRunStatusesNoContent() *GetRunStatusesNoContent {
+	return &GetRunStatusesNoContent{}
+}
+
+/*GetRunStatusesNoContent handles this case with default header values.
+
+No content.
+*/
+type GetRunStatusesNoContent struct {
+	Payload interface{}
+}
+
+func (o *GetRunStatusesNoContent) Error() string {
+	return fmt.Sprintf("[GET /api/v1/{owner}/{project}/runs/{uuid}/statuses][%d] getRunStatusesNoContent  %+v", 204, o.Payload)
+}
+
+func (o *GetRunStatusesNoContent) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *GetRunStatusesNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	// response payload
+	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
 // NewGetRunStatusesForbidden creates a GetRunStatusesForbidden with default headers values
 func NewGetRunStatusesForbidden() *GetRunStatusesForbidden {
 	return &GetRunStatusesForbidden{}
@@ -136,14 +173,14 @@ func NewGetRunStatusesNotFound() *GetRunStatusesNotFound {
 Resource does not exist.
 */
 type GetRunStatusesNotFound struct {
-	Payload string
+	Payload interface{}
 }
 
 func (o *GetRunStatusesNotFound) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/{project}/runs/{uuid}/statuses][%d] getRunStatusesNotFound  %+v", 404, o.Payload)
 }
 
-func (o *GetRunStatusesNotFound) GetPayload() string {
+func (o *GetRunStatusesNotFound) GetPayload() interface{} {
 	return o.Payload
 }
 

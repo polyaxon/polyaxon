@@ -277,12 +277,10 @@ public class ArtifactsStoresV1Api {
      * 
      * @param owner Owner of the namespace (required)
      * @param uuid Unique integer identifier of the entity (required)
-     * @return Object
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public Object deleteArtifactsStore(String owner, String uuid) throws ApiException {
-        ApiResponse<Object> resp = deleteArtifactsStoreWithHttpInfo(owner, uuid);
-        return resp.getData();
+    public void deleteArtifactsStore(String owner, String uuid) throws ApiException {
+        deleteArtifactsStoreWithHttpInfo(owner, uuid);
     }
 
     /**
@@ -290,13 +288,12 @@ public class ArtifactsStoresV1Api {
      * 
      * @param owner Owner of the namespace (required)
      * @param uuid Unique integer identifier of the entity (required)
-     * @return ApiResponse&lt;Object&gt;
+     * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<Object> deleteArtifactsStoreWithHttpInfo(String owner, String uuid) throws ApiException {
+    public ApiResponse<Void> deleteArtifactsStoreWithHttpInfo(String owner, String uuid) throws ApiException {
         com.squareup.okhttp.Call call = deleteArtifactsStoreValidateBeforeCall(owner, uuid, null, null);
-        Type localVarReturnType = new TypeToken<Object>(){}.getType();
-        return apiClient.execute(call, localVarReturnType);
+        return apiClient.execute(call);
     }
 
     /**
@@ -308,7 +305,7 @@ public class ArtifactsStoresV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call deleteArtifactsStoreAsync(String owner, String uuid, final ApiCallback<Object> callback) throws ApiException {
+    public com.squareup.okhttp.Call deleteArtifactsStoreAsync(String owner, String uuid, final ApiCallback<Void> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -330,8 +327,7 @@ public class ArtifactsStoresV1Api {
         }
 
         com.squareup.okhttp.Call call = deleteArtifactsStoreValidateBeforeCall(owner, uuid, progressListener, progressRequestListener);
-        Type localVarReturnType = new TypeToken<Object>(){}.getType();
-        apiClient.executeAsync(call, localVarReturnType, callback);
+        apiClient.executeAsync(call, callback);
         return call;
     }
     /**

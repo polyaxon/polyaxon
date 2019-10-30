@@ -43,7 +43,7 @@ type Client struct {
 /*
 CreateArtifactsStore lists runs
 */
-func (a *Client) CreateArtifactsStore(params *CreateArtifactsStoreParams, authInfo runtime.ClientAuthInfoWriter) (*CreateArtifactsStoreOK, error) {
+func (a *Client) CreateArtifactsStore(params *CreateArtifactsStoreParams, authInfo runtime.ClientAuthInfoWriter) (*CreateArtifactsStoreOK, *CreateArtifactsStoreNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewCreateArtifactsStoreParams()
@@ -55,7 +55,7 @@ func (a *Client) CreateArtifactsStore(params *CreateArtifactsStoreParams, authIn
 		PathPattern:        "/api/v1/{owner}/artifacts_stores",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https", "ws", "wss"},
+		Schemes:            []string{"http", "https"},
 		Params:             params,
 		Reader:             &CreateArtifactsStoreReader{formats: a.formats},
 		AuthInfo:           authInfo,
@@ -63,22 +63,23 @@ func (a *Client) CreateArtifactsStore(params *CreateArtifactsStoreParams, authIn
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	success, ok := result.(*CreateArtifactsStoreOK)
-	if ok {
-		return success, nil
+	switch value := result.(type) {
+	case *CreateArtifactsStoreOK:
+		return value, nil, nil
+	case *CreateArtifactsStoreNoContent:
+		return nil, value, nil
 	}
-	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for CreateArtifactsStore: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for artifacts_stores_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
 /*
 DeleteArtifactsStore patches run
 */
-func (a *Client) DeleteArtifactsStore(params *DeleteArtifactsStoreParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteArtifactsStoreOK, error) {
+func (a *Client) DeleteArtifactsStore(params *DeleteArtifactsStoreParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteArtifactsStoreOK, *DeleteArtifactsStoreNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewDeleteArtifactsStoreParams()
@@ -90,7 +91,7 @@ func (a *Client) DeleteArtifactsStore(params *DeleteArtifactsStoreParams, authIn
 		PathPattern:        "/api/v1/{owner}/artifacts_stores/{uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https", "ws", "wss"},
+		Schemes:            []string{"http", "https"},
 		Params:             params,
 		Reader:             &DeleteArtifactsStoreReader{formats: a.formats},
 		AuthInfo:           authInfo,
@@ -98,22 +99,23 @@ func (a *Client) DeleteArtifactsStore(params *DeleteArtifactsStoreParams, authIn
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	success, ok := result.(*DeleteArtifactsStoreOK)
-	if ok {
-		return success, nil
+	switch value := result.(type) {
+	case *DeleteArtifactsStoreOK:
+		return value, nil, nil
+	case *DeleteArtifactsStoreNoContent:
+		return nil, value, nil
 	}
-	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for DeleteArtifactsStore: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for artifacts_stores_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
 /*
 GetArtifactsStore creates new run
 */
-func (a *Client) GetArtifactsStore(params *GetArtifactsStoreParams, authInfo runtime.ClientAuthInfoWriter) (*GetArtifactsStoreOK, error) {
+func (a *Client) GetArtifactsStore(params *GetArtifactsStoreParams, authInfo runtime.ClientAuthInfoWriter) (*GetArtifactsStoreOK, *GetArtifactsStoreNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetArtifactsStoreParams()
@@ -125,7 +127,7 @@ func (a *Client) GetArtifactsStore(params *GetArtifactsStoreParams, authInfo run
 		PathPattern:        "/api/v1/{owner}/artifacts_stores/{uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https", "ws", "wss"},
+		Schemes:            []string{"http", "https"},
 		Params:             params,
 		Reader:             &GetArtifactsStoreReader{formats: a.formats},
 		AuthInfo:           authInfo,
@@ -133,22 +135,23 @@ func (a *Client) GetArtifactsStore(params *GetArtifactsStoreParams, authInfo run
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	success, ok := result.(*GetArtifactsStoreOK)
-	if ok {
-		return success, nil
+	switch value := result.(type) {
+	case *GetArtifactsStoreOK:
+		return value, nil, nil
+	case *GetArtifactsStoreNoContent:
+		return nil, value, nil
 	}
-	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for GetArtifactsStore: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for artifacts_stores_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
 /*
 ListArtifactsStoreNames lists bookmarked runs for user
 */
-func (a *Client) ListArtifactsStoreNames(params *ListArtifactsStoreNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListArtifactsStoreNamesOK, error) {
+func (a *Client) ListArtifactsStoreNames(params *ListArtifactsStoreNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListArtifactsStoreNamesOK, *ListArtifactsStoreNamesNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewListArtifactsStoreNamesParams()
@@ -160,7 +163,7 @@ func (a *Client) ListArtifactsStoreNames(params *ListArtifactsStoreNamesParams, 
 		PathPattern:        "/api/v1/{owner}/artifacts_stores/names",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https", "ws", "wss"},
+		Schemes:            []string{"http", "https"},
 		Params:             params,
 		Reader:             &ListArtifactsStoreNamesReader{formats: a.formats},
 		AuthInfo:           authInfo,
@@ -168,22 +171,23 @@ func (a *Client) ListArtifactsStoreNames(params *ListArtifactsStoreNamesParams, 
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	success, ok := result.(*ListArtifactsStoreNamesOK)
-	if ok {
-		return success, nil
+	switch value := result.(type) {
+	case *ListArtifactsStoreNamesOK:
+		return value, nil, nil
+	case *ListArtifactsStoreNamesNoContent:
+		return nil, value, nil
 	}
-	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for ListArtifactsStoreNames: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for artifacts_stores_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
 /*
 ListArtifactsStores lists archived runs for user
 */
-func (a *Client) ListArtifactsStores(params *ListArtifactsStoresParams, authInfo runtime.ClientAuthInfoWriter) (*ListArtifactsStoresOK, error) {
+func (a *Client) ListArtifactsStores(params *ListArtifactsStoresParams, authInfo runtime.ClientAuthInfoWriter) (*ListArtifactsStoresOK, *ListArtifactsStoresNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewListArtifactsStoresParams()
@@ -195,7 +199,7 @@ func (a *Client) ListArtifactsStores(params *ListArtifactsStoresParams, authInfo
 		PathPattern:        "/api/v1/{owner}/artifacts_stores",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https", "ws", "wss"},
+		Schemes:            []string{"http", "https"},
 		Params:             params,
 		Reader:             &ListArtifactsStoresReader{formats: a.formats},
 		AuthInfo:           authInfo,
@@ -203,22 +207,23 @@ func (a *Client) ListArtifactsStores(params *ListArtifactsStoresParams, authInfo
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	success, ok := result.(*ListArtifactsStoresOK)
-	if ok {
-		return success, nil
+	switch value := result.(type) {
+	case *ListArtifactsStoresOK:
+		return value, nil, nil
+	case *ListArtifactsStoresNoContent:
+		return nil, value, nil
 	}
-	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for ListArtifactsStores: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for artifacts_stores_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
 /*
 PatchArtifactsStore updates run
 */
-func (a *Client) PatchArtifactsStore(params *PatchArtifactsStoreParams, authInfo runtime.ClientAuthInfoWriter) (*PatchArtifactsStoreOK, error) {
+func (a *Client) PatchArtifactsStore(params *PatchArtifactsStoreParams, authInfo runtime.ClientAuthInfoWriter) (*PatchArtifactsStoreOK, *PatchArtifactsStoreNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewPatchArtifactsStoreParams()
@@ -230,7 +235,7 @@ func (a *Client) PatchArtifactsStore(params *PatchArtifactsStoreParams, authInfo
 		PathPattern:        "/api/v1/{owner}/artifacts_stores/{artifact_store.uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https", "ws", "wss"},
+		Schemes:            []string{"http", "https"},
 		Params:             params,
 		Reader:             &PatchArtifactsStoreReader{formats: a.formats},
 		AuthInfo:           authInfo,
@@ -238,22 +243,23 @@ func (a *Client) PatchArtifactsStore(params *PatchArtifactsStoreParams, authInfo
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	success, ok := result.(*PatchArtifactsStoreOK)
-	if ok {
-		return success, nil
+	switch value := result.(type) {
+	case *PatchArtifactsStoreOK:
+		return value, nil, nil
+	case *PatchArtifactsStoreNoContent:
+		return nil, value, nil
 	}
-	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for PatchArtifactsStore: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for artifacts_stores_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
 /*
 UpdateArtifactsStore gets run
 */
-func (a *Client) UpdateArtifactsStore(params *UpdateArtifactsStoreParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateArtifactsStoreOK, error) {
+func (a *Client) UpdateArtifactsStore(params *UpdateArtifactsStoreParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateArtifactsStoreOK, *UpdateArtifactsStoreNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewUpdateArtifactsStoreParams()
@@ -265,7 +271,7 @@ func (a *Client) UpdateArtifactsStore(params *UpdateArtifactsStoreParams, authIn
 		PathPattern:        "/api/v1/{owner}/artifacts_stores/{artifact_store.uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https", "ws", "wss"},
+		Schemes:            []string{"http", "https"},
 		Params:             params,
 		Reader:             &UpdateArtifactsStoreReader{formats: a.formats},
 		AuthInfo:           authInfo,
@@ -273,15 +279,16 @@ func (a *Client) UpdateArtifactsStore(params *UpdateArtifactsStoreParams, authIn
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	success, ok := result.(*UpdateArtifactsStoreOK)
-	if ok {
-		return success, nil
+	switch value := result.(type) {
+	case *UpdateArtifactsStoreOK:
+		return value, nil, nil
+	case *UpdateArtifactsStoreNoContent:
+		return nil, value, nil
 	}
-	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for UpdateArtifactsStore: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for artifacts_stores_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 

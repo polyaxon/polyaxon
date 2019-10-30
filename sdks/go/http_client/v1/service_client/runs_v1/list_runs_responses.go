@@ -44,6 +44,12 @@ func (o *ListRunsReader) ReadResponse(response runtime.ClientResponse, consumer 
 			return nil, err
 		}
 		return result, nil
+	case 204:
+		result := NewListRunsNoContent()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return result, nil
 	case 403:
 		result := NewListRunsForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -95,6 +101,37 @@ func (o *ListRunsOK) readResponse(response runtime.ClientResponse, consumer runt
 	return nil
 }
 
+// NewListRunsNoContent creates a ListRunsNoContent with default headers values
+func NewListRunsNoContent() *ListRunsNoContent {
+	return &ListRunsNoContent{}
+}
+
+/*ListRunsNoContent handles this case with default header values.
+
+No content.
+*/
+type ListRunsNoContent struct {
+	Payload interface{}
+}
+
+func (o *ListRunsNoContent) Error() string {
+	return fmt.Sprintf("[GET /api/v1/{owner}/{project}/runs/list][%d] listRunsNoContent  %+v", 204, o.Payload)
+}
+
+func (o *ListRunsNoContent) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *ListRunsNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	// response payload
+	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
 // NewListRunsForbidden creates a ListRunsForbidden with default headers values
 func NewListRunsForbidden() *ListRunsForbidden {
 	return &ListRunsForbidden{}
@@ -136,14 +173,14 @@ func NewListRunsNotFound() *ListRunsNotFound {
 Resource does not exist.
 */
 type ListRunsNotFound struct {
-	Payload string
+	Payload interface{}
 }
 
 func (o *ListRunsNotFound) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/{project}/runs/list][%d] listRunsNotFound  %+v", 404, o.Payload)
 }
 
-func (o *ListRunsNotFound) GetPayload() string {
+func (o *ListRunsNotFound) GetPayload() interface{} {
 	return o.Payload
 }
 

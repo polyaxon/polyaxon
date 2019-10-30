@@ -42,6 +42,12 @@ func (o *EnableProjectCIReader) ReadResponse(response runtime.ClientResponse, co
 			return nil, err
 		}
 		return result, nil
+	case 204:
+		result := NewEnableProjectCINoContent()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return result, nil
 	case 403:
 		result := NewEnableProjectCIForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -70,18 +76,39 @@ func NewEnableProjectCIOK() *EnableProjectCIOK {
 A successful response.
 */
 type EnableProjectCIOK struct {
-	Payload interface{}
 }
 
 func (o *EnableProjectCIOK) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/ci][%d] enableProjectCIOK  %+v", 200, o.Payload)
-}
-
-func (o *EnableProjectCIOK) GetPayload() interface{} {
-	return o.Payload
+	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/ci][%d] enableProjectCIOK ", 200)
 }
 
 func (o *EnableProjectCIOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	return nil
+}
+
+// NewEnableProjectCINoContent creates a EnableProjectCINoContent with default headers values
+func NewEnableProjectCINoContent() *EnableProjectCINoContent {
+	return &EnableProjectCINoContent{}
+}
+
+/*EnableProjectCINoContent handles this case with default header values.
+
+No content.
+*/
+type EnableProjectCINoContent struct {
+	Payload interface{}
+}
+
+func (o *EnableProjectCINoContent) Error() string {
+	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/ci][%d] enableProjectCINoContent  %+v", 204, o.Payload)
+}
+
+func (o *EnableProjectCINoContent) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *EnableProjectCINoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
 	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
@@ -132,14 +159,14 @@ func NewEnableProjectCINotFound() *EnableProjectCINotFound {
 Resource does not exist.
 */
 type EnableProjectCINotFound struct {
-	Payload string
+	Payload interface{}
 }
 
 func (o *EnableProjectCINotFound) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/ci][%d] enableProjectCINotFound  %+v", 404, o.Payload)
 }
 
-func (o *EnableProjectCINotFound) GetPayload() string {
+func (o *EnableProjectCINotFound) GetPayload() interface{} {
 	return o.Payload
 }
 

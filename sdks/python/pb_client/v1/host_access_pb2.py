@@ -37,7 +37,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='v1',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\x14v1/host_access.proto\x12\x02v1\x1a\x1fgoogle/protobuf/timestamp.proto\"\xff\x01\n\nHostAccess\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x13\n\x0b\x64\x65scription\x18\x03 \x01(\t\x12\x0e\n\x06readme\x18\x04 \x01(\t\x12\x0c\n\x04tags\x18\x05 \x03(\t\x12.\n\ncreated_at\x18\x06 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12.\n\nupdated_at\x18\x07 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x0e\n\x06\x66rozen\x18\x08 \x01(\x08\x12\x10\n\x08\x64isabled\x18\t \x01(\x08\x12\x12\n\nk8s_secret\x18\n \x01(\t\x12\x0c\n\x04host\x18\x0b \x01(\t\"K\n\x15HostAccessBodyRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12#\n\x0bhost_access\x18\x02 \x01(\x0b\x32\x0e.v1.HostAccess\"j\n\x18ListHostAccessesResponse\x12\r\n\x05\x63ount\x18\x01 \x01(\x05\x12\x1f\n\x07results\x18\x02 \x03(\x0b\x32\x0e.v1.HostAccess\x12\x10\n\x08previous\x18\x03 \x01(\t\x12\x0c\n\x04next\x18\x04 \x01(\tb\x06proto3')
+  serialized_pb=_b('\n\x14v1/host_access.proto\x12\x02v1\x1a\x1fgoogle/protobuf/timestamp.proto\"\xa2\x02\n\nHostAccess\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x13\n\x0b\x64\x65scription\x18\x03 \x01(\t\x12\x0e\n\x06readme\x18\x04 \x01(\t\x12\x0c\n\x04tags\x18\x05 \x03(\t\x12.\n\ncreated_at\x18\x06 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12.\n\nupdated_at\x18\x07 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x0e\n\x06\x66rozen\x18\x08 \x01(\x08\x12\x10\n\x08\x64isabled\x18\t \x01(\x08\x12\x10\n\x08insecure\x18\n \x01(\x08\x12\x0f\n\x07\x64\x65leted\x18\x0b \x01(\x08\x12\x12\n\nk8s_secret\x18\x0c \x01(\t\x12\x0c\n\x04host\x18\r \x01(\t\"K\n\x15HostAccessBodyRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12#\n\x0bhost_access\x18\x02 \x01(\x0b\x32\x0e.v1.HostAccess\"j\n\x18ListHostAccessesResponse\x12\r\n\x05\x63ount\x18\x01 \x01(\x05\x12\x1f\n\x07results\x18\x02 \x03(\x0b\x32\x0e.v1.HostAccess\x12\x10\n\x08previous\x18\x03 \x01(\t\x12\x0c\n\x04next\x18\x04 \x01(\tb\x06proto3')
   ,
   dependencies=[google_dot_protobuf_dot_timestamp__pb2.DESCRIPTOR,])
 
@@ -115,15 +115,29 @@ _HOSTACCESS = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='k8s_secret', full_name='v1.HostAccess.k8s_secret', index=9,
-      number=10, type=9, cpp_type=9, label=1,
+      name='insecure', full_name='v1.HostAccess.insecure', index=9,
+      number=10, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='deleted', full_name='v1.HostAccess.deleted', index=10,
+      number=11, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='k8s_secret', full_name='v1.HostAccess.k8s_secret', index=11,
+      number=12, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='host', full_name='v1.HostAccess.host', index=10,
-      number=11, type=9, cpp_type=9, label=1,
+      name='host', full_name='v1.HostAccess.host', index=12,
+      number=13, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -141,7 +155,7 @@ _HOSTACCESS = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=62,
-  serialized_end=317,
+  serialized_end=352,
 )
 
 
@@ -178,8 +192,8 @@ _HOSTACCESSBODYREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=319,
-  serialized_end=394,
+  serialized_start=354,
+  serialized_end=429,
 )
 
 
@@ -230,8 +244,8 @@ _LISTHOSTACCESSESRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=396,
-  serialized_end=502,
+  serialized_start=431,
+  serialized_end=537,
 )
 
 _HOSTACCESS.fields_by_name['created_at'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP

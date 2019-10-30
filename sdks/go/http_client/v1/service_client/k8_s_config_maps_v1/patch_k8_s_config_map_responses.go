@@ -44,6 +44,12 @@ func (o *PatchK8SConfigMapReader) ReadResponse(response runtime.ClientResponse, 
 			return nil, err
 		}
 		return result, nil
+	case 204:
+		result := NewPatchK8SConfigMapNoContent()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return result, nil
 	case 403:
 		result := NewPatchK8SConfigMapForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -95,6 +101,37 @@ func (o *PatchK8SConfigMapOK) readResponse(response runtime.ClientResponse, cons
 	return nil
 }
 
+// NewPatchK8SConfigMapNoContent creates a PatchK8SConfigMapNoContent with default headers values
+func NewPatchK8SConfigMapNoContent() *PatchK8SConfigMapNoContent {
+	return &PatchK8SConfigMapNoContent{}
+}
+
+/*PatchK8SConfigMapNoContent handles this case with default header values.
+
+No content.
+*/
+type PatchK8SConfigMapNoContent struct {
+	Payload interface{}
+}
+
+func (o *PatchK8SConfigMapNoContent) Error() string {
+	return fmt.Sprintf("[PATCH /api/v1/{owner}/k8s_config_maps/{k8s_resource.uuid}][%d] patchK8SConfigMapNoContent  %+v", 204, o.Payload)
+}
+
+func (o *PatchK8SConfigMapNoContent) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *PatchK8SConfigMapNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	// response payload
+	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
 // NewPatchK8SConfigMapForbidden creates a PatchK8SConfigMapForbidden with default headers values
 func NewPatchK8SConfigMapForbidden() *PatchK8SConfigMapForbidden {
 	return &PatchK8SConfigMapForbidden{}
@@ -136,14 +173,14 @@ func NewPatchK8SConfigMapNotFound() *PatchK8SConfigMapNotFound {
 Resource does not exist.
 */
 type PatchK8SConfigMapNotFound struct {
-	Payload string
+	Payload interface{}
 }
 
 func (o *PatchK8SConfigMapNotFound) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/{owner}/k8s_config_maps/{k8s_resource.uuid}][%d] patchK8SConfigMapNotFound  %+v", 404, o.Payload)
 }
 
-func (o *PatchK8SConfigMapNotFound) GetPayload() string {
+func (o *PatchK8SConfigMapNotFound) GetPayload() interface{} {
 	return o.Payload
 }
 

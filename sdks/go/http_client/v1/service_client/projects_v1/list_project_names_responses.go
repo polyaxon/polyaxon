@@ -44,6 +44,12 @@ func (o *ListProjectNamesReader) ReadResponse(response runtime.ClientResponse, c
 			return nil, err
 		}
 		return result, nil
+	case 204:
+		result := NewListProjectNamesNoContent()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return result, nil
 	case 403:
 		result := NewListProjectNamesForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -95,6 +101,37 @@ func (o *ListProjectNamesOK) readResponse(response runtime.ClientResponse, consu
 	return nil
 }
 
+// NewListProjectNamesNoContent creates a ListProjectNamesNoContent with default headers values
+func NewListProjectNamesNoContent() *ListProjectNamesNoContent {
+	return &ListProjectNamesNoContent{}
+}
+
+/*ListProjectNamesNoContent handles this case with default header values.
+
+No content.
+*/
+type ListProjectNamesNoContent struct {
+	Payload interface{}
+}
+
+func (o *ListProjectNamesNoContent) Error() string {
+	return fmt.Sprintf("[GET /api/v1/{owner}/projects/names][%d] listProjectNamesNoContent  %+v", 204, o.Payload)
+}
+
+func (o *ListProjectNamesNoContent) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *ListProjectNamesNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	// response payload
+	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
 // NewListProjectNamesForbidden creates a ListProjectNamesForbidden with default headers values
 func NewListProjectNamesForbidden() *ListProjectNamesForbidden {
 	return &ListProjectNamesForbidden{}
@@ -136,14 +173,14 @@ func NewListProjectNamesNotFound() *ListProjectNamesNotFound {
 Resource does not exist.
 */
 type ListProjectNamesNotFound struct {
-	Payload string
+	Payload interface{}
 }
 
 func (o *ListProjectNamesNotFound) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/projects/names][%d] listProjectNamesNotFound  %+v", 404, o.Payload)
 }
 
-func (o *ListProjectNamesNotFound) GetPayload() string {
+func (o *ListProjectNamesNotFound) GetPayload() interface{} {
 	return o.Payload
 }
 

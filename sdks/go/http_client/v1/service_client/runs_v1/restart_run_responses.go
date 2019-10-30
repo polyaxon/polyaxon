@@ -44,6 +44,12 @@ func (o *RestartRunReader) ReadResponse(response runtime.ClientResponse, consume
 			return nil, err
 		}
 		return result, nil
+	case 204:
+		result := NewRestartRunNoContent()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return result, nil
 	case 403:
 		result := NewRestartRunForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -95,6 +101,37 @@ func (o *RestartRunOK) readResponse(response runtime.ClientResponse, consumer ru
 	return nil
 }
 
+// NewRestartRunNoContent creates a RestartRunNoContent with default headers values
+func NewRestartRunNoContent() *RestartRunNoContent {
+	return &RestartRunNoContent{}
+}
+
+/*RestartRunNoContent handles this case with default header values.
+
+No content.
+*/
+type RestartRunNoContent struct {
+	Payload interface{}
+}
+
+func (o *RestartRunNoContent) Error() string {
+	return fmt.Sprintf("[POST /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/restart][%d] restartRunNoContent  %+v", 204, o.Payload)
+}
+
+func (o *RestartRunNoContent) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *RestartRunNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	// response payload
+	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
 // NewRestartRunForbidden creates a RestartRunForbidden with default headers values
 func NewRestartRunForbidden() *RestartRunForbidden {
 	return &RestartRunForbidden{}
@@ -136,14 +173,14 @@ func NewRestartRunNotFound() *RestartRunNotFound {
 Resource does not exist.
 */
 type RestartRunNotFound struct {
-	Payload string
+	Payload interface{}
 }
 
 func (o *RestartRunNotFound) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/restart][%d] restartRunNotFound  %+v", 404, o.Payload)
 }
 
-func (o *RestartRunNotFound) GetPayload() string {
+func (o *RestartRunNotFound) GetPayload() interface{} {
 	return o.Payload
 }
 

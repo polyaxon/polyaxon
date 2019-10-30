@@ -44,6 +44,12 @@ func (o *CreateArtifactsStoreReader) ReadResponse(response runtime.ClientRespons
 			return nil, err
 		}
 		return result, nil
+	case 204:
+		result := NewCreateArtifactsStoreNoContent()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return result, nil
 	case 403:
 		result := NewCreateArtifactsStoreForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -95,6 +101,37 @@ func (o *CreateArtifactsStoreOK) readResponse(response runtime.ClientResponse, c
 	return nil
 }
 
+// NewCreateArtifactsStoreNoContent creates a CreateArtifactsStoreNoContent with default headers values
+func NewCreateArtifactsStoreNoContent() *CreateArtifactsStoreNoContent {
+	return &CreateArtifactsStoreNoContent{}
+}
+
+/*CreateArtifactsStoreNoContent handles this case with default header values.
+
+No content.
+*/
+type CreateArtifactsStoreNoContent struct {
+	Payload interface{}
+}
+
+func (o *CreateArtifactsStoreNoContent) Error() string {
+	return fmt.Sprintf("[POST /api/v1/{owner}/artifacts_stores][%d] createArtifactsStoreNoContent  %+v", 204, o.Payload)
+}
+
+func (o *CreateArtifactsStoreNoContent) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *CreateArtifactsStoreNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	// response payload
+	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
 // NewCreateArtifactsStoreForbidden creates a CreateArtifactsStoreForbidden with default headers values
 func NewCreateArtifactsStoreForbidden() *CreateArtifactsStoreForbidden {
 	return &CreateArtifactsStoreForbidden{}
@@ -136,14 +173,14 @@ func NewCreateArtifactsStoreNotFound() *CreateArtifactsStoreNotFound {
 Resource does not exist.
 */
 type CreateArtifactsStoreNotFound struct {
-	Payload string
+	Payload interface{}
 }
 
 func (o *CreateArtifactsStoreNotFound) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/artifacts_stores][%d] createArtifactsStoreNotFound  %+v", 404, o.Payload)
 }
 
-func (o *CreateArtifactsStoreNotFound) GetPayload() string {
+func (o *CreateArtifactsStoreNotFound) GetPayload() interface{} {
 	return o.Payload
 }
 

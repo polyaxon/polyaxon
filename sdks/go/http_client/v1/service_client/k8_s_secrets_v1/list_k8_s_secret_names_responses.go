@@ -44,6 +44,12 @@ func (o *ListK8SSecretNamesReader) ReadResponse(response runtime.ClientResponse,
 			return nil, err
 		}
 		return result, nil
+	case 204:
+		result := NewListK8SSecretNamesNoContent()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return result, nil
 	case 403:
 		result := NewListK8SSecretNamesForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -95,6 +101,37 @@ func (o *ListK8SSecretNamesOK) readResponse(response runtime.ClientResponse, con
 	return nil
 }
 
+// NewListK8SSecretNamesNoContent creates a ListK8SSecretNamesNoContent with default headers values
+func NewListK8SSecretNamesNoContent() *ListK8SSecretNamesNoContent {
+	return &ListK8SSecretNamesNoContent{}
+}
+
+/*ListK8SSecretNamesNoContent handles this case with default header values.
+
+No content.
+*/
+type ListK8SSecretNamesNoContent struct {
+	Payload interface{}
+}
+
+func (o *ListK8SSecretNamesNoContent) Error() string {
+	return fmt.Sprintf("[GET /api/v1/{owner}/k8s_secrets/names][%d] listK8SSecretNamesNoContent  %+v", 204, o.Payload)
+}
+
+func (o *ListK8SSecretNamesNoContent) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *ListK8SSecretNamesNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	// response payload
+	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
 // NewListK8SSecretNamesForbidden creates a ListK8SSecretNamesForbidden with default headers values
 func NewListK8SSecretNamesForbidden() *ListK8SSecretNamesForbidden {
 	return &ListK8SSecretNamesForbidden{}
@@ -136,14 +173,14 @@ func NewListK8SSecretNamesNotFound() *ListK8SSecretNamesNotFound {
 Resource does not exist.
 */
 type ListK8SSecretNamesNotFound struct {
-	Payload string
+	Payload interface{}
 }
 
 func (o *ListK8SSecretNamesNotFound) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/k8s_secrets/names][%d] listK8SSecretNamesNotFound  %+v", 404, o.Payload)
 }
 
-func (o *ListK8SSecretNamesNotFound) GetPayload() string {
+func (o *ListK8SSecretNamesNotFound) GetPayload() interface{} {
 	return o.Payload
 }
 

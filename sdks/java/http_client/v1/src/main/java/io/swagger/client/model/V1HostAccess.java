@@ -73,6 +73,12 @@ public class V1HostAccess {
   @SerializedName("disabled")
   private Boolean disabled = null;
 
+  @SerializedName("insecure")
+  private Boolean insecure = null;
+
+  @SerializedName("deleted")
+  private Boolean deleted = null;
+
   @SerializedName("k8s_secret")
   private String k8sSecret = null;
 
@@ -249,6 +255,42 @@ public class V1HostAccess {
     this.disabled = disabled;
   }
 
+  public V1HostAccess insecure(Boolean insecure) {
+    this.insecure = insecure;
+    return this;
+  }
+
+   /**
+   * Get insecure
+   * @return insecure
+  **/
+  @ApiModelProperty(value = "")
+  public Boolean isInsecure() {
+    return insecure;
+  }
+
+  public void setInsecure(Boolean insecure) {
+    this.insecure = insecure;
+  }
+
+  public V1HostAccess deleted(Boolean deleted) {
+    this.deleted = deleted;
+    return this;
+  }
+
+   /**
+   * Get deleted
+   * @return deleted
+  **/
+  @ApiModelProperty(value = "")
+  public Boolean isDeleted() {
+    return deleted;
+  }
+
+  public void setDeleted(Boolean deleted) {
+    this.deleted = deleted;
+  }
+
   public V1HostAccess k8sSecret(String k8sSecret) {
     this.k8sSecret = k8sSecret;
     return this;
@@ -304,13 +346,15 @@ public class V1HostAccess {
         Objects.equals(this.updatedAt, v1HostAccess.updatedAt) &&
         Objects.equals(this.frozen, v1HostAccess.frozen) &&
         Objects.equals(this.disabled, v1HostAccess.disabled) &&
+        Objects.equals(this.insecure, v1HostAccess.insecure) &&
+        Objects.equals(this.deleted, v1HostAccess.deleted) &&
         Objects.equals(this.k8sSecret, v1HostAccess.k8sSecret) &&
         Objects.equals(this.host, v1HostAccess.host);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(uuid, name, description, readme, tags, createdAt, updatedAt, frozen, disabled, k8sSecret, host);
+    return Objects.hash(uuid, name, description, readme, tags, createdAt, updatedAt, frozen, disabled, insecure, deleted, k8sSecret, host);
   }
 
 
@@ -328,6 +372,8 @@ public class V1HostAccess {
     sb.append("    updatedAt: ").append(toIndentedString(updatedAt)).append("\n");
     sb.append("    frozen: ").append(toIndentedString(frozen)).append("\n");
     sb.append("    disabled: ").append(toIndentedString(disabled)).append("\n");
+    sb.append("    insecure: ").append(toIndentedString(insecure)).append("\n");
+    sb.append("    deleted: ").append(toIndentedString(deleted)).append("\n");
     sb.append("    k8sSecret: ").append(toIndentedString(k8sSecret)).append("\n");
     sb.append("    host: ").append(toIndentedString(host)).append("\n");
     sb.append("}");

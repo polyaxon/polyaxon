@@ -44,6 +44,12 @@ func (o *GetGitAccessReader) ReadResponse(response runtime.ClientResponse, consu
 			return nil, err
 		}
 		return result, nil
+	case 204:
+		result := NewGetGitAccessNoContent()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return result, nil
 	case 403:
 		result := NewGetGitAccessForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -95,6 +101,37 @@ func (o *GetGitAccessOK) readResponse(response runtime.ClientResponse, consumer 
 	return nil
 }
 
+// NewGetGitAccessNoContent creates a GetGitAccessNoContent with default headers values
+func NewGetGitAccessNoContent() *GetGitAccessNoContent {
+	return &GetGitAccessNoContent{}
+}
+
+/*GetGitAccessNoContent handles this case with default header values.
+
+No content.
+*/
+type GetGitAccessNoContent struct {
+	Payload interface{}
+}
+
+func (o *GetGitAccessNoContent) Error() string {
+	return fmt.Sprintf("[GET /api/v1/{owner}/git_accesses/{uuid}][%d] getGitAccessNoContent  %+v", 204, o.Payload)
+}
+
+func (o *GetGitAccessNoContent) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *GetGitAccessNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	// response payload
+	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
 // NewGetGitAccessForbidden creates a GetGitAccessForbidden with default headers values
 func NewGetGitAccessForbidden() *GetGitAccessForbidden {
 	return &GetGitAccessForbidden{}
@@ -136,14 +173,14 @@ func NewGetGitAccessNotFound() *GetGitAccessNotFound {
 Resource does not exist.
 */
 type GetGitAccessNotFound struct {
-	Payload string
+	Payload interface{}
 }
 
 func (o *GetGitAccessNotFound) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/git_accesses/{uuid}][%d] getGitAccessNotFound  %+v", 404, o.Payload)
 }
 
-func (o *GetGitAccessNotFound) GetPayload() string {
+func (o *GetGitAccessNotFound) GetPayload() interface{} {
 	return o.Payload
 }
 

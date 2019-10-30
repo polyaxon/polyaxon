@@ -11,9 +11,7 @@
   },
   "schemes": [
     "http",
-    "https",
-    "ws",
-    "wss"
+    "https"
   ],
   "consumes": [
     "application/json"
@@ -33,16 +31,17 @@
               "$ref": "#/definitions/v1ListProjectsResponse"
             }
           },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
           "403": {
             "description": "You don't have permission to access the resource.",
             "schema": {}
           },
           "404": {
             "description": "Resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
+            "schema": {}
           }
         },
         "parameters": [
@@ -100,16 +99,17 @@
               "$ref": "#/definitions/v1ListRunsResponse"
             }
           },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
           "403": {
             "description": "You don't have permission to access the resource.",
             "schema": {}
           },
           "404": {
             "description": "Resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
+            "schema": {}
           }
         },
         "parameters": [
@@ -167,16 +167,17 @@
               "$ref": "#/definitions/v1ListProjectsResponse"
             }
           },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
           "403": {
             "description": "You don't have permission to access the resource.",
             "schema": {}
           },
           "404": {
             "description": "Resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
+            "schema": {}
           }
         },
         "parameters": [
@@ -234,16 +235,17 @@
               "$ref": "#/definitions/v1ListRunsResponse"
             }
           },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
           "403": {
             "description": "You don't have permission to access the resource.",
             "schema": {}
           },
           "404": {
             "description": "Resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
+            "schema": {}
           }
         },
         "parameters": [
@@ -301,16 +303,17 @@
               "$ref": "#/definitions/v1LogHandler"
             }
           },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
           "403": {
             "description": "You don't have permission to access the resource.",
             "schema": {}
           },
           "404": {
             "description": "Resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
+            "schema": {}
           }
         },
         "tags": [
@@ -329,16 +332,17 @@
               "$ref": "#/definitions/v1User"
             }
           },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
           "403": {
             "description": "You don't have permission to access the resource.",
             "schema": {}
           },
           "404": {
             "description": "Resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
+            "schema": {}
           }
         },
         "tags": [
@@ -357,16 +361,17 @@
               "$ref": "#/definitions/v1Auth"
             }
           },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
           "403": {
             "description": "You don't have permission to access the resource.",
             "schema": {}
           },
           "404": {
             "description": "Resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
+            "schema": {}
           }
         },
         "parameters": [
@@ -395,16 +400,17 @@
               "$ref": "#/definitions/v1Versions"
             }
           },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
           "403": {
             "description": "You don't have permission to access the resource.",
             "schema": {}
           },
           "404": {
             "description": "Resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
+            "schema": {}
           }
         },
         "tags": [
@@ -423,16 +429,17 @@
               "$ref": "#/definitions/v1CodeReference"
             }
           },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
           "403": {
             "description": "You don't have permission to access the resource.",
             "schema": {}
           },
           "404": {
             "description": "Resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
+            "schema": {}
           }
         },
         "parameters": [
@@ -483,16 +490,17 @@
               "$ref": "#/definitions/v1Run"
             }
           },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
           "403": {
             "description": "You don't have permission to access the resource.",
             "schema": {}
           },
           "404": {
             "description": "Resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
+            "schema": {}
           }
         },
         "parameters": [
@@ -543,16 +551,17 @@
               "$ref": "#/definitions/v1Run"
             }
           },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
           "403": {
             "description": "You don't have permission to access the resource.",
             "schema": {}
           },
           "404": {
             "description": "Resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
+            "schema": {}
           }
         },
         "parameters": [
@@ -603,16 +612,17 @@
               "$ref": "#/definitions/v1Run"
             }
           },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
           "403": {
             "description": "You don't have permission to access the resource.",
             "schema": {}
           },
           "404": {
             "description": "Resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
+            "schema": {}
           }
         },
         "parameters": [
@@ -663,16 +673,17 @@
               "$ref": "#/definitions/v1ListArtifactsStoresResponse"
             }
           },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
           "403": {
             "description": "You don't have permission to access the resource.",
             "schema": {}
           },
           "404": {
             "description": "Resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
+            "schema": {}
           }
         },
         "parameters": [
@@ -728,16 +739,17 @@
               "$ref": "#/definitions/v1ArtifactsStore"
             }
           },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
           "403": {
             "description": "You don't have permission to access the resource.",
             "schema": {}
           },
           "404": {
             "description": "Resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
+            "schema": {}
           }
         },
         "parameters": [
@@ -774,16 +786,17 @@
               "$ref": "#/definitions/v1ListArtifactsStoresResponse"
             }
           },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
           "403": {
             "description": "You don't have permission to access the resource.",
             "schema": {}
           },
           "404": {
             "description": "Resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
+            "schema": {}
           }
         },
         "parameters": [
@@ -841,16 +854,17 @@
               "$ref": "#/definitions/v1ArtifactsStore"
             }
           },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
           "403": {
             "description": "You don't have permission to access the resource.",
             "schema": {}
           },
           "404": {
             "description": "Resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
+            "schema": {}
           }
         },
         "parameters": [
@@ -892,16 +906,17 @@
               "$ref": "#/definitions/v1ArtifactsStore"
             }
           },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
           "403": {
             "description": "You don't have permission to access the resource.",
             "schema": {}
           },
           "404": {
             "description": "Resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
+            "schema": {}
           }
         },
         "parameters": [
@@ -945,16 +960,17 @@
               "$ref": "#/definitions/v1ArtifactsStore"
             }
           },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
           "403": {
             "description": "You don't have permission to access the resource.",
             "schema": {}
           },
           "404": {
             "description": "Resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
+            "schema": {}
           }
         },
         "parameters": [
@@ -982,10 +998,11 @@
         "operationId": "DeleteArtifactsStore",
         "responses": {
           "200": {
-            "description": "A successful response.",
-            "schema": {
-              "properties": {}
-            }
+            "description": "A successful response."
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
           },
           "403": {
             "description": "You don't have permission to access the resource.",
@@ -993,10 +1010,7 @@
           },
           "404": {
             "description": "Resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
+            "schema": {}
           }
         },
         "parameters": [
@@ -1031,16 +1045,17 @@
               "$ref": "#/definitions/v1ListHostAccessesResponse"
             }
           },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
           "403": {
             "description": "You don't have permission to access the resource.",
             "schema": {}
           },
           "404": {
             "description": "Resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
+            "schema": {}
           }
         },
         "parameters": [
@@ -1096,16 +1111,17 @@
               "$ref": "#/definitions/v1HostAccess"
             }
           },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
           "403": {
             "description": "You don't have permission to access the resource.",
             "schema": {}
           },
           "404": {
             "description": "Resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
+            "schema": {}
           }
         },
         "parameters": [
@@ -1142,16 +1158,17 @@
               "$ref": "#/definitions/v1ListHostAccessesResponse"
             }
           },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
           "403": {
             "description": "You don't have permission to access the resource.",
             "schema": {}
           },
           "404": {
             "description": "Resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
+            "schema": {}
           }
         },
         "parameters": [
@@ -1209,16 +1226,17 @@
               "$ref": "#/definitions/v1HostAccess"
             }
           },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
           "403": {
             "description": "You don't have permission to access the resource.",
             "schema": {}
           },
           "404": {
             "description": "Resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
+            "schema": {}
           }
         },
         "parameters": [
@@ -1260,16 +1278,17 @@
               "$ref": "#/definitions/v1HostAccess"
             }
           },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
           "403": {
             "description": "You don't have permission to access the resource.",
             "schema": {}
           },
           "404": {
             "description": "Resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
+            "schema": {}
           }
         },
         "parameters": [
@@ -1313,16 +1332,17 @@
               "$ref": "#/definitions/v1HostAccess"
             }
           },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
           "403": {
             "description": "You don't have permission to access the resource.",
             "schema": {}
           },
           "404": {
             "description": "Resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
+            "schema": {}
           }
         },
         "parameters": [
@@ -1350,10 +1370,11 @@
         "operationId": "DeleteGitAccess",
         "responses": {
           "200": {
-            "description": "A successful response.",
-            "schema": {
-              "properties": {}
-            }
+            "description": "A successful response."
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
           },
           "403": {
             "description": "You don't have permission to access the resource.",
@@ -1361,10 +1382,7 @@
           },
           "404": {
             "description": "Resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
+            "schema": {}
           }
         },
         "parameters": [
@@ -1399,16 +1417,17 @@
               "$ref": "#/definitions/v1ListK8SResourcesResponse"
             }
           },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
           "403": {
             "description": "You don't have permission to access the resource.",
             "schema": {}
           },
           "404": {
             "description": "Resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
+            "schema": {}
           }
         },
         "parameters": [
@@ -1464,16 +1483,17 @@
               "$ref": "#/definitions/v1K8SResource"
             }
           },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
           "403": {
             "description": "You don't have permission to access the resource.",
             "schema": {}
           },
           "404": {
             "description": "Resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
+            "schema": {}
           }
         },
         "parameters": [
@@ -1510,16 +1530,17 @@
               "$ref": "#/definitions/v1ListK8SResourcesResponse"
             }
           },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
           "403": {
             "description": "You don't have permission to access the resource.",
             "schema": {}
           },
           "404": {
             "description": "Resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
+            "schema": {}
           }
         },
         "parameters": [
@@ -1577,16 +1598,17 @@
               "$ref": "#/definitions/v1K8SResource"
             }
           },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
           "403": {
             "description": "You don't have permission to access the resource.",
             "schema": {}
           },
           "404": {
             "description": "Resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
+            "schema": {}
           }
         },
         "parameters": [
@@ -1628,16 +1650,17 @@
               "$ref": "#/definitions/v1K8SResource"
             }
           },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
           "403": {
             "description": "You don't have permission to access the resource.",
             "schema": {}
           },
           "404": {
             "description": "Resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
+            "schema": {}
           }
         },
         "parameters": [
@@ -1681,16 +1704,17 @@
               "$ref": "#/definitions/v1K8SResource"
             }
           },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
           "403": {
             "description": "You don't have permission to access the resource.",
             "schema": {}
           },
           "404": {
             "description": "Resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
+            "schema": {}
           }
         },
         "parameters": [
@@ -1718,10 +1742,11 @@
         "operationId": "DeleteK8SConfigMap",
         "responses": {
           "200": {
-            "description": "A successful response.",
-            "schema": {
-              "properties": {}
-            }
+            "description": "A successful response."
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
           },
           "403": {
             "description": "You don't have permission to access the resource.",
@@ -1729,10 +1754,7 @@
           },
           "404": {
             "description": "Resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
+            "schema": {}
           }
         },
         "parameters": [
@@ -1767,16 +1789,17 @@
               "$ref": "#/definitions/v1ListK8SResourcesResponse"
             }
           },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
           "403": {
             "description": "You don't have permission to access the resource.",
             "schema": {}
           },
           "404": {
             "description": "Resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
+            "schema": {}
           }
         },
         "parameters": [
@@ -1832,16 +1855,17 @@
               "$ref": "#/definitions/v1K8SResource"
             }
           },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
           "403": {
             "description": "You don't have permission to access the resource.",
             "schema": {}
           },
           "404": {
             "description": "Resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
+            "schema": {}
           }
         },
         "parameters": [
@@ -1878,16 +1902,17 @@
               "$ref": "#/definitions/v1ListK8SResourcesResponse"
             }
           },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
           "403": {
             "description": "You don't have permission to access the resource.",
             "schema": {}
           },
           "404": {
             "description": "Resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
+            "schema": {}
           }
         },
         "parameters": [
@@ -1945,16 +1970,17 @@
               "$ref": "#/definitions/v1K8SResource"
             }
           },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
           "403": {
             "description": "You don't have permission to access the resource.",
             "schema": {}
           },
           "404": {
             "description": "Resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
+            "schema": {}
           }
         },
         "parameters": [
@@ -1996,16 +2022,17 @@
               "$ref": "#/definitions/v1K8SResource"
             }
           },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
           "403": {
             "description": "You don't have permission to access the resource.",
             "schema": {}
           },
           "404": {
             "description": "Resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
+            "schema": {}
           }
         },
         "parameters": [
@@ -2049,16 +2076,17 @@
               "$ref": "#/definitions/v1K8SResource"
             }
           },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
           "403": {
             "description": "You don't have permission to access the resource.",
             "schema": {}
           },
           "404": {
             "description": "Resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
+            "schema": {}
           }
         },
         "parameters": [
@@ -2086,10 +2114,11 @@
         "operationId": "DeleteK8SSecret",
         "responses": {
           "200": {
-            "description": "A successful response.",
-            "schema": {
-              "properties": {}
-            }
+            "description": "A successful response."
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
           },
           "403": {
             "description": "You don't have permission to access the resource.",
@@ -2097,10 +2126,7 @@
           },
           "404": {
             "description": "Resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
+            "schema": {}
           }
         },
         "parameters": [
@@ -2135,16 +2161,17 @@
               "$ref": "#/definitions/v1Project"
             }
           },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
           "403": {
             "description": "You don't have permission to access the resource.",
             "schema": {}
           },
           "404": {
             "description": "Resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
+            "schema": {}
           }
         },
         "parameters": [
@@ -2181,16 +2208,17 @@
               "$ref": "#/definitions/v1ListProjectsResponse"
             }
           },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
           "403": {
             "description": "You don't have permission to access the resource.",
             "schema": {}
           },
           "404": {
             "description": "Resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
+            "schema": {}
           }
         },
         "parameters": [
@@ -2248,16 +2276,17 @@
               "$ref": "#/definitions/v1ListProjectsResponse"
             }
           },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
           "403": {
             "description": "You don't have permission to access the resource.",
             "schema": {}
           },
           "404": {
             "description": "Resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
+            "schema": {}
           }
         },
         "parameters": [
@@ -2315,16 +2344,17 @@
               "$ref": "#/definitions/v1ListHostAccessesResponse"
             }
           },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
           "403": {
             "description": "You don't have permission to access the resource.",
             "schema": {}
           },
           "404": {
             "description": "Resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
+            "schema": {}
           }
         },
         "parameters": [
@@ -2380,16 +2410,17 @@
               "$ref": "#/definitions/v1HostAccess"
             }
           },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
           "403": {
             "description": "You don't have permission to access the resource.",
             "schema": {}
           },
           "404": {
             "description": "Resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
+            "schema": {}
           }
         },
         "parameters": [
@@ -2426,16 +2457,17 @@
               "$ref": "#/definitions/v1ListHostAccessesResponse"
             }
           },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
           "403": {
             "description": "You don't have permission to access the resource.",
             "schema": {}
           },
           "404": {
             "description": "Resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
+            "schema": {}
           }
         },
         "parameters": [
@@ -2493,16 +2525,17 @@
               "$ref": "#/definitions/v1HostAccess"
             }
           },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
           "403": {
             "description": "You don't have permission to access the resource.",
             "schema": {}
           },
           "404": {
             "description": "Resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
+            "schema": {}
           }
         },
         "parameters": [
@@ -2544,16 +2577,17 @@
               "$ref": "#/definitions/v1HostAccess"
             }
           },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
           "403": {
             "description": "You don't have permission to access the resource.",
             "schema": {}
           },
           "404": {
             "description": "Resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
+            "schema": {}
           }
         },
         "parameters": [
@@ -2597,16 +2631,17 @@
               "$ref": "#/definitions/v1HostAccess"
             }
           },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
           "403": {
             "description": "You don't have permission to access the resource.",
             "schema": {}
           },
           "404": {
             "description": "Resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
+            "schema": {}
           }
         },
         "parameters": [
@@ -2634,10 +2669,11 @@
         "operationId": "DeleteRegsitryAccess",
         "responses": {
           "200": {
-            "description": "A successful response.",
-            "schema": {
-              "properties": {}
-            }
+            "description": "A successful response."
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
           },
           "403": {
             "description": "You don't have permission to access the resource.",
@@ -2645,10 +2681,7 @@
           },
           "404": {
             "description": "Resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
+            "schema": {}
           }
         },
         "parameters": [
@@ -2683,16 +2716,17 @@
               "$ref": "#/definitions/v1Project"
             }
           },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
           "403": {
             "description": "You don't have permission to access the resource.",
             "schema": {}
           },
           "404": {
             "description": "Resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
+            "schema": {}
           }
         },
         "parameters": [
@@ -2734,16 +2768,17 @@
               "$ref": "#/definitions/v1Project"
             }
           },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
           "403": {
             "description": "You don't have permission to access the resource.",
             "schema": {}
           },
           "404": {
             "description": "Resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
+            "schema": {}
           }
         },
         "parameters": [
@@ -2787,16 +2822,17 @@
               "$ref": "#/definitions/v1Project"
             }
           },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
           "403": {
             "description": "You don't have permission to access the resource.",
             "schema": {}
           },
           "404": {
             "description": "Resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
+            "schema": {}
           }
         },
         "parameters": [
@@ -2824,10 +2860,11 @@
         "operationId": "DeleteProject",
         "responses": {
           "200": {
-            "description": "A successful response.",
-            "schema": {
-              "properties": {}
-            }
+            "description": "A successful response."
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
           },
           "403": {
             "description": "You don't have permission to access the resource.",
@@ -2835,10 +2872,7 @@
           },
           "404": {
             "description": "Resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
+            "schema": {}
           }
         },
         "parameters": [
@@ -2868,10 +2902,11 @@
         "operationId": "ArchiveProject",
         "responses": {
           "200": {
-            "description": "A successful response.",
-            "schema": {
-              "properties": {}
-            }
+            "description": "A successful response."
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
           },
           "403": {
             "description": "You don't have permission to access the resource.",
@@ -2879,10 +2914,7 @@
           },
           "404": {
             "description": "Resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
+            "schema": {}
           }
         },
         "parameters": [
@@ -2912,10 +2944,11 @@
         "operationId": "BookmarkProject",
         "responses": {
           "200": {
-            "description": "A successful response.",
-            "schema": {
-              "properties": {}
-            }
+            "description": "A successful response."
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
           },
           "403": {
             "description": "You don't have permission to access the resource.",
@@ -2923,10 +2956,7 @@
           },
           "404": {
             "description": "Resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
+            "schema": {}
           }
         },
         "parameters": [
@@ -2956,10 +2986,11 @@
         "operationId": "DisableProjectCI",
         "responses": {
           "200": {
-            "description": "A successful response.",
-            "schema": {
-              "properties": {}
-            }
+            "description": "A successful response."
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
           },
           "403": {
             "description": "You don't have permission to access the resource.",
@@ -2967,10 +2998,7 @@
           },
           "404": {
             "description": "Resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
+            "schema": {}
           }
         },
         "parameters": [
@@ -2998,10 +3026,11 @@
         "operationId": "EnableProjectCI",
         "responses": {
           "200": {
-            "description": "A successful response.",
-            "schema": {
-              "properties": {}
-            }
+            "description": "A successful response."
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
           },
           "403": {
             "description": "You don't have permission to access the resource.",
@@ -3009,10 +3038,7 @@
           },
           "404": {
             "description": "Resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
+            "schema": {}
           }
         },
         "parameters": [
@@ -3039,13 +3065,14 @@
     "/api/v1/{owner}/{project}/restore": {
       "post": {
         "summary": "Stop runs",
-        "operationId": "RestoreExperiment",
+        "operationId": "RestoreProject",
         "responses": {
           "200": {
-            "description": "A successful response.",
-            "schema": {
-              "properties": {}
-            }
+            "description": "A successful response."
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
           },
           "403": {
             "description": "You don't have permission to access the resource.",
@@ -3053,10 +3080,7 @@
           },
           "404": {
             "description": "Resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
+            "schema": {}
           }
         },
         "parameters": [
@@ -3091,16 +3115,17 @@
               "$ref": "#/definitions/v1Run"
             }
           },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
           "403": {
             "description": "You don't have permission to access the resource.",
             "schema": {}
           },
           "404": {
             "description": "Resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
+            "schema": {}
           }
         },
         "parameters": [
@@ -3139,10 +3164,11 @@
         "operationId": "DeleteRuns",
         "responses": {
           "200": {
-            "description": "A successful response.",
-            "schema": {
-              "properties": {}
-            }
+            "description": "A successful response."
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
           },
           "403": {
             "description": "You don't have permission to access the resource.",
@@ -3150,10 +3176,7 @@
           },
           "404": {
             "description": "Resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
+            "schema": {}
           }
         },
         "parameters": [
@@ -3192,10 +3215,11 @@
         "operationId": "InvalidateRuns",
         "responses": {
           "200": {
-            "description": "A successful response.",
-            "schema": {
-              "properties": {}
-            }
+            "description": "A successful response."
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
           },
           "403": {
             "description": "You don't have permission to access the resource.",
@@ -3203,10 +3227,7 @@
           },
           "404": {
             "description": "Resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
+            "schema": {}
           }
         },
         "parameters": [
@@ -3250,16 +3271,17 @@
               "$ref": "#/definitions/v1ListRunsResponse"
             }
           },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
           "403": {
             "description": "You don't have permission to access the resource.",
             "schema": {}
           },
           "404": {
             "description": "Resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
+            "schema": {}
           }
         },
         "parameters": [
@@ -3319,10 +3341,11 @@
         "operationId": "StopRuns",
         "responses": {
           "200": {
-            "description": "A successful response.",
-            "schema": {
-              "properties": {}
-            }
+            "description": "A successful response."
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
           },
           "403": {
             "description": "You don't have permission to access the resource.",
@@ -3330,10 +3353,7 @@
           },
           "404": {
             "description": "Resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
+            "schema": {}
           }
         },
         "parameters": [
@@ -3377,16 +3397,17 @@
               "$ref": "#/definitions/v1Run"
             }
           },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
           "403": {
             "description": "You don't have permission to access the resource.",
             "schema": {}
           },
           "404": {
             "description": "Resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
+            "schema": {}
           }
         },
         "parameters": [
@@ -3435,16 +3456,17 @@
               "$ref": "#/definitions/v1Run"
             }
           },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
           "403": {
             "description": "You don't have permission to access the resource.",
             "schema": {}
           },
           "404": {
             "description": "Resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
+            "schema": {}
           }
         },
         "parameters": [
@@ -3495,16 +3517,17 @@
               "$ref": "#/definitions/v1Run"
             }
           },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
           "403": {
             "description": "You don't have permission to access the resource.",
             "schema": {}
           },
           "404": {
             "description": "Resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
+            "schema": {}
           }
         },
         "parameters": [
@@ -3539,10 +3562,11 @@
         "operationId": "DeleteRun",
         "responses": {
           "200": {
-            "description": "A successful response.",
-            "schema": {
-              "properties": {}
-            }
+            "description": "A successful response."
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
           },
           "403": {
             "description": "You don't have permission to access the resource.",
@@ -3550,10 +3574,7 @@
           },
           "404": {
             "description": "Resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
+            "schema": {}
           }
         },
         "parameters": [
@@ -3590,10 +3611,11 @@
         "operationId": "ArchiveRun",
         "responses": {
           "200": {
-            "description": "A successful response.",
-            "schema": {
-              "properties": {}
-            }
+            "description": "A successful response."
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
           },
           "403": {
             "description": "You don't have permission to access the resource.",
@@ -3601,10 +3623,7 @@
           },
           "404": {
             "description": "Resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
+            "schema": {}
           }
         },
         "parameters": [
@@ -3641,10 +3660,11 @@
         "operationId": "BookmarkRun",
         "responses": {
           "200": {
-            "description": "A successful response.",
-            "schema": {
-              "properties": {}
-            }
+            "description": "A successful response."
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
           },
           "403": {
             "description": "You don't have permission to access the resource.",
@@ -3652,10 +3672,7 @@
           },
           "404": {
             "description": "Resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
+            "schema": {}
           }
         },
         "parameters": [
@@ -3697,16 +3714,17 @@
               "$ref": "#/definitions/v1ListCodeRefsResponse"
             }
           },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
           "403": {
             "description": "You don't have permission to access the resource.",
             "schema": {}
           },
           "404": {
             "description": "Resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
+            "schema": {}
           }
         },
         "parameters": [
@@ -3748,16 +3766,17 @@
               "$ref": "#/definitions/v1Auth"
             }
           },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
           "403": {
             "description": "You don't have permission to access the resource.",
             "schema": {}
           },
           "404": {
             "description": "Resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
+            "schema": {}
           }
         },
         "parameters": [
@@ -3794,10 +3813,11 @@
         "operationId": "InvalidateRun",
         "responses": {
           "200": {
-            "description": "A successful response.",
-            "schema": {
-              "properties": {}
-            }
+            "description": "A successful response."
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
           },
           "403": {
             "description": "You don't have permission to access the resource.",
@@ -3805,10 +3825,7 @@
           },
           "404": {
             "description": "Resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
+            "schema": {}
           }
         },
         "parameters": [
@@ -3853,10 +3870,11 @@
         "operationId": "RestoreRun",
         "responses": {
           "200": {
-            "description": "A successful response.",
-            "schema": {
-              "properties": {}
-            }
+            "description": "A successful response."
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
           },
           "403": {
             "description": "You don't have permission to access the resource.",
@@ -3864,10 +3882,7 @@
           },
           "404": {
             "description": "Resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
+            "schema": {}
           }
         },
         "parameters": [
@@ -3909,16 +3924,17 @@
               "$ref": "#/definitions/v1Status"
             }
           },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
           "403": {
             "description": "You don't have permission to access the resource.",
             "schema": {}
           },
           "404": {
             "description": "Resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
+            "schema": {}
           }
         },
         "parameters": [
@@ -3958,16 +3974,17 @@
               "$ref": "#/definitions/v1Status"
             }
           },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
           "403": {
             "description": "You don't have permission to access the resource.",
             "schema": {}
           },
           "404": {
             "description": "Resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
+            "schema": {}
           }
         },
         "parameters": [
@@ -4012,10 +4029,11 @@
         "operationId": "StopRun",
         "responses": {
           "200": {
-            "description": "A successful response.",
-            "schema": {
-              "properties": {}
-            }
+            "description": "A successful response."
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
           },
           "403": {
             "description": "You don't have permission to access the resource.",
@@ -4023,10 +4041,7 @@
           },
           "404": {
             "description": "Resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
+            "schema": {}
           }
         },
         "parameters": [
@@ -4063,10 +4078,11 @@
         "operationId": "StartRunTensorboard",
         "responses": {
           "200": {
-            "description": "A successful response.",
-            "schema": {
-              "properties": {}
-            }
+            "description": "A successful response."
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
           },
           "403": {
             "description": "You don't have permission to access the resource.",
@@ -4074,10 +4090,7 @@
           },
           "404": {
             "description": "Resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
+            "schema": {}
           }
         },
         "parameters": [
@@ -4117,15 +4130,16 @@
       }
     },
     "/api/v1/{owner}/{project}/runs/{uuid}/tensorboard/stop": {
-      "delete": {
+      "post": {
         "summary": "Stop run tensorboard",
         "operationId": "StopRunTensorboard",
         "responses": {
           "200": {
-            "description": "A successful response.",
-            "schema": {
-              "properties": {}
-            }
+            "description": "A successful response."
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
           },
           "403": {
             "description": "You don't have permission to access the resource.",
@@ -4133,10 +4147,7 @@
           },
           "404": {
             "description": "Resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
+            "schema": {}
           }
         },
         "parameters": [
@@ -4173,10 +4184,11 @@
         "operationId": "UnbookmarkRun",
         "responses": {
           "200": {
-            "description": "A successful response.",
-            "schema": {
-              "properties": {}
-            }
+            "description": "A successful response."
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
           },
           "403": {
             "description": "You don't have permission to access the resource.",
@@ -4184,10 +4196,7 @@
           },
           "404": {
             "description": "Resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
+            "schema": {}
           }
         },
         "parameters": [
@@ -4229,16 +4238,17 @@
               "$ref": "#/definitions/v1ListSearchesResponse"
             }
           },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
           "403": {
             "description": "You don't have permission to access the resource.",
             "schema": {}
           },
           "404": {
             "description": "Resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
+            "schema": {}
           }
         },
         "parameters": [
@@ -4301,16 +4311,17 @@
               "$ref": "#/definitions/v1Search"
             }
           },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
           "403": {
             "description": "You don't have permission to access the resource.",
             "schema": {}
           },
           "404": {
             "description": "Resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
+            "schema": {}
           }
         },
         "parameters": [
@@ -4354,16 +4365,17 @@
               "$ref": "#/definitions/v1Search"
             }
           },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
           "403": {
             "description": "You don't have permission to access the resource.",
             "schema": {}
           },
           "404": {
             "description": "Resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
+            "schema": {}
           }
         },
         "parameters": [
@@ -4412,16 +4424,17 @@
               "$ref": "#/definitions/v1Search"
             }
           },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
           "403": {
             "description": "You don't have permission to access the resource.",
             "schema": {}
           },
           "404": {
             "description": "Resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
+            "schema": {}
           }
         },
         "parameters": [
@@ -4472,16 +4485,17 @@
               "$ref": "#/definitions/v1Search"
             }
           },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
           "403": {
             "description": "You don't have permission to access the resource.",
             "schema": {}
           },
           "404": {
             "description": "Resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
+            "schema": {}
           }
         },
         "parameters": [
@@ -4516,10 +4530,11 @@
         "operationId": "DeleteSearch",
         "responses": {
           "200": {
-            "description": "A successful response.",
-            "schema": {
-              "properties": {}
-            }
+            "description": "A successful response."
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
           },
           "403": {
             "description": "You don't have permission to access the resource.",
@@ -4527,10 +4542,7 @@
           },
           "404": {
             "description": "Resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
+            "schema": {}
           }
         },
         "parameters": [
@@ -4567,10 +4579,11 @@
         "operationId": "UnbookmarkProject",
         "responses": {
           "200": {
-            "description": "A successful response.",
-            "schema": {
-              "properties": {}
-            }
+            "description": "A successful response."
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
           },
           "403": {
             "description": "You don't have permission to access the resource.",
@@ -4578,10 +4591,7 @@
           },
           "404": {
             "description": "Resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
+            "schema": {}
           }
         },
         "parameters": [
@@ -4652,6 +4662,11 @@
           "type": "boolean",
           "format": "boolean",
           "title": "Optional a flag to disable an access"
+        },
+        "deleted": {
+          "type": "boolean",
+          "format": "boolean",
+          "title": "Optional if the entity has been deleted"
         },
         "k8s_secret": {
           "type": "string",
@@ -4809,6 +4824,16 @@
           "format": "boolean",
           "title": "Optional a flag to disable an access"
         },
+        "insecure": {
+          "type": "boolean",
+          "format": "boolean",
+          "title": "Optional a flag to mark the host as insecure"
+        },
+        "deleted": {
+          "type": "boolean",
+          "format": "boolean",
+          "title": "Optional if the entity has been deleted"
+        },
         "k8s_secret": {
           "type": "string",
           "title": "Optional the k8s secret to use"
@@ -4856,6 +4881,10 @@
           "format": "date-time",
           "title": "Optional last time the entity was updated"
         },
+        "k8s_ref": {
+          "type": "string",
+          "title": "Optional the k8s ref"
+        },
         "frozen": {
           "type": "boolean",
           "format": "boolean",
@@ -4865,6 +4894,11 @@
           "type": "boolean",
           "format": "boolean",
           "title": "Optional a flag to disable an access"
+        },
+        "deleted": {
+          "type": "boolean",
+          "format": "boolean",
+          "title": "Optional if the entity has been deleted"
         },
         "mount_path": {
           "type": "string",
@@ -5084,6 +5118,10 @@
           "type": "string",
           "title": "Required name of user who created this entity"
         },
+        "owner": {
+          "type": "string",
+          "title": "Required owner/namespace where the projet was created"
+        },
         "name": {
           "type": "string",
           "title": "Required name"
@@ -5091,6 +5129,13 @@
         "description": {
           "type": "string",
           "title": "Optional description"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "Optional Tags of this entity"
         },
         "created_at": {
           "type": "string",
@@ -5106,10 +5151,19 @@
           "type": "string",
           "title": "Optional flag to tell if this project is public"
         },
+        "deleted": {
+          "type": "boolean",
+          "format": "boolean",
+          "title": "Optional flag to tell if this project is deleted"
+        },
         "bookmarked": {
           "type": "boolean",
           "format": "boolean",
           "title": "Optional if this entity was bookmarked"
+        },
+        "readme": {
+          "type": "string",
+          "title": "Optional a readme text describing this entity"
         }
       },
       "title": "Project specification"
@@ -5281,16 +5335,34 @@
           "type": "string",
           "title": "Optional name"
         },
-        "query": {
-          "type": "string",
-          "title": "Optional Search query"
-        },
-        "meta": {
-          "type": "string",
-          "title": "Optional Search meta"
+        "definition": {
+          "$ref": "#/definitions/v1SearchDefinition",
+          "title": "Optional Search definition"
         }
       },
       "title": "Search specification"
+    },
+    "v1SearchDefinition": {
+      "type": "object",
+      "properties": {
+        "query": {
+          "type": "string",
+          "title": "Search query"
+        },
+        "sort": {
+          "type": "string",
+          "title": "Search sort"
+        },
+        "groupby": {
+          "type": "string",
+          "title": "Search group bys"
+        },
+        "columns": {
+          "type": "string",
+          "title": "Search columns"
+        }
+      },
+      "title": "Search definition specification"
     },
     "v1Status": {
       "type": "object",

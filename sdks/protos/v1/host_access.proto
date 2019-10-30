@@ -33,11 +33,17 @@ message HostAccess {
     // Optional a flag to disable an access
     bool disabled = 9;
 
+    // Optional a flag to mark the host as insecure
+    bool insecure = 10;
+
+    // Optional if the entity has been deleted
+    bool deleted = 11;
+
     // Optional the k8s secret to use
-    string k8s_secret = 10;
+    string k8s_secret = 12;
 
     // Optional the host value
-    string host = 11;
+    string host = 13;
 }
 
  // Request data to create/update host access

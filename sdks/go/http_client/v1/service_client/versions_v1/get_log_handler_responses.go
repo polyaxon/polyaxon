@@ -44,6 +44,12 @@ func (o *GetLogHandlerReader) ReadResponse(response runtime.ClientResponse, cons
 			return nil, err
 		}
 		return result, nil
+	case 204:
+		result := NewGetLogHandlerNoContent()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return result, nil
 	case 403:
 		result := NewGetLogHandlerForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -95,6 +101,37 @@ func (o *GetLogHandlerOK) readResponse(response runtime.ClientResponse, consumer
 	return nil
 }
 
+// NewGetLogHandlerNoContent creates a GetLogHandlerNoContent with default headers values
+func NewGetLogHandlerNoContent() *GetLogHandlerNoContent {
+	return &GetLogHandlerNoContent{}
+}
+
+/*GetLogHandlerNoContent handles this case with default header values.
+
+No content.
+*/
+type GetLogHandlerNoContent struct {
+	Payload interface{}
+}
+
+func (o *GetLogHandlerNoContent) Error() string {
+	return fmt.Sprintf("[GET /api/v1/log_handler][%d] getLogHandlerNoContent  %+v", 204, o.Payload)
+}
+
+func (o *GetLogHandlerNoContent) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *GetLogHandlerNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	// response payload
+	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
 // NewGetLogHandlerForbidden creates a GetLogHandlerForbidden with default headers values
 func NewGetLogHandlerForbidden() *GetLogHandlerForbidden {
 	return &GetLogHandlerForbidden{}
@@ -136,14 +173,14 @@ func NewGetLogHandlerNotFound() *GetLogHandlerNotFound {
 Resource does not exist.
 */
 type GetLogHandlerNotFound struct {
-	Payload string
+	Payload interface{}
 }
 
 func (o *GetLogHandlerNotFound) Error() string {
 	return fmt.Sprintf("[GET /api/v1/log_handler][%d] getLogHandlerNotFound  %+v", 404, o.Payload)
 }
 
-func (o *GetLogHandlerNotFound) GetPayload() string {
+func (o *GetLogHandlerNotFound) GetPayload() interface{} {
 	return o.Payload
 }
 

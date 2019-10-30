@@ -71,7 +71,7 @@ Name | Type | Description  | Notes
 
 <a name="deleteSearch"></a>
 # **deleteSearch**
-> Object deleteSearch(owner, project, uuid)
+> deleteSearch(owner, project, uuid)
 
 Update run
 
@@ -97,8 +97,7 @@ String owner = "owner_example"; // String | Owner of the namespace
 String project = "project_example"; // String | Project where the experiement will be assigned
 String uuid = "uuid_example"; // String | Unique integer identifier of the entity
 try {
-    Object result = apiInstance.deleteSearch(owner, project, uuid);
-    System.out.println(result);
+    apiInstance.deleteSearch(owner, project, uuid);
 } catch (ApiException e) {
     System.err.println("Exception when calling SearchV1Api#deleteSearch");
     e.printStackTrace();
@@ -115,7 +114,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 

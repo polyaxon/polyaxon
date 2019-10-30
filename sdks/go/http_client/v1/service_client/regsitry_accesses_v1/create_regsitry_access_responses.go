@@ -44,6 +44,12 @@ func (o *CreateRegsitryAccessReader) ReadResponse(response runtime.ClientRespons
 			return nil, err
 		}
 		return result, nil
+	case 204:
+		result := NewCreateRegsitryAccessNoContent()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return result, nil
 	case 403:
 		result := NewCreateRegsitryAccessForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -95,6 +101,37 @@ func (o *CreateRegsitryAccessOK) readResponse(response runtime.ClientResponse, c
 	return nil
 }
 
+// NewCreateRegsitryAccessNoContent creates a CreateRegsitryAccessNoContent with default headers values
+func NewCreateRegsitryAccessNoContent() *CreateRegsitryAccessNoContent {
+	return &CreateRegsitryAccessNoContent{}
+}
+
+/*CreateRegsitryAccessNoContent handles this case with default header values.
+
+No content.
+*/
+type CreateRegsitryAccessNoContent struct {
+	Payload interface{}
+}
+
+func (o *CreateRegsitryAccessNoContent) Error() string {
+	return fmt.Sprintf("[POST /api/v1/{owner}/registry_accesses][%d] createRegsitryAccessNoContent  %+v", 204, o.Payload)
+}
+
+func (o *CreateRegsitryAccessNoContent) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *CreateRegsitryAccessNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	// response payload
+	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
 // NewCreateRegsitryAccessForbidden creates a CreateRegsitryAccessForbidden with default headers values
 func NewCreateRegsitryAccessForbidden() *CreateRegsitryAccessForbidden {
 	return &CreateRegsitryAccessForbidden{}
@@ -136,14 +173,14 @@ func NewCreateRegsitryAccessNotFound() *CreateRegsitryAccessNotFound {
 Resource does not exist.
 */
 type CreateRegsitryAccessNotFound struct {
-	Payload string
+	Payload interface{}
 }
 
 func (o *CreateRegsitryAccessNotFound) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/registry_accesses][%d] createRegsitryAccessNotFound  %+v", 404, o.Payload)
 }
 
-func (o *CreateRegsitryAccessNotFound) GetPayload() string {
+func (o *CreateRegsitryAccessNotFound) GetPayload() interface{} {
 	return o.Payload
 }
 

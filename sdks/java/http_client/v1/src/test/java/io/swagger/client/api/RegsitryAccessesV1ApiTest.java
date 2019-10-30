@@ -76,7 +76,7 @@ public class RegsitryAccessesV1ApiTest {
     public void deleteRegsitryAccessTest() throws ApiException {
         String owner = null;
         String uuid = null;
-        Object response = api.deleteRegsitryAccess(owner, uuid);
+        api.deleteRegsitryAccess(owner, uuid);
 
         // TODO: test validations
     }

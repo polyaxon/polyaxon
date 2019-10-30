@@ -4,6 +4,21 @@ package v1;
 
 import "google/protobuf/timestamp.proto";
 
+// Search definition specification
+message SearchDefinition {
+    // Search query
+    string query = 1;
+
+    // Search sort
+    string sort = 2;
+
+    // Search group bys
+    string groupby = 3;
+
+    // Search columns
+    string columns = 4;
+}
+
 // Search specification
 message Search {
     // UUID
@@ -12,11 +27,8 @@ message Search {
     // Optional name
     string name = 2;
 
-    // Optional Search query
-    string query = 3;
-
-    // Optional Search meta
-    string meta = 4;
+    // Optional Search definition
+    SearchDefinition definition = 3;
 }
 
  // Request data to create/update artifacts store

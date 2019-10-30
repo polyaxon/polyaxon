@@ -44,6 +44,12 @@ func (o *ListArchivedRunsReader) ReadResponse(response runtime.ClientResponse, c
 			return nil, err
 		}
 		return result, nil
+	case 204:
+		result := NewListArchivedRunsNoContent()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return result, nil
 	case 403:
 		result := NewListArchivedRunsForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -95,6 +101,37 @@ func (o *ListArchivedRunsOK) readResponse(response runtime.ClientResponse, consu
 	return nil
 }
 
+// NewListArchivedRunsNoContent creates a ListArchivedRunsNoContent with default headers values
+func NewListArchivedRunsNoContent() *ListArchivedRunsNoContent {
+	return &ListArchivedRunsNoContent{}
+}
+
+/*ListArchivedRunsNoContent handles this case with default header values.
+
+No content.
+*/
+type ListArchivedRunsNoContent struct {
+	Payload interface{}
+}
+
+func (o *ListArchivedRunsNoContent) Error() string {
+	return fmt.Sprintf("[GET /api/v1/archives/{user}/runs][%d] listArchivedRunsNoContent  %+v", 204, o.Payload)
+}
+
+func (o *ListArchivedRunsNoContent) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *ListArchivedRunsNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	// response payload
+	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
 // NewListArchivedRunsForbidden creates a ListArchivedRunsForbidden with default headers values
 func NewListArchivedRunsForbidden() *ListArchivedRunsForbidden {
 	return &ListArchivedRunsForbidden{}
@@ -136,14 +173,14 @@ func NewListArchivedRunsNotFound() *ListArchivedRunsNotFound {
 Resource does not exist.
 */
 type ListArchivedRunsNotFound struct {
-	Payload string
+	Payload interface{}
 }
 
 func (o *ListArchivedRunsNotFound) Error() string {
 	return fmt.Sprintf("[GET /api/v1/archives/{user}/runs][%d] listArchivedRunsNotFound  %+v", 404, o.Payload)
 }
 
-func (o *ListArchivedRunsNotFound) GetPayload() string {
+func (o *ListArchivedRunsNotFound) GetPayload() interface{} {
 	return o.Payload
 }
 

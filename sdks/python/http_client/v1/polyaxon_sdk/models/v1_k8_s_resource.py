@@ -54,8 +54,10 @@ class V1K8SResource(object):
         'tags': 'list[str]',
         'created_at': 'datetime',
         'updated_at': 'datetime',
+        'k8s_ref': 'str',
         'frozen': 'bool',
         'disabled': 'bool',
+        'deleted': 'bool',
         'mount_path': 'str',
         'items': 'list[str]'
     }
@@ -68,13 +70,15 @@ class V1K8SResource(object):
         'tags': 'tags',
         'created_at': 'created_at',
         'updated_at': 'updated_at',
+        'k8s_ref': 'k8s_ref',
         'frozen': 'frozen',
         'disabled': 'disabled',
+        'deleted': 'deleted',
         'mount_path': 'mount_path',
         'items': 'items'
     }
 
-    def __init__(self, uuid=None, name=None, description=None, readme=None, tags=None, created_at=None, updated_at=None, frozen=None, disabled=None, mount_path=None, items=None):  # noqa: E501
+    def __init__(self, uuid=None, name=None, description=None, readme=None, tags=None, created_at=None, updated_at=None, k8s_ref=None, frozen=None, disabled=None, deleted=None, mount_path=None, items=None):  # noqa: E501
         """V1K8SResource - a model defined in Swagger"""  # noqa: E501
 
         self._uuid = None
@@ -84,8 +88,10 @@ class V1K8SResource(object):
         self._tags = None
         self._created_at = None
         self._updated_at = None
+        self._k8s_ref = None
         self._frozen = None
         self._disabled = None
+        self._deleted = None
         self._mount_path = None
         self._items = None
         self.discriminator = None
@@ -104,10 +110,14 @@ class V1K8SResource(object):
             self.created_at = created_at
         if updated_at is not None:
             self.updated_at = updated_at
+        if k8s_ref is not None:
+            self.k8s_ref = k8s_ref
         if frozen is not None:
             self.frozen = frozen
         if disabled is not None:
             self.disabled = disabled
+        if deleted is not None:
+            self.deleted = deleted
         if mount_path is not None:
             self.mount_path = mount_path
         if items is not None:
@@ -261,6 +271,27 @@ class V1K8SResource(object):
         self._updated_at = updated_at
 
     @property
+    def k8s_ref(self):
+        """Gets the k8s_ref of this V1K8SResource.  # noqa: E501
+
+
+        :return: The k8s_ref of this V1K8SResource.  # noqa: E501
+        :rtype: str
+        """
+        return self._k8s_ref
+
+    @k8s_ref.setter
+    def k8s_ref(self, k8s_ref):
+        """Sets the k8s_ref of this V1K8SResource.
+
+
+        :param k8s_ref: The k8s_ref of this V1K8SResource.  # noqa: E501
+        :type: str
+        """
+
+        self._k8s_ref = k8s_ref
+
+    @property
     def frozen(self):
         """Gets the frozen of this V1K8SResource.  # noqa: E501
 
@@ -301,6 +332,27 @@ class V1K8SResource(object):
         """
 
         self._disabled = disabled
+
+    @property
+    def deleted(self):
+        """Gets the deleted of this V1K8SResource.  # noqa: E501
+
+
+        :return: The deleted of this V1K8SResource.  # noqa: E501
+        :rtype: bool
+        """
+        return self._deleted
+
+    @deleted.setter
+    def deleted(self, deleted):
+        """Sets the deleted of this V1K8SResource.
+
+
+        :param deleted: The deleted of this V1K8SResource.  # noqa: E501
+        :type: bool
+        """
+
+        self._deleted = deleted
 
     @property
     def mount_path(self):

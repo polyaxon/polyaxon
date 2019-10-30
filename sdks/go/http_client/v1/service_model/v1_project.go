@@ -38,6 +38,9 @@ type V1Project struct {
 	// Format: date-time
 	CreatedAt strfmt.DateTime `json:"created_at,omitempty"`
 
+	// Optional flag to tell if this project is deleted
+	Deleted bool `json:"deleted,omitempty"`
+
 	// Optional description
 	Description string `json:"description,omitempty"`
 
@@ -46,6 +49,15 @@ type V1Project struct {
 
 	// Required name
 	Name string `json:"name,omitempty"`
+
+	// Required owner/namespace where the projet was created
+	Owner string `json:"owner,omitempty"`
+
+	// Optional a readme text describing this entity
+	Readme string `json:"readme,omitempty"`
+
+	// Optional Tags of this entity
+	Tags []string `json:"tags"`
 
 	// Optional last time the entity was updated
 	// Format: date-time

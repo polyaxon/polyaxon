@@ -16,14 +16,14 @@ Method | HTTP request | Description
 [**listProjectNames**](ProjectsV1Api.md#listProjectNames) | **GET** /api/v1/{owner}/projects/names | List archived runs for user
 [**listProjects**](ProjectsV1Api.md#listProjects) | **GET** /api/v1/{owner}/projects/list | List bookmarked runs for user
 [**patchProject**](ProjectsV1Api.md#patchProject) | **PATCH** /api/v1/{owner}/{project.name} | Delete run
-[**restoreExperiment**](ProjectsV1Api.md#restoreExperiment) | **POST** /api/v1/{owner}/{project}/restore | Stop runs
+[**restoreProject**](ProjectsV1Api.md#restoreProject) | **POST** /api/v1/{owner}/{project}/restore | Stop runs
 [**unbookmarkProject**](ProjectsV1Api.md#unbookmarkProject) | **DELETE** /api/v1/{owner}/{project}/unbookmark | Invalidate runs
 [**updateProject**](ProjectsV1Api.md#updateProject) | **PUT** /api/v1/{owner}/{project.name} | Patch run
 
 
 <a name="archiveProject"></a>
 # **archiveProject**
-> Object archiveProject(owner, project)
+> archiveProject(owner, project)
 
 Stop run
 
@@ -49,7 +49,7 @@ var callback = function(error, data, response) {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully. Returned data: ' + data);
+    console.log('API called successfully.');
   }
 };
 apiInstance.archiveProject(owner, project, callback);
@@ -64,7 +64,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 
@@ -77,7 +77,7 @@ Name | Type | Description  | Notes
 
 <a name="bookmarkProject"></a>
 # **bookmarkProject**
-> Object bookmarkProject(owner, project)
+> bookmarkProject(owner, project)
 
 Invalidate run
 
@@ -103,7 +103,7 @@ var callback = function(error, data, response) {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully. Returned data: ' + data);
+    console.log('API called successfully.');
   }
 };
 apiInstance.bookmarkProject(owner, project, callback);
@@ -118,7 +118,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 
@@ -185,7 +185,7 @@ Name | Type | Description  | Notes
 
 <a name="deleteProject"></a>
 # **deleteProject**
-> Object deleteProject(owner, project)
+> deleteProject(owner, project)
 
 Delete runs
 
@@ -211,7 +211,7 @@ var callback = function(error, data, response) {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully. Returned data: ' + data);
+    console.log('API called successfully.');
   }
 };
 apiInstance.deleteProject(owner, project, callback);
@@ -226,7 +226,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 
@@ -239,7 +239,7 @@ Name | Type | Description  | Notes
 
 <a name="disableProjectCI"></a>
 # **disableProjectCI**
-> Object disableProjectCI(owner, project)
+> disableProjectCI(owner, project)
 
 Restart run
 
@@ -265,7 +265,7 @@ var callback = function(error, data, response) {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully. Returned data: ' + data);
+    console.log('API called successfully.');
   }
 };
 apiInstance.disableProjectCI(owner, project, callback);
@@ -280,7 +280,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 
@@ -293,7 +293,7 @@ Name | Type | Description  | Notes
 
 <a name="enableProjectCI"></a>
 # **enableProjectCI**
-> Object enableProjectCI(owner, project)
+> enableProjectCI(owner, project)
 
 Restart run with copy
 
@@ -319,7 +319,7 @@ var callback = function(error, data, response) {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully. Returned data: ' + data);
+    console.log('API called successfully.');
   }
 };
 apiInstance.enableProjectCI(owner, project, callback);
@@ -334,7 +334,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 
@@ -700,9 +700,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="restoreExperiment"></a>
-# **restoreExperiment**
-> Object restoreExperiment(owner, project)
+<a name="restoreProject"></a>
+# **restoreProject**
+> restoreProject(owner, project)
 
 Stop runs
 
@@ -728,10 +728,10 @@ var callback = function(error, data, response) {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully. Returned data: ' + data);
+    console.log('API called successfully.');
   }
 };
-apiInstance.restoreExperiment(owner, project, callback);
+apiInstance.restoreProject(owner, project, callback);
 ```
 
 ### Parameters
@@ -743,7 +743,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 
@@ -756,7 +756,7 @@ Name | Type | Description  | Notes
 
 <a name="unbookmarkProject"></a>
 # **unbookmarkProject**
-> Object unbookmarkProject(owner, project)
+> unbookmarkProject(owner, project)
 
 Invalidate runs
 
@@ -782,7 +782,7 @@ var callback = function(error, data, response) {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully. Returned data: ' + data);
+    console.log('API called successfully.');
   }
 };
 apiInstance.unbookmarkProject(owner, project, callback);
@@ -797,7 +797,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 

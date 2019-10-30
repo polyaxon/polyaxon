@@ -35,6 +35,9 @@ type V1HostAccess struct {
 	// Format: date-time
 	CreatedAt strfmt.DateTime `json:"created_at,omitempty"`
 
+	// Optional if the entity has been deleted
+	Deleted bool `json:"deleted,omitempty"`
+
 	// Optional description
 	Description string `json:"description,omitempty"`
 
@@ -46,6 +49,9 @@ type V1HostAccess struct {
 
 	// Optional the host value
 	Host string `json:"host,omitempty"`
+
+	// Optional a flag to mark the host as insecure
+	Insecure bool `json:"insecure,omitempty"`
 
 	// Optional the k8s secret to use
 	K8sSecret string `json:"k8s_secret,omitempty"`

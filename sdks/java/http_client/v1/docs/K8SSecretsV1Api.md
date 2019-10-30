@@ -70,7 +70,7 @@ Name | Type | Description  | Notes
 
 <a name="deleteK8SSecret"></a>
 # **deleteK8SSecret**
-> Object deleteK8SSecret(owner, uuid)
+> deleteK8SSecret(owner, uuid)
 
 Patch run
 
@@ -95,8 +95,7 @@ K8SSecretsV1Api apiInstance = new K8SSecretsV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
 String uuid = "uuid_example"; // String | Unique integer identifier of the entity
 try {
-    Object result = apiInstance.deleteK8SSecret(owner, uuid);
-    System.out.println(result);
+    apiInstance.deleteK8SSecret(owner, uuid);
 } catch (ApiException e) {
     System.err.println("Exception when calling K8SSecretsV1Api#deleteK8SSecret");
     e.printStackTrace();
@@ -112,7 +111,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 

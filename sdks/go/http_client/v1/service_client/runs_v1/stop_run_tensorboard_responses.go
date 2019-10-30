@@ -42,6 +42,12 @@ func (o *StopRunTensorboardReader) ReadResponse(response runtime.ClientResponse,
 			return nil, err
 		}
 		return result, nil
+	case 204:
+		result := NewStopRunTensorboardNoContent()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return result, nil
 	case 403:
 		result := NewStopRunTensorboardForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -70,18 +76,39 @@ func NewStopRunTensorboardOK() *StopRunTensorboardOK {
 A successful response.
 */
 type StopRunTensorboardOK struct {
-	Payload interface{}
 }
 
 func (o *StopRunTensorboardOK) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/runs/{uuid}/tensorboard/stop][%d] stopRunTensorboardOK  %+v", 200, o.Payload)
-}
-
-func (o *StopRunTensorboardOK) GetPayload() interface{} {
-	return o.Payload
+	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/tensorboard/stop][%d] stopRunTensorboardOK ", 200)
 }
 
 func (o *StopRunTensorboardOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	return nil
+}
+
+// NewStopRunTensorboardNoContent creates a StopRunTensorboardNoContent with default headers values
+func NewStopRunTensorboardNoContent() *StopRunTensorboardNoContent {
+	return &StopRunTensorboardNoContent{}
+}
+
+/*StopRunTensorboardNoContent handles this case with default header values.
+
+No content.
+*/
+type StopRunTensorboardNoContent struct {
+	Payload interface{}
+}
+
+func (o *StopRunTensorboardNoContent) Error() string {
+	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/tensorboard/stop][%d] stopRunTensorboardNoContent  %+v", 204, o.Payload)
+}
+
+func (o *StopRunTensorboardNoContent) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *StopRunTensorboardNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
 	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
@@ -105,7 +132,7 @@ type StopRunTensorboardForbidden struct {
 }
 
 func (o *StopRunTensorboardForbidden) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/runs/{uuid}/tensorboard/stop][%d] stopRunTensorboardForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/tensorboard/stop][%d] stopRunTensorboardForbidden  %+v", 403, o.Payload)
 }
 
 func (o *StopRunTensorboardForbidden) GetPayload() interface{} {
@@ -132,14 +159,14 @@ func NewStopRunTensorboardNotFound() *StopRunTensorboardNotFound {
 Resource does not exist.
 */
 type StopRunTensorboardNotFound struct {
-	Payload string
+	Payload interface{}
 }
 
 func (o *StopRunTensorboardNotFound) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/runs/{uuid}/tensorboard/stop][%d] stopRunTensorboardNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/tensorboard/stop][%d] stopRunTensorboardNotFound  %+v", 404, o.Payload)
 }
 
-func (o *StopRunTensorboardNotFound) GetPayload() string {
+func (o *StopRunTensorboardNotFound) GetPayload() interface{} {
 	return o.Payload
 }
 

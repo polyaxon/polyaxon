@@ -44,6 +44,12 @@ func (o *ListArtifactsStoresReader) ReadResponse(response runtime.ClientResponse
 			return nil, err
 		}
 		return result, nil
+	case 204:
+		result := NewListArtifactsStoresNoContent()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return result, nil
 	case 403:
 		result := NewListArtifactsStoresForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -95,6 +101,37 @@ func (o *ListArtifactsStoresOK) readResponse(response runtime.ClientResponse, co
 	return nil
 }
 
+// NewListArtifactsStoresNoContent creates a ListArtifactsStoresNoContent with default headers values
+func NewListArtifactsStoresNoContent() *ListArtifactsStoresNoContent {
+	return &ListArtifactsStoresNoContent{}
+}
+
+/*ListArtifactsStoresNoContent handles this case with default header values.
+
+No content.
+*/
+type ListArtifactsStoresNoContent struct {
+	Payload interface{}
+}
+
+func (o *ListArtifactsStoresNoContent) Error() string {
+	return fmt.Sprintf("[GET /api/v1/{owner}/artifacts_stores][%d] listArtifactsStoresNoContent  %+v", 204, o.Payload)
+}
+
+func (o *ListArtifactsStoresNoContent) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *ListArtifactsStoresNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	// response payload
+	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
 // NewListArtifactsStoresForbidden creates a ListArtifactsStoresForbidden with default headers values
 func NewListArtifactsStoresForbidden() *ListArtifactsStoresForbidden {
 	return &ListArtifactsStoresForbidden{}
@@ -136,14 +173,14 @@ func NewListArtifactsStoresNotFound() *ListArtifactsStoresNotFound {
 Resource does not exist.
 */
 type ListArtifactsStoresNotFound struct {
-	Payload string
+	Payload interface{}
 }
 
 func (o *ListArtifactsStoresNotFound) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/artifacts_stores][%d] listArtifactsStoresNotFound  %+v", 404, o.Payload)
 }
 
-func (o *ListArtifactsStoresNotFound) GetPayload() string {
+func (o *ListArtifactsStoresNotFound) GetPayload() interface{} {
 	return o.Payload
 }
 

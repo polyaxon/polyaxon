@@ -70,7 +70,7 @@ Name | Type | Description  | Notes
 
 <a name="deleteGitAccess"></a>
 # **deleteGitAccess**
-> Object deleteGitAccess(owner, uuid)
+> deleteGitAccess(owner, uuid)
 
 Patch run
 
@@ -95,8 +95,7 @@ GitAccessesV1Api apiInstance = new GitAccessesV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
 String uuid = "uuid_example"; // String | Unique integer identifier of the entity
 try {
-    Object result = apiInstance.deleteGitAccess(owner, uuid);
-    System.out.println(result);
+    apiInstance.deleteGitAccess(owner, uuid);
 } catch (ApiException e) {
     System.err.println("Exception when calling GitAccessesV1Api#deleteGitAccess");
     e.printStackTrace();
@@ -112,7 +111,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 

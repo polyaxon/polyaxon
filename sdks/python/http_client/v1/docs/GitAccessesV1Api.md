@@ -68,7 +68,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **delete_git_access**
-> object delete_git_access(owner, uuid)
+> delete_git_access(owner, uuid)
 
 Patch run
 
@@ -93,8 +93,7 @@ uuid = 'uuid_example' # str | Unique integer identifier of the entity
 
 try:
     # Patch run
-    api_response = api_instance.delete_git_access(owner, uuid)
-    pprint(api_response)
+    api_instance.delete_git_access(owner, uuid)
 except ApiException as e:
     print("Exception when calling GitAccessesV1Api->delete_git_access: %s\n" % e)
 ```
@@ -108,7 +107,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**object**
+void (empty response body)
 
 ### Authorization
 

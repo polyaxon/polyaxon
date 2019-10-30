@@ -70,7 +70,7 @@ Name | Type | Description  | Notes
 
 <a name="deleteArtifactsStore"></a>
 # **deleteArtifactsStore**
-> Object deleteArtifactsStore(owner, uuid)
+> deleteArtifactsStore(owner, uuid)
 
 Patch run
 
@@ -95,8 +95,7 @@ ArtifactsStoresV1Api apiInstance = new ArtifactsStoresV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
 String uuid = "uuid_example"; // String | Unique integer identifier of the entity
 try {
-    Object result = apiInstance.deleteArtifactsStore(owner, uuid);
-    System.out.println(result);
+    apiInstance.deleteArtifactsStore(owner, uuid);
 } catch (ApiException e) {
     System.err.println("Exception when calling ArtifactsStoresV1Api#deleteArtifactsStore");
     e.printStackTrace();
@@ -112,7 +111,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 

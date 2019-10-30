@@ -44,6 +44,12 @@ func (o *CreateRunCodeRefReader) ReadResponse(response runtime.ClientResponse, c
 			return nil, err
 		}
 		return result, nil
+	case 204:
+		result := NewCreateRunCodeRefNoContent()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return result, nil
 	case 403:
 		result := NewCreateRunCodeRefForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -95,6 +101,37 @@ func (o *CreateRunCodeRefOK) readResponse(response runtime.ClientResponse, consu
 	return nil
 }
 
+// NewCreateRunCodeRefNoContent creates a CreateRunCodeRefNoContent with default headers values
+func NewCreateRunCodeRefNoContent() *CreateRunCodeRefNoContent {
+	return &CreateRunCodeRefNoContent{}
+}
+
+/*CreateRunCodeRefNoContent handles this case with default header values.
+
+No content.
+*/
+type CreateRunCodeRefNoContent struct {
+	Payload interface{}
+}
+
+func (o *CreateRunCodeRefNoContent) Error() string {
+	return fmt.Sprintf("[POST /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/coderef][%d] createRunCodeRefNoContent  %+v", 204, o.Payload)
+}
+
+func (o *CreateRunCodeRefNoContent) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *CreateRunCodeRefNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	// response payload
+	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
 // NewCreateRunCodeRefForbidden creates a CreateRunCodeRefForbidden with default headers values
 func NewCreateRunCodeRefForbidden() *CreateRunCodeRefForbidden {
 	return &CreateRunCodeRefForbidden{}
@@ -136,14 +173,14 @@ func NewCreateRunCodeRefNotFound() *CreateRunCodeRefNotFound {
 Resource does not exist.
 */
 type CreateRunCodeRefNotFound struct {
-	Payload string
+	Payload interface{}
 }
 
 func (o *CreateRunCodeRefNotFound) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/coderef][%d] createRunCodeRefNotFound  %+v", 404, o.Payload)
 }
 
-func (o *CreateRunCodeRefNotFound) GetPayload() string {
+func (o *CreateRunCodeRefNotFound) GetPayload() interface{} {
 	return o.Payload
 }
 

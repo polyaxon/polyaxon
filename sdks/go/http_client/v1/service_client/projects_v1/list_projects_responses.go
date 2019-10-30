@@ -44,6 +44,12 @@ func (o *ListProjectsReader) ReadResponse(response runtime.ClientResponse, consu
 			return nil, err
 		}
 		return result, nil
+	case 204:
+		result := NewListProjectsNoContent()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return result, nil
 	case 403:
 		result := NewListProjectsForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -95,6 +101,37 @@ func (o *ListProjectsOK) readResponse(response runtime.ClientResponse, consumer 
 	return nil
 }
 
+// NewListProjectsNoContent creates a ListProjectsNoContent with default headers values
+func NewListProjectsNoContent() *ListProjectsNoContent {
+	return &ListProjectsNoContent{}
+}
+
+/*ListProjectsNoContent handles this case with default header values.
+
+No content.
+*/
+type ListProjectsNoContent struct {
+	Payload interface{}
+}
+
+func (o *ListProjectsNoContent) Error() string {
+	return fmt.Sprintf("[GET /api/v1/{owner}/projects/list][%d] listProjectsNoContent  %+v", 204, o.Payload)
+}
+
+func (o *ListProjectsNoContent) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *ListProjectsNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	// response payload
+	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
 // NewListProjectsForbidden creates a ListProjectsForbidden with default headers values
 func NewListProjectsForbidden() *ListProjectsForbidden {
 	return &ListProjectsForbidden{}
@@ -136,14 +173,14 @@ func NewListProjectsNotFound() *ListProjectsNotFound {
 Resource does not exist.
 */
 type ListProjectsNotFound struct {
-	Payload string
+	Payload interface{}
 }
 
 func (o *ListProjectsNotFound) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/projects/list][%d] listProjectsNotFound  %+v", 404, o.Payload)
 }
 
-func (o *ListProjectsNotFound) GetPayload() string {
+func (o *ListProjectsNotFound) GetPayload() interface{} {
 	return o.Payload
 }
 

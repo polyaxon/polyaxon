@@ -119,7 +119,7 @@ Class | Method | HTTP request | Description
 *ProjectsV1Api* | [**list_project_names**](docs/ProjectsV1Api.md#list_project_names) | **GET** /api/v1/{owner}/projects/names | List archived runs for user
 *ProjectsV1Api* | [**list_projects**](docs/ProjectsV1Api.md#list_projects) | **GET** /api/v1/{owner}/projects/list | List bookmarked runs for user
 *ProjectsV1Api* | [**patch_project**](docs/ProjectsV1Api.md#patch_project) | **PATCH** /api/v1/{owner}/{project.name} | Delete run
-*ProjectsV1Api* | [**restore_experiment**](docs/ProjectsV1Api.md#restore_experiment) | **POST** /api/v1/{owner}/{project}/restore | Stop runs
+*ProjectsV1Api* | [**restore_project**](docs/ProjectsV1Api.md#restore_project) | **POST** /api/v1/{owner}/{project}/restore | Stop runs
 *ProjectsV1Api* | [**unbookmark_project**](docs/ProjectsV1Api.md#unbookmark_project) | **DELETE** /api/v1/{owner}/{project}/unbookmark | Invalidate runs
 *ProjectsV1Api* | [**update_project**](docs/ProjectsV1Api.md#update_project) | **PUT** /api/v1/{owner}/{project.name} | Patch run
 *RegsitryAccessesV1Api* | [**create_regsitry_access**](docs/RegsitryAccessesV1Api.md#create_regsitry_access) | **POST** /api/v1/{owner}/registry_accesses | List runs
@@ -152,7 +152,7 @@ Class | Method | HTTP request | Description
 *RunsV1Api* | [**resume_run**](docs/RunsV1Api.md#resume_run) | **POST** /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/resume | Resume run
 *RunsV1Api* | [**start_run_tensorboard**](docs/RunsV1Api.md#start_run_tensorboard) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/tensorboard/start | Start run tensorboard
 *RunsV1Api* | [**stop_run**](docs/RunsV1Api.md#stop_run) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/stop | Stop run
-*RunsV1Api* | [**stop_run_tensorboard**](docs/RunsV1Api.md#stop_run_tensorboard) | **DELETE** /api/v1/{owner}/{project}/runs/{uuid}/tensorboard/stop | Stop run tensorboard
+*RunsV1Api* | [**stop_run_tensorboard**](docs/RunsV1Api.md#stop_run_tensorboard) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/tensorboard/stop | Stop run tensorboard
 *RunsV1Api* | [**stop_runs**](docs/RunsV1Api.md#stop_runs) | **POST** /api/v1/{owner}/{project}/runs/stop | Stop runs
 *RunsV1Api* | [**unbookmark_run**](docs/RunsV1Api.md#unbookmark_run) | **DELETE** /api/v1/{owner}/{project}/runs/{uuid}/unbookmark | Unbookmark run
 *RunsV1Api* | [**update_run**](docs/RunsV1Api.md#update_run) | **PUT** /api/v1/{owner}/{project}/runs/{run.uuid} | Update run
@@ -188,6 +188,7 @@ Class | Method | HTTP request | Description
  - [V1ProjectEntityResourceRequest](docs/V1ProjectEntityResourceRequest.md)
  - [V1Run](docs/V1Run.md)
  - [V1Search](docs/V1Search.md)
+ - [V1SearchDefinition](docs/V1SearchDefinition.md)
  - [V1Status](docs/V1Status.md)
  - [V1StatusCondition](docs/V1StatusCondition.md)
  - [V1User](docs/V1User.md)

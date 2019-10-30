@@ -20,7 +20,7 @@ PYTHON := $(DOCKER_RUN) python
 GO := $(DOCKER_RUN) go
 SWAGGER := $(DOCKER_RUN) swagger
 DOCKER_PATH_AUTOGEN := /usr/local/bin/autogen/autogen
-PATH_SWAGGER_CLI := ~/bin/swagger-codegen-cli-2.4.7.jar
+PATH_SWAGGER_CLI := ~/bin/swagger-codegen-cli-2.4.9.jar
 LICENSE_OWNER := "Polyaxon, Inc."
 
 # Client
@@ -70,6 +70,7 @@ generate-js-swagger:
 
 generate-ts-swagger:
 	java -jar $(PATH_SWAGGER_CLI) generate -i swagger/$(VERSION)/polyaxon_sdk.swagger.json -l typescript-fetch -o ts/$(HTTP_CLIENT)/$(VERSION) -c swagger/config.json
+	cp -r ts/$(HTTP_CLIENT)/$(VERSION)/ ../client/src/api
 
 generate-java-swagger:
 	java -jar $(PATH_SWAGGER_CLI) generate -i swagger/$(VERSION)/polyaxon_sdk.swagger.json -l java -o java/$(HTTP_CLIENT)/$(VERSION) -c swagger/config.json -D hideGenerationTimestamp=true
@@ -99,14 +100,15 @@ clean:
 	rm -rf java/$(PB_CLIENT)/$(VERSION)/*
 	rm -rf swagger/$(VERSION)/*
 
-all: clean \
-	 docker-build \
-	 compile-go \
-	 compile-python \
-	 compile-swagger \
-	 generate-go-swagger \
+swagger-generate: generate-go-swagger \
 	 generate-js-swagger \
 	 generate-ts-swagger \
 	 generate-java-swagger \
 	 generate-py-swagger \
 	 auto-license
+
+all: clean \
+	 docker-build \
+	 compile-go \
+	 compile-python \
+	 compile-swagger

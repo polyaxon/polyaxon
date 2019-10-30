@@ -42,6 +42,12 @@ func (o *DisableProjectCIReader) ReadResponse(response runtime.ClientResponse, c
 			return nil, err
 		}
 		return result, nil
+	case 204:
+		result := NewDisableProjectCINoContent()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return result, nil
 	case 403:
 		result := NewDisableProjectCIForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -70,18 +76,39 @@ func NewDisableProjectCIOK() *DisableProjectCIOK {
 A successful response.
 */
 type DisableProjectCIOK struct {
-	Payload interface{}
 }
 
 func (o *DisableProjectCIOK) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/ci][%d] disableProjectCIOK  %+v", 200, o.Payload)
-}
-
-func (o *DisableProjectCIOK) GetPayload() interface{} {
-	return o.Payload
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/ci][%d] disableProjectCIOK ", 200)
 }
 
 func (o *DisableProjectCIOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	return nil
+}
+
+// NewDisableProjectCINoContent creates a DisableProjectCINoContent with default headers values
+func NewDisableProjectCINoContent() *DisableProjectCINoContent {
+	return &DisableProjectCINoContent{}
+}
+
+/*DisableProjectCINoContent handles this case with default header values.
+
+No content.
+*/
+type DisableProjectCINoContent struct {
+	Payload interface{}
+}
+
+func (o *DisableProjectCINoContent) Error() string {
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/ci][%d] disableProjectCINoContent  %+v", 204, o.Payload)
+}
+
+func (o *DisableProjectCINoContent) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *DisableProjectCINoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
 	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
@@ -132,14 +159,14 @@ func NewDisableProjectCINotFound() *DisableProjectCINotFound {
 Resource does not exist.
 */
 type DisableProjectCINotFound struct {
-	Payload string
+	Payload interface{}
 }
 
 func (o *DisableProjectCINotFound) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/ci][%d] disableProjectCINotFound  %+v", 404, o.Payload)
 }
 
-func (o *DisableProjectCINotFound) GetPayload() string {
+func (o *DisableProjectCINotFound) GetPayload() interface{} {
 	return o.Payload
 }
 

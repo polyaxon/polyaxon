@@ -42,6 +42,12 @@ func (o *DeleteProjectReader) ReadResponse(response runtime.ClientResponse, cons
 			return nil, err
 		}
 		return result, nil
+	case 204:
+		result := NewDeleteProjectNoContent()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return result, nil
 	case 403:
 		result := NewDeleteProjectForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -70,18 +76,39 @@ func NewDeleteProjectOK() *DeleteProjectOK {
 A successful response.
 */
 type DeleteProjectOK struct {
-	Payload interface{}
 }
 
 func (o *DeleteProjectOK) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}][%d] deleteProjectOK  %+v", 200, o.Payload)
-}
-
-func (o *DeleteProjectOK) GetPayload() interface{} {
-	return o.Payload
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}][%d] deleteProjectOK ", 200)
 }
 
 func (o *DeleteProjectOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	return nil
+}
+
+// NewDeleteProjectNoContent creates a DeleteProjectNoContent with default headers values
+func NewDeleteProjectNoContent() *DeleteProjectNoContent {
+	return &DeleteProjectNoContent{}
+}
+
+/*DeleteProjectNoContent handles this case with default header values.
+
+No content.
+*/
+type DeleteProjectNoContent struct {
+	Payload interface{}
+}
+
+func (o *DeleteProjectNoContent) Error() string {
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}][%d] deleteProjectNoContent  %+v", 204, o.Payload)
+}
+
+func (o *DeleteProjectNoContent) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *DeleteProjectNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
 	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
@@ -132,14 +159,14 @@ func NewDeleteProjectNotFound() *DeleteProjectNotFound {
 Resource does not exist.
 */
 type DeleteProjectNotFound struct {
-	Payload string
+	Payload interface{}
 }
 
 func (o *DeleteProjectNotFound) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}][%d] deleteProjectNotFound  %+v", 404, o.Payload)
 }
 
-func (o *DeleteProjectNotFound) GetPayload() string {
+func (o *DeleteProjectNotFound) GetPayload() interface{} {
 	return o.Payload
 }
 

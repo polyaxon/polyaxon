@@ -44,6 +44,12 @@ func (o *ListRegsitryAccessesReader) ReadResponse(response runtime.ClientRespons
 			return nil, err
 		}
 		return result, nil
+	case 204:
+		result := NewListRegsitryAccessesNoContent()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return result, nil
 	case 403:
 		result := NewListRegsitryAccessesForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -95,6 +101,37 @@ func (o *ListRegsitryAccessesOK) readResponse(response runtime.ClientResponse, c
 	return nil
 }
 
+// NewListRegsitryAccessesNoContent creates a ListRegsitryAccessesNoContent with default headers values
+func NewListRegsitryAccessesNoContent() *ListRegsitryAccessesNoContent {
+	return &ListRegsitryAccessesNoContent{}
+}
+
+/*ListRegsitryAccessesNoContent handles this case with default header values.
+
+No content.
+*/
+type ListRegsitryAccessesNoContent struct {
+	Payload interface{}
+}
+
+func (o *ListRegsitryAccessesNoContent) Error() string {
+	return fmt.Sprintf("[GET /api/v1/{owner}/registry_accesses][%d] listRegsitryAccessesNoContent  %+v", 204, o.Payload)
+}
+
+func (o *ListRegsitryAccessesNoContent) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *ListRegsitryAccessesNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	// response payload
+	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
 // NewListRegsitryAccessesForbidden creates a ListRegsitryAccessesForbidden with default headers values
 func NewListRegsitryAccessesForbidden() *ListRegsitryAccessesForbidden {
 	return &ListRegsitryAccessesForbidden{}
@@ -136,14 +173,14 @@ func NewListRegsitryAccessesNotFound() *ListRegsitryAccessesNotFound {
 Resource does not exist.
 */
 type ListRegsitryAccessesNotFound struct {
-	Payload string
+	Payload interface{}
 }
 
 func (o *ListRegsitryAccessesNotFound) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/registry_accesses][%d] listRegsitryAccessesNotFound  %+v", 404, o.Payload)
 }
 
-func (o *ListRegsitryAccessesNotFound) GetPayload() string {
+func (o *ListRegsitryAccessesNotFound) GetPayload() interface{} {
 	return o.Payload
 }
 

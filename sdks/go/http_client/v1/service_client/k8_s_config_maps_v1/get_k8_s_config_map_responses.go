@@ -44,6 +44,12 @@ func (o *GetK8SConfigMapReader) ReadResponse(response runtime.ClientResponse, co
 			return nil, err
 		}
 		return result, nil
+	case 204:
+		result := NewGetK8SConfigMapNoContent()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return result, nil
 	case 403:
 		result := NewGetK8SConfigMapForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -95,6 +101,37 @@ func (o *GetK8SConfigMapOK) readResponse(response runtime.ClientResponse, consum
 	return nil
 }
 
+// NewGetK8SConfigMapNoContent creates a GetK8SConfigMapNoContent with default headers values
+func NewGetK8SConfigMapNoContent() *GetK8SConfigMapNoContent {
+	return &GetK8SConfigMapNoContent{}
+}
+
+/*GetK8SConfigMapNoContent handles this case with default header values.
+
+No content.
+*/
+type GetK8SConfigMapNoContent struct {
+	Payload interface{}
+}
+
+func (o *GetK8SConfigMapNoContent) Error() string {
+	return fmt.Sprintf("[GET /api/v1/{owner}/k8s_config_maps/{uuid}][%d] getK8SConfigMapNoContent  %+v", 204, o.Payload)
+}
+
+func (o *GetK8SConfigMapNoContent) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *GetK8SConfigMapNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	// response payload
+	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
 // NewGetK8SConfigMapForbidden creates a GetK8SConfigMapForbidden with default headers values
 func NewGetK8SConfigMapForbidden() *GetK8SConfigMapForbidden {
 	return &GetK8SConfigMapForbidden{}
@@ -136,14 +173,14 @@ func NewGetK8SConfigMapNotFound() *GetK8SConfigMapNotFound {
 Resource does not exist.
 */
 type GetK8SConfigMapNotFound struct {
-	Payload string
+	Payload interface{}
 }
 
 func (o *GetK8SConfigMapNotFound) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/k8s_config_maps/{uuid}][%d] getK8SConfigMapNotFound  %+v", 404, o.Payload)
 }
 
-func (o *GetK8SConfigMapNotFound) GetPayload() string {
+func (o *GetK8SConfigMapNotFound) GetPayload() interface{} {
 	return o.Payload
 }
 

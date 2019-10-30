@@ -44,6 +44,12 @@ func (o *ListArtifactsStoreNamesReader) ReadResponse(response runtime.ClientResp
 			return nil, err
 		}
 		return result, nil
+	case 204:
+		result := NewListArtifactsStoreNamesNoContent()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return result, nil
 	case 403:
 		result := NewListArtifactsStoreNamesForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -95,6 +101,37 @@ func (o *ListArtifactsStoreNamesOK) readResponse(response runtime.ClientResponse
 	return nil
 }
 
+// NewListArtifactsStoreNamesNoContent creates a ListArtifactsStoreNamesNoContent with default headers values
+func NewListArtifactsStoreNamesNoContent() *ListArtifactsStoreNamesNoContent {
+	return &ListArtifactsStoreNamesNoContent{}
+}
+
+/*ListArtifactsStoreNamesNoContent handles this case with default header values.
+
+No content.
+*/
+type ListArtifactsStoreNamesNoContent struct {
+	Payload interface{}
+}
+
+func (o *ListArtifactsStoreNamesNoContent) Error() string {
+	return fmt.Sprintf("[GET /api/v1/{owner}/artifacts_stores/names][%d] listArtifactsStoreNamesNoContent  %+v", 204, o.Payload)
+}
+
+func (o *ListArtifactsStoreNamesNoContent) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *ListArtifactsStoreNamesNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	// response payload
+	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
 // NewListArtifactsStoreNamesForbidden creates a ListArtifactsStoreNamesForbidden with default headers values
 func NewListArtifactsStoreNamesForbidden() *ListArtifactsStoreNamesForbidden {
 	return &ListArtifactsStoreNamesForbidden{}
@@ -136,14 +173,14 @@ func NewListArtifactsStoreNamesNotFound() *ListArtifactsStoreNamesNotFound {
 Resource does not exist.
 */
 type ListArtifactsStoreNamesNotFound struct {
-	Payload string
+	Payload interface{}
 }
 
 func (o *ListArtifactsStoreNamesNotFound) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/artifacts_stores/names][%d] listArtifactsStoreNamesNotFound  %+v", 404, o.Payload)
 }
 
-func (o *ListArtifactsStoreNamesNotFound) GetPayload() string {
+func (o *ListArtifactsStoreNamesNotFound) GetPayload() interface{} {
 	return o.Payload
 }
 

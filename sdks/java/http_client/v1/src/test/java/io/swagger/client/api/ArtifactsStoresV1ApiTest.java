@@ -76,7 +76,7 @@ public class ArtifactsStoresV1ApiTest {
     public void deleteArtifactsStoreTest() throws ApiException {
         String owner = null;
         String uuid = null;
-        Object response = api.deleteArtifactsStore(owner, uuid);
+        api.deleteArtifactsStore(owner, uuid);
 
         // TODO: test validations
     }

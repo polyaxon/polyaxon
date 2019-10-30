@@ -73,6 +73,9 @@ public class V1ArtifactsStore {
   @SerializedName("disabled")
   private Boolean disabled = null;
 
+  @SerializedName("deleted")
+  private Boolean deleted = null;
+
   @SerializedName("k8s_secret")
   private String k8sSecret = null;
 
@@ -264,6 +267,24 @@ public class V1ArtifactsStore {
     this.disabled = disabled;
   }
 
+  public V1ArtifactsStore deleted(Boolean deleted) {
+    this.deleted = deleted;
+    return this;
+  }
+
+   /**
+   * Get deleted
+   * @return deleted
+  **/
+  @ApiModelProperty(value = "")
+  public Boolean isDeleted() {
+    return deleted;
+  }
+
+  public void setDeleted(Boolean deleted) {
+    this.deleted = deleted;
+  }
+
   public V1ArtifactsStore k8sSecret(String k8sSecret) {
     this.k8sSecret = k8sSecret;
     return this;
@@ -409,6 +430,7 @@ public class V1ArtifactsStore {
         Objects.equals(this.updatedAt, v1ArtifactsStore.updatedAt) &&
         Objects.equals(this.frozen, v1ArtifactsStore.frozen) &&
         Objects.equals(this.disabled, v1ArtifactsStore.disabled) &&
+        Objects.equals(this.deleted, v1ArtifactsStore.deleted) &&
         Objects.equals(this.k8sSecret, v1ArtifactsStore.k8sSecret) &&
         Objects.equals(this.type, v1ArtifactsStore.type) &&
         Objects.equals(this.mountPath, v1ArtifactsStore.mountPath) &&
@@ -420,7 +442,7 @@ public class V1ArtifactsStore {
 
   @Override
   public int hashCode() {
-    return Objects.hash(uuid, name, description, readme, tags, createdAt, updatedAt, frozen, disabled, k8sSecret, type, mountPath, hostPath, volumeClaim, bucket, readOnly);
+    return Objects.hash(uuid, name, description, readme, tags, createdAt, updatedAt, frozen, disabled, deleted, k8sSecret, type, mountPath, hostPath, volumeClaim, bucket, readOnly);
   }
 
 
@@ -438,6 +460,7 @@ public class V1ArtifactsStore {
     sb.append("    updatedAt: ").append(toIndentedString(updatedAt)).append("\n");
     sb.append("    frozen: ").append(toIndentedString(frozen)).append("\n");
     sb.append("    disabled: ").append(toIndentedString(disabled)).append("\n");
+    sb.append("    deleted: ").append(toIndentedString(deleted)).append("\n");
     sb.append("    k8sSecret: ").append(toIndentedString(k8sSecret)).append("\n");
     sb.append("    type: ").append(toIndentedString(type)).append("\n");
     sb.append("    mountPath: ").append(toIndentedString(mountPath)).append("\n");

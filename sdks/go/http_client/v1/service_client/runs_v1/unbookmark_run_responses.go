@@ -42,6 +42,12 @@ func (o *UnbookmarkRunReader) ReadResponse(response runtime.ClientResponse, cons
 			return nil, err
 		}
 		return result, nil
+	case 204:
+		result := NewUnbookmarkRunNoContent()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return result, nil
 	case 403:
 		result := NewUnbookmarkRunForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -70,18 +76,39 @@ func NewUnbookmarkRunOK() *UnbookmarkRunOK {
 A successful response.
 */
 type UnbookmarkRunOK struct {
-	Payload interface{}
 }
 
 func (o *UnbookmarkRunOK) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/runs/{uuid}/unbookmark][%d] unbookmarkRunOK  %+v", 200, o.Payload)
-}
-
-func (o *UnbookmarkRunOK) GetPayload() interface{} {
-	return o.Payload
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/runs/{uuid}/unbookmark][%d] unbookmarkRunOK ", 200)
 }
 
 func (o *UnbookmarkRunOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	return nil
+}
+
+// NewUnbookmarkRunNoContent creates a UnbookmarkRunNoContent with default headers values
+func NewUnbookmarkRunNoContent() *UnbookmarkRunNoContent {
+	return &UnbookmarkRunNoContent{}
+}
+
+/*UnbookmarkRunNoContent handles this case with default header values.
+
+No content.
+*/
+type UnbookmarkRunNoContent struct {
+	Payload interface{}
+}
+
+func (o *UnbookmarkRunNoContent) Error() string {
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/runs/{uuid}/unbookmark][%d] unbookmarkRunNoContent  %+v", 204, o.Payload)
+}
+
+func (o *UnbookmarkRunNoContent) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *UnbookmarkRunNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
 	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
@@ -132,14 +159,14 @@ func NewUnbookmarkRunNotFound() *UnbookmarkRunNotFound {
 Resource does not exist.
 */
 type UnbookmarkRunNotFound struct {
-	Payload string
+	Payload interface{}
 }
 
 func (o *UnbookmarkRunNotFound) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/runs/{uuid}/unbookmark][%d] unbookmarkRunNotFound  %+v", 404, o.Payload)
 }
 
-func (o *UnbookmarkRunNotFound) GetPayload() string {
+func (o *UnbookmarkRunNotFound) GetPayload() interface{} {
 	return o.Payload
 }
 

@@ -42,6 +42,12 @@ func (o *InvalidateRunReader) ReadResponse(response runtime.ClientResponse, cons
 			return nil, err
 		}
 		return result, nil
+	case 204:
+		result := NewInvalidateRunNoContent()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return result, nil
 	case 403:
 		result := NewInvalidateRunForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -70,18 +76,39 @@ func NewInvalidateRunOK() *InvalidateRunOK {
 A successful response.
 */
 type InvalidateRunOK struct {
-	Payload interface{}
 }
 
 func (o *InvalidateRunOK) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/invalidate][%d] invalidateRunOK  %+v", 200, o.Payload)
-}
-
-func (o *InvalidateRunOK) GetPayload() interface{} {
-	return o.Payload
+	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/invalidate][%d] invalidateRunOK ", 200)
 }
 
 func (o *InvalidateRunOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	return nil
+}
+
+// NewInvalidateRunNoContent creates a InvalidateRunNoContent with default headers values
+func NewInvalidateRunNoContent() *InvalidateRunNoContent {
+	return &InvalidateRunNoContent{}
+}
+
+/*InvalidateRunNoContent handles this case with default header values.
+
+No content.
+*/
+type InvalidateRunNoContent struct {
+	Payload interface{}
+}
+
+func (o *InvalidateRunNoContent) Error() string {
+	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/invalidate][%d] invalidateRunNoContent  %+v", 204, o.Payload)
+}
+
+func (o *InvalidateRunNoContent) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *InvalidateRunNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
 	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
@@ -132,14 +159,14 @@ func NewInvalidateRunNotFound() *InvalidateRunNotFound {
 Resource does not exist.
 */
 type InvalidateRunNotFound struct {
-	Payload string
+	Payload interface{}
 }
 
 func (o *InvalidateRunNotFound) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/invalidate][%d] invalidateRunNotFound  %+v", 404, o.Payload)
 }
 
-func (o *InvalidateRunNotFound) GetPayload() string {
+func (o *InvalidateRunNotFound) GetPayload() interface{} {
 	return o.Payload
 }
 

@@ -43,7 +43,7 @@ type Client struct {
 /*
 CreateK8SSecrets lists runs
 */
-func (a *Client) CreateK8SSecrets(params *CreateK8SSecretsParams, authInfo runtime.ClientAuthInfoWriter) (*CreateK8SSecretsOK, error) {
+func (a *Client) CreateK8SSecrets(params *CreateK8SSecretsParams, authInfo runtime.ClientAuthInfoWriter) (*CreateK8SSecretsOK, *CreateK8SSecretsNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewCreateK8SSecretsParams()
@@ -55,7 +55,7 @@ func (a *Client) CreateK8SSecrets(params *CreateK8SSecretsParams, authInfo runti
 		PathPattern:        "/api/v1/{owner}/k8s_secrets",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https", "ws", "wss"},
+		Schemes:            []string{"http", "https"},
 		Params:             params,
 		Reader:             &CreateK8SSecretsReader{formats: a.formats},
 		AuthInfo:           authInfo,
@@ -63,22 +63,23 @@ func (a *Client) CreateK8SSecrets(params *CreateK8SSecretsParams, authInfo runti
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	success, ok := result.(*CreateK8SSecretsOK)
-	if ok {
-		return success, nil
+	switch value := result.(type) {
+	case *CreateK8SSecretsOK:
+		return value, nil, nil
+	case *CreateK8SSecretsNoContent:
+		return nil, value, nil
 	}
-	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for CreateK8SSecrets: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for k8_s_secrets_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
 /*
 DeleteK8SSecret patches run
 */
-func (a *Client) DeleteK8SSecret(params *DeleteK8SSecretParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteK8SSecretOK, error) {
+func (a *Client) DeleteK8SSecret(params *DeleteK8SSecretParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteK8SSecretOK, *DeleteK8SSecretNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewDeleteK8SSecretParams()
@@ -90,7 +91,7 @@ func (a *Client) DeleteK8SSecret(params *DeleteK8SSecretParams, authInfo runtime
 		PathPattern:        "/api/v1/{owner}/k8s_secrets/{uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https", "ws", "wss"},
+		Schemes:            []string{"http", "https"},
 		Params:             params,
 		Reader:             &DeleteK8SSecretReader{formats: a.formats},
 		AuthInfo:           authInfo,
@@ -98,22 +99,23 @@ func (a *Client) DeleteK8SSecret(params *DeleteK8SSecretParams, authInfo runtime
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	success, ok := result.(*DeleteK8SSecretOK)
-	if ok {
-		return success, nil
+	switch value := result.(type) {
+	case *DeleteK8SSecretOK:
+		return value, nil, nil
+	case *DeleteK8SSecretNoContent:
+		return nil, value, nil
 	}
-	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for DeleteK8SSecret: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for k8_s_secrets_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
 /*
 GetK8SSecret creates new run
 */
-func (a *Client) GetK8SSecret(params *GetK8SSecretParams, authInfo runtime.ClientAuthInfoWriter) (*GetK8SSecretOK, error) {
+func (a *Client) GetK8SSecret(params *GetK8SSecretParams, authInfo runtime.ClientAuthInfoWriter) (*GetK8SSecretOK, *GetK8SSecretNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetK8SSecretParams()
@@ -125,7 +127,7 @@ func (a *Client) GetK8SSecret(params *GetK8SSecretParams, authInfo runtime.Clien
 		PathPattern:        "/api/v1/{owner}/k8s_secrets/{uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https", "ws", "wss"},
+		Schemes:            []string{"http", "https"},
 		Params:             params,
 		Reader:             &GetK8SSecretReader{formats: a.formats},
 		AuthInfo:           authInfo,
@@ -133,22 +135,23 @@ func (a *Client) GetK8SSecret(params *GetK8SSecretParams, authInfo runtime.Clien
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	success, ok := result.(*GetK8SSecretOK)
-	if ok {
-		return success, nil
+	switch value := result.(type) {
+	case *GetK8SSecretOK:
+		return value, nil, nil
+	case *GetK8SSecretNoContent:
+		return nil, value, nil
 	}
-	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for GetK8SSecret: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for k8_s_secrets_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
 /*
 ListK8SSecretNames lists bookmarked runs for user
 */
-func (a *Client) ListK8SSecretNames(params *ListK8SSecretNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListK8SSecretNamesOK, error) {
+func (a *Client) ListK8SSecretNames(params *ListK8SSecretNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListK8SSecretNamesOK, *ListK8SSecretNamesNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewListK8SSecretNamesParams()
@@ -160,7 +163,7 @@ func (a *Client) ListK8SSecretNames(params *ListK8SSecretNamesParams, authInfo r
 		PathPattern:        "/api/v1/{owner}/k8s_secrets/names",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https", "ws", "wss"},
+		Schemes:            []string{"http", "https"},
 		Params:             params,
 		Reader:             &ListK8SSecretNamesReader{formats: a.formats},
 		AuthInfo:           authInfo,
@@ -168,22 +171,23 @@ func (a *Client) ListK8SSecretNames(params *ListK8SSecretNamesParams, authInfo r
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	success, ok := result.(*ListK8SSecretNamesOK)
-	if ok {
-		return success, nil
+	switch value := result.(type) {
+	case *ListK8SSecretNamesOK:
+		return value, nil, nil
+	case *ListK8SSecretNamesNoContent:
+		return nil, value, nil
 	}
-	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for ListK8SSecretNames: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for k8_s_secrets_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
 /*
 ListK8SSecrets lists archived runs for user
 */
-func (a *Client) ListK8SSecrets(params *ListK8SSecretsParams, authInfo runtime.ClientAuthInfoWriter) (*ListK8SSecretsOK, error) {
+func (a *Client) ListK8SSecrets(params *ListK8SSecretsParams, authInfo runtime.ClientAuthInfoWriter) (*ListK8SSecretsOK, *ListK8SSecretsNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewListK8SSecretsParams()
@@ -195,7 +199,7 @@ func (a *Client) ListK8SSecrets(params *ListK8SSecretsParams, authInfo runtime.C
 		PathPattern:        "/api/v1/{owner}/k8s_secrets",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https", "ws", "wss"},
+		Schemes:            []string{"http", "https"},
 		Params:             params,
 		Reader:             &ListK8SSecretsReader{formats: a.formats},
 		AuthInfo:           authInfo,
@@ -203,22 +207,23 @@ func (a *Client) ListK8SSecrets(params *ListK8SSecretsParams, authInfo runtime.C
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	success, ok := result.(*ListK8SSecretsOK)
-	if ok {
-		return success, nil
+	switch value := result.(type) {
+	case *ListK8SSecretsOK:
+		return value, nil, nil
+	case *ListK8SSecretsNoContent:
+		return nil, value, nil
 	}
-	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for ListK8SSecrets: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for k8_s_secrets_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
 /*
 PatchK8SSecret updates run
 */
-func (a *Client) PatchK8SSecret(params *PatchK8SSecretParams, authInfo runtime.ClientAuthInfoWriter) (*PatchK8SSecretOK, error) {
+func (a *Client) PatchK8SSecret(params *PatchK8SSecretParams, authInfo runtime.ClientAuthInfoWriter) (*PatchK8SSecretOK, *PatchK8SSecretNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewPatchK8SSecretParams()
@@ -230,7 +235,7 @@ func (a *Client) PatchK8SSecret(params *PatchK8SSecretParams, authInfo runtime.C
 		PathPattern:        "/api/v1/{owner}/k8s_secrets/{k8s_resource.uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https", "ws", "wss"},
+		Schemes:            []string{"http", "https"},
 		Params:             params,
 		Reader:             &PatchK8SSecretReader{formats: a.formats},
 		AuthInfo:           authInfo,
@@ -238,22 +243,23 @@ func (a *Client) PatchK8SSecret(params *PatchK8SSecretParams, authInfo runtime.C
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	success, ok := result.(*PatchK8SSecretOK)
-	if ok {
-		return success, nil
+	switch value := result.(type) {
+	case *PatchK8SSecretOK:
+		return value, nil, nil
+	case *PatchK8SSecretNoContent:
+		return nil, value, nil
 	}
-	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for PatchK8SSecret: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for k8_s_secrets_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
 /*
 UpdateK8SSecret gets run
 */
-func (a *Client) UpdateK8SSecret(params *UpdateK8SSecretParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateK8SSecretOK, error) {
+func (a *Client) UpdateK8SSecret(params *UpdateK8SSecretParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateK8SSecretOK, *UpdateK8SSecretNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewUpdateK8SSecretParams()
@@ -265,7 +271,7 @@ func (a *Client) UpdateK8SSecret(params *UpdateK8SSecretParams, authInfo runtime
 		PathPattern:        "/api/v1/{owner}/k8s_secrets/{k8s_resource.uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https", "ws", "wss"},
+		Schemes:            []string{"http", "https"},
 		Params:             params,
 		Reader:             &UpdateK8SSecretReader{formats: a.formats},
 		AuthInfo:           authInfo,
@@ -273,15 +279,16 @@ func (a *Client) UpdateK8SSecret(params *UpdateK8SSecretParams, authInfo runtime
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	success, ok := result.(*UpdateK8SSecretOK)
-	if ok {
-		return success, nil
+	switch value := result.(type) {
+	case *UpdateK8SSecretOK:
+		return value, nil, nil
+	case *UpdateK8SSecretNoContent:
+		return nil, value, nil
 	}
-	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for UpdateK8SSecret: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for k8_s_secrets_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 

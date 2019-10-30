@@ -27,17 +27,23 @@ message K8SResource {
     // Optional last time the entity was updated
     google.protobuf.Timestamp updated_at = 7;
 
+    // Optional the k8s ref
+    string k8s_ref = 8;
+
     // Optional a flag to freeze an access
-    bool frozen = 8;
+    bool frozen = 9;
 
     // Optional a flag to disable an access
-    bool disabled = 9;
+    bool disabled = 10;
+
+    // Optional if the entity has been deleted
+    bool deleted = 11;
 
     //Optional a mount path to specifiy where to mount this resource
-    string mount_path = 10;
+    string mount_path = 12;
 
     // Optional the k8s secret to use
-    repeated string items = 11;
+    repeated string items = 13;
 }
 
  // Request data to create/update k8s resource

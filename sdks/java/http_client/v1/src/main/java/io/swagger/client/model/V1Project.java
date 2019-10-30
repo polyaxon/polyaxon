@@ -37,6 +37,8 @@ import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import org.threeten.bp.OffsetDateTime;
 
 /**
@@ -50,11 +52,17 @@ public class V1Project {
   @SerializedName("user")
   private String user = null;
 
+  @SerializedName("owner")
+  private String owner = null;
+
   @SerializedName("name")
   private String name = null;
 
   @SerializedName("description")
   private String description = null;
+
+  @SerializedName("tags")
+  private List<String> tags = null;
 
   @SerializedName("created_at")
   private OffsetDateTime createdAt = null;
@@ -65,8 +73,14 @@ public class V1Project {
   @SerializedName("is_public")
   private String isPublic = null;
 
+  @SerializedName("deleted")
+  private Boolean deleted = null;
+
   @SerializedName("bookmarked")
   private Boolean bookmarked = null;
+
+  @SerializedName("readme")
+  private String readme = null;
 
   public V1Project uuid(String uuid) {
     this.uuid = uuid;
@@ -104,6 +118,24 @@ public class V1Project {
     this.user = user;
   }
 
+  public V1Project owner(String owner) {
+    this.owner = owner;
+    return this;
+  }
+
+   /**
+   * Get owner
+   * @return owner
+  **/
+  @ApiModelProperty(value = "")
+  public String getOwner() {
+    return owner;
+  }
+
+  public void setOwner(String owner) {
+    this.owner = owner;
+  }
+
   public V1Project name(String name) {
     this.name = name;
     return this;
@@ -138,6 +170,32 @@ public class V1Project {
 
   public void setDescription(String description) {
     this.description = description;
+  }
+
+  public V1Project tags(List<String> tags) {
+    this.tags = tags;
+    return this;
+  }
+
+  public V1Project addTagsItem(String tagsItem) {
+    if (this.tags == null) {
+      this.tags = new ArrayList<String>();
+    }
+    this.tags.add(tagsItem);
+    return this;
+  }
+
+   /**
+   * Get tags
+   * @return tags
+  **/
+  @ApiModelProperty(value = "")
+  public List<String> getTags() {
+    return tags;
+  }
+
+  public void setTags(List<String> tags) {
+    this.tags = tags;
   }
 
   public V1Project createdAt(OffsetDateTime createdAt) {
@@ -194,6 +252,24 @@ public class V1Project {
     this.isPublic = isPublic;
   }
 
+  public V1Project deleted(Boolean deleted) {
+    this.deleted = deleted;
+    return this;
+  }
+
+   /**
+   * Get deleted
+   * @return deleted
+  **/
+  @ApiModelProperty(value = "")
+  public Boolean isDeleted() {
+    return deleted;
+  }
+
+  public void setDeleted(Boolean deleted) {
+    this.deleted = deleted;
+  }
+
   public V1Project bookmarked(Boolean bookmarked) {
     this.bookmarked = bookmarked;
     return this;
@@ -212,6 +288,24 @@ public class V1Project {
     this.bookmarked = bookmarked;
   }
 
+  public V1Project readme(String readme) {
+    this.readme = readme;
+    return this;
+  }
+
+   /**
+   * Get readme
+   * @return readme
+  **/
+  @ApiModelProperty(value = "")
+  public String getReadme() {
+    return readme;
+  }
+
+  public void setReadme(String readme) {
+    this.readme = readme;
+  }
+
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -224,17 +318,21 @@ public class V1Project {
     V1Project v1Project = (V1Project) o;
     return Objects.equals(this.uuid, v1Project.uuid) &&
         Objects.equals(this.user, v1Project.user) &&
+        Objects.equals(this.owner, v1Project.owner) &&
         Objects.equals(this.name, v1Project.name) &&
         Objects.equals(this.description, v1Project.description) &&
+        Objects.equals(this.tags, v1Project.tags) &&
         Objects.equals(this.createdAt, v1Project.createdAt) &&
         Objects.equals(this.updatedAt, v1Project.updatedAt) &&
         Objects.equals(this.isPublic, v1Project.isPublic) &&
-        Objects.equals(this.bookmarked, v1Project.bookmarked);
+        Objects.equals(this.deleted, v1Project.deleted) &&
+        Objects.equals(this.bookmarked, v1Project.bookmarked) &&
+        Objects.equals(this.readme, v1Project.readme);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(uuid, user, name, description, createdAt, updatedAt, isPublic, bookmarked);
+    return Objects.hash(uuid, user, owner, name, description, tags, createdAt, updatedAt, isPublic, deleted, bookmarked, readme);
   }
 
 
@@ -245,12 +343,16 @@ public class V1Project {
     
     sb.append("    uuid: ").append(toIndentedString(uuid)).append("\n");
     sb.append("    user: ").append(toIndentedString(user)).append("\n");
+    sb.append("    owner: ").append(toIndentedString(owner)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
+    sb.append("    tags: ").append(toIndentedString(tags)).append("\n");
     sb.append("    createdAt: ").append(toIndentedString(createdAt)).append("\n");
     sb.append("    updatedAt: ").append(toIndentedString(updatedAt)).append("\n");
     sb.append("    isPublic: ").append(toIndentedString(isPublic)).append("\n");
+    sb.append("    deleted: ").append(toIndentedString(deleted)).append("\n");
     sb.append("    bookmarked: ").append(toIndentedString(bookmarked)).append("\n");
+    sb.append("    readme: ").append(toIndentedString(readme)).append("\n");
     sb.append("}");
     return sb.toString();
   }

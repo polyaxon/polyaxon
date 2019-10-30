@@ -69,7 +69,7 @@ Name | Type | Description  | Notes
 
 <a name="deleteArtifactsStore"></a>
 # **deleteArtifactsStore**
-> Object deleteArtifactsStore(owner, uuid)
+> deleteArtifactsStore(owner, uuid)
 
 Patch run
 
@@ -95,7 +95,7 @@ var callback = function(error, data, response) {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully. Returned data: ' + data);
+    console.log('API called successfully.');
   }
 };
 apiInstance.deleteArtifactsStore(owner, uuid, callback);
@@ -110,7 +110,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 

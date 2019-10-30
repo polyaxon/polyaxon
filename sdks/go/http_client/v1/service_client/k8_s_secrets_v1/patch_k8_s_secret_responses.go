@@ -44,6 +44,12 @@ func (o *PatchK8SSecretReader) ReadResponse(response runtime.ClientResponse, con
 			return nil, err
 		}
 		return result, nil
+	case 204:
+		result := NewPatchK8SSecretNoContent()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return result, nil
 	case 403:
 		result := NewPatchK8SSecretForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -95,6 +101,37 @@ func (o *PatchK8SSecretOK) readResponse(response runtime.ClientResponse, consume
 	return nil
 }
 
+// NewPatchK8SSecretNoContent creates a PatchK8SSecretNoContent with default headers values
+func NewPatchK8SSecretNoContent() *PatchK8SSecretNoContent {
+	return &PatchK8SSecretNoContent{}
+}
+
+/*PatchK8SSecretNoContent handles this case with default header values.
+
+No content.
+*/
+type PatchK8SSecretNoContent struct {
+	Payload interface{}
+}
+
+func (o *PatchK8SSecretNoContent) Error() string {
+	return fmt.Sprintf("[PATCH /api/v1/{owner}/k8s_secrets/{k8s_resource.uuid}][%d] patchK8SSecretNoContent  %+v", 204, o.Payload)
+}
+
+func (o *PatchK8SSecretNoContent) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *PatchK8SSecretNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	// response payload
+	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
 // NewPatchK8SSecretForbidden creates a PatchK8SSecretForbidden with default headers values
 func NewPatchK8SSecretForbidden() *PatchK8SSecretForbidden {
 	return &PatchK8SSecretForbidden{}
@@ -136,14 +173,14 @@ func NewPatchK8SSecretNotFound() *PatchK8SSecretNotFound {
 Resource does not exist.
 */
 type PatchK8SSecretNotFound struct {
-	Payload string
+	Payload interface{}
 }
 
 func (o *PatchK8SSecretNotFound) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/{owner}/k8s_secrets/{k8s_resource.uuid}][%d] patchK8SSecretNotFound  %+v", 404, o.Payload)
 }
 
-func (o *PatchK8SSecretNotFound) GetPayload() string {
+func (o *PatchK8SSecretNotFound) GetPayload() interface{} {
 	return o.Payload
 }
 

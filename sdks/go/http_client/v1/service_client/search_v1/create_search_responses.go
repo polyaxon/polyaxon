@@ -44,6 +44,12 @@ func (o *CreateSearchReader) ReadResponse(response runtime.ClientResponse, consu
 			return nil, err
 		}
 		return result, nil
+	case 204:
+		result := NewCreateSearchNoContent()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return result, nil
 	case 403:
 		result := NewCreateSearchForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -95,6 +101,37 @@ func (o *CreateSearchOK) readResponse(response runtime.ClientResponse, consumer 
 	return nil
 }
 
+// NewCreateSearchNoContent creates a CreateSearchNoContent with default headers values
+func NewCreateSearchNoContent() *CreateSearchNoContent {
+	return &CreateSearchNoContent{}
+}
+
+/*CreateSearchNoContent handles this case with default header values.
+
+No content.
+*/
+type CreateSearchNoContent struct {
+	Payload interface{}
+}
+
+func (o *CreateSearchNoContent) Error() string {
+	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/searches][%d] createSearchNoContent  %+v", 204, o.Payload)
+}
+
+func (o *CreateSearchNoContent) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *CreateSearchNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	// response payload
+	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
 // NewCreateSearchForbidden creates a CreateSearchForbidden with default headers values
 func NewCreateSearchForbidden() *CreateSearchForbidden {
 	return &CreateSearchForbidden{}
@@ -136,14 +173,14 @@ func NewCreateSearchNotFound() *CreateSearchNotFound {
 Resource does not exist.
 */
 type CreateSearchNotFound struct {
-	Payload string
+	Payload interface{}
 }
 
 func (o *CreateSearchNotFound) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/searches][%d] createSearchNotFound  %+v", 404, o.Payload)
 }
 
-func (o *CreateSearchNotFound) GetPayload() string {
+func (o *CreateSearchNotFound) GetPayload() interface{} {
 	return o.Payload
 }
 

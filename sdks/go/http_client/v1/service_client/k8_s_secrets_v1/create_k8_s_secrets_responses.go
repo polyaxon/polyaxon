@@ -44,6 +44,12 @@ func (o *CreateK8SSecretsReader) ReadResponse(response runtime.ClientResponse, c
 			return nil, err
 		}
 		return result, nil
+	case 204:
+		result := NewCreateK8SSecretsNoContent()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return result, nil
 	case 403:
 		result := NewCreateK8SSecretsForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -95,6 +101,37 @@ func (o *CreateK8SSecretsOK) readResponse(response runtime.ClientResponse, consu
 	return nil
 }
 
+// NewCreateK8SSecretsNoContent creates a CreateK8SSecretsNoContent with default headers values
+func NewCreateK8SSecretsNoContent() *CreateK8SSecretsNoContent {
+	return &CreateK8SSecretsNoContent{}
+}
+
+/*CreateK8SSecretsNoContent handles this case with default header values.
+
+No content.
+*/
+type CreateK8SSecretsNoContent struct {
+	Payload interface{}
+}
+
+func (o *CreateK8SSecretsNoContent) Error() string {
+	return fmt.Sprintf("[POST /api/v1/{owner}/k8s_secrets][%d] createK8SSecretsNoContent  %+v", 204, o.Payload)
+}
+
+func (o *CreateK8SSecretsNoContent) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *CreateK8SSecretsNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	// response payload
+	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
 // NewCreateK8SSecretsForbidden creates a CreateK8SSecretsForbidden with default headers values
 func NewCreateK8SSecretsForbidden() *CreateK8SSecretsForbidden {
 	return &CreateK8SSecretsForbidden{}
@@ -136,14 +173,14 @@ func NewCreateK8SSecretsNotFound() *CreateK8SSecretsNotFound {
 Resource does not exist.
 */
 type CreateK8SSecretsNotFound struct {
-	Payload string
+	Payload interface{}
 }
 
 func (o *CreateK8SSecretsNotFound) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/k8s_secrets][%d] createK8SSecretsNotFound  %+v", 404, o.Payload)
 }
 
-func (o *CreateK8SSecretsNotFound) GetPayload() string {
+func (o *CreateK8SSecretsNotFound) GetPayload() interface{} {
 	return o.Payload
 }
 

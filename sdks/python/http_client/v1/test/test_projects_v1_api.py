@@ -129,8 +129,8 @@ class TestProjectsV1Api(unittest.TestCase):
         """
         pass
 
-    def test_restore_experiment(self):
-        """Test case for restore_experiment
+    def test_restore_project(self):
+        """Test case for restore_project
 
         Stop runs  # noqa: E501
         """

@@ -43,7 +43,7 @@ type Client struct {
 /*
 CreateSearch lists archived runs for user
 */
-func (a *Client) CreateSearch(params *CreateSearchParams, authInfo runtime.ClientAuthInfoWriter) (*CreateSearchOK, error) {
+func (a *Client) CreateSearch(params *CreateSearchParams, authInfo runtime.ClientAuthInfoWriter) (*CreateSearchOK, *CreateSearchNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewCreateSearchParams()
@@ -55,7 +55,7 @@ func (a *Client) CreateSearch(params *CreateSearchParams, authInfo runtime.Clien
 		PathPattern:        "/api/v1/{owner}/{project}/searches",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https", "ws", "wss"},
+		Schemes:            []string{"http", "https"},
 		Params:             params,
 		Reader:             &CreateSearchReader{formats: a.formats},
 		AuthInfo:           authInfo,
@@ -63,22 +63,23 @@ func (a *Client) CreateSearch(params *CreateSearchParams, authInfo runtime.Clien
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	success, ok := result.(*CreateSearchOK)
-	if ok {
-		return success, nil
+	switch value := result.(type) {
+	case *CreateSearchOK:
+		return value, nil, nil
+	case *CreateSearchNoContent:
+		return nil, value, nil
 	}
-	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for CreateSearch: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for search_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
 /*
 DeleteSearch updates run
 */
-func (a *Client) DeleteSearch(params *DeleteSearchParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteSearchOK, error) {
+func (a *Client) DeleteSearch(params *DeleteSearchParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteSearchOK, *DeleteSearchNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewDeleteSearchParams()
@@ -90,7 +91,7 @@ func (a *Client) DeleteSearch(params *DeleteSearchParams, authInfo runtime.Clien
 		PathPattern:        "/api/v1/{owner}/{project}/searches/{uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https", "ws", "wss"},
+		Schemes:            []string{"http", "https"},
 		Params:             params,
 		Reader:             &DeleteSearchReader{formats: a.formats},
 		AuthInfo:           authInfo,
@@ -98,22 +99,23 @@ func (a *Client) DeleteSearch(params *DeleteSearchParams, authInfo runtime.Clien
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	success, ok := result.(*DeleteSearchOK)
-	if ok {
-		return success, nil
+	switch value := result.(type) {
+	case *DeleteSearchOK:
+		return value, nil, nil
+	case *DeleteSearchNoContent:
+		return nil, value, nil
 	}
-	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for DeleteSearch: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for search_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
 /*
 GetSearch lists runs
 */
-func (a *Client) GetSearch(params *GetSearchParams, authInfo runtime.ClientAuthInfoWriter) (*GetSearchOK, error) {
+func (a *Client) GetSearch(params *GetSearchParams, authInfo runtime.ClientAuthInfoWriter) (*GetSearchOK, *GetSearchNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetSearchParams()
@@ -125,7 +127,7 @@ func (a *Client) GetSearch(params *GetSearchParams, authInfo runtime.ClientAuthI
 		PathPattern:        "/api/v1/{owner}/{project}/searches/{uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https", "ws", "wss"},
+		Schemes:            []string{"http", "https"},
 		Params:             params,
 		Reader:             &GetSearchReader{formats: a.formats},
 		AuthInfo:           authInfo,
@@ -133,22 +135,23 @@ func (a *Client) GetSearch(params *GetSearchParams, authInfo runtime.ClientAuthI
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	success, ok := result.(*GetSearchOK)
-	if ok {
-		return success, nil
+	switch value := result.(type) {
+	case *GetSearchOK:
+		return value, nil, nil
+	case *GetSearchNoContent:
+		return nil, value, nil
 	}
-	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for GetSearch: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for search_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
 /*
 ListSearches lists bookmarked runs for user
 */
-func (a *Client) ListSearches(params *ListSearchesParams, authInfo runtime.ClientAuthInfoWriter) (*ListSearchesOK, error) {
+func (a *Client) ListSearches(params *ListSearchesParams, authInfo runtime.ClientAuthInfoWriter) (*ListSearchesOK, *ListSearchesNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewListSearchesParams()
@@ -160,7 +163,7 @@ func (a *Client) ListSearches(params *ListSearchesParams, authInfo runtime.Clien
 		PathPattern:        "/api/v1/{owner}/{project}/searches",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https", "ws", "wss"},
+		Schemes:            []string{"http", "https"},
 		Params:             params,
 		Reader:             &ListSearchesReader{formats: a.formats},
 		AuthInfo:           authInfo,
@@ -168,22 +171,23 @@ func (a *Client) ListSearches(params *ListSearchesParams, authInfo runtime.Clien
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	success, ok := result.(*ListSearchesOK)
-	if ok {
-		return success, nil
+	switch value := result.(type) {
+	case *ListSearchesOK:
+		return value, nil, nil
+	case *ListSearchesNoContent:
+		return nil, value, nil
 	}
-	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for ListSearches: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for search_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
 /*
 PatchSearch gets run
 */
-func (a *Client) PatchSearch(params *PatchSearchParams, authInfo runtime.ClientAuthInfoWriter) (*PatchSearchOK, error) {
+func (a *Client) PatchSearch(params *PatchSearchParams, authInfo runtime.ClientAuthInfoWriter) (*PatchSearchOK, *PatchSearchNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewPatchSearchParams()
@@ -195,7 +199,7 @@ func (a *Client) PatchSearch(params *PatchSearchParams, authInfo runtime.ClientA
 		PathPattern:        "/api/v1/{owner}/{project}/searches/{search.uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https", "ws", "wss"},
+		Schemes:            []string{"http", "https"},
 		Params:             params,
 		Reader:             &PatchSearchReader{formats: a.formats},
 		AuthInfo:           authInfo,
@@ -203,22 +207,23 @@ func (a *Client) PatchSearch(params *PatchSearchParams, authInfo runtime.ClientA
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	success, ok := result.(*PatchSearchOK)
-	if ok {
-		return success, nil
+	switch value := result.(type) {
+	case *PatchSearchOK:
+		return value, nil, nil
+	case *PatchSearchNoContent:
+		return nil, value, nil
 	}
-	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for PatchSearch: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for search_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
 /*
 UpdateSearch creates new run
 */
-func (a *Client) UpdateSearch(params *UpdateSearchParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateSearchOK, error) {
+func (a *Client) UpdateSearch(params *UpdateSearchParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateSearchOK, *UpdateSearchNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewUpdateSearchParams()
@@ -230,7 +235,7 @@ func (a *Client) UpdateSearch(params *UpdateSearchParams, authInfo runtime.Clien
 		PathPattern:        "/api/v1/{owner}/{project}/searches/{search.uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https", "ws", "wss"},
+		Schemes:            []string{"http", "https"},
 		Params:             params,
 		Reader:             &UpdateSearchReader{formats: a.formats},
 		AuthInfo:           authInfo,
@@ -238,15 +243,16 @@ func (a *Client) UpdateSearch(params *UpdateSearchParams, authInfo runtime.Clien
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	success, ok := result.(*UpdateSearchOK)
-	if ok {
-		return success, nil
+	switch value := result.(type) {
+	case *UpdateSearchOK:
+		return value, nil, nil
+	case *UpdateSearchNoContent:
+		return nil, value, nil
 	}
-	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for UpdateSearch: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for search_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 

@@ -44,6 +44,12 @@ func (o *CreateRunReader) ReadResponse(response runtime.ClientResponse, consumer
 			return nil, err
 		}
 		return result, nil
+	case 204:
+		result := NewCreateRunNoContent()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return result, nil
 	case 403:
 		result := NewCreateRunForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -95,6 +101,37 @@ func (o *CreateRunOK) readResponse(response runtime.ClientResponse, consumer run
 	return nil
 }
 
+// NewCreateRunNoContent creates a CreateRunNoContent with default headers values
+func NewCreateRunNoContent() *CreateRunNoContent {
+	return &CreateRunNoContent{}
+}
+
+/*CreateRunNoContent handles this case with default header values.
+
+No content.
+*/
+type CreateRunNoContent struct {
+	Payload interface{}
+}
+
+func (o *CreateRunNoContent) Error() string {
+	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/create][%d] createRunNoContent  %+v", 204, o.Payload)
+}
+
+func (o *CreateRunNoContent) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *CreateRunNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	// response payload
+	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
 // NewCreateRunForbidden creates a CreateRunForbidden with default headers values
 func NewCreateRunForbidden() *CreateRunForbidden {
 	return &CreateRunForbidden{}
@@ -136,14 +173,14 @@ func NewCreateRunNotFound() *CreateRunNotFound {
 Resource does not exist.
 */
 type CreateRunNotFound struct {
-	Payload string
+	Payload interface{}
 }
 
 func (o *CreateRunNotFound) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/create][%d] createRunNotFound  %+v", 404, o.Payload)
 }
 
-func (o *CreateRunNotFound) GetPayload() string {
+func (o *CreateRunNotFound) GetPayload() interface{} {
 	return o.Payload
 }
 

@@ -67,11 +67,17 @@ public class V1K8SResource {
   @SerializedName("updated_at")
   private OffsetDateTime updatedAt = null;
 
+  @SerializedName("k8s_ref")
+  private String k8sRef = null;
+
   @SerializedName("frozen")
   private Boolean frozen = null;
 
   @SerializedName("disabled")
   private Boolean disabled = null;
+
+  @SerializedName("deleted")
+  private Boolean deleted = null;
 
   @SerializedName("mount_path")
   private String mountPath = null;
@@ -213,6 +219,24 @@ public class V1K8SResource {
     this.updatedAt = updatedAt;
   }
 
+  public V1K8SResource k8sRef(String k8sRef) {
+    this.k8sRef = k8sRef;
+    return this;
+  }
+
+   /**
+   * Get k8sRef
+   * @return k8sRef
+  **/
+  @ApiModelProperty(value = "")
+  public String getK8sRef() {
+    return k8sRef;
+  }
+
+  public void setK8sRef(String k8sRef) {
+    this.k8sRef = k8sRef;
+  }
+
   public V1K8SResource frozen(Boolean frozen) {
     this.frozen = frozen;
     return this;
@@ -247,6 +271,24 @@ public class V1K8SResource {
 
   public void setDisabled(Boolean disabled) {
     this.disabled = disabled;
+  }
+
+  public V1K8SResource deleted(Boolean deleted) {
+    this.deleted = deleted;
+    return this;
+  }
+
+   /**
+   * Get deleted
+   * @return deleted
+  **/
+  @ApiModelProperty(value = "")
+  public Boolean isDeleted() {
+    return deleted;
+  }
+
+  public void setDeleted(Boolean deleted) {
+    this.deleted = deleted;
   }
 
   public V1K8SResource mountPath(String mountPath) {
@@ -310,15 +352,17 @@ public class V1K8SResource {
         Objects.equals(this.tags, v1K8SResource.tags) &&
         Objects.equals(this.createdAt, v1K8SResource.createdAt) &&
         Objects.equals(this.updatedAt, v1K8SResource.updatedAt) &&
+        Objects.equals(this.k8sRef, v1K8SResource.k8sRef) &&
         Objects.equals(this.frozen, v1K8SResource.frozen) &&
         Objects.equals(this.disabled, v1K8SResource.disabled) &&
+        Objects.equals(this.deleted, v1K8SResource.deleted) &&
         Objects.equals(this.mountPath, v1K8SResource.mountPath) &&
         Objects.equals(this.items, v1K8SResource.items);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(uuid, name, description, readme, tags, createdAt, updatedAt, frozen, disabled, mountPath, items);
+    return Objects.hash(uuid, name, description, readme, tags, createdAt, updatedAt, k8sRef, frozen, disabled, deleted, mountPath, items);
   }
 
 
@@ -334,8 +378,10 @@ public class V1K8SResource {
     sb.append("    tags: ").append(toIndentedString(tags)).append("\n");
     sb.append("    createdAt: ").append(toIndentedString(createdAt)).append("\n");
     sb.append("    updatedAt: ").append(toIndentedString(updatedAt)).append("\n");
+    sb.append("    k8sRef: ").append(toIndentedString(k8sRef)).append("\n");
     sb.append("    frozen: ").append(toIndentedString(frozen)).append("\n");
     sb.append("    disabled: ").append(toIndentedString(disabled)).append("\n");
+    sb.append("    deleted: ").append(toIndentedString(deleted)).append("\n");
     sb.append("    mountPath: ").append(toIndentedString(mountPath)).append("\n");
     sb.append("    items: ").append(toIndentedString(items)).append("\n");
     sb.append("}");

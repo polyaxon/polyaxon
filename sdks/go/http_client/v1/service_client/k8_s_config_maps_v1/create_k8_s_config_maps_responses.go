@@ -44,6 +44,12 @@ func (o *CreateK8SConfigMapsReader) ReadResponse(response runtime.ClientResponse
 			return nil, err
 		}
 		return result, nil
+	case 204:
+		result := NewCreateK8SConfigMapsNoContent()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return result, nil
 	case 403:
 		result := NewCreateK8SConfigMapsForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -95,6 +101,37 @@ func (o *CreateK8SConfigMapsOK) readResponse(response runtime.ClientResponse, co
 	return nil
 }
 
+// NewCreateK8SConfigMapsNoContent creates a CreateK8SConfigMapsNoContent with default headers values
+func NewCreateK8SConfigMapsNoContent() *CreateK8SConfigMapsNoContent {
+	return &CreateK8SConfigMapsNoContent{}
+}
+
+/*CreateK8SConfigMapsNoContent handles this case with default header values.
+
+No content.
+*/
+type CreateK8SConfigMapsNoContent struct {
+	Payload interface{}
+}
+
+func (o *CreateK8SConfigMapsNoContent) Error() string {
+	return fmt.Sprintf("[POST /api/v1/{owner}/k8s_config_maps][%d] createK8SConfigMapsNoContent  %+v", 204, o.Payload)
+}
+
+func (o *CreateK8SConfigMapsNoContent) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *CreateK8SConfigMapsNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	// response payload
+	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
 // NewCreateK8SConfigMapsForbidden creates a CreateK8SConfigMapsForbidden with default headers values
 func NewCreateK8SConfigMapsForbidden() *CreateK8SConfigMapsForbidden {
 	return &CreateK8SConfigMapsForbidden{}
@@ -136,14 +173,14 @@ func NewCreateK8SConfigMapsNotFound() *CreateK8SConfigMapsNotFound {
 Resource does not exist.
 */
 type CreateK8SConfigMapsNotFound struct {
-	Payload string
+	Payload interface{}
 }
 
 func (o *CreateK8SConfigMapsNotFound) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/k8s_config_maps][%d] createK8SConfigMapsNotFound  %+v", 404, o.Payload)
 }
 
-func (o *CreateK8SConfigMapsNotFound) GetPayload() string {
+func (o *CreateK8SConfigMapsNotFound) GetPayload() interface{} {
 	return o.Payload
 }
 

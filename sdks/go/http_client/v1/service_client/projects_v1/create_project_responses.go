@@ -44,6 +44,12 @@ func (o *CreateProjectReader) ReadResponse(response runtime.ClientResponse, cons
 			return nil, err
 		}
 		return result, nil
+	case 204:
+		result := NewCreateProjectNoContent()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return result, nil
 	case 403:
 		result := NewCreateProjectForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -95,6 +101,37 @@ func (o *CreateProjectOK) readResponse(response runtime.ClientResponse, consumer
 	return nil
 }
 
+// NewCreateProjectNoContent creates a CreateProjectNoContent with default headers values
+func NewCreateProjectNoContent() *CreateProjectNoContent {
+	return &CreateProjectNoContent{}
+}
+
+/*CreateProjectNoContent handles this case with default header values.
+
+No content.
+*/
+type CreateProjectNoContent struct {
+	Payload interface{}
+}
+
+func (o *CreateProjectNoContent) Error() string {
+	return fmt.Sprintf("[POST /api/v1/{owner}/projects/create][%d] createProjectNoContent  %+v", 204, o.Payload)
+}
+
+func (o *CreateProjectNoContent) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *CreateProjectNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	// response payload
+	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
 // NewCreateProjectForbidden creates a CreateProjectForbidden with default headers values
 func NewCreateProjectForbidden() *CreateProjectForbidden {
 	return &CreateProjectForbidden{}
@@ -136,14 +173,14 @@ func NewCreateProjectNotFound() *CreateProjectNotFound {
 Resource does not exist.
 */
 type CreateProjectNotFound struct {
-	Payload string
+	Payload interface{}
 }
 
 func (o *CreateProjectNotFound) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/projects/create][%d] createProjectNotFound  %+v", 404, o.Payload)
 }
 
-func (o *CreateProjectNotFound) GetPayload() string {
+func (o *CreateProjectNotFound) GetPayload() interface{} {
 	return o.Payload
 }
 

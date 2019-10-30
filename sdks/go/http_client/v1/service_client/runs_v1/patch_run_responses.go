@@ -44,6 +44,12 @@ func (o *PatchRunReader) ReadResponse(response runtime.ClientResponse, consumer 
 			return nil, err
 		}
 		return result, nil
+	case 204:
+		result := NewPatchRunNoContent()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return result, nil
 	case 403:
 		result := NewPatchRunForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -95,6 +101,37 @@ func (o *PatchRunOK) readResponse(response runtime.ClientResponse, consumer runt
 	return nil
 }
 
+// NewPatchRunNoContent creates a PatchRunNoContent with default headers values
+func NewPatchRunNoContent() *PatchRunNoContent {
+	return &PatchRunNoContent{}
+}
+
+/*PatchRunNoContent handles this case with default header values.
+
+No content.
+*/
+type PatchRunNoContent struct {
+	Payload interface{}
+}
+
+func (o *PatchRunNoContent) Error() string {
+	return fmt.Sprintf("[PATCH /api/v1/{owner}/{project}/runs/{run.uuid}][%d] patchRunNoContent  %+v", 204, o.Payload)
+}
+
+func (o *PatchRunNoContent) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *PatchRunNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	// response payload
+	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
 // NewPatchRunForbidden creates a PatchRunForbidden with default headers values
 func NewPatchRunForbidden() *PatchRunForbidden {
 	return &PatchRunForbidden{}
@@ -136,14 +173,14 @@ func NewPatchRunNotFound() *PatchRunNotFound {
 Resource does not exist.
 */
 type PatchRunNotFound struct {
-	Payload string
+	Payload interface{}
 }
 
 func (o *PatchRunNotFound) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/{owner}/{project}/runs/{run.uuid}][%d] patchRunNotFound  %+v", 404, o.Payload)
 }
 
-func (o *PatchRunNotFound) GetPayload() string {
+func (o *PatchRunNotFound) GetPayload() interface{} {
 	return o.Payload
 }
 

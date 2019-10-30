@@ -44,6 +44,12 @@ func (o *PatchArtifactsStoreReader) ReadResponse(response runtime.ClientResponse
 			return nil, err
 		}
 		return result, nil
+	case 204:
+		result := NewPatchArtifactsStoreNoContent()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return result, nil
 	case 403:
 		result := NewPatchArtifactsStoreForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -95,6 +101,37 @@ func (o *PatchArtifactsStoreOK) readResponse(response runtime.ClientResponse, co
 	return nil
 }
 
+// NewPatchArtifactsStoreNoContent creates a PatchArtifactsStoreNoContent with default headers values
+func NewPatchArtifactsStoreNoContent() *PatchArtifactsStoreNoContent {
+	return &PatchArtifactsStoreNoContent{}
+}
+
+/*PatchArtifactsStoreNoContent handles this case with default header values.
+
+No content.
+*/
+type PatchArtifactsStoreNoContent struct {
+	Payload interface{}
+}
+
+func (o *PatchArtifactsStoreNoContent) Error() string {
+	return fmt.Sprintf("[PATCH /api/v1/{owner}/artifacts_stores/{artifact_store.uuid}][%d] patchArtifactsStoreNoContent  %+v", 204, o.Payload)
+}
+
+func (o *PatchArtifactsStoreNoContent) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *PatchArtifactsStoreNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	// response payload
+	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
 // NewPatchArtifactsStoreForbidden creates a PatchArtifactsStoreForbidden with default headers values
 func NewPatchArtifactsStoreForbidden() *PatchArtifactsStoreForbidden {
 	return &PatchArtifactsStoreForbidden{}
@@ -136,14 +173,14 @@ func NewPatchArtifactsStoreNotFound() *PatchArtifactsStoreNotFound {
 Resource does not exist.
 */
 type PatchArtifactsStoreNotFound struct {
-	Payload string
+	Payload interface{}
 }
 
 func (o *PatchArtifactsStoreNotFound) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/{owner}/artifacts_stores/{artifact_store.uuid}][%d] patchArtifactsStoreNotFound  %+v", 404, o.Payload)
 }
 
-func (o *PatchArtifactsStoreNotFound) GetPayload() string {
+func (o *PatchArtifactsStoreNotFound) GetPayload() interface{} {
 	return o.Payload
 }
 

@@ -44,6 +44,12 @@ func (o *PatchRegsitryAccessReader) ReadResponse(response runtime.ClientResponse
 			return nil, err
 		}
 		return result, nil
+	case 204:
+		result := NewPatchRegsitryAccessNoContent()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return result, nil
 	case 403:
 		result := NewPatchRegsitryAccessForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -95,6 +101,37 @@ func (o *PatchRegsitryAccessOK) readResponse(response runtime.ClientResponse, co
 	return nil
 }
 
+// NewPatchRegsitryAccessNoContent creates a PatchRegsitryAccessNoContent with default headers values
+func NewPatchRegsitryAccessNoContent() *PatchRegsitryAccessNoContent {
+	return &PatchRegsitryAccessNoContent{}
+}
+
+/*PatchRegsitryAccessNoContent handles this case with default header values.
+
+No content.
+*/
+type PatchRegsitryAccessNoContent struct {
+	Payload interface{}
+}
+
+func (o *PatchRegsitryAccessNoContent) Error() string {
+	return fmt.Sprintf("[PATCH /api/v1/{owner}/registry_accesses/{host_access.uuid}][%d] patchRegsitryAccessNoContent  %+v", 204, o.Payload)
+}
+
+func (o *PatchRegsitryAccessNoContent) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *PatchRegsitryAccessNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	// response payload
+	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
 // NewPatchRegsitryAccessForbidden creates a PatchRegsitryAccessForbidden with default headers values
 func NewPatchRegsitryAccessForbidden() *PatchRegsitryAccessForbidden {
 	return &PatchRegsitryAccessForbidden{}
@@ -136,14 +173,14 @@ func NewPatchRegsitryAccessNotFound() *PatchRegsitryAccessNotFound {
 Resource does not exist.
 */
 type PatchRegsitryAccessNotFound struct {
-	Payload string
+	Payload interface{}
 }
 
 func (o *PatchRegsitryAccessNotFound) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/{owner}/registry_accesses/{host_access.uuid}][%d] patchRegsitryAccessNotFound  %+v", 404, o.Payload)
 }
 
-func (o *PatchRegsitryAccessNotFound) GetPayload() string {
+func (o *PatchRegsitryAccessNotFound) GetPayload() interface{} {
 	return o.Payload
 }
 

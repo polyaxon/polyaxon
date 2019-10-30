@@ -577,8 +577,8 @@ class ProjectsV1Stub(object):
         request_serializer=v1_dot_base__pb2.ProjectResourceRequest.SerializeToString,
         response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
         )
-    self.RestoreExperiment = channel.unary_unary(
-        '/v1.ProjectsV1/RestoreExperiment',
+    self.RestoreProject = channel.unary_unary(
+        '/v1.ProjectsV1/RestoreProject',
         request_serializer=v1_dot_base__pb2.ProjectResourceRequest.SerializeToString,
         response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
         )
@@ -678,7 +678,7 @@ class ProjectsV1Servicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
-  def RestoreExperiment(self, request, context):
+  def RestoreProject(self, request, context):
     """Restore project
     """
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -766,8 +766,8 @@ def add_ProjectsV1Servicer_to_server(servicer, server):
           request_deserializer=v1_dot_base__pb2.ProjectResourceRequest.FromString,
           response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
       ),
-      'RestoreExperiment': grpc.unary_unary_rpc_method_handler(
-          servicer.RestoreExperiment,
+      'RestoreProject': grpc.unary_unary_rpc_method_handler(
+          servicer.RestoreProject,
           request_deserializer=v1_dot_base__pb2.ProjectResourceRequest.FromString,
           response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
       ),

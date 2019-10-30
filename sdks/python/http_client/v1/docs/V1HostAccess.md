@@ -12,6 +12,8 @@ Name | Type | Description | Notes
 **updated_at** | **datetime** |  | [optional] 
 **frozen** | **bool** |  | [optional] 
 **disabled** | **bool** |  | [optional] 
+**insecure** | **bool** |  | [optional] 
+**deleted** | **bool** |  | [optional] 
 **k8s_secret** | **str** |  | [optional] 
 **host** | **str** |  | [optional] 
 

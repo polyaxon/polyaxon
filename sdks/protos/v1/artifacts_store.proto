@@ -33,26 +33,29 @@ message ArtifactsStore {
     // Optional a flag to disable an access
     bool disabled = 9;
 
+    // Optional if the entity has been deleted
+    bool deleted = 10;
+
     // Optional the k8s secret to use
-    string k8s_secret = 10;
+    string k8s_secret = 11;
 
     // Optional type of the store
-    string type = 11;
+    string type = 12;
 
     // Optional mounth path
-    string mount_path = 12;
+    string mount_path = 13;
 
     // Optional host path
-    string host_path = 13;
+    string host_path = 14;
 
     // Optional volume claim
-    string volume_claim = 14;
+    string volume_claim = 15;
 
     // Optional bucket
-    string bucket = 15;
+    string bucket = 16;
 
     // Optional flag to set this store to read only mode
-    bool read_only = 16;
+    bool read_only = 17;
 }
 
  // Request data to create/update artifacts store

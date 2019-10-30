@@ -16,14 +16,14 @@ Method | HTTP request | Description
 [**listProjectNames**](ProjectsV1Api.md#listProjectNames) | **GET** /api/v1/{owner}/projects/names | List archived runs for user
 [**listProjects**](ProjectsV1Api.md#listProjects) | **GET** /api/v1/{owner}/projects/list | List bookmarked runs for user
 [**patchProject**](ProjectsV1Api.md#patchProject) | **PATCH** /api/v1/{owner}/{project.name} | Delete run
-[**restoreExperiment**](ProjectsV1Api.md#restoreExperiment) | **POST** /api/v1/{owner}/{project}/restore | Stop runs
+[**restoreProject**](ProjectsV1Api.md#restoreProject) | **POST** /api/v1/{owner}/{project}/restore | Stop runs
 [**unbookmarkProject**](ProjectsV1Api.md#unbookmarkProject) | **DELETE** /api/v1/{owner}/{project}/unbookmark | Invalidate runs
 [**updateProject**](ProjectsV1Api.md#updateProject) | **PUT** /api/v1/{owner}/{project.name} | Patch run
 
 
 <a name="archiveProject"></a>
 # **archiveProject**
-> Object archiveProject(owner, project)
+> archiveProject(owner, project)
 
 Stop run
 
@@ -48,8 +48,7 @@ ProjectsV1Api apiInstance = new ProjectsV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
 String project = "project_example"; // String | Project under namesapce
 try {
-    Object result = apiInstance.archiveProject(owner, project);
-    System.out.println(result);
+    apiInstance.archiveProject(owner, project);
 } catch (ApiException e) {
     System.err.println("Exception when calling ProjectsV1Api#archiveProject");
     e.printStackTrace();
@@ -65,7 +64,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 
@@ -78,7 +77,7 @@ Name | Type | Description  | Notes
 
 <a name="bookmarkProject"></a>
 # **bookmarkProject**
-> Object bookmarkProject(owner, project)
+> bookmarkProject(owner, project)
 
 Invalidate run
 
@@ -103,8 +102,7 @@ ProjectsV1Api apiInstance = new ProjectsV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
 String project = "project_example"; // String | Project under namesapce
 try {
-    Object result = apiInstance.bookmarkProject(owner, project);
-    System.out.println(result);
+    apiInstance.bookmarkProject(owner, project);
 } catch (ApiException e) {
     System.err.println("Exception when calling ProjectsV1Api#bookmarkProject");
     e.printStackTrace();
@@ -120,7 +118,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 
@@ -188,7 +186,7 @@ Name | Type | Description  | Notes
 
 <a name="deleteProject"></a>
 # **deleteProject**
-> Object deleteProject(owner, project)
+> deleteProject(owner, project)
 
 Delete runs
 
@@ -213,8 +211,7 @@ ProjectsV1Api apiInstance = new ProjectsV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
 String project = "project_example"; // String | Project under namesapce
 try {
-    Object result = apiInstance.deleteProject(owner, project);
-    System.out.println(result);
+    apiInstance.deleteProject(owner, project);
 } catch (ApiException e) {
     System.err.println("Exception when calling ProjectsV1Api#deleteProject");
     e.printStackTrace();
@@ -230,7 +227,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 
@@ -243,7 +240,7 @@ Name | Type | Description  | Notes
 
 <a name="disableProjectCI"></a>
 # **disableProjectCI**
-> Object disableProjectCI(owner, project)
+> disableProjectCI(owner, project)
 
 Restart run
 
@@ -268,8 +265,7 @@ ProjectsV1Api apiInstance = new ProjectsV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
 String project = "project_example"; // String | Project under namesapce
 try {
-    Object result = apiInstance.disableProjectCI(owner, project);
-    System.out.println(result);
+    apiInstance.disableProjectCI(owner, project);
 } catch (ApiException e) {
     System.err.println("Exception when calling ProjectsV1Api#disableProjectCI");
     e.printStackTrace();
@@ -285,7 +281,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 
@@ -298,7 +294,7 @@ Name | Type | Description  | Notes
 
 <a name="enableProjectCI"></a>
 # **enableProjectCI**
-> Object enableProjectCI(owner, project)
+> enableProjectCI(owner, project)
 
 Restart run with copy
 
@@ -323,8 +319,7 @@ ProjectsV1Api apiInstance = new ProjectsV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
 String project = "project_example"; // String | Project under namesapce
 try {
-    Object result = apiInstance.enableProjectCI(owner, project);
-    System.out.println(result);
+    apiInstance.enableProjectCI(owner, project);
 } catch (ApiException e) {
     System.err.println("Exception when calling ProjectsV1Api#enableProjectCI");
     e.printStackTrace();
@@ -340,7 +335,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 
@@ -707,9 +702,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="restoreExperiment"></a>
-# **restoreExperiment**
-> Object restoreExperiment(owner, project)
+<a name="restoreProject"></a>
+# **restoreProject**
+> restoreProject(owner, project)
 
 Stop runs
 
@@ -734,10 +729,9 @@ ProjectsV1Api apiInstance = new ProjectsV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
 String project = "project_example"; // String | Project under namesapce
 try {
-    Object result = apiInstance.restoreExperiment(owner, project);
-    System.out.println(result);
+    apiInstance.restoreProject(owner, project);
 } catch (ApiException e) {
-    System.err.println("Exception when calling ProjectsV1Api#restoreExperiment");
+    System.err.println("Exception when calling ProjectsV1Api#restoreProject");
     e.printStackTrace();
 }
 ```
@@ -751,7 +745,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 
@@ -764,7 +758,7 @@ Name | Type | Description  | Notes
 
 <a name="unbookmarkProject"></a>
 # **unbookmarkProject**
-> Object unbookmarkProject(owner, project)
+> unbookmarkProject(owner, project)
 
 Invalidate runs
 
@@ -789,8 +783,7 @@ ProjectsV1Api apiInstance = new ProjectsV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
 String project = "project_example"; // String | Project under namesapce
 try {
-    Object result = apiInstance.unbookmarkProject(owner, project);
-    System.out.println(result);
+    apiInstance.unbookmarkProject(owner, project);
 } catch (ApiException e) {
     System.err.println("Exception when calling ProjectsV1Api#unbookmarkProject");
     e.printStackTrace();
@@ -806,7 +799,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 

@@ -42,6 +42,12 @@ func (o *RestoreRunReader) ReadResponse(response runtime.ClientResponse, consume
 			return nil, err
 		}
 		return result, nil
+	case 204:
+		result := NewRestoreRunNoContent()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return result, nil
 	case 403:
 		result := NewRestoreRunForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -70,18 +76,39 @@ func NewRestoreRunOK() *RestoreRunOK {
 A successful response.
 */
 type RestoreRunOK struct {
-	Payload interface{}
 }
 
 func (o *RestoreRunOK) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/restore][%d] restoreRunOK  %+v", 200, o.Payload)
-}
-
-func (o *RestoreRunOK) GetPayload() interface{} {
-	return o.Payload
+	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/restore][%d] restoreRunOK ", 200)
 }
 
 func (o *RestoreRunOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	return nil
+}
+
+// NewRestoreRunNoContent creates a RestoreRunNoContent with default headers values
+func NewRestoreRunNoContent() *RestoreRunNoContent {
+	return &RestoreRunNoContent{}
+}
+
+/*RestoreRunNoContent handles this case with default header values.
+
+No content.
+*/
+type RestoreRunNoContent struct {
+	Payload interface{}
+}
+
+func (o *RestoreRunNoContent) Error() string {
+	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/restore][%d] restoreRunNoContent  %+v", 204, o.Payload)
+}
+
+func (o *RestoreRunNoContent) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *RestoreRunNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
 	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
@@ -132,14 +159,14 @@ func NewRestoreRunNotFound() *RestoreRunNotFound {
 Resource does not exist.
 */
 type RestoreRunNotFound struct {
-	Payload string
+	Payload interface{}
 }
 
 func (o *RestoreRunNotFound) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/restore][%d] restoreRunNotFound  %+v", 404, o.Payload)
 }
 
-func (o *RestoreRunNotFound) GetPayload() string {
+func (o *RestoreRunNotFound) GetPayload() interface{} {
 	return o.Payload
 }
 

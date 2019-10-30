@@ -56,6 +56,7 @@ class V1ArtifactsStore(object):
         'updated_at': 'datetime',
         'frozen': 'bool',
         'disabled': 'bool',
+        'deleted': 'bool',
         'k8s_secret': 'str',
         'type': 'str',
         'mount_path': 'str',
@@ -75,6 +76,7 @@ class V1ArtifactsStore(object):
         'updated_at': 'updated_at',
         'frozen': 'frozen',
         'disabled': 'disabled',
+        'deleted': 'deleted',
         'k8s_secret': 'k8s_secret',
         'type': 'type',
         'mount_path': 'mount_path',
@@ -84,7 +86,7 @@ class V1ArtifactsStore(object):
         'read_only': 'read_only'
     }
 
-    def __init__(self, uuid=None, name=None, description=None, readme=None, tags=None, created_at=None, updated_at=None, frozen=None, disabled=None, k8s_secret=None, type=None, mount_path=None, host_path=None, volume_claim=None, bucket=None, read_only=None):  # noqa: E501
+    def __init__(self, uuid=None, name=None, description=None, readme=None, tags=None, created_at=None, updated_at=None, frozen=None, disabled=None, deleted=None, k8s_secret=None, type=None, mount_path=None, host_path=None, volume_claim=None, bucket=None, read_only=None):  # noqa: E501
         """V1ArtifactsStore - a model defined in Swagger"""  # noqa: E501
 
         self._uuid = None
@@ -96,6 +98,7 @@ class V1ArtifactsStore(object):
         self._updated_at = None
         self._frozen = None
         self._disabled = None
+        self._deleted = None
         self._k8s_secret = None
         self._type = None
         self._mount_path = None
@@ -123,6 +126,8 @@ class V1ArtifactsStore(object):
             self.frozen = frozen
         if disabled is not None:
             self.disabled = disabled
+        if deleted is not None:
+            self.deleted = deleted
         if k8s_secret is not None:
             self.k8s_secret = k8s_secret
         if type is not None:
@@ -326,6 +331,27 @@ class V1ArtifactsStore(object):
         """
 
         self._disabled = disabled
+
+    @property
+    def deleted(self):
+        """Gets the deleted of this V1ArtifactsStore.  # noqa: E501
+
+
+        :return: The deleted of this V1ArtifactsStore.  # noqa: E501
+        :rtype: bool
+        """
+        return self._deleted
+
+    @deleted.setter
+    def deleted(self, deleted):
+        """Sets the deleted of this V1ArtifactsStore.
+
+
+        :param deleted: The deleted of this V1ArtifactsStore.  # noqa: E501
+        :type: bool
+        """
+
+        self._deleted = deleted
 
     @property
     def k8s_secret(self):

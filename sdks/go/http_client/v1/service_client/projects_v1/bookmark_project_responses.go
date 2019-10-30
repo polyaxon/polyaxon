@@ -42,6 +42,12 @@ func (o *BookmarkProjectReader) ReadResponse(response runtime.ClientResponse, co
 			return nil, err
 		}
 		return result, nil
+	case 204:
+		result := NewBookmarkProjectNoContent()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return result, nil
 	case 403:
 		result := NewBookmarkProjectForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -70,18 +76,39 @@ func NewBookmarkProjectOK() *BookmarkProjectOK {
 A successful response.
 */
 type BookmarkProjectOK struct {
-	Payload interface{}
 }
 
 func (o *BookmarkProjectOK) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/bookmark][%d] bookmarkProjectOK  %+v", 200, o.Payload)
-}
-
-func (o *BookmarkProjectOK) GetPayload() interface{} {
-	return o.Payload
+	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/bookmark][%d] bookmarkProjectOK ", 200)
 }
 
 func (o *BookmarkProjectOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	return nil
+}
+
+// NewBookmarkProjectNoContent creates a BookmarkProjectNoContent with default headers values
+func NewBookmarkProjectNoContent() *BookmarkProjectNoContent {
+	return &BookmarkProjectNoContent{}
+}
+
+/*BookmarkProjectNoContent handles this case with default header values.
+
+No content.
+*/
+type BookmarkProjectNoContent struct {
+	Payload interface{}
+}
+
+func (o *BookmarkProjectNoContent) Error() string {
+	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/bookmark][%d] bookmarkProjectNoContent  %+v", 204, o.Payload)
+}
+
+func (o *BookmarkProjectNoContent) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *BookmarkProjectNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
 	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
@@ -132,14 +159,14 @@ func NewBookmarkProjectNotFound() *BookmarkProjectNotFound {
 Resource does not exist.
 */
 type BookmarkProjectNotFound struct {
-	Payload string
+	Payload interface{}
 }
 
 func (o *BookmarkProjectNotFound) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/bookmark][%d] bookmarkProjectNotFound  %+v", 404, o.Payload)
 }
 
-func (o *BookmarkProjectNotFound) GetPayload() string {
+func (o *BookmarkProjectNotFound) GetPayload() interface{} {
 	return o.Payload
 }
 

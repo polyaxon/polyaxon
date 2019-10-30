@@ -69,7 +69,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **delete_search**
-> object delete_search(owner, project, uuid)
+> delete_search(owner, project, uuid)
 
 Update run
 
@@ -95,8 +95,7 @@ uuid = 'uuid_example' # str | Unique integer identifier of the entity
 
 try:
     # Update run
-    api_response = api_instance.delete_search(owner, project, uuid)
-    pprint(api_response)
+    api_instance.delete_search(owner, project, uuid)
 except ApiException as e:
     print("Exception when calling SearchV1Api->delete_search: %s\n" % e)
 ```
@@ -111,7 +110,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**object**
+void (empty response body)
 
 ### Authorization
 

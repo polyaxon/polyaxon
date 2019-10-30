@@ -42,6 +42,12 @@ func (o *ArchiveProjectReader) ReadResponse(response runtime.ClientResponse, con
 			return nil, err
 		}
 		return result, nil
+	case 204:
+		result := NewArchiveProjectNoContent()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return result, nil
 	case 403:
 		result := NewArchiveProjectForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -70,18 +76,39 @@ func NewArchiveProjectOK() *ArchiveProjectOK {
 A successful response.
 */
 type ArchiveProjectOK struct {
-	Payload interface{}
 }
 
 func (o *ArchiveProjectOK) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/archive][%d] archiveProjectOK  %+v", 200, o.Payload)
-}
-
-func (o *ArchiveProjectOK) GetPayload() interface{} {
-	return o.Payload
+	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/archive][%d] archiveProjectOK ", 200)
 }
 
 func (o *ArchiveProjectOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	return nil
+}
+
+// NewArchiveProjectNoContent creates a ArchiveProjectNoContent with default headers values
+func NewArchiveProjectNoContent() *ArchiveProjectNoContent {
+	return &ArchiveProjectNoContent{}
+}
+
+/*ArchiveProjectNoContent handles this case with default header values.
+
+No content.
+*/
+type ArchiveProjectNoContent struct {
+	Payload interface{}
+}
+
+func (o *ArchiveProjectNoContent) Error() string {
+	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/archive][%d] archiveProjectNoContent  %+v", 204, o.Payload)
+}
+
+func (o *ArchiveProjectNoContent) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *ArchiveProjectNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
 	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
@@ -132,14 +159,14 @@ func NewArchiveProjectNotFound() *ArchiveProjectNotFound {
 Resource does not exist.
 */
 type ArchiveProjectNotFound struct {
-	Payload string
+	Payload interface{}
 }
 
 func (o *ArchiveProjectNotFound) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/archive][%d] archiveProjectNotFound  %+v", 404, o.Payload)
 }
 
-func (o *ArchiveProjectNotFound) GetPayload() string {
+func (o *ArchiveProjectNotFound) GetPayload() interface{} {
 	return o.Payload
 }
 

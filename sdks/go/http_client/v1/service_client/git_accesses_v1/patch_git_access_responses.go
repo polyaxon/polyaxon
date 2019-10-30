@@ -44,6 +44,12 @@ func (o *PatchGitAccessReader) ReadResponse(response runtime.ClientResponse, con
 			return nil, err
 		}
 		return result, nil
+	case 204:
+		result := NewPatchGitAccessNoContent()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return result, nil
 	case 403:
 		result := NewPatchGitAccessForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -95,6 +101,37 @@ func (o *PatchGitAccessOK) readResponse(response runtime.ClientResponse, consume
 	return nil
 }
 
+// NewPatchGitAccessNoContent creates a PatchGitAccessNoContent with default headers values
+func NewPatchGitAccessNoContent() *PatchGitAccessNoContent {
+	return &PatchGitAccessNoContent{}
+}
+
+/*PatchGitAccessNoContent handles this case with default header values.
+
+No content.
+*/
+type PatchGitAccessNoContent struct {
+	Payload interface{}
+}
+
+func (o *PatchGitAccessNoContent) Error() string {
+	return fmt.Sprintf("[PATCH /api/v1/{owner}/git_accesses/{host_access.uuid}][%d] patchGitAccessNoContent  %+v", 204, o.Payload)
+}
+
+func (o *PatchGitAccessNoContent) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *PatchGitAccessNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	// response payload
+	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
 // NewPatchGitAccessForbidden creates a PatchGitAccessForbidden with default headers values
 func NewPatchGitAccessForbidden() *PatchGitAccessForbidden {
 	return &PatchGitAccessForbidden{}
@@ -136,14 +173,14 @@ func NewPatchGitAccessNotFound() *PatchGitAccessNotFound {
 Resource does not exist.
 */
 type PatchGitAccessNotFound struct {
-	Payload string
+	Payload interface{}
 }
 
 func (o *PatchGitAccessNotFound) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/{owner}/git_accesses/{host_access.uuid}][%d] patchGitAccessNotFound  %+v", 404, o.Payload)
 }
 
-func (o *PatchGitAccessNotFound) GetPayload() string {
+func (o *PatchGitAccessNotFound) GetPayload() interface{} {
 	return o.Payload
 }
 

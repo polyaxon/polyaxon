@@ -71,7 +71,7 @@ Name | Type | Description  | Notes
 
 <a name="deleteSearch"></a>
 # **deleteSearch**
-> Object deleteSearch(owner, project, uuid)
+> deleteSearch(owner, project, uuid)
 
 Update run
 
@@ -99,7 +99,7 @@ var callback = function(error, data, response) {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully. Returned data: ' + data);
+    console.log('API called successfully.');
   }
 };
 apiInstance.deleteSearch(owner, project, uuid, callback);
@@ -115,7 +115,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 

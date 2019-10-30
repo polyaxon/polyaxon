@@ -44,6 +44,12 @@ func (o *PatchSearchReader) ReadResponse(response runtime.ClientResponse, consum
 			return nil, err
 		}
 		return result, nil
+	case 204:
+		result := NewPatchSearchNoContent()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return result, nil
 	case 403:
 		result := NewPatchSearchForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -95,6 +101,37 @@ func (o *PatchSearchOK) readResponse(response runtime.ClientResponse, consumer r
 	return nil
 }
 
+// NewPatchSearchNoContent creates a PatchSearchNoContent with default headers values
+func NewPatchSearchNoContent() *PatchSearchNoContent {
+	return &PatchSearchNoContent{}
+}
+
+/*PatchSearchNoContent handles this case with default header values.
+
+No content.
+*/
+type PatchSearchNoContent struct {
+	Payload interface{}
+}
+
+func (o *PatchSearchNoContent) Error() string {
+	return fmt.Sprintf("[PATCH /api/v1/{owner}/{project}/searches/{search.uuid}][%d] patchSearchNoContent  %+v", 204, o.Payload)
+}
+
+func (o *PatchSearchNoContent) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *PatchSearchNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	// response payload
+	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
 // NewPatchSearchForbidden creates a PatchSearchForbidden with default headers values
 func NewPatchSearchForbidden() *PatchSearchForbidden {
 	return &PatchSearchForbidden{}
@@ -136,14 +173,14 @@ func NewPatchSearchNotFound() *PatchSearchNotFound {
 Resource does not exist.
 */
 type PatchSearchNotFound struct {
-	Payload string
+	Payload interface{}
 }
 
 func (o *PatchSearchNotFound) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/{owner}/{project}/searches/{search.uuid}][%d] patchSearchNotFound  %+v", 404, o.Payload)
 }
 
-func (o *PatchSearchNotFound) GetPayload() string {
+func (o *PatchSearchNotFound) GetPayload() interface{} {
 	return o.Payload
 }
 

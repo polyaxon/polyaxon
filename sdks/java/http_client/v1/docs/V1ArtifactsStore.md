@@ -13,6 +13,7 @@ Name | Type | Description | Notes
 **updatedAt** | [**OffsetDateTime**](OffsetDateTime.md) |  |  [optional]
 **frozen** | **Boolean** |  |  [optional]
 **disabled** | **Boolean** |  |  [optional]
+**deleted** | **Boolean** |  |  [optional]
 **k8sSecret** | **String** |  |  [optional]
 **type** | **String** |  |  [optional]
 **mountPath** | **String** |  |  [optional]

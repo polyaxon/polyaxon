@@ -44,6 +44,12 @@ func (o *GetRunCodeRefsReader) ReadResponse(response runtime.ClientResponse, con
 			return nil, err
 		}
 		return result, nil
+	case 204:
+		result := NewGetRunCodeRefsNoContent()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return result, nil
 	case 403:
 		result := NewGetRunCodeRefsForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -95,6 +101,37 @@ func (o *GetRunCodeRefsOK) readResponse(response runtime.ClientResponse, consume
 	return nil
 }
 
+// NewGetRunCodeRefsNoContent creates a GetRunCodeRefsNoContent with default headers values
+func NewGetRunCodeRefsNoContent() *GetRunCodeRefsNoContent {
+	return &GetRunCodeRefsNoContent{}
+}
+
+/*GetRunCodeRefsNoContent handles this case with default header values.
+
+No content.
+*/
+type GetRunCodeRefsNoContent struct {
+	Payload interface{}
+}
+
+func (o *GetRunCodeRefsNoContent) Error() string {
+	return fmt.Sprintf("[GET /api/v1/{owner}/{project}/runs/{uuid}/coderef][%d] getRunCodeRefsNoContent  %+v", 204, o.Payload)
+}
+
+func (o *GetRunCodeRefsNoContent) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *GetRunCodeRefsNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	// response payload
+	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
 // NewGetRunCodeRefsForbidden creates a GetRunCodeRefsForbidden with default headers values
 func NewGetRunCodeRefsForbidden() *GetRunCodeRefsForbidden {
 	return &GetRunCodeRefsForbidden{}
@@ -136,14 +173,14 @@ func NewGetRunCodeRefsNotFound() *GetRunCodeRefsNotFound {
 Resource does not exist.
 */
 type GetRunCodeRefsNotFound struct {
-	Payload string
+	Payload interface{}
 }
 
 func (o *GetRunCodeRefsNotFound) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/{project}/runs/{uuid}/coderef][%d] getRunCodeRefsNotFound  %+v", 404, o.Payload)
 }
 
-func (o *GetRunCodeRefsNotFound) GetPayload() string {
+func (o *GetRunCodeRefsNotFound) GetPayload() interface{} {
 	return o.Payload
 }
 

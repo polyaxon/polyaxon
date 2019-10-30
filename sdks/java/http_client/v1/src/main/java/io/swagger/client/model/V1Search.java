@@ -36,6 +36,7 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import io.swagger.client.model.V1SearchDefinition;
 import java.io.IOException;
 
 /**
@@ -49,11 +50,8 @@ public class V1Search {
   @SerializedName("name")
   private String name = null;
 
-  @SerializedName("query")
-  private String query = null;
-
-  @SerializedName("meta")
-  private String meta = null;
+  @SerializedName("definition")
+  private V1SearchDefinition definition = null;
 
   public V1Search uuid(String uuid) {
     this.uuid = uuid;
@@ -91,40 +89,22 @@ public class V1Search {
     this.name = name;
   }
 
-  public V1Search query(String query) {
-    this.query = query;
+  public V1Search definition(V1SearchDefinition definition) {
+    this.definition = definition;
     return this;
   }
 
    /**
-   * Get query
-   * @return query
+   * Get definition
+   * @return definition
   **/
   @ApiModelProperty(value = "")
-  public String getQuery() {
-    return query;
+  public V1SearchDefinition getDefinition() {
+    return definition;
   }
 
-  public void setQuery(String query) {
-    this.query = query;
-  }
-
-  public V1Search meta(String meta) {
-    this.meta = meta;
-    return this;
-  }
-
-   /**
-   * Get meta
-   * @return meta
-  **/
-  @ApiModelProperty(value = "")
-  public String getMeta() {
-    return meta;
-  }
-
-  public void setMeta(String meta) {
-    this.meta = meta;
+  public void setDefinition(V1SearchDefinition definition) {
+    this.definition = definition;
   }
 
 
@@ -139,13 +119,12 @@ public class V1Search {
     V1Search v1Search = (V1Search) o;
     return Objects.equals(this.uuid, v1Search.uuid) &&
         Objects.equals(this.name, v1Search.name) &&
-        Objects.equals(this.query, v1Search.query) &&
-        Objects.equals(this.meta, v1Search.meta);
+        Objects.equals(this.definition, v1Search.definition);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(uuid, name, query, meta);
+    return Objects.hash(uuid, name, definition);
   }
 
 
@@ -156,8 +135,7 @@ public class V1Search {
     
     sb.append("    uuid: ").append(toIndentedString(uuid)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
-    sb.append("    query: ").append(toIndentedString(query)).append("\n");
-    sb.append("    meta: ").append(toIndentedString(meta)).append("\n");
+    sb.append("    definition: ").append(toIndentedString(definition)).append("\n");
     sb.append("}");
     return sb.toString();
   }

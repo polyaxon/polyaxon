@@ -10,8 +10,10 @@ Name | Type | Description | Notes
 **tags** | **list[str]** |  | [optional] 
 **created_at** | **datetime** |  | [optional] 
 **updated_at** | **datetime** |  | [optional] 
+**k8s_ref** | **str** |  | [optional] 
 **frozen** | **bool** |  | [optional] 
 **disabled** | **bool** |  | [optional] 
+**deleted** | **bool** |  | [optional] 
 **mount_path** | **str** |  | [optional] 
 **items** | **list[str]** |  | [optional] 
 

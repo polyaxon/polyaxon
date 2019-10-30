@@ -42,6 +42,12 @@ func (o *ArchiveRunReader) ReadResponse(response runtime.ClientResponse, consume
 			return nil, err
 		}
 		return result, nil
+	case 204:
+		result := NewArchiveRunNoContent()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return result, nil
 	case 403:
 		result := NewArchiveRunForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -70,18 +76,39 @@ func NewArchiveRunOK() *ArchiveRunOK {
 A successful response.
 */
 type ArchiveRunOK struct {
-	Payload interface{}
 }
 
 func (o *ArchiveRunOK) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/archive][%d] archiveRunOK  %+v", 200, o.Payload)
-}
-
-func (o *ArchiveRunOK) GetPayload() interface{} {
-	return o.Payload
+	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/archive][%d] archiveRunOK ", 200)
 }
 
 func (o *ArchiveRunOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	return nil
+}
+
+// NewArchiveRunNoContent creates a ArchiveRunNoContent with default headers values
+func NewArchiveRunNoContent() *ArchiveRunNoContent {
+	return &ArchiveRunNoContent{}
+}
+
+/*ArchiveRunNoContent handles this case with default header values.
+
+No content.
+*/
+type ArchiveRunNoContent struct {
+	Payload interface{}
+}
+
+func (o *ArchiveRunNoContent) Error() string {
+	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/archive][%d] archiveRunNoContent  %+v", 204, o.Payload)
+}
+
+func (o *ArchiveRunNoContent) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *ArchiveRunNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
 	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
@@ -132,14 +159,14 @@ func NewArchiveRunNotFound() *ArchiveRunNotFound {
 Resource does not exist.
 */
 type ArchiveRunNotFound struct {
-	Payload string
+	Payload interface{}
 }
 
 func (o *ArchiveRunNotFound) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/archive][%d] archiveRunNotFound  %+v", 404, o.Payload)
 }
 
-func (o *ArchiveRunNotFound) GetPayload() string {
+func (o *ArchiveRunNotFound) GetPayload() interface{} {
 	return o.Payload
 }
 

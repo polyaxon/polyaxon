@@ -70,7 +70,7 @@ Name | Type | Description  | Notes
 
 <a name="deleteK8SConfigMap"></a>
 # **deleteK8SConfigMap**
-> Object deleteK8SConfigMap(owner, uuid)
+> deleteK8SConfigMap(owner, uuid)
 
 Patch run
 
@@ -95,8 +95,7 @@ K8SConfigMapsV1Api apiInstance = new K8SConfigMapsV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
 String uuid = "uuid_example"; // String | Unique integer identifier of the entity
 try {
-    Object result = apiInstance.deleteK8SConfigMap(owner, uuid);
-    System.out.println(result);
+    apiInstance.deleteK8SConfigMap(owner, uuid);
 } catch (ApiException e) {
     System.err.println("Exception when calling K8SConfigMapsV1Api#deleteK8SConfigMap");
     e.printStackTrace();
@@ -112,7 +111,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 

@@ -44,6 +44,12 @@ func (o *UpdateRegsitryAccessReader) ReadResponse(response runtime.ClientRespons
 			return nil, err
 		}
 		return result, nil
+	case 204:
+		result := NewUpdateRegsitryAccessNoContent()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return result, nil
 	case 403:
 		result := NewUpdateRegsitryAccessForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -95,6 +101,37 @@ func (o *UpdateRegsitryAccessOK) readResponse(response runtime.ClientResponse, c
 	return nil
 }
 
+// NewUpdateRegsitryAccessNoContent creates a UpdateRegsitryAccessNoContent with default headers values
+func NewUpdateRegsitryAccessNoContent() *UpdateRegsitryAccessNoContent {
+	return &UpdateRegsitryAccessNoContent{}
+}
+
+/*UpdateRegsitryAccessNoContent handles this case with default header values.
+
+No content.
+*/
+type UpdateRegsitryAccessNoContent struct {
+	Payload interface{}
+}
+
+func (o *UpdateRegsitryAccessNoContent) Error() string {
+	return fmt.Sprintf("[PUT /api/v1/{owner}/registry_accesses/{host_access.uuid}][%d] updateRegsitryAccessNoContent  %+v", 204, o.Payload)
+}
+
+func (o *UpdateRegsitryAccessNoContent) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *UpdateRegsitryAccessNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	// response payload
+	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
 // NewUpdateRegsitryAccessForbidden creates a UpdateRegsitryAccessForbidden with default headers values
 func NewUpdateRegsitryAccessForbidden() *UpdateRegsitryAccessForbidden {
 	return &UpdateRegsitryAccessForbidden{}
@@ -136,14 +173,14 @@ func NewUpdateRegsitryAccessNotFound() *UpdateRegsitryAccessNotFound {
 Resource does not exist.
 */
 type UpdateRegsitryAccessNotFound struct {
-	Payload string
+	Payload interface{}
 }
 
 func (o *UpdateRegsitryAccessNotFound) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/{owner}/registry_accesses/{host_access.uuid}][%d] updateRegsitryAccessNotFound  %+v", 404, o.Payload)
 }
 
-func (o *UpdateRegsitryAccessNotFound) GetPayload() string {
+func (o *UpdateRegsitryAccessNotFound) GetPayload() interface{} {
 	return o.Payload
 }
 

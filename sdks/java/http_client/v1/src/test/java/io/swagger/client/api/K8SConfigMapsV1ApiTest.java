@@ -76,7 +76,7 @@ public class K8SConfigMapsV1ApiTest {
     public void deleteK8SConfigMapTest() throws ApiException {
         String owner = null;
         String uuid = null;
-        Object response = api.deleteK8SConfigMap(owner, uuid);
+        api.deleteK8SConfigMap(owner, uuid);
 
         // TODO: test validations
     }

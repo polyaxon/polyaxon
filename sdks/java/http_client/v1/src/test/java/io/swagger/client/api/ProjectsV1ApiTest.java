@@ -59,7 +59,7 @@ public class ProjectsV1ApiTest {
     public void archiveProjectTest() throws ApiException {
         String owner = null;
         String project = null;
-        Object response = api.archiveProject(owner, project);
+        api.archiveProject(owner, project);
 
         // TODO: test validations
     }
@@ -76,7 +76,7 @@ public class ProjectsV1ApiTest {
     public void bookmarkProjectTest() throws ApiException {
         String owner = null;
         String project = null;
-        Object response = api.bookmarkProject(owner, project);
+        api.bookmarkProject(owner, project);
 
         // TODO: test validations
     }
@@ -110,7 +110,7 @@ public class ProjectsV1ApiTest {
     public void deleteProjectTest() throws ApiException {
         String owner = null;
         String project = null;
-        Object response = api.deleteProject(owner, project);
+        api.deleteProject(owner, project);
 
         // TODO: test validations
     }
@@ -127,7 +127,7 @@ public class ProjectsV1ApiTest {
     public void disableProjectCITest() throws ApiException {
         String owner = null;
         String project = null;
-        Object response = api.disableProjectCI(owner, project);
+        api.disableProjectCI(owner, project);
 
         // TODO: test validations
     }
@@ -144,7 +144,7 @@ public class ProjectsV1ApiTest {
     public void enableProjectCITest() throws ApiException {
         String owner = null;
         String project = null;
-        Object response = api.enableProjectCI(owner, project);
+        api.enableProjectCI(owner, project);
 
         // TODO: test validations
     }
@@ -273,10 +273,10 @@ public class ProjectsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void restoreExperimentTest() throws ApiException {
+    public void restoreProjectTest() throws ApiException {
         String owner = null;
         String project = null;
-        Object response = api.restoreExperiment(owner, project);
+        api.restoreProject(owner, project);
 
         // TODO: test validations
     }
@@ -293,7 +293,7 @@ public class ProjectsV1ApiTest {
     public void unbookmarkProjectTest() throws ApiException {
         String owner = null;
         String project = null;
-        Object response = api.unbookmarkProject(owner, project);
+        api.unbookmarkProject(owner, project);
 
         // TODO: test validations
     }

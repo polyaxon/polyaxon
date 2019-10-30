@@ -42,6 +42,12 @@ func (o *DeleteK8SConfigMapReader) ReadResponse(response runtime.ClientResponse,
 			return nil, err
 		}
 		return result, nil
+	case 204:
+		result := NewDeleteK8SConfigMapNoContent()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return result, nil
 	case 403:
 		result := NewDeleteK8SConfigMapForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -70,18 +76,39 @@ func NewDeleteK8SConfigMapOK() *DeleteK8SConfigMapOK {
 A successful response.
 */
 type DeleteK8SConfigMapOK struct {
-	Payload interface{}
 }
 
 func (o *DeleteK8SConfigMapOK) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/{owner}/k8s_config_maps/{uuid}][%d] deleteK8SConfigMapOK  %+v", 200, o.Payload)
-}
-
-func (o *DeleteK8SConfigMapOK) GetPayload() interface{} {
-	return o.Payload
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/k8s_config_maps/{uuid}][%d] deleteK8SConfigMapOK ", 200)
 }
 
 func (o *DeleteK8SConfigMapOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	return nil
+}
+
+// NewDeleteK8SConfigMapNoContent creates a DeleteK8SConfigMapNoContent with default headers values
+func NewDeleteK8SConfigMapNoContent() *DeleteK8SConfigMapNoContent {
+	return &DeleteK8SConfigMapNoContent{}
+}
+
+/*DeleteK8SConfigMapNoContent handles this case with default header values.
+
+No content.
+*/
+type DeleteK8SConfigMapNoContent struct {
+	Payload interface{}
+}
+
+func (o *DeleteK8SConfigMapNoContent) Error() string {
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/k8s_config_maps/{uuid}][%d] deleteK8SConfigMapNoContent  %+v", 204, o.Payload)
+}
+
+func (o *DeleteK8SConfigMapNoContent) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *DeleteK8SConfigMapNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
 	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
@@ -132,14 +159,14 @@ func NewDeleteK8SConfigMapNotFound() *DeleteK8SConfigMapNotFound {
 Resource does not exist.
 */
 type DeleteK8SConfigMapNotFound struct {
-	Payload string
+	Payload interface{}
 }
 
 func (o *DeleteK8SConfigMapNotFound) Error() string {
 	return fmt.Sprintf("[DELETE /api/v1/{owner}/k8s_config_maps/{uuid}][%d] deleteK8SConfigMapNotFound  %+v", 404, o.Payload)
 }
 
-func (o *DeleteK8SConfigMapNotFound) GetPayload() string {
+func (o *DeleteK8SConfigMapNotFound) GetPayload() interface{} {
 	return o.Payload
 }
 

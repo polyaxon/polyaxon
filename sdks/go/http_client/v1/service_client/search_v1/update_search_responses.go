@@ -44,6 +44,12 @@ func (o *UpdateSearchReader) ReadResponse(response runtime.ClientResponse, consu
 			return nil, err
 		}
 		return result, nil
+	case 204:
+		result := NewUpdateSearchNoContent()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return result, nil
 	case 403:
 		result := NewUpdateSearchForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -95,6 +101,37 @@ func (o *UpdateSearchOK) readResponse(response runtime.ClientResponse, consumer 
 	return nil
 }
 
+// NewUpdateSearchNoContent creates a UpdateSearchNoContent with default headers values
+func NewUpdateSearchNoContent() *UpdateSearchNoContent {
+	return &UpdateSearchNoContent{}
+}
+
+/*UpdateSearchNoContent handles this case with default header values.
+
+No content.
+*/
+type UpdateSearchNoContent struct {
+	Payload interface{}
+}
+
+func (o *UpdateSearchNoContent) Error() string {
+	return fmt.Sprintf("[PUT /api/v1/{owner}/{project}/searches/{search.uuid}][%d] updateSearchNoContent  %+v", 204, o.Payload)
+}
+
+func (o *UpdateSearchNoContent) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *UpdateSearchNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	// response payload
+	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
 // NewUpdateSearchForbidden creates a UpdateSearchForbidden with default headers values
 func NewUpdateSearchForbidden() *UpdateSearchForbidden {
 	return &UpdateSearchForbidden{}
@@ -136,14 +173,14 @@ func NewUpdateSearchNotFound() *UpdateSearchNotFound {
 Resource does not exist.
 */
 type UpdateSearchNotFound struct {
-	Payload string
+	Payload interface{}
 }
 
 func (o *UpdateSearchNotFound) Error() string {
 	return fmt.Sprintf("[PUT /api/v1/{owner}/{project}/searches/{search.uuid}][%d] updateSearchNotFound  %+v", 404, o.Payload)
 }
 
-func (o *UpdateSearchNotFound) GetPayload() string {
+func (o *UpdateSearchNotFound) GetPayload() interface{} {
 	return o.Payload
 }
 

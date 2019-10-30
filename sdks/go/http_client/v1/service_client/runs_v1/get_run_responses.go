@@ -44,6 +44,12 @@ func (o *GetRunReader) ReadResponse(response runtime.ClientResponse, consumer ru
 			return nil, err
 		}
 		return result, nil
+	case 204:
+		result := NewGetRunNoContent()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return result, nil
 	case 403:
 		result := NewGetRunForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -95,6 +101,37 @@ func (o *GetRunOK) readResponse(response runtime.ClientResponse, consumer runtim
 	return nil
 }
 
+// NewGetRunNoContent creates a GetRunNoContent with default headers values
+func NewGetRunNoContent() *GetRunNoContent {
+	return &GetRunNoContent{}
+}
+
+/*GetRunNoContent handles this case with default header values.
+
+No content.
+*/
+type GetRunNoContent struct {
+	Payload interface{}
+}
+
+func (o *GetRunNoContent) Error() string {
+	return fmt.Sprintf("[GET /api/v1/{owner}/{project}/runs/{uuid}][%d] getRunNoContent  %+v", 204, o.Payload)
+}
+
+func (o *GetRunNoContent) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *GetRunNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	// response payload
+	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
 // NewGetRunForbidden creates a GetRunForbidden with default headers values
 func NewGetRunForbidden() *GetRunForbidden {
 	return &GetRunForbidden{}
@@ -136,14 +173,14 @@ func NewGetRunNotFound() *GetRunNotFound {
 Resource does not exist.
 */
 type GetRunNotFound struct {
-	Payload string
+	Payload interface{}
 }
 
 func (o *GetRunNotFound) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/{project}/runs/{uuid}][%d] getRunNotFound  %+v", 404, o.Payload)
 }
 
-func (o *GetRunNotFound) GetPayload() string {
+func (o *GetRunNotFound) GetPayload() interface{} {
 	return o.Payload
 }
 
