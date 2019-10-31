@@ -1,3 +1,4 @@
+[![License: Apache 2](https://img.shields.io/badge/License-apache2-green.svg)](LICENSE)
 [![Build Status](https://travis-ci.org/polyaxon/polyaxon.svg?branch=master)](https://travis-ci.org/polyaxon/polyaxon)
 [![Docs](https://img.shields.io/badge/docs-0.5.6-brightgreen.svg?style=flat)](https://docs.polyaxon.com)
 [![Release](https://img.shields.io/badge/release-0.5.6-brightgreen.svg?longCache=true)](https://github.com/polyaxon/polyaxon/releases/tag/0.5.6)

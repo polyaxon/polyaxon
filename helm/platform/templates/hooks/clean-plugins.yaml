@@ -1,0 +1,53 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: "{{ .Release.Name }}-clean-plugins"
+  labels:
+    app: {{ template "polyaxon.fullname" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+    type: {{ .Values.types.core }}
+    role: {{ .Values.roles.hooks }}
+    app.kubernetes.io/name: {{ template "polyaxon.fullname" . }}-clean-plugins
+    app.kubernetes.io/instance: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    app.kubernetes.io/version: "{{ .Chart.Version }}"
+    app.kubernetes.io/part-of: {{ .Values.types.core }}
+    app.kubernetes.io/component: {{ .Values.roles.hooks }}
+    app.kubernetes.io/managed-by: "helm"
+  annotations:
+    # This is what defines this resource as a hook. Without this line, the
+    # job is considered part of the release.
+    "helm.sh/hook": pre-delete
+    "helm.sh/hook-weight": "-5"
+    "helm.sh/hook-delete-policy": "hook-succeeded,hook-failed"
+spec:
+  template:
+    metadata:
+      name: "{{ .Release.Name }}-clean-plugins"
+      labels:
+        app: {{ template "polyaxon.fullname" . }}
+        release: "{{ .Release.Name }}"
+    spec:
+{{ include "securityContext" . | indent 6 }}
+{{ include "config.scheduling" . | indent 6 }}
+{{ include "config.sa" . | indent 6 }}
+      restartPolicy: Never
+      activeDeadlineSeconds: 360
+      containers:
+      - name: clean-notebooks
+        image: "{{ .Values.hooks.image }}:{{ .Values.hooks.imageTag }}"
+        imagePullPolicy: {{ .Values.hooks.imagePullPolicy }}
+        args: ["clean_notebooks"]
+        envFrom:
+{{ include "config.envFrom" . | indent 8 }}
+        env:
+{{ include "config.envs" . | indent 8 }}
+      - name: clean-tensorboards
+        image: "{{ .Values.hooks.image }}:{{ .Values.hooks.imageTag }}"
+        imagePullPolicy: {{ .Values.hooks.imagePullPolicy }}
+        args: ["clean_tensorboards"]
+        envFrom:
+{{ include "config.envFrom" . | indent 8 }}
+        env:
+{{ include "config.envs" . | indent 8 }}

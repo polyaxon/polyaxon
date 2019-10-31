@@ -1,0 +1,219 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "polyaxon.fullname" . }}-config
+  labels:
+    app: {{ template "polyaxon.fullname" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+    type: {{ .Values.types.core }}
+    role: {{ .Values.roles.config }}
+    app.kubernetes.io/name: {{ template "polyaxon.fullname" . }}-beat
+    app.kubernetes.io/instance: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    app.kubernetes.io/version: "{{ .Chart.Version }}"
+    app.kubernetes.io/part-of: {{ .Values.types.core }}
+    app.kubernetes.io/component: {{ .Values.types.config }}
+    app.kubernetes.io/managed-by: "helm"
+data:
+  # Cluster
+  POLYAXON_DEPLOYMENT_TYPE: {{ default "kubernetes" .Values.deploymentType | quote }}
+  POLYAXON_CLUSTER_ID: {{ default "" .Values.clusterId | quote }}
+  {{- if .Values.allowedHosts }}
+  POLYAXON_ALLOWED_HOSTS: {{ toJson .Values.allowedHosts | quote }}
+  {{- end }}
+  {{- if .Values.ingress.enabled }}
+  POLYAXON_API_HOST: {{ .Values.ingress.hostName | quote }}
+  {{- else }}
+  {{- if .Values.hostName }}
+  POLYAXON_API_HOST: {{ .Values.hostName | quote }}
+  {{- end }}
+  {{- end }}
+  POLYAXON_K8S_NAMESPACE: {{ .Values.namespace | quote }}
+  POLYAXON_K8S_APP_NAME: {{ template "polyaxon.fullname" . }}
+  POLYAXON_K8S_API_HOST: {{ template "polyaxon.fullname" . }}-api:{{ .Values.api.service.internalPort }}
+  POLYAXON_K8S_API_INTERNAL_PORT: {{ .Values.api.service.internalPort | quote }}
+  POLYAXON_K8S_STREAM_INTERNAL_PORT: {{ .Values.streams.service.internalPort | quote }}
+  {{- if contains "NodePort" .Values.serviceType }}
+  POLYAXON_K8S_API_HTTP_PORT: {{ .Values.api.service.nodePort | quote }}
+  {{- else }}
+  POLYAXON_K8S_API_HTTP_PORT: {{ .Values.api.service.externalPort | quote }}
+  {{- end }}
+  POLYAXON_K8S_APP_CONFIG_NAME: {{ template "polyaxon.fullname" . }}-config
+  POLYAXON_K8S_APP_SECRET_NAME: {{ template "polyaxon.fullname" . }}-secret
+  {{- if .Values.k8s.host }}
+  POLYAXON_K8S_HOST: {{ .Values.k8s.host | quote }}
+  {{- end}}
+  {{- if .Values.k8s.ssl_ca_cert }}
+  POLYAXON_K8S_SSL_CA_CERT: {{ .Values.k8s.ssl_ca_cert | quote }}
+  {{- end }}
+  {{- if .Values.logLevel }}
+  POLYAXON_LOG_LEVEL: {{ .Values.logLevel | quote }}
+  {{- end }}
+  {{- if (index .Values "rabbitmq-ha").enabled }}
+  POLYAXON_K8S_RABBITMQ_SECRET_NAME: {{ template "rabbitmq.fullname" . }}
+  {{- else }}
+  POLYAXON_K8S_RABBITMQ_SECRET_NAME: {{ template "polyaxon.fullname" . }}-rabbitmq-secret
+  {{- end}}
+  {{- if .Values.redis.enabled }}
+  POLYAXON_K8S_REDIS_SECRET_NAME: {{ template "redis.fullname" . }}
+  {{- else }}
+  POLYAXON_K8S_REDIS_SECRET_NAME: {{ template "polyaxon.fullname" . }}-redis-secret
+  {{- end}}
+  {{- if .Values.postgresql.enabled }}
+  POLYAXON_K8S_DB_SECRET_NAME: {{ template "postgresql.fullname" . }}
+  {{- else }}
+  POLYAXON_K8S_DB_SECRET_NAME: {{ template "polyaxon.fullname" . }}-postgres-secret
+  {{- end}}
+  POLYAXON_ENVIRONMENT: {{ default "production" .Values.environment | quote }}
+  POLYAXON_TIME_ZONE: {{ .Values.timeZone | quote }}
+  # Run Env
+  POLYAXON_K8S_GPU_RESOURCE_KEY: "nvidia.com/gpu"
+  {{- if .Values.tpuTensorflowVersion }}
+  POLYAXON_K8S_TPU_TF_VERSION: {{ .Values.tpuTensorflowVersion | quote }}
+  {{- end }}
+  {{- if .Values.tpuResourceKey }}
+  POLYAXON_K8S_TPU_RESOURCE_KEY: {{ .Values.tpuResourceKey | quote }}
+  {{- end }}
+  # Dirs
+  POLYAXON_DIRS_NVIDIA: {{ toJson .Values.dirs.nvidia | quote }}
+  {{- if and .Values.mountPaths.nvidia.lib .Values.mountPaths.nvidia.bin .Values.mountPaths.nvidia.libcuda }}
+  POLYAXON_MOUNT_PATHS_NVIDIA: {{ toJson .Values.mountPaths.nvidia | quote }}
+  LD_LIBRARY_PATH: "{{ .Values.mountPaths.nvidia.lib }}:{{ .Values.mountPaths.nvidia.libcuda }}"
+  {{- else if and .Values.dirs.nvidia.lib .Values.dirs.nvidia.bin .Values.dirs.nvidia.libcuda }}
+  POLYAXON_MOUNT_PATHS_NVIDIA: {{ toJson .Values.dirs.nvidia | quote }}
+  LD_LIBRARY_PATH: "{{ .Values.dirs.nvidia.lib }}:{{ .Values.dirs.nvidia.libcuda }}"
+  {{- end }}
+  # Admin
+  POLYAXON_ADMIN_NAME: {{ .Values.user.username | quote }}
+  POLYAXON_ADMIN_MAIL: {{ .Values.user.email | quote }}
+  POLYAXON_PASSWORD_LENGTH: {{ default "6" .Values.passwordLength | quote }}
+  POLYAXON_ADMIN_VIEW_ENABLED: {{ default "false" .Values.adminViewEnabled | quote }}
+  {{- if .Values.adminModels }}
+  POLYAXON_ADMIN_MODELS: {{ toJson .Values.adminModels | quote }}
+  {{- end }}
+  # Email
+  {{- if .Values.email.from }}
+  POLYAXON_EMAIL_FROM: {{ .Values.email.from | quote }}
+  {{- end }}
+  {{- if .Values.email.subjectPrefix }}
+  POLYAXON_EMAIL_SUBJECT_PREFIX: {{ .Values.email.subjectPrefix | quote }}
+  {{- end }}
+  POLYAXON_EMAIL_HOST: {{ .Values.email.host | quote }}
+  POLYAXON_EMAIL_PORT: {{ .Values.email.port | quote }}
+  POLYAXON_EMAIL_USE_TLS: {{ .Values.email.useTls | quote }}
+  {{- if .Values.email.hostUser }}
+  POLYAXON_EMAIL_HOST_USER: {{ .Values.email.hostUser | quote }}
+  {{- end }}
+  {{- if .Values.email.backend }}
+  POLYAXON_EMAIL_BACKEND: {{ .Values.email.backend | quote }}
+  {{- end }}
+  # SSL
+  {{- if and .Values.ssl.enabled .Values.ssl.secretName }}
+  POLYAXON_SSL_ENABLED: "true"
+  {{- if .Values.ssl.path }}
+  POLYAXON_SSL_PATH:  {{ .Values.ssl.path | quote }}
+  {{- end }}
+  {{- end }}
+  # Queues
+  POLYAXON_INTERVALS_EXPERIMENTS_SCHEDULER: {{ .Values.intervals.experimentsScheduler | quote }}
+  POLYAXON_INTERVALS_EXPERIMENTS_SYNC: {{ .Values.intervals.experimentsSync | quote }}
+  POLYAXON_INTERVALS_CLUSTERS_UPDATE_SYSTEM_INFO: {{ .Values.intervals.clustersUpdateSystemInfo | quote }}
+  POLYAXON_INTERVALS_CLUSTERS_UPDATE_SYSTEM_NODES: {{ .Values.intervals.clustersUpdateSystemNodes | quote }}
+  POLYAXON_INTERVALS_PIPELINES_SCHEDULER: {{ .Values.intervals.pipelinesScheduler | quote }}
+  POLYAXON_INTERVALS_OPERATIONS_DEFAULT_RETRY_DELAY: {{ .Values.intervals.operationsDefaultRetryDelay | quote }}
+  POLYAXON_INTERVALS_OPERATIONS_MAX_RETRY_DELAY: {{ .Values.intervals.operationsMaxRetryDelay | quote }}
+  # DB
+  POLYAXON_DB_USER: {{ template "postgresql.user" . }}
+  POLYAXON_DB_NAME: {{ template "postgresql.database" . }}
+  POLYAXON_DB_PORT: "{{ template "postgresql.port" . }}"
+  POLYAXON_DB_CONN_MAX_AGE: "{{ template "postgresql.connMaxAge" . }}"
+  POLYAXON_DB_HOST: "{{ template "postgresql.host" . }}"
+  # Broker
+  {{ if ( .Values.broker ) and eq .Values.broker "redis" -}}
+  POLYAXON_BROKER_BACKEND: {{ .Values.broker }}
+  POLYAXON_REDIS_CELERY_BROKER_URL: {{ template "redis.host" . }}:{{ template "redis.port" . }}/0
+  {{- else }}
+  POLYAXON_AMQP_URL: {{ template "rabbitmq.host" . }}:{{ template "rabbitmq.port" . }}
+  POLYAXON_RABBITMQ_USER: {{ template "rabbitmq.user" . }}
+  {{- end }}
+  # REDIS
+  POLYAXON_REDIS_CELERY_RESULT_BACKEND_URL: {{ template "redis.host" . }}:{{ template "redis.port" . }}/1
+  POLYAXON_REDIS_JOB_CONTAINERS_URL: {{ template "redis.host" . }}:{{ template "redis.port" . }}/3
+  POLYAXON_REDIS_TO_STREAM_URL: {{ template "redis.host" . }}:{{ template "redis.port" . }}/4
+  POLYAXON_REDIS_SESSIONS_URL: {{ template "redis.host" . }}:{{ template "redis.port" . }}/5
+  POLYAXON_REDIS_EPHEMERAL_TOKENS_URL: {{ template "redis.host" . }}:{{ template "redis.port" . }}/6
+  POLYAXON_REDIS_TTL_URL: {{ template "redis.host" . }}:{{ template "redis.port" . }}/7
+  POLYAXON_REDIS_HEARTBEAT_URL: {{ template "redis.host" . }}:{{ template "redis.port" . }}/8
+  POLYAXON_REDIS_GROUP_CHECKS_URL: {{ template "redis.host" . }}:{{ template "redis.port" . }}/9
+  POLYAXON_REDIS_STATUSES_URL: {{ template "redis.host" . }}:{{ template "redis.port" . }}/10
+  POLYAXON_REDIS_HOST: "{{ template "redis.host" . }}"
+  POLYAXON_REDIS_PORT: "{{ template "redis.port" . }}"
+  # Security Context
+  {{- if and .Values.securityContext.enabled }}
+  POLYAXON_SECURITY_CONTEXT_USER: {{ .Values.securityContext.user | quote }}
+  POLYAXON_SECURITY_CONTEXT_GROUP: {{ .Values.securityContext.group | quote }}
+  {{- end }}
+  # Spawner
+  POLYAXON_JOB_SIDECAR_LOG_SLEEP_INTERVAL: "1"
+  POLYAXON_PUBLIC_PLUGIN_JOBS: {{ default false .Values.publicJobs | quote }}
+  POLYAXON_K8S_INGRESS_ENABLED: {{ .Values.ingress.enabled | quote }}
+  POLYAXON_K8S_INGRESS_ANNOTATIONS: {{ toJson .Values.ingress.annotations | quote }}
+  POLYAXON_K8S_RBAC_ENABLED: {{ .Values.rbac.enabled | quote }}
+  POLYAXON_K8S_SERVICE_ACCOUNT_NAME: {{ template "polyaxon.fullname" . }}-serviceaccount
+  POLYAXON_K8S_SERVICE_ACCOUNT_EXPERIMENTS: {{ template "polyaxon.fullname" . }}-workers-serviceaccount
+  POLYAXON_K8S_SERVICE_ACCOUNT_JOBS: {{ template "polyaxon.fullname" . }}-workers-serviceaccount
+  POLYAXON_K8S_SERVICE_ACCOUNT_BUILDS: {{ template "polyaxon.fullname" . }}-workers-serviceaccount
+  POLYAXON_ROLE_LABELS_API: {{ .Values.roles.api | quote }}
+  POLYAXON_ROLE_LABELS_LOG: {{ .Values.roles.log | quote }}
+  POLYAXON_ROLE_LABELS_CONFIG: {{ .Values.roles.config | quote }}
+  POLYAXON_ROLE_LABELS_HOOKS: {{ .Values.roles.hooks | quote }}
+  POLYAXON_ROLE_LABELS_WORKER: {{ .Values.roles.worker | quote }}
+  POLYAXON_ROLE_LABELS_DASHBOARD: {{ .Values.roles.dashboard | quote }}
+  POLYAXON_TYPE_LABELS_CORE: {{ .Values.types.core | quote }}
+  POLYAXON_TYPE_LABELS_RUNNER: {{ .Values.types.runner | quote }}
+  POLYAXON_TRACKER_BACKEND: {{ default "noop" .Values.trackerBackend | quote }}
+  POLYAXON_PLUGINS: {{ toJson .Values.plugins | quote }}
+  POLYAXON_DNS_USE_RESOLVER: "true"
+  POLYAXON_WS_PORT: {{ .Values.streams.service.internalPort | quote }}
+  # Registry
+  {{- if (index .Values "docker-registry").enabled }}
+  POLYAXON_REGISTRY_HOST: "{{ template "docker-registry.host" . }}:{{ template "docker-registry.port" . }}"
+  POLYAXON_REGISTRY_LOCALHOST: "127.0.0.1:{{ (index .Values "docker-registry").service.nodePort}}"
+  {{- end }}
+  POLYAXON_REGISTRY_IN_CLUSTER: {{ (index .Values "docker-registry").enabled | quote }}
+  # Versions
+  POLYAXON_CLI_MIN_VERSION: "0.5.0"
+  POLYAXON_CLI_LATEST_VERSION: "0.5.6"
+  POLYAXON_PLATFORM_MIN_VERSION: "0.5.0"
+  POLYAXON_PLATFORM_LATEST_VERSION: "0.5.6"
+  POLYAXON_LIB_MIN_VERSION: "0.0.2"
+  POLYAXON_LIB_LATEST_VERSION: "0.0.5"
+  POLYAXON_CHART_VERSION: {{ .Chart.Version | quote }}
+  POLYAXON_CHART_IS_UPGRADE: {{ .Release.IsUpgrade | quote }}
+  {{- if .Values.includeChartRevision }}
+  POLYAXON_CHART_REVISION: {{ .Release.Revision | quote }}
+  {{- else }}
+  POLYAXON_CHART_REVISION: ""
+  {{- end }}
+  # Auth
+  {{- if .Values.ldap.enabled }}
+  POLYAXON_AUTH_LDAP: "true"
+  POLYAXON_AUTH_LDAP_SERVER_URI: {{ .Values.ldap.serverUri | quote }}
+  POLYAXON_AUTH_LDAP_GLOBAL_OPTIONS: {{ toJson .Values.ldap.globalOptions | quote }}
+  POLYAXON_AUTH_LDAP_CONNECTION_OPTIONS: {{ toJson .Values.ldap.connectionOptions | quote }}
+  POLYAXON_AUTH_LDAP_BIND_DN: {{ .Values.ldap.bindDN | quote }}
+  POLYAXON_AUTH_LDAP_USER_SEARCH_BASE_DN: {{ .Values.ldap.userSearchBaseDN | quote }}
+  POLYAXON_AUTH_LDAP_USER_SEARCH_FILTERSTR: {{ .Values.ldap.userSearchFilterStr | quote }}
+  POLYAXON_AUTH_LDAP_USER_DN_TEMPLATE: {{ .Values.ldap.userDNTemplate | quote }}
+  POLYAXON_AUTH_LDAP_START_TLS: {{ .Values.ldap.startTLS | quote }}
+  POLYAXON_AUTH_LDAP_USER_ATTR_MAP: {{ toJson .Values.ldap.userAttrMap | quote }}
+  POLYAXON_AUTH_LDAP_GROUP_SEARCH_BASE_DN: {{ .Values.ldap.groupSearchBaseDN | quote }}
+  POLYAXON_AUTH_LDAP_GROUP_SEARCH_GROUP_TYPE: {{ .Values.ldap.groupSearchGroupType | quote }}
+  {{- if .Values.ldap.requireGroup }}
+  POLYAXON_AUTH_LDAP_REQUIRE_GROUP: {{ .Values.ldap.requireGroup | quote }}
+  {{- end }}
+  {{- if .Values.ldap.denyGroup }}
+  POLYAXON_AUTH_LDAP_DENY_GROUP: {{ .Values.ldap.denyGroup | quote }}
+  {{- end }}
+  {{- end }}

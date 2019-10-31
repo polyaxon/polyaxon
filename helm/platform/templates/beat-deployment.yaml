@@ -1,0 +1,74 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "polyaxon.fullname" . }}-beat
+  annotations:
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    checksum/config: {{ include (print $.Template.BasePath "/cm.yaml") . | sha256sum }}
+    checksum/secrets: {{ include (print $.Template.BasePath "/secrets.yaml") . | sha256sum }}
+  labels:
+    app: {{ template "polyaxon.fullname" . }}-beat
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+    type: {{ .Values.types.core }}
+    role: {{ .Values.roles.worker }}
+    app.kubernetes.io/name: {{ template "polyaxon.fullname" . }}-beat
+    app.kubernetes.io/instance: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    app.kubernetes.io/version: "{{ .Chart.Version }}"
+    app.kubernetes.io/part-of: {{ .Values.types.core }}
+    app.kubernetes.io/component: {{ .Values.roles.worker }}
+    app.kubernetes.io/managed-by: "helm"
+spec:
+  replicas: {{ .Values.beat.replicas }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ template "polyaxon.fullname" . }}-beat
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      annotations:
+        chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+        checksum/config: {{ include (print $.Template.BasePath "/cm.yaml") . | sha256sum }}
+        checksum/secrets: {{ include (print $.Template.BasePath "/secrets.yaml") . | sha256sum }}
+      labels:
+        app: {{ template "polyaxon.fullname" . }}-beat
+        release: "{{ .Release.Name }}"
+        type: {{ .Values.types.core }}
+        role: {{ .Values.roles.worker }}
+        app.kubernetes.io/name: {{ template "polyaxon.fullname" . }}-beat
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+{{ include "securityContext" . | indent 6 }}
+{{ include "config.scheduling" . | indent 6 }}
+{{ include "config.sa" . | indent 6 }}
+      containers:
+      - name: {{ .Chart.Name }}-beat
+        image: "{{ .Values.beat.image }}:{{ .Values.beat.imageTag }}"
+        imagePullPolicy: {{ .Values.beat.imagePullPolicy }}
+        envFrom:
+{{ include "config.envFrom" . | indent 8 }}
+        env:
+{{ include "config.envs" . | indent 8 }}
+        resources:
+          requests:
+{{ toYaml .Values.beat.resources.requests | indent 12 }}
+          {{- if .Values.limitResources }}
+          limits:
+{{ toYaml .Values.beat.resources.limits | indent 12 }}
+          {{- end }}
+      - name: {{ .Chart.Name }}-crons
+        image: "{{ .Values.crons.image }}:{{ .Values.crons.imageTag }}"
+        imagePullPolicy: {{ .Values.crons.imagePullPolicy }}
+        args: ["--concurrency={{ .Values.crons.concurrency }}"]
+        envFrom:
+{{ include "config.envFrom" . | indent 8 }}
+        env:
+{{ include "config.envs" . | indent 8 }}
+        resources:
+          requests:
+{{ toYaml .Values.crons.resources.requests | indent 12 }}
+          {{- if .Values.limitResources }}
+          limits:
+{{ toYaml .Values.crons.resources.limits | indent 12 }}
+          {{- end }}

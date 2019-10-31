@@ -114,6 +114,22 @@ jobs:
       - pytest tests
       - prospector
 
+    - language: python
+      python: "3.6"
+      services:
+      - docker
+      env:
+        matrix:
+        - VERSION=1.13-2
+        - VERSION=1.13
+        - VERSION=1.12
+        - VERSION=1.11
+      install:
+      - . "ci/envs/minikube-${VERSION}.env"
+      - ./ci/install.sh
+      script:
+      - ./ci/test-helm.sh
+      - ./ci/test-deploy.sh
 
 notifications:
   slack:

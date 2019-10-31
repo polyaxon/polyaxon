@@ -152,3 +152,13 @@ bin
 # Kubernetes Generated files - skip generated files, except for vendored files
 
 !vendor/**/zz_generated.*
+client/.awcache/
+
+# ignore devvalues
+values.dev.yaml
+values.*.test.yaml
+values.*.test.json
+values.*.test.sh
+
+# Chart dependencies
+**/charts/*.tgz
