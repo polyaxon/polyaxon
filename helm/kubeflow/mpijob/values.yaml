@@ -1,0 +1,2 @@
+image: mpioperator/mpi-operator
+imageTag: 0.2.1
