@@ -70,7 +70,6 @@ generate-js-swagger:
 
 generate-ts-swagger:
 	java -jar $(PATH_SWAGGER_CLI) generate -i swagger/$(VERSION)/polyaxon_sdk.swagger.json -l typescript-fetch -o ts/$(HTTP_CLIENT)/$(VERSION) -c swagger/config.json
-	cp -r ts/$(HTTP_CLIENT)/$(VERSION)/ ../client/src/api
 
 generate-java-swagger:
 	java -jar $(PATH_SWAGGER_CLI) generate -i swagger/$(VERSION)/polyaxon_sdk.swagger.json -l java -o java/$(HTTP_CLIENT)/$(VERSION) -c swagger/config.json -D hideGenerationTimestamp=true
