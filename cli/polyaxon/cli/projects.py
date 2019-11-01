@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# -*- coding: utf-8 -*-
+# coding: utf-8
 from __future__ import absolute_import, division, print_function
 
 import sys
@@ -136,7 +136,7 @@ def create(ctx, name, owner, description, private, init):
 @click.option("--limit", type=int, help="To limit the list of projects.")
 @click.option("--offset", type=int, help="To offset the list of projects.")
 @clean_outputs
-def list(owner, limit, offset):  # pylint:disable=redefined-builtin
+def ls(owner, limit, offset):
     """List projects.
 
     Uses [Caching](/references/polyaxon-cli/#caching)

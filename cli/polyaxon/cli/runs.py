@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# -*- coding: utf-8 -*-
+# coding: utf-8
 from __future__ import absolute_import, division, print_function
 
 import sys
@@ -110,7 +110,7 @@ def runs(ctx, project, uid):
 @click.pass_context
 @clean_outputs
 @clean_outputs
-def list(ctx, io, query, sort, limit, offset):  # pylint:disable=redefined-builtin
+def ls(ctx, io, query, sort, limit, offset):
     """List runs for this project.
 
     Uses [Caching](/references/polyaxon-cli/#caching)

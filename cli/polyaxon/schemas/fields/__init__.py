@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# -*- coding: utf-8 -*-
+# coding: utf-8
 from __future__ import absolute_import, division, print_function
 
 from polyaxon.schemas.fields.dict_or_str import DictOrStr  # noqa
