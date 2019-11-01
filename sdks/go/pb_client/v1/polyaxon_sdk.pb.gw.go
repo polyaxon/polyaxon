@@ -11760,7 +11760,7 @@ func RegisterVersionsV1HandlerClient(ctx context.Context, mux *runtime.ServeMux,
 }
 
 var (
-	pattern_VersionsV1_GetVersions_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"api", "v1", "versions"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_VersionsV1_GetVersions_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"api", "v1", "version"}, "", runtime.AssumeColonVerbOpt(true)))
 
 	pattern_VersionsV1_GetLogHandler_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"api", "v1", "log_handler"}, "", runtime.AssumeColonVerbOpt(true)))
 )

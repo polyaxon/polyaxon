@@ -1209,7 +1209,7 @@ export interface V1Versions {
      * @type {string}
      * @memberof V1Versions
      */
-    current_version?: string;
+    platform_version?: string;
     /**
      * 
      * @type {V1Version}
@@ -10008,7 +10008,7 @@ export const VersionsV1ApiFetchParamCreator = function (configuration?: Configur
          * @throws {RequiredError}
          */
         getVersions(options: any = {}): FetchArgs {
-            const localVarPath = `/api/v1/versions`;
+            const localVarPath = `/api/v1/version`;
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
             const localVarHeaderParameter = {} as any;

@@ -69,8 +69,8 @@
   exports.constructFromObject = function(data, obj) {
     if (data) {
       obj = obj || new exports();
-      if (data.hasOwnProperty('current_version'))
-        obj.current_version = ApiClient.convertToType(data['current_version'], 'String');
+      if (data.hasOwnProperty('platform_version'))
+        obj.platform_version = ApiClient.convertToType(data['platform_version'], 'String');
       if (data.hasOwnProperty('cli'))
         obj.cli = V1Version.constructFromObject(data['cli']);
       if (data.hasOwnProperty('platform'))
@@ -82,9 +82,9 @@
   }
 
   /**
-   * @member {String} current_version
+   * @member {String} platform_version
    */
-  exports.prototype.current_version = undefined;
+  exports.prototype.platform_version = undefined;
 
   /**
    * @member {module:model/V1Version} cli

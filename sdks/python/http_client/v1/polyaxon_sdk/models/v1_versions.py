@@ -47,30 +47,30 @@ class V1Versions(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'current_version': 'str',
+        'platform_version': 'str',
         'cli': 'V1Version',
         'platform': 'V1Version',
         'agent': 'V1Version'
     }
 
     attribute_map = {
-        'current_version': 'current_version',
+        'platform_version': 'platform_version',
         'cli': 'cli',
         'platform': 'platform',
         'agent': 'agent'
     }
 
-    def __init__(self, current_version=None, cli=None, platform=None, agent=None):  # noqa: E501
+    def __init__(self, platform_version=None, cli=None, platform=None, agent=None):  # noqa: E501
         """V1Versions - a model defined in Swagger"""  # noqa: E501
 
-        self._current_version = None
+        self._platform_version = None
         self._cli = None
         self._platform = None
         self._agent = None
         self.discriminator = None
 
-        if current_version is not None:
-            self.current_version = current_version
+        if platform_version is not None:
+            self.platform_version = platform_version
         if cli is not None:
             self.cli = cli
         if platform is not None:
@@ -79,25 +79,25 @@ class V1Versions(object):
             self.agent = agent
 
     @property
-    def current_version(self):
-        """Gets the current_version of this V1Versions.  # noqa: E501
+    def platform_version(self):
+        """Gets the platform_version of this V1Versions.  # noqa: E501
 
 
-        :return: The current_version of this V1Versions.  # noqa: E501
+        :return: The platform_version of this V1Versions.  # noqa: E501
         :rtype: str
         """
-        return self._current_version
+        return self._platform_version
 
-    @current_version.setter
-    def current_version(self, current_version):
-        """Sets the current_version of this V1Versions.
+    @platform_version.setter
+    def platform_version(self, platform_version):
+        """Sets the platform_version of this V1Versions.
 
 
-        :param current_version: The current_version of this V1Versions.  # noqa: E501
+        :param platform_version: The platform_version of this V1Versions.  # noqa: E501
         :type: str
         """
 
-        self._current_version = current_version
+        self._platform_version = platform_version
 
     @property
     def cli(self):

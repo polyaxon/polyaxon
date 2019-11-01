@@ -745,7 +745,7 @@ service VersionsV1 {
     // Get versions
     rpc GetVersions(google.protobuf.Empty) returns (Versions) {
         option (google.api.http) = {
-            get: "/api/v1/versions"
+            get: "/api/v1/version"
         };
     }
 

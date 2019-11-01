@@ -136,7 +136,7 @@
       var returnType = V1Versions;
 
       return this.apiClient.callApi(
-        '/api/v1/versions', 'GET',
+        '/api/v1/version', 'GET',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );

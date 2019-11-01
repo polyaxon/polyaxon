@@ -82,7 +82,7 @@ type GetVersionsOK struct {
 }
 
 func (o *GetVersionsOK) Error() string {
-	return fmt.Sprintf("[GET /api/v1/versions][%d] getVersionsOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/version][%d] getVersionsOK  %+v", 200, o.Payload)
 }
 
 func (o *GetVersionsOK) GetPayload() *service_model.V1Versions {
@@ -115,7 +115,7 @@ type GetVersionsNoContent struct {
 }
 
 func (o *GetVersionsNoContent) Error() string {
-	return fmt.Sprintf("[GET /api/v1/versions][%d] getVersionsNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/version][%d] getVersionsNoContent  %+v", 204, o.Payload)
 }
 
 func (o *GetVersionsNoContent) GetPayload() interface{} {
@@ -146,7 +146,7 @@ type GetVersionsForbidden struct {
 }
 
 func (o *GetVersionsForbidden) Error() string {
-	return fmt.Sprintf("[GET /api/v1/versions][%d] getVersionsForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/version][%d] getVersionsForbidden  %+v", 403, o.Payload)
 }
 
 func (o *GetVersionsForbidden) GetPayload() interface{} {
@@ -177,7 +177,7 @@ type GetVersionsNotFound struct {
 }
 
 func (o *GetVersionsNotFound) Error() string {
-	return fmt.Sprintf("[GET /api/v1/versions][%d] getVersionsNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/version][%d] getVersionsNotFound  %+v", 404, o.Payload)
 }
 
 func (o *GetVersionsNotFound) GetPayload() interface{} {

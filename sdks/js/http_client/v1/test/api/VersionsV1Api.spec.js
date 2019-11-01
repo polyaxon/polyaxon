@@ -86,8 +86,8 @@
             }
             // TODO: update response assertions
             expect(data).to.be.a(PolyaxonSdk.V1Versions);
-            expect(data.current_version).to.be.a('string');
-            expect(data.current_version).to.be("");
+            expect(data.platform_version).to.be.a('string');
+            expect(data.platform_version).to.be("");
             expect(data.cli).to.be.a(PolyaxonSdk.V1Version);
                   expect(data.cli.min_version).to.be.a('string');
               expect(data.cli.min_version).to.be("");

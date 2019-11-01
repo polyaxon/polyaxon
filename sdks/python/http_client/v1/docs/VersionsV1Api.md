@@ -5,7 +5,7 @@ All URIs are relative to *http://localhost*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**get_log_handler**](VersionsV1Api.md#get_log_handler) | **GET** /api/v1/log_handler | List archived runs for user
-[**get_versions**](VersionsV1Api.md#get_versions) | **GET** /api/v1/versions | List bookmarked runs for user
+[**get_versions**](VersionsV1Api.md#get_versions) | **GET** /api/v1/version | List bookmarked runs for user
 
 
 # **get_log_handler**

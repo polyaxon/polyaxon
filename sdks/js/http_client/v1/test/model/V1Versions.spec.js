@@ -55,10 +55,10 @@
         expect(instance).to.be.a(PolyaxonSdk.V1Versions);
       });
 
-      it('should have the property current_version (base name: "current_version")', function() {
-        // TODO: update the code to test the property current_version
-        expect(instance).to.have.property('current_version');
-        // expect(instance.current_version).to.be(expectedValueLiteral);
+      it('should have the property platform_version (base name: "platform_version")', function() {
+        // TODO: update the code to test the property platform_version
+        expect(instance).to.have.property('platform_version');
+        // expect(instance.platform_version).to.be(expectedValueLiteral);
       });
 
       it('should have the property cli (base name: "cli")', function() {

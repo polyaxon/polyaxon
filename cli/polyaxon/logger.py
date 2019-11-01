@@ -22,6 +22,8 @@ import sys
 
 from functools import wraps
 
+from polyaxon import settings
+
 try:
     from StringIO import StringIO
 except ImportError:
@@ -46,7 +48,11 @@ def configure_logger(verbose):
             )
 
     set_raven_client()
-    log_level = logging.DEBUG if verbose else logging.INFO
+    if verbose:
+        log_level = logging.DEBUG
+        settings.CLIENT_CONFIG.debug = True
+    else:
+        log_level = logging.INFO
     logging.basicConfig(format="%(message)s", level=log_level, stream=sys.stdout)
 
 

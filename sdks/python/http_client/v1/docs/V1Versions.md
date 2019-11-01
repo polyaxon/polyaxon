@@ -3,7 +3,7 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**current_version** | **str** |  | [optional] 
+**platform_version** | **str** |  | [optional] 
 **cli** | [**V1Version**](V1Version.md) |  | [optional] 
 **platform** | [**V1Version**](V1Version.md) |  | [optional] 
 **agent** | [**V1Version**](V1Version.md) |  | [optional] 

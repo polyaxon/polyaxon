@@ -88,7 +88,7 @@ func (a *Client) GetVersions(params *GetVersionsParams, authInfo runtime.ClientA
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "GetVersions",
 		Method:             "GET",
-		PathPattern:        "/api/v1/versions",
+		PathPattern:        "/api/v1/version",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},

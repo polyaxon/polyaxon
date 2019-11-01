@@ -38,7 +38,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='v1',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\x10v1/version.proto\x12\x02v1\x1a\x1cgoogle/api/annotations.proto\x1a,protoc-gen-swagger/options/annotations.proto\"6\n\x07Version\x12\x13\n\x0bmin_version\x18\x01 \x01(\t\x12\x16\n\x0elatest_version\x18\x02 \x01(\t\"x\n\x08Versions\x12\x17\n\x0f\x63urrent_version\x18\x01 \x01(\t\x12\x18\n\x03\x63li\x18\x02 \x01(\x0b\x32\x0b.v1.Version\x12\x1d\n\x08platform\x18\x03 \x01(\x0b\x32\x0b.v1.Version\x12\x1a\n\x05\x61gent\x18\x04 \x01(\x0b\x32\x0b.v1.Version\".\n\nLogHandler\x12\x0b\n\x03\x64sn\x18\x01 \x01(\t\x12\x13\n\x0b\x65nvironment\x18\x02 \x01(\tb\x06proto3')
+  serialized_pb=_b('\n\x10v1/version.proto\x12\x02v1\x1a\x1cgoogle/api/annotations.proto\x1a,protoc-gen-swagger/options/annotations.proto\"6\n\x07Version\x12\x13\n\x0bmin_version\x18\x01 \x01(\t\x12\x16\n\x0elatest_version\x18\x02 \x01(\t\"y\n\x08Versions\x12\x18\n\x10platform_version\x18\x01 \x01(\t\x12\x18\n\x03\x63li\x18\x02 \x01(\x0b\x32\x0b.v1.Version\x12\x1d\n\x08platform\x18\x03 \x01(\x0b\x32\x0b.v1.Version\x12\x1a\n\x05\x61gent\x18\x04 \x01(\x0b\x32\x0b.v1.Version\".\n\nLogHandler\x12\x0b\n\x03\x64sn\x18\x01 \x01(\t\x12\x13\n\x0b\x65nvironment\x18\x02 \x01(\tb\x06proto3')
   ,
   dependencies=[google_dot_api_dot_annotations__pb2.DESCRIPTOR,protoc__gen__swagger_dot_options_dot_annotations__pb2.DESCRIPTOR,])
 
@@ -91,7 +91,7 @@ _VERSIONS = _descriptor.Descriptor(
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='current_version', full_name='v1.Versions.current_version', index=0,
+      name='platform_version', full_name='v1.Versions.platform_version', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -131,7 +131,7 @@ _VERSIONS = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=156,
-  serialized_end=276,
+  serialized_end=277,
 )
 
 
@@ -168,8 +168,8 @@ _LOGHANDLER = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=278,
-  serialized_end=324,
+  serialized_start=279,
+  serialized_end=325,
 )
 
 _VERSIONS.fields_by_name['cli'].message_type = _VERSION

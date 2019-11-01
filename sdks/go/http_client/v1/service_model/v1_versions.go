@@ -36,11 +36,11 @@ type V1Versions struct {
 	// cli
 	Cli *V1Version `json:"cli,omitempty"`
 
-	// current version
-	CurrentVersion string `json:"current_version,omitempty"`
-
 	// platform
 	Platform *V1Version `json:"platform,omitempty"`
+
+	// platform version
+	PlatformVersion string `json:"platform_version,omitempty"`
 }
 
 // Validate validates this v1 versions

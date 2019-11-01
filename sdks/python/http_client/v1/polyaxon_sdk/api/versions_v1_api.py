@@ -212,7 +212,7 @@ class VersionsV1Api(object):
         auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
-            '/api/v1/versions', 'GET',
+            '/api/v1/version', 'GET',
             path_params,
             query_params,
             header_params,

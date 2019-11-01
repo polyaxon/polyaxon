@@ -15,7 +15,7 @@ message Version {
 }
 
 message Versions {
-    string current_version = 1;
+    string platform_version = 1;
     Version cli = 2;
     Version platform = 3;
     Version agent = 4;

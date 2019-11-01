@@ -164,7 +164,7 @@ Class | Method | HTTP request | Description
 *SearchV1Api* | [**update_search**](docs/SearchV1Api.md#update_search) | **PUT** /api/v1/{owner}/{project}/searches/{search.uuid} | Create new run
 *UsersV1Api* | [**get_user**](docs/UsersV1Api.md#get_user) | **GET** /api/v1/users | List bookmarked runs for user
 *VersionsV1Api* | [**get_log_handler**](docs/VersionsV1Api.md#get_log_handler) | **GET** /api/v1/log_handler | List archived runs for user
-*VersionsV1Api* | [**get_versions**](docs/VersionsV1Api.md#get_versions) | **GET** /api/v1/versions | List bookmarked runs for user
+*VersionsV1Api* | [**get_versions**](docs/VersionsV1Api.md#get_versions) | **GET** /api/v1/version | List bookmarked runs for user
 
 
 ## Documentation For Models

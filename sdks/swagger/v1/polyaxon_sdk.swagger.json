@@ -389,7 +389,7 @@
         ]
       }
     },
-    "/api/v1/versions": {
+    "/api/v1/version": {
       "get": {
         "summary": "List bookmarked runs for user",
         "operationId": "GetVersions",
@@ -5463,7 +5463,7 @@
     "v1Versions": {
       "type": "object",
       "properties": {
-        "current_version": {
+        "platform_version": {
           "type": "string"
         },
         "cli": {

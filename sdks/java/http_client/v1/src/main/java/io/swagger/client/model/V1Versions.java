@@ -44,8 +44,8 @@ import java.io.IOException;
  */
 
 public class V1Versions {
-  @SerializedName("current_version")
-  private String currentVersion = null;
+  @SerializedName("platform_version")
+  private String platformVersion = null;
 
   @SerializedName("cli")
   private V1Version cli = null;
@@ -56,22 +56,22 @@ public class V1Versions {
   @SerializedName("agent")
   private V1Version agent = null;
 
-  public V1Versions currentVersion(String currentVersion) {
-    this.currentVersion = currentVersion;
+  public V1Versions platformVersion(String platformVersion) {
+    this.platformVersion = platformVersion;
     return this;
   }
 
    /**
-   * Get currentVersion
-   * @return currentVersion
+   * Get platformVersion
+   * @return platformVersion
   **/
   @ApiModelProperty(value = "")
-  public String getCurrentVersion() {
-    return currentVersion;
+  public String getPlatformVersion() {
+    return platformVersion;
   }
 
-  public void setCurrentVersion(String currentVersion) {
-    this.currentVersion = currentVersion;
+  public void setPlatformVersion(String platformVersion) {
+    this.platformVersion = platformVersion;
   }
 
   public V1Versions cli(V1Version cli) {
@@ -138,7 +138,7 @@ public class V1Versions {
       return false;
     }
     V1Versions v1Versions = (V1Versions) o;
-    return Objects.equals(this.currentVersion, v1Versions.currentVersion) &&
+    return Objects.equals(this.platformVersion, v1Versions.platformVersion) &&
         Objects.equals(this.cli, v1Versions.cli) &&
         Objects.equals(this.platform, v1Versions.platform) &&
         Objects.equals(this.agent, v1Versions.agent);
@@ -146,7 +146,7 @@ public class V1Versions {
 
   @Override
   public int hashCode() {
-    return Objects.hash(currentVersion, cli, platform, agent);
+    return Objects.hash(platformVersion, cli, platform, agent);
   }
 
 
@@ -155,7 +155,7 @@ public class V1Versions {
     StringBuilder sb = new StringBuilder();
     sb.append("class V1Versions {\n");
     
-    sb.append("    currentVersion: ").append(toIndentedString(currentVersion)).append("\n");
+    sb.append("    platformVersion: ").append(toIndentedString(platformVersion)).append("\n");
     sb.append("    cli: ").append(toIndentedString(cli)).append("\n");
     sb.append("    platform: ").append(toIndentedString(platform)).append("\n");
     sb.append("    agent: ").append(toIndentedString(agent)).append("\n");
