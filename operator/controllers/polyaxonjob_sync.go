@@ -80,7 +80,7 @@ func (r *PolyaxonJobReconciler) createJobStatus(owner, project, uuid string, sta
 		},
 		Context: ctx,
 	}
-	_, err := r.PlxClient.RunsV1.CreateRunStatus(params, r.PlxToken)
+	_, _, err := r.PlxClient.RunsV1.CreateRunStatus(params, r.PlxToken)
 	log.Info("Create run status error", "API status errored", err)
 	return err
 }

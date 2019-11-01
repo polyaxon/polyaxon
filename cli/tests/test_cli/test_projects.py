@@ -20,7 +20,7 @@ class TestCliProject(BaseCommandTestCase):
 
     @patch("polyaxon_sdk.ProjectsV1Api.list_projects")
     def test_list_projects(self, list_projects):
-        self.runner.invoke(projects, ["list"])
+        self.runner.invoke(projects, ["ls"])
         assert list_projects.call_count == 1
 
     @patch("polyaxon_sdk.ProjectsV1Api.get_project")

@@ -101,6 +101,7 @@ github.com/google/uuid v1.1.1/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+
 github.com/googleapis/gnostic v0.3.1 h1:WeAefnSUHlBb0iJKwxFDZdbfGwkd7xRNuV+IpXMJhYk=
 github.com/googleapis/gnostic v0.3.1/go.mod h1:on+2t9HRStVgn95RSsFWFz+6Q0Snyqv1awfrALZdbtU=
 github.com/grpc-ecosystem/grpc-gateway v1.9.5/go.mod h1:vNeuVxBJEsws4ogUvrchl83t/GYV9WGTSLVdBhOQFDY=
+github.com/grpc-ecosystem/grpc-gateway v1.11.3/go.mod h1:vNeuVxBJEsws4ogUvrchl83t/GYV9WGTSLVdBhOQFDY=
 github.com/hashicorp/golang-lru v0.0.0-20180201235237-0fb14efe8c47 h1:UnszMmmmm5vLwWzDjTFVIkfhvWF1NdrmChl8L2NUDCw=
 github.com/hashicorp/golang-lru v0.0.0-20180201235237-0fb14efe8c47/go.mod h1:/m3WP610KZHVQ1SGc6re/UDhFvYD7pJ4Ao+sR/qLZy8=
 github.com/hpcloud/tail v1.0.0 h1:nfCOvKYfkgYP8hkirhJocXT2+zOD8yUNjXaWfTlyFKI=
@@ -163,6 +164,8 @@ github.com/polyaxon/polyaxon/sdks v0.0.0-20191021211737-26fce9240377 h1:m/xB9r96
 github.com/polyaxon/polyaxon/sdks v0.0.0-20191021211737-26fce9240377/go.mod h1:gcsDHvBSp9LkDFLl7GR6lUJl3JWILxVRoheWK5Wb/+Y=
 github.com/polyaxon/polyaxon/sdks v0.0.0-20191022141020-0db803485643 h1:DmHQav9dfkMEdm5P+qJnWZa9mAFoBcqMOY3IRT6tAOc=
 github.com/polyaxon/polyaxon/sdks v0.0.0-20191022141020-0db803485643/go.mod h1:gcsDHvBSp9LkDFLl7GR6lUJl3JWILxVRoheWK5Wb/+Y=
+github.com/polyaxon/polyaxon/sdks v0.0.0-20191101145429-a42b1ba3318e h1:J4B1s9y1oQU7gXEXwdDvzNZI4D6V6UCl5TwTT5SbhlM=
+github.com/polyaxon/polyaxon/sdks v0.0.0-20191101145429-a42b1ba3318e/go.mod h1:X9XPej11oJq+GFVmKaJWjlU9ol2/xbULknxX/eSypPw=
 github.com/prometheus/client_golang v0.9.0 h1:tXuTFVHC03mW0D+Ua1Q2d1EAVqLTuggX50V0VLICCzY=
 github.com/prometheus/client_golang v0.9.0/go.mod h1:7SWBe2y4D6OKWSNQJUaRYU/AaXPKyh/dDVn+NZz0KFw=
 github.com/prometheus/client_model v0.0.0-20180712105110-5c3871d89910 h1:idejC8f05m9MGOsuEi1ATq9shN03HrxNkD/luQvxCv8=

@@ -13,7 +13,7 @@ from polyaxon.cli.runs import runs
 class TestCliRuns(BaseCommandTestCase):
     @patch("polyaxon_sdk.RunsV1Api.list_runs")
     def test_list_runs(self, list_runs):
-        self.runner.invoke(runs, ["-p admin/foo", "list"])
+        self.runner.invoke(runs, ["-p admin/foo", "ls"])
         assert list_runs.call_count == 1
 
     @patch("polyaxon_sdk.RunsV1Api.get_run")

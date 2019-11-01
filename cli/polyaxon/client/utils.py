@@ -51,7 +51,9 @@ def create_context_auth(access_token, context_auth_path=None):
 def impersonate(owner, project, run_uuid):
     try:
         response = PolyaxonClient().runs_v1.impersonate_token(owner, project, run_uuid)
-        access_token = AccessTokenConfig(token=response.token)
+        polyaxon_client = PolyaxonClient(token=response.token)
+        user = polyaxon_client.users_v1.get_user()
+        access_token = AccessTokenConfig(username=user.username, token=response.token)
         create_context_auth(access_token)
     except (ApiException, HTTPError) as e:
         raise PolyaxonClientException(

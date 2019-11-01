@@ -25,7 +25,9 @@ from polyaxon.schemas.base import BaseConfig, BaseSchema
 class ContainerSchema(BaseSchema):
     image = fields.Str(allow_none=True)
     image_pull_policy = fields.Str(allow_none=True)
-    sync_interval = fields.Int(allow_none=True)
+    sleep_interval = fields.Int(allow_none=True)
+    outputs_sync_interval = fields.Int(allow_none=True)
+    logs_sync_interval = fields.Int(allow_none=True)
 
     @staticmethod
     def schema_config():
@@ -35,9 +37,24 @@ class ContainerSchema(BaseSchema):
 class ContainerConfig(BaseConfig):
     SCHEMA = ContainerSchema
     IDENTIFIER = "container"
-    REDUCED_ATTRIBUTES = ["image", "image_pull_policy", "sync_interval"]
+    REDUCED_ATTRIBUTES = [
+        "image",
+        "image_pull_policy",
+        "sleep_interval",
+        "outputs_sync_interval",
+        "logs_sync_interval",
+    ]
 
-    def __init__(self, image, image_pull_policy=None, sync_interval=None):
+    def __init__(
+        self,
+        image,
+        image_pull_policy=None,
+        sleep_interval=None,
+        outputs_sync_interval=None,
+        logs_sync_interval=None,
+    ):
         self.image = image
         self.image_pull_policy = image_pull_policy
-        self.sync_interval = sync_interval
+        self.sleep_interval = sleep_interval
+        self.outputs_sync_interval = outputs_sync_interval
+        self.logs_sync_interval = logs_sync_interval

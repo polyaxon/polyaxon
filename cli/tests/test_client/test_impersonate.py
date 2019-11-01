@@ -28,9 +28,11 @@ class TestImpersonate(TestCase):
         assert os.path.exists(context_mount_auth) is True
 
     @patch("polyaxon_sdk.RunsV1Api.impersonate_token")
+    @patch("polyaxon_sdk.UsersV1Api.get_user")
     @patch("polyaxon.client.utils.create_context_auth")
-    def test_login_impersonate(self, create_context, impersonate_token):
+    def test_login_impersonate(self, create_context, get_user, impersonate_token):
 
         impersonate(owner="owner", project="project", run_uuid=uuid.uuid4().hex)
         assert impersonate_token.call_count == 1
+        assert get_user.call_count == 1
         assert create_context.call_count == 1

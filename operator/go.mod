@@ -12,7 +12,7 @@ require (
 	github.com/kubeflow/tf-operator v0.5.3
 	github.com/onsi/ginkgo v1.8.0
 	github.com/onsi/gomega v1.5.0
-	github.com/polyaxon/polyaxon/sdks v0.0.0-20191022141020-0db803485643
+	github.com/polyaxon/polyaxon/sdks v0.0.0-20191101145429-a42b1ba3318e
 	github.com/sirupsen/logrus v1.4.2 // indirect
 	golang.org/x/net v0.0.0-20190613194153-d28f0bde5980
 	k8s.io/api v0.0.0-20190409021203-6e4e0e4f393b
