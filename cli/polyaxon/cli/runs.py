@@ -22,6 +22,8 @@ import sys
 import click
 import rhea
 
+from polyaxon.client.statuses import get_run_statuses
+from polyaxon.exceptions import PolyaxonClientException
 from polyaxon_sdk import V1Run
 from polyaxon_sdk.rest import ApiException
 from urllib3.exceptions import HTTPError
@@ -517,9 +519,10 @@ def resume(ctx, file, u):  # pylint:disable=redefined-builtin
 
 
 @runs.command()
+@click.option("--watch", "-w", is_flag=True, help="Watch statuses.")
 @click.pass_context
 @clean_outputs
-def statuses(ctx):
+def statuses(ctx, watch):
     """Get run or run job statuses.
 
     Uses [Caching](/references/polyaxon-cli/#caching)
@@ -537,38 +540,36 @@ def statuses(ctx):
     ```
     """
 
-    def get_run_statuses():
+    def _get_run_statuses():
         try:
-            polyaxon_client = PolyaxonClient()
-            response = polyaxon_client.runs_v1.get_run_statuses(
-                owner, project_name, run_uuid
-            )
-        except (ApiException, HTTPError) as e:
+            for status, conditions in get_run_statuses(owner, project_name, run_uuid, watch):
+                if not conditions:
+                    continue
+                Printer.print_header("Latest status:")
+                latest_status = Printer.add_status_color(
+                    {"status": status}, status_key="status"
+                )
+                click.echo("{}\n".format(latest_status["status"]))
+
+                objects = list_dicts_to_tabulate(
+                    [
+                        Printer.add_status_color(o.to_dict(), status_key="type")
+                        for o in conditions
+                    ]
+                )
+                if objects:
+                    Printer.print_header("Conditions:")
+                    dict_tabulate(objects, is_list_dict=True)
+        except (ApiException, HTTPError, PolyaxonClientException) as e:
             Printer.print_error("Could get status for run `{}`.".format(run_uuid))
             Printer.print_error("Error message `{}`.".format(e))
             sys.exit(1)
-
-        Printer.print_header("Latest status:")
-        latest_status = Printer.add_status_color(
-            {"status": response.status}, status_key="status"
-        )
-        click.echo("{}\n".format(latest_status["status"]))
-
-        objects = list_dicts_to_tabulate(
-            [
-                Printer.add_status_color(o.to_dict(), status_key="type")
-                for o in response.status_conditions
-            ]
-        )
-        if objects:
-            Printer.print_header("Conditions:")
-            dict_tabulate(objects, is_list_dict=True)
 
     owner, project_name, run_uuid = get_project_run_or_local(
         ctx.obj.get("project"), ctx.obj.get("run_uuid")
     )
 
-    get_run_statuses()
+    _get_run_statuses()
 
 
 @runs.command()

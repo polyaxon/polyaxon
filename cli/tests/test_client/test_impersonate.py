@@ -9,7 +9,7 @@ from unittest import TestCase
 
 from mock import patch
 
-from polyaxon.client.utils import create_context_auth, impersonate
+from polyaxon.client.impersonate import create_context_auth, impersonate
 from polyaxon.schemas.api.authentication import AccessTokenConfig
 
 
@@ -29,7 +29,7 @@ class TestImpersonate(TestCase):
 
     @patch("polyaxon_sdk.RunsV1Api.impersonate_token")
     @patch("polyaxon_sdk.UsersV1Api.get_user")
-    @patch("polyaxon.client.utils.create_context_auth")
+    @patch("polyaxon.client.impersonate.create_context_auth")
     def test_login_impersonate(self, create_context, get_user, impersonate_token):
 
         impersonate(owner="owner", project="project", run_uuid=uuid.uuid4().hex)

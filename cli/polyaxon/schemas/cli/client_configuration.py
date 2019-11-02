@@ -44,7 +44,7 @@ from polyaxon.env_vars.keys import (
     POLYAXON_KEYS_SSL_CA_CERT,
     POLYAXON_KEYS_TIMEOUT,
     POLYAXON_KEYS_VERIFY_SSL,
-)
+    POLYAXON_KEYS_WATCH_INTERVAL)
 from polyaxon.exceptions import PolyaxonClientException
 from polyaxon.managers.auth import AuthConfigManager
 from polyaxon.schemas.base import BaseConfig, BaseSchema
@@ -65,6 +65,7 @@ class ClientSchema(BaseSchema):
     is_offline = fields.Bool(allow_none=True, data_key=POLYAXON_KEYS_IS_OFFLINE)
     no_op = fields.Bool(allow_none=True, data_key=POLYAXON_KEYS_NO_OP)
     timeout = fields.Float(allow_none=True, data_key=POLYAXON_KEYS_TIMEOUT)
+    watch_interval = fields.Int(allow_none=True, data_key=POLYAXON_KEYS_WATCH_INTERVAL)
     interval = fields.Float(allow_none=True, data_key=POLYAXON_KEYS_INTERVAL)
     verify_ssl = fields.Bool(allow_none=True, data_key=POLYAXON_KEYS_VERIFY_SSL)
     ssl_ca_cert = fields.Str(allow_none=True, data_key=POLYAXON_KEYS_SSL_CA_CERT)
@@ -111,6 +112,7 @@ class ClientConfig(BaseConfig):
         in_cluster=None,
         no_op=None,
         timeout=None,
+        watch_interval=None,
         interval=None,
         verify_ssl=None,
         ssl_ca_cert=None,
@@ -145,6 +147,7 @@ class ClientConfig(BaseConfig):
         self.header_service = header_service
         self.timeout = timeout or 20
         self.interval = interval or 5
+        self.watch_interval = watch_interval or 5
         self.pod_id = pod_id
         self.namespace = namespace
         self.authentication_type = authentication_type or AuthenticationTypes.TOKEN
