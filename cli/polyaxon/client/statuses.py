@@ -19,20 +19,18 @@ from __future__ import absolute_import, division, print_function
 
 import time
 
+from polyaxon_sdk.rest import ApiException
 from urllib3.exceptions import HTTPError
 
 from polyaxon import settings
 from polyaxon.client import PolyaxonClient
 from polyaxon.exceptions import PolyaxonClientException
-from polyaxon_sdk.rest import ApiException
 
 
 def _get_run_statuses(owner, project, run_uuid, last_status=None):
     try:
         polyaxon_client = PolyaxonClient()
-        response = polyaxon_client.runs_v1.get_run_statuses(
-            owner, project, run_uuid
-        )
+        response = polyaxon_client.runs_v1.get_run_statuses(owner, project, run_uuid)
         if not last_status:
             return response.status, response.status_conditions
         if last_status == response.status:
@@ -56,14 +54,10 @@ def get_run_statuses(owner, project, run_uuid, watch=False):
         return
 
     last_status = None
-    is_done = {
-        "failed",
-        "upstream_failed",
-        "stopped",
-        "skipped",
-        "succeeded",
-    }
+    is_done = {"failed", "upstream_failed", "stopped", "skipped", "succeeded"}
     while last_status not in is_done:
-        last_status, conditions = _get_run_statuses(owner, project, run_uuid, last_status)
+        last_status, conditions = _get_run_statuses(
+            owner, project, run_uuid, last_status
+        )
         yield last_status, conditions
         time.sleep(settings.CLIENT_CONFIG.watch_interval)

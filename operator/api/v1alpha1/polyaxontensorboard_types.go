@@ -134,7 +134,7 @@ func (instance *PolyaxonTensorboard) LogWarning(reason, message string) {
 
 // LogSucceeded sets PolyaxonTensorboard to succeeded
 func (instance *PolyaxonTensorboard) LogSucceeded() {
-	instance.logCondition(DeploymentSucceeded, corev1.ConditionTrue, "PolyaxonTensorboardSucceeded", "Tensorboard has succeded")
+	instance.logCondition(DeploymentSucceeded, corev1.ConditionTrue, "PolyaxonTensorboardSucceeded", "Tensorboard has succeeded")
 }
 
 // LogFailed sets PolyaxonTensorboard to failed

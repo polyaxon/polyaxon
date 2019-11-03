@@ -146,7 +146,7 @@ func (instance *PolyaxonJob) LogWarning(reason, message string) bool {
 
 // LogSucceeded sets PolyaxonJob to succeeded
 func (instance *PolyaxonJob) LogSucceeded() bool {
-	return instance.logCondition(JobSucceeded, corev1.ConditionTrue, "PolyaxonJobSucceeded", "Job has succeded")
+	return instance.logCondition(JobSucceeded, corev1.ConditionTrue, "PolyaxonJobSucceeded", "Job has succeeded")
 }
 
 // LogFailed sets PolyaxonJob to failed

@@ -214,7 +214,7 @@ func (instance *PolyaxonKF) LogWarning(reason, message string) {
 
 // LogSucceeded sets PolyaxonKF to succeeded
 func (instance *PolyaxonKF) LogSucceeded() {
-	instance.logCondition(JobSucceeded, corev1.ConditionTrue, "PolyaxonKFSucceeded", "KFJob has succeded")
+	instance.logCondition(JobSucceeded, corev1.ConditionTrue, "PolyaxonKFSucceeded", "KFJob has succeeded")
 }
 
 // LogFailed sets PolyaxonKF to failed

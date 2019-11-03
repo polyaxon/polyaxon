@@ -22,8 +22,6 @@ import sys
 import click
 import rhea
 
-from polyaxon.client.statuses import get_run_statuses
-from polyaxon.exceptions import PolyaxonClientException
 from polyaxon_sdk import V1Run
 from polyaxon_sdk.rest import ApiException
 from urllib3.exceptions import HTTPError
@@ -32,6 +30,8 @@ from polyaxon.cli.getters.project import get_project_or_local
 from polyaxon.cli.getters.run import get_project_run_or_local
 from polyaxon.cli.upload import upload
 from polyaxon.client import PolyaxonClient
+from polyaxon.client.statuses import get_run_statuses
+from polyaxon.exceptions import PolyaxonClientException
 from polyaxon.logger import clean_outputs
 from polyaxon.managers.run import RunManager
 from polyaxon.utils import cache
@@ -542,7 +542,9 @@ def statuses(ctx, watch):
 
     def _get_run_statuses():
         try:
-            for status, conditions in get_run_statuses(owner, project_name, run_uuid, watch):
+            for status, conditions in get_run_statuses(
+                owner, project_name, run_uuid, watch
+            ):
                 if not conditions:
                     continue
                 Printer.print_header("Latest status:")

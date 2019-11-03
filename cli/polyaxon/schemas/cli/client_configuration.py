@@ -36,6 +36,7 @@ from polyaxon.env_vars.keys import (
     POLYAXON_KEYS_IS_LOCAL,
     POLYAXON_KEYS_IS_MANAGED,
     POLYAXON_KEYS_IS_OFFLINE,
+    POLYAXON_KEYS_IS_SERVICE,
     POLYAXON_KEYS_K8S_NAMESPACE,
     POLYAXON_KEYS_K8S_POD_ID,
     POLYAXON_KEYS_KEY_FILE,
@@ -44,7 +45,8 @@ from polyaxon.env_vars.keys import (
     POLYAXON_KEYS_SSL_CA_CERT,
     POLYAXON_KEYS_TIMEOUT,
     POLYAXON_KEYS_VERIFY_SSL,
-    POLYAXON_KEYS_WATCH_INTERVAL)
+    POLYAXON_KEYS_WATCH_INTERVAL,
+)
 from polyaxon.exceptions import PolyaxonClientException
 from polyaxon.managers.auth import AuthConfigManager
 from polyaxon.schemas.base import BaseConfig, BaseSchema
@@ -60,6 +62,7 @@ class ClientSchema(BaseSchema):
         allow_none=True, data_key=POLYAXON_KEYS_AUTHENTICATION_TYPE
     )
     is_managed = fields.Bool(allow_none=True, data_key=POLYAXON_KEYS_IS_MANAGED)
+    is_service = fields.Bool(allow_none=True, data_key=POLYAXON_KEYS_IS_SERVICE)
     in_cluster = fields.Bool(allow_none=True, data_key=POLYAXON_KEYS_IN_CLUSTER)
     is_local = fields.Bool(allow_none=True, data_key=POLYAXON_KEYS_IS_LOCAL)
     is_offline = fields.Bool(allow_none=True, data_key=POLYAXON_KEYS_IS_OFFLINE)
@@ -107,6 +110,7 @@ class ClientConfig(BaseConfig):
         version=None,
         authentication_type=None,
         is_managed=None,
+        is_service=None,
         is_local=None,
         is_offline=None,
         in_cluster=None,
@@ -133,6 +137,7 @@ class ClientConfig(BaseConfig):
         self.log_level = log_level
         self.version = version or "v1"
         self.is_managed = self._get_bool(is_managed, False)
+        self.is_service = self._get_bool(is_service, False)
         self.is_local = self._get_bool(is_local, False)
         self.is_offline = self._get_bool(is_offline, False)
         self.in_cluster = self._get_bool(in_cluster, False)

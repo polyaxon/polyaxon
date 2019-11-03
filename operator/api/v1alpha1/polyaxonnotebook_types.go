@@ -134,7 +134,7 @@ func (instance *PolyaxonNotebook) LogWarning(reason, message string) {
 
 // LogSucceeded sets PolyaxonNotebook to succeeded
 func (instance *PolyaxonNotebook) LogSucceeded() {
-	instance.logCondition(DeploymentSucceeded, corev1.ConditionTrue, "PolyaxonNotebookSucceeded", "Notebook has succeded")
+	instance.logCondition(DeploymentSucceeded, corev1.ConditionTrue, "PolyaxonNotebookSucceeded", "Notebook has succeeded")
 }
 
 // LogFailed sets PolyaxonNotebook to failed

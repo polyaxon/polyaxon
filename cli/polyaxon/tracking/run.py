@@ -17,159 +17,151 @@
 # coding: utf-8
 from __future__ import absolute_import, division, print_function
 
+import atexit
 import json
 import os
+import sys
+import time
 
 from datetime import datetime
 
+import polyaxon_sdk
+
+from polyaxon_sdk.rest import ApiException
+from polystores import StoreManager
+from urllib3.exceptions import HTTPError
+
 from polyaxon import settings
+from polyaxon.client import PolyaxonClient
 from polyaxon.client.handlers.conf import setup_logging
-from polyaxon.env_vars.keys import POLYAXON_KEYS_JOB_INSTANCE, POLYAXON_KEYS_PARAMS
+from polyaxon.client.statuses import get_run_statuses
 from polyaxon.exceptions import PolyaxonClientException
-from polyaxon.tracking.base import BaseTracker
+from polyaxon.specs import get_specification
 from polyaxon.tracking.is_managed import ensure_is_managed
 from polyaxon.tracking.no_op import check_no_op
 from polyaxon.tracking.offline import check_offline
-from polyaxon.tracking.paths import (
-    get_artifacts_paths,
-    get_base_outputs_path,
-    get_log_level,
-    get_outputs_path,
-)
-from polyaxon.tracking.utils.backend import OTHER_BACKEND
+from polyaxon.tracking.paths import get_artifacts_paths, get_log_level, get_outputs_path
 from polyaxon.tracking.utils.code_reference import get_code_reference
 from polyaxon.tracking.utils.env import get_run_env
+from polyaxon.tracking.utils.project import get_project_info
+from polyaxon.tracking.utils.run_info import get_run_info
+from polyaxon.utils.validation import validate_tags
 
 
-class Run(BaseTracker):
+class Run(object):
     @check_no_op
     def __init__(
         self,
+        owner=None,
         project=None,
-        experiment_id=None,
-        group_id=None,
+        run_uuid=None,
         client=None,
         track_logs=True,
         track_code=True,
-        track_env=True,
+        track_env=False,
         outputs_store=None,
     ):
 
-        if settings.CLIENT_CONFIG.no_op:
-            return
+        owner, project = get_project_info(owner=owner, project=project)
 
-        if (
-            project is None
-            and settings.CLIENT_CONFIG.is_managed
-            and not self.is_notebook_job
-        ):
-            experiment_info = self.get_experiment_info()
-            project = experiment_info["project_name"]
-            experiment_id = experiment_info["experiment_name"].split(".")[-1]
-        super(Run, self).__init__(
-            project=project,
-            client=client,
-            track_logs=track_logs,
-            track_code=track_code,
-            track_env=track_env,
-            outputs_store=outputs_store,
-        )
+        if project is None:
+            if settings.CLIENT_CONFIG.is_managed:
+                owner, project, _run_uuid = self.get_run_info()
+                run_uuid = run_uuid or _run_uuid
+            else:
+                raise PolyaxonClientException("Please provide a valid project.")
 
-        self.experiment_id = experiment_id
-        self.group_id = group_id
-        self.experiment = None
+        self.status = None
+        self.client = client
+        if not (self.client or settings.CLIENT_CONFIG.is_offline):
+            self.client = PolyaxonClient()
 
+        self.track_logs = track_logs
+        self.track_code = track_code
+        self.track_env = track_env
+        self._owner = owner
+        self._project = project
+        self._run_uuid = run_uuid
+        self.outputs_store = outputs_store
+
+        # Setup the outputs store
+        if outputs_store is None and settings.CLIENT_CONFIG.is_managed:
+            self.set_outputs_store(outputs_path=get_outputs_path(), set_env_vars=True)
+
+        self._run = polyaxon_sdk.V1Run()
         if settings.CLIENT_CONFIG.is_offline:
             return
 
-        if settings.CLIENT_CONFIG.is_managed:
-            self._set_health_url()
+        if self._run_uuid:
+            self.refresh_data()
 
         # Track run env
-        if (
-            settings.CLIENT_CONFIG.is_managed
-            and self.track_env
-            and not self.is_notebook_job
-        ):
+        if settings.CLIENT_CONFIG.is_managed and self.track_env:
             self.log_run_env()
 
-    @check_no_op
-    def get_entity_data(self):
-        self._entity_data = self.client.experiment.get_experiment(
-            owner=self.owner,
-            project_name=self.project_name,
-            experiment_id=self.experiment_id,
-        )
+    @property
+    def owner(self):
+        return self._owner
+
+    @property
+    def project(self):
+        return self._project
+
+    @property
+    def run_uuid(self):
+        return self._run_uuid
+
+    @property
+    def data(self):
+        return self._run
 
     @check_no_op
     def create(
         self,
         name=None,
-        framework=None,
-        backend=None,
         tags=None,
         description=None,
         content=None,
-        build_id=None,
         base_outputs_path=None,
     ):
-        experiment_config = {"run_env": get_run_env()} if self.track_env else {}
+        run = polyaxon_sdk.V1Run()
+        if self.track_env:
+            run.run_env = get_run_env()
         if name:
-            experiment_config["name"] = name
+            run.name = name
         if tags:
-            experiment_config["tags"] = tags
-        if framework:
-            experiment_config["framework"] = framework
-        experiment_config["backend"] = OTHER_BACKEND
-        if backend:
-            experiment_config["backend"] = backend
+            run.tags = tags
         if description:
-            experiment_config["description"] = description
+            run.description = description
         if content:
-            experiment_config["content"] = self.client.project.validate_content(
-                content=content
-            )
-        if build_id:
-            experiment_config["build_job"] = str(build_id)
-        experiment_config["is_managed"] = settings.CLIENT_CONFIG.is_managed
-
-        experiment = None
+            try:
+                specification = get_specification(data=[content])
+            except Exception as e:
+                raise PolyaxonClientException(e)
+            run.content = specification.config_dump
+        else:
+            run.is_managed = False
 
         if self.client:
-            if content:
-                experiment_config["content"] = self.client.project.validate_content(
-                    content=content
+            try:
+                run = self.client.runs_v1.create_run(
+                    owner=self.owner, project=self.project, body=run
                 )
-
-            experiment = self.client.project.create_experiment(
-                owner=self.owner,
-                project_name=self.project_name,
-                experiment_config=experiment_config,
-                group=self.group_id,
-            )
-            if not experiment:
-                raise PolyaxonClientException("Could not create experiment.")
+            except (ApiException, HTTPError) as e:
+                raise PolyaxonClientException(e)
+            if not run:
+                raise PolyaxonClientException("Could not create a run.")
         if not settings.CLIENT_CONFIG.is_managed and self.track_logs:
             setup_logging(send_logs=self.send_logs)
-        self.experiment_id = self._get_entity_uid(experiment)
-        self.experiment = experiment
-        self.last_status = "created"
+        self._run = run
+        self._run_uuid = run.uuid
+        self.status = "created"
 
         # Setup the outputs store
-        base_outputs_path = base_outputs_path or get_base_outputs_path()
         if self.outputs_store is None and base_outputs_path:
-            if self.group_id:
-                outputs_path = "{}/{}/{}/{}/{}".format(
-                    base_outputs_path,
-                    self.owner,
-                    self.project_name,
-                    self.group_id,
-                    self.experiment_id,
-                )
-            else:
-                outputs_path = "{}/{}/{}/{}".format(
-                    base_outputs_path, self.owner, self.project_name, self.experiment_id
-                )
+            outputs_path = "{}/{}/{}/{}".format(
+                base_outputs_path, self.owner, self.project, self.run_uuid
+            )
             self.set_outputs_store(outputs_path=outputs_path)
 
         if self.track_code:
@@ -177,41 +169,35 @@ class Run(BaseTracker):
 
         if not settings.CLIENT_CONFIG.is_managed:
             self._start()
-            self._set_health_url()
 
         return self
 
+    @check_no_op
+    @check_offline
+    def refresh_data(self):
+        self._run = self.client.runs_v1.get_run(self.owner, self.project, self.run_uuid)
+        for status, conditions in get_run_statuses(
+            self.owner, self.project, self.run_uuid
+        ):
+            self.status = status
+
+    @check_no_op
     @check_offline
     def _update(self, patch_dict):
-        self.client.experiment.update_experiment(
+        self.client.runs_v1.patch_run(
             owner=self.owner,
-            project_name=self.project_name,
-            experiment_id=self.experiment_id,
-            patch_dict=patch_dict,
-            background=True,
+            project=self.project,
+            run_uuid=self.run_uuid,
+            body=patch_dict,
+            async_req=True,
         )
 
-    @check_no_op
-    @check_offline
-    def _set_health_url(self):
-        health_url = self.client.experiment.get_heartbeat_url(
-            owner=self.owner,
-            project_name=self.project_name,
-            experiment_id=self.experiment_id,
-        )
-        self.client.set_health_check(url=health_url)
-        self._health_is_running = True
+    @property
+    def is_service(self):
+        if settings.CLIENT_CONFIG.no_op:
+            return None
 
-    @check_no_op
-    @check_offline
-    def _unset_health_url(self):
-        health_url = self.client.experiment.get_heartbeat_url(
-            owner=self.owner,
-            project_name=self.project_name,
-            experiment_id=self.experiment_id,
-        )
-        self.client.set_health_check(url=health_url)
-        self._health_is_running = False
+        return settings.CLIENT_CONFIG.is_managed and settings.CLIENT_CONFIG.is_service
 
     @check_no_op
     @check_offline
@@ -226,16 +212,26 @@ class Run(BaseTracker):
 
     @check_no_op
     @check_offline
-    def log_status(self, status, message=None, traceback=None):
-        self.client.experiment.create_status(
-            owner=self.owner,
-            project_name=self.project_name,
-            experiment_id=self.experiment_id,
-            status=status,
-            message=message,
-            traceback=traceback,
-            background=True,
+    def log_status(self, status, reason=None, message=None):
+        status_condition = polyaxon_sdk.V1StatusCondition(
+            type=status, status=True, reason=reason, message=message
         )
+        self.client.runs_v1.create_run_status(
+            owner=self.owner,
+            project=self.project,
+            uuid=self.run_uuid,
+            body=status_condition,
+            async_req=True,
+        )
+
+    @check_no_op
+    @check_offline
+    def get_statuses(self, watch=False):
+        for status, conditions in get_run_statuses(
+            self.owner, self.project, self.run_uuid, watch
+        ):
+            self.status = status
+            yield conditions
 
     @check_no_op
     @check_offline
@@ -245,7 +241,7 @@ class Run(BaseTracker):
             project_name=self.project_name,
             experiment_id=self.experiment_id,
             coderef=get_code_reference(),
-            background=True,
+            async_req=True,
         )
 
     @check_no_op
@@ -260,143 +256,160 @@ class Run(BaseTracker):
             periodic=True,
         )
 
-    @check_no_op
-    @check_offline
-    def log_framework(self, framework):
-        self._update({"framework": framework})
-
     @staticmethod
     @check_no_op
-    def get_cluster_def():
-        """Returns cluster definition created by polyaxon.
-        {
-            "master": ["plxjob-master0-8eefb7a1146f476ca66e3bee9b88c1de:2000"],
-            "worker": ["plxjob-worker1-8eefb7a1146f476ca66e3bee9b88c1de:2000",
-                       "plxjob-worker2-8eefb7a1146f476ca66e3bee9b88c1de:2000"],
-            "ps": ["plxjob-ps3-8eefb7a1146f476ca66e3bee9b88c1de:2000"],
-        }
-        :return: dict
+    def get_run_info():
+        """
+        Returns information about the current run:
+            * owner
+            * project
+            * run_uuid
         """
         ensure_is_managed()
 
-        cluster = os.getenv("POLYAXON_CLUSTER", None)
-        try:
-            return json.loads(cluster) if cluster else None
-        except (ValueError, TypeError):
-            print(
-                "Could get cluster definition, "
-                "please make sure this is running inside a polyaxon job."
-            )
-            return None
-
-    @staticmethod
-    @check_no_op
-    def get_task_info():
-        """Returns the task info: {"type": str, "index": int}."""
-        ensure_is_managed()
-
-        info = os.getenv("POLYAXON_TASK_INFO", None)
-        try:
-            return json.loads(info) if info else None
-        except (ValueError, TypeError):
-            print(
-                "Could get task info, "
-                "please make sure this is running inside a polyaxon job."
-            )
-            return None
-
-    @classmethod
-    def get_tf_config(cls, envvar="TF_CONFIG"):
-        """
-        Returns the TF_CONFIG defining the cluster and the current task.
-        if `envvar` is not null, it will set and env variable with `envvar`.
-        """
-        if settings.CLIENT_CONFIG.no_op:
-            return None
-
-        ensure_is_managed()
-
-        cluster_def = cls.get_cluster_def()
-        task_info = cls.get_task_info()
-        tf_config = {
-            "cluster": cluster_def,
-            "task": task_info,
-            "model_dir": get_outputs_path(),
-            "environment": "cloud",
-        }
-
-        if envvar:
-            os.environ[envvar] = json.dumps(tf_config)
-
-        return tf_config
-
-    @staticmethod
-    @check_no_op
-    def get_experiment_info():
-        """
-        Returns information about the experiment:
-            * project_name
-            * experiment_group_name
-            * experiment_name
-            * project_uuid
-            * experiment_group_uuid
-            * experiment_uuid
-        """
-        ensure_is_managed()
-
-        info = os.getenv(POLYAXON_KEYS_JOB_INSTANCE, None)
-        try:
-            return json.loads(info) if info else None
-        except (ValueError, TypeError):
-            print(
-                "Could get experiment info, "
-                "please make sure this is running inside a polyaxon job."
-            )
-            return None
-
-    @classmethod
-    def get_declarations(cls):
-        """Deprecated, please use get_params"""
-        return cls.get_params()
-
-    @staticmethod
-    @check_no_op
-    def get_params():
-        """
-        Returns all the experiment params based on both:
-            * params section
-            * optional inputs
-            * optional outputs
-            * matrix section
-        """
-        ensure_is_managed()
-
-        params = os.getenv(POLYAXON_KEYS_PARAMS, None)
-        try:
-            return json.loads(params) if params else None
-        except (ValueError, TypeError):
-            print(
-                "Could get params, "
-                "please make sure this is running inside a polyaxon job."
-            )
-            return None
+        return get_run_info()
 
     @check_no_op
-    def get_outputs_path(self):
-        # TODO: Add handling for experiment running out of Polyaxon
+    def get_inputs(self):
+        """
+        Returns all the run inputs/params.
+        """
+        return self.data.inputs
+
+    @check_no_op
+    def get_outputs(self):
+        """
+        Returns all the run inputs/params.
+        """
+        return self.data.outputs
+
+    @check_no_op
+    def get_default_artifacts_path(self):
         return get_outputs_path()
 
     @check_no_op
     def get_log_level(self):
-        # TODO: Add handling for experiment running out of Polyaxon
         return get_log_level()
-
-    @classmethod
-    def get_data_paths(cls):
-        return cls.get_artifacts_paths()
 
     @staticmethod
     def get_artifacts_paths():
         if settings.CLIENT_CONFIG.no_op:
             return None
         return get_artifacts_paths()
+
+    @check_no_op
+    @check_offline
+    def _start(self):
+        atexit.register(self._end)
+        self.start()
+
+        def excepthook(exception, value, tb):
+            self.log_failed(message="Type: {}, Value: {}".format(exception, value))
+            # Resume normal work
+            sys.__excepthook__(exception, value, tb)
+
+        sys.excepthook = excepthook
+
+    @check_no_op
+    @check_offline
+    def _end(self):
+        self.log_succeeded()
+
+    @check_no_op
+    @check_offline
+    def start(self):
+        self.log_status("running", "Job is running")
+        self.status = "running"
+
+    @check_no_op
+    @check_offline
+    def end(self, status, message=None, traceback=None):
+        if self.status in ["succeeded", "failed", "stopped"]:
+            return
+        self.log_status(status=status, reason=message, message=traceback)
+        self.status = status
+        time.sleep(
+            0.1
+        )  # Just to give the opportunity to the worker to pick the message
+
+    @check_no_op
+    @check_offline
+    def log_succeeded(self):
+        self.end("succeeded", "Job has succeeded")
+
+    @check_no_op
+    @check_offline
+    def log_stopped(self):
+        self.end("stopped", "Job is stopped")
+
+    @check_no_op
+    @check_offline
+    def log_failed(self, message=None, traceback=None):
+        self.end(status="failed", message=message, traceback=traceback)
+
+    @check_no_op
+    def set_outputs_store(
+        self, outputs_store=None, outputs_path=None, set_env_vars=False
+    ):
+        if not any([outputs_store, outputs_path]):
+            raise PolyaxonClientException(
+                "An Store instance or and outputs path is required."
+            )
+        self.outputs_store = outputs_store or StoreManager(path=outputs_path)
+        if self.outputs_store and set_env_vars:
+            self.outputs_store.set_env_vars()
+
+    @check_no_op
+    def log_artifact(self, file_path):
+        self.outputs_store.upload_file(filename=file_path)
+
+    @check_no_op
+    def log_artifacts(self, dir_path):
+        self.outputs_store.upload_dir(dirname=dir_path)
+
+    @check_no_op
+    @check_offline
+    def log_run_env(self):
+        self._update({"run_env": get_run_env()})
+
+    @check_no_op
+    @check_offline
+    def log_tags(self, tags, reset=False):
+        patch_dict = {"tags": validate_tags(tags)}
+        if reset is False:
+            patch_dict["merge"] = True
+        self._update(patch_dict)
+
+    @check_no_op
+    @check_offline
+    def log_inputs(self, reset=False, **inputs):
+        patch_dict = {"inputs": inputs}
+        if reset is False:
+            patch_dict["merge"] = True
+            self.data.inputs = inputs
+        else:
+            self.data.inputs.update(inputs)
+        self._update(patch_dict)
+
+    @check_no_op
+    @check_offline
+    def log_outputs(self, reset=False, **outputs):
+        patch_dict = {"outputs": outputs}
+        if reset is False:
+            patch_dict["merge"] = True
+            self.data.outputs = outputs
+        else:
+            self.data.inputs.update(outputs)
+        self._update(patch_dict)
+
+    @check_no_op
+    @check_offline
+    def set_description(self, description):
+        self._update({"description": description})
+        self.data.description = description
+
+    @check_no_op
+    @check_offline
+    def set_name(self, name):
+        self._update({"name": name})
+        self.data.name = name
