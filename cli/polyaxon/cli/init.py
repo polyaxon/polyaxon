@@ -22,6 +22,7 @@ import sys
 
 import click
 
+from polyaxon.cli.errors import handle_cli_error
 from polyaxon_sdk.rest import ApiException
 from urllib3.exceptions import HTTPError
 
@@ -42,8 +43,7 @@ def create_polyaxonfile():
             _ = PolyaxonFile(constants.INIT_FILE_PATH).specification  # noqa
             Printer.print_success("A valid polyaxonfile.yaml was found in the project.")
         except Exception as e:
-            Printer.print_error("A Polyaxonfile was found but it is not valid.")
-            Printer.print_error("Error message `{}`.".format(e))
+            handle_cli_error(e, message="A Polyaxonfile was found but it is not valid.")
             sys.exit(1)
     else:
         create_init_file(constants.INIT_FILE)
@@ -105,12 +105,11 @@ def init(project, polyaxonfile, purge):
         Printer.print_error(
             "Make sure you have a project with this name `{}`".format(project)
         )
-        Printer.print_error(
-            "You can a create new project with this command: "
-            "polyaxon project create "
-            "--name={} [--description=...] [--tags=...]".format(project_name)
-        )
-        Printer.print_error("Error message `{}`.".format(e))
+        handle_cli_error(
+            e,
+            message="You can a create new project with this command: "
+                    "polyaxon project create "
+                    "--name={} [--description=...] [--tags=...]".format(project_name))
         sys.exit(1)
 
     if purge:

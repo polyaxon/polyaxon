@@ -19,7 +19,7 @@ from __future__ import absolute_import, division, print_function
 
 import rhea
 
-from polyaxon.exceptions import PolyaxonConfigurationError, PolyaxonfileError
+from polyaxon.exceptions import PolyaxonSchemaError, PolyaxonfileError
 from polyaxon import kinds
 from polyaxon.specs.base import BaseSpecification
 from polyaxon.specs.job import JobSpecification
@@ -40,5 +40,5 @@ def get_specification(data):
     kind = BaseSpecification.get_kind(data=data)
     try:
         return SPECIFICATION_BY_KIND[kind](data)
-    except PolyaxonConfigurationError as e:
+    except PolyaxonSchemaError as e:
         raise PolyaxonfileError(e)

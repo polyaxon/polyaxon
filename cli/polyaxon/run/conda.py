@@ -23,10 +23,11 @@ import sys
 
 import click
 
+from polyaxon.cli.errors import handle_cli_error
 from polyaxon.deploy.operators.conda import CondaOperator
 from polyaxon.exceptions import (
+    PolyaxonException,
     PolyaxonClientException,
-    PolyaxonConfigurationError,
     PolyaxonHTTPError,
     PolyaxonShouldExitError,
 )
@@ -46,7 +47,7 @@ def _run(
     conda = CondaOperator()
     # cmd = CmdOperator()
     if not conda.check():
-        raise PolyaxonConfigurationError("Conda is required to run this command.")
+        raise PolyaxonException("Conda is required to run this command.")
 
     envs = conda.execute(["env", "list", "--json"], is_json=True)
     env_names = [os.path.basename(env) for env in envs["envs"]]
@@ -78,8 +79,7 @@ def run(
             conda_env,
         )
     except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
-        Printer.print_error("Could start local run.")
-        Printer.print_error("Error message `{}`.".format(e))
+        handle_cli_error(e, message="Could start local run.")
         sys.exit(1)
     except Exception as e:
         Printer.print_error("Could start local run.")

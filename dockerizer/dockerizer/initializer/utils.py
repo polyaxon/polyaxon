@@ -14,3 +14,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import os
+
+
+def ensure_path(path: str):
+    if not os.path.exists(path):
+        os.makedirs(path)

@@ -27,7 +27,7 @@ from polyaxon.deploy.operators.docker import DockerOperator
 from polyaxon.deploy.operators.helm import HelmOperator
 from polyaxon.deploy.operators.kubectl import KubectlOperator
 from polyaxon.deploy.schemas.deployment_types import DeploymentTypes
-from polyaxon.exceptions import PolyaxonDeploymentConfigError
+from polyaxon.exceptions import PolyaxonException
 from polyaxon.managers.compose import ComposeConfigManager
 from polyaxon.utils.formatting import Printer
 
@@ -82,13 +82,13 @@ class DeployManager(object):
     def check_for_kubernetes(self):
         # Deployment on k8s requires helm & kubectl to be installed
         if not self.kubectl.check():
-            raise PolyaxonDeploymentConfigError(
+            raise PolyaxonException(
                 "kubectl is required to run this command."
             )
         Printer.print_success("kubectl is installed")
 
         if not self.helm.check():
-            raise PolyaxonDeploymentConfigError("helm is required to run this command.")
+            raise PolyaxonException("helm is required to run this command.")
         Printer.print_success("helm is installed")
 
         # Check that polyaxon/polyaxon is set and up-to date
@@ -101,13 +101,13 @@ class DeployManager(object):
     def check_for_docker_compose(self):
         # Deployment on docker compose requires Docker & Docker Compose to be installed
         if not self.docker.check():
-            raise PolyaxonDeploymentConfigError(
+            raise PolyaxonException(
                 "Docker is required to run this command."
             )
         Printer.print_success("Docker is installed")
 
         if not self.compose.check():
-            raise PolyaxonDeploymentConfigError(
+            raise PolyaxonException(
                 "Docker Compose is required to run this command."
             )
         Printer.print_success("Docker Compose is installed")
@@ -119,7 +119,7 @@ class DeployManager(object):
 
     def check_for_docker(self):
         if not self.docker.check():
-            raise PolyaxonDeploymentConfigError(
+            raise PolyaxonException(
                 "Docker is required to run this command."
             )
         return True
@@ -133,7 +133,7 @@ class DeployManager(object):
     def check(self):
         """Add platform specific checks"""
         if not self.is_valid:
-            raise PolyaxonDeploymentConfigError(
+            raise PolyaxonException(
                 "Deployment type `{}` not supported".format(self.deployment_type)
             )
         check = False
@@ -146,7 +146,7 @@ class DeployManager(object):
         elif self.is_heroku:
             check = self.check_for_heroku()
         if not check:
-            raise PolyaxonDeploymentConfigError(
+            raise PolyaxonException(
                 "Deployment `{}` is not valid".format(self.deployment_type)
             )
 
@@ -215,7 +215,7 @@ class DeployManager(object):
     def install(self):
         """Install polyaxon using the current config to the correct platform."""
         if not self.is_valid:
-            raise PolyaxonDeploymentConfigError(
+            raise PolyaxonException(
                 "Deployment type `{}` not supported".format(self.deployment_type)
             )
 
@@ -257,7 +257,7 @@ class DeployManager(object):
     def upgrade(self):
         """Upgrade deployment."""
         if not self.is_valid:
-            raise PolyaxonDeploymentConfigError(
+            raise PolyaxonException(
                 "Deployment type `{}` not supported".format(self.deployment_type)
             )
 
@@ -292,7 +292,7 @@ class DeployManager(object):
     def teardown(self, hooks=True):
         """Teardown Polyaxon."""
         if not self.is_valid:
-            raise PolyaxonDeploymentConfigError(
+            raise PolyaxonException(
                 "Deployment type `{}` not supported".format(self.deployment_type)
             )
 

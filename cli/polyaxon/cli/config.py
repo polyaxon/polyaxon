@@ -21,6 +21,7 @@ import sys
 
 import click
 
+from polyaxon.cli.errors import handle_cli_error
 from polyaxon.logger import clean_outputs
 from polyaxon.managers.cli import CliConfigManager
 from polyaxon.managers.client import ClientConfigManager
@@ -99,8 +100,7 @@ def set(**kwargs):  # pylint:disable=redefined-builtin
     try:
         _config = ClientConfigManager.get_config_or_default()
     except Exception as e:
-        Printer.print_error("Polyaxon load configuration.")
-        Printer.print_error("Error message `{}`.".format(e))
+        handle_cli_error(e, message="Polyaxon load configuration.")
         Printer.print_header(
             "You can reset your config by running: polyaxon config purge"
         )

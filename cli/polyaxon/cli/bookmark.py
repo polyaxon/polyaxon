@@ -21,6 +21,7 @@ import sys
 
 import click
 
+from polyaxon.cli.errors import handle_cli_error
 from polyaxon_sdk.rest import ApiException
 from urllib3.exceptions import HTTPError
 
@@ -75,10 +76,7 @@ def projects(ctx, limit, offset):
         polyaxon_client = PolyaxonClient()
         response = polyaxon_client.projects_v1.list_bookmarked_projects(user, **params)
     except (ApiException, HTTPError) as e:
-        Printer.print_error(
-            "Could not get bookmarked projects for user `{}`.".format(user)
-        )
-        Printer.print_error("Error message `{}`.".format(e))
+        handle_cli_error(e, message="Could not get bookmarked projects for user `{}`.".format(user))
         sys.exit(1)
 
     meta = get_meta_response(response)
@@ -128,10 +126,10 @@ def runs(ctx, limit, offset):
         polyaxon_client = PolyaxonClient()
         response = polyaxon_client.runs_v1.list_bookmarked_runs(user, **params)
     except (ApiException, HTTPError) as e:
-        Printer.print_error(
-            "Could not get bookmarked experiments for user `{}`.".format(user)
+        handle_cli_error(
+            e,
+            message="Could not get bookmarked experiments for user `{}`.".format(user)
         )
-        Printer.print_error("Error message `{}`.".format(e))
         sys.exit(1)
 
     meta = get_meta_response(response)

@@ -22,7 +22,7 @@ import subprocess
 
 from tempfile import TemporaryFile
 
-from polyaxon.deploy.operators.exceptions import OperatorException
+from polyaxon.exceptions import PolyaxonOperatorException
 
 
 class CmdOperator(object):
@@ -36,7 +36,7 @@ class CmdOperator(object):
                 exit_status = ps.wait()
                 stderr.seek(0)
                 if exit_status != 0:
-                    raise OperatorException(
+                    raise PolyaxonOperatorException(
                         cmd=cls.CMD,
                         args=params,
                         return_code=exit_status,
@@ -51,7 +51,7 @@ class CmdOperator(object):
                 stdout.seek(0)
                 stderr.seek(0)
                 if exit_status != 0:
-                    raise OperatorException(
+                    raise PolyaxonOperatorException(
                         cmd=cls.CMD,
                         args=params,
                         return_code=exit_status,

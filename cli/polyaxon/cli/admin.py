@@ -24,6 +24,7 @@ import click
 
 from hestia.list_utils import to_list
 
+from polyaxon.cli.errors import handle_cli_error
 from polyaxon.deploy import reader
 from polyaxon.logger import clean_outputs
 from polyaxon.managers.deploy import DeployManager
@@ -42,8 +43,7 @@ def read_deployment_config(filepaths):
     try:
         deployment_config = reader.read(filepaths)
     except Exception as e:
-        Printer.print_error("Polyaxon deployment file is not valid ")
-        Printer.print_error("Error message `{}`.".format(e))
+        handle_cli_error(e, message="Polyaxon deployment file is not valid.")
         sys.exit(1)
 
     return deployment_config
@@ -91,8 +91,7 @@ def deploy(file, manager_path, check, dry_run):  # pylint:disable=redefined-buil
         try:
             manager.check()
         except Exception as e:
-            Printer.print_error("Polyaxon deployment file is not valid ")
-            Printer.print_error("Error message `{}`.".format(e))
+            handle_cli_error(e, message="Polyaxon deployment file is not valid.")
             sys.exit(1)
 
         Printer.print_success("Polyaxon deployment file is valid.")
@@ -143,8 +142,7 @@ def upgrade(file, manager_path, check, dry_run):  # pylint:disable=redefined-bui
         try:
             manager.check()
         except Exception as e:
-            Printer.print_error("Polyaxon deployment file is not valid ")
-            Printer.print_error("Error message `{}`.".format(e))
+            handle_cli_error(e, message="Polyaxon deployment file is not valid.")
             sys.exit(1)
         Printer.print_success("Polyaxon deployment file is valid.")
     else:

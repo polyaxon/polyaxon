@@ -28,7 +28,7 @@ from hestia.list_utils import to_list
 from marshmallow import ValidationError
 
 from polyaxon import kinds
-from polyaxon.exceptions import PolyaxonConfigurationError, PolyaxonfileError
+from polyaxon.exceptions import PolyaxonfileError, PolyaxonSchemaError
 from polyaxon.pkg import SCHEMA_VERSION
 from polyaxon.schemas.ops import params as ops_params
 from polyaxon.schemas.ops.io import IOTypes
@@ -354,7 +354,7 @@ class BaseSpecification(
         try:
             self._data = rhea.read(self._values)
         except rhea.RheaError as e:
-            raise PolyaxonConfigurationError(e)
+            raise PolyaxonSchemaError(e)
         try:
             self._config = self.CONFIG.from_dict(copy.deepcopy(self.data))
         except (ValidationError, TypeError) as e:

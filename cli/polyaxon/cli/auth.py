@@ -21,6 +21,7 @@ import sys
 
 import click
 import polyaxon_sdk
+from polyaxon.cli.errors import handle_cli_error
 
 from polyaxon_sdk.rest import ApiException
 from urllib3.exceptions import HTTPError
@@ -68,8 +69,7 @@ def login(token, username, password):
         except (ApiException, HTTPError) as e:
             AuthConfigManager.purge()
             CliConfigManager.purge()
-            Printer.print_error("Could not login.")
-            Printer.print_error("Error Message `{}`.".format(e))
+            handle_cli_error(e, message="Could not login.")
             sys.exit(1)
 
         if not access_auth.token:
@@ -110,8 +110,7 @@ def login(token, username, password):
         polyaxon_client = PolyaxonClient(token=access_auth.token)
         user = polyaxon_client.users_v1.get_user()
     except (ApiException, HTTPError) as e:
-        Printer.print_error("Could not load user info.")
-        Printer.print_error("Error message `{}`.".format(e))
+        handle_cli_error(e, message="Could not load user info.")
         sys.exit(1)
     access_token = AccessTokenConfig(username=user.username, token=access_auth.token)
     AuthConfigManager.set_config(access_token)
@@ -147,8 +146,7 @@ def whoami():
         polyaxon_client = PolyaxonClient()
         user = polyaxon_client.users_v1.get_user()
     except (ApiException, HTTPError) as e:
-        Printer.print_error("Could not load user info.")
-        Printer.print_error("Error message `{}`.".format(e))
+        handle_cli_error(e, message="Could not load user info.")
         sys.exit(1)
 
     response = dict_to_tabulate(user.to_dict(), exclude_attrs=["role"])

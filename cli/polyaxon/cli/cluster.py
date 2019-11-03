@@ -21,6 +21,7 @@ import sys
 
 import click
 
+from polyaxon.cli.errors import handle_cli_error
 from polyaxon.client import PolyaxonClient
 from polyaxon.exceptions import (
     PolyaxonClientException,
@@ -86,8 +87,7 @@ def cluster(node):
             PolyaxonShouldExitError,
             PolyaxonClientException,
         ) as e:
-            Printer.print_error("Could not load node `{}` info.".format(node))
-            Printer.print_error("Error message `{}`.".format(e))
+            handle_cli_error(e, message="Could not load node `{}` info.".format(node))
             sys.exit(1)
         get_node_info(node_config)
     else:
@@ -98,7 +98,6 @@ def cluster(node):
             PolyaxonShouldExitError,
             PolyaxonClientException,
         ) as e:
-            Printer.print_error("Could not load cluster info.")
-            Printer.print_error("Error message `{}`.".format(e))
+            handle_cli_error(e, message="Could not load cluster info.")
             sys.exit(1)
         get_cluster_info(cluster_config)

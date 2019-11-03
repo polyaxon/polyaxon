@@ -21,7 +21,7 @@ from copy import copy
 
 from hestia.imports import import_string
 
-from polyaxon.exceptions import PolyaxonConfigurationError
+from polyaxon.exceptions import PolyaxonSchemaError
 from polyaxon.schemas.ops.operation import BaseOpSchema
 
 
@@ -45,7 +45,7 @@ class SchemaRegistry(object):
         for schema_name, schema_path in polyflow_operations:
             schema = import_string(schema_path)
             if not issubclass(schema, BaseOpSchema):
-                raise PolyaxonConfigurationError(
+                raise PolyaxonSchemaError(
                     "Schema {} at path: {} is not a valid operation.".format(
                         schema_name, schema_path
                     )

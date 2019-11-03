@@ -26,6 +26,7 @@ import click
 
 from hestia.list_utils import to_list
 
+from polyaxon.cli.errors import handle_cli_error
 from polyaxon.logger import clean_outputs
 from polyaxon.polyaxonfile import PolyaxonFile
 from polyaxon.run.params import parse_params
@@ -57,8 +58,7 @@ def check_polyaxonfile(
             Printer.print_success("Polyaxonfile valid")
         return plx_file
     except Exception as e:
-        Printer.print_error("Polyaxonfile is not valid.")
-        Printer.print_error("Error message `{}`.".format(e))
+        handle_cli_error(e, message="Polyaxonfile is not valid.")
         sys.exit(1)
 
 

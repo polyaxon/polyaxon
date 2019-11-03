@@ -29,14 +29,14 @@ from polyaxon_dockerizer import constants as dockerizer_constants
 from polyaxon_dockerizer import generate as dockerizer_generate
 
 from polyaxon import settings
+from polyaxon.cli.errors import handle_cli_error
 from polyaxon.deploy.operators.docker import DockerOperator
 from polyaxon.env_vars.keys import POLYAXON_KEYS_NO_OP
 from polyaxon.exceptions import (
     PolyaxonClientException,
-    PolyaxonConfigurationError,
     PolyaxonHTTPError,
     PolyaxonShouldExitError,
-)
+    PolyaxonException)
 from polyaxon.tracking import Run
 from polyaxon.tracking.utils.hashing import hash_value
 from polyaxon.utils.formatting import Printer
@@ -170,7 +170,7 @@ def _create_docker_build(build_job, build_config, project):
 def _run(ctx, name, owner, project_name, description, tags, specification, log):
     docker = DockerOperator()
     if not docker.check():
-        raise PolyaxonConfigurationError("Docker is required to run this command.")
+        raise PolyaxonException("Docker is required to run this command.")
 
     # Create Build
     project = "{}.{}".format(owner, project_name)
@@ -209,8 +209,7 @@ def _run(ctx, name, owner, project_name, description, tags, specification, log):
         print(cmd_args)
         docker.execute(cmd_args, stream=True)
     except Exception as e:
-        Printer.print_error("Could start local run.")
-        Printer.print_error("Error message `{}`.".format(e))
+        handle_cli_error(e, message="Could start local run.")
         sys.exit(1)
 
 
@@ -218,8 +217,7 @@ def run(ctx, name, owner, project_name, description, tags, specification, log):
     try:
         _run(ctx, name, owner, project_name, description, tags, specification, log)
     except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
-        Printer.print_error("Could start local run.")
-        Printer.print_error("Error message `{}`.".format(e))
+        handle_cli_error(e, message="Could start local run.")
         sys.exit(1)
     except Exception as e:
         Printer.print_error("Could start local run.")

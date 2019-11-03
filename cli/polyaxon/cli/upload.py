@@ -21,6 +21,7 @@ import sys
 
 import click
 
+from polyaxon.cli.errors import handle_cli_error
 from polyaxon.client import PolyaxonClient
 from polyaxon.exceptions import (
     PolyaxonClientException,
@@ -55,10 +56,10 @@ def upload(sync=True):  # pylint:disable=assign-to-new-keyword
                     PolyaxonShouldExitError,
                     PolyaxonClientException,
                 ) as e:
-                    Printer.print_error(
-                        "Could not upload code for project `{}`.".format(project.name)
+                    handle_cli_error(
+                        e,
+                        message="Could not upload code for project `{}`.".format(project.name)
                     )
-                    Printer.print_error("Error message `{}`.".format(e))
                     Printer.print_error(
                         "Check the project exists, "
                         "and that you have access rights, "
@@ -68,6 +69,5 @@ def upload(sync=True):  # pylint:disable=assign-to-new-keyword
                     sys.exit(1)
                 Printer.print_success("Files uploaded.")
     except Exception as e:
-        Printer.print_error("Could not upload the file.")
-        Printer.print_error("Error message `{}`.".format(e))
+        handle_cli_error(e, message="Could not upload the file.")
         sys.exit(1)

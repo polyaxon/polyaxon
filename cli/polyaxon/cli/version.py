@@ -21,6 +21,7 @@ import sys
 
 import click
 
+from polyaxon.cli.errors import handle_cli_error
 from polyaxon_sdk.rest import ApiException
 from urllib3.exceptions import HTTPError
 
@@ -69,8 +70,7 @@ def get_server_versions(polyaxon_client=None):
         if e.status == 403:
             session_expired()
             sys.exit(1)
-        Printer.print_error("Could not get cli version.")
-        Printer.print_error("Error message `{}`.".format(e))
+        handle_cli_error(e, message="Could not get cli version.")
         sys.exit(1)
     except HTTPError:
         Printer.print_error("Could not connect to remote server.")
@@ -85,8 +85,7 @@ def get_log_handler(polyaxon_client=None):
         if e.status == 403:
             session_expired()
             sys.exit(1)
-        Printer.print_error("Could not get cli version.")
-        Printer.print_error("Error message `{}`.".format(e))
+        handle_cli_error(e, message="Could not get cli version.")
         sys.exit(1)
     except HTTPError:
         Printer.print_error("Could not connect to remote server.")

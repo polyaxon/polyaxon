@@ -23,7 +23,7 @@ import mock
 
 from polyaxon.deploy import reader
 from polyaxon.deploy.operators.compose import ComposeOperator
-from polyaxon.deploy.operators.exceptions import OperatorException
+from polyaxon.exceptions import PolyaxonOperatorException
 
 DUMMY_RETURN_VALUE = object()
 
@@ -56,7 +56,7 @@ class TestComposeOperator(TestCase):
         stdout = "output"
         stderr = "error"
         mock_subprocess.Popen = self.mock_popen(return_code, stdout, stderr)
-        with self.assertRaises(OperatorException) as exception:
+        with self.assertRaises(PolyaxonOperatorException) as exception:
             self.compose.execute(["down"])
 
         self.assertEqual(

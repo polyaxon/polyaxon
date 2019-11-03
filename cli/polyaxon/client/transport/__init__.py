@@ -24,8 +24,6 @@ from polyaxon.client.transport.periodic_transport import (
 )
 from polyaxon.client.transport.socket_transport import SocketTransportMixin
 from polyaxon.client.transport.threaded_transport import ThreadedTransportMixin
-from polyaxon.exceptions import AuthenticationError
-from polyaxon.logger import logger
 
 
 class Transport(
@@ -55,13 +53,3 @@ class Transport(
             if self.config.client_header:
                 request_headers.update(self.config.client_header)
         return request_headers
-
-    def handle_exception(self, e, log_message=None):
-        logger.info("%s: %s", log_message, e.message)
-
-        if self.config.reraise:
-            raise e
-
-        if isinstance(e, AuthenticationError):
-            # exit now since there is nothing we can do without login
-            raise e

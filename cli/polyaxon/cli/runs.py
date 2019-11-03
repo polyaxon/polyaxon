@@ -22,6 +22,7 @@ import sys
 import click
 import rhea
 
+from polyaxon.cli.errors import handle_cli_error
 from polyaxon_sdk import V1Run
 from polyaxon_sdk.rest import ApiException
 from urllib3.exceptions import HTTPError
@@ -153,8 +154,7 @@ def ls(ctx, io, query, sort, limit, offset):
             owner=owner, project=project_name, **params
         )
     except (ApiException, HTTPError) as e:
-        Printer.print_error("Could not get runs for project `{}`.".format(project_name))
-        Printer.print_error("Error message `{}`.".format(e))
+        handle_cli_error(e, message="Could not get runs for project `{}`.".format(project_name))
         sys.exit(1)
 
     meta = get_meta_response(response)
@@ -247,8 +247,7 @@ def get(ctx):
         config = polyaxon_client.api_client.sanitize_for_serialization(response)
         cache.cache(config_manager=RunManager, response=config)
     except (ApiException, HTTPError) as e:
-        Printer.print_error("Could not load run `{}` info.".format(run_uuid))
-        Printer.print_error("Error message `{}`.".format(e))
+        handle_cli_error(e, message="Could not load run `{}` info.".format(run_uuid))
         sys.exit(1)
 
     get_run_details(response)
@@ -292,8 +291,7 @@ def delete(ctx):
         # Purge caching
         RunManager.purge()
     except (ApiException, HTTPError) as e:
-        Printer.print_error("Could not delete run `{}`.".format(run_uuid))
-        Printer.print_error("Error message `{}`.".format(e))
+        handle_cli_error(e, message="Could not delete run `{}`.".format(run_uuid))
         sys.exit(1)
 
     Printer.print_success("Run `{}` was delete successfully".format(run_uuid))
@@ -351,8 +349,7 @@ def update(ctx, name, description, tags):
             owner, project_name, run_uuid, update_dict
         )
     except (ApiException, HTTPError) as e:
-        Printer.print_error("Could not update run `{}`.".format(run_uuid))
-        Printer.print_error("Error message `{}`.".format(e))
+        handle_cli_error(e, message="Could not update run `{}`.".format(run_uuid))
         sys.exit(1)
 
     Printer.print_success("Run updated.")
@@ -400,8 +397,7 @@ def stop(ctx, yes):
         polyaxon_client = PolyaxonClient()
         polyaxon_client.runs_v1.stop_run(owner, project_name, run_uuid)
     except (ApiException, HTTPError) as e:
-        Printer.print_error("Could not stop run `{}`.".format(run_uuid))
-        Printer.print_error("Error message `{}`.".format(e))
+        handle_cli_error(e, message="Could not stop run `{}`.".format(run_uuid))
         sys.exit(1)
 
     Printer.print_success("Run is being stopped.")
@@ -464,8 +460,7 @@ def restart(ctx, copy, file, u):  # pylint:disable=redefined-builtin
             )
             Printer.print_success("Run was restarted with uid {}".format(response.uuid))
     except (ApiException, HTTPError) as e:
-        Printer.print_error("Could not restart run `{}`.".format(run_uuid))
-        Printer.print_error("Error message `{}`.".format(e))
+        handle_cli_error(e, message="Could not restart run `{}`.".format(run_uuid))
         sys.exit(1)
 
 
@@ -513,8 +508,7 @@ def resume(ctx, file, u):  # pylint:disable=redefined-builtin
         )
         Printer.print_success("Run was resumed with uid {}".format(response.uuid))
     except (ApiException, HTTPError) as e:
-        Printer.print_error("Could not resume run `{}`.".format(run_uuid))
-        Printer.print_error("Error message `{}`.".format(e))
+        handle_cli_error(e, message="Could not resume run `{}`.".format(run_uuid))
         sys.exit(1)
 
 
@@ -563,8 +557,7 @@ def statuses(ctx, watch):
                     Printer.print_header("Conditions:")
                     dict_tabulate(objects, is_list_dict=True)
         except (ApiException, HTTPError, PolyaxonClientException) as e:
-            Printer.print_error("Could get status for run `{}`.".format(run_uuid))
-            Printer.print_error("Error message `{}`.".format(e))
+            handle_cli_error(e, message="Could get status for run `{}`.".format(run_uuid))
             sys.exit(1)
 
     owner, project_name, run_uuid = get_project_run_or_local(
@@ -605,10 +598,7 @@ def resources(ctx, gpu):
                 owner, project_name, run_uuid, message_handler=message_handler
             )
         except (ApiException, HTTPError) as e:
-            Printer.print_error(
-                "Could not get resources for run `{}`.".format(run_uuid)
-            )
-            Printer.print_error("Error message `{}`.".format(e))
+            handle_cli_error(e, message="Could not get resources for run `{}`.".format(run_uuid))
             sys.exit(1)
 
     owner, project_name, run_uuid = get_project_run_or_local(
@@ -668,10 +658,7 @@ def logs(ctx, past, follow, hide_time):
                     return
             except (ApiException, HTTPError) as e:
                 if not follow:
-                    Printer.print_error(
-                        "Could not get logs for run `{}`.".format(run_uuid)
-                    )
-                    Printer.print_error("Error message `{}`.".format(e))
+                    handle_cli_error(e, message="Could not get logs for run `{}`.".format(run_uuid))
                     sys.exit(1)
 
         try:
@@ -684,8 +671,7 @@ def logs(ctx, past, follow, hide_time):
                 ),
             )
         except (ApiException, HTTPError) as e:
-            Printer.print_error("Could not get logs for run `{}`.".format(run_uuid))
-            Printer.print_error("Error message `{}`.".format(e))
+            handle_cli_error(e, message="Could not get logs for run `{}`.".format(run_uuid))
             sys.exit(1)
 
     owner, project_name, run_uuid = get_project_run_or_local(
@@ -716,8 +702,7 @@ def outputs(ctx):
     try:
         PolyaxonClient().run.download_outputs(owner, project_name, run_uuid)
     except (ApiException, HTTPError) as e:
-        Printer.print_error("Could not download outputs for run `{}`.".format(run_uuid))
-        Printer.print_error("Error message `{}`.".format(e))
+        handle_cli_error(e, message="Could not download outputs for run `{}`.".format(run_uuid))
         sys.exit(1)
     Printer.print_success("Files downloaded.")
 
@@ -755,8 +740,7 @@ def code(ctx):
             Printer.print_warning("Run has no code ref, downloading latest code...")
         PolyaxonClient().project.download_repo(owner, project_name, commit=commit)
     except (ApiException, HTTPError) as e:
-        Printer.print_error("Could not download outputs for run `{}`.".format(run_uuid))
-        Printer.print_error("Error message `{}`.".format(e))
+        handle_cli_error(e, message="Could not download outputs for run `{}`.".format(run_uuid))
         sys.exit(1)
     Printer.print_success("Files downloaded.")
 
@@ -788,8 +772,7 @@ def bookmark(ctx):
         polyaxon_client = PolyaxonClient()
         polyaxon_client.runs_v1.bookmark_run(owner, project_name, run_uuid)
     except (ApiException, HTTPError) as e:
-        Printer.print_error("Could not bookmark run `{}`.".format(run_uuid))
-        Printer.print_error("Error message `{}`.".format(e))
+        handle_cli_error(e, message="Could not bookmark run `{}`.".format(run_uuid))
         sys.exit(1)
 
     Printer.print_success("Run is bookmarked.")
@@ -822,8 +805,7 @@ def unbookmark(ctx):
         polyaxon_client = PolyaxonClient()
         polyaxon_client.runs_v1.unbookmark_run(owner, project_name, run_uuid)
     except (ApiException, HTTPError) as e:
-        Printer.print_error("Could not unbookmark run `{}`.".format(run_uuid))
-        Printer.print_error("Error message `{}`.".format(e))
+        handle_cli_error(e, message="Could not unbookmark run `{}`.".format(run_uuid))
         sys.exit(1)
 
     Printer.print_success("Run is unbookmarked.")

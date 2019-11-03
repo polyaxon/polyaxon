@@ -21,6 +21,7 @@ import sys
 
 import click
 
+from polyaxon.cli.errors import handle_cli_error
 from polyaxon_sdk import V1Run
 from polyaxon_sdk.rest import ApiException
 from urllib3.exceptions import HTTPError
@@ -45,7 +46,7 @@ def run(
     log,
     can_upload,
 ):
-    def run_experiment():
+    def create_run():
         click.echo("Creating a run.")
         run = V1Run(content=specification.config_dump)
         try:
@@ -54,8 +55,7 @@ def run(
             cache.cache(config_manager=RunManager, response=response)
             Printer.print_success("A new run `{}` was created".format(response.uuid))
         except (ApiException, HTTPError) as e:
-            Printer.print_error("Could not create op.")
-            Printer.print_error("Error message `{}`.".format(e))
+            handle_cli_error(e, message="Could not create a run.")
             sys.exit(1)
 
     # Check if we need to upload
@@ -70,7 +70,7 @@ def run(
             sys.exit(1)
         ctx.invoke(upload_cmd, sync=False)
 
-    run_experiment()
+    create_run()
     logs_cmd = run_logs
 
     # Check if we need to invoke logs

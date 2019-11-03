@@ -1,3 +1,19 @@
+#!/usr/bin/python
+#
+# Copyright 2019 Polyaxon, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 #!/usr/bin/env python
 
 import sys
@@ -24,29 +40,24 @@ class PyTest(TestCommand):
 
 
 setup(name='polyaxon-dockerizer',
-      version='0.0.9',
+      version='0.5.6',
       description='Python dockerizer to generate and build docker images.',
-      long_description=read_readme(),
-      long_description_content_type="text/markdown",
-      maintainer='Mourad Mourafiq',
-      maintainer_email='mourad@polyaxon.com',
-      author='Mourad Mourafiq',
-      author_email='mourad@polyaxon.com',
-      url='https://github.com/polyaxon/polyaxon-dockerizer',
+      maintainer='Polyaxon, Inc.',
+      maintainer_email='contact@polyaxon.com',
+      author='Polyaxon, Inc.',
+      author_email='contact@polyaxon.com',
+      url='https://github.com/polyaxon/polyaxon',
       license='Apache 2.0',
+      long_description_content_type="text/markdown",
+      long_description=read_readme(),
       platforms='any',
       packages=find_packages(),
       keywords=[
           'polyaxon',
-          'docker',
-          'deep-learning',
-          'machine-learning',
-          'data-science',
-          'neural-networks',
-          'artificial-intelligence',
-          'ai',
-          'reinforcement-learning',
           'kubernetes',
+          'containers',
+          'docker'
+          'instrumentation'
       ],
       install_requires=[
           'docker==4.0.2',
@@ -57,7 +68,11 @@ setup(name='polyaxon-dockerizer',
           'Operating System :: OS Independent',
           'Intended Audience :: Developers',
           'Intended Audience :: Science/Research',
-          'Topic :: Scientific/Engineering :: Artificial Intelligence'
+          'Topic :: Scientific/Engineering :: Artificial Intelligence',
+          'Development Status :: 5 - Production/Stable',
+          'Environment :: Web Environment',
+          'Programming Language :: Python :: 3',
+          'Topic :: Internet :: WWW/HTTP',
       ],
       tests_require=[
           "pytest",

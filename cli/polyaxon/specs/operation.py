@@ -18,7 +18,7 @@
 from __future__ import absolute_import, division, print_function
 
 from polyaxon import kinds
-from polyaxon.exceptions import PolyaxonConfigurationError
+from polyaxon.exceptions import PolyaxonSchemaError
 from polyaxon.schemas.polyflow.ops import OpConfig
 from polyaxon.specs.base import BaseSpecification
 
@@ -60,12 +60,12 @@ class OperationSpecification(BaseSpecification, OperationSpecificationMixin):
     CONFIG = OpConfig
 
     def apply_context(self):
-        raise PolyaxonConfigurationError(
+        raise PolyaxonSchemaError(
             "This method is not allowed on this specification."
         )
 
     def apply_container_contexts(self, contexts=None):
-        raise PolyaxonConfigurationError(
+        raise PolyaxonSchemaError(
             "This method is not allowed on this specification."
         )
 

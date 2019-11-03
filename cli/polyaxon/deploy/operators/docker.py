@@ -18,7 +18,7 @@
 from __future__ import absolute_import, division, print_function
 
 from polyaxon.deploy.operators.cmd_operator import CmdOperator
-from polyaxon.deploy.operators.exceptions import OperatorException
+from polyaxon.exceptions import PolyaxonOperatorException
 
 
 class DockerOperator(CmdOperator):
@@ -45,7 +45,7 @@ class DockerOperator(CmdOperator):
     def set_volume(cls, volume):
         args = ["volume", "create", "--name={}".format(volume)]
         if not volume:
-            raise OperatorException(
+            raise PolyaxonOperatorException(
                 "docker", args, None, None, "Volume name was not provided"
             )
         return cls.execute(args)

@@ -22,7 +22,7 @@ from unittest import TestCase
 import mock
 
 from polyaxon.deploy.operators.docker import DockerOperator
-from polyaxon.deploy.operators.exceptions import OperatorException
+from polyaxon.exceptions import PolyaxonOperatorException
 
 DUMMY_RETURN_VALUE = object()
 
@@ -66,7 +66,7 @@ class TestDockerOperator(TestCase):
         stdout = "output"
         stderr = "error"
         mock_subprocess.Popen = self.mock_popen(return_code, stdout, stderr)
-        with self.assertRaises(OperatorException) as exception:
+        with self.assertRaises(PolyaxonOperatorException) as exception:
             self.docker.execute(["run"])
 
         self.assertEqual(

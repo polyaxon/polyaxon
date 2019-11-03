@@ -27,7 +27,7 @@ from flaky import flaky
 from marshmallow import ValidationError
 from tests.utils import assert_equal_dict
 
-from polyaxon.exceptions import PolyaxonConfigurationError, PolyaxonfileError
+from polyaxon.exceptions import PolyaxonSchemaError, PolyaxonfileError
 from polyaxon.schemas.ops.environments import EnvironmentConfig
 from polyaxon.schemas.ops.io import IOTypes
 from polyaxon.schemas.utils import TaskType
@@ -44,13 +44,13 @@ from polyaxon.specs import (
 class TestSpecifications(TestCase):
     def test_non_yaml_spec(self):
         config = ",sdf;ldjks"
-        with self.assertRaises(PolyaxonConfigurationError):
+        with self.assertRaises(PolyaxonSchemaError):
             JobSpecification.read(config)
 
-        with self.assertRaises(PolyaxonConfigurationError):
+        with self.assertRaises(PolyaxonSchemaError):
             ServiceSpecification.read(config)
 
-        with self.assertRaises(PolyaxonConfigurationError):
+        with self.assertRaises(PolyaxonSchemaError):
             PipelineSpecification.read(config)
 
     def test_job_specification_raises_for_missing_container_section(self):
