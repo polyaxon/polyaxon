@@ -13,9 +13,9 @@ outputs:
 init:
   build:
     image: my_image
-    build_steps:
+    run:
       - pip install package1
-    env_vars:
+    env:
       - ['KEY1', 'en_US.UTF-8']
       - ['KEY2', 2]
 

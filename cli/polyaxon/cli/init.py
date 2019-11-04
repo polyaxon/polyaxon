@@ -22,10 +22,10 @@ import sys
 
 import click
 
-from polyaxon.cli.errors import handle_cli_error
 from polyaxon_sdk.rest import ApiException
 from urllib3.exceptions import HTTPError
 
+from polyaxon.cli.errors import handle_cli_error
 from polyaxon.cli.getters.project import get_project_or_local
 from polyaxon.client import PolyaxonClient
 from polyaxon.logger import clean_outputs
@@ -108,8 +108,9 @@ def init(project, polyaxonfile, purge):
         handle_cli_error(
             e,
             message="You can a create new project with this command: "
-                    "polyaxon project create "
-                    "--name={} [--description=...] [--tags=...]".format(project_name))
+            "polyaxon project create "
+            "--name={} [--description=...] [--tags=...]".format(project_name),
+        )
         sys.exit(1)
 
     if purge:

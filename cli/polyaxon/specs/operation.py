@@ -60,14 +60,10 @@ class OperationSpecification(BaseSpecification, OperationSpecificationMixin):
     CONFIG = OpConfig
 
     def apply_context(self):
-        raise PolyaxonSchemaError(
-            "This method is not allowed on this specification."
-        )
+        raise PolyaxonSchemaError("This method is not allowed on this specification.")
 
     def apply_container_contexts(self, contexts=None):
-        raise PolyaxonSchemaError(
-            "This method is not allowed on this specification."
-        )
+        raise PolyaxonSchemaError("This method is not allowed on this specification.")
 
     @property
     def is_template_job(self):

@@ -21,11 +21,11 @@ import sys
 
 import click
 import polyaxon_sdk
-from polyaxon.cli.errors import handle_cli_error
 
 from polyaxon_sdk.rest import ApiException
 from urllib3.exceptions import HTTPError
 
+from polyaxon.cli.errors import handle_cli_error
 from polyaxon.cli.version import (
     get_current_version,
     get_log_handler,

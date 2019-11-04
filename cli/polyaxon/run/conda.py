@@ -26,8 +26,8 @@ import click
 from polyaxon.cli.errors import handle_cli_error
 from polyaxon.deploy.operators.conda import CondaOperator
 from polyaxon.exceptions import (
-    PolyaxonException,
     PolyaxonClientException,
+    PolyaxonException,
     PolyaxonHTTPError,
     PolyaxonShouldExitError,
 )

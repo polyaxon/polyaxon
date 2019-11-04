@@ -262,7 +262,10 @@ class TestPipelineConfigs(TestCase):
                     "init": {
                         "build": {
                             "image": "foo/bar",
-                            "build_steps": ["pip3 install foo"],
+                            "run": ["pip3 install foo"],
+                            "shell": "foo",
+                            "name": "foo.yaml",
+                            "workdir": "/test",
                         }
                     },
                     "environment": {

@@ -57,7 +57,7 @@ templates:
     init:
       build:
         image: my_image
-        build_steps:
+        run:
         - pip install package1
     environment:
       resources: {requests: {cpu: 1}}

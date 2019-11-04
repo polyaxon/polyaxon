@@ -24,24 +24,20 @@ import sys
 import tempfile
 import time
 
-from polyaxon_dockerizer import build as dockerizer_build
-from polyaxon_dockerizer import constants as dockerizer_constants
-from polyaxon_dockerizer import generate as dockerizer_generate
-
 from polyaxon import settings
 from polyaxon.cli.errors import handle_cli_error
 from polyaxon.deploy.operators.docker import DockerOperator
 from polyaxon.env_vars.keys import POLYAXON_KEYS_NO_OP
 from polyaxon.exceptions import (
     PolyaxonClientException,
+    PolyaxonException,
     PolyaxonHTTPError,
     PolyaxonShouldExitError,
-    PolyaxonException)
+)
 from polyaxon.tracking import Run
 from polyaxon.tracking.utils.hashing import hash_value
 from polyaxon.utils.formatting import Printer
 
-POLYAXON_DOCKERFILE_NAME = "Dockerfile"
 POLYAXON_DATA_PATH = "/tmp/data"
 
 
@@ -113,58 +109,8 @@ def _get_data_volumes(bind_mounts):
     return result
 
 
-def _create_docker_build(build_job, build_config, project):
-    directory = tempfile.mkdtemp()
-    build_context = build_config.context or "."
-    try:
-        dst_path = os.path.join(directory, dockerizer_constants.REPO_PATH)
-        shutil.copytree(src=build_context, dst=dst_path)
-        dockerfile_path = POLYAXON_DOCKERFILE_NAME
-        dockerfile_generate = True
-        if build_config.dockerfile:
-            dockerfile_path = os.path.join(directory, dockerfile_path)
-            shutil.copy(build_config.dockerfile, dockerfile_path)
-            dockerfile_generate = False
-        if dockerfile_generate:
-            rendered_dockerfile = dockerizer_generate(
-                repo_path=dst_path,
-                from_image=build_config.image,
-                build_steps=build_config.build_steps,
-                env_vars=build_config.env_vars,
-                lang_env=build_config.lang_env,
-            )
-        else:
-            with open(dockerfile_path) as dockerfile:
-                rendered_dockerfile = dockerfile
-
-        if rendered_dockerfile:
-            build_job.log_dockerfile(dockerfile=rendered_dockerfile)
-        else:
-            message = "Failed to generate the dockerfile."
-            Printer.print_error(message)
-            build_job.failed(message=message)
-            raise PolyaxonShouldExitError("")
-
-        image_tag = hash_value(rendered_dockerfile)
-        if "POLYAXON_IS_OFFLINE" not in os.environ:
-            job_name = build_job.job["unique_name"]
-        else:
-            job_name = "{project}-builds-local-{timestamp}".format(
-                project=project, timestamp=int(time.time())
-            )
-
-        image_name = job_name.replace(".", "-")
-
-        dockerizer_build(
-            build_context=directory,
-            image_tag=image_tag,
-            image_name=image_name,
-            nocache=build_config.nocache,
-        )
-        build_job.succeeded()
-    finally:
-        shutil.rmtree(directory)
-    return "{}:{}".format(image_name, image_tag)
+def _create_docker_build(*args):
+    return ""
 
 
 def _run(ctx, name, owner, project_name, description, tags, specification, log):

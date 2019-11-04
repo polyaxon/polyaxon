@@ -71,9 +71,7 @@ class PipelineSpecification(BaseSpecification, ScheduleSpecificationMixin):
     CONFIG = PipelineConfig
 
     def apply_container_contexts(self, contexts=None):
-        raise PolyaxonSchemaError(
-            "This method is not allowed on this specification."
-        )
+        raise PolyaxonSchemaError("This method is not allowed on this specification.")
 
     def apply_context(self):
         self.config.process_dag()

@@ -82,9 +82,7 @@ class DeployManager(object):
     def check_for_kubernetes(self):
         # Deployment on k8s requires helm & kubectl to be installed
         if not self.kubectl.check():
-            raise PolyaxonException(
-                "kubectl is required to run this command."
-            )
+            raise PolyaxonException("kubectl is required to run this command.")
         Printer.print_success("kubectl is installed")
 
         if not self.helm.check():
@@ -101,15 +99,11 @@ class DeployManager(object):
     def check_for_docker_compose(self):
         # Deployment on docker compose requires Docker & Docker Compose to be installed
         if not self.docker.check():
-            raise PolyaxonException(
-                "Docker is required to run this command."
-            )
+            raise PolyaxonException("Docker is required to run this command.")
         Printer.print_success("Docker is installed")
 
         if not self.compose.check():
-            raise PolyaxonException(
-                "Docker Compose is required to run this command."
-            )
+            raise PolyaxonException("Docker Compose is required to run this command.")
         Printer.print_success("Docker Compose is installed")
 
         # Check that .polyaxon/.compose is set and up-to date
@@ -119,9 +113,7 @@ class DeployManager(object):
 
     def check_for_docker(self):
         if not self.docker.check():
-            raise PolyaxonException(
-                "Docker is required to run this command."
-            )
+            raise PolyaxonException("Docker is required to run this command.")
         return True
 
     def check_for_heroku(self):

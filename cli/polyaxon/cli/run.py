@@ -37,11 +37,12 @@ from polyaxon.utils.validation import validate_tags
 @click.command()
 @click.option("--project", "-p", type=str)
 @click.option(
-    "--file",
     "-f",
+    "--file",
+    "polyaxonfile",
     multiple=True,
     type=click.Path(exists=True),
-    help="The polyaxon files to run.",
+    help="The polyaxonfiles to run.",
 )
 @click.option(
     "--name",
@@ -84,7 +85,7 @@ from polyaxon.utils.validation import validate_tags
 def run(
     ctx,
     project,
-    file,  # pylint:disable=redefined-builtin
+    polyaxonfile,
     name,
     tags,
     description,
@@ -138,12 +139,9 @@ def run(
     $ polyaxon run -p project1 -f file.yaml -P param1=234.2 -P param2=relu
     ```
     """
-    if not file:
-        file = PolyaxonFile.check_default_path(path=".")
-    if not file:
-        file = ""
-
-    specification = check_polyaxonfile(file, params=params, profile=profile, log=False)
+    specification = check_polyaxonfile(
+        polyaxonfile, params=params, profile=profile, log=False
+    )
 
     owner, project_name = get_project_or_local(project)
     tags = validate_tags(tags)

@@ -21,11 +21,11 @@ import sys
 
 import click
 
-from polyaxon.cli.errors import handle_cli_error
 from polyaxon_sdk import V1Project
 from polyaxon_sdk.rest import ApiException
 from urllib3.exceptions import HTTPError
 
+from polyaxon.cli.errors import handle_cli_error
 from polyaxon.cli.getters.project import get_project_or_local
 from polyaxon.cli.init import init as init_project
 from polyaxon.client import PolyaxonClient
@@ -238,7 +238,9 @@ def delete(ctx):
             # Purge caching
             ProjectManager.purge()
     except (ApiException, HTTPError) as e:
-        handle_cli_error(e, message="Could not delete project `{}/{}`.".format(owner, project_name))
+        handle_cli_error(
+            e, message="Could not delete project `{}/{}`.".format(owner, project_name)
+        )
         sys.exit(1)
 
     if response.status_code == 204:
@@ -301,7 +303,9 @@ def update(ctx, name, description, private):
             owner, project_name, update_dict
         )
     except (ApiException, HTTPError) as e:
-        handle_cli_error(e, message="Could not update project `{}`.".format(project_name))
+        handle_cli_error(
+            e, message="Could not update project `{}`.".format(project_name)
+        )
         sys.exit(1)
 
     Printer.print_success("Project updated.")
@@ -356,7 +360,7 @@ def git(ctx, url, private, sync):  # pylint:disable=assign-to-new-keyword
         except (ApiException, HTTPError) as e:
             handle_cli_error(
                 e,
-                message="Could not set git repo on project `{}`.".format(project_name)
+                message="Could not set git repo on project `{}`.".format(project_name),
             )
             sys.exit(1)
 
@@ -370,7 +374,7 @@ def git(ctx, url, private, sync):  # pylint:disable=assign-to-new-keyword
         except (ApiException, HTTPError) as e:
             handle_cli_error(
                 e,
-                message="Could not sync git repo on project `{}`.".format(project_name)
+                message="Could not sync git repo on project `{}`.".format(project_name),
             )
             sys.exit(1)
 
@@ -413,7 +417,9 @@ def ci(ctx, enable, disable):  # pylint:disable=assign-to-new-keyword
         try:
             polyaxon_client.projects_v1.enable_ci(owner, project_name)
         except (ApiException, HTTPError) as e:
-            handle_cli_error(e, message="Could not enable CI on project `{}`.".format(project_name))
+            handle_cli_error(
+                e, message="Could not enable CI on project `{}`.".format(project_name)
+            )
             sys.exit(1)
 
         Printer.print_success(
@@ -427,8 +433,7 @@ def ci(ctx, enable, disable):  # pylint:disable=assign-to-new-keyword
             polyaxon_client.projects_v1.disable_ci(owner, project_name)
         except (ApiException, HTTPError) as e:
             handle_cli_error(
-                e,
-                message="Could not disable CI on project `{}`.".format(project_name)
+                e, message="Could not disable CI on project `{}`.".format(project_name)
             )
             sys.exit(1)
 
@@ -456,8 +461,7 @@ def download(ctx, commit):
         polyaxon_client.projects_v1.download_repo(user, project_name, commit=commit)
     except (ApiException, HTTPError) as e:
         handle_cli_error(
-            e,
-            message="Could not download code for project `{}`.".format(project_name)
+            e, message="Could not download code for project `{}`.".format(project_name)
         )
         sys.exit(1)
     Printer.print_success("Files downloaded.")
@@ -478,8 +482,8 @@ def bookmark(ctx):
         polyaxon_client.projects_v1.bookmark_project(owner, project_name)
     except (ApiException, HTTPError) as e:
         handle_cli_error(
-            e,
-            message="Could not bookmark project `{}/{}`.".format(owner, project_name))
+            e, message="Could not bookmark project `{}/{}`.".format(owner, project_name)
+        )
         sys.exit(1)
 
     Printer.print_success("Project `{}/{}` is bookmarked.".format(owner, project_name))
@@ -501,7 +505,7 @@ def unbookmark(ctx):
     except (ApiException, HTTPError) as e:
         handle_cli_error(
             e,
-            message="Could not unbookmark project `{}/{}`.".format(owner, project_name)
+            message="Could not unbookmark project `{}/{}`.".format(owner, project_name),
         )
         sys.exit(1)
 
@@ -533,7 +537,9 @@ def invalidate_runs(ctx):
     except (ApiException, HTTPError) as e:
         handle_cli_error(
             e,
-            message="Could not invalidate build jobs for project `{}`.".format(project_name)
+            message="Could not invalidate build jobs for project `{}`.".format(
+                project_name
+            ),
         )
         sys.exit(1)
 

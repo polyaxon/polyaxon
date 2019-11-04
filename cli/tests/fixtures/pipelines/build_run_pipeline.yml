@@ -65,5 +65,5 @@ templates:
     init:
       build:
         image: base
-        env_vars: "{{ env_vars }}"
+        env: "{{ env_vars }}"
     container: {image: base}

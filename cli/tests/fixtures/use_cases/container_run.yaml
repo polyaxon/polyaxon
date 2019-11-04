@@ -374,9 +374,9 @@ environemnt:
 init:
   build:  # The build context is a helper to create a simple docker file, for advance use case, you can just clone a repo with a dockerfile, or use a repo from the catalog with dockerile
     image: my_image
-    build_steps:
+    run:
     - pip install package1
-    env_vars:
+    env:
     - ['KEY1', 'en_US.UTF-8']
     - ['KEY2', 2]
 

@@ -25,6 +25,11 @@ import pytest
 
 from polyaxon.exceptions import PolyaxonSchemaError
 from polyaxon.polyaxonfile import PolyaxonFile
+from polyaxon.schemas.ops.init.build_context import (
+    POLYAXON_DOCKER_SHELL,
+    POLYAXON_DOCKER_WORKDIR,
+    POLYAXON_DOCKERFILE_NAME,
+)
 from polyaxon.specs import OperationSpecification, get_specification
 
 
@@ -196,7 +201,10 @@ class TestPolyaxonfileWithPipelines(TestCase):
         assert spec.config.templates[1].container.to_light_dict() == {"image": "base"}
         assert spec.config.templates[1].init.build.to_light_dict() == {
             "image": "base",
-            "env_vars": "{{ env_vars }}",
+            "env": "{{ env_vars }}",
+            "name": POLYAXON_DOCKERFILE_NAME,
+            "workdir": POLYAXON_DOCKER_WORKDIR,
+            "shell": POLYAXON_DOCKER_SHELL,
         }
 
         # Create a an op spec

@@ -46,6 +46,10 @@ class PolyaxonOperatorException(PolyaxonException):
         super(PolyaxonOperatorException, self).__init__(message=message)
 
 
+class PolyaxonBuildException(PolyaxonException):
+    pass
+
+
 class PolyaxonBuildException(Exception):
     pass
 
@@ -89,7 +93,7 @@ HTTP_ERROR_MESSAGES_MAPPING = {
     401: "Status: 401. Authentication failed. Retry by invoking Polyaxon login.",
     403: "Status: 403. You are not authorized to access this resource on Polyaxon.",
     404: "Status: 404. "
-         "The resource you are looking for was not found. Check if the name or uuid is correct.",
+    "The resource you are looking for was not found. Check if the name or uuid is correct.",
     429: "Status: 429. You are over the allowed limits for this operation.",
     500: "Status: 502. Internal polyaxon server error, please try again later.",
     502: "Status: 502. Invalid response from Polyaxon server.",

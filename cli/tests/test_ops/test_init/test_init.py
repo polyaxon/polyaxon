@@ -55,8 +55,11 @@ class TestInitConfigs(TestCase):
         config_dict = {
             "build": {
                 "image": "tensorflow:1.3.0",
-                "build_steps": ["pip install tensor2tensor"],
-                "env_vars": [["LC_ALL", "en_US.UTF-8"]],
+                "run": ["pip install tensor2tensor"],
+                "env": [["LC_ALL", "en_US.UTF-8"]],
+                "shell": "foo",
+                "name": "foo.yaml",
+                "workdir": "/test",
             }
         }
         config = InitConfig.from_dict(config_dict)

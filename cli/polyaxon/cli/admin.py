@@ -57,8 +57,9 @@ def admin():
 
 @admin.command()
 @click.option(
-    "--file",
     "-f",
+    "--file",
+    "config_file",
     type=click.Path(exists=True),
     help="The polyaxon deployment config file(s) to check.",
 )
@@ -80,11 +81,11 @@ def admin():
     help="Dry run the configuration and generate a debuggable output.",
 )
 @clean_outputs
-def deploy(file, manager_path, check, dry_run):  # pylint:disable=redefined-builtin
+def deploy(config_file, manager_path, check, dry_run):
     """Deploy polyaxon."""
-    config = read_deployment_config(file)
+    config = read_deployment_config(config_file)
     manager = DeployManager(
-        config=config, filepath=file, manager_path=manager_path, dry_run=dry_run
+        config=config, filepath=config_file, manager_path=manager_path, dry_run=dry_run
     )
     exception = None
     if check:
@@ -108,13 +109,14 @@ def deploy(file, manager_path, check, dry_run):  # pylint:disable=redefined-buil
 
 @admin.command()
 @click.option(
-    "--file",
     "-f",
+    "--file",
+    "config_file",
     type=click.Path(exists=True),
     help="The polyaxon deployment config file(s) to check.",
 )
 @click.option(
-    "--manager_path",
+    "--manager-path",
     type=click.Path(exists=True),
     help="The path of the deployment manager, e.g. local chart.",
 )
@@ -125,17 +127,17 @@ def deploy(file, manager_path, check, dry_run):  # pylint:disable=redefined-buil
     help="Check if deployment file and other requirements are met.",
 )
 @click.option(
-    "--dry_run",
+    "--dry-run",
     is_flag=True,
     default=False,
     help="Dry run the configuration and generate a debuggable output.",
 )
 @clean_outputs
-def upgrade(file, manager_path, check, dry_run):  # pylint:disable=redefined-builtin
+def upgrade(config_file, manager_path, check, dry_run):
     """Upgrade a Polyaxon deployment."""
-    config = read_deployment_config(file)
+    config = read_deployment_config(config_file)
     manager = DeployManager(
-        config=config, filepath=file, manager_path=manager_path, dry_run=dry_run
+        config=config, filepath=config_file, manager_path=manager_path, dry_run=dry_run
     )
     exception = None
     if check:
@@ -158,16 +160,17 @@ def upgrade(file, manager_path, check, dry_run):  # pylint:disable=redefined-bui
 
 @admin.command()
 @click.option(
-    "--file",
     "-f",
+    "--file",
+    "config_file",
     type=click.Path(exists=True),
     help="The polyaxon deployment config file(s) to check.",
 )
 @clean_outputs
-def teardown(file):  # pylint:disable=redefined-builtin
+def teardown(config_file):
     """Teardown a polyaxon deployment given a config file."""
-    config = read_deployment_config(file)
-    manager = DeployManager(config=config, filepath=file)
+    config = read_deployment_config(config_file)
+    manager = DeployManager(config=config, filepath=config_file)
     exception = None
     try:
         if click.confirm("Would you like to execute pre-delete hooks?", default=True):

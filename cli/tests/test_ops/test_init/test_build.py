@@ -23,7 +23,12 @@ import pytest
 
 from marshmallow import ValidationError
 
-from polyaxon.schemas.ops.init.build_context import BuildContextConfig
+from polyaxon.schemas.ops.init.build_context import (
+    POLYAXON_DOCKER_SHELL,
+    POLYAXON_DOCKER_WORKDIR,
+    POLYAXON_DOCKERFILE_NAME,
+    BuildContextConfig,
+)
 
 
 @pytest.mark.init_mark
@@ -73,15 +78,13 @@ class TestBuildConfigs(TestCase):
 
     def test_does_not_accept_dockerfiles(self):
         config_dict = {"dockerfile": "foo/bar"}
-        config = BuildContextConfig.from_dict(config_dict)
-        assert config.dockerfile == "foo/bar"
+        with self.assertRaises(ValidationError):
+            BuildContextConfig.from_dict(config_dict)
 
     def test_build_config(self):
         config_dict = {"image": "some_image_name"}
         config = BuildContextConfig.from_dict(config_dict)
-        assert config.to_dict() == config_dict
         assert config.image_tag == "latest"
-        assert config.context is None
 
     def test_build_config_image_use_cases(self):
         # Latest
@@ -119,24 +122,16 @@ class TestBuildConfigs(TestCase):
         config = BuildContextConfig.from_dict(config_dict)
         assert config.image_tag == "foo"
 
-    def test_build_context(self):
-        config_dict = {"image": "some_image_name", "context": "path/to/module"}
-        config = BuildContextConfig.from_dict(config_dict)
-        assert config.to_dict() == config_dict
-        assert config.image_tag == "latest"
-        assert config.context == "path/to/module"
-
-        config_dict = {"dockerfile": "path/to/Dockerfile", "context": "path/to/module"}
-        config = BuildContextConfig.from_dict(config_dict)
-        assert config.to_dict() == config_dict
-        assert config.dockerfile == "path/to/Dockerfile"
-        assert config.context == "path/to/module"
-
-    def test_build_repo_with_install_step_config(self):
+    def test_build_repo_with_install_step_copy_path_config(self):
         config_dict = {
             "image": "tensorflow:1.3.0",
-            "build_steps": ["pip install tensor2tensor"],
-            "env_vars": [["LC_ALL", "en_US.UTF-8"]],
+            "path": ["./module"],
+            "copy": ["/foo/bar"],
+            "run": ["pip install tensor2tensor"],
+            "env": [["LC_ALL", "en_US.UTF-8"]],
+            "name": "dockerfile",
+            "workdir": "",
+            "shell": "sh",
         }
         config = BuildContextConfig.from_dict(config_dict)
         assert config.to_dict() == config_dict
@@ -145,29 +140,27 @@ class TestBuildConfigs(TestCase):
     def test_build_repo_with_security_context(self):
         config_dict = {
             "image": "tensorflow:1.3.0",
-            "build_steps": ["pip install tensor2tensor"],
-            "env_vars": [["LC_ALL", "en_US.UTF-8"]],
-            "security_context": {"runAsUser": 1000, "runAsGroup": 3000},
+            "run": ["pip install tensor2tensor"],
+            "env": [["LC_ALL", "en_US.UTF-8"]],
+            "uid": 1000,
+            "gid": 3000,
+            "name": "dockerfile",
+            "workdir": "",
+            "shell": "sh",
         }
         config = BuildContextConfig.from_dict(config_dict)
         assert config.to_dict() == config_dict
         assert config.image_tag == "1.3.0"
-        assert config.security_context == {"runAsUser": 1000, "runAsGroup": 3000}
+        assert config.uid == 1000
+        assert config.gid == 3000
 
-    def test_build_config_with_dockerfile(self):
+    def test_build_config_with_default_values(self):
         config_dict = {"image": "some_image_name"}
         config = BuildContextConfig.from_dict(config_dict)
-        assert config.to_dict() == config_dict
         assert config.image_tag == "latest"
-        assert config.dockerfile is None
-        assert config.context is None
-
-        config_dict = {"dockerfile": "path/Dockerfile"}
-        config = BuildContextConfig.from_dict(config_dict)
-        assert config.to_dict() == config_dict
-        assert config.image_tag is None
-        assert config.dockerfile == "path/Dockerfile"
-        assert config.context is None
+        assert config.name == POLYAXON_DOCKERFILE_NAME
+        assert config.shell == POLYAXON_DOCKER_SHELL
+        assert config.workdir == POLYAXON_DOCKER_WORKDIR
 
         config_dict = {}
         with self.assertRaises(ValidationError):

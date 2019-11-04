@@ -65,7 +65,6 @@ setup(
         "click==7.0",
         "click-completion==0.5.1",
         "pathlib==1.0.1",
-        "polyaxon-dockerizer==0.0.9",
         "sentry-sdk==0.12.3",
         "tabulate==0.8.2",
         "hestia==0.5.5",
@@ -83,6 +82,12 @@ setup(
         "requests-toolbelt>=0.8.0",
         "websocket-client>=0.53.0",
     ],
+    extras_require={
+        "gcs": ["google-cloud-storage"],
+        "s3": ["boto3", "botocore"],
+        "azure": ["azure-storage"],
+        "docker": ["docker"],
+    },
     entry_points={"console_scripts": ["polyaxon = polyaxon.main:cli"]},
     python_requires=">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*",
     classifiers=[

@@ -27,8 +27,11 @@ from requests_toolbelt import MultipartEncoder, MultipartEncoderMonitor
 
 from polyaxon import settings
 from polyaxon.client.transport.utils import Bar, progress_bar
-from polyaxon.exceptions import PolyaxonShouldExitError, HTTP_ERROR_MESSAGES_MAPPING, \
-    PolyaxonClientException
+from polyaxon.exceptions import (
+    HTTP_ERROR_MESSAGES_MAPPING,
+    PolyaxonClientException,
+    PolyaxonShouldExitError,
+)
 from polyaxon.logger import logger
 
 
@@ -299,7 +302,9 @@ class HttpTransportMixin(object):
         except TypeError:
             logger.error("Request to %s failed with status code", endpoint)
 
-        raise PolyaxonClientException(HTTP_ERROR_MESSAGES_MAPPING.get(response.status_code))
+        raise PolyaxonClientException(
+            HTTP_ERROR_MESSAGES_MAPPING.get(response.status_code)
+        )
 
     def get(
         self,

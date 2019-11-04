@@ -58,7 +58,9 @@ def upload(sync=True):  # pylint:disable=assign-to-new-keyword
                 ) as e:
                     handle_cli_error(
                         e,
-                        message="Could not upload code for project `{}`.".format(project.name)
+                        message="Could not upload code for project `{}`.".format(
+                            project.name
+                        ),
                     )
                     Printer.print_error(
                         "Check the project exists, "

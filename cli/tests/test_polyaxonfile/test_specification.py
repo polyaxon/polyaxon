@@ -27,7 +27,7 @@ from flaky import flaky
 from marshmallow import ValidationError
 from tests.utils import assert_equal_dict
 
-from polyaxon.exceptions import PolyaxonSchemaError, PolyaxonfileError
+from polyaxon.exceptions import PolyaxonfileError, PolyaxonSchemaError
 from polyaxon.schemas.ops.environments import EnvironmentConfig
 from polyaxon.schemas.ops.io import IOTypes
 from polyaxon.schemas.utils import TaskType

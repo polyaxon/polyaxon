@@ -21,8 +21,8 @@ from unittest import TestCase
 
 import mock
 
-from polyaxon.exceptions import PolyaxonOperatorException
 from polyaxon.deploy.operators.helm import HelmOperator
+from polyaxon.exceptions import PolyaxonOperatorException
 
 DUMMY_RETURN_VALUE = object()
 

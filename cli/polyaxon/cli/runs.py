@@ -22,11 +22,11 @@ import sys
 import click
 import rhea
 
-from polyaxon.cli.errors import handle_cli_error
 from polyaxon_sdk import V1Run
 from polyaxon_sdk.rest import ApiException
 from urllib3.exceptions import HTTPError
 
+from polyaxon.cli.errors import handle_cli_error
 from polyaxon.cli.getters.project import get_project_or_local
 from polyaxon.cli.getters.run import get_project_run_or_local
 from polyaxon.cli.upload import upload
@@ -154,7 +154,9 @@ def ls(ctx, io, query, sort, limit, offset):
             owner=owner, project=project_name, **params
         )
     except (ApiException, HTTPError) as e:
-        handle_cli_error(e, message="Could not get runs for project `{}`.".format(project_name))
+        handle_cli_error(
+            e, message="Could not get runs for project `{}`.".format(project_name)
+        )
         sys.exit(1)
 
     meta = get_meta_response(response)
@@ -412,18 +414,19 @@ def stop(ctx, yes):
     help="To copy the run before restarting.",
 )
 @click.option(
-    "--file",
     "-f",
+    "--file",
+    "polyaxonfile",
     multiple=True,
     type=click.Path(exists=True),
-    help="The polyaxon files to update with.",
+    help="The polyaxonfiles to update with.",
 )
 @click.option(
     "-u", is_flag=True, default=False, help="To upload the repo before restarting."
 )
 @click.pass_context
 @clean_outputs
-def restart(ctx, copy, file, u):  # pylint:disable=redefined-builtin
+def restart(ctx, copy, polyaxonfile, u):
     """Restart run.
 
     Uses [Caching](/references/polyaxon-cli/#caching)
@@ -436,8 +439,8 @@ def restart(ctx, copy, file, u):  # pylint:disable=redefined-builtin
     ```
     """
     content = None
-    if file:
-        content = "{}".format(rhea.read(file))
+    if polyaxonfile:
+        content = "{}".format(rhea.read(polyaxonfile))
 
     # Check if we need to upload
     if u:
@@ -466,18 +469,19 @@ def restart(ctx, copy, file, u):  # pylint:disable=redefined-builtin
 
 @runs.command()
 @click.option(
-    "--file",
     "-f",
+    "--file",
+    "polyaxonfile",
     multiple=True,
     type=click.Path(exists=True),
-    help="The polyaxon files to update with.",
+    help="The polyaxonfiles to update with.",
 )
 @click.option(
     "-u", is_flag=True, default=False, help="To upload the repo before resuming."
 )
 @click.pass_context
 @clean_outputs
-def resume(ctx, file, u):  # pylint:disable=redefined-builtin
+def resume(ctx, polyaxonfile, u):
     """Resume run.
 
     Uses [Caching](/references/polyaxon-cli/#caching)
@@ -490,8 +494,8 @@ def resume(ctx, file, u):  # pylint:disable=redefined-builtin
     ```
     """
     content = None
-    if file:
-        content = "{}".format(rhea.read(file))
+    if polyaxonfile:
+        content = "{}".format(rhea.read(polyaxonfile))
 
     # Check if we need to upload
     if u:
@@ -557,7 +561,9 @@ def statuses(ctx, watch):
                     Printer.print_header("Conditions:")
                     dict_tabulate(objects, is_list_dict=True)
         except (ApiException, HTTPError, PolyaxonClientException) as e:
-            handle_cli_error(e, message="Could get status for run `{}`.".format(run_uuid))
+            handle_cli_error(
+                e, message="Could get status for run `{}`.".format(run_uuid)
+            )
             sys.exit(1)
 
     owner, project_name, run_uuid = get_project_run_or_local(
@@ -598,7 +604,9 @@ def resources(ctx, gpu):
                 owner, project_name, run_uuid, message_handler=message_handler
             )
         except (ApiException, HTTPError) as e:
-            handle_cli_error(e, message="Could not get resources for run `{}`.".format(run_uuid))
+            handle_cli_error(
+                e, message="Could not get resources for run `{}`.".format(run_uuid)
+            )
             sys.exit(1)
 
     owner, project_name, run_uuid = get_project_run_or_local(
@@ -658,7 +666,9 @@ def logs(ctx, past, follow, hide_time):
                     return
             except (ApiException, HTTPError) as e:
                 if not follow:
-                    handle_cli_error(e, message="Could not get logs for run `{}`.".format(run_uuid))
+                    handle_cli_error(
+                        e, message="Could not get logs for run `{}`.".format(run_uuid)
+                    )
                     sys.exit(1)
 
         try:
@@ -671,7 +681,9 @@ def logs(ctx, past, follow, hide_time):
                 ),
             )
         except (ApiException, HTTPError) as e:
-            handle_cli_error(e, message="Could not get logs for run `{}`.".format(run_uuid))
+            handle_cli_error(
+                e, message="Could not get logs for run `{}`.".format(run_uuid)
+            )
             sys.exit(1)
 
     owner, project_name, run_uuid = get_project_run_or_local(
@@ -702,7 +714,9 @@ def outputs(ctx):
     try:
         PolyaxonClient().run.download_outputs(owner, project_name, run_uuid)
     except (ApiException, HTTPError) as e:
-        handle_cli_error(e, message="Could not download outputs for run `{}`.".format(run_uuid))
+        handle_cli_error(
+            e, message="Could not download outputs for run `{}`.".format(run_uuid)
+        )
         sys.exit(1)
     Printer.print_success("Files downloaded.")
 
@@ -740,7 +754,9 @@ def code(ctx):
             Printer.print_warning("Run has no code ref, downloading latest code...")
         PolyaxonClient().project.download_repo(owner, project_name, commit=commit)
     except (ApiException, HTTPError) as e:
-        handle_cli_error(e, message="Could not download outputs for run `{}`.".format(run_uuid))
+        handle_cli_error(
+            e, message="Could not download outputs for run `{}`.".format(run_uuid)
+        )
         sys.exit(1)
     Printer.print_success("Files downloaded.")
 
