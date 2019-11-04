@@ -19,7 +19,8 @@ from __future__ import absolute_import, division, print_function
 
 import abc
 import copy
-import json
+import ujson
+
 import six
 
 import rhea
@@ -551,11 +552,11 @@ class BaseSpecification(
 
     @property
     def data_dump(self):
-        return json.dumps(self._data)
+        return ujson.dumps(self._data)
 
     @property
     def config_dump(self):
-        return json.dumps(self.config.to_light_dict())
+        return self.config.to_light_dict(dump=True)
 
     @property
     def version(self):

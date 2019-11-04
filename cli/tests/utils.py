@@ -17,14 +17,13 @@
 # coding: utf-8
 from __future__ import absolute_import, division, print_function
 
-import json
 import os
+import ujson
+
 import six
 
 from collections import Mapping
 from unittest import TestCase
-
-from polyaxon import settings
 
 
 def assert_equal_dict(dict1, dict2):
@@ -92,11 +91,11 @@ class TestEnvVarsCase(TestCase):
 
     @staticmethod
     def check_valid_dict_value(key, expected_function, value):
-        os.environ[key] = json.dumps(value)
+        os.environ[key] = ujson.dumps(value)
         assert expected_function() == value
 
     def check_raise_for_invalid_value(self, key, expected_function, value, exception):
-        os.environ[key] = json.dumps(value)
+        os.environ[key] = ujson.dumps(value)
         with self.assertRaises(exception):
             expected_function()
 

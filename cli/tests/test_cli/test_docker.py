@@ -17,8 +17,6 @@
 # coding: utf-8
 from __future__ import absolute_import, division, print_function
 
-import json
-
 import pytest
 
 from mock import patch
@@ -36,7 +34,7 @@ class TestCliDocker(BaseCommandTestCase):
         build_context = BuildContextConfig(image="foo")
         self.runner.invoke(
             docker,
-            ["generate", "--build-context={}".format(json.dumps(build_context.to_dict()))]
+            ["generate", "--build-context={}".format(build_context.to_dict(dump=True))]
         )
         assert generate_create.call_count == 1
 

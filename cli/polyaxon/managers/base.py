@@ -17,8 +17,8 @@
 # coding: utf-8
 from __future__ import absolute_import, division, print_function
 
-import json
 import os
+import ujson
 
 from collections import Mapping
 
@@ -88,9 +88,9 @@ class BaseConfigManager(object):
                 logger.debug(
                     "Setting %s in the file %s", config.to_dict(), cls.CONFIG_FILE_NAME
                 )
-                config_file.write(json.dumps(config.to_dict()))
+                config_file.write(ujson.dumps(config.to_dict()))
             elif isinstance(config, Mapping):
-                config_file.write(json.dumps(config))
+                config_file.write(ujson.dumps(config))
             else:
                 logger.debug("Setting %s in the file %s", config, cls.CONFIG_FILE_NAME)
                 config_file.write(config)
@@ -104,8 +104,8 @@ class BaseConfigManager(object):
         with open(config_file_path, "r") as config_file:
             config_str = config_file.read()
         if issubclass(cls.CONFIG, BaseConfig):
-            return cls.CONFIG.from_dict(json.loads(config_str))
-        return cls.CONFIG(**json.loads(config_str))
+            return cls.CONFIG.from_dict(ujson.loads(config_str))
+        return cls.CONFIG(**ujson.loads(config_str))
 
     @classmethod
     def get_config_or_default(cls):

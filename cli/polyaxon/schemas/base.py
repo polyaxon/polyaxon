@@ -74,6 +74,7 @@ class BaseConfig(object):
         include_attrs=None,
         exclude_attrs=None,
         unknown=None,
+        dump=False,
     ):
         unknown = unknown or self.UNKNOWN_BEHAVIOUR
         obj_dict = self.to_dict(humanize_values=humanize_values, unknown=unknown)
@@ -90,11 +91,16 @@ class BaseConfig(object):
         for attr in exclude_attrs:
             obj_dict.pop(attr, None)
 
+        if dump:
+            return ujson.dumps(obj_dict)
         return obj_dict
 
-    def to_dict(self, humanize_values=False, unknown=None):
+    def to_dict(self, humanize_values=False, unknown=None, dump=False):
         unknown = unknown or self.UNKNOWN_BEHAVIOUR
-        return self.obj_to_dict(self, humanize_values=humanize_values, unknown=unknown)
+        obj = self.obj_to_dict(self, humanize_values=humanize_values, unknown=unknown)
+        if dump:
+            return ujson.dumps(obj)
+        return obj
 
     def to_schema(self):
         return self.obj_to_schema(self)

@@ -45,7 +45,7 @@ def create_polyaxon_tmp():
 def create_context_auth(access_token, context_auth_path=None):
     context_auth_path = context_auth_path or CONTEXT_MOUNT_AUTH
     with open(context_auth_path, "w") as config_file:
-        config_file.write(json.dumps(access_token.to_dict()))
+        config_file.write(access_token.to_dict(dump=True))
 
 
 def impersonate(owner, project, run_uuid):
