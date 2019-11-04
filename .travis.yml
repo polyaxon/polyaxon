@@ -1,5 +1,4 @@
 esudo: required
-<<<<<<< HEAD
 dist: xenial
 language: python
 
