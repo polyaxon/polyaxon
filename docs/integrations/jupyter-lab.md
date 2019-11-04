@@ -22,7 +22,7 @@ Polyaxon makes it easy to start JupyterLab on your projects for you and your tea
 
 ## Overview
  
-Users cnn run Jupyter Lab jobs on projects level, these jobs are subject to the same permissions of the project they belong to.
+Users can run Jupyter Lab jobs on projects level, these jobs are subject to the same permissions of the project they belong to.
 
 Jupyter Lab is an alternative backend when creating notebooks on Polyaxon.
 
