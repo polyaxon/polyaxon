@@ -20,6 +20,7 @@ from __future__ import absolute_import, division, print_function
 from unittest import TestCase
 
 import mock
+import pytest
 
 from rhea.specs import UriSpec
 from urllib3.exceptions import ReadTimeoutError
@@ -28,41 +29,34 @@ from polyaxon.builds.builder import DockerBuilder, DockerPusher, build, build_an
 from polyaxon.exceptions import PolyaxonBuildException
 
 
+@pytest.mark.api_builds
 class TestDockerBuilder(TestCase):
     @staticmethod
     def touch(path):
         with open(path, "w") as f:
             f.write("test")
 
-    def test_tagged_image(self):
-        builder = DockerBuilder(dockerfile_path=".", image_name="image", image_tag="tag")
-        assert builder.get_tagged_image() == "image:tag"
-
     @mock.patch("docker.APIClient.images")
     def test_check_image(self, check_image):
-        builder = DockerBuilder(dockerfile_path=".", image_name="image", image_tag="tag")
+        builder = DockerBuilder(context=".", destination="image:tag")
         builder.check_image()
         assert check_image.call_count == 1
         assert check_image.call_args[0] == ("image:tag",)
 
     def test_validate_registries(self):
         with self.assertRaises(PolyaxonBuildException):
-            DockerBuilder(
-                dockerfile_path=".", image_name="image", image_tag="tag", registries="foo"
-            )
+            DockerBuilder(context=".", destination="image:tag", registries="foo")
 
         with self.assertRaises(PolyaxonBuildException):
             DockerBuilder(
-                dockerfile_path=".",
-                image_name="image",
-                image_tag="tag",
+                context=".",
+                destination="image:tag",
                 registries=["foo", UriSpec("user", "pwd", "host")],
             )
 
         builder = DockerBuilder(
-            dockerfile_path=".",
-            image_name="image",
-            image_tag="tag",
+            context=".",
+            destination="image:tag",
             registries=[UriSpec("user", "pwd", "host")],
         )
 
@@ -71,9 +65,8 @@ class TestDockerBuilder(TestCase):
     @mock.patch("docker.APIClient.login")
     def test_login_registries(self, login_mock):
         builder = DockerBuilder(
-            dockerfile_path=".",
-            image_name="image",
-            image_tag="tag",
+            context=".",
+            destination="image:tag",
             registries=[UriSpec("user", "pwd", "host"), UriSpec("user", "pwd", "host")],
         )
         builder.login_private_registries()
@@ -81,13 +74,13 @@ class TestDockerBuilder(TestCase):
 
     @mock.patch("docker.APIClient.build")
     def test_build(self, build_mock):
-        builder = DockerBuilder(dockerfile_path=".", image_name="image", image_tag="tag")
+        builder = DockerBuilder(context=".", destination="image:tag")
         builder.build()
         assert build_mock.call_count == 1
 
     @mock.patch("docker.APIClient.push")
     def test_push(self, push_mock):
-        builder = DockerPusher(image_name="image", image_tag="tag")
+        builder = DockerPusher(destination="image:tag")
         builder.push()
         assert push_mock.call_count == 1
 
@@ -97,9 +90,8 @@ class TestBuilder(TestCase):
     @mock.patch("docker.APIClient.login")
     def test_build_no_login(self, login_mock, build_mock):
         build(
-            dockerfile_path=".",
-            image_tag="image_tag",
-            image_name="image_name",
+            context=".",
+            destination="image_name:image_tag",
             nocache=True,
             registries=None,
         )
@@ -110,9 +102,8 @@ class TestBuilder(TestCase):
     @mock.patch("docker.APIClient.login")
     def test_build_login(self, login_mock, build_mock):
         build(
-            dockerfile_path=".",
-            image_tag="image_tag",
-            image_name="image_name",
+            context=".",
+            destination="image_name:image_tag",
             nocache=True,
             registries=[UriSpec("user", "pwd", "host"), UriSpec("user", "pwd", "host")],
         )
@@ -124,9 +115,8 @@ class TestBuilder(TestCase):
     @mock.patch("docker.APIClient.login")
     def test_build_and_push(self, login_mock, build_mock, push_mock):
         build_and_push(
-            dockerfile_path=".",
-            image_tag="image_tag",
-            image_name="image_name",
+            context=".",
+            destination="image_name:image_tag",
             nocache=True,
             registries=[UriSpec("user", "pwd", "host"), UriSpec("user", "pwd", "host")],
         )
@@ -139,9 +129,8 @@ class TestBuilder(TestCase):
         build_mock.side_effect = ReadTimeoutError(None, "foo", "error")
         with self.assertRaises(PolyaxonBuildException):
             build(
-                dockerfile_path=".",
-                image_tag="image_tag",
-                image_name="image_name",
+                context=".",
+                destination="image_name:image_tag",
                 nocache=True,
                 max_retries=1,
                 sleep_interval=0,
@@ -153,9 +142,8 @@ class TestBuilder(TestCase):
         push_mock.side_effect = ReadTimeoutError(None, "foo", "error")
         with self.assertRaises(PolyaxonBuildException):
             build_and_push(
-                dockerfile_path=".",
-                image_tag="image_tag",
-                image_name="image_name",
+                context=".",
+                destination="image_name:image_tag",
                 nocache=True,
                 max_retries=1,
                 sleep_interval=0,

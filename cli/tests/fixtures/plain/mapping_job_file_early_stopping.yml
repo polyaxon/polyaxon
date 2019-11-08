@@ -1,0 +1,27 @@
+---
+version: 0.6
+
+kind: component
+
+workflow:
+  concurrency: 2
+
+  strategy:
+    kind: mapping
+    values:
+      - lr: 0.001
+        loss: MeanSquaredError
+      - lr: 0.1
+        loss: AbsoluteDifference
+
+  early_stopping:
+  - kind: metric_early_stopping
+    metric: loss
+    value: 0.01
+    optimization: maximize
+
+container:
+  image: foo:latest
+  command: train --lr={{ lr }} --loss={{ loss }}
+...
+

@@ -101,18 +101,11 @@ class DockerBuilder(DockerMixin):
     IS_BUILD = True
 
     def __init__(
-        self,
-        dockerfile_path,
-        image_name,
-        image_tag,
-        credstore_env=None,
-        registries=None,
-        docker=None,
+        self, context, destination, credstore_env=None, registries=None, docker=None
     ):
-        self.image_name = image_name
-        self.image_tag = image_tag
+        self.destination = destination
 
-        self.dockerfile_path = dockerfile_path
+        self.context = context
         self._validate_registries(registries)
         self.registries = registries
         self.docker = docker or APIClient(version="auto", credstore_env=credstore_env)
@@ -131,11 +124,8 @@ class DockerBuilder(DockerMixin):
 
         return True
 
-    def get_tagged_image(self):
-        return "{}:{}".format(self.image_name, self.image_tag)
-
     def check_image(self):
-        return self.docker.images(self.get_tagged_image())
+        return self.docker.images(self.destination)
 
     def login_private_registries(self):
         if not self.registries:
@@ -157,8 +147,8 @@ class DockerBuilder(DockerMixin):
             limits["memory"] = memory_limit
 
         stream = self.docker.build(
-            path=self.dockerfile_path,
-            tag=self.get_tagged_image(),
+            path=self.context,
+            tag=self.destination,
             forcerm=True,
             rm=True,
             pull=True,
@@ -171,40 +161,32 @@ class DockerBuilder(DockerMixin):
 class DockerPusher(DockerMixin):
     IS_BUILD = False
 
-    def __init__(self, image_name, image_tag, credstore_env=None, docker=None):
-        self.image_name = image_name
-        self.image_tag = image_tag
+    def __init__(self, destination, credstore_env=None, docker=None):
+        self.destination = destination
         self.docker = docker or APIClient(version="auto", credstore_env=credstore_env)
         self.is_pushing = False
 
     def push(self):
-        stream = self.docker.push(self.image_name, tag=self.image_tag, stream=True)
+        stream = self.docker.push(self.destination, stream=True)
         return self._handle_log_stream(stream=stream)
 
 
 def _build(
-    dockerfile_path,
-    image_tag,
-    image_name,
-    nocache,
-    docker=None,
-    credstore_env=None,
-    registries=None,
+    context, destination, nocache, docker=None, credstore_env=None, registries=None
 ):
     """Build necessary code for a job to run"""
     _logger.info("Starting build ...")
 
     # Build the image
     docker_builder = DockerBuilder(
-        dockerfile_path=dockerfile_path,
-        image_name=image_name,
-        image_tag=image_tag,
+        context=context,
+        destination=destination,
         credstore_env=credstore_env,
         registries=registries,
         docker=docker,
     )
     docker_builder.login_private_registries()
-    if docker_builder.check_image():
+    if docker_builder.check_image() and not nocache:
         # Image already built
         return docker_builder
     if not docker_builder.build(nocache=nocache):
@@ -213,9 +195,8 @@ def _build(
 
 
 def build(
-    dockerfile_path,
-    image_tag,
-    image_name,
+    context,
+    destination,
     nocache,
     docker=None,
     credstore_env=None,
@@ -229,13 +210,13 @@ def build(
     while retry < max_retries and not is_done:
         try:
             docker_builder = _build(
-                dockerfile_path=dockerfile_path,
-                image_tag=image_tag,
-                image_name=image_name,
+                context=context,
+                destination=destination,
                 docker=docker,
                 nocache=nocache,
                 credstore_env=credstore_env,
-                registries=registries,)
+                registries=registries,
+            )
             is_done = True
             return docker_builder
         except ReadTimeoutError:
@@ -247,10 +228,8 @@ def build(
         )
 
 
-def push(image_tag, image_name, docker=None, max_retries=3, sleep_interval=1):
-    docker_pusher = DockerPusher(
-        image_name=image_name, image_tag=image_tag, docker=docker
-    )
+def push(destination, docker=None, max_retries=3, sleep_interval=1):
+    docker_pusher = DockerPusher(destination=destination, docker=docker)
     retry = 0
     is_done = False
     while retry < max_retries and not is_done:
@@ -270,9 +249,8 @@ def push(image_tag, image_name, docker=None, max_retries=3, sleep_interval=1):
 
 
 def build_and_push(
-    dockerfile_path,
-    image_tag,
-    image_name,
+    context,
+    destination,
     nocache,
     credstore_env=None,
     registries=None,
@@ -282,9 +260,8 @@ def build_and_push(
     """Build necessary code for a job to run and push it."""
     # Build the image
     docker_builder = build(
-        dockerfile_path=dockerfile_path,
-        image_tag=image_tag,
-        image_name=image_name,
+        context=context,
+        destination=destination,
         nocache=nocache,
         credstore_env=credstore_env,
         registries=registries,
@@ -292,8 +269,7 @@ def build_and_push(
         sleep_interval=sleep_interval,
     )
     push(
-        image_tag=image_tag,
-        image_name=image_name,
+        destination=destination,
         docker=docker_builder.docker,
         max_retries=max_retries,
         sleep_interval=sleep_interval,

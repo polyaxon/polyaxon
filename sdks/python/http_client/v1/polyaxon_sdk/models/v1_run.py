@@ -62,7 +62,7 @@ class V1Run(object):
         'is_managed': 'str',
         'content': 'str',
         'status': 'str',
-        'kind': 'str',
+        'meta_info': 'V1RunMetaInfo',
         'readme': 'str',
         'bookmarked': 'bool',
         'inputs': 'dict(str, str)',
@@ -93,7 +93,7 @@ class V1Run(object):
         'is_managed': 'is_managed',
         'content': 'content',
         'status': 'status',
-        'kind': 'kind',
+        'meta_info': 'meta_info',
         'readme': 'readme',
         'bookmarked': 'bookmarked',
         'inputs': 'inputs',
@@ -108,7 +108,7 @@ class V1Run(object):
         'original_name': 'original_name'
     }
 
-    def __init__(self, uuid=None, name=None, description=None, tags=None, deleted=None, user=None, owner=None, project=None, created_at=None, updated_at=None, started_at=None, finished_at=None, is_managed=None, content=None, status=None, kind=None, readme=None, bookmarked=None, inputs=None, outputs=None, run_env=None, is_resume=None, is_clone=None, cloning_strategy=None, pipeline=None, original=None, pipeline_name=None, original_name=None):  # noqa: E501
+    def __init__(self, uuid=None, name=None, description=None, tags=None, deleted=None, user=None, owner=None, project=None, created_at=None, updated_at=None, started_at=None, finished_at=None, is_managed=None, content=None, status=None, meta_info=None, readme=None, bookmarked=None, inputs=None, outputs=None, run_env=None, is_resume=None, is_clone=None, cloning_strategy=None, pipeline=None, original=None, pipeline_name=None, original_name=None):  # noqa: E501
         """V1Run - a model defined in Swagger"""  # noqa: E501
 
         self._uuid = None
@@ -126,7 +126,7 @@ class V1Run(object):
         self._is_managed = None
         self._content = None
         self._status = None
-        self._kind = None
+        self._meta_info = None
         self._readme = None
         self._bookmarked = None
         self._inputs = None
@@ -171,8 +171,8 @@ class V1Run(object):
             self.content = content
         if status is not None:
             self.status = status
-        if kind is not None:
-            self.kind = kind
+        if meta_info is not None:
+            self.meta_info = meta_info
         if readme is not None:
             self.readme = readme
         if bookmarked is not None:
@@ -514,25 +514,25 @@ class V1Run(object):
         self._status = status
 
     @property
-    def kind(self):
-        """Gets the kind of this V1Run.  # noqa: E501
+    def meta_info(self):
+        """Gets the meta_info of this V1Run.  # noqa: E501
 
 
-        :return: The kind of this V1Run.  # noqa: E501
-        :rtype: str
+        :return: The meta_info of this V1Run.  # noqa: E501
+        :rtype: V1RunMetaInfo
         """
-        return self._kind
+        return self._meta_info
 
-    @kind.setter
-    def kind(self, kind):
-        """Sets the kind of this V1Run.
+    @meta_info.setter
+    def meta_info(self, meta_info):
+        """Sets the meta_info of this V1Run.
 
 
-        :param kind: The kind of this V1Run.  # noqa: E501
-        :type: str
+        :param meta_info: The meta_info of this V1Run.  # noqa: E501
+        :type: V1RunMetaInfo
         """
 
-        self._kind = kind
+        self._meta_info = meta_info
 
     @property
     def readme(self):

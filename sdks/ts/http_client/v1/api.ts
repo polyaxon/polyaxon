@@ -932,10 +932,10 @@ export interface V1Run {
     status?: string;
     /**
      * 
-     * @type {string}
+     * @type {V1RunMetaInfo}
      * @memberof V1Run
      */
-    kind?: string;
+    meta_info?: V1RunMetaInfo;
     /**
      * 
      * @type {string}
@@ -1008,6 +1008,32 @@ export interface V1Run {
      * @memberof V1Run
      */
     original_name?: string;
+}
+
+/**
+ * 
+ * @export
+ * @interface V1RunMetaInfo
+ */
+export interface V1RunMetaInfo {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof V1RunMetaInfo
+     */
+    service?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1RunMetaInfo
+     */
+    workflow_strategy?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof V1RunMetaInfo
+     */
+    workflow_concurrency?: number;
 }
 
 /**

@@ -145,10 +145,10 @@
         // expect(instance.status).to.be(expectedValueLiteral);
       });
 
-      it('should have the property kind (base name: "kind")', function() {
-        // TODO: update the code to test the property kind
-        expect(instance).to.have.property('kind');
-        // expect(instance.kind).to.be(expectedValueLiteral);
+      it('should have the property meta_info (base name: "meta_info")', function() {
+        // TODO: update the code to test the property meta_info
+        expect(instance).to.have.property('meta_info');
+        // expect(instance.meta_info).to.be(expectedValueLiteral);
       });
 
       it('should have the property readme (base name: "readme")', function() {

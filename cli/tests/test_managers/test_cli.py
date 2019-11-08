@@ -22,12 +22,15 @@ import uuid
 
 from unittest import TestCase
 
+import pytest
+
 from mock import patch
 
 from polyaxon.managers.cli import CliConfigManager
 from polyaxon.schemas.cli.cli_configuration import CliConfigurationConfig
 
 
+@pytest.mark.managers_mark
 class TestCliConfigManager(TestCase):
     def test_default_props(self):
         assert CliConfigManager.IS_GLOBAL is True
@@ -37,6 +40,7 @@ class TestCliConfigManager(TestCase):
         assert CliConfigManager.FREQUENCY == 3
 
 
+@pytest.mark.managers_mark
 class TestCliConfigManagerMethods(TestCase):
     def setUp(self):
         self.filename = uuid.uuid4().hex

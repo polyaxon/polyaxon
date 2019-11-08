@@ -21,7 +21,7 @@ from marshmallow import EXCLUDE, fields
 
 from polyaxon.deploy.schemas.celery import CelerySchema
 from polyaxon.schemas.base import BaseConfig, BaseSchema
-from polyaxon.schemas.ops.environments import ContainerResourcesSchema
+from polyaxon.schemas.polyflow.environments import ContainerResourcesSchema
 
 
 class ServiceSchema(BaseSchema):

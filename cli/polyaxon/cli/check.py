@@ -74,11 +74,9 @@ def check_polyaxonfile_kind(specification, kind):
         sys.exit(-1)
 
 
-def get_group_experiments_info(
-    search_algorithm, concurrency, early_stopping=False, **kwargs
-):
+def get_workflow_info(strategy, concurrency, early_stopping=False, **kwargs):
     info = OrderedDict()
-    info["Search algorithm"] = search_algorithm.lower()
+    info["Workflow strategy"] = strategy.lower()
     info["Concurrency"] = (
         "{} runs".format("sequential")
         if concurrency == 1

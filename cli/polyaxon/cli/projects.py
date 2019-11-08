@@ -512,37 +512,3 @@ def unbookmark(ctx):
     Printer.print_success(
         "Project `{}/{}` is unbookmarked.".format(owner, project_name)
     )
-
-
-@projects.command()
-@click.pass_context
-@clean_outputs
-def invalidate_runs(ctx):
-    """Invalidate runs' cache inside this project.
-
-    Uses [Caching](/references/polyaxon-cli/#caching)
-
-    Examples:
-
-    \b
-    ```bash
-    $ polyaxon invalidate_builds
-    ```
-    """
-    owner, project_name = get_project_or_local(ctx.obj.get("project"))
-
-    try:
-        polyaxon_client = PolyaxonClient()
-        polyaxon_client.projects_v1.invalidate_builds(owner, project_name)
-    except (ApiException, HTTPError) as e:
-        handle_cli_error(
-            e,
-            message="Could not invalidate build jobs for project `{}`.".format(
-                project_name
-            ),
-        )
-        sys.exit(1)
-
-    Printer.print_success(
-        "Build jobs have being invalidated for project `{}`.".format(project_name)
-    )

@@ -28,16 +28,10 @@ from marshmallow import ValidationError
 from tests.utils import assert_equal_dict
 
 from polyaxon.exceptions import PolyaxonfileError, PolyaxonSchemaError
-from polyaxon.schemas.ops.environments import EnvironmentConfig
-from polyaxon.schemas.ops.io import IOTypes
+from polyaxon.schemas.polyflow.environments import EnvironmentConfig
+from polyaxon.schemas.polyflow.io import IOTypes
 from polyaxon.schemas.utils import TaskType
-from polyaxon.specs import (
-    JobSpecification,
-    OperationSpecification,
-    PipelineSpecification,
-    ServiceSpecification,
-    get_specification,
-)
+from polyaxon.specs import ComponentSpecification, OpSpecification, get_specification
 
 
 @pytest.mark.polyaxonfile_mark
@@ -45,17 +39,14 @@ class TestSpecifications(TestCase):
     def test_non_yaml_spec(self):
         config = ",sdf;ldjks"
         with self.assertRaises(PolyaxonSchemaError):
-            JobSpecification.read(config)
+            OpSpecification.read(config)
 
         with self.assertRaises(PolyaxonSchemaError):
-            ServiceSpecification.read(config)
-
-        with self.assertRaises(PolyaxonSchemaError):
-            PipelineSpecification.read(config)
+            ComponentSpecification.read(config)
 
     def test_job_specification_raises_for_missing_container_section(self):
         with self.assertRaises(PolyaxonfileError):
-            JobSpecification.read(
+            OpSpecification.read(
                 os.path.abspath("tests/fixtures/plain/job_missing_container.yml")
             )
 
@@ -69,12 +60,12 @@ class TestSpecifications(TestCase):
     def test_patch_experiment_without_io_and_params_raises(self):
         content = {
             "version": 0.6,
-            "kind": "job",
+            "kind": "component",
             "container": {"image": "test/test:latest", "command": "train"},
         }
-        spec = JobSpecification.read(content)
+        spec = ComponentSpecification.read(content)
         spec = spec.apply_context()
-        new_spec = JobSpecification.read(spec.data)
+        new_spec = ComponentSpecification.read(spec.data)
         spec = new_spec.apply_context()
         assert new_spec.data == content
 
@@ -86,14 +77,14 @@ class TestSpecifications(TestCase):
     def test_apply_context_raises_with_required_inputs(self):
         content = {
             "version": 0.6,
-            "kind": "job",
+            "kind": "component",
             "inputs": [
                 {"name": "lr", "type": IOTypes.FLOAT},
                 {"name": "num_steps", "type": IOTypes.INT},
             ],
             "container": {"image": "test/test:latest", "command": "train"},
         }
-        spec = JobSpecification.read(content)
+        spec = ComponentSpecification.read(content)
 
         # Raise because required inputs are not met
         with self.assertRaises(PolyaxonfileError):
@@ -111,14 +102,14 @@ class TestSpecifications(TestCase):
     def test_apply_context_passes_with_required_inputs_and_params(self):
         content = {
             "version": 0.6,
-            "kind": "job",
+            "kind": "component",
             "inputs": [
                 {"name": "lr", "type": IOTypes.FLOAT},
                 {"name": "num_steps", "type": IOTypes.INT},
             ],
             "container": {"image": "test/test:latest", "command": "train"},
         }
-        spec = JobSpecification.read(content)
+        spec = ComponentSpecification.read(content)
         # no params
         with self.assertRaises(PolyaxonfileError):
             spec.apply_context()
@@ -136,7 +127,7 @@ class TestSpecifications(TestCase):
         new_spec = spec.apply_context()
         updated_content = {
             "version": 0.6,
-            "kind": "job",
+            "kind": "component",
             "inputs": [
                 {
                     "name": "lr",
@@ -169,7 +160,7 @@ class TestSpecifications(TestCase):
     def test_patch_experiment_with_optional_inputs(self):
         content = {
             "version": 0.6,
-            "kind": "job",
+            "kind": "component",
             "inputs": [
                 {
                     "name": "lr",
@@ -186,7 +177,7 @@ class TestSpecifications(TestCase):
             ],
             "container": {"image": "test/test:latest", "command": "train"},
         }
-        spec = JobSpecification.read(content)
+        spec = ComponentSpecification.read(content)
         assert spec.config.inputs[0].value == 0.6
         assert spec.config.inputs[1].value == 16
         spec = spec.apply_context()
@@ -197,7 +188,7 @@ class TestSpecifications(TestCase):
         assert spec.config.inputs[0].value == 0.6
         assert spec.config.inputs[1].value == 16
 
-        new_spec = JobSpecification.read(spec.data)
+        new_spec = ComponentSpecification.read(spec.data)
         assert new_spec.data == content
 
         params = {"lr": 0.6, "num_steps": 16}
@@ -243,19 +234,17 @@ class TestSpecifications(TestCase):
             "name": "foo",
             "description": "a description",
             "tags": ["value"],
-            "template": {"name": "foo"},
+            "component_ref": {"name": "foo"},
             "params": {"param1": "foo", "param2": "bar"},
             "trigger": "all_succeeded",
-            "_template": {
-                "version": 0.6,
-                "kind": "job",
+            "component": {
                 "name": "build-template",
                 "tags": ["kaniko"],
                 "init": {"repos": [{"name": "foo", "branch": "dev"}]},
                 "container": {"image": "test"},
             },
         }
-        spec = OperationSpecification.read(values=config_dict)
+        spec = OpSpecification.read(values=config_dict)
         assert spec.name == "foo"
         assert spec.description == "a description"
         assert spec.tags == ["value"]
@@ -289,19 +278,17 @@ class TestSpecifications(TestCase):
             "name": "foo",
             "description": "a description",
             "tags": ["value"],
-            "template": {"name": "foo"},
+            "component_ref": {"name": "foo"},
             "params": {"param1": "foo", "param2": "bar"},
             "trigger": "all_succeeded",
-            "_template": {
-                "version": 0.6,
-                "kind": "job",
+            "component": {
                 "name": "build-template",
                 "tags": ["kaniko"],
                 "init": {"repos": [{"name": "foo", "branch": "dev"}]},
                 "container": {"image": "test"},
             },
         }
-        spec = OperationSpecification.read(values=config_dict)
+        spec = OpSpecification.read(values=config_dict)
 
         run_data = spec.generate_run_data()
         job_spec = get_specification(run_data)
@@ -333,19 +320,17 @@ class TestSpecifications(TestCase):
             "description": "a description",
             "tags": ["value"],
             "nocache": True,
-            "template": {"name": "foo"},
+            "component_ref": {"name": "foo"},
             "params": {"param1": "foo", "param2": "bar"},
             "trigger": "all_succeeded",
-            "_template": {
-                "version": 0.6,
-                "kind": "job",
+            "component": {
                 "name": "build-template",
                 "tags": ["kaniko"],
                 "init": {"repos": [{"name": "foo", "branch": "dev"}]},
                 "container": {"image": "test"},
             },
         }
-        spec = OperationSpecification.read(values=config_dict)
+        spec = OpSpecification.read(values=config_dict)
 
         run_data = spec.generate_run_data()
         job_spec = get_specification(run_data)
@@ -369,115 +354,3 @@ class TestSpecifications(TestCase):
         run_data = spec.generate_run_data(env)
         job_spec = get_specification(run_data)
         assert job_spec.environment.to_light_dict() == env["environment"]
-
-    # def test_job_replicas_environment_config(self):
-    #     config_dict = {
-    #         "resources": {'requests': {"cpu": 1}, "limits": {"cpu": 0.5}},
-    #         "replicas": {"n_workers": 10, "n_ps": 5},
-    #     }
-    #     config = EnvironmentConfig.from_dict(config_dict)
-    #     results = config.to_dict()
-    #     assert_equal_dict(config_dict["replicas"], results["replicas"])
-    #     assert_equal_dict(
-    #         {"requests": {"cpu": 0.5}, "limits": {"cpu": 1}}, results["resources"]
-    #     )
-    #
-    #     # Add some field should raise
-    #     config_dict.pop("resources")
-    #     config_dict["foo"] = {"n_workers": 10, "n_ps": 5}
-    #
-    #     with self.assertRaises(ValidationError):
-    #         EnvironmentConfig.from_dict(config_dict)
-    #
-    #     del config_dict["foo"]
-    #
-    #     experiment_config = {"environment": config_dict, "framework": "tensorflow"}
-    #     config = JobConfig.from_dict(experiment_config)
-    #     assert_equal_dict(experiment_config, config.to_dict())
-    #
-    #     # Removing framework tensorflow should raise
-    #     del experiment_config["framework"]
-    #     with self.assertRaises(ValidationError):
-    #         JobConfig.from_dict(experiment_config)
-    #
-    #     # Using unknown framework should raise
-    #     experiment_config["framework"] = "foo"
-    #     with self.assertRaises(ValidationError):
-    #         JobConfig.from_dict(experiment_config)
-    #
-    #     # Using known framework
-    #     experiment_config["framework"] = "mxnet"
-    #     config = JobConfig.from_dict(experiment_config)
-    #     assert_equal_dict(experiment_config, config.to_dict())
-    #
-    #     # Adding horovod should raise
-    #     experiment_config["framework"] = "horovod"
-    #     with self.assertRaises(ValidationError):
-    #         JobConfig.from_dict(experiment_config)
-    #
-    #     # Setting correct horovod replicas should pass
-    #     experiment_config["environment"]["replicas"] = {"n_workers": 5}
-    #     config = ExperimentConfig.from_dict(experiment_config)
-    #     assert_equal_dict(experiment_config, config.to_dict())
-    #
-    #     # Adding pytorch should pass
-    #     experiment_config["framework"] = "pytorch"
-    #     config = ExperimentConfig.from_dict(experiment_config)
-    #     assert_equal_dict(experiment_config, config.to_dict())
-    #
-    #     # Setting wrong pytorch replicas should raise
-    #     experiment_config["environment"]["replicas"] = {"n_workers": 5, "n_ps": 1}
-    #
-    #     with self.assertRaises(ValidationError):
-    #         ExperimentConfig.from_dict(experiment_config)
-    #
-    # @flaky(max_runs=3)
-    # def test_group_environment(self):
-    #     content = {
-    #         "version": 1,
-    #         "kind": "group",
-    #         "hptuning": {"matrix": {"lr": {"values": [0.1, 0.2]}}},
-    #         "build": {"image": "my_image"},
-    #         "run": {"cmd": "train"},
-    #     }
-    #     spec = GroupSpecification.read(content)
-    #     assert GroupSpecification.read(spec.raw_data).raw_data == spec.raw_data
-    #     assert spec.environment is None
-    #     assert spec.config_map_refs is None
-    #     assert spec.secret_refs is None
-    #
-    #     content["environment"] = {"config_map_refs": ["foo", "boo"]}
-    #     spec = GroupSpecification.read(content)
-    #     assert spec.environment is not None
-    #     assert spec.config_map_refs is not None
-    #     assert [r.to_light_dict() for r in spec.config_map_refs] == [
-    #         {"name": "foo"},
-    #         {"name": "boo"},
-    #     ]
-    #     assert spec.secret_refs is None
-    #
-    #     content["environment"] = {"secret_refs": ["foo", {"name": "boo"}]}
-    #     spec = GroupSpecification.read(content)
-    #     assert spec.environment is not None
-    #     assert spec.config_map_refs is None
-    #     assert spec.secret_refs is not None
-    #     assert [r.to_light_dict() for r in spec.secret_refs] == [
-    #         {"name": "foo"},
-    #         {"name": "boo"},
-    #     ]
-    #
-    #     content["environment"] = {
-    #         "secret_refs": ["foo", "boo"],
-    #         "config_map_refs": ["foo", "boo"],
-    #     }
-    #     spec = GroupSpecification.read(content)
-    #     assert spec.environment is not None
-    #     assert spec.config_map_refs is not None
-    #     assert [r.to_light_dict() for r in spec.config_map_refs] == [
-    #         {"name": "foo"},
-    #         {"name": "boo"},
-    #     ]
-    #     assert [r.to_light_dict() for r in spec.secret_refs] == [
-    #         {"name": "foo"},
-    #         {"name": "boo"},
-    #     ]

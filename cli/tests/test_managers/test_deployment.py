@@ -19,12 +19,15 @@ from __future__ import absolute_import, division, print_function
 
 from unittest import TestCase
 
+import pytest
+
 from polyaxon.deploy.operators.helm import HelmOperator
 from polyaxon.deploy.operators.kubectl import KubectlOperator
 from polyaxon.deploy.schemas.deployment import DeploymentConfig, DeploymentTypes
 from polyaxon.managers.deploy import DeployManager
 
 
+@pytest.mark.managers_mark
 class TestDeployManager(TestCase):
     def test_default_props(self):
         manager = DeployManager()

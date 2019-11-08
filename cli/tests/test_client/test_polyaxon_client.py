@@ -22,6 +22,7 @@ import tempfile
 from unittest import TestCase
 
 import polyaxon_sdk
+import pytest
 
 from polyaxon import settings
 from polyaxon.client.client import PolyaxonClient
@@ -29,6 +30,7 @@ from polyaxon.client.transport import Transport
 from polyaxon.schemas.cli.client_configuration import ClientConfig
 
 
+@pytest.mark.client_mark
 class TestPolyaxonClient(TestCase):
     def setUp(self):
         super(TestPolyaxonClient, self).setUp()

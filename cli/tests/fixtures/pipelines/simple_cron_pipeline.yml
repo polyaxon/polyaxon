@@ -1,7 +1,7 @@
 ---
 version: 0.6
 
-kind: pipeline
+kind: component
 
 name: test-pipeline
 
@@ -11,31 +11,32 @@ schedule:
   kind: cron
   cron: 0 0 * * *
 
-ops:
-  - name: cron-task
-    template: {name: experiment-template}
-
-templates:
-  - kind: job
-    name: experiment-template
-    description: experiment to predict something
-    tags: [tag11, tag12]
-    inputs:
-      - name: lr
-        type: float
-        value: 0.1
-        is_optional: true
-      - name: loss
-        type: str
-        value: MSE
-        is_optional: true
-    environment:
-      log_level: INFO
-      resources: {requests: {cpu: 1}}
-      node_selector: {polyaxon: experiments}
-      service_account: service
-      image_pull_secrets: [secret1, secret2]
-    termination:
-      max_retries: 2
-      ttl: 22
-    container: {image: test}
+workflow:
+  strategy:
+    kind: dag
+    ops:
+      - name: cron-task
+        component_ref: {name: experiment-template}
+    components:
+      - name: experiment-template
+        description: experiment to predict something
+        tags: [tag11, tag12]
+        inputs:
+          - name: lr
+            type: float
+            value: 0.1
+            is_optional: true
+          - name: loss
+            type: str
+            value: MSE
+            is_optional: true
+        environment:
+          log_level: INFO
+          resources: {requests: {cpu: 1}}
+          node_selector: {polyaxon: experiments}
+          service_account: service
+          image_pull_secrets: [secret1, secret2]
+        termination:
+          max_retries: 2
+          ttl: 22
+        container: {image: test}

@@ -21,7 +21,7 @@ from unittest import TestCase
 
 import pytest
 
-from polyaxon.specs import JobSpecification
+from polyaxon.specs import OpSpecification
 from polyaxon.specs.libs.parser import Parser
 
 
@@ -40,14 +40,14 @@ class TestParser(TestCase):
 
         parser = Parser()
         for d in data:
-            assert d == parser.parse_expression(JobSpecification, d, {})
+            assert d == parser.parse_expression(OpSpecification, d, {})
 
     def test_parse_context_expression(self):
         parser = Parser()
-        assert parser.parse_expression(JobSpecification, "{{ something }}", {}) == ""
+        assert parser.parse_expression(OpSpecification, "{{ something }}", {}) == ""
         assert (
             parser.parse_expression(
-                JobSpecification, "{{ something }}", {"something": 1}
+                OpSpecification, "{{ something }}", {"something": 1}
             )
             == 1
         )

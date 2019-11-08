@@ -50,10 +50,6 @@ class PolyaxonBuildException(PolyaxonException):
     pass
 
 
-class PolyaxonBuildException(Exception):
-    pass
-
-
 class PolyaxonSchemaError(PolyaxonException):
     """Exception class to raise if a schema has an issue."""
 

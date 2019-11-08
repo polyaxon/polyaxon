@@ -17,7 +17,7 @@ metadata:
     role: polyaxon-dashboard
     type: polyaxon-runner
 spec:
-  template:
+  component_ref:
     spec:
       containers:
       - args:

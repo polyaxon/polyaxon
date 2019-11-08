@@ -21,9 +21,12 @@ from marshmallow import ValidationError
 from polyaxon.schemas.fields.params import PARAM_REGEX
 
 
-def validate_image(image):
+def validate_image(image, allow_none=False):
     if not image:
-        return
+        if allow_none:
+            return
+        else:
+            raise ValidationError("Image is required")
     param = PARAM_REGEX.search(image)
     if param:
         return

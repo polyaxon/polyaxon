@@ -19,11 +19,14 @@ from __future__ import absolute_import, division, print_function
 
 from unittest import TestCase
 
+import pytest
+
 from mock import mock_open, patch
 
 from polyaxon.managers.ignore import IgnoreManager
 
 
+@pytest.mark.managers_mark
 class TestIgnoreManager(TestCase):
     """Mock the config ignore file."""
 

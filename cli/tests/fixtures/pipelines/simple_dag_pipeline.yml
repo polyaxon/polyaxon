@@ -1,79 +1,73 @@
 ---
 version: 0.6
-
-kind: pipeline
-
+kind: component
 name: test-pipeline
-
 tags: [native]
-
-parallel:
-  concurrency: 3
-
 environment:
   log_level: INFO
+workflow:
+  concurrency: 3
+  strategy:
+    kind: dag
+    ops:
+      - name: job1
+        component_ref: {name: job-template}
+        params:
+          bucket: s3://foo
+      - name: experiment1
+        component_ref: {name: experiment-template}
+        dependencies: [job1]
+        params:
+          lr : 0.001
+      - name: experiment2
+        component_ref: {name: experiment-template}
+        dependencies: [job1]
+        params:
+          lr: 0.05
+      - name: experiment3
+        component_ref: {name: experiment-template}
+        dependencies: [job1]
+        params:
+          lr: 0.23
+      - name: job2
+        component_ref: {name: job-template}
+        params:
+          bucket: s3://bar
+        dependencies: [experiment1, experiment2, experiment3]
 
-ops:
-  - name: job1
-    template: {name: job-template}
-    params:
-      bucket: s3://foo
-  - name: experiment1
-    template: {name: experiment-template}
-    dependencies: [job1]
-    params:
-      lr : 0.001
-  - name: experiment2
-    template: {name: experiment-template}
-    dependencies: [job1]
-    params:
-      lr: 0.05
-  - name: experiment3
-    template: {name: experiment-template}
-    dependencies: [job1]
-    params:
-      lr: 0.23
-  - name: job2
-    template: {name: job-template}
-    params:
-      bucket: s3://bar
-    dependencies: [experiment1, experiment2, experiment3]
+    components:
+      - name: experiment-template
+        description: experiment to predict something
+        tags: [value]
+        inputs:
+          - name: lr
+            type: float
+            value: 0.1
+            is_optional: true
+          - name: loss
+            type: str
+            value: MSE
+            is_optional: true
+        environment:
+          resources: {requests: {cpu: 1}}
+          node_selector: {polyaxon: experiments}
+          service_account: service
+          image_pull_secrets: [secret1, secret2]
+        termination:
+          max_retries: 2
+        container: {image: test}
 
-templates:
-  - kind: job
-    name: experiment-template
-    description: experiment to predict something
-    tags: [value]
-    inputs:
-      - name: lr
-        type: float
-        value: 0.1
-        is_optional: true
-      - name: loss
-        type: str
-        value: MSE
-        is_optional: true
-    environment:
-      resources: {requests: {cpu: 1}}
-      node_selector: {polyaxon: experiments}
-      service_account: service
-      image_pull_secrets: [secret1, secret2]
-    termination:
-      max_retries: 2
-    container: {image: test}
-
-  - kind: job
-    name: job-template
-    description: job to process something
-    tags: [value]
-    inputs:
-    - name: bucket
-      type: s3_path
-    environment:
-      resources: {requests: {cpu: 1}}
-      node_selector: {polyaxon: experiments}
-      service_account: service
-      image_pull_secrets: [secret1, secret2]
-    termination:
-      max_retries: 2
-    container: {image: test}
+      - name: job-template
+        description: job to process something
+        tags: [value]
+        inputs:
+        - name: bucket
+          type: s3_path
+        environment:
+          resources: {requests: {cpu: 1}}
+          node_selector: {polyaxon: experiments}
+          service_account: service
+          image_pull_secrets: [secret1, secret2]
+        termination:
+          max_retries: 2
+        container: {image: test}

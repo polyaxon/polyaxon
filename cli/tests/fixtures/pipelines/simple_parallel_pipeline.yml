@@ -1,69 +1,63 @@
 ---
 version: 0.6
-
-kind: pipeline
-
+kind: component
 name: test-pipeline
-
 tags: [native]
-
-parallel:
+workflow:
   concurrency: 2
+  strategy:
+    kind: dag
+    ops:
+      - name: job1
+        component_ref: {name: job-template}
+        params:
+          bucket: s3://foo
+      - name: job2
+        component_ref: {name: job-template}
+        params:
+          bucket: s3://bar
+      - name: experiment1
+        component_ref: {name: experiment-template}
+      - name: experiment2
+        component_ref: {name: experiment-template}
+    components:
+      - name: experiment-template
+        description: experiment to predict something
+        tags: [tag1]
+        inputs:
+          - name: lr
+            type: float
+            value: 0.1
+            is_optional: true
+          - name: loss
+            type: str
+            value: MSE
+            is_optional: true
+        environment:
+          resources: {requests: {memory: 1024}}
+          node_selector: {polyaxon: experiments}
+          service_account: service
+          image_pull_secrets: [secret1, secret2]
+        termination:
+          max_retries: 2
+        container: {image: test}
 
-ops:
-  - name: job1
-    template: {name: job-template}
-    params:
-      bucket: s3://foo
-  - name: job2
-    template: {name: job-template}
-    params:
-      bucket: s3://bar
-  - name: experiment1
-    template: {name: experiment-template}
-  - name: experiment2
-    template: {name: experiment-template}
-
-templates:
-  - kind: job
-    name: experiment-template
-    description: experiment to predict something
-    tags: [tag1]
-    inputs:
-      - name: lr
-        type: float
-        value: 0.1
-        is_optional: true
-      - name: loss
-        type: str
-        value: MSE
-        is_optional: true
-    environment:
-      resources: {requests: {memory: 1024}}
-      node_selector: {polyaxon: experiments}
-      service_account: service
-      image_pull_secrets: [secret1, secret2]
-    termination:
-      max_retries: 2
-    container: {image: test}
-
-  - kind: job
-    name: job-template
-    description: job to process something
-    tags: [tag2]
-    inputs:
-    - name: bucket
-      type: s3_path
-    init:
-      build:
-        image: my_image
-        run:
-        - pip install package1
-    environment:
-      resources: {requests: {cpu: 1}}
-      node_selector: {polyaxon: experiments}
-      service_account: service
-      image_pull_secrets: [secret1, secret2]
-    termination:
-      max_retries: 2
-    container: {image: test}
+      - name: job-template
+        description: job to process something
+        tags: [tag2]
+        inputs:
+        - name: bucket
+          type: s3_path
+        init:
+          build:
+            image: my_image
+            run:
+            - pip install package1
+        environment:
+          resources: {requests: {cpu: 1}}
+          node_selector: {polyaxon: experiments}
+          service_account: service
+          image_pull_secrets: [secret1, secret2]
+        termination:
+          max_retries: 2
+        container: {image: test}

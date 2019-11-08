@@ -22,14 +22,17 @@ import tempfile
 
 from unittest import TestCase
 
+import pytest
+
 from polyaxon.builds.generator.generator import DockerFileGenerator
-from polyaxon.schemas.ops.init.build_context import (
+from polyaxon.schemas.polyflow.init.build_context import (
     POLYAXON_DOCKER_WORKDIR,
     POLYAXON_DOCKERFILE_NAME,
     BuildContextConfig,
 )
 
 
+@pytest.mark.api_builds
 class TestDockerfileGenerator(TestCase):
     @staticmethod
     def touch(path):
@@ -70,7 +73,7 @@ class TestDockerfileGenerator(TestCase):
         assert "COPY" not in dockerfile
 
         # By default it should use FROM image declare WORKDIR, and work
-        build_context = BuildContextConfig(image="busybox", code_path=repo_path)
+        build_context = BuildContextConfig(image="busybox", workdir_path=repo_path)
         builder = DockerFileGenerator(
             build_context=build_context, destination=repo_path
         )
@@ -86,7 +89,7 @@ class TestDockerfileGenerator(TestCase):
 
         # Add env vars
         build_context = BuildContextConfig(
-            image="busybox", code_path=repo_path, env=[("BLA", "BLA")]
+            image="busybox", workdir_path=repo_path, env=[("BLA", "BLA")]
         )
         builder = DockerFileGenerator(
             build_context=build_context, destination=repo_path
@@ -107,7 +110,7 @@ class TestDockerfileGenerator(TestCase):
             "conda env update -n base -f environment.yml",
         ]
         build_context = BuildContextConfig(
-            image="busybox", code_path=repo_path, copy=copy, run=run
+            image="busybox", workdir_path=repo_path, copy=copy, run=run
         )
 
         builder = DockerFileGenerator(
@@ -128,7 +131,7 @@ class TestDockerfileGenerator(TestCase):
 
         # Add uid but no gid
         build_context = BuildContextConfig(
-            image="busybox", code_path=repo_path, uid=1000
+            image="busybox", workdir_path=repo_path, uid=1000
         )
 
         builder = DockerFileGenerator(
@@ -143,7 +146,7 @@ class TestDockerfileGenerator(TestCase):
 
         # Add gid but no uid
         build_context = BuildContextConfig(
-            image="busybox", code_path=repo_path, gid=1000
+            image="busybox", workdir_path=repo_path, gid=1000
         )
         builder = DockerFileGenerator(
             build_context=build_context, destination=repo_path
@@ -157,7 +160,7 @@ class TestDockerfileGenerator(TestCase):
 
         # Add uid and gid
         build_context = BuildContextConfig(
-            image="busybox", code_path=repo_path, uid=1000, gid=1000
+            image="busybox", workdir_path=repo_path, uid=1000, gid=1000
         )
         builder = DockerFileGenerator(
             build_context=build_context, destination=repo_path
@@ -172,7 +175,7 @@ class TestDockerfileGenerator(TestCase):
 
         # Add lan env
         build_context = BuildContextConfig(
-            image="busybox", code_path=repo_path, lang_env="en_US.UTF-8"
+            image="busybox", workdir_path=repo_path, lang_env="en_US.UTF-8"
         )
         builder = DockerFileGenerator(
             build_context=build_context, destination=repo_path
@@ -195,7 +198,7 @@ class TestGenerate(TestCase):
 
         build_context = BuildContextConfig(
             image="busybox",
-            code_path=tmp_path,
+            workdir_path=tmp_path,
             lang_env="en_US.UTF-8",
             uid=100,
             gid=100,

@@ -25,11 +25,11 @@ import pytest
 
 from polyaxon.exceptions import PolyaxonfileError
 from polyaxon.polyaxonfile import PolyaxonFile
-from polyaxon.schemas.ops.container import ContainerConfig
-from polyaxon.schemas.ops.io import IOConfig
-from polyaxon.schemas.ops.parallel import GridSearchConfig, ParallelConfig
-from polyaxon.schemas.ops.parallel.matrix import MatrixChoiceConfig
-from polyaxon.schemas.ops.params import get_params_with_refs
+from polyaxon.schemas.polyflow.container import ContainerConfig
+from polyaxon.schemas.polyflow.io import IOConfig
+from polyaxon.schemas.polyflow.params import get_params_with_refs
+from polyaxon.schemas.polyflow.workflows import GridSearchConfig, WorkflowConfig
+from polyaxon.schemas.polyflow.workflows.matrix import MatrixChoiceConfig
 
 
 @pytest.mark.polyaxonfile_mark
@@ -69,7 +69,7 @@ class TestPolyaxonfileWithTypes(TestCase):
         assert spec.container.command == ["/bin/sh", "-c"]
         assert spec.container.args == "video_prediction_train --loss=bar "
         assert spec.environment is None
-        assert spec.is_job
+        assert spec.is_component
 
         plxfile = PolyaxonFile(
             os.path.abspath("tests/fixtures/typing/required_inputs.yml")
@@ -88,7 +88,7 @@ class TestPolyaxonfileWithTypes(TestCase):
         assert spec.container.command == ["/bin/sh", "-c"]
         assert spec.container.args == "video_prediction_train --loss=bar --flag"
         assert spec.environment is None
-        assert spec.is_job
+        assert spec.is_component
 
         # Adding extra value raises
         with self.assertRaises(PolyaxonfileError):
@@ -112,36 +112,52 @@ class TestPolyaxonfileWithTypes(TestCase):
         spec = plxfile.specification
         spec = spec.apply_context()
         assert spec.version == 0.6
-        assert spec.is_job
-        assert isinstance(spec.parallel.algorithm.matrix["param1"], MatrixChoiceConfig)
-        assert isinstance(spec.parallel.algorithm.matrix["param2"], MatrixChoiceConfig)
-        assert spec.parallel.algorithm.matrix["param1"].to_dict() == {
+        assert spec.is_component
+        assert spec.has_pipeline
+        assert spec.has_dag is False
+        assert isinstance(spec.workflow.strategy.matrix["param1"], MatrixChoiceConfig)
+        assert isinstance(spec.workflow.strategy.matrix["param2"], MatrixChoiceConfig)
+        assert spec.workflow.strategy.matrix["param1"].to_dict() == {
             "kind": "choice",
             "value": [1, 2],
         }
-        assert spec.parallel.algorithm.matrix["param2"].to_dict() == {
+        assert spec.workflow.strategy.matrix["param2"].to_dict() == {
             "kind": "choice",
             "value": [3.3, 4.4],
         }
-        assert isinstance(spec.parallel, ParallelConfig)
+        assert isinstance(spec.workflow, WorkflowConfig)
         assert spec.concurrency == 2
-        assert isinstance(spec.parallel_algorithm, GridSearchConfig)
-        assert spec.parallel_algorithm_kind == GridSearchConfig.IDENTIFIER
-        assert spec.parallel.early_stopping is None
+        assert isinstance(spec.workflow_strategy, GridSearchConfig)
+        assert spec.workflow_strategy_kind == GridSearchConfig.IDENTIFIER
+        assert spec.workflow.early_stopping is None
         assert spec.early_stopping == []
 
-        # TODO
-        # spec = spec.get_experiment_spec(matrix_declaration=get_matrix_declaration_test(spec))
-        # spec.apply_context()
-        # assert spec.environment is None
-        # assert spec.framework is None
-        # assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
-        # assert (
-        #     spec.run.cmd
-        #     == "train --param1={param1} --param2={param2} --param3=23423".format(
-        #         **spec.params
-        #     )
-        # )
+    def test_matrix_job_file_passes_int_float_types(self):
+        plxfile = PolyaxonFile(
+            os.path.abspath(
+                "tests/fixtures/typing/matrix_job_file_with_int_float_types.yml"
+            )
+        )
+        spec = plxfile.specification
+        spec = spec.apply_context()
+        assert spec.version == 0.6
+        assert spec.is_component
+        assert isinstance(spec.workflow.strategy.matrix["param1"], MatrixChoiceConfig)
+        assert isinstance(spec.workflow.strategy.matrix["param2"], MatrixChoiceConfig)
+        assert spec.workflow.strategy.matrix["param1"].to_dict() == {
+            "kind": "choice",
+            "value": [1, 2],
+        }
+        assert spec.workflow.strategy.matrix["param2"].to_dict() == {
+            "kind": "choice",
+            "value": [3.3, 4.4],
+        }
+        assert isinstance(spec.workflow, WorkflowConfig)
+        assert spec.concurrency == 2
+        assert isinstance(spec.workflow_strategy, GridSearchConfig)
+        assert spec.workflow_strategy_kind == GridSearchConfig.IDENTIFIER
+        assert spec.workflow.early_stopping is None
+        assert spec.early_stopping == []
 
     def test_run_simple_file_passes(self):
         plxfile = PolyaxonFile(
@@ -179,7 +195,7 @@ class TestPolyaxonfileWithTypes(TestCase):
         new_spec = new_spec.apply_container_contexts()
         assert new_spec.version == 0.6
         assert new_spec.tags == ["foo", "bar"]
-        assert new_spec.is_job
+        assert new_spec.is_component
         assert new_spec.environment is None
         container = new_spec.container
         assert isinstance(container, ContainerConfig)

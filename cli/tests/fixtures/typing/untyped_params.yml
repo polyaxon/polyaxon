@@ -1,7 +1,7 @@
 ---
 version: 0.6
 
-kind: job
+kind: op
 
 tags: [foo, bar]
 

@@ -18,9 +18,10 @@
 from __future__ import absolute_import, division, print_function
 
 import os
-import ujson
 
 from collections import Mapping
+
+import ujson
 
 from hestia.user_path import polyaxon_user_path
 

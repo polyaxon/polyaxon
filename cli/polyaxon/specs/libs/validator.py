@@ -20,8 +20,8 @@ from __future__ import absolute_import, division, print_function
 import copy
 
 from polyaxon.exceptions import PolyaxonfileError
-from polyaxon.schemas.ops.container import ContainerConfig
-from polyaxon.schemas.ops.environments import EnvironmentConfig
+from polyaxon.schemas.polyflow.container import ContainerConfig
+from polyaxon.schemas.polyflow.environments import EnvironmentConfig
 
 
 def validate(spec, data):

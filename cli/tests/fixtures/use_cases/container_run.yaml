@@ -1,7 +1,7 @@
 ---
 version: 0.6
 
-kind: job
+kind: component
 
 description: Run default image entry-point
 
@@ -11,7 +11,7 @@ container:
 ---
 version: 0.6
 
-kind: job
+kind: component
 
 description: Run image with updated command/args
 
@@ -23,7 +23,7 @@ container:
 ---
 version: 0.6
 
-kind: job
+kind: component
 
 description: Run image with updated list command/args
 
@@ -35,7 +35,7 @@ container:
 ---
 version: 0.6
 
-kind: job
+kind: component
 
 description: Run image with updated list command/args
 
@@ -52,7 +52,7 @@ container:
 ---
 version: 0.6
 
-kind: job
+kind: component
 
 description: Run image with updated command/args based on code I download with git clone
 
@@ -67,7 +67,7 @@ container:
 ---
 version: 0.6
 
-kind: job
+kind: component
 
 description: Run image with updated command/args based on code I download with (ssh) git clone
 
@@ -86,7 +86,7 @@ container:
 ---
 version: 0.6
 
-kind: job
+kind: component
 
 description: Run image with updated command/args based on my code with no need to to clone (using repos catalog)
 
@@ -109,7 +109,7 @@ container:
 ---
 version: 0.6
 
-kind: job
+kind: component
 
 description: Run with data from a bucket
 
@@ -124,7 +124,7 @@ container:
 ---
 version: 0.6
 
-kind: job
+kind: component
 
 description: Run with data from a bucket
 
@@ -143,7 +143,7 @@ container:
 ---
 version: 0.6
 
-kind: job
+kind: component
 
 description: Run with data from a bucket based in artifacts catalog
 
@@ -164,7 +164,7 @@ container:
 ---
 version: 0.6
 
-kind: job
+kind: component
 
 description: Run with data from a bucket based in artifacts catalog
 
@@ -185,7 +185,7 @@ container:
 ---
 version: 0.6
 
-kind: job
+kind: component
 
 description: Run with data from a multiple bucket based in artifacts catalog
 
@@ -208,7 +208,7 @@ container:
 ---
 version: 0.6
 
-kind: job
+kind: component
 
 description: Run with data from a volumes
 
@@ -234,7 +234,7 @@ container:
 ---
 version: 0.6
 
-kind: job
+kind: component
 
 description: Run with data from a volumes
 
@@ -259,7 +259,7 @@ container:
 ---
 version: 0.6
 
-kind: job
+kind: component
 
 description: Run and upload outputs to a bucket
 
@@ -285,7 +285,7 @@ container:
 ---
 version: 0.6
 
-kind: job
+kind: component
 
 description: Run and upload outputs to a bucket based on artifacts stores
 
@@ -313,7 +313,7 @@ container:
 ---
 version: 0.6
 
-kind: job
+kind: component
 
 description:
   Run and upload outputs to the default outputs store. In Polyaxon,
@@ -338,7 +338,7 @@ container:
 ---
 version: 0.6
 
-kind: job
+kind: component
 
 description: Run some code with env vars coming from config map or config-map mounted somewhere
 
@@ -363,7 +363,7 @@ container:
 ---
 version: 0.6
 
-kind: job
+kind: component
 
 description: Building docker image with Polyaxon using the docker context
 
@@ -396,7 +396,7 @@ container:
 ---
 version: 0.6
 
-kind: job
+kind: component
 
 description: Building docker image with Polyaxon
   for code and dockerfile, you can use the `repos`context, or attach and ssh/token secret to git clone the code
@@ -421,7 +421,7 @@ container:
 ---
 version: 0.6
 
-kind: job
+kind: component
 
 description: Building docker image with Polyaxon and default registry connexion
   Similar to the outputs store, Polyaxon allows users to create a registry in the catalog to define how to connect to that registry, and where to push the images to
@@ -471,3 +471,242 @@ ops:
     container:
       image: {{image}}
       command: [python3, -u, my-model]
+
+---
+kind: component
+name: experiment
+inputs:
+  - name: batch_size
+    is_optional: true
+    default: 128
+    type: int
+  - name: num_steps
+    is_optional: true
+    default: 300
+    type: int
+  - name: learning_rate
+    is_optional: true
+    default: 0.001
+    type: float
+  - name: dropout
+    is_optional: true
+    default: 0.25
+    type: float
+  - name: num_epochs
+    is_optional: true
+    default: 1
+    type: int
+  - name: activation
+    is_optional: true
+    default: relu
+    type: str
+
+
+workflow:
+  strategy: random_search
+  matrix:
+    learning_rate:
+      linspace: 0.001:0.1:5
+    dropout:
+      values: [0.25, 0.3]
+    activation:
+      values: [relu, sigmoid]
+  concurrency: 5
+
+container:
+  image: polyaxon/polyaxon-init:dev
+  command: ["python3", "-u", "model.py"]
+  args:
+  - "--batch_size={{ batch_size }}"
+  - "--num_steps={{ num_steps }}"
+  - "--learning_rate={{ learning_rate }}"
+  - "--dropout={{ dropout }}"
+  - "--num_epochs={{ num_epochs }}"
+  - "--activation={{ activation }}"
+
+---
+kind: component
+name: experiment
+inputs:
+  - name: batch_size
+    is_optional: true
+    default: 128
+    type: int
+  - name: num_steps
+    is_optional: true
+    default: 300
+    type: int
+  - name: learning_rate
+    is_optional: true
+    default: 0.001
+    type: float
+  - name: dropout
+    is_optional: true
+    default: 0.25
+    type: float
+  - name: num_epochs
+    is_optional: true
+    default: 1
+    type: int
+  - name: activation
+    is_optional: true
+    default: relu
+    type: str
+
+workflow:
+  strategy: grid_search
+  matrix:
+    learning_rate:
+      linspace: 0.001:0.1:5
+    dropout:
+      values: [0.25, 0.3]
+    activation:
+      values: [relu, sigmoid]
+  concurrency: 5
+
+container:
+  image: polyaxon/polyaxon-init:dev
+  command: ["python3", "-u", "model.py"]
+  args:
+  - "--batch_size={{ batch_size }}"
+  - "--num_steps={{ num_steps }}"
+  - "--learning_rate={{ learning_rate }}"
+  - "--dropout={{ dropout }}"
+  - "--num_epochs={{ num_epochs }}"
+  - "--activation={{ activation }}"
+
+---
+version: 0.6
+kind: component
+description: Parallel pipeline
+workflow:
+  concurrency: 5
+  strategy: map
+  values:
+    iteration: [1, 2, 3, 4 , 10]
+
+ops:
+  - name: iteration
+    component_ref:
+  - name: random-search
+    component_ref: {name: random-search}
+    cond:
+  - name: bo-suggestion
+    component_ref: {name: bo-suggestor}
+    params: "{{ pipeline.inputs.__runs__ }}"
+    metrics: "{{ ops.random-search.outputs.__all__ }}"
+
+components:
+  - kind: component
+    name: random-search
+    workflow:
+      strategy: random_search
+      matrix:
+        learning_rate:
+          linspace: 0.001:0.1:5
+        dropout:
+          values: [0.25, 0.3]
+        activation:
+          values: [relu, sigmoid]
+      concurrency: 5
+
+    ops:
+      - name: op
+        component_ref: {name: experiment}
+        params:
+          batch_size: "{{ pipeline.inputs.learning_rate }}"
+          dropout: "{{ pipeline.inputs.dropout }}"
+          activation: "{{ pipeline.inputs.activation }}"
+    components:
+      - kind: component
+        name: experiment
+        inputs:
+        - name: batch_size
+          is_optional: true
+          default: 128
+          type: int
+        - name: num_steps
+          is_optional: true
+          default: 300
+          type: int
+        - name: learning_rate
+          is_optional: true
+          default: 0.001
+          type: float
+        - name: dropout
+          is_optional: true
+          default: 0.25
+          type: float
+        - name: num_epochs
+          is_optional: true
+          default: 1
+          type: int
+        - name: activation
+          is_optional: true
+          default: relu
+          type: str
+
+        outputs:
+          - name: test_result
+            is_optional: false
+            type: str
+
+        container:
+          image: polyaxon/polyaxon-init:dev
+          command: ["python3", "-u", "model.py"]
+          args:
+          - "--batch_size={{ batch_size }}"
+          - "--num_steps={{ num_steps }}"
+          - "--learning_rate={{ learning_rate }}"
+          - "--dropout={{ dropout }}"
+          - "--num_epochs={{ num_epochs }}"
+          - "--activation={{ activation }}"
+---
+
+version: 0.6
+kind: component
+description: Workflow based ops
+workflow:
+  concurrency: 5
+  strategy: dag
+  early_stopping:
+  - metric: loss
+    value: 0.01
+    optimization: minimize
+
+  - metric: accuracy
+    value: 0.97
+    optimization: maximize
+
+  ops:
+    - name: iteration
+      component_ref:
+    - name: random-search
+      component_ref: {name: random-search}
+      cond:
+    - name: bo-suggestion
+      component_ref: {name: bo-suggestor}
+      params: "{{ pipeline.inputs.__runs__ }}"
+      metrics: "{{ ops.random-search.outputs.__all__ }}"
+
+  components:
+    - kind: Pipeline
+      name: random-search
+      workflow:
+        strategy: random_search
+        matrix:
+          learning_rate:
+            linspace: 0.001:0.1:5
+          dropout:
+            values: [0.25, 0.3]
+          activation:
+            values: [relu, sigmoid]
+        concurrency: 5
+
+      ops:
+        - name: experiment
+          component_ref: {name: experiment}
+          params:
+            batch_size: "{{ pipeline.inputs.learning_rate }}"
+            dropout: "{{ pipeline.inputs.dropout }}"
+            activation: "{{ pipeline.inputs.activation }}"

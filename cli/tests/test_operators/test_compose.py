@@ -20,6 +20,7 @@ from __future__ import absolute_import, division, print_function
 from unittest import TestCase
 
 import mock
+import pytest
 
 from polyaxon.deploy import reader
 from polyaxon.deploy.operators.compose import ComposeOperator
@@ -28,6 +29,7 @@ from polyaxon.exceptions import PolyaxonOperatorException
 DUMMY_RETURN_VALUE = object()
 
 
+@pytest.mark.operators_mark
 class TestComposeOperator(TestCase):
     def setUp(self):
         self.compose = ComposeOperator()
@@ -68,5 +70,5 @@ class TestComposeOperator(TestCase):
         )
 
     def test_generate(self):
-        config = reader.read("tests/fixtures/all_values.yml")
+        config = reader.read("tests/fixtures/deployment/all_values.yml")
         assert ComposeOperator.generate_env(config) is not None

@@ -17,7 +17,6 @@
 # coding: utf-8
 from __future__ import absolute_import, division, print_function
 
-import os
 import sys
 
 import click
@@ -28,11 +27,12 @@ from rhea import RheaError
 
 from polyaxon.builds.generator import DockerFileGenerator
 from polyaxon.cli.check import check_polyaxonfile
-from polyaxon.exceptions import PolyaxonSchemaError
+from polyaxon.cli.errors import handle_cli_error
+from polyaxon.exceptions import PolyaxonBuildException, PolyaxonSchemaError
 from polyaxon.logger import clean_outputs
-from polyaxon.schemas.ops.init.build_context import BuildContextConfig
+from polyaxon.schemas.fields.docker_image import validate_image
+from polyaxon.schemas.polyflow.init.build_context import BuildContextConfig
 from polyaxon.specs import get_specification
-from polyaxon.tracking.utils.hashing import hash_value
 from polyaxon.utils.formatting import Printer
 
 
@@ -52,8 +52,7 @@ def docker():
     help="The polyaxonfiles to generate the dockerfile from.",
 )
 @click.option(
-    "--build-context",
-    help="The build context config to generate the dockerfile from.",
+    "--build-context", help="The build context config to generate the dockerfile from."
 )
 @click.option(
     "-dest", "--destination", help="The destination where to generate the build."
@@ -79,13 +78,14 @@ def generate(polyaxonfile, build_context, destination, params):
             build_context = BuildContextConfig.from_dict(rhea.read(build_context))
         except (RheaError, ValidationError) as e:
             Printer.print_error("received a non valid build context.")
-            Printer.print_error("Error message `{}`.".format(e))
+            Printer.print_error("Error message: {}.".format(e))
             sys.exit(1)
     else:
         specification = check_polyaxonfile(polyaxonfile, params=params, log=False)
 
         try:
             run_spec = get_specification(specification.generate_run_data())
+            run_spec.apply_params(params=specification.config.params)
             run_spec.apply_context()
         except PolyaxonSchemaError:
             Printer.print_error(
@@ -100,19 +100,22 @@ def generate(polyaxonfile, build_context, destination, params):
         build_context=build_context, destination=destination or "."
     )
     generator.create()
-    Printer.print_success("Dockerfile was generated: `{}`".format(generator.dockerfile_path))
+    Printer.print_success(
+        "Dockerfile was generated: `{}`".format(generator.dockerfile_path)
+    )
 
 
 @docker.command()
 @click.option(
-    "-d",
-    "--dockerfile",
+    "-c",
+    "--context",
     required=True,
     type=click.Path(exists=True),
-    help="The dockerfile to build."
+    help="A build context accessible to Polyaxon.",
 )
-@click.option("-name", "--image-name", help="The image name.")
-@click.option("-tag", "--image-tag", help="The image tag.")
+@click.option(
+    "-d", "--destination", help="The tagged image destination $PROJECT/$IMAGE:$TAG."
+)
 @click.option(
     "--nocache",
     is_flag=True,
@@ -132,30 +135,42 @@ def generate(polyaxonfile, build_context, destination, params):
     default=2,
     help="Sleep interval between retries in seconds.",
 )
+@click.option(
+    "--reraise",
+    is_flag=True,
+    default=False,
+    show_default=False,
+    help="To force rebuild the image.",
+)
 @clean_outputs
-def build(dockerfile, image_name, image_tag, nocache, max_retries, sleep_interval):
+def build(context, destination, nocache, max_retries, sleep_interval, reraise):
     """Build a dockerfile, this command required Docker to be installed."""
     from polyaxon.builds.builder import build
 
-    if not image_tag:
-        with open(dockerfile, "r") as f:
-            image_tag = hash_value(f)
+    try:
+        validate_image(destination)
+    except ValidationError as e:
+        handle_cli_error(e, message="Image destination is invalid.")
 
-    dockerfile_path = os.path.dirname(os.path.realpath(dockerfile))
-
-    build(
-        dockerfile_path=dockerfile_path,
-        image_name=image_name,
-        image_tag=image_tag,
-        nocache=nocache,
-        max_retries=max_retries,
-        sleep_interval=sleep_interval,
-    )
+    try:
+        build(
+            context=context,
+            destination=destination,
+            nocache=nocache,
+            max_retries=max_retries,
+            sleep_interval=sleep_interval,
+        )
+    except PolyaxonBuildException as e:
+        handle_cli_error(e, message="Docker build failed")
+        if reraise:
+            raise e
+        sys.exit(1)
 
 
 @docker.command()
-@click.option("-name", "--image-name", help="The image name.")
-@click.option("-tag", "--image-tag", help="The image tag.")
+@click.option(
+    "-d", "--destination", help="The tagged image destination $PROJECT/$IMAGE:$TAG."
+)
 @click.option(
     "--max-retries",
     type=int,
@@ -168,29 +183,42 @@ def build(dockerfile, image_name, image_tag, nocache, max_retries, sleep_interva
     default=2,
     help="Sleep interval between retries in seconds.",
 )
+@click.option(
+    "--reraise",
+    is_flag=True,
+    default=False,
+    show_default=False,
+    help="To force rebuild the image.",
+)
 @clean_outputs
-def push(image_name, image_tag, max_retries, sleep_interval):
+def push(destination, max_retries, sleep_interval, reraise):
     """Push an image, this command required Docker to be installed."""
     from polyaxon.builds.builder import push
 
-    push(
-        image_name=image_name,
-        image_tag=image_tag,
-        max_retries=max_retries,
-        sleep_interval=sleep_interval,
-    )
+    try:
+        push(
+            destination=destination,
+            max_retries=max_retries,
+            sleep_interval=sleep_interval,
+        )
+    except PolyaxonBuildException as e:
+        handle_cli_error(e, message="Docker push failed")
+        if reraise:
+            raise e
+        sys.exit(1)
 
 
 @docker.command()
 @click.option(
-    "-d",
-    "--dockerfile",
+    "-c",
+    "--context",
     required=True,
     type=click.Path(exists=True),
-    help="The dockerfile to build."
+    help="A build context accessible to Polyaxon.",
 )
-@click.option("-name", "--image-name", required=True, help="The image name.")
-@click.option("-tag", "--image-tag", help="The image tag.")
+@click.option(
+    "-d", "--destination", help="The tagged image destination $PROJECT/$IMAGE:$TAG."
+)
 @click.option(
     "--nocache",
     is_flag=True,
@@ -210,27 +238,32 @@ def push(image_name, image_tag, max_retries, sleep_interval):
     default=2,
     help="Sleep interval between retries in seconds.",
 )
+@click.option(
+    "--reraise",
+    is_flag=True,
+    default=False,
+    show_default=False,
+    help="To force rebuild the image.",
+)
 @clean_outputs
-def build_and_push(
-    dockerfile, image_name, image_tag, nocache, max_retries, sleep_interval
-):
+def build_and_push(context, destination, nocache, max_retries, sleep_interval, reraise):
     """
     Build a dockerfile and push it to the provided registry,
     this command required Docker to be installed.
     """
-    if not image_tag:
-        with open(dockerfile, "r") as f:
-            image_tag = hash_value(f)
-
-    dockerfile_path = os.path.dirname(os.path.realpath(dockerfile))
 
     from polyaxon.builds.builder import build_and_push
 
-    build_and_push(
-        dockerfile_path=dockerfile_path,
-        image_name=image_name,
-        image_tag=image_tag,
-        nocache=nocache,
-        max_retries=max_retries,
-        sleep_interval=sleep_interval,
-    )
+    try:
+        build_and_push(
+            context=context,
+            destination=destination,
+            nocache=nocache,
+            max_retries=max_retries,
+            sleep_interval=sleep_interval,
+        )
+    except PolyaxonBuildException as e:
+        handle_cli_error(e, message="Docker build and push failed")
+        if reraise:
+            raise e
+        sys.exit(1)

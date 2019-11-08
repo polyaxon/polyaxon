@@ -21,11 +21,14 @@ import os
 
 from unittest import TestCase
 
+import pytest
+
 from mock import patch
 
 from polyaxon.managers.base import BaseConfigManager
 
 
+@pytest.mark.managers_mark
 class TestBaseConfigManger(TestCase):
     def test_default_props(self):
         assert BaseConfigManager.IS_GLOBAL is False

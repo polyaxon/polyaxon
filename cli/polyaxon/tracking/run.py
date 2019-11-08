@@ -18,8 +18,6 @@
 from __future__ import absolute_import, division, print_function
 
 import atexit
-import json
-import os
 import sys
 import time
 
@@ -169,6 +167,8 @@ class Run(object):
 
         if not settings.CLIENT_CONFIG.is_managed:
             self._start()
+        else:
+            self._register_wait()
 
         return self
 
@@ -299,6 +299,11 @@ class Run(object):
 
     @check_no_op
     @check_offline
+    def _register_wait(self):
+        atexit.register(self._wait)
+
+    @check_no_op
+    @check_offline
     def _start(self):
         atexit.register(self._end)
         self.start()
@@ -314,6 +319,12 @@ class Run(object):
     @check_offline
     def _end(self):
         self.log_succeeded()
+        self._wait()
+
+    @check_no_op
+    @check_offline
+    def _wait(self):
+        time.sleep(1)
 
     @check_no_op
     @check_offline

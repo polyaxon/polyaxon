@@ -53,7 +53,7 @@ class DockerFileGenerator(object):
             env=to_list(self.build_context.env, check_none=True),
             workdir=self.build_context.workdir,
             path=to_list(self.build_context.path, check_none=True),
-            code_path=self.build_context.code_path,
+            workdir_path=self.build_context.workdir_path,
             lang_env=self.build_context.lang_env,
             uid=self.build_context.uid,
             gid=self.build_context.gid,

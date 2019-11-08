@@ -23,12 +23,15 @@ import uuid
 
 from unittest import TestCase
 
+import pytest
+
 from mock import patch
 
 from polyaxon.client.impersonate import create_context_auth, impersonate
 from polyaxon.schemas.api.authentication import AccessTokenConfig
 
 
+@pytest.mark.client_mark
 class TestImpersonate(TestCase):
     def test_create_context_auth(self):
         token = uuid.uuid4().hex

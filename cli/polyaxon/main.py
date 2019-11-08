@@ -25,7 +25,6 @@ import click_completion
 from marshmallow import ValidationError
 
 from polyaxon import settings
-from polyaxon.cli.docker import docker
 from polyaxon.cli.admin import admin
 from polyaxon.cli.auth import login, logout, whoami
 from polyaxon.cli.bookmark import bookmark
@@ -34,6 +33,7 @@ from polyaxon.cli.cluster import cluster
 from polyaxon.cli.completion import completion
 from polyaxon.cli.config import config
 from polyaxon.cli.dashboard import dashboard
+from polyaxon.cli.docker import docker
 from polyaxon.cli.init import init
 from polyaxon.cli.projects import projects
 from polyaxon.cli.run import run

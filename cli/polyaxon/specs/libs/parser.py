@@ -63,17 +63,20 @@ class Parser(object):
             parsed_data[spec.INPUTS] = [io.to_dict() for io in inputs]
         outputs = getattr(config, spec.OUTPUTS)
         if outputs:
-            parsed_data[spec.OUTPUTS] = [io.to_dict() for io in outputs]
+            parsed_data[spec.OUTPUTS] = [
+                cls.parse_expression(spec, io.to_dict(), parsed_params)
+                for io in outputs
+            ]
 
-        # Check parallel
-        parallel_section = cls._get_section(config, spec.PARALLEL)
-        if parallel_section:
-            parsed_data[spec.PARALLEL] = cls.parse_expression(
-                spec, parallel_section, parsed_params
+        # Check workflow
+        workflow_section = cls._get_section(config, spec.WORKFLOW)
+        if workflow_section:
+            parsed_data[spec.WORKFLOW] = cls.parse_expression(
+                spec, workflow_section, parsed_params
             )
-            parallel_params = copy.copy(parsed_data[spec.PARALLEL])
-            if parallel_params:
-                parsed_params = deep_update(parallel_params, parsed_params)
+            workflow_params = copy.copy(parsed_data[spec.WORKFLOW])
+            if workflow_params:
+                parsed_params = deep_update(workflow_params, parsed_params)
 
         for section in spec.PARSING_SECTIONS:
             config_section = cls._get_section(config, section)

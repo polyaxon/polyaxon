@@ -1,7 +1,7 @@
 ---
 version: 0.6
 
-kind: service
+kind: component
 
 tags: [bar]
 

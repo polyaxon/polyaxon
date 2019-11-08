@@ -20,6 +20,7 @@ from __future__ import absolute_import, division, print_function
 from unittest import TestCase
 
 import mock
+import pytest
 
 from polyaxon.deploy.operators.docker import DockerOperator
 from polyaxon.exceptions import PolyaxonOperatorException
@@ -27,6 +28,7 @@ from polyaxon.exceptions import PolyaxonOperatorException
 DUMMY_RETURN_VALUE = object()
 
 
+@pytest.mark.operators_mark
 class TestDockerOperator(TestCase):
     def setUp(self):
         self.docker = DockerOperator()

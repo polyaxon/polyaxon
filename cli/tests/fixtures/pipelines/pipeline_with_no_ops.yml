@@ -1,32 +1,33 @@
 ---
 version: 0.6
 
-kind: pipeline
+kind: component
 
 name: test-pipeline
 
 tags: [native]
 
-templates:
-
-  - kind: job
-    name: job-template
-    description: job to process something
-    tags: [tag11, tag12]
-    inputs:
-    - name: bucket
-      type: s3_path
-    init:
-      build:
-        image: my_image
-        run:
-        - pip install package1
-    environment:
-      resources: {requests: {cpu: 1}}
-      node_selector: {polyaxon: experiments}
-      service_account: service
-      image_pull_secrets: [secret1, secret2]
-    termination:
-      max_retries: 2
-      ttl: 3600
-    container: {image: test}
+workflow:
+  strategy:
+    kind: dag
+    components:
+    - name: job-template
+      description: job to process something
+      tags: [tag11, tag12]
+      inputs:
+      - name: bucket
+        type: s3_path
+      init:
+        build:
+          image: my_image
+          run:
+          - pip install package1
+      environment:
+        resources: {requests: {cpu: 1}}
+        node_selector: {polyaxon: experiments}
+        service_account: service
+        image_pull_secrets: [secret1, secret2]
+      termination:
+        max_retries: 2
+        ttl: 3600
+      container: {image: test}

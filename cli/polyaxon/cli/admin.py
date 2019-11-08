@@ -104,7 +104,7 @@ def deploy(config_file, manager_path, check, dry_run):
             exception = e
 
     if exception:
-        Printer.print_error("Error message `{}`.".format(exception))
+        Printer.print_error("Error message: {}.".format(exception))
 
 
 @admin.command()
@@ -155,7 +155,7 @@ def upgrade(config_file, manager_path, check, dry_run):
             exception = e
 
     if exception:
-        Printer.print_error("Error message `{}`.".format(exception))
+        Printer.print_error("Error message: {}.".format(exception))
 
 
 @admin.command()
@@ -182,4 +182,4 @@ def teardown(config_file):
         exception = e
 
     if exception:
-        Printer.print_error("Error message `{}`.".format(exception))
+        Printer.print_error("Error message: {}.".format(exception))

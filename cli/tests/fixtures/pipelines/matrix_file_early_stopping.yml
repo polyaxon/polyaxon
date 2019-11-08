@@ -1,0 +1,40 @@
+---
+version: 0.6
+kind: component
+workflow:
+  concurrency: 4
+  early_stopping:
+  - kind: failure_early_stopping
+    percent: 0.1
+    evaluation_interval: 1
+  strategy:
+    kind: dag
+    ops:
+    - name: build
+      component_ref: {hub: kaniko}
+    - name: experiment-group
+      component_ref: {name: random-search}
+    components:
+    - name: random-search
+      workflow:
+        concurrency: 2
+        strategy:
+          kind: random_search
+          n_experiments: 300
+          matrix:
+            lr:
+              kind: linspace
+              value: 0.01:0.1:5
+            loss:
+              kind: choice
+              value: [MeanSquaredError, AbsoluteDifference]
+        early_stopping:
+        - kind: metric_early_stopping
+          metric: loss
+          value: 0.01
+          optimization: maximize
+
+      container:
+        image: foo:latest
+        command: train --lr={{ lr }} --loss={{ loss }}
+...

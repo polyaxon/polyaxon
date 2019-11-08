@@ -20,11 +20,10 @@ from __future__ import absolute_import, division, print_function
 import pytest
 
 from mock import patch
-
-from polyaxon.schemas.ops.init.build_context import BuildContextConfig
 from tests.test_cli.utils import BaseCommandTestCase
 
 from polyaxon.cli.docker import docker
+from polyaxon.schemas.polyflow.init.build_context import BuildContextConfig
 
 
 @pytest.mark.cli_mark
@@ -34,7 +33,6 @@ class TestCliDocker(BaseCommandTestCase):
         build_context = BuildContextConfig(image="foo")
         self.runner.invoke(
             docker,
-            ["generate", "--build-context={}".format(build_context.to_dict(dump=True))]
+            ["generate", "--build-context={}".format(build_context.to_dict(dump=True))],
         )
         assert generate_create.call_count == 1
-

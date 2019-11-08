@@ -18,7 +18,7 @@ Name | Type | Description | Notes
 **is_managed** | **String** |  | [optional] 
 **content** | **String** |  | [optional] 
 **status** | **String** |  | [optional] 
-**kind** | **String** |  | [optional] 
+**meta_info** | [**V1RunMetaInfo**](V1RunMetaInfo.md) |  | [optional] 
 **readme** | **String** |  | [optional] 
 **bookmarked** | **Boolean** |  | [optional] 
 **inputs** | **{String: String}** |  | [optional] 

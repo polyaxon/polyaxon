@@ -19,26 +19,18 @@ from __future__ import absolute_import, division, print_function
 
 import rhea
 
-from polyaxon.exceptions import PolyaxonSchemaError, PolyaxonfileError
 from polyaxon import kinds
 from polyaxon.specs.base import BaseSpecification
-from polyaxon.specs.job import JobSpecification
-from polyaxon.specs.operation import OperationSpecification
-from polyaxon.specs.pipelines import PipelineSpecification
-from polyaxon.specs.service import ServiceSpecification
+from polyaxon.specs.op import OpSpecification
+from polyaxon.specs.component import ComponentSpecification
 
 SPECIFICATION_BY_KIND = {
-    kinds.JOB: JobSpecification,
-    kinds.SERVICE: ServiceSpecification,
-    kinds.PIPELINE: PipelineSpecification,
-    kinds.OPERATION: OperationSpecification,
+    kinds.OP: OpSpecification,
+    kinds.COMPONENT: ComponentSpecification,
 }
 
 
 def get_specification(data):
     data = rhea.read(data)
     kind = BaseSpecification.get_kind(data=data)
-    try:
-        return SPECIFICATION_BY_KIND[kind](data)
-    except PolyaxonSchemaError as e:
-        raise PolyaxonfileError(e)
+    return SPECIFICATION_BY_KIND[kind](data)

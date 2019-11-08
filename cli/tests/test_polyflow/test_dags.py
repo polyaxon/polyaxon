@@ -16,12 +16,15 @@
 
 from unittest import TestCase
 
+import pytest
+
 from mock import MagicMock
 
 from polyaxon.exceptions import PolyaxonSchemaError
 from polyaxon.schemas.polyflow import dags
 
 
+@pytest.mark.polyflow_mark
 class TestDags(TestCase):
     def setUp(self):
         self.dag0 = (

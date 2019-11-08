@@ -18,12 +18,12 @@
 from __future__ import absolute_import, division, print_function
 
 import os
-import ujson
-
 import six
 
 from collections import Mapping
 from unittest import TestCase
+
+import ujson
 
 
 def assert_equal_dict(dict1, dict2):

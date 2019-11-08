@@ -16,8 +16,6 @@
 
 # coding: utf-8
 
-JOB = "job"
-SERVICE = "service"
-PIPELINE = "pipeline"
-OPERATION = "op"
-KINDS = {JOB, SERVICE, PIPELINE, OPERATION}
+OP = "op"
+COMPONENT = "component"
+KINDS = {OP, COMPONENT}

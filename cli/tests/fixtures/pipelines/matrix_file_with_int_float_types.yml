@@ -1,0 +1,30 @@
+---
+version: 0.6
+kind: component
+workflow:
+  concurrency: 4
+  strategy:
+    kind: dag
+    ops:
+      - name: build
+        component_ref: {hub: kaniko}
+      - name: experiment-group
+        component_ref: {name: grid-experiment}
+    components:
+    - name: grid-experiment
+      description: hypertuning params experiment
+      workflow:
+        concurrency: 2
+        strategy:
+          kind: grid_search
+          matrix:
+            param1:
+              kind: choice
+              value: [1, 2]
+            param2:
+              kind: choice
+              value: [3.3, 4.4]
+      container:
+        image: foo:latest
+        command: train --param1={{ param1 }} --param2={{ param2 }}
+...

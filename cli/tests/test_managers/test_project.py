@@ -19,11 +19,14 @@ from __future__ import absolute_import, division, print_function
 
 from unittest import TestCase
 
+import pytest
+
 from polyaxon_sdk import V1Project
 
 from polyaxon.managers.project import ProjectManager
 
 
+@pytest.mark.managers_mark
 class TestProjectManager(TestCase):
     def test_default_props(self):
         assert ProjectManager.IS_GLOBAL is False

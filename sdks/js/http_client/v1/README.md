@@ -237,6 +237,7 @@ Class | Method | HTTP request | Description
  - [PolyaxonSdk.V1Project](docs/V1Project.md)
  - [PolyaxonSdk.V1ProjectEntityResourceRequest](docs/V1ProjectEntityResourceRequest.md)
  - [PolyaxonSdk.V1Run](docs/V1Run.md)
+ - [PolyaxonSdk.V1RunMetaInfo](docs/V1RunMetaInfo.md)
  - [PolyaxonSdk.V1Search](docs/V1Search.md)
  - [PolyaxonSdk.V1SearchDefinition](docs/V1SearchDefinition.md)
  - [PolyaxonSdk.V1Status](docs/V1Status.md)

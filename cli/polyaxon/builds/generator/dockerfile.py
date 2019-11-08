@@ -61,7 +61,7 @@ RUN {{ step }}
 {% endfor -%}
 {% endif -%}
 
-{% if code_path -%}
-COPY {{ code_path }} {{ workdir }}
+{% if workdir_path -%}
+COPY {{ workdir_path }} {{ workdir }}
 {% endif -%}
 """

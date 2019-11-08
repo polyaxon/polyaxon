@@ -1,7 +1,7 @@
 ---
 version: 0.6
 
-kind: job
+kind: component
 
 inputs:
   - name: input1
@@ -9,9 +9,9 @@ inputs:
     value: [MeanSquaredError, AbsoluteDifference]
     is_optional: true
 
-parallel:
-  algorithm:
-    kind: random
+workflow:
+  strategy:
+    kind: random_search
     matrix:
       loss:
         values: "{{ input1 }}"

@@ -21,12 +21,15 @@ import uuid
 
 from unittest import TestCase
 
+import pytest
+
 from mock import MagicMock, mock
 
 from polyaxon import settings
 from polyaxon.client.statuses import get_run_statuses
 
 
+@pytest.mark.client_mark
 class TestStatuses(TestCase):
     @mock.patch("polyaxon_sdk.RunsV1Api.get_run_statuses")
     def test_get_statuses(self, sdk_get_run_statuses):

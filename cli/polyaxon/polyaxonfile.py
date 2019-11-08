@@ -27,7 +27,6 @@ from hestia.list_utils import to_list
 
 from polyaxon import kinds
 from polyaxon.exceptions import PolyaxonfileError
-from polyaxon.schemas.polyflow.ops import OpConfig
 from polyaxon.specs import get_specification
 
 DEFAULT_POLYAXON_FILE_NAME = [
@@ -67,24 +66,26 @@ class PolyaxonFile(object):
                     return filepath
 
     def get_op_specification(self, params=None, profile=None):
-        op_data = OpConfig(version=self.specification.version, kind=kinds.OPERATION)
+        job_data = {"version": self.specification.version, "kind": kinds.OP}
         if params:
             if not isinstance(params, Mapping):
                 raise PolyaxonfileError(
                     "Params: `{}` must be a valid mapping".format(params)
                 )
-            op_data.params = params
+            job_data["params"] = params
         if profile:
-            op_data.profile = profile
+            job_data["profile"] = profile
 
-        if self.specification.is_operation:
+        if self.specification.is_op:
             specification = get_specification(
-                data=[self.specification.config.to_dict(), op_data.to_dict()]
+                data=[self.specification.config.to_dict(), job_data]
             )
         else:
-            op_data._template = self.specification.config
-            specification = get_specification(data=[op_data.to_dict()])
+            job_data["component"] = self.specification.config.to_dict()
+            specification = get_specification(data=[job_data])
         # Sanity check if params were passed
         run_spec = get_specification(specification.generate_run_data())
-        run_spec.validate_params(params=op_data.params)
+        run_spec.validate_params(params=params, is_template=False)
+        if run_spec.has_dag:
+            run_spec.apply_context()
         return specification

@@ -1,0 +1,28 @@
+---
+version: 0.6
+
+kind: component
+
+name: test-pipeline
+
+tags: [native]
+
+workflow:
+  strategy:
+    kind: dag
+    ops:
+      - name: job1
+        component_ref: {name: job-template}
+        params:
+          input1: s3://foo
+      - name: job2
+        component_ref: {name: job-template}
+        params:
+          input1: s3://bar
+        dependencies: [job1]
+      - name: experiment1
+        component_ref: {name: experiment-template}
+        dependencies: [job2]
+      - name: experiment2
+        component_ref: {name: experiment-template}
+        dependencies: [experiment1]

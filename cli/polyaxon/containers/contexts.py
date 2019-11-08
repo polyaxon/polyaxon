@@ -16,7 +16,6 @@
 
 # coding: utf-8
 
-CONTEXT_MOUNT_CODE = "/plx-context/code"
 CONTEXT_MOUNT_BUILD = "/plx-context/build"
 CONTEXT_MOUNT_CONFIGS = "/plx-context/.configs"
 CONTEXT_MOUNT_AUTH = "{}/.polyaxonauth".format(CONTEXT_MOUNT_CONFIGS)

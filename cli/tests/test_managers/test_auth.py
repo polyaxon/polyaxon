@@ -19,10 +19,13 @@ from __future__ import absolute_import, division, print_function
 
 from unittest import TestCase
 
+import pytest
+
 from polyaxon.managers.auth import AuthConfigManager
 from polyaxon.schemas.api.authentication import AccessTokenConfig
 
 
+@pytest.mark.managers_mark
 class TestAuthConfigManager(TestCase):
     def test_default_props(self):
         assert AuthConfigManager.IS_GLOBAL is True

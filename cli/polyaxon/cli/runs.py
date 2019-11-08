@@ -59,7 +59,7 @@ def get_run_details(run):  # pylint:disable=redefined-outer-name
         dict_tabulate(run.inputs)
 
     if run.outputs:
-        Printer.print_header("Run inputs:")
+        Printer.print_header("Run outputs:")
         dict_tabulate(run.outputs)
 
     response = Printer.add_status_color(run.to_dict())
@@ -513,6 +513,34 @@ def resume(ctx, polyaxonfile, u):
         Printer.print_success("Run was resumed with uid {}".format(response.uuid))
     except (ApiException, HTTPError) as e:
         handle_cli_error(e, message="Could not resume run `{}`.".format(run_uuid))
+        sys.exit(1)
+
+
+@runs.command()
+@click.pass_context
+@clean_outputs
+def invalidate_run(ctx):
+    """Invalidate runs' cache inside this project.
+
+    Uses [Caching](/references/polyaxon-cli/#caching)
+
+    Examples:
+
+    \b
+    ```bash
+    $ polyaxon invalidate_builds
+    ```
+    """
+
+    owner, project_name, run_uuid = get_project_run_or_local(
+        ctx.obj.get("project"), ctx.obj.get("run_uuid")
+    )
+    try:
+        polyaxon_client = PolyaxonClient()
+        response = polyaxon_client.runs_v1.invalidate_run(owner, project_name, run_uuid)
+        Printer.print_success("Run was invalidated with uid {}".format(response.uuid))
+    except (ApiException, HTTPError) as e:
+        handle_cli_error(e, message="Could not invalidate run `{}`.".format(run_uuid))
         sys.exit(1)
 
 

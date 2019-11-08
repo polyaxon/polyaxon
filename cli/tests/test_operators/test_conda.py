@@ -20,6 +20,7 @@ from __future__ import absolute_import, division, print_function
 from unittest import TestCase
 
 import mock
+import pytest
 
 from polyaxon.deploy.operators.conda import CondaOperator
 from polyaxon.exceptions import PolyaxonOperatorException
@@ -27,6 +28,7 @@ from polyaxon.exceptions import PolyaxonOperatorException
 DUMMY_RETURN_VALUE = object()
 
 
+@pytest.mark.operators_mark
 class TestCondaOperator(TestCase):
     def setUp(self):
         self.conda = CondaOperator()

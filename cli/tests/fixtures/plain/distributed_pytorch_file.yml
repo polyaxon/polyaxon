@@ -1,7 +1,7 @@
 ---
 version: 0.6
 
-kind: experiment
+kind: component
 
 tags: [pytorch]
 
@@ -9,12 +9,10 @@ environment:
   log_level: INFO
 
   resources:
-    cpu:
-      requests: 1
-      limits: 2
-
-  node_selector:
-    polyaxon.com: node_for_master_task
+    requests:
+      cpu: 1
+    limits:
+      cpu: 2
 
   affinity:
     nodeAffinity:
@@ -35,31 +33,34 @@ environment:
             values:
             - another-node-label-value
 
-replica_spec:
-  Master:
-    replicas: 5
-    ennvironment:
-      tolerations:
-        - key: "key"
-          operator: "Exists"
-          effect: "NoSchedule"
-      resources:
-        cpu:
-          requests: 3
-          limits: 3
-        memory:
-            requests: 256
-            limits: 256
+workflow:
+  strategy:
+    kind: pytorch_job
+    master:
+      replicas: 5
+      termination:
+        restart_policy: OnFailure
+      environment:
+        resources:
+          requests:
+            memory: 300Mi
+          limits:
+            memory: 300Mi
 
-  Worker:
-    replicas: 2
-    ennvironment:
-      tolerations:
-        - operator: "Exists"
-      resources:
-        memory:
-          requests: 300
-          limits: 300
+    worker:
+      replicas: 10
+      environment:
+        tolerations:
+          - key: "key"
+            operator: "Exists"
+            effect: "NoSchedule"
+        resources:
+          requests:
+            cpu: 3
+            memory: 256Mi
+          limits:
+            cpu: 3
+            memory: 256Mi
 
 container:
   image: my_image

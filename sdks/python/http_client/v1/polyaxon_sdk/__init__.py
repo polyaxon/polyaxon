@@ -66,6 +66,7 @@ from polyaxon_sdk.models.v1_log_handler import V1LogHandler
 from polyaxon_sdk.models.v1_project import V1Project
 from polyaxon_sdk.models.v1_project_entity_resource_request import V1ProjectEntityResourceRequest
 from polyaxon_sdk.models.v1_run import V1Run
+from polyaxon_sdk.models.v1_run_meta_info import V1RunMetaInfo
 from polyaxon_sdk.models.v1_search import V1Search
 from polyaxon_sdk.models.v1_search_definition import V1SearchDefinition
 from polyaxon_sdk.models.v1_status import V1Status

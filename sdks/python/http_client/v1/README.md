@@ -187,6 +187,7 @@ Class | Method | HTTP request | Description
  - [V1Project](docs/V1Project.md)
  - [V1ProjectEntityResourceRequest](docs/V1ProjectEntityResourceRequest.md)
  - [V1Run](docs/V1Run.md)
+ - [V1RunMetaInfo](docs/V1RunMetaInfo.md)
  - [V1Search](docs/V1Search.md)
  - [V1SearchDefinition](docs/V1SearchDefinition.md)
  - [V1Status](docs/V1Status.md)

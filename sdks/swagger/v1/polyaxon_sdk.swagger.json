@@ -5257,9 +5257,9 @@
           "type": "string",
           "title": "Optional latest status of this entity"
         },
-        "kind": {
-          "type": "string",
-          "title": "Optional run kind"
+        "meta_info": {
+          "$ref": "#/definitions/v1RunMetaInfo",
+          "title": "Optional run meta info"
         },
         "readme": {
           "type": "string",
@@ -5323,6 +5323,23 @@
         }
       },
       "title": "Run specification"
+    },
+    "v1RunMetaInfo": {
+      "type": "object",
+      "properties": {
+        "service": {
+          "type": "boolean",
+          "format": "boolean"
+        },
+        "workflow_strategy": {
+          "type": "string"
+        },
+        "workflow_concurrency": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "Run meta info specification"
     },
     "v1Search": {
       "type": "object",

@@ -1,7 +1,7 @@
 ---
 version: 0.6
 
-kind: experiment
+kind: component
 
 tags: [mxnet]
 
@@ -35,35 +35,37 @@ environment:
             values:
             - another-node-label-value
 
-replica_spec:
-  Scheduler:
-    replicas: 1
-    environment:
-      tolerations:
-      - key: "key"
-        operator: "Exists"
-        effect: "NoSchedule"
-      resources:
-        cpu:
-          requests: 3
-          limits: 3
-        memory:
-          requests: 256
-          limits: 256
+workflow:
+  strategy:
+    kind: replication
+    Scheduler:
+      replicas: 1
+      environment:
+        tolerations:
+        - key: "key"
+          operator: "Exists"
+          effect: "NoSchedule"
+        resources:
+          cpu:
+            requests: 3
+            limits: 3
+          memory:
+            requests: 256
+            limits: 256
 
 
-  Server:
-    replicas: 1
+    Server:
+      replicas: 1
 
-  Worker:
-    replicas: 1
-    environment:
-      tolerations:
-        - operator: "Exists"
-      resources:
-        memory:
-          requests: 300
-          limits: 300
+    Worker:
+      replicas: 1
+      environment:
+        tolerations:
+          - operator: "Exists"
+        resources:
+          memory:
+            requests: 300
+            limits: 300
 
 container:
   image: my_image

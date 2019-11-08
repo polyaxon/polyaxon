@@ -18,7 +18,7 @@ Name | Type | Description | Notes
 **is_managed** | **str** |  | [optional] 
 **content** | **str** |  | [optional] 
 **status** | **str** |  | [optional] 
-**kind** | **str** |  | [optional] 
+**meta_info** | [**V1RunMetaInfo**](V1RunMetaInfo.md) |  | [optional] 
 **readme** | **str** |  | [optional] 
 **bookmarked** | **bool** |  | [optional] 
 **inputs** | **dict(str, str)** |  | [optional] 

@@ -19,7 +19,7 @@ Name | Type | Description | Notes
 **isManaged** | **String** |  |  [optional]
 **content** | **String** |  |  [optional]
 **status** | **String** |  |  [optional]
-**kind** | **String** |  |  [optional]
+**metaInfo** | [**V1RunMetaInfo**](V1RunMetaInfo.md) |  |  [optional]
 **readme** | **String** |  |  [optional]
 **bookmarked** | **Boolean** |  |  [optional]
 **inputs** | **Map&lt;String, String&gt;** |  |  [optional]

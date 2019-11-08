@@ -19,11 +19,10 @@ from __future__ import absolute_import, division, print_function
 
 import abc
 import copy
-import ujson
-
 import six
 
 import rhea
+import ujson
 
 from hestia.list_utils import to_list
 from marshmallow import ValidationError
@@ -31,10 +30,11 @@ from marshmallow import ValidationError
 from polyaxon import kinds
 from polyaxon.exceptions import PolyaxonfileError, PolyaxonSchemaError
 from polyaxon.pkg import SCHEMA_VERSION
-from polyaxon.schemas.ops import params as ops_params
-from polyaxon.schemas.ops.io import IOTypes
-from polyaxon.schemas.ops.operators import ForConfig, IfConfig
-from polyaxon.schemas.ops.params import ParamSpec
+from polyaxon.schemas.polyflow import params as ops_params
+from polyaxon.schemas.polyflow.io import IOTypes
+from polyaxon.schemas.polyflow.operators import ForConfig, IfConfig
+from polyaxon.schemas.polyflow.params import ParamSpec
+from polyaxon.schemas.polyflow.workflows import DagConfig
 from polyaxon.specs.libs.parser import Parser
 
 
@@ -210,31 +210,31 @@ class MountsSpecificationMixin(object):
         return self._get_refs_by_names(self.config_maps)
 
 
-class ParallelSpecificationMixin(object):
+class WorkflowSpecificationMixin(object):
     @property
-    def parallel(self):
-        return self.config.parallel
+    def workflow(self):
+        return self.config.workflow
 
     @property
     def early_stopping(self):
         early_stopping = None
-        if self.parallel:
-            early_stopping = self.parallel.early_stopping
+        if self.workflow:
+            early_stopping = self.workflow.early_stopping
         return early_stopping or []
 
     @property
-    def parallel_algorithm(self):
-        return self.parallel.algorithm if self.parallel else None
+    def workflow_strategy(self):
+        return self.workflow.strategy if self.workflow else None
 
     @property
-    def parallel_algorithm_kind(self):
-        return self.parallel_algorithm.kind if self.parallel_algorithm else None
+    def workflow_strategy_kind(self):
+        return self.workflow_strategy.kind if self.workflow_strategy else None
 
     @property
     def concurrency(self):
         concurrency = None
-        if self.parallel:
-            concurrency = self.parallel.concurrency
+        if self.workflow:
+            concurrency = self.workflow.concurrency
         return concurrency or 1
 
 
@@ -260,13 +260,48 @@ class TerminationSpecificationMixin(object):
         return self.termination.ttl if self.termination else None
 
 
+class ScheduleSpecificationMixin(object):
+    @property
+    def schedule(self):
+        return self.config.schedule
+
+    @property
+    def schedule_kind(self):
+        return self.schedule.kind if self.schedule else None
+
+    @property
+    def schedule_start_at(self):
+        return self.schedule.start_at if self.schedule else None
+
+    @property
+    def schedule_end_at(self):
+        return self.schedule.end_at if self.schedule else None
+
+    @property
+    def schedule_frequency(self):
+        return self.schedule.frequency if self.schedule else None
+
+    @property
+    def schedule_cron(self):
+        return self.schedule.cron if self.schedule else None
+
+    @property
+    def schedule_depends_on_past(self):
+        return self.schedule.depends_on_past if self.schedule else None
+
+    @property
+    def execute_at(self):
+        return self.schedule.execute_at if self.schedule else None
+
+
 @six.add_metaclass(abc.ABCMeta)
 class BaseSpecification(
     EnvironmentSpecificationMixin,
     InitSpecificationMixin,
     MountsSpecificationMixin,
     TerminationSpecificationMixin,
-    ParallelSpecificationMixin,
+    WorkflowSpecificationMixin,
+    ScheduleSpecificationMixin,
 ):
     """Base abstract specification for plyaxonfiles and configurations."""
 
@@ -294,15 +329,17 @@ class BaseSpecification(
     INIT = "init"
     MOUNTS = "mounts"
     CONTAINER = "container"
-    PARALLEL = "parallel"
-    REPLICA_SPEC = "replica_spec"
-    PORTS = "ports"
-    TEMPLATES = "templates"
-    OPS = "ops"
+    WORKFLOW = "workflow"
+    SERVICE = "service"
+    OPERATIONS = "operations"
+    COMPONENTS = "components"
     SCHEDULE = "schedule"
     DEPENDENCIES = "dependencies"
     TRIGGER = "trigger"
     CONDITIONS = "conditions"
+    SKIP_ON_UPSTREAM_SKIP = "skip_on_upstream_skip"
+    COMPONENT_REF = "component_ref"
+    COMPONENT = "component"
 
     SECTIONS = (
         VERSION,
@@ -310,8 +347,6 @@ class BaseSpecification(
         NAME,
         DESCRIPTION,
         TAGS,
-        INPUTS,
-        OUTPUTS,
         PARAMS,
         PROFILE,
         NOCACHE,
@@ -319,16 +354,19 @@ class BaseSpecification(
         TERMINATION,
         INIT,
         MOUNTS,
-        CONTAINER,
-        PARALLEL,
-        REPLICA_SPEC,
-        PORTS,
-        TEMPLATES,
-        OPS,
+        WORKFLOW,
+        SERVICE,
+        OPERATIONS,
         SCHEDULE,
         DEPENDENCIES,
         TRIGGER,
         CONDITIONS,
+        SKIP_ON_UPSTREAM_SKIP,
+        COMPONENT_REF,
+        COMPONENT,
+        INPUTS,
+        OUTPUTS,
+        CONTAINER,
     )
 
     PARSING_SECTIONS = (
@@ -336,12 +374,12 @@ class BaseSpecification(
         NOCACHE,
         ENVIRONMENT,
         TERMINATION,
+        SCHEDULE,
         INIT,
         MOUNTS,
-        REPLICA_SPEC,
-        PORTS,
+        SERVICE,
     )
-    OP_PARSING_SECTIONS = (TEMPLATES, OPS, SCHEDULE, DEPENDENCIES, TRIGGER, CONDITIONS)
+    OP_PARSING_SECTIONS = (OPERATIONS, SCHEDULE, DEPENDENCIES, TRIGGER, CONDITIONS)
 
     REQUIRED_SECTIONS = (VERSION, KIND)
 
@@ -353,13 +391,17 @@ class BaseSpecification(
         self._values = to_list(values)
 
         try:
-            self._data = rhea.read(self._values)
+            self._data = rhea.read(
+                [{"kind": self._SPEC_KIND, "version": SCHEMA_VERSION}] + self._values
+            )
         except rhea.RheaError as e:
-            raise PolyaxonSchemaError(e)
+            raise PolyaxonSchemaError("%s" % e)
         try:
             self._config = self.CONFIG.from_dict(copy.deepcopy(self.data))
         except (ValidationError, TypeError) as e:
-            raise PolyaxonfileError(e)
+            raise PolyaxonfileError(
+                "Received a non valid config `{}`: `{}`".format(self._SPEC_KIND, e)
+            )
         self.check_data()
         self._extra_validation()
 
@@ -388,7 +430,7 @@ class BaseSpecification(
                 check_runs=check_runs,
             )
         except ValidationError as e:
-            raise PolyaxonfileError(e)
+            raise PolyaxonfileError("Params validation error: `{}`".format(e))
 
     def apply_params(self, params=None, context=None):
         context = context or {}
@@ -413,7 +455,7 @@ class BaseSpecification(
         set_io(self.config.inputs)
         set_io(self.config.outputs)
 
-    def apply_context(self):
+    def _apply_run_context(self):
         params = self.validate_params(is_template=False, check_runs=True)
 
         for param in params:
@@ -426,7 +468,23 @@ class BaseSpecification(
         params = {param.name: param for param in params}
         return self._parse(params)
 
+    def _apply_dag_context(self):
+        self.workflow_strategy.process_dag()
+        self.workflow_strategy.validate_dag()
+        self.workflow_strategy.process_components(self.config.inputs)
+        return self
+
+    def apply_context(self):
+        if self.has_dag:
+            return self._apply_dag_context()
+        else:
+            return self._apply_run_context()
+
     def apply_container_contexts(self, contexts=None):
+        if self.has_pipeline:
+            raise PolyaxonSchemaError(
+                "This method is not allowed on this specification."
+            )
         params = self.validate_params(is_template=False, check_runs=True)
         params = {param.name: param for param in params}
         contexts = contexts or {}
@@ -505,20 +563,12 @@ class BaseSpecification(
         return data[cls.KIND]
 
     @staticmethod
-    def check_kind_job(kind):
-        return kind == kinds.JOB
+    def check_kind_op(kind):
+        return kind == kinds.OP
 
     @staticmethod
-    def check_kind_service(kind):
-        return kind == kinds.SERVICE
-
-    @staticmethod
-    def check_kind_pipeline(kind):
-        return kind == kinds.PIPELINE
-
-    @staticmethod
-    def check_kind_operation(kind):
-        return kind == kinds.OPERATION
+    def check_kind_component(kind):
+        return kind == kinds.COMPONENT
 
     @classmethod
     def read(cls, values):
@@ -527,20 +577,29 @@ class BaseSpecification(
         return cls(values)
 
     @property
-    def is_job(self):
-        return self.check_kind_job(self.kind)
+    def is_op(self):
+        return self.check_kind_op(self.kind)
 
     @property
-    def is_service(self):
-        return self.check_kind_service(self.kind)
+    def is_component(self):
+        return self.check_kind_component(self.kind)
 
     @property
-    def is_pipeline(self):
-        return self.check_kind_pipeline(self.kind)
+    def has_service(self):
+        return self.config.service is not None
 
     @property
-    def is_operation(self):
-        return self.check_kind_operation(self.kind)
+    def has_pipeline(self):
+        return self.workflow_strategy and (
+            self.workflow.has_dag_strategy or self.workflow.has_automl_strategy
+        )
+
+    @property
+    def has_dag(self):
+        return (
+            self.workflow_strategy_kind
+            and self.workflow_strategy_kind == DagConfig.IDENTIFIER
+        )
 
     @property
     def values(self):

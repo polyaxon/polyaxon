@@ -47,11 +47,11 @@ def configure_logger(verbose):
                 environment=cli_config.log_handler.environment,
             )
 
-    set_raven_client()
     if verbose:
         log_level = logging.DEBUG
         settings.CLIENT_CONFIG.debug = True
     else:
+        set_raven_client()
         log_level = logging.INFO
     logging.basicConfig(format="%(message)s", level=log_level, stream=sys.stdout)
 

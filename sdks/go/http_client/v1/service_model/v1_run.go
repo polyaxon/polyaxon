@@ -66,8 +66,8 @@ type V1Run struct {
 	// Is resume
 	IsResume bool `json:"is_resume,omitempty"`
 
-	// Optional run kind
-	Kind string `json:"kind,omitempty"`
+	// Optional run meta info
+	MetaInfo *V1RunMetaInfo `json:"meta_info,omitempty"`
 
 	// Optional name
 	Name string `json:"name,omitempty"`
@@ -132,6 +132,10 @@ func (m *V1Run) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
+	if err := m.validateMetaInfo(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateStartedAt(formats); err != nil {
 		res = append(res, err)
 	}
@@ -167,6 +171,24 @@ func (m *V1Run) validateFinishedAt(formats strfmt.Registry) error {
 
 	if err := validate.FormatOf("finished_at", "body", "date-time", m.FinishedAt.String(), formats); err != nil {
 		return err
+	}
+
+	return nil
+}
+
+func (m *V1Run) validateMetaInfo(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.MetaInfo) { // not required
+		return nil
+	}
+
+	if m.MetaInfo != nil {
+		if err := m.MetaInfo.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("meta_info")
+			}
+			return err
+		}
 	}
 
 	return nil

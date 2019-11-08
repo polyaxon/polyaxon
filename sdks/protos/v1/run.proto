@@ -9,6 +9,15 @@ import "protoc-gen-swagger/options/annotations.proto";
 
 import "v1/base.proto";
 
+// Run meta info specification
+message RunMetaInfo {
+    bool service = 1;
+
+    string workflow_strategy = 2;
+
+    int32 workflow_concurrency = 3;
+}
+
 // Run specification
 message Run {
     // UUID
@@ -56,8 +65,8 @@ message Run {
     // Optional latest status of this entity
     string status = 15;
 
-    // Optional run kind
-    string kind = 16;
+    // Optional run meta info
+    RunMetaInfo meta_info = 16;
 
     // Optional a readme text describing this entity
     string readme = 17;
