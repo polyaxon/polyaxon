@@ -20,7 +20,6 @@ from __future__ import absolute_import, division, print_function
 import ast
 import copy
 import jinja2
-import numpy as np
 import six
 
 from collections import Mapping, defaultdict
@@ -29,6 +28,11 @@ from hestia.list_utils import to_list
 from rhea.utils import deep_update
 
 from polyaxon.exceptions import PolyaxonfileError
+
+try:
+    import numpy as np
+except (ImportError, ModuleNotFoundError):
+    np = None
 
 
 class Parser(object):
@@ -115,9 +119,9 @@ class Parser(object):
     ):
         if isinstance(expression, (int, float, complex, type(None))):
             return expression
-        if isinstance(expression, np.integer):
+        if np and isinstance(expression, np.integer):
             return int(expression)
-        if isinstance(expression, np.floating):
+        if np and isinstance(expression, np.floating):
             return float(expression)
         if isinstance(expression, Mapping):
             if len(expression) == 1:

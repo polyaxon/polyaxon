@@ -78,7 +78,6 @@ class OpConfig(BaseComponentConfig):
         mounts=None,
         schedule=None,
         workflow=None,
-        recursive=None,
         service=None,
         dependencies=None,
         params=None,
@@ -102,7 +101,6 @@ class OpConfig(BaseComponentConfig):
             mounts=mounts,
             schedule=schedule,
             workflow=workflow,
-            recursive=recursive,
             service=service,
         )
         validate_op({"component_ref": component_ref, "component": component})

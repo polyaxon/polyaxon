@@ -28,7 +28,7 @@ from polyaxon.polyaxonfile import PolyaxonFile
 from polyaxon.schemas.polyflow.container import ContainerConfig
 from polyaxon.schemas.polyflow.io import IOConfig
 from polyaxon.schemas.polyflow.params import get_params_with_refs
-from polyaxon.schemas.polyflow.workflows import GridSearchConfig, WorkflowConfig
+from polyaxon.schemas.polyflow.workflows import GridSearchConfig
 from polyaxon.schemas.polyflow.workflows.matrix import MatrixChoiceConfig
 
 
@@ -115,20 +115,19 @@ class TestPolyaxonfileWithTypes(TestCase):
         assert spec.is_component
         assert spec.has_pipeline
         assert spec.has_dag is False
-        assert isinstance(spec.workflow.strategy.matrix["param1"], MatrixChoiceConfig)
-        assert isinstance(spec.workflow.strategy.matrix["param2"], MatrixChoiceConfig)
-        assert spec.workflow.strategy.matrix["param1"].to_dict() == {
+        assert isinstance(spec.workflow.matrix["param1"], MatrixChoiceConfig)
+        assert isinstance(spec.workflow.matrix["param2"], MatrixChoiceConfig)
+        assert spec.workflow.matrix["param1"].to_dict() == {
             "kind": "choice",
             "value": [1, 2],
         }
-        assert spec.workflow.strategy.matrix["param2"].to_dict() == {
+        assert spec.workflow.matrix["param2"].to_dict() == {
             "kind": "choice",
             "value": [3.3, 4.4],
         }
-        assert isinstance(spec.workflow, WorkflowConfig)
+        assert isinstance(spec.workflow, GridSearchConfig)
         assert spec.concurrency == 2
-        assert isinstance(spec.workflow_strategy, GridSearchConfig)
-        assert spec.workflow_strategy_kind == GridSearchConfig.IDENTIFIER
+        assert spec.workflow_kind == GridSearchConfig.IDENTIFIER
         assert spec.workflow.early_stopping is None
         assert spec.early_stopping == []
 
@@ -142,20 +141,19 @@ class TestPolyaxonfileWithTypes(TestCase):
         spec = spec.apply_context()
         assert spec.version == 0.6
         assert spec.is_component
-        assert isinstance(spec.workflow.strategy.matrix["param1"], MatrixChoiceConfig)
-        assert isinstance(spec.workflow.strategy.matrix["param2"], MatrixChoiceConfig)
-        assert spec.workflow.strategy.matrix["param1"].to_dict() == {
+        assert isinstance(spec.workflow.matrix["param1"], MatrixChoiceConfig)
+        assert isinstance(spec.workflow.matrix["param2"], MatrixChoiceConfig)
+        assert spec.workflow.matrix["param1"].to_dict() == {
             "kind": "choice",
             "value": [1, 2],
         }
-        assert spec.workflow.strategy.matrix["param2"].to_dict() == {
+        assert spec.workflow.matrix["param2"].to_dict() == {
             "kind": "choice",
             "value": [3.3, 4.4],
         }
-        assert isinstance(spec.workflow, WorkflowConfig)
+        assert isinstance(spec.workflow, GridSearchConfig)
         assert spec.concurrency == 2
-        assert isinstance(spec.workflow_strategy, GridSearchConfig)
-        assert spec.workflow_strategy_kind == GridSearchConfig.IDENTIFIER
+        assert spec.workflow_kind == GridSearchConfig.IDENTIFIER
         assert spec.workflow.early_stopping is None
         assert spec.early_stopping == []
 

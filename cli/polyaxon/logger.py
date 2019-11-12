@@ -22,8 +22,6 @@ import sys
 
 from functools import wraps
 
-from polyaxon import settings
-
 try:
     from StringIO import StringIO
 except ImportError:
@@ -48,6 +46,8 @@ def configure_logger(verbose):
             )
 
     if verbose:
+        from polyaxon import settings
+
         log_level = logging.DEBUG
         settings.CLIENT_CONFIG.debug = True
     else:

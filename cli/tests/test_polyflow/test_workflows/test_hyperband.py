@@ -24,7 +24,7 @@ import pytest
 from marshmallow.exceptions import ValidationError
 from tests.utils import assert_equal_dict
 
-from polyaxon.schemas.polyflow.workflows import HyperbandConfig
+from polyaxon.schemas.polyflow.workflows.automl.hyperband import HyperbandConfig
 from polyaxon.schemas.polyflow.workflows.metrics import Optimization, SearchMetricConfig
 
 
@@ -55,7 +55,7 @@ class TestWorkflowHyperbandConfigs(TestCase):
             HyperbandConfig.from_dict(config_dict)
 
         config_dict["max_iter"] = 3
-        # Add n_experiments percent
+        # Add n_runs percent
         config_dict["eta"] = -0.5
         with self.assertRaises(ValidationError):
             HyperbandConfig.from_dict(config_dict)

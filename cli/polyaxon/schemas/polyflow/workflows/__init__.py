@@ -17,15 +17,14 @@
 # coding: utf-8
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import fields
-
-from polyaxon.schemas.base import BaseConfig, BaseOneOfSchema, BaseSchema
+from polyaxon.schemas.base import BaseOneOfSchema
 from polyaxon.schemas.polyflow.workflows.automl.bo import BOConfig, BOSchema
+from polyaxon.schemas.polyflow.workflows.automl.hyperopt import (
+    HyperoptSchema,
+    HyperoptConfig,
+)
 from polyaxon.schemas.polyflow.workflows.dag import DagConfig, DagSchema
 from polyaxon.schemas.polyflow.workflows.dask import DaskConfig, DaskSchema
-from polyaxon.schemas.polyflow.workflows.early_stopping_policies import (
-    EarlyStoppingSchema,
-)
 from polyaxon.schemas.polyflow.workflows.automl.grid_search import (
     GridSearchConfig,
     GridSearchSchema,
@@ -50,10 +49,14 @@ from polyaxon.schemas.polyflow.workflows.kubeflow.pytorch_job import (
     PytorchJobSchema,
 )
 from polyaxon.schemas.polyflow.workflows.kubeflow.tf_job import TFJobConfig, TFJobSchema
+from polyaxon.schemas.polyflow.workflows.iterative import (
+    IterativeConfig,
+    IterativeSchema,
+)
 from polyaxon.schemas.polyflow.workflows.spark import SparkConfig, SparkSchema
 
 
-class WorkflowStrategySchema(BaseOneOfSchema):
+class WorkflowSchema(BaseOneOfSchema):
     TYPE_FIELD = "kind"
     TYPE_FIELD_REMOVE = False
     SCHEMAS = {
@@ -62,6 +65,7 @@ class WorkflowStrategySchema(BaseOneOfSchema):
         RandomSearchConfig.IDENTIFIER: RandomSearchSchema,
         HyperbandConfig.IDENTIFIER: HyperbandSchema,
         BOConfig.IDENTIFIER: BOSchema,
+        HyperoptConfig.IDENTIFIER: HyperoptSchema,
         DagConfig.IDENTIFIER: DagSchema,
         MpiJobConfig.IDENTIFIER: MpiJobSchema,
         PytorchJobConfig.IDENTIFIER: PytorchJobSchema,
@@ -69,99 +73,76 @@ class WorkflowStrategySchema(BaseOneOfSchema):
         SparkConfig.IDENTIFIER: SparkSchema,
         FlinkConfig.IDENTIFIER: FlinkSchema,
         DaskConfig.IDENTIFIER: DaskSchema,
+        IterativeConfig.IDENTIFIER: IterativeSchema,
     }
 
 
-class WorkflowStrategyMixin(object):
-    def get_kind(self):
+class WorkflowMixin(object):
+    def get_workflow_kind(self):
         raise NotImplementedError()
 
     @property
-    def has_mapping_strategy(self):
-        return self.get_kind() == MappingConfig.IDENTIFIER
+    def has_mapping_workflow(self):
+        return self.get_workflow_kind() == MappingConfig.IDENTIFIER
 
     @property
-    def has_grid_search_strategy(self):
-        return self.get_kind() == GridSearchConfig.IDENTIFIER
+    def has_grid_search_workflow(self):
+        return self.get_workflow_kind() == GridSearchConfig.IDENTIFIER
 
     @property
-    def has_random_search_strategy(self):
-        return self.get_kind() == RandomSearchConfig.IDENTIFIER
+    def has_random_search_workflow(self):
+        return self.get_workflow_kind() == RandomSearchConfig.IDENTIFIER
 
     @property
-    def has_hyperband_strategy(self):
-        return self.get_kind() == HyperbandConfig.IDENTIFIER
+    def has_hyperband_workflow(self):
+        return self.get_workflow_kind() == HyperbandConfig.IDENTIFIER
 
     @property
-    def has_bo_strategy(self):
-        return self.get_kind() == BOConfig.IDENTIFIER
+    def has_bo_workflow(self):
+        return self.get_workflow_kind() == BOConfig.IDENTIFIER
 
     @property
-    def has_mpi_job_strategy(self):
-        return self.get_kind() == MpiJobConfig.IDENTIFIER
+    def has_mpi_job_workflow(self):
+        return self.get_workflow_kind() == MpiJobConfig.IDENTIFIER
 
     @property
-    def has_pytorch_job_strategy(self):
-        return self.get_kind() == PytorchJobConfig.IDENTIFIER
+    def has_pytorch_job_workflow(self):
+        return self.get_workflow_kind() == PytorchJobConfig.IDENTIFIER
 
     @property
-    def has_tf_job_strategy(self):
-        return self.get_kind() == TFJobConfig.IDENTIFIER
+    def has_tf_job_workflow(self):
+        return self.get_workflow_kind() == TFJobConfig.IDENTIFIER
 
     @property
-    def has_spark_strategy(self):
-        return self.get_kind() == SparkConfig.IDENTIFIER
+    def has_spark_workflow(self):
+        return self.get_workflow_kind() == SparkConfig.IDENTIFIER
 
     @property
-    def has_flink_strategy(self):
-        return self.get_kind() == FlinkConfig.IDENTIFIER
+    def has_flink_workflow(self):
+        return self.get_workflow_kind() == FlinkConfig.IDENTIFIER
 
     @property
-    def has_dask_strategy(self):
-        return self.get_kind() == DaskConfig.IDENTIFIER
+    def has_dask_workflow(self):
+        return self.get_workflow_kind() == DaskConfig.IDENTIFIER
 
     @property
-    def has_dag_strategy(self):
-        return self.get_kind() == DagConfig.IDENTIFIER
+    def has_dag_workflow(self):
+        return self.get_workflow_kind() == DagConfig.IDENTIFIER
 
     @property
-    def has_distributed_strategy(self):
+    def has_distributed_workflow(self):
         return (
-            self.has_mpi_job_strategy
-            or self.has_pytorch_job_strategy
-            or self.has_tf_job_strategy
+            self.has_mpi_job_workflow
+            or self.has_pytorch_job_workflow
+            or self.has_tf_job_workflow
         )
 
     @property
-    def has_automl_strategy(self):
+    def has_automl_workflow(self):
         return (
-            self.has_mapping_strategy
-            or self.has_grid_search_strategy
-            or self.has_random_search_strategy
-            or self.has_hyperband_strategy
-            or self.has_bo_strategy
+            self.has_mapping_workflow
+            or self.has_grid_search_workflow
+            or self.has_random_search_workflow
+            or self.has_hyperband_workflow
+            or self.has_bo_workflow
         )
-
-
-class WorkflowSchema(BaseSchema):
-    strategy = fields.Nested(WorkflowStrategySchema, required=True)
-    concurrency = fields.Int(allow_none=True)
-    early_stopping = fields.Nested(EarlyStoppingSchema, many=True, allow_none=True)
-
-    @staticmethod
-    def schema_config():
-        return WorkflowConfig
-
-
-class WorkflowConfig(BaseConfig, WorkflowStrategyMixin):
-    SCHEMA = WorkflowSchema
-    IDENTIFIER = "workflow"
-    REDUCED_ATTRIBUTES = ["concurrency", "strategy", "early_stopping"]
-
-    def __init__(self, strategy=None, concurrency=None, early_stopping=None):
-        self.strategy = strategy
-        self.concurrency = concurrency
-        self.early_stopping = early_stopping
-
-    def get_kind(self):
-        return self.strategy.kind

@@ -39,7 +39,7 @@ const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 type HostAccess struct {
 	// UUID
 	Uuid string `protobuf:"bytes,1,opt,name=uuid,proto3" json:"uuid,omitempty"`
-	// Optional name
+	// Name
 	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
 	// Optional description
 	Description string `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`

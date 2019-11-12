@@ -8,16 +8,15 @@ name: test-pipeline
 tags: [native]
 
 workflow:
-  strategy:
-    kind: dag
-    ops:
-      - name: job1
-        component_ref: {name: job-template}
-        params:
-          input1: s3://foo
+  kind: dag
+  ops:
+    - name: job1
+      component_ref: {name: job-template}
+      params:
+        input1: s3://foo
 
-    components:
-      - name: experiment-template
-        description: experiment to predict something
-        tags: [tag11, tag12]
-        container: {image: test}
+  components:
+    - name: experiment-template
+      description: experiment to predict something
+      tags: [tag11, tag12]
+      container: {image: test}

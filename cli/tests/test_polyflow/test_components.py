@@ -593,7 +593,8 @@ class TestOperationsConfigs(TestCase):
         config_dict = {
             "workflow": {
                 "concurrency": 2,
-                "strategy": {"kind": "mapping", "values": [{"a": 1}, {"a": 1}]},
+                "kind": "mapping",
+                "values": [{"a": 1}, {"a": 1}],
             },
             "container": {"image": "test"},
         }
@@ -603,7 +604,8 @@ class TestOperationsConfigs(TestCase):
         config_dict = {
             "workflow": {
                 "concurrency": 2,
-                "strategy": {"kind": "mapping", "values": [{"a": 1}, {"a": 1}]},
+                "kind": "mapping",
+                "values": [{"a": 1}, {"a": 1}],
             },
             "schedule": {"kind": "exact_time", "execute_at": local_now().isoformat()},
             "termination": {"timeout": 1000},
@@ -611,4 +613,6 @@ class TestOperationsConfigs(TestCase):
         }
         config = ComponentConfig.from_dict(config_dict)
         config_to_light = config.to_light_dict()
+        config_to_light["schedule"].pop("execute_at")
+        config_dict["schedule"].pop("execute_at")
         assert config_to_light == config_dict

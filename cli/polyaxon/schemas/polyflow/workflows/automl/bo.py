@@ -23,6 +23,9 @@ from marshmallow import ValidationError, fields, validate, validates_schema
 
 from polyaxon.schemas.base import BaseConfig, BaseSchema
 from polyaxon.schemas.fields.ref_or_obj import RefOrObject
+from polyaxon.schemas.polyflow.workflows.early_stopping_policies import (
+    EarlyStoppingSchema,
+)
 from polyaxon.schemas.polyflow.workflows.matrix import MatrixSchema
 from polyaxon.schemas.polyflow.workflows.metrics import SearchMetricSchema
 
@@ -191,6 +194,8 @@ class BOSchema(BaseSchema):
         keys=fields.Str(), values=fields.Nested(MatrixSchema), required=True
     )
     seed = RefOrObject(fields.Int(allow_none=True))
+    concurrency = fields.Int(allow_none=True)
+    early_stopping = fields.Nested(EarlyStoppingSchema, many=True, allow_none=True)
 
     @staticmethod
     def schema_config():
@@ -205,6 +210,7 @@ class BOSchema(BaseSchema):
 class BOConfig(BaseConfig):
     SCHEMA = BOSchema
     IDENTIFIER = "bo"
+    REDUCED_ATTRIBUTES = ["seed", "concurrency", "early_stopping"]
 
     def __init__(
         self,
@@ -214,6 +220,8 @@ class BOConfig(BaseConfig):
         metric,
         utility_function=None,
         seed=None,
+        concurrency=None,
+        early_stopping=None,
         kind=IDENTIFIER,
     ):
         self.matrix = validate_matrix(matrix)
@@ -223,3 +231,5 @@ class BOConfig(BaseConfig):
         self.utility_function = utility_function
         self.metric = metric
         self.seed = seed
+        self.concurrency = concurrency
+        self.early_stopping = early_stopping

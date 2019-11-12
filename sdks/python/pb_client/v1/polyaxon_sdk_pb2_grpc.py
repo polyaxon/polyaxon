@@ -177,6 +177,16 @@ class RunsV1Stub(object):
         request_serializer=v1_dot_base__pb2.ProjectEntityResourceRequest.SerializeToString,
         response_deserializer=v1_dot_auth__pb2.Auth.FromString,
         )
+    self.GetRunLogsTree = channel.unary_unary(
+        '/v1.RunsV1/GetRunLogsTree',
+        request_serializer=v1_dot_base__pb2.RunArtifactRequest.SerializeToString,
+        response_deserializer=v1_dot_artifacts__store__pb2.ArtifactTreeResponse.FromString,
+        )
+    self.GetRunArtifactsTree = channel.unary_unary(
+        '/v1.RunsV1/GetRunArtifactsTree',
+        request_serializer=v1_dot_base__pb2.RunArtifactRequest.SerializeToString,
+        response_deserializer=v1_dot_artifacts__store__pb2.ArtifactTreeResponse.FromString,
+        )
 
 
 class RunsV1Servicer(object):
@@ -373,6 +383,20 @@ class RunsV1Servicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
+  def GetRunLogsTree(self, request, context):
+    """Get run logs list
+    """
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def GetRunArtifactsTree(self, request, context):
+    """Get run artifacts list
+    """
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
 
 def add_RunsV1Servicer_to_server(servicer, server):
   rpc_method_handlers = {
@@ -511,6 +535,16 @@ def add_RunsV1Servicer_to_server(servicer, server):
           request_deserializer=v1_dot_base__pb2.ProjectEntityResourceRequest.FromString,
           response_serializer=v1_dot_auth__pb2.Auth.SerializeToString,
       ),
+      'GetRunLogsTree': grpc.unary_unary_rpc_method_handler(
+          servicer.GetRunLogsTree,
+          request_deserializer=v1_dot_base__pb2.RunArtifactRequest.FromString,
+          response_serializer=v1_dot_artifacts__store__pb2.ArtifactTreeResponse.SerializeToString,
+      ),
+      'GetRunArtifactsTree': grpc.unary_unary_rpc_method_handler(
+          servicer.GetRunArtifactsTree,
+          request_deserializer=v1_dot_base__pb2.RunArtifactRequest.FromString,
+          response_serializer=v1_dot_artifacts__store__pb2.ArtifactTreeResponse.SerializeToString,
+      ),
   }
   generic_handler = grpc.method_handlers_generic_handler(
       'v1.RunsV1', rpc_method_handlers)
@@ -532,6 +566,11 @@ class ProjectsV1Stub(object):
         request_serializer=v1_dot_base__pb2.OwnerResouceListRequest.SerializeToString,
         response_deserializer=v1_dot_project__pb2.ListProjectsResponse.FromString,
         )
+    self.CreateProject = channel.unary_unary(
+        '/v1.ProjectsV1/CreateProject',
+        request_serializer=v1_dot_project__pb2.ProjectBodyRequest.SerializeToString,
+        response_deserializer=v1_dot_project__pb2.Project.FromString,
+        )
     self.ListProjectNames = channel.unary_unary(
         '/v1.ProjectsV1/ListProjectNames',
         request_serializer=v1_dot_base__pb2.OwnerResouceListRequest.SerializeToString,
@@ -546,11 +585,6 @@ class ProjectsV1Stub(object):
         '/v1.ProjectsV1/ListArchivedProjects',
         request_serializer=v1_dot_base__pb2.UserResouceListRequest.SerializeToString,
         response_deserializer=v1_dot_project__pb2.ListProjectsResponse.FromString,
-        )
-    self.CreateProject = channel.unary_unary(
-        '/v1.ProjectsV1/CreateProject',
-        request_serializer=v1_dot_project__pb2.ProjectBodyRequest.SerializeToString,
-        response_deserializer=v1_dot_project__pb2.Project.FromString,
         )
     self.GetProject = channel.unary_unary(
         '/v1.ProjectsV1/GetProject',
@@ -615,6 +649,13 @@ class ProjectsV1Servicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
+  def CreateProject(self, request, context):
+    """Create new project
+    """
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
   def ListProjectNames(self, request, context):
     """List project namess
     """
@@ -631,13 +672,6 @@ class ProjectsV1Servicer(object):
 
   def ListArchivedProjects(self, request, context):
     """List archived projects for user
-    """
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def CreateProject(self, request, context):
-    """Create new project
     """
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
@@ -721,6 +755,11 @@ def add_ProjectsV1Servicer_to_server(servicer, server):
           request_deserializer=v1_dot_base__pb2.OwnerResouceListRequest.FromString,
           response_serializer=v1_dot_project__pb2.ListProjectsResponse.SerializeToString,
       ),
+      'CreateProject': grpc.unary_unary_rpc_method_handler(
+          servicer.CreateProject,
+          request_deserializer=v1_dot_project__pb2.ProjectBodyRequest.FromString,
+          response_serializer=v1_dot_project__pb2.Project.SerializeToString,
+      ),
       'ListProjectNames': grpc.unary_unary_rpc_method_handler(
           servicer.ListProjectNames,
           request_deserializer=v1_dot_base__pb2.OwnerResouceListRequest.FromString,
@@ -735,11 +774,6 @@ def add_ProjectsV1Servicer_to_server(servicer, server):
           servicer.ListArchivedProjects,
           request_deserializer=v1_dot_base__pb2.UserResouceListRequest.FromString,
           response_serializer=v1_dot_project__pb2.ListProjectsResponse.SerializeToString,
-      ),
-      'CreateProject': grpc.unary_unary_rpc_method_handler(
-          servicer.CreateProject,
-          request_deserializer=v1_dot_project__pb2.ProjectBodyRequest.FromString,
-          response_serializer=v1_dot_project__pb2.Project.SerializeToString,
       ),
       'GetProject': grpc.unary_unary_rpc_method_handler(
           servicer.GetProject,
@@ -941,7 +975,7 @@ def add_ArtifactsStoresV1Servicer_to_server(servicer, server):
   server.add_generic_rpc_handlers((generic_handler,))
 
 
-class K8SConfigMapsV1Stub(object):
+class K8sConfigMapsV1Stub(object):
   """Service to manage k8s config maps
   """
 
@@ -951,90 +985,90 @@ class K8SConfigMapsV1Stub(object):
     Args:
       channel: A grpc.Channel.
     """
-    self.ListK8SConfigMapNames = channel.unary_unary(
-        '/v1.K8SConfigMapsV1/ListK8SConfigMapNames',
+    self.ListK8sConfigMapNames = channel.unary_unary(
+        '/v1.K8sConfigMapsV1/ListK8sConfigMapNames',
         request_serializer=v1_dot_base__pb2.OwnerResouceListRequest.SerializeToString,
-        response_deserializer=v1_dot_k8s__resource__pb2.ListK8SResourcesResponse.FromString,
+        response_deserializer=v1_dot_k8s__resource__pb2.ListK8sResourcesResponse.FromString,
         )
-    self.ListK8SConfigMaps = channel.unary_unary(
-        '/v1.K8SConfigMapsV1/ListK8SConfigMaps',
+    self.ListK8sConfigMaps = channel.unary_unary(
+        '/v1.K8sConfigMapsV1/ListK8sConfigMaps',
         request_serializer=v1_dot_base__pb2.OwnerResouceListRequest.SerializeToString,
-        response_deserializer=v1_dot_k8s__resource__pb2.ListK8SResourcesResponse.FromString,
+        response_deserializer=v1_dot_k8s__resource__pb2.ListK8sResourcesResponse.FromString,
         )
-    self.CreateK8SConfigMaps = channel.unary_unary(
-        '/v1.K8SConfigMapsV1/CreateK8SConfigMaps',
-        request_serializer=v1_dot_k8s__resource__pb2.K8SResourceBodyRequest.SerializeToString,
-        response_deserializer=v1_dot_k8s__resource__pb2.K8SResource.FromString,
+    self.CreateK8sConfigMaps = channel.unary_unary(
+        '/v1.K8sConfigMapsV1/CreateK8sConfigMaps',
+        request_serializer=v1_dot_k8s__resource__pb2.K8sResourceBodyRequest.SerializeToString,
+        response_deserializer=v1_dot_k8s__resource__pb2.K8sResource.FromString,
         )
-    self.GetK8SConfigMap = channel.unary_unary(
-        '/v1.K8SConfigMapsV1/GetK8SConfigMap',
+    self.GetK8sConfigMap = channel.unary_unary(
+        '/v1.K8sConfigMapsV1/GetK8sConfigMap',
         request_serializer=v1_dot_base__pb2.OwnerEntityResourceRequest.SerializeToString,
-        response_deserializer=v1_dot_k8s__resource__pb2.K8SResource.FromString,
+        response_deserializer=v1_dot_k8s__resource__pb2.K8sResource.FromString,
         )
-    self.UpdateK8SConfigMap = channel.unary_unary(
-        '/v1.K8SConfigMapsV1/UpdateK8SConfigMap',
-        request_serializer=v1_dot_k8s__resource__pb2.K8SResourceBodyRequest.SerializeToString,
-        response_deserializer=v1_dot_k8s__resource__pb2.K8SResource.FromString,
+    self.UpdateK8sConfigMap = channel.unary_unary(
+        '/v1.K8sConfigMapsV1/UpdateK8sConfigMap',
+        request_serializer=v1_dot_k8s__resource__pb2.K8sResourceBodyRequest.SerializeToString,
+        response_deserializer=v1_dot_k8s__resource__pb2.K8sResource.FromString,
         )
-    self.PatchK8SConfigMap = channel.unary_unary(
-        '/v1.K8SConfigMapsV1/PatchK8SConfigMap',
-        request_serializer=v1_dot_k8s__resource__pb2.K8SResourceBodyRequest.SerializeToString,
-        response_deserializer=v1_dot_k8s__resource__pb2.K8SResource.FromString,
+    self.PatchK8sConfigMap = channel.unary_unary(
+        '/v1.K8sConfigMapsV1/PatchK8sConfigMap',
+        request_serializer=v1_dot_k8s__resource__pb2.K8sResourceBodyRequest.SerializeToString,
+        response_deserializer=v1_dot_k8s__resource__pb2.K8sResource.FromString,
         )
-    self.DeleteK8SConfigMap = channel.unary_unary(
-        '/v1.K8SConfigMapsV1/DeleteK8SConfigMap',
+    self.DeleteK8sConfigMap = channel.unary_unary(
+        '/v1.K8sConfigMapsV1/DeleteK8sConfigMap',
         request_serializer=v1_dot_base__pb2.OwnerEntityResourceRequest.SerializeToString,
         response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
         )
 
 
-class K8SConfigMapsV1Servicer(object):
+class K8sConfigMapsV1Servicer(object):
   """Service to manage k8s config maps
   """
 
-  def ListK8SConfigMapNames(self, request, context):
+  def ListK8sConfigMapNames(self, request, context):
     """List k8s config map namess
     """
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
-  def ListK8SConfigMaps(self, request, context):
+  def ListK8sConfigMaps(self, request, context):
     """List k8s config maps
     """
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
-  def CreateK8SConfigMaps(self, request, context):
+  def CreateK8sConfigMaps(self, request, context):
     """Create k8s config map
     """
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
-  def GetK8SConfigMap(self, request, context):
+  def GetK8sConfigMap(self, request, context):
     """Get k8s config map
     """
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
-  def UpdateK8SConfigMap(self, request, context):
+  def UpdateK8sConfigMap(self, request, context):
     """Update k8s config map
     """
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
-  def PatchK8SConfigMap(self, request, context):
+  def PatchK8sConfigMap(self, request, context):
     """Patch k8s config map
     """
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
-  def DeleteK8SConfigMap(self, request, context):
+  def DeleteK8sConfigMap(self, request, context):
     """Delete k8s config map
     """
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -1042,50 +1076,50 @@ class K8SConfigMapsV1Servicer(object):
     raise NotImplementedError('Method not implemented!')
 
 
-def add_K8SConfigMapsV1Servicer_to_server(servicer, server):
+def add_K8sConfigMapsV1Servicer_to_server(servicer, server):
   rpc_method_handlers = {
-      'ListK8SConfigMapNames': grpc.unary_unary_rpc_method_handler(
-          servicer.ListK8SConfigMapNames,
+      'ListK8sConfigMapNames': grpc.unary_unary_rpc_method_handler(
+          servicer.ListK8sConfigMapNames,
           request_deserializer=v1_dot_base__pb2.OwnerResouceListRequest.FromString,
-          response_serializer=v1_dot_k8s__resource__pb2.ListK8SResourcesResponse.SerializeToString,
+          response_serializer=v1_dot_k8s__resource__pb2.ListK8sResourcesResponse.SerializeToString,
       ),
-      'ListK8SConfigMaps': grpc.unary_unary_rpc_method_handler(
-          servicer.ListK8SConfigMaps,
+      'ListK8sConfigMaps': grpc.unary_unary_rpc_method_handler(
+          servicer.ListK8sConfigMaps,
           request_deserializer=v1_dot_base__pb2.OwnerResouceListRequest.FromString,
-          response_serializer=v1_dot_k8s__resource__pb2.ListK8SResourcesResponse.SerializeToString,
+          response_serializer=v1_dot_k8s__resource__pb2.ListK8sResourcesResponse.SerializeToString,
       ),
-      'CreateK8SConfigMaps': grpc.unary_unary_rpc_method_handler(
-          servicer.CreateK8SConfigMaps,
-          request_deserializer=v1_dot_k8s__resource__pb2.K8SResourceBodyRequest.FromString,
-          response_serializer=v1_dot_k8s__resource__pb2.K8SResource.SerializeToString,
+      'CreateK8sConfigMaps': grpc.unary_unary_rpc_method_handler(
+          servicer.CreateK8sConfigMaps,
+          request_deserializer=v1_dot_k8s__resource__pb2.K8sResourceBodyRequest.FromString,
+          response_serializer=v1_dot_k8s__resource__pb2.K8sResource.SerializeToString,
       ),
-      'GetK8SConfigMap': grpc.unary_unary_rpc_method_handler(
-          servicer.GetK8SConfigMap,
+      'GetK8sConfigMap': grpc.unary_unary_rpc_method_handler(
+          servicer.GetK8sConfigMap,
           request_deserializer=v1_dot_base__pb2.OwnerEntityResourceRequest.FromString,
-          response_serializer=v1_dot_k8s__resource__pb2.K8SResource.SerializeToString,
+          response_serializer=v1_dot_k8s__resource__pb2.K8sResource.SerializeToString,
       ),
-      'UpdateK8SConfigMap': grpc.unary_unary_rpc_method_handler(
-          servicer.UpdateK8SConfigMap,
-          request_deserializer=v1_dot_k8s__resource__pb2.K8SResourceBodyRequest.FromString,
-          response_serializer=v1_dot_k8s__resource__pb2.K8SResource.SerializeToString,
+      'UpdateK8sConfigMap': grpc.unary_unary_rpc_method_handler(
+          servicer.UpdateK8sConfigMap,
+          request_deserializer=v1_dot_k8s__resource__pb2.K8sResourceBodyRequest.FromString,
+          response_serializer=v1_dot_k8s__resource__pb2.K8sResource.SerializeToString,
       ),
-      'PatchK8SConfigMap': grpc.unary_unary_rpc_method_handler(
-          servicer.PatchK8SConfigMap,
-          request_deserializer=v1_dot_k8s__resource__pb2.K8SResourceBodyRequest.FromString,
-          response_serializer=v1_dot_k8s__resource__pb2.K8SResource.SerializeToString,
+      'PatchK8sConfigMap': grpc.unary_unary_rpc_method_handler(
+          servicer.PatchK8sConfigMap,
+          request_deserializer=v1_dot_k8s__resource__pb2.K8sResourceBodyRequest.FromString,
+          response_serializer=v1_dot_k8s__resource__pb2.K8sResource.SerializeToString,
       ),
-      'DeleteK8SConfigMap': grpc.unary_unary_rpc_method_handler(
-          servicer.DeleteK8SConfigMap,
+      'DeleteK8sConfigMap': grpc.unary_unary_rpc_method_handler(
+          servicer.DeleteK8sConfigMap,
           request_deserializer=v1_dot_base__pb2.OwnerEntityResourceRequest.FromString,
           response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
       ),
   }
   generic_handler = grpc.method_handlers_generic_handler(
-      'v1.K8SConfigMapsV1', rpc_method_handlers)
+      'v1.K8sConfigMapsV1', rpc_method_handlers)
   server.add_generic_rpc_handlers((generic_handler,))
 
 
-class K8SSecretsV1Stub(object):
+class K8sSecretsV1Stub(object):
   """Service to manage k8s secrets
   """
 
@@ -1095,90 +1129,90 @@ class K8SSecretsV1Stub(object):
     Args:
       channel: A grpc.Channel.
     """
-    self.ListK8SSecretNames = channel.unary_unary(
-        '/v1.K8SSecretsV1/ListK8SSecretNames',
+    self.ListK8sSecretNames = channel.unary_unary(
+        '/v1.K8sSecretsV1/ListK8sSecretNames',
         request_serializer=v1_dot_base__pb2.OwnerResouceListRequest.SerializeToString,
-        response_deserializer=v1_dot_k8s__resource__pb2.ListK8SResourcesResponse.FromString,
+        response_deserializer=v1_dot_k8s__resource__pb2.ListK8sResourcesResponse.FromString,
         )
-    self.ListK8SSecrets = channel.unary_unary(
-        '/v1.K8SSecretsV1/ListK8SSecrets',
+    self.ListK8sSecrets = channel.unary_unary(
+        '/v1.K8sSecretsV1/ListK8sSecrets',
         request_serializer=v1_dot_base__pb2.OwnerResouceListRequest.SerializeToString,
-        response_deserializer=v1_dot_k8s__resource__pb2.ListK8SResourcesResponse.FromString,
+        response_deserializer=v1_dot_k8s__resource__pb2.ListK8sResourcesResponse.FromString,
         )
-    self.CreateK8SSecrets = channel.unary_unary(
-        '/v1.K8SSecretsV1/CreateK8SSecrets',
-        request_serializer=v1_dot_k8s__resource__pb2.K8SResourceBodyRequest.SerializeToString,
-        response_deserializer=v1_dot_k8s__resource__pb2.K8SResource.FromString,
+    self.CreateK8sSecrets = channel.unary_unary(
+        '/v1.K8sSecretsV1/CreateK8sSecrets',
+        request_serializer=v1_dot_k8s__resource__pb2.K8sResourceBodyRequest.SerializeToString,
+        response_deserializer=v1_dot_k8s__resource__pb2.K8sResource.FromString,
         )
-    self.GetK8SSecret = channel.unary_unary(
-        '/v1.K8SSecretsV1/GetK8SSecret',
+    self.GetK8sSecret = channel.unary_unary(
+        '/v1.K8sSecretsV1/GetK8sSecret',
         request_serializer=v1_dot_base__pb2.OwnerEntityResourceRequest.SerializeToString,
-        response_deserializer=v1_dot_k8s__resource__pb2.K8SResource.FromString,
+        response_deserializer=v1_dot_k8s__resource__pb2.K8sResource.FromString,
         )
-    self.UpdateK8SSecret = channel.unary_unary(
-        '/v1.K8SSecretsV1/UpdateK8SSecret',
-        request_serializer=v1_dot_k8s__resource__pb2.K8SResourceBodyRequest.SerializeToString,
-        response_deserializer=v1_dot_k8s__resource__pb2.K8SResource.FromString,
+    self.UpdateK8sSecret = channel.unary_unary(
+        '/v1.K8sSecretsV1/UpdateK8sSecret',
+        request_serializer=v1_dot_k8s__resource__pb2.K8sResourceBodyRequest.SerializeToString,
+        response_deserializer=v1_dot_k8s__resource__pb2.K8sResource.FromString,
         )
-    self.PatchK8SSecret = channel.unary_unary(
-        '/v1.K8SSecretsV1/PatchK8SSecret',
-        request_serializer=v1_dot_k8s__resource__pb2.K8SResourceBodyRequest.SerializeToString,
-        response_deserializer=v1_dot_k8s__resource__pb2.K8SResource.FromString,
+    self.PatchK8sSecret = channel.unary_unary(
+        '/v1.K8sSecretsV1/PatchK8sSecret',
+        request_serializer=v1_dot_k8s__resource__pb2.K8sResourceBodyRequest.SerializeToString,
+        response_deserializer=v1_dot_k8s__resource__pb2.K8sResource.FromString,
         )
-    self.DeleteK8SSecret = channel.unary_unary(
-        '/v1.K8SSecretsV1/DeleteK8SSecret',
+    self.DeleteK8sSecret = channel.unary_unary(
+        '/v1.K8sSecretsV1/DeleteK8sSecret',
         request_serializer=v1_dot_base__pb2.OwnerEntityResourceRequest.SerializeToString,
         response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
         )
 
 
-class K8SSecretsV1Servicer(object):
+class K8sSecretsV1Servicer(object):
   """Service to manage k8s secrets
   """
 
-  def ListK8SSecretNames(self, request, context):
+  def ListK8sSecretNames(self, request, context):
     """List k8s secret namess
     """
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
-  def ListK8SSecrets(self, request, context):
+  def ListK8sSecrets(self, request, context):
     """List k8s secrets
     """
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
-  def CreateK8SSecrets(self, request, context):
+  def CreateK8sSecrets(self, request, context):
     """Create k8s secret
     """
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
-  def GetK8SSecret(self, request, context):
+  def GetK8sSecret(self, request, context):
     """Get k8s secret
     """
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
-  def UpdateK8SSecret(self, request, context):
+  def UpdateK8sSecret(self, request, context):
     """Update k8s secret
     """
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
-  def PatchK8SSecret(self, request, context):
+  def PatchK8sSecret(self, request, context):
     """Patch k8s secret
     """
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
-  def DeleteK8SSecret(self, request, context):
+  def DeleteK8sSecret(self, request, context):
     """Delete k8s config map
     """
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -1186,50 +1220,50 @@ class K8SSecretsV1Servicer(object):
     raise NotImplementedError('Method not implemented!')
 
 
-def add_K8SSecretsV1Servicer_to_server(servicer, server):
+def add_K8sSecretsV1Servicer_to_server(servicer, server):
   rpc_method_handlers = {
-      'ListK8SSecretNames': grpc.unary_unary_rpc_method_handler(
-          servicer.ListK8SSecretNames,
+      'ListK8sSecretNames': grpc.unary_unary_rpc_method_handler(
+          servicer.ListK8sSecretNames,
           request_deserializer=v1_dot_base__pb2.OwnerResouceListRequest.FromString,
-          response_serializer=v1_dot_k8s__resource__pb2.ListK8SResourcesResponse.SerializeToString,
+          response_serializer=v1_dot_k8s__resource__pb2.ListK8sResourcesResponse.SerializeToString,
       ),
-      'ListK8SSecrets': grpc.unary_unary_rpc_method_handler(
-          servicer.ListK8SSecrets,
+      'ListK8sSecrets': grpc.unary_unary_rpc_method_handler(
+          servicer.ListK8sSecrets,
           request_deserializer=v1_dot_base__pb2.OwnerResouceListRequest.FromString,
-          response_serializer=v1_dot_k8s__resource__pb2.ListK8SResourcesResponse.SerializeToString,
+          response_serializer=v1_dot_k8s__resource__pb2.ListK8sResourcesResponse.SerializeToString,
       ),
-      'CreateK8SSecrets': grpc.unary_unary_rpc_method_handler(
-          servicer.CreateK8SSecrets,
-          request_deserializer=v1_dot_k8s__resource__pb2.K8SResourceBodyRequest.FromString,
-          response_serializer=v1_dot_k8s__resource__pb2.K8SResource.SerializeToString,
+      'CreateK8sSecrets': grpc.unary_unary_rpc_method_handler(
+          servicer.CreateK8sSecrets,
+          request_deserializer=v1_dot_k8s__resource__pb2.K8sResourceBodyRequest.FromString,
+          response_serializer=v1_dot_k8s__resource__pb2.K8sResource.SerializeToString,
       ),
-      'GetK8SSecret': grpc.unary_unary_rpc_method_handler(
-          servicer.GetK8SSecret,
+      'GetK8sSecret': grpc.unary_unary_rpc_method_handler(
+          servicer.GetK8sSecret,
           request_deserializer=v1_dot_base__pb2.OwnerEntityResourceRequest.FromString,
-          response_serializer=v1_dot_k8s__resource__pb2.K8SResource.SerializeToString,
+          response_serializer=v1_dot_k8s__resource__pb2.K8sResource.SerializeToString,
       ),
-      'UpdateK8SSecret': grpc.unary_unary_rpc_method_handler(
-          servicer.UpdateK8SSecret,
-          request_deserializer=v1_dot_k8s__resource__pb2.K8SResourceBodyRequest.FromString,
-          response_serializer=v1_dot_k8s__resource__pb2.K8SResource.SerializeToString,
+      'UpdateK8sSecret': grpc.unary_unary_rpc_method_handler(
+          servicer.UpdateK8sSecret,
+          request_deserializer=v1_dot_k8s__resource__pb2.K8sResourceBodyRequest.FromString,
+          response_serializer=v1_dot_k8s__resource__pb2.K8sResource.SerializeToString,
       ),
-      'PatchK8SSecret': grpc.unary_unary_rpc_method_handler(
-          servicer.PatchK8SSecret,
-          request_deserializer=v1_dot_k8s__resource__pb2.K8SResourceBodyRequest.FromString,
-          response_serializer=v1_dot_k8s__resource__pb2.K8SResource.SerializeToString,
+      'PatchK8sSecret': grpc.unary_unary_rpc_method_handler(
+          servicer.PatchK8sSecret,
+          request_deserializer=v1_dot_k8s__resource__pb2.K8sResourceBodyRequest.FromString,
+          response_serializer=v1_dot_k8s__resource__pb2.K8sResource.SerializeToString,
       ),
-      'DeleteK8SSecret': grpc.unary_unary_rpc_method_handler(
-          servicer.DeleteK8SSecret,
+      'DeleteK8sSecret': grpc.unary_unary_rpc_method_handler(
+          servicer.DeleteK8sSecret,
           request_deserializer=v1_dot_base__pb2.OwnerEntityResourceRequest.FromString,
           response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
       ),
   }
   generic_handler = grpc.method_handlers_generic_handler(
-      'v1.K8SSecretsV1', rpc_method_handlers)
+      'v1.K8sSecretsV1', rpc_method_handlers)
   server.add_generic_rpc_handlers((generic_handler,))
 
 
-class RegsitryAccessesV1Stub(object):
+class RegistryAccessesV1Stub(object):
   """Service to manage regsitry access
   """
 
@@ -1239,90 +1273,90 @@ class RegsitryAccessesV1Stub(object):
     Args:
       channel: A grpc.Channel.
     """
-    self.ListRegsitryAccessNames = channel.unary_unary(
-        '/v1.RegsitryAccessesV1/ListRegsitryAccessNames',
+    self.ListRegistryAccessNames = channel.unary_unary(
+        '/v1.RegistryAccessesV1/ListRegistryAccessNames',
         request_serializer=v1_dot_base__pb2.OwnerResouceListRequest.SerializeToString,
         response_deserializer=v1_dot_host__access__pb2.ListHostAccessesResponse.FromString,
         )
-    self.ListRegsitryAccesses = channel.unary_unary(
-        '/v1.RegsitryAccessesV1/ListRegsitryAccesses',
+    self.ListRegistryAccesses = channel.unary_unary(
+        '/v1.RegistryAccessesV1/ListRegistryAccesses',
         request_serializer=v1_dot_base__pb2.OwnerResouceListRequest.SerializeToString,
         response_deserializer=v1_dot_host__access__pb2.ListHostAccessesResponse.FromString,
         )
-    self.CreateRegsitryAccess = channel.unary_unary(
-        '/v1.RegsitryAccessesV1/CreateRegsitryAccess',
+    self.CreateRegistryAccess = channel.unary_unary(
+        '/v1.RegistryAccessesV1/CreateRegistryAccess',
         request_serializer=v1_dot_host__access__pb2.HostAccessBodyRequest.SerializeToString,
         response_deserializer=v1_dot_host__access__pb2.HostAccess.FromString,
         )
-    self.GetRegsitryAccess = channel.unary_unary(
-        '/v1.RegsitryAccessesV1/GetRegsitryAccess',
+    self.GetRegistryAccess = channel.unary_unary(
+        '/v1.RegistryAccessesV1/GetRegistryAccess',
         request_serializer=v1_dot_base__pb2.OwnerEntityResourceRequest.SerializeToString,
         response_deserializer=v1_dot_host__access__pb2.HostAccess.FromString,
         )
-    self.UpdateRegsitryAccess = channel.unary_unary(
-        '/v1.RegsitryAccessesV1/UpdateRegsitryAccess',
+    self.UpdateRegistryAccess = channel.unary_unary(
+        '/v1.RegistryAccessesV1/UpdateRegistryAccess',
         request_serializer=v1_dot_host__access__pb2.HostAccessBodyRequest.SerializeToString,
         response_deserializer=v1_dot_host__access__pb2.HostAccess.FromString,
         )
-    self.PatchRegsitryAccess = channel.unary_unary(
-        '/v1.RegsitryAccessesV1/PatchRegsitryAccess',
+    self.PatchRegistryAccess = channel.unary_unary(
+        '/v1.RegistryAccessesV1/PatchRegistryAccess',
         request_serializer=v1_dot_host__access__pb2.HostAccessBodyRequest.SerializeToString,
         response_deserializer=v1_dot_host__access__pb2.HostAccess.FromString,
         )
-    self.DeleteRegsitryAccess = channel.unary_unary(
-        '/v1.RegsitryAccessesV1/DeleteRegsitryAccess',
+    self.DeleteRegistryAccess = channel.unary_unary(
+        '/v1.RegistryAccessesV1/DeleteRegistryAccess',
         request_serializer=v1_dot_base__pb2.OwnerEntityResourceRequest.SerializeToString,
         response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
         )
 
 
-class RegsitryAccessesV1Servicer(object):
+class RegistryAccessesV1Servicer(object):
   """Service to manage regsitry access
   """
 
-  def ListRegsitryAccessNames(self, request, context):
+  def ListRegistryAccessNames(self, request, context):
     """List registry access names
     """
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
-  def ListRegsitryAccesses(self, request, context):
+  def ListRegistryAccesses(self, request, context):
     """List registry access
     """
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
-  def CreateRegsitryAccess(self, request, context):
+  def CreateRegistryAccess(self, request, context):
     """Create registry access
     """
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
-  def GetRegsitryAccess(self, request, context):
+  def GetRegistryAccess(self, request, context):
     """Get registry access
     """
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
-  def UpdateRegsitryAccess(self, request, context):
+  def UpdateRegistryAccess(self, request, context):
     """Update registry access
     """
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
-  def PatchRegsitryAccess(self, request, context):
+  def PatchRegistryAccess(self, request, context):
     """Patch registry access
     """
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
-  def DeleteRegsitryAccess(self, request, context):
+  def DeleteRegistryAccess(self, request, context):
     """Delete registry access
     """
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -1330,46 +1364,46 @@ class RegsitryAccessesV1Servicer(object):
     raise NotImplementedError('Method not implemented!')
 
 
-def add_RegsitryAccessesV1Servicer_to_server(servicer, server):
+def add_RegistryAccessesV1Servicer_to_server(servicer, server):
   rpc_method_handlers = {
-      'ListRegsitryAccessNames': grpc.unary_unary_rpc_method_handler(
-          servicer.ListRegsitryAccessNames,
+      'ListRegistryAccessNames': grpc.unary_unary_rpc_method_handler(
+          servicer.ListRegistryAccessNames,
           request_deserializer=v1_dot_base__pb2.OwnerResouceListRequest.FromString,
           response_serializer=v1_dot_host__access__pb2.ListHostAccessesResponse.SerializeToString,
       ),
-      'ListRegsitryAccesses': grpc.unary_unary_rpc_method_handler(
-          servicer.ListRegsitryAccesses,
+      'ListRegistryAccesses': grpc.unary_unary_rpc_method_handler(
+          servicer.ListRegistryAccesses,
           request_deserializer=v1_dot_base__pb2.OwnerResouceListRequest.FromString,
           response_serializer=v1_dot_host__access__pb2.ListHostAccessesResponse.SerializeToString,
       ),
-      'CreateRegsitryAccess': grpc.unary_unary_rpc_method_handler(
-          servicer.CreateRegsitryAccess,
+      'CreateRegistryAccess': grpc.unary_unary_rpc_method_handler(
+          servicer.CreateRegistryAccess,
           request_deserializer=v1_dot_host__access__pb2.HostAccessBodyRequest.FromString,
           response_serializer=v1_dot_host__access__pb2.HostAccess.SerializeToString,
       ),
-      'GetRegsitryAccess': grpc.unary_unary_rpc_method_handler(
-          servicer.GetRegsitryAccess,
+      'GetRegistryAccess': grpc.unary_unary_rpc_method_handler(
+          servicer.GetRegistryAccess,
           request_deserializer=v1_dot_base__pb2.OwnerEntityResourceRequest.FromString,
           response_serializer=v1_dot_host__access__pb2.HostAccess.SerializeToString,
       ),
-      'UpdateRegsitryAccess': grpc.unary_unary_rpc_method_handler(
-          servicer.UpdateRegsitryAccess,
+      'UpdateRegistryAccess': grpc.unary_unary_rpc_method_handler(
+          servicer.UpdateRegistryAccess,
           request_deserializer=v1_dot_host__access__pb2.HostAccessBodyRequest.FromString,
           response_serializer=v1_dot_host__access__pb2.HostAccess.SerializeToString,
       ),
-      'PatchRegsitryAccess': grpc.unary_unary_rpc_method_handler(
-          servicer.PatchRegsitryAccess,
+      'PatchRegistryAccess': grpc.unary_unary_rpc_method_handler(
+          servicer.PatchRegistryAccess,
           request_deserializer=v1_dot_host__access__pb2.HostAccessBodyRequest.FromString,
           response_serializer=v1_dot_host__access__pb2.HostAccess.SerializeToString,
       ),
-      'DeleteRegsitryAccess': grpc.unary_unary_rpc_method_handler(
-          servicer.DeleteRegsitryAccess,
+      'DeleteRegistryAccess': grpc.unary_unary_rpc_method_handler(
+          servicer.DeleteRegistryAccess,
           request_deserializer=v1_dot_base__pb2.OwnerEntityResourceRequest.FromString,
           response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
       ),
   }
   generic_handler = grpc.method_handlers_generic_handler(
-      'v1.RegsitryAccessesV1', rpc_method_handlers)
+      'v1.RegistryAccessesV1', rpc_method_handlers)
   server.add_generic_rpc_handlers((generic_handler,))
 
 

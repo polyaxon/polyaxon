@@ -52,6 +52,9 @@ compile-swagger:
 	# Compile the *.proto files into *.swagger.json (swagger specification).
 	$(PROTOC) $(PROTO_PATH) $(INCLUDE_FLAGS) --plugin=protoc-gen-swagger=/gopath/bin/protoc-gen-swagger --swagger_out=logtostderr=true,allow_delete_body=true:swagger $(PROTO_FILES)
 
+concat-swagger:
+
+
 compile-js:
 	$(PROTOC) $(PROTO_PATH) $(INCLUDE_FLAGS) --plugin=protoc-gen-grpc=/usr/local/bin/grpc_tools_node_protoc_plugin --js_out=import_style=commonjs,binary:js/$(PB_CLIENT) --grpc_out=minimum_node_version=6:js/$(PB_CLIENT) $(PROTO_FILES)
 
@@ -106,8 +109,12 @@ swagger-generate: generate-go-swagger \
 	 generate-py-swagger \
 	 auto-license
 
+swagger-concat:
+	./concat.sh
+
 all: clean \
 	 docker-build \
 	 compile-go \
 	 compile-python \
-	 compile-swagger
+	 compile-swagger \
+	 swagger-concat

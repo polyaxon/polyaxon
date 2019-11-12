@@ -9,7 +9,7 @@ message ArtifactsStore {
     // UUID
     string uuid = 1;
 
-    // Optional name
+    // Name
     string name = 2;
 
     // Optional description
@@ -81,4 +81,11 @@ message ListArtifactsStoresResponse {
 
     // Next page
     string next = 4;
+}
+
+// Artifact tree response
+message ArtifactTreeResponse {
+    map<string, int64> files = 1;
+    repeated string dirs = 2;
+    bool is_done = 3;
 }

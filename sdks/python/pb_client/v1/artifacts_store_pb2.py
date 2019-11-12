@@ -37,7 +37,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='v1',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\x18v1/artifacts_store.proto\x12\x02v1\x1a\x1fgoogle/protobuf/timestamp.proto\"\xf4\x02\n\x0e\x41rtifactsStore\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x13\n\x0b\x64\x65scription\x18\x03 \x01(\t\x12\x0e\n\x06readme\x18\x04 \x01(\t\x12\x0c\n\x04tags\x18\x05 \x03(\t\x12.\n\ncreated_at\x18\x06 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12.\n\nupdated_at\x18\x07 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x0e\n\x06\x66rozen\x18\x08 \x01(\x08\x12\x10\n\x08\x64isabled\x18\t \x01(\x08\x12\x0f\n\x07\x64\x65leted\x18\n \x01(\x08\x12\x12\n\nk8s_secret\x18\x0b \x01(\t\x12\x0c\n\x04type\x18\x0c \x01(\t\x12\x12\n\nmount_path\x18\r \x01(\t\x12\x11\n\thost_path\x18\x0e \x01(\t\x12\x14\n\x0cvolume_claim\x18\x0f \x01(\t\x12\x0e\n\x06\x62ucket\x18\x10 \x01(\t\x12\x11\n\tread_only\x18\x11 \x01(\x08\"V\n\x19\x41rtifactsStoreBodyRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12*\n\x0e\x61rtifact_store\x18\x02 \x01(\x0b\x32\x12.v1.ArtifactsStore\"q\n\x1bListArtifactsStoresResponse\x12\r\n\x05\x63ount\x18\x01 \x01(\x05\x12#\n\x07results\x18\x02 \x03(\x0b\x32\x12.v1.ArtifactsStore\x12\x10\n\x08previous\x18\x03 \x01(\t\x12\x0c\n\x04next\x18\x04 \x01(\tb\x06proto3')
+  serialized_pb=_b('\n\x18v1/artifacts_store.proto\x12\x02v1\x1a\x1fgoogle/protobuf/timestamp.proto\"\xf4\x02\n\x0e\x41rtifactsStore\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x13\n\x0b\x64\x65scription\x18\x03 \x01(\t\x12\x0e\n\x06readme\x18\x04 \x01(\t\x12\x0c\n\x04tags\x18\x05 \x03(\t\x12.\n\ncreated_at\x18\x06 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12.\n\nupdated_at\x18\x07 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x0e\n\x06\x66rozen\x18\x08 \x01(\x08\x12\x10\n\x08\x64isabled\x18\t \x01(\x08\x12\x0f\n\x07\x64\x65leted\x18\n \x01(\x08\x12\x12\n\nk8s_secret\x18\x0b \x01(\t\x12\x0c\n\x04type\x18\x0c \x01(\t\x12\x12\n\nmount_path\x18\r \x01(\t\x12\x11\n\thost_path\x18\x0e \x01(\t\x12\x14\n\x0cvolume_claim\x18\x0f \x01(\t\x12\x0e\n\x06\x62ucket\x18\x10 \x01(\t\x12\x11\n\tread_only\x18\x11 \x01(\x08\"V\n\x19\x41rtifactsStoreBodyRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12*\n\x0e\x61rtifact_store\x18\x02 \x01(\x0b\x32\x12.v1.ArtifactsStore\"q\n\x1bListArtifactsStoresResponse\x12\r\n\x05\x63ount\x18\x01 \x01(\x05\x12#\n\x07results\x18\x02 \x03(\x0b\x32\x12.v1.ArtifactsStore\x12\x10\n\x08previous\x18\x03 \x01(\t\x12\x0c\n\x04next\x18\x04 \x01(\t\"\x97\x01\n\x14\x41rtifactTreeResponse\x12\x32\n\x05\x66iles\x18\x01 \x03(\x0b\x32#.v1.ArtifactTreeResponse.FilesEntry\x12\x0c\n\x04\x64irs\x18\x02 \x03(\t\x12\x0f\n\x07is_done\x18\x03 \x01(\x08\x1a,\n\nFilesEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x03:\x02\x38\x01\x62\x06proto3')
   ,
   dependencies=[google_dot_protobuf_dot_timestamp__pb2.DESCRIPTOR,])
 
@@ -276,13 +276,98 @@ _LISTARTIFACTSSTORESRESPONSE = _descriptor.Descriptor(
   serialized_end=641,
 )
 
+
+_ARTIFACTTREERESPONSE_FILESENTRY = _descriptor.Descriptor(
+  name='FilesEntry',
+  full_name='v1.ArtifactTreeResponse.FilesEntry',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='key', full_name='v1.ArtifactTreeResponse.FilesEntry.key', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='value', full_name='v1.ArtifactTreeResponse.FilesEntry.value', index=1,
+      number=2, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=_b('8\001'),
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=751,
+  serialized_end=795,
+)
+
+_ARTIFACTTREERESPONSE = _descriptor.Descriptor(
+  name='ArtifactTreeResponse',
+  full_name='v1.ArtifactTreeResponse',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='files', full_name='v1.ArtifactTreeResponse.files', index=0,
+      number=1, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='dirs', full_name='v1.ArtifactTreeResponse.dirs', index=1,
+      number=2, type=9, cpp_type=9, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='is_done', full_name='v1.ArtifactTreeResponse.is_done', index=2,
+      number=3, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[_ARTIFACTTREERESPONSE_FILESENTRY, ],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=644,
+  serialized_end=795,
+)
+
 _ARTIFACTSSTORE.fields_by_name['created_at'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
 _ARTIFACTSSTORE.fields_by_name['updated_at'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
 _ARTIFACTSSTOREBODYREQUEST.fields_by_name['artifact_store'].message_type = _ARTIFACTSSTORE
 _LISTARTIFACTSSTORESRESPONSE.fields_by_name['results'].message_type = _ARTIFACTSSTORE
+_ARTIFACTTREERESPONSE_FILESENTRY.containing_type = _ARTIFACTTREERESPONSE
+_ARTIFACTTREERESPONSE.fields_by_name['files'].message_type = _ARTIFACTTREERESPONSE_FILESENTRY
 DESCRIPTOR.message_types_by_name['ArtifactsStore'] = _ARTIFACTSSTORE
 DESCRIPTOR.message_types_by_name['ArtifactsStoreBodyRequest'] = _ARTIFACTSSTOREBODYREQUEST
 DESCRIPTOR.message_types_by_name['ListArtifactsStoresResponse'] = _LISTARTIFACTSSTORESRESPONSE
+DESCRIPTOR.message_types_by_name['ArtifactTreeResponse'] = _ARTIFACTTREERESPONSE
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 ArtifactsStore = _reflection.GeneratedProtocolMessageType('ArtifactsStore', (_message.Message,), {
@@ -306,5 +391,21 @@ ListArtifactsStoresResponse = _reflection.GeneratedProtocolMessageType('ListArti
   })
 _sym_db.RegisterMessage(ListArtifactsStoresResponse)
 
+ArtifactTreeResponse = _reflection.GeneratedProtocolMessageType('ArtifactTreeResponse', (_message.Message,), {
 
+  'FilesEntry' : _reflection.GeneratedProtocolMessageType('FilesEntry', (_message.Message,), {
+    'DESCRIPTOR' : _ARTIFACTTREERESPONSE_FILESENTRY,
+    '__module__' : 'v1.artifacts_store_pb2'
+    # @@protoc_insertion_point(class_scope:v1.ArtifactTreeResponse.FilesEntry)
+    })
+  ,
+  'DESCRIPTOR' : _ARTIFACTTREERESPONSE,
+  '__module__' : 'v1.artifacts_store_pb2'
+  # @@protoc_insertion_point(class_scope:v1.ArtifactTreeResponse)
+  })
+_sym_db.RegisterMessage(ArtifactTreeResponse)
+_sym_db.RegisterMessage(ArtifactTreeResponse.FilesEntry)
+
+
+_ARTIFACTTREERESPONSE_FILESENTRY._options = None
 # @@protoc_insertion_point(module_scope)

@@ -10,16 +10,15 @@ inputs:
     is_optional: true
 
 workflow:
+  kind: grid_search
   concurrency: 2
-  strategy:
-    kind: grid_search
-    matrix:
-      param1:
-        kind: choice
-        value: [1, 2]
-      param2:
-        kind: choice
-        value: [3.3, 4.4]
+  matrix:
+    param1:
+      kind: choice
+      value: [1, 2]
+    param2:
+      kind: choice
+      value: [3.3, 4.4]
 
 container:
   image: my_image

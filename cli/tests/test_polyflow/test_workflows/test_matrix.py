@@ -25,6 +25,7 @@ import pytest
 
 from marshmallow.exceptions import ValidationError
 
+from polyaxon.automl.matrix.utils import get_length, get_max, get_min, sample, to_numpy
 from polyaxon.schemas.polyflow.workflows.matrix import (
     MatrixChoiceConfig,
     MatrixGeomSpaceConfig,
@@ -49,49 +50,49 @@ class TestMatrixConfigs(TestCase):
         config_dict = {"kind": "choice", "value": [1, 2, 3]}
         config = MatrixChoiceConfig.from_dict(config_dict)
         assert config.to_dict() == config_dict
-        assert config.to_numpy() == config_dict["value"]
-        assert config.sample() in [1, 2, 3]
-        assert config.length == 3
+        assert to_numpy(config) == config_dict["value"]
+        assert sample(config) in [1, 2, 3]
+        assert get_length(config) == 3
         assert config.is_categorical is False
         assert config.is_distribution is False
         assert config.is_range is False
         assert config.is_uniform is False
         assert config.is_discrete is True
         assert config.is_continuous is False
-        assert config.min == 1
-        assert config.max == 3
+        assert get_min(config) == 1
+        assert get_max(config) == 3
 
         config_dict["value"] = ["ok", "nook"]
         config = MatrixChoiceConfig.from_dict(config_dict)
         assert config.to_dict() == config_dict
-        assert config.to_numpy() == config_dict["value"]
-        assert config.sample() in ["ok", "nook"]
-        assert config.length == 2
+        assert to_numpy(config) == config_dict["value"]
+        assert sample(config) in ["ok", "nook"]
+        assert get_length(config) == 2
         assert config.is_categorical is True
         assert config.is_distribution is False
         assert config.is_range is False
         assert config.is_uniform is False
         assert config.is_discrete is True
         assert config.is_continuous is False
-        assert config.min is None
-        assert config.max is None
+        assert get_min(config) is None
+        assert get_max(config) is None
 
         config_dict["value"] = [[1, 2], [2, 4]]
         config = MatrixChoiceConfig.from_dict(config_dict)
         assert config.to_dict() == config_dict
-        assert config.to_numpy() == config_dict["value"]
-        assert config.sample() in [[1, 2], [2, 4]]
-        assert config.length == 2
+        assert to_numpy(config) == config_dict["value"]
+        assert sample(config) in [[1, 2], [2, 4]]
+        assert get_length(config) == 2
         assert config.is_categorical is True
         assert config.is_distribution is False
         assert config.is_range is False
         assert config.is_uniform is False
         assert config.is_discrete is True
         assert config.is_continuous is False
-        assert config.min is None
-        assert config.max is None
+        assert get_min(config) is None
+        assert get_max(config) is None
 
-    def test_matrix_pvalues_option(self):
+    def test_matrix_pchoice_option(self):
         config_dict = {"kind": "pchoice", "value": [(1, 0.1), (2, 0.3), (3, 6)]}
         with self.assertRaises(ValidationError):
             MatrixPChoiceConfig.from_dict(config_dict)
@@ -113,33 +114,33 @@ class TestMatrixConfigs(TestCase):
         config = MatrixPChoiceConfig.from_dict(config_dict)
         assert config.to_dict() == config_dict
         with self.assertRaises(ValidationError):
-            config.to_numpy()
-        assert config.sample() in [1, 2, 3]
-        assert config.length == 3
+            to_numpy(config)
+        assert sample(config) in [1, 2, 3]
+        assert get_length(config) == 3
         assert config.is_categorical is False
         assert config.is_distribution is True
         assert config.is_range is False
         assert config.is_uniform is False
         assert config.is_discrete is True
         assert config.is_continuous is False
-        assert config.min is None
-        assert config.max is None
+        assert get_min(config) is None
+        assert get_max(config) is None
 
     def test_matrix_range_option(self):
         def assert_equal(config, v1, v2, v3):
             result = {"start": v1, "stop": v2, "step": v3}
             assert config.to_dict()["value"] == result
-            np.testing.assert_array_equal(config.to_numpy(), np.arange(**result))
-            assert config.length == len(np.arange(**result))
-            assert config.sample() in np.arange(**result)
+            np.testing.assert_array_equal(to_numpy(config), np.arange(**result))
+            assert get_length(config) == len(np.arange(**result))
+            assert sample(config) in np.arange(**result)
             assert config.is_categorical is False
             assert config.is_distribution is False
             assert config.is_range is True
             assert config.is_uniform is False
             assert config.is_discrete is True
             assert config.is_continuous is False
-            assert config.min == v1
-            assert config.max == v2
+            assert get_min(config) == v1
+            assert get_max(config) == v2
 
         # as list
         config_dict = {"kind": "range", "value": [1, 2, 3]}
@@ -160,17 +161,17 @@ class TestMatrixConfigs(TestCase):
         def assert_equal(config, v1, v2, v3):
             result = {"start": v1, "stop": v2, "num": v3}
             assert config.to_dict()["value"] == result
-            np.testing.assert_array_equal(config.to_numpy(), np.linspace(**result))
-            assert config.length == len(np.linspace(**result))
-            assert config.sample() in np.linspace(**result)
+            np.testing.assert_array_equal(to_numpy(config), np.linspace(**result))
+            assert get_length(config) == len(np.linspace(**result))
+            assert sample(config) in np.linspace(**result)
             assert config.is_categorical is False
             assert config.is_distribution is False
             assert config.is_range is True
             assert config.is_uniform is False
             assert config.is_discrete is True
             assert config.is_continuous is False
-            assert config.min == v1
-            assert config.max == v2
+            assert get_min(config) == v1
+            assert get_max(config) == v2
 
         # as list
         config_dict = {"kind": "linspace", "value": [1, 2, 3]}
@@ -191,17 +192,17 @@ class TestMatrixConfigs(TestCase):
         def assert_equal(config, v1, v2, v3):
             result = {"start": v1, "stop": v2, "num": v3}
             assert config.to_dict()["value"] == result
-            np.testing.assert_array_equal(config.to_numpy(), np.geomspace(**result))
-            assert config.length == len(np.geomspace(**result))
-            assert config.sample() in np.geomspace(**result)
+            np.testing.assert_array_equal(to_numpy(config), np.geomspace(**result))
+            assert get_length(config) == len(np.geomspace(**result))
+            assert sample(config) in np.geomspace(**result)
             assert config.is_categorical is False
             assert config.is_distribution is False
             assert config.is_range is True
             assert config.is_uniform is False
             assert config.is_discrete is True
             assert config.is_continuous is False
-            assert config.min == v1
-            assert config.max == v2
+            assert get_min(config) == v1
+            assert get_max(config) == v2
 
         # as list
         config_dict = {"kind": "geomspace", "value": [1, 2, 3]}
@@ -225,17 +226,17 @@ class TestMatrixConfigs(TestCase):
                 result["base"] = v4
 
             assert config.to_dict()["value"] == result
-            np.testing.assert_array_equal(config.to_numpy(), np.logspace(**result))
-            assert config.length == len(np.logspace(**result))
-            assert config.sample() in np.logspace(**result)
+            np.testing.assert_array_equal(to_numpy(config), np.logspace(**result))
+            assert get_length(config) == len(np.logspace(**result))
+            assert sample(config) in np.logspace(**result)
             assert config.is_categorical is False
             assert config.is_distribution is False
             assert config.is_range is True
             assert config.is_uniform is False
             assert config.is_discrete is True
             assert config.is_continuous is False
-            assert config.min == v1
-            assert config.max == v2
+            assert get_min(config) == v1
+            assert get_max(config) == v2
 
         # as list
         config_dict = {"kind": "logspace", "value": [1, 2, 3]}
@@ -274,20 +275,20 @@ class TestMatrixConfigs(TestCase):
                 result["size"] = v3
             assert config.to_dict()["value"] == result
             with self.assertRaises(ValidationError):
-                config.to_numpy()
+                to_numpy(config)
             with self.assertRaises(ValidationError):
-                config.to_numpy()
+                to_numpy(config)
             with self.assertRaises(ValidationError):
-                config.length
-            assert v1 <= config.sample() <= v2
+                get_length(config)
+            assert v1 <= sample(config) <= v2
             assert config.is_categorical is False
             assert config.is_distribution is True
             assert config.is_range is False
             assert config.is_uniform is True
             assert config.is_discrete is False
             assert config.is_continuous is True
-            assert config.min == v1
-            assert config.max == v2
+            assert get_min(config) == v1
+            assert get_max(config) == v2
 
         # as list
         config_dict = {"kind": "uniform", "value": [0, 1]}
@@ -311,18 +312,18 @@ class TestMatrixConfigs(TestCase):
                 result["size"] = v3
             assert config.to_dict()["value"] == result
             with self.assertRaises(ValidationError):
-                config.to_numpy()
+                to_numpy(config)
             with self.assertRaises(ValidationError):
-                config.length
-            assert isinstance(config.sample(), float)
+                get_length(config)
+            assert isinstance(sample(config), float)
             assert config.is_categorical is False
             assert config.is_distribution is True
             assert config.is_range is False
             assert config.is_uniform is False
             assert config.is_discrete is False
             assert config.is_continuous is True
-            assert config.min is None
-            assert config.max is None
+            assert get_min(config) is None
+            assert get_max(config) is None
 
         # as list
         config_dict = {"kind": "quniform", "value": [0, 1, 0.1]}
@@ -346,18 +347,18 @@ class TestMatrixConfigs(TestCase):
                 result["size"] = v3
             assert config.to_dict()["value"] == result
             with self.assertRaises(ValidationError):
-                config.to_numpy()
+                to_numpy(config)
             with self.assertRaises(ValidationError):
-                config.length
-            assert isinstance(config.sample(), float)
+                get_length(config)
+            assert isinstance(sample(config), float)
             assert config.is_categorical is False
             assert config.is_distribution is True
             assert config.is_range is False
             assert config.is_uniform is False
             assert config.is_discrete is False
             assert config.is_continuous is True
-            assert config.min is None
-            assert config.max is None
+            assert get_min(config) is None
+            assert get_max(config) is None
 
         # as list
         config_dict = {"kind": "loguniform", "value": [0, 1]}
@@ -381,18 +382,18 @@ class TestMatrixConfigs(TestCase):
                 result["size"] = v3
             assert config.to_dict()["value"] == result
             with self.assertRaises(ValidationError):
-                config.to_numpy()
+                to_numpy(config)
             with self.assertRaises(ValidationError):
-                config.length
-            assert isinstance(config.sample(), float)
+                get_length(config)
+            assert isinstance(sample(config), float)
             assert config.is_categorical is False
             assert config.is_distribution is True
             assert config.is_range is False
             assert config.is_uniform is False
             assert config.is_discrete is False
             assert config.is_continuous is True
-            assert config.min is None
-            assert config.max is None
+            assert get_min(config) is None
+            assert get_max(config) is None
 
         # as list
         config_dict = {"kind": "qloguniform", "value": [0, 1, 0.1]}
@@ -416,18 +417,18 @@ class TestMatrixConfigs(TestCase):
                 result["size"] = v3
             assert config.to_dict()["value"] == result
             with self.assertRaises(ValidationError):
-                config.to_numpy()
+                to_numpy(config)
             with self.assertRaises(ValidationError):
-                config.length
-            assert isinstance(config.sample(), float)
+                get_length(config)
+            assert isinstance(sample(config), float)
             assert config.is_categorical is False
             assert config.is_distribution is True
             assert config.is_range is False
             assert config.is_uniform is False
             assert config.is_discrete is False
             assert config.is_continuous is True
-            assert config.min is None
-            assert config.max is None
+            assert get_min(config) is None
+            assert get_max(config) is None
 
         # as list
         config_dict = {"kind": "normal", "value": [0, 1]}
@@ -466,18 +467,18 @@ class TestMatrixConfigs(TestCase):
                 result["size"] = v3
             assert config.to_dict()["value"] == result
             with self.assertRaises(ValidationError):
-                config.to_numpy()
+                to_numpy(config)
             with self.assertRaises(ValidationError):
-                config.length
-            assert isinstance(config.sample(), float)
+                get_length(config)
+            assert isinstance(sample(config), float)
             assert config.is_categorical is False
             assert config.is_distribution is True
             assert config.is_range is False
             assert config.is_uniform is False
             assert config.is_discrete is False
             assert config.is_continuous is True
-            assert config.min is None
-            assert config.max is None
+            assert get_min(config) is None
+            assert get_max(config) is None
 
         # as list
         config_dict = {"kind": "qnormal", "value": [0, 1, 0.1]}
@@ -501,18 +502,18 @@ class TestMatrixConfigs(TestCase):
                 result["size"] = v3
             assert config.to_dict()["value"] == result
             with self.assertRaises(ValidationError):
-                config.to_numpy()
+                to_numpy(config)
             with self.assertRaises(ValidationError):
-                config.length
-            assert isinstance(config.sample(), float)
+                get_length(config)
+            assert isinstance(sample(config), float)
             assert config.is_categorical is False
             assert config.is_distribution is True
             assert config.is_range is False
             assert config.is_uniform is False
             assert config.is_discrete is False
             assert config.is_continuous is True
-            assert config.min is None
-            assert config.max is None
+            assert get_min(config) is None
+            assert get_max(config) is None
 
         # as list
         config_dict = {"kind": "lognormal", "value": [0, 1]}
@@ -536,18 +537,18 @@ class TestMatrixConfigs(TestCase):
                 result["size"] = v3
             assert config.to_dict()["value"] == result
             with self.assertRaises(ValidationError):
-                config.to_numpy()
+                to_numpy(config)
             with self.assertRaises(ValidationError):
-                config.length
-            assert isinstance(config.sample(), float)
+                get_length(config)
+            assert isinstance(sample(config), float)
             assert config.is_categorical is False
             assert config.is_distribution is True
             assert config.is_range is False
             assert config.is_uniform is False
             assert config.is_discrete is False
             assert config.is_continuous is True
-            assert config.min is None
-            assert config.max is None
+            assert get_min(config) is None
+            assert get_max(config) is None
 
         # as list
         config_dict = {"kind": "qlognormal", "value": [0, 1, 0.1]}

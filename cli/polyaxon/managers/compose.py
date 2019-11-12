@@ -28,8 +28,8 @@ class ComposeConfigManager(BaseConfigManager):
     FREQUENCY = 3
 
     @classmethod
-    def get_config_file_path(cls, create=True):
-        path = super(ComposeConfigManager, cls).get_config_file_path(create=create)
+    def get_config_filepath(cls, create=True):
+        path = super(ComposeConfigManager, cls).get_config_filepath(create=create)
         values = path.split("/")[:-1]
         cls._create_dir("/".join(values))
         return path

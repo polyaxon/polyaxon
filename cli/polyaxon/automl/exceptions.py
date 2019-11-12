@@ -1,0 +1,2 @@
+class PolyaxonAutoMLException(Exception):
+    pass

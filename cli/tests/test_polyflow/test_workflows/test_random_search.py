@@ -24,7 +24,8 @@ import pytest
 from marshmallow.exceptions import ValidationError
 from tests.utils import assert_equal_dict
 
-from polyaxon.schemas.polyflow.workflows import RandomSearchConfig, WorkflowConfig
+from polyaxon.schemas.polyflow.base import BaseComponentConfig
+from polyaxon.schemas.polyflow.workflows.automl.random_search import RandomSearchConfig
 
 
 @pytest.mark.workflow_mark
@@ -32,39 +33,43 @@ class TestWorkflowRandomSearchConfigs(TestCase):
     def test_random_search_config(self):
         config_dict = {
             "kind": "random_search",
-            "n_experiments": 10,
+            "n_runs": 10,
             "matrix": {"lr": {"kind": "choice", "value": [[0.1], [0.9]]}},
         }
         config = RandomSearchConfig.from_dict(config_dict)
         assert_equal_dict(config.to_dict(), config_dict)
 
         # Raises for negative values
-        config_dict["n_experiments"] = -5
+        config_dict["n_runs"] = -5
         with self.assertRaises(ValidationError):
             RandomSearchConfig.from_dict(config_dict)
 
-        config_dict["n_experiments"] = -0.5
+        config_dict["n_runs"] = -0.5
         with self.assertRaises(ValidationError):
             RandomSearchConfig.from_dict(config_dict)
 
-        # Add n_experiments percent
-        config_dict["n_experiments"] = 0.5
+        # Add n_runs percent
+        config_dict["n_runs"] = 0.5
         with self.assertRaises(ValidationError):
             RandomSearchConfig.from_dict(config_dict)
 
-        config_dict["n_experiments"] = 5
+        config_dict["n_runs"] = 5
         config = RandomSearchConfig.from_dict(config_dict)
         assert_equal_dict(config.to_dict(), config_dict)
 
-    def test_random_and_grid_search_without_n_experiments(self):
+    def test_random_search_without_n_runs(self):
         config_dict = {
-            "concurrency": 1,
-            "strategy": {
+            "workflow": {
                 "kind": "random_search",
+                "concurrency": 1,
                 "matrix": {"lr": {"kind": "choice", "value": [1, 2, 3]}},
                 "seed": 1,
-            },
-            "early_stopping": [],
+                "early_stopping": [],
+            }
         }
-        config = WorkflowConfig.from_dict(config_dict)
+        with self.assertRaises(ValidationError):
+            BaseComponentConfig.from_dict(config_dict)
+
+        config_dict["workflow"]["n_runs"] = 10
+        config = BaseComponentConfig.from_dict(config_dict)
         assert config.to_dict() == config_dict

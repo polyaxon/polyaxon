@@ -1,13 +1,14 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "Polyaxon sdk",
-    "version": "1.14.4",
+    "title": "Polyaxon SDKs and REST API specification.",
+    "version": "1.0.0",
     "contact": {
       "name": "Polyaxon sdk",
       "url": "https://github.com/polyaxon/polyaxon",
       "email": "contact@polyaxon.com"
-    }
+    },
+    "description": "Polyaxon SDKs and REST API specification."
   },
   "schemes": [
     "http",
@@ -22,7 +23,7 @@
   "paths": {
     "/api/v1/archives/{user}/projects": {
       "get": {
-        "summary": "Create new run",
+        "summary": "Get run",
         "operationId": "ListArchivedProjects",
         "responses": {
           "200": {
@@ -158,7 +159,7 @@
     },
     "/api/v1/bookmarks/{user}/projects": {
       "get": {
-        "summary": "List runs",
+        "summary": "Create new run",
         "operationId": "ListBookmarkedProjects",
         "responses": {
           "200": {
@@ -1409,12 +1410,12 @@
     "/api/v1/{owner}/k8s_config_maps": {
       "get": {
         "summary": "List archived runs for user",
-        "operationId": "ListK8SConfigMaps",
+        "operationId": "ListK8sConfigMaps",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1ListK8SResourcesResponse"
+              "$ref": "#/definitions/v1ListK8sResourcesResponse"
             }
           },
           "204": {
@@ -1470,17 +1471,17 @@
           }
         ],
         "tags": [
-          "K8SConfigMapsV1"
+          "K8sConfigMapsV1"
         ]
       },
       "post": {
         "summary": "List runs",
-        "operationId": "CreateK8SConfigMaps",
+        "operationId": "CreateK8sConfigMaps",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1K8SResource"
+              "$ref": "#/definitions/v1K8sResource"
             }
           },
           "204": {
@@ -1510,24 +1511,24 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/v1K8SResource"
+              "$ref": "#/definitions/v1K8sResource"
             }
           }
         ],
         "tags": [
-          "K8SConfigMapsV1"
+          "K8sConfigMapsV1"
         ]
       }
     },
     "/api/v1/{owner}/k8s_config_maps/names": {
       "get": {
         "summary": "List bookmarked runs for user",
-        "operationId": "ListK8SConfigMapNames",
+        "operationId": "ListK8sConfigMapNames",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1ListK8SResourcesResponse"
+              "$ref": "#/definitions/v1ListK8sResourcesResponse"
             }
           },
           "204": {
@@ -1583,19 +1584,19 @@
           }
         ],
         "tags": [
-          "K8SConfigMapsV1"
+          "K8sConfigMapsV1"
         ]
       }
     },
     "/api/v1/{owner}/k8s_config_maps/{k8s_resource.uuid}": {
       "put": {
         "summary": "Get run",
-        "operationId": "UpdateK8SConfigMap",
+        "operationId": "UpdateK8sConfigMap",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1K8SResource"
+              "$ref": "#/definitions/v1K8sResource"
             }
           },
           "204": {
@@ -1632,22 +1633,22 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/v1K8SResource"
+              "$ref": "#/definitions/v1K8sResource"
             }
           }
         ],
         "tags": [
-          "K8SConfigMapsV1"
+          "K8sConfigMapsV1"
         ]
       },
       "patch": {
         "summary": "Update run",
-        "operationId": "PatchK8SConfigMap",
+        "operationId": "PatchK8sConfigMap",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1K8SResource"
+              "$ref": "#/definitions/v1K8sResource"
             }
           },
           "204": {
@@ -1684,24 +1685,24 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/v1K8SResource"
+              "$ref": "#/definitions/v1K8sResource"
             }
           }
         ],
         "tags": [
-          "K8SConfigMapsV1"
+          "K8sConfigMapsV1"
         ]
       }
     },
     "/api/v1/{owner}/k8s_config_maps/{uuid}": {
       "get": {
         "summary": "Create new run",
-        "operationId": "GetK8SConfigMap",
+        "operationId": "GetK8sConfigMap",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1K8SResource"
+              "$ref": "#/definitions/v1K8sResource"
             }
           },
           "204": {
@@ -1734,12 +1735,12 @@
           }
         ],
         "tags": [
-          "K8SConfigMapsV1"
+          "K8sConfigMapsV1"
         ]
       },
       "delete": {
         "summary": "Patch run",
-        "operationId": "DeleteK8SConfigMap",
+        "operationId": "DeleteK8sConfigMap",
         "responses": {
           "200": {
             "description": "A successful response."
@@ -1774,19 +1775,19 @@
           }
         ],
         "tags": [
-          "K8SConfigMapsV1"
+          "K8sConfigMapsV1"
         ]
       }
     },
     "/api/v1/{owner}/k8s_secrets": {
       "get": {
         "summary": "List archived runs for user",
-        "operationId": "ListK8SSecrets",
+        "operationId": "ListK8sSecrets",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1ListK8SResourcesResponse"
+              "$ref": "#/definitions/v1ListK8sResourcesResponse"
             }
           },
           "204": {
@@ -1842,17 +1843,17 @@
           }
         ],
         "tags": [
-          "K8SSecretsV1"
+          "K8sSecretsV1"
         ]
       },
       "post": {
         "summary": "List runs",
-        "operationId": "CreateK8SSecrets",
+        "operationId": "CreateK8sSecrets",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1K8SResource"
+              "$ref": "#/definitions/v1K8sResource"
             }
           },
           "204": {
@@ -1882,24 +1883,24 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/v1K8SResource"
+              "$ref": "#/definitions/v1K8sResource"
             }
           }
         ],
         "tags": [
-          "K8SSecretsV1"
+          "K8sSecretsV1"
         ]
       }
     },
     "/api/v1/{owner}/k8s_secrets/names": {
       "get": {
         "summary": "List bookmarked runs for user",
-        "operationId": "ListK8SSecretNames",
+        "operationId": "ListK8sSecretNames",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1ListK8SResourcesResponse"
+              "$ref": "#/definitions/v1ListK8sResourcesResponse"
             }
           },
           "204": {
@@ -1955,19 +1956,19 @@
           }
         ],
         "tags": [
-          "K8SSecretsV1"
+          "K8sSecretsV1"
         ]
       }
     },
     "/api/v1/{owner}/k8s_secrets/{k8s_resource.uuid}": {
       "put": {
         "summary": "Get run",
-        "operationId": "UpdateK8SSecret",
+        "operationId": "UpdateK8sSecret",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1K8SResource"
+              "$ref": "#/definitions/v1K8sResource"
             }
           },
           "204": {
@@ -2004,22 +2005,22 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/v1K8SResource"
+              "$ref": "#/definitions/v1K8sResource"
             }
           }
         ],
         "tags": [
-          "K8SSecretsV1"
+          "K8sSecretsV1"
         ]
       },
       "patch": {
         "summary": "Update run",
-        "operationId": "PatchK8SSecret",
+        "operationId": "PatchK8sSecret",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1K8SResource"
+              "$ref": "#/definitions/v1K8sResource"
             }
           },
           "204": {
@@ -2056,24 +2057,24 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/v1K8SResource"
+              "$ref": "#/definitions/v1K8sResource"
             }
           }
         ],
         "tags": [
-          "K8SSecretsV1"
+          "K8sSecretsV1"
         ]
       }
     },
     "/api/v1/{owner}/k8s_secrets/{uuid}": {
       "get": {
         "summary": "Create new run",
-        "operationId": "GetK8SSecret",
+        "operationId": "GetK8sSecret",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1K8SResource"
+              "$ref": "#/definitions/v1K8sResource"
             }
           },
           "204": {
@@ -2106,12 +2107,12 @@
           }
         ],
         "tags": [
-          "K8SSecretsV1"
+          "K8sSecretsV1"
         ]
       },
       "delete": {
         "summary": "Patch run",
-        "operationId": "DeleteK8SSecret",
+        "operationId": "DeleteK8sSecret",
         "responses": {
           "200": {
             "description": "A successful response."
@@ -2146,58 +2147,11 @@
           }
         ],
         "tags": [
-          "K8SSecretsV1"
+          "K8sSecretsV1"
         ]
       }
     },
-    "/api/v1/{owner}/projects/create": {
-      "post": {
-        "summary": "Get run",
-        "operationId": "CreateProject",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1Project"
-            }
-          },
-          "204": {
-            "description": "No content.",
-            "schema": {}
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {}
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "description": "Project body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/v1Project"
-            }
-          }
-        ],
-        "tags": [
-          "ProjectsV1"
-        ]
-      }
-    },
-    "/api/v1/{owner}/projects/list": {
+    "/api/v1/{owner}/projects": {
       "get": {
         "summary": "List bookmarked runs for user",
         "operationId": "ListProjects",
@@ -2263,11 +2217,56 @@
         "tags": [
           "ProjectsV1"
         ]
+      },
+      "post": {
+        "summary": "List archived runs for user",
+        "operationId": "CreateProject",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Project"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "description": "Project body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1Project"
+            }
+          }
+        ],
+        "tags": [
+          "ProjectsV1"
+        ]
       }
     },
     "/api/v1/{owner}/projects/names": {
       "get": {
-        "summary": "List archived runs for user",
+        "summary": "List runs",
         "operationId": "ListProjectNames",
         "responses": {
           "200": {
@@ -2336,7 +2335,7 @@
     "/api/v1/{owner}/registry_accesses": {
       "get": {
         "summary": "List archived runs for user",
-        "operationId": "ListRegsitryAccesses",
+        "operationId": "ListRegistryAccesses",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -2397,12 +2396,12 @@
           }
         ],
         "tags": [
-          "RegsitryAccessesV1"
+          "RegistryAccessesV1"
         ]
       },
       "post": {
         "summary": "List runs",
-        "operationId": "CreateRegsitryAccess",
+        "operationId": "CreateRegistryAccess",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -2442,14 +2441,14 @@
           }
         ],
         "tags": [
-          "RegsitryAccessesV1"
+          "RegistryAccessesV1"
         ]
       }
     },
     "/api/v1/{owner}/registry_accesses/names": {
       "get": {
         "summary": "List bookmarked runs for user",
-        "operationId": "ListRegsitryAccessNames",
+        "operationId": "ListRegistryAccessNames",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -2510,14 +2509,14 @@
           }
         ],
         "tags": [
-          "RegsitryAccessesV1"
+          "RegistryAccessesV1"
         ]
       }
     },
     "/api/v1/{owner}/registry_accesses/{host_access.uuid}": {
       "put": {
         "summary": "Get run",
-        "operationId": "UpdateRegsitryAccess",
+        "operationId": "UpdateRegistryAccess",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -2564,12 +2563,12 @@
           }
         ],
         "tags": [
-          "RegsitryAccessesV1"
+          "RegistryAccessesV1"
         ]
       },
       "patch": {
         "summary": "Update run",
-        "operationId": "PatchRegsitryAccess",
+        "operationId": "PatchRegistryAccess",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -2616,14 +2615,14 @@
           }
         ],
         "tags": [
-          "RegsitryAccessesV1"
+          "RegistryAccessesV1"
         ]
       }
     },
     "/api/v1/{owner}/registry_accesses/{uuid}": {
       "get": {
         "summary": "Create new run",
-        "operationId": "GetRegsitryAccess",
+        "operationId": "GetRegistryAccess",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -2661,12 +2660,12 @@
           }
         ],
         "tags": [
-          "RegsitryAccessesV1"
+          "RegistryAccessesV1"
         ]
       },
       "delete": {
         "summary": "Patch run",
-        "operationId": "DeleteRegsitryAccess",
+        "operationId": "DeleteRegistryAccess",
         "responses": {
           "200": {
             "description": "A successful response."
@@ -2701,7 +2700,7 @@
           }
         ],
         "tags": [
-          "RegsitryAccessesV1"
+          "RegistryAccessesV1"
         ]
       }
     },
@@ -3104,7 +3103,80 @@
         ]
       }
     },
-    "/api/v1/{owner}/{project}/runs/create": {
+    "/api/v1/{owner}/{project}/runs": {
+      "get": {
+        "summary": "List runs",
+        "operationId": "ListRuns",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ListRunsResponse"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "project",
+            "description": "Project under namesapce",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "offset",
+            "description": "Pagination offset.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "limit",
+            "description": "Limit size.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "sort",
+            "description": "Sort to order the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "query",
+            "description": "Query filter the search search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "RunsV1"
+        ]
+      },
       "post": {
         "summary": "Create new run",
         "operationId": "CreateRun",
@@ -3253,81 +3325,6 @@
             "schema": {
               "$ref": "#/definitions/v1Uuids"
             }
-          }
-        ],
-        "tags": [
-          "RunsV1"
-        ]
-      }
-    },
-    "/api/v1/{owner}/{project}/runs/list": {
-      "get": {
-        "summary": "List runs",
-        "operationId": "ListRuns",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1ListRunsResponse"
-            }
-          },
-          "204": {
-            "description": "No content.",
-            "schema": {}
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {}
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "project",
-            "description": "Project under namesapce",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "offset",
-            "description": "Pagination offset.",
-            "in": "query",
-            "required": false,
-            "type": "integer",
-            "format": "int32"
-          },
-          {
-            "name": "limit",
-            "description": "Limit size.",
-            "in": "query",
-            "required": false,
-            "type": "integer",
-            "format": "int32"
-          },
-          {
-            "name": "sort",
-            "description": "Sort to order the search.",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "query",
-            "description": "Query filter the search search.",
-            "in": "query",
-            "required": false,
-            "type": "string"
           }
         ],
         "tags": [
@@ -3654,6 +3651,80 @@
         ]
       }
     },
+    "/api/v1/{owner}/{project}/runs/{uuid}/artifacts/tree": {
+      "get": {
+        "summary": "Get run artifacts list",
+        "operationId": "GetRunArtifactsTree",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ArtifactTreeResponse"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "project",
+            "description": "Project where the experiement will be assigned",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "uuid",
+            "description": "Unique integer identifier of the entity",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "path",
+            "description": "Artifact filepath.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "step",
+            "description": "Artifact logging step.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "type",
+            "description": "Artifact type.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "RunsV1"
+        ]
+      }
+    },
     "/api/v1/{owner}/{project}/runs/{uuid}/bookmark": {
       "post": {
         "summary": "Bookmark run",
@@ -3857,6 +3928,80 @@
             "schema": {
               "$ref": "#/definitions/v1ProjectEntityResourceRequest"
             }
+          }
+        ],
+        "tags": [
+          "RunsV1"
+        ]
+      }
+    },
+    "/api/v1/{owner}/{project}/runs/{uuid}/logs/tree": {
+      "get": {
+        "summary": "Get run logs list",
+        "operationId": "GetRunLogsTree",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ArtifactTreeResponse"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "project",
+            "description": "Project where the experiement will be assigned",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "uuid",
+            "description": "Unique integer identifier of the entity",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "path",
+            "description": "Artifact filepath.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "step",
+            "description": "Artifact logging step.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "type",
+            "description": "Artifact type.",
+            "in": "query",
+            "required": false,
+            "type": "string"
           }
         ],
         "tags": [
@@ -4614,9 +4759,403 @@
           "ProjectsV1"
         ]
       }
+    },
+    "/api/v1/catalogs/{owner}/artifacts_stores/{uuid}/upload": {
+      "post": {
+        "summary": "Upload artifact to a store",
+        "operationId": "UploadArtifact",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "A successful response."
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "uuid",
+            "description": "Unique integer identifier of the entity",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "uploadfile",
+            "in": "formData",
+            "required": true,
+            "type": "file",
+            "description": "The file to upload."
+          },
+          {
+            "name": "path",
+            "description": "File path query params.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "overwrite",
+            "description": "File path query params.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          }
+        ],
+        "tags": [
+          "ArtifactsStoresV1"
+        ]
+      }
+    },
+    "/api/v1/{owner}/{project}/artifacts_stores/{uuid}/upload": {
+      "post": {
+        "summary": "Upload artifact to a store via project access",
+        "operationId": "UploadProjectArtifact",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "A successful response."
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "project",
+            "description": "Project having access to the store",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "uuid",
+            "description": "Unique integer identifier of the entity",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "uploadfile",
+            "in": "formData",
+            "required": true,
+            "type": "file",
+            "description": "The file to upload."
+          },
+          {
+            "name": "path",
+            "description": "File path query params.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "overwrite",
+            "description": "File path query params.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          }
+        ],
+        "tags": [
+          "ProjectsV1"
+        ]
+      }
+    },
+    "/api/v1/{owner}/{project}/runs/{uuid}/logs/upload": {
+      "post": {
+        "summary": "Upload a logs file to a store via run access",
+        "operationId": "UploadRunLogs",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "A successful response."
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "project",
+            "description": "Project having access to the store",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "uuid",
+            "description": "Unique integer identifier of the entity",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "uploadfile",
+            "in": "formData",
+            "required": true,
+            "type": "file",
+            "description": "The file to upload."
+          },
+          {
+            "name": "path",
+            "description": "File path query params.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "overwrite",
+            "description": "File path query params.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          }
+        ],
+        "tags": [
+          "RunsV1"
+        ]
+      }
+    },
+    "/api/v1/{owner}/{project}/runs/{uuid}/artifacts/upload": {
+      "post": {
+        "summary": "Upload an artifact file to a store via run access",
+        "operationId": "UploadRunArtifact",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "A successful response."
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "project",
+            "description": "Project having access to the store",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "uuid",
+            "description": "Unique integer identifier of the entity",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "uploadfile",
+            "in": "formData",
+            "required": true,
+            "type": "file",
+            "description": "The file to upload."
+          },
+          {
+            "name": "path",
+            "description": "File path query params.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "overwrite",
+            "description": "File path query params.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          }
+        ],
+        "tags": [
+          "RunsV1"
+        ]
+      }
+    },
+    "/api/v1/{owner}/{project}/runs/{uuid}/logs/file": {
+      "get": {
+        "summary": "Get run logs get file",
+        "operationId": "GetRunLogsFile",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "project",
+            "description": "Project where the experiement will be assigned",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "uuid",
+            "description": "Unique integer identifier of the entity",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "path",
+            "description": "Artifact filepath.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "step",
+            "description": "Artifact logging step.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "type",
+            "description": "Artifact type.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "RunsV1"
+        ]
+      }
     }
   },
   "definitions": {
+    "v1ArtifactTreeResponse": {
+      "type": "object",
+      "properties": {
+        "files": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string",
+            "format": "int64"
+          }
+        },
+        "dirs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "is_done": {
+          "type": "boolean",
+          "format": "boolean"
+        }
+      },
+      "title": "Artifact tree response"
+    },
     "v1ArtifactsStore": {
       "type": "object",
       "properties": {
@@ -4626,7 +5165,7 @@
         },
         "name": {
           "type": "string",
-          "title": "Optional name"
+          "title": "Name"
         },
         "description": {
           "type": "string",
@@ -4787,7 +5326,7 @@
         },
         "name": {
           "type": "string",
-          "title": "Optional name"
+          "title": "Name"
         },
         "description": {
           "type": "string",
@@ -4845,7 +5384,7 @@
       },
       "title": "Host access specification"
     },
-    "v1K8SResource": {
+    "v1K8sResource": {
       "type": "object",
       "properties": {
         "uuid": {
@@ -4854,7 +5393,7 @@
         },
         "name": {
           "type": "string",
-          "title": "Optional name"
+          "title": "Name"
         },
         "description": {
           "type": "string",
@@ -4912,7 +5451,7 @@
           "title": "Optional the k8s secret to use"
         }
       },
-      "title": "K8S resource specification"
+      "title": "K8s resource specification"
     },
     "v1ListArtifactsStoresResponse": {
       "type": "object",
@@ -4992,7 +5531,7 @@
       },
       "title": "Contains list host accesses"
     },
-    "v1ListK8SResourcesResponse": {
+    "v1ListK8sResourcesResponse": {
       "type": "object",
       "properties": {
         "count": {
@@ -5003,7 +5542,7 @@
         "results": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/v1K8SResource"
+            "$ref": "#/definitions/v1K8sResource"
           },
           "title": "List of all entities"
         },
@@ -5329,14 +5868,17 @@
       "properties": {
         "service": {
           "type": "boolean",
-          "format": "boolean"
+          "format": "boolean",
+          "title": "Optional flag to tell if the run has a service"
         },
-        "workflow_strategy": {
-          "type": "string"
-        },
-        "workflow_concurrency": {
+        "concurrency": {
           "type": "integer",
-          "format": "int32"
+          "format": "int32",
+          "title": "Optional an indicator if the run has a concurrency"
+        },
+        "workflow_kind": {
+          "type": "string",
+          "title": "Optional the kind of workflow if it exists"
         }
       },
       "title": "Run meta info specification"

@@ -23,6 +23,9 @@ from marshmallow import ValidationError, fields, validate, validates_schema
 
 from polyaxon.schemas.base import BaseConfig, BaseSchema
 from polyaxon.schemas.fields.ref_or_obj import RefOrObject
+from polyaxon.schemas.polyflow.workflows.early_stopping_policies import (
+    EarlyStoppingSchema,
+)
 from polyaxon.schemas.polyflow.workflows.matrix import MatrixSchema
 
 
@@ -45,9 +48,9 @@ class GridSearchSchema(BaseSchema):
     matrix = fields.Dict(
         keys=fields.Str(), values=fields.Nested(MatrixSchema), required=True
     )
-    n_experiments = RefOrObject(
-        fields.Int(allow_none=True, validate=validate.Range(min=1))
-    )
+    concurrency = fields.Int(allow_none=True)
+    n_runs = RefOrObject(fields.Int(allow_none=True, validate=validate.Range(min=1)))
+    early_stopping = fields.Nested(EarlyStoppingSchema, many=True, allow_none=True)
 
     @staticmethod
     def schema_config():
@@ -62,9 +65,18 @@ class GridSearchSchema(BaseSchema):
 class GridSearchConfig(BaseConfig):
     SCHEMA = GridSearchSchema
     IDENTIFIER = "grid_search"
-    REDUCED_ATTRIBUTES = ["n_experiments"]
+    REDUCED_ATTRIBUTES = ["n_runs", "concurrency", "early_stopping"]
 
-    def __init__(self, matrix=None, n_experiments=None, kind=IDENTIFIER):
+    def __init__(
+        self,
+        matrix=None,
+        concurrency=None,
+        n_runs=None,
+        early_stopping=None,
+        kind=IDENTIFIER,
+    ):
         self.matrix = validate_matrix(matrix)
         self.kind = kind
-        self.n_experiments = n_experiments
+        self.n_runs = n_runs
+        self.concurrency = concurrency
+        self.early_stopping = early_stopping

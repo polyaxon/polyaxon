@@ -23,12 +23,16 @@ from polyaxon.schemas.polyflow.schedules.cron import (
     CronScheduleSchema,
 )
 from polyaxon.schemas.polyflow.schedules.execute import (
-    ExecutableConfig,
-    ExactTimeSchema,
+    ExactTimeScheduleConfig,
+    ExactTimeScheduleSchema,
 )
 from polyaxon.schemas.polyflow.schedules.interval import (
     IntervalScheduleConfig,
     IntervalScheduleSchema,
+)
+from polyaxon.schemas.polyflow.schedules.repeatable import (
+    RepeatableScheduleConfig,
+    RepeatableScheduleSchema,
 )
 
 
@@ -38,5 +42,6 @@ class ScheduleSchema(BaseOneOfSchema):
     SCHEMAS = {
         IntervalScheduleConfig.IDENTIFIER: IntervalScheduleSchema,
         CronScheduleConfig.IDENTIFIER: CronScheduleSchema,
-        ExecutableConfig.IDENTIFIER: ExactTimeSchema,
+        ExactTimeScheduleConfig.IDENTIFIER: ExactTimeScheduleSchema,
+        RepeatableScheduleConfig.IDENTIFIER: RepeatableScheduleSchema,
     }

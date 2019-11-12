@@ -5,8 +5,8 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **service** | **Boolean** |  |  [optional]
-**workflowStrategy** | **String** |  |  [optional]
-**workflowConcurrency** | **Integer** |  |  [optional]
+**concurrency** | **Integer** |  |  [optional]
+**workflowKind** | **String** |  |  [optional]
 
 
 

@@ -71,4 +71,4 @@ class PolyaxonModelCheckpoint(ModelCheckpoint):
             elif os.path.isfile(self.filepath):
                 self.run.log_output(self.filepath)
             else:
-                raise ValueError("Unknow file type: ", self.filepath)
+                raise ValueError("Unknown file type: ", self.filepath)

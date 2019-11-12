@@ -19,7 +19,6 @@ from __future__ import absolute_import, division, print_function
 
 import ast
 import copy
-import numpy as np
 import six
 
 from collections import Mapping
@@ -28,6 +27,12 @@ from marshmallow import fields, validate, validates_schema
 from marshmallow.exceptions import ValidationError
 
 from polyaxon.schemas.base import BaseConfig, BaseOneOfSchema, BaseSchema
+
+try:
+    import numpy as np
+except (ImportError, ModuleNotFoundError):
+    np = None
+
 
 # pylint:disable=redefined-outer-name
 
@@ -138,57 +143,17 @@ class LogSpace(Range):
     KEYS = REQUIRED_KEYS + OPTIONAL_KEYS
 
 
-def uniform(low, high, size=None, rand_generator=None):
-    rand_generator = rand_generator or np.random
-    return rand_generator.uniform(low=low, high=high, size=size)
-
-
-def quniform(low, high, q, size=None, rand_generator=None):
-    value = uniform(low=low, high=high, size=size, rand_generator=rand_generator)
-    return np.round(value // q) * q
-
-
-def loguniform(low, high, size=None, rand_generator=None):
-    value = uniform(low=low, high=high, size=size, rand_generator=rand_generator)
-    return np.exp(value)
-
-
-def qloguniform(low, high, q, size=None, rand_generator=None):
-    value = loguniform(low=low, high=high, size=size, rand_generator=rand_generator)
-    return np.round(value // q) * q
-
-
-def normal(loc, scale, size=None, rand_generator=None):
-    rand_generator = rand_generator or np.random
-    return rand_generator.normal(loc=loc, scale=scale, size=size)
-
-
-def qnormal(loc, scale, q, size=None, rand_generator=None):
-    draw = normal(loc=loc, scale=scale, size=size, rand_generator=rand_generator)
-    return np.round(draw // q) * q
-
-
-def lognormal(loc, scale, size=None, rand_generator=None):
-    rand_generator = rand_generator or np.random
-    return rand_generator.lognormal(mean=loc, sigma=scale, size=size)
-
-
-def qlognormal(loc, scale, q, size=None, rand_generator=None):
-    draw = lognormal(loc=loc, scale=scale, size=size, rand_generator=rand_generator)
-    return np.exp(draw)
-
-
-def validate_pvalues(values):
+def validate_pchoice(values):
     dists = [v for v in values if v]
     if sum(dists) > 1:
         raise ValidationError("The distribution of different outcomes should sum to 1.")
 
 
-def pvalues(values, size=None, rand_generator=None):
+def pchoice(values, size=None, rand_generator=None):
     rand_generator = rand_generator or np.random
     keys = [v[0] for v in values]
     dists = [v[1] for v in values]
-    validate_pvalues(dists)
+    validate_pchoice(dists)
     indices = rand_generator.multinomial(1, dists, size=size)
     if size is None:
         return keys[indices.argmax()]
@@ -255,25 +220,6 @@ def validate_matrix(values):
         )
 
 
-def space_sample(value, size, rand_generator):
-    size = None if size == 1 else size
-    rand_generator = rand_generator or np.random
-    try:
-        return rand_generator.choice(value, size=size)
-    except ValueError:
-        idx = rand_generator.randint(0, len(value))
-        return value[idx]
-
-
-def dist_sample(fct, value, size, rand_generator):
-    size = None if size == 1 else size
-    rand_generator = rand_generator or np.random
-    value = copy.deepcopy(value)
-    value["size"] = size
-    value["rand_generator"] = rand_generator
-    return fct(**value)
-
-
 class MatrixChoiceSchema(BaseSchema):
     kind = fields.Str(allow_none=True, validate=validate.Equal("choice"))
     value = fields.List(fields.Raw(), allow_none=True)
@@ -321,30 +267,6 @@ class MatrixChoiceConfig(BaseConfig):
     def is_uniform(self):
         return False
 
-    @property
-    def min(self):
-        if self.is_categorical:
-            return None
-        return min(self.to_numpy())
-
-    @property
-    def max(self):
-        if self.is_categorical:
-            return None
-        return max(self.to_numpy())
-
-    @property
-    def length(self):
-        return len(self.value)
-
-    def to_numpy(self):
-        return self.value
-
-    def sample(self, size=None, rand_generator=None):
-        return space_sample(
-            value=self.to_numpy(), size=size, rand_generator=rand_generator
-        )
-
 
 class MatrixPChoiceSchema(BaseSchema):
     kind = fields.Str(allow_none=True, validate=validate.Equal("pchoice"))
@@ -357,7 +279,7 @@ class MatrixPChoiceSchema(BaseSchema):
     @validates_schema
     def validate_pchoice(self, data):
         if data.get("value"):
-            validate_pvalues(values=[v[1] for v in data["value"] if v])
+            validate_pchoice(values=[v[1] for v in data["value"] if v])
 
 
 class MatrixPChoiceConfig(BaseConfig):
@@ -369,7 +291,7 @@ class MatrixPChoiceConfig(BaseConfig):
         self.value = value
 
         if value:
-            validate_pvalues(values=[v[1] for v in value if v])
+            validate_pchoice(values=[v[1] for v in value if v])
 
     @property
     def is_distribution(self):
@@ -394,28 +316,6 @@ class MatrixPChoiceConfig(BaseConfig):
     @property
     def is_uniform(self):
         return False
-
-    @property
-    def min(self):
-        return None
-
-    @property
-    def max(self):
-        return None
-
-    @property
-    def length(self):
-        return len(self.value)
-
-    def to_numpy(self):
-        raise ValidationError(
-            "Distribution should not call `to_numpy`, "
-            "instead it should call `sample`."
-        )
-
-    def sample(self, size=None, rand_generator=None):
-        size = None if size == 1 else size
-        return pvalues(values=self.value, size=size, rand_generator=rand_generator)
 
 
 class MatrixRangeSchema(BaseSchema):
@@ -459,26 +359,6 @@ class MatrixRangeConfig(BaseConfig):
     def is_uniform(self):
         return False
 
-    @property
-    def min(self):
-        return self.value.get("start")
-
-    @property
-    def max(self):
-        return self.value.get("stop")
-
-    @property
-    def length(self):
-        return len(np.arange(**self.value))
-
-    def to_numpy(self):
-        return np.arange(**self.value)
-
-    def sample(self, size=None, rand_generator=None):
-        return space_sample(
-            value=self.to_numpy(), size=size, rand_generator=rand_generator
-        )
-
 
 class MatrixLinSpaceSchema(BaseSchema):
     kind = fields.Str(allow_none=True, validate=validate.Equal("linspace"))
@@ -520,26 +400,6 @@ class MatrixLinSpaceConfig(BaseConfig):
     @property
     def is_uniform(self):
         return False
-
-    @property
-    def min(self):
-        return self.value.get("start")
-
-    @property
-    def max(self):
-        return self.value.get("stop")
-
-    @property
-    def length(self):
-        return len(np.linspace(**self.value))
-
-    def to_numpy(self):
-        return np.linspace(**self.value)
-
-    def sample(self, size=None, rand_generator=None):
-        return space_sample(
-            value=self.to_numpy(), size=size, rand_generator=rand_generator
-        )
 
 
 class MatrixLogSpaceSchema(BaseSchema):
@@ -583,26 +443,6 @@ class MatrixLogSpaceConfig(BaseConfig):
     def is_uniform(self):
         return False
 
-    @property
-    def min(self):
-        return self.value.get("start")
-
-    @property
-    def max(self):
-        return self.value.get("stop")
-
-    @property
-    def length(self):
-        return len(np.logspace(**self.value))
-
-    def to_numpy(self):
-        return np.logspace(**self.value)
-
-    def sample(self, size=None, rand_generator=None):
-        return space_sample(
-            value=self.to_numpy(), size=size, rand_generator=rand_generator
-        )
-
 
 class MatrixGeomSpaceSchema(BaseSchema):
     kind = fields.Str(allow_none=True, validate=validate.Equal("geomspace"))
@@ -644,26 +484,6 @@ class MatrixGeomSpaceConfig(BaseConfig):
     @property
     def is_uniform(self):
         return False
-
-    @property
-    def min(self):
-        return self.value.get("start")
-
-    @property
-    def max(self):
-        return self.value.get("stop")
-
-    @property
-    def length(self):
-        return len(np.geomspace(**self.value))
-
-    def to_numpy(self):
-        return np.geomspace(**self.value)
-
-    def sample(self, size=None, rand_generator=None):
-        return space_sample(
-            value=self.to_numpy(), size=size, rand_generator=rand_generator
-        )
 
 
 class MatrixUniformSchema(BaseSchema):
@@ -707,27 +527,6 @@ class MatrixUniformConfig(BaseConfig):
     def is_categorical(self):
         return False
 
-    @property
-    def min(self):
-        return self.value.get("low")
-
-    @property
-    def max(self):
-        return self.value.get("high")
-
-    @property
-    def length(self):
-        raise ValidationError("Distribution should not call `length`")
-
-    def to_numpy(self):
-        raise ValidationError(
-            "Distribution should not call `to_numpy`, "
-            "instead it should call `sample`."
-        )
-
-    def sample(self, size=None, rand_generator=None):
-        return dist_sample(uniform, self.value, size, rand_generator)
-
 
 class MatrixQUniformSchema(BaseSchema):
     kind = fields.Str(allow_none=True, validate=validate.Equal("quniform"))
@@ -770,27 +569,6 @@ class MatrixQUniformConfig(BaseConfig):
     def is_categorical(self):
         return False
 
-    @property
-    def min(self):
-        return None
-
-    @property
-    def max(self):
-        return None
-
-    @property
-    def length(self):
-        raise ValidationError("Distribution should not call `length`")
-
-    def to_numpy(self):
-        raise ValidationError(
-            "Distribution should not call `to_numpy`, "
-            "instead it should call `sample`."
-        )
-
-    def sample(self, size=None, rand_generator=None):
-        return dist_sample(quniform, self.value, size, rand_generator)
-
 
 class MatrixLogUniformSchema(BaseSchema):
     kind = fields.Str(allow_none=True, validate=validate.Equal("loguniform"))
@@ -832,27 +610,6 @@ class MatrixLogUniformConfig(BaseConfig):
     @property
     def is_categorical(self):
         return False
-
-    @property
-    def min(self):
-        return None
-
-    @property
-    def max(self):
-        return None
-
-    @property
-    def length(self):
-        raise ValidationError("Distribution should not call `length`")
-
-    def to_numpy(self):
-        raise ValidationError(
-            "Distribution should not call `to_numpy`, "
-            "instead it should call `sample`."
-        )
-
-    def sample(self, size=None, rand_generator=None):
-        return dist_sample(loguniform, self.value, size, rand_generator)
 
 
 class MatrixQLogUniformSchema(BaseSchema):
@@ -900,23 +657,6 @@ class MatrixQLogUniformConfig(BaseConfig):
     def min(self):
         return None
 
-    @property
-    def max(self):
-        return None
-
-    @property
-    def length(self):
-        raise ValidationError("Distribution should not call `length`")
-
-    def to_numpy(self):
-        raise ValidationError(
-            "Distribution should not call `to_numpy`, "
-            "instead it should call `sample`."
-        )
-
-    def sample(self, size=None, rand_generator=None):
-        return dist_sample(qloguniform, self.value, size, rand_generator)
-
 
 class MatrixNormalSchema(BaseSchema):
     kind = fields.Str(allow_none=True, validate=validate.Equal("normal"))
@@ -958,27 +698,6 @@ class MatrixNormalConfig(BaseConfig):
     @property
     def is_categorical(self):
         return False
-
-    @property
-    def min(self):
-        return None
-
-    @property
-    def max(self):
-        return None
-
-    @property
-    def length(self):
-        raise ValidationError("Distribution should not call `length`")
-
-    def to_numpy(self):
-        raise ValidationError(
-            "Distribution should not call `to_numpy`, "
-            "instead it should call `sample`."
-        )
-
-    def sample(self, size=None, rand_generator=None):
-        return dist_sample(normal, self.value, size, rand_generator)
 
 
 class MatrixQNormalSchema(BaseSchema):
@@ -1022,27 +741,6 @@ class MatrixQNormalConfig(BaseConfig):
     def is_categorical(self):
         return False
 
-    @property
-    def min(self):
-        return None
-
-    @property
-    def max(self):
-        return None
-
-    @property
-    def length(self):
-        raise ValidationError("Distribution should not call `length`")
-
-    def to_numpy(self):
-        raise ValidationError(
-            "Distribution should not call `to_numpy`, "
-            "instead it should call `sample`."
-        )
-
-    def sample(self, size=None, rand_generator=None):
-        return dist_sample(qnormal, self.value, size, rand_generator)
-
 
 class MatrixLogNormalSchema(BaseSchema):
     kind = fields.Str(allow_none=True, validate=validate.Equal("lognormal"))
@@ -1085,27 +783,6 @@ class MatrixLogNormalConfig(BaseConfig):
     def is_categorical(self):
         return False
 
-    @property
-    def min(self):
-        return None
-
-    @property
-    def max(self):
-        return None
-
-    @property
-    def length(self):
-        raise ValidationError("Distribution should not call `length`")
-
-    def to_numpy(self):
-        raise ValidationError(
-            "Distribution should not call `to_numpy`, "
-            "instead it should call `sample`."
-        )
-
-    def sample(self, size=None, rand_generator=None):
-        return dist_sample(lognormal, self.value, size, rand_generator)
-
 
 class MatrixQLogNormalSchema(BaseSchema):
     kind = fields.Str(allow_none=True, validate=validate.Equal("qlognormal"))
@@ -1147,27 +824,6 @@ class MatrixQLogNormalConfig(BaseConfig):
     @property
     def is_categorical(self):
         return False
-
-    @property
-    def min(self):
-        return None
-
-    @property
-    def max(self):
-        return None
-
-    @property
-    def length(self):
-        raise ValidationError("Distribution should not call `length`")
-
-    def to_numpy(self):
-        raise ValidationError(
-            "Distribution should not call `to_numpy`, "
-            "instead it should call `sample`."
-        )
-
-    def sample(self, size=None, rand_generator=None):
-        return dist_sample(qlognormal, self.value, size, rand_generator)
 
 
 class MatrixSchema(BaseOneOfSchema):

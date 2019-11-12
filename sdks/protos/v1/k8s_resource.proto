@@ -4,12 +4,12 @@ package v1;
 
 import "google/protobuf/timestamp.proto";
 
-// K8S resource specification
-message K8SResource {
+// K8s resource specification
+message K8sResource {
     // UUID
     string uuid = 1;
 
-    // Optional name
+    // Name
     string name = 2;
 
     // Optional description
@@ -47,22 +47,22 @@ message K8SResource {
 }
 
  // Request data to create/update k8s resource
- message K8SResourceBodyRequest {
+ message K8sResourceBodyRequest {
     // Owner of the namespace
     string owner = 1;
 
     // Artifact store body
-    K8SResource k8s_resource = 2;
+    K8sResource k8s_resource = 2;
  }
 
 
 // Contains list k8s resources
-message ListK8SResourcesResponse {
+message ListK8sResourcesResponse {
     // Count of the entities
     int32 count = 1;
 
     // List of all entities
-    repeated K8SResource results = 2;
+    repeated K8sResource results = 2;
 
     // Previous page
     string previous = 3;

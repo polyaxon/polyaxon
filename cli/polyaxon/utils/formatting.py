@@ -138,7 +138,7 @@ class Printer(object):
             return cls.add_color(status, "cyan")
         elif status == "succeeded":
             return cls.add_color(status, color="green")
-        elif status in ["failed", "stopped"]:
+        elif status in ["failed", "stopped", "upstream_failed"]:
             return cls.add_color(status, color="red")
         elif status == "done":
             return cls.add_color(status, color="white")
@@ -253,5 +253,14 @@ def get_runs_with_keys(objects, params_keys):
         for param in keys:
             if param not in obj_keys:
                 obj[param] = None
+
+    return objects
+
+
+def get_runs_with_meta(objects):
+    # Extend run with params_keys
+    for obj in objects:
+        meta_info = obj.pop("meta_info", {}) or {}
+        obj.update({"workflow": meta_info.get("workflow_kind")})
 
     return objects

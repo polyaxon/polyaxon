@@ -82,7 +82,7 @@ type CreateProjectOK struct {
 }
 
 func (o *CreateProjectOK) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/projects/create][%d] createProjectOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/projects][%d] createProjectOK  %+v", 200, o.Payload)
 }
 
 func (o *CreateProjectOK) GetPayload() *service_model.V1Project {
@@ -115,7 +115,7 @@ type CreateProjectNoContent struct {
 }
 
 func (o *CreateProjectNoContent) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/projects/create][%d] createProjectNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/projects][%d] createProjectNoContent  %+v", 204, o.Payload)
 }
 
 func (o *CreateProjectNoContent) GetPayload() interface{} {
@@ -146,7 +146,7 @@ type CreateProjectForbidden struct {
 }
 
 func (o *CreateProjectForbidden) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/projects/create][%d] createProjectForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/projects][%d] createProjectForbidden  %+v", 403, o.Payload)
 }
 
 func (o *CreateProjectForbidden) GetPayload() interface{} {
@@ -177,7 +177,7 @@ type CreateProjectNotFound struct {
 }
 
 func (o *CreateProjectNotFound) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/projects/create][%d] createProjectNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/projects][%d] createProjectNotFound  %+v", 404, o.Payload)
 }
 
 func (o *CreateProjectNotFound) GetPayload() interface{} {

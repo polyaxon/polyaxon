@@ -20,14 +20,15 @@ from __future__ import absolute_import, division, print_function
 from marshmallow import fields, validate
 
 from polyaxon.schemas.base import BaseConfig, BaseSchema
+from polyaxon.schemas.fields.ref_or_obj import RefOrObject
 
 
 class CronScheduleSchema(BaseSchema):
     kind = fields.Str(allow_none=True, validate=validate.Equal("cron"))
-    start_at = fields.LocalDateTime(allow_none=True)
-    end_at = fields.LocalDateTime(allow_none=True)
-    cron = fields.String(required=True)
-    depends_on_past = fields.Bool(allow_none=True)
+    start_at = RefOrObject(fields.LocalDateTime(allow_none=True))
+    end_at = RefOrObject(fields.LocalDateTime(allow_none=True))
+    cron = RefOrObject(fields.String(required=True))
+    depends_on_past = RefOrObject(fields.Bool(allow_none=True))
 
     @staticmethod
     def schema_config():
@@ -39,7 +40,12 @@ class CronScheduleConfig(BaseConfig):
     IDENTIFIER = "cron"
 
     def __init__(
-        self, cron, start_at=None, end_at=None, depends_on_past=None, kind=IDENTIFIER
+        self,
+        cron=None,
+        start_at=None,
+        end_at=None,
+        depends_on_past=None,
+        kind=IDENTIFIER,
     ):
         self.cron = cron
         self.start_at = start_at

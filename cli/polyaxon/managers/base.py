@@ -48,7 +48,7 @@ class BaseConfigManager(object):
                 logger.error("Could not create config directory `%s`", dir_path)
 
     @classmethod
-    def get_config_file_path(cls, create=True):
+    def get_config_filepath(cls, create=True):
         if not cls.IS_GLOBAL:
             # local to this directory
             base_path = os.path.join(".")
@@ -71,20 +71,20 @@ class BaseConfigManager(object):
 
     @classmethod
     def is_initialized(cls):
-        config_file_path = cls.get_config_file_path(False)
-        return os.path.isfile(config_file_path)
+        config_filepath = cls.get_config_filepath(False)
+        return os.path.isfile(config_filepath)
 
     @classmethod
     def set_config(cls, config, init=False):
-        config_file_path = cls.get_config_file_path()
+        config_filepath = cls.get_config_filepath()
 
-        if os.path.isfile(config_file_path) and init:
+        if os.path.isfile(config_filepath) and init:
             logger.debug(
-                "%s file already present at %s", cls.CONFIG_FILE_NAME, config_file_path
+                "%s file already present at %s", cls.CONFIG_FILE_NAME, config_filepath
             )
             return
 
-        with open(config_file_path, "w") as config_file:
+        with open(config_filepath, "w") as config_file:
             if hasattr(config, "to_dict"):
                 logger.debug(
                     "Setting %s in the file %s", config.to_dict(), cls.CONFIG_FILE_NAME
@@ -101,8 +101,8 @@ class BaseConfigManager(object):
         if not cls.is_initialized():
             return None
 
-        config_file_path = cls.get_config_file_path()
-        with open(config_file_path, "r") as config_file:
+        config_filepath = cls.get_config_filepath()
+        with open(config_filepath, "r") as config_file:
             config_str = config_file.read()
         if issubclass(cls.CONFIG, BaseConfig):
             return cls.CONFIG.from_dict(ujson.loads(config_str))
@@ -128,9 +128,9 @@ class BaseConfigManager(object):
 
     @classmethod
     def purge(cls):
-        config_file_path = cls.get_config_file_path()
+        config_filepath = cls.get_config_filepath()
 
-        if not os.path.isfile(config_file_path):
+        if not os.path.isfile(config_filepath):
             return
 
-        os.remove(config_file_path)
+        os.remove(config_filepath)

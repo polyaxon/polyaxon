@@ -4,17 +4,15 @@ version: 0.6
 kind: component
 
 workflow:
+  kind: grid_search
   concurrency: 2
-
-  strategy:
-    kind: grid_search
-    matrix:
-      param1:
-        kind: choice
-        value: [1, 2]
-      param2:
-        kind: choice
-        value: [3.3, 4.4]
+  matrix:
+    param1:
+      kind: choice
+      value: [1, 2]
+    param2:
+      kind: choice
+      value: [3.3, 4.4]
 
 container:
   image: foo:latest

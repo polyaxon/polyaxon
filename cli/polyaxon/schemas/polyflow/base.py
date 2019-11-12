@@ -21,16 +21,13 @@ from marshmallow import fields, validate
 
 from polyaxon.schemas.base import NAME_REGEX, BaseConfig, BaseSchema
 from polyaxon.schemas.fields.ref_or_obj import RefOrObject
-from polyaxon.schemas.polyflow.container import ContainerSchema
 from polyaxon.schemas.polyflow.environments import EnvironmentSchema
 from polyaxon.schemas.polyflow.init import InitSchema
-from polyaxon.schemas.polyflow.io import IOSchema
 from polyaxon.schemas.polyflow.mounts import MountsSchema
-from polyaxon.schemas.polyflow.recursive import RecursiveSchema
 from polyaxon.schemas.polyflow.schedules import ScheduleSchema
 from polyaxon.schemas.polyflow.service import ServiceSchema
 from polyaxon.schemas.polyflow.termination import TerminationSchema
-from polyaxon.schemas.polyflow.workflows import WorkflowSchema
+from polyaxon.schemas.polyflow.workflows import WorkflowMixin, WorkflowSchema
 
 
 class BaseComponentSchema(BaseSchema):
@@ -46,7 +43,6 @@ class BaseComponentSchema(BaseSchema):
     init = fields.Nested(InitSchema, allow_none=True)
     mounts = fields.Nested(MountsSchema, allow_none=True)
     schedule = fields.Nested(ScheduleSchema, allow_none=True)
-    recursive = fields.Nested(RecursiveSchema, allow_none=True)
     workflow = fields.Nested(WorkflowSchema, allow_none=True)
     service = fields.Nested(ServiceSchema, allow_none=True)
 
@@ -55,7 +51,7 @@ class BaseComponentSchema(BaseSchema):
         return BaseComponentConfig
 
 
-class BaseComponentConfig(BaseConfig):
+class BaseComponentConfig(BaseConfig, WorkflowMixin):
     SCHEMA = BaseComponentSchema
     REDUCED_ATTRIBUTES = [
         "version",
@@ -71,7 +67,6 @@ class BaseComponentConfig(BaseConfig):
         "schedule",
         "mounts",
         "workflow",
-        "recursive",
         "service",
     ]
 
@@ -90,7 +85,6 @@ class BaseComponentConfig(BaseConfig):
         mounts=None,
         schedule=None,
         workflow=None,
-        recursive=None,
         service=None,
     ):
         self.version = version
@@ -106,5 +100,7 @@ class BaseComponentConfig(BaseConfig):
         self.mounts = mounts
         self.schedule = schedule
         self.workflow = workflow
-        self.recursive = recursive
         self.service = service
+
+    def get_workflow_kind(self):
+        return self.workflow.kind if self.workflow else None

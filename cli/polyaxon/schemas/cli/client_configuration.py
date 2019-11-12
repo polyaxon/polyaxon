@@ -49,8 +49,10 @@ from polyaxon.env_vars.keys import (
 )
 from polyaxon.exceptions import PolyaxonClientException
 from polyaxon.managers.auth import AuthConfigManager
+from polyaxon.pkg import VERSION
 from polyaxon.schemas.base import BaseConfig, BaseSchema
 from polyaxon.services.auth import AuthenticationTypes
+from polyaxon.services.headers import POLYAXON_HEADERS_CLI_VERSION
 
 
 class ClientSchema(BaseSchema):
@@ -164,6 +166,12 @@ class ClientConfig(BaseConfig):
             self.client_header["header_value"] = self.header_service
 
         self.base_url = self.BASE_URL.format(self.host, self.version)
+
+    def set_cli_header(self):
+        self.header = POLYAXON_HEADERS_CLI_VERSION.replace("_", "-")
+        self.header_service = VERSION
+        self.client_header["header_name"] = self.header
+        self.client_header["header_value"] = self.header_service
 
     @staticmethod
     def get_config_from_manager():

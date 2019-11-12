@@ -59,7 +59,7 @@ type V1ArtifactsStore struct {
 	// Optional mounth path
 	MountPath string `json:"mount_path,omitempty"`
 
-	// Optional name
+	// Name
 	Name string `json:"name,omitempty"`
 
 	// Optional flag to set this store to read only mode

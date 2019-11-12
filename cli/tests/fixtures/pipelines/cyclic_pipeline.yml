@@ -6,20 +6,19 @@ kind: component
 name: test-pipeline
 
 workflow:
-  strategy:
-    kind: dag
-    ops:
-      - name: A
-        component_ref: {name: experiment-template}
-        dependencies: [B]
-      - name: B
-        component_ref: {name: experiment-template}
-        dependencies: [A]
-      - name: C
-        component_ref: {name: experiment-template}
-        dependencies: [B]
+  kind: dag
+  ops:
+    - name: A
+      component_ref: {name: experiment-template}
+      dependencies: [B]
+    - name: B
+      component_ref: {name: experiment-template}
+      dependencies: [A]
+    - name: C
+      component_ref: {name: experiment-template}
+      dependencies: [B]
 
-    components:
-      - kind: component
-        name: experiment-template
-        container: {image: test}
+  components:
+    - kind: component
+      name: experiment-template
+      container: {image: test}

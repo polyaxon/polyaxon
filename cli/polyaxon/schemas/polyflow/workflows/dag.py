@@ -23,12 +23,17 @@ from polyaxon.exceptions import PolyaxonSchemaError
 from polyaxon.schemas.base import BaseConfig, BaseSchema
 from polyaxon.schemas.polyflow import dags
 from polyaxon.schemas.polyflow import params as ops_params
+from polyaxon.schemas.polyflow.workflows.early_stopping_policies import (
+    EarlyStoppingSchema,
+)
 
 
 class DagSchema(BaseSchema):
     kind = fields.Str(allow_none=True, validate=validate.Equal("dag"))
     ops = fields.Nested("OpSchema", many=True)
     components = fields.Nested("ComponentSchema", many=True)
+    concurrency = fields.Int(allow_none=True)
+    early_stopping = fields.Nested(EarlyStoppingSchema, many=True, allow_none=True)
 
     @staticmethod
     def schema_config():
@@ -38,12 +43,21 @@ class DagSchema(BaseSchema):
 class DagConfig(BaseConfig):
     SCHEMA = DagSchema
     IDENTIFIER = "dag"
-    REDUCED_ATTRIBUTES = ["ops", "components"]
+    REDUCED_ATTRIBUTES = ["ops", "components", "concurrency", "early_stopping"]
 
-    def __init__(self, ops=None, components=None, kind=IDENTIFIER):
+    def __init__(
+        self,
+        ops=None,
+        components=None,
+        concurrency=None,
+        early_stopping=None,
+        kind=IDENTIFIER,
+    ):
         self.kind = kind
         self.ops = ops
         self.components = components
+        self.concurrency = concurrency
+        self.early_stopping = early_stopping
         self._dag = {}  # OpName -> DagOpSpec
         self._components_by_names = {}  # ComponentName -> Component
         self._op_component_mapping = {}  # OpName -> ComponentName

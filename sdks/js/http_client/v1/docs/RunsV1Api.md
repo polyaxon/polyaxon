@@ -7,20 +7,23 @@ Method | HTTP request | Description
 [**archiveRun**](RunsV1Api.md#archiveRun) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/archive | Archive run
 [**bookmarkRun**](RunsV1Api.md#bookmarkRun) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/bookmark | Bookmark run
 [**copyRun**](RunsV1Api.md#copyRun) | **POST** /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/copy | Restart run with copy
-[**createRun**](RunsV1Api.md#createRun) | **POST** /api/v1/{owner}/{project}/runs/create | Create new run
+[**createRun**](RunsV1Api.md#createRun) | **POST** /api/v1/{owner}/{project}/runs | Create new run
 [**createRunCodeRef**](RunsV1Api.md#createRunCodeRef) | **POST** /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/coderef | Get run code ref
 [**createRunStatus**](RunsV1Api.md#createRunStatus) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/statuses | Create new run status
 [**deleteRun**](RunsV1Api.md#deleteRun) | **DELETE** /api/v1/{owner}/{project}/runs/{uuid} | Delete run
 [**deleteRuns**](RunsV1Api.md#deleteRuns) | **DELETE** /api/v1/{owner}/{project}/runs/delete | Delete runs
 [**getRun**](RunsV1Api.md#getRun) | **GET** /api/v1/{owner}/{project}/runs/{uuid} | Get run
+[**getRunArtifactsTree**](RunsV1Api.md#getRunArtifactsTree) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/artifacts/tree | Get run artifacts list
 [**getRunCodeRefs**](RunsV1Api.md#getRunCodeRefs) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/coderef | Get run code ref
+[**getRunLogsFile**](RunsV1Api.md#getRunLogsFile) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/logs/file | Get run logs get file
+[**getRunLogsTree**](RunsV1Api.md#getRunLogsTree) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/logs/tree | Get run logs list
 [**getRunStatuses**](RunsV1Api.md#getRunStatuses) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/statuses | Get run status
 [**impersonateToken**](RunsV1Api.md#impersonateToken) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/impersonate | Impersonate run token
 [**invalidateRun**](RunsV1Api.md#invalidateRun) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/invalidate | Invalidate run
 [**invalidateRuns**](RunsV1Api.md#invalidateRuns) | **POST** /api/v1/{owner}/{project}/runs/invalidate | Invalidate runs
 [**listArchivedRuns**](RunsV1Api.md#listArchivedRuns) | **GET** /api/v1/archives/{user}/runs | List archived runs for user
 [**listBookmarkedRuns**](RunsV1Api.md#listBookmarkedRuns) | **GET** /api/v1/bookmarks/{user}/runs | List bookmarked runs for user
-[**listRuns**](RunsV1Api.md#listRuns) | **GET** /api/v1/{owner}/{project}/runs/list | List runs
+[**listRuns**](RunsV1Api.md#listRuns) | **GET** /api/v1/{owner}/{project}/runs | List runs
 [**patchRun**](RunsV1Api.md#patchRun) | **PATCH** /api/v1/{owner}/{project}/runs/{run.uuid} | Patch run
 [**restartRun**](RunsV1Api.md#restartRun) | **POST** /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/restart | Restart run
 [**restoreRun**](RunsV1Api.md#restoreRun) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/restore | Restore run
@@ -31,6 +34,8 @@ Method | HTTP request | Description
 [**stopRuns**](RunsV1Api.md#stopRuns) | **POST** /api/v1/{owner}/{project}/runs/stop | Stop runs
 [**unbookmarkRun**](RunsV1Api.md#unbookmarkRun) | **DELETE** /api/v1/{owner}/{project}/runs/{uuid}/unbookmark | Unbookmark run
 [**updateRun**](RunsV1Api.md#updateRun) | **PUT** /api/v1/{owner}/{project}/runs/{run.uuid} | Update run
+[**uploadRunArtifact**](RunsV1Api.md#uploadRunArtifact) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/artifacts/upload | Upload an artifact file to a store via run access
+[**uploadRunLogs**](RunsV1Api.md#uploadRunLogs) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/logs/upload | Upload a logs file to a store via run access
 
 
 <a name="archiveRun"></a>
@@ -555,6 +560,71 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
+<a name="getRunArtifactsTree"></a>
+# **getRunArtifactsTree**
+> V1ArtifactTreeResponse getRunArtifactsTree(owner, project, uuid, opts)
+
+Get run artifacts list
+
+### Example
+```javascript
+var PolyaxonSdk = require('polyaxon-sdk');
+var defaultClient = PolyaxonSdk.ApiClient.instance;
+
+// Configure API key authorization: ApiKey
+var ApiKey = defaultClient.authentications['ApiKey'];
+ApiKey.apiKey = 'YOUR API KEY';
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.apiKeyPrefix = 'Token';
+
+var apiInstance = new PolyaxonSdk.RunsV1Api();
+
+var owner = "owner_example"; // String | Owner of the namespace
+
+var project = "project_example"; // String | Project where the experiement will be assigned
+
+var uuid = "uuid_example"; // String | Unique integer identifier of the entity
+
+var opts = { 
+  'path': "path_example", // String | Artifact filepath.
+  'step': 56, // Number | Artifact logging step.
+  'type': "type_example" // String | Artifact type.
+};
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+apiInstance.getRunArtifactsTree(owner, project, uuid, opts, callback);
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **String**| Owner of the namespace | 
+ **project** | **String**| Project where the experiement will be assigned | 
+ **uuid** | **String**| Unique integer identifier of the entity | 
+ **path** | **String**| Artifact filepath. | [optional] 
+ **step** | **Number**| Artifact logging step. | [optional] 
+ **type** | **String**| Artifact type. | [optional] 
+
+### Return type
+
+[**V1ArtifactTreeResponse**](V1ArtifactTreeResponse.md)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
 <a name="getRunCodeRefs"></a>
 # **getRunCodeRefs**
 > V1ListCodeRefsResponse getRunCodeRefs(owner, project, uuid)
@@ -602,6 +672,136 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**V1ListCodeRefsResponse**](V1ListCodeRefsResponse.md)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+<a name="getRunLogsFile"></a>
+# **getRunLogsFile**
+> 'String' getRunLogsFile(owner, project, uuid, opts)
+
+Get run logs get file
+
+### Example
+```javascript
+var PolyaxonSdk = require('polyaxon-sdk');
+var defaultClient = PolyaxonSdk.ApiClient.instance;
+
+// Configure API key authorization: ApiKey
+var ApiKey = defaultClient.authentications['ApiKey'];
+ApiKey.apiKey = 'YOUR API KEY';
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.apiKeyPrefix = 'Token';
+
+var apiInstance = new PolyaxonSdk.RunsV1Api();
+
+var owner = "owner_example"; // String | Owner of the namespace
+
+var project = "project_example"; // String | Project where the experiement will be assigned
+
+var uuid = "uuid_example"; // String | Unique integer identifier of the entity
+
+var opts = { 
+  'path': "path_example", // String | Artifact filepath.
+  'step': 56, // Number | Artifact logging step.
+  'type': "type_example" // String | Artifact type.
+};
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+apiInstance.getRunLogsFile(owner, project, uuid, opts, callback);
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **String**| Owner of the namespace | 
+ **project** | **String**| Project where the experiement will be assigned | 
+ **uuid** | **String**| Unique integer identifier of the entity | 
+ **path** | **String**| Artifact filepath. | [optional] 
+ **step** | **Number**| Artifact logging step. | [optional] 
+ **type** | **String**| Artifact type. | [optional] 
+
+### Return type
+
+**'String'**
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+<a name="getRunLogsTree"></a>
+# **getRunLogsTree**
+> V1ArtifactTreeResponse getRunLogsTree(owner, project, uuid, opts)
+
+Get run logs list
+
+### Example
+```javascript
+var PolyaxonSdk = require('polyaxon-sdk');
+var defaultClient = PolyaxonSdk.ApiClient.instance;
+
+// Configure API key authorization: ApiKey
+var ApiKey = defaultClient.authentications['ApiKey'];
+ApiKey.apiKey = 'YOUR API KEY';
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.apiKeyPrefix = 'Token';
+
+var apiInstance = new PolyaxonSdk.RunsV1Api();
+
+var owner = "owner_example"; // String | Owner of the namespace
+
+var project = "project_example"; // String | Project where the experiement will be assigned
+
+var uuid = "uuid_example"; // String | Unique integer identifier of the entity
+
+var opts = { 
+  'path': "path_example", // String | Artifact filepath.
+  'step': 56, // Number | Artifact logging step.
+  'type': "type_example" // String | Artifact type.
+};
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+apiInstance.getRunLogsTree(owner, project, uuid, opts, callback);
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **String**| Owner of the namespace | 
+ **project** | **String**| Project where the experiement will be assigned | 
+ **uuid** | **String**| Unique integer identifier of the entity | 
+ **path** | **String**| Artifact filepath. | [optional] 
+ **step** | **Number**| Artifact logging step. | [optional] 
+ **type** | **String**| Artifact type. | [optional] 
+
+### Return type
+
+[**V1ArtifactTreeResponse**](V1ArtifactTreeResponse.md)
 
 ### Authorization
 
@@ -1612,5 +1812,137 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: application/json
+ - **Accept**: application/json
+
+<a name="uploadRunArtifact"></a>
+# **uploadRunArtifact**
+> uploadRunArtifact(owner, project, uuid, uploadfile, opts)
+
+Upload an artifact file to a store via run access
+
+### Example
+```javascript
+var PolyaxonSdk = require('polyaxon-sdk');
+var defaultClient = PolyaxonSdk.ApiClient.instance;
+
+// Configure API key authorization: ApiKey
+var ApiKey = defaultClient.authentications['ApiKey'];
+ApiKey.apiKey = 'YOUR API KEY';
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.apiKeyPrefix = 'Token';
+
+var apiInstance = new PolyaxonSdk.RunsV1Api();
+
+var owner = "owner_example"; // String | Owner of the namespace
+
+var project = "project_example"; // String | Project having access to the store
+
+var uuid = "uuid_example"; // String | Unique integer identifier of the entity
+
+var uploadfile = "/path/to/file.txt"; // File | The file to upload.
+
+var opts = { 
+  'path': "path_example", // String | File path query params.
+  'overwrite': true // Boolean | File path query params.
+};
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully.');
+  }
+};
+apiInstance.uploadRunArtifact(owner, project, uuid, uploadfile, opts, callback);
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **String**| Owner of the namespace | 
+ **project** | **String**| Project having access to the store | 
+ **uuid** | **String**| Unique integer identifier of the entity | 
+ **uploadfile** | **File**| The file to upload. | 
+ **path** | **String**| File path query params. | [optional] 
+ **overwrite** | **Boolean**| File path query params. | [optional] 
+
+### Return type
+
+null (empty response body)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: multipart/form-data
+ - **Accept**: application/json
+
+<a name="uploadRunLogs"></a>
+# **uploadRunLogs**
+> uploadRunLogs(owner, project, uuid, uploadfile, opts)
+
+Upload a logs file to a store via run access
+
+### Example
+```javascript
+var PolyaxonSdk = require('polyaxon-sdk');
+var defaultClient = PolyaxonSdk.ApiClient.instance;
+
+// Configure API key authorization: ApiKey
+var ApiKey = defaultClient.authentications['ApiKey'];
+ApiKey.apiKey = 'YOUR API KEY';
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.apiKeyPrefix = 'Token';
+
+var apiInstance = new PolyaxonSdk.RunsV1Api();
+
+var owner = "owner_example"; // String | Owner of the namespace
+
+var project = "project_example"; // String | Project having access to the store
+
+var uuid = "uuid_example"; // String | Unique integer identifier of the entity
+
+var uploadfile = "/path/to/file.txt"; // File | The file to upload.
+
+var opts = { 
+  'path': "path_example", // String | File path query params.
+  'overwrite': true // Boolean | File path query params.
+};
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully.');
+  }
+};
+apiInstance.uploadRunLogs(owner, project, uuid, uploadfile, opts, callback);
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **String**| Owner of the namespace | 
+ **project** | **String**| Project having access to the store | 
+ **uuid** | **String**| Unique integer identifier of the entity | 
+ **uploadfile** | **File**| The file to upload. | 
+ **path** | **String**| File path query params. | [optional] 
+ **overwrite** | **Boolean**| File path query params. | [optional] 
+
+### Return type
+
+null (empty response body)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: multipart/form-data
  - **Accept**: application/json
 

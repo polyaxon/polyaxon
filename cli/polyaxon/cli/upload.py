@@ -40,10 +40,10 @@ from polyaxon.utils.formatting import Printer
 def upload(sync=True):  # pylint:disable=assign-to-new-keyword
     """Upload code of the current directory while respecting the .polyaxonignore file."""
     project = ProjectManager.get_config_or_raise()
-    files = IgnoreManager.get_unignored_file_paths()
+    files = IgnoreManager.get_unignored_filepaths()
     try:
-        with create_tarfile(files, project.name) as file_path:
-            with get_files_in_current_directory("repo", [file_path]) as (
+        with create_tarfile(files, project.name) as filepath:
+            with get_files_in_current_directory("repo", [filepath]) as (
                 files,
                 files_size,
             ):

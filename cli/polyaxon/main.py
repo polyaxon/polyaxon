@@ -87,6 +87,8 @@ def cli(context, verbose, offline):
         "teardown",
     ]
     context.obj = context.obj or {}
+    if not settings.CLIENT_CONFIG.client_header:
+        settings.CLIENT_CONFIG.set_cli_header()
     context.obj["offline"] = offline
     if offline:
         os.environ["POLYAXON_IS_OFFLINE"] = "true"

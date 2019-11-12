@@ -10,11 +10,10 @@ inputs:
     is_optional: true
 
 workflow:
-  strategy:
-    kind: random_search
-    matrix:
-      loss:
-        values: "{{ input1 }}"
+  kind: random_search
+  matrix:
+    loss:
+      values: "{{ input1 }}"
 
 container:
   image: my_image

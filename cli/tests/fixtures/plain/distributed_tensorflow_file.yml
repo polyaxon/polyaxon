@@ -34,33 +34,32 @@ environment:
             - another-node-label-value
 
 workflow:
-  strategy:
-    kind: tfjob
-    worker:
-      replicas: 5
-      termination:
-        restart_policy: OnFailure
-      environment:
-        resources:
-          requests:
-            memory: 300Mi
-          limits:
-            memory: 300Mi
+  kind: tfjob
+  worker:
+    replicas: 5
+    termination:
+      restart_policy: OnFailure
+    environment:
+      resources:
+        requests:
+          memory: 300Mi
+        limits:
+          memory: 300Mi
 
-    ps:
-      replicas: 10
-      environment:
-        tolerations:
-          - key: "key"
-            operator: "Exists"
-            effect: "NoSchedule"
-        resources:
-          requests:
-            cpu: 3
-            memory: 256Mi
-          limits:
-            cpu: 3
-            memory: 256Mi
+  ps:
+    replicas: 10
+    environment:
+      tolerations:
+        - key: "key"
+          operator: "Exists"
+          effect: "NoSchedule"
+      resources:
+        requests:
+          cpu: 3
+          memory: 256Mi
+        limits:
+          cpu: 3
+          memory: 256Mi
 
 container:
   image: my_image

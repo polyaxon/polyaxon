@@ -292,6 +292,42 @@ func (a *Client) UpdateArtifactsStore(params *UpdateArtifactsStoreParams, authIn
 	panic(msg)
 }
 
+/*
+UploadArtifact uploads artifact to a store
+*/
+func (a *Client) UploadArtifact(params *UploadArtifactParams, authInfo runtime.ClientAuthInfoWriter) (*UploadArtifactOK, *UploadArtifactNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewUploadArtifactParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "UploadArtifact",
+		Method:             "POST",
+		PathPattern:        "/api/v1/catalogs/{owner}/artifacts_stores/{uuid}/upload",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"multipart/form-data"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &UploadArtifactReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *UploadArtifactOK:
+		return value, nil, nil
+	case *UploadArtifactNoContent:
+		return nil, value, nil
+	}
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for artifacts_stores_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
 // SetTransport changes the transport on the client
 func (a *Client) SetTransport(transport runtime.ClientTransport) {
 	a.transport = transport

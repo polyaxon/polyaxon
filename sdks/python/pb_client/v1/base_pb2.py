@@ -37,7 +37,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='v1',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\rv1/base.proto\x12\x02v1\x1a\x19google/protobuf/any.proto\"6\n\x02KV\x12\x0b\n\x03key\x18\x01 \x01(\t\x12#\n\x05value\x18\x02 \x01(\x0b\x32\x14.google.protobuf.Any\"#\n\x13UserResourceRequest\x12\x0c\n\x04user\x18\x01 \x01(\t\"%\n\x14OwnerResourceRequest\x12\r\n\x05owner\x18\x01 \x01(\t\"9\n\x1aOwnerEntityResourceRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0c\n\x04uuid\x18\x02 \x01(\t\"8\n\x16ProjectResourceRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0f\n\x07project\x18\x02 \x01(\t\"\x16\n\x05Uuids\x12\r\n\x05uuids\x18\x01 \x03(\t\"[\n\x1fProjectResourceUuidsBodyRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0f\n\x07project\x18\x02 \x01(\t\x12\x18\n\x05uuids\x18\x03 \x01(\x0b\x32\t.v1.Uuids\"L\n\x1cProjectEntityResourceRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0f\n\x07project\x18\x02 \x01(\t\x12\x0c\n\x04uuid\x18\x03 \x01(\t\"b\n\x16UserResouceListRequest\x12\x0c\n\x04user\x18\x01 \x01(\t\x12\x0e\n\x06offset\x18\x02 \x01(\x05\x12\r\n\x05limit\x18\x03 \x01(\x05\x12\x0c\n\x04sort\x18\x04 \x01(\t\x12\r\n\x05query\x18\x05 \x01(\t\"d\n\x17OwnerResouceListRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0e\n\x06offset\x18\x02 \x01(\x05\x12\r\n\x05limit\x18\x03 \x01(\x05\x12\x0c\n\x04sort\x18\x04 \x01(\t\x12\r\n\x05query\x18\x05 \x01(\t\"x\n\x1aProjectResourceListRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0f\n\x07project\x18\x02 \x01(\t\x12\x0e\n\x06offset\x18\x03 \x01(\x05\x12\r\n\x05limit\x18\x04 \x01(\x05\x12\x0c\n\x04sort\x18\x05 \x01(\t\x12\r\n\x05query\x18\x06 \x01(\tb\x06proto3')
+  serialized_pb=_b('\n\rv1/base.proto\x12\x02v1\x1a\x19google/protobuf/any.proto\"6\n\x02KV\x12\x0b\n\x03key\x18\x01 \x01(\t\x12#\n\x05value\x18\x02 \x01(\x0b\x32\x14.google.protobuf.Any\"#\n\x13UserResourceRequest\x12\x0c\n\x04user\x18\x01 \x01(\t\"%\n\x14OwnerResourceRequest\x12\r\n\x05owner\x18\x01 \x01(\t\"9\n\x1aOwnerEntityResourceRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0c\n\x04uuid\x18\x02 \x01(\t\"8\n\x16ProjectResourceRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0f\n\x07project\x18\x02 \x01(\t\"\x16\n\x05Uuids\x12\r\n\x05uuids\x18\x01 \x03(\t\"[\n\x1fProjectResourceUuidsBodyRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0f\n\x07project\x18\x02 \x01(\t\x12\x18\n\x05uuids\x18\x03 \x01(\x0b\x32\t.v1.Uuids\"L\n\x1cProjectEntityResourceRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0f\n\x07project\x18\x02 \x01(\t\x12\x0c\n\x04uuid\x18\x03 \x01(\t\"b\n\x16UserResouceListRequest\x12\x0c\n\x04user\x18\x01 \x01(\t\x12\x0e\n\x06offset\x18\x02 \x01(\x05\x12\r\n\x05limit\x18\x03 \x01(\x05\x12\x0c\n\x04sort\x18\x04 \x01(\t\x12\r\n\x05query\x18\x05 \x01(\t\"d\n\x17OwnerResouceListRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0e\n\x06offset\x18\x02 \x01(\x05\x12\r\n\x05limit\x18\x03 \x01(\x05\x12\x0c\n\x04sort\x18\x04 \x01(\t\x12\r\n\x05query\x18\x05 \x01(\t\"x\n\x1aProjectResourceListRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0f\n\x07project\x18\x02 \x01(\t\x12\x0e\n\x06offset\x18\x03 \x01(\x05\x12\r\n\x05limit\x18\x04 \x01(\x05\x12\x0c\n\x04sort\x18\x05 \x01(\t\x12\r\n\x05query\x18\x06 \x01(\t\"l\n\x12RunArtifactRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0f\n\x07project\x18\x02 \x01(\t\x12\x0c\n\x04uuid\x18\x03 \x01(\t\x12\x0c\n\x04path\x18\x04 \x01(\t\x12\x0c\n\x04step\x18\x05 \x01(\x05\x12\x0c\n\x04type\x18\x06 \x01(\tb\x06proto3')
   ,
   dependencies=[google_dot_protobuf_dot_any__pb2.DESCRIPTOR,])
 
@@ -524,6 +524,72 @@ _PROJECTRESOURCELISTREQUEST = _descriptor.Descriptor(
   serialized_end=814,
 )
 
+
+_RUNARTIFACTREQUEST = _descriptor.Descriptor(
+  name='RunArtifactRequest',
+  full_name='v1.RunArtifactRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='owner', full_name='v1.RunArtifactRequest.owner', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='project', full_name='v1.RunArtifactRequest.project', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='uuid', full_name='v1.RunArtifactRequest.uuid', index=2,
+      number=3, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='path', full_name='v1.RunArtifactRequest.path', index=3,
+      number=4, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='step', full_name='v1.RunArtifactRequest.step', index=4,
+      number=5, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='type', full_name='v1.RunArtifactRequest.type', index=5,
+      number=6, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=816,
+  serialized_end=924,
+)
+
 _KV.fields_by_name['value'].message_type = google_dot_protobuf_dot_any__pb2._ANY
 _PROJECTRESOURCEUUIDSBODYREQUEST.fields_by_name['uuids'].message_type = _UUIDS
 DESCRIPTOR.message_types_by_name['KV'] = _KV
@@ -537,6 +603,7 @@ DESCRIPTOR.message_types_by_name['ProjectEntityResourceRequest'] = _PROJECTENTIT
 DESCRIPTOR.message_types_by_name['UserResouceListRequest'] = _USERRESOUCELISTREQUEST
 DESCRIPTOR.message_types_by_name['OwnerResouceListRequest'] = _OWNERRESOUCELISTREQUEST
 DESCRIPTOR.message_types_by_name['ProjectResourceListRequest'] = _PROJECTRESOURCELISTREQUEST
+DESCRIPTOR.message_types_by_name['RunArtifactRequest'] = _RUNARTIFACTREQUEST
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 KV = _reflection.GeneratedProtocolMessageType('KV', (_message.Message,), {
@@ -615,6 +682,13 @@ ProjectResourceListRequest = _reflection.GeneratedProtocolMessageType('ProjectRe
   # @@protoc_insertion_point(class_scope:v1.ProjectResourceListRequest)
   })
 _sym_db.RegisterMessage(ProjectResourceListRequest)
+
+RunArtifactRequest = _reflection.GeneratedProtocolMessageType('RunArtifactRequest', (_message.Message,), {
+  'DESCRIPTOR' : _RUNARTIFACTREQUEST,
+  '__module__' : 'v1.base_pb2'
+  # @@protoc_insertion_point(class_scope:v1.RunArtifactRequest)
+  })
+_sym_db.RegisterMessage(RunArtifactRequest)
 
 
 # @@protoc_insertion_point(module_scope)

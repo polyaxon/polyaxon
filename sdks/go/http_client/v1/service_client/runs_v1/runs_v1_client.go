@@ -160,7 +160,7 @@ func (a *Client) CreateRun(params *CreateRunParams, authInfo runtime.ClientAuthI
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "CreateRun",
 		Method:             "POST",
-		PathPattern:        "/api/v1/{owner}/{project}/runs/create",
+		PathPattern:        "/api/v1/{owner}/{project}/runs",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -365,6 +365,42 @@ func (a *Client) GetRun(params *GetRunParams, authInfo runtime.ClientAuthInfoWri
 }
 
 /*
+GetRunArtifactsTree gets run artifacts list
+*/
+func (a *Client) GetRunArtifactsTree(params *GetRunArtifactsTreeParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunArtifactsTreeOK, *GetRunArtifactsTreeNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetRunArtifactsTreeParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "GetRunArtifactsTree",
+		Method:             "GET",
+		PathPattern:        "/api/v1/{owner}/{project}/runs/{uuid}/artifacts/tree",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &GetRunArtifactsTreeReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *GetRunArtifactsTreeOK:
+		return value, nil, nil
+	case *GetRunArtifactsTreeNoContent:
+		return nil, value, nil
+	}
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for runs_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
 GetRunCodeRefs gets run code ref
 */
 func (a *Client) GetRunCodeRefs(params *GetRunCodeRefsParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunCodeRefsOK, *GetRunCodeRefsNoContent, error) {
@@ -393,6 +429,78 @@ func (a *Client) GetRunCodeRefs(params *GetRunCodeRefsParams, authInfo runtime.C
 	case *GetRunCodeRefsOK:
 		return value, nil, nil
 	case *GetRunCodeRefsNoContent:
+		return nil, value, nil
+	}
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for runs_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+GetRunLogsFile gets run logs get file
+*/
+func (a *Client) GetRunLogsFile(params *GetRunLogsFileParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunLogsFileOK, *GetRunLogsFileNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetRunLogsFileParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "GetRunLogsFile",
+		Method:             "GET",
+		PathPattern:        "/api/v1/{owner}/{project}/runs/{uuid}/logs/file",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &GetRunLogsFileReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *GetRunLogsFileOK:
+		return value, nil, nil
+	case *GetRunLogsFileNoContent:
+		return nil, value, nil
+	}
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for runs_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+GetRunLogsTree gets run logs list
+*/
+func (a *Client) GetRunLogsTree(params *GetRunLogsTreeParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunLogsTreeOK, *GetRunLogsTreeNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetRunLogsTreeParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "GetRunLogsTree",
+		Method:             "GET",
+		PathPattern:        "/api/v1/{owner}/{project}/runs/{uuid}/logs/tree",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &GetRunLogsTreeReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *GetRunLogsTreeOK:
+		return value, nil, nil
+	case *GetRunLogsTreeNoContent:
 		return nil, value, nil
 	}
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
@@ -628,7 +736,7 @@ func (a *Client) ListRuns(params *ListRunsParams, authInfo runtime.ClientAuthInf
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "ListRuns",
 		Method:             "GET",
-		PathPattern:        "/api/v1/{owner}/{project}/runs/list",
+		PathPattern:        "/api/v1/{owner}/{project}/runs",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -1005,6 +1113,78 @@ func (a *Client) UpdateRun(params *UpdateRunParams, authInfo runtime.ClientAuthI
 	case *UpdateRunOK:
 		return value, nil, nil
 	case *UpdateRunNoContent:
+		return nil, value, nil
+	}
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for runs_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+UploadRunArtifact uploads an artifact file to a store via run access
+*/
+func (a *Client) UploadRunArtifact(params *UploadRunArtifactParams, authInfo runtime.ClientAuthInfoWriter) (*UploadRunArtifactOK, *UploadRunArtifactNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewUploadRunArtifactParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "UploadRunArtifact",
+		Method:             "POST",
+		PathPattern:        "/api/v1/{owner}/{project}/runs/{uuid}/artifacts/upload",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"multipart/form-data"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &UploadRunArtifactReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *UploadRunArtifactOK:
+		return value, nil, nil
+	case *UploadRunArtifactNoContent:
+		return nil, value, nil
+	}
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for runs_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+UploadRunLogs uploads a logs file to a store via run access
+*/
+func (a *Client) UploadRunLogs(params *UploadRunLogsParams, authInfo runtime.ClientAuthInfoWriter) (*UploadRunLogsOK, *UploadRunLogsNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewUploadRunLogsParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "UploadRunLogs",
+		Method:             "POST",
+		PathPattern:        "/api/v1/{owner}/{project}/runs/{uuid}/logs/upload",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"multipart/form-data"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &UploadRunLogsReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *UploadRunLogsOK:
+		return value, nil, nil
+	case *UploadRunLogsNoContent:
 		return nil, value, nil
 	}
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue

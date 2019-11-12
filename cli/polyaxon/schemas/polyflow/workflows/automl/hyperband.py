@@ -21,6 +21,9 @@ from marshmallow import fields, validate
 
 from polyaxon.schemas.base import BaseConfig, BaseSchema
 from polyaxon.schemas.fields.ref_or_obj import RefOrObject
+from polyaxon.schemas.polyflow.workflows.early_stopping_policies import (
+    EarlyStoppingSchema,
+)
 from polyaxon.schemas.polyflow.workflows.matrix import MatrixSchema
 from polyaxon.schemas.polyflow.workflows.metrics import SearchMetricSchema
 
@@ -79,6 +82,8 @@ class HyperbandSchema(BaseSchema):
     metric = fields.Nested(SearchMetricSchema)
     resume = RefOrObject(fields.Boolean(allow_none=True))
     seed = RefOrObject(fields.Int(allow_none=True))
+    concurrency = fields.Int(allow_none=True)
+    early_stopping = fields.Nested(EarlyStoppingSchema, many=True, allow_none=True)
 
     @staticmethod
     def schema_config():
@@ -88,6 +93,7 @@ class HyperbandSchema(BaseSchema):
 class HyperbandConfig(BaseConfig):
     SCHEMA = HyperbandSchema
     IDENTIFIER = "hyperband"
+    REDUCED_ATTRIBUTES = ["seed", "concurrency", "early_stopping"]
 
     def __init__(
         self,
@@ -96,8 +102,10 @@ class HyperbandConfig(BaseConfig):
         eta,
         resource,
         metric,
+        concurrency=None,
         resume=False,
         seed=None,
+        early_stopping=None,
         kind=IDENTIFIER,
     ):
         self.matrix = matrix
@@ -106,5 +114,7 @@ class HyperbandConfig(BaseConfig):
         self.eta = eta
         self.resource = resource
         self.metric = metric
-        self.seed = seed
         self.resume = resume
+        self.seed = seed
+        self.concurrency = concurrency
+        self.early_stopping = early_stopping

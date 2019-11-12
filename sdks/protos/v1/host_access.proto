@@ -9,7 +9,7 @@ message HostAccess {
     // UUID
     string uuid = 1;
 
-    // Optional name
+    // Name
     string name = 2;
 
     // Optional description

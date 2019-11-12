@@ -80,6 +80,13 @@ from polyaxon.utils.validation import validate_tags
     help="A parameter to override the default params of the run, form -P name=value.",
 )
 @click.option("--profile", type=str, help="Name of profile to use for this run.")
+@click.option(
+    "--nocache",
+    is_flag=True,
+    default=None,
+    type=str,
+    help="Check cache before starting this operation.",
+)
 @click.pass_context
 @clean_outputs
 def run(
@@ -95,6 +102,7 @@ def run(
     conda_env,
     params,
     profile,
+    nocache,
 ):
     """Run polyaxonfile specification.
 
@@ -140,7 +148,7 @@ def run(
     ```
     """
     specification = check_polyaxonfile(
-        polyaxonfile, params=params, profile=profile, log=False
+        polyaxonfile, params=params, profile=profile, nocache=nocache, log=False
     )
 
     owner, project_name = get_project_or_local(project)

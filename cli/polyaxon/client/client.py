@@ -43,8 +43,9 @@ class PolyaxonClient(object):
         self._projects_v1 = None
         self._runs_v1 = None
         self._auth_v1 = None
-        self._versions_v1 = None
         self._users_v1 = None
+        self._versions_v1 = None
+        self._artifacts_stores_v1 = None
 
     def reset(self):
         self._transport = None
@@ -53,6 +54,7 @@ class PolyaxonClient(object):
         self._auth_v1 = None
         self._users_v1 = None
         self._versions_v1 = None
+        self._artifacts_stores_v1 = None
         self.api_client = polyaxon_sdk.ApiClient(
             self.config.sdk_config, **self.config.client_header
         )
@@ -118,3 +120,9 @@ class PolyaxonClient(object):
         if not self._versions_v1:
             self._versions_v1 = polyaxon_sdk.VersionsV1Api(self.api_client)
         return self._versions_v1
+
+    @property
+    def artifacts_stores_v1(self):
+        if not self._users_v1:
+            self._users_v1 = polyaxon_sdk.ArtifactsStoresV1Api(self.api_client)
+        return self._users_v1

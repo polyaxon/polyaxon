@@ -20,19 +20,20 @@ from __future__ import absolute_import, division, print_function
 from marshmallow import fields, validate
 
 from polyaxon.schemas.base import BaseConfig, BaseSchema
+from polyaxon.schemas.fields.ref_or_obj import RefOrObject
 
 
-class ExactTimeSchema(BaseSchema):
+class ExactTimeScheduleSchema(BaseSchema):
     kind = fields.Str(allow_none=True, validate=validate.Equal("exact_time"))
-    execute_at = fields.LocalDateTime(allow_none=True)
+    execute_at = RefOrObject(fields.LocalDateTime(required=True), required=True)
 
     @staticmethod
     def schema_config():
-        return ExecutableConfig
+        return ExactTimeScheduleConfig
 
 
-class ExecutableConfig(BaseConfig):
-    SCHEMA = ExactTimeSchema
+class ExactTimeScheduleConfig(BaseConfig):
+    SCHEMA = ExactTimeScheduleSchema
     IDENTIFIER = "exact_time"
     REDUCED_ATTRIBUTES = ["execute_at"]
 

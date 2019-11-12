@@ -47,7 +47,7 @@ class TestCliConfigManagerMethods(TestCase):
         CliConfigManager.CONFIG_FILE_NAME = self.filename
 
     def tearDown(self):
-        path = CliConfigManager.get_config_file_path(create=False)
+        path = CliConfigManager.get_config_filepath(create=False)
         if not os.path.exists(path):
             return
         os.remove(path)

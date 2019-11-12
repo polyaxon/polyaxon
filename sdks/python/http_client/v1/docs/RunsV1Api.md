@@ -7,20 +7,23 @@ Method | HTTP request | Description
 [**archive_run**](RunsV1Api.md#archive_run) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/archive | Archive run
 [**bookmark_run**](RunsV1Api.md#bookmark_run) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/bookmark | Bookmark run
 [**copy_run**](RunsV1Api.md#copy_run) | **POST** /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/copy | Restart run with copy
-[**create_run**](RunsV1Api.md#create_run) | **POST** /api/v1/{owner}/{project}/runs/create | Create new run
+[**create_run**](RunsV1Api.md#create_run) | **POST** /api/v1/{owner}/{project}/runs | Create new run
 [**create_run_code_ref**](RunsV1Api.md#create_run_code_ref) | **POST** /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/coderef | Get run code ref
 [**create_run_status**](RunsV1Api.md#create_run_status) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/statuses | Create new run status
 [**delete_run**](RunsV1Api.md#delete_run) | **DELETE** /api/v1/{owner}/{project}/runs/{uuid} | Delete run
 [**delete_runs**](RunsV1Api.md#delete_runs) | **DELETE** /api/v1/{owner}/{project}/runs/delete | Delete runs
 [**get_run**](RunsV1Api.md#get_run) | **GET** /api/v1/{owner}/{project}/runs/{uuid} | Get run
+[**get_run_artifacts_tree**](RunsV1Api.md#get_run_artifacts_tree) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/artifacts/tree | Get run artifacts list
 [**get_run_code_refs**](RunsV1Api.md#get_run_code_refs) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/coderef | Get run code ref
+[**get_run_logs_file**](RunsV1Api.md#get_run_logs_file) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/logs/file | Get run logs get file
+[**get_run_logs_tree**](RunsV1Api.md#get_run_logs_tree) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/logs/tree | Get run logs list
 [**get_run_statuses**](RunsV1Api.md#get_run_statuses) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/statuses | Get run status
 [**impersonate_token**](RunsV1Api.md#impersonate_token) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/impersonate | Impersonate run token
 [**invalidate_run**](RunsV1Api.md#invalidate_run) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/invalidate | Invalidate run
 [**invalidate_runs**](RunsV1Api.md#invalidate_runs) | **POST** /api/v1/{owner}/{project}/runs/invalidate | Invalidate runs
 [**list_archived_runs**](RunsV1Api.md#list_archived_runs) | **GET** /api/v1/archives/{user}/runs | List archived runs for user
 [**list_bookmarked_runs**](RunsV1Api.md#list_bookmarked_runs) | **GET** /api/v1/bookmarks/{user}/runs | List bookmarked runs for user
-[**list_runs**](RunsV1Api.md#list_runs) | **GET** /api/v1/{owner}/{project}/runs/list | List runs
+[**list_runs**](RunsV1Api.md#list_runs) | **GET** /api/v1/{owner}/{project}/runs | List runs
 [**patch_run**](RunsV1Api.md#patch_run) | **PATCH** /api/v1/{owner}/{project}/runs/{run.uuid} | Patch run
 [**restart_run**](RunsV1Api.md#restart_run) | **POST** /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/restart | Restart run
 [**restore_run**](RunsV1Api.md#restore_run) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/restore | Restore run
@@ -31,6 +34,8 @@ Method | HTTP request | Description
 [**stop_runs**](RunsV1Api.md#stop_runs) | **POST** /api/v1/{owner}/{project}/runs/stop | Stop runs
 [**unbookmark_run**](RunsV1Api.md#unbookmark_run) | **DELETE** /api/v1/{owner}/{project}/runs/{uuid}/unbookmark | Unbookmark run
 [**update_run**](RunsV1Api.md#update_run) | **PUT** /api/v1/{owner}/{project}/runs/{run.uuid} | Update run
+[**upload_run_artifact**](RunsV1Api.md#upload_run_artifact) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/artifacts/upload | Upload an artifact file to a store via run access
+[**upload_run_logs**](RunsV1Api.md#upload_run_logs) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/logs/upload | Upload a logs file to a store via run access
 
 
 # **archive_run**
@@ -539,6 +544,68 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **get_run_artifacts_tree**
+> V1ArtifactTreeResponse get_run_artifacts_tree(owner, project, uuid, path=path, step=step, type=type)
+
+Get run artifacts list
+
+### Example
+```python
+from __future__ import print_function
+import time
+import polyaxon_sdk
+from polyaxon_sdk.rest import ApiException
+from pprint import pprint
+
+# Configure API key authorization: ApiKey
+configuration = polyaxon_sdk.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
+owner = 'owner_example' # str | Owner of the namespace
+project = 'project_example' # str | Project where the experiement will be assigned
+uuid = 'uuid_example' # str | Unique integer identifier of the entity
+path = 'path_example' # str | Artifact filepath. (optional)
+step = 56 # int | Artifact logging step. (optional)
+type = 'type_example' # str | Artifact type. (optional)
+
+try:
+    # Get run artifacts list
+    api_response = api_instance.get_run_artifacts_tree(owner, project, uuid, path=path, step=step, type=type)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling RunsV1Api->get_run_artifacts_tree: %s\n" % e)
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **str**| Owner of the namespace | 
+ **project** | **str**| Project where the experiement will be assigned | 
+ **uuid** | **str**| Unique integer identifier of the entity | 
+ **path** | **str**| Artifact filepath. | [optional] 
+ **step** | **int**| Artifact logging step. | [optional] 
+ **type** | **str**| Artifact type. | [optional] 
+
+### Return type
+
+[**V1ArtifactTreeResponse**](V1ArtifactTreeResponse.md)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **get_run_code_refs**
 > V1ListCodeRefsResponse get_run_code_refs(owner, project, uuid)
 
@@ -583,6 +650,130 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**V1ListCodeRefsResponse**](V1ListCodeRefsResponse.md)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **get_run_logs_file**
+> str get_run_logs_file(owner, project, uuid, path=path, step=step, type=type)
+
+Get run logs get file
+
+### Example
+```python
+from __future__ import print_function
+import time
+import polyaxon_sdk
+from polyaxon_sdk.rest import ApiException
+from pprint import pprint
+
+# Configure API key authorization: ApiKey
+configuration = polyaxon_sdk.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
+owner = 'owner_example' # str | Owner of the namespace
+project = 'project_example' # str | Project where the experiement will be assigned
+uuid = 'uuid_example' # str | Unique integer identifier of the entity
+path = 'path_example' # str | Artifact filepath. (optional)
+step = 56 # int | Artifact logging step. (optional)
+type = 'type_example' # str | Artifact type. (optional)
+
+try:
+    # Get run logs get file
+    api_response = api_instance.get_run_logs_file(owner, project, uuid, path=path, step=step, type=type)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling RunsV1Api->get_run_logs_file: %s\n" % e)
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **str**| Owner of the namespace | 
+ **project** | **str**| Project where the experiement will be assigned | 
+ **uuid** | **str**| Unique integer identifier of the entity | 
+ **path** | **str**| Artifact filepath. | [optional] 
+ **step** | **int**| Artifact logging step. | [optional] 
+ **type** | **str**| Artifact type. | [optional] 
+
+### Return type
+
+**str**
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **get_run_logs_tree**
+> V1ArtifactTreeResponse get_run_logs_tree(owner, project, uuid, path=path, step=step, type=type)
+
+Get run logs list
+
+### Example
+```python
+from __future__ import print_function
+import time
+import polyaxon_sdk
+from polyaxon_sdk.rest import ApiException
+from pprint import pprint
+
+# Configure API key authorization: ApiKey
+configuration = polyaxon_sdk.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
+owner = 'owner_example' # str | Owner of the namespace
+project = 'project_example' # str | Project where the experiement will be assigned
+uuid = 'uuid_example' # str | Unique integer identifier of the entity
+path = 'path_example' # str | Artifact filepath. (optional)
+step = 56 # int | Artifact logging step. (optional)
+type = 'type_example' # str | Artifact type. (optional)
+
+try:
+    # Get run logs list
+    api_response = api_instance.get_run_logs_tree(owner, project, uuid, path=path, step=step, type=type)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling RunsV1Api->get_run_logs_tree: %s\n" % e)
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **str**| Owner of the namespace | 
+ **project** | **str**| Project where the experiement will be assigned | 
+ **uuid** | **str**| Unique integer identifier of the entity | 
+ **path** | **str**| Artifact filepath. | [optional] 
+ **step** | **int**| Artifact logging step. | [optional] 
+ **type** | **str**| Artifact type. | [optional] 
+
+### Return type
+
+[**V1ArtifactTreeResponse**](V1ArtifactTreeResponse.md)
 
 ### Authorization
 
@@ -1561,6 +1752,128 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **upload_run_artifact**
+> upload_run_artifact(owner, project, uuid, uploadfile, path=path, overwrite=overwrite)
+
+Upload an artifact file to a store via run access
+
+### Example
+```python
+from __future__ import print_function
+import time
+import polyaxon_sdk
+from polyaxon_sdk.rest import ApiException
+from pprint import pprint
+
+# Configure API key authorization: ApiKey
+configuration = polyaxon_sdk.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
+owner = 'owner_example' # str | Owner of the namespace
+project = 'project_example' # str | Project having access to the store
+uuid = 'uuid_example' # str | Unique integer identifier of the entity
+uploadfile = '/path/to/file.txt' # file | The file to upload.
+path = 'path_example' # str | File path query params. (optional)
+overwrite = true # bool | File path query params. (optional)
+
+try:
+    # Upload an artifact file to a store via run access
+    api_instance.upload_run_artifact(owner, project, uuid, uploadfile, path=path, overwrite=overwrite)
+except ApiException as e:
+    print("Exception when calling RunsV1Api->upload_run_artifact: %s\n" % e)
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **str**| Owner of the namespace | 
+ **project** | **str**| Project having access to the store | 
+ **uuid** | **str**| Unique integer identifier of the entity | 
+ **uploadfile** | **file**| The file to upload. | 
+ **path** | **str**| File path query params. | [optional] 
+ **overwrite** | **bool**| File path query params. | [optional] 
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: multipart/form-data
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **upload_run_logs**
+> upload_run_logs(owner, project, uuid, uploadfile, path=path, overwrite=overwrite)
+
+Upload a logs file to a store via run access
+
+### Example
+```python
+from __future__ import print_function
+import time
+import polyaxon_sdk
+from polyaxon_sdk.rest import ApiException
+from pprint import pprint
+
+# Configure API key authorization: ApiKey
+configuration = polyaxon_sdk.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
+owner = 'owner_example' # str | Owner of the namespace
+project = 'project_example' # str | Project having access to the store
+uuid = 'uuid_example' # str | Unique integer identifier of the entity
+uploadfile = '/path/to/file.txt' # file | The file to upload.
+path = 'path_example' # str | File path query params. (optional)
+overwrite = true # bool | File path query params. (optional)
+
+try:
+    # Upload a logs file to a store via run access
+    api_instance.upload_run_logs(owner, project, uuid, uploadfile, path=path, overwrite=overwrite)
+except ApiException as e:
+    print("Exception when calling RunsV1Api->upload_run_logs: %s\n" % e)
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **str**| Owner of the namespace | 
+ **project** | **str**| Project having access to the store | 
+ **uuid** | **str**| Unique integer identifier of the entity | 
+ **uploadfile** | **file**| The file to upload. | 
+ **path** | **str**| File path query params. | [optional] 
+ **overwrite** | **bool**| File path query params. | [optional] 
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: multipart/form-data
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

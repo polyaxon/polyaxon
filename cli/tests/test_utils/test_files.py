@@ -34,6 +34,6 @@ class TestFiles(TestCase):
         assert not os.path.exists(tar_file_name)
 
     def test_get_files_in_current_directory(self):
-        file_paths = ["tests/test_utils/__init__.py"]
-        with get_files_in_current_directory("repo", file_paths) as (files, files_size):
-            assert len(file_paths) == len(files)
+        filepaths = ["tests/test_utils/__init__.py"]
+        with get_files_in_current_directory("repo", filepaths) as (files, files_size):
+            assert len(filepaths) == len(files)

@@ -29,14 +29,14 @@ import (
 // swagger:model v1RunMetaInfo
 type V1RunMetaInfo struct {
 
-	// service
+	// Optional an indicator if the run has a concurrency
+	Concurrency int32 `json:"concurrency,omitempty"`
+
+	// Optional flag to tell if the run has a service
 	Service bool `json:"service,omitempty"`
 
-	// workflow concurrency
-	WorkflowConcurrency int32 `json:"workflow_concurrency,omitempty"`
-
-	// workflow strategy
-	WorkflowStrategy string `json:"workflow_strategy,omitempty"`
+	// Optional the kind of workflow if it exists
+	WorkflowKind string `json:"workflow_kind,omitempty"`
 }
 
 // Validate validates this v1 run meta info

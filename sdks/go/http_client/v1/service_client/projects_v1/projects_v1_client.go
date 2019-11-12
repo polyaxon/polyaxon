@@ -113,7 +113,7 @@ func (a *Client) BookmarkProject(params *BookmarkProjectParams, authInfo runtime
 }
 
 /*
-CreateProject gets run
+CreateProject lists archived runs for user
 */
 func (a *Client) CreateProject(params *CreateProjectParams, authInfo runtime.ClientAuthInfoWriter) (*CreateProjectOK, *CreateProjectNoContent, error) {
 	// TODO: Validate the params before sending
@@ -124,7 +124,7 @@ func (a *Client) CreateProject(params *CreateProjectParams, authInfo runtime.Cli
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "CreateProject",
 		Method:             "POST",
-		PathPattern:        "/api/v1/{owner}/projects/create",
+		PathPattern:        "/api/v1/{owner}/projects",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -293,7 +293,7 @@ func (a *Client) GetProject(params *GetProjectParams, authInfo runtime.ClientAut
 }
 
 /*
-ListArchivedProjects creates new run
+ListArchivedProjects gets run
 */
 func (a *Client) ListArchivedProjects(params *ListArchivedProjectsParams, authInfo runtime.ClientAuthInfoWriter) (*ListArchivedProjectsOK, *ListArchivedProjectsNoContent, error) {
 	// TODO: Validate the params before sending
@@ -329,7 +329,7 @@ func (a *Client) ListArchivedProjects(params *ListArchivedProjectsParams, authIn
 }
 
 /*
-ListBookmarkedProjects lists runs
+ListBookmarkedProjects creates new run
 */
 func (a *Client) ListBookmarkedProjects(params *ListBookmarkedProjectsParams, authInfo runtime.ClientAuthInfoWriter) (*ListBookmarkedProjectsOK, *ListBookmarkedProjectsNoContent, error) {
 	// TODO: Validate the params before sending
@@ -365,7 +365,7 @@ func (a *Client) ListBookmarkedProjects(params *ListBookmarkedProjectsParams, au
 }
 
 /*
-ListProjectNames lists archived runs for user
+ListProjectNames lists runs
 */
 func (a *Client) ListProjectNames(params *ListProjectNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListProjectNamesOK, *ListProjectNamesNoContent, error) {
 	// TODO: Validate the params before sending
@@ -412,7 +412,7 @@ func (a *Client) ListProjects(params *ListProjectsParams, authInfo runtime.Clien
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "ListProjects",
 		Method:             "GET",
-		PathPattern:        "/api/v1/{owner}/projects/list",
+		PathPattern:        "/api/v1/{owner}/projects",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -573,6 +573,42 @@ func (a *Client) UpdateProject(params *UpdateProjectParams, authInfo runtime.Cli
 	case *UpdateProjectOK:
 		return value, nil, nil
 	case *UpdateProjectNoContent:
+		return nil, value, nil
+	}
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for projects_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+UploadProjectArtifact uploads artifact to a store via project access
+*/
+func (a *Client) UploadProjectArtifact(params *UploadProjectArtifactParams, authInfo runtime.ClientAuthInfoWriter) (*UploadProjectArtifactOK, *UploadProjectArtifactNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewUploadProjectArtifactParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "UploadProjectArtifact",
+		Method:             "POST",
+		PathPattern:        "/api/v1/{owner}/{project}/artifacts_stores/{uuid}/upload",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"multipart/form-data"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &UploadProjectArtifactReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *UploadProjectArtifactOK:
+		return value, nil, nil
+	case *UploadProjectArtifactNoContent:
 		return nil, value, nil
 	}
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue

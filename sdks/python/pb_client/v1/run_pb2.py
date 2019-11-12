@@ -41,7 +41,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='v1',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\x0cv1/run.proto\x12\x02v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a,protoc-gen-swagger/options/annotations.proto\x1a\rv1/base.proto\"W\n\x0bRunMetaInfo\x12\x0f\n\x07service\x18\x01 \x01(\x08\x12\x19\n\x11workflow_strategy\x18\x02 \x01(\t\x12\x1c\n\x14workflow_concurrency\x18\x03 \x01(\x05\"\xd2\x06\n\x03Run\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x13\n\x0b\x64\x65scription\x18\x03 \x01(\t\x12\x0c\n\x04tags\x18\x04 \x03(\t\x12\x0f\n\x07\x64\x65leted\x18\x05 \x01(\x08\x12\x0c\n\x04user\x18\x06 \x01(\t\x12\r\n\x05owner\x18\x07 \x01(\t\x12\x0f\n\x07project\x18\x08 \x01(\t\x12.\n\ncreated_at\x18\t \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12.\n\nupdated_at\x18\n \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12.\n\nstarted_at\x18\x0b \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12/\n\x0b\x66inished_at\x18\x0c \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x12\n\nis_managed\x18\r \x01(\t\x12\x0f\n\x07\x63ontent\x18\x0e \x01(\t\x12\x0e\n\x06status\x18\x0f \x01(\t\x12\"\n\tmeta_info\x18\x10 \x01(\x0b\x32\x0f.v1.RunMetaInfo\x12\x0e\n\x06readme\x18\x11 \x01(\t\x12\x12\n\nbookmarked\x18\x12 \x01(\x08\x12#\n\x06inputs\x18\x13 \x03(\x0b\x32\x13.v1.Run.InputsEntry\x12%\n\x07outputs\x18\x14 \x03(\x0b\x32\x14.v1.Run.OutputsEntry\x12$\n\x07run_env\x18\x15 \x03(\x0b\x32\x13.v1.Run.RunEnvEntry\x12\x11\n\tis_resume\x18\x16 \x01(\x08\x12\x10\n\x08is_clone\x18\x17 \x01(\x08\x12\x18\n\x10\x63loning_strategy\x18\x18 \x01(\t\x12\x10\n\x08pipeline\x18\x19 \x01(\t\x12\x10\n\x08original\x18\x1a \x01(\t\x12\x15\n\rpipeline_name\x18\x1b \x01(\t\x12\x15\n\roriginal_name\x18\x1c \x01(\t\x1a-\n\x0bInputsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x1a.\n\x0cOutputsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x1a-\n\x0bRunEnvEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"F\n\x0eRunBodyRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0f\n\x07project\x18\x02 \x01(\t\x12\x14\n\x03run\x18\x03 \x01(\x0b\x32\x07.v1.Run\"^\n\x14\x45ntityRunBodyRequest\x12\x30\n\x06\x65ntity\x18\x01 \x01(\x0b\x32 .v1.ProjectEntityResourceRequest\x12\x14\n\x03run\x18\x02 \x01(\x0b\x32\x07.v1.Run\"[\n\x10ListRunsResponse\x12\r\n\x05\x63ount\x18\x01 \x01(\x05\x12\x18\n\x07results\x18\x02 \x03(\x0b\x32\x07.v1.Run\x12\x10\n\x08previous\x18\x03 \x01(\t\x12\x0c\n\x04next\x18\x04 \x01(\tb\x06proto3')
+  serialized_pb=_b('\n\x0cv1/run.proto\x12\x02v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a,protoc-gen-swagger/options/annotations.proto\x1a\rv1/base.proto\"J\n\x0bRunMetaInfo\x12\x0f\n\x07service\x18\x01 \x01(\x08\x12\x13\n\x0b\x63oncurrency\x18\x03 \x01(\x05\x12\x15\n\rworkflow_kind\x18\x02 \x01(\t\"\xd2\x06\n\x03Run\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x13\n\x0b\x64\x65scription\x18\x03 \x01(\t\x12\x0c\n\x04tags\x18\x04 \x03(\t\x12\x0f\n\x07\x64\x65leted\x18\x05 \x01(\x08\x12\x0c\n\x04user\x18\x06 \x01(\t\x12\r\n\x05owner\x18\x07 \x01(\t\x12\x0f\n\x07project\x18\x08 \x01(\t\x12.\n\ncreated_at\x18\t \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12.\n\nupdated_at\x18\n \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12.\n\nstarted_at\x18\x0b \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12/\n\x0b\x66inished_at\x18\x0c \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x12\n\nis_managed\x18\r \x01(\t\x12\x0f\n\x07\x63ontent\x18\x0e \x01(\t\x12\x0e\n\x06status\x18\x0f \x01(\t\x12\"\n\tmeta_info\x18\x10 \x01(\x0b\x32\x0f.v1.RunMetaInfo\x12\x0e\n\x06readme\x18\x11 \x01(\t\x12\x12\n\nbookmarked\x18\x12 \x01(\x08\x12#\n\x06inputs\x18\x13 \x03(\x0b\x32\x13.v1.Run.InputsEntry\x12%\n\x07outputs\x18\x14 \x03(\x0b\x32\x14.v1.Run.OutputsEntry\x12$\n\x07run_env\x18\x15 \x03(\x0b\x32\x13.v1.Run.RunEnvEntry\x12\x11\n\tis_resume\x18\x16 \x01(\x08\x12\x10\n\x08is_clone\x18\x17 \x01(\x08\x12\x18\n\x10\x63loning_strategy\x18\x18 \x01(\t\x12\x10\n\x08pipeline\x18\x19 \x01(\t\x12\x10\n\x08original\x18\x1a \x01(\t\x12\x15\n\rpipeline_name\x18\x1b \x01(\t\x12\x15\n\roriginal_name\x18\x1c \x01(\t\x1a-\n\x0bInputsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x1a.\n\x0cOutputsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x1a-\n\x0bRunEnvEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"F\n\x0eRunBodyRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0f\n\x07project\x18\x02 \x01(\t\x12\x14\n\x03run\x18\x03 \x01(\x0b\x32\x07.v1.Run\"^\n\x14\x45ntityRunBodyRequest\x12\x30\n\x06\x65ntity\x18\x01 \x01(\x0b\x32 .v1.ProjectEntityResourceRequest\x12\x14\n\x03run\x18\x02 \x01(\x0b\x32\x07.v1.Run\"[\n\x10ListRunsResponse\x12\r\n\x05\x63ount\x18\x01 \x01(\x05\x12\x18\n\x07results\x18\x02 \x03(\x0b\x32\x07.v1.Run\x12\x10\n\x08previous\x18\x03 \x01(\t\x12\x0c\n\x04next\x18\x04 \x01(\tb\x06proto3')
   ,
   dependencies=[google_dot_api_dot_annotations__pb2.DESCRIPTOR,google_dot_protobuf_dot_struct__pb2.DESCRIPTOR,google_dot_protobuf_dot_timestamp__pb2.DESCRIPTOR,protoc__gen__swagger_dot_options_dot_annotations__pb2.DESCRIPTOR,v1_dot_base__pb2.DESCRIPTOR,])
 
@@ -63,16 +63,16 @@ _RUNMETAINFO = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='workflow_strategy', full_name='v1.RunMetaInfo.workflow_strategy', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b("").decode('utf-8'),
+      name='concurrency', full_name='v1.RunMetaInfo.concurrency', index=1,
+      number=3, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='workflow_concurrency', full_name='v1.RunMetaInfo.workflow_concurrency', index=2,
-      number=3, type=5, cpp_type=1, label=1,
-      has_default_value=False, default_value=0,
+      name='workflow_kind', full_name='v1.RunMetaInfo.workflow_kind', index=2,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
@@ -89,7 +89,7 @@ _RUNMETAINFO = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=174,
-  serialized_end=261,
+  serialized_end=248,
 )
 
 
@@ -126,8 +126,8 @@ _RUN_INPUTSENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=974,
-  serialized_end=1019,
+  serialized_start=961,
+  serialized_end=1006,
 )
 
 _RUN_OUTPUTSENTRY = _descriptor.Descriptor(
@@ -163,8 +163,8 @@ _RUN_OUTPUTSENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1021,
-  serialized_end=1067,
+  serialized_start=1008,
+  serialized_end=1054,
 )
 
 _RUN_RUNENVENTRY = _descriptor.Descriptor(
@@ -200,8 +200,8 @@ _RUN_RUNENVENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1069,
-  serialized_end=1114,
+  serialized_start=1056,
+  serialized_end=1101,
 )
 
 _RUN = _descriptor.Descriptor(
@@ -419,8 +419,8 @@ _RUN = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=264,
-  serialized_end=1114,
+  serialized_start=251,
+  serialized_end=1101,
 )
 
 
@@ -464,8 +464,8 @@ _RUNBODYREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1116,
-  serialized_end=1186,
+  serialized_start=1103,
+  serialized_end=1173,
 )
 
 
@@ -502,8 +502,8 @@ _ENTITYRUNBODYREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1188,
-  serialized_end=1282,
+  serialized_start=1175,
+  serialized_end=1269,
 )
 
 
@@ -554,8 +554,8 @@ _LISTRUNSRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1284,
-  serialized_end=1375,
+  serialized_start=1271,
+  serialized_end=1362,
 )
 
 _RUN_INPUTSENTRY.containing_type = _RUN

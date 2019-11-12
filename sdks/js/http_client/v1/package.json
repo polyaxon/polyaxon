@@ -1,7 +1,7 @@
 {
   "name": "polyaxon-sdk",
-  "version": "1.14.4",
-  "description": "ERROR_UNKNOWN",
+  "version": "1.0.0",
+  "description": "Polyaxon_SDKs_and_REST_API_specification_",
   "license": "Unlicense",
   "main": "src/index.js",
   "scripts": {

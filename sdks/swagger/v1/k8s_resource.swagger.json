@@ -4,10 +4,6 @@
     "title": "v1/k8s_resource.proto",
     "version": "version not set"
   },
-  "schemes": [
-    "http",
-    "https"
-  ],
   "consumes": [
     "application/json"
   ],

@@ -4,16 +4,13 @@ version: 0.6
 kind: component
 
 workflow:
+  kind: mapping
   concurrency: 2
-
-  strategy:
-    kind: mapping
-    values:
-      - lr: 0.001
-        loss: MeanSquaredError
-      - lr: 0.1
-        loss: AbsoluteDifference
-
+  values:
+    - lr: 0.001
+      loss: MeanSquaredError
+    - lr: 0.1
+      loss: AbsoluteDifference
   early_stopping:
   - kind: metric_early_stopping
     metric: loss

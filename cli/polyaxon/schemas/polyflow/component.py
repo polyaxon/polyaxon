@@ -70,7 +70,6 @@ class ComponentConfig(BaseComponentConfig):
         mounts=None,
         schedule=None,
         workflow=None,
-        recursive=None,
         service=None,
         container=None,
         inputs=None,
@@ -90,7 +89,6 @@ class ComponentConfig(BaseComponentConfig):
             mounts=mounts,
             schedule=schedule,
             workflow=workflow,
-            recursive=recursive,
             service=service,
         )
         validate_component({"container": container, "workflow": workflow})

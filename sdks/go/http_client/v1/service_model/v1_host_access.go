@@ -56,7 +56,7 @@ type V1HostAccess struct {
 	// Optional the k8s secret to use
 	K8sSecret string `json:"k8s_secret,omitempty"`
 
-	// Optional name
+	// Name
 	Name string `json:"name,omitempty"`
 
 	// Optional a readme text describing this entity

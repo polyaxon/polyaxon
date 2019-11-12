@@ -163,7 +163,7 @@ class DeployManager(object):
         Printer.print_success("Deployment finished.")
 
     def install_on_docker_compose(self):
-        path = ComposeConfigManager.get_config_file_path()
+        path = ComposeConfigManager.get_config_filepath()
         path = "/".join(path.split("/")[:-1])
         # Fetch docker-compose
         Transport().download(
@@ -271,7 +271,7 @@ class DeployManager(object):
         Printer.print_success("Deployment successfully deleted.")
 
     def teardown_on_docker_compose(self):
-        path = ComposeConfigManager.get_config_file_path()
+        path = ComposeConfigManager.get_config_filepath()
         path = "/".join(path.split("/")[:-1])
         self.compose.execute(["-f", path + "/docker-compose.yml", "down"])
 

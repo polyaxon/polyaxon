@@ -2,53 +2,51 @@
 version: 0.6
 kind: component
 workflow:
+  kind: dag
   concurrency: 4
-  strategy:
-    kind: dag
-    ops:
-      - name: build
-        component_ref: {hub: kaniko}
-      - name: experiment-group
-        component_ref: {name: hyperband-experiment}
-    components:
-      - version: 0.6
-        kind: component
-        name: hyperband-experiment
-        description: hypertuning params experiment
-        workflow:
-          concurrency: 2
-          strategy:
-            kind: hyperband
-            max_iter: 10
-            eta: 3
-            resource:
-              name: steps
-              type: int
-            resume: False
-            metric:
-              name: loss
-              optimization: minimize
-            matrix:
-              lr:
-                kind: linspace
-                value: 0.01:0.1:5
-              loss:
-                kind: choice
-                value: [MeanSquaredError, AbsoluteDifference]
-              normal_rate:
-                kind: normal
-                value: [0, 0.9]
-              dropout:
-                kind: qloguniform
-                value: [0, 0.8, 0.1]
-              activation:
-                kind: pchoice
-                value: [[relu, 0.1], [sigmoid, 0.8]]
-              model:
-                kind: choice
-                value: [CDNA, DNA, STP]
+  ops:
+    - name: build
+      component_ref: {hub: kaniko}
+    - name: experiment-group
+      component_ref: {name: hyperband-experiment}
+  components:
+    - version: 0.6
+      kind: component
+      name: hyperband-experiment
+      description: hypertuning params experiment
+      workflow:
+        kind: hyperband
+        concurrency: 2
+        max_iter: 10
+        eta: 3
+        resource:
+          name: steps
+          type: int
+        resume: False
+        metric:
+          name: loss
+          optimization: minimize
+        matrix:
+          lr:
+            kind: linspace
+            value: 0.01:0.1:5
+          loss:
+            kind: choice
+            value: [MeanSquaredError, AbsoluteDifference]
+          normal_rate:
+            kind: normal
+            value: [0, 0.9]
+          dropout:
+            kind: qloguniform
+            value: [0, 0.8, 0.1]
+          activation:
+            kind: pchoice
+            value: [[relu, 0.1], [sigmoid, 0.8]]
+          model:
+            kind: choice
+            value: [CDNA, DNA, STP]
 
-        container:
-          image: foo:latest
-          command: train --lr={{ lr }} --loss={{ loss }}
+      container:
+        image: foo:latest
+        command: train --lr={{ lr }} --loss={{ loss }}
 ...

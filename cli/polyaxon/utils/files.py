@@ -27,18 +27,15 @@ from polyaxon.utils import constants
 
 
 @contextmanager
-def get_files_in_current_directory(file_type, file_paths):
+def get_files_in_current_directory(file_type, filepaths):
     local_files = []
     total_file_size = 0
 
-    for file_path in file_paths:
+    for filepath in filepaths:
         local_files.append(
-            (
-                file_type,
-                (unix_style_path(file_path), open(file_path, "rb"), "text/plain"),
-            )
+            (file_type, (unix_style_path(filepath), open(filepath, "rb"), "text/plain"))
         )
-        total_file_size += os.path.getsize(file_path)
+        total_file_size += os.path.getsize(filepath)
 
     yield local_files, total_file_size
 

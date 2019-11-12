@@ -162,16 +162,16 @@ class IgnoreManager(BaseConfigManager):
 
     @classmethod
     def get_config(cls):
-        config_file_path = cls.get_config_file_path()
+        config_filepath = cls.get_config_filepath()
 
-        if not os.path.isfile(config_file_path):
+        if not os.path.isfile(config_filepath):
             return []
 
-        with open(config_file_path, "r") as ignore_file:
+        with open(config_filepath, "r") as ignore_file:
             return cls.get_patterns(ignore_file)
 
     @classmethod
-    def get_unignored_file_paths(cls):
+    def get_unignored_filepaths(cls):
         config = cls.get_config()
         unignored_files = []
 
@@ -184,8 +184,8 @@ class IgnoreManager(BaseConfigManager):
                 continue
 
             for file_name in files:
-                file_path = unix_style_path(os.path.join(root, file_name))
-                if cls.is_ignored(file_path, config):
+                filepath = unix_style_path(os.path.join(root, file_name))
+                if cls.is_ignored(filepath, config):
                     logger.debug("Ignoring file : %s", file_name)
                     continue
 

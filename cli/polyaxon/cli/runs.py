@@ -42,6 +42,7 @@ from polyaxon.utils.formatting import (
     dict_to_tabulate,
     get_meta_response,
     get_runs_with_keys,
+    get_runs_with_meta,
     list_dicts_to_tabulate,
 )
 from polyaxon.utils.log_handler import get_logs_handler
@@ -172,6 +173,7 @@ def ls(ctx, io, query, sort, limit, offset):
         )
 
     objects = [Printer.add_status_color(o.to_dict()) for o in response.results]
+    objects = get_runs_with_meta(objects=objects)
 
     if io:
         objects = get_runs_with_keys(objects=objects, params_keys=["inputs", "outputs"])
@@ -185,6 +187,7 @@ def ls(ctx, io, query, sort, limit, offset):
                 "deleted",
                 "readme",
                 "run_env",
+                "meta_info",
             ],
         )
     else:
@@ -200,6 +203,7 @@ def ls(ctx, io, query, sort, limit, offset):
                 "run_env",
                 "inputs",
                 "outputs",
+                "meta_info",
             ],
         )
     if objects:

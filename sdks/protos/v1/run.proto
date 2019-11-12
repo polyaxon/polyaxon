@@ -11,11 +11,15 @@ import "v1/base.proto";
 
 // Run meta info specification
 message RunMetaInfo {
+    // Optional flag to tell if the run has a service
     bool service = 1;
 
-    string workflow_strategy = 2;
+    // Optional an indicator if the run has a concurrency
+    int32 concurrency = 3;
 
-    int32 workflow_concurrency = 3;
+    // Optional the kind of workflow if it exists
+    string workflow_kind = 2;
+
 }
 
 // Run specification

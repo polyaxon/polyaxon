@@ -4,7 +4,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **service** | **Boolean** |  | [optional] 
-**workflow_strategy** | **String** |  | [optional] 
-**workflow_concurrency** | **Number** |  | [optional] 
+**concurrency** | **Number** |  | [optional] 
+**workflow_kind** | **String** |  | [optional] 
 
 

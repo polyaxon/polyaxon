@@ -4,18 +4,16 @@ version: 0.6
 kind: component
 
 workflow:
+  kind: random_search
   concurrency: 2
-
-  strategy:
-    kind: random_search
-    n_experiments: 300
-    matrix:
-      lr:
-        kind: linspace
-        value: 0.01:0.1:5
-      loss:
-        kind: choice
-        value: [MeanSquaredError, AbsoluteDifference]
+  n_runs: 300
+  matrix:
+    lr:
+      kind: linspace
+      value: 0.01:0.1:5
+    loss:
+      kind: choice
+      value: [MeanSquaredError, AbsoluteDifference]
 
   early_stopping:
   - kind: metric_early_stopping

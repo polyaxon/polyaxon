@@ -21,6 +21,8 @@ import abc
 import copy
 import six
 
+from collections import namedtuple
+
 import rhea
 import ujson
 
@@ -34,8 +36,24 @@ from polyaxon.schemas.polyflow import params as ops_params
 from polyaxon.schemas.polyflow.io import IOTypes
 from polyaxon.schemas.polyflow.operators import ForConfig, IfConfig
 from polyaxon.schemas.polyflow.params import ParamSpec
-from polyaxon.schemas.polyflow.workflows import DagConfig
+from polyaxon.schemas.polyflow.workflows import DagConfig, WorkflowMixin
 from polyaxon.specs.libs.parser import Parser
+
+
+class MetaInfoSpec(
+    namedtuple("MetaInfoSpec", "service concurrency workflow_kind"), WorkflowMixin
+):
+    @classmethod
+    def get(cls, service=False, concurrency=None, workflow_kind=None):
+        return cls(
+            service=service, concurrency=concurrency, workflow_kind=workflow_kind
+        )
+
+    def get_workflow_kind(self):
+        return self.workflow_kind
+
+    def to_dict(self):
+        return dict(self._asdict())
 
 
 class EnvironmentSpecificationMixin(object):
@@ -210,7 +228,7 @@ class MountsSpecificationMixin(object):
         return self._get_refs_by_names(self.config_maps)
 
 
-class WorkflowSpecificationMixin(object):
+class WorkflowSpecificationMixin(WorkflowMixin):
     @property
     def workflow(self):
         return self.config.workflow
@@ -223,19 +241,18 @@ class WorkflowSpecificationMixin(object):
         return early_stopping or []
 
     @property
-    def workflow_strategy(self):
-        return self.workflow.strategy if self.workflow else None
+    def workflow_kind(self):
+        return self.workflow.kind if self.workflow else None
 
-    @property
-    def workflow_strategy_kind(self):
-        return self.workflow_strategy.kind if self.workflow_strategy else None
+    def get_workflow_kind(self):
+        return self.workflow_kind
 
     @property
     def concurrency(self):
         concurrency = None
-        if self.workflow:
+        if self.workflow and hasattr(self.workflow, "concurrency"):
             concurrency = self.workflow.concurrency
-        return concurrency or 1
+        return concurrency
 
 
 class TerminationSpecificationMixin(object):
@@ -469,9 +486,9 @@ class BaseSpecification(
         return self._parse(params)
 
     def _apply_dag_context(self):
-        self.workflow_strategy.process_dag()
-        self.workflow_strategy.validate_dag()
-        self.workflow_strategy.process_components(self.config.inputs)
+        self.workflow.process_dag()
+        self.workflow.validate_dag()
+        self.workflow.process_components(self.config.inputs)
         return self
 
     def apply_context(self):
@@ -590,16 +607,21 @@ class BaseSpecification(
 
     @property
     def has_pipeline(self):
-        return self.workflow_strategy and (
-            self.workflow.has_dag_strategy or self.workflow.has_automl_strategy
+        return self.workflow and (
+            self.config.has_dag_workflow or self.config.has_automl_workflow
+        )
+
+    @property
+    def meta_info(self):
+        return MetaInfoSpec.get(
+            service=self.has_service,
+            concurrency=self.concurrency,
+            workflow_kind=self.workflow_kind,
         )
 
     @property
     def has_dag(self):
-        return (
-            self.workflow_strategy_kind
-            and self.workflow_strategy_kind == DagConfig.IDENTIFIER
-        )
+        return self.workflow_kind and self.workflow_kind == DagConfig.IDENTIFIER
 
     @property
     def values(self):

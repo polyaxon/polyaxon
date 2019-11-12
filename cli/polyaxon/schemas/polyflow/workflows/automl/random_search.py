@@ -17,10 +17,13 @@
 # coding: utf-8
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import ValidationError, fields, validate
+from marshmallow import fields, validate
 
 from polyaxon.schemas.base import BaseConfig, BaseSchema
 from polyaxon.schemas.fields.ref_or_obj import RefOrObject
+from polyaxon.schemas.polyflow.workflows.early_stopping_policies import (
+    EarlyStoppingSchema,
+)
 from polyaxon.schemas.polyflow.workflows.matrix import MatrixSchema
 
 
@@ -29,10 +32,12 @@ class RandomSearchSchema(BaseSchema):
     matrix = fields.Dict(
         keys=fields.Str(), values=fields.Nested(MatrixSchema), required=True
     )
-    n_experiments = RefOrObject(
-        fields.Int(allow_none=True, validate=validate.Range(min=1))
+    n_runs = RefOrObject(
+        fields.Int(required=True, validate=validate.Range(min=1)), required=True
     )
     seed = RefOrObject(fields.Int(allow_none=True))
+    concurrency = fields.Int(allow_none=True)
+    early_stopping = fields.Nested(EarlyStoppingSchema, many=True, allow_none=True)
 
     @staticmethod
     def schema_config():
@@ -42,10 +47,20 @@ class RandomSearchSchema(BaseSchema):
 class RandomSearchConfig(BaseConfig):
     SCHEMA = RandomSearchSchema
     IDENTIFIER = "random_search"
-    REDUCED_ATTRIBUTES = ["seed", "n_experiments"]
+    REDUCED_ATTRIBUTES = ["n_runs", "seed", "concurrency", "early_stopping"]
 
-    def __init__(self, matrix=None, n_experiments=None, seed=None, kind=IDENTIFIER):
+    def __init__(
+        self,
+        matrix=None,
+        n_runs=None,
+        seed=None,
+        concurrency=None,
+        early_stopping=None,
+        kind=IDENTIFIER,
+    ):
         self.matrix = matrix
         self.kind = kind
-        self.n_experiments = n_experiments
+        self.n_runs = n_runs
         self.seed = seed
+        self.concurrency = concurrency
+        self.early_stopping = early_stopping

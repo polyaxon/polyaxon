@@ -4,10 +4,6 @@
     "title": "v1/host_access.proto",
     "version": "version not set"
   },
-  "schemes": [
-    "http",
-    "https"
-  ],
   "consumes": [
     "application/json"
   ],

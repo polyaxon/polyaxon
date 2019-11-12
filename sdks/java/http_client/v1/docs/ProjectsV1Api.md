@@ -6,19 +6,20 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**archiveProject**](ProjectsV1Api.md#archiveProject) | **POST** /api/v1/{owner}/{project}/archive | Stop run
 [**bookmarkProject**](ProjectsV1Api.md#bookmarkProject) | **POST** /api/v1/{owner}/{project}/bookmark | Invalidate run
-[**createProject**](ProjectsV1Api.md#createProject) | **POST** /api/v1/{owner}/projects/create | Get run
+[**createProject**](ProjectsV1Api.md#createProject) | **POST** /api/v1/{owner}/projects | List archived runs for user
 [**deleteProject**](ProjectsV1Api.md#deleteProject) | **DELETE** /api/v1/{owner}/{project} | Delete runs
 [**disableProjectCI**](ProjectsV1Api.md#disableProjectCI) | **DELETE** /api/v1/{owner}/{project}/ci | Restart run
 [**enableProjectCI**](ProjectsV1Api.md#enableProjectCI) | **POST** /api/v1/{owner}/{project}/ci | Restart run with copy
 [**getProject**](ProjectsV1Api.md#getProject) | **GET** /api/v1/{owner}/{project} | Update run
-[**listArchivedProjects**](ProjectsV1Api.md#listArchivedProjects) | **GET** /api/v1/archives/{user}/projects | Create new run
-[**listBookmarkedProjects**](ProjectsV1Api.md#listBookmarkedProjects) | **GET** /api/v1/bookmarks/{user}/projects | List runs
-[**listProjectNames**](ProjectsV1Api.md#listProjectNames) | **GET** /api/v1/{owner}/projects/names | List archived runs for user
-[**listProjects**](ProjectsV1Api.md#listProjects) | **GET** /api/v1/{owner}/projects/list | List bookmarked runs for user
+[**listArchivedProjects**](ProjectsV1Api.md#listArchivedProjects) | **GET** /api/v1/archives/{user}/projects | Get run
+[**listBookmarkedProjects**](ProjectsV1Api.md#listBookmarkedProjects) | **GET** /api/v1/bookmarks/{user}/projects | Create new run
+[**listProjectNames**](ProjectsV1Api.md#listProjectNames) | **GET** /api/v1/{owner}/projects/names | List runs
+[**listProjects**](ProjectsV1Api.md#listProjects) | **GET** /api/v1/{owner}/projects | List bookmarked runs for user
 [**patchProject**](ProjectsV1Api.md#patchProject) | **PATCH** /api/v1/{owner}/{project.name} | Delete run
 [**restoreProject**](ProjectsV1Api.md#restoreProject) | **POST** /api/v1/{owner}/{project}/restore | Stop runs
 [**unbookmarkProject**](ProjectsV1Api.md#unbookmarkProject) | **DELETE** /api/v1/{owner}/{project}/unbookmark | Invalidate runs
 [**updateProject**](ProjectsV1Api.md#updateProject) | **PUT** /api/v1/{owner}/{project.name} | Patch run
+[**uploadProjectArtifact**](ProjectsV1Api.md#uploadProjectArtifact) | **POST** /api/v1/{owner}/{project}/artifacts_stores/{uuid}/upload | Upload artifact to a store via project access
 
 
 <a name="archiveProject"></a>
@@ -133,7 +134,7 @@ null (empty response body)
 # **createProject**
 > V1Project createProject(owner, body)
 
-Get run
+List archived runs for user
 
 ### Example
 ```java
@@ -405,7 +406,7 @@ Name | Type | Description  | Notes
 # **listArchivedProjects**
 > V1ListProjectsResponse listArchivedProjects(user, offset, limit, sort, query)
 
-Create new run
+Get run
 
 ### Example
 ```java
@@ -466,7 +467,7 @@ Name | Type | Description  | Notes
 # **listBookmarkedProjects**
 > V1ListProjectsResponse listBookmarkedProjects(user, offset, limit, sort, query)
 
-List runs
+Create new run
 
 ### Example
 ```java
@@ -527,7 +528,7 @@ Name | Type | Description  | Notes
 # **listProjectNames**
 > V1ListProjectsResponse listProjectNames(owner, offset, limit, sort, query)
 
-List archived runs for user
+List runs
 
 ### Example
 ```java
@@ -865,5 +866,67 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: application/json
+ - **Accept**: application/json
+
+<a name="uploadProjectArtifact"></a>
+# **uploadProjectArtifact**
+> uploadProjectArtifact(owner, project, uuid, uploadfile, path, overwrite)
+
+Upload artifact to a store via project access
+
+### Example
+```java
+// Import classes:
+//import io.swagger.client.ApiClient;
+//import io.swagger.client.ApiException;
+//import io.swagger.client.Configuration;
+//import io.swagger.client.auth.*;
+//import io.swagger.client.api.ProjectsV1Api;
+
+ApiClient defaultClient = Configuration.getDefaultApiClient();
+
+// Configure API key authorization: ApiKey
+ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+ApiKey.setApiKey("YOUR API KEY");
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.setApiKeyPrefix("Token");
+
+ProjectsV1Api apiInstance = new ProjectsV1Api();
+String owner = "owner_example"; // String | Owner of the namespace
+String project = "project_example"; // String | Project having access to the store
+String uuid = "uuid_example"; // String | Unique integer identifier of the entity
+File uploadfile = new File("/path/to/file.txt"); // File | The file to upload.
+String path = "path_example"; // String | File path query params.
+Boolean overwrite = true; // Boolean | File path query params.
+try {
+    apiInstance.uploadProjectArtifact(owner, project, uuid, uploadfile, path, overwrite);
+} catch (ApiException e) {
+    System.err.println("Exception when calling ProjectsV1Api#uploadProjectArtifact");
+    e.printStackTrace();
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **String**| Owner of the namespace |
+ **project** | **String**| Project having access to the store |
+ **uuid** | **String**| Unique integer identifier of the entity |
+ **uploadfile** | **File**| The file to upload. |
+ **path** | **String**| File path query params. | [optional]
+ **overwrite** | **Boolean**| File path query params. | [optional]
+
+### Return type
+
+null (empty response body)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: multipart/form-data
  - **Accept**: application/json
 

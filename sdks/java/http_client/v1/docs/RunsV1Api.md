@@ -7,20 +7,23 @@ Method | HTTP request | Description
 [**archiveRun**](RunsV1Api.md#archiveRun) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/archive | Archive run
 [**bookmarkRun**](RunsV1Api.md#bookmarkRun) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/bookmark | Bookmark run
 [**copyRun**](RunsV1Api.md#copyRun) | **POST** /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/copy | Restart run with copy
-[**createRun**](RunsV1Api.md#createRun) | **POST** /api/v1/{owner}/{project}/runs/create | Create new run
+[**createRun**](RunsV1Api.md#createRun) | **POST** /api/v1/{owner}/{project}/runs | Create new run
 [**createRunCodeRef**](RunsV1Api.md#createRunCodeRef) | **POST** /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/coderef | Get run code ref
 [**createRunStatus**](RunsV1Api.md#createRunStatus) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/statuses | Create new run status
 [**deleteRun**](RunsV1Api.md#deleteRun) | **DELETE** /api/v1/{owner}/{project}/runs/{uuid} | Delete run
 [**deleteRuns**](RunsV1Api.md#deleteRuns) | **DELETE** /api/v1/{owner}/{project}/runs/delete | Delete runs
 [**getRun**](RunsV1Api.md#getRun) | **GET** /api/v1/{owner}/{project}/runs/{uuid} | Get run
+[**getRunArtifactsTree**](RunsV1Api.md#getRunArtifactsTree) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/artifacts/tree | Get run artifacts list
 [**getRunCodeRefs**](RunsV1Api.md#getRunCodeRefs) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/coderef | Get run code ref
+[**getRunLogsFile**](RunsV1Api.md#getRunLogsFile) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/logs/file | Get run logs get file
+[**getRunLogsTree**](RunsV1Api.md#getRunLogsTree) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/logs/tree | Get run logs list
 [**getRunStatuses**](RunsV1Api.md#getRunStatuses) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/statuses | Get run status
 [**impersonateToken**](RunsV1Api.md#impersonateToken) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/impersonate | Impersonate run token
 [**invalidateRun**](RunsV1Api.md#invalidateRun) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/invalidate | Invalidate run
 [**invalidateRuns**](RunsV1Api.md#invalidateRuns) | **POST** /api/v1/{owner}/{project}/runs/invalidate | Invalidate runs
 [**listArchivedRuns**](RunsV1Api.md#listArchivedRuns) | **GET** /api/v1/archives/{user}/runs | List archived runs for user
 [**listBookmarkedRuns**](RunsV1Api.md#listBookmarkedRuns) | **GET** /api/v1/bookmarks/{user}/runs | List bookmarked runs for user
-[**listRuns**](RunsV1Api.md#listRuns) | **GET** /api/v1/{owner}/{project}/runs/list | List runs
+[**listRuns**](RunsV1Api.md#listRuns) | **GET** /api/v1/{owner}/{project}/runs | List runs
 [**patchRun**](RunsV1Api.md#patchRun) | **PATCH** /api/v1/{owner}/{project}/runs/{run.uuid} | Patch run
 [**restartRun**](RunsV1Api.md#restartRun) | **POST** /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/restart | Restart run
 [**restoreRun**](RunsV1Api.md#restoreRun) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/restore | Restore run
@@ -31,6 +34,8 @@ Method | HTTP request | Description
 [**stopRuns**](RunsV1Api.md#stopRuns) | **POST** /api/v1/{owner}/{project}/runs/stop | Stop runs
 [**unbookmarkRun**](RunsV1Api.md#unbookmarkRun) | **DELETE** /api/v1/{owner}/{project}/runs/{uuid}/unbookmark | Unbookmark run
 [**updateRun**](RunsV1Api.md#updateRun) | **PUT** /api/v1/{owner}/{project}/runs/{run.uuid} | Update run
+[**uploadRunArtifact**](RunsV1Api.md#uploadRunArtifact) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/artifacts/upload | Upload an artifact file to a store via run access
+[**uploadRunLogs**](RunsV1Api.md#uploadRunLogs) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/logs/upload | Upload a logs file to a store via run access
 
 
 <a name="archiveRun"></a>
@@ -548,6 +553,69 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
+<a name="getRunArtifactsTree"></a>
+# **getRunArtifactsTree**
+> V1ArtifactTreeResponse getRunArtifactsTree(owner, project, uuid, path, step, type)
+
+Get run artifacts list
+
+### Example
+```java
+// Import classes:
+//import io.swagger.client.ApiClient;
+//import io.swagger.client.ApiException;
+//import io.swagger.client.Configuration;
+//import io.swagger.client.auth.*;
+//import io.swagger.client.api.RunsV1Api;
+
+ApiClient defaultClient = Configuration.getDefaultApiClient();
+
+// Configure API key authorization: ApiKey
+ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+ApiKey.setApiKey("YOUR API KEY");
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.setApiKeyPrefix("Token");
+
+RunsV1Api apiInstance = new RunsV1Api();
+String owner = "owner_example"; // String | Owner of the namespace
+String project = "project_example"; // String | Project where the experiement will be assigned
+String uuid = "uuid_example"; // String | Unique integer identifier of the entity
+String path = "path_example"; // String | Artifact filepath.
+Integer step = 56; // Integer | Artifact logging step.
+String type = "type_example"; // String | Artifact type.
+try {
+    V1ArtifactTreeResponse result = apiInstance.getRunArtifactsTree(owner, project, uuid, path, step, type);
+    System.out.println(result);
+} catch (ApiException e) {
+    System.err.println("Exception when calling RunsV1Api#getRunArtifactsTree");
+    e.printStackTrace();
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **String**| Owner of the namespace |
+ **project** | **String**| Project where the experiement will be assigned |
+ **uuid** | **String**| Unique integer identifier of the entity |
+ **path** | **String**| Artifact filepath. | [optional]
+ **step** | **Integer**| Artifact logging step. | [optional]
+ **type** | **String**| Artifact type. | [optional]
+
+### Return type
+
+[**V1ArtifactTreeResponse**](V1ArtifactTreeResponse.md)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
 <a name="getRunCodeRefs"></a>
 # **getRunCodeRefs**
 > V1ListCodeRefsResponse getRunCodeRefs(owner, project, uuid)
@@ -595,6 +663,132 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**V1ListCodeRefsResponse**](V1ListCodeRefsResponse.md)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+<a name="getRunLogsFile"></a>
+# **getRunLogsFile**
+> String getRunLogsFile(owner, project, uuid, path, step, type)
+
+Get run logs get file
+
+### Example
+```java
+// Import classes:
+//import io.swagger.client.ApiClient;
+//import io.swagger.client.ApiException;
+//import io.swagger.client.Configuration;
+//import io.swagger.client.auth.*;
+//import io.swagger.client.api.RunsV1Api;
+
+ApiClient defaultClient = Configuration.getDefaultApiClient();
+
+// Configure API key authorization: ApiKey
+ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+ApiKey.setApiKey("YOUR API KEY");
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.setApiKeyPrefix("Token");
+
+RunsV1Api apiInstance = new RunsV1Api();
+String owner = "owner_example"; // String | Owner of the namespace
+String project = "project_example"; // String | Project where the experiement will be assigned
+String uuid = "uuid_example"; // String | Unique integer identifier of the entity
+String path = "path_example"; // String | Artifact filepath.
+Integer step = 56; // Integer | Artifact logging step.
+String type = "type_example"; // String | Artifact type.
+try {
+    String result = apiInstance.getRunLogsFile(owner, project, uuid, path, step, type);
+    System.out.println(result);
+} catch (ApiException e) {
+    System.err.println("Exception when calling RunsV1Api#getRunLogsFile");
+    e.printStackTrace();
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **String**| Owner of the namespace |
+ **project** | **String**| Project where the experiement will be assigned |
+ **uuid** | **String**| Unique integer identifier of the entity |
+ **path** | **String**| Artifact filepath. | [optional]
+ **step** | **Integer**| Artifact logging step. | [optional]
+ **type** | **String**| Artifact type. | [optional]
+
+### Return type
+
+**String**
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+<a name="getRunLogsTree"></a>
+# **getRunLogsTree**
+> V1ArtifactTreeResponse getRunLogsTree(owner, project, uuid, path, step, type)
+
+Get run logs list
+
+### Example
+```java
+// Import classes:
+//import io.swagger.client.ApiClient;
+//import io.swagger.client.ApiException;
+//import io.swagger.client.Configuration;
+//import io.swagger.client.auth.*;
+//import io.swagger.client.api.RunsV1Api;
+
+ApiClient defaultClient = Configuration.getDefaultApiClient();
+
+// Configure API key authorization: ApiKey
+ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+ApiKey.setApiKey("YOUR API KEY");
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.setApiKeyPrefix("Token");
+
+RunsV1Api apiInstance = new RunsV1Api();
+String owner = "owner_example"; // String | Owner of the namespace
+String project = "project_example"; // String | Project where the experiement will be assigned
+String uuid = "uuid_example"; // String | Unique integer identifier of the entity
+String path = "path_example"; // String | Artifact filepath.
+Integer step = 56; // Integer | Artifact logging step.
+String type = "type_example"; // String | Artifact type.
+try {
+    V1ArtifactTreeResponse result = apiInstance.getRunLogsTree(owner, project, uuid, path, step, type);
+    System.out.println(result);
+} catch (ApiException e) {
+    System.err.println("Exception when calling RunsV1Api#getRunLogsTree");
+    e.printStackTrace();
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **String**| Owner of the namespace |
+ **project** | **String**| Project where the experiement will be assigned |
+ **uuid** | **String**| Unique integer identifier of the entity |
+ **path** | **String**| Artifact filepath. | [optional]
+ **step** | **Integer**| Artifact logging step. | [optional]
+ **type** | **String**| Artifact type. | [optional]
+
+### Return type
+
+[**V1ArtifactTreeResponse**](V1ArtifactTreeResponse.md)
 
 ### Authorization
 
@@ -1590,5 +1784,129 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: application/json
+ - **Accept**: application/json
+
+<a name="uploadRunArtifact"></a>
+# **uploadRunArtifact**
+> uploadRunArtifact(owner, project, uuid, uploadfile, path, overwrite)
+
+Upload an artifact file to a store via run access
+
+### Example
+```java
+// Import classes:
+//import io.swagger.client.ApiClient;
+//import io.swagger.client.ApiException;
+//import io.swagger.client.Configuration;
+//import io.swagger.client.auth.*;
+//import io.swagger.client.api.RunsV1Api;
+
+ApiClient defaultClient = Configuration.getDefaultApiClient();
+
+// Configure API key authorization: ApiKey
+ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+ApiKey.setApiKey("YOUR API KEY");
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.setApiKeyPrefix("Token");
+
+RunsV1Api apiInstance = new RunsV1Api();
+String owner = "owner_example"; // String | Owner of the namespace
+String project = "project_example"; // String | Project having access to the store
+String uuid = "uuid_example"; // String | Unique integer identifier of the entity
+File uploadfile = new File("/path/to/file.txt"); // File | The file to upload.
+String path = "path_example"; // String | File path query params.
+Boolean overwrite = true; // Boolean | File path query params.
+try {
+    apiInstance.uploadRunArtifact(owner, project, uuid, uploadfile, path, overwrite);
+} catch (ApiException e) {
+    System.err.println("Exception when calling RunsV1Api#uploadRunArtifact");
+    e.printStackTrace();
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **String**| Owner of the namespace |
+ **project** | **String**| Project having access to the store |
+ **uuid** | **String**| Unique integer identifier of the entity |
+ **uploadfile** | **File**| The file to upload. |
+ **path** | **String**| File path query params. | [optional]
+ **overwrite** | **Boolean**| File path query params. | [optional]
+
+### Return type
+
+null (empty response body)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: multipart/form-data
+ - **Accept**: application/json
+
+<a name="uploadRunLogs"></a>
+# **uploadRunLogs**
+> uploadRunLogs(owner, project, uuid, uploadfile, path, overwrite)
+
+Upload a logs file to a store via run access
+
+### Example
+```java
+// Import classes:
+//import io.swagger.client.ApiClient;
+//import io.swagger.client.ApiException;
+//import io.swagger.client.Configuration;
+//import io.swagger.client.auth.*;
+//import io.swagger.client.api.RunsV1Api;
+
+ApiClient defaultClient = Configuration.getDefaultApiClient();
+
+// Configure API key authorization: ApiKey
+ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+ApiKey.setApiKey("YOUR API KEY");
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.setApiKeyPrefix("Token");
+
+RunsV1Api apiInstance = new RunsV1Api();
+String owner = "owner_example"; // String | Owner of the namespace
+String project = "project_example"; // String | Project having access to the store
+String uuid = "uuid_example"; // String | Unique integer identifier of the entity
+File uploadfile = new File("/path/to/file.txt"); // File | The file to upload.
+String path = "path_example"; // String | File path query params.
+Boolean overwrite = true; // Boolean | File path query params.
+try {
+    apiInstance.uploadRunLogs(owner, project, uuid, uploadfile, path, overwrite);
+} catch (ApiException e) {
+    System.err.println("Exception when calling RunsV1Api#uploadRunLogs");
+    e.printStackTrace();
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **String**| Owner of the namespace |
+ **project** | **String**| Project having access to the store |
+ **uuid** | **String**| Unique integer identifier of the entity |
+ **uploadfile** | **File**| The file to upload. |
+ **path** | **String**| File path query params. | [optional]
+ **overwrite** | **Boolean**| File path query params. | [optional]
+
+### Return type
+
+null (empty response body)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: multipart/form-data
  - **Accept**: application/json
 

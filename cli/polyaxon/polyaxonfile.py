@@ -65,7 +65,7 @@ class PolyaxonFile(object):
                 if os.path.isfile(filepath):
                     return filepath
 
-    def get_op_specification(self, params=None, profile=None):
+    def get_op_specification(self, params=None, profile=None, nocache=None):
         job_data = {"version": self.specification.version, "kind": kinds.OP}
         if params:
             if not isinstance(params, Mapping):
@@ -75,6 +75,8 @@ class PolyaxonFile(object):
             job_data["params"] = params
         if profile:
             job_data["profile"] = profile
+        if nocache is not None:
+            job_data["nocache"] = nocache
 
         if self.specification.is_op:
             specification = get_specification(

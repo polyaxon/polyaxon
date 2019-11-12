@@ -206,22 +206,20 @@ class TestOpConfigs(TestCase):
                     },
                 ],
                 "workflow": {
-                    "strategy": {
-                        "kind": "dag",
-                        "ops": [
-                            {
-                                "kind": "op",
-                                "name": "job-template",
-                                "component": {"container": {"image": "test"}},
-                            },
-                            {
-                                "kind": "op",
-                                "name": "build-template",
-                                "tags": ["kaniko"],
-                                "init": {"repos": [{"name": "foo", "branch": "dev"}]},
-                            },
-                        ],
-                    }
+                    "kind": "dag",
+                    "ops": [
+                        {
+                            "kind": "op",
+                            "name": "job-template",
+                            "component": {"container": {"image": "test"}},
+                        },
+                        {
+                            "kind": "op",
+                            "name": "build-template",
+                            "tags": ["kaniko"],
+                            "init": {"repos": [{"name": "foo", "branch": "dev"}]},
+                        },
+                    ],
                 },
             },
         }
@@ -235,23 +233,21 @@ class TestOpConfigs(TestCase):
             "params": {"param1": "foo", "param2": "bar"},
             "trigger": "all_succeeded",
             "workflow": {
-                "strategy": {
-                    "kind": "dag",
-                    "ops": [
-                        {
-                            "kind": "op",
-                            "name": "A",
-                            "component": {"container": {"image": "test"}},
-                        },
-                        {
-                            "kind": "op",
-                            "name": "B",
-                            "dependencies": ["A"],
-                            "tags": ["kaniko"],
-                            "init": {"repos": [{"name": "foo", "branch": "dev"}]},
-                        },
-                    ],
-                }
+                "kind": "dag",
+                "ops": [
+                    {
+                        "kind": "op",
+                        "name": "A",
+                        "component": {"container": {"image": "test"}},
+                    },
+                    {
+                        "kind": "op",
+                        "name": "B",
+                        "dependencies": ["A"],
+                        "tags": ["kaniko"],
+                        "init": {"repos": [{"name": "foo", "branch": "dev"}]},
+                    },
+                ],
             },
         }
         with self.assertRaises(ValidationError):
@@ -264,24 +260,22 @@ class TestOpConfigs(TestCase):
             "params": {"param1": "foo", "param2": "bar"},
             "trigger": "all_succeeded",
             "workflow": {
-                "strategy": {
-                    "kind": "dag",
-                    "ops": [
-                        {
-                            "kind": "op",
-                            "name": "A",
-                            "component": {"container": {"image": "test"}},
-                        },
-                        {
-                            "kind": "op",
-                            "name": "B",
-                            "dependencies": ["A"],
-                            "tags": ["kaniko"],
-                            "init": {"repos": [{"name": "foo", "branch": "dev"}]},
-                            "component": {"container": {"image": "test"}},
-                        },
-                    ],
-                }
+                "kind": "dag",
+                "ops": [
+                    {
+                        "kind": "op",
+                        "name": "A",
+                        "component": {"container": {"image": "test"}},
+                    },
+                    {
+                        "kind": "op",
+                        "name": "B",
+                        "dependencies": ["A"],
+                        "tags": ["kaniko"],
+                        "init": {"repos": [{"name": "foo", "branch": "dev"}]},
+                        "component": {"container": {"image": "test"}},
+                    },
+                ],
             },
         }
         config = OpConfig.from_dict(config_dict)

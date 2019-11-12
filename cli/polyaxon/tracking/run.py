@@ -371,8 +371,8 @@ class Run(object):
             self.outputs_store.set_env_vars()
 
     @check_no_op
-    def log_artifact(self, file_path):
-        self.outputs_store.upload_file(filename=file_path)
+    def log_artifact(self, filepath):
+        self.outputs_store.upload_file(filename=filepath)
 
     @check_no_op
     def log_artifacts(self, dir_path):

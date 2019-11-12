@@ -34,7 +34,7 @@ from polyaxon.utils import constants
 from polyaxon.utils.formatting import Printer, dict_tabulate
 
 
-def check_polyaxonfile(polyaxonfile, params=None, profile=None, log=True):
+def check_polyaxonfile(polyaxonfile, params=None, profile=None, nocache=None, log=True):
     if not polyaxonfile:
         polyaxonfile = PolyaxonFile.check_default_path(path=".")
     if not polyaxonfile:
@@ -56,7 +56,9 @@ def check_polyaxonfile(polyaxonfile, params=None, profile=None, log=True):
 
     try:
         plx_file = PolyaxonFile(polyaxonfile)
-        plx_file = plx_file.get_op_specification(params=parsed_params, profile=profile)
+        plx_file = plx_file.get_op_specification(
+            params=parsed_params, profile=profile, nocache=nocache
+        )
         if log:
             Printer.print_success("Polyaxonfile valid")
         return plx_file
@@ -74,17 +76,17 @@ def check_polyaxonfile_kind(specification, kind):
         sys.exit(-1)
 
 
-def get_workflow_info(strategy, concurrency, early_stopping=False, **kwargs):
+def get_workflow_info(kind, concurrency, early_stopping=False, **kwargs):
     info = OrderedDict()
-    info["Workflow strategy"] = strategy.lower()
+    info["Workflow kind"] = kind.lower()
     info["Concurrency"] = (
         "{} runs".format("sequential")
         if concurrency == 1
         else "{} concurrent runs".format(concurrency)
     )
     info["Early stopping"] = "activated" if early_stopping else "deactivated"
-    if "n_experiments" in kwargs:
-        info["Experiments to create"] = kwargs["n_experiments"]
+    if "n_runs" in kwargs:
+        info["Num of runs to create"] = kwargs["n_runs"]
 
     dict_tabulate(info)
 

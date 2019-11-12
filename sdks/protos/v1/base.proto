@@ -124,3 +124,25 @@ message ProjectResourceListRequest {
      // Query filter the search search
     string query = 6;
 }
+
+
+// Params for requesting an artifact
+message RunArtifactRequest {
+    // Owner of the namespace
+    string owner = 1;
+
+    // Project where the experiement will be assigned
+    string project = 2;
+
+    // Unique integer identifier of the entity
+    string uuid = 3;
+
+    // Artifact filepath
+    string path = 4;
+
+    // Artifact logging step
+    int32 step = 5;
+
+    // Artifact type
+    string type = 6;
+}
