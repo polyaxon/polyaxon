@@ -59,7 +59,7 @@ class TestSpecifications(TestCase):
     #
     def test_patch_experiment_without_io_and_params_raises(self):
         content = {
-            "version": 0.6,
+            "version": 1.0,
             "kind": "component",
             "container": {"image": "test/test:latest", "command": "train"},
         }
@@ -76,7 +76,7 @@ class TestSpecifications(TestCase):
 
     def test_apply_context_raises_with_required_inputs(self):
         content = {
-            "version": 0.6,
+            "version": 1.0,
             "kind": "component",
             "inputs": [
                 {"name": "lr", "type": IOTypes.FLOAT},
@@ -101,7 +101,7 @@ class TestSpecifications(TestCase):
 
     def test_apply_context_passes_with_required_inputs_and_params(self):
         content = {
-            "version": 0.6,
+            "version": 1.0,
             "kind": "component",
             "inputs": [
                 {"name": "lr", "type": IOTypes.FLOAT},
@@ -126,7 +126,7 @@ class TestSpecifications(TestCase):
 
         new_spec = spec.apply_context()
         updated_content = {
-            "version": 0.6,
+            "version": 1.0,
             "kind": "component",
             "inputs": [
                 {
@@ -159,7 +159,7 @@ class TestSpecifications(TestCase):
 
     def test_patch_experiment_with_optional_inputs(self):
         content = {
-            "version": 0.6,
+            "version": 1.0,
             "kind": "component",
             "inputs": [
                 {
@@ -229,7 +229,7 @@ class TestSpecifications(TestCase):
 
     def test_op_specification_with_override_info(self):
         config_dict = {
-            "version": 0.6,
+            "version": 1.0,
             "kind": "op",
             "name": "foo",
             "description": "a description",
@@ -273,7 +273,7 @@ class TestSpecifications(TestCase):
 
     def test_op_specification(self):
         config_dict = {
-            "version": 0.6,
+            "version": 1.0,
             "kind": "op",
             "name": "foo",
             "description": "a description",
@@ -314,7 +314,7 @@ class TestSpecifications(TestCase):
 
     def test_op_specification_with_nocache(self):
         config_dict = {
-            "version": 0.6,
+            "version": 1.0,
             "kind": "op",
             "name": "foo",
             "description": "a description",

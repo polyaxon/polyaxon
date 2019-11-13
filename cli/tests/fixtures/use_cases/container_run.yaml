@@ -1,5 +1,5 @@
 ---
-version: 0.6
+version: 1.0
 
 kind: component
 
@@ -9,7 +9,7 @@ container:
   image: image
 
 ---
-version: 0.6
+version: 1.0
 
 kind: component
 
@@ -21,7 +21,7 @@ container:
   args: my_arg
 
 ---
-version: 0.6
+version: 1.0
 
 kind: component
 
@@ -33,7 +33,7 @@ container:
   args: [arg1, arg2]
 
 ---
-version: 0.6
+version: 1.0
 
 kind: component
 
@@ -50,7 +50,7 @@ container:
 
 
 ---
-version: 0.6
+version: 1.0
 
 kind: component
 
@@ -65,7 +65,7 @@ container:
 
 
 ---
-version: 0.6
+version: 1.0
 
 kind: component
 
@@ -84,7 +84,7 @@ container:
   args: git clone github.com/user/private-repo && cd private-repo && ./run stuff
 
 ---
-version: 0.6
+version: 1.0
 
 kind: component
 
@@ -107,7 +107,7 @@ container:
 
 
 ---
-version: 0.6
+version: 1.0
 
 kind: component
 
@@ -122,7 +122,7 @@ container:
 
 
 ---
-version: 0.6
+version: 1.0
 
 kind: component
 
@@ -141,7 +141,7 @@ container:
   args: aws s3 cp s3://foo ./data/ --recursive && ./do-stuff.sh --data_path=./data/
 
 ---
-version: 0.6
+version: 1.0
 
 kind: component
 
@@ -162,7 +162,7 @@ container:
 
 
 ---
-version: 0.6
+version: 1.0
 
 kind: component
 
@@ -183,7 +183,7 @@ container:
 
 
 ---
-version: 0.6
+version: 1.0
 
 kind: component
 
@@ -206,7 +206,7 @@ container:
 
 
 ---
-version: 0.6
+version: 1.0
 
 kind: component
 
@@ -232,7 +232,7 @@ container:
 
 
 ---
-version: 0.6
+version: 1.0
 
 kind: component
 
@@ -257,7 +257,7 @@ container:
 
 
 ---
-version: 0.6
+version: 1.0
 
 kind: component
 
@@ -283,7 +283,7 @@ container:
 
 
 ---
-version: 0.6
+version: 1.0
 
 kind: component
 
@@ -311,7 +311,7 @@ container:
 
 
 ---
-version: 0.6
+version: 1.0
 
 kind: component
 
@@ -336,7 +336,7 @@ container:
 
 
 ---
-version: 0.6
+version: 1.0
 
 kind: component
 
@@ -361,7 +361,7 @@ container:
 
 
 ---
-version: 0.6
+version: 1.0
 
 kind: component
 
@@ -394,7 +394,7 @@ container:
 
 
 ---
-version: 0.6
+version: 1.0
 
 kind: component
 
@@ -419,7 +419,7 @@ container:
 
 
 ---
-version: 0.6
+version: 1.0
 
 kind: component
 
@@ -442,7 +442,7 @@ container:
 
 
 ---
-version: 0.6
+version: 1.0
 
 kind: Pipeline
 
@@ -576,7 +576,7 @@ container:
   - "--activation={{ activation }}"
 
 ---
-version: 0.6
+version: 1.0
 kind: component
 description: Parallel pipeline
 workflow:
@@ -663,7 +663,7 @@ components:
           - "--activation={{ activation }}"
 ---
 
-version: 0.6
+version: 1.0
 kind: component
 description: Workflow based ops
 workflow:

@@ -66,7 +66,7 @@ class TestPolyaxonfiles(TestCase):
         plxfile = PolyaxonFile(os.path.abspath("tests/fixtures/plain/simple_job.yml"))
         spec = plxfile.specification
         spec = spec.apply_context()
-        assert spec.version == 0.6
+        assert spec.version == 1.0
         assert spec.tags is None
         assert spec.container.image == "python-with-boto3"
         assert spec.container.command == "python download-s3-bucket"
@@ -100,7 +100,7 @@ class TestPolyaxonfiles(TestCase):
         assert spec.config.inputs[1].value is True
         spec = spec.apply_context()
         spec = spec.apply_container_contexts()
-        assert spec.version == 0.6
+        assert spec.version == 1.0
         assert spec.tags == ["foo", "bar"]
         assert spec.container.image == "my_image"
         assert spec.container.command == ["/bin/sh", "-c"]
@@ -121,7 +121,7 @@ class TestPolyaxonfiles(TestCase):
         )
         spec = plxfile.specification
         spec = spec.apply_context()
-        assert spec.version == 0.6
+        assert spec.version == 1.0
         assert spec.is_component
         assert isinstance(spec.environment, EnvironmentConfig)
         assert spec.environment.log_level == "INFO"
@@ -155,7 +155,7 @@ class TestPolyaxonfiles(TestCase):
         )
         spec = plxfile.specification
         spec = spec.apply_context()
-        assert spec.version == 0.6
+        assert spec.version == 1.0
         assert spec.is_component
         assert isinstance(spec.termination, TerminationConfig)
         assert spec.max_retries == 5
@@ -169,7 +169,7 @@ class TestPolyaxonfiles(TestCase):
         )
         spec = plxfile.specification
         spec = spec.apply_context()
-        assert spec.version == 0.6
+        assert spec.version == 1.0
         assert spec.is_component
         assert isinstance(spec.environment, EnvironmentConfig)
         assert spec.node_selector == {"polyaxon.com": "core"}
@@ -202,7 +202,7 @@ class TestPolyaxonfiles(TestCase):
         )
         spec = plxfile.specification
         spec = spec.apply_context()
-        assert spec.version == 0.6
+        assert spec.version == 1.0
         assert spec.is_component
         assert isinstance(spec.workflow, HyperbandConfig)
         assert isinstance(spec.workflow.matrix["lr"], MatrixLinSpaceConfig)
@@ -246,7 +246,7 @@ class TestPolyaxonfiles(TestCase):
         )
         spec = plxfile.specification
         spec = spec.apply_context()
-        assert spec.version == 0.6
+        assert spec.version == 1.0
         assert spec.is_component
         assert isinstance(spec.workflow, GridSearchConfig)
         assert isinstance(spec.workflow.matrix["param1"], MatrixChoiceConfig)
@@ -271,7 +271,7 @@ class TestPolyaxonfiles(TestCase):
         )
         spec = plxfile.specification
         spec = spec.apply_context()
-        assert spec.version == 0.6
+        assert spec.version == 1.0
         assert spec.is_component
         assert spec.meta_info.to_dict() == {
             "service": False,
@@ -308,7 +308,7 @@ class TestPolyaxonfiles(TestCase):
             "concurrency": 2,
             "workflow_kind": "mapping",
         }
-        assert spec.version == 0.6
+        assert spec.version == 1.0
         assert spec.is_component
         assert isinstance(spec.workflow, MappingConfig)
         assert spec.workflow.values == [
@@ -333,7 +333,7 @@ class TestPolyaxonfiles(TestCase):
             "concurrency": None,
             "workflow_kind": "tfjob",
         }
-        assert spec.version == 0.6
+        assert spec.version == 1.0
         assert spec.log_level == "INFO"
         assert spec.is_component
         assert isinstance(spec.environment, EnvironmentConfig)
@@ -373,7 +373,7 @@ class TestPolyaxonfiles(TestCase):
             "concurrency": None,
             "workflow_kind": "pytorch_job",
         }
-        assert spec.version == 0.6
+        assert spec.version == 1.0
         assert spec.log_level == "INFO"
         assert spec.is_component
         assert isinstance(spec.environment, EnvironmentConfig)
@@ -413,7 +413,7 @@ class TestPolyaxonfiles(TestCase):
             "concurrency": None,
             "workflow_kind": "mpi_job",
         }
-        assert spec.version == 0.6
+        assert spec.version == 1.0
         assert spec.log_level == "INFO"
         assert spec.is_component
 

@@ -304,7 +304,7 @@ class TestPolyaxonfileWithPipelines(TestCase):
         )
         spec = plxfile.specification
         spec = spec.apply_context()
-        assert spec.version == 0.6
+        assert spec.version == 1.0
         assert spec.is_component is True
         assert spec.has_dag is True
         assert spec.has_pipeline is True
@@ -356,7 +356,7 @@ class TestPolyaxonfileWithPipelines(TestCase):
         )
         spec = plxfile.specification
         spec = spec.apply_context()
-        assert spec.version == 0.6
+        assert spec.version == 1.0
         assert spec.is_component is True
         assert spec.has_dag is True
         assert spec.has_pipeline is True

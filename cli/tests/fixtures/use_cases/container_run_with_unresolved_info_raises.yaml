@@ -1,5 +1,5 @@
 ---
-version: 0.6
+version: 1.0
 
 kind: component
 
@@ -11,7 +11,7 @@ container:
     - {{arg2}}
 
 ---
-version: 0.6
+version: 1.0
 
 kind: component
 
@@ -19,7 +19,7 @@ container:
   image: {{image}}
 
 ---
-version: 0.6
+version: 1.0
 
 kind: component
 

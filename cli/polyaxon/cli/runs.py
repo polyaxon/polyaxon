@@ -18,6 +18,7 @@
 from __future__ import absolute_import, division, print_function
 
 import sys
+import time
 
 import click
 import rhea
@@ -683,34 +684,41 @@ def logs(ctx, past, follow, hide_time):
     ```
     """
 
-    def get_run_logs():
-        if past:
-            try:
-                response = PolyaxonClient().run.logs(
-                    owner, project_name, run_uuid, stream=False
-                )
-                get_logs_handler(
-                    handle_job_info=True, show_timestamp=not hide_time, stream=False
-                )(response.content.decode().split("\n"))
-                print()
+    def show_run_logs():
+        is_done = False
+        last_logs_filepath = None
+        while not is_done:
+            response_tree = get_run_tree()
+            for filepath in response_tree.files:
+                if filepath == last_logs_filepath:
+                    continue
+                last_logs_filepath = filepath
+                get_run_logs(filepath)
 
-                if not follow:
-                    return
-            except (ApiException, HTTPError) as e:
-                if not follow:
-                    handle_cli_error(
-                        e, message="Could not get logs for run `{}`.".format(run_uuid)
-                    )
-                    sys.exit(1)
+            is_done = response_tree.is_done
+            if not is_done:
+                time.sleep(5)
 
+    def get_run_logs(path):
         try:
-            PolyaxonClient().run.logs(
-                owner,
-                project_name,
-                run_uuid,
-                message_handler=get_logs_handler(
-                    handle_job_info=True, show_timestamp=not hide_time
-                ),
+            response = polyaxon_client.runs_v1.get_run_logs_file(
+                owner, project_name, run_uuid, path=path
+            )
+            get_logs_handler(
+                handle_job_info=True, show_timestamp=not hide_time, stream=False
+            )(response.split("\n"))
+            print()
+        except (ApiException, HTTPError) as e:
+            if not follow:
+                handle_cli_error(
+                    e, message="Could not get logs for run `{}`.".format(run_uuid)
+                )
+                sys.exit(1)
+
+    def get_run_tree():
+        try:
+            return polyaxon_client.runs_v1.get_run_logs_tree(
+                owner, project_name, run_uuid
             )
         except (ApiException, HTTPError) as e:
             handle_cli_error(
@@ -722,7 +730,8 @@ def logs(ctx, past, follow, hide_time):
         ctx.obj.get("project"), ctx.obj.get("run_uuid")
     )
 
-    get_run_logs()
+    polyaxon_client = PolyaxonClient()
+    show_run_logs()
 
 
 @runs.command()

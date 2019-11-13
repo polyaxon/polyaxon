@@ -196,7 +196,7 @@ class TestOpConfigs(TestCase):
             "trigger": "all_succeeded",
             "component": {
                 "kind": "component",
-                "version": 0.6,
+                "version": 1.0,
                 "key_not_supported": [
                     {"component_ref": {"name": "build-template"}, "name": "A"},
                     {

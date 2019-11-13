@@ -26,7 +26,7 @@ class PyTest(TestCommand):
 
 setup(
     name="polyaxon",
-    version="0.5.6",
+    version="1.0.0",
     description="Command Line Interface (CLI) and client to interact with Polyaxon API.",
     long_description=read_readme(),
     long_description_content_type="text/markdown",
@@ -77,6 +77,7 @@ setup(
         "ujson>=1.35",
         "psutil>=5.4.7",
         "requests>=2.20.1",
+        "polystores>=0.2.4",
         "requests-toolbelt>=0.8.0",
         "websocket-client>=0.53.0",
     ],
@@ -85,7 +86,6 @@ setup(
         "s3": ["boto3", "botocore"],
         "azure": ["azure-storage"],
         "docker": ["docker"],
-        "polystores": ["polystores>=0.2.4"],
         "scikit": ["scikit-learn==0.20.4"],
         "hyperopt": ["hyperopt"],
     },

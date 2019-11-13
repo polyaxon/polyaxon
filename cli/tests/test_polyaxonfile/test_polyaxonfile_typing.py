@@ -63,7 +63,7 @@ class TestPolyaxonfileWithTypes(TestCase):
         assert spec.config.inputs[1].value is False
         spec = spec.apply_context()
         spec = spec.apply_container_contexts()
-        assert spec.version == 0.6
+        assert spec.version == 1.0
         assert spec.tags == ["foo", "bar"]
         assert spec.container.image == "my_image"
         assert spec.container.command == ["/bin/sh", "-c"]
@@ -82,7 +82,7 @@ class TestPolyaxonfileWithTypes(TestCase):
         assert spec.config.inputs[1].value is True
         spec = spec.apply_context()
         spec = spec.apply_container_contexts()
-        assert spec.version == 0.6
+        assert spec.version == 1.0
         assert spec.tags == ["foo", "bar"]
         assert spec.container.image == "my_image"
         assert spec.container.command == ["/bin/sh", "-c"]
@@ -111,7 +111,7 @@ class TestPolyaxonfileWithTypes(TestCase):
         )
         spec = plxfile.specification
         spec = spec.apply_context()
-        assert spec.version == 0.6
+        assert spec.version == 1.0
         assert spec.is_component
         assert spec.has_pipeline
         assert spec.has_dag is False
@@ -139,7 +139,7 @@ class TestPolyaxonfileWithTypes(TestCase):
         )
         spec = plxfile.specification
         spec = spec.apply_context()
-        assert spec.version == 0.6
+        assert spec.version == 1.0
         assert spec.is_component
         assert isinstance(spec.workflow.matrix["param1"], MatrixChoiceConfig)
         assert isinstance(spec.workflow.matrix["param2"], MatrixChoiceConfig)
@@ -191,7 +191,7 @@ class TestPolyaxonfileWithTypes(TestCase):
         spec.apply_params(params={"num_masks": 100})
         new_spec = spec.apply_context()
         new_spec = new_spec.apply_container_contexts()
-        assert new_spec.version == 0.6
+        assert new_spec.version == 1.0
         assert new_spec.tags == ["foo", "bar"]
         assert new_spec.is_component
         assert new_spec.environment is None

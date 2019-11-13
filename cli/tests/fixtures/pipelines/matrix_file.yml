@@ -1,5 +1,5 @@
 ---
-version: 0.6
+version: 1.0
 kind: component
 workflow:
   kind: dag
@@ -10,7 +10,7 @@ workflow:
     - name: experiment-group
       component_ref: {name: hyperband-experiment}
   components:
-    - version: 0.6
+    - version: 1.0
       kind: component
       name: hyperband-experiment
       description: hypertuning params experiment

@@ -17,8 +17,8 @@
 # coding: utf-8
 
 NAME = "polyaxon-cli"
-VERSION = "0.5.6"
-SCHEMA_VERSION = 0.6
+VERSION = "1.0.0"
+SCHEMA_VERSION = 1.0
 DESC = "Command Line Interface (CLI) for Polyaxon."
 URL = "https://github.com/polyaxon/polyaxon-cli"
 AUTHOR = "Polyaxon, Inc."
