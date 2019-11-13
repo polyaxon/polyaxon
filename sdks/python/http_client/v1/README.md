@@ -110,7 +110,7 @@ Class | Method | HTTP request | Description
 *K8sSecretsV1Api* | [**update_k8s_secret**](docs/K8sSecretsV1Api.md#update_k8s_secret) | **PUT** /api/v1/{owner}/k8s_secrets/{k8s_resource.uuid} | Get run
 *ProjectsV1Api* | [**archive_project**](docs/ProjectsV1Api.md#archive_project) | **POST** /api/v1/{owner}/{project}/archive | Stop run
 *ProjectsV1Api* | [**bookmark_project**](docs/ProjectsV1Api.md#bookmark_project) | **POST** /api/v1/{owner}/{project}/bookmark | Invalidate run
-*ProjectsV1Api* | [**create_project**](docs/ProjectsV1Api.md#create_project) | **POST** /api/v1/{owner}/projects | List archived runs for user
+*ProjectsV1Api* | [**create_project**](docs/ProjectsV1Api.md#create_project) | **POST** /api/v1/{owner}/projects/create | List archived runs for user
 *ProjectsV1Api* | [**delete_project**](docs/ProjectsV1Api.md#delete_project) | **DELETE** /api/v1/{owner}/{project} | Delete runs
 *ProjectsV1Api* | [**disable_project_ci**](docs/ProjectsV1Api.md#disable_project_ci) | **DELETE** /api/v1/{owner}/{project}/ci | Restart run
 *ProjectsV1Api* | [**enable_project_ci**](docs/ProjectsV1Api.md#enable_project_ci) | **POST** /api/v1/{owner}/{project}/ci | Restart run with copy
@@ -118,7 +118,7 @@ Class | Method | HTTP request | Description
 *ProjectsV1Api* | [**list_archived_projects**](docs/ProjectsV1Api.md#list_archived_projects) | **GET** /api/v1/archives/{user}/projects | Get run
 *ProjectsV1Api* | [**list_bookmarked_projects**](docs/ProjectsV1Api.md#list_bookmarked_projects) | **GET** /api/v1/bookmarks/{user}/projects | Create new run
 *ProjectsV1Api* | [**list_project_names**](docs/ProjectsV1Api.md#list_project_names) | **GET** /api/v1/{owner}/projects/names | List runs
-*ProjectsV1Api* | [**list_projects**](docs/ProjectsV1Api.md#list_projects) | **GET** /api/v1/{owner}/projects | List bookmarked runs for user
+*ProjectsV1Api* | [**list_projects**](docs/ProjectsV1Api.md#list_projects) | **GET** /api/v1/{owner}/projects/list | List bookmarked runs for user
 *ProjectsV1Api* | [**patch_project**](docs/ProjectsV1Api.md#patch_project) | **PATCH** /api/v1/{owner}/{project.name} | Delete run
 *ProjectsV1Api* | [**restore_project**](docs/ProjectsV1Api.md#restore_project) | **POST** /api/v1/{owner}/{project}/restore | Stop runs
 *ProjectsV1Api* | [**unbookmark_project**](docs/ProjectsV1Api.md#unbookmark_project) | **DELETE** /api/v1/{owner}/{project}/unbookmark | Invalidate runs

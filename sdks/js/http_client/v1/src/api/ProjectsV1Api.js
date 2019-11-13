@@ -215,7 +215,7 @@
       var returnType = V1Project;
 
       return this.apiClient.callApi(
-        '/api/v1/{owner}/projects', 'POST',
+        '/api/v1/{owner}/projects/create', 'POST',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -656,7 +656,7 @@
       var returnType = V1ListProjectsResponse;
 
       return this.apiClient.callApi(
-        '/api/v1/{owner}/projects', 'GET',
+        '/api/v1/{owner}/projects/list', 'GET',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );

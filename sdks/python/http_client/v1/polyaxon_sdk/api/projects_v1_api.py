@@ -383,7 +383,7 @@ class ProjectsV1Api(object):
         auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/projects",
+            "/api/v1/{owner}/projects/create",
             "POST",
             path_params,
             query_params,
@@ -1341,7 +1341,7 @@ class ProjectsV1Api(object):
         auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/projects",
+            "/api/v1/{owner}/projects/list",
             "GET",
             path_params,
             query_params,

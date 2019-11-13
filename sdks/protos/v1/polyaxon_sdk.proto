@@ -293,14 +293,14 @@ service ProjectsV1 {
     // List projects
     rpc ListProjects(OwnerResouceListRequest) returns (ListProjectsResponse) {
         option (google.api.http) = {
-            get: "/api/v1/{owner}/projects"
+            get: "/api/v1/{owner}/projects/list"
         };
     }
 
     // Create new project
     rpc CreateProject(ProjectBodyRequest) returns (Project) {
         option (google.api.http) = {
-            post: "/api/v1/{owner}/projects"
+            post: "/api/v1/{owner}/projects/create"
             body: "project"
         };
     }

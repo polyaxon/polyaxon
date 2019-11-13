@@ -10537,9 +10537,9 @@ func RegisterProjectsV1HandlerClient(ctx context.Context, mux *runtime.ServeMux,
 }
 
 var (
-	pattern_ProjectsV1_ListProjects_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3}, []string{"api", "v1", "owner", "projects"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ProjectsV1_ListProjects_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 2, 4}, []string{"api", "v1", "owner", "projects", "list"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_ProjectsV1_CreateProject_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3}, []string{"api", "v1", "owner", "projects"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ProjectsV1_CreateProject_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 2, 4}, []string{"api", "v1", "owner", "projects", "create"}, "", runtime.AssumeColonVerbOpt(true)))
 
 	pattern_ProjectsV1_ListProjectNames_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 2, 4}, []string{"api", "v1", "owner", "projects", "names"}, "", runtime.AssumeColonVerbOpt(true)))
 

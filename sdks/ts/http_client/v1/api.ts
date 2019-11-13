@@ -4500,7 +4500,7 @@ export const ProjectsV1ApiFetchParamCreator = function (configuration?: Configur
             if (body === null || body === undefined) {
                 throw new RequiredError('body','Required parameter body was null or undefined when calling createProject.');
             }
-            const localVarPath = `/api/v1/{owner}/projects`
+            const localVarPath = `/api/v1/{owner}/projects/create`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)));
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
@@ -4888,7 +4888,7 @@ export const ProjectsV1ApiFetchParamCreator = function (configuration?: Configur
             if (owner === null || owner === undefined) {
                 throw new RequiredError('owner','Required parameter owner was null or undefined when calling listProjects.');
             }
-            const localVarPath = `/api/v1/{owner}/projects`
+            const localVarPath = `/api/v1/{owner}/projects/list`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)));
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'GET' }, options);

@@ -124,7 +124,7 @@ func (a *Client) CreateProject(params *CreateProjectParams, authInfo runtime.Cli
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "CreateProject",
 		Method:             "POST",
-		PathPattern:        "/api/v1/{owner}/projects",
+		PathPattern:        "/api/v1/{owner}/projects/create",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -412,7 +412,7 @@ func (a *Client) ListProjects(params *ListProjectsParams, authInfo runtime.Clien
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "ListProjects",
 		Method:             "GET",
-		PathPattern:        "/api/v1/{owner}/projects",
+		PathPattern:        "/api/v1/{owner}/projects/list",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
