@@ -106,8 +106,7 @@ polyaxon admin deploy -f config.yml
 Or you can use Helm to do the same:
 
 ```bash
-helm install polyaxon/polyaxon \
-    --name=<RELEASE_NAME> \
+helm install <RELEASE_NAME> polyaxon/polyaxon \
     --namespace=<NAMESPACE> \
     -f config.yml
 ```
