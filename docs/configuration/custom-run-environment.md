@@ -233,12 +233,12 @@ Assuming your project has the following structure:
         |_ main.py
         |_ preprocess.py
         |_ exec.sh
-    |_ modeule2
+    |_ module2
         |_ main.py
         |_ model.py
 ```
 
-You might want to mount `mudule1` to a job to do some preprocessing, and `module2` to an experiment to train a model:
+You might want to mount `module1` to a job to do some preprocessing, and `module2` to an experiment to train a model:
 
 Job:
 
@@ -447,7 +447,7 @@ In order to set the default environment variables, you can update the ENV_VARS i
 
 You can set a default resources definition to apply all experiments/jobs/builds/tensorboards/notebooks using the settings page.
 
-Additionally any Polyaxon user can can customize the container's resources, by providing a resources subsection to the environment's section: 
+Additionally any Polyaxon user can customize the container's resources, by providing a resources subsection to the environment's section: 
 
 ```yaml
 environment:
