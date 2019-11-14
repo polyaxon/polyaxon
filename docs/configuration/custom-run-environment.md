@@ -447,7 +447,7 @@ In order to set the default environment variables, you can update the ENV_VARS i
 
 You can set a default resources definition to apply all experiments/jobs/builds/tensorboards/notebooks using the settings page.
 
-Additionally any Polyaxon user can can customize the container's resources, by providing a resources subsection to the environment's section: 
+Additionally any Polyaxon user can customize the container's resources, by providing a resources subsection to the environment's section: 
 
 ```yaml
 environment:
