@@ -38,7 +38,7 @@ This file should include the following information:
 
 You should then create a secret with this access keys information on Kubernetes on the same namespace as Polyaxon deployment:
 
-`kubectl create secret generic az-secret --from-file=az-secret.json=path/to/az-key.json -n polyaxon`
+`kubectl create secret generic az-secret --from-file=path/to/az-key.json -n polyaxon`
 
 ## Use the secret name and secret key in your data persistence definition
 
