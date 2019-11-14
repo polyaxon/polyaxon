@@ -233,12 +233,12 @@ Assuming your project has the following structure:
         |_ main.py
         |_ preprocess.py
         |_ exec.sh
-    |_ modeule2
+    |_ module2
         |_ main.py
         |_ model.py
 ```
 
-You might want to mount `mudule1` to a job to do some preprocessing, and `module2` to an experiment to train a model:
+You might want to mount `module1` to a job to do some preprocessing, and `module2` to an experiment to train a model:
 
 Job:
 
