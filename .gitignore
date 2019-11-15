@@ -154,8 +154,8 @@ bin
 !vendor/**/zz_generated.*
 client/.awcache/
 
-# ignore devvalues
-values.dev.yaml
+# ignore dev/test values
+values.*.dev.yaml
 values.*.test.yaml
 values.*.test.json
 values.*.test.sh

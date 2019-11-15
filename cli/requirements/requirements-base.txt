@@ -7,7 +7,7 @@ Jinja2==2.10.3
 marshmallow==3.0.0rc5
 python-dateutil>=2.7.3
 pytz>=2019.2
-rhea==0.5.4
+rhea==0.5.5
 ujson>=1.35
 psutil>=5.4.7
 requests>=2.20.1

@@ -25,30 +25,10 @@ api:
 scheduler:
   replicas: 3
 
-hpsearch:
-  replicas: 3
-
-eventsHandlers:
-  replicas: 3
-
-k8sEventsHandlers:
-  replicas: 3
-
-eventMonitors:
+worker:
   replicas: 3
 
 persistence:
-  data:
-    data1:
-      mountPath: "/tmp/data"
-      hostPath: "/tmp/data"
-    data2:
-      mountPath: "/tmp/data"
-      existingClaim: "data-2-pvc"
-    data3:
-      mountPath: "/tmp/data"
-      existingClaim: "data-3-pvc"
-      readOnly: true
   outputs:
     outputs1:
       mountPath: "/tmp/outputs"

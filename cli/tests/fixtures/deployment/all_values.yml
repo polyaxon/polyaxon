@@ -50,19 +50,6 @@ user:
 timeZone: 'UTC'
 adminViewEnabled: true
 
-dirs:
-  nvidia:
-    lib: ""  # e.g. "/usr/lib/nvidia-384"
-    bin: ""  # e.g. "/usr/lib/nvidia-384/bin"
-    libcuda: ""  # e.g. "/usr/lib/x86_64-linux-gnu/libcuda.so.1"
-
-# This is where we mount nvidia on hosts
-mountPaths:
-  nvidia:
-    lib: ""
-    bin: ""
-    libcuda: ""
-
 # N.B. this is in beta
 securityContext:
   enabled: false
@@ -74,16 +61,7 @@ persistence:
     existingClaim:
     mountPath: "/polyaxon-logs"
     hostPath: "/tmp/logs"
-  repos:
-    existingClaim:
-    mountPath: "/polyaxon-repos"
-    hostPath: "/tmp/repos"
-  upload:
-    existingClaim:
-    mountPath: "/tmp/upload"
-    hostPath: "/tmp/upload"
   outputs: {}
-  data: {}
 
 # e.g.
   # data:
@@ -194,21 +172,6 @@ api:
     nodePort: 31811
     annotations: {}
 
-streams:
-  image: polyaxon/polyaxon-streams
-  imageTag: 0.5.6
-  imagePullPolicy: Always
-  resources:
-    limits:
-      cpu: 700m
-      memory: 1000Mi
-    requests:
-      cpu: 100m
-      memory: 128Mi
-  service:
-    name: streams
-    internalPort: 1337
-
 scheduler:
   image: polyaxon/polyaxon-scheduler
   imageTag: 0.5.6
@@ -230,48 +193,8 @@ scheduler:
     workerMaxTasksPerChild: 123
     workerMaxMemoryPerChild: 123
 
-hpsearch:
-  image: polyaxon/polyaxon-hpsearch
-  imageTag: 0.5.6
-  imagePullPolicy: Always
-  replicas: 1
-  concurrency: 2
-  resources:
-    requests:
-      cpu: 150m
-      memory: 200Mi
-  celery:
-    taskTrackStarted: True
-    brokerPoolLimit: 123
-    confirmPublish: True
-    workerPrefetchMultiplier: 4
-    workerMaxTasksPerChild: 123
-    workerMaxMemoryPerChild: 123
-
-eventsHandlers:
-  image: polyaxon/polyaxon-events-handlers
-  imageTag: 0.5.6
-  imagePullPolicy: Always
-  replicas: 1
-  concurrency: 2
-  resources:
-    limits:
-      cpu: 200m
-      memory: 300Mi
-    requests:
-      cpu: 130m
-      memory: 200Mi
-  celery:
-    taskTrackStarted: True
-    brokerPoolLimit: 123
-    confirmPublish: True
-    workerPrefetchMultiplier: 4
-    workerMaxTasksPerChild: 123
-    workerMaxMemoryPerChild: 123
-
-
-k8sEventsHandlers:
-  image: polyaxon/polyaxon-k8s-events-handlers
+worker:
+  image: polyaxon/polyaxon-worker
   imageTag: 0.5.6
   imagePullPolicy: Always
   replicas: 1
@@ -303,67 +226,6 @@ beat:
     requests:
       cpu: 50m
       memory: 128Mi
-
-crons:
-  image: polyaxon/polyaxon-crons
-  imageTag: 0.5.6
-  imagePullPolicy: Always
-  replicas: 1
-  concurrency: 2
-  resources:
-    limits:
-      cpu: 100m
-      memory: 256Mi
-    requests:
-      cpu: 100m
-      memory: 100Mi
-
-eventMonitors:
-  namespace:
-    enabled: true
-    image: polyaxon/polyaxon-monitor-namespace
-    imageTag: 0.5.6
-    imagePullPolicy: Always
-    resources:
-      limits:
-        cpu: 120m
-        memory: 200Mi
-      requests:
-        cpu: 80m
-        memory: 128Mi
-    persists: false
-    sleepInterval: 1
-
-  statuses:
-    enabled: true
-    image: polyaxon/polyaxon-monitor-statuses
-    imageTag: 0.5.6
-    imagePullPolicy: Always
-    resources:
-      limits:
-        cpu: 120m
-        memory: 200Mi
-      requests:
-        cpu: 80m
-        memory: 128Mi
-    persists: false
-    sleepInterval: 1
-
-resourcesDaemon:
-  enabled: true
-  image: polyaxon/polyaxon-monitor-resources
-  imageTag: 0.5.6
-  imagePullPolicy: Always
-  resources:
-    limits:
-      cpu: 150m
-      memory: 200Mi
-    requests:
-      cpu: 150m
-      memory: 200Mi
-  persists: false
-  sleepInterval: 1
-  tolerations:
 
 hooks:
   image: polyaxon/polyaxon-manage
@@ -525,11 +387,7 @@ email:
 #  - 159.203.150.212
 
 intervals:  # in seconds
-  experimentsScheduler: 15
-  experimentsSync: 60
-  clustersUpdateSystemInfo: 150
-  clustersUpdateSystemNodes: 150
-  pipelinesScheduler: 60
+  runsScheduler: 15
   operationsDefaultRetryDelay: 60
   operationsMaxRetryDelay: 3600
 

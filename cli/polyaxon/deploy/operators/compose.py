@@ -137,32 +137,7 @@ class ComposeOperator(CmdOperator):
         if config.intervals:
             env.append(
                 template.format(
-                    "POLYAXON_INTERVALS_EXPERIMENTS_SCHEDULER",
-                    config.intervals.experimentsScheduler,
-                )
-            )
-            env.append(
-                template.format(
-                    "POLYAXON_INTERVALS_EXPERIMENTS_SYNC",
-                    config.intervals.experimentsSync,
-                )
-            )
-            env.append(
-                template.format(
-                    "POLYAXON_INTERVALS_CLUSTERS_UPDATE_SYSTEM_INFO",
-                    config.intervals.clustersUpdateSystemInfo,
-                )
-            )
-            env.append(
-                template.format(
-                    "POLYAXON_INTERVALS_CLUSTERS_UPDATE_SYSTEM_NODES",
-                    config.intervals.clustersUpdateSystemNodes,
-                )
-            )
-            env.append(
-                template.format(
-                    "POLYAXON_INTERVALS_PIPELINES_SCHEDULER",
-                    config.intervals.pipelinesScheduler,
+                    "POLYAXON_INTERVALS_RUNS_SCHEDULER", config.intervals.runsScheduler
                 )
             )
             env.append(
@@ -207,8 +182,6 @@ class ComposeOperator(CmdOperator):
             env.append(
                 template.format("POLYAXON_CHART_VERSION", config.deploymentVersion)
             )
-        if config.clusterId:
-            env.append(template.format("POLYAXON_CLUSTER_ID", config.clusterId))
         if config.namespace:
             env.append(template.format("POLYAXON_K8S_NAMESPACE", config.namespace))
         env.append(

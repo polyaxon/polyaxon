@@ -89,8 +89,8 @@ func main() {
 		token = config.GetStrEnv(config.AgentToken, "")
 	}
 
-	if config.GetStrEnv(config.AgentAPIHostgo, "") != "" {
-		host = config.GetStrEnv(config.AgentAPIHostgo, "")
+	if config.GetStrEnv(config.AgentAPIHost, "") != "" {
+		host = config.GetStrEnv(config.AgentAPIHost, "")
 	}
 
 	flag.StringVar(&metricsAddr, "metrics-addr", ":8080", "The address the metric endpoint binds to.")

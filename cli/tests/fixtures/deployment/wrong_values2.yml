@@ -25,16 +25,7 @@ api:
 scheduler:
   replicas: 3
 
-hpsearch:
-  replicas: 3
-
-eventsHandlers:
-  replicas: 3
-
-k8sEventsHandlers:
-  replicas: 3
-
-eventMonitors:
+worker:
   replicas: 3
 
 persistence:

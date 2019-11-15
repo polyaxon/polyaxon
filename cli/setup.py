@@ -73,7 +73,7 @@ setup(
         "python-dateutil>=2.7.3",
         "pytz>=2019.2",
         "ujson>=1.35",
-        "rhea==0.5.4",
+        "rhea==0.5.5",
         "ujson>=1.35",
         "psutil>=5.4.7",
         "requests>=2.20.1",

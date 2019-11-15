@@ -93,7 +93,6 @@ class DeploymentSchema(BaseSchema):
         allow_none=True, validate=validate.OneOf(DeploymentTypes.VALUES)
     )
     deploymentVersion = fields.Str(allow_none=True)
-    clusterId = fields.Str(allow_none=True)
     namespace = fields.Str(allow_none=True)
     rbac = fields.Nested(RBACSchema, allow_none=True)
     polyaxonSecret = fields.Str(allow_none=True)
@@ -119,13 +118,7 @@ class DeploymentSchema(BaseSchema):
     streams = fields.Nested(ApiSchema, allow_none=True)
     scheduler = fields.Nested(WorkerSchema, allow_none=True)
     worker = fields.Nested(WorkerSchema, allow_none=True)
-    hpsearch = fields.Nested(WorkerSchema, allow_none=True)
-    eventsHandlers = fields.Nested(WorkerSchema, allow_none=True)
-    k8sEventsHandlers = fields.Nested(WorkerSchema, allow_none=True)
     beat = fields.Nested(ServiceSchema, allow_none=True)
-    crons = fields.Nested(ServiceSchema, allow_none=True)
-    eventMonitors = fields.Nested(EventMonitorsSchema, allow_none=True)
-    resourcesDaemon = fields.Nested(ThirdPartyServiceSchema, allow_none=True)
     tablesHook = fields.Nested(ServiceSchema, allow_none=True)
     hooks = fields.Nested(HooksSchema, allow_none=True)
     postgresql = fields.Nested(PostgresqlSchema, allow_none=True)
@@ -145,8 +138,6 @@ class DeploymentSchema(BaseSchema):
     reposAccessToken = fields.Str(allow_none=True)
     logLevel = fields.Str(allow_none=True)
     trackerBackend = fields.Str(allow_none=True)
-    dirs = fields.Dict(allow_none=True)
-    mountPaths = fields.Dict(allow_none=True)
     securityContext = fields.Nested(SecurityContextSchema, allow_none=True)
     externalServices = fields.Nested(ExternalServicesSchema, allow_none=True)
     debugMode = fields.Bool(allow_none=True)
@@ -175,7 +166,6 @@ class DeploymentConfig(BaseConfig):
         self,  # noqa
         deploymentType=None,
         deploymentVersion=None,
-        clusterId=None,
         namespace=None,
         rbac=None,
         polyaxonSecret=None,
@@ -200,13 +190,7 @@ class DeploymentConfig(BaseConfig):
         streams=None,
         scheduler=None,
         worker=None,
-        hpsearch=None,
-        eventsHandlers=None,
-        k8sEventsHandlers=None,
         beat=None,
-        crons=None,
-        eventMonitors=None,
-        resourcesDaemon=None,
         tablesHook=None,
         hooks=None,
         postgresql=None,
@@ -224,8 +208,6 @@ class DeploymentConfig(BaseConfig):
         reposAccessToken=None,
         logLevel=None,
         trackerBackend=None,
-        dirs=None,
-        mountPaths=None,
         securityContext=None,
         externalServices=None,
         debugMode=None,
@@ -236,7 +218,6 @@ class DeploymentConfig(BaseConfig):
         check_rabbitmq(rabbitmq, externalServices, broker)
         self.deploymentType = deploymentType
         self.deploymentVersion = deploymentVersion
-        self.clusterId = clusterId
         self.namespace = namespace
         self.rbac = rbac
         self.polyaxonSecret = polyaxonSecret
@@ -261,13 +242,7 @@ class DeploymentConfig(BaseConfig):
         self.streams = streams
         self.scheduler = scheduler
         self.worker = worker
-        self.hpsearch = hpsearch
-        self.eventsHandlers = eventsHandlers
-        self.k8sEventsHandlers = k8sEventsHandlers
         self.beat = beat
-        self.crons = crons
-        self.eventMonitors = eventMonitors
-        self.resourcesDaemon = resourcesDaemon
         self.tablesHook = tablesHook
         self.hooks = hooks
         self.postgresql = postgresql
@@ -285,8 +260,6 @@ class DeploymentConfig(BaseConfig):
         self.reposAccessToken = reposAccessToken
         self.logLevel = logLevel
         self.trackerBackend = trackerBackend
-        self.dirs = dirs
-        self.mountPaths = mountPaths
         self.securityContext = securityContext
         self.externalServices = externalServices
         self.debugMode = debugMode

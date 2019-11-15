@@ -12,17 +12,6 @@ user:
   password: test
 
 persistence:
-  data:
-    data1:
-      mountPath: "/data/1"
-      existingClaim: polyaxon-pvc-data
-    data2:
-      mountPath: "/data/2"
-      existingClaim: "data-2-pvc"
-  repos:
-    existingClaim: polyaxon-pvc-repos
-  upload:
-    existingClaim: polyaxon-pvc-upload
   logs:
     store: gcs
     bucket: gs://test-logs
@@ -55,50 +44,18 @@ api:
   imageTag: latest
   imagePullPolicy: Always
 
-streams:
-  imageTag: latest
-  imagePullPolicy: Always
-
 scheduler:
   concurrency: 10
   replicas: 1
   imageTag: latest
   imagePullPolicy: Always
 
-hpsearch:
-  replicas: 1
-  imageTag: latest
-  imagePullPolicy: Always
-
-eventsHandlers:
-  replicas: 1
-  imageTag: latest
-  imagePullPolicy: Always
-
-k8sEventsHandlers:
+worker:
   replicas: 1
   imageTag: latest
   imagePullPolicy: Always
 
 beat:
-  imageTag: latest
-  imagePullPolicy: Always
-
-crons:
-  imageTag: latest
-  imagePullPolicy: Always
-
-eventMonitors:
-  replicas: 1
-  namespace:
-    imageTag: latest
-    imagePullPolicy: Always
-
-  statuses:
-    imageTag: latest
-    imagePullPolicy: Always
-
-resourcesDaemon:
   imageTag: latest
   imagePullPolicy: Always
 

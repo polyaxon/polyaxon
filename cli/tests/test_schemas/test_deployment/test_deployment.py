@@ -45,15 +45,8 @@ class TestDeploymentConfig(TestCase):
         assert config.globalReplicas is None
         assert config.globalConcurrency is None
         assert config.api is None
-        assert config.streams is None
         assert config.scheduler is None
-        assert config.hpsearch is None
-        assert config.eventsHandlers is None
-        assert config.k8sEventsHandlers is None
         assert config.beat is None
-        assert config.crons is None
-        assert config.eventMonitors is None
-        assert config.resourcesDaemon is None
         assert config.hooks is None
         assert config.postgresql.enabled is False
         assert config.rabbitmq is None
@@ -84,15 +77,8 @@ class TestDeploymentConfig(TestCase):
         assert config.globalReplicas is None
         assert config.globalConcurrency is None
         assert config.api.replicas == 3
-        assert config.streams is None
         assert config.scheduler.replicas == 3
-        assert config.hpsearch.replicas == 3
-        assert config.eventsHandlers.replicas == 3
-        assert config.k8sEventsHandlers.replicas == 3
         assert config.beat is None
-        assert config.crons is None
-        assert config.eventMonitors.replicas == 3
-        assert config.resourcesDaemon is None
         assert config.hooks is None
         assert config.postgresql.persistence is not None
         assert config.rabbitmq is None
@@ -105,12 +91,6 @@ class TestDeploymentConfig(TestCase):
             "mountPath": "/tmp/logs",
             "hostPath": "/tmp/logs",
         }
-        assert config.persistence.repos.to_dict() == {
-            "mountPath": "/tmp/repos",
-            "hostPath": "/tmp/repos",
-        }
-        assert config.persistence.upload.to_dict() == {"existingClaim": "foo"}
-        assert len(config.persistence.data) == 1
         assert len(config.persistence.outputs) == 1
         assert config.ldap is None
 
@@ -133,15 +113,9 @@ class TestDeploymentConfig(TestCase):
         assert config.globalReplicas is None
         assert config.globalConcurrency is None
         assert config.api.replicas == 3
-        assert config.streams is None
         assert config.scheduler.replicas == 3
-        assert config.hpsearch.replicas == 3
-        assert config.eventsHandlers.replicas == 3
-        assert config.k8sEventsHandlers.replicas == 3
+        assert config.worker.replicas == 3
         assert config.beat is None
-        assert config.crons is None
-        assert config.eventMonitors.replicas == 3
-        assert config.resourcesDaemon is None
         assert config.hooks is None
         assert config.postgresql.enabled is True
         assert config.rabbitmq.enabled is False
@@ -152,9 +126,6 @@ class TestDeploymentConfig(TestCase):
         assert config.allowedHosts == ["foo.bar.com", "123.123.12.3"]
         assert config.intervals is None
         assert config.persistence.logs is None
-        assert config.persistence.repos is None
-        assert config.persistence.upload is None
-        assert len(config.persistence.data) == 3
         assert len(config.persistence.outputs) == 3
         assert config.trackerBackend is None
         assert config.ldap is None
@@ -180,15 +151,10 @@ class TestDeploymentConfig(TestCase):
         assert config.globalReplicas is None
         assert config.globalConcurrency is None
         assert config.api.replicas == 1
-        assert config.streams.imageTag == "latest"
         assert config.scheduler.replicas == 1
-        assert config.hpsearch.replicas == 1
-        assert config.eventsHandlers.replicas == 1
-        assert config.k8sEventsHandlers.replicas == 1
+        assert config.worker.replicas == 1
         assert config.beat.imageTag == "latest"
-        assert config.crons.imageTag == "latest"
-        assert config.eventMonitors.replicas == 1
-        assert config.resourcesDaemon.imageTag == "latest"
+        assert config.worker.imageTag == "latest"
         assert config.hooks.imageTag == "latest"
         assert config.postgresql is None
         assert config.rabbitmq is None
@@ -199,9 +165,6 @@ class TestDeploymentConfig(TestCase):
         assert config.allowedHosts == ["127.0.0.1", "123.123.12.3"]
         assert config.intervals is None
         assert config.persistence.logs is not None
-        assert config.persistence.repos is not None
-        assert config.persistence.upload is not None
-        assert len(config.persistence.data) == 2
         assert len(config.persistence.outputs) == 2
         assert config.trackerBackend is None
         assert config.ldap is not None
@@ -237,7 +200,6 @@ class TestDeploymentConfig(TestCase):
         assert config.globalReplicas is None
         assert config.globalConcurrency is None
         assert config.api.replicas == 1
-        assert config.streams.imageTag == "latest"
         assert config.scheduler.replicas == 1
         assert config.scheduler.celery.to_dict() == {
             "taskTrackStarted": False,
@@ -248,26 +210,8 @@ class TestDeploymentConfig(TestCase):
             "workerMaxMemoryPerChild": 2,
             "taskAlwaysEager": True,
         }
-        assert config.hpsearch.replicas == 1
-        assert config.hpsearch.celery.to_dict() == {
-            "taskTrackStarted": True,
-            "brokerPoolLimit": 1,
-            "confirmPublish": True,
-            "workerPrefetchMultiplier": 1,
-            "workerMaxTasksPerChild": 1,
-            "workerMaxMemoryPerChild": 1,
-        }
-        assert config.eventsHandlers.replicas == 1
-        assert config.eventsHandlers.celery.to_dict() == {
-            "taskTrackStarted": True,
-            "brokerPoolLimit": 3,
-            "confirmPublish": True,
-            "workerPrefetchMultiplier": 3,
-            "workerMaxTasksPerChild": 3,
-            "workerMaxMemoryPerChild": 3,
-        }
-        assert config.k8sEventsHandlers.replicas == 1
-        assert config.k8sEventsHandlers.celery.to_dict() == {
+        assert config.worker.replicas == 1
+        assert config.worker.celery.to_dict() == {
             "taskTrackStarted": True,
             "brokerPoolLimit": 4,
             "confirmPublish": True,
@@ -276,9 +220,6 @@ class TestDeploymentConfig(TestCase):
             "workerMaxMemoryPerChild": 4,
         }
         assert config.beat.imageTag == "latest"
-        assert config.crons.imageTag == "latest"
-        assert config.eventMonitors.replicas == 1
-        assert config.resourcesDaemon.imageTag == "latest"
         assert config.hooks.imageTag == "latest"
         assert config.postgresql is None
         assert config.rabbitmq.enabled is False
@@ -290,13 +231,8 @@ class TestDeploymentConfig(TestCase):
         assert config.intervals is None
         assert config.ldap is None
         assert config.persistence.logs is not None
-        assert config.persistence.repos is not None
-        assert config.persistence.upload is not None
-        assert len(config.persistence.data) == 2
         assert len(config.persistence.outputs) == 2
         assert config.trackerBackend == "noop"
-        assert config.dirs == {"nvidia": {"lib": "", "bin": "", "libcuda": ""}}
-        assert config.mountPaths == {"nvidia": {"lib": "", "bin": "", "libcuda": ""}}
 
     def test_read_deploy_config_pgsql_values(self):
         config = reader.read("tests/fixtures/deployment/external_pgsql_values.yml")
@@ -317,15 +253,9 @@ class TestDeploymentConfig(TestCase):
         assert config.globalReplicas is None
         assert config.globalConcurrency is None
         assert config.api is None
-        assert config.streams is None
         assert config.scheduler is None
-        assert config.hpsearch is None
-        assert config.eventsHandlers is None
-        assert config.k8sEventsHandlers is None
+        assert config.worker is None
         assert config.beat is None
-        assert config.crons is None
-        assert config.eventMonitors is None
-        assert config.resourcesDaemon is None
         assert config.hooks is None
         assert config.dockerRegistry is None
         assert config.email is None
@@ -366,15 +296,9 @@ class TestDeploymentConfig(TestCase):
         assert config.globalReplicas is None
         assert config.globalConcurrency is None
         assert config.api is None
-        assert config.streams is None
         assert config.scheduler is None
-        assert config.hpsearch is None
-        assert config.eventsHandlers is None
-        assert config.k8sEventsHandlers is None
+        assert config.worker is None
         assert config.beat is None
-        assert config.crons is None
-        assert config.eventMonitors is None
-        assert config.resourcesDaemon is None
         assert config.hooks is None
         assert config.dockerRegistry is None
         assert config.email is None
@@ -414,15 +338,9 @@ class TestDeploymentConfig(TestCase):
         assert config.globalReplicas is None
         assert config.globalConcurrency is None
         assert config.api is None
-        assert config.streams is None
         assert config.scheduler is None
-        assert config.hpsearch is None
-        assert config.eventsHandlers is None
-        assert config.k8sEventsHandlers is None
+        assert config.worker is None
         assert config.beat is None
-        assert config.crons is None
-        assert config.eventMonitors is None
-        assert config.resourcesDaemon is None
         assert config.hooks is None
         assert config.dockerRegistry is None
         assert config.email is None

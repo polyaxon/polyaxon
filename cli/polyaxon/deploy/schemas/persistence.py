@@ -105,9 +105,6 @@ def validate_named_persistence(values, persistence):
 
 class PersistenceSchema(BaseSchema):
     logs = fields.Nested(PersistenceEntitySchema, allow_none=True)
-    repos = fields.Nested(PersistenceEntitySchema, allow_none=True)
-    upload = fields.Nested(PersistenceEntitySchema, allow_none=True)
-    data = fields.Dict(allow_none=True)
     outputs = fields.Dict(allow_none=True)
 
     @staticmethod
@@ -122,15 +119,10 @@ class PersistenceSchema(BaseSchema):
 
 class PersistenceConfig(BaseConfig):
     SCHEMA = PersistenceSchema
-    REDUCED_ATTRIBUTES = ["logs", "repos", "upload", "data", "outputs"]
+    REDUCED_ATTRIBUTES = ["logs", "outputs"]
 
-    def __init__(self, logs=None, repos=None, upload=None, data=None, outputs=None):
+    def __init__(self, logs=None, outputs=None):
         self.logs = logs
-        self.repos = repos
-        self.upload = upload
-        if data:
-            validate_named_persistence(data, "data")
-        self.data = data
         if outputs:
             validate_named_persistence(outputs, "outputs")
         self.outputs = outputs

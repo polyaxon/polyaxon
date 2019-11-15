@@ -1,0 +1,209 @@
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: polyaxon-agent-sa
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: {{ template "polyaxon.fullname" . }}-agent-sa
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+    type: {{ .Values.types.agent }}
+    role: {{ .Values.roles.config }}
+    app.kubernetes.io/name: polyaxon-agent-sa
+    app.kubernetes.io/instance: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    app.kubernetes.io/version: "{{ .Chart.Version }}"
+    app.kubernetes.io/part-of: {{ .Values.types.agent }}
+    app.kubernetes.io/component: {{ .Values.roles.config }}
+    app.kubernetes.io/managed-by: "helm"
+
+{{- if .Values.rbac.enabled }}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: polyaxon-agent-role
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: polyaxon-agent-role
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+    type: {{ .Values.types.agent }}
+    role: {{ .Values.roles.config }}
+    app.kubernetes.io/name: polyaxon-agent-role
+    app.kubernetes.io/instance: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    app.kubernetes.io/version: "{{ .Chart.Version }}"
+    app.kubernetes.io/part-of: {{ .Values.types.agent }}
+    app.kubernetes.io/component: {{ .Values.roles.config }}
+    app.kubernetes.io/managed-by: "helm"
+rules:
+- apiGroups:
+  - apps
+  resources:
+  - deployments
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - apps
+  resources:
+  - deployments/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - batch
+  resources:
+  - jobs
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - batch
+  resources:
+  - jobs/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - ""
+  resources:
+  - services
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - services/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - core.polyaxon.com
+  resources:
+  - polyaxonjobs
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - core.polyaxon.com
+  resources:
+  - polyaxonjobs/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - core.polyaxon.com
+  resources:
+  - polyaxonkfs
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - core.polyaxon.com
+  resources:
+  - polyaxonkfs/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - core.polyaxon.com
+  resources:
+  - polyaxonnotebooks
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - core.polyaxon.com
+  resources:
+  - polyaxonnotebooks/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - core.polyaxon.com
+  resources:
+  - polyaxontensorboards
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - core.polyaxon.com
+  resources:
+  - polyaxontensorboards/status
+  verbs:
+  - get
+  - patch
+  - update
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: polyaxon-agent-role-binding
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: polyaxon-agent-role-binding
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+    type: {{ .Values.types.agent }}
+    role: {{ .Values.roles.config }}
+    app.kubernetes.io/name: polyaxon-agent-role-binding
+    app.kubernetes.io/instance: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    app.kubernetes.io/version: "{{ .Chart.Version }}"
+    app.kubernetes.io/part-of: {{ .Values.types.agent }}
+    app.kubernetes.io/component: {{ .Values.roles.config }}
+    app.kubernetes.io/managed-by: "helm"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: polyaxon-agent-role
+subjects:
+  - kind: ServiceAccount
+    name: polyaxon-agent-sa
+    namespace: {{ .Values.namespace }}
+{{- end }}

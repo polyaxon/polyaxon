@@ -88,28 +88,22 @@ class TestPersistenceConfig(TestCase):
 
         config_dicts = [
             {},
-            {"repos": {"existingClaim": "foo"}, "outputs": {}},
-            {"upload": {}, "outputs": {}},
+            {"outputs": {}},
             {"logs": {}},
-            {"repos": {}},
-            {"upload": {}},
             {
                 "logs": {"existingClaim": "foo"},
-                "data": {},
                 "outputs": {
                     "foo": {"existingClaim": "foo"},
                     "bar": {"hostPath": "foo"},
                 },
             },
             {
-                "repos": {"existingClaim": "foo"},
                 "logs": {"existingClaim": "foo"},
-                "data": {
+                "outputs": {
                     "foo": {"existingClaim": "foo"},
                     "bar": {"hostPath": "bar", "readOnly": True},
                     "moo": {"store": "s3"},
                 },
-                "outputs": {"foo": {"existingClaim": "foo"}},
             },
         ]
 

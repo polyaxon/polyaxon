@@ -15,8 +15,8 @@ const (
 	// AgentToken is Polyaxon's token for this agent
 	AgentToken = "POLYAXON_AUTH_TOKEN"
 
-	// AgentAPIHostgo is Polyaxon's api for this agent
-	AgentAPIHostgo = "POLYAXON_AGENT_API_HOST"
+	// AgentAPIHost is Polyaxon's api for this agent
+	AgentAPIHost = "POLYAXON_AGENT_API_HOST"
 )
 
 // GetStrEnv returns an environment str variable given by key or return a default value.
