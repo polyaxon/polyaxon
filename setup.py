@@ -24,7 +24,7 @@ class PyTest(TestCommand):
 
 
 setup(name='rhea',
-      version='0.5.4',
+      version='0.5.5',
       description='Efficient environment variables management and typing for python.',
       long_description_content_type="text/markdown",
       long_description=read_readme(),
@@ -47,7 +47,7 @@ setup(name='rhea',
       ],
       install_requires=[
           'PyYAML>=5.1',
-          'six==1.12.0',
+          'six>=1.12.0',
       ],
       classifiers=[
           'Programming Language :: Python',
