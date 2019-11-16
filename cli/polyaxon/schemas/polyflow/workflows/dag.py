@@ -17,6 +17,8 @@
 # coding: utf-8
 from __future__ import absolute_import, division, print_function
 
+from collections import Mapping
+
 from marshmallow import fields, validate
 
 from polyaxon.exceptions import PolyaxonSchemaError
@@ -83,6 +85,14 @@ class DagConfig(BaseConfig):
 
         if not op.params:
             return upstream
+
+        if not isinstance(op.params, Mapping):
+            raise PolyaxonSchemaError(
+                "Op `{}` defines a malformed params `{}`, "
+                "params should be a dictionary of form <name: value>".format(
+                    op.name, op.params
+                )
+            )
 
         for param in op.params:
             param_ref = ops_params.get_param(

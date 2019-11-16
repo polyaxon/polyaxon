@@ -19,7 +19,61 @@ from __future__ import absolute_import, division, print_function
 
 import os
 
-from polyaxon.tracking.utils.cmd import run_command
+from polyaxon.utils.cmd import run_command
+
+
+def checkout_commit(repo_path, commit_hash):  # pylint:disable=redefined-outer-name
+    """Checkout to a specific commit.
+
+    If commit is None then checkout to master.
+    """
+    commit_hash = commit_hash or "master"
+    run_command(
+        cmd="git checkout {}".format(commit_hash),
+        data=None,
+        location=repo_path,
+        chw=True,
+    )
+
+
+def set_remote(repo_path, git_url):
+    run_command(
+        cmd="git remote set-url origin {}".format(git_url),
+        data=None,
+        location=repo_path,
+        chw=True,
+    )
+
+
+def get_status(repo_path):
+    return run_command(cmd="git status -s", data=None, location=repo_path, chw=True)
+
+
+def get_committed_files(repo_path, commit_hash):  # pylint:disable=redefined-outer-name
+    files_committed = run_command(
+        cmd="git diff-tree --no-commit-id --name-only -r {}".format(commit_hash),
+        data=None,
+        location=repo_path,
+        chw=True,
+    ).split("\n")
+    return [f for f in files_committed if f]
+
+
+def undo(repo_path):
+    run_command(cmd="git reset --hard", data=None, location=repo_path, chw=True)
+    run_command(cmd="git clean -fd", data=None, location=repo_path, chw=True)
+
+
+def commit(repo_path, user_email, user_name, message="updated"):
+    run_command(cmd="git add -A", data=None, location=repo_path, chw=True)
+    run_command(
+        cmd='git -c user.email=<{}> -c user.name={} commit -m "{}"'.format(
+            user_email, user_name, message
+        ),
+        data=None,
+        location=repo_path,
+        chw=True,
+    )
 
 
 def is_git_initialized(path="."):
@@ -45,10 +99,14 @@ def get_head(path="."):
     ).split("\n")[0]
 
 
-def get_remote(path="."):
-    return run_command(
-        cmd="git config --get remote.origin.url", data=None, location=path, chw=True
-    ).split("\n")[0]
+def get_remote(repo_path="."):
+    current_remote = run_command(
+        cmd="git config --get remote.origin.url {}".format(repo_path),
+        data=None,
+        location=repo_path,
+        chw=True,
+    )
+    return current_remote.strip("\n")[0]
 
 
 def get_repo_name(path="."):

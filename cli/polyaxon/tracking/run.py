@@ -39,10 +39,10 @@ from polyaxon.tracking.is_managed import ensure_is_managed
 from polyaxon.tracking.no_op import check_no_op
 from polyaxon.tracking.offline import check_offline
 from polyaxon.tracking.paths import get_artifacts_paths, get_log_level, get_outputs_path
-from polyaxon.tracking.utils.code_reference import get_code_reference
 from polyaxon.tracking.utils.env import get_run_env
 from polyaxon.tracking.utils.project import get_project_info
 from polyaxon.tracking.utils.run_info import get_run_info
+from polyaxon.utils.code_reference import get_code_reference
 from polyaxon.utils.validation import validate_tags
 
 

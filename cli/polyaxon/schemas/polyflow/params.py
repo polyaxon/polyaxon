@@ -97,12 +97,12 @@ def get_param(name, value, iotype, is_flag):
             "Could not parse value `{}` for param `{}`.".format(value, name)
         )
 
-    def process_pipeline_param():
+    def process_dag_param():
         if param_parts[0] != DAG or param_parts[1] != INPUTS:
             raise ValidationError(
                 "Param `{}` value `{}` is not valid, "
                 "it should follow a format "
-                "`pipeline.outputs.name`.".format(name, value)
+                "`dag.inputs.name`.".format(name, value)
             )
         return param_parts[0], DAG_ENTITY_REF, param_parts[-1]
 
@@ -140,7 +140,7 @@ def get_param(name, value, iotype, is_flag):
         return param_parts[0], param_parts[1], param_parts[-1]
 
     if len(param_parts) == 3:
-        entity, entity_ref, entity_value = process_pipeline_param()
+        entity, entity_ref, entity_value = process_dag_param()
     elif len(param_parts) == 4:
         entity, entity_ref, entity_value = process_op_param()
     else:
@@ -171,7 +171,7 @@ def validate_param(param, context, is_template=False, check_runs=False):
         raise ValidationError(
             "Param `{}` has a ref value `{}`, "
             "but op with name `{}` has no such output, "
-            "please check that your pipeline defines the correct component_ref.".format(
+            "please check that your dag defines the correct component_ref.".format(
                 param.name, param.value, param.entity_ref
             )
         )
@@ -356,7 +356,7 @@ def get_upstream_run_params_by_names(params):
     return upstream
 
 
-def get_pipeline_params_by_names(params):
+def get_dag_params_by_names(params):
     upstream = {}
 
     if not params:

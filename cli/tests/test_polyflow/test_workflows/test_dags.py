@@ -1969,15 +1969,15 @@ class TestWorkflowDagConfigs(TestCase):
         assert run_upstream_by_names == {}
 
         # pipeline upstreams
-        pipeline_by_names = ops_params.get_pipeline_params_by_names(
+        pipeline_by_names = ops_params.get_dag_params_by_names(
             params=config.dag["A"].op.params
         )
         assert pipeline_by_names == {}
-        pipeline_by_names = ops_params.get_pipeline_params_by_names(
+        pipeline_by_names = ops_params.get_dag_params_by_names(
             params=config.dag["B"].op.params
         )
         assert pipeline_by_names == {}
-        pipeline_by_names = ops_params.get_pipeline_params_by_names(
+        pipeline_by_names = ops_params.get_dag_params_by_names(
             params=config.dag["C"].op.params
         )
         assert pipeline_by_names == {}
@@ -2165,15 +2165,15 @@ class TestWorkflowDagConfigs(TestCase):
         assert run_upstream_by_names == {}
 
         # pipeline upstreams
-        pipeline_by_names = ops_params.get_pipeline_params_by_names(
+        pipeline_by_names = ops_params.get_dag_params_by_names(
             params=config.dag["A"].op.params
         )
         assert pipeline_by_names == {}
-        pipeline_by_names = ops_params.get_pipeline_params_by_names(
+        pipeline_by_names = ops_params.get_dag_params_by_names(
             params=config.dag["B"].op.params
         )
         assert pipeline_by_names == {}
-        pipeline_by_names = ops_params.get_pipeline_params_by_names(
+        pipeline_by_names = ops_params.get_dag_params_by_names(
             params=config.dag["C"].op.params
         )
         assert pipeline_by_names["_"] == [
