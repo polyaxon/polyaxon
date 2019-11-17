@@ -46,27 +46,21 @@ class V1CodeRef(object):
       attribute_map (dict): The key is attribute name
                             and the value is json key in definition.
     """
-    swagger_types = {
-        'commit': 'str',
-        'git_url': 'str'
-    }
+    swagger_types = {"commit": "str", "url": "str"}
 
-    attribute_map = {
-        'commit': 'commit',
-        'git_url': 'git_url'
-    }
+    attribute_map = {"commit": "commit", "url": "url"}
 
-    def __init__(self, commit=None, git_url=None):  # noqa: E501
+    def __init__(self, commit=None, url=None):  # noqa: E501
         """V1CodeRef - a model defined in Swagger"""  # noqa: E501
 
         self._commit = None
-        self._git_url = None
+        self._url = None
         self.discriminator = None
 
         if commit is not None:
             self.commit = commit
-        if git_url is not None:
-            self.git_url = git_url
+        if url is not None:
+            self.url = url
 
     @property
     def commit(self):
@@ -90,25 +84,25 @@ class V1CodeRef(object):
         self._commit = commit
 
     @property
-    def git_url(self):
-        """Gets the git_url of this V1CodeRef.  # noqa: E501
+    def url(self):
+        """Gets the url of this V1CodeRef.  # noqa: E501
 
 
-        :return: The git_url of this V1CodeRef.  # noqa: E501
+        :return: The url of this V1CodeRef.  # noqa: E501
         :rtype: str
         """
-        return self._git_url
+        return self._url
 
-    @git_url.setter
-    def git_url(self, git_url):
-        """Sets the git_url of this V1CodeRef.
+    @url.setter
+    def url(self, url):
+        """Sets the url of this V1CodeRef.
 
 
-        :param git_url: The git_url of this V1CodeRef.  # noqa: E501
+        :param url: The url of this V1CodeRef.  # noqa: E501
         :type: str
         """
 
-        self._git_url = git_url
+        self._url = url
 
     def to_dict(self):
         """Returns the model properties as a dict"""
@@ -117,18 +111,20 @@ class V1CodeRef(object):
         for attr, _ in six.iteritems(self.swagger_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(map(
-                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
-                    value
-                ))
+                result[attr] = list(
+                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
+                )
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(map(
-                    lambda item: (item[0], item[1].to_dict())
-                    if hasattr(item[1], "to_dict") else item,
-                    value.items()
-                ))
+                result[attr] = dict(
+                    map(
+                        lambda item: (item[0], item[1].to_dict())
+                        if hasattr(item[1], "to_dict")
+                        else item,
+                        value.items(),
+                    )
+                )
             else:
                 result[attr] = value
         if issubclass(V1CodeRef, dict):

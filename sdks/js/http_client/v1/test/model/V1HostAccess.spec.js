@@ -127,10 +127,10 @@
         // expect(instance.k8s_secret).to.be(expectedValueLiteral);
       });
 
-      it('should have the property host (base name: "host")', function() {
-        // TODO: update the code to test the property host
-        expect(instance).to.have.property('host');
-        // expect(instance.host).to.be(expectedValueLiteral);
+      it('should have the property url (base name: "url")', function() {
+        // TODO: update the code to test the property url
+        expect(instance).to.have.property('url');
+        // expect(instance.url).to.be(expectedValueLiteral);
       });
 
     });

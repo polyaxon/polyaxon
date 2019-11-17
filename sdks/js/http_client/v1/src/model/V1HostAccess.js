@@ -93,8 +93,8 @@
         obj.deleted = ApiClient.convertToType(data['deleted'], 'Boolean');
       if (data.hasOwnProperty('k8s_secret'))
         obj.k8s_secret = ApiClient.convertToType(data['k8s_secret'], 'String');
-      if (data.hasOwnProperty('host'))
-        obj.host = ApiClient.convertToType(data['host'], 'String');
+      if (data.hasOwnProperty('url'))
+        obj.url = ApiClient.convertToType(data['url'], 'String');
     }
     return obj;
   }
@@ -160,9 +160,9 @@
   exports.prototype.k8s_secret = undefined;
 
   /**
-   * @member {String} host
+   * @member {String} url
    */
-  exports.prototype.host = undefined;
+  exports.prototype.url = undefined;
 
   return exports;
 

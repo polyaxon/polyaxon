@@ -47,46 +47,65 @@ class V1ArtifactsStore(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'uuid': 'str',
-        'name': 'str',
-        'description': 'str',
-        'readme': 'str',
-        'tags': 'list[str]',
-        'created_at': 'datetime',
-        'updated_at': 'datetime',
-        'frozen': 'bool',
-        'disabled': 'bool',
-        'deleted': 'bool',
-        'k8s_secret': 'str',
-        'type': 'str',
-        'mount_path': 'str',
-        'host_path': 'str',
-        'volume_claim': 'str',
-        'bucket': 'str',
-        'read_only': 'bool'
+        "uuid": "str",
+        "name": "str",
+        "description": "str",
+        "readme": "str",
+        "tags": "list[str]",
+        "created_at": "datetime",
+        "updated_at": "datetime",
+        "frozen": "bool",
+        "disabled": "bool",
+        "deleted": "bool",
+        "k8s_secret": "str",
+        "type": "str",
+        "mount_path": "str",
+        "host_path": "str",
+        "volume_claim": "str",
+        "bucket": "str",
+        "read_only": "bool",
     }
 
     attribute_map = {
-        'uuid': 'uuid',
-        'name': 'name',
-        'description': 'description',
-        'readme': 'readme',
-        'tags': 'tags',
-        'created_at': 'created_at',
-        'updated_at': 'updated_at',
-        'frozen': 'frozen',
-        'disabled': 'disabled',
-        'deleted': 'deleted',
-        'k8s_secret': 'k8s_secret',
-        'type': 'type',
-        'mount_path': 'mount_path',
-        'host_path': 'host_path',
-        'volume_claim': 'volume_claim',
-        'bucket': 'bucket',
-        'read_only': 'read_only'
+        "uuid": "uuid",
+        "name": "name",
+        "description": "description",
+        "readme": "readme",
+        "tags": "tags",
+        "created_at": "created_at",
+        "updated_at": "updated_at",
+        "frozen": "frozen",
+        "disabled": "disabled",
+        "deleted": "deleted",
+        "k8s_secret": "k8s_secret",
+        "type": "type",
+        "mount_path": "mount_path",
+        "host_path": "host_path",
+        "volume_claim": "volume_claim",
+        "bucket": "bucket",
+        "read_only": "read_only",
     }
 
-    def __init__(self, uuid=None, name=None, description=None, readme=None, tags=None, created_at=None, updated_at=None, frozen=None, disabled=None, deleted=None, k8s_secret=None, type=None, mount_path=None, host_path=None, volume_claim=None, bucket=None, read_only=None):  # noqa: E501
+    def __init__(
+        self,
+        uuid=None,
+        name=None,
+        description=None,
+        readme=None,
+        tags=None,
+        created_at=None,
+        updated_at=None,
+        frozen=None,
+        disabled=None,
+        deleted=None,
+        k8s_secret=None,
+        type=None,
+        mount_path=None,
+        host_path=None,
+        volume_claim=None,
+        bucket=None,
+        read_only=None,
+    ):  # noqa: E501
         """V1ArtifactsStore - a model defined in Swagger"""  # noqa: E501
 
         self._uuid = None
@@ -507,18 +526,20 @@ class V1ArtifactsStore(object):
         for attr, _ in six.iteritems(self.swagger_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(map(
-                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
-                    value
-                ))
+                result[attr] = list(
+                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
+                )
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(map(
-                    lambda item: (item[0], item[1].to_dict())
-                    if hasattr(item[1], "to_dict") else item,
-                    value.items()
-                ))
+                result[attr] = dict(
+                    map(
+                        lambda item: (item[0], item[1].to_dict())
+                        if hasattr(item[1], "to_dict")
+                        else item,
+                        value.items(),
+                    )
+                )
             else:
                 result[attr] = value
         if issubclass(V1ArtifactsStore, dict):

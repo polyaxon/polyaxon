@@ -396,7 +396,7 @@
           var entity_uuid = "entity_uuid_example";
           var body = new PolyaxonSdk.V1CodeRef();
           body.commit = "";
-          body.git_url = "";
+          body.url = "";
 
           instance.createRunCodeRef(entity_owner, entity_project, entity_uuid, body, function(error, data, response) {
             if (error) {

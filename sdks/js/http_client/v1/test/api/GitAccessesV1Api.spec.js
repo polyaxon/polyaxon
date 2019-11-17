@@ -68,7 +68,7 @@
           body.insecure = false;
           body.deleted = false;
           body.k8s_secret = "";
-          body.host = "";
+          body.url = "";
 
           instance.createGitAccess(owner, body, function(error, data, response) {
             if (error) {
@@ -109,8 +109,8 @@
             expect(data.deleted).to.be(false);
             expect(data.k8s_secret).to.be.a('string');
             expect(data.k8s_secret).to.be("");
-            expect(data.host).to.be.a('string');
-            expect(data.host).to.be("");
+            expect(data.url).to.be.a('string');
+            expect(data.url).to.be("");
 
             done();
           });
@@ -185,8 +185,8 @@
             expect(data.deleted).to.be(false);
             expect(data.k8s_secret).to.be.a('string');
             expect(data.k8s_secret).to.be("");
-            expect(data.host).to.be.a('string');
-            expect(data.host).to.be("");
+            expect(data.url).to.be.a('string');
+            expect(data.url).to.be("");
 
             done();
           });
@@ -254,8 +254,8 @@
                 expect(data.deleted).to.be(false);
                 expect(data.k8s_secret).to.be.a('string');
                 expect(data.k8s_secret).to.be("");
-                expect(data.host).to.be.a('string');
-                expect(data.host).to.be("");
+                expect(data.url).to.be.a('string');
+                expect(data.url).to.be("");
               }
             }
             expect(data.previous).to.be.a('string');
@@ -329,8 +329,8 @@
                 expect(data.deleted).to.be(false);
                 expect(data.k8s_secret).to.be.a('string');
                 expect(data.k8s_secret).to.be("");
-                expect(data.host).to.be.a('string');
-                expect(data.host).to.be("");
+                expect(data.url).to.be.a('string');
+                expect(data.url).to.be("");
               }
             }
             expect(data.previous).to.be.a('string');
@@ -364,7 +364,7 @@
           body.insecure = false;
           body.deleted = false;
           body.k8s_secret = "";
-          body.host = "";
+          body.url = "";
 
           instance.patchGitAccess(owner, host_access_uuid, body, function(error, data, response) {
             if (error) {
@@ -405,8 +405,8 @@
             expect(data.deleted).to.be(false);
             expect(data.k8s_secret).to.be.a('string');
             expect(data.k8s_secret).to.be("");
-            expect(data.host).to.be.a('string');
-            expect(data.host).to.be("");
+            expect(data.url).to.be.a('string');
+            expect(data.url).to.be("");
 
             done();
           });
@@ -434,7 +434,7 @@
           body.insecure = false;
           body.deleted = false;
           body.k8s_secret = "";
-          body.host = "";
+          body.url = "";
 
           instance.updateGitAccess(owner, host_access_uuid, body, function(error, data, response) {
             if (error) {
@@ -475,8 +475,8 @@
             expect(data.deleted).to.be(false);
             expect(data.k8s_secret).to.be.a('string');
             expect(data.k8s_secret).to.be("");
-            expect(data.host).to.be.a('string');
-            expect(data.host).to.be("");
+            expect(data.url).to.be.a('string');
+            expect(data.url).to.be("");
 
             done();
           });

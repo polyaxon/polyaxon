@@ -94,7 +94,7 @@ def set(**kwargs):  # pylint:disable=redefined-builtin
 
     \b
     ```bash
-    $ polyaxon config set --host=localhost --port=80
+    $ polyaxon config set --host=localhost
     ```
     """
     try:

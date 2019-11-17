@@ -16,7 +16,7 @@ Name | Type | Description | Notes
 **insecure** | **Boolean** |  |  [optional]
 **deleted** | **Boolean** |  |  [optional]
 **k8sSecret** | **String** |  |  [optional]
-**host** | **String** |  |  [optional]
+**url** | **String** |  |  [optional]
 
 
 

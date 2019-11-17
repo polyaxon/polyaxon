@@ -82,8 +82,8 @@ public class V1HostAccess {
   @SerializedName("k8s_secret")
   private String k8sSecret = null;
 
-  @SerializedName("host")
-  private String host = null;
+  @SerializedName("url")
+  private String url = null;
 
   public V1HostAccess uuid(String uuid) {
     this.uuid = uuid;
@@ -309,22 +309,22 @@ public class V1HostAccess {
     this.k8sSecret = k8sSecret;
   }
 
-  public V1HostAccess host(String host) {
-    this.host = host;
+  public V1HostAccess url(String url) {
+    this.url = url;
     return this;
   }
 
    /**
-   * Get host
-   * @return host
+   * Get url
+   * @return url
   **/
   @ApiModelProperty(value = "")
-  public String getHost() {
-    return host;
+  public String getUrl() {
+    return url;
   }
 
-  public void setHost(String host) {
-    this.host = host;
+  public void setUrl(String url) {
+    this.url = url;
   }
 
 
@@ -349,12 +349,12 @@ public class V1HostAccess {
         Objects.equals(this.insecure, v1HostAccess.insecure) &&
         Objects.equals(this.deleted, v1HostAccess.deleted) &&
         Objects.equals(this.k8sSecret, v1HostAccess.k8sSecret) &&
-        Objects.equals(this.host, v1HostAccess.host);
+        Objects.equals(this.url, v1HostAccess.url);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(uuid, name, description, readme, tags, createdAt, updatedAt, frozen, disabled, insecure, deleted, k8sSecret, host);
+    return Objects.hash(uuid, name, description, readme, tags, createdAt, updatedAt, frozen, disabled, insecure, deleted, k8sSecret, url);
   }
 
 
@@ -375,7 +375,7 @@ public class V1HostAccess {
     sb.append("    insecure: ").append(toIndentedString(insecure)).append("\n");
     sb.append("    deleted: ").append(toIndentedString(deleted)).append("\n");
     sb.append("    k8sSecret: ").append(toIndentedString(k8sSecret)).append("\n");
-    sb.append("    host: ").append(toIndentedString(host)).append("\n");
+    sb.append("    url: ").append(toIndentedString(url)).append("\n");
     sb.append("}");
     return sb.toString();
   }

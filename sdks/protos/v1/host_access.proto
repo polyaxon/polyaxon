@@ -42,8 +42,8 @@ message HostAccess {
     // Optional the k8s secret to use
     string k8s_secret = 12;
 
-    // Optional the host value
-    string host = 13;
+    // Optional the url value
+    string url = 13;
 }
 
  // Request data to create/update host access

@@ -47,38 +47,53 @@ class V1HostAccess(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'uuid': 'str',
-        'name': 'str',
-        'description': 'str',
-        'readme': 'str',
-        'tags': 'list[str]',
-        'created_at': 'datetime',
-        'updated_at': 'datetime',
-        'frozen': 'bool',
-        'disabled': 'bool',
-        'insecure': 'bool',
-        'deleted': 'bool',
-        'k8s_secret': 'str',
-        'host': 'str'
+        "uuid": "str",
+        "name": "str",
+        "description": "str",
+        "readme": "str",
+        "tags": "list[str]",
+        "created_at": "datetime",
+        "updated_at": "datetime",
+        "frozen": "bool",
+        "disabled": "bool",
+        "insecure": "bool",
+        "deleted": "bool",
+        "k8s_secret": "str",
+        "url": "str",
     }
 
     attribute_map = {
-        'uuid': 'uuid',
-        'name': 'name',
-        'description': 'description',
-        'readme': 'readme',
-        'tags': 'tags',
-        'created_at': 'created_at',
-        'updated_at': 'updated_at',
-        'frozen': 'frozen',
-        'disabled': 'disabled',
-        'insecure': 'insecure',
-        'deleted': 'deleted',
-        'k8s_secret': 'k8s_secret',
-        'host': 'host'
+        "uuid": "uuid",
+        "name": "name",
+        "description": "description",
+        "readme": "readme",
+        "tags": "tags",
+        "created_at": "created_at",
+        "updated_at": "updated_at",
+        "frozen": "frozen",
+        "disabled": "disabled",
+        "insecure": "insecure",
+        "deleted": "deleted",
+        "k8s_secret": "k8s_secret",
+        "url": "url",
     }
 
-    def __init__(self, uuid=None, name=None, description=None, readme=None, tags=None, created_at=None, updated_at=None, frozen=None, disabled=None, insecure=None, deleted=None, k8s_secret=None, host=None):  # noqa: E501
+    def __init__(
+        self,
+        uuid=None,
+        name=None,
+        description=None,
+        readme=None,
+        tags=None,
+        created_at=None,
+        updated_at=None,
+        frozen=None,
+        disabled=None,
+        insecure=None,
+        deleted=None,
+        k8s_secret=None,
+        url=None,
+    ):  # noqa: E501
         """V1HostAccess - a model defined in Swagger"""  # noqa: E501
 
         self._uuid = None
@@ -93,7 +108,7 @@ class V1HostAccess(object):
         self._insecure = None
         self._deleted = None
         self._k8s_secret = None
-        self._host = None
+        self._url = None
         self.discriminator = None
 
         if uuid is not None:
@@ -120,8 +135,8 @@ class V1HostAccess(object):
             self.deleted = deleted
         if k8s_secret is not None:
             self.k8s_secret = k8s_secret
-        if host is not None:
-            self.host = host
+        if url is not None:
+            self.url = url
 
     @property
     def uuid(self):
@@ -376,25 +391,25 @@ class V1HostAccess(object):
         self._k8s_secret = k8s_secret
 
     @property
-    def host(self):
-        """Gets the host of this V1HostAccess.  # noqa: E501
+    def url(self):
+        """Gets the url of this V1HostAccess.  # noqa: E501
 
 
-        :return: The host of this V1HostAccess.  # noqa: E501
+        :return: The url of this V1HostAccess.  # noqa: E501
         :rtype: str
         """
-        return self._host
+        return self._url
 
-    @host.setter
-    def host(self, host):
-        """Sets the host of this V1HostAccess.
+    @url.setter
+    def url(self, url):
+        """Sets the url of this V1HostAccess.
 
 
-        :param host: The host of this V1HostAccess.  # noqa: E501
+        :param url: The url of this V1HostAccess.  # noqa: E501
         :type: str
         """
 
-        self._host = host
+        self._url = url
 
     def to_dict(self):
         """Returns the model properties as a dict"""
@@ -403,18 +418,20 @@ class V1HostAccess(object):
         for attr, _ in six.iteritems(self.swagger_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(map(
-                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
-                    value
-                ))
+                result[attr] = list(
+                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
+                )
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(map(
-                    lambda item: (item[0], item[1].to_dict())
-                    if hasattr(item[1], "to_dict") else item,
-                    value.items()
-                ))
+                result[attr] = dict(
+                    map(
+                        lambda item: (item[0], item[1].to_dict())
+                        if hasattr(item[1], "to_dict")
+                        else item,
+                        value.items(),
+                    )
+                )
             else:
                 result[attr] = value
         if issubclass(V1HostAccess, dict):

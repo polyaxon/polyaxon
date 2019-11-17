@@ -38,7 +38,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='v1',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\x11v1/code_ref.proto\x12\x02v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\rv1/base.proto\"*\n\x07\x43odeRef\x12\x0e\n\x06\x63ommit\x18\x01 \x01(\t\x12\x0f\n\x07git_url\x18\x02 \x01(\t\"d\n\x12\x43odeRefBodyRequest\x12\x30\n\x06\x65ntity\x18\x01 \x01(\x0b\x32 .v1.ProjectEntityResourceRequest\x12\x1c\n\x07\x63oderef\x18\x02 \x01(\x0b\x32\x0b.v1.CodeRefb\x06proto3')
+  serialized_pb=_b('\n\x11v1/code_ref.proto\x12\x02v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\rv1/base.proto\"&\n\x07\x43odeRef\x12\x0e\n\x06\x63ommit\x18\x01 \x01(\t\x12\x0b\n\x03url\x18\x02 \x01(\t\"d\n\x12\x43odeRefBodyRequest\x12\x30\n\x06\x65ntity\x18\x01 \x01(\x0b\x32 .v1.ProjectEntityResourceRequest\x12\x1c\n\x07\x63oderef\x18\x02 \x01(\x0b\x32\x0b.v1.CodeRefb\x06proto3')
   ,
   dependencies=[google_dot_protobuf_dot_timestamp__pb2.DESCRIPTOR,v1_dot_base__pb2.DESCRIPTOR,])
 
@@ -60,7 +60,7 @@ _CODEREF = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='git_url', full_name='v1.CodeRef.git_url', index=1,
+      name='url', full_name='v1.CodeRef.url', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -79,7 +79,7 @@ _CODEREF = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=73,
-  serialized_end=115,
+  serialized_end=111,
 )
 
 
@@ -116,8 +116,8 @@ _CODEREFBODYREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=117,
-  serialized_end=217,
+  serialized_start=113,
+  serialized_end=213,
 )
 
 _CODEREFBODYREQUEST.fields_by_name['entity'].message_type = v1_dot_base__pb2._PROJECTENTITYRESOURCEREQUEST

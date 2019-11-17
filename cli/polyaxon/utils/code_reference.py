@@ -36,9 +36,9 @@ def checkout_commit(repo_path, commit_hash):  # pylint:disable=redefined-outer-n
     )
 
 
-def set_remote(repo_path, git_url):
+def set_remote(repo_path, url):
     run_command(
-        cmd="git remote set-url origin {}".format(git_url),
+        cmd="git remote set-url origin {}".format(url),
         data=None,
         location=repo_path,
         chw=True,
@@ -131,10 +131,7 @@ def get_code_reference(path="."):
     if not is_git_initialized(path):
         return None
 
-    return {
-        "commit": get_commit(path),
-        "git_url": get_remote(path),
-    }
+    return {"commit": get_commit(path), "url": get_remote(path)}
 
 
 def get_code_reference_all(path="."):
@@ -145,6 +142,6 @@ def get_code_reference_all(path="."):
         "commit": get_commit(path),
         "head": get_head(path),
         "branch": get_branch_name(path),
-        "git_url": get_remote(path),
+        "url": get_remote(path),
         "is_dirty": is_dirty(path),
     }

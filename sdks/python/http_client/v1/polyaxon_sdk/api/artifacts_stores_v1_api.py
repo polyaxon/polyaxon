@@ -64,14 +64,20 @@ class ArtifactsStoresV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
-        if kwargs.get('async_req'):
-            return self.create_artifacts_store_with_http_info(owner, body, **kwargs)  # noqa: E501
+        kwargs["_return_http_data_only"] = True
+        if kwargs.get("async_req"):
+            return self.create_artifacts_store_with_http_info(
+                owner, body, **kwargs
+            )  # noqa: E501
         else:
-            (data) = self.create_artifacts_store_with_http_info(owner, body, **kwargs)  # noqa: E501
+            (data) = self.create_artifacts_store_with_http_info(
+                owner, body, **kwargs
+            )  # noqa: E501
             return data
 
-    def create_artifacts_store_with_http_info(self, owner, body, **kwargs):  # noqa: E501
+    def create_artifacts_store_with_http_info(
+        self, owner, body, **kwargs
+    ):  # noqa: E501
         """List runs  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -87,35 +93,37 @@ class ArtifactsStoresV1Api(object):
                  returns the request thread.
         """
 
-        all_params = ['owner', 'body']  # noqa: E501
-        all_params.append('async_req')
-        all_params.append('_return_http_data_only')
-        all_params.append('_preload_content')
-        all_params.append('_request_timeout')
+        all_params = ["owner", "body"]  # noqa: E501
+        all_params.append("async_req")
+        all_params.append("_return_http_data_only")
+        all_params.append("_preload_content")
+        all_params.append("_request_timeout")
 
         params = locals()
-        for key, val in six.iteritems(params['kwargs']):
+        for key, val in six.iteritems(params["kwargs"]):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method create_artifacts_store" % key
                 )
             params[key] = val
-        del params['kwargs']
+        del params["kwargs"]
         # verify the required parameter 'owner' is set
-        if ('owner' not in params or
-                params['owner'] is None):
-            raise ValueError("Missing the required parameter `owner` when calling `create_artifacts_store`")  # noqa: E501
+        if "owner" not in params or params["owner"] is None:
+            raise ValueError(
+                "Missing the required parameter `owner` when calling `create_artifacts_store`"
+            )  # noqa: E501
         # verify the required parameter 'body' is set
-        if ('body' not in params or
-                params['body'] is None):
-            raise ValueError("Missing the required parameter `body` when calling `create_artifacts_store`")  # noqa: E501
+        if "body" not in params or params["body"] is None:
+            raise ValueError(
+                "Missing the required parameter `body` when calling `create_artifacts_store`"
+            )  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if 'owner' in params:
-            path_params['owner'] = params['owner']  # noqa: E501
+        if "owner" in params:
+            path_params["owner"] = params["owner"]  # noqa: E501
 
         query_params = []
 
@@ -125,34 +133,40 @@ class ArtifactsStoresV1Api(object):
         local_var_files = {}
 
         body_params = None
-        if 'body' in params:
-            body_params = params['body']
+        if "body" in params:
+            body_params = params["body"]
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
-            ['application/json'])  # noqa: E501
+        header_params[
+            "Content-Type"
+        ] = self.api_client.select_header_content_type(  # noqa: E501
+            ["application/json"]
+        )  # noqa: E501
 
         # Authentication setting
-        auth_settings = ['ApiKey']  # noqa: E501
+        auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            '/api/v1/{owner}/artifacts_stores', 'POST',
+            "/api/v1/{owner}/artifacts_stores",
+            "POST",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='V1ArtifactsStore',  # noqa: E501
+            response_type="V1ArtifactsStore",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get('async_req'),
-            _return_http_data_only=params.get('_return_http_data_only'),
-            _preload_content=params.get('_preload_content', True),
-            _request_timeout=params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=params.get("async_req"),
+            _return_http_data_only=params.get("_return_http_data_only"),
+            _preload_content=params.get("_preload_content", True),
+            _request_timeout=params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
     def delete_artifacts_store(self, owner, uuid, **kwargs):  # noqa: E501
         """Patch run  # noqa: E501
@@ -169,14 +183,20 @@ class ArtifactsStoresV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
-        if kwargs.get('async_req'):
-            return self.delete_artifacts_store_with_http_info(owner, uuid, **kwargs)  # noqa: E501
+        kwargs["_return_http_data_only"] = True
+        if kwargs.get("async_req"):
+            return self.delete_artifacts_store_with_http_info(
+                owner, uuid, **kwargs
+            )  # noqa: E501
         else:
-            (data) = self.delete_artifacts_store_with_http_info(owner, uuid, **kwargs)  # noqa: E501
+            (data) = self.delete_artifacts_store_with_http_info(
+                owner, uuid, **kwargs
+            )  # noqa: E501
             return data
 
-    def delete_artifacts_store_with_http_info(self, owner, uuid, **kwargs):  # noqa: E501
+    def delete_artifacts_store_with_http_info(
+        self, owner, uuid, **kwargs
+    ):  # noqa: E501
         """Patch run  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -192,37 +212,39 @@ class ArtifactsStoresV1Api(object):
                  returns the request thread.
         """
 
-        all_params = ['owner', 'uuid']  # noqa: E501
-        all_params.append('async_req')
-        all_params.append('_return_http_data_only')
-        all_params.append('_preload_content')
-        all_params.append('_request_timeout')
+        all_params = ["owner", "uuid"]  # noqa: E501
+        all_params.append("async_req")
+        all_params.append("_return_http_data_only")
+        all_params.append("_preload_content")
+        all_params.append("_request_timeout")
 
         params = locals()
-        for key, val in six.iteritems(params['kwargs']):
+        for key, val in six.iteritems(params["kwargs"]):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method delete_artifacts_store" % key
                 )
             params[key] = val
-        del params['kwargs']
+        del params["kwargs"]
         # verify the required parameter 'owner' is set
-        if ('owner' not in params or
-                params['owner'] is None):
-            raise ValueError("Missing the required parameter `owner` when calling `delete_artifacts_store`")  # noqa: E501
+        if "owner" not in params or params["owner"] is None:
+            raise ValueError(
+                "Missing the required parameter `owner` when calling `delete_artifacts_store`"
+            )  # noqa: E501
         # verify the required parameter 'uuid' is set
-        if ('uuid' not in params or
-                params['uuid'] is None):
-            raise ValueError("Missing the required parameter `uuid` when calling `delete_artifacts_store`")  # noqa: E501
+        if "uuid" not in params or params["uuid"] is None:
+            raise ValueError(
+                "Missing the required parameter `uuid` when calling `delete_artifacts_store`"
+            )  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if 'owner' in params:
-            path_params['owner'] = params['owner']  # noqa: E501
-        if 'uuid' in params:
-            path_params['uuid'] = params['uuid']  # noqa: E501
+        if "owner" in params:
+            path_params["owner"] = params["owner"]  # noqa: E501
+        if "uuid" in params:
+            path_params["uuid"] = params["uuid"]  # noqa: E501
 
         query_params = []
 
@@ -233,18 +255,23 @@ class ArtifactsStoresV1Api(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
-            ['application/json'])  # noqa: E501
+        header_params[
+            "Content-Type"
+        ] = self.api_client.select_header_content_type(  # noqa: E501
+            ["application/json"]
+        )  # noqa: E501
 
         # Authentication setting
-        auth_settings = ['ApiKey']  # noqa: E501
+        auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            '/api/v1/{owner}/artifacts_stores/{uuid}', 'DELETE',
+            "/api/v1/{owner}/artifacts_stores/{uuid}",
+            "DELETE",
             path_params,
             query_params,
             header_params,
@@ -253,11 +280,12 @@ class ArtifactsStoresV1Api(object):
             files=local_var_files,
             response_type=None,  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get('async_req'),
-            _return_http_data_only=params.get('_return_http_data_only'),
-            _preload_content=params.get('_preload_content', True),
-            _request_timeout=params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=params.get("async_req"),
+            _return_http_data_only=params.get("_return_http_data_only"),
+            _preload_content=params.get("_preload_content", True),
+            _request_timeout=params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
     def get_artifacts_store(self, owner, uuid, **kwargs):  # noqa: E501
         """Create new run  # noqa: E501
@@ -274,11 +302,15 @@ class ArtifactsStoresV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
-        if kwargs.get('async_req'):
-            return self.get_artifacts_store_with_http_info(owner, uuid, **kwargs)  # noqa: E501
+        kwargs["_return_http_data_only"] = True
+        if kwargs.get("async_req"):
+            return self.get_artifacts_store_with_http_info(
+                owner, uuid, **kwargs
+            )  # noqa: E501
         else:
-            (data) = self.get_artifacts_store_with_http_info(owner, uuid, **kwargs)  # noqa: E501
+            (data) = self.get_artifacts_store_with_http_info(
+                owner, uuid, **kwargs
+            )  # noqa: E501
             return data
 
     def get_artifacts_store_with_http_info(self, owner, uuid, **kwargs):  # noqa: E501
@@ -297,37 +329,39 @@ class ArtifactsStoresV1Api(object):
                  returns the request thread.
         """
 
-        all_params = ['owner', 'uuid']  # noqa: E501
-        all_params.append('async_req')
-        all_params.append('_return_http_data_only')
-        all_params.append('_preload_content')
-        all_params.append('_request_timeout')
+        all_params = ["owner", "uuid"]  # noqa: E501
+        all_params.append("async_req")
+        all_params.append("_return_http_data_only")
+        all_params.append("_preload_content")
+        all_params.append("_request_timeout")
 
         params = locals()
-        for key, val in six.iteritems(params['kwargs']):
+        for key, val in six.iteritems(params["kwargs"]):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method get_artifacts_store" % key
                 )
             params[key] = val
-        del params['kwargs']
+        del params["kwargs"]
         # verify the required parameter 'owner' is set
-        if ('owner' not in params or
-                params['owner'] is None):
-            raise ValueError("Missing the required parameter `owner` when calling `get_artifacts_store`")  # noqa: E501
+        if "owner" not in params or params["owner"] is None:
+            raise ValueError(
+                "Missing the required parameter `owner` when calling `get_artifacts_store`"
+            )  # noqa: E501
         # verify the required parameter 'uuid' is set
-        if ('uuid' not in params or
-                params['uuid'] is None):
-            raise ValueError("Missing the required parameter `uuid` when calling `get_artifacts_store`")  # noqa: E501
+        if "uuid" not in params or params["uuid"] is None:
+            raise ValueError(
+                "Missing the required parameter `uuid` when calling `get_artifacts_store`"
+            )  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if 'owner' in params:
-            path_params['owner'] = params['owner']  # noqa: E501
-        if 'uuid' in params:
-            path_params['uuid'] = params['uuid']  # noqa: E501
+        if "owner" in params:
+            path_params["owner"] = params["owner"]  # noqa: E501
+        if "uuid" in params:
+            path_params["uuid"] = params["uuid"]  # noqa: E501
 
         query_params = []
 
@@ -338,31 +372,37 @@ class ArtifactsStoresV1Api(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
-            ['application/json'])  # noqa: E501
+        header_params[
+            "Content-Type"
+        ] = self.api_client.select_header_content_type(  # noqa: E501
+            ["application/json"]
+        )  # noqa: E501
 
         # Authentication setting
-        auth_settings = ['ApiKey']  # noqa: E501
+        auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            '/api/v1/{owner}/artifacts_stores/{uuid}', 'GET',
+            "/api/v1/{owner}/artifacts_stores/{uuid}",
+            "GET",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='V1ArtifactsStore',  # noqa: E501
+            response_type="V1ArtifactsStore",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get('async_req'),
-            _return_http_data_only=params.get('_return_http_data_only'),
-            _preload_content=params.get('_preload_content', True),
-            _request_timeout=params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=params.get("async_req"),
+            _return_http_data_only=params.get("_return_http_data_only"),
+            _preload_content=params.get("_preload_content", True),
+            _request_timeout=params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
     def list_artifacts_store_names(self, owner, **kwargs):  # noqa: E501
         """List bookmarked runs for user  # noqa: E501
@@ -382,11 +422,15 @@ class ArtifactsStoresV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
-        if kwargs.get('async_req'):
-            return self.list_artifacts_store_names_with_http_info(owner, **kwargs)  # noqa: E501
+        kwargs["_return_http_data_only"] = True
+        if kwargs.get("async_req"):
+            return self.list_artifacts_store_names_with_http_info(
+                owner, **kwargs
+            )  # noqa: E501
         else:
-            (data) = self.list_artifacts_store_names_with_http_info(owner, **kwargs)  # noqa: E501
+            (data) = self.list_artifacts_store_names_with_http_info(
+                owner, **kwargs
+            )  # noqa: E501
             return data
 
     def list_artifacts_store_names_with_http_info(self, owner, **kwargs):  # noqa: E501
@@ -408,41 +452,42 @@ class ArtifactsStoresV1Api(object):
                  returns the request thread.
         """
 
-        all_params = ['owner', 'offset', 'limit', 'sort', 'query']  # noqa: E501
-        all_params.append('async_req')
-        all_params.append('_return_http_data_only')
-        all_params.append('_preload_content')
-        all_params.append('_request_timeout')
+        all_params = ["owner", "offset", "limit", "sort", "query"]  # noqa: E501
+        all_params.append("async_req")
+        all_params.append("_return_http_data_only")
+        all_params.append("_preload_content")
+        all_params.append("_request_timeout")
 
         params = locals()
-        for key, val in six.iteritems(params['kwargs']):
+        for key, val in six.iteritems(params["kwargs"]):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method list_artifacts_store_names" % key
                 )
             params[key] = val
-        del params['kwargs']
+        del params["kwargs"]
         # verify the required parameter 'owner' is set
-        if ('owner' not in params or
-                params['owner'] is None):
-            raise ValueError("Missing the required parameter `owner` when calling `list_artifacts_store_names`")  # noqa: E501
+        if "owner" not in params or params["owner"] is None:
+            raise ValueError(
+                "Missing the required parameter `owner` when calling `list_artifacts_store_names`"
+            )  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if 'owner' in params:
-            path_params['owner'] = params['owner']  # noqa: E501
+        if "owner" in params:
+            path_params["owner"] = params["owner"]  # noqa: E501
 
         query_params = []
-        if 'offset' in params:
-            query_params.append(('offset', params['offset']))  # noqa: E501
-        if 'limit' in params:
-            query_params.append(('limit', params['limit']))  # noqa: E501
-        if 'sort' in params:
-            query_params.append(('sort', params['sort']))  # noqa: E501
-        if 'query' in params:
-            query_params.append(('query', params['query']))  # noqa: E501
+        if "offset" in params:
+            query_params.append(("offset", params["offset"]))  # noqa: E501
+        if "limit" in params:
+            query_params.append(("limit", params["limit"]))  # noqa: E501
+        if "sort" in params:
+            query_params.append(("sort", params["sort"]))  # noqa: E501
+        if "query" in params:
+            query_params.append(("query", params["query"]))  # noqa: E501
 
         header_params = {}
 
@@ -451,31 +496,37 @@ class ArtifactsStoresV1Api(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
-            ['application/json'])  # noqa: E501
+        header_params[
+            "Content-Type"
+        ] = self.api_client.select_header_content_type(  # noqa: E501
+            ["application/json"]
+        )  # noqa: E501
 
         # Authentication setting
-        auth_settings = ['ApiKey']  # noqa: E501
+        auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            '/api/v1/{owner}/artifacts_stores/names', 'GET',
+            "/api/v1/{owner}/artifacts_stores/names",
+            "GET",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='V1ListArtifactsStoresResponse',  # noqa: E501
+            response_type="V1ListArtifactsStoresResponse",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get('async_req'),
-            _return_http_data_only=params.get('_return_http_data_only'),
-            _preload_content=params.get('_preload_content', True),
-            _request_timeout=params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=params.get("async_req"),
+            _return_http_data_only=params.get("_return_http_data_only"),
+            _preload_content=params.get("_preload_content", True),
+            _request_timeout=params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
     def list_artifacts_stores(self, owner, **kwargs):  # noqa: E501
         """List archived runs for user  # noqa: E501
@@ -495,11 +546,15 @@ class ArtifactsStoresV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
-        if kwargs.get('async_req'):
-            return self.list_artifacts_stores_with_http_info(owner, **kwargs)  # noqa: E501
+        kwargs["_return_http_data_only"] = True
+        if kwargs.get("async_req"):
+            return self.list_artifacts_stores_with_http_info(
+                owner, **kwargs
+            )  # noqa: E501
         else:
-            (data) = self.list_artifacts_stores_with_http_info(owner, **kwargs)  # noqa: E501
+            (data) = self.list_artifacts_stores_with_http_info(
+                owner, **kwargs
+            )  # noqa: E501
             return data
 
     def list_artifacts_stores_with_http_info(self, owner, **kwargs):  # noqa: E501
@@ -521,41 +576,42 @@ class ArtifactsStoresV1Api(object):
                  returns the request thread.
         """
 
-        all_params = ['owner', 'offset', 'limit', 'sort', 'query']  # noqa: E501
-        all_params.append('async_req')
-        all_params.append('_return_http_data_only')
-        all_params.append('_preload_content')
-        all_params.append('_request_timeout')
+        all_params = ["owner", "offset", "limit", "sort", "query"]  # noqa: E501
+        all_params.append("async_req")
+        all_params.append("_return_http_data_only")
+        all_params.append("_preload_content")
+        all_params.append("_request_timeout")
 
         params = locals()
-        for key, val in six.iteritems(params['kwargs']):
+        for key, val in six.iteritems(params["kwargs"]):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method list_artifacts_stores" % key
                 )
             params[key] = val
-        del params['kwargs']
+        del params["kwargs"]
         # verify the required parameter 'owner' is set
-        if ('owner' not in params or
-                params['owner'] is None):
-            raise ValueError("Missing the required parameter `owner` when calling `list_artifacts_stores`")  # noqa: E501
+        if "owner" not in params or params["owner"] is None:
+            raise ValueError(
+                "Missing the required parameter `owner` when calling `list_artifacts_stores`"
+            )  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if 'owner' in params:
-            path_params['owner'] = params['owner']  # noqa: E501
+        if "owner" in params:
+            path_params["owner"] = params["owner"]  # noqa: E501
 
         query_params = []
-        if 'offset' in params:
-            query_params.append(('offset', params['offset']))  # noqa: E501
-        if 'limit' in params:
-            query_params.append(('limit', params['limit']))  # noqa: E501
-        if 'sort' in params:
-            query_params.append(('sort', params['sort']))  # noqa: E501
-        if 'query' in params:
-            query_params.append(('query', params['query']))  # noqa: E501
+        if "offset" in params:
+            query_params.append(("offset", params["offset"]))  # noqa: E501
+        if "limit" in params:
+            query_params.append(("limit", params["limit"]))  # noqa: E501
+        if "sort" in params:
+            query_params.append(("sort", params["sort"]))  # noqa: E501
+        if "query" in params:
+            query_params.append(("query", params["query"]))  # noqa: E501
 
         header_params = {}
 
@@ -564,33 +620,41 @@ class ArtifactsStoresV1Api(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
-            ['application/json'])  # noqa: E501
+        header_params[
+            "Content-Type"
+        ] = self.api_client.select_header_content_type(  # noqa: E501
+            ["application/json"]
+        )  # noqa: E501
 
         # Authentication setting
-        auth_settings = ['ApiKey']  # noqa: E501
+        auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            '/api/v1/{owner}/artifacts_stores', 'GET',
+            "/api/v1/{owner}/artifacts_stores",
+            "GET",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='V1ListArtifactsStoresResponse',  # noqa: E501
+            response_type="V1ListArtifactsStoresResponse",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get('async_req'),
-            _return_http_data_only=params.get('_return_http_data_only'),
-            _preload_content=params.get('_preload_content', True),
-            _request_timeout=params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=params.get("async_req"),
+            _return_http_data_only=params.get("_return_http_data_only"),
+            _preload_content=params.get("_preload_content", True),
+            _request_timeout=params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
-    def patch_artifacts_store(self, owner, artifact_store_uuid, body, **kwargs):  # noqa: E501
+    def patch_artifacts_store(
+        self, owner, artifact_store_uuid, body, **kwargs
+    ):  # noqa: E501
         """Update run  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -606,14 +670,20 @@ class ArtifactsStoresV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
-        if kwargs.get('async_req'):
-            return self.patch_artifacts_store_with_http_info(owner, artifact_store_uuid, body, **kwargs)  # noqa: E501
+        kwargs["_return_http_data_only"] = True
+        if kwargs.get("async_req"):
+            return self.patch_artifacts_store_with_http_info(
+                owner, artifact_store_uuid, body, **kwargs
+            )  # noqa: E501
         else:
-            (data) = self.patch_artifacts_store_with_http_info(owner, artifact_store_uuid, body, **kwargs)  # noqa: E501
+            (data) = self.patch_artifacts_store_with_http_info(
+                owner, artifact_store_uuid, body, **kwargs
+            )  # noqa: E501
             return data
 
-    def patch_artifacts_store_with_http_info(self, owner, artifact_store_uuid, body, **kwargs):  # noqa: E501
+    def patch_artifacts_store_with_http_info(
+        self, owner, artifact_store_uuid, body, **kwargs
+    ):  # noqa: E501
         """Update run  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -630,41 +700,46 @@ class ArtifactsStoresV1Api(object):
                  returns the request thread.
         """
 
-        all_params = ['owner', 'artifact_store_uuid', 'body']  # noqa: E501
-        all_params.append('async_req')
-        all_params.append('_return_http_data_only')
-        all_params.append('_preload_content')
-        all_params.append('_request_timeout')
+        all_params = ["owner", "artifact_store_uuid", "body"]  # noqa: E501
+        all_params.append("async_req")
+        all_params.append("_return_http_data_only")
+        all_params.append("_preload_content")
+        all_params.append("_request_timeout")
 
         params = locals()
-        for key, val in six.iteritems(params['kwargs']):
+        for key, val in six.iteritems(params["kwargs"]):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method patch_artifacts_store" % key
                 )
             params[key] = val
-        del params['kwargs']
+        del params["kwargs"]
         # verify the required parameter 'owner' is set
-        if ('owner' not in params or
-                params['owner'] is None):
-            raise ValueError("Missing the required parameter `owner` when calling `patch_artifacts_store`")  # noqa: E501
+        if "owner" not in params or params["owner"] is None:
+            raise ValueError(
+                "Missing the required parameter `owner` when calling `patch_artifacts_store`"
+            )  # noqa: E501
         # verify the required parameter 'artifact_store_uuid' is set
-        if ('artifact_store_uuid' not in params or
-                params['artifact_store_uuid'] is None):
-            raise ValueError("Missing the required parameter `artifact_store_uuid` when calling `patch_artifacts_store`")  # noqa: E501
+        if "artifact_store_uuid" not in params or params["artifact_store_uuid"] is None:
+            raise ValueError(
+                "Missing the required parameter `artifact_store_uuid` when calling `patch_artifacts_store`"
+            )  # noqa: E501
         # verify the required parameter 'body' is set
-        if ('body' not in params or
-                params['body'] is None):
-            raise ValueError("Missing the required parameter `body` when calling `patch_artifacts_store`")  # noqa: E501
+        if "body" not in params or params["body"] is None:
+            raise ValueError(
+                "Missing the required parameter `body` when calling `patch_artifacts_store`"
+            )  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if 'owner' in params:
-            path_params['owner'] = params['owner']  # noqa: E501
-        if 'artifact_store_uuid' in params:
-            path_params['artifact_store.uuid'] = params['artifact_store_uuid']  # noqa: E501
+        if "owner" in params:
+            path_params["owner"] = params["owner"]  # noqa: E501
+        if "artifact_store_uuid" in params:
+            path_params["artifact_store.uuid"] = params[
+                "artifact_store_uuid"
+            ]  # noqa: E501
 
         query_params = []
 
@@ -674,36 +749,44 @@ class ArtifactsStoresV1Api(object):
         local_var_files = {}
 
         body_params = None
-        if 'body' in params:
-            body_params = params['body']
+        if "body" in params:
+            body_params = params["body"]
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
-            ['application/json'])  # noqa: E501
+        header_params[
+            "Content-Type"
+        ] = self.api_client.select_header_content_type(  # noqa: E501
+            ["application/json"]
+        )  # noqa: E501
 
         # Authentication setting
-        auth_settings = ['ApiKey']  # noqa: E501
+        auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            '/api/v1/{owner}/artifacts_stores/{artifact_store.uuid}', 'PATCH',
+            "/api/v1/{owner}/artifacts_stores/{artifact_store.uuid}",
+            "PATCH",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='V1ArtifactsStore',  # noqa: E501
+            response_type="V1ArtifactsStore",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get('async_req'),
-            _return_http_data_only=params.get('_return_http_data_only'),
-            _preload_content=params.get('_preload_content', True),
-            _request_timeout=params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=params.get("async_req"),
+            _return_http_data_only=params.get("_return_http_data_only"),
+            _preload_content=params.get("_preload_content", True),
+            _request_timeout=params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
-    def update_artifacts_store(self, owner, artifact_store_uuid, body, **kwargs):  # noqa: E501
+    def update_artifacts_store(
+        self, owner, artifact_store_uuid, body, **kwargs
+    ):  # noqa: E501
         """Get run  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -719,14 +802,20 @@ class ArtifactsStoresV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
-        if kwargs.get('async_req'):
-            return self.update_artifacts_store_with_http_info(owner, artifact_store_uuid, body, **kwargs)  # noqa: E501
+        kwargs["_return_http_data_only"] = True
+        if kwargs.get("async_req"):
+            return self.update_artifacts_store_with_http_info(
+                owner, artifact_store_uuid, body, **kwargs
+            )  # noqa: E501
         else:
-            (data) = self.update_artifacts_store_with_http_info(owner, artifact_store_uuid, body, **kwargs)  # noqa: E501
+            (data) = self.update_artifacts_store_with_http_info(
+                owner, artifact_store_uuid, body, **kwargs
+            )  # noqa: E501
             return data
 
-    def update_artifacts_store_with_http_info(self, owner, artifact_store_uuid, body, **kwargs):  # noqa: E501
+    def update_artifacts_store_with_http_info(
+        self, owner, artifact_store_uuid, body, **kwargs
+    ):  # noqa: E501
         """Get run  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -743,41 +832,46 @@ class ArtifactsStoresV1Api(object):
                  returns the request thread.
         """
 
-        all_params = ['owner', 'artifact_store_uuid', 'body']  # noqa: E501
-        all_params.append('async_req')
-        all_params.append('_return_http_data_only')
-        all_params.append('_preload_content')
-        all_params.append('_request_timeout')
+        all_params = ["owner", "artifact_store_uuid", "body"]  # noqa: E501
+        all_params.append("async_req")
+        all_params.append("_return_http_data_only")
+        all_params.append("_preload_content")
+        all_params.append("_request_timeout")
 
         params = locals()
-        for key, val in six.iteritems(params['kwargs']):
+        for key, val in six.iteritems(params["kwargs"]):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method update_artifacts_store" % key
                 )
             params[key] = val
-        del params['kwargs']
+        del params["kwargs"]
         # verify the required parameter 'owner' is set
-        if ('owner' not in params or
-                params['owner'] is None):
-            raise ValueError("Missing the required parameter `owner` when calling `update_artifacts_store`")  # noqa: E501
+        if "owner" not in params or params["owner"] is None:
+            raise ValueError(
+                "Missing the required parameter `owner` when calling `update_artifacts_store`"
+            )  # noqa: E501
         # verify the required parameter 'artifact_store_uuid' is set
-        if ('artifact_store_uuid' not in params or
-                params['artifact_store_uuid'] is None):
-            raise ValueError("Missing the required parameter `artifact_store_uuid` when calling `update_artifacts_store`")  # noqa: E501
+        if "artifact_store_uuid" not in params or params["artifact_store_uuid"] is None:
+            raise ValueError(
+                "Missing the required parameter `artifact_store_uuid` when calling `update_artifacts_store`"
+            )  # noqa: E501
         # verify the required parameter 'body' is set
-        if ('body' not in params or
-                params['body'] is None):
-            raise ValueError("Missing the required parameter `body` when calling `update_artifacts_store`")  # noqa: E501
+        if "body" not in params or params["body"] is None:
+            raise ValueError(
+                "Missing the required parameter `body` when calling `update_artifacts_store`"
+            )  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if 'owner' in params:
-            path_params['owner'] = params['owner']  # noqa: E501
-        if 'artifact_store_uuid' in params:
-            path_params['artifact_store.uuid'] = params['artifact_store_uuid']  # noqa: E501
+        if "owner" in params:
+            path_params["owner"] = params["owner"]  # noqa: E501
+        if "artifact_store_uuid" in params:
+            path_params["artifact_store.uuid"] = params[
+                "artifact_store_uuid"
+            ]  # noqa: E501
 
         query_params = []
 
@@ -787,34 +881,40 @@ class ArtifactsStoresV1Api(object):
         local_var_files = {}
 
         body_params = None
-        if 'body' in params:
-            body_params = params['body']
+        if "body" in params:
+            body_params = params["body"]
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
-            ['application/json'])  # noqa: E501
+        header_params[
+            "Content-Type"
+        ] = self.api_client.select_header_content_type(  # noqa: E501
+            ["application/json"]
+        )  # noqa: E501
 
         # Authentication setting
-        auth_settings = ['ApiKey']  # noqa: E501
+        auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            '/api/v1/{owner}/artifacts_stores/{artifact_store.uuid}', 'PUT',
+            "/api/v1/{owner}/artifacts_stores/{artifact_store.uuid}",
+            "PUT",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='V1ArtifactsStore',  # noqa: E501
+            response_type="V1ArtifactsStore",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get('async_req'),
-            _return_http_data_only=params.get('_return_http_data_only'),
-            _preload_content=params.get('_preload_content', True),
-            _request_timeout=params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=params.get("async_req"),
+            _return_http_data_only=params.get("_return_http_data_only"),
+            _preload_content=params.get("_preload_content", True),
+            _request_timeout=params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
     def upload_artifact(self, owner, uuid, uploadfile, **kwargs):  # noqa: E501
         """Upload artifact to a store  # noqa: E501
@@ -834,14 +934,20 @@ class ArtifactsStoresV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
-        if kwargs.get('async_req'):
-            return self.upload_artifact_with_http_info(owner, uuid, uploadfile, **kwargs)  # noqa: E501
+        kwargs["_return_http_data_only"] = True
+        if kwargs.get("async_req"):
+            return self.upload_artifact_with_http_info(
+                owner, uuid, uploadfile, **kwargs
+            )  # noqa: E501
         else:
-            (data) = self.upload_artifact_with_http_info(owner, uuid, uploadfile, **kwargs)  # noqa: E501
+            (data) = self.upload_artifact_with_http_info(
+                owner, uuid, uploadfile, **kwargs
+            )  # noqa: E501
             return data
 
-    def upload_artifact_with_http_info(self, owner, uuid, uploadfile, **kwargs):  # noqa: E501
+    def upload_artifact_with_http_info(
+        self, owner, uuid, uploadfile, **kwargs
+    ):  # noqa: E501
         """Upload artifact to a store  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -860,69 +966,77 @@ class ArtifactsStoresV1Api(object):
                  returns the request thread.
         """
 
-        all_params = ['owner', 'uuid', 'uploadfile', 'path', 'overwrite']  # noqa: E501
-        all_params.append('async_req')
-        all_params.append('_return_http_data_only')
-        all_params.append('_preload_content')
-        all_params.append('_request_timeout')
+        all_params = ["owner", "uuid", "uploadfile", "path", "overwrite"]  # noqa: E501
+        all_params.append("async_req")
+        all_params.append("_return_http_data_only")
+        all_params.append("_preload_content")
+        all_params.append("_request_timeout")
 
         params = locals()
-        for key, val in six.iteritems(params['kwargs']):
+        for key, val in six.iteritems(params["kwargs"]):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method upload_artifact" % key
                 )
             params[key] = val
-        del params['kwargs']
+        del params["kwargs"]
         # verify the required parameter 'owner' is set
-        if ('owner' not in params or
-                params['owner'] is None):
-            raise ValueError("Missing the required parameter `owner` when calling `upload_artifact`")  # noqa: E501
+        if "owner" not in params or params["owner"] is None:
+            raise ValueError(
+                "Missing the required parameter `owner` when calling `upload_artifact`"
+            )  # noqa: E501
         # verify the required parameter 'uuid' is set
-        if ('uuid' not in params or
-                params['uuid'] is None):
-            raise ValueError("Missing the required parameter `uuid` when calling `upload_artifact`")  # noqa: E501
+        if "uuid" not in params or params["uuid"] is None:
+            raise ValueError(
+                "Missing the required parameter `uuid` when calling `upload_artifact`"
+            )  # noqa: E501
         # verify the required parameter 'uploadfile' is set
-        if ('uploadfile' not in params or
-                params['uploadfile'] is None):
-            raise ValueError("Missing the required parameter `uploadfile` when calling `upload_artifact`")  # noqa: E501
+        if "uploadfile" not in params or params["uploadfile"] is None:
+            raise ValueError(
+                "Missing the required parameter `uploadfile` when calling `upload_artifact`"
+            )  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if 'owner' in params:
-            path_params['owner'] = params['owner']  # noqa: E501
-        if 'uuid' in params:
-            path_params['uuid'] = params['uuid']  # noqa: E501
+        if "owner" in params:
+            path_params["owner"] = params["owner"]  # noqa: E501
+        if "uuid" in params:
+            path_params["uuid"] = params["uuid"]  # noqa: E501
 
         query_params = []
-        if 'path' in params:
-            query_params.append(('path', params['path']))  # noqa: E501
-        if 'overwrite' in params:
-            query_params.append(('overwrite', params['overwrite']))  # noqa: E501
+        if "path" in params:
+            query_params.append(("path", params["path"]))  # noqa: E501
+        if "overwrite" in params:
+            query_params.append(("overwrite", params["overwrite"]))  # noqa: E501
 
         header_params = {}
 
         form_params = []
         local_var_files = {}
-        if 'uploadfile' in params:
-            local_var_files['uploadfile'] = params['uploadfile']  # noqa: E501
+        if "uploadfile" in params:
+            local_var_files["uploadfile"] = params["uploadfile"]  # noqa: E501
 
         body_params = None
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
-            ['multipart/form-data'])  # noqa: E501
+        header_params[
+            "Content-Type"
+        ] = self.api_client.select_header_content_type(  # noqa: E501
+            ["multipart/form-data"]
+        )  # noqa: E501
 
         # Authentication setting
-        auth_settings = ['ApiKey']  # noqa: E501
+        auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            '/api/v1/catalogs/{owner}/artifacts_stores/{uuid}/upload', 'POST',
+            "/api/v1/catalogs/{owner}/artifacts_stores/{uuid}/upload",
+            "POST",
             path_params,
             query_params,
             header_params,
@@ -931,8 +1045,9 @@ class ArtifactsStoresV1Api(object):
             files=local_var_files,
             response_type=None,  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get('async_req'),
-            _return_http_data_only=params.get('_return_http_data_only'),
-            _preload_content=params.get('_preload_content', True),
-            _request_timeout=params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=params.get("async_req"),
+            _return_http_data_only=params.get("_return_http_data_only"),
+            _preload_content=params.get("_preload_content", True),
+            _request_timeout=params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )

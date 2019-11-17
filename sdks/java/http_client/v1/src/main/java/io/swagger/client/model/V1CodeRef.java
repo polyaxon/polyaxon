@@ -46,8 +46,8 @@ public class V1CodeRef {
   @SerializedName("commit")
   private String commit = null;
 
-  @SerializedName("git_url")
-  private String gitUrl = null;
+  @SerializedName("url")
+  private String url = null;
 
   public V1CodeRef commit(String commit) {
     this.commit = commit;
@@ -67,22 +67,22 @@ public class V1CodeRef {
     this.commit = commit;
   }
 
-  public V1CodeRef gitUrl(String gitUrl) {
-    this.gitUrl = gitUrl;
+  public V1CodeRef url(String url) {
+    this.url = url;
     return this;
   }
 
    /**
-   * Get gitUrl
-   * @return gitUrl
+   * Get url
+   * @return url
   **/
   @ApiModelProperty(value = "")
-  public String getGitUrl() {
-    return gitUrl;
+  public String getUrl() {
+    return url;
   }
 
-  public void setGitUrl(String gitUrl) {
-    this.gitUrl = gitUrl;
+  public void setUrl(String url) {
+    this.url = url;
   }
 
 
@@ -96,12 +96,12 @@ public class V1CodeRef {
     }
     V1CodeRef v1CodeRef = (V1CodeRef) o;
     return Objects.equals(this.commit, v1CodeRef.commit) &&
-        Objects.equals(this.gitUrl, v1CodeRef.gitUrl);
+        Objects.equals(this.url, v1CodeRef.url);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(commit, gitUrl);
+    return Objects.hash(commit, url);
   }
 
 
@@ -111,7 +111,7 @@ public class V1CodeRef {
     sb.append("class V1CodeRef {\n");
     
     sb.append("    commit: ").append(toIndentedString(commit)).append("\n");
-    sb.append("    gitUrl: ").append(toIndentedString(gitUrl)).append("\n");
+    sb.append("    url: ").append(toIndentedString(url)).append("\n");
     sb.append("}");
     return sb.toString();
   }

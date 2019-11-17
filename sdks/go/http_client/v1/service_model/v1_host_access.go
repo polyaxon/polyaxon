@@ -47,9 +47,6 @@ type V1HostAccess struct {
 	// Optional a flag to freeze an access
 	Frozen bool `json:"frozen,omitempty"`
 
-	// Optional the host value
-	Host string `json:"host,omitempty"`
-
 	// Optional a flag to mark the host as insecure
 	Insecure bool `json:"insecure,omitempty"`
 
@@ -68,6 +65,9 @@ type V1HostAccess struct {
 	// Optional last time the entity was updated
 	// Format: date-time
 	UpdatedAt strfmt.DateTime `json:"updated_at,omitempty"`
+
+	// Optional the url value
+	URL string `json:"url,omitempty"`
 
 	// UUID
 	UUID string `json:"uuid,omitempty"`

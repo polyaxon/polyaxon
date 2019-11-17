@@ -5203,7 +5203,7 @@
           "type": "string",
           "title": "Commit of the code ref"
         },
-        "git_url": {
+        "url": {
           "type": "string",
           "title": "Git url for this code ref"
         }
@@ -5306,9 +5306,9 @@
           "type": "string",
           "title": "Optional the k8s secret to use"
         },
-        "host": {
+        "url": {
           "type": "string",
-          "title": "Optional the host value"
+          "title": "Optional the url value"
         }
       },
       "title": "Host access specification"

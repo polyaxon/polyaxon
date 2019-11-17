@@ -13,7 +13,7 @@ message CodeRef {
     string commit = 1;
 
     // Git url for this code ref
-    string git_url = 2;
+    string url = 2;
 }
 
 // Request data to create/update CodeReference

@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **commit** | **String** |  |  [optional]
-**gitUrl** | **String** |  |  [optional]
+**url** | **String** |  |  [optional]
 
 
 

@@ -33,7 +33,7 @@ type V1CodeRef struct {
 	Commit string `json:"commit,omitempty"`
 
 	// Git url for this code ref
-	GitURL string `json:"git_url,omitempty"`
+	URL string `json:"url,omitempty"`
 }
 
 // Validate validates this v1 code ref

@@ -259,7 +259,7 @@ export interface V1CodeRef {
      * @type {string}
      * @memberof V1CodeRef
      */
-    git_url?: string;
+    url?: string;
 }
 
 /**
@@ -397,7 +397,7 @@ export interface V1HostAccess {
      * @type {string}
      * @memberof V1HostAccess
      */
-    host?: string;
+    url?: string;
 }
 
 /**

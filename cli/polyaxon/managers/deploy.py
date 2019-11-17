@@ -195,7 +195,7 @@ class DeployManager(object):
         Printer.print_success("Deployment is running in the background.")
         Printer.print_success(
             "You can configure your CLI by running: "
-            "polyaxon config set --host=localhost --port=8000."
+            "polyaxon config set --host=localhost."
         )
 
     def install_on_docker(self):

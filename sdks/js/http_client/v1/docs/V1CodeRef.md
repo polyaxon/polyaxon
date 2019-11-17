@@ -4,6 +4,6 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **commit** | **String** |  | [optional] 
-**git_url** | **String** |  | [optional] 
+**url** | **String** |  | [optional] 
 
 

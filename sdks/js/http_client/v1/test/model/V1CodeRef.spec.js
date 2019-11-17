@@ -61,10 +61,10 @@
         // expect(instance.commit).to.be(expectedValueLiteral);
       });
 
-      it('should have the property git_url (base name: "git_url")', function() {
-        // TODO: update the code to test the property git_url
-        expect(instance).to.have.property('git_url');
-        // expect(instance.git_url).to.be(expectedValueLiteral);
+      it('should have the property url (base name: "url")', function() {
+        // TODO: update the code to test the property url
+        expect(instance).to.have.property('url');
+        // expect(instance.url).to.be(expectedValueLiteral);
       });
 
     });

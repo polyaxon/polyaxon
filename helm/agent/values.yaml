@@ -29,3 +29,6 @@ securityContext:
   enabled: false
   user: 2222
   group: 2222
+
+
+imagePullSecrets: []

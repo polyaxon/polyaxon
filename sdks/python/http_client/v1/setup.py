@@ -27,7 +27,7 @@
 """
 
 
-from setuptools import setup, find_packages  # noqa: H301
+from setuptools import find_packages, setup  # noqa: H301
 
 NAME = "polyaxon-sdk"
 VERSION = "1"
@@ -38,13 +38,8 @@ VERSION = "1"
 # prerequisite: setuptools
 # http://pypi.python.org/pypi/setuptools
 
-REQUIRES = [
-    "certifi>=2017.4.17",
-    "python-dateutil>=2.1",
-    "six>=1.10",
-    "urllib3>=1.23"
-]
-    
+REQUIRES = ["certifi>=2017.4.17", "python-dateutil>=2.1", "six>=1.10", "urllib3>=1.23"]
+
 
 setup(
     name=NAME,
@@ -58,5 +53,5 @@ setup(
     include_package_data=True,
     long_description="""\
     Polyaxon SDKs and REST API specification.  # noqa: E501
-    """
+    """,
 )

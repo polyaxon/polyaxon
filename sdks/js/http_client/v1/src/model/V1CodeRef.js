@@ -71,8 +71,8 @@
       obj = obj || new exports();
       if (data.hasOwnProperty('commit'))
         obj.commit = ApiClient.convertToType(data['commit'], 'String');
-      if (data.hasOwnProperty('git_url'))
-        obj.git_url = ApiClient.convertToType(data['git_url'], 'String');
+      if (data.hasOwnProperty('url'))
+        obj.url = ApiClient.convertToType(data['url'], 'String');
     }
     return obj;
   }
@@ -83,9 +83,9 @@
   exports.prototype.commit = undefined;
 
   /**
-   * @member {String} git_url
+   * @member {String} url
    */
-  exports.prototype.git_url = undefined;
+  exports.prototype.url = undefined;
 
   return exports;
 
