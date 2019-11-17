@@ -81,7 +81,7 @@ type CreateRunCodeRefParams struct {
 	  Code ref object
 
 	*/
-	Body *service_model.V1CodeReference
+	Body *service_model.V1CodeRef
 	/*EntityOwner
 	  Owner of the namespace
 
@@ -137,13 +137,13 @@ func (o *CreateRunCodeRefParams) SetHTTPClient(client *http.Client) {
 }
 
 // WithBody adds the body to the create run code ref params
-func (o *CreateRunCodeRefParams) WithBody(body *service_model.V1CodeReference) *CreateRunCodeRefParams {
+func (o *CreateRunCodeRefParams) WithBody(body *service_model.V1CodeRef) *CreateRunCodeRefParams {
 	o.SetBody(body)
 	return o
 }
 
 // SetBody adds the body to the create run code ref params
-func (o *CreateRunCodeRefParams) SetBody(body *service_model.V1CodeReference) {
+func (o *CreateRunCodeRefParams) SetBody(body *service_model.V1CodeRef) {
 	o.Body = body
 }
 

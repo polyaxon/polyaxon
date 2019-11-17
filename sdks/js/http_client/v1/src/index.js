@@ -31,12 +31,12 @@
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
-    define(['ApiClient', 'model/V1ArtifactTreeResponse', 'model/V1ArtifactsStore', 'model/V1Auth', 'model/V1CodeReference', 'model/V1CredsBodyRequest', 'model/V1EntityStatusBodyRequest', 'model/V1HostAccess', 'model/V1K8sResource', 'model/V1ListArtifactsStoresResponse', 'model/V1ListCodeRefsResponse', 'model/V1ListHostAccessesResponse', 'model/V1ListK8sResourcesResponse', 'model/V1ListProjectsResponse', 'model/V1ListRunsResponse', 'model/V1ListSearchesResponse', 'model/V1LogHandler', 'model/V1Project', 'model/V1ProjectEntityResourceRequest', 'model/V1Run', 'model/V1RunMetaInfo', 'model/V1Search', 'model/V1SearchDefinition', 'model/V1Status', 'model/V1StatusCondition', 'model/V1User', 'model/V1Uuids', 'model/V1Version', 'model/V1Versions', 'api/ArtifactsStoresV1Api', 'api/AuthV1Api', 'api/GitAccessesV1Api', 'api/K8sConfigMapsV1Api', 'api/K8sSecretsV1Api', 'api/ProjectsV1Api', 'api/RegistryAccessesV1Api', 'api/RunsV1Api', 'api/SearchV1Api', 'api/UsersV1Api', 'api/VersionsV1Api'], factory);
+    define(['ApiClient', 'model/V1ArtifactTreeResponse', 'model/V1ArtifactsStore', 'model/V1Auth', 'model/V1CodeRef', 'model/V1CredsBodyRequest', 'model/V1EntityStatusBodyRequest', 'model/V1HostAccess', 'model/V1K8sResource', 'model/V1ListArtifactsStoresResponse', 'model/V1ListHostAccessesResponse', 'model/V1ListK8sResourcesResponse', 'model/V1ListProjectsResponse', 'model/V1ListRunsResponse', 'model/V1ListSearchesResponse', 'model/V1LogHandler', 'model/V1Project', 'model/V1ProjectEntityResourceRequest', 'model/V1Run', 'model/V1RunMetaInfo', 'model/V1Search', 'model/V1SearchDefinition', 'model/V1Status', 'model/V1StatusCondition', 'model/V1User', 'model/V1Uuids', 'model/V1Version', 'model/V1Versions', 'api/ArtifactsStoresV1Api', 'api/AuthV1Api', 'api/GitAccessesV1Api', 'api/K8sConfigMapsV1Api', 'api/K8sSecretsV1Api', 'api/ProjectsV1Api', 'api/RegistryAccessesV1Api', 'api/RunsV1Api', 'api/SearchV1Api', 'api/UsersV1Api', 'api/VersionsV1Api'], factory);
   } else if (typeof module === 'object' && module.exports) {
     // CommonJS-like environments that support module.exports, like Node.
-    module.exports = factory(require('./ApiClient'), require('./model/V1ArtifactTreeResponse'), require('./model/V1ArtifactsStore'), require('./model/V1Auth'), require('./model/V1CodeReference'), require('./model/V1CredsBodyRequest'), require('./model/V1EntityStatusBodyRequest'), require('./model/V1HostAccess'), require('./model/V1K8sResource'), require('./model/V1ListArtifactsStoresResponse'), require('./model/V1ListCodeRefsResponse'), require('./model/V1ListHostAccessesResponse'), require('./model/V1ListK8sResourcesResponse'), require('./model/V1ListProjectsResponse'), require('./model/V1ListRunsResponse'), require('./model/V1ListSearchesResponse'), require('./model/V1LogHandler'), require('./model/V1Project'), require('./model/V1ProjectEntityResourceRequest'), require('./model/V1Run'), require('./model/V1RunMetaInfo'), require('./model/V1Search'), require('./model/V1SearchDefinition'), require('./model/V1Status'), require('./model/V1StatusCondition'), require('./model/V1User'), require('./model/V1Uuids'), require('./model/V1Version'), require('./model/V1Versions'), require('./api/ArtifactsStoresV1Api'), require('./api/AuthV1Api'), require('./api/GitAccessesV1Api'), require('./api/K8sConfigMapsV1Api'), require('./api/K8sSecretsV1Api'), require('./api/ProjectsV1Api'), require('./api/RegistryAccessesV1Api'), require('./api/RunsV1Api'), require('./api/SearchV1Api'), require('./api/UsersV1Api'), require('./api/VersionsV1Api'));
+    module.exports = factory(require('./ApiClient'), require('./model/V1ArtifactTreeResponse'), require('./model/V1ArtifactsStore'), require('./model/V1Auth'), require('./model/V1CodeRef'), require('./model/V1CredsBodyRequest'), require('./model/V1EntityStatusBodyRequest'), require('./model/V1HostAccess'), require('./model/V1K8sResource'), require('./model/V1ListArtifactsStoresResponse'), require('./model/V1ListHostAccessesResponse'), require('./model/V1ListK8sResourcesResponse'), require('./model/V1ListProjectsResponse'), require('./model/V1ListRunsResponse'), require('./model/V1ListSearchesResponse'), require('./model/V1LogHandler'), require('./model/V1Project'), require('./model/V1ProjectEntityResourceRequest'), require('./model/V1Run'), require('./model/V1RunMetaInfo'), require('./model/V1Search'), require('./model/V1SearchDefinition'), require('./model/V1Status'), require('./model/V1StatusCondition'), require('./model/V1User'), require('./model/V1Uuids'), require('./model/V1Version'), require('./model/V1Versions'), require('./api/ArtifactsStoresV1Api'), require('./api/AuthV1Api'), require('./api/GitAccessesV1Api'), require('./api/K8sConfigMapsV1Api'), require('./api/K8sSecretsV1Api'), require('./api/ProjectsV1Api'), require('./api/RegistryAccessesV1Api'), require('./api/RunsV1Api'), require('./api/SearchV1Api'), require('./api/UsersV1Api'), require('./api/VersionsV1Api'));
   }
-}(function(ApiClient, V1ArtifactTreeResponse, V1ArtifactsStore, V1Auth, V1CodeReference, V1CredsBodyRequest, V1EntityStatusBodyRequest, V1HostAccess, V1K8sResource, V1ListArtifactsStoresResponse, V1ListCodeRefsResponse, V1ListHostAccessesResponse, V1ListK8sResourcesResponse, V1ListProjectsResponse, V1ListRunsResponse, V1ListSearchesResponse, V1LogHandler, V1Project, V1ProjectEntityResourceRequest, V1Run, V1RunMetaInfo, V1Search, V1SearchDefinition, V1Status, V1StatusCondition, V1User, V1Uuids, V1Version, V1Versions, ArtifactsStoresV1Api, AuthV1Api, GitAccessesV1Api, K8sConfigMapsV1Api, K8sSecretsV1Api, ProjectsV1Api, RegistryAccessesV1Api, RunsV1Api, SearchV1Api, UsersV1Api, VersionsV1Api) {
+}(function(ApiClient, V1ArtifactTreeResponse, V1ArtifactsStore, V1Auth, V1CodeRef, V1CredsBodyRequest, V1EntityStatusBodyRequest, V1HostAccess, V1K8sResource, V1ListArtifactsStoresResponse, V1ListHostAccessesResponse, V1ListK8sResourcesResponse, V1ListProjectsResponse, V1ListRunsResponse, V1ListSearchesResponse, V1LogHandler, V1Project, V1ProjectEntityResourceRequest, V1Run, V1RunMetaInfo, V1Search, V1SearchDefinition, V1Status, V1StatusCondition, V1User, V1Uuids, V1Version, V1Versions, ArtifactsStoresV1Api, AuthV1Api, GitAccessesV1Api, K8sConfigMapsV1Api, K8sSecretsV1Api, ProjectsV1Api, RegistryAccessesV1Api, RunsV1Api, SearchV1Api, UsersV1Api, VersionsV1Api) {
   'use strict';
 
   /**
@@ -92,10 +92,10 @@
      */
     V1Auth: V1Auth,
     /**
-     * The V1CodeReference model constructor.
-     * @property {module:model/V1CodeReference}
+     * The V1CodeRef model constructor.
+     * @property {module:model/V1CodeRef}
      */
-    V1CodeReference: V1CodeReference,
+    V1CodeRef: V1CodeRef,
     /**
      * The V1CredsBodyRequest model constructor.
      * @property {module:model/V1CredsBodyRequest}
@@ -121,11 +121,6 @@
      * @property {module:model/V1ListArtifactsStoresResponse}
      */
     V1ListArtifactsStoresResponse: V1ListArtifactsStoresResponse,
-    /**
-     * The V1ListCodeRefsResponse model constructor.
-     * @property {module:model/V1ListCodeRefsResponse}
-     */
-    V1ListCodeRefsResponse: V1ListCodeRefsResponse,
     /**
      * The V1ListHostAccessesResponse model constructor.
      * @property {module:model/V1ListHostAccessesResponse}

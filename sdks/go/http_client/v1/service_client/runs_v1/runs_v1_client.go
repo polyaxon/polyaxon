@@ -196,7 +196,7 @@ func (a *Client) CreateRunCodeRef(params *CreateRunCodeRefParams, authInfo runti
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "CreateRunCodeRef",
 		Method:             "POST",
-		PathPattern:        "/api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/coderef",
+		PathPattern:        "/api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/coderefs",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -393,42 +393,6 @@ func (a *Client) GetRunArtifactsTree(params *GetRunArtifactsTreeParams, authInfo
 	case *GetRunArtifactsTreeOK:
 		return value, nil, nil
 	case *GetRunArtifactsTreeNoContent:
-		return nil, value, nil
-	}
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for runs_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
-}
-
-/*
-GetRunCodeRefs gets run code ref
-*/
-func (a *Client) GetRunCodeRefs(params *GetRunCodeRefsParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunCodeRefsOK, *GetRunCodeRefsNoContent, error) {
-	// TODO: Validate the params before sending
-	if params == nil {
-		params = NewGetRunCodeRefsParams()
-	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "GetRunCodeRefs",
-		Method:             "GET",
-		PathPattern:        "/api/v1/{owner}/{project}/runs/{uuid}/coderef",
-		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https"},
-		Params:             params,
-		Reader:             &GetRunCodeRefsReader{formats: a.formats},
-		AuthInfo:           authInfo,
-		Context:            params.Context,
-		Client:             params.HTTPClient,
-	})
-	if err != nil {
-		return nil, nil, err
-	}
-	switch value := result.(type) {
-	case *GetRunCodeRefsOK:
-		return value, nil, nil
-	case *GetRunCodeRefsNoContent:
 		return nil, value, nil
 	}
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue

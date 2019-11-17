@@ -8,13 +8,12 @@ Method | HTTP request | Description
 [**bookmark_run**](RunsV1Api.md#bookmark_run) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/bookmark | Bookmark run
 [**copy_run**](RunsV1Api.md#copy_run) | **POST** /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/copy | Restart run with copy
 [**create_run**](RunsV1Api.md#create_run) | **POST** /api/v1/{owner}/{project}/runs | Create new run
-[**create_run_code_ref**](RunsV1Api.md#create_run_code_ref) | **POST** /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/coderef | Get run code ref
+[**create_run_code_ref**](RunsV1Api.md#create_run_code_ref) | **POST** /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/coderefs | Get run code ref
 [**create_run_status**](RunsV1Api.md#create_run_status) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/statuses | Create new run status
 [**delete_run**](RunsV1Api.md#delete_run) | **DELETE** /api/v1/{owner}/{project}/runs/{uuid} | Delete run
 [**delete_runs**](RunsV1Api.md#delete_runs) | **DELETE** /api/v1/{owner}/{project}/runs/delete | Delete runs
 [**get_run**](RunsV1Api.md#get_run) | **GET** /api/v1/{owner}/{project}/runs/{uuid} | Get run
 [**get_run_artifacts_tree**](RunsV1Api.md#get_run_artifacts_tree) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/artifacts/tree | Get run artifacts list
-[**get_run_code_refs**](RunsV1Api.md#get_run_code_refs) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/coderef | Get run code ref
 [**get_run_logs_file**](RunsV1Api.md#get_run_logs_file) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/logs/file | Get run logs get file
 [**get_run_logs_tree**](RunsV1Api.md#get_run_logs_tree) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/logs/tree | Get run logs list
 [**get_run_statuses**](RunsV1Api.md#get_run_statuses) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/statuses | Get run status
@@ -263,7 +262,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **create_run_code_ref**
-> V1CodeReference create_run_code_ref(entity_owner, entity_project, entity_uuid, body)
+> create_run_code_ref(entity_owner, entity_project, entity_uuid, body)
 
 Get run code ref
 
@@ -286,12 +285,11 @@ api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
 entity_owner = 'entity_owner_example' # str | Owner of the namespace
 entity_project = 'entity_project_example' # str | Project where the experiement will be assigned
 entity_uuid = 'entity_uuid_example' # str | Unique integer identifier of the entity
-body = polyaxon_sdk.V1CodeReference() # V1CodeReference | Code ref object
+body = polyaxon_sdk.V1CodeRef() # V1CodeRef | Code ref object
 
 try:
     # Get run code ref
-    api_response = api_instance.create_run_code_ref(entity_owner, entity_project, entity_uuid, body)
-    pprint(api_response)
+    api_instance.create_run_code_ref(entity_owner, entity_project, entity_uuid, body)
 except ApiException as e:
     print("Exception when calling RunsV1Api->create_run_code_ref: %s\n" % e)
 ```
@@ -303,11 +301,11 @@ Name | Type | Description  | Notes
  **entity_owner** | **str**| Owner of the namespace | 
  **entity_project** | **str**| Project where the experiement will be assigned | 
  **entity_uuid** | **str**| Unique integer identifier of the entity | 
- **body** | [**V1CodeReference**](V1CodeReference.md)| Code ref object | 
+ **body** | [**V1CodeRef**](V1CodeRef.md)| Code ref object | 
 
 ### Return type
 
-[**V1CodeReference**](V1CodeReference.md)
+void (empty response body)
 
 ### Authorization
 
@@ -594,62 +592,6 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**V1ArtifactTreeResponse**](V1ArtifactTreeResponse.md)
-
-### Authorization
-
-[ApiKey](../README.md#ApiKey)
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **get_run_code_refs**
-> V1ListCodeRefsResponse get_run_code_refs(owner, project, uuid)
-
-Get run code ref
-
-### Example
-```python
-from __future__ import print_function
-import time
-import polyaxon_sdk
-from polyaxon_sdk.rest import ApiException
-from pprint import pprint
-
-# Configure API key authorization: ApiKey
-configuration = polyaxon_sdk.Configuration()
-configuration.api_key['Authorization'] = 'YOUR_API_KEY'
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['Authorization'] = 'Bearer'
-
-# create an instance of the API class
-api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
-owner = 'owner_example' # str | Owner of the namespace
-project = 'project_example' # str | Project where the experiement will be assigned
-uuid = 'uuid_example' # str | Unique integer identifier of the entity
-
-try:
-    # Get run code ref
-    api_response = api_instance.get_run_code_refs(owner, project, uuid)
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling RunsV1Api->get_run_code_refs: %s\n" % e)
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **owner** | **str**| Owner of the namespace | 
- **project** | **str**| Project where the experiement will be assigned | 
- **uuid** | **str**| Unique integer identifier of the entity | 
-
-### Return type
-
-[**V1ListCodeRefsResponse**](V1ListCodeRefsResponse.md)
 
 ### Authorization
 

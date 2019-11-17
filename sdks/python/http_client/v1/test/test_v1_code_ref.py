@@ -32,12 +32,12 @@ from __future__ import absolute_import
 import unittest
 
 import polyaxon_sdk
-from polyaxon_sdk.models.v1_code_reference import V1CodeReference  # noqa: E501
+from polyaxon_sdk.models.v1_code_ref import V1CodeRef  # noqa: E501
 from polyaxon_sdk.rest import ApiException
 
 
-class TestV1CodeReference(unittest.TestCase):
-    """V1CodeReference unit test stubs"""
+class TestV1CodeRef(unittest.TestCase):
+    """V1CodeRef unit test stubs"""
 
     def setUp(self):
         pass
@@ -45,12 +45,12 @@ class TestV1CodeReference(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def testV1CodeReference(self):
-        """Test V1CodeReference"""
+    def testV1CodeRef(self):
+        """Test V1CodeRef"""
         # FIXME: construct object with mandatory attributes with example values
-        # model = polyaxon_sdk.models.v1_code_reference.V1CodeReference()  # noqa: E501
+        # model = polyaxon_sdk.models.v1_code_ref.V1CodeRef()  # noqa: E501
         pass
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     unittest.main()

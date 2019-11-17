@@ -162,15 +162,10 @@ class RunsV1Stub(object):
         request_serializer=v1_dot_status__pb2.EntityStatusBodyRequest.SerializeToString,
         response_deserializer=v1_dot_status__pb2.Status.FromString,
         )
-    self.GetRunCodeRefs = channel.unary_unary(
-        '/v1.RunsV1/GetRunCodeRefs',
-        request_serializer=v1_dot_base__pb2.ProjectEntityResourceRequest.SerializeToString,
-        response_deserializer=v1_dot_code__ref__pb2.ListCodeRefsResponse.FromString,
-        )
     self.CreateRunCodeRef = channel.unary_unary(
         '/v1.RunsV1/CreateRunCodeRef',
         request_serializer=v1_dot_code__ref__pb2.CodeRefBodyRequest.SerializeToString,
-        response_deserializer=v1_dot_code__ref__pb2.CodeReference.FromString,
+        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
         )
     self.ImpersonateToken = channel.unary_unary(
         '/v1.RunsV1/ImpersonateToken',
@@ -362,13 +357,6 @@ class RunsV1Servicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
-  def GetRunCodeRefs(self, request, context):
-    """Get run code ref
-    """
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
   def CreateRunCodeRef(self, request, context):
     """Get run code ref
     """
@@ -520,15 +508,10 @@ def add_RunsV1Servicer_to_server(servicer, server):
           request_deserializer=v1_dot_status__pb2.EntityStatusBodyRequest.FromString,
           response_serializer=v1_dot_status__pb2.Status.SerializeToString,
       ),
-      'GetRunCodeRefs': grpc.unary_unary_rpc_method_handler(
-          servicer.GetRunCodeRefs,
-          request_deserializer=v1_dot_base__pb2.ProjectEntityResourceRequest.FromString,
-          response_serializer=v1_dot_code__ref__pb2.ListCodeRefsResponse.SerializeToString,
-      ),
       'CreateRunCodeRef': grpc.unary_unary_rpc_method_handler(
           servicer.CreateRunCodeRef,
           request_deserializer=v1_dot_code__ref__pb2.CodeRefBodyRequest.FromString,
-          response_serializer=v1_dot_code__ref__pb2.CodeReference.SerializeToString,
+          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
       ),
       'ImpersonateToken': grpc.unary_unary_rpc_method_handler(
           servicer.ImpersonateToken,

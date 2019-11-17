@@ -26,8 +26,6 @@ import (
 	"github.com/go-openapi/runtime"
 
 	strfmt "github.com/go-openapi/strfmt"
-
-	service_model "github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_model"
 )
 
 // CreateRunCodeRefReader is a Reader for the CreateRunCodeRef structure.
@@ -78,25 +76,13 @@ func NewCreateRunCodeRefOK() *CreateRunCodeRefOK {
 A successful response.
 */
 type CreateRunCodeRefOK struct {
-	Payload *service_model.V1CodeReference
 }
 
 func (o *CreateRunCodeRefOK) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/coderef][%d] createRunCodeRefOK  %+v", 200, o.Payload)
-}
-
-func (o *CreateRunCodeRefOK) GetPayload() *service_model.V1CodeReference {
-	return o.Payload
+	return fmt.Sprintf("[POST /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/coderefs][%d] createRunCodeRefOK ", 200)
 }
 
 func (o *CreateRunCodeRefOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
-
-	o.Payload = new(service_model.V1CodeReference)
-
-	// response payload
-	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
-		return err
-	}
 
 	return nil
 }
@@ -115,7 +101,7 @@ type CreateRunCodeRefNoContent struct {
 }
 
 func (o *CreateRunCodeRefNoContent) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/coderef][%d] createRunCodeRefNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/coderefs][%d] createRunCodeRefNoContent  %+v", 204, o.Payload)
 }
 
 func (o *CreateRunCodeRefNoContent) GetPayload() interface{} {
@@ -146,7 +132,7 @@ type CreateRunCodeRefForbidden struct {
 }
 
 func (o *CreateRunCodeRefForbidden) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/coderef][%d] createRunCodeRefForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/coderefs][%d] createRunCodeRefForbidden  %+v", 403, o.Payload)
 }
 
 func (o *CreateRunCodeRefForbidden) GetPayload() interface{} {
@@ -177,7 +163,7 @@ type CreateRunCodeRefNotFound struct {
 }
 
 func (o *CreateRunCodeRefNotFound) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/coderef][%d] createRunCodeRefNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/coderefs][%d] createRunCodeRefNotFound  %+v", 404, o.Payload)
 }
 
 func (o *CreateRunCodeRefNotFound) GetPayload() interface{} {

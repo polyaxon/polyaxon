@@ -45,38 +45,26 @@
   var instance;
 
   describe('(package)', function() {
-    describe('V1ListCodeRefsResponse', function() {
+    describe('V1CodeRef', function() {
       beforeEach(function() {
-        instance = new PolyaxonSdk.V1ListCodeRefsResponse();
+        instance = new PolyaxonSdk.V1CodeRef();
       });
 
-      it('should create an instance of V1ListCodeRefsResponse', function() {
-        // TODO: update the code to test V1ListCodeRefsResponse
-        expect(instance).to.be.a(PolyaxonSdk.V1ListCodeRefsResponse);
+      it('should create an instance of V1CodeRef', function() {
+        // TODO: update the code to test V1CodeRef
+        expect(instance).to.be.a(PolyaxonSdk.V1CodeRef);
       });
 
-      it('should have the property count (base name: "count")', function() {
-        // TODO: update the code to test the property count
-        expect(instance).to.have.property('count');
-        // expect(instance.count).to.be(expectedValueLiteral);
+      it('should have the property commit (base name: "commit")', function() {
+        // TODO: update the code to test the property commit
+        expect(instance).to.have.property('commit');
+        // expect(instance.commit).to.be(expectedValueLiteral);
       });
 
-      it('should have the property results (base name: "results")', function() {
-        // TODO: update the code to test the property results
-        expect(instance).to.have.property('results');
-        // expect(instance.results).to.be(expectedValueLiteral);
-      });
-
-      it('should have the property previous (base name: "previous")', function() {
-        // TODO: update the code to test the property previous
-        expect(instance).to.have.property('previous');
-        // expect(instance.previous).to.be(expectedValueLiteral);
-      });
-
-      it('should have the property next (base name: "next")', function() {
-        // TODO: update the code to test the property next
-        expect(instance).to.have.property('next');
-        // expect(instance.next).to.be(expectedValueLiteral);
+      it('should have the property git_url (base name: "git_url")', function() {
+        // TODO: update the code to test the property git_url
+        expect(instance).to.have.property('git_url');
+        // expect(instance.git_url).to.be(expectedValueLiteral);
       });
 
     });

@@ -37,50 +37,19 @@ import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
-import org.threeten.bp.OffsetDateTime;
 
 /**
- * V1CodeReference
+ * V1CodeRef
  */
 
-public class V1CodeReference {
-  @SerializedName("uuid")
-  private String uuid = null;
-
+public class V1CodeRef {
   @SerializedName("commit")
   private String commit = null;
-
-  @SerializedName("updated_at")
-  private OffsetDateTime updatedAt = null;
-
-  @SerializedName("status")
-  private String status = null;
 
   @SerializedName("git_url")
   private String gitUrl = null;
 
-  @SerializedName("is_dirty")
-  private Boolean isDirty = null;
-
-  public V1CodeReference uuid(String uuid) {
-    this.uuid = uuid;
-    return this;
-  }
-
-   /**
-   * Get uuid
-   * @return uuid
-  **/
-  @ApiModelProperty(value = "")
-  public String getUuid() {
-    return uuid;
-  }
-
-  public void setUuid(String uuid) {
-    this.uuid = uuid;
-  }
-
-  public V1CodeReference commit(String commit) {
+  public V1CodeRef commit(String commit) {
     this.commit = commit;
     return this;
   }
@@ -98,43 +67,7 @@ public class V1CodeReference {
     this.commit = commit;
   }
 
-  public V1CodeReference updatedAt(OffsetDateTime updatedAt) {
-    this.updatedAt = updatedAt;
-    return this;
-  }
-
-   /**
-   * Get updatedAt
-   * @return updatedAt
-  **/
-  @ApiModelProperty(value = "")
-  public OffsetDateTime getUpdatedAt() {
-    return updatedAt;
-  }
-
-  public void setUpdatedAt(OffsetDateTime updatedAt) {
-    this.updatedAt = updatedAt;
-  }
-
-  public V1CodeReference status(String status) {
-    this.status = status;
-    return this;
-  }
-
-   /**
-   * Get status
-   * @return status
-  **/
-  @ApiModelProperty(value = "")
-  public String getStatus() {
-    return status;
-  }
-
-  public void setStatus(String status) {
-    this.status = status;
-  }
-
-  public V1CodeReference gitUrl(String gitUrl) {
+  public V1CodeRef gitUrl(String gitUrl) {
     this.gitUrl = gitUrl;
     return this;
   }
@@ -152,24 +85,6 @@ public class V1CodeReference {
     this.gitUrl = gitUrl;
   }
 
-  public V1CodeReference isDirty(Boolean isDirty) {
-    this.isDirty = isDirty;
-    return this;
-  }
-
-   /**
-   * Get isDirty
-   * @return isDirty
-  **/
-  @ApiModelProperty(value = "")
-  public Boolean isIsDirty() {
-    return isDirty;
-  }
-
-  public void setIsDirty(Boolean isDirty) {
-    this.isDirty = isDirty;
-  }
-
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -179,32 +94,24 @@ public class V1CodeReference {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    V1CodeReference v1CodeReference = (V1CodeReference) o;
-    return Objects.equals(this.uuid, v1CodeReference.uuid) &&
-        Objects.equals(this.commit, v1CodeReference.commit) &&
-        Objects.equals(this.updatedAt, v1CodeReference.updatedAt) &&
-        Objects.equals(this.status, v1CodeReference.status) &&
-        Objects.equals(this.gitUrl, v1CodeReference.gitUrl) &&
-        Objects.equals(this.isDirty, v1CodeReference.isDirty);
+    V1CodeRef v1CodeRef = (V1CodeRef) o;
+    return Objects.equals(this.commit, v1CodeRef.commit) &&
+        Objects.equals(this.gitUrl, v1CodeRef.gitUrl);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(uuid, commit, updatedAt, status, gitUrl, isDirty);
+    return Objects.hash(commit, gitUrl);
   }
 
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class V1CodeReference {\n");
+    sb.append("class V1CodeRef {\n");
     
-    sb.append("    uuid: ").append(toIndentedString(uuid)).append("\n");
     sb.append("    commit: ").append(toIndentedString(commit)).append("\n");
-    sb.append("    updatedAt: ").append(toIndentedString(updatedAt)).append("\n");
-    sb.append("    status: ").append(toIndentedString(status)).append("\n");
     sb.append("    gitUrl: ").append(toIndentedString(gitUrl)).append("\n");
-    sb.append("    isDirty: ").append(toIndentedString(isDirty)).append("\n");
     sb.append("}");
     return sb.toString();
   }

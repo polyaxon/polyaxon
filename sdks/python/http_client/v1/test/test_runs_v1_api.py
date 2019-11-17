@@ -115,13 +115,6 @@ class TestRunsV1Api(unittest.TestCase):
         """
         pass
 
-    def test_get_run_code_refs(self):
-        """Test case for get_run_code_refs
-
-        Get run code ref  # noqa: E501
-        """
-        pass
-
     def test_get_run_logs_file(self):
         """Test case for get_run_logs_file
 
@@ -270,5 +263,5 @@ class TestRunsV1Api(unittest.TestCase):
         pass
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     unittest.main()

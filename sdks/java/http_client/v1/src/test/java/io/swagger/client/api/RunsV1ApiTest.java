@@ -31,9 +31,8 @@ import io.swagger.client.ApiException;
 import java.io.File;
 import io.swagger.client.model.V1ArtifactTreeResponse;
 import io.swagger.client.model.V1Auth;
-import io.swagger.client.model.V1CodeReference;
+import io.swagger.client.model.V1CodeRef;
 import io.swagger.client.model.V1EntityStatusBodyRequest;
-import io.swagger.client.model.V1ListCodeRefsResponse;
 import io.swagger.client.model.V1ListRunsResponse;
 import io.swagger.client.model.V1ProjectEntityResourceRequest;
 import io.swagger.client.model.V1Run;
@@ -142,8 +141,8 @@ public class RunsV1ApiTest {
         String entityOwner = null;
         String entityProject = null;
         String entityUuid = null;
-        V1CodeReference body = null;
-        V1CodeReference response = api.createRunCodeRef(entityOwner, entityProject, entityUuid, body);
+        V1CodeRef body = null;
+        api.createRunCodeRef(entityOwner, entityProject, entityUuid, body);
 
         // TODO: test validations
     }
@@ -238,24 +237,6 @@ public class RunsV1ApiTest {
         Integer step = null;
         String type = null;
         V1ArtifactTreeResponse response = api.getRunArtifactsTree(owner, project, uuid, path, step, type);
-
-        // TODO: test validations
-    }
-    
-    /**
-     * Get run code ref
-     *
-     * 
-     *
-     * @throws ApiException
-     *          if the Api call fails
-     */
-    @Test
-    public void getRunCodeRefsTest() throws ApiException {
-        String owner = null;
-        String project = null;
-        String uuid = null;
-        V1ListCodeRefsResponse response = api.getRunCodeRefs(owner, project, uuid);
 
         // TODO: test validations
     }

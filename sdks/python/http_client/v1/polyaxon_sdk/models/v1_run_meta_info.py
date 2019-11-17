@@ -46,17 +46,19 @@ class V1RunMetaInfo(object):
       attribute_map (dict): The key is attribute name
                             and the value is json key in definition.
     """
-    swagger_types = {"service": "bool", "concurrency": "int", "workflow_kind": "str"}
-
-    attribute_map = {
-        "service": "service",
-        "concurrency": "concurrency",
-        "workflow_kind": "workflow_kind",
+    swagger_types = {
+        'service': 'bool',
+        'concurrency': 'int',
+        'workflow_kind': 'str'
     }
 
-    def __init__(
-        self, service=None, concurrency=None, workflow_kind=None
-    ):  # noqa: E501
+    attribute_map = {
+        'service': 'service',
+        'concurrency': 'concurrency',
+        'workflow_kind': 'workflow_kind'
+    }
+
+    def __init__(self, service=None, concurrency=None, workflow_kind=None):  # noqa: E501
         """V1RunMetaInfo - a model defined in Swagger"""  # noqa: E501
 
         self._service = None
@@ -141,20 +143,18 @@ class V1RunMetaInfo(object):
         for attr, _ in six.iteritems(self.swagger_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(
-                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
-                )
+                result[attr] = list(map(
+                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
+                    value
+                ))
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(
-                    map(
-                        lambda item: (item[0], item[1].to_dict())
-                        if hasattr(item[1], "to_dict")
-                        else item,
-                        value.items(),
-                    )
-                )
+                result[attr] = dict(map(
+                    lambda item: (item[0], item[1].to_dict())
+                    if hasattr(item[1], "to_dict") else item,
+                    value.items()
+                ))
             else:
                 result[attr] = value
         if issubclass(V1RunMetaInfo, dict):

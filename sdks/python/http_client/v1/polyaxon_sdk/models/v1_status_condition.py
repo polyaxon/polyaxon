@@ -47,32 +47,24 @@ class V1StatusCondition(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        "type": "str",
-        "status": "str",
-        "reason": "str",
-        "message": "str",
-        "last_update_time": "datetime",
-        "last_transition_time": "datetime",
+        'type': 'str',
+        'status': 'str',
+        'reason': 'str',
+        'message': 'str',
+        'last_update_time': 'datetime',
+        'last_transition_time': 'datetime'
     }
 
     attribute_map = {
-        "type": "type",
-        "status": "status",
-        "reason": "reason",
-        "message": "message",
-        "last_update_time": "last_update_time",
-        "last_transition_time": "last_transition_time",
+        'type': 'type',
+        'status': 'status',
+        'reason': 'reason',
+        'message': 'message',
+        'last_update_time': 'last_update_time',
+        'last_transition_time': 'last_transition_time'
     }
 
-    def __init__(
-        self,
-        type=None,
-        status=None,
-        reason=None,
-        message=None,
-        last_update_time=None,
-        last_transition_time=None,
-    ):  # noqa: E501
+    def __init__(self, type=None, status=None, reason=None, message=None, last_update_time=None, last_transition_time=None):  # noqa: E501
         """V1StatusCondition - a model defined in Swagger"""  # noqa: E501
 
         self._type = None
@@ -229,20 +221,18 @@ class V1StatusCondition(object):
         for attr, _ in six.iteritems(self.swagger_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(
-                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
-                )
+                result[attr] = list(map(
+                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
+                    value
+                ))
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(
-                    map(
-                        lambda item: (item[0], item[1].to_dict())
-                        if hasattr(item[1], "to_dict")
-                        else item,
-                        value.items(),
-                    )
-                )
+                result[attr] = dict(map(
+                    lambda item: (item[0], item[1].to_dict())
+                    if hasattr(item[1], "to_dict") else item,
+                    value.items()
+                ))
             else:
                 result[attr] = value
         if issubclass(V1StatusCondition, dict):

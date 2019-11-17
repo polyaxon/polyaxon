@@ -40,55 +40,42 @@
     if (!root.PolyaxonSdk) {
       root.PolyaxonSdk = {};
     }
-    root.PolyaxonSdk.V1CodeReference = factory(root.PolyaxonSdk.ApiClient);
+    root.PolyaxonSdk.V1CodeRef = factory(root.PolyaxonSdk.ApiClient);
   }
 }(this, function(ApiClient) {
   'use strict';
 
   /**
-   * The V1CodeReference model module.
-   * @module model/V1CodeReference
+   * The V1CodeRef model module.
+   * @module model/V1CodeRef
    * @version 1.0.0
    */
 
   /**
-   * Constructs a new <code>V1CodeReference</code>.
-   * @alias module:model/V1CodeReference
+   * Constructs a new <code>V1CodeRef</code>.
+   * @alias module:model/V1CodeRef
    * @class
    */
   var exports = function() {
   };
 
   /**
-   * Constructs a <code>V1CodeReference</code> from a plain JavaScript object, optionally creating a new instance.
+   * Constructs a <code>V1CodeRef</code> from a plain JavaScript object, optionally creating a new instance.
    * Copies all relevant properties from <code>data</code> to <code>obj</code> if supplied or a new instance if not.
    * @param {Object} data The plain JavaScript object bearing properties of interest.
-   * @param {module:model/V1CodeReference} obj Optional instance to populate.
-   * @return {module:model/V1CodeReference} The populated <code>V1CodeReference</code> instance.
+   * @param {module:model/V1CodeRef} obj Optional instance to populate.
+   * @return {module:model/V1CodeRef} The populated <code>V1CodeRef</code> instance.
    */
   exports.constructFromObject = function(data, obj) {
     if (data) {
       obj = obj || new exports();
-      if (data.hasOwnProperty('uuid'))
-        obj.uuid = ApiClient.convertToType(data['uuid'], 'String');
       if (data.hasOwnProperty('commit'))
         obj.commit = ApiClient.convertToType(data['commit'], 'String');
-      if (data.hasOwnProperty('updated_at'))
-        obj.updated_at = ApiClient.convertToType(data['updated_at'], 'Date');
-      if (data.hasOwnProperty('status'))
-        obj.status = ApiClient.convertToType(data['status'], 'String');
       if (data.hasOwnProperty('git_url'))
         obj.git_url = ApiClient.convertToType(data['git_url'], 'String');
-      if (data.hasOwnProperty('is_dirty'))
-        obj.is_dirty = ApiClient.convertToType(data['is_dirty'], 'Boolean');
     }
     return obj;
   }
-
-  /**
-   * @member {String} uuid
-   */
-  exports.prototype.uuid = undefined;
 
   /**
    * @member {String} commit
@@ -96,24 +83,9 @@
   exports.prototype.commit = undefined;
 
   /**
-   * @member {Date} updated_at
-   */
-  exports.prototype.updated_at = undefined;
-
-  /**
-   * @member {String} status
-   */
-  exports.prototype.status = undefined;
-
-  /**
    * @member {String} git_url
    */
   exports.prototype.git_url = undefined;
-
-  /**
-   * @member {Boolean} is_dirty
-   */
-  exports.prototype.is_dirty = undefined;
 
   return exports;
 

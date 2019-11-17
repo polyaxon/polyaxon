@@ -245,45 +245,21 @@ export interface V1Auth {
 /**
  * 
  * @export
- * @interface V1CodeReference
+ * @interface V1CodeRef
  */
-export interface V1CodeReference {
+export interface V1CodeRef {
     /**
      * 
      * @type {string}
-     * @memberof V1CodeReference
-     */
-    uuid?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1CodeReference
+     * @memberof V1CodeRef
      */
     commit?: string;
     /**
      * 
-     * @type {Date}
-     * @memberof V1CodeReference
-     */
-    updated_at?: Date;
-    /**
-     * 
      * @type {string}
-     * @memberof V1CodeReference
-     */
-    status?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1CodeReference
+     * @memberof V1CodeRef
      */
     git_url?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof V1CodeReference
-     */
-    is_dirty?: boolean;
 }
 
 /**
@@ -538,38 +514,6 @@ export interface V1ListArtifactsStoresResponse {
      * 
      * @type {string}
      * @memberof V1ListArtifactsStoresResponse
-     */
-    next?: string;
-}
-
-/**
- * 
- * @export
- * @interface V1ListCodeRefsResponse
- */
-export interface V1ListCodeRefsResponse {
-    /**
-     * 
-     * @type {number}
-     * @memberof V1ListCodeRefsResponse
-     */
-    count?: number;
-    /**
-     * 
-     * @type {Array<V1CodeReference>}
-     * @memberof V1ListCodeRefsResponse
-     */
-    results?: Array<V1CodeReference>;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1ListCodeRefsResponse
-     */
-    previous?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1ListCodeRefsResponse
      */
     next?: string;
 }
@@ -6917,11 +6861,11 @@ export const RunsV1ApiFetchParamCreator = function (configuration?: Configuratio
          * @param {string} entity_owner Owner of the namespace
          * @param {string} entity_project Project where the experiement will be assigned
          * @param {string} entity_uuid Unique integer identifier of the entity
-         * @param {V1CodeReference} body Code ref object
+         * @param {V1CodeRef} body Code ref object
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createRunCodeRef(entity_owner: string, entity_project: string, entity_uuid: string, body: V1CodeReference, options: any = {}): FetchArgs {
+        createRunCodeRef(entity_owner: string, entity_project: string, entity_uuid: string, body: V1CodeRef, options: any = {}): FetchArgs {
             // verify required parameter 'entity_owner' is not null or undefined
             if (entity_owner === null || entity_owner === undefined) {
                 throw new RequiredError('entity_owner','Required parameter entity_owner was null or undefined when calling createRunCodeRef.');
@@ -6938,7 +6882,7 @@ export const RunsV1ApiFetchParamCreator = function (configuration?: Configuratio
             if (body === null || body === undefined) {
                 throw new RequiredError('body','Required parameter body was null or undefined when calling createRunCodeRef.');
             }
-            const localVarPath = `/api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/coderef`
+            const localVarPath = `/api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/coderefs`
                 .replace(`{${"entity.owner"}}`, encodeURIComponent(String(entity_owner)))
                 .replace(`{${"entity.project"}}`, encodeURIComponent(String(entity_project)))
                 .replace(`{${"entity.uuid"}}`, encodeURIComponent(String(entity_uuid)));
@@ -6961,7 +6905,7 @@ export const RunsV1ApiFetchParamCreator = function (configuration?: Configuratio
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"V1CodeReference" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            const needsSerialization = (<any>"V1CodeRef" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
             localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
 
             return {
@@ -7229,55 +7173,6 @@ export const RunsV1ApiFetchParamCreator = function (configuration?: Configuratio
 
             if (type !== undefined) {
                 localVarQueryParameter['type'] = type;
-            }
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Get run code ref
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} uuid Unique integer identifier of the entity
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getRunCodeRefs(owner: string, project: string, uuid: string, options: any = {}): FetchArgs {
-            // verify required parameter 'owner' is not null or undefined
-            if (owner === null || owner === undefined) {
-                throw new RequiredError('owner','Required parameter owner was null or undefined when calling getRunCodeRefs.');
-            }
-            // verify required parameter 'project' is not null or undefined
-            if (project === null || project === undefined) {
-                throw new RequiredError('project','Required parameter project was null or undefined when calling getRunCodeRefs.');
-            }
-            // verify required parameter 'uuid' is not null or undefined
-            if (uuid === null || uuid === undefined) {
-                throw new RequiredError('uuid','Required parameter uuid was null or undefined when calling getRunCodeRefs.');
-            }
-            const localVarPath = `/api/v1/{owner}/{project}/runs/{uuid}/coderef`
-                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
-                .replace(`{${"project"}}`, encodeURIComponent(String(project)))
-                .replace(`{${"uuid"}}`, encodeURIComponent(String(uuid)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKey required
-            if (configuration && configuration.apiKey) {
-                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-					? configuration.apiKey("Authorization")
-					: configuration.apiKey;
-                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
             }
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
@@ -8585,16 +8480,16 @@ export const RunsV1ApiFp = function(configuration?: Configuration) {
          * @param {string} entity_owner Owner of the namespace
          * @param {string} entity_project Project where the experiement will be assigned
          * @param {string} entity_uuid Unique integer identifier of the entity
-         * @param {V1CodeReference} body Code ref object
+         * @param {V1CodeRef} body Code ref object
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createRunCodeRef(entity_owner: string, entity_project: string, entity_uuid: string, body: V1CodeReference, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1CodeReference> {
+        createRunCodeRef(entity_owner: string, entity_project: string, entity_uuid: string, body: V1CodeRef, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
             const localVarFetchArgs = RunsV1ApiFetchParamCreator(configuration).createRunCodeRef(entity_owner, entity_project, entity_uuid, body, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
-                        return response.json();
+                        return response;
                     } else {
                         throw response;
                     }
@@ -8700,27 +8595,6 @@ export const RunsV1ApiFp = function(configuration?: Configuration) {
          */
         getRunArtifactsTree(owner: string, project: string, uuid: string, path?: string, step?: number, type?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ArtifactTreeResponse> {
             const localVarFetchArgs = RunsV1ApiFetchParamCreator(configuration).getRunArtifactsTree(owner, project, uuid, path, step, type, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary Get run code ref
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} uuid Unique integer identifier of the entity
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getRunCodeRefs(owner: string, project: string, uuid: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ListCodeRefsResponse> {
-            const localVarFetchArgs = RunsV1ApiFetchParamCreator(configuration).getRunCodeRefs(owner, project, uuid, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -9261,11 +9135,11 @@ export const RunsV1ApiFactory = function (configuration?: Configuration, fetch?:
          * @param {string} entity_owner Owner of the namespace
          * @param {string} entity_project Project where the experiement will be assigned
          * @param {string} entity_uuid Unique integer identifier of the entity
-         * @param {V1CodeReference} body Code ref object
+         * @param {V1CodeRef} body Code ref object
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createRunCodeRef(entity_owner: string, entity_project: string, entity_uuid: string, body: V1CodeReference, options?: any) {
+        createRunCodeRef(entity_owner: string, entity_project: string, entity_uuid: string, body: V1CodeRef, options?: any) {
             return RunsV1ApiFp(configuration).createRunCodeRef(entity_owner, entity_project, entity_uuid, body, options)(fetch, basePath);
         },
         /**
@@ -9331,18 +9205,6 @@ export const RunsV1ApiFactory = function (configuration?: Configuration, fetch?:
          */
         getRunArtifactsTree(owner: string, project: string, uuid: string, path?: string, step?: number, type?: string, options?: any) {
             return RunsV1ApiFp(configuration).getRunArtifactsTree(owner, project, uuid, path, step, type, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary Get run code ref
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} uuid Unique integer identifier of the entity
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getRunCodeRefs(owner: string, project: string, uuid: string, options?: any) {
-            return RunsV1ApiFp(configuration).getRunCodeRefs(owner, project, uuid, options)(fetch, basePath);
         },
         /**
          * 
@@ -9694,12 +9556,12 @@ export class RunsV1Api extends BaseAPI {
      * @param {string} entity_owner Owner of the namespace
      * @param {string} entity_project Project where the experiement will be assigned
      * @param {string} entity_uuid Unique integer identifier of the entity
-     * @param {V1CodeReference} body Code ref object
+     * @param {V1CodeRef} body Code ref object
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof RunsV1Api
      */
-    public createRunCodeRef(entity_owner: string, entity_project: string, entity_uuid: string, body: V1CodeReference, options?: any) {
+    public createRunCodeRef(entity_owner: string, entity_project: string, entity_uuid: string, body: V1CodeRef, options?: any) {
         return RunsV1ApiFp(this.configuration).createRunCodeRef(entity_owner, entity_project, entity_uuid, body, options)(this.fetch, this.basePath);
     }
 
@@ -9775,20 +9637,6 @@ export class RunsV1Api extends BaseAPI {
      */
     public getRunArtifactsTree(owner: string, project: string, uuid: string, path?: string, step?: number, type?: string, options?: any) {
         return RunsV1ApiFp(this.configuration).getRunArtifactsTree(owner, project, uuid, path, step, type, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary Get run code ref
-     * @param {string} owner Owner of the namespace
-     * @param {string} project Project where the experiement will be assigned
-     * @param {string} uuid Unique integer identifier of the entity
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof RunsV1Api
-     */
-    public getRunCodeRefs(owner: string, project: string, uuid: string, options?: any) {
-        return RunsV1ApiFp(this.configuration).getRunCodeRefs(owner, project, uuid, options)(this.fetch, this.basePath);
     }
 
     /**

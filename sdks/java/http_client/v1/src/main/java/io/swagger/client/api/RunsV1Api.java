@@ -44,9 +44,8 @@ import java.io.IOException;
 import java.io.File;
 import io.swagger.client.model.V1ArtifactTreeResponse;
 import io.swagger.client.model.V1Auth;
-import io.swagger.client.model.V1CodeReference;
+import io.swagger.client.model.V1CodeRef;
 import io.swagger.client.model.V1EntityStatusBodyRequest;
-import io.swagger.client.model.V1ListCodeRefsResponse;
 import io.swagger.client.model.V1ListRunsResponse;
 import io.swagger.client.model.V1ProjectEntityResourceRequest;
 import io.swagger.client.model.V1Run;
@@ -661,11 +660,11 @@ public class RunsV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call createRunCodeRefCall(String entityOwner, String entityProject, String entityUuid, V1CodeReference body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call createRunCodeRefCall(String entityOwner, String entityProject, String entityUuid, V1CodeRef body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
-        String localVarPath = "/api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/coderef"
+        String localVarPath = "/api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/coderefs"
             .replaceAll("\\{" + "entity.owner" + "\\}", apiClient.escapeString(entityOwner.toString()))
             .replaceAll("\\{" + "entity.project" + "\\}", apiClient.escapeString(entityProject.toString()))
             .replaceAll("\\{" + "entity.uuid" + "\\}", apiClient.escapeString(entityUuid.toString()));
@@ -706,7 +705,7 @@ public class RunsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call createRunCodeRefValidateBeforeCall(String entityOwner, String entityProject, String entityUuid, V1CodeReference body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call createRunCodeRefValidateBeforeCall(String entityOwner, String entityProject, String entityUuid, V1CodeRef body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'entityOwner' is set
         if (entityOwner == null) {
@@ -741,12 +740,10 @@ public class RunsV1Api {
      * @param entityProject Project where the experiement will be assigned (required)
      * @param entityUuid Unique integer identifier of the entity (required)
      * @param body Code ref object (required)
-     * @return V1CodeReference
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1CodeReference createRunCodeRef(String entityOwner, String entityProject, String entityUuid, V1CodeReference body) throws ApiException {
-        ApiResponse<V1CodeReference> resp = createRunCodeRefWithHttpInfo(entityOwner, entityProject, entityUuid, body);
-        return resp.getData();
+    public void createRunCodeRef(String entityOwner, String entityProject, String entityUuid, V1CodeRef body) throws ApiException {
+        createRunCodeRefWithHttpInfo(entityOwner, entityProject, entityUuid, body);
     }
 
     /**
@@ -756,13 +753,12 @@ public class RunsV1Api {
      * @param entityProject Project where the experiement will be assigned (required)
      * @param entityUuid Unique integer identifier of the entity (required)
      * @param body Code ref object (required)
-     * @return ApiResponse&lt;V1CodeReference&gt;
+     * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1CodeReference> createRunCodeRefWithHttpInfo(String entityOwner, String entityProject, String entityUuid, V1CodeReference body) throws ApiException {
+    public ApiResponse<Void> createRunCodeRefWithHttpInfo(String entityOwner, String entityProject, String entityUuid, V1CodeRef body) throws ApiException {
         com.squareup.okhttp.Call call = createRunCodeRefValidateBeforeCall(entityOwner, entityProject, entityUuid, body, null, null);
-        Type localVarReturnType = new TypeToken<V1CodeReference>(){}.getType();
-        return apiClient.execute(call, localVarReturnType);
+        return apiClient.execute(call);
     }
 
     /**
@@ -776,7 +772,7 @@ public class RunsV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call createRunCodeRefAsync(String entityOwner, String entityProject, String entityUuid, V1CodeReference body, final ApiCallback<V1CodeReference> callback) throws ApiException {
+    public com.squareup.okhttp.Call createRunCodeRefAsync(String entityOwner, String entityProject, String entityUuid, V1CodeRef body, final ApiCallback<Void> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -798,8 +794,7 @@ public class RunsV1Api {
         }
 
         com.squareup.okhttp.Call call = createRunCodeRefValidateBeforeCall(entityOwner, entityProject, entityUuid, body, progressListener, progressRequestListener);
-        Type localVarReturnType = new TypeToken<V1CodeReference>(){}.getType();
-        apiClient.executeAsync(call, localVarReturnType, callback);
+        apiClient.executeAsync(call, callback);
         return call;
     }
     /**
@@ -1532,149 +1527,6 @@ public class RunsV1Api {
 
         com.squareup.okhttp.Call call = getRunArtifactsTreeValidateBeforeCall(owner, project, uuid, path, step, type, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1ArtifactTreeResponse>(){}.getType();
-        apiClient.executeAsync(call, localVarReturnType, callback);
-        return call;
-    }
-    /**
-     * Build call for getRunCodeRefs
-     * @param owner Owner of the namespace (required)
-     * @param project Project where the experiement will be assigned (required)
-     * @param uuid Unique integer identifier of the entity (required)
-     * @param progressListener Progress listener
-     * @param progressRequestListener Progress request listener
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     */
-    public com.squareup.okhttp.Call getRunCodeRefsCall(String owner, String project, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        Object localVarPostBody = null;
-
-        // create path and map variables
-        String localVarPath = "/api/v1/{owner}/{project}/runs/{uuid}/coderef"
-            .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()))
-            .replaceAll("\\{" + "project" + "\\}", apiClient.escapeString(project.toString()))
-            .replaceAll("\\{" + "uuid" + "\\}", apiClient.escapeString(uuid.toString()));
-
-        List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-        final String[] localVarAccepts = {
-            "application/json"
-        };
-        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
-
-        final String[] localVarContentTypes = {
-            "application/json"
-        };
-        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
-        localVarHeaderParams.put("Content-Type", localVarContentType);
-
-        if(progressListener != null) {
-            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
-                @Override
-                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
-                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
-                    return originalResponse.newBuilder()
-                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
-                    .build();
-                }
-            });
-        }
-
-        String[] localVarAuthNames = new String[] { "ApiKey" };
-        return apiClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
-    }
-
-    @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call getRunCodeRefsValidateBeforeCall(String owner, String project, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        
-        // verify the required parameter 'owner' is set
-        if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling getRunCodeRefs(Async)");
-        }
-        
-        // verify the required parameter 'project' is set
-        if (project == null) {
-            throw new ApiException("Missing the required parameter 'project' when calling getRunCodeRefs(Async)");
-        }
-        
-        // verify the required parameter 'uuid' is set
-        if (uuid == null) {
-            throw new ApiException("Missing the required parameter 'uuid' when calling getRunCodeRefs(Async)");
-        }
-        
-
-        com.squareup.okhttp.Call call = getRunCodeRefsCall(owner, project, uuid, progressListener, progressRequestListener);
-        return call;
-
-    }
-
-    /**
-     * Get run code ref
-     * 
-     * @param owner Owner of the namespace (required)
-     * @param project Project where the experiement will be assigned (required)
-     * @param uuid Unique integer identifier of the entity (required)
-     * @return V1ListCodeRefsResponse
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     */
-    public V1ListCodeRefsResponse getRunCodeRefs(String owner, String project, String uuid) throws ApiException {
-        ApiResponse<V1ListCodeRefsResponse> resp = getRunCodeRefsWithHttpInfo(owner, project, uuid);
-        return resp.getData();
-    }
-
-    /**
-     * Get run code ref
-     * 
-     * @param owner Owner of the namespace (required)
-     * @param project Project where the experiement will be assigned (required)
-     * @param uuid Unique integer identifier of the entity (required)
-     * @return ApiResponse&lt;V1ListCodeRefsResponse&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     */
-    public ApiResponse<V1ListCodeRefsResponse> getRunCodeRefsWithHttpInfo(String owner, String project, String uuid) throws ApiException {
-        com.squareup.okhttp.Call call = getRunCodeRefsValidateBeforeCall(owner, project, uuid, null, null);
-        Type localVarReturnType = new TypeToken<V1ListCodeRefsResponse>(){}.getType();
-        return apiClient.execute(call, localVarReturnType);
-    }
-
-    /**
-     * Get run code ref (asynchronously)
-     * 
-     * @param owner Owner of the namespace (required)
-     * @param project Project where the experiement will be assigned (required)
-     * @param uuid Unique integer identifier of the entity (required)
-     * @param callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     */
-    public com.squareup.okhttp.Call getRunCodeRefsAsync(String owner, String project, String uuid, final ApiCallback<V1ListCodeRefsResponse> callback) throws ApiException {
-
-        ProgressResponseBody.ProgressListener progressListener = null;
-        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
-
-        if (callback != null) {
-            progressListener = new ProgressResponseBody.ProgressListener() {
-                @Override
-                public void update(long bytesRead, long contentLength, boolean done) {
-                    callback.onDownloadProgress(bytesRead, contentLength, done);
-                }
-            };
-
-            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
-                @Override
-                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
-                    callback.onUploadProgress(bytesWritten, contentLength, done);
-                }
-            };
-        }
-
-        com.squareup.okhttp.Call call = getRunCodeRefsValidateBeforeCall(owner, project, uuid, progressListener, progressRequestListener);
-        Type localVarReturnType = new TypeToken<V1ListCodeRefsResponse>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }

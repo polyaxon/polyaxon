@@ -8,13 +8,12 @@ Method | HTTP request | Description
 [**bookmarkRun**](RunsV1Api.md#bookmarkRun) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/bookmark | Bookmark run
 [**copyRun**](RunsV1Api.md#copyRun) | **POST** /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/copy | Restart run with copy
 [**createRun**](RunsV1Api.md#createRun) | **POST** /api/v1/{owner}/{project}/runs | Create new run
-[**createRunCodeRef**](RunsV1Api.md#createRunCodeRef) | **POST** /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/coderef | Get run code ref
+[**createRunCodeRef**](RunsV1Api.md#createRunCodeRef) | **POST** /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/coderefs | Get run code ref
 [**createRunStatus**](RunsV1Api.md#createRunStatus) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/statuses | Create new run status
 [**deleteRun**](RunsV1Api.md#deleteRun) | **DELETE** /api/v1/{owner}/{project}/runs/{uuid} | Delete run
 [**deleteRuns**](RunsV1Api.md#deleteRuns) | **DELETE** /api/v1/{owner}/{project}/runs/delete | Delete runs
 [**getRun**](RunsV1Api.md#getRun) | **GET** /api/v1/{owner}/{project}/runs/{uuid} | Get run
 [**getRunArtifactsTree**](RunsV1Api.md#getRunArtifactsTree) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/artifacts/tree | Get run artifacts list
-[**getRunCodeRefs**](RunsV1Api.md#getRunCodeRefs) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/coderef | Get run code ref
 [**getRunLogsFile**](RunsV1Api.md#getRunLogsFile) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/logs/file | Get run logs get file
 [**getRunLogsTree**](RunsV1Api.md#getRunLogsTree) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/logs/tree | Get run logs list
 [**getRunStatuses**](RunsV1Api.md#getRunStatuses) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/statuses | Get run status
@@ -271,7 +270,7 @@ Name | Type | Description  | Notes
 
 <a name="createRunCodeRef"></a>
 # **createRunCodeRef**
-> V1CodeReference createRunCodeRef(entity_owner, entity_project, entity_uuid, body)
+> createRunCodeRef(entity_owner, entity_project, entity_uuid, body)
 
 Get run code ref
 
@@ -294,14 +293,14 @@ var entity_project = "entity_project_example"; // String | Project where the exp
 
 var entity_uuid = "entity_uuid_example"; // String | Unique integer identifier of the entity
 
-var body = new PolyaxonSdk.V1CodeReference(); // V1CodeReference | Code ref object
+var body = new PolyaxonSdk.V1CodeRef(); // V1CodeRef | Code ref object
 
 
 var callback = function(error, data, response) {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully. Returned data: ' + data);
+    console.log('API called successfully.');
   }
 };
 apiInstance.createRunCodeRef(entity_owner, entity_project, entity_uuid, body, callback);
@@ -314,11 +313,11 @@ Name | Type | Description  | Notes
  **entity_owner** | **String**| Owner of the namespace | 
  **entity_project** | **String**| Project where the experiement will be assigned | 
  **entity_uuid** | **String**| Unique integer identifier of the entity | 
- **body** | [**V1CodeReference**](V1CodeReference.md)| Code ref object | 
+ **body** | [**V1CodeRef**](V1CodeRef.md)| Code ref object | 
 
 ### Return type
 
-[**V1CodeReference**](V1CodeReference.md)
+null (empty response body)
 
 ### Authorization
 
@@ -615,63 +614,6 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**V1ArtifactTreeResponse**](V1ArtifactTreeResponse.md)
-
-### Authorization
-
-[ApiKey](../README.md#ApiKey)
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: application/json
-
-<a name="getRunCodeRefs"></a>
-# **getRunCodeRefs**
-> V1ListCodeRefsResponse getRunCodeRefs(owner, project, uuid)
-
-Get run code ref
-
-### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
-
-// Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
-ApiKey.apiKey = 'YOUR API KEY';
-// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-//ApiKey.apiKeyPrefix = 'Token';
-
-var apiInstance = new PolyaxonSdk.RunsV1Api();
-
-var owner = "owner_example"; // String | Owner of the namespace
-
-var project = "project_example"; // String | Project where the experiement will be assigned
-
-var uuid = "uuid_example"; // String | Unique integer identifier of the entity
-
-
-var callback = function(error, data, response) {
-  if (error) {
-    console.error(error);
-  } else {
-    console.log('API called successfully. Returned data: ' + data);
-  }
-};
-apiInstance.getRunCodeRefs(owner, project, uuid, callback);
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **owner** | **String**| Owner of the namespace | 
- **project** | **String**| Project where the experiement will be assigned | 
- **uuid** | **String**| Unique integer identifier of the entity | 
-
-### Return type
-
-[**V1ListCodeRefsResponse**](V1ListCodeRefsResponse.md)
 
 ### Authorization
 

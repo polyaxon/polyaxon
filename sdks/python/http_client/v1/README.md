@@ -135,13 +135,12 @@ Class | Method | HTTP request | Description
 *RunsV1Api* | [**bookmark_run**](docs/RunsV1Api.md#bookmark_run) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/bookmark | Bookmark run
 *RunsV1Api* | [**copy_run**](docs/RunsV1Api.md#copy_run) | **POST** /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/copy | Restart run with copy
 *RunsV1Api* | [**create_run**](docs/RunsV1Api.md#create_run) | **POST** /api/v1/{owner}/{project}/runs | Create new run
-*RunsV1Api* | [**create_run_code_ref**](docs/RunsV1Api.md#create_run_code_ref) | **POST** /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/coderef | Get run code ref
+*RunsV1Api* | [**create_run_code_ref**](docs/RunsV1Api.md#create_run_code_ref) | **POST** /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/coderefs | Get run code ref
 *RunsV1Api* | [**create_run_status**](docs/RunsV1Api.md#create_run_status) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/statuses | Create new run status
 *RunsV1Api* | [**delete_run**](docs/RunsV1Api.md#delete_run) | **DELETE** /api/v1/{owner}/{project}/runs/{uuid} | Delete run
 *RunsV1Api* | [**delete_runs**](docs/RunsV1Api.md#delete_runs) | **DELETE** /api/v1/{owner}/{project}/runs/delete | Delete runs
 *RunsV1Api* | [**get_run**](docs/RunsV1Api.md#get_run) | **GET** /api/v1/{owner}/{project}/runs/{uuid} | Get run
 *RunsV1Api* | [**get_run_artifacts_tree**](docs/RunsV1Api.md#get_run_artifacts_tree) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/artifacts/tree | Get run artifacts list
-*RunsV1Api* | [**get_run_code_refs**](docs/RunsV1Api.md#get_run_code_refs) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/coderef | Get run code ref
 *RunsV1Api* | [**get_run_logs_file**](docs/RunsV1Api.md#get_run_logs_file) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/logs/file | Get run logs get file
 *RunsV1Api* | [**get_run_logs_tree**](docs/RunsV1Api.md#get_run_logs_tree) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/logs/tree | Get run logs list
 *RunsV1Api* | [**get_run_statuses**](docs/RunsV1Api.md#get_run_statuses) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/statuses | Get run status
@@ -179,13 +178,12 @@ Class | Method | HTTP request | Description
  - [V1ArtifactTreeResponse](docs/V1ArtifactTreeResponse.md)
  - [V1ArtifactsStore](docs/V1ArtifactsStore.md)
  - [V1Auth](docs/V1Auth.md)
- - [V1CodeReference](docs/V1CodeReference.md)
+ - [V1CodeRef](docs/V1CodeRef.md)
  - [V1CredsBodyRequest](docs/V1CredsBodyRequest.md)
  - [V1EntityStatusBodyRequest](docs/V1EntityStatusBodyRequest.md)
  - [V1HostAccess](docs/V1HostAccess.md)
  - [V1K8sResource](docs/V1K8sResource.md)
  - [V1ListArtifactsStoresResponse](docs/V1ListArtifactsStoresResponse.md)
- - [V1ListCodeRefsResponse](docs/V1ListCodeRefsResponse.md)
  - [V1ListHostAccessesResponse](docs/V1ListHostAccessesResponse.md)
  - [V1ListK8sResourcesResponse](docs/V1ListK8sResourcesResponse.md)
  - [V1ListProjectsResponse](docs/V1ListProjectsResponse.md)

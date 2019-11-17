@@ -65,15 +65,11 @@ class RunsV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs["_return_http_data_only"] = True
-        if kwargs.get("async_req"):
-            return self.archive_run_with_http_info(
-                owner, project, uuid, **kwargs
-            )  # noqa: E501
+        kwargs['_return_http_data_only'] = True
+        if kwargs.get('async_req'):
+            return self.archive_run_with_http_info(owner, project, uuid, **kwargs)  # noqa: E501
         else:
-            (data) = self.archive_run_with_http_info(
-                owner, project, uuid, **kwargs
-            )  # noqa: E501
+            (data) = self.archive_run_with_http_info(owner, project, uuid, **kwargs)  # noqa: E501
             return data
 
     def archive_run_with_http_info(self, owner, project, uuid, **kwargs):  # noqa: E501
@@ -93,46 +89,43 @@ class RunsV1Api(object):
                  returns the request thread.
         """
 
-        all_params = ["owner", "project", "uuid"]  # noqa: E501
-        all_params.append("async_req")
-        all_params.append("_return_http_data_only")
-        all_params.append("_preload_content")
-        all_params.append("_request_timeout")
+        all_params = ['owner', 'project', 'uuid']  # noqa: E501
+        all_params.append('async_req')
+        all_params.append('_return_http_data_only')
+        all_params.append('_preload_content')
+        all_params.append('_request_timeout')
 
         params = locals()
-        for key, val in six.iteritems(params["kwargs"]):
+        for key, val in six.iteritems(params['kwargs']):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method archive_run" % key
                 )
             params[key] = val
-        del params["kwargs"]
+        del params['kwargs']
         # verify the required parameter 'owner' is set
-        if "owner" not in params or params["owner"] is None:
-            raise ValueError(
-                "Missing the required parameter `owner` when calling `archive_run`"
-            )  # noqa: E501
+        if ('owner' not in params or
+                params['owner'] is None):
+            raise ValueError("Missing the required parameter `owner` when calling `archive_run`")  # noqa: E501
         # verify the required parameter 'project' is set
-        if "project" not in params or params["project"] is None:
-            raise ValueError(
-                "Missing the required parameter `project` when calling `archive_run`"
-            )  # noqa: E501
+        if ('project' not in params or
+                params['project'] is None):
+            raise ValueError("Missing the required parameter `project` when calling `archive_run`")  # noqa: E501
         # verify the required parameter 'uuid' is set
-        if "uuid" not in params or params["uuid"] is None:
-            raise ValueError(
-                "Missing the required parameter `uuid` when calling `archive_run`"
-            )  # noqa: E501
+        if ('uuid' not in params or
+                params['uuid'] is None):
+            raise ValueError("Missing the required parameter `uuid` when calling `archive_run`")  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if "owner" in params:
-            path_params["owner"] = params["owner"]  # noqa: E501
-        if "project" in params:
-            path_params["project"] = params["project"]  # noqa: E501
-        if "uuid" in params:
-            path_params["uuid"] = params["uuid"]  # noqa: E501
+        if 'owner' in params:
+            path_params['owner'] = params['owner']  # noqa: E501
+        if 'project' in params:
+            path_params['project'] = params['project']  # noqa: E501
+        if 'uuid' in params:
+            path_params['uuid'] = params['uuid']  # noqa: E501
 
         query_params = []
 
@@ -143,23 +136,18 @@ class RunsV1Api(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params[
-            "Content-Type"
-        ] = self.api_client.select_header_content_type(  # noqa: E501
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
+            ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = ["ApiKey"]  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/{project}/runs/{uuid}/archive",
-            "POST",
+            '/api/v1/{owner}/{project}/runs/{uuid}/archive', 'POST',
             path_params,
             query_params,
             header_params,
@@ -168,12 +156,11 @@ class RunsV1Api(object):
             files=local_var_files,
             response_type=None,  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get("async_req"),
-            _return_http_data_only=params.get("_return_http_data_only"),
-            _preload_content=params.get("_preload_content", True),
-            _request_timeout=params.get("_request_timeout"),
-            collection_formats=collection_formats,
-        )
+            async_req=params.get('async_req'),
+            _return_http_data_only=params.get('_return_http_data_only'),
+            _preload_content=params.get('_preload_content', True),
+            _request_timeout=params.get('_request_timeout'),
+            collection_formats=collection_formats)
 
     def bookmark_run(self, owner, project, uuid, **kwargs):  # noqa: E501
         """Bookmark run  # noqa: E501
@@ -191,15 +178,11 @@ class RunsV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs["_return_http_data_only"] = True
-        if kwargs.get("async_req"):
-            return self.bookmark_run_with_http_info(
-                owner, project, uuid, **kwargs
-            )  # noqa: E501
+        kwargs['_return_http_data_only'] = True
+        if kwargs.get('async_req'):
+            return self.bookmark_run_with_http_info(owner, project, uuid, **kwargs)  # noqa: E501
         else:
-            (data) = self.bookmark_run_with_http_info(
-                owner, project, uuid, **kwargs
-            )  # noqa: E501
+            (data) = self.bookmark_run_with_http_info(owner, project, uuid, **kwargs)  # noqa: E501
             return data
 
     def bookmark_run_with_http_info(self, owner, project, uuid, **kwargs):  # noqa: E501
@@ -219,46 +202,43 @@ class RunsV1Api(object):
                  returns the request thread.
         """
 
-        all_params = ["owner", "project", "uuid"]  # noqa: E501
-        all_params.append("async_req")
-        all_params.append("_return_http_data_only")
-        all_params.append("_preload_content")
-        all_params.append("_request_timeout")
+        all_params = ['owner', 'project', 'uuid']  # noqa: E501
+        all_params.append('async_req')
+        all_params.append('_return_http_data_only')
+        all_params.append('_preload_content')
+        all_params.append('_request_timeout')
 
         params = locals()
-        for key, val in six.iteritems(params["kwargs"]):
+        for key, val in six.iteritems(params['kwargs']):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method bookmark_run" % key
                 )
             params[key] = val
-        del params["kwargs"]
+        del params['kwargs']
         # verify the required parameter 'owner' is set
-        if "owner" not in params or params["owner"] is None:
-            raise ValueError(
-                "Missing the required parameter `owner` when calling `bookmark_run`"
-            )  # noqa: E501
+        if ('owner' not in params or
+                params['owner'] is None):
+            raise ValueError("Missing the required parameter `owner` when calling `bookmark_run`")  # noqa: E501
         # verify the required parameter 'project' is set
-        if "project" not in params or params["project"] is None:
-            raise ValueError(
-                "Missing the required parameter `project` when calling `bookmark_run`"
-            )  # noqa: E501
+        if ('project' not in params or
+                params['project'] is None):
+            raise ValueError("Missing the required parameter `project` when calling `bookmark_run`")  # noqa: E501
         # verify the required parameter 'uuid' is set
-        if "uuid" not in params or params["uuid"] is None:
-            raise ValueError(
-                "Missing the required parameter `uuid` when calling `bookmark_run`"
-            )  # noqa: E501
+        if ('uuid' not in params or
+                params['uuid'] is None):
+            raise ValueError("Missing the required parameter `uuid` when calling `bookmark_run`")  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if "owner" in params:
-            path_params["owner"] = params["owner"]  # noqa: E501
-        if "project" in params:
-            path_params["project"] = params["project"]  # noqa: E501
-        if "uuid" in params:
-            path_params["uuid"] = params["uuid"]  # noqa: E501
+        if 'owner' in params:
+            path_params['owner'] = params['owner']  # noqa: E501
+        if 'project' in params:
+            path_params['project'] = params['project']  # noqa: E501
+        if 'uuid' in params:
+            path_params['uuid'] = params['uuid']  # noqa: E501
 
         query_params = []
 
@@ -269,23 +249,18 @@ class RunsV1Api(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params[
-            "Content-Type"
-        ] = self.api_client.select_header_content_type(  # noqa: E501
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
+            ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = ["ApiKey"]  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/{project}/runs/{uuid}/bookmark",
-            "POST",
+            '/api/v1/{owner}/{project}/runs/{uuid}/bookmark', 'POST',
             path_params,
             query_params,
             header_params,
@@ -294,16 +269,13 @@ class RunsV1Api(object):
             files=local_var_files,
             response_type=None,  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get("async_req"),
-            _return_http_data_only=params.get("_return_http_data_only"),
-            _preload_content=params.get("_preload_content", True),
-            _request_timeout=params.get("_request_timeout"),
-            collection_formats=collection_formats,
-        )
+            async_req=params.get('async_req'),
+            _return_http_data_only=params.get('_return_http_data_only'),
+            _preload_content=params.get('_preload_content', True),
+            _request_timeout=params.get('_request_timeout'),
+            collection_formats=collection_formats)
 
-    def copy_run(
-        self, entity_owner, entity_project, entity_uuid, body, **kwargs
-    ):  # noqa: E501
+    def copy_run(self, entity_owner, entity_project, entity_uuid, body, **kwargs):  # noqa: E501
         """Restart run with copy  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -320,20 +292,14 @@ class RunsV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs["_return_http_data_only"] = True
-        if kwargs.get("async_req"):
-            return self.copy_run_with_http_info(
-                entity_owner, entity_project, entity_uuid, body, **kwargs
-            )  # noqa: E501
+        kwargs['_return_http_data_only'] = True
+        if kwargs.get('async_req'):
+            return self.copy_run_with_http_info(entity_owner, entity_project, entity_uuid, body, **kwargs)  # noqa: E501
         else:
-            (data) = self.copy_run_with_http_info(
-                entity_owner, entity_project, entity_uuid, body, **kwargs
-            )  # noqa: E501
+            (data) = self.copy_run_with_http_info(entity_owner, entity_project, entity_uuid, body, **kwargs)  # noqa: E501
             return data
 
-    def copy_run_with_http_info(
-        self, entity_owner, entity_project, entity_uuid, body, **kwargs
-    ):  # noqa: E501
+    def copy_run_with_http_info(self, entity_owner, entity_project, entity_uuid, body, **kwargs):  # noqa: E501
         """Restart run with copy  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -351,56 +317,47 @@ class RunsV1Api(object):
                  returns the request thread.
         """
 
-        all_params = [
-            "entity_owner",
-            "entity_project",
-            "entity_uuid",
-            "body",
-        ]  # noqa: E501
-        all_params.append("async_req")
-        all_params.append("_return_http_data_only")
-        all_params.append("_preload_content")
-        all_params.append("_request_timeout")
+        all_params = ['entity_owner', 'entity_project', 'entity_uuid', 'body']  # noqa: E501
+        all_params.append('async_req')
+        all_params.append('_return_http_data_only')
+        all_params.append('_preload_content')
+        all_params.append('_request_timeout')
 
         params = locals()
-        for key, val in six.iteritems(params["kwargs"]):
+        for key, val in six.iteritems(params['kwargs']):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method copy_run" % key
                 )
             params[key] = val
-        del params["kwargs"]
+        del params['kwargs']
         # verify the required parameter 'entity_owner' is set
-        if "entity_owner" not in params or params["entity_owner"] is None:
-            raise ValueError(
-                "Missing the required parameter `entity_owner` when calling `copy_run`"
-            )  # noqa: E501
+        if ('entity_owner' not in params or
+                params['entity_owner'] is None):
+            raise ValueError("Missing the required parameter `entity_owner` when calling `copy_run`")  # noqa: E501
         # verify the required parameter 'entity_project' is set
-        if "entity_project" not in params or params["entity_project"] is None:
-            raise ValueError(
-                "Missing the required parameter `entity_project` when calling `copy_run`"
-            )  # noqa: E501
+        if ('entity_project' not in params or
+                params['entity_project'] is None):
+            raise ValueError("Missing the required parameter `entity_project` when calling `copy_run`")  # noqa: E501
         # verify the required parameter 'entity_uuid' is set
-        if "entity_uuid" not in params or params["entity_uuid"] is None:
-            raise ValueError(
-                "Missing the required parameter `entity_uuid` when calling `copy_run`"
-            )  # noqa: E501
+        if ('entity_uuid' not in params or
+                params['entity_uuid'] is None):
+            raise ValueError("Missing the required parameter `entity_uuid` when calling `copy_run`")  # noqa: E501
         # verify the required parameter 'body' is set
-        if "body" not in params or params["body"] is None:
-            raise ValueError(
-                "Missing the required parameter `body` when calling `copy_run`"
-            )  # noqa: E501
+        if ('body' not in params or
+                params['body'] is None):
+            raise ValueError("Missing the required parameter `body` when calling `copy_run`")  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if "entity_owner" in params:
-            path_params["entity.owner"] = params["entity_owner"]  # noqa: E501
-        if "entity_project" in params:
-            path_params["entity.project"] = params["entity_project"]  # noqa: E501
-        if "entity_uuid" in params:
-            path_params["entity.uuid"] = params["entity_uuid"]  # noqa: E501
+        if 'entity_owner' in params:
+            path_params['entity.owner'] = params['entity_owner']  # noqa: E501
+        if 'entity_project' in params:
+            path_params['entity.project'] = params['entity_project']  # noqa: E501
+        if 'entity_uuid' in params:
+            path_params['entity.uuid'] = params['entity_uuid']  # noqa: E501
 
         query_params = []
 
@@ -410,40 +367,34 @@ class RunsV1Api(object):
         local_var_files = {}
 
         body_params = None
-        if "body" in params:
-            body_params = params["body"]
+        if 'body' in params:
+            body_params = params['body']
         # HTTP header `Accept`
-        header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params[
-            "Content-Type"
-        ] = self.api_client.select_header_content_type(  # noqa: E501
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
+            ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = ["ApiKey"]  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/copy",
-            "POST",
+            '/api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/copy', 'POST',
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type="V1Run",  # noqa: E501
+            response_type='V1Run',  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get("async_req"),
-            _return_http_data_only=params.get("_return_http_data_only"),
-            _preload_content=params.get("_preload_content", True),
-            _request_timeout=params.get("_request_timeout"),
-            collection_formats=collection_formats,
-        )
+            async_req=params.get('async_req'),
+            _return_http_data_only=params.get('_return_http_data_only'),
+            _preload_content=params.get('_preload_content', True),
+            _request_timeout=params.get('_request_timeout'),
+            collection_formats=collection_formats)
 
     def create_run(self, owner, project, body, **kwargs):  # noqa: E501
         """Create new run  # noqa: E501
@@ -461,15 +412,11 @@ class RunsV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs["_return_http_data_only"] = True
-        if kwargs.get("async_req"):
-            return self.create_run_with_http_info(
-                owner, project, body, **kwargs
-            )  # noqa: E501
+        kwargs['_return_http_data_only'] = True
+        if kwargs.get('async_req'):
+            return self.create_run_with_http_info(owner, project, body, **kwargs)  # noqa: E501
         else:
-            (data) = self.create_run_with_http_info(
-                owner, project, body, **kwargs
-            )  # noqa: E501
+            (data) = self.create_run_with_http_info(owner, project, body, **kwargs)  # noqa: E501
             return data
 
     def create_run_with_http_info(self, owner, project, body, **kwargs):  # noqa: E501
@@ -489,44 +436,41 @@ class RunsV1Api(object):
                  returns the request thread.
         """
 
-        all_params = ["owner", "project", "body"]  # noqa: E501
-        all_params.append("async_req")
-        all_params.append("_return_http_data_only")
-        all_params.append("_preload_content")
-        all_params.append("_request_timeout")
+        all_params = ['owner', 'project', 'body']  # noqa: E501
+        all_params.append('async_req')
+        all_params.append('_return_http_data_only')
+        all_params.append('_preload_content')
+        all_params.append('_request_timeout')
 
         params = locals()
-        for key, val in six.iteritems(params["kwargs"]):
+        for key, val in six.iteritems(params['kwargs']):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method create_run" % key
                 )
             params[key] = val
-        del params["kwargs"]
+        del params['kwargs']
         # verify the required parameter 'owner' is set
-        if "owner" not in params or params["owner"] is None:
-            raise ValueError(
-                "Missing the required parameter `owner` when calling `create_run`"
-            )  # noqa: E501
+        if ('owner' not in params or
+                params['owner'] is None):
+            raise ValueError("Missing the required parameter `owner` when calling `create_run`")  # noqa: E501
         # verify the required parameter 'project' is set
-        if "project" not in params or params["project"] is None:
-            raise ValueError(
-                "Missing the required parameter `project` when calling `create_run`"
-            )  # noqa: E501
+        if ('project' not in params or
+                params['project'] is None):
+            raise ValueError("Missing the required parameter `project` when calling `create_run`")  # noqa: E501
         # verify the required parameter 'body' is set
-        if "body" not in params or params["body"] is None:
-            raise ValueError(
-                "Missing the required parameter `body` when calling `create_run`"
-            )  # noqa: E501
+        if ('body' not in params or
+                params['body'] is None):
+            raise ValueError("Missing the required parameter `body` when calling `create_run`")  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if "owner" in params:
-            path_params["owner"] = params["owner"]  # noqa: E501
-        if "project" in params:
-            path_params["project"] = params["project"]  # noqa: E501
+        if 'owner' in params:
+            path_params['owner'] = params['owner']  # noqa: E501
+        if 'project' in params:
+            path_params['project'] = params['project']  # noqa: E501
 
         query_params = []
 
@@ -536,44 +480,36 @@ class RunsV1Api(object):
         local_var_files = {}
 
         body_params = None
-        if "body" in params:
-            body_params = params["body"]
+        if 'body' in params:
+            body_params = params['body']
         # HTTP header `Accept`
-        header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params[
-            "Content-Type"
-        ] = self.api_client.select_header_content_type(  # noqa: E501
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
+            ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = ["ApiKey"]  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/{project}/runs",
-            "POST",
+            '/api/v1/{owner}/{project}/runs', 'POST',
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type="V1Run",  # noqa: E501
+            response_type='V1Run',  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get("async_req"),
-            _return_http_data_only=params.get("_return_http_data_only"),
-            _preload_content=params.get("_preload_content", True),
-            _request_timeout=params.get("_request_timeout"),
-            collection_formats=collection_formats,
-        )
+            async_req=params.get('async_req'),
+            _return_http_data_only=params.get('_return_http_data_only'),
+            _preload_content=params.get('_preload_content', True),
+            _request_timeout=params.get('_request_timeout'),
+            collection_formats=collection_formats)
 
-    def create_run_code_ref(
-        self, entity_owner, entity_project, entity_uuid, body, **kwargs
-    ):  # noqa: E501
+    def create_run_code_ref(self, entity_owner, entity_project, entity_uuid, body, **kwargs):  # noqa: E501
         """Get run code ref  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -585,25 +521,19 @@ class RunsV1Api(object):
         :param str entity_owner: Owner of the namespace (required)
         :param str entity_project: Project where the experiement will be assigned (required)
         :param str entity_uuid: Unique integer identifier of the entity (required)
-        :param V1CodeReference body: Code ref object (required)
-        :return: V1CodeReference
+        :param V1CodeRef body: Code ref object (required)
+        :return: None
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs["_return_http_data_only"] = True
-        if kwargs.get("async_req"):
-            return self.create_run_code_ref_with_http_info(
-                entity_owner, entity_project, entity_uuid, body, **kwargs
-            )  # noqa: E501
+        kwargs['_return_http_data_only'] = True
+        if kwargs.get('async_req'):
+            return self.create_run_code_ref_with_http_info(entity_owner, entity_project, entity_uuid, body, **kwargs)  # noqa: E501
         else:
-            (data) = self.create_run_code_ref_with_http_info(
-                entity_owner, entity_project, entity_uuid, body, **kwargs
-            )  # noqa: E501
+            (data) = self.create_run_code_ref_with_http_info(entity_owner, entity_project, entity_uuid, body, **kwargs)  # noqa: E501
             return data
 
-    def create_run_code_ref_with_http_info(
-        self, entity_owner, entity_project, entity_uuid, body, **kwargs
-    ):  # noqa: E501
+    def create_run_code_ref_with_http_info(self, entity_owner, entity_project, entity_uuid, body, **kwargs):  # noqa: E501
         """Get run code ref  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -615,62 +545,53 @@ class RunsV1Api(object):
         :param str entity_owner: Owner of the namespace (required)
         :param str entity_project: Project where the experiement will be assigned (required)
         :param str entity_uuid: Unique integer identifier of the entity (required)
-        :param V1CodeReference body: Code ref object (required)
-        :return: V1CodeReference
+        :param V1CodeRef body: Code ref object (required)
+        :return: None
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = [
-            "entity_owner",
-            "entity_project",
-            "entity_uuid",
-            "body",
-        ]  # noqa: E501
-        all_params.append("async_req")
-        all_params.append("_return_http_data_only")
-        all_params.append("_preload_content")
-        all_params.append("_request_timeout")
+        all_params = ['entity_owner', 'entity_project', 'entity_uuid', 'body']  # noqa: E501
+        all_params.append('async_req')
+        all_params.append('_return_http_data_only')
+        all_params.append('_preload_content')
+        all_params.append('_request_timeout')
 
         params = locals()
-        for key, val in six.iteritems(params["kwargs"]):
+        for key, val in six.iteritems(params['kwargs']):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method create_run_code_ref" % key
                 )
             params[key] = val
-        del params["kwargs"]
+        del params['kwargs']
         # verify the required parameter 'entity_owner' is set
-        if "entity_owner" not in params or params["entity_owner"] is None:
-            raise ValueError(
-                "Missing the required parameter `entity_owner` when calling `create_run_code_ref`"
-            )  # noqa: E501
+        if ('entity_owner' not in params or
+                params['entity_owner'] is None):
+            raise ValueError("Missing the required parameter `entity_owner` when calling `create_run_code_ref`")  # noqa: E501
         # verify the required parameter 'entity_project' is set
-        if "entity_project" not in params or params["entity_project"] is None:
-            raise ValueError(
-                "Missing the required parameter `entity_project` when calling `create_run_code_ref`"
-            )  # noqa: E501
+        if ('entity_project' not in params or
+                params['entity_project'] is None):
+            raise ValueError("Missing the required parameter `entity_project` when calling `create_run_code_ref`")  # noqa: E501
         # verify the required parameter 'entity_uuid' is set
-        if "entity_uuid" not in params or params["entity_uuid"] is None:
-            raise ValueError(
-                "Missing the required parameter `entity_uuid` when calling `create_run_code_ref`"
-            )  # noqa: E501
+        if ('entity_uuid' not in params or
+                params['entity_uuid'] is None):
+            raise ValueError("Missing the required parameter `entity_uuid` when calling `create_run_code_ref`")  # noqa: E501
         # verify the required parameter 'body' is set
-        if "body" not in params or params["body"] is None:
-            raise ValueError(
-                "Missing the required parameter `body` when calling `create_run_code_ref`"
-            )  # noqa: E501
+        if ('body' not in params or
+                params['body'] is None):
+            raise ValueError("Missing the required parameter `body` when calling `create_run_code_ref`")  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if "entity_owner" in params:
-            path_params["entity.owner"] = params["entity_owner"]  # noqa: E501
-        if "entity_project" in params:
-            path_params["entity.project"] = params["entity_project"]  # noqa: E501
-        if "entity_uuid" in params:
-            path_params["entity.uuid"] = params["entity_uuid"]  # noqa: E501
+        if 'entity_owner' in params:
+            path_params['entity.owner'] = params['entity_owner']  # noqa: E501
+        if 'entity_project' in params:
+            path_params['entity.project'] = params['entity_project']  # noqa: E501
+        if 'entity_uuid' in params:
+            path_params['entity.uuid'] = params['entity_uuid']  # noqa: E501
 
         query_params = []
 
@@ -680,40 +601,34 @@ class RunsV1Api(object):
         local_var_files = {}
 
         body_params = None
-        if "body" in params:
-            body_params = params["body"]
+        if 'body' in params:
+            body_params = params['body']
         # HTTP header `Accept`
-        header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params[
-            "Content-Type"
-        ] = self.api_client.select_header_content_type(  # noqa: E501
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
+            ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = ["ApiKey"]  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/coderef",
-            "POST",
+            '/api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/coderefs', 'POST',
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type="V1CodeReference",  # noqa: E501
+            response_type=None,  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get("async_req"),
-            _return_http_data_only=params.get("_return_http_data_only"),
-            _preload_content=params.get("_preload_content", True),
-            _request_timeout=params.get("_request_timeout"),
-            collection_formats=collection_formats,
-        )
+            async_req=params.get('async_req'),
+            _return_http_data_only=params.get('_return_http_data_only'),
+            _preload_content=params.get('_preload_content', True),
+            _request_timeout=params.get('_request_timeout'),
+            collection_formats=collection_formats)
 
     def create_run_status(self, owner, project, uuid, body, **kwargs):  # noqa: E501
         """Create new run status  # noqa: E501
@@ -732,20 +647,14 @@ class RunsV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs["_return_http_data_only"] = True
-        if kwargs.get("async_req"):
-            return self.create_run_status_with_http_info(
-                owner, project, uuid, body, **kwargs
-            )  # noqa: E501
+        kwargs['_return_http_data_only'] = True
+        if kwargs.get('async_req'):
+            return self.create_run_status_with_http_info(owner, project, uuid, body, **kwargs)  # noqa: E501
         else:
-            (data) = self.create_run_status_with_http_info(
-                owner, project, uuid, body, **kwargs
-            )  # noqa: E501
+            (data) = self.create_run_status_with_http_info(owner, project, uuid, body, **kwargs)  # noqa: E501
             return data
 
-    def create_run_status_with_http_info(
-        self, owner, project, uuid, body, **kwargs
-    ):  # noqa: E501
+    def create_run_status_with_http_info(self, owner, project, uuid, body, **kwargs):  # noqa: E501
         """Create new run status  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -763,51 +672,47 @@ class RunsV1Api(object):
                  returns the request thread.
         """
 
-        all_params = ["owner", "project", "uuid", "body"]  # noqa: E501
-        all_params.append("async_req")
-        all_params.append("_return_http_data_only")
-        all_params.append("_preload_content")
-        all_params.append("_request_timeout")
+        all_params = ['owner', 'project', 'uuid', 'body']  # noqa: E501
+        all_params.append('async_req')
+        all_params.append('_return_http_data_only')
+        all_params.append('_preload_content')
+        all_params.append('_request_timeout')
 
         params = locals()
-        for key, val in six.iteritems(params["kwargs"]):
+        for key, val in six.iteritems(params['kwargs']):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method create_run_status" % key
                 )
             params[key] = val
-        del params["kwargs"]
+        del params['kwargs']
         # verify the required parameter 'owner' is set
-        if "owner" not in params or params["owner"] is None:
-            raise ValueError(
-                "Missing the required parameter `owner` when calling `create_run_status`"
-            )  # noqa: E501
+        if ('owner' not in params or
+                params['owner'] is None):
+            raise ValueError("Missing the required parameter `owner` when calling `create_run_status`")  # noqa: E501
         # verify the required parameter 'project' is set
-        if "project" not in params or params["project"] is None:
-            raise ValueError(
-                "Missing the required parameter `project` when calling `create_run_status`"
-            )  # noqa: E501
+        if ('project' not in params or
+                params['project'] is None):
+            raise ValueError("Missing the required parameter `project` when calling `create_run_status`")  # noqa: E501
         # verify the required parameter 'uuid' is set
-        if "uuid" not in params or params["uuid"] is None:
-            raise ValueError(
-                "Missing the required parameter `uuid` when calling `create_run_status`"
-            )  # noqa: E501
+        if ('uuid' not in params or
+                params['uuid'] is None):
+            raise ValueError("Missing the required parameter `uuid` when calling `create_run_status`")  # noqa: E501
         # verify the required parameter 'body' is set
-        if "body" not in params or params["body"] is None:
-            raise ValueError(
-                "Missing the required parameter `body` when calling `create_run_status`"
-            )  # noqa: E501
+        if ('body' not in params or
+                params['body'] is None):
+            raise ValueError("Missing the required parameter `body` when calling `create_run_status`")  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if "owner" in params:
-            path_params["owner"] = params["owner"]  # noqa: E501
-        if "project" in params:
-            path_params["project"] = params["project"]  # noqa: E501
-        if "uuid" in params:
-            path_params["uuid"] = params["uuid"]  # noqa: E501
+        if 'owner' in params:
+            path_params['owner'] = params['owner']  # noqa: E501
+        if 'project' in params:
+            path_params['project'] = params['project']  # noqa: E501
+        if 'uuid' in params:
+            path_params['uuid'] = params['uuid']  # noqa: E501
 
         query_params = []
 
@@ -817,40 +722,34 @@ class RunsV1Api(object):
         local_var_files = {}
 
         body_params = None
-        if "body" in params:
-            body_params = params["body"]
+        if 'body' in params:
+            body_params = params['body']
         # HTTP header `Accept`
-        header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params[
-            "Content-Type"
-        ] = self.api_client.select_header_content_type(  # noqa: E501
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
+            ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = ["ApiKey"]  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/{project}/runs/{uuid}/statuses",
-            "POST",
+            '/api/v1/{owner}/{project}/runs/{uuid}/statuses', 'POST',
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type="V1Status",  # noqa: E501
+            response_type='V1Status',  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get("async_req"),
-            _return_http_data_only=params.get("_return_http_data_only"),
-            _preload_content=params.get("_preload_content", True),
-            _request_timeout=params.get("_request_timeout"),
-            collection_formats=collection_formats,
-        )
+            async_req=params.get('async_req'),
+            _return_http_data_only=params.get('_return_http_data_only'),
+            _preload_content=params.get('_preload_content', True),
+            _request_timeout=params.get('_request_timeout'),
+            collection_formats=collection_formats)
 
     def delete_run(self, owner, project, uuid, **kwargs):  # noqa: E501
         """Delete run  # noqa: E501
@@ -868,15 +767,11 @@ class RunsV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs["_return_http_data_only"] = True
-        if kwargs.get("async_req"):
-            return self.delete_run_with_http_info(
-                owner, project, uuid, **kwargs
-            )  # noqa: E501
+        kwargs['_return_http_data_only'] = True
+        if kwargs.get('async_req'):
+            return self.delete_run_with_http_info(owner, project, uuid, **kwargs)  # noqa: E501
         else:
-            (data) = self.delete_run_with_http_info(
-                owner, project, uuid, **kwargs
-            )  # noqa: E501
+            (data) = self.delete_run_with_http_info(owner, project, uuid, **kwargs)  # noqa: E501
             return data
 
     def delete_run_with_http_info(self, owner, project, uuid, **kwargs):  # noqa: E501
@@ -896,46 +791,43 @@ class RunsV1Api(object):
                  returns the request thread.
         """
 
-        all_params = ["owner", "project", "uuid"]  # noqa: E501
-        all_params.append("async_req")
-        all_params.append("_return_http_data_only")
-        all_params.append("_preload_content")
-        all_params.append("_request_timeout")
+        all_params = ['owner', 'project', 'uuid']  # noqa: E501
+        all_params.append('async_req')
+        all_params.append('_return_http_data_only')
+        all_params.append('_preload_content')
+        all_params.append('_request_timeout')
 
         params = locals()
-        for key, val in six.iteritems(params["kwargs"]):
+        for key, val in six.iteritems(params['kwargs']):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method delete_run" % key
                 )
             params[key] = val
-        del params["kwargs"]
+        del params['kwargs']
         # verify the required parameter 'owner' is set
-        if "owner" not in params or params["owner"] is None:
-            raise ValueError(
-                "Missing the required parameter `owner` when calling `delete_run`"
-            )  # noqa: E501
+        if ('owner' not in params or
+                params['owner'] is None):
+            raise ValueError("Missing the required parameter `owner` when calling `delete_run`")  # noqa: E501
         # verify the required parameter 'project' is set
-        if "project" not in params or params["project"] is None:
-            raise ValueError(
-                "Missing the required parameter `project` when calling `delete_run`"
-            )  # noqa: E501
+        if ('project' not in params or
+                params['project'] is None):
+            raise ValueError("Missing the required parameter `project` when calling `delete_run`")  # noqa: E501
         # verify the required parameter 'uuid' is set
-        if "uuid" not in params or params["uuid"] is None:
-            raise ValueError(
-                "Missing the required parameter `uuid` when calling `delete_run`"
-            )  # noqa: E501
+        if ('uuid' not in params or
+                params['uuid'] is None):
+            raise ValueError("Missing the required parameter `uuid` when calling `delete_run`")  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if "owner" in params:
-            path_params["owner"] = params["owner"]  # noqa: E501
-        if "project" in params:
-            path_params["project"] = params["project"]  # noqa: E501
-        if "uuid" in params:
-            path_params["uuid"] = params["uuid"]  # noqa: E501
+        if 'owner' in params:
+            path_params['owner'] = params['owner']  # noqa: E501
+        if 'project' in params:
+            path_params['project'] = params['project']  # noqa: E501
+        if 'uuid' in params:
+            path_params['uuid'] = params['uuid']  # noqa: E501
 
         query_params = []
 
@@ -946,23 +838,18 @@ class RunsV1Api(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params[
-            "Content-Type"
-        ] = self.api_client.select_header_content_type(  # noqa: E501
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
+            ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = ["ApiKey"]  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/{project}/runs/{uuid}",
-            "DELETE",
+            '/api/v1/{owner}/{project}/runs/{uuid}', 'DELETE',
             path_params,
             query_params,
             header_params,
@@ -971,12 +858,11 @@ class RunsV1Api(object):
             files=local_var_files,
             response_type=None,  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get("async_req"),
-            _return_http_data_only=params.get("_return_http_data_only"),
-            _preload_content=params.get("_preload_content", True),
-            _request_timeout=params.get("_request_timeout"),
-            collection_formats=collection_formats,
-        )
+            async_req=params.get('async_req'),
+            _return_http_data_only=params.get('_return_http_data_only'),
+            _preload_content=params.get('_preload_content', True),
+            _request_timeout=params.get('_request_timeout'),
+            collection_formats=collection_formats)
 
     def delete_runs(self, owner, project, body, **kwargs):  # noqa: E501
         """Delete runs  # noqa: E501
@@ -994,15 +880,11 @@ class RunsV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs["_return_http_data_only"] = True
-        if kwargs.get("async_req"):
-            return self.delete_runs_with_http_info(
-                owner, project, body, **kwargs
-            )  # noqa: E501
+        kwargs['_return_http_data_only'] = True
+        if kwargs.get('async_req'):
+            return self.delete_runs_with_http_info(owner, project, body, **kwargs)  # noqa: E501
         else:
-            (data) = self.delete_runs_with_http_info(
-                owner, project, body, **kwargs
-            )  # noqa: E501
+            (data) = self.delete_runs_with_http_info(owner, project, body, **kwargs)  # noqa: E501
             return data
 
     def delete_runs_with_http_info(self, owner, project, body, **kwargs):  # noqa: E501
@@ -1022,44 +904,41 @@ class RunsV1Api(object):
                  returns the request thread.
         """
 
-        all_params = ["owner", "project", "body"]  # noqa: E501
-        all_params.append("async_req")
-        all_params.append("_return_http_data_only")
-        all_params.append("_preload_content")
-        all_params.append("_request_timeout")
+        all_params = ['owner', 'project', 'body']  # noqa: E501
+        all_params.append('async_req')
+        all_params.append('_return_http_data_only')
+        all_params.append('_preload_content')
+        all_params.append('_request_timeout')
 
         params = locals()
-        for key, val in six.iteritems(params["kwargs"]):
+        for key, val in six.iteritems(params['kwargs']):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method delete_runs" % key
                 )
             params[key] = val
-        del params["kwargs"]
+        del params['kwargs']
         # verify the required parameter 'owner' is set
-        if "owner" not in params or params["owner"] is None:
-            raise ValueError(
-                "Missing the required parameter `owner` when calling `delete_runs`"
-            )  # noqa: E501
+        if ('owner' not in params or
+                params['owner'] is None):
+            raise ValueError("Missing the required parameter `owner` when calling `delete_runs`")  # noqa: E501
         # verify the required parameter 'project' is set
-        if "project" not in params or params["project"] is None:
-            raise ValueError(
-                "Missing the required parameter `project` when calling `delete_runs`"
-            )  # noqa: E501
+        if ('project' not in params or
+                params['project'] is None):
+            raise ValueError("Missing the required parameter `project` when calling `delete_runs`")  # noqa: E501
         # verify the required parameter 'body' is set
-        if "body" not in params or params["body"] is None:
-            raise ValueError(
-                "Missing the required parameter `body` when calling `delete_runs`"
-            )  # noqa: E501
+        if ('body' not in params or
+                params['body'] is None):
+            raise ValueError("Missing the required parameter `body` when calling `delete_runs`")  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if "owner" in params:
-            path_params["owner"] = params["owner"]  # noqa: E501
-        if "project" in params:
-            path_params["project"] = params["project"]  # noqa: E501
+        if 'owner' in params:
+            path_params['owner'] = params['owner']  # noqa: E501
+        if 'project' in params:
+            path_params['project'] = params['project']  # noqa: E501
 
         query_params = []
 
@@ -1069,26 +948,21 @@ class RunsV1Api(object):
         local_var_files = {}
 
         body_params = None
-        if "body" in params:
-            body_params = params["body"]
+        if 'body' in params:
+            body_params = params['body']
         # HTTP header `Accept`
-        header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params[
-            "Content-Type"
-        ] = self.api_client.select_header_content_type(  # noqa: E501
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
+            ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = ["ApiKey"]  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/{project}/runs/delete",
-            "DELETE",
+            '/api/v1/{owner}/{project}/runs/delete', 'DELETE',
             path_params,
             query_params,
             header_params,
@@ -1097,12 +971,11 @@ class RunsV1Api(object):
             files=local_var_files,
             response_type=None,  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get("async_req"),
-            _return_http_data_only=params.get("_return_http_data_only"),
-            _preload_content=params.get("_preload_content", True),
-            _request_timeout=params.get("_request_timeout"),
-            collection_formats=collection_formats,
-        )
+            async_req=params.get('async_req'),
+            _return_http_data_only=params.get('_return_http_data_only'),
+            _preload_content=params.get('_preload_content', True),
+            _request_timeout=params.get('_request_timeout'),
+            collection_formats=collection_formats)
 
     def get_run(self, owner, project, uuid, **kwargs):  # noqa: E501
         """Get run  # noqa: E501
@@ -1120,15 +993,11 @@ class RunsV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs["_return_http_data_only"] = True
-        if kwargs.get("async_req"):
-            return self.get_run_with_http_info(
-                owner, project, uuid, **kwargs
-            )  # noqa: E501
+        kwargs['_return_http_data_only'] = True
+        if kwargs.get('async_req'):
+            return self.get_run_with_http_info(owner, project, uuid, **kwargs)  # noqa: E501
         else:
-            (data) = self.get_run_with_http_info(
-                owner, project, uuid, **kwargs
-            )  # noqa: E501
+            (data) = self.get_run_with_http_info(owner, project, uuid, **kwargs)  # noqa: E501
             return data
 
     def get_run_with_http_info(self, owner, project, uuid, **kwargs):  # noqa: E501
@@ -1148,45 +1017,43 @@ class RunsV1Api(object):
                  returns the request thread.
         """
 
-        all_params = ["owner", "project", "uuid"]  # noqa: E501
-        all_params.append("async_req")
-        all_params.append("_return_http_data_only")
-        all_params.append("_preload_content")
-        all_params.append("_request_timeout")
+        all_params = ['owner', 'project', 'uuid']  # noqa: E501
+        all_params.append('async_req')
+        all_params.append('_return_http_data_only')
+        all_params.append('_preload_content')
+        all_params.append('_request_timeout')
 
         params = locals()
-        for key, val in six.iteritems(params["kwargs"]):
+        for key, val in six.iteritems(params['kwargs']):
             if key not in all_params:
                 raise TypeError(
-                    "Got an unexpected keyword argument '%s'" " to method get_run" % key
+                    "Got an unexpected keyword argument '%s'"
+                    " to method get_run" % key
                 )
             params[key] = val
-        del params["kwargs"]
+        del params['kwargs']
         # verify the required parameter 'owner' is set
-        if "owner" not in params or params["owner"] is None:
-            raise ValueError(
-                "Missing the required parameter `owner` when calling `get_run`"
-            )  # noqa: E501
+        if ('owner' not in params or
+                params['owner'] is None):
+            raise ValueError("Missing the required parameter `owner` when calling `get_run`")  # noqa: E501
         # verify the required parameter 'project' is set
-        if "project" not in params or params["project"] is None:
-            raise ValueError(
-                "Missing the required parameter `project` when calling `get_run`"
-            )  # noqa: E501
+        if ('project' not in params or
+                params['project'] is None):
+            raise ValueError("Missing the required parameter `project` when calling `get_run`")  # noqa: E501
         # verify the required parameter 'uuid' is set
-        if "uuid" not in params or params["uuid"] is None:
-            raise ValueError(
-                "Missing the required parameter `uuid` when calling `get_run`"
-            )  # noqa: E501
+        if ('uuid' not in params or
+                params['uuid'] is None):
+            raise ValueError("Missing the required parameter `uuid` when calling `get_run`")  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if "owner" in params:
-            path_params["owner"] = params["owner"]  # noqa: E501
-        if "project" in params:
-            path_params["project"] = params["project"]  # noqa: E501
-        if "uuid" in params:
-            path_params["uuid"] = params["uuid"]  # noqa: E501
+        if 'owner' in params:
+            path_params['owner'] = params['owner']  # noqa: E501
+        if 'project' in params:
+            path_params['project'] = params['project']  # noqa: E501
+        if 'uuid' in params:
+            path_params['uuid'] = params['uuid']  # noqa: E501
 
         query_params = []
 
@@ -1197,37 +1064,31 @@ class RunsV1Api(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params[
-            "Content-Type"
-        ] = self.api_client.select_header_content_type(  # noqa: E501
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
+            ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = ["ApiKey"]  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/{project}/runs/{uuid}",
-            "GET",
+            '/api/v1/{owner}/{project}/runs/{uuid}', 'GET',
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type="V1Run",  # noqa: E501
+            response_type='V1Run',  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get("async_req"),
-            _return_http_data_only=params.get("_return_http_data_only"),
-            _preload_content=params.get("_preload_content", True),
-            _request_timeout=params.get("_request_timeout"),
-            collection_formats=collection_formats,
-        )
+            async_req=params.get('async_req'),
+            _return_http_data_only=params.get('_return_http_data_only'),
+            _preload_content=params.get('_preload_content', True),
+            _request_timeout=params.get('_request_timeout'),
+            collection_formats=collection_formats)
 
     def get_run_artifacts_tree(self, owner, project, uuid, **kwargs):  # noqa: E501
         """Get run artifacts list  # noqa: E501
@@ -1248,20 +1109,14 @@ class RunsV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs["_return_http_data_only"] = True
-        if kwargs.get("async_req"):
-            return self.get_run_artifacts_tree_with_http_info(
-                owner, project, uuid, **kwargs
-            )  # noqa: E501
+        kwargs['_return_http_data_only'] = True
+        if kwargs.get('async_req'):
+            return self.get_run_artifacts_tree_with_http_info(owner, project, uuid, **kwargs)  # noqa: E501
         else:
-            (data) = self.get_run_artifacts_tree_with_http_info(
-                owner, project, uuid, **kwargs
-            )  # noqa: E501
+            (data) = self.get_run_artifacts_tree_with_http_info(owner, project, uuid, **kwargs)  # noqa: E501
             return data
 
-    def get_run_artifacts_tree_with_http_info(
-        self, owner, project, uuid, **kwargs
-    ):  # noqa: E501
+    def get_run_artifacts_tree_with_http_info(self, owner, project, uuid, **kwargs):  # noqa: E501
         """Get run artifacts list  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -1281,54 +1136,51 @@ class RunsV1Api(object):
                  returns the request thread.
         """
 
-        all_params = ["owner", "project", "uuid", "path", "step", "type"]  # noqa: E501
-        all_params.append("async_req")
-        all_params.append("_return_http_data_only")
-        all_params.append("_preload_content")
-        all_params.append("_request_timeout")
+        all_params = ['owner', 'project', 'uuid', 'path', 'step', 'type']  # noqa: E501
+        all_params.append('async_req')
+        all_params.append('_return_http_data_only')
+        all_params.append('_preload_content')
+        all_params.append('_request_timeout')
 
         params = locals()
-        for key, val in six.iteritems(params["kwargs"]):
+        for key, val in six.iteritems(params['kwargs']):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method get_run_artifacts_tree" % key
                 )
             params[key] = val
-        del params["kwargs"]
+        del params['kwargs']
         # verify the required parameter 'owner' is set
-        if "owner" not in params or params["owner"] is None:
-            raise ValueError(
-                "Missing the required parameter `owner` when calling `get_run_artifacts_tree`"
-            )  # noqa: E501
+        if ('owner' not in params or
+                params['owner'] is None):
+            raise ValueError("Missing the required parameter `owner` when calling `get_run_artifacts_tree`")  # noqa: E501
         # verify the required parameter 'project' is set
-        if "project" not in params or params["project"] is None:
-            raise ValueError(
-                "Missing the required parameter `project` when calling `get_run_artifacts_tree`"
-            )  # noqa: E501
+        if ('project' not in params or
+                params['project'] is None):
+            raise ValueError("Missing the required parameter `project` when calling `get_run_artifacts_tree`")  # noqa: E501
         # verify the required parameter 'uuid' is set
-        if "uuid" not in params or params["uuid"] is None:
-            raise ValueError(
-                "Missing the required parameter `uuid` when calling `get_run_artifacts_tree`"
-            )  # noqa: E501
+        if ('uuid' not in params or
+                params['uuid'] is None):
+            raise ValueError("Missing the required parameter `uuid` when calling `get_run_artifacts_tree`")  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if "owner" in params:
-            path_params["owner"] = params["owner"]  # noqa: E501
-        if "project" in params:
-            path_params["project"] = params["project"]  # noqa: E501
-        if "uuid" in params:
-            path_params["uuid"] = params["uuid"]  # noqa: E501
+        if 'owner' in params:
+            path_params['owner'] = params['owner']  # noqa: E501
+        if 'project' in params:
+            path_params['project'] = params['project']  # noqa: E501
+        if 'uuid' in params:
+            path_params['uuid'] = params['uuid']  # noqa: E501
 
         query_params = []
-        if "path" in params:
-            query_params.append(("path", params["path"]))  # noqa: E501
-        if "step" in params:
-            query_params.append(("step", params["step"]))  # noqa: E501
-        if "type" in params:
-            query_params.append(("type", params["type"]))  # noqa: E501
+        if 'path' in params:
+            query_params.append(('path', params['path']))  # noqa: E501
+        if 'step' in params:
+            query_params.append(('step', params['step']))  # noqa: E501
+        if 'type' in params:
+            query_params.append(('type', params['type']))  # noqa: E501
 
         header_params = {}
 
@@ -1337,165 +1189,31 @@ class RunsV1Api(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params[
-            "Content-Type"
-        ] = self.api_client.select_header_content_type(  # noqa: E501
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
+            ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = ["ApiKey"]  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/{project}/runs/{uuid}/artifacts/tree",
-            "GET",
+            '/api/v1/{owner}/{project}/runs/{uuid}/artifacts/tree', 'GET',
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type="V1ArtifactTreeResponse",  # noqa: E501
+            response_type='V1ArtifactTreeResponse',  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get("async_req"),
-            _return_http_data_only=params.get("_return_http_data_only"),
-            _preload_content=params.get("_preload_content", True),
-            _request_timeout=params.get("_request_timeout"),
-            collection_formats=collection_formats,
-        )
-
-    def get_run_code_refs(self, owner, project, uuid, **kwargs):  # noqa: E501
-        """Get run code ref  # noqa: E501
-
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.get_run_code_refs(owner, project, uuid, async_req=True)
-        >>> result = thread.get()
-
-        :param async_req bool
-        :param str owner: Owner of the namespace (required)
-        :param str project: Project where the experiement will be assigned (required)
-        :param str uuid: Unique integer identifier of the entity (required)
-        :return: V1ListCodeRefsResponse
-                 If the method is called asynchronously,
-                 returns the request thread.
-        """
-        kwargs["_return_http_data_only"] = True
-        if kwargs.get("async_req"):
-            return self.get_run_code_refs_with_http_info(
-                owner, project, uuid, **kwargs
-            )  # noqa: E501
-        else:
-            (data) = self.get_run_code_refs_with_http_info(
-                owner, project, uuid, **kwargs
-            )  # noqa: E501
-            return data
-
-    def get_run_code_refs_with_http_info(
-        self, owner, project, uuid, **kwargs
-    ):  # noqa: E501
-        """Get run code ref  # noqa: E501
-
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.get_run_code_refs_with_http_info(owner, project, uuid, async_req=True)
-        >>> result = thread.get()
-
-        :param async_req bool
-        :param str owner: Owner of the namespace (required)
-        :param str project: Project where the experiement will be assigned (required)
-        :param str uuid: Unique integer identifier of the entity (required)
-        :return: V1ListCodeRefsResponse
-                 If the method is called asynchronously,
-                 returns the request thread.
-        """
-
-        all_params = ["owner", "project", "uuid"]  # noqa: E501
-        all_params.append("async_req")
-        all_params.append("_return_http_data_only")
-        all_params.append("_preload_content")
-        all_params.append("_request_timeout")
-
-        params = locals()
-        for key, val in six.iteritems(params["kwargs"]):
-            if key not in all_params:
-                raise TypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method get_run_code_refs" % key
-                )
-            params[key] = val
-        del params["kwargs"]
-        # verify the required parameter 'owner' is set
-        if "owner" not in params or params["owner"] is None:
-            raise ValueError(
-                "Missing the required parameter `owner` when calling `get_run_code_refs`"
-            )  # noqa: E501
-        # verify the required parameter 'project' is set
-        if "project" not in params or params["project"] is None:
-            raise ValueError(
-                "Missing the required parameter `project` when calling `get_run_code_refs`"
-            )  # noqa: E501
-        # verify the required parameter 'uuid' is set
-        if "uuid" not in params or params["uuid"] is None:
-            raise ValueError(
-                "Missing the required parameter `uuid` when calling `get_run_code_refs`"
-            )  # noqa: E501
-
-        collection_formats = {}
-
-        path_params = {}
-        if "owner" in params:
-            path_params["owner"] = params["owner"]  # noqa: E501
-        if "project" in params:
-            path_params["project"] = params["project"]  # noqa: E501
-        if "uuid" in params:
-            path_params["uuid"] = params["uuid"]  # noqa: E501
-
-        query_params = []
-
-        header_params = {}
-
-        form_params = []
-        local_var_files = {}
-
-        body_params = None
-        # HTTP header `Accept`
-        header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
-
-        # HTTP header `Content-Type`
-        header_params[
-            "Content-Type"
-        ] = self.api_client.select_header_content_type(  # noqa: E501
-            ["application/json"]
-        )  # noqa: E501
-
-        # Authentication setting
-        auth_settings = ["ApiKey"]  # noqa: E501
-
-        return self.api_client.call_api(
-            "/api/v1/{owner}/{project}/runs/{uuid}/coderef",
-            "GET",
-            path_params,
-            query_params,
-            header_params,
-            body=body_params,
-            post_params=form_params,
-            files=local_var_files,
-            response_type="V1ListCodeRefsResponse",  # noqa: E501
-            auth_settings=auth_settings,
-            async_req=params.get("async_req"),
-            _return_http_data_only=params.get("_return_http_data_only"),
-            _preload_content=params.get("_preload_content", True),
-            _request_timeout=params.get("_request_timeout"),
-            collection_formats=collection_formats,
-        )
+            async_req=params.get('async_req'),
+            _return_http_data_only=params.get('_return_http_data_only'),
+            _preload_content=params.get('_preload_content', True),
+            _request_timeout=params.get('_request_timeout'),
+            collection_formats=collection_formats)
 
     def get_run_logs_file(self, owner, project, uuid, **kwargs):  # noqa: E501
         """Get run logs get file  # noqa: E501
@@ -1516,20 +1234,14 @@ class RunsV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs["_return_http_data_only"] = True
-        if kwargs.get("async_req"):
-            return self.get_run_logs_file_with_http_info(
-                owner, project, uuid, **kwargs
-            )  # noqa: E501
+        kwargs['_return_http_data_only'] = True
+        if kwargs.get('async_req'):
+            return self.get_run_logs_file_with_http_info(owner, project, uuid, **kwargs)  # noqa: E501
         else:
-            (data) = self.get_run_logs_file_with_http_info(
-                owner, project, uuid, **kwargs
-            )  # noqa: E501
+            (data) = self.get_run_logs_file_with_http_info(owner, project, uuid, **kwargs)  # noqa: E501
             return data
 
-    def get_run_logs_file_with_http_info(
-        self, owner, project, uuid, **kwargs
-    ):  # noqa: E501
+    def get_run_logs_file_with_http_info(self, owner, project, uuid, **kwargs):  # noqa: E501
         """Get run logs get file  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -1549,54 +1261,51 @@ class RunsV1Api(object):
                  returns the request thread.
         """
 
-        all_params = ["owner", "project", "uuid", "path", "step", "type"]  # noqa: E501
-        all_params.append("async_req")
-        all_params.append("_return_http_data_only")
-        all_params.append("_preload_content")
-        all_params.append("_request_timeout")
+        all_params = ['owner', 'project', 'uuid', 'path', 'step', 'type']  # noqa: E501
+        all_params.append('async_req')
+        all_params.append('_return_http_data_only')
+        all_params.append('_preload_content')
+        all_params.append('_request_timeout')
 
         params = locals()
-        for key, val in six.iteritems(params["kwargs"]):
+        for key, val in six.iteritems(params['kwargs']):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method get_run_logs_file" % key
                 )
             params[key] = val
-        del params["kwargs"]
+        del params['kwargs']
         # verify the required parameter 'owner' is set
-        if "owner" not in params or params["owner"] is None:
-            raise ValueError(
-                "Missing the required parameter `owner` when calling `get_run_logs_file`"
-            )  # noqa: E501
+        if ('owner' not in params or
+                params['owner'] is None):
+            raise ValueError("Missing the required parameter `owner` when calling `get_run_logs_file`")  # noqa: E501
         # verify the required parameter 'project' is set
-        if "project" not in params or params["project"] is None:
-            raise ValueError(
-                "Missing the required parameter `project` when calling `get_run_logs_file`"
-            )  # noqa: E501
+        if ('project' not in params or
+                params['project'] is None):
+            raise ValueError("Missing the required parameter `project` when calling `get_run_logs_file`")  # noqa: E501
         # verify the required parameter 'uuid' is set
-        if "uuid" not in params or params["uuid"] is None:
-            raise ValueError(
-                "Missing the required parameter `uuid` when calling `get_run_logs_file`"
-            )  # noqa: E501
+        if ('uuid' not in params or
+                params['uuid'] is None):
+            raise ValueError("Missing the required parameter `uuid` when calling `get_run_logs_file`")  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if "owner" in params:
-            path_params["owner"] = params["owner"]  # noqa: E501
-        if "project" in params:
-            path_params["project"] = params["project"]  # noqa: E501
-        if "uuid" in params:
-            path_params["uuid"] = params["uuid"]  # noqa: E501
+        if 'owner' in params:
+            path_params['owner'] = params['owner']  # noqa: E501
+        if 'project' in params:
+            path_params['project'] = params['project']  # noqa: E501
+        if 'uuid' in params:
+            path_params['uuid'] = params['uuid']  # noqa: E501
 
         query_params = []
-        if "path" in params:
-            query_params.append(("path", params["path"]))  # noqa: E501
-        if "step" in params:
-            query_params.append(("step", params["step"]))  # noqa: E501
-        if "type" in params:
-            query_params.append(("type", params["type"]))  # noqa: E501
+        if 'path' in params:
+            query_params.append(('path', params['path']))  # noqa: E501
+        if 'step' in params:
+            query_params.append(('step', params['step']))  # noqa: E501
+        if 'type' in params:
+            query_params.append(('type', params['type']))  # noqa: E501
 
         header_params = {}
 
@@ -1605,37 +1314,31 @@ class RunsV1Api(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params[
-            "Content-Type"
-        ] = self.api_client.select_header_content_type(  # noqa: E501
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
+            ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = ["ApiKey"]  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/{project}/runs/{uuid}/logs/file",
-            "GET",
+            '/api/v1/{owner}/{project}/runs/{uuid}/logs/file', 'GET',
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type="str",  # noqa: E501
+            response_type='str',  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get("async_req"),
-            _return_http_data_only=params.get("_return_http_data_only"),
-            _preload_content=params.get("_preload_content", True),
-            _request_timeout=params.get("_request_timeout"),
-            collection_formats=collection_formats,
-        )
+            async_req=params.get('async_req'),
+            _return_http_data_only=params.get('_return_http_data_only'),
+            _preload_content=params.get('_preload_content', True),
+            _request_timeout=params.get('_request_timeout'),
+            collection_formats=collection_formats)
 
     def get_run_logs_tree(self, owner, project, uuid, **kwargs):  # noqa: E501
         """Get run logs list  # noqa: E501
@@ -1656,20 +1359,14 @@ class RunsV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs["_return_http_data_only"] = True
-        if kwargs.get("async_req"):
-            return self.get_run_logs_tree_with_http_info(
-                owner, project, uuid, **kwargs
-            )  # noqa: E501
+        kwargs['_return_http_data_only'] = True
+        if kwargs.get('async_req'):
+            return self.get_run_logs_tree_with_http_info(owner, project, uuid, **kwargs)  # noqa: E501
         else:
-            (data) = self.get_run_logs_tree_with_http_info(
-                owner, project, uuid, **kwargs
-            )  # noqa: E501
+            (data) = self.get_run_logs_tree_with_http_info(owner, project, uuid, **kwargs)  # noqa: E501
             return data
 
-    def get_run_logs_tree_with_http_info(
-        self, owner, project, uuid, **kwargs
-    ):  # noqa: E501
+    def get_run_logs_tree_with_http_info(self, owner, project, uuid, **kwargs):  # noqa: E501
         """Get run logs list  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -1689,54 +1386,51 @@ class RunsV1Api(object):
                  returns the request thread.
         """
 
-        all_params = ["owner", "project", "uuid", "path", "step", "type"]  # noqa: E501
-        all_params.append("async_req")
-        all_params.append("_return_http_data_only")
-        all_params.append("_preload_content")
-        all_params.append("_request_timeout")
+        all_params = ['owner', 'project', 'uuid', 'path', 'step', 'type']  # noqa: E501
+        all_params.append('async_req')
+        all_params.append('_return_http_data_only')
+        all_params.append('_preload_content')
+        all_params.append('_request_timeout')
 
         params = locals()
-        for key, val in six.iteritems(params["kwargs"]):
+        for key, val in six.iteritems(params['kwargs']):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method get_run_logs_tree" % key
                 )
             params[key] = val
-        del params["kwargs"]
+        del params['kwargs']
         # verify the required parameter 'owner' is set
-        if "owner" not in params or params["owner"] is None:
-            raise ValueError(
-                "Missing the required parameter `owner` when calling `get_run_logs_tree`"
-            )  # noqa: E501
+        if ('owner' not in params or
+                params['owner'] is None):
+            raise ValueError("Missing the required parameter `owner` when calling `get_run_logs_tree`")  # noqa: E501
         # verify the required parameter 'project' is set
-        if "project" not in params or params["project"] is None:
-            raise ValueError(
-                "Missing the required parameter `project` when calling `get_run_logs_tree`"
-            )  # noqa: E501
+        if ('project' not in params or
+                params['project'] is None):
+            raise ValueError("Missing the required parameter `project` when calling `get_run_logs_tree`")  # noqa: E501
         # verify the required parameter 'uuid' is set
-        if "uuid" not in params or params["uuid"] is None:
-            raise ValueError(
-                "Missing the required parameter `uuid` when calling `get_run_logs_tree`"
-            )  # noqa: E501
+        if ('uuid' not in params or
+                params['uuid'] is None):
+            raise ValueError("Missing the required parameter `uuid` when calling `get_run_logs_tree`")  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if "owner" in params:
-            path_params["owner"] = params["owner"]  # noqa: E501
-        if "project" in params:
-            path_params["project"] = params["project"]  # noqa: E501
-        if "uuid" in params:
-            path_params["uuid"] = params["uuid"]  # noqa: E501
+        if 'owner' in params:
+            path_params['owner'] = params['owner']  # noqa: E501
+        if 'project' in params:
+            path_params['project'] = params['project']  # noqa: E501
+        if 'uuid' in params:
+            path_params['uuid'] = params['uuid']  # noqa: E501
 
         query_params = []
-        if "path" in params:
-            query_params.append(("path", params["path"]))  # noqa: E501
-        if "step" in params:
-            query_params.append(("step", params["step"]))  # noqa: E501
-        if "type" in params:
-            query_params.append(("type", params["type"]))  # noqa: E501
+        if 'path' in params:
+            query_params.append(('path', params['path']))  # noqa: E501
+        if 'step' in params:
+            query_params.append(('step', params['step']))  # noqa: E501
+        if 'type' in params:
+            query_params.append(('type', params['type']))  # noqa: E501
 
         header_params = {}
 
@@ -1745,37 +1439,31 @@ class RunsV1Api(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params[
-            "Content-Type"
-        ] = self.api_client.select_header_content_type(  # noqa: E501
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
+            ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = ["ApiKey"]  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/{project}/runs/{uuid}/logs/tree",
-            "GET",
+            '/api/v1/{owner}/{project}/runs/{uuid}/logs/tree', 'GET',
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type="V1ArtifactTreeResponse",  # noqa: E501
+            response_type='V1ArtifactTreeResponse',  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get("async_req"),
-            _return_http_data_only=params.get("_return_http_data_only"),
-            _preload_content=params.get("_preload_content", True),
-            _request_timeout=params.get("_request_timeout"),
-            collection_formats=collection_formats,
-        )
+            async_req=params.get('async_req'),
+            _return_http_data_only=params.get('_return_http_data_only'),
+            _preload_content=params.get('_preload_content', True),
+            _request_timeout=params.get('_request_timeout'),
+            collection_formats=collection_formats)
 
     def get_run_statuses(self, owner, project, uuid, **kwargs):  # noqa: E501
         """Get run status  # noqa: E501
@@ -1793,20 +1481,14 @@ class RunsV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs["_return_http_data_only"] = True
-        if kwargs.get("async_req"):
-            return self.get_run_statuses_with_http_info(
-                owner, project, uuid, **kwargs
-            )  # noqa: E501
+        kwargs['_return_http_data_only'] = True
+        if kwargs.get('async_req'):
+            return self.get_run_statuses_with_http_info(owner, project, uuid, **kwargs)  # noqa: E501
         else:
-            (data) = self.get_run_statuses_with_http_info(
-                owner, project, uuid, **kwargs
-            )  # noqa: E501
+            (data) = self.get_run_statuses_with_http_info(owner, project, uuid, **kwargs)  # noqa: E501
             return data
 
-    def get_run_statuses_with_http_info(
-        self, owner, project, uuid, **kwargs
-    ):  # noqa: E501
+    def get_run_statuses_with_http_info(self, owner, project, uuid, **kwargs):  # noqa: E501
         """Get run status  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -1823,46 +1505,43 @@ class RunsV1Api(object):
                  returns the request thread.
         """
 
-        all_params = ["owner", "project", "uuid"]  # noqa: E501
-        all_params.append("async_req")
-        all_params.append("_return_http_data_only")
-        all_params.append("_preload_content")
-        all_params.append("_request_timeout")
+        all_params = ['owner', 'project', 'uuid']  # noqa: E501
+        all_params.append('async_req')
+        all_params.append('_return_http_data_only')
+        all_params.append('_preload_content')
+        all_params.append('_request_timeout')
 
         params = locals()
-        for key, val in six.iteritems(params["kwargs"]):
+        for key, val in six.iteritems(params['kwargs']):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method get_run_statuses" % key
                 )
             params[key] = val
-        del params["kwargs"]
+        del params['kwargs']
         # verify the required parameter 'owner' is set
-        if "owner" not in params or params["owner"] is None:
-            raise ValueError(
-                "Missing the required parameter `owner` when calling `get_run_statuses`"
-            )  # noqa: E501
+        if ('owner' not in params or
+                params['owner'] is None):
+            raise ValueError("Missing the required parameter `owner` when calling `get_run_statuses`")  # noqa: E501
         # verify the required parameter 'project' is set
-        if "project" not in params or params["project"] is None:
-            raise ValueError(
-                "Missing the required parameter `project` when calling `get_run_statuses`"
-            )  # noqa: E501
+        if ('project' not in params or
+                params['project'] is None):
+            raise ValueError("Missing the required parameter `project` when calling `get_run_statuses`")  # noqa: E501
         # verify the required parameter 'uuid' is set
-        if "uuid" not in params or params["uuid"] is None:
-            raise ValueError(
-                "Missing the required parameter `uuid` when calling `get_run_statuses`"
-            )  # noqa: E501
+        if ('uuid' not in params or
+                params['uuid'] is None):
+            raise ValueError("Missing the required parameter `uuid` when calling `get_run_statuses`")  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if "owner" in params:
-            path_params["owner"] = params["owner"]  # noqa: E501
-        if "project" in params:
-            path_params["project"] = params["project"]  # noqa: E501
-        if "uuid" in params:
-            path_params["uuid"] = params["uuid"]  # noqa: E501
+        if 'owner' in params:
+            path_params['owner'] = params['owner']  # noqa: E501
+        if 'project' in params:
+            path_params['project'] = params['project']  # noqa: E501
+        if 'uuid' in params:
+            path_params['uuid'] = params['uuid']  # noqa: E501
 
         query_params = []
 
@@ -1873,37 +1552,31 @@ class RunsV1Api(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params[
-            "Content-Type"
-        ] = self.api_client.select_header_content_type(  # noqa: E501
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
+            ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = ["ApiKey"]  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/{project}/runs/{uuid}/statuses",
-            "GET",
+            '/api/v1/{owner}/{project}/runs/{uuid}/statuses', 'GET',
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type="V1Status",  # noqa: E501
+            response_type='V1Status',  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get("async_req"),
-            _return_http_data_only=params.get("_return_http_data_only"),
-            _preload_content=params.get("_preload_content", True),
-            _request_timeout=params.get("_request_timeout"),
-            collection_formats=collection_formats,
-        )
+            async_req=params.get('async_req'),
+            _return_http_data_only=params.get('_return_http_data_only'),
+            _preload_content=params.get('_preload_content', True),
+            _request_timeout=params.get('_request_timeout'),
+            collection_formats=collection_formats)
 
     def impersonate_token(self, owner, project, uuid, **kwargs):  # noqa: E501
         """Impersonate run token  # noqa: E501
@@ -1921,20 +1594,14 @@ class RunsV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs["_return_http_data_only"] = True
-        if kwargs.get("async_req"):
-            return self.impersonate_token_with_http_info(
-                owner, project, uuid, **kwargs
-            )  # noqa: E501
+        kwargs['_return_http_data_only'] = True
+        if kwargs.get('async_req'):
+            return self.impersonate_token_with_http_info(owner, project, uuid, **kwargs)  # noqa: E501
         else:
-            (data) = self.impersonate_token_with_http_info(
-                owner, project, uuid, **kwargs
-            )  # noqa: E501
+            (data) = self.impersonate_token_with_http_info(owner, project, uuid, **kwargs)  # noqa: E501
             return data
 
-    def impersonate_token_with_http_info(
-        self, owner, project, uuid, **kwargs
-    ):  # noqa: E501
+    def impersonate_token_with_http_info(self, owner, project, uuid, **kwargs):  # noqa: E501
         """Impersonate run token  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -1951,46 +1618,43 @@ class RunsV1Api(object):
                  returns the request thread.
         """
 
-        all_params = ["owner", "project", "uuid"]  # noqa: E501
-        all_params.append("async_req")
-        all_params.append("_return_http_data_only")
-        all_params.append("_preload_content")
-        all_params.append("_request_timeout")
+        all_params = ['owner', 'project', 'uuid']  # noqa: E501
+        all_params.append('async_req')
+        all_params.append('_return_http_data_only')
+        all_params.append('_preload_content')
+        all_params.append('_request_timeout')
 
         params = locals()
-        for key, val in six.iteritems(params["kwargs"]):
+        for key, val in six.iteritems(params['kwargs']):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method impersonate_token" % key
                 )
             params[key] = val
-        del params["kwargs"]
+        del params['kwargs']
         # verify the required parameter 'owner' is set
-        if "owner" not in params or params["owner"] is None:
-            raise ValueError(
-                "Missing the required parameter `owner` when calling `impersonate_token`"
-            )  # noqa: E501
+        if ('owner' not in params or
+                params['owner'] is None):
+            raise ValueError("Missing the required parameter `owner` when calling `impersonate_token`")  # noqa: E501
         # verify the required parameter 'project' is set
-        if "project" not in params or params["project"] is None:
-            raise ValueError(
-                "Missing the required parameter `project` when calling `impersonate_token`"
-            )  # noqa: E501
+        if ('project' not in params or
+                params['project'] is None):
+            raise ValueError("Missing the required parameter `project` when calling `impersonate_token`")  # noqa: E501
         # verify the required parameter 'uuid' is set
-        if "uuid" not in params or params["uuid"] is None:
-            raise ValueError(
-                "Missing the required parameter `uuid` when calling `impersonate_token`"
-            )  # noqa: E501
+        if ('uuid' not in params or
+                params['uuid'] is None):
+            raise ValueError("Missing the required parameter `uuid` when calling `impersonate_token`")  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if "owner" in params:
-            path_params["owner"] = params["owner"]  # noqa: E501
-        if "project" in params:
-            path_params["project"] = params["project"]  # noqa: E501
-        if "uuid" in params:
-            path_params["uuid"] = params["uuid"]  # noqa: E501
+        if 'owner' in params:
+            path_params['owner'] = params['owner']  # noqa: E501
+        if 'project' in params:
+            path_params['project'] = params['project']  # noqa: E501
+        if 'uuid' in params:
+            path_params['uuid'] = params['uuid']  # noqa: E501
 
         query_params = []
 
@@ -2001,37 +1665,31 @@ class RunsV1Api(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params[
-            "Content-Type"
-        ] = self.api_client.select_header_content_type(  # noqa: E501
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
+            ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = ["ApiKey"]  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/{project}/runs/{uuid}/impersonate",
-            "POST",
+            '/api/v1/{owner}/{project}/runs/{uuid}/impersonate', 'POST',
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type="V1Auth",  # noqa: E501
+            response_type='V1Auth',  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get("async_req"),
-            _return_http_data_only=params.get("_return_http_data_only"),
-            _preload_content=params.get("_preload_content", True),
-            _request_timeout=params.get("_request_timeout"),
-            collection_formats=collection_formats,
-        )
+            async_req=params.get('async_req'),
+            _return_http_data_only=params.get('_return_http_data_only'),
+            _preload_content=params.get('_preload_content', True),
+            _request_timeout=params.get('_request_timeout'),
+            collection_formats=collection_formats)
 
     def invalidate_run(self, owner, project, uuid, body, **kwargs):  # noqa: E501
         """Invalidate run  # noqa: E501
@@ -2050,20 +1708,14 @@ class RunsV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs["_return_http_data_only"] = True
-        if kwargs.get("async_req"):
-            return self.invalidate_run_with_http_info(
-                owner, project, uuid, body, **kwargs
-            )  # noqa: E501
+        kwargs['_return_http_data_only'] = True
+        if kwargs.get('async_req'):
+            return self.invalidate_run_with_http_info(owner, project, uuid, body, **kwargs)  # noqa: E501
         else:
-            (data) = self.invalidate_run_with_http_info(
-                owner, project, uuid, body, **kwargs
-            )  # noqa: E501
+            (data) = self.invalidate_run_with_http_info(owner, project, uuid, body, **kwargs)  # noqa: E501
             return data
 
-    def invalidate_run_with_http_info(
-        self, owner, project, uuid, body, **kwargs
-    ):  # noqa: E501
+    def invalidate_run_with_http_info(self, owner, project, uuid, body, **kwargs):  # noqa: E501
         """Invalidate run  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -2081,51 +1733,47 @@ class RunsV1Api(object):
                  returns the request thread.
         """
 
-        all_params = ["owner", "project", "uuid", "body"]  # noqa: E501
-        all_params.append("async_req")
-        all_params.append("_return_http_data_only")
-        all_params.append("_preload_content")
-        all_params.append("_request_timeout")
+        all_params = ['owner', 'project', 'uuid', 'body']  # noqa: E501
+        all_params.append('async_req')
+        all_params.append('_return_http_data_only')
+        all_params.append('_preload_content')
+        all_params.append('_request_timeout')
 
         params = locals()
-        for key, val in six.iteritems(params["kwargs"]):
+        for key, val in six.iteritems(params['kwargs']):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method invalidate_run" % key
                 )
             params[key] = val
-        del params["kwargs"]
+        del params['kwargs']
         # verify the required parameter 'owner' is set
-        if "owner" not in params or params["owner"] is None:
-            raise ValueError(
-                "Missing the required parameter `owner` when calling `invalidate_run`"
-            )  # noqa: E501
+        if ('owner' not in params or
+                params['owner'] is None):
+            raise ValueError("Missing the required parameter `owner` when calling `invalidate_run`")  # noqa: E501
         # verify the required parameter 'project' is set
-        if "project" not in params or params["project"] is None:
-            raise ValueError(
-                "Missing the required parameter `project` when calling `invalidate_run`"
-            )  # noqa: E501
+        if ('project' not in params or
+                params['project'] is None):
+            raise ValueError("Missing the required parameter `project` when calling `invalidate_run`")  # noqa: E501
         # verify the required parameter 'uuid' is set
-        if "uuid" not in params or params["uuid"] is None:
-            raise ValueError(
-                "Missing the required parameter `uuid` when calling `invalidate_run`"
-            )  # noqa: E501
+        if ('uuid' not in params or
+                params['uuid'] is None):
+            raise ValueError("Missing the required parameter `uuid` when calling `invalidate_run`")  # noqa: E501
         # verify the required parameter 'body' is set
-        if "body" not in params or params["body"] is None:
-            raise ValueError(
-                "Missing the required parameter `body` when calling `invalidate_run`"
-            )  # noqa: E501
+        if ('body' not in params or
+                params['body'] is None):
+            raise ValueError("Missing the required parameter `body` when calling `invalidate_run`")  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if "owner" in params:
-            path_params["owner"] = params["owner"]  # noqa: E501
-        if "project" in params:
-            path_params["project"] = params["project"]  # noqa: E501
-        if "uuid" in params:
-            path_params["uuid"] = params["uuid"]  # noqa: E501
+        if 'owner' in params:
+            path_params['owner'] = params['owner']  # noqa: E501
+        if 'project' in params:
+            path_params['project'] = params['project']  # noqa: E501
+        if 'uuid' in params:
+            path_params['uuid'] = params['uuid']  # noqa: E501
 
         query_params = []
 
@@ -2135,26 +1783,21 @@ class RunsV1Api(object):
         local_var_files = {}
 
         body_params = None
-        if "body" in params:
-            body_params = params["body"]
+        if 'body' in params:
+            body_params = params['body']
         # HTTP header `Accept`
-        header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params[
-            "Content-Type"
-        ] = self.api_client.select_header_content_type(  # noqa: E501
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
+            ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = ["ApiKey"]  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/{project}/runs/{uuid}/invalidate",
-            "POST",
+            '/api/v1/{owner}/{project}/runs/{uuid}/invalidate', 'POST',
             path_params,
             query_params,
             header_params,
@@ -2163,12 +1806,11 @@ class RunsV1Api(object):
             files=local_var_files,
             response_type=None,  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get("async_req"),
-            _return_http_data_only=params.get("_return_http_data_only"),
-            _preload_content=params.get("_preload_content", True),
-            _request_timeout=params.get("_request_timeout"),
-            collection_formats=collection_formats,
-        )
+            async_req=params.get('async_req'),
+            _return_http_data_only=params.get('_return_http_data_only'),
+            _preload_content=params.get('_preload_content', True),
+            _request_timeout=params.get('_request_timeout'),
+            collection_formats=collection_formats)
 
     def invalidate_runs(self, owner, project, body, **kwargs):  # noqa: E501
         """Invalidate runs  # noqa: E501
@@ -2186,20 +1828,14 @@ class RunsV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs["_return_http_data_only"] = True
-        if kwargs.get("async_req"):
-            return self.invalidate_runs_with_http_info(
-                owner, project, body, **kwargs
-            )  # noqa: E501
+        kwargs['_return_http_data_only'] = True
+        if kwargs.get('async_req'):
+            return self.invalidate_runs_with_http_info(owner, project, body, **kwargs)  # noqa: E501
         else:
-            (data) = self.invalidate_runs_with_http_info(
-                owner, project, body, **kwargs
-            )  # noqa: E501
+            (data) = self.invalidate_runs_with_http_info(owner, project, body, **kwargs)  # noqa: E501
             return data
 
-    def invalidate_runs_with_http_info(
-        self, owner, project, body, **kwargs
-    ):  # noqa: E501
+    def invalidate_runs_with_http_info(self, owner, project, body, **kwargs):  # noqa: E501
         """Invalidate runs  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -2216,44 +1852,41 @@ class RunsV1Api(object):
                  returns the request thread.
         """
 
-        all_params = ["owner", "project", "body"]  # noqa: E501
-        all_params.append("async_req")
-        all_params.append("_return_http_data_only")
-        all_params.append("_preload_content")
-        all_params.append("_request_timeout")
+        all_params = ['owner', 'project', 'body']  # noqa: E501
+        all_params.append('async_req')
+        all_params.append('_return_http_data_only')
+        all_params.append('_preload_content')
+        all_params.append('_request_timeout')
 
         params = locals()
-        for key, val in six.iteritems(params["kwargs"]):
+        for key, val in six.iteritems(params['kwargs']):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method invalidate_runs" % key
                 )
             params[key] = val
-        del params["kwargs"]
+        del params['kwargs']
         # verify the required parameter 'owner' is set
-        if "owner" not in params or params["owner"] is None:
-            raise ValueError(
-                "Missing the required parameter `owner` when calling `invalidate_runs`"
-            )  # noqa: E501
+        if ('owner' not in params or
+                params['owner'] is None):
+            raise ValueError("Missing the required parameter `owner` when calling `invalidate_runs`")  # noqa: E501
         # verify the required parameter 'project' is set
-        if "project" not in params or params["project"] is None:
-            raise ValueError(
-                "Missing the required parameter `project` when calling `invalidate_runs`"
-            )  # noqa: E501
+        if ('project' not in params or
+                params['project'] is None):
+            raise ValueError("Missing the required parameter `project` when calling `invalidate_runs`")  # noqa: E501
         # verify the required parameter 'body' is set
-        if "body" not in params or params["body"] is None:
-            raise ValueError(
-                "Missing the required parameter `body` when calling `invalidate_runs`"
-            )  # noqa: E501
+        if ('body' not in params or
+                params['body'] is None):
+            raise ValueError("Missing the required parameter `body` when calling `invalidate_runs`")  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if "owner" in params:
-            path_params["owner"] = params["owner"]  # noqa: E501
-        if "project" in params:
-            path_params["project"] = params["project"]  # noqa: E501
+        if 'owner' in params:
+            path_params['owner'] = params['owner']  # noqa: E501
+        if 'project' in params:
+            path_params['project'] = params['project']  # noqa: E501
 
         query_params = []
 
@@ -2263,26 +1896,21 @@ class RunsV1Api(object):
         local_var_files = {}
 
         body_params = None
-        if "body" in params:
-            body_params = params["body"]
+        if 'body' in params:
+            body_params = params['body']
         # HTTP header `Accept`
-        header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params[
-            "Content-Type"
-        ] = self.api_client.select_header_content_type(  # noqa: E501
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
+            ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = ["ApiKey"]  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/{project}/runs/invalidate",
-            "POST",
+            '/api/v1/{owner}/{project}/runs/invalidate', 'POST',
             path_params,
             query_params,
             header_params,
@@ -2291,12 +1919,11 @@ class RunsV1Api(object):
             files=local_var_files,
             response_type=None,  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get("async_req"),
-            _return_http_data_only=params.get("_return_http_data_only"),
-            _preload_content=params.get("_preload_content", True),
-            _request_timeout=params.get("_request_timeout"),
-            collection_formats=collection_formats,
-        )
+            async_req=params.get('async_req'),
+            _return_http_data_only=params.get('_return_http_data_only'),
+            _preload_content=params.get('_preload_content', True),
+            _request_timeout=params.get('_request_timeout'),
+            collection_formats=collection_formats)
 
     def list_archived_runs(self, user, **kwargs):  # noqa: E501
         """List archived runs for user  # noqa: E501
@@ -2316,13 +1943,11 @@ class RunsV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs["_return_http_data_only"] = True
-        if kwargs.get("async_req"):
+        kwargs['_return_http_data_only'] = True
+        if kwargs.get('async_req'):
             return self.list_archived_runs_with_http_info(user, **kwargs)  # noqa: E501
         else:
-            (data) = self.list_archived_runs_with_http_info(
-                user, **kwargs
-            )  # noqa: E501
+            (data) = self.list_archived_runs_with_http_info(user, **kwargs)  # noqa: E501
             return data
 
     def list_archived_runs_with_http_info(self, user, **kwargs):  # noqa: E501
@@ -2344,42 +1969,41 @@ class RunsV1Api(object):
                  returns the request thread.
         """
 
-        all_params = ["user", "offset", "limit", "sort", "query"]  # noqa: E501
-        all_params.append("async_req")
-        all_params.append("_return_http_data_only")
-        all_params.append("_preload_content")
-        all_params.append("_request_timeout")
+        all_params = ['user', 'offset', 'limit', 'sort', 'query']  # noqa: E501
+        all_params.append('async_req')
+        all_params.append('_return_http_data_only')
+        all_params.append('_preload_content')
+        all_params.append('_request_timeout')
 
         params = locals()
-        for key, val in six.iteritems(params["kwargs"]):
+        for key, val in six.iteritems(params['kwargs']):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method list_archived_runs" % key
                 )
             params[key] = val
-        del params["kwargs"]
+        del params['kwargs']
         # verify the required parameter 'user' is set
-        if "user" not in params or params["user"] is None:
-            raise ValueError(
-                "Missing the required parameter `user` when calling `list_archived_runs`"
-            )  # noqa: E501
+        if ('user' not in params or
+                params['user'] is None):
+            raise ValueError("Missing the required parameter `user` when calling `list_archived_runs`")  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if "user" in params:
-            path_params["user"] = params["user"]  # noqa: E501
+        if 'user' in params:
+            path_params['user'] = params['user']  # noqa: E501
 
         query_params = []
-        if "offset" in params:
-            query_params.append(("offset", params["offset"]))  # noqa: E501
-        if "limit" in params:
-            query_params.append(("limit", params["limit"]))  # noqa: E501
-        if "sort" in params:
-            query_params.append(("sort", params["sort"]))  # noqa: E501
-        if "query" in params:
-            query_params.append(("query", params["query"]))  # noqa: E501
+        if 'offset' in params:
+            query_params.append(('offset', params['offset']))  # noqa: E501
+        if 'limit' in params:
+            query_params.append(('limit', params['limit']))  # noqa: E501
+        if 'sort' in params:
+            query_params.append(('sort', params['sort']))  # noqa: E501
+        if 'query' in params:
+            query_params.append(('query', params['query']))  # noqa: E501
 
         header_params = {}
 
@@ -2388,37 +2012,31 @@ class RunsV1Api(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params[
-            "Content-Type"
-        ] = self.api_client.select_header_content_type(  # noqa: E501
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
+            ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = ["ApiKey"]  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/archives/{user}/runs",
-            "GET",
+            '/api/v1/archives/{user}/runs', 'GET',
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type="V1ListRunsResponse",  # noqa: E501
+            response_type='V1ListRunsResponse',  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get("async_req"),
-            _return_http_data_only=params.get("_return_http_data_only"),
-            _preload_content=params.get("_preload_content", True),
-            _request_timeout=params.get("_request_timeout"),
-            collection_formats=collection_formats,
-        )
+            async_req=params.get('async_req'),
+            _return_http_data_only=params.get('_return_http_data_only'),
+            _preload_content=params.get('_preload_content', True),
+            _request_timeout=params.get('_request_timeout'),
+            collection_formats=collection_formats)
 
     def list_bookmarked_runs(self, user, **kwargs):  # noqa: E501
         """List bookmarked runs for user  # noqa: E501
@@ -2438,15 +2056,11 @@ class RunsV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs["_return_http_data_only"] = True
-        if kwargs.get("async_req"):
-            return self.list_bookmarked_runs_with_http_info(
-                user, **kwargs
-            )  # noqa: E501
+        kwargs['_return_http_data_only'] = True
+        if kwargs.get('async_req'):
+            return self.list_bookmarked_runs_with_http_info(user, **kwargs)  # noqa: E501
         else:
-            (data) = self.list_bookmarked_runs_with_http_info(
-                user, **kwargs
-            )  # noqa: E501
+            (data) = self.list_bookmarked_runs_with_http_info(user, **kwargs)  # noqa: E501
             return data
 
     def list_bookmarked_runs_with_http_info(self, user, **kwargs):  # noqa: E501
@@ -2468,42 +2082,41 @@ class RunsV1Api(object):
                  returns the request thread.
         """
 
-        all_params = ["user", "offset", "limit", "sort", "query"]  # noqa: E501
-        all_params.append("async_req")
-        all_params.append("_return_http_data_only")
-        all_params.append("_preload_content")
-        all_params.append("_request_timeout")
+        all_params = ['user', 'offset', 'limit', 'sort', 'query']  # noqa: E501
+        all_params.append('async_req')
+        all_params.append('_return_http_data_only')
+        all_params.append('_preload_content')
+        all_params.append('_request_timeout')
 
         params = locals()
-        for key, val in six.iteritems(params["kwargs"]):
+        for key, val in six.iteritems(params['kwargs']):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method list_bookmarked_runs" % key
                 )
             params[key] = val
-        del params["kwargs"]
+        del params['kwargs']
         # verify the required parameter 'user' is set
-        if "user" not in params or params["user"] is None:
-            raise ValueError(
-                "Missing the required parameter `user` when calling `list_bookmarked_runs`"
-            )  # noqa: E501
+        if ('user' not in params or
+                params['user'] is None):
+            raise ValueError("Missing the required parameter `user` when calling `list_bookmarked_runs`")  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if "user" in params:
-            path_params["user"] = params["user"]  # noqa: E501
+        if 'user' in params:
+            path_params['user'] = params['user']  # noqa: E501
 
         query_params = []
-        if "offset" in params:
-            query_params.append(("offset", params["offset"]))  # noqa: E501
-        if "limit" in params:
-            query_params.append(("limit", params["limit"]))  # noqa: E501
-        if "sort" in params:
-            query_params.append(("sort", params["sort"]))  # noqa: E501
-        if "query" in params:
-            query_params.append(("query", params["query"]))  # noqa: E501
+        if 'offset' in params:
+            query_params.append(('offset', params['offset']))  # noqa: E501
+        if 'limit' in params:
+            query_params.append(('limit', params['limit']))  # noqa: E501
+        if 'sort' in params:
+            query_params.append(('sort', params['sort']))  # noqa: E501
+        if 'query' in params:
+            query_params.append(('query', params['query']))  # noqa: E501
 
         header_params = {}
 
@@ -2512,37 +2125,31 @@ class RunsV1Api(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params[
-            "Content-Type"
-        ] = self.api_client.select_header_content_type(  # noqa: E501
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
+            ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = ["ApiKey"]  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/bookmarks/{user}/runs",
-            "GET",
+            '/api/v1/bookmarks/{user}/runs', 'GET',
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type="V1ListRunsResponse",  # noqa: E501
+            response_type='V1ListRunsResponse',  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get("async_req"),
-            _return_http_data_only=params.get("_return_http_data_only"),
-            _preload_content=params.get("_preload_content", True),
-            _request_timeout=params.get("_request_timeout"),
-            collection_formats=collection_formats,
-        )
+            async_req=params.get('async_req'),
+            _return_http_data_only=params.get('_return_http_data_only'),
+            _preload_content=params.get('_preload_content', True),
+            _request_timeout=params.get('_request_timeout'),
+            collection_formats=collection_formats)
 
     def list_runs(self, owner, project, **kwargs):  # noqa: E501
         """List runs  # noqa: E501
@@ -2563,13 +2170,11 @@ class RunsV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs["_return_http_data_only"] = True
-        if kwargs.get("async_req"):
+        kwargs['_return_http_data_only'] = True
+        if kwargs.get('async_req'):
             return self.list_runs_with_http_info(owner, project, **kwargs)  # noqa: E501
         else:
-            (data) = self.list_runs_with_http_info(
-                owner, project, **kwargs
-            )  # noqa: E501
+            (data) = self.list_runs_with_http_info(owner, project, **kwargs)  # noqa: E501
             return data
 
     def list_runs_with_http_info(self, owner, project, **kwargs):  # noqa: E501
@@ -2592,56 +2197,47 @@ class RunsV1Api(object):
                  returns the request thread.
         """
 
-        all_params = [
-            "owner",
-            "project",
-            "offset",
-            "limit",
-            "sort",
-            "query",
-        ]  # noqa: E501
-        all_params.append("async_req")
-        all_params.append("_return_http_data_only")
-        all_params.append("_preload_content")
-        all_params.append("_request_timeout")
+        all_params = ['owner', 'project', 'offset', 'limit', 'sort', 'query']  # noqa: E501
+        all_params.append('async_req')
+        all_params.append('_return_http_data_only')
+        all_params.append('_preload_content')
+        all_params.append('_request_timeout')
 
         params = locals()
-        for key, val in six.iteritems(params["kwargs"]):
+        for key, val in six.iteritems(params['kwargs']):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method list_runs" % key
                 )
             params[key] = val
-        del params["kwargs"]
+        del params['kwargs']
         # verify the required parameter 'owner' is set
-        if "owner" not in params or params["owner"] is None:
-            raise ValueError(
-                "Missing the required parameter `owner` when calling `list_runs`"
-            )  # noqa: E501
+        if ('owner' not in params or
+                params['owner'] is None):
+            raise ValueError("Missing the required parameter `owner` when calling `list_runs`")  # noqa: E501
         # verify the required parameter 'project' is set
-        if "project" not in params or params["project"] is None:
-            raise ValueError(
-                "Missing the required parameter `project` when calling `list_runs`"
-            )  # noqa: E501
+        if ('project' not in params or
+                params['project'] is None):
+            raise ValueError("Missing the required parameter `project` when calling `list_runs`")  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if "owner" in params:
-            path_params["owner"] = params["owner"]  # noqa: E501
-        if "project" in params:
-            path_params["project"] = params["project"]  # noqa: E501
+        if 'owner' in params:
+            path_params['owner'] = params['owner']  # noqa: E501
+        if 'project' in params:
+            path_params['project'] = params['project']  # noqa: E501
 
         query_params = []
-        if "offset" in params:
-            query_params.append(("offset", params["offset"]))  # noqa: E501
-        if "limit" in params:
-            query_params.append(("limit", params["limit"]))  # noqa: E501
-        if "sort" in params:
-            query_params.append(("sort", params["sort"]))  # noqa: E501
-        if "query" in params:
-            query_params.append(("query", params["query"]))  # noqa: E501
+        if 'offset' in params:
+            query_params.append(('offset', params['offset']))  # noqa: E501
+        if 'limit' in params:
+            query_params.append(('limit', params['limit']))  # noqa: E501
+        if 'sort' in params:
+            query_params.append(('sort', params['sort']))  # noqa: E501
+        if 'query' in params:
+            query_params.append(('query', params['query']))  # noqa: E501
 
         header_params = {}
 
@@ -2650,37 +2246,31 @@ class RunsV1Api(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params[
-            "Content-Type"
-        ] = self.api_client.select_header_content_type(  # noqa: E501
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
+            ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = ["ApiKey"]  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/{project}/runs",
-            "GET",
+            '/api/v1/{owner}/{project}/runs', 'GET',
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type="V1ListRunsResponse",  # noqa: E501
+            response_type='V1ListRunsResponse',  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get("async_req"),
-            _return_http_data_only=params.get("_return_http_data_only"),
-            _preload_content=params.get("_preload_content", True),
-            _request_timeout=params.get("_request_timeout"),
-            collection_formats=collection_formats,
-        )
+            async_req=params.get('async_req'),
+            _return_http_data_only=params.get('_return_http_data_only'),
+            _preload_content=params.get('_preload_content', True),
+            _request_timeout=params.get('_request_timeout'),
+            collection_formats=collection_formats)
 
     def patch_run(self, owner, project, run_uuid, body, **kwargs):  # noqa: E501
         """Patch run  # noqa: E501
@@ -2699,20 +2289,14 @@ class RunsV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs["_return_http_data_only"] = True
-        if kwargs.get("async_req"):
-            return self.patch_run_with_http_info(
-                owner, project, run_uuid, body, **kwargs
-            )  # noqa: E501
+        kwargs['_return_http_data_only'] = True
+        if kwargs.get('async_req'):
+            return self.patch_run_with_http_info(owner, project, run_uuid, body, **kwargs)  # noqa: E501
         else:
-            (data) = self.patch_run_with_http_info(
-                owner, project, run_uuid, body, **kwargs
-            )  # noqa: E501
+            (data) = self.patch_run_with_http_info(owner, project, run_uuid, body, **kwargs)  # noqa: E501
             return data
 
-    def patch_run_with_http_info(
-        self, owner, project, run_uuid, body, **kwargs
-    ):  # noqa: E501
+    def patch_run_with_http_info(self, owner, project, run_uuid, body, **kwargs):  # noqa: E501
         """Patch run  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -2730,51 +2314,47 @@ class RunsV1Api(object):
                  returns the request thread.
         """
 
-        all_params = ["owner", "project", "run_uuid", "body"]  # noqa: E501
-        all_params.append("async_req")
-        all_params.append("_return_http_data_only")
-        all_params.append("_preload_content")
-        all_params.append("_request_timeout")
+        all_params = ['owner', 'project', 'run_uuid', 'body']  # noqa: E501
+        all_params.append('async_req')
+        all_params.append('_return_http_data_only')
+        all_params.append('_preload_content')
+        all_params.append('_request_timeout')
 
         params = locals()
-        for key, val in six.iteritems(params["kwargs"]):
+        for key, val in six.iteritems(params['kwargs']):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method patch_run" % key
                 )
             params[key] = val
-        del params["kwargs"]
+        del params['kwargs']
         # verify the required parameter 'owner' is set
-        if "owner" not in params or params["owner"] is None:
-            raise ValueError(
-                "Missing the required parameter `owner` when calling `patch_run`"
-            )  # noqa: E501
+        if ('owner' not in params or
+                params['owner'] is None):
+            raise ValueError("Missing the required parameter `owner` when calling `patch_run`")  # noqa: E501
         # verify the required parameter 'project' is set
-        if "project" not in params or params["project"] is None:
-            raise ValueError(
-                "Missing the required parameter `project` when calling `patch_run`"
-            )  # noqa: E501
+        if ('project' not in params or
+                params['project'] is None):
+            raise ValueError("Missing the required parameter `project` when calling `patch_run`")  # noqa: E501
         # verify the required parameter 'run_uuid' is set
-        if "run_uuid" not in params or params["run_uuid"] is None:
-            raise ValueError(
-                "Missing the required parameter `run_uuid` when calling `patch_run`"
-            )  # noqa: E501
+        if ('run_uuid' not in params or
+                params['run_uuid'] is None):
+            raise ValueError("Missing the required parameter `run_uuid` when calling `patch_run`")  # noqa: E501
         # verify the required parameter 'body' is set
-        if "body" not in params or params["body"] is None:
-            raise ValueError(
-                "Missing the required parameter `body` when calling `patch_run`"
-            )  # noqa: E501
+        if ('body' not in params or
+                params['body'] is None):
+            raise ValueError("Missing the required parameter `body` when calling `patch_run`")  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if "owner" in params:
-            path_params["owner"] = params["owner"]  # noqa: E501
-        if "project" in params:
-            path_params["project"] = params["project"]  # noqa: E501
-        if "run_uuid" in params:
-            path_params["run.uuid"] = params["run_uuid"]  # noqa: E501
+        if 'owner' in params:
+            path_params['owner'] = params['owner']  # noqa: E501
+        if 'project' in params:
+            path_params['project'] = params['project']  # noqa: E501
+        if 'run_uuid' in params:
+            path_params['run.uuid'] = params['run_uuid']  # noqa: E501
 
         query_params = []
 
@@ -2784,44 +2364,36 @@ class RunsV1Api(object):
         local_var_files = {}
 
         body_params = None
-        if "body" in params:
-            body_params = params["body"]
+        if 'body' in params:
+            body_params = params['body']
         # HTTP header `Accept`
-        header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params[
-            "Content-Type"
-        ] = self.api_client.select_header_content_type(  # noqa: E501
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
+            ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = ["ApiKey"]  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/{project}/runs/{run.uuid}",
-            "PATCH",
+            '/api/v1/{owner}/{project}/runs/{run.uuid}', 'PATCH',
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type="V1Run",  # noqa: E501
+            response_type='V1Run',  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get("async_req"),
-            _return_http_data_only=params.get("_return_http_data_only"),
-            _preload_content=params.get("_preload_content", True),
-            _request_timeout=params.get("_request_timeout"),
-            collection_formats=collection_formats,
-        )
+            async_req=params.get('async_req'),
+            _return_http_data_only=params.get('_return_http_data_only'),
+            _preload_content=params.get('_preload_content', True),
+            _request_timeout=params.get('_request_timeout'),
+            collection_formats=collection_formats)
 
-    def restart_run(
-        self, entity_owner, entity_project, entity_uuid, body, **kwargs
-    ):  # noqa: E501
+    def restart_run(self, entity_owner, entity_project, entity_uuid, body, **kwargs):  # noqa: E501
         """Restart run  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -2838,20 +2410,14 @@ class RunsV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs["_return_http_data_only"] = True
-        if kwargs.get("async_req"):
-            return self.restart_run_with_http_info(
-                entity_owner, entity_project, entity_uuid, body, **kwargs
-            )  # noqa: E501
+        kwargs['_return_http_data_only'] = True
+        if kwargs.get('async_req'):
+            return self.restart_run_with_http_info(entity_owner, entity_project, entity_uuid, body, **kwargs)  # noqa: E501
         else:
-            (data) = self.restart_run_with_http_info(
-                entity_owner, entity_project, entity_uuid, body, **kwargs
-            )  # noqa: E501
+            (data) = self.restart_run_with_http_info(entity_owner, entity_project, entity_uuid, body, **kwargs)  # noqa: E501
             return data
 
-    def restart_run_with_http_info(
-        self, entity_owner, entity_project, entity_uuid, body, **kwargs
-    ):  # noqa: E501
+    def restart_run_with_http_info(self, entity_owner, entity_project, entity_uuid, body, **kwargs):  # noqa: E501
         """Restart run  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -2869,56 +2435,47 @@ class RunsV1Api(object):
                  returns the request thread.
         """
 
-        all_params = [
-            "entity_owner",
-            "entity_project",
-            "entity_uuid",
-            "body",
-        ]  # noqa: E501
-        all_params.append("async_req")
-        all_params.append("_return_http_data_only")
-        all_params.append("_preload_content")
-        all_params.append("_request_timeout")
+        all_params = ['entity_owner', 'entity_project', 'entity_uuid', 'body']  # noqa: E501
+        all_params.append('async_req')
+        all_params.append('_return_http_data_only')
+        all_params.append('_preload_content')
+        all_params.append('_request_timeout')
 
         params = locals()
-        for key, val in six.iteritems(params["kwargs"]):
+        for key, val in six.iteritems(params['kwargs']):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method restart_run" % key
                 )
             params[key] = val
-        del params["kwargs"]
+        del params['kwargs']
         # verify the required parameter 'entity_owner' is set
-        if "entity_owner" not in params or params["entity_owner"] is None:
-            raise ValueError(
-                "Missing the required parameter `entity_owner` when calling `restart_run`"
-            )  # noqa: E501
+        if ('entity_owner' not in params or
+                params['entity_owner'] is None):
+            raise ValueError("Missing the required parameter `entity_owner` when calling `restart_run`")  # noqa: E501
         # verify the required parameter 'entity_project' is set
-        if "entity_project" not in params or params["entity_project"] is None:
-            raise ValueError(
-                "Missing the required parameter `entity_project` when calling `restart_run`"
-            )  # noqa: E501
+        if ('entity_project' not in params or
+                params['entity_project'] is None):
+            raise ValueError("Missing the required parameter `entity_project` when calling `restart_run`")  # noqa: E501
         # verify the required parameter 'entity_uuid' is set
-        if "entity_uuid" not in params or params["entity_uuid"] is None:
-            raise ValueError(
-                "Missing the required parameter `entity_uuid` when calling `restart_run`"
-            )  # noqa: E501
+        if ('entity_uuid' not in params or
+                params['entity_uuid'] is None):
+            raise ValueError("Missing the required parameter `entity_uuid` when calling `restart_run`")  # noqa: E501
         # verify the required parameter 'body' is set
-        if "body" not in params or params["body"] is None:
-            raise ValueError(
-                "Missing the required parameter `body` when calling `restart_run`"
-            )  # noqa: E501
+        if ('body' not in params or
+                params['body'] is None):
+            raise ValueError("Missing the required parameter `body` when calling `restart_run`")  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if "entity_owner" in params:
-            path_params["entity.owner"] = params["entity_owner"]  # noqa: E501
-        if "entity_project" in params:
-            path_params["entity.project"] = params["entity_project"]  # noqa: E501
-        if "entity_uuid" in params:
-            path_params["entity.uuid"] = params["entity_uuid"]  # noqa: E501
+        if 'entity_owner' in params:
+            path_params['entity.owner'] = params['entity_owner']  # noqa: E501
+        if 'entity_project' in params:
+            path_params['entity.project'] = params['entity_project']  # noqa: E501
+        if 'entity_uuid' in params:
+            path_params['entity.uuid'] = params['entity_uuid']  # noqa: E501
 
         query_params = []
 
@@ -2928,40 +2485,34 @@ class RunsV1Api(object):
         local_var_files = {}
 
         body_params = None
-        if "body" in params:
-            body_params = params["body"]
+        if 'body' in params:
+            body_params = params['body']
         # HTTP header `Accept`
-        header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params[
-            "Content-Type"
-        ] = self.api_client.select_header_content_type(  # noqa: E501
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
+            ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = ["ApiKey"]  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/restart",
-            "POST",
+            '/api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/restart', 'POST',
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type="V1Run",  # noqa: E501
+            response_type='V1Run',  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get("async_req"),
-            _return_http_data_only=params.get("_return_http_data_only"),
-            _preload_content=params.get("_preload_content", True),
-            _request_timeout=params.get("_request_timeout"),
-            collection_formats=collection_formats,
-        )
+            async_req=params.get('async_req'),
+            _return_http_data_only=params.get('_return_http_data_only'),
+            _preload_content=params.get('_preload_content', True),
+            _request_timeout=params.get('_request_timeout'),
+            collection_formats=collection_formats)
 
     def restore_run(self, owner, project, uuid, **kwargs):  # noqa: E501
         """Restore run  # noqa: E501
@@ -2979,15 +2530,11 @@ class RunsV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs["_return_http_data_only"] = True
-        if kwargs.get("async_req"):
-            return self.restore_run_with_http_info(
-                owner, project, uuid, **kwargs
-            )  # noqa: E501
+        kwargs['_return_http_data_only'] = True
+        if kwargs.get('async_req'):
+            return self.restore_run_with_http_info(owner, project, uuid, **kwargs)  # noqa: E501
         else:
-            (data) = self.restore_run_with_http_info(
-                owner, project, uuid, **kwargs
-            )  # noqa: E501
+            (data) = self.restore_run_with_http_info(owner, project, uuid, **kwargs)  # noqa: E501
             return data
 
     def restore_run_with_http_info(self, owner, project, uuid, **kwargs):  # noqa: E501
@@ -3007,46 +2554,43 @@ class RunsV1Api(object):
                  returns the request thread.
         """
 
-        all_params = ["owner", "project", "uuid"]  # noqa: E501
-        all_params.append("async_req")
-        all_params.append("_return_http_data_only")
-        all_params.append("_preload_content")
-        all_params.append("_request_timeout")
+        all_params = ['owner', 'project', 'uuid']  # noqa: E501
+        all_params.append('async_req')
+        all_params.append('_return_http_data_only')
+        all_params.append('_preload_content')
+        all_params.append('_request_timeout')
 
         params = locals()
-        for key, val in six.iteritems(params["kwargs"]):
+        for key, val in six.iteritems(params['kwargs']):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method restore_run" % key
                 )
             params[key] = val
-        del params["kwargs"]
+        del params['kwargs']
         # verify the required parameter 'owner' is set
-        if "owner" not in params or params["owner"] is None:
-            raise ValueError(
-                "Missing the required parameter `owner` when calling `restore_run`"
-            )  # noqa: E501
+        if ('owner' not in params or
+                params['owner'] is None):
+            raise ValueError("Missing the required parameter `owner` when calling `restore_run`")  # noqa: E501
         # verify the required parameter 'project' is set
-        if "project" not in params or params["project"] is None:
-            raise ValueError(
-                "Missing the required parameter `project` when calling `restore_run`"
-            )  # noqa: E501
+        if ('project' not in params or
+                params['project'] is None):
+            raise ValueError("Missing the required parameter `project` when calling `restore_run`")  # noqa: E501
         # verify the required parameter 'uuid' is set
-        if "uuid" not in params or params["uuid"] is None:
-            raise ValueError(
-                "Missing the required parameter `uuid` when calling `restore_run`"
-            )  # noqa: E501
+        if ('uuid' not in params or
+                params['uuid'] is None):
+            raise ValueError("Missing the required parameter `uuid` when calling `restore_run`")  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if "owner" in params:
-            path_params["owner"] = params["owner"]  # noqa: E501
-        if "project" in params:
-            path_params["project"] = params["project"]  # noqa: E501
-        if "uuid" in params:
-            path_params["uuid"] = params["uuid"]  # noqa: E501
+        if 'owner' in params:
+            path_params['owner'] = params['owner']  # noqa: E501
+        if 'project' in params:
+            path_params['project'] = params['project']  # noqa: E501
+        if 'uuid' in params:
+            path_params['uuid'] = params['uuid']  # noqa: E501
 
         query_params = []
 
@@ -3057,23 +2601,18 @@ class RunsV1Api(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params[
-            "Content-Type"
-        ] = self.api_client.select_header_content_type(  # noqa: E501
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
+            ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = ["ApiKey"]  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/{project}/runs/{uuid}/restore",
-            "POST",
+            '/api/v1/{owner}/{project}/runs/{uuid}/restore', 'POST',
             path_params,
             query_params,
             header_params,
@@ -3082,16 +2621,13 @@ class RunsV1Api(object):
             files=local_var_files,
             response_type=None,  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get("async_req"),
-            _return_http_data_only=params.get("_return_http_data_only"),
-            _preload_content=params.get("_preload_content", True),
-            _request_timeout=params.get("_request_timeout"),
-            collection_formats=collection_formats,
-        )
+            async_req=params.get('async_req'),
+            _return_http_data_only=params.get('_return_http_data_only'),
+            _preload_content=params.get('_preload_content', True),
+            _request_timeout=params.get('_request_timeout'),
+            collection_formats=collection_formats)
 
-    def resume_run(
-        self, entity_owner, entity_project, entity_uuid, body, **kwargs
-    ):  # noqa: E501
+    def resume_run(self, entity_owner, entity_project, entity_uuid, body, **kwargs):  # noqa: E501
         """Resume run  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -3108,20 +2644,14 @@ class RunsV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs["_return_http_data_only"] = True
-        if kwargs.get("async_req"):
-            return self.resume_run_with_http_info(
-                entity_owner, entity_project, entity_uuid, body, **kwargs
-            )  # noqa: E501
+        kwargs['_return_http_data_only'] = True
+        if kwargs.get('async_req'):
+            return self.resume_run_with_http_info(entity_owner, entity_project, entity_uuid, body, **kwargs)  # noqa: E501
         else:
-            (data) = self.resume_run_with_http_info(
-                entity_owner, entity_project, entity_uuid, body, **kwargs
-            )  # noqa: E501
+            (data) = self.resume_run_with_http_info(entity_owner, entity_project, entity_uuid, body, **kwargs)  # noqa: E501
             return data
 
-    def resume_run_with_http_info(
-        self, entity_owner, entity_project, entity_uuid, body, **kwargs
-    ):  # noqa: E501
+    def resume_run_with_http_info(self, entity_owner, entity_project, entity_uuid, body, **kwargs):  # noqa: E501
         """Resume run  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -3139,56 +2669,47 @@ class RunsV1Api(object):
                  returns the request thread.
         """
 
-        all_params = [
-            "entity_owner",
-            "entity_project",
-            "entity_uuid",
-            "body",
-        ]  # noqa: E501
-        all_params.append("async_req")
-        all_params.append("_return_http_data_only")
-        all_params.append("_preload_content")
-        all_params.append("_request_timeout")
+        all_params = ['entity_owner', 'entity_project', 'entity_uuid', 'body']  # noqa: E501
+        all_params.append('async_req')
+        all_params.append('_return_http_data_only')
+        all_params.append('_preload_content')
+        all_params.append('_request_timeout')
 
         params = locals()
-        for key, val in six.iteritems(params["kwargs"]):
+        for key, val in six.iteritems(params['kwargs']):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method resume_run" % key
                 )
             params[key] = val
-        del params["kwargs"]
+        del params['kwargs']
         # verify the required parameter 'entity_owner' is set
-        if "entity_owner" not in params or params["entity_owner"] is None:
-            raise ValueError(
-                "Missing the required parameter `entity_owner` when calling `resume_run`"
-            )  # noqa: E501
+        if ('entity_owner' not in params or
+                params['entity_owner'] is None):
+            raise ValueError("Missing the required parameter `entity_owner` when calling `resume_run`")  # noqa: E501
         # verify the required parameter 'entity_project' is set
-        if "entity_project" not in params or params["entity_project"] is None:
-            raise ValueError(
-                "Missing the required parameter `entity_project` when calling `resume_run`"
-            )  # noqa: E501
+        if ('entity_project' not in params or
+                params['entity_project'] is None):
+            raise ValueError("Missing the required parameter `entity_project` when calling `resume_run`")  # noqa: E501
         # verify the required parameter 'entity_uuid' is set
-        if "entity_uuid" not in params or params["entity_uuid"] is None:
-            raise ValueError(
-                "Missing the required parameter `entity_uuid` when calling `resume_run`"
-            )  # noqa: E501
+        if ('entity_uuid' not in params or
+                params['entity_uuid'] is None):
+            raise ValueError("Missing the required parameter `entity_uuid` when calling `resume_run`")  # noqa: E501
         # verify the required parameter 'body' is set
-        if "body" not in params or params["body"] is None:
-            raise ValueError(
-                "Missing the required parameter `body` when calling `resume_run`"
-            )  # noqa: E501
+        if ('body' not in params or
+                params['body'] is None):
+            raise ValueError("Missing the required parameter `body` when calling `resume_run`")  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if "entity_owner" in params:
-            path_params["entity.owner"] = params["entity_owner"]  # noqa: E501
-        if "entity_project" in params:
-            path_params["entity.project"] = params["entity_project"]  # noqa: E501
-        if "entity_uuid" in params:
-            path_params["entity.uuid"] = params["entity_uuid"]  # noqa: E501
+        if 'entity_owner' in params:
+            path_params['entity.owner'] = params['entity_owner']  # noqa: E501
+        if 'entity_project' in params:
+            path_params['entity.project'] = params['entity_project']  # noqa: E501
+        if 'entity_uuid' in params:
+            path_params['entity.uuid'] = params['entity_uuid']  # noqa: E501
 
         query_params = []
 
@@ -3198,40 +2719,34 @@ class RunsV1Api(object):
         local_var_files = {}
 
         body_params = None
-        if "body" in params:
-            body_params = params["body"]
+        if 'body' in params:
+            body_params = params['body']
         # HTTP header `Accept`
-        header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params[
-            "Content-Type"
-        ] = self.api_client.select_header_content_type(  # noqa: E501
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
+            ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = ["ApiKey"]  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/resume",
-            "POST",
+            '/api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/resume', 'POST',
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type="V1Run",  # noqa: E501
+            response_type='V1Run',  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get("async_req"),
-            _return_http_data_only=params.get("_return_http_data_only"),
-            _preload_content=params.get("_preload_content", True),
-            _request_timeout=params.get("_request_timeout"),
-            collection_formats=collection_formats,
-        )
+            async_req=params.get('async_req'),
+            _return_http_data_only=params.get('_return_http_data_only'),
+            _preload_content=params.get('_preload_content', True),
+            _request_timeout=params.get('_request_timeout'),
+            collection_formats=collection_formats)
 
     def start_run_tensorboard(self, owner, project, uuid, body, **kwargs):  # noqa: E501
         """Start run tensorboard  # noqa: E501
@@ -3250,20 +2765,14 @@ class RunsV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs["_return_http_data_only"] = True
-        if kwargs.get("async_req"):
-            return self.start_run_tensorboard_with_http_info(
-                owner, project, uuid, body, **kwargs
-            )  # noqa: E501
+        kwargs['_return_http_data_only'] = True
+        if kwargs.get('async_req'):
+            return self.start_run_tensorboard_with_http_info(owner, project, uuid, body, **kwargs)  # noqa: E501
         else:
-            (data) = self.start_run_tensorboard_with_http_info(
-                owner, project, uuid, body, **kwargs
-            )  # noqa: E501
+            (data) = self.start_run_tensorboard_with_http_info(owner, project, uuid, body, **kwargs)  # noqa: E501
             return data
 
-    def start_run_tensorboard_with_http_info(
-        self, owner, project, uuid, body, **kwargs
-    ):  # noqa: E501
+    def start_run_tensorboard_with_http_info(self, owner, project, uuid, body, **kwargs):  # noqa: E501
         """Start run tensorboard  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -3281,51 +2790,47 @@ class RunsV1Api(object):
                  returns the request thread.
         """
 
-        all_params = ["owner", "project", "uuid", "body"]  # noqa: E501
-        all_params.append("async_req")
-        all_params.append("_return_http_data_only")
-        all_params.append("_preload_content")
-        all_params.append("_request_timeout")
+        all_params = ['owner', 'project', 'uuid', 'body']  # noqa: E501
+        all_params.append('async_req')
+        all_params.append('_return_http_data_only')
+        all_params.append('_preload_content')
+        all_params.append('_request_timeout')
 
         params = locals()
-        for key, val in six.iteritems(params["kwargs"]):
+        for key, val in six.iteritems(params['kwargs']):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method start_run_tensorboard" % key
                 )
             params[key] = val
-        del params["kwargs"]
+        del params['kwargs']
         # verify the required parameter 'owner' is set
-        if "owner" not in params or params["owner"] is None:
-            raise ValueError(
-                "Missing the required parameter `owner` when calling `start_run_tensorboard`"
-            )  # noqa: E501
+        if ('owner' not in params or
+                params['owner'] is None):
+            raise ValueError("Missing the required parameter `owner` when calling `start_run_tensorboard`")  # noqa: E501
         # verify the required parameter 'project' is set
-        if "project" not in params or params["project"] is None:
-            raise ValueError(
-                "Missing the required parameter `project` when calling `start_run_tensorboard`"
-            )  # noqa: E501
+        if ('project' not in params or
+                params['project'] is None):
+            raise ValueError("Missing the required parameter `project` when calling `start_run_tensorboard`")  # noqa: E501
         # verify the required parameter 'uuid' is set
-        if "uuid" not in params or params["uuid"] is None:
-            raise ValueError(
-                "Missing the required parameter `uuid` when calling `start_run_tensorboard`"
-            )  # noqa: E501
+        if ('uuid' not in params or
+                params['uuid'] is None):
+            raise ValueError("Missing the required parameter `uuid` when calling `start_run_tensorboard`")  # noqa: E501
         # verify the required parameter 'body' is set
-        if "body" not in params or params["body"] is None:
-            raise ValueError(
-                "Missing the required parameter `body` when calling `start_run_tensorboard`"
-            )  # noqa: E501
+        if ('body' not in params or
+                params['body'] is None):
+            raise ValueError("Missing the required parameter `body` when calling `start_run_tensorboard`")  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if "owner" in params:
-            path_params["owner"] = params["owner"]  # noqa: E501
-        if "project" in params:
-            path_params["project"] = params["project"]  # noqa: E501
-        if "uuid" in params:
-            path_params["uuid"] = params["uuid"]  # noqa: E501
+        if 'owner' in params:
+            path_params['owner'] = params['owner']  # noqa: E501
+        if 'project' in params:
+            path_params['project'] = params['project']  # noqa: E501
+        if 'uuid' in params:
+            path_params['uuid'] = params['uuid']  # noqa: E501
 
         query_params = []
 
@@ -3335,26 +2840,21 @@ class RunsV1Api(object):
         local_var_files = {}
 
         body_params = None
-        if "body" in params:
-            body_params = params["body"]
+        if 'body' in params:
+            body_params = params['body']
         # HTTP header `Accept`
-        header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params[
-            "Content-Type"
-        ] = self.api_client.select_header_content_type(  # noqa: E501
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
+            ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = ["ApiKey"]  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/{project}/runs/{uuid}/tensorboard/start",
-            "POST",
+            '/api/v1/{owner}/{project}/runs/{uuid}/tensorboard/start', 'POST',
             path_params,
             query_params,
             header_params,
@@ -3363,12 +2863,11 @@ class RunsV1Api(object):
             files=local_var_files,
             response_type=None,  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get("async_req"),
-            _return_http_data_only=params.get("_return_http_data_only"),
-            _preload_content=params.get("_preload_content", True),
-            _request_timeout=params.get("_request_timeout"),
-            collection_formats=collection_formats,
-        )
+            async_req=params.get('async_req'),
+            _return_http_data_only=params.get('_return_http_data_only'),
+            _preload_content=params.get('_preload_content', True),
+            _request_timeout=params.get('_request_timeout'),
+            collection_formats=collection_formats)
 
     def stop_run(self, owner, project, uuid, **kwargs):  # noqa: E501
         """Stop run  # noqa: E501
@@ -3386,15 +2885,11 @@ class RunsV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs["_return_http_data_only"] = True
-        if kwargs.get("async_req"):
-            return self.stop_run_with_http_info(
-                owner, project, uuid, **kwargs
-            )  # noqa: E501
+        kwargs['_return_http_data_only'] = True
+        if kwargs.get('async_req'):
+            return self.stop_run_with_http_info(owner, project, uuid, **kwargs)  # noqa: E501
         else:
-            (data) = self.stop_run_with_http_info(
-                owner, project, uuid, **kwargs
-            )  # noqa: E501
+            (data) = self.stop_run_with_http_info(owner, project, uuid, **kwargs)  # noqa: E501
             return data
 
     def stop_run_with_http_info(self, owner, project, uuid, **kwargs):  # noqa: E501
@@ -3414,46 +2909,43 @@ class RunsV1Api(object):
                  returns the request thread.
         """
 
-        all_params = ["owner", "project", "uuid"]  # noqa: E501
-        all_params.append("async_req")
-        all_params.append("_return_http_data_only")
-        all_params.append("_preload_content")
-        all_params.append("_request_timeout")
+        all_params = ['owner', 'project', 'uuid']  # noqa: E501
+        all_params.append('async_req')
+        all_params.append('_return_http_data_only')
+        all_params.append('_preload_content')
+        all_params.append('_request_timeout')
 
         params = locals()
-        for key, val in six.iteritems(params["kwargs"]):
+        for key, val in six.iteritems(params['kwargs']):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method stop_run" % key
                 )
             params[key] = val
-        del params["kwargs"]
+        del params['kwargs']
         # verify the required parameter 'owner' is set
-        if "owner" not in params or params["owner"] is None:
-            raise ValueError(
-                "Missing the required parameter `owner` when calling `stop_run`"
-            )  # noqa: E501
+        if ('owner' not in params or
+                params['owner'] is None):
+            raise ValueError("Missing the required parameter `owner` when calling `stop_run`")  # noqa: E501
         # verify the required parameter 'project' is set
-        if "project" not in params or params["project"] is None:
-            raise ValueError(
-                "Missing the required parameter `project` when calling `stop_run`"
-            )  # noqa: E501
+        if ('project' not in params or
+                params['project'] is None):
+            raise ValueError("Missing the required parameter `project` when calling `stop_run`")  # noqa: E501
         # verify the required parameter 'uuid' is set
-        if "uuid" not in params or params["uuid"] is None:
-            raise ValueError(
-                "Missing the required parameter `uuid` when calling `stop_run`"
-            )  # noqa: E501
+        if ('uuid' not in params or
+                params['uuid'] is None):
+            raise ValueError("Missing the required parameter `uuid` when calling `stop_run`")  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if "owner" in params:
-            path_params["owner"] = params["owner"]  # noqa: E501
-        if "project" in params:
-            path_params["project"] = params["project"]  # noqa: E501
-        if "uuid" in params:
-            path_params["uuid"] = params["uuid"]  # noqa: E501
+        if 'owner' in params:
+            path_params['owner'] = params['owner']  # noqa: E501
+        if 'project' in params:
+            path_params['project'] = params['project']  # noqa: E501
+        if 'uuid' in params:
+            path_params['uuid'] = params['uuid']  # noqa: E501
 
         query_params = []
 
@@ -3464,23 +2956,18 @@ class RunsV1Api(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params[
-            "Content-Type"
-        ] = self.api_client.select_header_content_type(  # noqa: E501
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
+            ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = ["ApiKey"]  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/{project}/runs/{uuid}/stop",
-            "POST",
+            '/api/v1/{owner}/{project}/runs/{uuid}/stop', 'POST',
             path_params,
             query_params,
             header_params,
@@ -3489,12 +2976,11 @@ class RunsV1Api(object):
             files=local_var_files,
             response_type=None,  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get("async_req"),
-            _return_http_data_only=params.get("_return_http_data_only"),
-            _preload_content=params.get("_preload_content", True),
-            _request_timeout=params.get("_request_timeout"),
-            collection_formats=collection_formats,
-        )
+            async_req=params.get('async_req'),
+            _return_http_data_only=params.get('_return_http_data_only'),
+            _preload_content=params.get('_preload_content', True),
+            _request_timeout=params.get('_request_timeout'),
+            collection_formats=collection_formats)
 
     def stop_run_tensorboard(self, owner, project, uuid, **kwargs):  # noqa: E501
         """Stop run tensorboard  # noqa: E501
@@ -3512,20 +2998,14 @@ class RunsV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs["_return_http_data_only"] = True
-        if kwargs.get("async_req"):
-            return self.stop_run_tensorboard_with_http_info(
-                owner, project, uuid, **kwargs
-            )  # noqa: E501
+        kwargs['_return_http_data_only'] = True
+        if kwargs.get('async_req'):
+            return self.stop_run_tensorboard_with_http_info(owner, project, uuid, **kwargs)  # noqa: E501
         else:
-            (data) = self.stop_run_tensorboard_with_http_info(
-                owner, project, uuid, **kwargs
-            )  # noqa: E501
+            (data) = self.stop_run_tensorboard_with_http_info(owner, project, uuid, **kwargs)  # noqa: E501
             return data
 
-    def stop_run_tensorboard_with_http_info(
-        self, owner, project, uuid, **kwargs
-    ):  # noqa: E501
+    def stop_run_tensorboard_with_http_info(self, owner, project, uuid, **kwargs):  # noqa: E501
         """Stop run tensorboard  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -3542,46 +3022,43 @@ class RunsV1Api(object):
                  returns the request thread.
         """
 
-        all_params = ["owner", "project", "uuid"]  # noqa: E501
-        all_params.append("async_req")
-        all_params.append("_return_http_data_only")
-        all_params.append("_preload_content")
-        all_params.append("_request_timeout")
+        all_params = ['owner', 'project', 'uuid']  # noqa: E501
+        all_params.append('async_req')
+        all_params.append('_return_http_data_only')
+        all_params.append('_preload_content')
+        all_params.append('_request_timeout')
 
         params = locals()
-        for key, val in six.iteritems(params["kwargs"]):
+        for key, val in six.iteritems(params['kwargs']):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method stop_run_tensorboard" % key
                 )
             params[key] = val
-        del params["kwargs"]
+        del params['kwargs']
         # verify the required parameter 'owner' is set
-        if "owner" not in params or params["owner"] is None:
-            raise ValueError(
-                "Missing the required parameter `owner` when calling `stop_run_tensorboard`"
-            )  # noqa: E501
+        if ('owner' not in params or
+                params['owner'] is None):
+            raise ValueError("Missing the required parameter `owner` when calling `stop_run_tensorboard`")  # noqa: E501
         # verify the required parameter 'project' is set
-        if "project" not in params or params["project"] is None:
-            raise ValueError(
-                "Missing the required parameter `project` when calling `stop_run_tensorboard`"
-            )  # noqa: E501
+        if ('project' not in params or
+                params['project'] is None):
+            raise ValueError("Missing the required parameter `project` when calling `stop_run_tensorboard`")  # noqa: E501
         # verify the required parameter 'uuid' is set
-        if "uuid" not in params or params["uuid"] is None:
-            raise ValueError(
-                "Missing the required parameter `uuid` when calling `stop_run_tensorboard`"
-            )  # noqa: E501
+        if ('uuid' not in params or
+                params['uuid'] is None):
+            raise ValueError("Missing the required parameter `uuid` when calling `stop_run_tensorboard`")  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if "owner" in params:
-            path_params["owner"] = params["owner"]  # noqa: E501
-        if "project" in params:
-            path_params["project"] = params["project"]  # noqa: E501
-        if "uuid" in params:
-            path_params["uuid"] = params["uuid"]  # noqa: E501
+        if 'owner' in params:
+            path_params['owner'] = params['owner']  # noqa: E501
+        if 'project' in params:
+            path_params['project'] = params['project']  # noqa: E501
+        if 'uuid' in params:
+            path_params['uuid'] = params['uuid']  # noqa: E501
 
         query_params = []
 
@@ -3592,23 +3069,18 @@ class RunsV1Api(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params[
-            "Content-Type"
-        ] = self.api_client.select_header_content_type(  # noqa: E501
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
+            ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = ["ApiKey"]  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/{project}/runs/{uuid}/tensorboard/stop",
-            "POST",
+            '/api/v1/{owner}/{project}/runs/{uuid}/tensorboard/stop', 'POST',
             path_params,
             query_params,
             header_params,
@@ -3617,12 +3089,11 @@ class RunsV1Api(object):
             files=local_var_files,
             response_type=None,  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get("async_req"),
-            _return_http_data_only=params.get("_return_http_data_only"),
-            _preload_content=params.get("_preload_content", True),
-            _request_timeout=params.get("_request_timeout"),
-            collection_formats=collection_formats,
-        )
+            async_req=params.get('async_req'),
+            _return_http_data_only=params.get('_return_http_data_only'),
+            _preload_content=params.get('_preload_content', True),
+            _request_timeout=params.get('_request_timeout'),
+            collection_formats=collection_formats)
 
     def stop_runs(self, owner, project, body, **kwargs):  # noqa: E501
         """Stop runs  # noqa: E501
@@ -3640,15 +3111,11 @@ class RunsV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs["_return_http_data_only"] = True
-        if kwargs.get("async_req"):
-            return self.stop_runs_with_http_info(
-                owner, project, body, **kwargs
-            )  # noqa: E501
+        kwargs['_return_http_data_only'] = True
+        if kwargs.get('async_req'):
+            return self.stop_runs_with_http_info(owner, project, body, **kwargs)  # noqa: E501
         else:
-            (data) = self.stop_runs_with_http_info(
-                owner, project, body, **kwargs
-            )  # noqa: E501
+            (data) = self.stop_runs_with_http_info(owner, project, body, **kwargs)  # noqa: E501
             return data
 
     def stop_runs_with_http_info(self, owner, project, body, **kwargs):  # noqa: E501
@@ -3668,44 +3135,41 @@ class RunsV1Api(object):
                  returns the request thread.
         """
 
-        all_params = ["owner", "project", "body"]  # noqa: E501
-        all_params.append("async_req")
-        all_params.append("_return_http_data_only")
-        all_params.append("_preload_content")
-        all_params.append("_request_timeout")
+        all_params = ['owner', 'project', 'body']  # noqa: E501
+        all_params.append('async_req')
+        all_params.append('_return_http_data_only')
+        all_params.append('_preload_content')
+        all_params.append('_request_timeout')
 
         params = locals()
-        for key, val in six.iteritems(params["kwargs"]):
+        for key, val in six.iteritems(params['kwargs']):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method stop_runs" % key
                 )
             params[key] = val
-        del params["kwargs"]
+        del params['kwargs']
         # verify the required parameter 'owner' is set
-        if "owner" not in params or params["owner"] is None:
-            raise ValueError(
-                "Missing the required parameter `owner` when calling `stop_runs`"
-            )  # noqa: E501
+        if ('owner' not in params or
+                params['owner'] is None):
+            raise ValueError("Missing the required parameter `owner` when calling `stop_runs`")  # noqa: E501
         # verify the required parameter 'project' is set
-        if "project" not in params or params["project"] is None:
-            raise ValueError(
-                "Missing the required parameter `project` when calling `stop_runs`"
-            )  # noqa: E501
+        if ('project' not in params or
+                params['project'] is None):
+            raise ValueError("Missing the required parameter `project` when calling `stop_runs`")  # noqa: E501
         # verify the required parameter 'body' is set
-        if "body" not in params or params["body"] is None:
-            raise ValueError(
-                "Missing the required parameter `body` when calling `stop_runs`"
-            )  # noqa: E501
+        if ('body' not in params or
+                params['body'] is None):
+            raise ValueError("Missing the required parameter `body` when calling `stop_runs`")  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if "owner" in params:
-            path_params["owner"] = params["owner"]  # noqa: E501
-        if "project" in params:
-            path_params["project"] = params["project"]  # noqa: E501
+        if 'owner' in params:
+            path_params['owner'] = params['owner']  # noqa: E501
+        if 'project' in params:
+            path_params['project'] = params['project']  # noqa: E501
 
         query_params = []
 
@@ -3715,26 +3179,21 @@ class RunsV1Api(object):
         local_var_files = {}
 
         body_params = None
-        if "body" in params:
-            body_params = params["body"]
+        if 'body' in params:
+            body_params = params['body']
         # HTTP header `Accept`
-        header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params[
-            "Content-Type"
-        ] = self.api_client.select_header_content_type(  # noqa: E501
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
+            ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = ["ApiKey"]  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/{project}/runs/stop",
-            "POST",
+            '/api/v1/{owner}/{project}/runs/stop', 'POST',
             path_params,
             query_params,
             header_params,
@@ -3743,12 +3202,11 @@ class RunsV1Api(object):
             files=local_var_files,
             response_type=None,  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get("async_req"),
-            _return_http_data_only=params.get("_return_http_data_only"),
-            _preload_content=params.get("_preload_content", True),
-            _request_timeout=params.get("_request_timeout"),
-            collection_formats=collection_formats,
-        )
+            async_req=params.get('async_req'),
+            _return_http_data_only=params.get('_return_http_data_only'),
+            _preload_content=params.get('_preload_content', True),
+            _request_timeout=params.get('_request_timeout'),
+            collection_formats=collection_formats)
 
     def unbookmark_run(self, owner, project, uuid, **kwargs):  # noqa: E501
         """Unbookmark run  # noqa: E501
@@ -3766,20 +3224,14 @@ class RunsV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs["_return_http_data_only"] = True
-        if kwargs.get("async_req"):
-            return self.unbookmark_run_with_http_info(
-                owner, project, uuid, **kwargs
-            )  # noqa: E501
+        kwargs['_return_http_data_only'] = True
+        if kwargs.get('async_req'):
+            return self.unbookmark_run_with_http_info(owner, project, uuid, **kwargs)  # noqa: E501
         else:
-            (data) = self.unbookmark_run_with_http_info(
-                owner, project, uuid, **kwargs
-            )  # noqa: E501
+            (data) = self.unbookmark_run_with_http_info(owner, project, uuid, **kwargs)  # noqa: E501
             return data
 
-    def unbookmark_run_with_http_info(
-        self, owner, project, uuid, **kwargs
-    ):  # noqa: E501
+    def unbookmark_run_with_http_info(self, owner, project, uuid, **kwargs):  # noqa: E501
         """Unbookmark run  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -3796,46 +3248,43 @@ class RunsV1Api(object):
                  returns the request thread.
         """
 
-        all_params = ["owner", "project", "uuid"]  # noqa: E501
-        all_params.append("async_req")
-        all_params.append("_return_http_data_only")
-        all_params.append("_preload_content")
-        all_params.append("_request_timeout")
+        all_params = ['owner', 'project', 'uuid']  # noqa: E501
+        all_params.append('async_req')
+        all_params.append('_return_http_data_only')
+        all_params.append('_preload_content')
+        all_params.append('_request_timeout')
 
         params = locals()
-        for key, val in six.iteritems(params["kwargs"]):
+        for key, val in six.iteritems(params['kwargs']):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method unbookmark_run" % key
                 )
             params[key] = val
-        del params["kwargs"]
+        del params['kwargs']
         # verify the required parameter 'owner' is set
-        if "owner" not in params or params["owner"] is None:
-            raise ValueError(
-                "Missing the required parameter `owner` when calling `unbookmark_run`"
-            )  # noqa: E501
+        if ('owner' not in params or
+                params['owner'] is None):
+            raise ValueError("Missing the required parameter `owner` when calling `unbookmark_run`")  # noqa: E501
         # verify the required parameter 'project' is set
-        if "project" not in params or params["project"] is None:
-            raise ValueError(
-                "Missing the required parameter `project` when calling `unbookmark_run`"
-            )  # noqa: E501
+        if ('project' not in params or
+                params['project'] is None):
+            raise ValueError("Missing the required parameter `project` when calling `unbookmark_run`")  # noqa: E501
         # verify the required parameter 'uuid' is set
-        if "uuid" not in params or params["uuid"] is None:
-            raise ValueError(
-                "Missing the required parameter `uuid` when calling `unbookmark_run`"
-            )  # noqa: E501
+        if ('uuid' not in params or
+                params['uuid'] is None):
+            raise ValueError("Missing the required parameter `uuid` when calling `unbookmark_run`")  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if "owner" in params:
-            path_params["owner"] = params["owner"]  # noqa: E501
-        if "project" in params:
-            path_params["project"] = params["project"]  # noqa: E501
-        if "uuid" in params:
-            path_params["uuid"] = params["uuid"]  # noqa: E501
+        if 'owner' in params:
+            path_params['owner'] = params['owner']  # noqa: E501
+        if 'project' in params:
+            path_params['project'] = params['project']  # noqa: E501
+        if 'uuid' in params:
+            path_params['uuid'] = params['uuid']  # noqa: E501
 
         query_params = []
 
@@ -3846,23 +3295,18 @@ class RunsV1Api(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params[
-            "Content-Type"
-        ] = self.api_client.select_header_content_type(  # noqa: E501
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
+            ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = ["ApiKey"]  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/{project}/runs/{uuid}/unbookmark",
-            "DELETE",
+            '/api/v1/{owner}/{project}/runs/{uuid}/unbookmark', 'DELETE',
             path_params,
             query_params,
             header_params,
@@ -3871,12 +3315,11 @@ class RunsV1Api(object):
             files=local_var_files,
             response_type=None,  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get("async_req"),
-            _return_http_data_only=params.get("_return_http_data_only"),
-            _preload_content=params.get("_preload_content", True),
-            _request_timeout=params.get("_request_timeout"),
-            collection_formats=collection_formats,
-        )
+            async_req=params.get('async_req'),
+            _return_http_data_only=params.get('_return_http_data_only'),
+            _preload_content=params.get('_preload_content', True),
+            _request_timeout=params.get('_request_timeout'),
+            collection_formats=collection_formats)
 
     def update_run(self, owner, project, run_uuid, body, **kwargs):  # noqa: E501
         """Update run  # noqa: E501
@@ -3895,20 +3338,14 @@ class RunsV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs["_return_http_data_only"] = True
-        if kwargs.get("async_req"):
-            return self.update_run_with_http_info(
-                owner, project, run_uuid, body, **kwargs
-            )  # noqa: E501
+        kwargs['_return_http_data_only'] = True
+        if kwargs.get('async_req'):
+            return self.update_run_with_http_info(owner, project, run_uuid, body, **kwargs)  # noqa: E501
         else:
-            (data) = self.update_run_with_http_info(
-                owner, project, run_uuid, body, **kwargs
-            )  # noqa: E501
+            (data) = self.update_run_with_http_info(owner, project, run_uuid, body, **kwargs)  # noqa: E501
             return data
 
-    def update_run_with_http_info(
-        self, owner, project, run_uuid, body, **kwargs
-    ):  # noqa: E501
+    def update_run_with_http_info(self, owner, project, run_uuid, body, **kwargs):  # noqa: E501
         """Update run  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -3926,51 +3363,47 @@ class RunsV1Api(object):
                  returns the request thread.
         """
 
-        all_params = ["owner", "project", "run_uuid", "body"]  # noqa: E501
-        all_params.append("async_req")
-        all_params.append("_return_http_data_only")
-        all_params.append("_preload_content")
-        all_params.append("_request_timeout")
+        all_params = ['owner', 'project', 'run_uuid', 'body']  # noqa: E501
+        all_params.append('async_req')
+        all_params.append('_return_http_data_only')
+        all_params.append('_preload_content')
+        all_params.append('_request_timeout')
 
         params = locals()
-        for key, val in six.iteritems(params["kwargs"]):
+        for key, val in six.iteritems(params['kwargs']):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method update_run" % key
                 )
             params[key] = val
-        del params["kwargs"]
+        del params['kwargs']
         # verify the required parameter 'owner' is set
-        if "owner" not in params or params["owner"] is None:
-            raise ValueError(
-                "Missing the required parameter `owner` when calling `update_run`"
-            )  # noqa: E501
+        if ('owner' not in params or
+                params['owner'] is None):
+            raise ValueError("Missing the required parameter `owner` when calling `update_run`")  # noqa: E501
         # verify the required parameter 'project' is set
-        if "project" not in params or params["project"] is None:
-            raise ValueError(
-                "Missing the required parameter `project` when calling `update_run`"
-            )  # noqa: E501
+        if ('project' not in params or
+                params['project'] is None):
+            raise ValueError("Missing the required parameter `project` when calling `update_run`")  # noqa: E501
         # verify the required parameter 'run_uuid' is set
-        if "run_uuid" not in params or params["run_uuid"] is None:
-            raise ValueError(
-                "Missing the required parameter `run_uuid` when calling `update_run`"
-            )  # noqa: E501
+        if ('run_uuid' not in params or
+                params['run_uuid'] is None):
+            raise ValueError("Missing the required parameter `run_uuid` when calling `update_run`")  # noqa: E501
         # verify the required parameter 'body' is set
-        if "body" not in params or params["body"] is None:
-            raise ValueError(
-                "Missing the required parameter `body` when calling `update_run`"
-            )  # noqa: E501
+        if ('body' not in params or
+                params['body'] is None):
+            raise ValueError("Missing the required parameter `body` when calling `update_run`")  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if "owner" in params:
-            path_params["owner"] = params["owner"]  # noqa: E501
-        if "project" in params:
-            path_params["project"] = params["project"]  # noqa: E501
-        if "run_uuid" in params:
-            path_params["run.uuid"] = params["run_uuid"]  # noqa: E501
+        if 'owner' in params:
+            path_params['owner'] = params['owner']  # noqa: E501
+        if 'project' in params:
+            path_params['project'] = params['project']  # noqa: E501
+        if 'run_uuid' in params:
+            path_params['run.uuid'] = params['run_uuid']  # noqa: E501
 
         query_params = []
 
@@ -3980,44 +3413,36 @@ class RunsV1Api(object):
         local_var_files = {}
 
         body_params = None
-        if "body" in params:
-            body_params = params["body"]
+        if 'body' in params:
+            body_params = params['body']
         # HTTP header `Accept`
-        header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params[
-            "Content-Type"
-        ] = self.api_client.select_header_content_type(  # noqa: E501
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
+            ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = ["ApiKey"]  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/{project}/runs/{run.uuid}",
-            "PUT",
+            '/api/v1/{owner}/{project}/runs/{run.uuid}', 'PUT',
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type="V1Run",  # noqa: E501
+            response_type='V1Run',  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get("async_req"),
-            _return_http_data_only=params.get("_return_http_data_only"),
-            _preload_content=params.get("_preload_content", True),
-            _request_timeout=params.get("_request_timeout"),
-            collection_formats=collection_formats,
-        )
+            async_req=params.get('async_req'),
+            _return_http_data_only=params.get('_return_http_data_only'),
+            _preload_content=params.get('_preload_content', True),
+            _request_timeout=params.get('_request_timeout'),
+            collection_formats=collection_formats)
 
-    def upload_run_artifact(
-        self, owner, project, uuid, uploadfile, **kwargs
-    ):  # noqa: E501
+    def upload_run_artifact(self, owner, project, uuid, uploadfile, **kwargs):  # noqa: E501
         """Upload an artifact file to a store via run access  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -4036,20 +3461,14 @@ class RunsV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs["_return_http_data_only"] = True
-        if kwargs.get("async_req"):
-            return self.upload_run_artifact_with_http_info(
-                owner, project, uuid, uploadfile, **kwargs
-            )  # noqa: E501
+        kwargs['_return_http_data_only'] = True
+        if kwargs.get('async_req'):
+            return self.upload_run_artifact_with_http_info(owner, project, uuid, uploadfile, **kwargs)  # noqa: E501
         else:
-            (data) = self.upload_run_artifact_with_http_info(
-                owner, project, uuid, uploadfile, **kwargs
-            )  # noqa: E501
+            (data) = self.upload_run_artifact_with_http_info(owner, project, uuid, uploadfile, **kwargs)  # noqa: E501
             return data
 
-    def upload_run_artifact_with_http_info(
-        self, owner, project, uuid, uploadfile, **kwargs
-    ):  # noqa: E501
+    def upload_run_artifact_with_http_info(self, owner, project, uuid, uploadfile, **kwargs):  # noqa: E501
         """Upload an artifact file to a store via run access  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -4069,91 +3488,75 @@ class RunsV1Api(object):
                  returns the request thread.
         """
 
-        all_params = [
-            "owner",
-            "project",
-            "uuid",
-            "uploadfile",
-            "path",
-            "overwrite",
-        ]  # noqa: E501
-        all_params.append("async_req")
-        all_params.append("_return_http_data_only")
-        all_params.append("_preload_content")
-        all_params.append("_request_timeout")
+        all_params = ['owner', 'project', 'uuid', 'uploadfile', 'path', 'overwrite']  # noqa: E501
+        all_params.append('async_req')
+        all_params.append('_return_http_data_only')
+        all_params.append('_preload_content')
+        all_params.append('_request_timeout')
 
         params = locals()
-        for key, val in six.iteritems(params["kwargs"]):
+        for key, val in six.iteritems(params['kwargs']):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method upload_run_artifact" % key
                 )
             params[key] = val
-        del params["kwargs"]
+        del params['kwargs']
         # verify the required parameter 'owner' is set
-        if "owner" not in params or params["owner"] is None:
-            raise ValueError(
-                "Missing the required parameter `owner` when calling `upload_run_artifact`"
-            )  # noqa: E501
+        if ('owner' not in params or
+                params['owner'] is None):
+            raise ValueError("Missing the required parameter `owner` when calling `upload_run_artifact`")  # noqa: E501
         # verify the required parameter 'project' is set
-        if "project" not in params or params["project"] is None:
-            raise ValueError(
-                "Missing the required parameter `project` when calling `upload_run_artifact`"
-            )  # noqa: E501
+        if ('project' not in params or
+                params['project'] is None):
+            raise ValueError("Missing the required parameter `project` when calling `upload_run_artifact`")  # noqa: E501
         # verify the required parameter 'uuid' is set
-        if "uuid" not in params or params["uuid"] is None:
-            raise ValueError(
-                "Missing the required parameter `uuid` when calling `upload_run_artifact`"
-            )  # noqa: E501
+        if ('uuid' not in params or
+                params['uuid'] is None):
+            raise ValueError("Missing the required parameter `uuid` when calling `upload_run_artifact`")  # noqa: E501
         # verify the required parameter 'uploadfile' is set
-        if "uploadfile" not in params or params["uploadfile"] is None:
-            raise ValueError(
-                "Missing the required parameter `uploadfile` when calling `upload_run_artifact`"
-            )  # noqa: E501
+        if ('uploadfile' not in params or
+                params['uploadfile'] is None):
+            raise ValueError("Missing the required parameter `uploadfile` when calling `upload_run_artifact`")  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if "owner" in params:
-            path_params["owner"] = params["owner"]  # noqa: E501
-        if "project" in params:
-            path_params["project"] = params["project"]  # noqa: E501
-        if "uuid" in params:
-            path_params["uuid"] = params["uuid"]  # noqa: E501
+        if 'owner' in params:
+            path_params['owner'] = params['owner']  # noqa: E501
+        if 'project' in params:
+            path_params['project'] = params['project']  # noqa: E501
+        if 'uuid' in params:
+            path_params['uuid'] = params['uuid']  # noqa: E501
 
         query_params = []
-        if "path" in params:
-            query_params.append(("path", params["path"]))  # noqa: E501
-        if "overwrite" in params:
-            query_params.append(("overwrite", params["overwrite"]))  # noqa: E501
+        if 'path' in params:
+            query_params.append(('path', params['path']))  # noqa: E501
+        if 'overwrite' in params:
+            query_params.append(('overwrite', params['overwrite']))  # noqa: E501
 
         header_params = {}
 
         form_params = []
         local_var_files = {}
-        if "uploadfile" in params:
-            local_var_files["uploadfile"] = params["uploadfile"]  # noqa: E501
+        if 'uploadfile' in params:
+            local_var_files['uploadfile'] = params['uploadfile']  # noqa: E501
 
         body_params = None
         # HTTP header `Accept`
-        header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params[
-            "Content-Type"
-        ] = self.api_client.select_header_content_type(  # noqa: E501
-            ["multipart/form-data"]
-        )  # noqa: E501
+        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
+            ['multipart/form-data'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = ["ApiKey"]  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/{project}/runs/{uuid}/artifacts/upload",
-            "POST",
+            '/api/v1/{owner}/{project}/runs/{uuid}/artifacts/upload', 'POST',
             path_params,
             query_params,
             header_params,
@@ -4162,12 +3565,11 @@ class RunsV1Api(object):
             files=local_var_files,
             response_type=None,  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get("async_req"),
-            _return_http_data_only=params.get("_return_http_data_only"),
-            _preload_content=params.get("_preload_content", True),
-            _request_timeout=params.get("_request_timeout"),
-            collection_formats=collection_formats,
-        )
+            async_req=params.get('async_req'),
+            _return_http_data_only=params.get('_return_http_data_only'),
+            _preload_content=params.get('_preload_content', True),
+            _request_timeout=params.get('_request_timeout'),
+            collection_formats=collection_formats)
 
     def upload_run_logs(self, owner, project, uuid, uploadfile, **kwargs):  # noqa: E501
         """Upload a logs file to a store via run access  # noqa: E501
@@ -4188,20 +3590,14 @@ class RunsV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs["_return_http_data_only"] = True
-        if kwargs.get("async_req"):
-            return self.upload_run_logs_with_http_info(
-                owner, project, uuid, uploadfile, **kwargs
-            )  # noqa: E501
+        kwargs['_return_http_data_only'] = True
+        if kwargs.get('async_req'):
+            return self.upload_run_logs_with_http_info(owner, project, uuid, uploadfile, **kwargs)  # noqa: E501
         else:
-            (data) = self.upload_run_logs_with_http_info(
-                owner, project, uuid, uploadfile, **kwargs
-            )  # noqa: E501
+            (data) = self.upload_run_logs_with_http_info(owner, project, uuid, uploadfile, **kwargs)  # noqa: E501
             return data
 
-    def upload_run_logs_with_http_info(
-        self, owner, project, uuid, uploadfile, **kwargs
-    ):  # noqa: E501
+    def upload_run_logs_with_http_info(self, owner, project, uuid, uploadfile, **kwargs):  # noqa: E501
         """Upload a logs file to a store via run access  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -4221,91 +3617,75 @@ class RunsV1Api(object):
                  returns the request thread.
         """
 
-        all_params = [
-            "owner",
-            "project",
-            "uuid",
-            "uploadfile",
-            "path",
-            "overwrite",
-        ]  # noqa: E501
-        all_params.append("async_req")
-        all_params.append("_return_http_data_only")
-        all_params.append("_preload_content")
-        all_params.append("_request_timeout")
+        all_params = ['owner', 'project', 'uuid', 'uploadfile', 'path', 'overwrite']  # noqa: E501
+        all_params.append('async_req')
+        all_params.append('_return_http_data_only')
+        all_params.append('_preload_content')
+        all_params.append('_request_timeout')
 
         params = locals()
-        for key, val in six.iteritems(params["kwargs"]):
+        for key, val in six.iteritems(params['kwargs']):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method upload_run_logs" % key
                 )
             params[key] = val
-        del params["kwargs"]
+        del params['kwargs']
         # verify the required parameter 'owner' is set
-        if "owner" not in params or params["owner"] is None:
-            raise ValueError(
-                "Missing the required parameter `owner` when calling `upload_run_logs`"
-            )  # noqa: E501
+        if ('owner' not in params or
+                params['owner'] is None):
+            raise ValueError("Missing the required parameter `owner` when calling `upload_run_logs`")  # noqa: E501
         # verify the required parameter 'project' is set
-        if "project" not in params or params["project"] is None:
-            raise ValueError(
-                "Missing the required parameter `project` when calling `upload_run_logs`"
-            )  # noqa: E501
+        if ('project' not in params or
+                params['project'] is None):
+            raise ValueError("Missing the required parameter `project` when calling `upload_run_logs`")  # noqa: E501
         # verify the required parameter 'uuid' is set
-        if "uuid" not in params or params["uuid"] is None:
-            raise ValueError(
-                "Missing the required parameter `uuid` when calling `upload_run_logs`"
-            )  # noqa: E501
+        if ('uuid' not in params or
+                params['uuid'] is None):
+            raise ValueError("Missing the required parameter `uuid` when calling `upload_run_logs`")  # noqa: E501
         # verify the required parameter 'uploadfile' is set
-        if "uploadfile" not in params or params["uploadfile"] is None:
-            raise ValueError(
-                "Missing the required parameter `uploadfile` when calling `upload_run_logs`"
-            )  # noqa: E501
+        if ('uploadfile' not in params or
+                params['uploadfile'] is None):
+            raise ValueError("Missing the required parameter `uploadfile` when calling `upload_run_logs`")  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if "owner" in params:
-            path_params["owner"] = params["owner"]  # noqa: E501
-        if "project" in params:
-            path_params["project"] = params["project"]  # noqa: E501
-        if "uuid" in params:
-            path_params["uuid"] = params["uuid"]  # noqa: E501
+        if 'owner' in params:
+            path_params['owner'] = params['owner']  # noqa: E501
+        if 'project' in params:
+            path_params['project'] = params['project']  # noqa: E501
+        if 'uuid' in params:
+            path_params['uuid'] = params['uuid']  # noqa: E501
 
         query_params = []
-        if "path" in params:
-            query_params.append(("path", params["path"]))  # noqa: E501
-        if "overwrite" in params:
-            query_params.append(("overwrite", params["overwrite"]))  # noqa: E501
+        if 'path' in params:
+            query_params.append(('path', params['path']))  # noqa: E501
+        if 'overwrite' in params:
+            query_params.append(('overwrite', params['overwrite']))  # noqa: E501
 
         header_params = {}
 
         form_params = []
         local_var_files = {}
-        if "uploadfile" in params:
-            local_var_files["uploadfile"] = params["uploadfile"]  # noqa: E501
+        if 'uploadfile' in params:
+            local_var_files['uploadfile'] = params['uploadfile']  # noqa: E501
 
         body_params = None
         # HTTP header `Accept`
-        header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params[
-            "Content-Type"
-        ] = self.api_client.select_header_content_type(  # noqa: E501
-            ["multipart/form-data"]
-        )  # noqa: E501
+        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
+            ['multipart/form-data'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = ["ApiKey"]  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/{project}/runs/{uuid}/logs/upload",
-            "POST",
+            '/api/v1/{owner}/{project}/runs/{uuid}/logs/upload', 'POST',
             path_params,
             query_params,
             header_params,
@@ -4314,9 +3694,8 @@ class RunsV1Api(object):
             files=local_var_files,
             response_type=None,  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get("async_req"),
-            _return_http_data_only=params.get("_return_http_data_only"),
-            _preload_content=params.get("_preload_content", True),
-            _request_timeout=params.get("_request_timeout"),
-            collection_formats=collection_formats,
-        )
+            async_req=params.get('async_req'),
+            _return_http_data_only=params.get('_return_http_data_only'),
+            _preload_content=params.get('_preload_content', True),
+            _request_timeout=params.get('_request_timeout'),
+            collection_formats=collection_formats)

@@ -252,17 +252,10 @@ service RunsV1 {
     }
 
     // Get run code ref
-    rpc GetRunCodeRefs(ProjectEntityResourceRequest) returns (ListCodeRefsResponse) {
+    rpc CreateRunCodeRef(CodeRefBodyRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
-            get: "/api/v1/{owner}/{project}/runs/{uuid}/coderef"
-        };
-    }
-
-    // Get run code ref
-    rpc CreateRunCodeRef(CodeRefBodyRequest) returns (CodeReference) {
-        option (google.api.http) = {
-            post: "/api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/coderef"
-            body: "code_reference"
+            post: "/api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/coderefs"
+            body: "coderef"
         };
     }
 

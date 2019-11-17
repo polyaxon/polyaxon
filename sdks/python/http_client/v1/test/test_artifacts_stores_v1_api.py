@@ -40,9 +40,7 @@ class TestArtifactsStoresV1Api(unittest.TestCase):
     """ArtifactsStoresV1Api unit test stubs"""
 
     def setUp(self):
-        self.api = (
-            polyaxon_sdk.api.artifacts_stores_v1_api.ArtifactsStoresV1Api()
-        )  # noqa: E501
+        self.api = polyaxon_sdk.api.artifacts_stores_v1_api.ArtifactsStoresV1Api()  # noqa: E501
 
     def tearDown(self):
         pass
@@ -104,5 +102,5 @@ class TestArtifactsStoresV1Api(unittest.TestCase):
         pass
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     unittest.main()

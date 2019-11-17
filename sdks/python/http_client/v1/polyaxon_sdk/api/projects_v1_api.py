@@ -64,15 +64,11 @@ class ProjectsV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs["_return_http_data_only"] = True
-        if kwargs.get("async_req"):
-            return self.archive_project_with_http_info(
-                owner, project, **kwargs
-            )  # noqa: E501
+        kwargs['_return_http_data_only'] = True
+        if kwargs.get('async_req'):
+            return self.archive_project_with_http_info(owner, project, **kwargs)  # noqa: E501
         else:
-            (data) = self.archive_project_with_http_info(
-                owner, project, **kwargs
-            )  # noqa: E501
+            (data) = self.archive_project_with_http_info(owner, project, **kwargs)  # noqa: E501
             return data
 
     def archive_project_with_http_info(self, owner, project, **kwargs):  # noqa: E501
@@ -91,39 +87,37 @@ class ProjectsV1Api(object):
                  returns the request thread.
         """
 
-        all_params = ["owner", "project"]  # noqa: E501
-        all_params.append("async_req")
-        all_params.append("_return_http_data_only")
-        all_params.append("_preload_content")
-        all_params.append("_request_timeout")
+        all_params = ['owner', 'project']  # noqa: E501
+        all_params.append('async_req')
+        all_params.append('_return_http_data_only')
+        all_params.append('_preload_content')
+        all_params.append('_request_timeout')
 
         params = locals()
-        for key, val in six.iteritems(params["kwargs"]):
+        for key, val in six.iteritems(params['kwargs']):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method archive_project" % key
                 )
             params[key] = val
-        del params["kwargs"]
+        del params['kwargs']
         # verify the required parameter 'owner' is set
-        if "owner" not in params or params["owner"] is None:
-            raise ValueError(
-                "Missing the required parameter `owner` when calling `archive_project`"
-            )  # noqa: E501
+        if ('owner' not in params or
+                params['owner'] is None):
+            raise ValueError("Missing the required parameter `owner` when calling `archive_project`")  # noqa: E501
         # verify the required parameter 'project' is set
-        if "project" not in params or params["project"] is None:
-            raise ValueError(
-                "Missing the required parameter `project` when calling `archive_project`"
-            )  # noqa: E501
+        if ('project' not in params or
+                params['project'] is None):
+            raise ValueError("Missing the required parameter `project` when calling `archive_project`")  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if "owner" in params:
-            path_params["owner"] = params["owner"]  # noqa: E501
-        if "project" in params:
-            path_params["project"] = params["project"]  # noqa: E501
+        if 'owner' in params:
+            path_params['owner'] = params['owner']  # noqa: E501
+        if 'project' in params:
+            path_params['project'] = params['project']  # noqa: E501
 
         query_params = []
 
@@ -134,23 +128,18 @@ class ProjectsV1Api(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params[
-            "Content-Type"
-        ] = self.api_client.select_header_content_type(  # noqa: E501
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
+            ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = ["ApiKey"]  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/{project}/archive",
-            "POST",
+            '/api/v1/{owner}/{project}/archive', 'POST',
             path_params,
             query_params,
             header_params,
@@ -159,12 +148,11 @@ class ProjectsV1Api(object):
             files=local_var_files,
             response_type=None,  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get("async_req"),
-            _return_http_data_only=params.get("_return_http_data_only"),
-            _preload_content=params.get("_preload_content", True),
-            _request_timeout=params.get("_request_timeout"),
-            collection_formats=collection_formats,
-        )
+            async_req=params.get('async_req'),
+            _return_http_data_only=params.get('_return_http_data_only'),
+            _preload_content=params.get('_preload_content', True),
+            _request_timeout=params.get('_request_timeout'),
+            collection_formats=collection_formats)
 
     def bookmark_project(self, owner, project, **kwargs):  # noqa: E501
         """Invalidate run  # noqa: E501
@@ -181,15 +169,11 @@ class ProjectsV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs["_return_http_data_only"] = True
-        if kwargs.get("async_req"):
-            return self.bookmark_project_with_http_info(
-                owner, project, **kwargs
-            )  # noqa: E501
+        kwargs['_return_http_data_only'] = True
+        if kwargs.get('async_req'):
+            return self.bookmark_project_with_http_info(owner, project, **kwargs)  # noqa: E501
         else:
-            (data) = self.bookmark_project_with_http_info(
-                owner, project, **kwargs
-            )  # noqa: E501
+            (data) = self.bookmark_project_with_http_info(owner, project, **kwargs)  # noqa: E501
             return data
 
     def bookmark_project_with_http_info(self, owner, project, **kwargs):  # noqa: E501
@@ -208,39 +192,37 @@ class ProjectsV1Api(object):
                  returns the request thread.
         """
 
-        all_params = ["owner", "project"]  # noqa: E501
-        all_params.append("async_req")
-        all_params.append("_return_http_data_only")
-        all_params.append("_preload_content")
-        all_params.append("_request_timeout")
+        all_params = ['owner', 'project']  # noqa: E501
+        all_params.append('async_req')
+        all_params.append('_return_http_data_only')
+        all_params.append('_preload_content')
+        all_params.append('_request_timeout')
 
         params = locals()
-        for key, val in six.iteritems(params["kwargs"]):
+        for key, val in six.iteritems(params['kwargs']):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method bookmark_project" % key
                 )
             params[key] = val
-        del params["kwargs"]
+        del params['kwargs']
         # verify the required parameter 'owner' is set
-        if "owner" not in params or params["owner"] is None:
-            raise ValueError(
-                "Missing the required parameter `owner` when calling `bookmark_project`"
-            )  # noqa: E501
+        if ('owner' not in params or
+                params['owner'] is None):
+            raise ValueError("Missing the required parameter `owner` when calling `bookmark_project`")  # noqa: E501
         # verify the required parameter 'project' is set
-        if "project" not in params or params["project"] is None:
-            raise ValueError(
-                "Missing the required parameter `project` when calling `bookmark_project`"
-            )  # noqa: E501
+        if ('project' not in params or
+                params['project'] is None):
+            raise ValueError("Missing the required parameter `project` when calling `bookmark_project`")  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if "owner" in params:
-            path_params["owner"] = params["owner"]  # noqa: E501
-        if "project" in params:
-            path_params["project"] = params["project"]  # noqa: E501
+        if 'owner' in params:
+            path_params['owner'] = params['owner']  # noqa: E501
+        if 'project' in params:
+            path_params['project'] = params['project']  # noqa: E501
 
         query_params = []
 
@@ -251,23 +233,18 @@ class ProjectsV1Api(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params[
-            "Content-Type"
-        ] = self.api_client.select_header_content_type(  # noqa: E501
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
+            ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = ["ApiKey"]  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/{project}/bookmark",
-            "POST",
+            '/api/v1/{owner}/{project}/bookmark', 'POST',
             path_params,
             query_params,
             header_params,
@@ -276,12 +253,11 @@ class ProjectsV1Api(object):
             files=local_var_files,
             response_type=None,  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get("async_req"),
-            _return_http_data_only=params.get("_return_http_data_only"),
-            _preload_content=params.get("_preload_content", True),
-            _request_timeout=params.get("_request_timeout"),
-            collection_formats=collection_formats,
-        )
+            async_req=params.get('async_req'),
+            _return_http_data_only=params.get('_return_http_data_only'),
+            _preload_content=params.get('_preload_content', True),
+            _request_timeout=params.get('_request_timeout'),
+            collection_formats=collection_formats)
 
     def create_project(self, owner, body, **kwargs):  # noqa: E501
         """List archived runs for user  # noqa: E501
@@ -298,15 +274,11 @@ class ProjectsV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs["_return_http_data_only"] = True
-        if kwargs.get("async_req"):
-            return self.create_project_with_http_info(
-                owner, body, **kwargs
-            )  # noqa: E501
+        kwargs['_return_http_data_only'] = True
+        if kwargs.get('async_req'):
+            return self.create_project_with_http_info(owner, body, **kwargs)  # noqa: E501
         else:
-            (data) = self.create_project_with_http_info(
-                owner, body, **kwargs
-            )  # noqa: E501
+            (data) = self.create_project_with_http_info(owner, body, **kwargs)  # noqa: E501
             return data
 
     def create_project_with_http_info(self, owner, body, **kwargs):  # noqa: E501
@@ -325,37 +297,35 @@ class ProjectsV1Api(object):
                  returns the request thread.
         """
 
-        all_params = ["owner", "body"]  # noqa: E501
-        all_params.append("async_req")
-        all_params.append("_return_http_data_only")
-        all_params.append("_preload_content")
-        all_params.append("_request_timeout")
+        all_params = ['owner', 'body']  # noqa: E501
+        all_params.append('async_req')
+        all_params.append('_return_http_data_only')
+        all_params.append('_preload_content')
+        all_params.append('_request_timeout')
 
         params = locals()
-        for key, val in six.iteritems(params["kwargs"]):
+        for key, val in six.iteritems(params['kwargs']):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method create_project" % key
                 )
             params[key] = val
-        del params["kwargs"]
+        del params['kwargs']
         # verify the required parameter 'owner' is set
-        if "owner" not in params or params["owner"] is None:
-            raise ValueError(
-                "Missing the required parameter `owner` when calling `create_project`"
-            )  # noqa: E501
+        if ('owner' not in params or
+                params['owner'] is None):
+            raise ValueError("Missing the required parameter `owner` when calling `create_project`")  # noqa: E501
         # verify the required parameter 'body' is set
-        if "body" not in params or params["body"] is None:
-            raise ValueError(
-                "Missing the required parameter `body` when calling `create_project`"
-            )  # noqa: E501
+        if ('body' not in params or
+                params['body'] is None):
+            raise ValueError("Missing the required parameter `body` when calling `create_project`")  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if "owner" in params:
-            path_params["owner"] = params["owner"]  # noqa: E501
+        if 'owner' in params:
+            path_params['owner'] = params['owner']  # noqa: E501
 
         query_params = []
 
@@ -365,40 +335,34 @@ class ProjectsV1Api(object):
         local_var_files = {}
 
         body_params = None
-        if "body" in params:
-            body_params = params["body"]
+        if 'body' in params:
+            body_params = params['body']
         # HTTP header `Accept`
-        header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params[
-            "Content-Type"
-        ] = self.api_client.select_header_content_type(  # noqa: E501
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
+            ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = ["ApiKey"]  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/projects/create",
-            "POST",
+            '/api/v1/{owner}/projects/create', 'POST',
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type="V1Project",  # noqa: E501
+            response_type='V1Project',  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get("async_req"),
-            _return_http_data_only=params.get("_return_http_data_only"),
-            _preload_content=params.get("_preload_content", True),
-            _request_timeout=params.get("_request_timeout"),
-            collection_formats=collection_formats,
-        )
+            async_req=params.get('async_req'),
+            _return_http_data_only=params.get('_return_http_data_only'),
+            _preload_content=params.get('_preload_content', True),
+            _request_timeout=params.get('_request_timeout'),
+            collection_formats=collection_formats)
 
     def delete_project(self, owner, project, **kwargs):  # noqa: E501
         """Delete runs  # noqa: E501
@@ -415,15 +379,11 @@ class ProjectsV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs["_return_http_data_only"] = True
-        if kwargs.get("async_req"):
-            return self.delete_project_with_http_info(
-                owner, project, **kwargs
-            )  # noqa: E501
+        kwargs['_return_http_data_only'] = True
+        if kwargs.get('async_req'):
+            return self.delete_project_with_http_info(owner, project, **kwargs)  # noqa: E501
         else:
-            (data) = self.delete_project_with_http_info(
-                owner, project, **kwargs
-            )  # noqa: E501
+            (data) = self.delete_project_with_http_info(owner, project, **kwargs)  # noqa: E501
             return data
 
     def delete_project_with_http_info(self, owner, project, **kwargs):  # noqa: E501
@@ -442,39 +402,37 @@ class ProjectsV1Api(object):
                  returns the request thread.
         """
 
-        all_params = ["owner", "project"]  # noqa: E501
-        all_params.append("async_req")
-        all_params.append("_return_http_data_only")
-        all_params.append("_preload_content")
-        all_params.append("_request_timeout")
+        all_params = ['owner', 'project']  # noqa: E501
+        all_params.append('async_req')
+        all_params.append('_return_http_data_only')
+        all_params.append('_preload_content')
+        all_params.append('_request_timeout')
 
         params = locals()
-        for key, val in six.iteritems(params["kwargs"]):
+        for key, val in six.iteritems(params['kwargs']):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method delete_project" % key
                 )
             params[key] = val
-        del params["kwargs"]
+        del params['kwargs']
         # verify the required parameter 'owner' is set
-        if "owner" not in params or params["owner"] is None:
-            raise ValueError(
-                "Missing the required parameter `owner` when calling `delete_project`"
-            )  # noqa: E501
+        if ('owner' not in params or
+                params['owner'] is None):
+            raise ValueError("Missing the required parameter `owner` when calling `delete_project`")  # noqa: E501
         # verify the required parameter 'project' is set
-        if "project" not in params or params["project"] is None:
-            raise ValueError(
-                "Missing the required parameter `project` when calling `delete_project`"
-            )  # noqa: E501
+        if ('project' not in params or
+                params['project'] is None):
+            raise ValueError("Missing the required parameter `project` when calling `delete_project`")  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if "owner" in params:
-            path_params["owner"] = params["owner"]  # noqa: E501
-        if "project" in params:
-            path_params["project"] = params["project"]  # noqa: E501
+        if 'owner' in params:
+            path_params['owner'] = params['owner']  # noqa: E501
+        if 'project' in params:
+            path_params['project'] = params['project']  # noqa: E501
 
         query_params = []
 
@@ -485,23 +443,18 @@ class ProjectsV1Api(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params[
-            "Content-Type"
-        ] = self.api_client.select_header_content_type(  # noqa: E501
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
+            ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = ["ApiKey"]  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/{project}",
-            "DELETE",
+            '/api/v1/{owner}/{project}', 'DELETE',
             path_params,
             query_params,
             header_params,
@@ -510,12 +463,11 @@ class ProjectsV1Api(object):
             files=local_var_files,
             response_type=None,  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get("async_req"),
-            _return_http_data_only=params.get("_return_http_data_only"),
-            _preload_content=params.get("_preload_content", True),
-            _request_timeout=params.get("_request_timeout"),
-            collection_formats=collection_formats,
-        )
+            async_req=params.get('async_req'),
+            _return_http_data_only=params.get('_return_http_data_only'),
+            _preload_content=params.get('_preload_content', True),
+            _request_timeout=params.get('_request_timeout'),
+            collection_formats=collection_formats)
 
     def disable_project_ci(self, owner, project, **kwargs):  # noqa: E501
         """Restart run  # noqa: E501
@@ -532,15 +484,11 @@ class ProjectsV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs["_return_http_data_only"] = True
-        if kwargs.get("async_req"):
-            return self.disable_project_ci_with_http_info(
-                owner, project, **kwargs
-            )  # noqa: E501
+        kwargs['_return_http_data_only'] = True
+        if kwargs.get('async_req'):
+            return self.disable_project_ci_with_http_info(owner, project, **kwargs)  # noqa: E501
         else:
-            (data) = self.disable_project_ci_with_http_info(
-                owner, project, **kwargs
-            )  # noqa: E501
+            (data) = self.disable_project_ci_with_http_info(owner, project, **kwargs)  # noqa: E501
             return data
 
     def disable_project_ci_with_http_info(self, owner, project, **kwargs):  # noqa: E501
@@ -559,39 +507,37 @@ class ProjectsV1Api(object):
                  returns the request thread.
         """
 
-        all_params = ["owner", "project"]  # noqa: E501
-        all_params.append("async_req")
-        all_params.append("_return_http_data_only")
-        all_params.append("_preload_content")
-        all_params.append("_request_timeout")
+        all_params = ['owner', 'project']  # noqa: E501
+        all_params.append('async_req')
+        all_params.append('_return_http_data_only')
+        all_params.append('_preload_content')
+        all_params.append('_request_timeout')
 
         params = locals()
-        for key, val in six.iteritems(params["kwargs"]):
+        for key, val in six.iteritems(params['kwargs']):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method disable_project_ci" % key
                 )
             params[key] = val
-        del params["kwargs"]
+        del params['kwargs']
         # verify the required parameter 'owner' is set
-        if "owner" not in params or params["owner"] is None:
-            raise ValueError(
-                "Missing the required parameter `owner` when calling `disable_project_ci`"
-            )  # noqa: E501
+        if ('owner' not in params or
+                params['owner'] is None):
+            raise ValueError("Missing the required parameter `owner` when calling `disable_project_ci`")  # noqa: E501
         # verify the required parameter 'project' is set
-        if "project" not in params or params["project"] is None:
-            raise ValueError(
-                "Missing the required parameter `project` when calling `disable_project_ci`"
-            )  # noqa: E501
+        if ('project' not in params or
+                params['project'] is None):
+            raise ValueError("Missing the required parameter `project` when calling `disable_project_ci`")  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if "owner" in params:
-            path_params["owner"] = params["owner"]  # noqa: E501
-        if "project" in params:
-            path_params["project"] = params["project"]  # noqa: E501
+        if 'owner' in params:
+            path_params['owner'] = params['owner']  # noqa: E501
+        if 'project' in params:
+            path_params['project'] = params['project']  # noqa: E501
 
         query_params = []
 
@@ -602,23 +548,18 @@ class ProjectsV1Api(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params[
-            "Content-Type"
-        ] = self.api_client.select_header_content_type(  # noqa: E501
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
+            ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = ["ApiKey"]  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/{project}/ci",
-            "DELETE",
+            '/api/v1/{owner}/{project}/ci', 'DELETE',
             path_params,
             query_params,
             header_params,
@@ -627,12 +568,11 @@ class ProjectsV1Api(object):
             files=local_var_files,
             response_type=None,  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get("async_req"),
-            _return_http_data_only=params.get("_return_http_data_only"),
-            _preload_content=params.get("_preload_content", True),
-            _request_timeout=params.get("_request_timeout"),
-            collection_formats=collection_formats,
-        )
+            async_req=params.get('async_req'),
+            _return_http_data_only=params.get('_return_http_data_only'),
+            _preload_content=params.get('_preload_content', True),
+            _request_timeout=params.get('_request_timeout'),
+            collection_formats=collection_formats)
 
     def enable_project_ci(self, owner, project, **kwargs):  # noqa: E501
         """Restart run with copy  # noqa: E501
@@ -649,15 +589,11 @@ class ProjectsV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs["_return_http_data_only"] = True
-        if kwargs.get("async_req"):
-            return self.enable_project_ci_with_http_info(
-                owner, project, **kwargs
-            )  # noqa: E501
+        kwargs['_return_http_data_only'] = True
+        if kwargs.get('async_req'):
+            return self.enable_project_ci_with_http_info(owner, project, **kwargs)  # noqa: E501
         else:
-            (data) = self.enable_project_ci_with_http_info(
-                owner, project, **kwargs
-            )  # noqa: E501
+            (data) = self.enable_project_ci_with_http_info(owner, project, **kwargs)  # noqa: E501
             return data
 
     def enable_project_ci_with_http_info(self, owner, project, **kwargs):  # noqa: E501
@@ -676,39 +612,37 @@ class ProjectsV1Api(object):
                  returns the request thread.
         """
 
-        all_params = ["owner", "project"]  # noqa: E501
-        all_params.append("async_req")
-        all_params.append("_return_http_data_only")
-        all_params.append("_preload_content")
-        all_params.append("_request_timeout")
+        all_params = ['owner', 'project']  # noqa: E501
+        all_params.append('async_req')
+        all_params.append('_return_http_data_only')
+        all_params.append('_preload_content')
+        all_params.append('_request_timeout')
 
         params = locals()
-        for key, val in six.iteritems(params["kwargs"]):
+        for key, val in six.iteritems(params['kwargs']):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method enable_project_ci" % key
                 )
             params[key] = val
-        del params["kwargs"]
+        del params['kwargs']
         # verify the required parameter 'owner' is set
-        if "owner" not in params or params["owner"] is None:
-            raise ValueError(
-                "Missing the required parameter `owner` when calling `enable_project_ci`"
-            )  # noqa: E501
+        if ('owner' not in params or
+                params['owner'] is None):
+            raise ValueError("Missing the required parameter `owner` when calling `enable_project_ci`")  # noqa: E501
         # verify the required parameter 'project' is set
-        if "project" not in params or params["project"] is None:
-            raise ValueError(
-                "Missing the required parameter `project` when calling `enable_project_ci`"
-            )  # noqa: E501
+        if ('project' not in params or
+                params['project'] is None):
+            raise ValueError("Missing the required parameter `project` when calling `enable_project_ci`")  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if "owner" in params:
-            path_params["owner"] = params["owner"]  # noqa: E501
-        if "project" in params:
-            path_params["project"] = params["project"]  # noqa: E501
+        if 'owner' in params:
+            path_params['owner'] = params['owner']  # noqa: E501
+        if 'project' in params:
+            path_params['project'] = params['project']  # noqa: E501
 
         query_params = []
 
@@ -719,23 +653,18 @@ class ProjectsV1Api(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params[
-            "Content-Type"
-        ] = self.api_client.select_header_content_type(  # noqa: E501
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
+            ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = ["ApiKey"]  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/{project}/ci",
-            "POST",
+            '/api/v1/{owner}/{project}/ci', 'POST',
             path_params,
             query_params,
             header_params,
@@ -744,12 +673,11 @@ class ProjectsV1Api(object):
             files=local_var_files,
             response_type=None,  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get("async_req"),
-            _return_http_data_only=params.get("_return_http_data_only"),
-            _preload_content=params.get("_preload_content", True),
-            _request_timeout=params.get("_request_timeout"),
-            collection_formats=collection_formats,
-        )
+            async_req=params.get('async_req'),
+            _return_http_data_only=params.get('_return_http_data_only'),
+            _preload_content=params.get('_preload_content', True),
+            _request_timeout=params.get('_request_timeout'),
+            collection_formats=collection_formats)
 
     def get_project(self, owner, project, **kwargs):  # noqa: E501
         """Update run  # noqa: E501
@@ -766,15 +694,11 @@ class ProjectsV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs["_return_http_data_only"] = True
-        if kwargs.get("async_req"):
-            return self.get_project_with_http_info(
-                owner, project, **kwargs
-            )  # noqa: E501
+        kwargs['_return_http_data_only'] = True
+        if kwargs.get('async_req'):
+            return self.get_project_with_http_info(owner, project, **kwargs)  # noqa: E501
         else:
-            (data) = self.get_project_with_http_info(
-                owner, project, **kwargs
-            )  # noqa: E501
+            (data) = self.get_project_with_http_info(owner, project, **kwargs)  # noqa: E501
             return data
 
     def get_project_with_http_info(self, owner, project, **kwargs):  # noqa: E501
@@ -793,39 +717,37 @@ class ProjectsV1Api(object):
                  returns the request thread.
         """
 
-        all_params = ["owner", "project"]  # noqa: E501
-        all_params.append("async_req")
-        all_params.append("_return_http_data_only")
-        all_params.append("_preload_content")
-        all_params.append("_request_timeout")
+        all_params = ['owner', 'project']  # noqa: E501
+        all_params.append('async_req')
+        all_params.append('_return_http_data_only')
+        all_params.append('_preload_content')
+        all_params.append('_request_timeout')
 
         params = locals()
-        for key, val in six.iteritems(params["kwargs"]):
+        for key, val in six.iteritems(params['kwargs']):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method get_project" % key
                 )
             params[key] = val
-        del params["kwargs"]
+        del params['kwargs']
         # verify the required parameter 'owner' is set
-        if "owner" not in params or params["owner"] is None:
-            raise ValueError(
-                "Missing the required parameter `owner` when calling `get_project`"
-            )  # noqa: E501
+        if ('owner' not in params or
+                params['owner'] is None):
+            raise ValueError("Missing the required parameter `owner` when calling `get_project`")  # noqa: E501
         # verify the required parameter 'project' is set
-        if "project" not in params or params["project"] is None:
-            raise ValueError(
-                "Missing the required parameter `project` when calling `get_project`"
-            )  # noqa: E501
+        if ('project' not in params or
+                params['project'] is None):
+            raise ValueError("Missing the required parameter `project` when calling `get_project`")  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if "owner" in params:
-            path_params["owner"] = params["owner"]  # noqa: E501
-        if "project" in params:
-            path_params["project"] = params["project"]  # noqa: E501
+        if 'owner' in params:
+            path_params['owner'] = params['owner']  # noqa: E501
+        if 'project' in params:
+            path_params['project'] = params['project']  # noqa: E501
 
         query_params = []
 
@@ -836,37 +758,31 @@ class ProjectsV1Api(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params[
-            "Content-Type"
-        ] = self.api_client.select_header_content_type(  # noqa: E501
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
+            ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = ["ApiKey"]  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/{project}",
-            "GET",
+            '/api/v1/{owner}/{project}', 'GET',
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type="V1Project",  # noqa: E501
+            response_type='V1Project',  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get("async_req"),
-            _return_http_data_only=params.get("_return_http_data_only"),
-            _preload_content=params.get("_preload_content", True),
-            _request_timeout=params.get("_request_timeout"),
-            collection_formats=collection_formats,
-        )
+            async_req=params.get('async_req'),
+            _return_http_data_only=params.get('_return_http_data_only'),
+            _preload_content=params.get('_preload_content', True),
+            _request_timeout=params.get('_request_timeout'),
+            collection_formats=collection_formats)
 
     def list_archived_projects(self, user, **kwargs):  # noqa: E501
         """Get run  # noqa: E501
@@ -886,15 +802,11 @@ class ProjectsV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs["_return_http_data_only"] = True
-        if kwargs.get("async_req"):
-            return self.list_archived_projects_with_http_info(
-                user, **kwargs
-            )  # noqa: E501
+        kwargs['_return_http_data_only'] = True
+        if kwargs.get('async_req'):
+            return self.list_archived_projects_with_http_info(user, **kwargs)  # noqa: E501
         else:
-            (data) = self.list_archived_projects_with_http_info(
-                user, **kwargs
-            )  # noqa: E501
+            (data) = self.list_archived_projects_with_http_info(user, **kwargs)  # noqa: E501
             return data
 
     def list_archived_projects_with_http_info(self, user, **kwargs):  # noqa: E501
@@ -916,42 +828,41 @@ class ProjectsV1Api(object):
                  returns the request thread.
         """
 
-        all_params = ["user", "offset", "limit", "sort", "query"]  # noqa: E501
-        all_params.append("async_req")
-        all_params.append("_return_http_data_only")
-        all_params.append("_preload_content")
-        all_params.append("_request_timeout")
+        all_params = ['user', 'offset', 'limit', 'sort', 'query']  # noqa: E501
+        all_params.append('async_req')
+        all_params.append('_return_http_data_only')
+        all_params.append('_preload_content')
+        all_params.append('_request_timeout')
 
         params = locals()
-        for key, val in six.iteritems(params["kwargs"]):
+        for key, val in six.iteritems(params['kwargs']):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method list_archived_projects" % key
                 )
             params[key] = val
-        del params["kwargs"]
+        del params['kwargs']
         # verify the required parameter 'user' is set
-        if "user" not in params or params["user"] is None:
-            raise ValueError(
-                "Missing the required parameter `user` when calling `list_archived_projects`"
-            )  # noqa: E501
+        if ('user' not in params or
+                params['user'] is None):
+            raise ValueError("Missing the required parameter `user` when calling `list_archived_projects`")  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if "user" in params:
-            path_params["user"] = params["user"]  # noqa: E501
+        if 'user' in params:
+            path_params['user'] = params['user']  # noqa: E501
 
         query_params = []
-        if "offset" in params:
-            query_params.append(("offset", params["offset"]))  # noqa: E501
-        if "limit" in params:
-            query_params.append(("limit", params["limit"]))  # noqa: E501
-        if "sort" in params:
-            query_params.append(("sort", params["sort"]))  # noqa: E501
-        if "query" in params:
-            query_params.append(("query", params["query"]))  # noqa: E501
+        if 'offset' in params:
+            query_params.append(('offset', params['offset']))  # noqa: E501
+        if 'limit' in params:
+            query_params.append(('limit', params['limit']))  # noqa: E501
+        if 'sort' in params:
+            query_params.append(('sort', params['sort']))  # noqa: E501
+        if 'query' in params:
+            query_params.append(('query', params['query']))  # noqa: E501
 
         header_params = {}
 
@@ -960,37 +871,31 @@ class ProjectsV1Api(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params[
-            "Content-Type"
-        ] = self.api_client.select_header_content_type(  # noqa: E501
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
+            ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = ["ApiKey"]  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/archives/{user}/projects",
-            "GET",
+            '/api/v1/archives/{user}/projects', 'GET',
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type="V1ListProjectsResponse",  # noqa: E501
+            response_type='V1ListProjectsResponse',  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get("async_req"),
-            _return_http_data_only=params.get("_return_http_data_only"),
-            _preload_content=params.get("_preload_content", True),
-            _request_timeout=params.get("_request_timeout"),
-            collection_formats=collection_formats,
-        )
+            async_req=params.get('async_req'),
+            _return_http_data_only=params.get('_return_http_data_only'),
+            _preload_content=params.get('_preload_content', True),
+            _request_timeout=params.get('_request_timeout'),
+            collection_formats=collection_formats)
 
     def list_bookmarked_projects(self, user, **kwargs):  # noqa: E501
         """Create new run  # noqa: E501
@@ -1010,15 +915,11 @@ class ProjectsV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs["_return_http_data_only"] = True
-        if kwargs.get("async_req"):
-            return self.list_bookmarked_projects_with_http_info(
-                user, **kwargs
-            )  # noqa: E501
+        kwargs['_return_http_data_only'] = True
+        if kwargs.get('async_req'):
+            return self.list_bookmarked_projects_with_http_info(user, **kwargs)  # noqa: E501
         else:
-            (data) = self.list_bookmarked_projects_with_http_info(
-                user, **kwargs
-            )  # noqa: E501
+            (data) = self.list_bookmarked_projects_with_http_info(user, **kwargs)  # noqa: E501
             return data
 
     def list_bookmarked_projects_with_http_info(self, user, **kwargs):  # noqa: E501
@@ -1040,42 +941,41 @@ class ProjectsV1Api(object):
                  returns the request thread.
         """
 
-        all_params = ["user", "offset", "limit", "sort", "query"]  # noqa: E501
-        all_params.append("async_req")
-        all_params.append("_return_http_data_only")
-        all_params.append("_preload_content")
-        all_params.append("_request_timeout")
+        all_params = ['user', 'offset', 'limit', 'sort', 'query']  # noqa: E501
+        all_params.append('async_req')
+        all_params.append('_return_http_data_only')
+        all_params.append('_preload_content')
+        all_params.append('_request_timeout')
 
         params = locals()
-        for key, val in six.iteritems(params["kwargs"]):
+        for key, val in six.iteritems(params['kwargs']):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method list_bookmarked_projects" % key
                 )
             params[key] = val
-        del params["kwargs"]
+        del params['kwargs']
         # verify the required parameter 'user' is set
-        if "user" not in params or params["user"] is None:
-            raise ValueError(
-                "Missing the required parameter `user` when calling `list_bookmarked_projects`"
-            )  # noqa: E501
+        if ('user' not in params or
+                params['user'] is None):
+            raise ValueError("Missing the required parameter `user` when calling `list_bookmarked_projects`")  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if "user" in params:
-            path_params["user"] = params["user"]  # noqa: E501
+        if 'user' in params:
+            path_params['user'] = params['user']  # noqa: E501
 
         query_params = []
-        if "offset" in params:
-            query_params.append(("offset", params["offset"]))  # noqa: E501
-        if "limit" in params:
-            query_params.append(("limit", params["limit"]))  # noqa: E501
-        if "sort" in params:
-            query_params.append(("sort", params["sort"]))  # noqa: E501
-        if "query" in params:
-            query_params.append(("query", params["query"]))  # noqa: E501
+        if 'offset' in params:
+            query_params.append(('offset', params['offset']))  # noqa: E501
+        if 'limit' in params:
+            query_params.append(('limit', params['limit']))  # noqa: E501
+        if 'sort' in params:
+            query_params.append(('sort', params['sort']))  # noqa: E501
+        if 'query' in params:
+            query_params.append(('query', params['query']))  # noqa: E501
 
         header_params = {}
 
@@ -1084,37 +984,31 @@ class ProjectsV1Api(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params[
-            "Content-Type"
-        ] = self.api_client.select_header_content_type(  # noqa: E501
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
+            ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = ["ApiKey"]  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/bookmarks/{user}/projects",
-            "GET",
+            '/api/v1/bookmarks/{user}/projects', 'GET',
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type="V1ListProjectsResponse",  # noqa: E501
+            response_type='V1ListProjectsResponse',  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get("async_req"),
-            _return_http_data_only=params.get("_return_http_data_only"),
-            _preload_content=params.get("_preload_content", True),
-            _request_timeout=params.get("_request_timeout"),
-            collection_formats=collection_formats,
-        )
+            async_req=params.get('async_req'),
+            _return_http_data_only=params.get('_return_http_data_only'),
+            _preload_content=params.get('_preload_content', True),
+            _request_timeout=params.get('_request_timeout'),
+            collection_formats=collection_formats)
 
     def list_project_names(self, owner, **kwargs):  # noqa: E501
         """List runs  # noqa: E501
@@ -1134,13 +1028,11 @@ class ProjectsV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs["_return_http_data_only"] = True
-        if kwargs.get("async_req"):
+        kwargs['_return_http_data_only'] = True
+        if kwargs.get('async_req'):
             return self.list_project_names_with_http_info(owner, **kwargs)  # noqa: E501
         else:
-            (data) = self.list_project_names_with_http_info(
-                owner, **kwargs
-            )  # noqa: E501
+            (data) = self.list_project_names_with_http_info(owner, **kwargs)  # noqa: E501
             return data
 
     def list_project_names_with_http_info(self, owner, **kwargs):  # noqa: E501
@@ -1162,42 +1054,41 @@ class ProjectsV1Api(object):
                  returns the request thread.
         """
 
-        all_params = ["owner", "offset", "limit", "sort", "query"]  # noqa: E501
-        all_params.append("async_req")
-        all_params.append("_return_http_data_only")
-        all_params.append("_preload_content")
-        all_params.append("_request_timeout")
+        all_params = ['owner', 'offset', 'limit', 'sort', 'query']  # noqa: E501
+        all_params.append('async_req')
+        all_params.append('_return_http_data_only')
+        all_params.append('_preload_content')
+        all_params.append('_request_timeout')
 
         params = locals()
-        for key, val in six.iteritems(params["kwargs"]):
+        for key, val in six.iteritems(params['kwargs']):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method list_project_names" % key
                 )
             params[key] = val
-        del params["kwargs"]
+        del params['kwargs']
         # verify the required parameter 'owner' is set
-        if "owner" not in params or params["owner"] is None:
-            raise ValueError(
-                "Missing the required parameter `owner` when calling `list_project_names`"
-            )  # noqa: E501
+        if ('owner' not in params or
+                params['owner'] is None):
+            raise ValueError("Missing the required parameter `owner` when calling `list_project_names`")  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if "owner" in params:
-            path_params["owner"] = params["owner"]  # noqa: E501
+        if 'owner' in params:
+            path_params['owner'] = params['owner']  # noqa: E501
 
         query_params = []
-        if "offset" in params:
-            query_params.append(("offset", params["offset"]))  # noqa: E501
-        if "limit" in params:
-            query_params.append(("limit", params["limit"]))  # noqa: E501
-        if "sort" in params:
-            query_params.append(("sort", params["sort"]))  # noqa: E501
-        if "query" in params:
-            query_params.append(("query", params["query"]))  # noqa: E501
+        if 'offset' in params:
+            query_params.append(('offset', params['offset']))  # noqa: E501
+        if 'limit' in params:
+            query_params.append(('limit', params['limit']))  # noqa: E501
+        if 'sort' in params:
+            query_params.append(('sort', params['sort']))  # noqa: E501
+        if 'query' in params:
+            query_params.append(('query', params['query']))  # noqa: E501
 
         header_params = {}
 
@@ -1206,37 +1097,31 @@ class ProjectsV1Api(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params[
-            "Content-Type"
-        ] = self.api_client.select_header_content_type(  # noqa: E501
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
+            ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = ["ApiKey"]  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/projects/names",
-            "GET",
+            '/api/v1/{owner}/projects/names', 'GET',
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type="V1ListProjectsResponse",  # noqa: E501
+            response_type='V1ListProjectsResponse',  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get("async_req"),
-            _return_http_data_only=params.get("_return_http_data_only"),
-            _preload_content=params.get("_preload_content", True),
-            _request_timeout=params.get("_request_timeout"),
-            collection_formats=collection_formats,
-        )
+            async_req=params.get('async_req'),
+            _return_http_data_only=params.get('_return_http_data_only'),
+            _preload_content=params.get('_preload_content', True),
+            _request_timeout=params.get('_request_timeout'),
+            collection_formats=collection_formats)
 
     def list_projects(self, owner, **kwargs):  # noqa: E501
         """List bookmarked runs for user  # noqa: E501
@@ -1256,8 +1141,8 @@ class ProjectsV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs["_return_http_data_only"] = True
-        if kwargs.get("async_req"):
+        kwargs['_return_http_data_only'] = True
+        if kwargs.get('async_req'):
             return self.list_projects_with_http_info(owner, **kwargs)  # noqa: E501
         else:
             (data) = self.list_projects_with_http_info(owner, **kwargs)  # noqa: E501
@@ -1282,42 +1167,41 @@ class ProjectsV1Api(object):
                  returns the request thread.
         """
 
-        all_params = ["owner", "offset", "limit", "sort", "query"]  # noqa: E501
-        all_params.append("async_req")
-        all_params.append("_return_http_data_only")
-        all_params.append("_preload_content")
-        all_params.append("_request_timeout")
+        all_params = ['owner', 'offset', 'limit', 'sort', 'query']  # noqa: E501
+        all_params.append('async_req')
+        all_params.append('_return_http_data_only')
+        all_params.append('_preload_content')
+        all_params.append('_request_timeout')
 
         params = locals()
-        for key, val in six.iteritems(params["kwargs"]):
+        for key, val in six.iteritems(params['kwargs']):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method list_projects" % key
                 )
             params[key] = val
-        del params["kwargs"]
+        del params['kwargs']
         # verify the required parameter 'owner' is set
-        if "owner" not in params or params["owner"] is None:
-            raise ValueError(
-                "Missing the required parameter `owner` when calling `list_projects`"
-            )  # noqa: E501
+        if ('owner' not in params or
+                params['owner'] is None):
+            raise ValueError("Missing the required parameter `owner` when calling `list_projects`")  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if "owner" in params:
-            path_params["owner"] = params["owner"]  # noqa: E501
+        if 'owner' in params:
+            path_params['owner'] = params['owner']  # noqa: E501
 
         query_params = []
-        if "offset" in params:
-            query_params.append(("offset", params["offset"]))  # noqa: E501
-        if "limit" in params:
-            query_params.append(("limit", params["limit"]))  # noqa: E501
-        if "sort" in params:
-            query_params.append(("sort", params["sort"]))  # noqa: E501
-        if "query" in params:
-            query_params.append(("query", params["query"]))  # noqa: E501
+        if 'offset' in params:
+            query_params.append(('offset', params['offset']))  # noqa: E501
+        if 'limit' in params:
+            query_params.append(('limit', params['limit']))  # noqa: E501
+        if 'sort' in params:
+            query_params.append(('sort', params['sort']))  # noqa: E501
+        if 'query' in params:
+            query_params.append(('query', params['query']))  # noqa: E501
 
         header_params = {}
 
@@ -1326,37 +1210,31 @@ class ProjectsV1Api(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params[
-            "Content-Type"
-        ] = self.api_client.select_header_content_type(  # noqa: E501
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
+            ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = ["ApiKey"]  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/projects/list",
-            "GET",
+            '/api/v1/{owner}/projects/list', 'GET',
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type="V1ListProjectsResponse",  # noqa: E501
+            response_type='V1ListProjectsResponse',  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get("async_req"),
-            _return_http_data_only=params.get("_return_http_data_only"),
-            _preload_content=params.get("_preload_content", True),
-            _request_timeout=params.get("_request_timeout"),
-            collection_formats=collection_formats,
-        )
+            async_req=params.get('async_req'),
+            _return_http_data_only=params.get('_return_http_data_only'),
+            _preload_content=params.get('_preload_content', True),
+            _request_timeout=params.get('_request_timeout'),
+            collection_formats=collection_formats)
 
     def patch_project(self, owner, project_name, body, **kwargs):  # noqa: E501
         """Delete run  # noqa: E501
@@ -1374,20 +1252,14 @@ class ProjectsV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs["_return_http_data_only"] = True
-        if kwargs.get("async_req"):
-            return self.patch_project_with_http_info(
-                owner, project_name, body, **kwargs
-            )  # noqa: E501
+        kwargs['_return_http_data_only'] = True
+        if kwargs.get('async_req'):
+            return self.patch_project_with_http_info(owner, project_name, body, **kwargs)  # noqa: E501
         else:
-            (data) = self.patch_project_with_http_info(
-                owner, project_name, body, **kwargs
-            )  # noqa: E501
+            (data) = self.patch_project_with_http_info(owner, project_name, body, **kwargs)  # noqa: E501
             return data
 
-    def patch_project_with_http_info(
-        self, owner, project_name, body, **kwargs
-    ):  # noqa: E501
+    def patch_project_with_http_info(self, owner, project_name, body, **kwargs):  # noqa: E501
         """Delete run  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -1404,44 +1276,41 @@ class ProjectsV1Api(object):
                  returns the request thread.
         """
 
-        all_params = ["owner", "project_name", "body"]  # noqa: E501
-        all_params.append("async_req")
-        all_params.append("_return_http_data_only")
-        all_params.append("_preload_content")
-        all_params.append("_request_timeout")
+        all_params = ['owner', 'project_name', 'body']  # noqa: E501
+        all_params.append('async_req')
+        all_params.append('_return_http_data_only')
+        all_params.append('_preload_content')
+        all_params.append('_request_timeout')
 
         params = locals()
-        for key, val in six.iteritems(params["kwargs"]):
+        for key, val in six.iteritems(params['kwargs']):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method patch_project" % key
                 )
             params[key] = val
-        del params["kwargs"]
+        del params['kwargs']
         # verify the required parameter 'owner' is set
-        if "owner" not in params or params["owner"] is None:
-            raise ValueError(
-                "Missing the required parameter `owner` when calling `patch_project`"
-            )  # noqa: E501
+        if ('owner' not in params or
+                params['owner'] is None):
+            raise ValueError("Missing the required parameter `owner` when calling `patch_project`")  # noqa: E501
         # verify the required parameter 'project_name' is set
-        if "project_name" not in params or params["project_name"] is None:
-            raise ValueError(
-                "Missing the required parameter `project_name` when calling `patch_project`"
-            )  # noqa: E501
+        if ('project_name' not in params or
+                params['project_name'] is None):
+            raise ValueError("Missing the required parameter `project_name` when calling `patch_project`")  # noqa: E501
         # verify the required parameter 'body' is set
-        if "body" not in params or params["body"] is None:
-            raise ValueError(
-                "Missing the required parameter `body` when calling `patch_project`"
-            )  # noqa: E501
+        if ('body' not in params or
+                params['body'] is None):
+            raise ValueError("Missing the required parameter `body` when calling `patch_project`")  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if "owner" in params:
-            path_params["owner"] = params["owner"]  # noqa: E501
-        if "project_name" in params:
-            path_params["project.name"] = params["project_name"]  # noqa: E501
+        if 'owner' in params:
+            path_params['owner'] = params['owner']  # noqa: E501
+        if 'project_name' in params:
+            path_params['project.name'] = params['project_name']  # noqa: E501
 
         query_params = []
 
@@ -1451,40 +1320,34 @@ class ProjectsV1Api(object):
         local_var_files = {}
 
         body_params = None
-        if "body" in params:
-            body_params = params["body"]
+        if 'body' in params:
+            body_params = params['body']
         # HTTP header `Accept`
-        header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params[
-            "Content-Type"
-        ] = self.api_client.select_header_content_type(  # noqa: E501
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
+            ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = ["ApiKey"]  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/{project.name}",
-            "PATCH",
+            '/api/v1/{owner}/{project.name}', 'PATCH',
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type="V1Project",  # noqa: E501
+            response_type='V1Project',  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get("async_req"),
-            _return_http_data_only=params.get("_return_http_data_only"),
-            _preload_content=params.get("_preload_content", True),
-            _request_timeout=params.get("_request_timeout"),
-            collection_formats=collection_formats,
-        )
+            async_req=params.get('async_req'),
+            _return_http_data_only=params.get('_return_http_data_only'),
+            _preload_content=params.get('_preload_content', True),
+            _request_timeout=params.get('_request_timeout'),
+            collection_formats=collection_formats)
 
     def restore_project(self, owner, project, **kwargs):  # noqa: E501
         """Stop runs  # noqa: E501
@@ -1501,15 +1364,11 @@ class ProjectsV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs["_return_http_data_only"] = True
-        if kwargs.get("async_req"):
-            return self.restore_project_with_http_info(
-                owner, project, **kwargs
-            )  # noqa: E501
+        kwargs['_return_http_data_only'] = True
+        if kwargs.get('async_req'):
+            return self.restore_project_with_http_info(owner, project, **kwargs)  # noqa: E501
         else:
-            (data) = self.restore_project_with_http_info(
-                owner, project, **kwargs
-            )  # noqa: E501
+            (data) = self.restore_project_with_http_info(owner, project, **kwargs)  # noqa: E501
             return data
 
     def restore_project_with_http_info(self, owner, project, **kwargs):  # noqa: E501
@@ -1528,39 +1387,37 @@ class ProjectsV1Api(object):
                  returns the request thread.
         """
 
-        all_params = ["owner", "project"]  # noqa: E501
-        all_params.append("async_req")
-        all_params.append("_return_http_data_only")
-        all_params.append("_preload_content")
-        all_params.append("_request_timeout")
+        all_params = ['owner', 'project']  # noqa: E501
+        all_params.append('async_req')
+        all_params.append('_return_http_data_only')
+        all_params.append('_preload_content')
+        all_params.append('_request_timeout')
 
         params = locals()
-        for key, val in six.iteritems(params["kwargs"]):
+        for key, val in six.iteritems(params['kwargs']):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method restore_project" % key
                 )
             params[key] = val
-        del params["kwargs"]
+        del params['kwargs']
         # verify the required parameter 'owner' is set
-        if "owner" not in params or params["owner"] is None:
-            raise ValueError(
-                "Missing the required parameter `owner` when calling `restore_project`"
-            )  # noqa: E501
+        if ('owner' not in params or
+                params['owner'] is None):
+            raise ValueError("Missing the required parameter `owner` when calling `restore_project`")  # noqa: E501
         # verify the required parameter 'project' is set
-        if "project" not in params or params["project"] is None:
-            raise ValueError(
-                "Missing the required parameter `project` when calling `restore_project`"
-            )  # noqa: E501
+        if ('project' not in params or
+                params['project'] is None):
+            raise ValueError("Missing the required parameter `project` when calling `restore_project`")  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if "owner" in params:
-            path_params["owner"] = params["owner"]  # noqa: E501
-        if "project" in params:
-            path_params["project"] = params["project"]  # noqa: E501
+        if 'owner' in params:
+            path_params['owner'] = params['owner']  # noqa: E501
+        if 'project' in params:
+            path_params['project'] = params['project']  # noqa: E501
 
         query_params = []
 
@@ -1571,23 +1428,18 @@ class ProjectsV1Api(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params[
-            "Content-Type"
-        ] = self.api_client.select_header_content_type(  # noqa: E501
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
+            ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = ["ApiKey"]  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/{project}/restore",
-            "POST",
+            '/api/v1/{owner}/{project}/restore', 'POST',
             path_params,
             query_params,
             header_params,
@@ -1596,12 +1448,11 @@ class ProjectsV1Api(object):
             files=local_var_files,
             response_type=None,  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get("async_req"),
-            _return_http_data_only=params.get("_return_http_data_only"),
-            _preload_content=params.get("_preload_content", True),
-            _request_timeout=params.get("_request_timeout"),
-            collection_formats=collection_formats,
-        )
+            async_req=params.get('async_req'),
+            _return_http_data_only=params.get('_return_http_data_only'),
+            _preload_content=params.get('_preload_content', True),
+            _request_timeout=params.get('_request_timeout'),
+            collection_formats=collection_formats)
 
     def unbookmark_project(self, owner, project, **kwargs):  # noqa: E501
         """Invalidate runs  # noqa: E501
@@ -1618,15 +1469,11 @@ class ProjectsV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs["_return_http_data_only"] = True
-        if kwargs.get("async_req"):
-            return self.unbookmark_project_with_http_info(
-                owner, project, **kwargs
-            )  # noqa: E501
+        kwargs['_return_http_data_only'] = True
+        if kwargs.get('async_req'):
+            return self.unbookmark_project_with_http_info(owner, project, **kwargs)  # noqa: E501
         else:
-            (data) = self.unbookmark_project_with_http_info(
-                owner, project, **kwargs
-            )  # noqa: E501
+            (data) = self.unbookmark_project_with_http_info(owner, project, **kwargs)  # noqa: E501
             return data
 
     def unbookmark_project_with_http_info(self, owner, project, **kwargs):  # noqa: E501
@@ -1645,39 +1492,37 @@ class ProjectsV1Api(object):
                  returns the request thread.
         """
 
-        all_params = ["owner", "project"]  # noqa: E501
-        all_params.append("async_req")
-        all_params.append("_return_http_data_only")
-        all_params.append("_preload_content")
-        all_params.append("_request_timeout")
+        all_params = ['owner', 'project']  # noqa: E501
+        all_params.append('async_req')
+        all_params.append('_return_http_data_only')
+        all_params.append('_preload_content')
+        all_params.append('_request_timeout')
 
         params = locals()
-        for key, val in six.iteritems(params["kwargs"]):
+        for key, val in six.iteritems(params['kwargs']):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method unbookmark_project" % key
                 )
             params[key] = val
-        del params["kwargs"]
+        del params['kwargs']
         # verify the required parameter 'owner' is set
-        if "owner" not in params or params["owner"] is None:
-            raise ValueError(
-                "Missing the required parameter `owner` when calling `unbookmark_project`"
-            )  # noqa: E501
+        if ('owner' not in params or
+                params['owner'] is None):
+            raise ValueError("Missing the required parameter `owner` when calling `unbookmark_project`")  # noqa: E501
         # verify the required parameter 'project' is set
-        if "project" not in params or params["project"] is None:
-            raise ValueError(
-                "Missing the required parameter `project` when calling `unbookmark_project`"
-            )  # noqa: E501
+        if ('project' not in params or
+                params['project'] is None):
+            raise ValueError("Missing the required parameter `project` when calling `unbookmark_project`")  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if "owner" in params:
-            path_params["owner"] = params["owner"]  # noqa: E501
-        if "project" in params:
-            path_params["project"] = params["project"]  # noqa: E501
+        if 'owner' in params:
+            path_params['owner'] = params['owner']  # noqa: E501
+        if 'project' in params:
+            path_params['project'] = params['project']  # noqa: E501
 
         query_params = []
 
@@ -1688,23 +1533,18 @@ class ProjectsV1Api(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params[
-            "Content-Type"
-        ] = self.api_client.select_header_content_type(  # noqa: E501
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
+            ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = ["ApiKey"]  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/{project}/unbookmark",
-            "DELETE",
+            '/api/v1/{owner}/{project}/unbookmark', 'DELETE',
             path_params,
             query_params,
             header_params,
@@ -1713,12 +1553,11 @@ class ProjectsV1Api(object):
             files=local_var_files,
             response_type=None,  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get("async_req"),
-            _return_http_data_only=params.get("_return_http_data_only"),
-            _preload_content=params.get("_preload_content", True),
-            _request_timeout=params.get("_request_timeout"),
-            collection_formats=collection_formats,
-        )
+            async_req=params.get('async_req'),
+            _return_http_data_only=params.get('_return_http_data_only'),
+            _preload_content=params.get('_preload_content', True),
+            _request_timeout=params.get('_request_timeout'),
+            collection_formats=collection_formats)
 
     def update_project(self, owner, project_name, body, **kwargs):  # noqa: E501
         """Patch run  # noqa: E501
@@ -1736,20 +1575,14 @@ class ProjectsV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs["_return_http_data_only"] = True
-        if kwargs.get("async_req"):
-            return self.update_project_with_http_info(
-                owner, project_name, body, **kwargs
-            )  # noqa: E501
+        kwargs['_return_http_data_only'] = True
+        if kwargs.get('async_req'):
+            return self.update_project_with_http_info(owner, project_name, body, **kwargs)  # noqa: E501
         else:
-            (data) = self.update_project_with_http_info(
-                owner, project_name, body, **kwargs
-            )  # noqa: E501
+            (data) = self.update_project_with_http_info(owner, project_name, body, **kwargs)  # noqa: E501
             return data
 
-    def update_project_with_http_info(
-        self, owner, project_name, body, **kwargs
-    ):  # noqa: E501
+    def update_project_with_http_info(self, owner, project_name, body, **kwargs):  # noqa: E501
         """Patch run  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -1766,44 +1599,41 @@ class ProjectsV1Api(object):
                  returns the request thread.
         """
 
-        all_params = ["owner", "project_name", "body"]  # noqa: E501
-        all_params.append("async_req")
-        all_params.append("_return_http_data_only")
-        all_params.append("_preload_content")
-        all_params.append("_request_timeout")
+        all_params = ['owner', 'project_name', 'body']  # noqa: E501
+        all_params.append('async_req')
+        all_params.append('_return_http_data_only')
+        all_params.append('_preload_content')
+        all_params.append('_request_timeout')
 
         params = locals()
-        for key, val in six.iteritems(params["kwargs"]):
+        for key, val in six.iteritems(params['kwargs']):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method update_project" % key
                 )
             params[key] = val
-        del params["kwargs"]
+        del params['kwargs']
         # verify the required parameter 'owner' is set
-        if "owner" not in params or params["owner"] is None:
-            raise ValueError(
-                "Missing the required parameter `owner` when calling `update_project`"
-            )  # noqa: E501
+        if ('owner' not in params or
+                params['owner'] is None):
+            raise ValueError("Missing the required parameter `owner` when calling `update_project`")  # noqa: E501
         # verify the required parameter 'project_name' is set
-        if "project_name" not in params or params["project_name"] is None:
-            raise ValueError(
-                "Missing the required parameter `project_name` when calling `update_project`"
-            )  # noqa: E501
+        if ('project_name' not in params or
+                params['project_name'] is None):
+            raise ValueError("Missing the required parameter `project_name` when calling `update_project`")  # noqa: E501
         # verify the required parameter 'body' is set
-        if "body" not in params or params["body"] is None:
-            raise ValueError(
-                "Missing the required parameter `body` when calling `update_project`"
-            )  # noqa: E501
+        if ('body' not in params or
+                params['body'] is None):
+            raise ValueError("Missing the required parameter `body` when calling `update_project`")  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if "owner" in params:
-            path_params["owner"] = params["owner"]  # noqa: E501
-        if "project_name" in params:
-            path_params["project.name"] = params["project_name"]  # noqa: E501
+        if 'owner' in params:
+            path_params['owner'] = params['owner']  # noqa: E501
+        if 'project_name' in params:
+            path_params['project.name'] = params['project_name']  # noqa: E501
 
         query_params = []
 
@@ -1813,44 +1643,36 @@ class ProjectsV1Api(object):
         local_var_files = {}
 
         body_params = None
-        if "body" in params:
-            body_params = params["body"]
+        if 'body' in params:
+            body_params = params['body']
         # HTTP header `Accept`
-        header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params[
-            "Content-Type"
-        ] = self.api_client.select_header_content_type(  # noqa: E501
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
+            ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = ["ApiKey"]  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/{project.name}",
-            "PUT",
+            '/api/v1/{owner}/{project.name}', 'PUT',
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type="V1Project",  # noqa: E501
+            response_type='V1Project',  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get("async_req"),
-            _return_http_data_only=params.get("_return_http_data_only"),
-            _preload_content=params.get("_preload_content", True),
-            _request_timeout=params.get("_request_timeout"),
-            collection_formats=collection_formats,
-        )
+            async_req=params.get('async_req'),
+            _return_http_data_only=params.get('_return_http_data_only'),
+            _preload_content=params.get('_preload_content', True),
+            _request_timeout=params.get('_request_timeout'),
+            collection_formats=collection_formats)
 
-    def upload_project_artifact(
-        self, owner, project, uuid, uploadfile, **kwargs
-    ):  # noqa: E501
+    def upload_project_artifact(self, owner, project, uuid, uploadfile, **kwargs):  # noqa: E501
         """Upload artifact to a store via project access  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -1869,20 +1691,14 @@ class ProjectsV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs["_return_http_data_only"] = True
-        if kwargs.get("async_req"):
-            return self.upload_project_artifact_with_http_info(
-                owner, project, uuid, uploadfile, **kwargs
-            )  # noqa: E501
+        kwargs['_return_http_data_only'] = True
+        if kwargs.get('async_req'):
+            return self.upload_project_artifact_with_http_info(owner, project, uuid, uploadfile, **kwargs)  # noqa: E501
         else:
-            (data) = self.upload_project_artifact_with_http_info(
-                owner, project, uuid, uploadfile, **kwargs
-            )  # noqa: E501
+            (data) = self.upload_project_artifact_with_http_info(owner, project, uuid, uploadfile, **kwargs)  # noqa: E501
             return data
 
-    def upload_project_artifact_with_http_info(
-        self, owner, project, uuid, uploadfile, **kwargs
-    ):  # noqa: E501
+    def upload_project_artifact_with_http_info(self, owner, project, uuid, uploadfile, **kwargs):  # noqa: E501
         """Upload artifact to a store via project access  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -1902,91 +1718,75 @@ class ProjectsV1Api(object):
                  returns the request thread.
         """
 
-        all_params = [
-            "owner",
-            "project",
-            "uuid",
-            "uploadfile",
-            "path",
-            "overwrite",
-        ]  # noqa: E501
-        all_params.append("async_req")
-        all_params.append("_return_http_data_only")
-        all_params.append("_preload_content")
-        all_params.append("_request_timeout")
+        all_params = ['owner', 'project', 'uuid', 'uploadfile', 'path', 'overwrite']  # noqa: E501
+        all_params.append('async_req')
+        all_params.append('_return_http_data_only')
+        all_params.append('_preload_content')
+        all_params.append('_request_timeout')
 
         params = locals()
-        for key, val in six.iteritems(params["kwargs"]):
+        for key, val in six.iteritems(params['kwargs']):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method upload_project_artifact" % key
                 )
             params[key] = val
-        del params["kwargs"]
+        del params['kwargs']
         # verify the required parameter 'owner' is set
-        if "owner" not in params or params["owner"] is None:
-            raise ValueError(
-                "Missing the required parameter `owner` when calling `upload_project_artifact`"
-            )  # noqa: E501
+        if ('owner' not in params or
+                params['owner'] is None):
+            raise ValueError("Missing the required parameter `owner` when calling `upload_project_artifact`")  # noqa: E501
         # verify the required parameter 'project' is set
-        if "project" not in params or params["project"] is None:
-            raise ValueError(
-                "Missing the required parameter `project` when calling `upload_project_artifact`"
-            )  # noqa: E501
+        if ('project' not in params or
+                params['project'] is None):
+            raise ValueError("Missing the required parameter `project` when calling `upload_project_artifact`")  # noqa: E501
         # verify the required parameter 'uuid' is set
-        if "uuid" not in params or params["uuid"] is None:
-            raise ValueError(
-                "Missing the required parameter `uuid` when calling `upload_project_artifact`"
-            )  # noqa: E501
+        if ('uuid' not in params or
+                params['uuid'] is None):
+            raise ValueError("Missing the required parameter `uuid` when calling `upload_project_artifact`")  # noqa: E501
         # verify the required parameter 'uploadfile' is set
-        if "uploadfile" not in params or params["uploadfile"] is None:
-            raise ValueError(
-                "Missing the required parameter `uploadfile` when calling `upload_project_artifact`"
-            )  # noqa: E501
+        if ('uploadfile' not in params or
+                params['uploadfile'] is None):
+            raise ValueError("Missing the required parameter `uploadfile` when calling `upload_project_artifact`")  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if "owner" in params:
-            path_params["owner"] = params["owner"]  # noqa: E501
-        if "project" in params:
-            path_params["project"] = params["project"]  # noqa: E501
-        if "uuid" in params:
-            path_params["uuid"] = params["uuid"]  # noqa: E501
+        if 'owner' in params:
+            path_params['owner'] = params['owner']  # noqa: E501
+        if 'project' in params:
+            path_params['project'] = params['project']  # noqa: E501
+        if 'uuid' in params:
+            path_params['uuid'] = params['uuid']  # noqa: E501
 
         query_params = []
-        if "path" in params:
-            query_params.append(("path", params["path"]))  # noqa: E501
-        if "overwrite" in params:
-            query_params.append(("overwrite", params["overwrite"]))  # noqa: E501
+        if 'path' in params:
+            query_params.append(('path', params['path']))  # noqa: E501
+        if 'overwrite' in params:
+            query_params.append(('overwrite', params['overwrite']))  # noqa: E501
 
         header_params = {}
 
         form_params = []
         local_var_files = {}
-        if "uploadfile" in params:
-            local_var_files["uploadfile"] = params["uploadfile"]  # noqa: E501
+        if 'uploadfile' in params:
+            local_var_files['uploadfile'] = params['uploadfile']  # noqa: E501
 
         body_params = None
         # HTTP header `Accept`
-        header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params[
-            "Content-Type"
-        ] = self.api_client.select_header_content_type(  # noqa: E501
-            ["multipart/form-data"]
-        )  # noqa: E501
+        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
+            ['multipart/form-data'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = ["ApiKey"]  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/{project}/artifacts_stores/{uuid}/upload",
-            "POST",
+            '/api/v1/{owner}/{project}/artifacts_stores/{uuid}/upload', 'POST',
             path_params,
             query_params,
             header_params,
@@ -1995,9 +1795,8 @@ class ProjectsV1Api(object):
             files=local_var_files,
             response_type=None,  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get("async_req"),
-            _return_http_data_only=params.get("_return_http_data_only"),
-            _preload_content=params.get("_preload_content", True),
-            _request_timeout=params.get("_request_timeout"),
-            collection_formats=collection_formats,
-        )
+            async_req=params.get('async_req'),
+            _return_http_data_only=params.get('_return_http_data_only'),
+            _preload_content=params.get('_preload_content', True),
+            _request_timeout=params.get('_request_timeout'),
+            collection_formats=collection_formats)

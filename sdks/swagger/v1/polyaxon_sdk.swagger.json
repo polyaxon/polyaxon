@@ -419,16 +419,13 @@
         ]
       }
     },
-    "/api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/coderef": {
+    "/api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/coderefs": {
       "post": {
         "summary": "Get run code ref",
         "operationId": "CreateRunCodeRef",
         "responses": {
           "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1CodeReference"
-            }
+            "description": "A successful response."
           },
           "204": {
             "description": "No content.",
@@ -471,7 +468,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/v1CodeReference"
+              "$ref": "#/definitions/v1CodeRef"
             }
           }
         ],
@@ -3776,58 +3773,6 @@
         ]
       }
     },
-    "/api/v1/{owner}/{project}/runs/{uuid}/coderef": {
-      "get": {
-        "summary": "Get run code ref",
-        "operationId": "GetRunCodeRefs",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1ListCodeRefsResponse"
-            }
-          },
-          "204": {
-            "description": "No content.",
-            "schema": {}
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {}
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "project",
-            "description": "Project where the experiement will be assigned",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "uuid",
-            "description": "Unique integer identifier of the entity",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "RunsV1"
-        ]
-      }
-    },
     "/api/v1/{owner}/{project}/runs/{uuid}/impersonate": {
       "post": {
         "summary": "Impersonate run token",
@@ -5251,34 +5196,16 @@
       },
       "title": "Auth specification"
     },
-    "v1CodeReference": {
+    "v1CodeRef": {
       "type": "object",
       "properties": {
-        "uuid": {
-          "type": "string",
-          "title": "UUID"
-        },
         "commit": {
           "type": "string",
-          "title": "Optional commit of the code ref"
-        },
-        "updated_at": {
-          "type": "string",
-          "format": "date-time",
-          "title": "Optional head of the code ref"
-        },
-        "status": {
-          "type": "string",
-          "title": "Optional branch of the code ref"
+          "title": "Commit of the code ref"
         },
         "git_url": {
           "type": "string",
-          "title": "Optional git url for this code ref"
-        },
-        "is_dirty": {
-          "type": "boolean",
-          "format": "boolean",
-          "title": "Optional whether this code ref is dirty"
+          "title": "Git url for this code ref"
         }
       },
       "title": "Code Reference specification"
@@ -5480,32 +5407,6 @@
         }
       },
       "title": "Contains list artifacts stores"
-    },
-    "v1ListCodeRefsResponse": {
-      "type": "object",
-      "properties": {
-        "count": {
-          "type": "integer",
-          "format": "int32",
-          "title": "Count of the entities"
-        },
-        "results": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/v1CodeReference"
-          },
-          "title": "List of all entities"
-        },
-        "previous": {
-          "type": "string",
-          "title": "Previous page"
-        },
-        "next": {
-          "type": "string",
-          "title": "Next page"
-        }
-      },
-      "title": "Contains list runs"
     },
     "v1ListHostAccessesResponse": {
       "type": "object",

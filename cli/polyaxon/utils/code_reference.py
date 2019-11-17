@@ -133,6 +133,16 @@ def get_code_reference(path="."):
 
     return {
         "commit": get_commit(path),
+        "git_url": get_remote(path),
+    }
+
+
+def get_code_reference_all(path="."):
+    if not is_git_initialized(path):
+        return None
+
+    return {
+        "commit": get_commit(path),
         "head": get_head(path),
         "branch": get_branch_name(path),
         "git_url": get_remote(path),

@@ -47,98 +47,68 @@ class V1Run(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        "uuid": "str",
-        "name": "str",
-        "description": "str",
-        "tags": "list[str]",
-        "deleted": "bool",
-        "user": "str",
-        "owner": "str",
-        "project": "str",
-        "created_at": "datetime",
-        "updated_at": "datetime",
-        "started_at": "datetime",
-        "finished_at": "datetime",
-        "is_managed": "str",
-        "content": "str",
-        "status": "str",
-        "meta_info": "V1RunMetaInfo",
-        "readme": "str",
-        "bookmarked": "bool",
-        "inputs": "dict(str, str)",
-        "outputs": "dict(str, str)",
-        "run_env": "dict(str, str)",
-        "is_resume": "bool",
-        "is_clone": "bool",
-        "cloning_strategy": "str",
-        "pipeline": "str",
-        "original": "str",
-        "pipeline_name": "str",
-        "original_name": "str",
+        'uuid': 'str',
+        'name': 'str',
+        'description': 'str',
+        'tags': 'list[str]',
+        'deleted': 'bool',
+        'user': 'str',
+        'owner': 'str',
+        'project': 'str',
+        'created_at': 'datetime',
+        'updated_at': 'datetime',
+        'started_at': 'datetime',
+        'finished_at': 'datetime',
+        'is_managed': 'str',
+        'content': 'str',
+        'status': 'str',
+        'meta_info': 'V1RunMetaInfo',
+        'readme': 'str',
+        'bookmarked': 'bool',
+        'inputs': 'dict(str, str)',
+        'outputs': 'dict(str, str)',
+        'run_env': 'dict(str, str)',
+        'is_resume': 'bool',
+        'is_clone': 'bool',
+        'cloning_strategy': 'str',
+        'pipeline': 'str',
+        'original': 'str',
+        'pipeline_name': 'str',
+        'original_name': 'str'
     }
 
     attribute_map = {
-        "uuid": "uuid",
-        "name": "name",
-        "description": "description",
-        "tags": "tags",
-        "deleted": "deleted",
-        "user": "user",
-        "owner": "owner",
-        "project": "project",
-        "created_at": "created_at",
-        "updated_at": "updated_at",
-        "started_at": "started_at",
-        "finished_at": "finished_at",
-        "is_managed": "is_managed",
-        "content": "content",
-        "status": "status",
-        "meta_info": "meta_info",
-        "readme": "readme",
-        "bookmarked": "bookmarked",
-        "inputs": "inputs",
-        "outputs": "outputs",
-        "run_env": "run_env",
-        "is_resume": "is_resume",
-        "is_clone": "is_clone",
-        "cloning_strategy": "cloning_strategy",
-        "pipeline": "pipeline",
-        "original": "original",
-        "pipeline_name": "pipeline_name",
-        "original_name": "original_name",
+        'uuid': 'uuid',
+        'name': 'name',
+        'description': 'description',
+        'tags': 'tags',
+        'deleted': 'deleted',
+        'user': 'user',
+        'owner': 'owner',
+        'project': 'project',
+        'created_at': 'created_at',
+        'updated_at': 'updated_at',
+        'started_at': 'started_at',
+        'finished_at': 'finished_at',
+        'is_managed': 'is_managed',
+        'content': 'content',
+        'status': 'status',
+        'meta_info': 'meta_info',
+        'readme': 'readme',
+        'bookmarked': 'bookmarked',
+        'inputs': 'inputs',
+        'outputs': 'outputs',
+        'run_env': 'run_env',
+        'is_resume': 'is_resume',
+        'is_clone': 'is_clone',
+        'cloning_strategy': 'cloning_strategy',
+        'pipeline': 'pipeline',
+        'original': 'original',
+        'pipeline_name': 'pipeline_name',
+        'original_name': 'original_name'
     }
 
-    def __init__(
-        self,
-        uuid=None,
-        name=None,
-        description=None,
-        tags=None,
-        deleted=None,
-        user=None,
-        owner=None,
-        project=None,
-        created_at=None,
-        updated_at=None,
-        started_at=None,
-        finished_at=None,
-        is_managed=None,
-        content=None,
-        status=None,
-        meta_info=None,
-        readme=None,
-        bookmarked=None,
-        inputs=None,
-        outputs=None,
-        run_env=None,
-        is_resume=None,
-        is_clone=None,
-        cloning_strategy=None,
-        pipeline=None,
-        original=None,
-        pipeline_name=None,
-        original_name=None,
-    ):  # noqa: E501
+    def __init__(self, uuid=None, name=None, description=None, tags=None, deleted=None, user=None, owner=None, project=None, created_at=None, updated_at=None, started_at=None, finished_at=None, is_managed=None, content=None, status=None, meta_info=None, readme=None, bookmarked=None, inputs=None, outputs=None, run_env=None, is_resume=None, is_clone=None, cloning_strategy=None, pipeline=None, original=None, pipeline_name=None, original_name=None):  # noqa: E501
         """V1Run - a model defined in Swagger"""  # noqa: E501
 
         self._uuid = None
@@ -823,20 +793,18 @@ class V1Run(object):
         for attr, _ in six.iteritems(self.swagger_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(
-                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
-                )
+                result[attr] = list(map(
+                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
+                    value
+                ))
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(
-                    map(
-                        lambda item: (item[0], item[1].to_dict())
-                        if hasattr(item[1], "to_dict")
-                        else item,
-                        value.items(),
-                    )
-                )
+                result[attr] = dict(map(
+                    lambda item: (item[0], item[1].to_dict())
+                    if hasattr(item[1], "to_dict") else item,
+                    value.items()
+                ))
             else:
                 result[attr] = value
         if issubclass(V1Run, dict):

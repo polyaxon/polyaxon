@@ -31,18 +31,18 @@
 (function(root, factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
-    define(['ApiClient', 'model/V1ArtifactTreeResponse', 'model/V1Auth', 'model/V1CodeReference', 'model/V1EntityStatusBodyRequest', 'model/V1ListCodeRefsResponse', 'model/V1ListRunsResponse', 'model/V1ProjectEntityResourceRequest', 'model/V1Run', 'model/V1Status', 'model/V1Uuids'], factory);
+    define(['ApiClient', 'model/V1ArtifactTreeResponse', 'model/V1Auth', 'model/V1CodeRef', 'model/V1EntityStatusBodyRequest', 'model/V1ListRunsResponse', 'model/V1ProjectEntityResourceRequest', 'model/V1Run', 'model/V1Status', 'model/V1Uuids'], factory);
   } else if (typeof module === 'object' && module.exports) {
     // CommonJS-like environments that support module.exports, like Node.
-    module.exports = factory(require('../ApiClient'), require('../model/V1ArtifactTreeResponse'), require('../model/V1Auth'), require('../model/V1CodeReference'), require('../model/V1EntityStatusBodyRequest'), require('../model/V1ListCodeRefsResponse'), require('../model/V1ListRunsResponse'), require('../model/V1ProjectEntityResourceRequest'), require('../model/V1Run'), require('../model/V1Status'), require('../model/V1Uuids'));
+    module.exports = factory(require('../ApiClient'), require('../model/V1ArtifactTreeResponse'), require('../model/V1Auth'), require('../model/V1CodeRef'), require('../model/V1EntityStatusBodyRequest'), require('../model/V1ListRunsResponse'), require('../model/V1ProjectEntityResourceRequest'), require('../model/V1Run'), require('../model/V1Status'), require('../model/V1Uuids'));
   } else {
     // Browser globals (root is window)
     if (!root.PolyaxonSdk) {
       root.PolyaxonSdk = {};
     }
-    root.PolyaxonSdk.RunsV1Api = factory(root.PolyaxonSdk.ApiClient, root.PolyaxonSdk.V1ArtifactTreeResponse, root.PolyaxonSdk.V1Auth, root.PolyaxonSdk.V1CodeReference, root.PolyaxonSdk.V1EntityStatusBodyRequest, root.PolyaxonSdk.V1ListCodeRefsResponse, root.PolyaxonSdk.V1ListRunsResponse, root.PolyaxonSdk.V1ProjectEntityResourceRequest, root.PolyaxonSdk.V1Run, root.PolyaxonSdk.V1Status, root.PolyaxonSdk.V1Uuids);
+    root.PolyaxonSdk.RunsV1Api = factory(root.PolyaxonSdk.ApiClient, root.PolyaxonSdk.V1ArtifactTreeResponse, root.PolyaxonSdk.V1Auth, root.PolyaxonSdk.V1CodeRef, root.PolyaxonSdk.V1EntityStatusBodyRequest, root.PolyaxonSdk.V1ListRunsResponse, root.PolyaxonSdk.V1ProjectEntityResourceRequest, root.PolyaxonSdk.V1Run, root.PolyaxonSdk.V1Status, root.PolyaxonSdk.V1Uuids);
   }
-}(this, function(ApiClient, V1ArtifactTreeResponse, V1Auth, V1CodeReference, V1EntityStatusBodyRequest, V1ListCodeRefsResponse, V1ListRunsResponse, V1ProjectEntityResourceRequest, V1Run, V1Status, V1Uuids) {
+}(this, function(ApiClient, V1ArtifactTreeResponse, V1Auth, V1CodeRef, V1EntityStatusBodyRequest, V1ListRunsResponse, V1ProjectEntityResourceRequest, V1Run, V1Status, V1Uuids) {
   'use strict';
 
   /**
@@ -313,7 +313,7 @@
      * Callback function to receive the result of the createRunCodeRef operation.
      * @callback module:api/RunsV1Api~createRunCodeRefCallback
      * @param {String} error Error message, if any.
-     * @param {module:model/V1CodeReference} data The data returned by the service call.
+     * @param data This operation does not return a value.
      * @param {String} response The complete HTTP response.
      */
 
@@ -322,9 +322,8 @@
      * @param {String} entity_owner Owner of the namespace
      * @param {String} entity_project Project where the experiement will be assigned
      * @param {String} entity_uuid Unique integer identifier of the entity
-     * @param {module:model/V1CodeReference} body Code ref object
+     * @param {module:model/V1CodeRef} body Code ref object
      * @param {module:api/RunsV1Api~createRunCodeRefCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link module:model/V1CodeReference}
      */
     this.createRunCodeRef = function(entity_owner, entity_project, entity_uuid, body, callback) {
       var postBody = body;
@@ -367,10 +366,10 @@
       var authNames = ['ApiKey'];
       var contentTypes = ['application/json'];
       var accepts = ['application/json'];
-      var returnType = V1CodeReference;
+      var returnType = null;
 
       return this.apiClient.callApi(
-        '/api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/coderef', 'POST',
+        '/api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/coderefs', 'POST',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -687,67 +686,6 @@
 
       return this.apiClient.callApi(
         '/api/v1/{owner}/{project}/runs/{uuid}/artifacts/tree', 'GET',
-        pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
-        authNames, contentTypes, accepts, returnType, callback
-      );
-    }
-
-    /**
-     * Callback function to receive the result of the getRunCodeRefs operation.
-     * @callback module:api/RunsV1Api~getRunCodeRefsCallback
-     * @param {String} error Error message, if any.
-     * @param {module:model/V1ListCodeRefsResponse} data The data returned by the service call.
-     * @param {String} response The complete HTTP response.
-     */
-
-    /**
-     * Get run code ref
-     * @param {String} owner Owner of the namespace
-     * @param {String} project Project where the experiement will be assigned
-     * @param {String} uuid Unique integer identifier of the entity
-     * @param {module:api/RunsV1Api~getRunCodeRefsCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link module:model/V1ListCodeRefsResponse}
-     */
-    this.getRunCodeRefs = function(owner, project, uuid, callback) {
-      var postBody = null;
-
-      // verify the required parameter 'owner' is set
-      if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling getRunCodeRefs");
-      }
-
-      // verify the required parameter 'project' is set
-      if (project === undefined || project === null) {
-        throw new Error("Missing the required parameter 'project' when calling getRunCodeRefs");
-      }
-
-      // verify the required parameter 'uuid' is set
-      if (uuid === undefined || uuid === null) {
-        throw new Error("Missing the required parameter 'uuid' when calling getRunCodeRefs");
-      }
-
-
-      var pathParams = {
-        'owner': owner,
-        'project': project,
-        'uuid': uuid
-      };
-      var queryParams = {
-      };
-      var collectionQueryParams = {
-      };
-      var headerParams = {
-      };
-      var formParams = {
-      };
-
-      var authNames = ['ApiKey'];
-      var contentTypes = ['application/json'];
-      var accepts = ['application/json'];
-      var returnType = V1ListCodeRefsResponse;
-
-      return this.apiClient.callApi(
-        '/api/v1/{owner}/{project}/runs/{uuid}/coderef', 'GET',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );

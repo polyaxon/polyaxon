@@ -185,13 +185,12 @@ Class | Method | HTTP request | Description
 *PolyaxonSdk.RunsV1Api* | [**bookmarkRun**](docs/RunsV1Api.md#bookmarkRun) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/bookmark | Bookmark run
 *PolyaxonSdk.RunsV1Api* | [**copyRun**](docs/RunsV1Api.md#copyRun) | **POST** /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/copy | Restart run with copy
 *PolyaxonSdk.RunsV1Api* | [**createRun**](docs/RunsV1Api.md#createRun) | **POST** /api/v1/{owner}/{project}/runs | Create new run
-*PolyaxonSdk.RunsV1Api* | [**createRunCodeRef**](docs/RunsV1Api.md#createRunCodeRef) | **POST** /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/coderef | Get run code ref
+*PolyaxonSdk.RunsV1Api* | [**createRunCodeRef**](docs/RunsV1Api.md#createRunCodeRef) | **POST** /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/coderefs | Get run code ref
 *PolyaxonSdk.RunsV1Api* | [**createRunStatus**](docs/RunsV1Api.md#createRunStatus) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/statuses | Create new run status
 *PolyaxonSdk.RunsV1Api* | [**deleteRun**](docs/RunsV1Api.md#deleteRun) | **DELETE** /api/v1/{owner}/{project}/runs/{uuid} | Delete run
 *PolyaxonSdk.RunsV1Api* | [**deleteRuns**](docs/RunsV1Api.md#deleteRuns) | **DELETE** /api/v1/{owner}/{project}/runs/delete | Delete runs
 *PolyaxonSdk.RunsV1Api* | [**getRun**](docs/RunsV1Api.md#getRun) | **GET** /api/v1/{owner}/{project}/runs/{uuid} | Get run
 *PolyaxonSdk.RunsV1Api* | [**getRunArtifactsTree**](docs/RunsV1Api.md#getRunArtifactsTree) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/artifacts/tree | Get run artifacts list
-*PolyaxonSdk.RunsV1Api* | [**getRunCodeRefs**](docs/RunsV1Api.md#getRunCodeRefs) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/coderef | Get run code ref
 *PolyaxonSdk.RunsV1Api* | [**getRunLogsFile**](docs/RunsV1Api.md#getRunLogsFile) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/logs/file | Get run logs get file
 *PolyaxonSdk.RunsV1Api* | [**getRunLogsTree**](docs/RunsV1Api.md#getRunLogsTree) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/logs/tree | Get run logs list
 *PolyaxonSdk.RunsV1Api* | [**getRunStatuses**](docs/RunsV1Api.md#getRunStatuses) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/statuses | Get run status
@@ -229,13 +228,12 @@ Class | Method | HTTP request | Description
  - [PolyaxonSdk.V1ArtifactTreeResponse](docs/V1ArtifactTreeResponse.md)
  - [PolyaxonSdk.V1ArtifactsStore](docs/V1ArtifactsStore.md)
  - [PolyaxonSdk.V1Auth](docs/V1Auth.md)
- - [PolyaxonSdk.V1CodeReference](docs/V1CodeReference.md)
+ - [PolyaxonSdk.V1CodeRef](docs/V1CodeRef.md)
  - [PolyaxonSdk.V1CredsBodyRequest](docs/V1CredsBodyRequest.md)
  - [PolyaxonSdk.V1EntityStatusBodyRequest](docs/V1EntityStatusBodyRequest.md)
  - [PolyaxonSdk.V1HostAccess](docs/V1HostAccess.md)
  - [PolyaxonSdk.V1K8sResource](docs/V1K8sResource.md)
  - [PolyaxonSdk.V1ListArtifactsStoresResponse](docs/V1ListArtifactsStoresResponse.md)
- - [PolyaxonSdk.V1ListCodeRefsResponse](docs/V1ListCodeRefsResponse.md)
  - [PolyaxonSdk.V1ListHostAccessesResponse](docs/V1ListHostAccessesResponse.md)
  - [PolyaxonSdk.V1ListK8sResourcesResponse](docs/V1ListK8sResourcesResponse.md)
  - [PolyaxonSdk.V1ListProjectsResponse](docs/V1ListProjectsResponse.md)

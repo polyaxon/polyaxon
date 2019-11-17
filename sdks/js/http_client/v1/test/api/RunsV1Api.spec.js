@@ -389,38 +389,20 @@
       });
       describe('createRunCodeRef', function() {
         it('should call createRunCodeRef successfully', function(done) {
-          // TODO: uncomment, update parameter values for createRunCodeRef call and complete the assertions
+          // TODO: uncomment, update parameter values for createRunCodeRef call
           /*
           var entity_owner = "entity_owner_example";
           var entity_project = "entity_project_example";
           var entity_uuid = "entity_uuid_example";
-          var body = new PolyaxonSdk.V1CodeReference();
-          body.uuid = "";
+          var body = new PolyaxonSdk.V1CodeRef();
           body.commit = "";
-          body.updated_at = new Date();
-          body.status = "";
           body.git_url = "";
-          body.is_dirty = false;
 
           instance.createRunCodeRef(entity_owner, entity_project, entity_uuid, body, function(error, data, response) {
             if (error) {
               done(error);
               return;
             }
-            // TODO: update response assertions
-            expect(data).to.be.a(PolyaxonSdk.V1CodeReference);
-            expect(data.uuid).to.be.a('string');
-            expect(data.uuid).to.be("");
-            expect(data.commit).to.be.a('string');
-            expect(data.commit).to.be("");
-            expect(data.updated_at).to.be.a(Date);
-            expect(data.updated_at).to.be(new Date());
-            expect(data.status).to.be.a('string');
-            expect(data.status).to.be("");
-            expect(data.git_url).to.be.a('string');
-            expect(data.git_url).to.be("");
-            expect(data.is_dirty).to.be.a('boolean');
-            expect(data.is_dirty).to.be(false);
 
             done();
           });
@@ -688,56 +670,6 @@
             }
             expect(data.is_done).to.be.a('boolean');
             expect(data.is_done).to.be(false);
-
-            done();
-          });
-          */
-          // TODO: uncomment and complete method invocation above, then delete this line and the next:
-          done();
-        });
-      });
-      describe('getRunCodeRefs', function() {
-        it('should call getRunCodeRefs successfully', function(done) {
-          // TODO: uncomment, update parameter values for getRunCodeRefs call and complete the assertions
-          /*
-          var owner = "owner_example";
-          var project = "project_example";
-          var uuid = "uuid_example";
-
-          instance.getRunCodeRefs(owner, project, uuid, function(error, data, response) {
-            if (error) {
-              done(error);
-              return;
-            }
-            // TODO: update response assertions
-            expect(data).to.be.a(PolyaxonSdk.V1ListCodeRefsResponse);
-            expect(data.count).to.be.a('number');
-            expect(data.count).to.be(0);
-            {
-              let dataCtr = data.results;
-              expect(dataCtr).to.be.an(Array);
-              expect(dataCtr).to.not.be.empty();
-              for (let p in dataCtr) {
-                let data = dataCtr[p];
-                expect(data).to.be.a(PolyaxonSdk.V1CodeReference);
-                expect(data.uuid).to.be.a('string');
-                expect(data.uuid).to.be("");
-                expect(data.commit).to.be.a('string');
-                expect(data.commit).to.be("");
-                expect(data.updated_at).to.be.a(Date);
-                expect(data.updated_at).to.be(new Date());
-                expect(data.status).to.be.a('string');
-                expect(data.status).to.be("");
-                expect(data.git_url).to.be.a('string');
-                expect(data.git_url).to.be("");
-                expect(data.is_dirty).to.be.a('boolean');
-                expect(data.is_dirty).to.be(false);
-              }
-            }
-            expect(data.previous).to.be.a('string');
-            expect(data.previous).to.be("");
-            expect(data.next).to.be.a('string');
-            expect(data.next).to.be("");
 
             done();
           });
