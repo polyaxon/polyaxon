@@ -95,6 +95,50 @@ export class RequiredError extends Error {
 /**
  * 
  * @export
+ * @interface V1Agent
+ */
+export interface V1Agent {
+    /**
+     * 
+     * @type {string}
+     * @memberof V1Agent
+     */
+    uuid?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1Agent
+     */
+    name?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1Agent
+     */
+    namespace?: string;
+    /**
+     * 
+     * @type {{ [key: string]: string; }}
+     * @memberof V1Agent
+     */
+    version_api?: { [key: string]: string; };
+    /**
+     * 
+     * @type {Date}
+     * @memberof V1Agent
+     */
+    created_at?: Date;
+    /**
+     * 
+     * @type {Date}
+     * @memberof V1Agent
+     */
+    updated_at?: Date;
+}
+
+/**
+ * 
+ * @export
  * @interface V1ArtifactTreeResponse
  */
 export interface V1ArtifactTreeResponse {
@@ -489,6 +533,38 @@ export interface V1K8sResource {
 /**
  * 
  * @export
+ * @interface V1ListAgentsResponse
+ */
+export interface V1ListAgentsResponse {
+    /**
+     * 
+     * @type {number}
+     * @memberof V1ListAgentsResponse
+     */
+    count?: number;
+    /**
+     * 
+     * @type {Array<V1Agent>}
+     * @memberof V1ListAgentsResponse
+     */
+    results?: Array<V1Agent>;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1ListAgentsResponse
+     */
+    previous?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1ListAgentsResponse
+     */
+    next?: string;
+}
+
+/**
+ * 
+ * @export
  * @interface V1ListArtifactsStoresResponse
  */
 export interface V1ListArtifactsStoresResponse {
@@ -610,6 +686,38 @@ export interface V1ListProjectsResponse {
      * 
      * @type {string}
      * @memberof V1ListProjectsResponse
+     */
+    next?: string;
+}
+
+/**
+ * 
+ * @export
+ * @interface V1ListQueuesResponse
+ */
+export interface V1ListQueuesResponse {
+    /**
+     * 
+     * @type {number}
+     * @memberof V1ListQueuesResponse
+     */
+    count?: number;
+    /**
+     * 
+     * @type {Array<V1Queue>}
+     * @memberof V1ListQueuesResponse
+     */
+    results?: Array<V1Queue>;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1ListQueuesResponse
+     */
+    previous?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1ListQueuesResponse
      */
     next?: string;
 }
@@ -802,6 +910,56 @@ export interface V1ProjectEntityResourceRequest {
      * @memberof V1ProjectEntityResourceRequest
      */
     uuid?: string;
+}
+
+/**
+ * 
+ * @export
+ * @interface V1Queue
+ */
+export interface V1Queue {
+    /**
+     * 
+     * @type {string}
+     * @memberof V1Queue
+     */
+    uuid?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1Queue
+     */
+    agent?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1Queue
+     */
+    name?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof V1Queue
+     */
+    priority?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof V1Queue
+     */
+    concurrency?: number;
+    /**
+     * 
+     * @type {Date}
+     * @memberof V1Queue
+     */
+    created_at?: Date;
+    /**
+     * 
+     * @type {Date}
+     * @memberof V1Queue
+     */
+    updated_at?: Date;
 }
 
 /**
@@ -1226,6 +1384,724 @@ export interface V1Versions {
     agent?: V1Version;
 }
 
+
+/**
+ * AgentsV1Api - fetch parameter creator
+ * @export
+ */
+export const AgentsV1ApiFetchParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary List runs
+         * @param {string} owner Owner of the namespace
+         * @param {V1Agent} body Agent body
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createAgent(owner: string, body: V1Agent, options: any = {}): FetchArgs {
+            // verify required parameter 'owner' is not null or undefined
+            if (owner === null || owner === undefined) {
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling createAgent.');
+            }
+            // verify required parameter 'body' is not null or undefined
+            if (body === null || body === undefined) {
+                throw new RequiredError('body','Required parameter body was null or undefined when calling createAgent.');
+            }
+            const localVarPath = `/api/v1/{owner}/agents`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("Authorization")
+					: configuration.apiKey;
+                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"V1Agent" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Patch run
+         * @param {string} owner Owner of the namespace
+         * @param {string} uuid Unique integer identifier of the entity
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteAgent(owner: string, uuid: string, options: any = {}): FetchArgs {
+            // verify required parameter 'owner' is not null or undefined
+            if (owner === null || owner === undefined) {
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling deleteAgent.');
+            }
+            // verify required parameter 'uuid' is not null or undefined
+            if (uuid === null || uuid === undefined) {
+                throw new RequiredError('uuid','Required parameter uuid was null or undefined when calling deleteAgent.');
+            }
+            const localVarPath = `/api/v1/{owner}/agents/{uuid}`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"uuid"}}`, encodeURIComponent(String(uuid)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'DELETE' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("Authorization")
+					: configuration.apiKey;
+                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Create new run
+         * @param {string} owner Owner of the namespace
+         * @param {string} uuid Unique integer identifier of the entity
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAgent(owner: string, uuid: string, options: any = {}): FetchArgs {
+            // verify required parameter 'owner' is not null or undefined
+            if (owner === null || owner === undefined) {
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling getAgent.');
+            }
+            // verify required parameter 'uuid' is not null or undefined
+            if (uuid === null || uuid === undefined) {
+                throw new RequiredError('uuid','Required parameter uuid was null or undefined when calling getAgent.');
+            }
+            const localVarPath = `/api/v1/{owner}/agents/{uuid}`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"uuid"}}`, encodeURIComponent(String(uuid)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("Authorization")
+					: configuration.apiKey;
+                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary List bookmarked runs for user
+         * @param {string} owner Owner of the namespace
+         * @param {number} [offset] Pagination offset.
+         * @param {number} [limit] Limit size.
+         * @param {string} [sort] Sort to order the search.
+         * @param {string} [query] Query filter the search search.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listAgentNames(owner: string, offset?: number, limit?: number, sort?: string, query?: string, options: any = {}): FetchArgs {
+            // verify required parameter 'owner' is not null or undefined
+            if (owner === null || owner === undefined) {
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling listAgentNames.');
+            }
+            const localVarPath = `/api/v1/{owner}/agents/names`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("Authorization")
+					: configuration.apiKey;
+                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            if (offset !== undefined) {
+                localVarQueryParameter['offset'] = offset;
+            }
+
+            if (limit !== undefined) {
+                localVarQueryParameter['limit'] = limit;
+            }
+
+            if (sort !== undefined) {
+                localVarQueryParameter['sort'] = sort;
+            }
+
+            if (query !== undefined) {
+                localVarQueryParameter['query'] = query;
+            }
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary List archived runs for user
+         * @param {string} owner Owner of the namespace
+         * @param {number} [offset] Pagination offset.
+         * @param {number} [limit] Limit size.
+         * @param {string} [sort] Sort to order the search.
+         * @param {string} [query] Query filter the search search.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listAgents(owner: string, offset?: number, limit?: number, sort?: string, query?: string, options: any = {}): FetchArgs {
+            // verify required parameter 'owner' is not null or undefined
+            if (owner === null || owner === undefined) {
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling listAgents.');
+            }
+            const localVarPath = `/api/v1/{owner}/agents`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("Authorization")
+					: configuration.apiKey;
+                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            if (offset !== undefined) {
+                localVarQueryParameter['offset'] = offset;
+            }
+
+            if (limit !== undefined) {
+                localVarQueryParameter['limit'] = limit;
+            }
+
+            if (sort !== undefined) {
+                localVarQueryParameter['sort'] = sort;
+            }
+
+            if (query !== undefined) {
+                localVarQueryParameter['query'] = query;
+            }
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Update run
+         * @param {string} owner Owner of the namespace
+         * @param {string} agent_uuid UUID
+         * @param {V1Agent} body Agent body
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchAgent(owner: string, agent_uuid: string, body: V1Agent, options: any = {}): FetchArgs {
+            // verify required parameter 'owner' is not null or undefined
+            if (owner === null || owner === undefined) {
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling patchAgent.');
+            }
+            // verify required parameter 'agent_uuid' is not null or undefined
+            if (agent_uuid === null || agent_uuid === undefined) {
+                throw new RequiredError('agent_uuid','Required parameter agent_uuid was null or undefined when calling patchAgent.');
+            }
+            // verify required parameter 'body' is not null or undefined
+            if (body === null || body === undefined) {
+                throw new RequiredError('body','Required parameter body was null or undefined when calling patchAgent.');
+            }
+            const localVarPath = `/api/v1/{owner}/agents/{agent.uuid}`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"agent.uuid"}}`, encodeURIComponent(String(agent_uuid)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'PATCH' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("Authorization")
+					: configuration.apiKey;
+                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"V1Agent" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get run
+         * @param {string} owner Owner of the namespace
+         * @param {string} agent_uuid UUID
+         * @param {V1Agent} body Agent body
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateAgent(owner: string, agent_uuid: string, body: V1Agent, options: any = {}): FetchArgs {
+            // verify required parameter 'owner' is not null or undefined
+            if (owner === null || owner === undefined) {
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling updateAgent.');
+            }
+            // verify required parameter 'agent_uuid' is not null or undefined
+            if (agent_uuid === null || agent_uuid === undefined) {
+                throw new RequiredError('agent_uuid','Required parameter agent_uuid was null or undefined when calling updateAgent.');
+            }
+            // verify required parameter 'body' is not null or undefined
+            if (body === null || body === undefined) {
+                throw new RequiredError('body','Required parameter body was null or undefined when calling updateAgent.');
+            }
+            const localVarPath = `/api/v1/{owner}/agents/{agent.uuid}`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"agent.uuid"}}`, encodeURIComponent(String(agent_uuid)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'PUT' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("Authorization")
+					: configuration.apiKey;
+                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"V1Agent" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * AgentsV1Api - functional programming interface
+ * @export
+ */
+export const AgentsV1ApiFp = function(configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary List runs
+         * @param {string} owner Owner of the namespace
+         * @param {V1Agent} body Agent body
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createAgent(owner: string, body: V1Agent, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1Agent> {
+            const localVarFetchArgs = AgentsV1ApiFetchParamCreator(configuration).createAgent(owner, body, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary Patch run
+         * @param {string} owner Owner of the namespace
+         * @param {string} uuid Unique integer identifier of the entity
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteAgent(owner: string, uuid: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+            const localVarFetchArgs = AgentsV1ApiFetchParamCreator(configuration).deleteAgent(owner, uuid, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response;
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary Create new run
+         * @param {string} owner Owner of the namespace
+         * @param {string} uuid Unique integer identifier of the entity
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAgent(owner: string, uuid: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1Agent> {
+            const localVarFetchArgs = AgentsV1ApiFetchParamCreator(configuration).getAgent(owner, uuid, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary List bookmarked runs for user
+         * @param {string} owner Owner of the namespace
+         * @param {number} [offset] Pagination offset.
+         * @param {number} [limit] Limit size.
+         * @param {string} [sort] Sort to order the search.
+         * @param {string} [query] Query filter the search search.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listAgentNames(owner: string, offset?: number, limit?: number, sort?: string, query?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ListAgentsResponse> {
+            const localVarFetchArgs = AgentsV1ApiFetchParamCreator(configuration).listAgentNames(owner, offset, limit, sort, query, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary List archived runs for user
+         * @param {string} owner Owner of the namespace
+         * @param {number} [offset] Pagination offset.
+         * @param {number} [limit] Limit size.
+         * @param {string} [sort] Sort to order the search.
+         * @param {string} [query] Query filter the search search.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listAgents(owner: string, offset?: number, limit?: number, sort?: string, query?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ListAgentsResponse> {
+            const localVarFetchArgs = AgentsV1ApiFetchParamCreator(configuration).listAgents(owner, offset, limit, sort, query, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary Update run
+         * @param {string} owner Owner of the namespace
+         * @param {string} agent_uuid UUID
+         * @param {V1Agent} body Agent body
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchAgent(owner: string, agent_uuid: string, body: V1Agent, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1Agent> {
+            const localVarFetchArgs = AgentsV1ApiFetchParamCreator(configuration).patchAgent(owner, agent_uuid, body, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary Get run
+         * @param {string} owner Owner of the namespace
+         * @param {string} agent_uuid UUID
+         * @param {V1Agent} body Agent body
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateAgent(owner: string, agent_uuid: string, body: V1Agent, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1Agent> {
+            const localVarFetchArgs = AgentsV1ApiFetchParamCreator(configuration).updateAgent(owner, agent_uuid, body, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+    }
+};
+
+/**
+ * AgentsV1Api - factory interface
+ * @export
+ */
+export const AgentsV1ApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
+    return {
+        /**
+         * 
+         * @summary List runs
+         * @param {string} owner Owner of the namespace
+         * @param {V1Agent} body Agent body
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createAgent(owner: string, body: V1Agent, options?: any) {
+            return AgentsV1ApiFp(configuration).createAgent(owner, body, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary Patch run
+         * @param {string} owner Owner of the namespace
+         * @param {string} uuid Unique integer identifier of the entity
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteAgent(owner: string, uuid: string, options?: any) {
+            return AgentsV1ApiFp(configuration).deleteAgent(owner, uuid, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary Create new run
+         * @param {string} owner Owner of the namespace
+         * @param {string} uuid Unique integer identifier of the entity
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAgent(owner: string, uuid: string, options?: any) {
+            return AgentsV1ApiFp(configuration).getAgent(owner, uuid, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary List bookmarked runs for user
+         * @param {string} owner Owner of the namespace
+         * @param {number} [offset] Pagination offset.
+         * @param {number} [limit] Limit size.
+         * @param {string} [sort] Sort to order the search.
+         * @param {string} [query] Query filter the search search.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listAgentNames(owner: string, offset?: number, limit?: number, sort?: string, query?: string, options?: any) {
+            return AgentsV1ApiFp(configuration).listAgentNames(owner, offset, limit, sort, query, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary List archived runs for user
+         * @param {string} owner Owner of the namespace
+         * @param {number} [offset] Pagination offset.
+         * @param {number} [limit] Limit size.
+         * @param {string} [sort] Sort to order the search.
+         * @param {string} [query] Query filter the search search.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listAgents(owner: string, offset?: number, limit?: number, sort?: string, query?: string, options?: any) {
+            return AgentsV1ApiFp(configuration).listAgents(owner, offset, limit, sort, query, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary Update run
+         * @param {string} owner Owner of the namespace
+         * @param {string} agent_uuid UUID
+         * @param {V1Agent} body Agent body
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchAgent(owner: string, agent_uuid: string, body: V1Agent, options?: any) {
+            return AgentsV1ApiFp(configuration).patchAgent(owner, agent_uuid, body, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary Get run
+         * @param {string} owner Owner of the namespace
+         * @param {string} agent_uuid UUID
+         * @param {V1Agent} body Agent body
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateAgent(owner: string, agent_uuid: string, body: V1Agent, options?: any) {
+            return AgentsV1ApiFp(configuration).updateAgent(owner, agent_uuid, body, options)(fetch, basePath);
+        },
+    };
+};
+
+/**
+ * AgentsV1Api - object-oriented interface
+ * @export
+ * @class AgentsV1Api
+ * @extends {BaseAPI}
+ */
+export class AgentsV1Api extends BaseAPI {
+    /**
+     * 
+     * @summary List runs
+     * @param {string} owner Owner of the namespace
+     * @param {V1Agent} body Agent body
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AgentsV1Api
+     */
+    public createAgent(owner: string, body: V1Agent, options?: any) {
+        return AgentsV1ApiFp(this.configuration).createAgent(owner, body, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary Patch run
+     * @param {string} owner Owner of the namespace
+     * @param {string} uuid Unique integer identifier of the entity
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AgentsV1Api
+     */
+    public deleteAgent(owner: string, uuid: string, options?: any) {
+        return AgentsV1ApiFp(this.configuration).deleteAgent(owner, uuid, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary Create new run
+     * @param {string} owner Owner of the namespace
+     * @param {string} uuid Unique integer identifier of the entity
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AgentsV1Api
+     */
+    public getAgent(owner: string, uuid: string, options?: any) {
+        return AgentsV1ApiFp(this.configuration).getAgent(owner, uuid, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary List bookmarked runs for user
+     * @param {string} owner Owner of the namespace
+     * @param {number} [offset] Pagination offset.
+     * @param {number} [limit] Limit size.
+     * @param {string} [sort] Sort to order the search.
+     * @param {string} [query] Query filter the search search.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AgentsV1Api
+     */
+    public listAgentNames(owner: string, offset?: number, limit?: number, sort?: string, query?: string, options?: any) {
+        return AgentsV1ApiFp(this.configuration).listAgentNames(owner, offset, limit, sort, query, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary List archived runs for user
+     * @param {string} owner Owner of the namespace
+     * @param {number} [offset] Pagination offset.
+     * @param {number} [limit] Limit size.
+     * @param {string} [sort] Sort to order the search.
+     * @param {string} [query] Query filter the search search.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AgentsV1Api
+     */
+    public listAgents(owner: string, offset?: number, limit?: number, sort?: string, query?: string, options?: any) {
+        return AgentsV1ApiFp(this.configuration).listAgents(owner, offset, limit, sort, query, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary Update run
+     * @param {string} owner Owner of the namespace
+     * @param {string} agent_uuid UUID
+     * @param {V1Agent} body Agent body
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AgentsV1Api
+     */
+    public patchAgent(owner: string, agent_uuid: string, body: V1Agent, options?: any) {
+        return AgentsV1ApiFp(this.configuration).patchAgent(owner, agent_uuid, body, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary Get run
+     * @param {string} owner Owner of the namespace
+     * @param {string} agent_uuid UUID
+     * @param {V1Agent} body Agent body
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AgentsV1Api
+     */
+    public updateAgent(owner: string, agent_uuid: string, body: V1Agent, options?: any) {
+        return AgentsV1ApiFp(this.configuration).updateAgent(owner, agent_uuid, body, options)(this.fetch, this.basePath);
+    }
+
+}
 
 /**
  * ArtifactsStoresV1Api - fetch parameter creator
@@ -5919,6 +6795,787 @@ export class ProjectsV1Api extends BaseAPI {
      */
     public uploadProjectArtifact(owner: string, project: string, uuid: string, uploadfile: any, path?: string, overwrite?: boolean, options?: any) {
         return ProjectsV1ApiFp(this.configuration).uploadProjectArtifact(owner, project, uuid, uploadfile, path, overwrite, options)(this.fetch, this.basePath);
+    }
+
+}
+
+/**
+ * QueuesV1Api - fetch parameter creator
+ * @export
+ */
+export const QueuesV1ApiFetchParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary List runs
+         * @param {string} owner Owner of the namespace
+         * @param {string} agent Agent that consumes the queue
+         * @param {V1Queue} body Queue body
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createQueue(owner: string, agent: string, body: V1Queue, options: any = {}): FetchArgs {
+            // verify required parameter 'owner' is not null or undefined
+            if (owner === null || owner === undefined) {
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling createQueue.');
+            }
+            // verify required parameter 'agent' is not null or undefined
+            if (agent === null || agent === undefined) {
+                throw new RequiredError('agent','Required parameter agent was null or undefined when calling createQueue.');
+            }
+            // verify required parameter 'body' is not null or undefined
+            if (body === null || body === undefined) {
+                throw new RequiredError('body','Required parameter body was null or undefined when calling createQueue.');
+            }
+            const localVarPath = `/api/v1/{owner}/agents/{agent}/queues`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"agent"}}`, encodeURIComponent(String(agent)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("Authorization")
+					: configuration.apiKey;
+                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"V1Queue" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Patch run
+         * @param {string} owner Owner of the namespace
+         * @param {string} agent Agent managing the resource
+         * @param {string} uuid Unique integer identifier of the entity
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteQueue(owner: string, agent: string, uuid: string, options: any = {}): FetchArgs {
+            // verify required parameter 'owner' is not null or undefined
+            if (owner === null || owner === undefined) {
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling deleteQueue.');
+            }
+            // verify required parameter 'agent' is not null or undefined
+            if (agent === null || agent === undefined) {
+                throw new RequiredError('agent','Required parameter agent was null or undefined when calling deleteQueue.');
+            }
+            // verify required parameter 'uuid' is not null or undefined
+            if (uuid === null || uuid === undefined) {
+                throw new RequiredError('uuid','Required parameter uuid was null or undefined when calling deleteQueue.');
+            }
+            const localVarPath = `/api/v1/{owner}/agents/{agent}/queues/{uuid}`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"agent"}}`, encodeURIComponent(String(agent)))
+                .replace(`{${"uuid"}}`, encodeURIComponent(String(uuid)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'DELETE' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("Authorization")
+					: configuration.apiKey;
+                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Create new run
+         * @param {string} owner Owner of the namespace
+         * @param {string} agent Agent managing the resource
+         * @param {string} uuid Unique integer identifier of the entity
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getQueue(owner: string, agent: string, uuid: string, options: any = {}): FetchArgs {
+            // verify required parameter 'owner' is not null or undefined
+            if (owner === null || owner === undefined) {
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling getQueue.');
+            }
+            // verify required parameter 'agent' is not null or undefined
+            if (agent === null || agent === undefined) {
+                throw new RequiredError('agent','Required parameter agent was null or undefined when calling getQueue.');
+            }
+            // verify required parameter 'uuid' is not null or undefined
+            if (uuid === null || uuid === undefined) {
+                throw new RequiredError('uuid','Required parameter uuid was null or undefined when calling getQueue.');
+            }
+            const localVarPath = `/api/v1/{owner}/agents/{agent}/queues/{uuid}`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"agent"}}`, encodeURIComponent(String(agent)))
+                .replace(`{${"uuid"}}`, encodeURIComponent(String(uuid)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("Authorization")
+					: configuration.apiKey;
+                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary List bookmarked runs for user
+         * @param {string} owner Owner of the namespace
+         * @param {string} agent Agent man managing the resource
+         * @param {number} [offset] Pagination offset.
+         * @param {number} [limit] Limit size.
+         * @param {string} [sort] Sort to order the search.
+         * @param {string} [query] Query filter the search search.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listQueueNames(owner: string, agent: string, offset?: number, limit?: number, sort?: string, query?: string, options: any = {}): FetchArgs {
+            // verify required parameter 'owner' is not null or undefined
+            if (owner === null || owner === undefined) {
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling listQueueNames.');
+            }
+            // verify required parameter 'agent' is not null or undefined
+            if (agent === null || agent === undefined) {
+                throw new RequiredError('agent','Required parameter agent was null or undefined when calling listQueueNames.');
+            }
+            const localVarPath = `/api/v1/{owner}/agents/{agent}/queues/names`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"agent"}}`, encodeURIComponent(String(agent)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("Authorization")
+					: configuration.apiKey;
+                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            if (offset !== undefined) {
+                localVarQueryParameter['offset'] = offset;
+            }
+
+            if (limit !== undefined) {
+                localVarQueryParameter['limit'] = limit;
+            }
+
+            if (sort !== undefined) {
+                localVarQueryParameter['sort'] = sort;
+            }
+
+            if (query !== undefined) {
+                localVarQueryParameter['query'] = query;
+            }
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary List archived runs for user
+         * @param {string} owner Owner of the namespace
+         * @param {string} agent Agent man managing the resource
+         * @param {number} [offset] Pagination offset.
+         * @param {number} [limit] Limit size.
+         * @param {string} [sort] Sort to order the search.
+         * @param {string} [query] Query filter the search search.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listQueues(owner: string, agent: string, offset?: number, limit?: number, sort?: string, query?: string, options: any = {}): FetchArgs {
+            // verify required parameter 'owner' is not null or undefined
+            if (owner === null || owner === undefined) {
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling listQueues.');
+            }
+            // verify required parameter 'agent' is not null or undefined
+            if (agent === null || agent === undefined) {
+                throw new RequiredError('agent','Required parameter agent was null or undefined when calling listQueues.');
+            }
+            const localVarPath = `/api/v1/{owner}/agents/{agent}/queues`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"agent"}}`, encodeURIComponent(String(agent)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("Authorization")
+					: configuration.apiKey;
+                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            if (offset !== undefined) {
+                localVarQueryParameter['offset'] = offset;
+            }
+
+            if (limit !== undefined) {
+                localVarQueryParameter['limit'] = limit;
+            }
+
+            if (sort !== undefined) {
+                localVarQueryParameter['sort'] = sort;
+            }
+
+            if (query !== undefined) {
+                localVarQueryParameter['query'] = query;
+            }
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Update run
+         * @param {string} owner Owner of the namespace
+         * @param {string} queue_agent Agent
+         * @param {string} queue_uuid UUID
+         * @param {V1Queue} body Queue body
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchQueue(owner: string, queue_agent: string, queue_uuid: string, body: V1Queue, options: any = {}): FetchArgs {
+            // verify required parameter 'owner' is not null or undefined
+            if (owner === null || owner === undefined) {
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling patchQueue.');
+            }
+            // verify required parameter 'queue_agent' is not null or undefined
+            if (queue_agent === null || queue_agent === undefined) {
+                throw new RequiredError('queue_agent','Required parameter queue_agent was null or undefined when calling patchQueue.');
+            }
+            // verify required parameter 'queue_uuid' is not null or undefined
+            if (queue_uuid === null || queue_uuid === undefined) {
+                throw new RequiredError('queue_uuid','Required parameter queue_uuid was null or undefined when calling patchQueue.');
+            }
+            // verify required parameter 'body' is not null or undefined
+            if (body === null || body === undefined) {
+                throw new RequiredError('body','Required parameter body was null or undefined when calling patchQueue.');
+            }
+            const localVarPath = `/api/v1/{owner}/agents/{queue.agent}/queues/{queue.uuid}`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"queue.agent"}}`, encodeURIComponent(String(queue_agent)))
+                .replace(`{${"queue.uuid"}}`, encodeURIComponent(String(queue_uuid)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'PATCH' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("Authorization")
+					: configuration.apiKey;
+                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"V1Queue" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get run
+         * @param {string} owner Owner of the namespace
+         * @param {string} queue_agent Agent
+         * @param {string} queue_uuid UUID
+         * @param {V1Queue} body Queue body
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateQueue(owner: string, queue_agent: string, queue_uuid: string, body: V1Queue, options: any = {}): FetchArgs {
+            // verify required parameter 'owner' is not null or undefined
+            if (owner === null || owner === undefined) {
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling updateQueue.');
+            }
+            // verify required parameter 'queue_agent' is not null or undefined
+            if (queue_agent === null || queue_agent === undefined) {
+                throw new RequiredError('queue_agent','Required parameter queue_agent was null or undefined when calling updateQueue.');
+            }
+            // verify required parameter 'queue_uuid' is not null or undefined
+            if (queue_uuid === null || queue_uuid === undefined) {
+                throw new RequiredError('queue_uuid','Required parameter queue_uuid was null or undefined when calling updateQueue.');
+            }
+            // verify required parameter 'body' is not null or undefined
+            if (body === null || body === undefined) {
+                throw new RequiredError('body','Required parameter body was null or undefined when calling updateQueue.');
+            }
+            const localVarPath = `/api/v1/{owner}/agents/{queue.agent}/queues/{queue.uuid}`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"queue.agent"}}`, encodeURIComponent(String(queue_agent)))
+                .replace(`{${"queue.uuid"}}`, encodeURIComponent(String(queue_uuid)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'PUT' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("Authorization")
+					: configuration.apiKey;
+                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"V1Queue" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * QueuesV1Api - functional programming interface
+ * @export
+ */
+export const QueuesV1ApiFp = function(configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary List runs
+         * @param {string} owner Owner of the namespace
+         * @param {string} agent Agent that consumes the queue
+         * @param {V1Queue} body Queue body
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createQueue(owner: string, agent: string, body: V1Queue, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1Agent> {
+            const localVarFetchArgs = QueuesV1ApiFetchParamCreator(configuration).createQueue(owner, agent, body, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary Patch run
+         * @param {string} owner Owner of the namespace
+         * @param {string} agent Agent managing the resource
+         * @param {string} uuid Unique integer identifier of the entity
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteQueue(owner: string, agent: string, uuid: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+            const localVarFetchArgs = QueuesV1ApiFetchParamCreator(configuration).deleteQueue(owner, agent, uuid, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response;
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary Create new run
+         * @param {string} owner Owner of the namespace
+         * @param {string} agent Agent managing the resource
+         * @param {string} uuid Unique integer identifier of the entity
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getQueue(owner: string, agent: string, uuid: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1Queue> {
+            const localVarFetchArgs = QueuesV1ApiFetchParamCreator(configuration).getQueue(owner, agent, uuid, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary List bookmarked runs for user
+         * @param {string} owner Owner of the namespace
+         * @param {string} agent Agent man managing the resource
+         * @param {number} [offset] Pagination offset.
+         * @param {number} [limit] Limit size.
+         * @param {string} [sort] Sort to order the search.
+         * @param {string} [query] Query filter the search search.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listQueueNames(owner: string, agent: string, offset?: number, limit?: number, sort?: string, query?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ListQueuesResponse> {
+            const localVarFetchArgs = QueuesV1ApiFetchParamCreator(configuration).listQueueNames(owner, agent, offset, limit, sort, query, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary List archived runs for user
+         * @param {string} owner Owner of the namespace
+         * @param {string} agent Agent man managing the resource
+         * @param {number} [offset] Pagination offset.
+         * @param {number} [limit] Limit size.
+         * @param {string} [sort] Sort to order the search.
+         * @param {string} [query] Query filter the search search.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listQueues(owner: string, agent: string, offset?: number, limit?: number, sort?: string, query?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ListQueuesResponse> {
+            const localVarFetchArgs = QueuesV1ApiFetchParamCreator(configuration).listQueues(owner, agent, offset, limit, sort, query, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary Update run
+         * @param {string} owner Owner of the namespace
+         * @param {string} queue_agent Agent
+         * @param {string} queue_uuid UUID
+         * @param {V1Queue} body Queue body
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchQueue(owner: string, queue_agent: string, queue_uuid: string, body: V1Queue, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1Queue> {
+            const localVarFetchArgs = QueuesV1ApiFetchParamCreator(configuration).patchQueue(owner, queue_agent, queue_uuid, body, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary Get run
+         * @param {string} owner Owner of the namespace
+         * @param {string} queue_agent Agent
+         * @param {string} queue_uuid UUID
+         * @param {V1Queue} body Queue body
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateQueue(owner: string, queue_agent: string, queue_uuid: string, body: V1Queue, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1Queue> {
+            const localVarFetchArgs = QueuesV1ApiFetchParamCreator(configuration).updateQueue(owner, queue_agent, queue_uuid, body, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+    }
+};
+
+/**
+ * QueuesV1Api - factory interface
+ * @export
+ */
+export const QueuesV1ApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
+    return {
+        /**
+         * 
+         * @summary List runs
+         * @param {string} owner Owner of the namespace
+         * @param {string} agent Agent that consumes the queue
+         * @param {V1Queue} body Queue body
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createQueue(owner: string, agent: string, body: V1Queue, options?: any) {
+            return QueuesV1ApiFp(configuration).createQueue(owner, agent, body, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary Patch run
+         * @param {string} owner Owner of the namespace
+         * @param {string} agent Agent managing the resource
+         * @param {string} uuid Unique integer identifier of the entity
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteQueue(owner: string, agent: string, uuid: string, options?: any) {
+            return QueuesV1ApiFp(configuration).deleteQueue(owner, agent, uuid, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary Create new run
+         * @param {string} owner Owner of the namespace
+         * @param {string} agent Agent managing the resource
+         * @param {string} uuid Unique integer identifier of the entity
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getQueue(owner: string, agent: string, uuid: string, options?: any) {
+            return QueuesV1ApiFp(configuration).getQueue(owner, agent, uuid, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary List bookmarked runs for user
+         * @param {string} owner Owner of the namespace
+         * @param {string} agent Agent man managing the resource
+         * @param {number} [offset] Pagination offset.
+         * @param {number} [limit] Limit size.
+         * @param {string} [sort] Sort to order the search.
+         * @param {string} [query] Query filter the search search.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listQueueNames(owner: string, agent: string, offset?: number, limit?: number, sort?: string, query?: string, options?: any) {
+            return QueuesV1ApiFp(configuration).listQueueNames(owner, agent, offset, limit, sort, query, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary List archived runs for user
+         * @param {string} owner Owner of the namespace
+         * @param {string} agent Agent man managing the resource
+         * @param {number} [offset] Pagination offset.
+         * @param {number} [limit] Limit size.
+         * @param {string} [sort] Sort to order the search.
+         * @param {string} [query] Query filter the search search.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listQueues(owner: string, agent: string, offset?: number, limit?: number, sort?: string, query?: string, options?: any) {
+            return QueuesV1ApiFp(configuration).listQueues(owner, agent, offset, limit, sort, query, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary Update run
+         * @param {string} owner Owner of the namespace
+         * @param {string} queue_agent Agent
+         * @param {string} queue_uuid UUID
+         * @param {V1Queue} body Queue body
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchQueue(owner: string, queue_agent: string, queue_uuid: string, body: V1Queue, options?: any) {
+            return QueuesV1ApiFp(configuration).patchQueue(owner, queue_agent, queue_uuid, body, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary Get run
+         * @param {string} owner Owner of the namespace
+         * @param {string} queue_agent Agent
+         * @param {string} queue_uuid UUID
+         * @param {V1Queue} body Queue body
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateQueue(owner: string, queue_agent: string, queue_uuid: string, body: V1Queue, options?: any) {
+            return QueuesV1ApiFp(configuration).updateQueue(owner, queue_agent, queue_uuid, body, options)(fetch, basePath);
+        },
+    };
+};
+
+/**
+ * QueuesV1Api - object-oriented interface
+ * @export
+ * @class QueuesV1Api
+ * @extends {BaseAPI}
+ */
+export class QueuesV1Api extends BaseAPI {
+    /**
+     * 
+     * @summary List runs
+     * @param {string} owner Owner of the namespace
+     * @param {string} agent Agent that consumes the queue
+     * @param {V1Queue} body Queue body
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof QueuesV1Api
+     */
+    public createQueue(owner: string, agent: string, body: V1Queue, options?: any) {
+        return QueuesV1ApiFp(this.configuration).createQueue(owner, agent, body, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary Patch run
+     * @param {string} owner Owner of the namespace
+     * @param {string} agent Agent managing the resource
+     * @param {string} uuid Unique integer identifier of the entity
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof QueuesV1Api
+     */
+    public deleteQueue(owner: string, agent: string, uuid: string, options?: any) {
+        return QueuesV1ApiFp(this.configuration).deleteQueue(owner, agent, uuid, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary Create new run
+     * @param {string} owner Owner of the namespace
+     * @param {string} agent Agent managing the resource
+     * @param {string} uuid Unique integer identifier of the entity
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof QueuesV1Api
+     */
+    public getQueue(owner: string, agent: string, uuid: string, options?: any) {
+        return QueuesV1ApiFp(this.configuration).getQueue(owner, agent, uuid, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary List bookmarked runs for user
+     * @param {string} owner Owner of the namespace
+     * @param {string} agent Agent man managing the resource
+     * @param {number} [offset] Pagination offset.
+     * @param {number} [limit] Limit size.
+     * @param {string} [sort] Sort to order the search.
+     * @param {string} [query] Query filter the search search.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof QueuesV1Api
+     */
+    public listQueueNames(owner: string, agent: string, offset?: number, limit?: number, sort?: string, query?: string, options?: any) {
+        return QueuesV1ApiFp(this.configuration).listQueueNames(owner, agent, offset, limit, sort, query, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary List archived runs for user
+     * @param {string} owner Owner of the namespace
+     * @param {string} agent Agent man managing the resource
+     * @param {number} [offset] Pagination offset.
+     * @param {number} [limit] Limit size.
+     * @param {string} [sort] Sort to order the search.
+     * @param {string} [query] Query filter the search search.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof QueuesV1Api
+     */
+    public listQueues(owner: string, agent: string, offset?: number, limit?: number, sort?: string, query?: string, options?: any) {
+        return QueuesV1ApiFp(this.configuration).listQueues(owner, agent, offset, limit, sort, query, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary Update run
+     * @param {string} owner Owner of the namespace
+     * @param {string} queue_agent Agent
+     * @param {string} queue_uuid UUID
+     * @param {V1Queue} body Queue body
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof QueuesV1Api
+     */
+    public patchQueue(owner: string, queue_agent: string, queue_uuid: string, body: V1Queue, options?: any) {
+        return QueuesV1ApiFp(this.configuration).patchQueue(owner, queue_agent, queue_uuid, body, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary Get run
+     * @param {string} owner Owner of the namespace
+     * @param {string} queue_agent Agent
+     * @param {string} queue_uuid UUID
+     * @param {V1Queue} body Queue body
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof QueuesV1Api
+     */
+    public updateQueue(owner: string, queue_agent: string, queue_uuid: string, body: V1Queue, options?: any) {
+        return QueuesV1ApiFp(this.configuration).updateQueue(owner, queue_agent, queue_uuid, body, options)(this.fetch, this.basePath);
     }
 
 }

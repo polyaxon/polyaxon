@@ -67,6 +67,18 @@ message ProjectEntityResourceRequest {
     string uuid = 3;
 }
 
+// Request data to get/delete agent's entity
+message AgentEntityResourceRequest {
+    // Owner of the namespace
+    string owner = 1;
+
+    // Agent managing the resource
+    string agent = 2;
+
+    // Unique integer identifier of the entity
+    string uuid = 3;
+}
+
 
 // Request list data with user namespace
 message UserResouceListRequest {
@@ -111,6 +123,27 @@ message ProjectResourceListRequest {
 
     // Project under namesapce
     string project = 2;
+
+    // Pagination offset
+    int32 offset = 3;
+
+    // Limit size
+    int32 limit = 4;
+
+     // Sort to order the search
+    string sort = 5;
+
+     // Query filter the search search
+    string query = 6;
+}
+
+// Request list data with owner/agent namespace
+message AgentResourceListRequest {
+    // Owner of the namespace
+    string owner = 1;
+
+    // Agent man managing the resource
+    string agent = 2;
 
     // Pagination offset
     int32 offset = 3;

@@ -147,12 +147,12 @@ func (r *PolyaxonJobReconciler) reconcileJobStatus(instance *corev1alpha1.Polyax
 	if len(job.Status.Conditions) == 0 {
 		if job.Status.Failed > 0 {
 			if updated := instance.LogWarning("", ""); updated {
-				log.V(1).Info("Build Logging Status Warning")
+				log.V(1).Info("Job Logging Status Warning")
 				return true
 			}
 		} else if job.Status.Active > 0 {
 			if updated := instance.LogRunning(); updated {
-				log.V(1).Info("Build Logging Status Running")
+				log.V(1).Info("Job Logging Status Running")
 				return true
 			}
 		}
@@ -164,7 +164,7 @@ func (r *PolyaxonJobReconciler) reconcileJobStatus(instance *corev1alpha1.Polyax
 	if job.Status.Active == 0 && job.Status.Succeeded > 0 && utils.IsPlxJobSucceded(newJobCond) {
 		if updated := instance.LogSucceeded(); updated {
 			instance.Status.CompletionTime = &now
-			log.V(1).Info("Build Logging Status Succeeded")
+			log.V(1).Info("Job Logging Status Succeeded")
 			return true
 		}
 	}
@@ -172,7 +172,7 @@ func (r *PolyaxonJobReconciler) reconcileJobStatus(instance *corev1alpha1.Polyax
 	if job.Status.Failed > 0 && utils.IsPlxJobFailed(newJobCond) {
 		if updated := instance.LogFailed(newJobCond.Reason, newJobCond.Message); updated {
 			instance.Status.CompletionTime = &now
-			log.V(1).Info("Build Logging Status Failed")
+			log.V(1).Info("Job Logging Status Failed")
 			return true
 		}
 	}

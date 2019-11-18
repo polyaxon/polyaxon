@@ -25,12 +25,14 @@ import (
 
 	strfmt "github.com/go-openapi/strfmt"
 
+	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_client/agents_v1"
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_client/artifacts_stores_v1"
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_client/auth_v1"
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_client/git_accesses_v1"
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_client/k8s_config_maps_v1"
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_client/k8s_secrets_v1"
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_client/projects_v1"
+	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_client/queues_v1"
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_client/registry_accesses_v1"
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_client/runs_v1"
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_client/search_v1"
@@ -81,6 +83,8 @@ func New(transport runtime.ClientTransport, formats strfmt.Registry) *PolyaxonSd
 	cli := new(PolyaxonSdk)
 	cli.Transport = transport
 
+	cli.AgentsV1 = agents_v1.New(transport, formats)
+
 	cli.ArtifactsStoresV1 = artifacts_stores_v1.New(transport, formats)
 
 	cli.AuthV1 = auth_v1.New(transport, formats)
@@ -92,6 +96,8 @@ func New(transport runtime.ClientTransport, formats strfmt.Registry) *PolyaxonSd
 	cli.K8sSecretsV1 = k8s_secrets_v1.New(transport, formats)
 
 	cli.ProjectsV1 = projects_v1.New(transport, formats)
+
+	cli.QueuesV1 = queues_v1.New(transport, formats)
 
 	cli.RegistryAccessesV1 = registry_accesses_v1.New(transport, formats)
 
@@ -147,6 +153,8 @@ func (cfg *TransportConfig) WithSchemes(schemes []string) *TransportConfig {
 
 // PolyaxonSdk is a client for polyaxon sdk
 type PolyaxonSdk struct {
+	AgentsV1 *agents_v1.Client
+
 	ArtifactsStoresV1 *artifacts_stores_v1.Client
 
 	AuthV1 *auth_v1.Client
@@ -158,6 +166,8 @@ type PolyaxonSdk struct {
 	K8sSecretsV1 *k8s_secrets_v1.Client
 
 	ProjectsV1 *projects_v1.Client
+
+	QueuesV1 *queues_v1.Client
 
 	RegistryAccessesV1 *registry_accesses_v1.Client
 
@@ -176,6 +186,8 @@ type PolyaxonSdk struct {
 func (c *PolyaxonSdk) SetTransport(transport runtime.ClientTransport) {
 	c.Transport = transport
 
+	c.AgentsV1.SetTransport(transport)
+
 	c.ArtifactsStoresV1.SetTransport(transport)
 
 	c.AuthV1.SetTransport(transport)
@@ -187,6 +199,8 @@ func (c *PolyaxonSdk) SetTransport(transport runtime.ClientTransport) {
 	c.K8sSecretsV1.SetTransport(transport)
 
 	c.ProjectsV1.SetTransport(transport)
+
+	c.QueuesV1.SetTransport(transport)
 
 	c.RegistryAccessesV1.SetTransport(transport)
 

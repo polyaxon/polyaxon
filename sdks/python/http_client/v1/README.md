@@ -59,16 +59,16 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # create an instance of the API class
-api_instance = polyaxon_sdk.ArtifactsStoresV1Api(polyaxon_sdk.ApiClient(configuration))
+api_instance = polyaxon_sdk.AgentsV1Api(polyaxon_sdk.ApiClient(configuration))
 owner = 'owner_example' # str | Owner of the namespace
-body = polyaxon_sdk.V1ArtifactsStore() # V1ArtifactsStore | Artifact store body
+body = polyaxon_sdk.V1Agent() # V1Agent | Agent body
 
 try:
     # List runs
-    api_response = api_instance.create_artifacts_store(owner, body)
+    api_response = api_instance.create_agent(owner, body)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling ArtifactsStoresV1Api->create_artifacts_store: %s\n" % e)
+    print("Exception when calling AgentsV1Api->create_agent: %s\n" % e)
 
 ```
 
@@ -78,6 +78,13 @@ All URIs are relative to *http://localhost*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
+*AgentsV1Api* | [**create_agent**](docs/AgentsV1Api.md#create_agent) | **POST** /api/v1/{owner}/agents | List runs
+*AgentsV1Api* | [**delete_agent**](docs/AgentsV1Api.md#delete_agent) | **DELETE** /api/v1/{owner}/agents/{uuid} | Patch run
+*AgentsV1Api* | [**get_agent**](docs/AgentsV1Api.md#get_agent) | **GET** /api/v1/{owner}/agents/{uuid} | Create new run
+*AgentsV1Api* | [**list_agent_names**](docs/AgentsV1Api.md#list_agent_names) | **GET** /api/v1/{owner}/agents/names | List bookmarked runs for user
+*AgentsV1Api* | [**list_agents**](docs/AgentsV1Api.md#list_agents) | **GET** /api/v1/{owner}/agents | List archived runs for user
+*AgentsV1Api* | [**patch_agent**](docs/AgentsV1Api.md#patch_agent) | **PATCH** /api/v1/{owner}/agents/{agent.uuid} | Update run
+*AgentsV1Api* | [**update_agent**](docs/AgentsV1Api.md#update_agent) | **PUT** /api/v1/{owner}/agents/{agent.uuid} | Get run
 *ArtifactsStoresV1Api* | [**create_artifacts_store**](docs/ArtifactsStoresV1Api.md#create_artifacts_store) | **POST** /api/v1/{owner}/artifacts_stores | List runs
 *ArtifactsStoresV1Api* | [**delete_artifacts_store**](docs/ArtifactsStoresV1Api.md#delete_artifacts_store) | **DELETE** /api/v1/{owner}/artifacts_stores/{uuid} | Patch run
 *ArtifactsStoresV1Api* | [**get_artifacts_store**](docs/ArtifactsStoresV1Api.md#get_artifacts_store) | **GET** /api/v1/{owner}/artifacts_stores/{uuid} | Create new run
@@ -124,6 +131,13 @@ Class | Method | HTTP request | Description
 *ProjectsV1Api* | [**unbookmark_project**](docs/ProjectsV1Api.md#unbookmark_project) | **DELETE** /api/v1/{owner}/{project}/unbookmark | Invalidate runs
 *ProjectsV1Api* | [**update_project**](docs/ProjectsV1Api.md#update_project) | **PUT** /api/v1/{owner}/{project.name} | Patch run
 *ProjectsV1Api* | [**upload_project_artifact**](docs/ProjectsV1Api.md#upload_project_artifact) | **POST** /api/v1/{owner}/{project}/artifacts_stores/{uuid}/upload | Upload artifact to a store via project access
+*QueuesV1Api* | [**create_queue**](docs/QueuesV1Api.md#create_queue) | **POST** /api/v1/{owner}/agents/{agent}/queues | List runs
+*QueuesV1Api* | [**delete_queue**](docs/QueuesV1Api.md#delete_queue) | **DELETE** /api/v1/{owner}/agents/{agent}/queues/{uuid} | Patch run
+*QueuesV1Api* | [**get_queue**](docs/QueuesV1Api.md#get_queue) | **GET** /api/v1/{owner}/agents/{agent}/queues/{uuid} | Create new run
+*QueuesV1Api* | [**list_queue_names**](docs/QueuesV1Api.md#list_queue_names) | **GET** /api/v1/{owner}/agents/{agent}/queues/names | List bookmarked runs for user
+*QueuesV1Api* | [**list_queues**](docs/QueuesV1Api.md#list_queues) | **GET** /api/v1/{owner}/agents/{agent}/queues | List archived runs for user
+*QueuesV1Api* | [**patch_queue**](docs/QueuesV1Api.md#patch_queue) | **PATCH** /api/v1/{owner}/agents/{queue.agent}/queues/{queue.uuid} | Update run
+*QueuesV1Api* | [**update_queue**](docs/QueuesV1Api.md#update_queue) | **PUT** /api/v1/{owner}/agents/{queue.agent}/queues/{queue.uuid} | Get run
 *RegistryAccessesV1Api* | [**create_registry_access**](docs/RegistryAccessesV1Api.md#create_registry_access) | **POST** /api/v1/{owner}/registry_accesses | List runs
 *RegistryAccessesV1Api* | [**delete_registry_access**](docs/RegistryAccessesV1Api.md#delete_registry_access) | **DELETE** /api/v1/{owner}/registry_accesses/{uuid} | Patch run
 *RegistryAccessesV1Api* | [**get_registry_access**](docs/RegistryAccessesV1Api.md#get_registry_access) | **GET** /api/v1/{owner}/registry_accesses/{uuid} | Create new run
@@ -175,6 +189,7 @@ Class | Method | HTTP request | Description
 
 ## Documentation For Models
 
+ - [V1Agent](docs/V1Agent.md)
  - [V1ArtifactTreeResponse](docs/V1ArtifactTreeResponse.md)
  - [V1ArtifactsStore](docs/V1ArtifactsStore.md)
  - [V1Auth](docs/V1Auth.md)
@@ -183,15 +198,18 @@ Class | Method | HTTP request | Description
  - [V1EntityStatusBodyRequest](docs/V1EntityStatusBodyRequest.md)
  - [V1HostAccess](docs/V1HostAccess.md)
  - [V1K8sResource](docs/V1K8sResource.md)
+ - [V1ListAgentsResponse](docs/V1ListAgentsResponse.md)
  - [V1ListArtifactsStoresResponse](docs/V1ListArtifactsStoresResponse.md)
  - [V1ListHostAccessesResponse](docs/V1ListHostAccessesResponse.md)
  - [V1ListK8sResourcesResponse](docs/V1ListK8sResourcesResponse.md)
  - [V1ListProjectsResponse](docs/V1ListProjectsResponse.md)
+ - [V1ListQueuesResponse](docs/V1ListQueuesResponse.md)
  - [V1ListRunsResponse](docs/V1ListRunsResponse.md)
  - [V1ListSearchesResponse](docs/V1ListSearchesResponse.md)
  - [V1LogHandler](docs/V1LogHandler.md)
  - [V1Project](docs/V1Project.md)
  - [V1ProjectEntityResourceRequest](docs/V1ProjectEntityResourceRequest.md)
+ - [V1Queue](docs/V1Queue.md)
  - [V1Run](docs/V1Run.md)
  - [V1RunMetaInfo](docs/V1RunMetaInfo.md)
  - [V1Search](docs/V1Search.md)

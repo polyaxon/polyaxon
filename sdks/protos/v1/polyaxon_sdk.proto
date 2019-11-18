@@ -6,6 +6,7 @@ import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
 import "protoc-gen-swagger/options/annotations.proto";
 
+import "v1/agent.proto";
 import "v1/artifacts_store.proto";
 import "v1/host_access.proto";
 import "v1/k8s_resource.proto";
@@ -298,7 +299,7 @@ service ProjectsV1 {
         };
     }
 
-    // List project namess
+    // List project names
     rpc ListProjectNames(OwnerResouceListRequest) returns (ListProjectsResponse) {
         option (google.api.http) = {
             get: "/api/v1/{owner}/projects/names"
@@ -395,7 +396,7 @@ service ProjectsV1 {
 // Service to manage artifacts
 service ArtifactsStoresV1 {
 
-    // List artifact stores namess
+    // List artifact stores names
     rpc ListArtifactsStoreNames(OwnerResouceListRequest) returns (ListArtifactsStoresResponse) {
         option (google.api.http) = {
             get: "/api/v1/{owner}/artifacts_stores/names"
@@ -451,7 +452,7 @@ service ArtifactsStoresV1 {
 // Service to manage k8s config maps
 service K8sConfigMapsV1 {
 
-    // List k8s config map namess
+    // List k8s config map names
     rpc ListK8sConfigMapNames(OwnerResouceListRequest) returns (ListK8sResourcesResponse) {
         option (google.api.http) = {
             get: "/api/v1/{owner}/k8s_config_maps/names"
@@ -507,7 +508,7 @@ service K8sConfigMapsV1 {
 // Service to manage k8s secrets
 service K8sSecretsV1 {
 
-    // List k8s secret namess
+    // List k8s secret names
     rpc ListK8sSecretNames(OwnerResouceListRequest) returns (ListK8sResourcesResponse) {
         option (google.api.http) = {
             get: "/api/v1/{owner}/k8s_secrets/names"
@@ -721,6 +722,120 @@ service SearchV1 {
         };
     }
 }
+
+// Service to manage agents
+service AgentsV1 {
+
+    // List agents names
+    rpc ListAgentNames(OwnerResouceListRequest) returns (ListAgentsResponse) {
+        option (google.api.http) = {
+            get: "/api/v1/{owner}/agents/names"
+        };
+    }
+
+    // List agents
+    rpc ListAgents(OwnerResouceListRequest) returns (ListAgentsResponse) {
+        option (google.api.http) = {
+            get: "/api/v1/{owner}/agents"
+        };
+    }
+
+    // Create agent
+    rpc CreateAgent(AgentBodyRequest) returns (Agent) {
+        option (google.api.http) = {
+            post: "/api/v1/{owner}/agents"
+            body: "agent"
+        };
+    }
+
+    // Get agent
+    rpc GetAgent(OwnerEntityResourceRequest) returns (Agent) {
+        option (google.api.http) = {
+            get: "/api/v1/{owner}/agents/{uuid}"
+        };
+    }
+
+    // Update agent
+    rpc UpdateAgent(AgentBodyRequest) returns (Agent) {
+        option (google.api.http) = {
+            put: "/api/v1/{owner}/agents/{agent.uuid}"
+            body: "agent"
+        };
+    }
+
+    // Patch agent
+    rpc PatchAgent(AgentBodyRequest) returns (Agent) {
+        option (google.api.http) = {
+            patch:  "/api/v1/{owner}/agents/{agent.uuid}"
+            body: "agent"
+        };
+    }
+
+    // Delete agent
+    rpc DeleteAgent(OwnerEntityResourceRequest) returns (google.protobuf.Empty) {
+        option (google.api.http) = {
+            delete: "/api/v1/{owner}/agents/{uuid}"
+        };
+    }
+}
+
+
+// Service to manage queues
+service QueuesV1 {
+
+    // List queues names
+    rpc ListQueueNames(AgentResourceListRequest) returns (ListQueuesResponse) {
+        option (google.api.http) = {
+            get: "/api/v1/{owner}/agents/{agent}/queues/names"
+        };
+    }
+
+    // List queues
+    rpc ListQueues(AgentResourceListRequest) returns (ListQueuesResponse) {
+        option (google.api.http) = {
+            get: "/api/v1/{owner}/agents/{agent}/queues"
+        };
+    }
+
+    // Create queue
+    rpc CreateQueue(QueueBodyRequest) returns (Agent) {
+        option (google.api.http) = {
+            post: "/api/v1/{owner}/agents/{agent}/queues"
+            body: "queue"
+        };
+    }
+
+    // Get queue
+    rpc GetQueue(AgentEntityResourceRequest) returns (Queue) {
+        option (google.api.http) = {
+            get: "/api/v1/{owner}/agents/{agent}/queues/{uuid}"
+        };
+    }
+
+    // Update queue
+    rpc UpdateQueue(QueueBodyRequest) returns (Queue) {
+        option (google.api.http) = {
+            put: "/api/v1/{owner}/agents/{queue.agent}/queues/{queue.uuid}"
+            body: "queue"
+        };
+    }
+
+    // Patch queue
+    rpc PatchQueue(QueueBodyRequest) returns (Queue) {
+        option (google.api.http) = {
+            patch: "/api/v1/{owner}/agents/{queue.agent}/queues/{queue.uuid}"
+            body: "queue"
+        };
+    }
+
+    // Delete queue
+    rpc DeleteQueue(AgentEntityResourceRequest) returns (google.protobuf.Empty) {
+        option (google.api.http) = {
+            delete: "/api/v1/{owner}/agents/{agent}/queues/{uuid}"
+        };
+    }
+}
+
 
 // Service to manage auth
 service AuthV1 {

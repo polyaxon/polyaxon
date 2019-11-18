@@ -23,7 +23,6 @@ from marshmallow import ValidationError
 
 from polyaxon.deploy.schemas.service import (
     DockerRegistryConfig,
-    EventMonitorsConfig,
     ExternalServiceConfig,
     ExternalServicesConfig,
     PostgresqlConfig,
@@ -62,38 +61,6 @@ class TestServiceConfig(TestCase):
         }
 
         config = ServiceConfig.from_dict(config_dict)
-        assert config.to_light_dict() == config_dict
-
-    def test_events_monitor_config(self):
-        bad_config_dicts = [
-            {"replicas": "sdf"},
-            {"namespace": "foo"},
-            {"replicas": 12, "statuses": "foo"},
-        ]
-
-        for config_dict in bad_config_dicts:
-            with self.assertRaises(ValidationError):
-                EventMonitorsConfig.from_dict(config_dict)
-
-        config_dict = {
-            "replicas": 12,
-            "namespace": {
-                "image": "foo",
-                "imageTag": "bar",
-                "imagePullPolicy": "Always",
-            },
-        }
-
-        config = EventMonitorsConfig.from_dict(config_dict)
-        assert config.to_light_dict() == config_dict
-
-        config_dict = {
-            "statuses": {
-                "resources": {"requests": {"cpu": 2}, "limits": {"memory": "500Mi"}}
-            }
-        }
-
-        config = EventMonitorsConfig.from_dict(config_dict)
         assert config.to_light_dict() == config_dict
 
     def test_third_party_service(self):

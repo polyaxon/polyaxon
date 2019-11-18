@@ -138,26 +138,6 @@ class ApiConfig(ServiceConfig):
         self.service = service
 
 
-class EventMonitorsSchema(BaseSchema):
-    replicas = fields.Int(allow_none=True)
-    namespace = fields.Nested(ServiceSchema, allow_none=True)
-    statuses = fields.Nested(ServiceSchema, allow_none=True)
-
-    @staticmethod
-    def schema_config():
-        return EventMonitorsConfig
-
-
-class EventMonitorsConfig(BaseConfig):
-    SCHEMA = EventMonitorsSchema
-    REDUCED_ATTRIBUTES = ["replicas", "namespace", "statuses"]
-
-    def __init__(self, replicas=None, namespace=None, statuses=None):
-        self.replicas = replicas
-        self.namespace = namespace
-        self.statuses = statuses
-
-
 class HooksSchema(ServiceSchema):
     loadFixtures = fields.Bool(allow_none=True)
 

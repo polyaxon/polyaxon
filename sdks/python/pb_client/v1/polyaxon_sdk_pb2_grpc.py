@@ -18,6 +18,7 @@
 import grpc
 
 from google.protobuf import empty_pb2 as google_dot_protobuf_dot_empty__pb2
+from v1 import agent_pb2 as v1_dot_agent__pb2
 from v1 import artifacts_store_pb2 as v1_dot_artifacts__store__pb2
 from v1 import auth_pb2 as v1_dot_auth__pb2
 from v1 import base_pb2 as v1_dot_base__pb2
@@ -640,7 +641,7 @@ class ProjectsV1Servicer(object):
     raise NotImplementedError('Method not implemented!')
 
   def ListProjectNames(self, request, context):
-    """List project namess
+    """List project names
     """
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
@@ -866,7 +867,7 @@ class ArtifactsStoresV1Servicer(object):
   """
 
   def ListArtifactsStoreNames(self, request, context):
-    """List artifact stores namess
+    """List artifact stores names
     """
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
@@ -1010,7 +1011,7 @@ class K8sConfigMapsV1Servicer(object):
   """
 
   def ListK8sConfigMapNames(self, request, context):
-    """List k8s config map namess
+    """List k8s config map names
     """
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
@@ -1154,7 +1155,7 @@ class K8sSecretsV1Servicer(object):
   """
 
   def ListK8sSecretNames(self, request, context):
-    """List k8s secret namess
+    """List k8s secret names
     """
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
@@ -1658,6 +1659,294 @@ def add_SearchV1Servicer_to_server(servicer, server):
   }
   generic_handler = grpc.method_handlers_generic_handler(
       'v1.SearchV1', rpc_method_handlers)
+  server.add_generic_rpc_handlers((generic_handler,))
+
+
+class AgentsV1Stub(object):
+  """Service to manage agents
+  """
+
+  def __init__(self, channel):
+    """Constructor.
+
+    Args:
+      channel: A grpc.Channel.
+    """
+    self.ListAgentNames = channel.unary_unary(
+        '/v1.AgentsV1/ListAgentNames',
+        request_serializer=v1_dot_base__pb2.OwnerResouceListRequest.SerializeToString,
+        response_deserializer=v1_dot_agent__pb2.ListAgentsResponse.FromString,
+        )
+    self.ListAgents = channel.unary_unary(
+        '/v1.AgentsV1/ListAgents',
+        request_serializer=v1_dot_base__pb2.OwnerResouceListRequest.SerializeToString,
+        response_deserializer=v1_dot_agent__pb2.ListAgentsResponse.FromString,
+        )
+    self.CreateAgent = channel.unary_unary(
+        '/v1.AgentsV1/CreateAgent',
+        request_serializer=v1_dot_agent__pb2.AgentBodyRequest.SerializeToString,
+        response_deserializer=v1_dot_agent__pb2.Agent.FromString,
+        )
+    self.GetAgent = channel.unary_unary(
+        '/v1.AgentsV1/GetAgent',
+        request_serializer=v1_dot_base__pb2.OwnerEntityResourceRequest.SerializeToString,
+        response_deserializer=v1_dot_agent__pb2.Agent.FromString,
+        )
+    self.UpdateAgent = channel.unary_unary(
+        '/v1.AgentsV1/UpdateAgent',
+        request_serializer=v1_dot_agent__pb2.AgentBodyRequest.SerializeToString,
+        response_deserializer=v1_dot_agent__pb2.Agent.FromString,
+        )
+    self.PatchAgent = channel.unary_unary(
+        '/v1.AgentsV1/PatchAgent',
+        request_serializer=v1_dot_agent__pb2.AgentBodyRequest.SerializeToString,
+        response_deserializer=v1_dot_agent__pb2.Agent.FromString,
+        )
+    self.DeleteAgent = channel.unary_unary(
+        '/v1.AgentsV1/DeleteAgent',
+        request_serializer=v1_dot_base__pb2.OwnerEntityResourceRequest.SerializeToString,
+        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+        )
+
+
+class AgentsV1Servicer(object):
+  """Service to manage agents
+  """
+
+  def ListAgentNames(self, request, context):
+    """List agents names
+    """
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def ListAgents(self, request, context):
+    """List agents
+    """
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def CreateAgent(self, request, context):
+    """Create agent
+    """
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def GetAgent(self, request, context):
+    """Get agent
+    """
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def UpdateAgent(self, request, context):
+    """Update agent
+    """
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def PatchAgent(self, request, context):
+    """Patch agent
+    """
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def DeleteAgent(self, request, context):
+    """Delete agent
+    """
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+
+def add_AgentsV1Servicer_to_server(servicer, server):
+  rpc_method_handlers = {
+      'ListAgentNames': grpc.unary_unary_rpc_method_handler(
+          servicer.ListAgentNames,
+          request_deserializer=v1_dot_base__pb2.OwnerResouceListRequest.FromString,
+          response_serializer=v1_dot_agent__pb2.ListAgentsResponse.SerializeToString,
+      ),
+      'ListAgents': grpc.unary_unary_rpc_method_handler(
+          servicer.ListAgents,
+          request_deserializer=v1_dot_base__pb2.OwnerResouceListRequest.FromString,
+          response_serializer=v1_dot_agent__pb2.ListAgentsResponse.SerializeToString,
+      ),
+      'CreateAgent': grpc.unary_unary_rpc_method_handler(
+          servicer.CreateAgent,
+          request_deserializer=v1_dot_agent__pb2.AgentBodyRequest.FromString,
+          response_serializer=v1_dot_agent__pb2.Agent.SerializeToString,
+      ),
+      'GetAgent': grpc.unary_unary_rpc_method_handler(
+          servicer.GetAgent,
+          request_deserializer=v1_dot_base__pb2.OwnerEntityResourceRequest.FromString,
+          response_serializer=v1_dot_agent__pb2.Agent.SerializeToString,
+      ),
+      'UpdateAgent': grpc.unary_unary_rpc_method_handler(
+          servicer.UpdateAgent,
+          request_deserializer=v1_dot_agent__pb2.AgentBodyRequest.FromString,
+          response_serializer=v1_dot_agent__pb2.Agent.SerializeToString,
+      ),
+      'PatchAgent': grpc.unary_unary_rpc_method_handler(
+          servicer.PatchAgent,
+          request_deserializer=v1_dot_agent__pb2.AgentBodyRequest.FromString,
+          response_serializer=v1_dot_agent__pb2.Agent.SerializeToString,
+      ),
+      'DeleteAgent': grpc.unary_unary_rpc_method_handler(
+          servicer.DeleteAgent,
+          request_deserializer=v1_dot_base__pb2.OwnerEntityResourceRequest.FromString,
+          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+      ),
+  }
+  generic_handler = grpc.method_handlers_generic_handler(
+      'v1.AgentsV1', rpc_method_handlers)
+  server.add_generic_rpc_handlers((generic_handler,))
+
+
+class QueuesV1Stub(object):
+  """Service to manage queues
+  """
+
+  def __init__(self, channel):
+    """Constructor.
+
+    Args:
+      channel: A grpc.Channel.
+    """
+    self.ListQueueNames = channel.unary_unary(
+        '/v1.QueuesV1/ListQueueNames',
+        request_serializer=v1_dot_base__pb2.AgentResourceListRequest.SerializeToString,
+        response_deserializer=v1_dot_agent__pb2.ListQueuesResponse.FromString,
+        )
+    self.ListQueues = channel.unary_unary(
+        '/v1.QueuesV1/ListQueues',
+        request_serializer=v1_dot_base__pb2.AgentResourceListRequest.SerializeToString,
+        response_deserializer=v1_dot_agent__pb2.ListQueuesResponse.FromString,
+        )
+    self.CreateQueue = channel.unary_unary(
+        '/v1.QueuesV1/CreateQueue',
+        request_serializer=v1_dot_agent__pb2.QueueBodyRequest.SerializeToString,
+        response_deserializer=v1_dot_agent__pb2.Agent.FromString,
+        )
+    self.GetQueue = channel.unary_unary(
+        '/v1.QueuesV1/GetQueue',
+        request_serializer=v1_dot_base__pb2.AgentEntityResourceRequest.SerializeToString,
+        response_deserializer=v1_dot_agent__pb2.Queue.FromString,
+        )
+    self.UpdateQueue = channel.unary_unary(
+        '/v1.QueuesV1/UpdateQueue',
+        request_serializer=v1_dot_agent__pb2.QueueBodyRequest.SerializeToString,
+        response_deserializer=v1_dot_agent__pb2.Queue.FromString,
+        )
+    self.PatchQueue = channel.unary_unary(
+        '/v1.QueuesV1/PatchQueue',
+        request_serializer=v1_dot_agent__pb2.QueueBodyRequest.SerializeToString,
+        response_deserializer=v1_dot_agent__pb2.Queue.FromString,
+        )
+    self.DeleteQueue = channel.unary_unary(
+        '/v1.QueuesV1/DeleteQueue',
+        request_serializer=v1_dot_base__pb2.AgentEntityResourceRequest.SerializeToString,
+        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+        )
+
+
+class QueuesV1Servicer(object):
+  """Service to manage queues
+  """
+
+  def ListQueueNames(self, request, context):
+    """List queues names
+    """
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def ListQueues(self, request, context):
+    """List queues
+    """
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def CreateQueue(self, request, context):
+    """Create queue
+    """
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def GetQueue(self, request, context):
+    """Get queue
+    """
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def UpdateQueue(self, request, context):
+    """Update queue
+    """
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def PatchQueue(self, request, context):
+    """Patch queue
+    """
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def DeleteQueue(self, request, context):
+    """Delete queue
+    """
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+
+def add_QueuesV1Servicer_to_server(servicer, server):
+  rpc_method_handlers = {
+      'ListQueueNames': grpc.unary_unary_rpc_method_handler(
+          servicer.ListQueueNames,
+          request_deserializer=v1_dot_base__pb2.AgentResourceListRequest.FromString,
+          response_serializer=v1_dot_agent__pb2.ListQueuesResponse.SerializeToString,
+      ),
+      'ListQueues': grpc.unary_unary_rpc_method_handler(
+          servicer.ListQueues,
+          request_deserializer=v1_dot_base__pb2.AgentResourceListRequest.FromString,
+          response_serializer=v1_dot_agent__pb2.ListQueuesResponse.SerializeToString,
+      ),
+      'CreateQueue': grpc.unary_unary_rpc_method_handler(
+          servicer.CreateQueue,
+          request_deserializer=v1_dot_agent__pb2.QueueBodyRequest.FromString,
+          response_serializer=v1_dot_agent__pb2.Agent.SerializeToString,
+      ),
+      'GetQueue': grpc.unary_unary_rpc_method_handler(
+          servicer.GetQueue,
+          request_deserializer=v1_dot_base__pb2.AgentEntityResourceRequest.FromString,
+          response_serializer=v1_dot_agent__pb2.Queue.SerializeToString,
+      ),
+      'UpdateQueue': grpc.unary_unary_rpc_method_handler(
+          servicer.UpdateQueue,
+          request_deserializer=v1_dot_agent__pb2.QueueBodyRequest.FromString,
+          response_serializer=v1_dot_agent__pb2.Queue.SerializeToString,
+      ),
+      'PatchQueue': grpc.unary_unary_rpc_method_handler(
+          servicer.PatchQueue,
+          request_deserializer=v1_dot_agent__pb2.QueueBodyRequest.FromString,
+          response_serializer=v1_dot_agent__pb2.Queue.SerializeToString,
+      ),
+      'DeleteQueue': grpc.unary_unary_rpc_method_handler(
+          servicer.DeleteQueue,
+          request_deserializer=v1_dot_base__pb2.AgentEntityResourceRequest.FromString,
+          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+      ),
+  }
+  generic_handler = grpc.method_handlers_generic_handler(
+      'v1.QueuesV1', rpc_method_handlers)
   server.add_generic_rpc_handlers((generic_handler,))
 
 

@@ -1,0 +1,106 @@
+syntax = "proto3";
+
+package v1;
+
+import "google/protobuf/timestamp.proto";
+
+// Agent specification
+message Agent {
+    // UUID
+    string uuid = 1;
+
+    // Name
+    string name = 2;
+
+    // Namespace where the agen is deployed
+    string namespace = 3;
+
+    // Optional version api
+    map<string, string> version_api = 4;
+
+    // Optional time when the entityt was created
+    google.protobuf.Timestamp created_at = 5;
+
+    // Optional last time the entity was updated
+    google.protobuf.Timestamp updated_at = 6;
+
+}
+
+ // Request data to create/update agents
+ message AgentBodyRequest {
+    // Owner of the namespace
+    string owner = 1;
+
+    // Agent body
+    Agent agent = 2;
+ }
+
+
+// Contains list agents
+message ListAgentsResponse {
+    // Count of the entities
+    int32 count = 1;
+
+    // List of all entities
+    repeated Agent results = 2;
+
+    // Previous page
+    string previous = 3;
+
+    // Next page
+    string next = 4;
+}
+
+
+// Queue specification
+message Queue {
+    // UUID
+    string uuid = 1;
+
+    // Agent
+    string agent = 2;
+
+    // Name
+    string name = 3;
+
+    // The queue priority
+    int32 priority = 4;
+
+    // The queue concurrency
+    int32 concurrency = 5;
+
+    // Optional time when the entityt was created
+    google.protobuf.Timestamp created_at = 6;
+
+    // Optional last time the entity was updated
+    google.protobuf.Timestamp updated_at = 7;
+
+}
+
+ // Request data to create/update agents
+ message QueueBodyRequest {
+    // Owner of the namespace
+    string owner = 1;
+
+    // Agent that consumes the queue
+    string agent = 2;
+
+    // Queue body
+    Queue queue = 3;
+ }
+
+
+// Contains list agents
+message ListQueuesResponse {
+    // Count of the entities
+    int32 count = 1;
+
+    // List of all entities
+    repeated Queue results = 2;
+
+    // Previous page
+    string previous = 3;
+
+    // Next page
+    string next = 4;
+}

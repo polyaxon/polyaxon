@@ -660,6 +660,799 @@
         ]
       }
     },
+    "/api/v1/{owner}/agents": {
+      "get": {
+        "summary": "List archived runs for user",
+        "operationId": "ListAgents",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ListAgentsResponse"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "offset",
+            "description": "Pagination offset.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "limit",
+            "description": "Limit size.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "sort",
+            "description": "Sort to order the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "query",
+            "description": "Query filter the search search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "AgentsV1"
+        ]
+      },
+      "post": {
+        "summary": "List runs",
+        "operationId": "CreateAgent",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Agent"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "description": "Agent body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1Agent"
+            }
+          }
+        ],
+        "tags": [
+          "AgentsV1"
+        ]
+      }
+    },
+    "/api/v1/{owner}/agents/names": {
+      "get": {
+        "summary": "List bookmarked runs for user",
+        "operationId": "ListAgentNames",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ListAgentsResponse"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "offset",
+            "description": "Pagination offset.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "limit",
+            "description": "Limit size.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "sort",
+            "description": "Sort to order the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "query",
+            "description": "Query filter the search search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "AgentsV1"
+        ]
+      }
+    },
+    "/api/v1/{owner}/agents/{agent.uuid}": {
+      "put": {
+        "summary": "Get run",
+        "operationId": "UpdateAgent",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Agent"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "agent.uuid",
+            "description": "UUID",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "description": "Agent body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1Agent"
+            }
+          }
+        ],
+        "tags": [
+          "AgentsV1"
+        ]
+      },
+      "patch": {
+        "summary": "Update run",
+        "operationId": "PatchAgent",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Agent"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "agent.uuid",
+            "description": "UUID",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "description": "Agent body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1Agent"
+            }
+          }
+        ],
+        "tags": [
+          "AgentsV1"
+        ]
+      }
+    },
+    "/api/v1/{owner}/agents/{agent}/queues": {
+      "get": {
+        "summary": "List archived runs for user",
+        "operationId": "ListQueues",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ListQueuesResponse"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "agent",
+            "description": "Agent man managing the resource",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "offset",
+            "description": "Pagination offset.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "limit",
+            "description": "Limit size.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "sort",
+            "description": "Sort to order the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "query",
+            "description": "Query filter the search search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "QueuesV1"
+        ]
+      },
+      "post": {
+        "summary": "List runs",
+        "operationId": "CreateQueue",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Agent"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "agent",
+            "description": "Agent that consumes the queue",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "description": "Queue body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1Queue"
+            }
+          }
+        ],
+        "tags": [
+          "QueuesV1"
+        ]
+      }
+    },
+    "/api/v1/{owner}/agents/{agent}/queues/names": {
+      "get": {
+        "summary": "List bookmarked runs for user",
+        "operationId": "ListQueueNames",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ListQueuesResponse"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "agent",
+            "description": "Agent man managing the resource",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "offset",
+            "description": "Pagination offset.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "limit",
+            "description": "Limit size.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "sort",
+            "description": "Sort to order the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "query",
+            "description": "Query filter the search search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "QueuesV1"
+        ]
+      }
+    },
+    "/api/v1/{owner}/agents/{agent}/queues/{uuid}": {
+      "get": {
+        "summary": "Create new run",
+        "operationId": "GetQueue",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Queue"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "agent",
+            "description": "Agent managing the resource",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "uuid",
+            "description": "Unique integer identifier of the entity",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "QueuesV1"
+        ]
+      },
+      "delete": {
+        "summary": "Patch run",
+        "operationId": "DeleteQueue",
+        "responses": {
+          "200": {
+            "description": "A successful response."
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "agent",
+            "description": "Agent managing the resource",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "uuid",
+            "description": "Unique integer identifier of the entity",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "QueuesV1"
+        ]
+      }
+    },
+    "/api/v1/{owner}/agents/{queue.agent}/queues/{queue.uuid}": {
+      "put": {
+        "summary": "Get run",
+        "operationId": "UpdateQueue",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Queue"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "queue.agent",
+            "description": "Agent",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "queue.uuid",
+            "description": "UUID",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "description": "Queue body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1Queue"
+            }
+          }
+        ],
+        "tags": [
+          "QueuesV1"
+        ]
+      },
+      "patch": {
+        "summary": "Update run",
+        "operationId": "PatchQueue",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Queue"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "queue.agent",
+            "description": "Agent",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "queue.uuid",
+            "description": "UUID",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "description": "Queue body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1Queue"
+            }
+          }
+        ],
+        "tags": [
+          "QueuesV1"
+        ]
+      }
+    },
+    "/api/v1/{owner}/agents/{uuid}": {
+      "get": {
+        "summary": "Create new run",
+        "operationId": "GetAgent",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Agent"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "uuid",
+            "description": "Unique integer identifier of the entity",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "AgentsV1"
+        ]
+      },
+      "delete": {
+        "summary": "Patch run",
+        "operationId": "DeleteAgent",
+        "responses": {
+          "200": {
+            "description": "A successful response."
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "uuid",
+            "description": "Unique integer identifier of the entity",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "AgentsV1"
+        ]
+      }
+    },
     "/api/v1/{owner}/artifacts_stores": {
       "get": {
         "summary": "List archived runs for user",
@@ -5080,6 +5873,41 @@
     }
   },
   "definitions": {
+    "v1Agent": {
+      "type": "object",
+      "properties": {
+        "uuid": {
+          "type": "string",
+          "title": "UUID"
+        },
+        "name": {
+          "type": "string",
+          "title": "Name"
+        },
+        "namespace": {
+          "type": "string",
+          "title": "Namespace where the agen is deployed"
+        },
+        "version_api": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "title": "Optional version api"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time",
+          "title": "Optional time when the entityt was created"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time",
+          "title": "Optional last time the entity was updated"
+        }
+      },
+      "title": "Agent specification"
+    },
     "v1ArtifactTreeResponse": {
       "type": "object",
       "properties": {
@@ -5382,6 +6210,32 @@
       },
       "title": "K8s resource specification"
     },
+    "v1ListAgentsResponse": {
+      "type": "object",
+      "properties": {
+        "count": {
+          "type": "integer",
+          "format": "int32",
+          "title": "Count of the entities"
+        },
+        "results": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1Agent"
+          },
+          "title": "List of all entities"
+        },
+        "previous": {
+          "type": "string",
+          "title": "Previous page"
+        },
+        "next": {
+          "type": "string",
+          "title": "Next page"
+        }
+      },
+      "title": "Contains list agents"
+    },
     "v1ListArtifactsStoresResponse": {
       "type": "object",
       "properties": {
@@ -5485,6 +6339,32 @@
         }
       },
       "title": "Contains list projects"
+    },
+    "v1ListQueuesResponse": {
+      "type": "object",
+      "properties": {
+        "count": {
+          "type": "integer",
+          "format": "int32",
+          "title": "Count of the entities"
+        },
+        "results": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1Queue"
+          },
+          "title": "List of all entities"
+        },
+        "previous": {
+          "type": "string",
+          "title": "Previous page"
+        },
+        "next": {
+          "type": "string",
+          "title": "Next page"
+        }
+      },
+      "title": "Contains list agents"
     },
     "v1ListRunsResponse": {
       "type": "object",
@@ -5627,6 +6507,44 @@
         }
       },
       "title": "Request data to get/delete entity"
+    },
+    "v1Queue": {
+      "type": "object",
+      "properties": {
+        "uuid": {
+          "type": "string",
+          "title": "UUID"
+        },
+        "agent": {
+          "type": "string",
+          "title": "Agent"
+        },
+        "name": {
+          "type": "string",
+          "title": "Name"
+        },
+        "priority": {
+          "type": "integer",
+          "format": "int32",
+          "title": "The queue priority"
+        },
+        "concurrency": {
+          "type": "integer",
+          "format": "int32",
+          "title": "The queue concurrency"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time",
+          "title": "Optional time when the entityt was created"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time",
+          "title": "Optional last time the entity was updated"
+        }
+      },
+      "title": "Queue specification"
     },
     "v1Run": {
       "type": "object",
