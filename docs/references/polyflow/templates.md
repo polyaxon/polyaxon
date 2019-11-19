@@ -33,8 +33,8 @@ A template is any [polyaxonfile primitive](/references/polyaxonfile-yaml-specifi
  * [logging](/references/polyaxonfile-yaml-specification/logging/): defines the logging.
  * name `required`: the name of the template, will be used to generate operations
  * description: a description of this template
- * [inputs](/references/polyaxonfile-yaml-specification/inputs_outputs/): the inputs of this template
- * [outputs](/references/polyaxonfile-yaml-specification/inputs_outputs/): the onputs of this template
+ * [inputs](/references/polyaxonfile-yaml-specification/inputs-outputs/): the inputs of this template
+ * [outputs](/references/polyaxonfile-yaml-specification/inputs-outputs/): the outputs of this template
  
  
 ## Example
