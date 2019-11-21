@@ -216,7 +216,7 @@ curl --request GET \
 
 <b>Example curl request</b>
 
-```json
+```
 curl --request POST \
   --url 'http://{{base_api_url}}/api/v1/{{username}}/{{project}}/jobs/{{id}}/restart' \
   --header 'Authorization: token {{token}}'

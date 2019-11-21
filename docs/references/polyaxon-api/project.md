@@ -309,7 +309,7 @@ curl -X POST \
 
 ## List experiments
 
-<span class="api api-post">
+<span class="api api-get">
 /api/v1/{username}/{project_name}/experiments/
 </span>>
 
@@ -610,7 +610,7 @@ curl -X GET \
 
 ## Start project tensorboard
 
-<span class="api api-pot">
+<span class="api api-post">
 /api/v1/{username}/{project_name}/tensorboard/start/
 </span>
 
