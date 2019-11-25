@@ -200,7 +200,7 @@ by either using their ids or names (if you gave them name).
 This will both mount necessary outputs volumes,
 and will expose the paths of those outputs in your experiment/job that requested them.
 
-If you referenced different outputs from jobs and experiments, the paths will following
+If you referenced different outputs from jobs and experiments, the paths will follow
 the same order that was provided.
 
 ```yaml
