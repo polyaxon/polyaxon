@@ -318,7 +318,7 @@ Additionally every Polyaxon users can override the default tolerations by using 
 ```yaml
 version: 1
 
-kind: tensorbaord
+kind: tensorboard
 
 environment:
   affinity:
