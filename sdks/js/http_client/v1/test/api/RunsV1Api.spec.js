@@ -115,15 +115,18 @@
           body.is_managed = "";
           body.content = "";
           body.status = "";
+          body.readme = "";
+          body.bookmarked = false;
           body.meta_info = new PolyaxonSdk.V1RunMetaInfo();
           body.meta_info.service = false;
           body.meta_info.concurrency = 0;
-          body.meta_info.workflow_kind = "";
-          body.readme = "";
-          body.bookmarked = false;
-          body.inputs = {key: ""};
-          body.outputs = {key: ""};
-          body.run_env = {key: ""};
+          body.meta_info.parallel_kind = "";
+          body.meta_info.run_kind = "";
+          body.kind = "";
+          body.hub = "";
+          body.inputs = ;
+          body.outputs = ;
+          body.run_env = ;
           body.is_resume = false;
           body.is_clone = false;
           body.cloning_strategy = "";
@@ -177,47 +180,29 @@
             expect(data.content).to.be("");
             expect(data.status).to.be.a('string');
             expect(data.status).to.be("");
+            expect(data.readme).to.be.a('string');
+            expect(data.readme).to.be("");
+            expect(data.bookmarked).to.be.a('boolean');
+            expect(data.bookmarked).to.be(false);
             expect(data.meta_info).to.be.a(PolyaxonSdk.V1RunMetaInfo);
                   expect(data.meta_info.service).to.be.a('boolean');
               expect(data.meta_info.service).to.be(false);
               expect(data.meta_info.concurrency).to.be.a('number');
               expect(data.meta_info.concurrency).to.be(0);
-              expect(data.meta_info.workflow_kind).to.be.a('string');
-              expect(data.meta_info.workflow_kind).to.be("");
-            expect(data.readme).to.be.a('string');
-            expect(data.readme).to.be("");
-            expect(data.bookmarked).to.be.a('boolean');
-            expect(data.bookmarked).to.be(false);
-            {
-              let dataCtr = data.inputs;
-              expect(dataCtr).to.be.an(Object);
-              expect(dataCtr).to.not.be.empty();
-              for (let p in dataCtr) {
-                let data = dataCtr[p];
-                expect(data).to.be.a('string');
-                expect(data).to.be("");
-              }
-            }
-            {
-              let dataCtr = data.outputs;
-              expect(dataCtr).to.be.an(Object);
-              expect(dataCtr).to.not.be.empty();
-              for (let p in dataCtr) {
-                let data = dataCtr[p];
-                expect(data).to.be.a('string');
-                expect(data).to.be("");
-              }
-            }
-            {
-              let dataCtr = data.run_env;
-              expect(dataCtr).to.be.an(Object);
-              expect(dataCtr).to.not.be.empty();
-              for (let p in dataCtr) {
-                let data = dataCtr[p];
-                expect(data).to.be.a('string');
-                expect(data).to.be("");
-              }
-            }
+              expect(data.meta_info.parallel_kind).to.be.a('string');
+              expect(data.meta_info.parallel_kind).to.be("");
+              expect(data.meta_info.run_kind).to.be.a('string');
+              expect(data.meta_info.run_kind).to.be("");
+            expect(data.kind).to.be.a('string');
+            expect(data.kind).to.be("");
+            expect(data.hub).to.be.a('string');
+            expect(data.hub).to.be("");
+            expect(data.inputs).to.be.a(Object);
+            expect(data.inputs).to.be();
+            expect(data.outputs).to.be.a(Object);
+            expect(data.outputs).to.be();
+            expect(data.run_env).to.be.a(Object);
+            expect(data.run_env).to.be();
             expect(data.is_resume).to.be.a('boolean');
             expect(data.is_resume).to.be(false);
             expect(data.is_clone).to.be.a('boolean');
@@ -262,15 +247,18 @@
           body.is_managed = "";
           body.content = "";
           body.status = "";
+          body.readme = "";
+          body.bookmarked = false;
           body.meta_info = new PolyaxonSdk.V1RunMetaInfo();
           body.meta_info.service = false;
           body.meta_info.concurrency = 0;
-          body.meta_info.workflow_kind = "";
-          body.readme = "";
-          body.bookmarked = false;
-          body.inputs = {key: ""};
-          body.outputs = {key: ""};
-          body.run_env = {key: ""};
+          body.meta_info.parallel_kind = "";
+          body.meta_info.run_kind = "";
+          body.kind = "";
+          body.hub = "";
+          body.inputs = ;
+          body.outputs = ;
+          body.run_env = ;
           body.is_resume = false;
           body.is_clone = false;
           body.cloning_strategy = "";
@@ -324,47 +312,29 @@
             expect(data.content).to.be("");
             expect(data.status).to.be.a('string');
             expect(data.status).to.be("");
+            expect(data.readme).to.be.a('string');
+            expect(data.readme).to.be("");
+            expect(data.bookmarked).to.be.a('boolean');
+            expect(data.bookmarked).to.be(false);
             expect(data.meta_info).to.be.a(PolyaxonSdk.V1RunMetaInfo);
                   expect(data.meta_info.service).to.be.a('boolean');
               expect(data.meta_info.service).to.be(false);
               expect(data.meta_info.concurrency).to.be.a('number');
               expect(data.meta_info.concurrency).to.be(0);
-              expect(data.meta_info.workflow_kind).to.be.a('string');
-              expect(data.meta_info.workflow_kind).to.be("");
-            expect(data.readme).to.be.a('string');
-            expect(data.readme).to.be("");
-            expect(data.bookmarked).to.be.a('boolean');
-            expect(data.bookmarked).to.be(false);
-            {
-              let dataCtr = data.inputs;
-              expect(dataCtr).to.be.an(Object);
-              expect(dataCtr).to.not.be.empty();
-              for (let p in dataCtr) {
-                let data = dataCtr[p];
-                expect(data).to.be.a('string');
-                expect(data).to.be("");
-              }
-            }
-            {
-              let dataCtr = data.outputs;
-              expect(dataCtr).to.be.an(Object);
-              expect(dataCtr).to.not.be.empty();
-              for (let p in dataCtr) {
-                let data = dataCtr[p];
-                expect(data).to.be.a('string');
-                expect(data).to.be("");
-              }
-            }
-            {
-              let dataCtr = data.run_env;
-              expect(dataCtr).to.be.an(Object);
-              expect(dataCtr).to.not.be.empty();
-              for (let p in dataCtr) {
-                let data = dataCtr[p];
-                expect(data).to.be.a('string');
-                expect(data).to.be("");
-              }
-            }
+              expect(data.meta_info.parallel_kind).to.be.a('string');
+              expect(data.meta_info.parallel_kind).to.be("");
+              expect(data.meta_info.run_kind).to.be.a('string');
+              expect(data.meta_info.run_kind).to.be("");
+            expect(data.kind).to.be.a('string');
+            expect(data.kind).to.be("");
+            expect(data.hub).to.be.a('string');
+            expect(data.hub).to.be("");
+            expect(data.inputs).to.be.a(Object);
+            expect(data.inputs).to.be();
+            expect(data.outputs).to.be.a(Object);
+            expect(data.outputs).to.be();
+            expect(data.run_env).to.be.a(Object);
+            expect(data.run_env).to.be();
             expect(data.is_resume).to.be.a('boolean');
             expect(data.is_resume).to.be(false);
             expect(data.is_clone).to.be.a('boolean');
@@ -566,47 +536,29 @@
             expect(data.content).to.be("");
             expect(data.status).to.be.a('string');
             expect(data.status).to.be("");
+            expect(data.readme).to.be.a('string');
+            expect(data.readme).to.be("");
+            expect(data.bookmarked).to.be.a('boolean');
+            expect(data.bookmarked).to.be(false);
             expect(data.meta_info).to.be.a(PolyaxonSdk.V1RunMetaInfo);
                   expect(data.meta_info.service).to.be.a('boolean');
               expect(data.meta_info.service).to.be(false);
               expect(data.meta_info.concurrency).to.be.a('number');
               expect(data.meta_info.concurrency).to.be(0);
-              expect(data.meta_info.workflow_kind).to.be.a('string');
-              expect(data.meta_info.workflow_kind).to.be("");
-            expect(data.readme).to.be.a('string');
-            expect(data.readme).to.be("");
-            expect(data.bookmarked).to.be.a('boolean');
-            expect(data.bookmarked).to.be(false);
-            {
-              let dataCtr = data.inputs;
-              expect(dataCtr).to.be.an(Object);
-              expect(dataCtr).to.not.be.empty();
-              for (let p in dataCtr) {
-                let data = dataCtr[p];
-                expect(data).to.be.a('string');
-                expect(data).to.be("");
-              }
-            }
-            {
-              let dataCtr = data.outputs;
-              expect(dataCtr).to.be.an(Object);
-              expect(dataCtr).to.not.be.empty();
-              for (let p in dataCtr) {
-                let data = dataCtr[p];
-                expect(data).to.be.a('string');
-                expect(data).to.be("");
-              }
-            }
-            {
-              let dataCtr = data.run_env;
-              expect(dataCtr).to.be.an(Object);
-              expect(dataCtr).to.not.be.empty();
-              for (let p in dataCtr) {
-                let data = dataCtr[p];
-                expect(data).to.be.a('string');
-                expect(data).to.be("");
-              }
-            }
+              expect(data.meta_info.parallel_kind).to.be.a('string');
+              expect(data.meta_info.parallel_kind).to.be("");
+              expect(data.meta_info.run_kind).to.be.a('string');
+              expect(data.meta_info.run_kind).to.be("");
+            expect(data.kind).to.be.a('string');
+            expect(data.kind).to.be("");
+            expect(data.hub).to.be.a('string');
+            expect(data.hub).to.be("");
+            expect(data.inputs).to.be.a(Object);
+            expect(data.inputs).to.be();
+            expect(data.outputs).to.be.a(Object);
+            expect(data.outputs).to.be();
+            expect(data.run_env).to.be.a(Object);
+            expect(data.run_env).to.be();
             expect(data.is_resume).to.be.a('boolean');
             expect(data.is_resume).to.be(false);
             expect(data.is_clone).to.be.a('boolean');
@@ -747,6 +699,121 @@
             }
             expect(data.is_done).to.be.a('boolean');
             expect(data.is_done).to.be(false);
+
+            done();
+          });
+          */
+          // TODO: uncomment and complete method invocation above, then delete this line and the next:
+          done();
+        });
+      });
+      describe('getRunSettings', function() {
+        it('should call getRunSettings successfully', function(done) {
+          // TODO: uncomment, update parameter values for getRunSettings call and complete the assertions
+          /*
+          var owner = "owner_example";
+          var project = "project_example";
+          var uuid = "uuid_example";
+
+          instance.getRunSettings(owner, project, uuid, function(error, data, response) {
+            if (error) {
+              done(error);
+              return;
+            }
+            // TODO: update response assertions
+            expect(data).to.be.a(PolyaxonSdk.V1RunSettings);
+            expect(data.namespace).to.be.a('string');
+            expect(data.namespace).to.be("");
+            expect(data.agent).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                  expect(data.agent.uuid).to.be.a('string');
+              expect(data.agent.uuid).to.be("");
+              expect(data.agent.name).to.be.a('string');
+              expect(data.agent.name).to.be("");
+            expect(data.queue).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                  expect(data.queue.uuid).to.be.a('string');
+              expect(data.queue.uuid).to.be("");
+              expect(data.queue.name).to.be.a('string');
+              expect(data.queue.name).to.be("");
+            expect(data.logs_store).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                  expect(data.logs_store.uuid).to.be.a('string');
+              expect(data.logs_store.uuid).to.be("");
+              expect(data.logs_store.name).to.be.a('string');
+              expect(data.logs_store.name).to.be("");
+            expect(data.outputs_store).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                  expect(data.outputs_store.uuid).to.be.a('string');
+              expect(data.outputs_store.uuid).to.be("");
+              expect(data.outputs_store.name).to.be.a('string');
+              expect(data.outputs_store.name).to.be("");
+            {
+              let dataCtr = data.init_artifacts_stores;
+              expect(dataCtr).to.be.an(Array);
+              expect(dataCtr).to.not.be.empty();
+              for (let p in dataCtr) {
+                let data = dataCtr[p];
+                expect(data).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                expect(data.uuid).to.be.a('string');
+                expect(data.uuid).to.be("");
+                expect(data.name).to.be.a('string');
+                expect(data.name).to.be("");
+              }
+            }
+            {
+              let dataCtr = data.artifacts_stores;
+              expect(dataCtr).to.be.an(Array);
+              expect(dataCtr).to.not.be.empty();
+              for (let p in dataCtr) {
+                let data = dataCtr[p];
+                expect(data).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                expect(data.uuid).to.be.a('string');
+                expect(data.uuid).to.be("");
+                expect(data.name).to.be.a('string');
+                expect(data.name).to.be("");
+              }
+            }
+            {
+              let dataCtr = data.git_accesses;
+              expect(dataCtr).to.be.an(Array);
+              expect(dataCtr).to.not.be.empty();
+              for (let p in dataCtr) {
+                let data = dataCtr[p];
+                expect(data).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                expect(data.uuid).to.be.a('string');
+                expect(data.uuid).to.be("");
+                expect(data.name).to.be.a('string');
+                expect(data.name).to.be("");
+              }
+            }
+            expect(data.registry_access).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                  expect(data.registry_access.uuid).to.be.a('string');
+              expect(data.registry_access.uuid).to.be("");
+              expect(data.registry_access.name).to.be.a('string');
+              expect(data.registry_access.name).to.be("");
+            {
+              let dataCtr = data.k8s_secrets;
+              expect(dataCtr).to.be.an(Array);
+              expect(dataCtr).to.not.be.empty();
+              for (let p in dataCtr) {
+                let data = dataCtr[p];
+                expect(data).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                expect(data.uuid).to.be.a('string');
+                expect(data.uuid).to.be("");
+                expect(data.name).to.be.a('string');
+                expect(data.name).to.be("");
+              }
+            }
+            {
+              let dataCtr = data.k8s_config_maps;
+              expect(dataCtr).to.be.an(Array);
+              expect(dataCtr).to.not.be.empty();
+              for (let p in dataCtr) {
+                let data = dataCtr[p];
+                expect(data).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                expect(data.uuid).to.be.a('string');
+                expect(data.uuid).to.be("");
+                expect(data.name).to.be.a('string');
+                expect(data.name).to.be("");
+              }
+            }
 
             done();
           });
@@ -940,47 +1007,29 @@
                 expect(data.content).to.be("");
                 expect(data.status).to.be.a('string');
                 expect(data.status).to.be("");
+                expect(data.readme).to.be.a('string');
+                expect(data.readme).to.be("");
+                expect(data.bookmarked).to.be.a('boolean');
+                expect(data.bookmarked).to.be(false);
                 expect(data.meta_info).to.be.a(PolyaxonSdk.V1RunMetaInfo);
                       expect(data.meta_info.service).to.be.a('boolean');
                   expect(data.meta_info.service).to.be(false);
                   expect(data.meta_info.concurrency).to.be.a('number');
                   expect(data.meta_info.concurrency).to.be(0);
-                  expect(data.meta_info.workflow_kind).to.be.a('string');
-                  expect(data.meta_info.workflow_kind).to.be("");
-                expect(data.readme).to.be.a('string');
-                expect(data.readme).to.be("");
-                expect(data.bookmarked).to.be.a('boolean');
-                expect(data.bookmarked).to.be(false);
-                {
-                  let dataCtr = data.inputs;
-                  expect(dataCtr).to.be.an(Object);
-                  expect(dataCtr).to.not.be.empty();
-                  for (let p in dataCtr) {
-                    let data = dataCtr[p];
-                    expect(data).to.be.a('string');
-                    expect(data).to.be("");
-                  }
-                }
-                {
-                  let dataCtr = data.outputs;
-                  expect(dataCtr).to.be.an(Object);
-                  expect(dataCtr).to.not.be.empty();
-                  for (let p in dataCtr) {
-                    let data = dataCtr[p];
-                    expect(data).to.be.a('string');
-                    expect(data).to.be("");
-                  }
-                }
-                {
-                  let dataCtr = data.run_env;
-                  expect(dataCtr).to.be.an(Object);
-                  expect(dataCtr).to.not.be.empty();
-                  for (let p in dataCtr) {
-                    let data = dataCtr[p];
-                    expect(data).to.be.a('string');
-                    expect(data).to.be("");
-                  }
-                }
+                  expect(data.meta_info.parallel_kind).to.be.a('string');
+                  expect(data.meta_info.parallel_kind).to.be("");
+                  expect(data.meta_info.run_kind).to.be.a('string');
+                  expect(data.meta_info.run_kind).to.be("");
+                expect(data.kind).to.be.a('string');
+                expect(data.kind).to.be("");
+                expect(data.hub).to.be.a('string');
+                expect(data.hub).to.be("");
+                expect(data.inputs).to.be.a(Object);
+                expect(data.inputs).to.be();
+                expect(data.outputs).to.be.a(Object);
+                expect(data.outputs).to.be();
+                expect(data.run_env).to.be.a(Object);
+                expect(data.run_env).to.be();
                 expect(data.is_resume).to.be.a('boolean');
                 expect(data.is_resume).to.be(false);
                 expect(data.is_clone).to.be.a('boolean');
@@ -1074,47 +1123,29 @@
                 expect(data.content).to.be("");
                 expect(data.status).to.be.a('string');
                 expect(data.status).to.be("");
+                expect(data.readme).to.be.a('string');
+                expect(data.readme).to.be("");
+                expect(data.bookmarked).to.be.a('boolean');
+                expect(data.bookmarked).to.be(false);
                 expect(data.meta_info).to.be.a(PolyaxonSdk.V1RunMetaInfo);
                       expect(data.meta_info.service).to.be.a('boolean');
                   expect(data.meta_info.service).to.be(false);
                   expect(data.meta_info.concurrency).to.be.a('number');
                   expect(data.meta_info.concurrency).to.be(0);
-                  expect(data.meta_info.workflow_kind).to.be.a('string');
-                  expect(data.meta_info.workflow_kind).to.be("");
-                expect(data.readme).to.be.a('string');
-                expect(data.readme).to.be("");
-                expect(data.bookmarked).to.be.a('boolean');
-                expect(data.bookmarked).to.be(false);
-                {
-                  let dataCtr = data.inputs;
-                  expect(dataCtr).to.be.an(Object);
-                  expect(dataCtr).to.not.be.empty();
-                  for (let p in dataCtr) {
-                    let data = dataCtr[p];
-                    expect(data).to.be.a('string');
-                    expect(data).to.be("");
-                  }
-                }
-                {
-                  let dataCtr = data.outputs;
-                  expect(dataCtr).to.be.an(Object);
-                  expect(dataCtr).to.not.be.empty();
-                  for (let p in dataCtr) {
-                    let data = dataCtr[p];
-                    expect(data).to.be.a('string');
-                    expect(data).to.be("");
-                  }
-                }
-                {
-                  let dataCtr = data.run_env;
-                  expect(dataCtr).to.be.an(Object);
-                  expect(dataCtr).to.not.be.empty();
-                  for (let p in dataCtr) {
-                    let data = dataCtr[p];
-                    expect(data).to.be.a('string');
-                    expect(data).to.be("");
-                  }
-                }
+                  expect(data.meta_info.parallel_kind).to.be.a('string');
+                  expect(data.meta_info.parallel_kind).to.be("");
+                  expect(data.meta_info.run_kind).to.be.a('string');
+                  expect(data.meta_info.run_kind).to.be("");
+                expect(data.kind).to.be.a('string');
+                expect(data.kind).to.be("");
+                expect(data.hub).to.be.a('string');
+                expect(data.hub).to.be("");
+                expect(data.inputs).to.be.a(Object);
+                expect(data.inputs).to.be();
+                expect(data.outputs).to.be.a(Object);
+                expect(data.outputs).to.be();
+                expect(data.run_env).to.be.a(Object);
+                expect(data.run_env).to.be();
                 expect(data.is_resume).to.be.a('boolean');
                 expect(data.is_resume).to.be(false);
                 expect(data.is_clone).to.be.a('boolean');
@@ -1209,47 +1240,29 @@
                 expect(data.content).to.be("");
                 expect(data.status).to.be.a('string');
                 expect(data.status).to.be("");
+                expect(data.readme).to.be.a('string');
+                expect(data.readme).to.be("");
+                expect(data.bookmarked).to.be.a('boolean');
+                expect(data.bookmarked).to.be(false);
                 expect(data.meta_info).to.be.a(PolyaxonSdk.V1RunMetaInfo);
                       expect(data.meta_info.service).to.be.a('boolean');
                   expect(data.meta_info.service).to.be(false);
                   expect(data.meta_info.concurrency).to.be.a('number');
                   expect(data.meta_info.concurrency).to.be(0);
-                  expect(data.meta_info.workflow_kind).to.be.a('string');
-                  expect(data.meta_info.workflow_kind).to.be("");
-                expect(data.readme).to.be.a('string');
-                expect(data.readme).to.be("");
-                expect(data.bookmarked).to.be.a('boolean');
-                expect(data.bookmarked).to.be(false);
-                {
-                  let dataCtr = data.inputs;
-                  expect(dataCtr).to.be.an(Object);
-                  expect(dataCtr).to.not.be.empty();
-                  for (let p in dataCtr) {
-                    let data = dataCtr[p];
-                    expect(data).to.be.a('string');
-                    expect(data).to.be("");
-                  }
-                }
-                {
-                  let dataCtr = data.outputs;
-                  expect(dataCtr).to.be.an(Object);
-                  expect(dataCtr).to.not.be.empty();
-                  for (let p in dataCtr) {
-                    let data = dataCtr[p];
-                    expect(data).to.be.a('string');
-                    expect(data).to.be("");
-                  }
-                }
-                {
-                  let dataCtr = data.run_env;
-                  expect(dataCtr).to.be.an(Object);
-                  expect(dataCtr).to.not.be.empty();
-                  for (let p in dataCtr) {
-                    let data = dataCtr[p];
-                    expect(data).to.be.a('string');
-                    expect(data).to.be("");
-                  }
-                }
+                  expect(data.meta_info.parallel_kind).to.be.a('string');
+                  expect(data.meta_info.parallel_kind).to.be("");
+                  expect(data.meta_info.run_kind).to.be.a('string');
+                  expect(data.meta_info.run_kind).to.be("");
+                expect(data.kind).to.be.a('string');
+                expect(data.kind).to.be("");
+                expect(data.hub).to.be.a('string');
+                expect(data.hub).to.be("");
+                expect(data.inputs).to.be.a(Object);
+                expect(data.inputs).to.be();
+                expect(data.outputs).to.be.a(Object);
+                expect(data.outputs).to.be();
+                expect(data.run_env).to.be.a(Object);
+                expect(data.run_env).to.be();
                 expect(data.is_resume).to.be.a('boolean');
                 expect(data.is_resume).to.be(false);
                 expect(data.is_clone).to.be.a('boolean');
@@ -1301,15 +1314,18 @@
           body.is_managed = "";
           body.content = "";
           body.status = "";
+          body.readme = "";
+          body.bookmarked = false;
           body.meta_info = new PolyaxonSdk.V1RunMetaInfo();
           body.meta_info.service = false;
           body.meta_info.concurrency = 0;
-          body.meta_info.workflow_kind = "";
-          body.readme = "";
-          body.bookmarked = false;
-          body.inputs = {key: ""};
-          body.outputs = {key: ""};
-          body.run_env = {key: ""};
+          body.meta_info.parallel_kind = "";
+          body.meta_info.run_kind = "";
+          body.kind = "";
+          body.hub = "";
+          body.inputs = ;
+          body.outputs = ;
+          body.run_env = ;
           body.is_resume = false;
           body.is_clone = false;
           body.cloning_strategy = "";
@@ -1363,47 +1379,29 @@
             expect(data.content).to.be("");
             expect(data.status).to.be.a('string');
             expect(data.status).to.be("");
+            expect(data.readme).to.be.a('string');
+            expect(data.readme).to.be("");
+            expect(data.bookmarked).to.be.a('boolean');
+            expect(data.bookmarked).to.be(false);
             expect(data.meta_info).to.be.a(PolyaxonSdk.V1RunMetaInfo);
                   expect(data.meta_info.service).to.be.a('boolean');
               expect(data.meta_info.service).to.be(false);
               expect(data.meta_info.concurrency).to.be.a('number');
               expect(data.meta_info.concurrency).to.be(0);
-              expect(data.meta_info.workflow_kind).to.be.a('string');
-              expect(data.meta_info.workflow_kind).to.be("");
-            expect(data.readme).to.be.a('string');
-            expect(data.readme).to.be("");
-            expect(data.bookmarked).to.be.a('boolean');
-            expect(data.bookmarked).to.be(false);
-            {
-              let dataCtr = data.inputs;
-              expect(dataCtr).to.be.an(Object);
-              expect(dataCtr).to.not.be.empty();
-              for (let p in dataCtr) {
-                let data = dataCtr[p];
-                expect(data).to.be.a('string');
-                expect(data).to.be("");
-              }
-            }
-            {
-              let dataCtr = data.outputs;
-              expect(dataCtr).to.be.an(Object);
-              expect(dataCtr).to.not.be.empty();
-              for (let p in dataCtr) {
-                let data = dataCtr[p];
-                expect(data).to.be.a('string');
-                expect(data).to.be("");
-              }
-            }
-            {
-              let dataCtr = data.run_env;
-              expect(dataCtr).to.be.an(Object);
-              expect(dataCtr).to.not.be.empty();
-              for (let p in dataCtr) {
-                let data = dataCtr[p];
-                expect(data).to.be.a('string');
-                expect(data).to.be("");
-              }
-            }
+              expect(data.meta_info.parallel_kind).to.be.a('string');
+              expect(data.meta_info.parallel_kind).to.be("");
+              expect(data.meta_info.run_kind).to.be.a('string');
+              expect(data.meta_info.run_kind).to.be("");
+            expect(data.kind).to.be.a('string');
+            expect(data.kind).to.be("");
+            expect(data.hub).to.be.a('string');
+            expect(data.hub).to.be("");
+            expect(data.inputs).to.be.a(Object);
+            expect(data.inputs).to.be();
+            expect(data.outputs).to.be.a(Object);
+            expect(data.outputs).to.be();
+            expect(data.run_env).to.be.a(Object);
+            expect(data.run_env).to.be();
             expect(data.is_resume).to.be.a('boolean');
             expect(data.is_resume).to.be(false);
             expect(data.is_clone).to.be.a('boolean');
@@ -1449,15 +1447,18 @@
           body.is_managed = "";
           body.content = "";
           body.status = "";
+          body.readme = "";
+          body.bookmarked = false;
           body.meta_info = new PolyaxonSdk.V1RunMetaInfo();
           body.meta_info.service = false;
           body.meta_info.concurrency = 0;
-          body.meta_info.workflow_kind = "";
-          body.readme = "";
-          body.bookmarked = false;
-          body.inputs = {key: ""};
-          body.outputs = {key: ""};
-          body.run_env = {key: ""};
+          body.meta_info.parallel_kind = "";
+          body.meta_info.run_kind = "";
+          body.kind = "";
+          body.hub = "";
+          body.inputs = ;
+          body.outputs = ;
+          body.run_env = ;
           body.is_resume = false;
           body.is_clone = false;
           body.cloning_strategy = "";
@@ -1511,47 +1512,29 @@
             expect(data.content).to.be("");
             expect(data.status).to.be.a('string');
             expect(data.status).to.be("");
+            expect(data.readme).to.be.a('string');
+            expect(data.readme).to.be("");
+            expect(data.bookmarked).to.be.a('boolean');
+            expect(data.bookmarked).to.be(false);
             expect(data.meta_info).to.be.a(PolyaxonSdk.V1RunMetaInfo);
                   expect(data.meta_info.service).to.be.a('boolean');
               expect(data.meta_info.service).to.be(false);
               expect(data.meta_info.concurrency).to.be.a('number');
               expect(data.meta_info.concurrency).to.be(0);
-              expect(data.meta_info.workflow_kind).to.be.a('string');
-              expect(data.meta_info.workflow_kind).to.be("");
-            expect(data.readme).to.be.a('string');
-            expect(data.readme).to.be("");
-            expect(data.bookmarked).to.be.a('boolean');
-            expect(data.bookmarked).to.be(false);
-            {
-              let dataCtr = data.inputs;
-              expect(dataCtr).to.be.an(Object);
-              expect(dataCtr).to.not.be.empty();
-              for (let p in dataCtr) {
-                let data = dataCtr[p];
-                expect(data).to.be.a('string');
-                expect(data).to.be("");
-              }
-            }
-            {
-              let dataCtr = data.outputs;
-              expect(dataCtr).to.be.an(Object);
-              expect(dataCtr).to.not.be.empty();
-              for (let p in dataCtr) {
-                let data = dataCtr[p];
-                expect(data).to.be.a('string');
-                expect(data).to.be("");
-              }
-            }
-            {
-              let dataCtr = data.run_env;
-              expect(dataCtr).to.be.an(Object);
-              expect(dataCtr).to.not.be.empty();
-              for (let p in dataCtr) {
-                let data = dataCtr[p];
-                expect(data).to.be.a('string');
-                expect(data).to.be("");
-              }
-            }
+              expect(data.meta_info.parallel_kind).to.be.a('string');
+              expect(data.meta_info.parallel_kind).to.be("");
+              expect(data.meta_info.run_kind).to.be.a('string');
+              expect(data.meta_info.run_kind).to.be("");
+            expect(data.kind).to.be.a('string');
+            expect(data.kind).to.be("");
+            expect(data.hub).to.be.a('string');
+            expect(data.hub).to.be("");
+            expect(data.inputs).to.be.a(Object);
+            expect(data.inputs).to.be();
+            expect(data.outputs).to.be.a(Object);
+            expect(data.outputs).to.be();
+            expect(data.run_env).to.be.a(Object);
+            expect(data.run_env).to.be();
             expect(data.is_resume).to.be.a('boolean');
             expect(data.is_resume).to.be(false);
             expect(data.is_clone).to.be.a('boolean');
@@ -1618,15 +1601,18 @@
           body.is_managed = "";
           body.content = "";
           body.status = "";
+          body.readme = "";
+          body.bookmarked = false;
           body.meta_info = new PolyaxonSdk.V1RunMetaInfo();
           body.meta_info.service = false;
           body.meta_info.concurrency = 0;
-          body.meta_info.workflow_kind = "";
-          body.readme = "";
-          body.bookmarked = false;
-          body.inputs = {key: ""};
-          body.outputs = {key: ""};
-          body.run_env = {key: ""};
+          body.meta_info.parallel_kind = "";
+          body.meta_info.run_kind = "";
+          body.kind = "";
+          body.hub = "";
+          body.inputs = ;
+          body.outputs = ;
+          body.run_env = ;
           body.is_resume = false;
           body.is_clone = false;
           body.cloning_strategy = "";
@@ -1680,47 +1666,29 @@
             expect(data.content).to.be("");
             expect(data.status).to.be.a('string');
             expect(data.status).to.be("");
+            expect(data.readme).to.be.a('string');
+            expect(data.readme).to.be("");
+            expect(data.bookmarked).to.be.a('boolean');
+            expect(data.bookmarked).to.be(false);
             expect(data.meta_info).to.be.a(PolyaxonSdk.V1RunMetaInfo);
                   expect(data.meta_info.service).to.be.a('boolean');
               expect(data.meta_info.service).to.be(false);
               expect(data.meta_info.concurrency).to.be.a('number');
               expect(data.meta_info.concurrency).to.be(0);
-              expect(data.meta_info.workflow_kind).to.be.a('string');
-              expect(data.meta_info.workflow_kind).to.be("");
-            expect(data.readme).to.be.a('string');
-            expect(data.readme).to.be("");
-            expect(data.bookmarked).to.be.a('boolean');
-            expect(data.bookmarked).to.be(false);
-            {
-              let dataCtr = data.inputs;
-              expect(dataCtr).to.be.an(Object);
-              expect(dataCtr).to.not.be.empty();
-              for (let p in dataCtr) {
-                let data = dataCtr[p];
-                expect(data).to.be.a('string');
-                expect(data).to.be("");
-              }
-            }
-            {
-              let dataCtr = data.outputs;
-              expect(dataCtr).to.be.an(Object);
-              expect(dataCtr).to.not.be.empty();
-              for (let p in dataCtr) {
-                let data = dataCtr[p];
-                expect(data).to.be.a('string');
-                expect(data).to.be("");
-              }
-            }
-            {
-              let dataCtr = data.run_env;
-              expect(dataCtr).to.be.an(Object);
-              expect(dataCtr).to.not.be.empty();
-              for (let p in dataCtr) {
-                let data = dataCtr[p];
-                expect(data).to.be.a('string');
-                expect(data).to.be("");
-              }
-            }
+              expect(data.meta_info.parallel_kind).to.be.a('string');
+              expect(data.meta_info.parallel_kind).to.be("");
+              expect(data.meta_info.run_kind).to.be.a('string');
+              expect(data.meta_info.run_kind).to.be("");
+            expect(data.kind).to.be.a('string');
+            expect(data.kind).to.be("");
+            expect(data.hub).to.be.a('string');
+            expect(data.hub).to.be("");
+            expect(data.inputs).to.be.a(Object);
+            expect(data.inputs).to.be();
+            expect(data.outputs).to.be.a(Object);
+            expect(data.outputs).to.be();
+            expect(data.run_env).to.be.a(Object);
+            expect(data.run_env).to.be();
             expect(data.is_resume).to.be.a('boolean');
             expect(data.is_resume).to.be(false);
             expect(data.is_clone).to.be.a('boolean');
@@ -1876,15 +1844,18 @@
           body.is_managed = "";
           body.content = "";
           body.status = "";
+          body.readme = "";
+          body.bookmarked = false;
           body.meta_info = new PolyaxonSdk.V1RunMetaInfo();
           body.meta_info.service = false;
           body.meta_info.concurrency = 0;
-          body.meta_info.workflow_kind = "";
-          body.readme = "";
-          body.bookmarked = false;
-          body.inputs = {key: ""};
-          body.outputs = {key: ""};
-          body.run_env = {key: ""};
+          body.meta_info.parallel_kind = "";
+          body.meta_info.run_kind = "";
+          body.kind = "";
+          body.hub = "";
+          body.inputs = ;
+          body.outputs = ;
+          body.run_env = ;
           body.is_resume = false;
           body.is_clone = false;
           body.cloning_strategy = "";
@@ -1938,47 +1909,29 @@
             expect(data.content).to.be("");
             expect(data.status).to.be.a('string');
             expect(data.status).to.be("");
+            expect(data.readme).to.be.a('string');
+            expect(data.readme).to.be("");
+            expect(data.bookmarked).to.be.a('boolean');
+            expect(data.bookmarked).to.be(false);
             expect(data.meta_info).to.be.a(PolyaxonSdk.V1RunMetaInfo);
                   expect(data.meta_info.service).to.be.a('boolean');
               expect(data.meta_info.service).to.be(false);
               expect(data.meta_info.concurrency).to.be.a('number');
               expect(data.meta_info.concurrency).to.be(0);
-              expect(data.meta_info.workflow_kind).to.be.a('string');
-              expect(data.meta_info.workflow_kind).to.be("");
-            expect(data.readme).to.be.a('string');
-            expect(data.readme).to.be("");
-            expect(data.bookmarked).to.be.a('boolean');
-            expect(data.bookmarked).to.be(false);
-            {
-              let dataCtr = data.inputs;
-              expect(dataCtr).to.be.an(Object);
-              expect(dataCtr).to.not.be.empty();
-              for (let p in dataCtr) {
-                let data = dataCtr[p];
-                expect(data).to.be.a('string');
-                expect(data).to.be("");
-              }
-            }
-            {
-              let dataCtr = data.outputs;
-              expect(dataCtr).to.be.an(Object);
-              expect(dataCtr).to.not.be.empty();
-              for (let p in dataCtr) {
-                let data = dataCtr[p];
-                expect(data).to.be.a('string');
-                expect(data).to.be("");
-              }
-            }
-            {
-              let dataCtr = data.run_env;
-              expect(dataCtr).to.be.an(Object);
-              expect(dataCtr).to.not.be.empty();
-              for (let p in dataCtr) {
-                let data = dataCtr[p];
-                expect(data).to.be.a('string');
-                expect(data).to.be("");
-              }
-            }
+              expect(data.meta_info.parallel_kind).to.be.a('string');
+              expect(data.meta_info.parallel_kind).to.be("");
+              expect(data.meta_info.run_kind).to.be.a('string');
+              expect(data.meta_info.run_kind).to.be("");
+            expect(data.kind).to.be.a('string');
+            expect(data.kind).to.be("");
+            expect(data.hub).to.be.a('string');
+            expect(data.hub).to.be("");
+            expect(data.inputs).to.be.a(Object);
+            expect(data.inputs).to.be();
+            expect(data.outputs).to.be.a(Object);
+            expect(data.outputs).to.be();
+            expect(data.run_env).to.be.a(Object);
+            expect(data.run_env).to.be();
             expect(data.is_resume).to.be.a('boolean');
             expect(data.is_resume).to.be(false);
             expect(data.is_clone).to.be.a('boolean');

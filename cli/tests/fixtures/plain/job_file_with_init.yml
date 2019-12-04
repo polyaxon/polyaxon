@@ -43,7 +43,8 @@ mounts:
     paths: ['path1', 'path2']
   - name: data2
 
-container:
+run:
+  kind: container
   image: my_image
   command: video_prediction_train
   args: [--model=DNA, --num_masks=1]

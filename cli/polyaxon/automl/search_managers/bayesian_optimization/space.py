@@ -2,7 +2,7 @@ import logging
 import numpy as np
 
 from polyaxon.automl.matrix.utils import get_max, get_min, to_numpy
-from polyaxon.schemas.polyflow.workflows.metrics import Optimization
+from polyaxon.schemas.polyflow.optimization import Optimization
 
 _logger = logging.getLogger("polyaxon.hpsearch.search_managers")
 

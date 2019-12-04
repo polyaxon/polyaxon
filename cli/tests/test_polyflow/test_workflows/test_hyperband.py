@@ -24,8 +24,11 @@ import pytest
 from marshmallow.exceptions import ValidationError
 from tests.utils import assert_equal_dict
 
-from polyaxon.schemas.polyflow.workflows.automl.hyperband import HyperbandConfig
-from polyaxon.schemas.polyflow.workflows.metrics import Optimization, SearchMetricConfig
+from polyaxon.schemas.polyflow.optimization import (
+    Optimization,
+    OptimizationMetricConfig,
+)
+from polyaxon.schemas.polyflow.parallel import HyperbandConfig
 
 
 @pytest.mark.workflow_mark
@@ -37,7 +40,7 @@ class TestWorkflowHyperbandConfigs(TestCase):
             "eta": 3,
             "resource": {"name": "steps", "type": "int"},
             "resume": False,
-            "metric": SearchMetricConfig(
+            "metric": OptimizationMetricConfig(
                 name="loss", optimization=Optimization.MINIMIZE
             ).to_dict(),
             "matrix": {"lr": {"kind": "choice", "value": [[0.1], [0.9]]}},

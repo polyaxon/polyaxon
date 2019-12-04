@@ -16,6 +16,7 @@ mounts:
     - name: my_s3_connnexion_secret
       mount_path: ~/.aws/credentials
 
-container:
+run:
+  kind: container
   image: python-with-boto3
   command: python download-s3-bucket

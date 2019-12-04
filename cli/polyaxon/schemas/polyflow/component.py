@@ -17,42 +17,31 @@
 # coding: utf-8
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import ValidationError, fields, validate, validates_schema
+from marshmallow import fields, validate
 
 from polyaxon.schemas.polyflow.base import BaseComponentConfig, BaseComponentSchema
-from polyaxon.schemas.polyflow.container import ContainerSchema
 from polyaxon.schemas.polyflow.io import IOSchema
-
-
-def validate_component(data):
-    if not data.get("container") and not data.get("workflow"):
-        raise ValidationError(
-            "An component requires a container or a workflow section."
-        )
+from polyaxon.schemas.polyflow.run import RunMixin, RunSchema
 
 
 class ComponentSchema(BaseComponentSchema):
     kind = fields.Str(allow_none=True, validate=validate.Equal("component"))
     inputs = fields.Nested(IOSchema, allow_none=True, many=True)
     outputs = fields.Nested(IOSchema, allow_none=True, many=True)
-    container = fields.Nested(ContainerSchema)
+    run = fields.Nested(RunSchema, required=True)
 
     @staticmethod
     def schema_config():
         return ComponentConfig
 
-    @validates_schema
-    def validate_component(self, data):
-        validate_component(data)
 
-
-class ComponentConfig(BaseComponentConfig):
+class ComponentConfig(BaseComponentConfig, RunMixin):
     SCHEMA = ComponentSchema
     IDENTIFIER = "component"
     REDUCED_ATTRIBUTES = BaseComponentConfig.REDUCED_ATTRIBUTES + [
         "inputs",
         "outputs",
-        "container",
+        "run",
     ]
 
     def __init__(
@@ -63,15 +52,16 @@ class ComponentConfig(BaseComponentConfig):
         description=None,
         tags=None,
         profile=None,
+        queue=None,
         nocache=None,
         environment=None,
         termination=None,
         init=None,
         mounts=None,
         schedule=None,
-        workflow=None,
+        parallel=None,
         service=None,
-        container=None,
+        run=None,
         inputs=None,
         outputs=None,
     ):
@@ -82,16 +72,19 @@ class ComponentConfig(BaseComponentConfig):
             description=description,
             tags=tags,
             profile=profile,
+            queue=queue,
             nocache=nocache,
             environment=environment,
             termination=termination,
             init=init,
             mounts=mounts,
             schedule=schedule,
-            workflow=workflow,
+            parallel=parallel,
             service=service,
         )
-        validate_component({"container": container, "workflow": workflow})
-        self.container = container
+        self.run = run
         self.inputs = inputs
         self.outputs = outputs
+
+    def get_run_kind(self):
+        return self.run.kind if self.run else None

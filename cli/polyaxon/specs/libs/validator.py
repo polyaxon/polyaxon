@@ -20,7 +20,6 @@ from __future__ import absolute_import, division, print_function
 import copy
 
 from polyaxon.exceptions import PolyaxonfileError
-from polyaxon.schemas.polyflow.container import ContainerConfig
 from polyaxon.schemas.polyflow.environments import EnvironmentConfig
 
 
@@ -45,6 +44,5 @@ def validate(spec, data):
             validated_data[section] = config.from_dict(section_data)
 
     add_validated_section(spec.ENVIRONMENT, EnvironmentConfig)
-    add_validated_section(spec.CONTAINER, ContainerConfig)
 
     return validated_data

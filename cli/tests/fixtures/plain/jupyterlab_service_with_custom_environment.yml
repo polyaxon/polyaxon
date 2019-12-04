@@ -46,7 +46,8 @@ mounts:
     - name: config_map2
       items: ['item1', 'item2']
 
-container:
+run:
+  kind: container
   image: jupyterlab
   command: ["/bin/sh", "-c"]
   args: [

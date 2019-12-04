@@ -78,7 +78,7 @@ for the create search operation typically these are written to a http.Request
 type CreateSearchParams struct {
 
 	/*Body
-	  Artifact store body
+	  Search body
 
 	*/
 	Body *service_model.V1Search

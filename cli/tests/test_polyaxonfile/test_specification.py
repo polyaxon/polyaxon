@@ -61,7 +61,11 @@ class TestSpecifications(TestCase):
         content = {
             "version": 1.0,
             "kind": "component",
-            "container": {"image": "test/test:latest", "command": "train"},
+            "run": {
+                "kind": "container",
+                "image": "test/test:latest",
+                "command": "train",
+            },
         }
         spec = ComponentSpecification.read(content)
         spec = spec.apply_context()
@@ -82,7 +86,11 @@ class TestSpecifications(TestCase):
                 {"name": "lr", "type": IOTypes.FLOAT},
                 {"name": "num_steps", "type": IOTypes.INT},
             ],
-            "container": {"image": "test/test:latest", "command": "train"},
+            "run": {
+                "kind": "container",
+                "image": "test/test:latest",
+                "command": "train",
+            },
         }
         spec = ComponentSpecification.read(content)
 
@@ -107,7 +115,11 @@ class TestSpecifications(TestCase):
                 {"name": "lr", "type": IOTypes.FLOAT},
                 {"name": "num_steps", "type": IOTypes.INT},
             ],
-            "container": {"image": "test/test:latest", "command": "train"},
+            "run": {
+                "kind": "container",
+                "image": "test/test:latest",
+                "command": "train",
+            },
         }
         spec = ComponentSpecification.read(content)
         # no params
@@ -142,7 +154,11 @@ class TestSpecifications(TestCase):
                     "value": 100,
                 },
             ],
-            "container": {"image": "test/test:latest", "command": "train"},
+            "run": {
+                "kind": "container",
+                "image": "test/test:latest",
+                "command": "train",
+            },
         }
         assert new_spec.data == updated_content
 
@@ -175,7 +191,11 @@ class TestSpecifications(TestCase):
                     "is_optional": True,
                 },
             ],
-            "container": {"image": "test/test:latest", "command": "train"},
+            "run": {
+                "kind": "container",
+                "image": "test/test:latest",
+                "command": "train",
+            },
         }
         spec = ComponentSpecification.read(content)
         assert spec.config.inputs[0].value == 0.6
@@ -241,7 +261,7 @@ class TestSpecifications(TestCase):
                 "name": "build-template",
                 "tags": ["kaniko"],
                 "init": {"repos": [{"name": "foo", "branch": "dev"}]},
-                "container": {"image": "test"},
+                "run": {"kind": "container", "image": "test"},
             },
         }
         spec = OpSpecification.read(values=config_dict)
@@ -285,7 +305,7 @@ class TestSpecifications(TestCase):
                 "name": "build-template",
                 "tags": ["kaniko"],
                 "init": {"repos": [{"name": "foo", "branch": "dev"}]},
-                "container": {"image": "test"},
+                "run": {"kind": "container", "image": "test"},
             },
         }
         spec = OpSpecification.read(values=config_dict)
@@ -327,7 +347,7 @@ class TestSpecifications(TestCase):
                 "name": "build-template",
                 "tags": ["kaniko"],
                 "init": {"repos": [{"name": "foo", "branch": "dev"}]},
-                "container": {"image": "test"},
+                "run": {"kind": "container", "image": "test"},
             },
         }
         spec = OpSpecification.read(values=config_dict)

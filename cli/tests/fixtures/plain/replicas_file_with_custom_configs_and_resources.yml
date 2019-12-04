@@ -17,8 +17,8 @@ environment:
     limits: {cpu: 2}
 
 
-workflow:
-  kind: replication
+run:
+  kind: tfjob
   workers:
     replicas: 5
     environment:
@@ -32,6 +32,11 @@ workflow:
         - key: "key"
           operator: "Exists"
           effect: "NoSchedule"
+
+    container:
+      image: my_image
+      command: video_prediction_train
+      args: [--model=DNA, --num_masks=1]
 
   ps:
     replicas: 10
@@ -63,9 +68,8 @@ workflow:
                 operator: In
                 values:
                 - another-node-label-value
-
-container:
-  image: my_image
-  command: video_prediction_train
-  args: [--model=DNA, --num_masks=1]
+    container:
+      image: my_image
+      command: video_prediction_train
+      args: [--model=DNA, --num_masks=1]
 ...

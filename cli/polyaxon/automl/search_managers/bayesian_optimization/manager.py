@@ -1,8 +1,7 @@
 from polyaxon.automl.search_managers.base import BaseManager
 from polyaxon.automl.search_managers.bayesian_optimization.optimizer import BOOptimizer
 from polyaxon.automl.search_managers.random_search.manager import RandomSearchManager
-from polyaxon.schemas.polyflow.workflows import RandomSearchConfig
-from polyaxon.schemas.polyflow.workflows.automl.bo import BOConfig
+from polyaxon.schemas.polyflow.parallel import BOConfig, RandomSearchConfig
 
 
 class BOSearchManager(BaseManager):

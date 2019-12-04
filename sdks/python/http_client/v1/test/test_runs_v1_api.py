@@ -129,6 +129,13 @@ class TestRunsV1Api(unittest.TestCase):
         """
         pass
 
+    def test_get_run_settings(self):
+        """Test case for get_run_settings
+
+        Get Run settings  # noqa: E501
+        """
+        pass
+
     def test_get_run_statuses(self):
         """Test case for get_run_statuses
 

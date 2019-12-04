@@ -29,7 +29,7 @@ from polyaxon.schemas.polyflow import params as ops_params
 from polyaxon.schemas.polyflow.component_ref import ComponentRefConfig
 from polyaxon.schemas.polyflow.io import IOConfig, IOTypes
 from polyaxon.schemas.polyflow.op import OpConfig
-from polyaxon.schemas.polyflow.workflows.dag import DagConfig
+from polyaxon.schemas.polyflow.run import DagConfig
 
 
 @pytest.mark.workflow_mark
@@ -158,7 +158,7 @@ class TestWorkflowDagConfigs(TestCase):
                         "image_pull_secrets": ["secret1", "secret2"],
                     },
                     "termination": {"max_retries": 2, "restart_policy": "never"},
-                    "container": {"image": "test"},
+                    "run": {"kind": "container", "image": "test"},
                 }
             ],
         }
@@ -210,7 +210,7 @@ class TestWorkflowDagConfigs(TestCase):
                             "image_pull_secrets": ["secret1", "secret2"],
                         },
                         "termination": {"max_retries": 2, "restart_policy": "never"},
-                        "container": {"image": "test"},
+                        "run": {"kind": "container", "image": "test"},
                     },
                 }
             ],
@@ -1099,12 +1099,12 @@ class TestWorkflowDagConfigs(TestCase):
                     "name": "build-template",
                     "description": "description build",
                     "tags": ["tag11", "tag12"],
-                    "container": {"image": "test"},
+                    "run": {"kind": "container", "image": "test"},
                 },
                 {
                     "name": "job-template",
                     "description": "description build",
-                    "container": {"image": "test"},
+                    "run": {"kind": "container", "image": "test"},
                 },
             ],
         }
@@ -1129,7 +1129,7 @@ class TestWorkflowDagConfigs(TestCase):
                     "tags": ["kaniko"],
                     "environment": {"registry": "A"},
                     "mounts": {"artifacts": [{"name": "data2"}]},
-                    "container": {"image": "test"},
+                    "run": {"kind": "container", "image": "test"},
                 }
             ],
         }
@@ -1151,12 +1151,12 @@ class TestWorkflowDagConfigs(TestCase):
                 },
             ],
             "components": [
-                {"name": "job-template", "container": {"image": "test"}},
+                {"name": "job-template", "run": {"kind": "container", "image": "test"}},
                 {
                     "name": "build-template",
                     "tags": ["kaniko"],
                     "init": {"repos": [{"name": "foo", "branch": "dev"}]},
-                    "container": {"image": "test"},
+                    "run": {"kind": "container", "image": "test"},
                 },
             ],
         }
@@ -1196,7 +1196,7 @@ class TestWorkflowDagConfigs(TestCase):
                         "kind": "component",
                         "name": "build-template",
                         "tags": ["kaniko"],
-                        "container": {"image": "test"},
+                        "run": {"kind": "container", "image": "test"},
                     },
                 },
                 {
@@ -1210,7 +1210,7 @@ class TestWorkflowDagConfigs(TestCase):
                     "component": {
                         "kind": "component",
                         "name": "job-template",
-                        "container": {"image": "test"},
+                        "run": {"kind": "container", "image": "test"},
                     },
                 },
             ],
@@ -1239,11 +1239,11 @@ class TestWorkflowDagConfigs(TestCase):
                 },
             ],
             "components": [
-                {"name": "job-template", "container": {"image": "test"}},
+                {"name": "job-template", "run": {"kind": "container", "image": "test"}},
                 {
                     "name": "build-template",
                     "tags": ["kaniko"],
-                    "container": {"image": "test"},
+                    "run": {"kind": "container", "image": "test"},
                 },
             ],
         }
@@ -1268,7 +1268,7 @@ class TestWorkflowDagConfigs(TestCase):
                                 "type": IOTypes.FLOAT,
                             }
                         ],
-                        "container": {"image": "test"},
+                        "run": {"kind": "container", "image": "test"},
                     },
                 }
             ],
@@ -1293,7 +1293,7 @@ class TestWorkflowDagConfigs(TestCase):
                             "type": IOTypes.FLOAT,
                         }
                     ],
-                    "container": {"image": "test"},
+                    "run": {"kind": "container", "image": "test"},
                 }
             ],
         }
@@ -1321,7 +1321,7 @@ class TestWorkflowDagConfigs(TestCase):
                                 "value": 12.2,
                             }
                         ],
-                        "container": {"image": "test"},
+                        "run": {"kind": "container", "image": "test"},
                     },
                 }
             ],
@@ -1347,7 +1347,7 @@ class TestWorkflowDagConfigs(TestCase):
                             "value": 12.2,
                         }
                     ],
-                    "container": {"image": "test"},
+                    "run": {"kind": "container", "image": "test"},
                 }
             ],
         }
@@ -1375,7 +1375,7 @@ class TestWorkflowDagConfigs(TestCase):
                                 "value": 12.2,
                             }
                         ],
-                        "container": {"image": "test"},
+                        "run": {"kind": "container", "image": "test"},
                     },
                 }
             ],
@@ -1410,7 +1410,7 @@ class TestWorkflowDagConfigs(TestCase):
                             "value": 12.2,
                         }
                     ],
-                    "container": {"image": "test"},
+                    "run": {"kind": "container", "image": "test"},
                 }
             ],
         }
@@ -1459,7 +1459,7 @@ class TestWorkflowDagConfigs(TestCase):
                             "value": True,
                         },
                     ],
-                    "container": {"image": "test"},
+                    "run": {"kind": "container", "image": "test"},
                 }
             ],
         }
@@ -1529,7 +1529,7 @@ class TestWorkflowDagConfigs(TestCase):
                             "value": True,
                         },
                     ],
-                    "container": {"image": "test"},
+                    "run": {"kind": "container", "image": "test"},
                 }
             ],
         }
@@ -1588,7 +1588,7 @@ class TestWorkflowDagConfigs(TestCase):
                             "value": 123,
                         }
                     ],
-                    "container": {"image": "test"},
+                    "run": {"kind": "container", "image": "test"},
                 }
             ],
         }
@@ -1649,7 +1649,7 @@ class TestWorkflowDagConfigs(TestCase):
                             "type": IOTypes.INT,
                         }
                     ],
-                    "container": {"image": "test"},
+                    "run": {"kind": "container", "image": "test"},
                 }
             ],
         }
@@ -1671,11 +1671,11 @@ class TestWorkflowDagConfigs(TestCase):
                 },
             ],
             "components": [
-                {"name": "job-template", "container": {"image": "test"}},
+                {"name": "job-template", "run": {"kind": "container", "image": "test"}},
                 {
                     "name": "build-template",
                     "tags": ["kaniko"],
-                    "container": {"image": "test"},
+                    "run": {"kind": "container", "image": "test"},
                 },
             ],
         }
@@ -1787,7 +1787,7 @@ class TestWorkflowDagConfigs(TestCase):
                         "image_pull_secrets": ["secret1", "secret2"],
                     },
                     "termination": {"max_retries": 2},
-                    "container": {"image": "test"},
+                    "run": {"kind": "container", "image": "test"},
                 },
                 {
                     "name": "group-template",
@@ -1821,13 +1821,13 @@ class TestWorkflowDagConfigs(TestCase):
                         "image_pull_secrets": ["secret1", "secret2"],
                     },
                     "termination": {"max_retries": 2},
-                    "container": {"image": "test"},
+                    "run": {"kind": "container", "image": "test"},
                 },
                 {
                     "name": "build-template",
                     "description": "description build",
                     "tags": ["tag11", "tag12"],
-                    "container": {"image": "test"},
+                    "run": {"kind": "container", "image": "test"},
                 },
                 {
                     "name": "build-template2",
@@ -1840,7 +1840,7 @@ class TestWorkflowDagConfigs(TestCase):
                         "image_pull_secrets": ["secret1", "secret2"],
                     },
                     "termination": {"max_retries": 2},
-                    "container": {"image": "test"},
+                    "run": {"kind": "container", "image": "test"},
                 },
                 {
                     "name": "job-template",
@@ -1869,7 +1869,7 @@ class TestWorkflowDagConfigs(TestCase):
                         "image_pull_secrets": ["secret1", "secret2"],
                     },
                     "termination": {"max_retries": 2},
-                    "container": {"image": "test"},
+                    "run": {"kind": "container", "image": "test"},
                 },
             ],
         }
@@ -2042,7 +2042,7 @@ class TestWorkflowDagConfigs(TestCase):
                             "value": True,
                         },
                     ],
-                    "container": {"image": "test"},
+                    "run": {"kind": "container", "image": "test"},
                 },
                 {
                     "name": "B",
@@ -2051,7 +2051,7 @@ class TestWorkflowDagConfigs(TestCase):
                         {"name": "input2", "type": IOTypes.S3_PATH},
                     ],
                     "outputs": [{"name": "output1", "type": IOTypes.S3_PATH}],
-                    "container": {"image": "test"},
+                    "run": {"kind": "container", "image": "test"},
                 },
             ],
         }

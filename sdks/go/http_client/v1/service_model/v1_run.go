@@ -34,7 +34,7 @@ type V1Run struct {
 	// Optional if this entity was bookmarked
 	Bookmarked bool `json:"bookmarked,omitempty"`
 
-	// Optional if this run was restarted/copied/resumed
+	// Optional if this run was restarted/copied/resumed/cached
 	CloningStrategy string `json:"cloning_strategy,omitempty"`
 
 	// Optional content of the entity's spec
@@ -54,8 +54,11 @@ type V1Run struct {
 	// Format: date-time
 	FinishedAt strfmt.DateTime `json:"finished_at,omitempty"`
 
+	// Optional hub reference versioned component
+	Hub string `json:"hub,omitempty"`
+
 	// Optional inputs of this entity
-	Inputs map[string]string `json:"inputs,omitempty"`
+	Inputs interface{} `json:"inputs,omitempty"`
 
 	// Is clone
 	IsClone bool `json:"is_clone,omitempty"`
@@ -65,6 +68,9 @@ type V1Run struct {
 
 	// Is resume
 	IsResume bool `json:"is_resume,omitempty"`
+
+	// Optional kind to tell the nature of this run
+	Kind string `json:"kind,omitempty"`
 
 	// Optional run meta info
 	MetaInfo *V1RunMetaInfo `json:"meta_info,omitempty"`
@@ -79,7 +85,7 @@ type V1Run struct {
 	OriginalName string `json:"original_name,omitempty"`
 
 	// Optional outputs of this entity
-	Outputs map[string]string `json:"outputs,omitempty"`
+	Outputs interface{} `json:"outputs,omitempty"`
 
 	// Required name of owner of this entity
 	Owner string `json:"owner,omitempty"`
@@ -97,7 +103,7 @@ type V1Run struct {
 	Readme string `json:"readme,omitempty"`
 
 	// Optional run environment tracked
-	RunEnv map[string]string `json:"run_env,omitempty"`
+	RunEnv interface{} `json:"run_env,omitempty"`
 
 	// Optional last time the entity was started
 	// Format: date-time

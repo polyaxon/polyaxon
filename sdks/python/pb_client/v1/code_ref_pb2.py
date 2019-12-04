@@ -29,7 +29,6 @@ from google.protobuf import symbol_database as _symbol_database
 _sym_db = _symbol_database.Default()
 
 
-from google.protobuf import timestamp_pb2 as google_dot_protobuf_dot_timestamp__pb2
 from v1 import base_pb2 as v1_dot_base__pb2
 
 
@@ -38,9 +37,9 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='v1',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\x11v1/code_ref.proto\x12\x02v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\rv1/base.proto\"&\n\x07\x43odeRef\x12\x0e\n\x06\x63ommit\x18\x01 \x01(\t\x12\x0b\n\x03url\x18\x02 \x01(\t\"d\n\x12\x43odeRefBodyRequest\x12\x30\n\x06\x65ntity\x18\x01 \x01(\x0b\x32 .v1.ProjectEntityResourceRequest\x12\x1c\n\x07\x63oderef\x18\x02 \x01(\x0b\x32\x0b.v1.CodeRefb\x06proto3')
+  serialized_pb=_b('\n\x11v1/code_ref.proto\x12\x02v1\x1a\rv1/base.proto\"&\n\x07\x43odeRef\x12\x0e\n\x06\x63ommit\x18\x01 \x01(\t\x12\x0b\n\x03url\x18\x02 \x01(\t\"d\n\x12\x43odeRefBodyRequest\x12\x30\n\x06\x65ntity\x18\x01 \x01(\x0b\x32 .v1.ProjectEntityResourceRequest\x12\x1c\n\x07\x63oderef\x18\x02 \x01(\x0b\x32\x0b.v1.CodeRefb\x06proto3')
   ,
-  dependencies=[google_dot_protobuf_dot_timestamp__pb2.DESCRIPTOR,v1_dot_base__pb2.DESCRIPTOR,])
+  dependencies=[v1_dot_base__pb2.DESCRIPTOR,])
 
 
 
@@ -78,8 +77,8 @@ _CODEREF = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=73,
-  serialized_end=111,
+  serialized_start=40,
+  serialized_end=78,
 )
 
 
@@ -116,8 +115,8 @@ _CODEREFBODYREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=113,
-  serialized_end=213,
+  serialized_start=80,
+  serialized_end=180,
 )
 
 _CODEREFBODYREQUEST.fields_by_name['entity'].message_type = v1_dot_base__pb2._PROJECTENTITYRESOURCEREQUEST

@@ -12,7 +12,8 @@ inputs:
     type: bool
     is_flag: true
 
-container:
+run:
+  kind: container
   image: my_image
   command: ["/bin/sh", "-c"]
   args: video_prediction_train --loss={{loss}} {{ flag }}

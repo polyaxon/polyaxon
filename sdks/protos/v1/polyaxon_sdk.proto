@@ -8,17 +8,21 @@ import "protoc-gen-swagger/options/annotations.proto";
 
 import "v1/agent.proto";
 import "v1/artifacts_store.proto";
+import "v1/dashboard.proto";
 import "v1/host_access.proto";
 import "v1/k8s_resource.proto";
 import "v1/base.proto";
 import "v1/code_ref.proto";
 import "v1/run.proto";
+import "v1/organization.proto";
 import "v1/project.proto";
 import "v1/version.proto";
 import "v1/auth.proto";
 import "v1/user.proto";
 import "v1/search.proto";
 import "v1/status.proto";
+import "v1/team.proto";
+import "v1/schemas/all.proto";
 
 option (grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger) = {
 	info: {
@@ -280,6 +284,13 @@ service RunsV1 {
             get: "/api/v1/{owner}/{project}/runs/{uuid}/artifacts/tree"
         };
     }
+
+    // Get Run settings
+    rpc GetRunSettings(ProjectEntityResourceRequest) returns (RunSettings) {
+        option (google.api.http) = {
+            get: "/api/v1/{owner}/{project}/runs/{uuid}/settings"
+        };
+    }
 }
 
 // Service to manage project
@@ -391,6 +402,52 @@ service ProjectsV1 {
             delete: "/api/v1/{owner}/{project}/ci"
         };
     }
+
+    // Get Project settings
+    rpc GetProjectSettings(ProjectResourceRequest) returns (ProjectSettings) {
+        option (google.api.http) = {
+            get: "/api/v1/{owner}/{project}/settings"
+        };
+    }
+
+    // Update project settings
+    rpc UpdateProjectSettings(ProjectSettingsBodyRequest) returns (ProjectSettings) {
+        option (google.api.http) = {
+            put: "/api/v1/{owner}/{project}/settings"
+            body: "settings"
+        };
+    }
+
+    // Patch project settings
+    rpc PatchProjectSettings(ProjectSettingsBodyRequest) returns (ProjectSettings) {
+        option (google.api.http) = {
+            patch: "/api/v1/{owner}/{project}/settings"
+            body: "settings"
+        };
+    }
+
+    // Get project teams
+    rpc GetProjectTeams(ProjectResourceRequest) returns (ProjectTeams) {
+        option (google.api.http) = {
+            get: "/api/v1/{owner}/{project}/teams"
+        };
+    }
+
+    // Update project teams
+    rpc UpdateProjectTeams(ProjectTeamsBodyRequest) returns (ProjectTeams) {
+        option (google.api.http) = {
+            put: "/api/v1/{owner}/{project}/teams"
+            body: "teams"
+        };
+    }
+
+    // Patch project teams
+    rpc PatchProjectTeams(ProjectTeamsBodyRequest) returns (ProjectTeams) {
+        option (google.api.http) = {
+            patch: "/api/v1/{owner}/{project}/teams"
+            body: "teams"
+        };
+    }
 }
 
 // Service to manage artifacts
@@ -436,7 +493,7 @@ service ArtifactsStoresV1 {
     // Patch artifact store
     rpc PatchArtifactsStore(ArtifactsStoreBodyRequest) returns (ArtifactsStore) {
         option (google.api.http) = {
-            patch:  "/api/v1/{owner}/artifacts_stores/{artifact_store.uuid}"
+            patch: "/api/v1/{owner}/artifacts_stores/{artifact_store.uuid}"
             body: "artifact_store"
         };
     }
@@ -492,7 +549,7 @@ service K8sConfigMapsV1 {
     // Patch k8s config map
     rpc PatchK8sConfigMap(K8sResourceBodyRequest) returns (K8sResource) {
         option (google.api.http) = {
-            patch:  "/api/v1/{owner}/k8s_config_maps/{k8s_resource.uuid}"
+            patch: "/api/v1/{owner}/k8s_config_maps/{k8s_resource.uuid}"
             body: "k8s_resource"
         };
     }
@@ -548,7 +605,7 @@ service K8sSecretsV1 {
     // Patch k8s secret
     rpc PatchK8sSecret(K8sResourceBodyRequest) returns (K8sResource) {
         option (google.api.http) = {
-            patch:  "/api/v1/{owner}/k8s_secrets/{k8s_resource.uuid}"
+            patch: "/api/v1/{owner}/k8s_secrets/{k8s_resource.uuid}"
             body: "k8s_resource"
         };
     }
@@ -605,7 +662,7 @@ service RegistryAccessesV1 {
     // Patch registry access
     rpc PatchRegistryAccess(HostAccessBodyRequest) returns (HostAccess) {
         option (google.api.http) = {
-            patch:  "/api/v1/{owner}/registry_accesses/{host_access.uuid}"
+            patch: "/api/v1/{owner}/registry_accesses/{host_access.uuid}"
             body: "host_access"
         };
     }
@@ -661,7 +718,7 @@ service GitAccessesV1 {
     // Patch git access
     rpc PatchGitAccess(HostAccessBodyRequest) returns (HostAccess) {
         option (google.api.http) = {
-            patch:  "/api/v1/{owner}/git_accesses/{host_access.uuid}"
+            patch: "/api/v1/{owner}/git_accesses/{host_access.uuid}"
             body: "host_access"
         };
     }
@@ -710,7 +767,7 @@ service SearchV1 {
     // Patch search
     rpc PatchSearch(SearchBodyRequest) returns (Search) {
         option (google.api.http) = {
-            patch:  "/api/v1/{owner}/{project}/searches/{search.uuid}"
+            patch: "/api/v1/{owner}/{project}/searches/{search.uuid}"
             body: "search"
         };
     }
@@ -719,6 +776,55 @@ service SearchV1 {
     rpc DeleteSearch(ProjectEntityResourceRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             delete: "/api/v1/{owner}/{project}/searches/{uuid}"
+        };
+    }
+}
+
+// Service to manage dashboards
+service DashboardV1 {
+
+    // List dashboards
+    rpc ListDashboard(ProjectResourceListRequest) returns (ListDashboardsResponse) {
+        option (google.api.http) = {
+            get: "/api/v1/{owner}/{project}/dashboards"
+        };
+    }
+
+    // Create dashboard
+    rpc CreateDashboard(DashboardBodyRequest) returns (Dashboard) {
+        option (google.api.http) = {
+            post: "/api/v1/{owner}/{project}/dashboards"
+            body: "dashboard"
+        };
+    }
+
+    // Get dashboard
+    rpc GetDashboard(ProjectEntityResourceRequest) returns (Dashboard) {
+        option (google.api.http) = {
+            get: "/api/v1/{owner}/{project}/dashboards/{uuid}"
+        };
+    }
+
+    // Update dashboard
+    rpc UpdateDashboard(DashboardBodyRequest) returns (Dashboard) {
+        option (google.api.http) = {
+            put: "/api/v1/{owner}/{project}/dashboards/{dashboard.uuid}"
+            body: "dashboard"
+        };
+    }
+
+    // Patch dashboard
+    rpc PatchDashboard(DashboardBodyRequest) returns (Dashboard) {
+        option (google.api.http) = {
+            patch: "/api/v1/{owner}/{project}/dashboards/{dashboard.uuid}"
+            body: "dashboard"
+        };
+    }
+
+    // Delete dashboard
+    rpc DeleteDashboard(ProjectEntityResourceRequest) returns (google.protobuf.Empty) {
+        option (google.api.http) = {
+            delete: "/api/v1/{owner}/{project}/dashboards/{uuid}"
         };
     }
 }
@@ -766,7 +872,7 @@ service AgentsV1 {
     // Patch agent
     rpc PatchAgent(AgentBodyRequest) returns (Agent) {
         option (google.api.http) = {
-            patch:  "/api/v1/{owner}/agents/{agent.uuid}"
+            patch: "/api/v1/{owner}/agents/{agent.uuid}"
             body: "agent"
         };
     }
@@ -872,6 +978,219 @@ service VersionsV1 {
     rpc GetLogHandler(google.protobuf.Empty) returns (LogHandler) {
         option (google.api.http) = {
             get: "/api/v1/log_handler"
+        };
+    }
+}
+
+// Service to manage organizations
+service OrganizationsV1 {
+
+    // List organizations names
+    rpc ListOrganizationNames(google.protobuf.Empty) returns (ListOrganizationsResponse) {
+        option (google.api.http) = {
+            get: "/api/v1/organizations/names"
+        };
+    }
+
+    // List organizations
+    rpc ListOrganizations(google.protobuf.Empty) returns (ListOrganizationsResponse) {
+        option (google.api.http) = {
+            get: "/api/v1/organizations/list"
+        };
+    }
+
+    // Create organization
+    rpc CreateOrganization(Organization) returns (Organization) {
+        option (google.api.http) = {
+            post: "/api/v1/organizations/create"
+            body: "*"
+        };
+    }
+
+    // Get organization
+    rpc GetOrganization(OwnerResourceRequest) returns (Organization) {
+        option (google.api.http) = {
+            get: "/api/v1/organizations/{owner}"
+        };
+    }
+
+    // Update organization
+    rpc UpdateOrganization(OrganizationBodyRequest) returns (Organization) {
+        option (google.api.http) = {
+            put: "/api/v1/organizations/{owner}"
+            body: "organization"
+        };
+    }
+
+    // Patch organization
+    rpc PatchOrganization(OrganizationBodyRequest) returns (Organization) {
+        option (google.api.http) = {
+            patch: "/api/v1/organizations/{owner}"
+            body: "organization"
+        };
+    }
+
+    // Delete organization
+    rpc DeleteOrganization(OwnerResourceRequest) returns (google.protobuf.Empty) {
+        option (google.api.http) = {
+            delete: "/api/v1/organizations/{owner}"
+        };
+    }
+
+    // Get organization members
+    rpc ListOrganizationMembers(OwnerResourceRequest) returns (ListOrganizationMembersResponse) {
+        option (google.api.http) = {
+            get: "/api/v1/organizations/{owner}/members"
+        };
+    }
+
+    // Create organization member
+    rpc CreateOrganizationMember(OrganizationMemberBodyRequest) returns (OrganizationMember) {
+        option (google.api.http) = {
+            post: "/api/v1/organizations/{owner}/members"
+            body: "member"
+        };
+    }
+
+    // Get organization member details
+    rpc GetOrganizationMember(OrganizationMemberBodyRequest) returns (OrganizationMember) {
+        option (google.api.http) = {
+            get: "/api/v1/organizations/{owner}/members/{member.user}"
+        };
+    }
+
+    // Update organization member
+    rpc UpdateOrganizationMember(OrganizationMemberBodyRequest) returns (OrganizationMember) {
+        option (google.api.http) = {
+            put: "/api/v1/organizations/{owner}/members/{member.user}"
+            body: "member"
+        };
+    }
+
+    // Patch organization member
+    rpc PatchOrganizationMember(OrganizationMemberBodyRequest) returns (OrganizationMember) {
+        option (google.api.http) = {
+            patch: "/api/v1/organizations/{owner}/members/{member.user}"
+            body: "member"
+        };
+    }
+
+    // Delete organization member details
+    rpc DeleteOrganizationMember(OrganizationMemberBodyRequest) returns (google.protobuf.Empty) {
+        option (google.api.http) = {
+            delete: "/api/v1/organizations/{owner}/members/{member.user}"
+        };
+    }
+}
+
+
+// Service to manage teams
+service TeamsV1 {
+
+    // List teams names
+    rpc ListTeamNames(OwnerResouceListRequest) returns (ListTeamsResponse) {
+        option (google.api.http) = {
+            get: "/api/v1/{owner}/teams/names"
+        };
+    }
+
+    // List teams
+    rpc ListTeams(OwnerResouceListRequest) returns (ListTeamsResponse) {
+        option (google.api.http) = {
+            get: "/api/v1/{owner}/teams"
+        };
+    }
+
+    // Create team
+    rpc CreateTeam(TeamBodyRequest) returns (Team) {
+        option (google.api.http) = {
+            post: "/api/v1/{owner}/teams"
+            body: "team"
+        };
+    }
+
+    // Get team
+    rpc GetTeam(TeamResourceRequest) returns (Team) {
+        option (google.api.http) = {
+            get: "/api/v1/{owner}/teams/{team}"
+        };
+    }
+
+    // Update team
+    rpc UpdateTeam(TeamBodyRequest) returns (Team) {
+        option (google.api.http) = {
+            put: "/api/v1/{owner}/teams/{team.name}"
+            body: "team"
+        };
+    }
+
+    // Patch team
+    rpc PatchTeam(TeamBodyRequest) returns (Team) {
+        option (google.api.http) = {
+            patch: "/api/v1/{owner}/teams/{team.name}"
+            body: "team"
+        };
+    }
+
+    // Delete team
+    rpc DeleteTeam(TeamResourceRequest) returns (google.protobuf.Empty) {
+        option (google.api.http) = {
+            delete: "/api/v1/{owner}/teams/{team}"
+        };
+    }
+
+    // Get team members
+    rpc ListTeamMembers(TeamResourceRequest) returns (ListTeamMembersResponse) {
+        option (google.api.http) = {
+            get: "/api/v1/{owner}/teams/{team}/members"
+        };
+    }
+
+    // Create team member
+    rpc CreateTeamMember(TeamMemberBodyRequest) returns (TeamMember) {
+        option (google.api.http) = {
+            post: "/api/v1/{owner}/teams/{team}/members"
+            body: "member"
+        };
+    }
+
+    // Get team member details
+    rpc GetTeamMember(TeamMemberBodyRequest) returns (TeamMember) {
+        option (google.api.http) = {
+            get: "/api/v1/{owner}/teams/{team}/members/{member.user}"
+        };
+    }
+
+    // Update team member
+    rpc UpdateTeamMember(TeamMemberBodyRequest) returns (TeamMember) {
+        option (google.api.http) = {
+            put: "/api/v1/{owner}/teams/{team}/members/{member.user}"
+            body: "member"
+        };
+    }
+
+    // Patch tram member
+    rpc PatchTeamMember(TeamMemberBodyRequest) returns (TeamMember) {
+        option (google.api.http) = {
+            patch: "/api/v1/{owner}/teams/{team}/members/{member.user}"
+            body: "member"
+        };
+    }
+
+    // Delete team member details
+    rpc DeleteTeamMember(TeamMemberBodyRequest) returns (google.protobuf.Empty) {
+        option (google.api.http) = {
+            delete: "/api/v1/{owner}/teams/{team}/members/{member.user}"
+        };
+    }
+}
+
+// Service to manage teams
+service SchemasV1 {
+     // Get random
+     rpc NoOp(google.protobuf.Empty) returns (Schemas) {
+        option (google.api.http) = {
+            get: "/schemas"
         };
     }
 }

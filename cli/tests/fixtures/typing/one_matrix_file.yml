@@ -9,13 +9,14 @@ inputs:
     value: [MeanSquaredError, AbsoluteDifference]
     is_optional: true
 
-workflow:
+parallel:
   kind: random_search
   matrix:
     loss:
       values: "{{ input1 }}"
 
-container:
+run:
+  kind: container
   image: my_image
   command: ["/bin/sh", "-c"]
   args: [train --loss="{{ loss }}"]

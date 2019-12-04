@@ -3,7 +3,7 @@ from unittest import TestCase
 import pytest
 
 from polyaxon.automl.search_managers.hyperband.manager import HyperbandManager
-from polyaxon.schemas.polyflow.workflows import HyperbandConfig
+from polyaxon.schemas.polyflow.parallel import HyperbandConfig
 
 
 @pytest.mark.automl_mark

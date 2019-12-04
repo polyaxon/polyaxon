@@ -73,7 +73,7 @@ public class SearchV1Api {
      * Build call for createSearch
      * @param owner Owner of the namespace (required)
      * @param project Project under namesapce (required)
-     * @param body Artifact store body (required)
+     * @param body Search body (required)
      * @param progressListener Progress listener
      * @param progressRequestListener Progress request listener
      * @return Call to execute
@@ -151,7 +151,7 @@ public class SearchV1Api {
      * 
      * @param owner Owner of the namespace (required)
      * @param project Project under namesapce (required)
-     * @param body Artifact store body (required)
+     * @param body Search body (required)
      * @return V1Search
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
@@ -165,7 +165,7 @@ public class SearchV1Api {
      * 
      * @param owner Owner of the namespace (required)
      * @param project Project under namesapce (required)
-     * @param body Artifact store body (required)
+     * @param body Search body (required)
      * @return ApiResponse&lt;V1Search&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
@@ -180,7 +180,7 @@ public class SearchV1Api {
      * 
      * @param owner Owner of the namespace (required)
      * @param project Project under namesapce (required)
-     * @param body Artifact store body (required)
+     * @param body Search body (required)
      * @param callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -655,7 +655,7 @@ public class SearchV1Api {
      * @param owner Owner of the namespace (required)
      * @param project Project under namesapce (required)
      * @param searchUuid UUID (required)
-     * @param body Artifact store body (required)
+     * @param body Search body (required)
      * @param progressListener Progress listener
      * @param progressRequestListener Progress request listener
      * @return Call to execute
@@ -740,7 +740,7 @@ public class SearchV1Api {
      * @param owner Owner of the namespace (required)
      * @param project Project under namesapce (required)
      * @param searchUuid UUID (required)
-     * @param body Artifact store body (required)
+     * @param body Search body (required)
      * @return V1Search
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
@@ -755,7 +755,7 @@ public class SearchV1Api {
      * @param owner Owner of the namespace (required)
      * @param project Project under namesapce (required)
      * @param searchUuid UUID (required)
-     * @param body Artifact store body (required)
+     * @param body Search body (required)
      * @return ApiResponse&lt;V1Search&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
@@ -771,7 +771,7 @@ public class SearchV1Api {
      * @param owner Owner of the namespace (required)
      * @param project Project under namesapce (required)
      * @param searchUuid UUID (required)
-     * @param body Artifact store body (required)
+     * @param body Search body (required)
      * @param callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -807,7 +807,7 @@ public class SearchV1Api {
      * @param owner Owner of the namespace (required)
      * @param project Project under namesapce (required)
      * @param searchUuid UUID (required)
-     * @param body Artifact store body (required)
+     * @param body Search body (required)
      * @param progressListener Progress listener
      * @param progressRequestListener Progress request listener
      * @return Call to execute
@@ -892,7 +892,7 @@ public class SearchV1Api {
      * @param owner Owner of the namespace (required)
      * @param project Project under namesapce (required)
      * @param searchUuid UUID (required)
-     * @param body Artifact store body (required)
+     * @param body Search body (required)
      * @return V1Search
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
@@ -907,7 +907,7 @@ public class SearchV1Api {
      * @param owner Owner of the namespace (required)
      * @param project Project under namesapce (required)
      * @param searchUuid UUID (required)
-     * @param body Artifact store body (required)
+     * @param body Search body (required)
      * @return ApiResponse&lt;V1Search&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
@@ -923,7 +923,7 @@ public class SearchV1Api {
      * @param owner Owner of the namespace (required)
      * @param project Project under namesapce (required)
      * @param searchUuid UUID (required)
-     * @param body Artifact store body (required)
+     * @param body Search body (required)
      * @param callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object

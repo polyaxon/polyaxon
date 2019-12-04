@@ -25,7 +25,7 @@ from marshmallow.exceptions import ValidationError
 from tests.utils import assert_equal_dict
 
 from polyaxon.schemas.polyflow.base import BaseComponentConfig
-from polyaxon.schemas.polyflow.workflows.automl.grid_search import GridSearchConfig
+from polyaxon.schemas.polyflow.parallel.grid_search import GridSearchConfig
 
 
 @pytest.mark.workflow_mark
@@ -59,7 +59,7 @@ class TestWorkflowGridSearchConfigs(TestCase):
 
     def test_grid_search_without_n_runs(self):
         config_dict = {
-            "workflow": {
+            "parallel": {
                 "kind": "grid_search",
                 "concurrency": 1,
                 "matrix": {"lr": {"kind": "choice", "value": [1, 2, 3]}},

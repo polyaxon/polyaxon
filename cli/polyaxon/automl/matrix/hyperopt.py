@@ -3,7 +3,7 @@ import hyperopt
 from marshmallow import ValidationError
 
 from polyaxon.automl.matrix.utils import to_numpy
-from polyaxon.schemas.polyflow.workflows.matrix import (
+from polyaxon.schemas.polyflow.parallel.matrix import (
     MatrixChoiceConfig,
     MatrixGeomSpaceConfig,
     MatrixLinSpaceConfig,

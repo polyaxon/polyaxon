@@ -37,9 +37,6 @@ import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import org.threeten.bp.OffsetDateTime;
 
 /**
@@ -57,7 +54,7 @@ public class V1Agent {
   private String namespace = null;
 
   @SerializedName("version_api")
-  private Map<String, String> versionApi = null;
+  private Object versionApi = null;
 
   @SerializedName("created_at")
   private OffsetDateTime createdAt = null;
@@ -119,16 +116,8 @@ public class V1Agent {
     this.namespace = namespace;
   }
 
-  public V1Agent versionApi(Map<String, String> versionApi) {
+  public V1Agent versionApi(Object versionApi) {
     this.versionApi = versionApi;
-    return this;
-  }
-
-  public V1Agent putVersionApiItem(String key, String versionApiItem) {
-    if (this.versionApi == null) {
-      this.versionApi = new HashMap<String, String>();
-    }
-    this.versionApi.put(key, versionApiItem);
     return this;
   }
 
@@ -137,11 +126,11 @@ public class V1Agent {
    * @return versionApi
   **/
   @ApiModelProperty(value = "")
-  public Map<String, String> getVersionApi() {
+  public Object getVersionApi() {
     return versionApi;
   }
 
-  public void setVersionApi(Map<String, String> versionApi) {
+  public void setVersionApi(Object versionApi) {
     this.versionApi = versionApi;
   }
 

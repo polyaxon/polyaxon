@@ -2,6 +2,7 @@ syntax = "proto3";
 
 package v1;
 
+import "google/protobuf/struct.proto";
 import "google/protobuf/timestamp.proto";
 
 // Agent specification
@@ -16,7 +17,7 @@ message Agent {
     string namespace = 3;
 
     // Optional version api
-    map<string, string> version_api = 4;
+    google.protobuf.Struct version_api = 4;
 
     // Optional time when the entityt was created
     google.protobuf.Timestamp created_at = 5;

@@ -2,7 +2,7 @@ import math
 
 from polyaxon.automl.search_managers.base import BaseManager
 from polyaxon.automl.search_managers.random_search.manager import RandomSearchManager
-from polyaxon.schemas.polyflow.workflows import HyperbandConfig, RandomSearchConfig
+from polyaxon.schemas.polyflow.parallel import HyperbandConfig, RandomSearchConfig
 
 
 class HyperbandManager(BaseManager):

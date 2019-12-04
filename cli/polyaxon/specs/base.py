@@ -35,22 +35,31 @@ from polyaxon.pkg import SCHEMA_VERSION
 from polyaxon.schemas.polyflow import params as ops_params
 from polyaxon.schemas.polyflow.io import IOTypes
 from polyaxon.schemas.polyflow.operators import ForConfig, IfConfig
+from polyaxon.schemas.polyflow.parallel import ParallelMixin
 from polyaxon.schemas.polyflow.params import ParamSpec
-from polyaxon.schemas.polyflow.workflows import DagConfig, WorkflowMixin
+from polyaxon.schemas.polyflow.run import RunMixin
 from polyaxon.specs.libs.parser import Parser
 
 
 class MetaInfoSpec(
-    namedtuple("MetaInfoSpec", "service concurrency workflow_kind"), WorkflowMixin
+    namedtuple("MetaInfoSpec", "service concurrency run_kind parallel_kind"),
+    RunMixin,
+    ParallelMixin,
 ):
     @classmethod
-    def get(cls, service=False, concurrency=None, workflow_kind=None):
+    def get(cls, service=False, concurrency=None, run_kind=None, parallel_kind=None):
         return cls(
-            service=service, concurrency=concurrency, workflow_kind=workflow_kind
+            service=service,
+            concurrency=concurrency,
+            run_kind=run_kind,
+            parallel_kind=parallel_kind,
         )
 
-    def get_workflow_kind(self):
-        return self.workflow_kind
+    def get_run_kind(self):
+        return self.run_kind
+
+    def get_parallel_kind(self):
+        return self.parallel_kind
 
     def to_dict(self):
         return dict(self._asdict())
@@ -228,30 +237,57 @@ class MountsSpecificationMixin(object):
         return self._get_refs_by_names(self.config_maps)
 
 
-class WorkflowSpecificationMixin(WorkflowMixin):
+class RunSpecificationMixin(RunMixin):
     @property
-    def workflow(self):
-        return self.config.workflow
+    def run(self):
+        return self.config.run
 
     @property
-    def early_stopping(self):
+    def run_early_stopping(self):
         early_stopping = None
-        if self.workflow:
-            early_stopping = self.workflow.early_stopping
+        if self.has_dag_run:
+            early_stopping = self.run.early_stopping
         return early_stopping or []
 
     @property
-    def workflow_kind(self):
-        return self.workflow.kind if self.workflow else None
+    def run_kind(self):
+        return self.run.kind if self.run else None
 
-    def get_workflow_kind(self):
-        return self.workflow_kind
+    def get_run_kind(self):
+        return self.run_kind
 
     @property
-    def concurrency(self):
+    def run_concurrency(self):
         concurrency = None
-        if self.workflow and hasattr(self.workflow, "concurrency"):
-            concurrency = self.workflow.concurrency
+        if self.has_dag_run:
+            concurrency = self.run.concurrency
+        return concurrency
+
+
+class ParallelSpecificationMixin(ParallelMixin):
+    @property
+    def parallel(self):
+        return self.config.parallel
+
+    @property
+    def parallel_early_stopping(self):
+        early_stopping = None
+        if self.parallel:
+            early_stopping = self.parallel.early_stopping
+        return early_stopping or []
+
+    @property
+    def parallel_kind(self):
+        return self.parallel.kind if self.parallel else None
+
+    def get_parallel_kind(self):
+        return self.parallel_kind
+
+    @property
+    def parallel_concurrency(self):
+        concurrency = None
+        if self.parallel:
+            concurrency = self.parallel.concurrency
         return concurrency
 
 
@@ -306,10 +342,6 @@ class ScheduleSpecificationMixin(object):
     def schedule_depends_on_past(self):
         return self.schedule.depends_on_past if self.schedule else None
 
-    @property
-    def execute_at(self):
-        return self.schedule.execute_at if self.schedule else None
-
 
 @six.add_metaclass(abc.ABCMeta)
 class BaseSpecification(
@@ -317,7 +349,8 @@ class BaseSpecification(
     InitSpecificationMixin,
     MountsSpecificationMixin,
     TerminationSpecificationMixin,
-    WorkflowSpecificationMixin,
+    RunSpecificationMixin,
+    ParallelSpecificationMixin,
     ScheduleSpecificationMixin,
 ):
     """Base abstract specification for plyaxonfiles and configurations."""
@@ -337,6 +370,7 @@ class BaseSpecification(
     DESCRIPTION = "description"
     TAGS = "tags"
     PROFILE = "profile"
+    QUEUE = "queue"
     NOCACHE = "nocache"
     INPUTS = "inputs"
     OUTPUTS = "outputs"
@@ -345,8 +379,8 @@ class BaseSpecification(
     TERMINATION = "termination"
     INIT = "init"
     MOUNTS = "mounts"
-    CONTAINER = "container"
-    WORKFLOW = "workflow"
+    RUN = "run"
+    PARALLEL = "parallel"
     SERVICE = "service"
     OPERATIONS = "operations"
     COMPONENTS = "components"
@@ -371,7 +405,7 @@ class BaseSpecification(
         TERMINATION,
         INIT,
         MOUNTS,
-        WORKFLOW,
+        PARALLEL,
         SERVICE,
         OPERATIONS,
         SCHEDULE,
@@ -383,7 +417,7 @@ class BaseSpecification(
         COMPONENT,
         INPUTS,
         OUTPUTS,
-        CONTAINER,
+        RUN,
     )
 
     PARSING_SECTIONS = (
@@ -486,18 +520,18 @@ class BaseSpecification(
         return self._parse(params)
 
     def _apply_dag_context(self):
-        self.workflow.process_dag()
-        self.workflow.validate_dag()
-        self.workflow.process_components(self.config.inputs)
+        self.run.process_dag()
+        self.run.validate_dag()
+        self.run.process_components(self.config.inputs)
         return self
 
     def apply_context(self):
-        if self.has_dag:
+        if self.has_dag_run:
             return self._apply_dag_context()
         else:
             return self._apply_run_context()
 
-    def apply_container_contexts(self, contexts=None):
+    def apply_run_contexts(self, contexts=None):
         if self.has_pipeline:
             raise PolyaxonSchemaError(
                 "This method is not allowed on this specification."
@@ -518,7 +552,7 @@ class BaseSpecification(
             for k, v in six.iteritems(contexts)
         }
         params.update(contexts)
-        parsed_data = Parser.parse_container(self, self.data, params)
+        parsed_data = Parser.parse_run(self, self.data, params)
         return self.read(parsed_data)
 
     @classmethod
@@ -607,21 +641,21 @@ class BaseSpecification(
 
     @property
     def has_pipeline(self):
-        return self.workflow and (
-            self.config.has_dag_workflow or self.config.has_automl_workflow
-        )
+        return self.has_dag_run or self.parallel
 
     @property
     def meta_info(self):
         return MetaInfoSpec.get(
             service=self.has_service,
-            concurrency=self.concurrency,
-            workflow_kind=self.workflow_kind,
+            # We prioritize parallel over run because parallel manages run (even dags)
+            concurrency=(
+                self.parallel_concurrency
+                if self.parallel_concurrency is not None
+                else self.run_concurrency
+            ),
+            run_kind=self.run_kind,
+            parallel_kind=self.parallel_kind,
         )
-
-    @property
-    def has_dag(self):
-        return self.workflow_kind and self.workflow_kind == DagConfig.IDENTIFIER
 
     @property
     def values(self):
@@ -664,9 +698,9 @@ class BaseSpecification(
         return self.config.profile
 
     @property
-    def nocache(self):
-        return self.config.nocache
+    def queue(self):
+        return self.config.queue
 
     @property
-    def container(self):
-        return self.config.container
+    def nocache(self):
+        return self.config.nocache

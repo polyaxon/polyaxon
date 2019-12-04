@@ -1,0 +1,66 @@
+syntax = "proto3";
+
+package v1;
+
+import "google/protobuf/struct.proto";
+import "google/protobuf/timestamp.proto";
+
+import "v1/search.proto";
+
+// Widget spec definition
+message WidgetSpec {
+    // Widget kind
+    string king = 1;
+
+    // Search spec
+    SearchSpec search = 2;
+
+    // Meta inforation
+    google.protobuf.Struct meta = 3;
+}
+
+// Dashboard specification
+message Dashboard {
+    // UUID
+    string uuid = 1;
+
+    // Optional name
+    string name = 2;
+
+    // Optional Search definition
+    repeated WidgetSpec widgets = 3;
+
+    // Optional time when the entityt was created
+    google.protobuf.Timestamp created_at = 4;
+
+    // Optional last time the entity was updated
+    google.protobuf.Timestamp updated_at = 5;
+}
+
+ // Request data to create/update dashboard
+ message DashboardBodyRequest {
+    // Owner of the namespace
+    string owner = 1;
+
+    // Project under namesapce
+    string project = 2;
+
+    // Dashboard body
+    Dashboard dashboard = 3;
+ }
+
+
+// Contains list dashboards
+message ListDashboardsResponse {
+    // Count of the entities
+    int32 count = 1;
+
+    // List of all entities
+    repeated Dashboard results = 2;
+
+    // Previous page
+    string previous = 3;
+
+    // Next page
+    string next = 4;
+}

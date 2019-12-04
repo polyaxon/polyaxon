@@ -39,9 +39,7 @@ import io.swagger.annotations.ApiModelProperty;
 import io.swagger.client.model.V1RunMetaInfo;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import org.threeten.bp.OffsetDateTime;
 
 /**
@@ -94,23 +92,29 @@ public class V1Run {
   @SerializedName("status")
   private String status = null;
 
-  @SerializedName("meta_info")
-  private V1RunMetaInfo metaInfo = null;
-
   @SerializedName("readme")
   private String readme = null;
 
   @SerializedName("bookmarked")
   private Boolean bookmarked = null;
 
+  @SerializedName("meta_info")
+  private V1RunMetaInfo metaInfo = null;
+
+  @SerializedName("kind")
+  private String kind = null;
+
+  @SerializedName("hub")
+  private String hub = null;
+
   @SerializedName("inputs")
-  private Map<String, String> inputs = null;
+  private Object inputs = null;
 
   @SerializedName("outputs")
-  private Map<String, String> outputs = null;
+  private Object outputs = null;
 
   @SerializedName("run_env")
-  private Map<String, String> runEnv = null;
+  private Object runEnv = null;
 
   @SerializedName("is_resume")
   private Boolean isResume = null;
@@ -411,24 +415,6 @@ public class V1Run {
     this.status = status;
   }
 
-  public V1Run metaInfo(V1RunMetaInfo metaInfo) {
-    this.metaInfo = metaInfo;
-    return this;
-  }
-
-   /**
-   * Get metaInfo
-   * @return metaInfo
-  **/
-  @ApiModelProperty(value = "")
-  public V1RunMetaInfo getMetaInfo() {
-    return metaInfo;
-  }
-
-  public void setMetaInfo(V1RunMetaInfo metaInfo) {
-    this.metaInfo = metaInfo;
-  }
-
   public V1Run readme(String readme) {
     this.readme = readme;
     return this;
@@ -465,16 +451,62 @@ public class V1Run {
     this.bookmarked = bookmarked;
   }
 
-  public V1Run inputs(Map<String, String> inputs) {
-    this.inputs = inputs;
+  public V1Run metaInfo(V1RunMetaInfo metaInfo) {
+    this.metaInfo = metaInfo;
     return this;
   }
 
-  public V1Run putInputsItem(String key, String inputsItem) {
-    if (this.inputs == null) {
-      this.inputs = new HashMap<String, String>();
-    }
-    this.inputs.put(key, inputsItem);
+   /**
+   * Get metaInfo
+   * @return metaInfo
+  **/
+  @ApiModelProperty(value = "")
+  public V1RunMetaInfo getMetaInfo() {
+    return metaInfo;
+  }
+
+  public void setMetaInfo(V1RunMetaInfo metaInfo) {
+    this.metaInfo = metaInfo;
+  }
+
+  public V1Run kind(String kind) {
+    this.kind = kind;
+    return this;
+  }
+
+   /**
+   * Get kind
+   * @return kind
+  **/
+  @ApiModelProperty(value = "")
+  public String getKind() {
+    return kind;
+  }
+
+  public void setKind(String kind) {
+    this.kind = kind;
+  }
+
+  public V1Run hub(String hub) {
+    this.hub = hub;
+    return this;
+  }
+
+   /**
+   * Get hub
+   * @return hub
+  **/
+  @ApiModelProperty(value = "")
+  public String getHub() {
+    return hub;
+  }
+
+  public void setHub(String hub) {
+    this.hub = hub;
+  }
+
+  public V1Run inputs(Object inputs) {
+    this.inputs = inputs;
     return this;
   }
 
@@ -483,24 +515,16 @@ public class V1Run {
    * @return inputs
   **/
   @ApiModelProperty(value = "")
-  public Map<String, String> getInputs() {
+  public Object getInputs() {
     return inputs;
   }
 
-  public void setInputs(Map<String, String> inputs) {
+  public void setInputs(Object inputs) {
     this.inputs = inputs;
   }
 
-  public V1Run outputs(Map<String, String> outputs) {
+  public V1Run outputs(Object outputs) {
     this.outputs = outputs;
-    return this;
-  }
-
-  public V1Run putOutputsItem(String key, String outputsItem) {
-    if (this.outputs == null) {
-      this.outputs = new HashMap<String, String>();
-    }
-    this.outputs.put(key, outputsItem);
     return this;
   }
 
@@ -509,24 +533,16 @@ public class V1Run {
    * @return outputs
   **/
   @ApiModelProperty(value = "")
-  public Map<String, String> getOutputs() {
+  public Object getOutputs() {
     return outputs;
   }
 
-  public void setOutputs(Map<String, String> outputs) {
+  public void setOutputs(Object outputs) {
     this.outputs = outputs;
   }
 
-  public V1Run runEnv(Map<String, String> runEnv) {
+  public V1Run runEnv(Object runEnv) {
     this.runEnv = runEnv;
-    return this;
-  }
-
-  public V1Run putRunEnvItem(String key, String runEnvItem) {
-    if (this.runEnv == null) {
-      this.runEnv = new HashMap<String, String>();
-    }
-    this.runEnv.put(key, runEnvItem);
     return this;
   }
 
@@ -535,11 +551,11 @@ public class V1Run {
    * @return runEnv
   **/
   @ApiModelProperty(value = "")
-  public Map<String, String> getRunEnv() {
+  public Object getRunEnv() {
     return runEnv;
   }
 
-  public void setRunEnv(Map<String, String> runEnv) {
+  public void setRunEnv(Object runEnv) {
     this.runEnv = runEnv;
   }
 
@@ -694,9 +710,11 @@ public class V1Run {
         Objects.equals(this.isManaged, v1Run.isManaged) &&
         Objects.equals(this.content, v1Run.content) &&
         Objects.equals(this.status, v1Run.status) &&
-        Objects.equals(this.metaInfo, v1Run.metaInfo) &&
         Objects.equals(this.readme, v1Run.readme) &&
         Objects.equals(this.bookmarked, v1Run.bookmarked) &&
+        Objects.equals(this.metaInfo, v1Run.metaInfo) &&
+        Objects.equals(this.kind, v1Run.kind) &&
+        Objects.equals(this.hub, v1Run.hub) &&
         Objects.equals(this.inputs, v1Run.inputs) &&
         Objects.equals(this.outputs, v1Run.outputs) &&
         Objects.equals(this.runEnv, v1Run.runEnv) &&
@@ -711,7 +729,7 @@ public class V1Run {
 
   @Override
   public int hashCode() {
-    return Objects.hash(uuid, name, description, tags, deleted, user, owner, project, createdAt, updatedAt, startedAt, finishedAt, isManaged, content, status, metaInfo, readme, bookmarked, inputs, outputs, runEnv, isResume, isClone, cloningStrategy, pipeline, original, pipelineName, originalName);
+    return Objects.hash(uuid, name, description, tags, deleted, user, owner, project, createdAt, updatedAt, startedAt, finishedAt, isManaged, content, status, readme, bookmarked, metaInfo, kind, hub, inputs, outputs, runEnv, isResume, isClone, cloningStrategy, pipeline, original, pipelineName, originalName);
   }
 
 
@@ -735,9 +753,11 @@ public class V1Run {
     sb.append("    isManaged: ").append(toIndentedString(isManaged)).append("\n");
     sb.append("    content: ").append(toIndentedString(content)).append("\n");
     sb.append("    status: ").append(toIndentedString(status)).append("\n");
-    sb.append("    metaInfo: ").append(toIndentedString(metaInfo)).append("\n");
     sb.append("    readme: ").append(toIndentedString(readme)).append("\n");
     sb.append("    bookmarked: ").append(toIndentedString(bookmarked)).append("\n");
+    sb.append("    metaInfo: ").append(toIndentedString(metaInfo)).append("\n");
+    sb.append("    kind: ").append(toIndentedString(kind)).append("\n");
+    sb.append("    hub: ").append(toIndentedString(hub)).append("\n");
     sb.append("    inputs: ").append(toIndentedString(inputs)).append("\n");
     sb.append("    outputs: ").append(toIndentedString(outputs)).append("\n");
     sb.append("    runEnv: ").append(toIndentedString(runEnv)).append("\n");

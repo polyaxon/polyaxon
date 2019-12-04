@@ -49,7 +49,7 @@ type V1Agent struct {
 	UUID string `json:"uuid,omitempty"`
 
 	// Optional version api
-	VersionAPI map[string]string `json:"version_api,omitempty"`
+	VersionAPI interface{} `json:"version_api,omitempty"`
 }
 
 // Validate validates this v1 agent

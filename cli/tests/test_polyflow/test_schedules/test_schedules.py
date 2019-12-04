@@ -106,23 +106,19 @@ class TestScheduleConfigs(TestCase):
         CronScheduleConfig.from_dict(config_dict)
 
     def test_exact_time_schedule(self):
-        config_dict = {"execute_at": "foo"}
+        config_dict = {"start_at": "foo"}
         with self.assertRaises(ValidationError):
             ExactTimeScheduleConfig.from_dict(config_dict)
 
-        config_dict = {"kind": "exact_time", "execute_at": local_now().isoformat()}
+        config_dict = {"kind": "exact_time", "start_at": local_now().isoformat()}
         ExactTimeScheduleConfig.from_dict(config_dict).to_dict()
 
     def test_repeatable_schedule(self):
-        config_dict = {"n_repetitions": "foo"}
+        config_dict = {"limit": "foo"}
         with self.assertRaises(ValidationError):
             RepeatableScheduleConfig.from_dict(config_dict)
 
-        config_dict = {
-            "kind": "repeatable",
-            "n_repetitions": 123,
-            "depends_on_past": False,
-        }
+        config_dict = {"kind": "repeatable", "limit": 123, "depends_on_past": False}
         assert RepeatableScheduleConfig.from_dict(config_dict).to_dict() == config_dict
 
     def test_schedule(self):

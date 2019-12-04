@@ -25,25 +25,25 @@ import pytest
 
 from polyaxon.exceptions import PolyaxonSchemaError
 from polyaxon.polyaxonfile import PolyaxonFile
+from polyaxon.schemas.polyflow.early_stopping import (
+    FailureEarlyStoppingConfig,
+    MetricEarlyStoppingConfig,
+)
 from polyaxon.schemas.polyflow.init.build_context import (
     POLYAXON_DOCKER_SHELL,
     POLYAXON_DOCKER_WORKDIR,
     POLYAXON_DOCKERFILE_NAME,
 )
-from polyaxon.schemas.polyflow.workflows import (
-    DagConfig,
+from polyaxon.schemas.polyflow.parallel import (
     GridSearchConfig,
     HyperbandConfig,
     RandomSearchConfig,
 )
-from polyaxon.schemas.polyflow.workflows.early_stopping_policies import (
-    FailureEarlyStoppingConfig,
-    MetricEarlyStoppingConfig,
-)
-from polyaxon.schemas.polyflow.workflows.matrix import (
+from polyaxon.schemas.polyflow.parallel.matrix import (
     MatrixChoiceConfig,
     MatrixLinSpaceConfig,
 )
+from polyaxon.schemas.polyflow.run import DagConfig
 from polyaxon.specs import OpSpecification, get_specification
 
 
@@ -76,12 +76,13 @@ class TestPolyaxonfileWithPipelines(TestCase):
         plx_file = PolyaxonFile(
             os.path.abspath("tests/fixtures/pipelines/cyclic_pipeline.yml")
         )
-        assert plx_file.specification.has_dag is True
+        assert plx_file.specification.has_dag_run is True
         assert plx_file.specification.has_pipeline is True
         assert plx_file.specification.meta_info.to_dict() == {
             "service": False,
             "concurrency": None,
-            "workflow_kind": "dag",
+            "run_kind": "dag",
+            "parallel_kind": None,
         }
         with self.assertRaises(PolyaxonSchemaError):
             plx_file.specification.apply_context()
@@ -92,9 +93,9 @@ class TestPolyaxonfileWithPipelines(TestCase):
         )
         spec = plx_file.specification
         spec = spec.apply_context()
-        assert spec.config.workflow is not None
-        assert len(spec.config.workflow.ops) == 1
-        assert spec.config.workflow.ops[0].name == "cron-task"
+        assert spec.config.run is not None
+        assert len(spec.config.run.ops) == 1
+        assert spec.config.run.ops[0].name == "cron-task"
         assert spec.config.schedule is not None
         assert spec.config.schedule.kind == "cron"
         assert spec.config.schedule.cron == "0 0 * * *"
@@ -104,7 +105,8 @@ class TestPolyaxonfileWithPipelines(TestCase):
         assert plx_file.specification.meta_info.to_dict() == {
             "service": False,
             "concurrency": None,
-            "workflow_kind": "dag",
+            "run_kind": "dag",
+            "parallel_kind": None,
         }
 
     def test_interval_pipeline(self):
@@ -113,9 +115,9 @@ class TestPolyaxonfileWithPipelines(TestCase):
         )
         spec = plx_file.specification
         spec = spec.apply_context()
-        assert spec.config.workflow is not None
-        assert len(spec.config.workflow.ops) == 1
-        assert spec.config.workflow.ops[0].name == "recurrent-task"
+        assert spec.config.run is not None
+        assert len(spec.config.run.ops) == 1
+        assert spec.config.run.ops[0].name == "recurrent-task"
         assert spec.config.schedule is not None
         assert spec.config.schedule.kind == "interval"
         assert spec.config.schedule.start_at.year == 2019
@@ -133,16 +135,16 @@ class TestPolyaxonfileWithPipelines(TestCase):
         )
         spec = plx_file.specification
         spec = spec.apply_context()
-        assert spec.config.workflow is not None
-        assert len(spec.config.workflow.ops) == 4
-        assert spec.config.workflow.ops[0].name == "job1"
-        assert spec.config.workflow.ops[1].name == "job2"
-        assert spec.config.workflow.ops[1].dependencies == ["job1"]
-        assert spec.config.workflow.ops[2].name == "experiment1"
-        assert spec.config.workflow.ops[2].dependencies == ["job2"]
-        assert spec.config.workflow.ops[3].name == "experiment2"
-        assert spec.config.workflow.ops[3].dependencies == ["experiment1"]
-        dag_strategy = spec.config.workflow
+        assert spec.config.run is not None
+        assert len(spec.config.run.ops) == 4
+        assert spec.config.run.ops[0].name == "job1"
+        assert spec.config.run.ops[1].name == "job2"
+        assert spec.config.run.ops[1].dependencies == ["job1"]
+        assert spec.config.run.ops[2].name == "experiment1"
+        assert spec.config.run.ops[2].dependencies == ["job2"]
+        assert spec.config.run.ops[3].name == "experiment2"
+        assert spec.config.run.ops[3].dependencies == ["experiment1"]
+        dag_strategy = spec.config.run
         assert dag_strategy.sort_topologically(dag_strategy.dag) == [
             ["job1"],
             ["job2"],
@@ -157,25 +159,25 @@ class TestPolyaxonfileWithPipelines(TestCase):
         )
         spec = plx_file.specification
         spec = spec.apply_context()
-        assert len(spec.config.workflow.ops) == 4
-        assert spec.config.workflow.ops[0].name == "job1"
-        assert spec.config.workflow.ops[0].dependencies is None
-        assert spec.config.workflow.ops[1].name == "job2"
-        assert spec.config.workflow.ops[1].dependencies is None
-        assert spec.config.workflow.ops[2].name == "experiment1"
-        assert spec.config.workflow.ops[2].dependencies is None
-        assert spec.config.workflow.ops[3].name == "experiment2"
-        assert spec.config.workflow.ops[3].dependencies is None
-        dag_strategy = spec.config.workflow
+        assert len(spec.config.run.ops) == 4
+        assert spec.config.run.ops[0].name == "job1"
+        assert spec.config.run.ops[0].dependencies is None
+        assert spec.config.run.ops[1].name == "job2"
+        assert spec.config.run.ops[1].dependencies is None
+        assert spec.config.run.ops[2].name == "experiment1"
+        assert spec.config.run.ops[2].dependencies is None
+        assert spec.config.run.ops[3].name == "experiment2"
+        assert spec.config.run.ops[3].dependencies is None
+        dag_strategy = spec.config.run
         assert set(dag_strategy.sort_topologically(dag_strategy.dag)[0]) == {
             "job1",
             "job2",
             "experiment1",
             "experiment2",
         }
-        assert spec.config.workflow.concurrency == 2
+        assert spec.config.run.concurrency == 2
         assert spec.config.schedule is None
-        assert spec.concurrency == 2
+        assert spec.run_concurrency == 2
         assert spec.schedule is None
 
     def test_dag_pipeline(self):
@@ -184,28 +186,28 @@ class TestPolyaxonfileWithPipelines(TestCase):
         )
         spec = plx_file.specification
         spec = spec.apply_context()
-        assert len(spec.config.workflow.ops) == 5
-        assert spec.config.workflow.ops[0].name == "job1"
-        assert spec.config.workflow.ops[1].name == "experiment1"
-        assert spec.config.workflow.ops[1].dependencies == ["job1"]
-        assert spec.config.workflow.ops[2].name == "experiment2"
-        assert spec.config.workflow.ops[2].dependencies == ["job1"]
-        assert spec.config.workflow.ops[3].name == "experiment3"
-        assert spec.config.workflow.ops[3].dependencies == ["job1"]
-        assert spec.config.workflow.ops[4].name == "job2"
-        assert spec.config.workflow.ops[4].dependencies == [
+        assert len(spec.config.run.ops) == 5
+        assert spec.config.run.ops[0].name == "job1"
+        assert spec.config.run.ops[1].name == "experiment1"
+        assert spec.config.run.ops[1].dependencies == ["job1"]
+        assert spec.config.run.ops[2].name == "experiment2"
+        assert spec.config.run.ops[2].dependencies == ["job1"]
+        assert spec.config.run.ops[3].name == "experiment3"
+        assert spec.config.run.ops[3].dependencies == ["job1"]
+        assert spec.config.run.ops[4].name == "job2"
+        assert spec.config.run.ops[4].dependencies == [
             "experiment1",
             "experiment2",
             "experiment3",
         ]
-        dag_strategy = spec.config.workflow
+        dag_strategy = spec.config.run
         sorted_dag = dag_strategy.sort_topologically(dag_strategy.dag)
         assert sorted_dag[0] == ["job1"]
         assert set(sorted_dag[1]) == {"experiment1", "experiment2", "experiment3"}
         assert sorted_dag[2] == ["job2"]
-        assert spec.config.workflow.concurrency == 3
+        assert spec.config.run.concurrency == 3
         assert spec.config.schedule is None
-        assert spec.concurrency == 3
+        assert spec.run_concurrency == 3
         assert spec.schedule is None
 
     def test_build_run_pipeline(self):
@@ -214,24 +216,26 @@ class TestPolyaxonfileWithPipelines(TestCase):
         )
         spec = plx_file.specification
         spec = spec.apply_context()
-        assert len(spec.workflow.ops) == 2
-        assert spec.workflow.ops[0].name == "build"
-        assert spec.workflow.ops[1].name == "run"
-        assert spec.has_dag is True
+        assert len(spec.run.ops) == 2
+        assert spec.run.ops[0].name == "build"
+        assert spec.run.ops[1].name == "run"
+        assert spec.has_dag_run is True
         assert spec.has_pipeline is True
         assert spec.config.schedule is None
-        assert len(spec.workflow.components) == 2
-        assert spec.workflow.components[0].name == "experiment-template"
-        assert spec.workflow.components[0].container.to_dict() == {
+        assert len(spec.run.components) == 2
+        assert spec.run.components[0].name == "experiment-template"
+        assert spec.run.components[0].run.to_dict() == {
+            "kind": "container",
             "image": "{{ image }}",
             "command": ["python3", "main.py"],
             "args": "--lr={{ lr }}",
         }
-        assert spec.workflow.components[1].name == "build-template"
-        assert spec.workflow.components[1].container.to_light_dict() == {
-            "image": "base"
+        assert spec.run.components[1].name == "build-template"
+        assert spec.run.components[1].run.to_light_dict() == {
+            "kind": "container",
+            "image": "base",
         }
-        assert spec.workflow.components[1].init.build.to_light_dict() == {
+        assert spec.run.components[1].init.build.to_light_dict() == {
             "image": "base",
             "env": "{{ env_vars }}",
             "name": POLYAXON_DOCKERFILE_NAME,
@@ -240,9 +244,9 @@ class TestPolyaxonfileWithPipelines(TestCase):
         }
 
         # Create a an op spec
-        spec.workflow.set_op_component("run")
-        assert spec.workflow.ops[1].component is not None
-        job_spec = OpSpecification(spec.workflow.ops[1].to_dict())
+        spec.run.set_op_component("run")
+        assert spec.run.ops[1].component is not None
+        job_spec = OpSpecification(spec.run.ops[1].to_dict())
         assert job_spec.config.params == {
             "image": "{{ ops.build.outputs.docker-image }}",
             "lr": 0.001,
@@ -251,8 +255,9 @@ class TestPolyaxonfileWithPipelines(TestCase):
         assert op_spec.is_component is True
         op_spec.apply_params({"image": "foo", "lr": 0.001})
         op_spec = op_spec.apply_context()
-        op_spec = op_spec.apply_container_contexts()
-        assert op_spec.config.container.to_dict() == {
+        op_spec = op_spec.apply_run_contexts()
+        assert op_spec.config.run.to_dict() == {
+            "kind": "container",
             "image": "foo",
             "command": ["python3", "main.py"],
             "args": "--lr=0.001",
@@ -264,21 +269,20 @@ class TestPolyaxonfileWithPipelines(TestCase):
         )
         spec = plxfile.specification
         spec = spec.apply_context()
-        assert spec.config.workflow is not None
-        assert spec.has_dag is True
+        assert spec.config.run is not None
+        assert spec.has_dag_run is True
         assert spec.has_pipeline is True
         assert spec.config.schedule is None
-        assert spec.workflow.concurrency == 4
-        assert spec.concurrency == 4
-        assert isinstance(spec.workflow, DagConfig)
-        assert spec.workflow.early_stopping[0].kind == "failure_early_stopping"
-        assert isinstance(spec.early_stopping[0], FailureEarlyStoppingConfig)
-        assert len(spec.early_stopping) == 1
-        assert spec.workflow_kind == DagConfig.IDENTIFIER
-        assert len(spec.workflow.ops) == 2
-        assert len(spec.workflow.components) == 1
-        template_workflow = spec.workflow.components[0].workflow
-        template_random = template_workflow
+        assert spec.run.concurrency == 4
+        assert spec.run_concurrency == 4
+        assert isinstance(spec.run, DagConfig)
+        assert spec.run.early_stopping[0].kind == "failure_early_stopping"
+        assert isinstance(spec.run_early_stopping[0], FailureEarlyStoppingConfig)
+        assert len(spec.run_early_stopping) == 1
+        assert spec.run_kind == DagConfig.IDENTIFIER
+        assert len(spec.run.ops) == 2
+        assert len(spec.run.components) == 1
+        template_random = spec.run.components[0].parallel
         assert isinstance(template_random, RandomSearchConfig)
         assert isinstance(template_random.matrix["lr"], MatrixLinSpaceConfig)
         assert isinstance(template_random.matrix["loss"], MatrixChoiceConfig)
@@ -290,13 +294,11 @@ class TestPolyaxonfileWithPipelines(TestCase):
             "kind": "choice",
             "value": ["MeanSquaredError", "AbsoluteDifference"],
         }
-        assert template_workflow.concurrency == 2
+        assert template_random.concurrency == 2
         assert template_random.n_runs == 300
-        assert template_workflow.early_stopping[0].kind == "metric_early_stopping"
-        assert len(template_workflow.early_stopping) == 1
-        assert isinstance(
-            template_workflow.early_stopping[0], MetricEarlyStoppingConfig
-        )
+        assert template_random.early_stopping[0].kind == "metric_early_stopping"
+        assert len(template_random.early_stopping) == 1
+        assert isinstance(template_random.early_stopping[0], MetricEarlyStoppingConfig)
 
     def test_matrix_file_passess(self):
         plxfile = PolyaxonFile(
@@ -306,19 +308,18 @@ class TestPolyaxonfileWithPipelines(TestCase):
         spec = spec.apply_context()
         assert spec.version == 1.0
         assert spec.is_component is True
-        assert spec.has_dag is True
+        assert spec.has_dag_run is True
         assert spec.has_pipeline is True
         assert spec.config.schedule is None
-        assert spec.workflow.concurrency == 4
-        assert spec.concurrency == 4
-        assert isinstance(spec.workflow, DagConfig)
-        assert spec.workflow.early_stopping is None
-        assert spec.early_stopping == []
-        assert spec.workflow_kind == DagConfig.IDENTIFIER
-        assert len(spec.workflow.ops) == 2
-        assert len(spec.workflow.components) == 1
-        template_workflow = spec.workflow.components[0].workflow
-        template_hyperband = template_workflow
+        assert spec.run.concurrency == 4
+        assert spec.run_concurrency == 4
+        assert isinstance(spec.run, DagConfig)
+        assert spec.run.early_stopping is None
+        assert spec.run_early_stopping == []
+        assert spec.run_kind == DagConfig.IDENTIFIER
+        assert len(spec.run.ops) == 2
+        assert len(spec.run.components) == 1
+        template_hyperband = spec.run.components[0].parallel
         assert isinstance(template_hyperband.matrix["lr"], MatrixLinSpaceConfig)
         assert isinstance(template_hyperband.matrix["loss"], MatrixChoiceConfig)
         assert template_hyperband.matrix["lr"].to_dict() == {
@@ -345,7 +346,7 @@ class TestPolyaxonfileWithPipelines(TestCase):
             "kind": "choice",
             "value": ["CDNA", "DNA", "STP"],
         }
-        assert template_workflow.concurrency == 2
+        assert template_hyperband.concurrency == 2
         assert isinstance(template_hyperband, HyperbandConfig)
 
     def test_matrix_file_passes_int_float_types(self):
@@ -358,19 +359,18 @@ class TestPolyaxonfileWithPipelines(TestCase):
         spec = spec.apply_context()
         assert spec.version == 1.0
         assert spec.is_component is True
-        assert spec.has_dag is True
+        assert spec.has_dag_run is True
         assert spec.has_pipeline is True
         assert spec.config.schedule is None
-        assert spec.workflow.concurrency == 4
-        assert spec.concurrency == 4
-        assert isinstance(spec.workflow, DagConfig)
-        assert spec.workflow.early_stopping is None
-        assert spec.early_stopping == []
-        assert spec.workflow_kind == DagConfig.IDENTIFIER
-        assert len(spec.workflow.ops) == 2
-        assert len(spec.workflow.components) == 1
-        template_workflow = spec.workflow.components[0].workflow
-        template_grid = template_workflow
+        assert spec.run.concurrency == 4
+        assert spec.run_concurrency == 4
+        assert isinstance(spec.run, DagConfig)
+        assert spec.run.early_stopping is None
+        assert spec.run_early_stopping == []
+        assert spec.run_kind == DagConfig.IDENTIFIER
+        assert len(spec.run.ops) == 2
+        assert len(spec.run.components) == 1
+        template_grid = spec.run.components[0].parallel
         assert isinstance(template_grid, GridSearchConfig)
         assert isinstance(template_grid.matrix["param1"], MatrixChoiceConfig)
         assert isinstance(template_grid.matrix["param2"], MatrixChoiceConfig)
@@ -382,5 +382,5 @@ class TestPolyaxonfileWithPipelines(TestCase):
             "kind": "choice",
             "value": [3.3, 4.4],
         }
-        assert template_workflow.concurrency == 2
-        assert template_workflow.early_stopping is None
+        assert template_grid.concurrency == 2
+        assert template_grid.early_stopping is None

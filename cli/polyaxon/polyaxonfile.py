@@ -65,7 +65,7 @@ class PolyaxonFile(object):
                 if os.path.isfile(filepath):
                     return filepath
 
-    def get_op_specification(self, params=None, profile=None, nocache=None):
+    def get_op_specification(self, params=None, profile=None, queue=None, nocache=None):
         job_data = {"version": self.specification.version, "kind": kinds.OP}
         if params:
             if not isinstance(params, Mapping):
@@ -75,6 +75,8 @@ class PolyaxonFile(object):
             job_data["params"] = params
         if profile:
             job_data["profile"] = profile
+        if queue:
+            job_data["queue"] = queue
         if nocache is not None:
             job_data["nocache"] = nocache
 
@@ -88,6 +90,6 @@ class PolyaxonFile(object):
         # Sanity check if params were passed
         run_spec = get_specification(specification.generate_run_data())
         run_spec.validate_params(params=params, is_template=False)
-        if run_spec.has_dag:
+        if run_spec.has_dag_run:
             run_spec.apply_context()
         return specification

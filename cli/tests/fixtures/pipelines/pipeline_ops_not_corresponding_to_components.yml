@@ -7,7 +7,7 @@ name: test-pipeline
 
 tags: [native]
 
-workflow:
+run:
   kind: dag
   ops:
     - name: job1
@@ -19,4 +19,6 @@ workflow:
     - name: experiment-template
       description: experiment to predict something
       tags: [tag11, tag12]
-      container: {image: test}
+      run:
+        kind: container
+        image: test

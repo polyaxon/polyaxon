@@ -31,7 +31,8 @@ environment:
   - key: "key"
     operator: "Exists"
 
-container:
+run:
+  kind: container
   image: my_image
   command: ["/bin/sh", "-c"]
   args: "tensorboard --logdir={{log_dir}} --port=6006"

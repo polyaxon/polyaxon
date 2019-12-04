@@ -23,7 +23,7 @@ from unittest.mock import patch
 import pytest
 
 from polyaxon.automl.search_managers.random_search.manager import RandomSearchManager
-from polyaxon.schemas.polyflow.workflows import RandomSearchConfig
+from polyaxon.schemas.polyflow.parallel import RandomSearchConfig
 
 
 @pytest.mark.automl_mark

@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+package v1;
+
+// Artifact mount specification
+message ArtifactMount {
+    // Name of the artifact
+    string name = 1;
+
+    // Paths to mount
+    repeated string paths = 2;
+}
+
+// K8S mount (config/secret) specification
+message K8sMount {
+    // Name of the artifact
+    string name = 1;
+
+    // Path where to mount the resource
+    string mount_path = 2;
+
+    // Items to mount from the resource
+    repeated string items = 3;
+}
+
+
+// Mounts specification
+message Mounts {
+    // Secrets mounts
+    repeated K8sMount secrets = 1;
+
+    // Config maps mounts
+    repeated K8sMount config_maps = 2;
+
+    // Artifacts mounts
+    repeated ArtifactMount artifacts = 3;
+}

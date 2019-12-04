@@ -73,8 +73,10 @@
         obj.service = ApiClient.convertToType(data['service'], 'Boolean');
       if (data.hasOwnProperty('concurrency'))
         obj.concurrency = ApiClient.convertToType(data['concurrency'], 'Number');
-      if (data.hasOwnProperty('workflow_kind'))
-        obj.workflow_kind = ApiClient.convertToType(data['workflow_kind'], 'String');
+      if (data.hasOwnProperty('parallel_kind'))
+        obj.parallel_kind = ApiClient.convertToType(data['parallel_kind'], 'String');
+      if (data.hasOwnProperty('run_kind'))
+        obj.run_kind = ApiClient.convertToType(data['run_kind'], 'String');
     }
     return obj;
   }
@@ -90,9 +92,14 @@
   exports.prototype.concurrency = undefined;
 
   /**
-   * @member {String} workflow_kind
+   * @member {String} parallel_kind
    */
-  exports.prototype.workflow_kind = undefined;
+  exports.prototype.parallel_kind = undefined;
+
+  /**
+   * @member {String} run_kind
+   */
+  exports.prototype.run_kind = undefined;
 
   return exports;
 

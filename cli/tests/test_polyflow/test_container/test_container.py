@@ -24,10 +24,8 @@ import pytest
 from marshmallow import ValidationError
 from mock import MagicMock
 
-from polyaxon.schemas.polyflow.container import (
-    ContainerConfig,
-    get_container_command_args,
-)
+from polyaxon.schemas.polyflow.run.container import ContainerConfig
+from polyaxon.schemas.polyflow.run.replica import get_container_command_args
 
 
 @pytest.mark.container_mark
@@ -306,7 +304,9 @@ class TestContainerConfigCommandArgs(TestCase):
             "--output_dir=~/t2t_train/base",
         }
         config = ContainerConfig.from_dict(config_dict)
-        assert config.to_dict() == config_dict
+        config_to_dict = config.to_dict()
+        config_to_dict.pop("kind")
+        assert config_to_dict == config_dict
         assert config.get_container_command_args() == (
             [],
             [
@@ -331,7 +331,9 @@ class TestContainerConfigCommandArgs(TestCase):
             "--output_dir=~/t2t_train/base",
         }
         config = ContainerConfig.from_dict(config_dict)
-        assert config.to_dict() == config_dict
+        config_to_dict = config.to_dict()
+        config_to_dict.pop("kind")
+        assert config_to_dict == config_dict
         assert config.get_container_command_args() == (
             [],
             [
@@ -356,7 +358,9 @@ class TestContainerConfigCommandArgs(TestCase):
             "--output_dir=~/t2t_train/base",
         }
         config = ContainerConfig.from_dict(config_dict)
-        assert config.to_dict() == config_dict
+        config_to_dict = config.to_dict()
+        config_to_dict.pop("kind")
+        assert config_to_dict == config_dict
         assert config.get_container_command_args() == (
             [],
             [
@@ -381,7 +385,9 @@ class TestContainerConfigCommandArgs(TestCase):
             "--output_dir=~/t2t_train/base",
         }
         config = ContainerConfig.from_dict(config_dict)
-        assert config.to_dict() == config_dict
+        config_to_dict = config.to_dict()
+        config_to_dict.pop("kind")
+        assert config_to_dict == config_dict
         assert config.get_container_command_args() == (
             [],
             [
@@ -398,18 +404,24 @@ class TestContainerConfigCommandArgs(TestCase):
     def test_exec_config_with_str_command(self):
         config_dict = {"image": "test/test", "command": "python t2t-trainer"}
         config = ContainerConfig.from_dict(config_dict)
-        assert config.to_dict() == config_dict
+        config_to_dict = config.to_dict()
+        config_to_dict.pop("kind")
+        assert config_to_dict == config_dict
         assert config.get_container_command_args() == (["python t2t-trainer"], [])
 
         config_dict = {"image": "test/test", "command": ["python t2t-trainer"]}
         config = ContainerConfig.from_dict(config_dict)
-        assert config.to_dict() == config_dict
+        config_to_dict = config.to_dict()
+        config_to_dict.pop("kind")
+        assert config_to_dict == config_dict
         assert config.get_container_command_args() == (["python t2t-trainer"], [])
 
     def test_exec_config_with_list_cmd(self):
         config_dict = {"image": "test/test", "command": ["foo", "python t2t-trainer"]}
         config = ContainerConfig.from_dict(config_dict)
-        assert config.to_dict() == config_dict
+        config_to_dict = config.to_dict()
+        config_to_dict.pop("kind")
+        assert config_to_dict == config_dict
         assert config.get_container_command_args() == (
             ["foo", "python t2t-trainer"],
             [],
@@ -419,7 +431,7 @@ class TestContainerConfigCommandArgs(TestCase):
 @pytest.mark.container_mark
 class TestContainerConfig(TestCase):
     def test_config_with_image(self):
-        config_dict = {"image": "foo/bar:latest"}
+        config_dict = {"kind": "container", "image": "foo/bar:latest"}
         config = ContainerConfig.from_dict(config_dict)
         assert config.to_light_dict() == config_dict
         assert config.get_container_command_args() == ([], [])
@@ -432,52 +444,75 @@ class TestContainerConfig(TestCase):
             ContainerConfig.from_dict({"command": ["foo"], "args": ["foo"]})
 
     def test_config_str_command(self):
-        config_dict = {"image": "foo/bar:latest", "command": "foo"}
+        config_dict = {"kind": "container", "image": "foo/bar:latest", "command": "foo"}
         config = ContainerConfig.from_dict(config_dict)
         assert config.to_light_dict() == config_dict
         assert config.get_container_command_args() == (["foo"], [])
 
     def test_config_list_command(self):
-        config_dict = {"image": "foo/bar:latest", "command": ["foo"]}
+        config_dict = {
+            "kind": "container",
+            "image": "foo/bar:latest",
+            "command": ["foo"],
+        }
         config = ContainerConfig.from_dict(config_dict)
         assert config.to_light_dict() == config_dict
         assert config.get_container_command_args() == (["foo"], [])
 
-        config_dict = {"image": "foo/bar:latest", "command": ["foo", "bar"]}
+        config_dict = {
+            "kind": "container",
+            "image": "foo/bar:latest",
+            "command": ["foo", "bar"],
+        }
         config = ContainerConfig.from_dict(config_dict)
         assert config.to_light_dict() == config_dict
         assert config.get_container_command_args() == (["foo", "bar"], [])
 
     def test_config_str_args(self):
-        config_dict = {"image": "foo/bar:latest", "args": "foo"}
+        config_dict = {"kind": "container", "image": "foo/bar:latest", "args": "foo"}
         config = ContainerConfig.from_dict(config_dict)
         assert config.to_light_dict() == config_dict
         assert config.get_container_command_args() == ([], ["foo"])
 
     def test_config_list_args(self):
-        config_dict = {"image": "foo/bar:latest", "args": ["foo"]}
+        config_dict = {"kind": "container", "image": "foo/bar:latest", "args": ["foo"]}
         config = ContainerConfig.from_dict(config_dict)
         assert config.to_light_dict() == config_dict
         assert config.get_container_command_args() == ([], ["foo"])
 
-        config_dict = {"image": "foo/bar:latest", "args": ["foo", "bar"]}
+        config_dict = {
+            "kind": "container",
+            "image": "foo/bar:latest",
+            "args": ["foo", "bar"],
+        }
         config = ContainerConfig.from_dict(config_dict)
         assert config.to_light_dict() == config_dict
         assert config.get_container_command_args() == ([], ["foo", "bar"])
 
     def test_config_str_command_args(self):
-        config_dict = {"image": "foo/bar:latest", "command": "foo", "args": "foo"}
+        config_dict = {
+            "kind": "container",
+            "image": "foo/bar:latest",
+            "command": "foo",
+            "args": "foo",
+        }
         config = ContainerConfig.from_dict(config_dict)
         assert config.to_light_dict() == config_dict
         assert config.get_container_command_args() == (["foo"], ["foo"])
 
     def test_config_list__command_args(self):
-        config_dict = {"image": "foo/bar:latest", "command": ["foo"], "args": ["foo"]}
+        config_dict = {
+            "kind": "container",
+            "image": "foo/bar:latest",
+            "command": ["foo"],
+            "args": ["foo"],
+        }
         config = ContainerConfig.from_dict(config_dict)
         assert config.to_light_dict() == config_dict
         assert config.get_container_command_args() == (["foo"], ["foo"])
 
         config_dict = {
+            "kind": "container",
             "image": "foo/bar:latest",
             "command": ["foo", "bar"],
             "args": ["foo", "bar"],

@@ -35,7 +35,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 api_instance = polyaxon_sdk.SearchV1Api(polyaxon_sdk.ApiClient(configuration))
 owner = 'owner_example' # str | Owner of the namespace
 project = 'project_example' # str | Project under namesapce
-body = polyaxon_sdk.V1Search() # V1Search | Artifact store body
+body = polyaxon_sdk.V1Search() # V1Search | Search body
 
 try:
     # List archived runs for user
@@ -51,7 +51,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **str**| Owner of the namespace | 
  **project** | **str**| Project under namesapce | 
- **body** | [**V1Search**](V1Search.md)| Artifact store body | 
+ **body** | [**V1Search**](V1Search.md)| Search body | 
 
 ### Return type
 
@@ -265,7 +265,7 @@ api_instance = polyaxon_sdk.SearchV1Api(polyaxon_sdk.ApiClient(configuration))
 owner = 'owner_example' # str | Owner of the namespace
 project = 'project_example' # str | Project under namesapce
 search_uuid = 'search_uuid_example' # str | UUID
-body = polyaxon_sdk.V1Search() # V1Search | Artifact store body
+body = polyaxon_sdk.V1Search() # V1Search | Search body
 
 try:
     # Get run
@@ -282,7 +282,7 @@ Name | Type | Description  | Notes
  **owner** | **str**| Owner of the namespace | 
  **project** | **str**| Project under namesapce | 
  **search_uuid** | **str**| UUID | 
- **body** | [**V1Search**](V1Search.md)| Artifact store body | 
+ **body** | [**V1Search**](V1Search.md)| Search body | 
 
 ### Return type
 
@@ -323,7 +323,7 @@ api_instance = polyaxon_sdk.SearchV1Api(polyaxon_sdk.ApiClient(configuration))
 owner = 'owner_example' # str | Owner of the namespace
 project = 'project_example' # str | Project under namesapce
 search_uuid = 'search_uuid_example' # str | UUID
-body = polyaxon_sdk.V1Search() # V1Search | Artifact store body
+body = polyaxon_sdk.V1Search() # V1Search | Search body
 
 try:
     # Create new run
@@ -340,7 +340,7 @@ Name | Type | Description  | Notes
  **owner** | **str**| Owner of the namespace | 
  **project** | **str**| Project under namesapce | 
  **search_uuid** | **str**| UUID | 
- **body** | [**V1Search**](V1Search.md)| Artifact store body | 
+ **body** | [**V1Search**](V1Search.md)| Search body | 
 
 ### Return type
 

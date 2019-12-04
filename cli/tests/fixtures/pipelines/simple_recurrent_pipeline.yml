@@ -8,7 +8,7 @@ schedule:
   start_at: '2019-06-24T21:20:07+00:00'
   frequency: 120
   depends_on_past: true
-workflow:
+run:
   kind: dag
   ops:
     - name: recurrent-task
@@ -34,4 +34,6 @@ workflow:
         image_pull_secrets: [secret1, secret2]
       termination:
         max_retries: 2
-      container: {image: test}
+      run:
+        kind: container
+        image: test

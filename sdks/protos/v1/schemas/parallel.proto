@@ -1,0 +1,202 @@
+syntax = "proto3";
+
+package v1;
+
+import "google/protobuf/struct.proto";
+
+import "v1/schemas/container.proto";
+import "v1/schemas/optimization.proto";
+
+
+// Parallelism based on randomly generated search space
+message RandomSearch {
+    // Kind of parallel, should be equal to "random_search"
+    string kind = 1;
+
+    // Matrix/Space definition of params to traverse
+    string matrix = 2;
+
+    // Number of runs to generate and search
+    int64 n_runs = 3;
+
+    // Seed for the random generator
+    int64 seed = 4;
+
+    // Number of concurrent runs
+    int64 concurrency = 5;
+
+    // A list of Early stoppings, accpets both metric and failure early stopping mechanisms
+    repeated google.protobuf.Struct early_stopping = 6;
+}
+
+
+// Parallelism based on grid/cartesian product generated search space
+message GridSearch {
+    // Kind of parallel, should be equal to "grid_search"
+    string kind = 1;
+
+    // Matrix/Space definition of params to traverse
+    string matrix = 2;
+
+    // Number of runs to generate and search
+    int64 n_runs = 3;
+
+    // Seed for the random generator
+    int64 seed = 4;
+
+    // Number of concurrent runs
+    int64 concurrency = 5;
+
+    // A list of Early stopping objects, accpets both metric and failure early stopping mechanisms
+    repeated google.protobuf.Struct early_stopping = 6;
+}
+
+// Parallelism based on hyperband
+message Hyperband {
+    // Kind of parallel, should be equal to "hyperband"
+    string kind = 1;
+
+    // Matrix/Space definition of params to traverse
+    string matrix = 2;
+
+    // Eta
+    int64 eta = 3;
+
+    // Resource to optimize (should be an integer or a float)
+    OptimizationResource resource = 4;
+
+    // Metric to optimize during the iterations
+    OptimizationMetric metric = 5;
+
+    // A flag to resume or restart the selected runs
+    bool resume = 6;
+
+    // Seed for the random generator
+    int64 seed = 7;
+
+    // Number of concurrent runs
+    int64 concurrency = 8;
+
+    // A list of Early stopping objects, accpets both metric and failure early stopping mechanisms
+    repeated google.protobuf.Struct early_stopping = 9;
+}
+
+
+// Parallelism based on Bayesian Optimization
+message BO {
+    // Kind of parallel, should be equal to "bo"
+    string kind = 1;
+
+    // Matrix/Space definition of params to traverse
+    string matrix = 2;
+
+    // Number of intial random observations to create
+    int32 n_initial_trials = 3;
+
+    // Number of iteration for producing new observations
+    int32 n_iterations = 4;
+
+    // A utility function to use for the bayesian optimization
+    repeated google.protobuf.Struct utility_function = 5;
+
+    // Metric to optimize during the iterations
+    OptimizationMetric metric = 6;
+
+    // Seed for the random generator
+    int64 seed = 7;
+
+    // Number of concurrent runs
+    int64 concurrency = 8;
+
+    // A list of Early stopping objects, accpets both metric and failure early stopping mechanisms
+    repeated google.protobuf.Struct early_stopping = 9;
+}
+
+
+// Hyperopt algorithms enum
+enum HyperoptAlgorithms {
+    // tpe algorithm
+    TPE = 0;
+
+    // random algorithm
+    RAND = 1;
+
+    // anneal algorithm
+    ANNEAL = 2;
+}
+
+// Parallelism based on hyperopt
+message Hyperopt {
+    // Kind of parallel, should be equal to "hyperopt"
+    string kind = 1;
+
+    // Algorithm to use from the hyperopt library
+    HyperoptAlgorithms algorithm = 2;
+
+    // Matrix/Space definition of params to traverse
+    string matrix = 3;
+
+    // Number of runs to generate and search
+    int64 n_runs = 4;
+
+    // Seed for the random generator
+    int64 seed = 5;
+
+    // Number of concurrent runs
+    int64 concurrency = 6;
+
+    // A list of Early stopping objects, accpets both metric and failure early stopping mechanisms
+    repeated google.protobuf.Struct early_stopping = 7;
+}
+
+
+// Parallelism based on a custom iterative algorithm (suggestions -> mapping -> reduce -> repeat)
+message Iterative {
+    // Kind of parallel, should be equal to "iterative"
+    string kind = 1;
+
+    // Matrix/Space definition of params to traverse
+    string matrix = 2;
+
+    // Number of iterations to run
+    int32 n_iterations = 3;
+
+    // Container specification for crating new observations based on data from previous iterations
+    Container container = 4;
+
+    // Seed for the random generator
+    int64 seed = 5;
+
+    // Number of concurrent runs
+    int64 concurrency = 6;
+
+    // A list of Early stopping objects, accpets both metric and failure early stopping mechanisms
+    repeated google.protobuf.Struct early_stopping = 7;
+}
+
+
+// Parallelism based on map/array either specified manually by the user or passed from another step
+message Mapping {
+    // Kind of parallel, should be equal to "iterative"
+    string kind = 1;
+
+    // The mapping values
+    string values = 2;
+
+    // Number of concurrent runs
+    int64 concurrency = 6;
+
+    // A list of Early stopping objects, accpets both metric and failure early stopping mechanisms
+    repeated google.protobuf.Struct early_stopping = 7;
+}
+
+// All Schemas message
+message ParallelAllSchemas {
+    RandomSearch random = 1;
+    GridSearch grid = 2;
+    Hyperband hyperband = 3;
+    BO bo = 4;
+    Hyperopt hyperopt = 5;
+    Iterative iterative = 6;
+    Mapping mapping = 7;
+}

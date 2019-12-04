@@ -7,7 +7,7 @@ from polyaxon.automl.matrix.utils import get_length, sample
 from polyaxon.automl.search_managers.base import BaseManager
 from polyaxon.automl.search_managers.spec import SuggestionSpec
 from polyaxon.automl.search_managers.utils import get_random_generator
-from polyaxon.schemas.polyflow.workflows import RandomSearchConfig
+from polyaxon.schemas.polyflow.parallel import RandomSearchConfig
 
 
 class RandomSearchManager(BaseManager):

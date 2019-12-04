@@ -322,6 +322,582 @@
         ]
       }
     },
+    "/api/v1/organizations/create": {
+      "post": {
+        "summary": "List runs",
+        "operationId": "CreateOrganization",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Organization"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1Organization"
+            }
+          }
+        ],
+        "tags": [
+          "OrganizationsV1"
+        ]
+      }
+    },
+    "/api/v1/organizations/list": {
+      "get": {
+        "summary": "List archived runs for user",
+        "operationId": "ListOrganizations",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ListOrganizationsResponse"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          }
+        },
+        "tags": [
+          "OrganizationsV1"
+        ]
+      }
+    },
+    "/api/v1/organizations/names": {
+      "get": {
+        "summary": "List bookmarked runs for user",
+        "operationId": "ListOrganizationNames",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ListOrganizationsResponse"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          }
+        },
+        "tags": [
+          "OrganizationsV1"
+        ]
+      }
+    },
+    "/api/v1/organizations/{owner}": {
+      "get": {
+        "summary": "Create new run",
+        "operationId": "GetOrganization",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Organization"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "OrganizationsV1"
+        ]
+      },
+      "delete": {
+        "summary": "Patch run",
+        "operationId": "DeleteOrganization",
+        "responses": {
+          "200": {
+            "description": "A successful response."
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "OrganizationsV1"
+        ]
+      },
+      "put": {
+        "summary": "Get run",
+        "operationId": "UpdateOrganization",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Organization"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "description": "Organization body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1Organization"
+            }
+          }
+        ],
+        "tags": [
+          "OrganizationsV1"
+        ]
+      },
+      "patch": {
+        "summary": "Update run",
+        "operationId": "PatchOrganization",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Organization"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "description": "Organization body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1Organization"
+            }
+          }
+        ],
+        "tags": [
+          "OrganizationsV1"
+        ]
+      }
+    },
+    "/api/v1/organizations/{owner}/members": {
+      "get": {
+        "summary": "Delete run",
+        "operationId": "ListOrganizationMembers",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ListOrganizationMembersResponse"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "OrganizationsV1"
+        ]
+      },
+      "post": {
+        "summary": "Delete runs",
+        "operationId": "CreateOrganizationMember",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1OrganizationMember"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "description": "Organization body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1OrganizationMember"
+            }
+          }
+        ],
+        "tags": [
+          "OrganizationsV1"
+        ]
+      }
+    },
+    "/api/v1/organizations/{owner}/members/{member.user}": {
+      "get": {
+        "summary": "Stop run",
+        "operationId": "GetOrganizationMember",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1OrganizationMember"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "member.user",
+            "description": "User",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "member.role",
+            "description": "Role.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "member.created_at",
+            "description": "Optional time when the entityt was created.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "member.updated_at",
+            "description": "Optional last time the entity was updated.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          }
+        ],
+        "tags": [
+          "OrganizationsV1"
+        ]
+      },
+      "delete": {
+        "summary": "Invalidate runs",
+        "operationId": "DeleteOrganizationMember",
+        "responses": {
+          "200": {
+            "description": "A successful response."
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "member.user",
+            "description": "User",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "member.role",
+            "description": "Role.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "member.created_at",
+            "description": "Optional time when the entityt was created.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "member.updated_at",
+            "description": "Optional last time the entity was updated.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          }
+        ],
+        "tags": [
+          "OrganizationsV1"
+        ]
+      },
+      "put": {
+        "summary": "Stop runs",
+        "operationId": "UpdateOrganizationMember",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1OrganizationMember"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "member.user",
+            "description": "User",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "description": "Organization body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1OrganizationMember"
+            }
+          }
+        ],
+        "tags": [
+          "OrganizationsV1"
+        ]
+      },
+      "patch": {
+        "summary": "Invalidate run",
+        "operationId": "PatchOrganizationMember",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1OrganizationMember"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "member.user",
+            "description": "User",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "description": "Organization body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1OrganizationMember"
+            }
+          }
+        ],
+        "tags": [
+          "OrganizationsV1"
+        ]
+      }
+    },
     "/api/v1/users": {
       "get": {
         "summary": "List bookmarked runs for user",
@@ -3496,6 +4072,752 @@
         ]
       }
     },
+    "/api/v1/{owner}/teams": {
+      "get": {
+        "summary": "List archived runs for user",
+        "operationId": "ListTeams",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ListTeamsResponse"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "offset",
+            "description": "Pagination offset.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "limit",
+            "description": "Limit size.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "sort",
+            "description": "Sort to order the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "query",
+            "description": "Query filter the search search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "TeamsV1"
+        ]
+      },
+      "post": {
+        "summary": "List runs",
+        "operationId": "CreateTeam",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Team"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "description": "Team body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1Team"
+            }
+          }
+        ],
+        "tags": [
+          "TeamsV1"
+        ]
+      }
+    },
+    "/api/v1/{owner}/teams/names": {
+      "get": {
+        "summary": "List bookmarked runs for user",
+        "operationId": "ListTeamNames",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ListTeamsResponse"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "offset",
+            "description": "Pagination offset.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "limit",
+            "description": "Limit size.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "sort",
+            "description": "Sort to order the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "query",
+            "description": "Query filter the search search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "TeamsV1"
+        ]
+      }
+    },
+    "/api/v1/{owner}/teams/{team.name}": {
+      "put": {
+        "summary": "Get run",
+        "operationId": "UpdateTeam",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Team"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "team.name",
+            "description": "Name",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "description": "Team body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1Team"
+            }
+          }
+        ],
+        "tags": [
+          "TeamsV1"
+        ]
+      },
+      "patch": {
+        "summary": "Update run",
+        "operationId": "PatchTeam",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Team"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "team.name",
+            "description": "Name",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "description": "Team body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1Team"
+            }
+          }
+        ],
+        "tags": [
+          "TeamsV1"
+        ]
+      }
+    },
+    "/api/v1/{owner}/teams/{team}": {
+      "get": {
+        "summary": "Create new run",
+        "operationId": "GetTeam",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Team"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "team",
+            "description": "Team under namesapce",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "TeamsV1"
+        ]
+      },
+      "delete": {
+        "summary": "Patch run",
+        "operationId": "DeleteTeam",
+        "responses": {
+          "200": {
+            "description": "A successful response."
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "team",
+            "description": "Team under namesapce",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "TeamsV1"
+        ]
+      }
+    },
+    "/api/v1/{owner}/teams/{team}/members": {
+      "get": {
+        "summary": "Delete run",
+        "operationId": "ListTeamMembers",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ListTeamMembersResponse"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "team",
+            "description": "Team under namesapce",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "TeamsV1"
+        ]
+      },
+      "post": {
+        "summary": "Delete runs",
+        "operationId": "CreateTeamMember",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1TeamMember"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "team",
+            "description": "Team",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "description": "Team body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1TeamMember"
+            }
+          }
+        ],
+        "tags": [
+          "TeamsV1"
+        ]
+      }
+    },
+    "/api/v1/{owner}/teams/{team}/members/{member.user}": {
+      "get": {
+        "summary": "Stop run",
+        "operationId": "GetTeamMember",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1TeamMember"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "team",
+            "description": "Team",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "member.user",
+            "description": "User",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "member.role",
+            "description": "Role.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "member.org_role",
+            "description": "Organization Role.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "member.created_at",
+            "description": "Optional time when the entityt was created.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "member.updated_at",
+            "description": "Optional last time the entity was updated.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          }
+        ],
+        "tags": [
+          "TeamsV1"
+        ]
+      },
+      "delete": {
+        "summary": "Invalidate runs",
+        "operationId": "DeleteTeamMember",
+        "responses": {
+          "200": {
+            "description": "A successful response."
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "team",
+            "description": "Team",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "member.user",
+            "description": "User",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "member.role",
+            "description": "Role.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "member.org_role",
+            "description": "Organization Role.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "member.created_at",
+            "description": "Optional time when the entityt was created.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "member.updated_at",
+            "description": "Optional last time the entity was updated.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          }
+        ],
+        "tags": [
+          "TeamsV1"
+        ]
+      },
+      "put": {
+        "summary": "Stop runs",
+        "operationId": "UpdateTeamMember",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1TeamMember"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "team",
+            "description": "Team",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "member.user",
+            "description": "User",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "description": "Team body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1TeamMember"
+            }
+          }
+        ],
+        "tags": [
+          "TeamsV1"
+        ]
+      },
+      "patch": {
+        "summary": "Invalidate run",
+        "operationId": "PatchTeamMember",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1TeamMember"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "team",
+            "description": "Team",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "member.user",
+            "description": "User",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "description": "Team body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1TeamMember"
+            }
+          }
+        ],
+        "tags": [
+          "TeamsV1"
+        ]
+      }
+    },
     "/api/v1/{owner}/{project.name}": {
       "put": {
         "summary": "Patch run",
@@ -3850,6 +5172,352 @@
         ],
         "tags": [
           "ProjectsV1"
+        ]
+      }
+    },
+    "/api/v1/{owner}/{project}/dashboards": {
+      "get": {
+        "summary": "List bookmarked runs for user",
+        "operationId": "ListDashboard",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ListDashboardsResponse"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "project",
+            "description": "Project under namesapce",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "offset",
+            "description": "Pagination offset.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "limit",
+            "description": "Limit size.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "sort",
+            "description": "Sort to order the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "query",
+            "description": "Query filter the search search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "DashboardV1"
+        ]
+      },
+      "post": {
+        "summary": "List archived runs for user",
+        "operationId": "CreateDashboard",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Dashboard"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "project",
+            "description": "Project under namesapce",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "description": "Dashboard body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1Dashboard"
+            }
+          }
+        ],
+        "tags": [
+          "DashboardV1"
+        ]
+      }
+    },
+    "/api/v1/{owner}/{project}/dashboards/{dashboard.uuid}": {
+      "put": {
+        "summary": "Create new run",
+        "operationId": "UpdateDashboard",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Dashboard"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "project",
+            "description": "Project under namesapce",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "dashboard.uuid",
+            "description": "UUID",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "description": "Dashboard body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1Dashboard"
+            }
+          }
+        ],
+        "tags": [
+          "DashboardV1"
+        ]
+      },
+      "patch": {
+        "summary": "Get run",
+        "operationId": "PatchDashboard",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Dashboard"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "project",
+            "description": "Project under namesapce",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "dashboard.uuid",
+            "description": "UUID",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "description": "Dashboard body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1Dashboard"
+            }
+          }
+        ],
+        "tags": [
+          "DashboardV1"
+        ]
+      }
+    },
+    "/api/v1/{owner}/{project}/dashboards/{uuid}": {
+      "get": {
+        "summary": "List runs",
+        "operationId": "GetDashboard",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Dashboard"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "project",
+            "description": "Project where the experiement will be assigned",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "uuid",
+            "description": "Unique integer identifier of the entity",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "DashboardV1"
+        ]
+      },
+      "delete": {
+        "summary": "Update run",
+        "operationId": "DeleteDashboard",
+        "responses": {
+          "200": {
+            "description": "A successful response."
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "project",
+            "description": "Project where the experiement will be assigned",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "uuid",
+            "description": "Unique integer identifier of the entity",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "DashboardV1"
         ]
       }
     },
@@ -4798,6 +6466,58 @@
         ]
       }
     },
+    "/api/v1/{owner}/{project}/runs/{uuid}/settings": {
+      "get": {
+        "summary": "Get Run settings",
+        "operationId": "GetRunSettings",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1RunSettings"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "project",
+            "description": "Project where the experiement will be assigned",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "uuid",
+            "description": "Unique integer identifier of the entity",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "RunsV1"
+        ]
+      }
+    },
     "/api/v1/{owner}/{project}/runs/{uuid}/statuses": {
       "get": {
         "summary": "Get run status",
@@ -5226,7 +6946,7 @@
           },
           {
             "name": "body",
-            "description": "Artifact store body",
+            "description": "Search body",
             "in": "body",
             "required": true,
             "schema": {
@@ -5287,7 +7007,7 @@
           },
           {
             "name": "body",
-            "description": "Artifact store body",
+            "description": "Search body",
             "in": "body",
             "required": true,
             "schema": {
@@ -5346,7 +7066,7 @@
           },
           {
             "name": "body",
-            "description": "Artifact store body",
+            "description": "Search body",
             "in": "body",
             "required": true,
             "schema": {
@@ -5458,6 +7178,304 @@
         ]
       }
     },
+    "/api/v1/{owner}/{project}/settings": {
+      "get": {
+        "summary": "Resume run",
+        "operationId": "GetProjectSettings",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ProjectSettings"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "project",
+            "description": "Project under namesapce",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "ProjectsV1"
+        ]
+      },
+      "put": {
+        "summary": "Archive run",
+        "operationId": "UpdateProjectSettings",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ProjectSettings"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "project",
+            "description": "Project name",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "description": "Project settings body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1ProjectSettings"
+            }
+          }
+        ],
+        "tags": [
+          "ProjectsV1"
+        ]
+      },
+      "patch": {
+        "summary": "Restore run",
+        "operationId": "PatchProjectSettings",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ProjectSettings"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "project",
+            "description": "Project name",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "description": "Project settings body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1ProjectSettings"
+            }
+          }
+        ],
+        "tags": [
+          "ProjectsV1"
+        ]
+      }
+    },
+    "/api/v1/{owner}/{project}/teams": {
+      "get": {
+        "summary": "Bookmark run",
+        "operationId": "GetProjectTeams",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ProjectTeams"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "project",
+            "description": "Project under namesapce",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "ProjectsV1"
+        ]
+      },
+      "put": {
+        "summary": "Unbookmark run",
+        "operationId": "UpdateProjectTeams",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ProjectTeams"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "project",
+            "description": "Project name",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "description": "Project settings body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1ProjectTeams"
+            }
+          }
+        ],
+        "tags": [
+          "ProjectsV1"
+        ]
+      },
+      "patch": {
+        "summary": "Start run tensorboard",
+        "operationId": "PatchProjectTeams",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ProjectTeams"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "project",
+            "description": "Project name",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "description": "Project settings body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1ProjectTeams"
+            }
+          }
+        ],
+        "tags": [
+          "ProjectsV1"
+        ]
+      }
+    },
     "/api/v1/{owner}/{project}/unbookmark": {
       "delete": {
         "summary": "Invalidate runs",
@@ -5497,6 +7515,35 @@
         ],
         "tags": [
           "ProjectsV1"
+        ]
+      }
+    },
+    "/schemas": {
+      "get": {
+        "summary": "List bookmarked runs for user",
+        "operationId": "NoOp",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Schemas"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          }
+        },
+        "tags": [
+          "SchemasV1"
         ]
       }
     },
@@ -5873,6 +7920,14 @@
     }
   },
   "definitions": {
+    "protobufNullValue": {
+      "type": "string",
+      "enum": [
+        "NULL_VALUE"
+      ],
+      "default": "NULL_VALUE",
+      "description": "`NullValue` is a singleton enumeration to represent the null value for the\n`Value` type union.\n\n The JSON representation for `NullValue` is JSON `null`.\n\n - NULL_VALUE: Null value."
+    },
     "v1Agent": {
       "type": "object",
       "properties": {
@@ -5890,9 +7945,6 @@
         },
         "version_api": {
           "type": "object",
-          "additionalProperties": {
-            "type": "string"
-          },
           "title": "Optional version api"
         },
         "created_at": {
@@ -5907,6 +7959,23 @@
         }
       },
       "title": "Agent specification"
+    },
+    "v1ArtifactMount": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "title": "Name of the artifact"
+        },
+        "paths": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "Paths to mount"
+        }
+      },
+      "title": "Artifact mount specification"
     },
     "v1ArtifactTreeResponse": {
       "type": "object",
@@ -6024,6 +8093,73 @@
       },
       "title": "Auth specification"
     },
+    "v1AverageStoppingPolicy": {
+      "type": "object",
+      "properties": {
+        "king": {
+          "type": "string",
+          "title": "Kind of this stopping policy, should be equal to \"average\""
+        },
+        "evaluation_interval": {
+          "type": "string",
+          "format": "int64",
+          "description": "Interval/Frequency for applying the policy."
+        }
+      },
+      "description": "Early stopping with average stopping, this policy computes running averages across\nall runs and stops those whose best performance is worse than the median\nof the running runs."
+    },
+    "v1BO": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "title": "Kind of parallel, should be equal to \"bo\""
+        },
+        "matrix": {
+          "type": "string",
+          "title": "Matrix/Space definition of params to traverse"
+        },
+        "n_initial_trials": {
+          "type": "integer",
+          "format": "int32",
+          "title": "Number of intial random observations to create"
+        },
+        "n_iterations": {
+          "type": "integer",
+          "format": "int32",
+          "title": "Number of iteration for producing new observations"
+        },
+        "utility_function": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          },
+          "title": "A utility function to use for the bayesian optimization"
+        },
+        "metric": {
+          "$ref": "#/definitions/v1OptimizationMetric",
+          "title": "Metric to optimize during the iterations"
+        },
+        "seed": {
+          "type": "string",
+          "format": "int64",
+          "title": "Seed for the random generator"
+        },
+        "concurrency": {
+          "type": "string",
+          "format": "int64",
+          "title": "Number of concurrent runs"
+        },
+        "early_stopping": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          },
+          "title": "A list of Early stopping objects, accpets both metric and failure early stopping mechanisms"
+        }
+      },
+      "title": "Parallelism based on Bayesian Optimization"
+    },
     "v1CodeRef": {
       "type": "object",
       "properties": {
@@ -6038,6 +8174,38 @@
       },
       "title": "Code Reference specification"
     },
+    "v1Container": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "title": "Kind of parallel, should be equal to \"container\""
+        },
+        "image": {
+          "type": "string",
+          "title": "Image to use for the container defintion"
+        },
+        "image_pull_policy": {
+          "type": "string",
+          "title": "A valid image pull policy"
+        },
+        "command": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "The command to execute on the container."
+        },
+        "args": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Arguments to the entrypoint."
+        }
+      },
+      "title": "Container specification"
+    },
     "v1CredsBodyRequest": {
       "type": "object",
       "properties": {
@@ -6051,6 +8219,87 @@
         }
       },
       "title": "Login"
+    },
+    "v1CronSchedule": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "title": "Kind of parallel, should be equal to \"cron\""
+        },
+        "start_at": {
+          "type": "string",
+          "format": "date-time",
+          "title": "Whan to start this cron schedule"
+        },
+        "end_at": {
+          "type": "string",
+          "format": "date-time",
+          "title": "Whan to end this cron schedule"
+        },
+        "cron": {
+          "type": "string",
+          "title": "Cron definition, e.g. 0 1 * * *"
+        },
+        "depends_on_past": {
+          "type": "boolean",
+          "format": "boolean",
+          "title": "A flag to set a dependency on past executions"
+        }
+      },
+      "title": "Cron schedule specification"
+    },
+    "v1Dashboard": {
+      "type": "object",
+      "properties": {
+        "uuid": {
+          "type": "string",
+          "title": "UUID"
+        },
+        "name": {
+          "type": "string",
+          "title": "Optional name"
+        },
+        "widgets": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1WidgetSpec"
+          },
+          "title": "Optional Search definition"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time",
+          "title": "Optional time when the entityt was created"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time",
+          "title": "Optional last time the entity was updated"
+        }
+      },
+      "title": "Dashboard specification"
+    },
+    "v1EarlyStoppingAllSchemas": {
+      "type": "object",
+      "properties": {
+        "median": {
+          "$ref": "#/definitions/v1MedianStoppingPolicy"
+        },
+        "average": {
+          "$ref": "#/definitions/v1AverageStoppingPolicy"
+        },
+        "truncation": {
+          "$ref": "#/definitions/v1TruncationStoppingPolicy"
+        },
+        "metric": {
+          "$ref": "#/definitions/v1MetricEarlyStopping"
+        },
+        "failure": {
+          "$ref": "#/definitions/v1FailureEarlyStopping"
+        }
+      },
+      "title": "All Schemas message"
     },
     "v1EntityStatusBodyRequest": {
       "type": "object",
@@ -6073,6 +8322,76 @@
         }
       },
       "title": "Request data to create/update entity status"
+    },
+    "v1ExactTimeSchedule": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "title": "Kind of parallel, should be equal to \"exact_time\""
+        },
+        "start_at": {
+          "type": "string",
+          "format": "date-time",
+          "title": "Whan to start this cron schedule"
+        }
+      },
+      "title": "Exact time schedule specification"
+    },
+    "v1FailureEarlyStopping": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "title": "Kind of this metric early stopping policy, should be equal to \"failure_early_stopping\""
+        },
+        "percent": {
+          "type": "integer",
+          "format": "int32",
+          "description": "The percentage failed runs, at each evaluation interval.\ne.g. 1 - 99."
+        },
+        "evaluation_interval": {
+          "type": "string",
+          "description": "Interval/Frequency for applying the policy."
+        }
+      },
+      "description": "FailureEarlyStoppingSchema specification\nEarly stopping based on failure config.\nthis policy stops based on a percentage of\nfailed runs at every evaluation."
+    },
+    "v1GridSearch": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "title": "Kind of parallel, should be equal to \"grid_search\""
+        },
+        "matrix": {
+          "type": "string",
+          "title": "Matrix/Space definition of params to traverse"
+        },
+        "n_runs": {
+          "type": "string",
+          "format": "int64",
+          "title": "Number of runs to generate and search"
+        },
+        "seed": {
+          "type": "string",
+          "format": "int64",
+          "title": "Seed for the random generator"
+        },
+        "concurrency": {
+          "type": "string",
+          "format": "int64",
+          "title": "Number of concurrent runs"
+        },
+        "early_stopping": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          },
+          "title": "A list of Early stopping objects, accpets both metric and failure early stopping mechanisms"
+        }
+      },
+      "title": "Parallelism based on grid/cartesian product generated search space"
     },
     "v1HostAccess": {
       "type": "object",
@@ -6140,6 +8459,197 @@
         }
       },
       "title": "Host access specification"
+    },
+    "v1Hyperband": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "title": "Kind of parallel, should be equal to \"hyperband\""
+        },
+        "matrix": {
+          "type": "string",
+          "title": "Matrix/Space definition of params to traverse"
+        },
+        "eta": {
+          "type": "string",
+          "format": "int64",
+          "title": "Eta"
+        },
+        "resource": {
+          "$ref": "#/definitions/v1OptimizationResource",
+          "title": "Resource to optimize (should be an integer or a float)"
+        },
+        "metric": {
+          "$ref": "#/definitions/v1OptimizationMetric",
+          "title": "Metric to optimize during the iterations"
+        },
+        "resume": {
+          "type": "boolean",
+          "format": "boolean",
+          "title": "A flag to resume or restart the selected runs"
+        },
+        "seed": {
+          "type": "string",
+          "format": "int64",
+          "title": "Seed for the random generator"
+        },
+        "concurrency": {
+          "type": "string",
+          "format": "int64",
+          "title": "Number of concurrent runs"
+        },
+        "early_stopping": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          },
+          "title": "A list of Early stopping objects, accpets both metric and failure early stopping mechanisms"
+        }
+      },
+      "title": "Parallelism based on hyperband"
+    },
+    "v1Hyperopt": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "title": "Kind of parallel, should be equal to \"hyperopt\""
+        },
+        "algorithm": {
+          "$ref": "#/definitions/v1HyperoptAlgorithms",
+          "title": "Algorithm to use from the hyperopt library"
+        },
+        "matrix": {
+          "type": "string",
+          "title": "Matrix/Space definition of params to traverse"
+        },
+        "n_runs": {
+          "type": "string",
+          "format": "int64",
+          "title": "Number of runs to generate and search"
+        },
+        "seed": {
+          "type": "string",
+          "format": "int64",
+          "title": "Seed for the random generator"
+        },
+        "concurrency": {
+          "type": "string",
+          "format": "int64",
+          "title": "Number of concurrent runs"
+        },
+        "early_stopping": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          },
+          "title": "A list of Early stopping objects, accpets both metric and failure early stopping mechanisms"
+        }
+      },
+      "title": "Parallelism based on hyperopt"
+    },
+    "v1HyperoptAlgorithms": {
+      "type": "string",
+      "enum": [
+        "TPE",
+        "RAND",
+        "ANNEAL"
+      ],
+      "default": "TPE",
+      "description": "- TPE: tpe algorithm\n - RAND: random algorithm\n - ANNEAL: anneal algorithm",
+      "title": "Hyperopt algorithms enum"
+    },
+    "v1IntervalSchedule": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "title": "Kind of parallel, should be equal to \"interval\""
+        },
+        "start_at": {
+          "type": "string",
+          "format": "date-time",
+          "title": "Whan to start this interval schedule"
+        },
+        "end_at": {
+          "type": "string",
+          "format": "date-time",
+          "title": "Whan to end this interval schedule"
+        },
+        "frequency": {
+          "type": "string",
+          "format": "int64",
+          "title": "Frequency at which to execute the runs"
+        },
+        "depends_on_past": {
+          "type": "boolean",
+          "format": "boolean",
+          "title": "A flag to set a dependency on past executions"
+        }
+      },
+      "title": "Interval schedule specification"
+    },
+    "v1Iterative": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "title": "Kind of parallel, should be equal to \"iterative\""
+        },
+        "matrix": {
+          "type": "string",
+          "title": "Matrix/Space definition of params to traverse"
+        },
+        "n_iterations": {
+          "type": "integer",
+          "format": "int32",
+          "title": "Number of iterations to run"
+        },
+        "container": {
+          "$ref": "#/definitions/v1Container",
+          "title": "Container specification for crating new observations based on data from previous iterations"
+        },
+        "seed": {
+          "type": "string",
+          "format": "int64",
+          "title": "Seed for the random generator"
+        },
+        "concurrency": {
+          "type": "string",
+          "format": "int64",
+          "title": "Number of concurrent runs"
+        },
+        "early_stopping": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          },
+          "title": "A list of Early stopping objects, accpets both metric and failure early stopping mechanisms"
+        }
+      },
+      "title": "Parallelism based on a custom iterative algorithm (suggestions -> mapping -> reduce -> repeat)"
+    },
+    "v1K8sMount": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "title": "Name of the artifact"
+        },
+        "mount_path": {
+          "type": "string",
+          "title": "Path where to mount the resource"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "Items to mount from the resource"
+        }
+      },
+      "title": "K8S mount (config/secret) specification"
     },
     "v1K8sResource": {
       "type": "object",
@@ -6262,6 +8772,32 @@
       },
       "title": "Contains list artifacts stores"
     },
+    "v1ListDashboardsResponse": {
+      "type": "object",
+      "properties": {
+        "count": {
+          "type": "integer",
+          "format": "int32",
+          "title": "Count of the entities"
+        },
+        "results": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1Dashboard"
+          },
+          "title": "List of all entities"
+        },
+        "previous": {
+          "type": "string",
+          "title": "Previous page"
+        },
+        "next": {
+          "type": "string",
+          "title": "Next page"
+        }
+      },
+      "title": "Contains list dashboards"
+    },
     "v1ListHostAccessesResponse": {
       "type": "object",
       "properties": {
@@ -6313,6 +8849,58 @@
         }
       },
       "title": "Contains list k8s resources"
+    },
+    "v1ListOrganizationMembersResponse": {
+      "type": "object",
+      "properties": {
+        "count": {
+          "type": "integer",
+          "format": "int32",
+          "title": "Count of the entities"
+        },
+        "results": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1OrganizationMember"
+          },
+          "title": "List of all entities"
+        },
+        "previous": {
+          "type": "string",
+          "title": "Previous page"
+        },
+        "next": {
+          "type": "string",
+          "title": "Next page"
+        }
+      },
+      "title": "Contains list organization members"
+    },
+    "v1ListOrganizationsResponse": {
+      "type": "object",
+      "properties": {
+        "count": {
+          "type": "integer",
+          "format": "int32",
+          "title": "Count of the entities"
+        },
+        "results": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1Organization"
+          },
+          "title": "List of all entities"
+        },
+        "previous": {
+          "type": "string",
+          "title": "Previous page"
+        },
+        "next": {
+          "type": "string",
+          "title": "Next page"
+        }
+      },
+      "title": "Contains list organizations"
     },
     "v1ListProjectsResponse": {
       "type": "object",
@@ -6416,7 +9004,59 @@
           "title": "Next page"
         }
       },
-      "title": "Contains list artifacts stores"
+      "title": "Contains list searches"
+    },
+    "v1ListTeamMembersResponse": {
+      "type": "object",
+      "properties": {
+        "count": {
+          "type": "integer",
+          "format": "int32",
+          "title": "Count of the entities"
+        },
+        "results": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1TeamMember"
+          },
+          "title": "List of all entities"
+        },
+        "previous": {
+          "type": "string",
+          "title": "Previous page"
+        },
+        "next": {
+          "type": "string",
+          "title": "Next page"
+        }
+      },
+      "title": "Contains list organization members"
+    },
+    "v1ListTeamsResponse": {
+      "type": "object",
+      "properties": {
+        "count": {
+          "type": "integer",
+          "format": "int32",
+          "title": "Count of the entities"
+        },
+        "results": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1Team"
+          },
+          "title": "List of all entities"
+        },
+        "previous": {
+          "type": "string",
+          "title": "Previous page"
+        },
+        "next": {
+          "type": "string",
+          "title": "Next page"
+        }
+      },
+      "title": "Contains list teams"
     },
     "v1LogHandler": {
       "type": "object",
@@ -6428,6 +9068,220 @@
           "type": "string"
         }
       }
+    },
+    "v1Mapping": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "title": "Kind of parallel, should be equal to \"iterative\""
+        },
+        "values": {
+          "type": "string",
+          "title": "The mapping values"
+        },
+        "concurrency": {
+          "type": "string",
+          "format": "int64",
+          "title": "Number of concurrent runs"
+        },
+        "early_stopping": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          },
+          "title": "A list of Early stopping objects, accpets both metric and failure early stopping mechanisms"
+        }
+      },
+      "title": "Parallelism based on map/array either specified manually by the user or passed from another step"
+    },
+    "v1MedianStoppingPolicy": {
+      "type": "object",
+      "properties": {
+        "king": {
+          "type": "string",
+          "title": "Kind of this stopping policy, should be equal to \"median\""
+        },
+        "evaluation_interval": {
+          "type": "string",
+          "format": "int64",
+          "description": "Interval/Frequency for applying the policy."
+        }
+      },
+      "description": "Early stopping with median stopping, this policy computes running medians across\nall runs and stops those whose best performance is worse than the median\nof the running runs."
+    },
+    "v1MetricEarlyStopping": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "title": "Kind of this metric early stopping policy, should be equal to \"metric_early_stopping\""
+        },
+        "metric": {
+          "type": "string",
+          "description": "Metric name to use for early stopping."
+        },
+        "value": {
+          "type": "string",
+          "description": "Metric value to use for the condition."
+        },
+        "optimization": {
+          "$ref": "#/definitions/v1Optimization",
+          "description": "Optimization to do: maximize or minimize."
+        },
+        "policy": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          },
+          "title": "Termination policy to use, should be one of the stopping policies:\nMedianStoppingPolicy, AverageStoppingPolicy, TruncationStoppingPolicy"
+        }
+      },
+      "description": "MetricEarlyStoppingSchema specification\nEarly stopping based on metric config."
+    },
+    "v1Mounts": {
+      "type": "object",
+      "properties": {
+        "secrets": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1K8sMount"
+          },
+          "title": "Secrets mounts"
+        },
+        "config_maps": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1K8sMount"
+          },
+          "title": "Config maps mounts"
+        },
+        "artifacts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1ArtifactMount"
+          },
+          "title": "Artifacts mounts"
+        }
+      },
+      "title": "Mounts specification"
+    },
+    "v1Optimization": {
+      "type": "string",
+      "enum": [
+        "MAXIMIZE",
+        "MINIMIZE"
+      ],
+      "default": "MAXIMIZE",
+      "description": "- MAXIMIZE: Minimize a metric\n - MINIMIZE: Maximize a metric",
+      "title": "Optimization enum for metrics"
+    },
+    "v1OptimizationMetric": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "title": "Name of the metric to optimize"
+        },
+        "optimization": {
+          "$ref": "#/definitions/v1Optimization",
+          "title": "Optimization to use fot the metric"
+        }
+      },
+      "title": "OptimizationMetric specification"
+    },
+    "v1OptimizationResource": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "title": "Name of the resource to allocate"
+        },
+        "type": {
+          "$ref": "#/definitions/v1ResourceType",
+          "title": "Type to use fot the resource"
+        }
+      },
+      "title": "OptimizationResource specification"
+    },
+    "v1Organization": {
+      "type": "object",
+      "properties": {
+        "user": {
+          "type": "string",
+          "title": "User"
+        },
+        "name": {
+          "type": "string",
+          "title": "Name"
+        },
+        "is_public": {
+          "type": "string",
+          "title": "Optional flag to tell if this organization is public"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time",
+          "title": "Optional time when the entityt was created"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time",
+          "title": "Optional last time the entity was updated"
+        }
+      },
+      "title": "Organization specification"
+    },
+    "v1OrganizationMember": {
+      "type": "object",
+      "properties": {
+        "user": {
+          "type": "string",
+          "title": "User"
+        },
+        "role": {
+          "type": "string",
+          "title": "Role"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time",
+          "title": "Optional time when the entityt was created"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time",
+          "title": "Optional last time the entity was updated"
+        }
+      },
+      "title": "Organization member specification"
+    },
+    "v1ParallelAllSchemas": {
+      "type": "object",
+      "properties": {
+        "random": {
+          "$ref": "#/definitions/v1RandomSearch"
+        },
+        "grid": {
+          "$ref": "#/definitions/v1GridSearch"
+        },
+        "hyperband": {
+          "$ref": "#/definitions/v1Hyperband"
+        },
+        "bo": {
+          "$ref": "#/definitions/v1BO"
+        },
+        "hyperopt": {
+          "$ref": "#/definitions/v1Hyperopt"
+        },
+        "iterative": {
+          "$ref": "#/definitions/v1Iterative"
+        },
+        "mapping": {
+          "$ref": "#/definitions/v1Mapping"
+        }
+      },
+      "title": "All Schemas message"
     },
     "v1Project": {
       "type": "object",
@@ -6508,6 +9362,79 @@
       },
       "title": "Request data to get/delete entity"
     },
+    "v1ProjectSettings": {
+      "type": "object",
+      "properties": {
+        "logs_store": {
+          "type": "string",
+          "title": "Logs Store"
+        },
+        "outputs_store": {
+          "type": "string",
+          "title": "Outputs Store"
+        },
+        "artifacts_stores": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "Artifacts Store"
+        },
+        "git_accesses": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "git Accesses"
+        },
+        "registry_accesses": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "Registry Accesses"
+        },
+        "k8s_secrets": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "K8S secrets"
+        },
+        "k8s_config_maps": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "K8S config maps"
+        },
+        "run_profile": {
+          "type": "string",
+          "title": "Run profile"
+        },
+        "run_profiles": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "Run profiles"
+        }
+      },
+      "title": "Project Settings specification"
+    },
+    "v1ProjectTeams": {
+      "type": "object",
+      "properties": {
+        "teams": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "Teams"
+        }
+      },
+      "title": "Project teams specification"
+    },
     "v1Queue": {
       "type": "object",
       "properties": {
@@ -6545,6 +9472,72 @@
         }
       },
       "title": "Queue specification"
+    },
+    "v1RandomSearch": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "title": "Kind of parallel, should be equal to \"random_search\""
+        },
+        "matrix": {
+          "type": "string",
+          "title": "Matrix/Space definition of params to traverse"
+        },
+        "n_runs": {
+          "type": "string",
+          "format": "int64",
+          "title": "Number of runs to generate and search"
+        },
+        "seed": {
+          "type": "string",
+          "format": "int64",
+          "title": "Seed for the random generator"
+        },
+        "concurrency": {
+          "type": "string",
+          "format": "int64",
+          "title": "Number of concurrent runs"
+        },
+        "early_stopping": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          },
+          "title": "A list of Early stoppings, accpets both metric and failure early stopping mechanisms"
+        }
+      },
+      "title": "Parallelism based on randomly generated search space"
+    },
+    "v1RepeatableSchedule": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "title": "Kind of parallel, should be equal to \"repeatable\""
+        },
+        "limit": {
+          "type": "string",
+          "format": "int64",
+          "title": "Limit to stop executing this schedule"
+        },
+        "depends_on_past": {
+          "type": "boolean",
+          "format": "boolean",
+          "title": "A flag to set a dependency on past executions"
+        }
+      },
+      "title": "Repeatable schedule specification"
+    },
+    "v1ResourceType": {
+      "type": "string",
+      "enum": [
+        "INT",
+        "FLOAT"
+      ],
+      "default": "INT",
+      "description": "- INT: Int resource\n - FLOAT: Float resource",
+      "title": "ResourceTypes enum for optmiztion resources"
     },
     "v1Run": {
       "type": "object",
@@ -6617,10 +9610,6 @@
           "type": "string",
           "title": "Optional latest status of this entity"
         },
-        "meta_info": {
-          "$ref": "#/definitions/v1RunMetaInfo",
-          "title": "Optional run meta info"
-        },
         "readme": {
           "type": "string",
           "title": "Optional a readme text describing this entity"
@@ -6630,25 +9619,28 @@
           "format": "boolean",
           "title": "Optional if this entity was bookmarked"
         },
+        "meta_info": {
+          "$ref": "#/definitions/v1RunMetaInfo",
+          "title": "Optional run meta info"
+        },
+        "kind": {
+          "type": "string",
+          "title": "Optional kind to tell the nature of this run"
+        },
+        "hub": {
+          "type": "string",
+          "title": "Optional hub reference versioned component"
+        },
         "inputs": {
           "type": "object",
-          "additionalProperties": {
-            "type": "string"
-          },
           "title": "Optional inputs of this entity"
         },
         "outputs": {
           "type": "object",
-          "additionalProperties": {
-            "type": "string"
-          },
           "title": "Optional outputs of this entity"
         },
         "run_env": {
           "type": "object",
-          "additionalProperties": {
-            "type": "string"
-          },
           "title": "Optional run environment tracked"
         },
         "is_resume": {
@@ -6663,7 +9655,7 @@
         },
         "cloning_strategy": {
           "type": "string",
-          "title": "Optional if this run was restarted/copied/resumed"
+          "title": "Optional if this run was restarted/copied/resumed/cached"
         },
         "pipeline": {
           "type": "string",
@@ -6697,12 +9689,132 @@
           "format": "int32",
           "title": "Optional an indicator if the run has a concurrency"
         },
-        "workflow_kind": {
+        "parallel_kind": {
           "type": "string",
-          "title": "Optional the kind of workflow if it exists"
+          "title": "Optional the parallel kind"
+        },
+        "run_kind": {
+          "type": "string",
+          "title": "Optional the run kind"
         }
       },
       "title": "Run meta info specification"
+    },
+    "v1RunSettings": {
+      "type": "object",
+      "properties": {
+        "namespace": {
+          "type": "string",
+          "title": "Namespace"
+        },
+        "agent": {
+          "$ref": "#/definitions/v1RunSettingsCatalog",
+          "title": "Agent"
+        },
+        "queue": {
+          "$ref": "#/definitions/v1RunSettingsCatalog",
+          "title": "Queue"
+        },
+        "logs_store": {
+          "$ref": "#/definitions/v1RunSettingsCatalog",
+          "title": "Logs Store"
+        },
+        "outputs_store": {
+          "$ref": "#/definitions/v1RunSettingsCatalog",
+          "title": "Outputs Store"
+        },
+        "init_artifacts_stores": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1RunSettingsCatalog"
+          },
+          "title": "Init artifact Stores"
+        },
+        "artifacts_stores": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1RunSettingsCatalog"
+          },
+          "title": "Artifacts Store"
+        },
+        "git_accesses": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1RunSettingsCatalog"
+          },
+          "title": "git Accesses"
+        },
+        "registry_access": {
+          "$ref": "#/definitions/v1RunSettingsCatalog",
+          "title": "Registry Access"
+        },
+        "k8s_secrets": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1RunSettingsCatalog"
+          },
+          "title": "K8S secrets"
+        },
+        "k8s_config_maps": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1RunSettingsCatalog"
+          },
+          "title": "K8S config maps"
+        }
+      }
+    },
+    "v1RunSettingsCatalog": {
+      "type": "object",
+      "properties": {
+        "uuid": {
+          "type": "string",
+          "title": "Uuid"
+        },
+        "name": {
+          "type": "string",
+          "title": "Name"
+        }
+      },
+      "title": "Run Settings specification"
+    },
+    "v1ScheduleAllSchemas": {
+      "type": "object",
+      "properties": {
+        "cron": {
+          "$ref": "#/definitions/v1CronSchedule"
+        },
+        "exact_time": {
+          "$ref": "#/definitions/v1ExactTimeSchedule"
+        },
+        "interval": {
+          "$ref": "#/definitions/v1IntervalSchedule"
+        },
+        "repeatable": {
+          "$ref": "#/definitions/v1RepeatableSchedule"
+        }
+      },
+      "title": "All Schemas message"
+    },
+    "v1Schemas": {
+      "type": "object",
+      "properties": {
+        "early_stopping": {
+          "$ref": "#/definitions/v1EarlyStoppingAllSchemas"
+        },
+        "mount": {
+          "$ref": "#/definitions/v1Mounts"
+        },
+        "parallel": {
+          "$ref": "#/definitions/v1ParallelAllSchemas"
+        },
+        "schedule": {
+          "$ref": "#/definitions/v1ScheduleAllSchemas"
+        },
+        "termination": {
+          "$ref": "#/definitions/v1Termination"
+        }
+      }
     },
     "v1Search": {
       "type": "object",
@@ -6715,14 +9827,24 @@
           "type": "string",
           "title": "Optional name"
         },
-        "definition": {
-          "$ref": "#/definitions/v1SearchDefinition",
-          "title": "Optional Search definition"
+        "spec": {
+          "$ref": "#/definitions/v1SearchSpec",
+          "title": "Search spec"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time",
+          "title": "Optional time when the entityt was created"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time",
+          "title": "Optional last time the entity was updated"
         }
       },
       "title": "Search specification"
     },
-    "v1SearchDefinition": {
+    "v1SearchSpec": {
       "type": "object",
       "properties": {
         "query": {
@@ -6733,6 +9855,11 @@
           "type": "string",
           "title": "Search sort"
         },
+        "limit": {
+          "type": "integer",
+          "format": "int32",
+          "title": "Search group bys"
+        },
         "groupby": {
           "type": "string",
           "title": "Search group bys"
@@ -6742,7 +9869,7 @@
           "title": "Search columns"
         }
       },
-      "title": "Search definition specification"
+      "title": "Search spec definition"
     },
     "v1Status": {
       "type": "object",
@@ -6796,6 +9923,110 @@
         }
       },
       "title": "Status condition specification"
+    },
+    "v1Team": {
+      "type": "object",
+      "properties": {
+        "uuid": {
+          "type": "string",
+          "title": "Uuid"
+        },
+        "name": {
+          "type": "string",
+          "title": "Name"
+        },
+        "projects": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "Name"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time",
+          "title": "Optional time when the entityt was created"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time",
+          "title": "Optional last time the entity was updated"
+        }
+      },
+      "title": "Team specification"
+    },
+    "v1TeamMember": {
+      "type": "object",
+      "properties": {
+        "user": {
+          "type": "string",
+          "title": "User"
+        },
+        "role": {
+          "type": "string",
+          "title": "Role"
+        },
+        "org_role": {
+          "type": "string",
+          "title": "Organization Role"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time",
+          "title": "Optional time when the entityt was created"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time",
+          "title": "Optional last time the entity was updated"
+        }
+      },
+      "title": "Team member specification"
+    },
+    "v1Termination": {
+      "type": "object",
+      "properties": {
+        "max_retries": {
+          "type": "integer",
+          "format": "int32",
+          "title": "Max retries for a specific run"
+        },
+        "restart_policy": {
+          "type": "string",
+          "title": "A valid restart policy"
+        },
+        "ttl": {
+          "type": "string",
+          "format": "int64",
+          "title": "A TTL definition"
+        },
+        "timeout": {
+          "type": "string",
+          "format": "int64",
+          "title": "A timeout in seconds"
+        }
+      },
+      "title": "Termination specification"
+    },
+    "v1TruncationStoppingPolicy": {
+      "type": "object",
+      "properties": {
+        "king": {
+          "type": "string",
+          "title": "Kind of this stopping policy, should be equal to \"truncation\""
+        },
+        "percent": {
+          "type": "integer",
+          "format": "int32",
+          "description": "The percentage of runs to stop, at each evaluation interval.\ne.g. 1 - 99."
+        },
+        "evaluation_interval": {
+          "type": "string",
+          "format": "int64",
+          "description": "Interval/Frequency for applying the policy."
+        }
+      },
+      "description": "Early stopping with truncation stopping, this policy stops a percentage of\nall running runs at every evaluation."
     },
     "v1User": {
       "type": "object",
@@ -6856,6 +10087,24 @@
           "$ref": "#/definitions/v1Version"
         }
       }
+    },
+    "v1WidgetSpec": {
+      "type": "object",
+      "properties": {
+        "king": {
+          "type": "string",
+          "title": "Widget kind"
+        },
+        "search": {
+          "$ref": "#/definitions/v1SearchSpec",
+          "title": "Search spec"
+        },
+        "meta": {
+          "type": "object",
+          "title": "Meta inforation"
+        }
+      },
+      "title": "Widget spec definition"
     }
   },
   "securityDefinitions": {

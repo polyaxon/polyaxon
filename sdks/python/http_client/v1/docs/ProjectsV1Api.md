@@ -11,14 +11,20 @@ Method | HTTP request | Description
 [**disable_project_ci**](ProjectsV1Api.md#disable_project_ci) | **DELETE** /api/v1/{owner}/{project}/ci | Restart run
 [**enable_project_ci**](ProjectsV1Api.md#enable_project_ci) | **POST** /api/v1/{owner}/{project}/ci | Restart run with copy
 [**get_project**](ProjectsV1Api.md#get_project) | **GET** /api/v1/{owner}/{project} | Update run
+[**get_project_settings**](ProjectsV1Api.md#get_project_settings) | **GET** /api/v1/{owner}/{project}/settings | Resume run
+[**get_project_teams**](ProjectsV1Api.md#get_project_teams) | **GET** /api/v1/{owner}/{project}/teams | Bookmark run
 [**list_archived_projects**](ProjectsV1Api.md#list_archived_projects) | **GET** /api/v1/archives/{user}/projects | Get run
 [**list_bookmarked_projects**](ProjectsV1Api.md#list_bookmarked_projects) | **GET** /api/v1/bookmarks/{user}/projects | Create new run
 [**list_project_names**](ProjectsV1Api.md#list_project_names) | **GET** /api/v1/{owner}/projects/names | List runs
 [**list_projects**](ProjectsV1Api.md#list_projects) | **GET** /api/v1/{owner}/projects/list | List bookmarked runs for user
 [**patch_project**](ProjectsV1Api.md#patch_project) | **PATCH** /api/v1/{owner}/{project.name} | Delete run
+[**patch_project_settings**](ProjectsV1Api.md#patch_project_settings) | **PATCH** /api/v1/{owner}/{project}/settings | Restore run
+[**patch_project_teams**](ProjectsV1Api.md#patch_project_teams) | **PATCH** /api/v1/{owner}/{project}/teams | Start run tensorboard
 [**restore_project**](ProjectsV1Api.md#restore_project) | **POST** /api/v1/{owner}/{project}/restore | Stop runs
 [**unbookmark_project**](ProjectsV1Api.md#unbookmark_project) | **DELETE** /api/v1/{owner}/{project}/unbookmark | Invalidate runs
 [**update_project**](ProjectsV1Api.md#update_project) | **PUT** /api/v1/{owner}/{project.name} | Patch run
+[**update_project_settings**](ProjectsV1Api.md#update_project_settings) | **PUT** /api/v1/{owner}/{project}/settings | Archive run
+[**update_project_teams**](ProjectsV1Api.md#update_project_teams) | **PUT** /api/v1/{owner}/{project}/teams | Unbookmark run
 [**upload_project_artifact**](ProjectsV1Api.md#upload_project_artifact) | **POST** /api/v1/{owner}/{project}/artifacts_stores/{uuid}/upload | Upload artifact to a store via project access
 
 
@@ -395,6 +401,114 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **get_project_settings**
+> V1ProjectSettings get_project_settings(owner, project)
+
+Resume run
+
+### Example
+```python
+from __future__ import print_function
+import time
+import polyaxon_sdk
+from polyaxon_sdk.rest import ApiException
+from pprint import pprint
+
+# Configure API key authorization: ApiKey
+configuration = polyaxon_sdk.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = polyaxon_sdk.ProjectsV1Api(polyaxon_sdk.ApiClient(configuration))
+owner = 'owner_example' # str | Owner of the namespace
+project = 'project_example' # str | Project under namesapce
+
+try:
+    # Resume run
+    api_response = api_instance.get_project_settings(owner, project)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling ProjectsV1Api->get_project_settings: %s\n" % e)
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **str**| Owner of the namespace | 
+ **project** | **str**| Project under namesapce | 
+
+### Return type
+
+[**V1ProjectSettings**](V1ProjectSettings.md)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **get_project_teams**
+> V1ProjectTeams get_project_teams(owner, project)
+
+Bookmark run
+
+### Example
+```python
+from __future__ import print_function
+import time
+import polyaxon_sdk
+from polyaxon_sdk.rest import ApiException
+from pprint import pprint
+
+# Configure API key authorization: ApiKey
+configuration = polyaxon_sdk.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = polyaxon_sdk.ProjectsV1Api(polyaxon_sdk.ApiClient(configuration))
+owner = 'owner_example' # str | Owner of the namespace
+project = 'project_example' # str | Project under namesapce
+
+try:
+    # Bookmark run
+    api_response = api_instance.get_project_teams(owner, project)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling ProjectsV1Api->get_project_teams: %s\n" % e)
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **str**| Owner of the namespace | 
+ **project** | **str**| Project under namesapce | 
+
+### Return type
+
+[**V1ProjectTeams**](V1ProjectTeams.md)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **list_archived_projects**
 > V1ListProjectsResponse list_archived_projects(user, offset=offset, limit=limit, sort=sort, query=query)
 
@@ -691,6 +805,118 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **patch_project_settings**
+> V1ProjectSettings patch_project_settings(owner, project, body)
+
+Restore run
+
+### Example
+```python
+from __future__ import print_function
+import time
+import polyaxon_sdk
+from polyaxon_sdk.rest import ApiException
+from pprint import pprint
+
+# Configure API key authorization: ApiKey
+configuration = polyaxon_sdk.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = polyaxon_sdk.ProjectsV1Api(polyaxon_sdk.ApiClient(configuration))
+owner = 'owner_example' # str | Owner of the namespace
+project = 'project_example' # str | Project name
+body = polyaxon_sdk.V1ProjectSettings() # V1ProjectSettings | Project settings body
+
+try:
+    # Restore run
+    api_response = api_instance.patch_project_settings(owner, project, body)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling ProjectsV1Api->patch_project_settings: %s\n" % e)
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **str**| Owner of the namespace | 
+ **project** | **str**| Project name | 
+ **body** | [**V1ProjectSettings**](V1ProjectSettings.md)| Project settings body | 
+
+### Return type
+
+[**V1ProjectSettings**](V1ProjectSettings.md)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **patch_project_teams**
+> V1ProjectTeams patch_project_teams(owner, project, body)
+
+Start run tensorboard
+
+### Example
+```python
+from __future__ import print_function
+import time
+import polyaxon_sdk
+from polyaxon_sdk.rest import ApiException
+from pprint import pprint
+
+# Configure API key authorization: ApiKey
+configuration = polyaxon_sdk.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = polyaxon_sdk.ProjectsV1Api(polyaxon_sdk.ApiClient(configuration))
+owner = 'owner_example' # str | Owner of the namespace
+project = 'project_example' # str | Project name
+body = polyaxon_sdk.V1ProjectTeams() # V1ProjectTeams | Project settings body
+
+try:
+    # Start run tensorboard
+    api_response = api_instance.patch_project_teams(owner, project, body)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling ProjectsV1Api->patch_project_teams: %s\n" % e)
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **str**| Owner of the namespace | 
+ **project** | **str**| Project name | 
+ **body** | [**V1ProjectTeams**](V1ProjectTeams.md)| Project settings body | 
+
+### Return type
+
+[**V1ProjectTeams**](V1ProjectTeams.md)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **restore_project**
 > restore_project(owner, project)
 
@@ -841,6 +1067,118 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**V1Project**](V1Project.md)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **update_project_settings**
+> V1ProjectSettings update_project_settings(owner, project, body)
+
+Archive run
+
+### Example
+```python
+from __future__ import print_function
+import time
+import polyaxon_sdk
+from polyaxon_sdk.rest import ApiException
+from pprint import pprint
+
+# Configure API key authorization: ApiKey
+configuration = polyaxon_sdk.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = polyaxon_sdk.ProjectsV1Api(polyaxon_sdk.ApiClient(configuration))
+owner = 'owner_example' # str | Owner of the namespace
+project = 'project_example' # str | Project name
+body = polyaxon_sdk.V1ProjectSettings() # V1ProjectSettings | Project settings body
+
+try:
+    # Archive run
+    api_response = api_instance.update_project_settings(owner, project, body)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling ProjectsV1Api->update_project_settings: %s\n" % e)
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **str**| Owner of the namespace | 
+ **project** | **str**| Project name | 
+ **body** | [**V1ProjectSettings**](V1ProjectSettings.md)| Project settings body | 
+
+### Return type
+
+[**V1ProjectSettings**](V1ProjectSettings.md)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **update_project_teams**
+> V1ProjectTeams update_project_teams(owner, project, body)
+
+Unbookmark run
+
+### Example
+```python
+from __future__ import print_function
+import time
+import polyaxon_sdk
+from polyaxon_sdk.rest import ApiException
+from pprint import pprint
+
+# Configure API key authorization: ApiKey
+configuration = polyaxon_sdk.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = polyaxon_sdk.ProjectsV1Api(polyaxon_sdk.ApiClient(configuration))
+owner = 'owner_example' # str | Owner of the namespace
+project = 'project_example' # str | Project name
+body = polyaxon_sdk.V1ProjectTeams() # V1ProjectTeams | Project settings body
+
+try:
+    # Unbookmark run
+    api_response = api_instance.update_project_teams(owner, project, body)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling ProjectsV1Api->update_project_teams: %s\n" % e)
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **str**| Owner of the namespace | 
+ **project** | **str**| Project name | 
+ **body** | [**V1ProjectTeams**](V1ProjectTeams.md)| Project settings body | 
+
+### Return type
+
+[**V1ProjectTeams**](V1ProjectTeams.md)
 
 ### Authorization
 

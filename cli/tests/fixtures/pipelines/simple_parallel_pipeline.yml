@@ -3,7 +3,7 @@ version: 1.0
 kind: component
 name: test-pipeline
 tags: [native]
-workflow:
+run:
   kind: dag
   concurrency: 2
   ops:
@@ -39,7 +39,9 @@ workflow:
         image_pull_secrets: [secret1, secret2]
       termination:
         max_retries: 2
-      container: {image: test}
+      run:
+        kind: container
+        image: test
 
     - name: job-template
       description: job to process something
@@ -59,4 +61,6 @@ workflow:
         image_pull_secrets: [secret1, secret2]
       termination:
         max_retries: 2
-      container: {image: test}
+      run:
+        kind: container
+        image: test

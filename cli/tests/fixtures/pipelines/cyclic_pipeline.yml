@@ -5,7 +5,7 @@ kind: component
 
 name: test-pipeline
 
-workflow:
+run:
   kind: dag
   ops:
     - name: A
@@ -21,4 +21,6 @@ workflow:
   components:
     - kind: component
       name: experiment-template
-      container: {image: test}
+      run:
+        kind: container
+        image: test

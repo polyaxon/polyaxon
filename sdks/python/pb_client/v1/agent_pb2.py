@@ -29,6 +29,7 @@ from google.protobuf import symbol_database as _symbol_database
 _sym_db = _symbol_database.Default()
 
 
+from google.protobuf import struct_pb2 as google_dot_protobuf_dot_struct__pb2
 from google.protobuf import timestamp_pb2 as google_dot_protobuf_dot_timestamp__pb2
 
 
@@ -37,49 +38,12 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='v1',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\x0ev1/agent.proto\x12\x02v1\x1a\x1fgoogle/protobuf/timestamp.proto\"\xf9\x01\n\x05\x41gent\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x11\n\tnamespace\x18\x03 \x01(\t\x12.\n\x0bversion_api\x18\x04 \x03(\x0b\x32\x19.v1.Agent.VersionApiEntry\x12.\n\ncreated_at\x18\x05 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12.\n\nupdated_at\x18\x06 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x1a\x31\n\x0fVersionApiEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\";\n\x10\x41gentBodyRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x18\n\x05\x61gent\x18\x02 \x01(\x0b\x32\t.v1.Agent\"_\n\x12ListAgentsResponse\x12\r\n\x05\x63ount\x18\x01 \x01(\x05\x12\x1a\n\x07results\x18\x02 \x03(\x0b\x32\t.v1.Agent\x12\x10\n\x08previous\x18\x03 \x01(\t\x12\x0c\n\x04next\x18\x04 \x01(\t\"\xb9\x01\n\x05Queue\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\r\n\x05\x61gent\x18\x02 \x01(\t\x12\x0c\n\x04name\x18\x03 \x01(\t\x12\x10\n\x08priority\x18\x04 \x01(\x05\x12\x13\n\x0b\x63oncurrency\x18\x05 \x01(\x05\x12.\n\ncreated_at\x18\x06 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12.\n\nupdated_at\x18\x07 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"J\n\x10QueueBodyRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\r\n\x05\x61gent\x18\x02 \x01(\t\x12\x18\n\x05queue\x18\x03 \x01(\x0b\x32\t.v1.Queue\"_\n\x12ListQueuesResponse\x12\r\n\x05\x63ount\x18\x01 \x01(\x05\x12\x1a\n\x07results\x18\x02 \x03(\x0b\x32\t.v1.Queue\x12\x10\n\x08previous\x18\x03 \x01(\t\x12\x0c\n\x04next\x18\x04 \x01(\tb\x06proto3')
+  serialized_pb=_b('\n\x0ev1/agent.proto\x12\x02v1\x1a\x1cgoogle/protobuf/struct.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\xc4\x01\n\x05\x41gent\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x11\n\tnamespace\x18\x03 \x01(\t\x12,\n\x0bversion_api\x18\x04 \x01(\x0b\x32\x17.google.protobuf.Struct\x12.\n\ncreated_at\x18\x05 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12.\n\nupdated_at\x18\x06 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\";\n\x10\x41gentBodyRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x18\n\x05\x61gent\x18\x02 \x01(\x0b\x32\t.v1.Agent\"_\n\x12ListAgentsResponse\x12\r\n\x05\x63ount\x18\x01 \x01(\x05\x12\x1a\n\x07results\x18\x02 \x03(\x0b\x32\t.v1.Agent\x12\x10\n\x08previous\x18\x03 \x01(\t\x12\x0c\n\x04next\x18\x04 \x01(\t\"\xb9\x01\n\x05Queue\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\r\n\x05\x61gent\x18\x02 \x01(\t\x12\x0c\n\x04name\x18\x03 \x01(\t\x12\x10\n\x08priority\x18\x04 \x01(\x05\x12\x13\n\x0b\x63oncurrency\x18\x05 \x01(\x05\x12.\n\ncreated_at\x18\x06 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12.\n\nupdated_at\x18\x07 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"J\n\x10QueueBodyRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\r\n\x05\x61gent\x18\x02 \x01(\t\x12\x18\n\x05queue\x18\x03 \x01(\x0b\x32\t.v1.Queue\"_\n\x12ListQueuesResponse\x12\r\n\x05\x63ount\x18\x01 \x01(\x05\x12\x1a\n\x07results\x18\x02 \x03(\x0b\x32\t.v1.Queue\x12\x10\n\x08previous\x18\x03 \x01(\t\x12\x0c\n\x04next\x18\x04 \x01(\tb\x06proto3')
   ,
-  dependencies=[google_dot_protobuf_dot_timestamp__pb2.DESCRIPTOR,])
+  dependencies=[google_dot_protobuf_dot_struct__pb2.DESCRIPTOR,google_dot_protobuf_dot_timestamp__pb2.DESCRIPTOR,])
 
 
 
-
-_AGENT_VERSIONAPIENTRY = _descriptor.Descriptor(
-  name='VersionApiEntry',
-  full_name='v1.Agent.VersionApiEntry',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='key', full_name='v1.Agent.VersionApiEntry.key', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b("").decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='value', full_name='v1.Agent.VersionApiEntry.value', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b("").decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=_b('8\001'),
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=256,
-  serialized_end=305,
-)
 
 _AGENT = _descriptor.Descriptor(
   name='Agent',
@@ -111,8 +75,8 @@ _AGENT = _descriptor.Descriptor(
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='version_api', full_name='v1.Agent.version_api', index=3,
-      number=4, type=11, cpp_type=10, label=3,
-      has_default_value=False, default_value=[],
+      number=4, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
@@ -133,7 +97,7 @@ _AGENT = _descriptor.Descriptor(
   ],
   extensions=[
   ],
-  nested_types=[_AGENT_VERSIONAPIENTRY, ],
+  nested_types=[],
   enum_types=[
   ],
   serialized_options=None,
@@ -142,8 +106,8 @@ _AGENT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=56,
-  serialized_end=305,
+  serialized_start=86,
+  serialized_end=282,
 )
 
 
@@ -180,8 +144,8 @@ _AGENTBODYREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=307,
-  serialized_end=366,
+  serialized_start=284,
+  serialized_end=343,
 )
 
 
@@ -232,8 +196,8 @@ _LISTAGENTSRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=368,
-  serialized_end=463,
+  serialized_start=345,
+  serialized_end=440,
 )
 
 
@@ -305,8 +269,8 @@ _QUEUE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=466,
-  serialized_end=651,
+  serialized_start=443,
+  serialized_end=628,
 )
 
 
@@ -350,8 +314,8 @@ _QUEUEBODYREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=653,
-  serialized_end=727,
+  serialized_start=630,
+  serialized_end=704,
 )
 
 
@@ -402,12 +366,11 @@ _LISTQUEUESRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=729,
-  serialized_end=824,
+  serialized_start=706,
+  serialized_end=801,
 )
 
-_AGENT_VERSIONAPIENTRY.containing_type = _AGENT
-_AGENT.fields_by_name['version_api'].message_type = _AGENT_VERSIONAPIENTRY
+_AGENT.fields_by_name['version_api'].message_type = google_dot_protobuf_dot_struct__pb2._STRUCT
 _AGENT.fields_by_name['created_at'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
 _AGENT.fields_by_name['updated_at'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
 _AGENTBODYREQUEST.fields_by_name['agent'].message_type = _AGENT
@@ -425,19 +388,11 @@ DESCRIPTOR.message_types_by_name['ListQueuesResponse'] = _LISTQUEUESRESPONSE
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 Agent = _reflection.GeneratedProtocolMessageType('Agent', (_message.Message,), {
-
-  'VersionApiEntry' : _reflection.GeneratedProtocolMessageType('VersionApiEntry', (_message.Message,), {
-    'DESCRIPTOR' : _AGENT_VERSIONAPIENTRY,
-    '__module__' : 'v1.agent_pb2'
-    # @@protoc_insertion_point(class_scope:v1.Agent.VersionApiEntry)
-    })
-  ,
   'DESCRIPTOR' : _AGENT,
   '__module__' : 'v1.agent_pb2'
   # @@protoc_insertion_point(class_scope:v1.Agent)
   })
 _sym_db.RegisterMessage(Agent)
-_sym_db.RegisterMessage(Agent.VersionApiEntry)
 
 AgentBodyRequest = _reflection.GeneratedProtocolMessageType('AgentBodyRequest', (_message.Message,), {
   'DESCRIPTOR' : _AGENTBODYREQUEST,
@@ -475,5 +430,4 @@ ListQueuesResponse = _reflection.GeneratedProtocolMessageType('ListQueuesRespons
 _sym_db.RegisterMessage(ListQueuesResponse)
 
 
-_AGENT_VERSIONAPIENTRY._options = None
 # @@protoc_insertion_point(module_scope)

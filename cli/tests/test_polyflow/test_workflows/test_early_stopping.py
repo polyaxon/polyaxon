@@ -23,11 +23,11 @@ import pytest
 
 from tests.utils import assert_equal_dict
 
-from polyaxon.schemas.polyflow.workflows.early_stopping_policies import (
+from polyaxon.schemas.polyflow.early_stopping import (
     FailureEarlyStoppingConfig,
     MetricEarlyStoppingConfig,
 )
-from polyaxon.schemas.polyflow.workflows.metrics import Optimization
+from polyaxon.schemas.polyflow.optimization import Optimization
 
 
 @pytest.mark.workflow_mark

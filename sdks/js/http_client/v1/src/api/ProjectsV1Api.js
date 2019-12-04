@@ -31,18 +31,18 @@
 (function(root, factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
-    define(['ApiClient', 'model/V1ListProjectsResponse', 'model/V1Project'], factory);
+    define(['ApiClient', 'model/V1ListProjectsResponse', 'model/V1Project', 'model/V1ProjectSettings', 'model/V1ProjectTeams'], factory);
   } else if (typeof module === 'object' && module.exports) {
     // CommonJS-like environments that support module.exports, like Node.
-    module.exports = factory(require('../ApiClient'), require('../model/V1ListProjectsResponse'), require('../model/V1Project'));
+    module.exports = factory(require('../ApiClient'), require('../model/V1ListProjectsResponse'), require('../model/V1Project'), require('../model/V1ProjectSettings'), require('../model/V1ProjectTeams'));
   } else {
     // Browser globals (root is window)
     if (!root.PolyaxonSdk) {
       root.PolyaxonSdk = {};
     }
-    root.PolyaxonSdk.ProjectsV1Api = factory(root.PolyaxonSdk.ApiClient, root.PolyaxonSdk.V1ListProjectsResponse, root.PolyaxonSdk.V1Project);
+    root.PolyaxonSdk.ProjectsV1Api = factory(root.PolyaxonSdk.ApiClient, root.PolyaxonSdk.V1ListProjectsResponse, root.PolyaxonSdk.V1Project, root.PolyaxonSdk.V1ProjectSettings, root.PolyaxonSdk.V1ProjectTeams);
   }
-}(this, function(ApiClient, V1ListProjectsResponse, V1Project) {
+}(this, function(ApiClient, V1ListProjectsResponse, V1Project, V1ProjectSettings, V1ProjectTeams) {
   'use strict';
 
   /**
@@ -435,6 +435,114 @@
     }
 
     /**
+     * Callback function to receive the result of the getProjectSettings operation.
+     * @callback module:api/ProjectsV1Api~getProjectSettingsCallback
+     * @param {String} error Error message, if any.
+     * @param {module:model/V1ProjectSettings} data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * Resume run
+     * @param {String} owner Owner of the namespace
+     * @param {String} project Project under namesapce
+     * @param {module:api/ProjectsV1Api~getProjectSettingsCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link module:model/V1ProjectSettings}
+     */
+    this.getProjectSettings = function(owner, project, callback) {
+      var postBody = null;
+
+      // verify the required parameter 'owner' is set
+      if (owner === undefined || owner === null) {
+        throw new Error("Missing the required parameter 'owner' when calling getProjectSettings");
+      }
+
+      // verify the required parameter 'project' is set
+      if (project === undefined || project === null) {
+        throw new Error("Missing the required parameter 'project' when calling getProjectSettings");
+      }
+
+
+      var pathParams = {
+        'owner': owner,
+        'project': project
+      };
+      var queryParams = {
+      };
+      var collectionQueryParams = {
+      };
+      var headerParams = {
+      };
+      var formParams = {
+      };
+
+      var authNames = ['ApiKey'];
+      var contentTypes = ['application/json'];
+      var accepts = ['application/json'];
+      var returnType = V1ProjectSettings;
+
+      return this.apiClient.callApi(
+        '/api/v1/{owner}/{project}/settings', 'GET',
+        pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
+
+    /**
+     * Callback function to receive the result of the getProjectTeams operation.
+     * @callback module:api/ProjectsV1Api~getProjectTeamsCallback
+     * @param {String} error Error message, if any.
+     * @param {module:model/V1ProjectTeams} data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * Bookmark run
+     * @param {String} owner Owner of the namespace
+     * @param {String} project Project under namesapce
+     * @param {module:api/ProjectsV1Api~getProjectTeamsCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link module:model/V1ProjectTeams}
+     */
+    this.getProjectTeams = function(owner, project, callback) {
+      var postBody = null;
+
+      // verify the required parameter 'owner' is set
+      if (owner === undefined || owner === null) {
+        throw new Error("Missing the required parameter 'owner' when calling getProjectTeams");
+      }
+
+      // verify the required parameter 'project' is set
+      if (project === undefined || project === null) {
+        throw new Error("Missing the required parameter 'project' when calling getProjectTeams");
+      }
+
+
+      var pathParams = {
+        'owner': owner,
+        'project': project
+      };
+      var queryParams = {
+      };
+      var collectionQueryParams = {
+      };
+      var headerParams = {
+      };
+      var formParams = {
+      };
+
+      var authNames = ['ApiKey'];
+      var contentTypes = ['application/json'];
+      var accepts = ['application/json'];
+      var returnType = V1ProjectTeams;
+
+      return this.apiClient.callApi(
+        '/api/v1/{owner}/{project}/teams', 'GET',
+        pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
+
+    /**
      * Callback function to receive the result of the listArchivedProjects operation.
      * @callback module:api/ProjectsV1Api~listArchivedProjectsCallback
      * @param {String} error Error message, if any.
@@ -723,6 +831,126 @@
     }
 
     /**
+     * Callback function to receive the result of the patchProjectSettings operation.
+     * @callback module:api/ProjectsV1Api~patchProjectSettingsCallback
+     * @param {String} error Error message, if any.
+     * @param {module:model/V1ProjectSettings} data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * Restore run
+     * @param {String} owner Owner of the namespace
+     * @param {String} project Project name
+     * @param {module:model/V1ProjectSettings} body Project settings body
+     * @param {module:api/ProjectsV1Api~patchProjectSettingsCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link module:model/V1ProjectSettings}
+     */
+    this.patchProjectSettings = function(owner, project, body, callback) {
+      var postBody = body;
+
+      // verify the required parameter 'owner' is set
+      if (owner === undefined || owner === null) {
+        throw new Error("Missing the required parameter 'owner' when calling patchProjectSettings");
+      }
+
+      // verify the required parameter 'project' is set
+      if (project === undefined || project === null) {
+        throw new Error("Missing the required parameter 'project' when calling patchProjectSettings");
+      }
+
+      // verify the required parameter 'body' is set
+      if (body === undefined || body === null) {
+        throw new Error("Missing the required parameter 'body' when calling patchProjectSettings");
+      }
+
+
+      var pathParams = {
+        'owner': owner,
+        'project': project
+      };
+      var queryParams = {
+      };
+      var collectionQueryParams = {
+      };
+      var headerParams = {
+      };
+      var formParams = {
+      };
+
+      var authNames = ['ApiKey'];
+      var contentTypes = ['application/json'];
+      var accepts = ['application/json'];
+      var returnType = V1ProjectSettings;
+
+      return this.apiClient.callApi(
+        '/api/v1/{owner}/{project}/settings', 'PATCH',
+        pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
+
+    /**
+     * Callback function to receive the result of the patchProjectTeams operation.
+     * @callback module:api/ProjectsV1Api~patchProjectTeamsCallback
+     * @param {String} error Error message, if any.
+     * @param {module:model/V1ProjectTeams} data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * Start run tensorboard
+     * @param {String} owner Owner of the namespace
+     * @param {String} project Project name
+     * @param {module:model/V1ProjectTeams} body Project settings body
+     * @param {module:api/ProjectsV1Api~patchProjectTeamsCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link module:model/V1ProjectTeams}
+     */
+    this.patchProjectTeams = function(owner, project, body, callback) {
+      var postBody = body;
+
+      // verify the required parameter 'owner' is set
+      if (owner === undefined || owner === null) {
+        throw new Error("Missing the required parameter 'owner' when calling patchProjectTeams");
+      }
+
+      // verify the required parameter 'project' is set
+      if (project === undefined || project === null) {
+        throw new Error("Missing the required parameter 'project' when calling patchProjectTeams");
+      }
+
+      // verify the required parameter 'body' is set
+      if (body === undefined || body === null) {
+        throw new Error("Missing the required parameter 'body' when calling patchProjectTeams");
+      }
+
+
+      var pathParams = {
+        'owner': owner,
+        'project': project
+      };
+      var queryParams = {
+      };
+      var collectionQueryParams = {
+      };
+      var headerParams = {
+      };
+      var formParams = {
+      };
+
+      var authNames = ['ApiKey'];
+      var contentTypes = ['application/json'];
+      var accepts = ['application/json'];
+      var returnType = V1ProjectTeams;
+
+      return this.apiClient.callApi(
+        '/api/v1/{owner}/{project}/teams', 'PATCH',
+        pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
+
+    /**
      * Callback function to receive the result of the restoreProject operation.
      * @callback module:api/ProjectsV1Api~restoreProjectCallback
      * @param {String} error Error message, if any.
@@ -883,6 +1111,126 @@
 
       return this.apiClient.callApi(
         '/api/v1/{owner}/{project.name}', 'PUT',
+        pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
+
+    /**
+     * Callback function to receive the result of the updateProjectSettings operation.
+     * @callback module:api/ProjectsV1Api~updateProjectSettingsCallback
+     * @param {String} error Error message, if any.
+     * @param {module:model/V1ProjectSettings} data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * Archive run
+     * @param {String} owner Owner of the namespace
+     * @param {String} project Project name
+     * @param {module:model/V1ProjectSettings} body Project settings body
+     * @param {module:api/ProjectsV1Api~updateProjectSettingsCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link module:model/V1ProjectSettings}
+     */
+    this.updateProjectSettings = function(owner, project, body, callback) {
+      var postBody = body;
+
+      // verify the required parameter 'owner' is set
+      if (owner === undefined || owner === null) {
+        throw new Error("Missing the required parameter 'owner' when calling updateProjectSettings");
+      }
+
+      // verify the required parameter 'project' is set
+      if (project === undefined || project === null) {
+        throw new Error("Missing the required parameter 'project' when calling updateProjectSettings");
+      }
+
+      // verify the required parameter 'body' is set
+      if (body === undefined || body === null) {
+        throw new Error("Missing the required parameter 'body' when calling updateProjectSettings");
+      }
+
+
+      var pathParams = {
+        'owner': owner,
+        'project': project
+      };
+      var queryParams = {
+      };
+      var collectionQueryParams = {
+      };
+      var headerParams = {
+      };
+      var formParams = {
+      };
+
+      var authNames = ['ApiKey'];
+      var contentTypes = ['application/json'];
+      var accepts = ['application/json'];
+      var returnType = V1ProjectSettings;
+
+      return this.apiClient.callApi(
+        '/api/v1/{owner}/{project}/settings', 'PUT',
+        pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
+
+    /**
+     * Callback function to receive the result of the updateProjectTeams operation.
+     * @callback module:api/ProjectsV1Api~updateProjectTeamsCallback
+     * @param {String} error Error message, if any.
+     * @param {module:model/V1ProjectTeams} data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * Unbookmark run
+     * @param {String} owner Owner of the namespace
+     * @param {String} project Project name
+     * @param {module:model/V1ProjectTeams} body Project settings body
+     * @param {module:api/ProjectsV1Api~updateProjectTeamsCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link module:model/V1ProjectTeams}
+     */
+    this.updateProjectTeams = function(owner, project, body, callback) {
+      var postBody = body;
+
+      // verify the required parameter 'owner' is set
+      if (owner === undefined || owner === null) {
+        throw new Error("Missing the required parameter 'owner' when calling updateProjectTeams");
+      }
+
+      // verify the required parameter 'project' is set
+      if (project === undefined || project === null) {
+        throw new Error("Missing the required parameter 'project' when calling updateProjectTeams");
+      }
+
+      // verify the required parameter 'body' is set
+      if (body === undefined || body === null) {
+        throw new Error("Missing the required parameter 'body' when calling updateProjectTeams");
+      }
+
+
+      var pathParams = {
+        'owner': owner,
+        'project': project
+      };
+      var queryParams = {
+      };
+      var collectionQueryParams = {
+      };
+      var headerParams = {
+      };
+      var formParams = {
+      };
+
+      var authNames = ['ApiKey'];
+      var contentTypes = ['application/json'];
+      var accepts = ['application/json'];
+      var returnType = V1ProjectTeams;
+
+      return this.apiClient.callApi(
+        '/api/v1/{owner}/{project}/teams', 'PUT',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );

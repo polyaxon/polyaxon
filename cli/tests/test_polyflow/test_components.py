@@ -63,7 +63,7 @@ class TestOperationsConfigs(TestCase):
                 {"name": "param9", "type": IOTypes.AZURE_PATH},
                 {"name": "param10", "type": IOTypes.PATH},
             ],
-            "container": {"image": "test"},
+            "run": {"kind": "container", "image": "test"},
         }
         op = ComponentConfig.from_dict(config_dict)
 
@@ -110,7 +110,7 @@ class TestOperationsConfigs(TestCase):
                 {"name": "param13", "type": IOTypes.METADATA},
                 {"name": "param14", "type": IOTypes.METADATA},
             ],
-            "container": {"image": "test"},
+            "run": {"kind": "container", "image": "test"},
         }
         op = ComponentConfig.from_dict(config_dict)
         params = {
@@ -151,7 +151,7 @@ class TestOperationsConfigs(TestCase):
                 {"name": "param1", "type": IOTypes.STR},
                 {"name": "param10", "type": IOTypes.PATH},
             ],
-            "container": {"image": "test"},
+            "run": {"kind": "container", "image": "test"},
         }
         config = ComponentConfig.from_dict(config_dict)
         with self.assertRaises(ValidationError):
@@ -168,7 +168,7 @@ class TestOperationsConfigs(TestCase):
                 {"name": "param1", "type": IOTypes.STR},
                 {"name": "param10", "type": IOTypes.PATH},
             ],
-            "container": {"image": "test"},
+            "run": {"kind": "container", "image": "test"},
         }
         config = ComponentConfig.from_dict(config_dict)
 
@@ -183,7 +183,7 @@ class TestOperationsConfigs(TestCase):
         config_dict = {
             "inputs": [{"name": "param1", "type": IOTypes.STR}],
             "outputs": [{"name": "param10", "type": IOTypes.PATH}],
-            "container": {"image": "test"},
+            "run": {"kind": "container", "image": "test"},
         }
         config = ComponentConfig.from_dict(config_dict)
         ops_params.validate_params(
@@ -199,7 +199,7 @@ class TestOperationsConfigs(TestCase):
                 {"name": "param1", "type": IOTypes.INT},
                 {"name": "param2", "type": IOTypes.INT},
             ],
-            "container": {"image": "test"},
+            "run": {"kind": "container", "image": "test"},
         }
         config = ComponentConfig.from_dict(config_dict)
         with self.assertRaises(ValidationError):
@@ -220,7 +220,7 @@ class TestOperationsConfigs(TestCase):
                 },
                 {"name": "param2", "type": IOTypes.INT},
             ],
-            "container": {"image": "test"},
+            "run": {"kind": "container", "image": "test"},
         }
         config = ComponentConfig.from_dict(config_dict)
         ops_params.validate_params(
@@ -234,7 +234,7 @@ class TestOperationsConfigs(TestCase):
         # inputs
         config_dict = {
             "inputs": [{"name": "param1", "type": IOTypes.INT}],
-            "container": {"image": "test"},
+            "run": {"kind": "container", "image": "test"},
         }
         config = ComponentConfig.from_dict(config_dict)
         with self.assertRaises(ValidationError):
@@ -248,7 +248,7 @@ class TestOperationsConfigs(TestCase):
         # outputs
         config_dict = {
             "outputs": [{"name": "param1", "type": IOTypes.INT}],
-            "container": {"image": "test"},
+            "run": {"kind": "container", "image": "test"},
         }
         config = ComponentConfig.from_dict(config_dict)
         with self.assertRaises(ValidationError):
@@ -262,7 +262,7 @@ class TestOperationsConfigs(TestCase):
     def test_param_validation_with_mismatched_inputs(self):
         config_dict = {
             "inputs": [{"name": "param1", "type": IOTypes.INT}],
-            "container": {"image": "test"},
+            "run": {"kind": "container", "image": "test"},
         }
         config = ComponentConfig.from_dict(config_dict)
         # Passing correct param
@@ -307,7 +307,7 @@ class TestOperationsConfigs(TestCase):
 
         config_dict = {
             "inputs": [{"name": "param2", "type": IOTypes.STR}],
-            "container": {"image": "test"},
+            "run": {"kind": "container", "image": "test"},
         }
         config = ComponentConfig.from_dict(config_dict)
         # Passing correct param
@@ -352,7 +352,7 @@ class TestOperationsConfigs(TestCase):
 
         config_dict = {
             "inputs": [{"name": "param7", "type": IOTypes.AZURE_PATH}],
-            "container": {"image": "test"},
+            "run": {"kind": "container", "image": "test"},
         }
         config = ComponentConfig.from_dict(config_dict)
         # Passing correct param
@@ -390,7 +390,7 @@ class TestOperationsConfigs(TestCase):
     def test_param_validation_with_mismatched_outputs(self):
         config_dict = {
             "outputs": [{"name": "param1", "type": IOTypes.INT}],
-            "container": {"image": "test"},
+            "run": {"kind": "container", "image": "test"},
         }
         config = ComponentConfig.from_dict(config_dict)
         # Passing correct param
@@ -435,7 +435,7 @@ class TestOperationsConfigs(TestCase):
 
         config_dict = {
             "outputs": [{"name": "param2", "type": IOTypes.STR}],
-            "container": {"image": "test"},
+            "run": {"kind": "container", "image": "test"},
         }
         config = ComponentConfig.from_dict(config_dict)
         # Passing correct param
@@ -480,7 +480,7 @@ class TestOperationsConfigs(TestCase):
 
         config_dict = {
             "outputs": [{"name": "param7", "type": IOTypes.AZURE_PATH}],
-            "container": {"image": "test"},
+            "run": {"kind": "container", "image": "test"},
         }
         config = ComponentConfig.from_dict(config_dict)
         # Passing correct param
@@ -523,7 +523,7 @@ class TestOperationsConfigs(TestCase):
                 {"name": "param9", "type": IOTypes.AZURE_PATH},
                 {"name": "param11", "type": IOTypes.METRIC},
             ],
-            "container": {"image": "test"},
+            "run": {"kind": "container", "image": "test"},
         }
         op = ComponentConfig.from_dict(config_dict)
         params = {
@@ -548,7 +548,7 @@ class TestOperationsConfigs(TestCase):
                 {"name": "param1", "type": IOTypes.INT},
                 {"name": "param9", "type": IOTypes.FLOAT},
             ],
-            "container": {"image": "test"},
+            "run": {"kind": "container", "image": "test"},
         }
         params = {"param1": "{{ job.A.outputs.foo }}", "param9": 13.1}
         config = ComponentConfig.from_dict(config_dict)
@@ -559,13 +559,13 @@ class TestOperationsConfigs(TestCase):
             )
 
     def test_executable(self):
-        config_dict = {"start_at": "foo", "container": {"image": "test"}}
+        config_dict = {"start_at": "foo", "run": {"kind": "container", "image": "test"}}
         with self.assertRaises(ValidationError):
             ComponentConfig.from_dict(config_dict)
 
         config_dict = {
-            "schedule": {"execute_at": "foo"},
-            "container": {"image": "test"},
+            "schedule": {"start_at": "foo"},
+            "run": {"kind": "container", "image": "test"},
         }
         with self.assertRaises(ValidationError):
             ComponentConfig.from_dict(config_dict)
@@ -576,43 +576,47 @@ class TestOperationsConfigs(TestCase):
 
         config_dict = {
             "termination": {"timeout": 2},
-            "schedule": {"kind": "exact_time", "execute_at": local_now().isoformat()},
-            "container": {"image": "test"},
+            "schedule": {"kind": "exact_time", "start_at": local_now().isoformat()},
+            "run": {"kind": "container", "image": "test"},
         }
         ComponentConfig.from_dict(config_dict)
 
     def test_pipelines_base_attrs(self):
-        config_dict = {"concurrency": "foo", "container": {"image": "test"}}
+        config_dict = {
+            "concurrency": "foo",
+            "run": {"kind": "container", "image": "test"},
+        }
         with self.assertRaises(ValidationError):
             ComponentConfig.from_dict(config_dict)
 
-        config_dict = {"concurrency": 2, "container": {"image": "test"}}
+        config_dict = {"concurrency": 2, "run": {"kind": "container", "image": "test"}}
         with self.assertRaises(ValidationError):
             ComponentConfig.from_dict(config_dict)
 
         config_dict = {
-            "workflow": {
+            "parallel": {
                 "concurrency": 2,
                 "kind": "mapping",
                 "values": [{"a": 1}, {"a": 1}],
             },
-            "container": {"image": "test"},
+            "run": {"kind": "container", "image": "test"},
         }
         config = ComponentConfig.from_dict(config_dict)
-        assert config.to_dict()["workflow"] == config_dict["workflow"]
+        assert config.to_dict()["run"] == config_dict["run"]
+        assert config.to_dict()["parallel"] == config_dict["parallel"]
 
         config_dict = {
-            "workflow": {
+            "parallel": {
                 "concurrency": 2,
                 "kind": "mapping",
                 "values": [{"a": 1}, {"a": 1}],
             },
-            "schedule": {"kind": "exact_time", "execute_at": local_now().isoformat()},
+            "schedule": {"kind": "exact_time", "start_at": local_now().isoformat()},
             "termination": {"timeout": 1000},
-            "container": {"image": "test"},
+            "run": {"kind": "container", "image": "test"},
         }
         config = ComponentConfig.from_dict(config_dict)
         config_to_light = config.to_light_dict()
-        config_to_light["schedule"].pop("execute_at")
-        config_dict["schedule"].pop("execute_at")
+        config_to_light["schedule"].pop("start_at")
+        config_dict["schedule"].pop("start_at")
         assert config_to_light == config_dict

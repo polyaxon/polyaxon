@@ -59,7 +59,7 @@
           body.uuid = "";
           body.name = "";
           body.namespace = "";
-          body.version_api = {key: ""};
+          body.version_api = ;
           body.created_at = new Date();
           body.updated_at = new Date();
 
@@ -76,16 +76,8 @@
             expect(data.name).to.be("");
             expect(data.namespace).to.be.a('string');
             expect(data.namespace).to.be("");
-            {
-              let dataCtr = data.version_api;
-              expect(dataCtr).to.be.an(Object);
-              expect(dataCtr).to.not.be.empty();
-              for (let p in dataCtr) {
-                let data = dataCtr[p];
-                expect(data).to.be.a('string');
-                expect(data).to.be("");
-              }
-            }
+            expect(data.version_api).to.be.a(Object);
+            expect(data.version_api).to.be();
             expect(data.created_at).to.be.a(Date);
             expect(data.created_at).to.be(new Date());
             expect(data.updated_at).to.be.a(Date);
@@ -138,16 +130,8 @@
             expect(data.name).to.be("");
             expect(data.namespace).to.be.a('string');
             expect(data.namespace).to.be("");
-            {
-              let dataCtr = data.version_api;
-              expect(dataCtr).to.be.an(Object);
-              expect(dataCtr).to.not.be.empty();
-              for (let p in dataCtr) {
-                let data = dataCtr[p];
-                expect(data).to.be.a('string');
-                expect(data).to.be("");
-              }
-            }
+            expect(data.version_api).to.be.a(Object);
+            expect(data.version_api).to.be();
             expect(data.created_at).to.be.a(Date);
             expect(data.created_at).to.be(new Date());
             expect(data.updated_at).to.be.a(Date);
@@ -193,16 +177,8 @@
                 expect(data.name).to.be("");
                 expect(data.namespace).to.be.a('string');
                 expect(data.namespace).to.be("");
-                {
-                  let dataCtr = data.version_api;
-                  expect(dataCtr).to.be.an(Object);
-                  expect(dataCtr).to.not.be.empty();
-                  for (let p in dataCtr) {
-                    let data = dataCtr[p];
-                    expect(data).to.be.a('string');
-                    expect(data).to.be("");
-                  }
-                }
+                expect(data.version_api).to.be.a(Object);
+                expect(data.version_api).to.be();
                 expect(data.created_at).to.be.a(Date);
                 expect(data.created_at).to.be(new Date());
                 expect(data.updated_at).to.be.a(Date);
@@ -254,16 +230,8 @@
                 expect(data.name).to.be("");
                 expect(data.namespace).to.be.a('string');
                 expect(data.namespace).to.be("");
-                {
-                  let dataCtr = data.version_api;
-                  expect(dataCtr).to.be.an(Object);
-                  expect(dataCtr).to.not.be.empty();
-                  for (let p in dataCtr) {
-                    let data = dataCtr[p];
-                    expect(data).to.be.a('string');
-                    expect(data).to.be("");
-                  }
-                }
+                expect(data.version_api).to.be.a(Object);
+                expect(data.version_api).to.be();
                 expect(data.created_at).to.be.a(Date);
                 expect(data.created_at).to.be(new Date());
                 expect(data.updated_at).to.be.a(Date);
@@ -292,7 +260,7 @@
           body.uuid = "";
           body.name = "";
           body.namespace = "";
-          body.version_api = {key: ""};
+          body.version_api = ;
           body.created_at = new Date();
           body.updated_at = new Date();
 
@@ -309,16 +277,8 @@
             expect(data.name).to.be("");
             expect(data.namespace).to.be.a('string');
             expect(data.namespace).to.be("");
-            {
-              let dataCtr = data.version_api;
-              expect(dataCtr).to.be.an(Object);
-              expect(dataCtr).to.not.be.empty();
-              for (let p in dataCtr) {
-                let data = dataCtr[p];
-                expect(data).to.be.a('string');
-                expect(data).to.be("");
-              }
-            }
+            expect(data.version_api).to.be.a(Object);
+            expect(data.version_api).to.be();
             expect(data.created_at).to.be.a(Date);
             expect(data.created_at).to.be(new Date());
             expect(data.updated_at).to.be.a(Date);
@@ -341,7 +301,7 @@
           body.uuid = "";
           body.name = "";
           body.namespace = "";
-          body.version_api = {key: ""};
+          body.version_api = ;
           body.created_at = new Date();
           body.updated_at = new Date();
 
@@ -358,16 +318,8 @@
             expect(data.name).to.be("");
             expect(data.namespace).to.be.a('string');
             expect(data.namespace).to.be("");
-            {
-              let dataCtr = data.version_api;
-              expect(dataCtr).to.be.an(Object);
-              expect(dataCtr).to.not.be.empty();
-              for (let p in dataCtr) {
-                let data = dataCtr[p];
-                expect(data).to.be.a('string');
-                expect(data).to.be("");
-              }
-            }
+            expect(data.version_api).to.be.a(Object);
+            expect(data.version_api).to.be();
             expect(data.created_at).to.be.a(Date);
             expect(data.created_at).to.be(new Date());
             expect(data.updated_at).to.be.a(Date);

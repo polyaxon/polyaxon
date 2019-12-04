@@ -4,7 +4,7 @@ import numpy as np
 from marshmallow import ValidationError
 
 from polyaxon.automl.matrix import dist
-from polyaxon.schemas.polyflow.workflows.matrix import (
+from polyaxon.schemas.polyflow.parallel.matrix import (
     MatrixChoiceConfig,
     MatrixGeomSpaceConfig,
     MatrixLinSpaceConfig,

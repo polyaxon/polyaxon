@@ -59,11 +59,14 @@
           var body = new PolyaxonSdk.V1Search();
           body.uuid = "";
           body.name = "";
-          body.definition = new PolyaxonSdk.V1SearchDefinition();
-          body.definition.query = "";
-          body.definition.sort = "";
-          body.definition.groupby = "";
-          body.definition.columns = "";
+          body.spec = new PolyaxonSdk.V1SearchSpec();
+          body.spec.query = "";
+          body.spec.sort = "";
+          body.spec.limit = 0;
+          body.spec.groupby = "";
+          body.spec.columns = "";
+          body.created_at = new Date();
+          body.updated_at = new Date();
 
           instance.createSearch(owner, project, body, function(error, data, response) {
             if (error) {
@@ -76,15 +79,21 @@
             expect(data.uuid).to.be("");
             expect(data.name).to.be.a('string');
             expect(data.name).to.be("");
-            expect(data.definition).to.be.a(PolyaxonSdk.V1SearchDefinition);
-                  expect(data.definition.query).to.be.a('string');
-              expect(data.definition.query).to.be("");
-              expect(data.definition.sort).to.be.a('string');
-              expect(data.definition.sort).to.be("");
-              expect(data.definition.groupby).to.be.a('string');
-              expect(data.definition.groupby).to.be("");
-              expect(data.definition.columns).to.be.a('string');
-              expect(data.definition.columns).to.be("");
+            expect(data.spec).to.be.a(PolyaxonSdk.V1SearchSpec);
+                  expect(data.spec.query).to.be.a('string');
+              expect(data.spec.query).to.be("");
+              expect(data.spec.sort).to.be.a('string');
+              expect(data.spec.sort).to.be("");
+              expect(data.spec.limit).to.be.a('number');
+              expect(data.spec.limit).to.be(0);
+              expect(data.spec.groupby).to.be.a('string');
+              expect(data.spec.groupby).to.be("");
+              expect(data.spec.columns).to.be.a('string');
+              expect(data.spec.columns).to.be("");
+            expect(data.created_at).to.be.a(Date);
+            expect(data.created_at).to.be(new Date());
+            expect(data.updated_at).to.be.a(Date);
+            expect(data.updated_at).to.be(new Date());
 
             done();
           });
@@ -133,15 +142,21 @@
             expect(data.uuid).to.be("");
             expect(data.name).to.be.a('string');
             expect(data.name).to.be("");
-            expect(data.definition).to.be.a(PolyaxonSdk.V1SearchDefinition);
-                  expect(data.definition.query).to.be.a('string');
-              expect(data.definition.query).to.be("");
-              expect(data.definition.sort).to.be.a('string');
-              expect(data.definition.sort).to.be("");
-              expect(data.definition.groupby).to.be.a('string');
-              expect(data.definition.groupby).to.be("");
-              expect(data.definition.columns).to.be.a('string');
-              expect(data.definition.columns).to.be("");
+            expect(data.spec).to.be.a(PolyaxonSdk.V1SearchSpec);
+                  expect(data.spec.query).to.be.a('string');
+              expect(data.spec.query).to.be("");
+              expect(data.spec.sort).to.be.a('string');
+              expect(data.spec.sort).to.be("");
+              expect(data.spec.limit).to.be.a('number');
+              expect(data.spec.limit).to.be(0);
+              expect(data.spec.groupby).to.be.a('string');
+              expect(data.spec.groupby).to.be("");
+              expect(data.spec.columns).to.be.a('string');
+              expect(data.spec.columns).to.be("");
+            expect(data.created_at).to.be.a(Date);
+            expect(data.created_at).to.be(new Date());
+            expect(data.updated_at).to.be.a(Date);
+            expect(data.updated_at).to.be(new Date());
 
             done();
           });
@@ -182,15 +197,21 @@
                 expect(data.uuid).to.be("");
                 expect(data.name).to.be.a('string');
                 expect(data.name).to.be("");
-                expect(data.definition).to.be.a(PolyaxonSdk.V1SearchDefinition);
-                      expect(data.definition.query).to.be.a('string');
-                  expect(data.definition.query).to.be("");
-                  expect(data.definition.sort).to.be.a('string');
-                  expect(data.definition.sort).to.be("");
-                  expect(data.definition.groupby).to.be.a('string');
-                  expect(data.definition.groupby).to.be("");
-                  expect(data.definition.columns).to.be.a('string');
-                  expect(data.definition.columns).to.be("");
+                expect(data.spec).to.be.a(PolyaxonSdk.V1SearchSpec);
+                      expect(data.spec.query).to.be.a('string');
+                  expect(data.spec.query).to.be("");
+                  expect(data.spec.sort).to.be.a('string');
+                  expect(data.spec.sort).to.be("");
+                  expect(data.spec.limit).to.be.a('number');
+                  expect(data.spec.limit).to.be(0);
+                  expect(data.spec.groupby).to.be.a('string');
+                  expect(data.spec.groupby).to.be("");
+                  expect(data.spec.columns).to.be.a('string');
+                  expect(data.spec.columns).to.be("");
+                expect(data.created_at).to.be.a(Date);
+                expect(data.created_at).to.be(new Date());
+                expect(data.updated_at).to.be.a(Date);
+                expect(data.updated_at).to.be(new Date());
               }
             }
             expect(data.previous).to.be.a('string');
@@ -215,11 +236,14 @@
           var body = new PolyaxonSdk.V1Search();
           body.uuid = "";
           body.name = "";
-          body.definition = new PolyaxonSdk.V1SearchDefinition();
-          body.definition.query = "";
-          body.definition.sort = "";
-          body.definition.groupby = "";
-          body.definition.columns = "";
+          body.spec = new PolyaxonSdk.V1SearchSpec();
+          body.spec.query = "";
+          body.spec.sort = "";
+          body.spec.limit = 0;
+          body.spec.groupby = "";
+          body.spec.columns = "";
+          body.created_at = new Date();
+          body.updated_at = new Date();
 
           instance.patchSearch(owner, project, search_uuid, body, function(error, data, response) {
             if (error) {
@@ -232,15 +256,21 @@
             expect(data.uuid).to.be("");
             expect(data.name).to.be.a('string');
             expect(data.name).to.be("");
-            expect(data.definition).to.be.a(PolyaxonSdk.V1SearchDefinition);
-                  expect(data.definition.query).to.be.a('string');
-              expect(data.definition.query).to.be("");
-              expect(data.definition.sort).to.be.a('string');
-              expect(data.definition.sort).to.be("");
-              expect(data.definition.groupby).to.be.a('string');
-              expect(data.definition.groupby).to.be("");
-              expect(data.definition.columns).to.be.a('string');
-              expect(data.definition.columns).to.be("");
+            expect(data.spec).to.be.a(PolyaxonSdk.V1SearchSpec);
+                  expect(data.spec.query).to.be.a('string');
+              expect(data.spec.query).to.be("");
+              expect(data.spec.sort).to.be.a('string');
+              expect(data.spec.sort).to.be("");
+              expect(data.spec.limit).to.be.a('number');
+              expect(data.spec.limit).to.be(0);
+              expect(data.spec.groupby).to.be.a('string');
+              expect(data.spec.groupby).to.be("");
+              expect(data.spec.columns).to.be.a('string');
+              expect(data.spec.columns).to.be("");
+            expect(data.created_at).to.be.a(Date);
+            expect(data.created_at).to.be(new Date());
+            expect(data.updated_at).to.be.a(Date);
+            expect(data.updated_at).to.be(new Date());
 
             done();
           });
@@ -259,11 +289,14 @@
           var body = new PolyaxonSdk.V1Search();
           body.uuid = "";
           body.name = "";
-          body.definition = new PolyaxonSdk.V1SearchDefinition();
-          body.definition.query = "";
-          body.definition.sort = "";
-          body.definition.groupby = "";
-          body.definition.columns = "";
+          body.spec = new PolyaxonSdk.V1SearchSpec();
+          body.spec.query = "";
+          body.spec.sort = "";
+          body.spec.limit = 0;
+          body.spec.groupby = "";
+          body.spec.columns = "";
+          body.created_at = new Date();
+          body.updated_at = new Date();
 
           instance.updateSearch(owner, project, search_uuid, body, function(error, data, response) {
             if (error) {
@@ -276,15 +309,21 @@
             expect(data.uuid).to.be("");
             expect(data.name).to.be.a('string');
             expect(data.name).to.be("");
-            expect(data.definition).to.be.a(PolyaxonSdk.V1SearchDefinition);
-                  expect(data.definition.query).to.be.a('string');
-              expect(data.definition.query).to.be("");
-              expect(data.definition.sort).to.be.a('string');
-              expect(data.definition.sort).to.be("");
-              expect(data.definition.groupby).to.be.a('string');
-              expect(data.definition.groupby).to.be("");
-              expect(data.definition.columns).to.be.a('string');
-              expect(data.definition.columns).to.be("");
+            expect(data.spec).to.be.a(PolyaxonSdk.V1SearchSpec);
+                  expect(data.spec.query).to.be.a('string');
+              expect(data.spec.query).to.be("");
+              expect(data.spec.sort).to.be.a('string');
+              expect(data.spec.sort).to.be("");
+              expect(data.spec.limit).to.be.a('number');
+              expect(data.spec.limit).to.be(0);
+              expect(data.spec.groupby).to.be.a('string');
+              expect(data.spec.groupby).to.be("");
+              expect(data.spec.columns).to.be.a('string');
+              expect(data.spec.columns).to.be("");
+            expect(data.created_at).to.be.a(Date);
+            expect(data.created_at).to.be(new Date());
+            expect(data.updated_at).to.be.a(Date);
+            expect(data.updated_at).to.be(new Date());
 
             done();
           });

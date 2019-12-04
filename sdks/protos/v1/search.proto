@@ -4,8 +4,8 @@ package v1;
 
 import "google/protobuf/timestamp.proto";
 
-// Search definition specification
-message SearchDefinition {
+// Search spec definition
+message SearchSpec {
     // Search query
     string query = 1;
 
@@ -13,10 +13,13 @@ message SearchDefinition {
     string sort = 2;
 
     // Search group bys
-    string groupby = 3;
+    int32 limit = 3;
+
+    // Search group bys
+    string groupby = 4;
 
     // Search columns
-    string columns = 4;
+    string columns = 5;
 }
 
 // Search specification
@@ -27,8 +30,14 @@ message Search {
     // Optional name
     string name = 2;
 
-    // Optional Search definition
-    SearchDefinition definition = 3;
+    // Search spec
+    SearchSpec spec = 3;
+
+    // Optional time when the entityt was created
+    google.protobuf.Timestamp created_at = 4;
+
+    // Optional last time the entity was updated
+    google.protobuf.Timestamp updated_at = 5;
 }
 
  // Request data to create/update artifacts store
@@ -39,12 +48,12 @@ message Search {
     // Project under namesapce
     string project = 2;
 
-    // Artifact store body
+    // Search body
     Search search = 3;
  }
 
 
-// Contains list artifacts stores
+// Contains list searches
 message ListSearchesResponse {
     // Count of the entities
     int32 count = 1;

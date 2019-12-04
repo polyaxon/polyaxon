@@ -23,7 +23,7 @@ from unittest.mock import patch
 import pytest
 
 from polyaxon.automl.search_managers.grid_search.manager import GridSearchManager
-from polyaxon.schemas.polyflow.workflows import GridSearchConfig
+from polyaxon.schemas.polyflow.parallel import GridSearchConfig
 
 
 @pytest.mark.automl_mark

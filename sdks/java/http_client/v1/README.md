@@ -128,6 +128,12 @@ Class | Method | HTTP request | Description
 *ArtifactsStoresV1Api* | [**updateArtifactsStore**](docs/ArtifactsStoresV1Api.md#updateArtifactsStore) | **PUT** /api/v1/{owner}/artifacts_stores/{artifact_store.uuid} | Get run
 *ArtifactsStoresV1Api* | [**uploadArtifact**](docs/ArtifactsStoresV1Api.md#uploadArtifact) | **POST** /api/v1/catalogs/{owner}/artifacts_stores/{uuid}/upload | Upload artifact to a store
 *AuthV1Api* | [**login**](docs/AuthV1Api.md#login) | **POST** /api/v1/users/token | List bookmarked runs for user
+*DashboardV1Api* | [**createDashboard**](docs/DashboardV1Api.md#createDashboard) | **POST** /api/v1/{owner}/{project}/dashboards | List archived runs for user
+*DashboardV1Api* | [**deleteDashboard**](docs/DashboardV1Api.md#deleteDashboard) | **DELETE** /api/v1/{owner}/{project}/dashboards/{uuid} | Update run
+*DashboardV1Api* | [**getDashboard**](docs/DashboardV1Api.md#getDashboard) | **GET** /api/v1/{owner}/{project}/dashboards/{uuid} | List runs
+*DashboardV1Api* | [**listDashboard**](docs/DashboardV1Api.md#listDashboard) | **GET** /api/v1/{owner}/{project}/dashboards | List bookmarked runs for user
+*DashboardV1Api* | [**patchDashboard**](docs/DashboardV1Api.md#patchDashboard) | **PATCH** /api/v1/{owner}/{project}/dashboards/{dashboard.uuid} | Get run
+*DashboardV1Api* | [**updateDashboard**](docs/DashboardV1Api.md#updateDashboard) | **PUT** /api/v1/{owner}/{project}/dashboards/{dashboard.uuid} | Create new run
 *GitAccessesV1Api* | [**createGitAccess**](docs/GitAccessesV1Api.md#createGitAccess) | **POST** /api/v1/{owner}/git_accesses | List runs
 *GitAccessesV1Api* | [**deleteGitAccess**](docs/GitAccessesV1Api.md#deleteGitAccess) | **DELETE** /api/v1/{owner}/git_accesses/{uuid} | Patch run
 *GitAccessesV1Api* | [**getGitAccess**](docs/GitAccessesV1Api.md#getGitAccess) | **GET** /api/v1/{owner}/git_accesses/{uuid} | Create new run
@@ -149,6 +155,19 @@ Class | Method | HTTP request | Description
 *K8sSecretsV1Api* | [**listK8sSecrets**](docs/K8sSecretsV1Api.md#listK8sSecrets) | **GET** /api/v1/{owner}/k8s_secrets | List archived runs for user
 *K8sSecretsV1Api* | [**patchK8sSecret**](docs/K8sSecretsV1Api.md#patchK8sSecret) | **PATCH** /api/v1/{owner}/k8s_secrets/{k8s_resource.uuid} | Update run
 *K8sSecretsV1Api* | [**updateK8sSecret**](docs/K8sSecretsV1Api.md#updateK8sSecret) | **PUT** /api/v1/{owner}/k8s_secrets/{k8s_resource.uuid} | Get run
+*OrganizationsV1Api* | [**createOrganization**](docs/OrganizationsV1Api.md#createOrganization) | **POST** /api/v1/organizations/create | List runs
+*OrganizationsV1Api* | [**createOrganizationMember**](docs/OrganizationsV1Api.md#createOrganizationMember) | **POST** /api/v1/organizations/{owner}/members | Delete runs
+*OrganizationsV1Api* | [**deleteOrganization**](docs/OrganizationsV1Api.md#deleteOrganization) | **DELETE** /api/v1/organizations/{owner} | Patch run
+*OrganizationsV1Api* | [**deleteOrganizationMember**](docs/OrganizationsV1Api.md#deleteOrganizationMember) | **DELETE** /api/v1/organizations/{owner}/members/{member.user} | Invalidate runs
+*OrganizationsV1Api* | [**getOrganization**](docs/OrganizationsV1Api.md#getOrganization) | **GET** /api/v1/organizations/{owner} | Create new run
+*OrganizationsV1Api* | [**getOrganizationMember**](docs/OrganizationsV1Api.md#getOrganizationMember) | **GET** /api/v1/organizations/{owner}/members/{member.user} | Stop run
+*OrganizationsV1Api* | [**listOrganizationMembers**](docs/OrganizationsV1Api.md#listOrganizationMembers) | **GET** /api/v1/organizations/{owner}/members | Delete run
+*OrganizationsV1Api* | [**listOrganizationNames**](docs/OrganizationsV1Api.md#listOrganizationNames) | **GET** /api/v1/organizations/names | List bookmarked runs for user
+*OrganizationsV1Api* | [**listOrganizations**](docs/OrganizationsV1Api.md#listOrganizations) | **GET** /api/v1/organizations/list | List archived runs for user
+*OrganizationsV1Api* | [**patchOrganization**](docs/OrganizationsV1Api.md#patchOrganization) | **PATCH** /api/v1/organizations/{owner} | Update run
+*OrganizationsV1Api* | [**patchOrganizationMember**](docs/OrganizationsV1Api.md#patchOrganizationMember) | **PATCH** /api/v1/organizations/{owner}/members/{member.user} | Invalidate run
+*OrganizationsV1Api* | [**updateOrganization**](docs/OrganizationsV1Api.md#updateOrganization) | **PUT** /api/v1/organizations/{owner} | Get run
+*OrganizationsV1Api* | [**updateOrganizationMember**](docs/OrganizationsV1Api.md#updateOrganizationMember) | **PUT** /api/v1/organizations/{owner}/members/{member.user} | Stop runs
 *ProjectsV1Api* | [**archiveProject**](docs/ProjectsV1Api.md#archiveProject) | **POST** /api/v1/{owner}/{project}/archive | Stop run
 *ProjectsV1Api* | [**bookmarkProject**](docs/ProjectsV1Api.md#bookmarkProject) | **POST** /api/v1/{owner}/{project}/bookmark | Invalidate run
 *ProjectsV1Api* | [**createProject**](docs/ProjectsV1Api.md#createProject) | **POST** /api/v1/{owner}/projects/create | List archived runs for user
@@ -156,14 +175,20 @@ Class | Method | HTTP request | Description
 *ProjectsV1Api* | [**disableProjectCI**](docs/ProjectsV1Api.md#disableProjectCI) | **DELETE** /api/v1/{owner}/{project}/ci | Restart run
 *ProjectsV1Api* | [**enableProjectCI**](docs/ProjectsV1Api.md#enableProjectCI) | **POST** /api/v1/{owner}/{project}/ci | Restart run with copy
 *ProjectsV1Api* | [**getProject**](docs/ProjectsV1Api.md#getProject) | **GET** /api/v1/{owner}/{project} | Update run
+*ProjectsV1Api* | [**getProjectSettings**](docs/ProjectsV1Api.md#getProjectSettings) | **GET** /api/v1/{owner}/{project}/settings | Resume run
+*ProjectsV1Api* | [**getProjectTeams**](docs/ProjectsV1Api.md#getProjectTeams) | **GET** /api/v1/{owner}/{project}/teams | Bookmark run
 *ProjectsV1Api* | [**listArchivedProjects**](docs/ProjectsV1Api.md#listArchivedProjects) | **GET** /api/v1/archives/{user}/projects | Get run
 *ProjectsV1Api* | [**listBookmarkedProjects**](docs/ProjectsV1Api.md#listBookmarkedProjects) | **GET** /api/v1/bookmarks/{user}/projects | Create new run
 *ProjectsV1Api* | [**listProjectNames**](docs/ProjectsV1Api.md#listProjectNames) | **GET** /api/v1/{owner}/projects/names | List runs
 *ProjectsV1Api* | [**listProjects**](docs/ProjectsV1Api.md#listProjects) | **GET** /api/v1/{owner}/projects/list | List bookmarked runs for user
 *ProjectsV1Api* | [**patchProject**](docs/ProjectsV1Api.md#patchProject) | **PATCH** /api/v1/{owner}/{project.name} | Delete run
+*ProjectsV1Api* | [**patchProjectSettings**](docs/ProjectsV1Api.md#patchProjectSettings) | **PATCH** /api/v1/{owner}/{project}/settings | Restore run
+*ProjectsV1Api* | [**patchProjectTeams**](docs/ProjectsV1Api.md#patchProjectTeams) | **PATCH** /api/v1/{owner}/{project}/teams | Start run tensorboard
 *ProjectsV1Api* | [**restoreProject**](docs/ProjectsV1Api.md#restoreProject) | **POST** /api/v1/{owner}/{project}/restore | Stop runs
 *ProjectsV1Api* | [**unbookmarkProject**](docs/ProjectsV1Api.md#unbookmarkProject) | **DELETE** /api/v1/{owner}/{project}/unbookmark | Invalidate runs
 *ProjectsV1Api* | [**updateProject**](docs/ProjectsV1Api.md#updateProject) | **PUT** /api/v1/{owner}/{project.name} | Patch run
+*ProjectsV1Api* | [**updateProjectSettings**](docs/ProjectsV1Api.md#updateProjectSettings) | **PUT** /api/v1/{owner}/{project}/settings | Archive run
+*ProjectsV1Api* | [**updateProjectTeams**](docs/ProjectsV1Api.md#updateProjectTeams) | **PUT** /api/v1/{owner}/{project}/teams | Unbookmark run
 *ProjectsV1Api* | [**uploadProjectArtifact**](docs/ProjectsV1Api.md#uploadProjectArtifact) | **POST** /api/v1/{owner}/{project}/artifacts_stores/{uuid}/upload | Upload artifact to a store via project access
 *QueuesV1Api* | [**createQueue**](docs/QueuesV1Api.md#createQueue) | **POST** /api/v1/{owner}/agents/{agent}/queues | List runs
 *QueuesV1Api* | [**deleteQueue**](docs/QueuesV1Api.md#deleteQueue) | **DELETE** /api/v1/{owner}/agents/{agent}/queues/{uuid} | Patch run
@@ -191,6 +216,7 @@ Class | Method | HTTP request | Description
 *RunsV1Api* | [**getRunArtifactsTree**](docs/RunsV1Api.md#getRunArtifactsTree) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/artifacts/tree | Get run artifacts list
 *RunsV1Api* | [**getRunLogsFile**](docs/RunsV1Api.md#getRunLogsFile) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/logs/file | Get run logs get file
 *RunsV1Api* | [**getRunLogsTree**](docs/RunsV1Api.md#getRunLogsTree) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/logs/tree | Get run logs list
+*RunsV1Api* | [**getRunSettings**](docs/RunsV1Api.md#getRunSettings) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/settings | Get Run settings
 *RunsV1Api* | [**getRunStatuses**](docs/RunsV1Api.md#getRunStatuses) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/statuses | Get run status
 *RunsV1Api* | [**impersonateToken**](docs/RunsV1Api.md#impersonateToken) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/impersonate | Impersonate run token
 *RunsV1Api* | [**invalidateRun**](docs/RunsV1Api.md#invalidateRun) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/invalidate | Invalidate run
@@ -210,12 +236,26 @@ Class | Method | HTTP request | Description
 *RunsV1Api* | [**updateRun**](docs/RunsV1Api.md#updateRun) | **PUT** /api/v1/{owner}/{project}/runs/{run.uuid} | Update run
 *RunsV1Api* | [**uploadRunArtifact**](docs/RunsV1Api.md#uploadRunArtifact) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/artifacts/upload | Upload an artifact file to a store via run access
 *RunsV1Api* | [**uploadRunLogs**](docs/RunsV1Api.md#uploadRunLogs) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/logs/upload | Upload a logs file to a store via run access
+*SchemasV1Api* | [**noOp**](docs/SchemasV1Api.md#noOp) | **GET** /schemas | List bookmarked runs for user
 *SearchV1Api* | [**createSearch**](docs/SearchV1Api.md#createSearch) | **POST** /api/v1/{owner}/{project}/searches | List archived runs for user
 *SearchV1Api* | [**deleteSearch**](docs/SearchV1Api.md#deleteSearch) | **DELETE** /api/v1/{owner}/{project}/searches/{uuid} | Update run
 *SearchV1Api* | [**getSearch**](docs/SearchV1Api.md#getSearch) | **GET** /api/v1/{owner}/{project}/searches/{uuid} | List runs
 *SearchV1Api* | [**listSearches**](docs/SearchV1Api.md#listSearches) | **GET** /api/v1/{owner}/{project}/searches | List bookmarked runs for user
 *SearchV1Api* | [**patchSearch**](docs/SearchV1Api.md#patchSearch) | **PATCH** /api/v1/{owner}/{project}/searches/{search.uuid} | Get run
 *SearchV1Api* | [**updateSearch**](docs/SearchV1Api.md#updateSearch) | **PUT** /api/v1/{owner}/{project}/searches/{search.uuid} | Create new run
+*TeamsV1Api* | [**createTeam**](docs/TeamsV1Api.md#createTeam) | **POST** /api/v1/{owner}/teams | List runs
+*TeamsV1Api* | [**createTeamMember**](docs/TeamsV1Api.md#createTeamMember) | **POST** /api/v1/{owner}/teams/{team}/members | Delete runs
+*TeamsV1Api* | [**deleteTeam**](docs/TeamsV1Api.md#deleteTeam) | **DELETE** /api/v1/{owner}/teams/{team} | Patch run
+*TeamsV1Api* | [**deleteTeamMember**](docs/TeamsV1Api.md#deleteTeamMember) | **DELETE** /api/v1/{owner}/teams/{team}/members/{member.user} | Invalidate runs
+*TeamsV1Api* | [**getTeam**](docs/TeamsV1Api.md#getTeam) | **GET** /api/v1/{owner}/teams/{team} | Create new run
+*TeamsV1Api* | [**getTeamMember**](docs/TeamsV1Api.md#getTeamMember) | **GET** /api/v1/{owner}/teams/{team}/members/{member.user} | Stop run
+*TeamsV1Api* | [**listTeamMembers**](docs/TeamsV1Api.md#listTeamMembers) | **GET** /api/v1/{owner}/teams/{team}/members | Delete run
+*TeamsV1Api* | [**listTeamNames**](docs/TeamsV1Api.md#listTeamNames) | **GET** /api/v1/{owner}/teams/names | List bookmarked runs for user
+*TeamsV1Api* | [**listTeams**](docs/TeamsV1Api.md#listTeams) | **GET** /api/v1/{owner}/teams | List archived runs for user
+*TeamsV1Api* | [**patchTeam**](docs/TeamsV1Api.md#patchTeam) | **PATCH** /api/v1/{owner}/teams/{team.name} | Update run
+*TeamsV1Api* | [**patchTeamMember**](docs/TeamsV1Api.md#patchTeamMember) | **PATCH** /api/v1/{owner}/teams/{team}/members/{member.user} | Invalidate run
+*TeamsV1Api* | [**updateTeam**](docs/TeamsV1Api.md#updateTeam) | **PUT** /api/v1/{owner}/teams/{team.name} | Get run
+*TeamsV1Api* | [**updateTeamMember**](docs/TeamsV1Api.md#updateTeamMember) | **PUT** /api/v1/{owner}/teams/{team}/members/{member.user} | Stop runs
 *UsersV1Api* | [**getUser**](docs/UsersV1Api.md#getUser) | **GET** /api/v1/users | List bookmarked runs for user
 *VersionsV1Api* | [**getLogHandler**](docs/VersionsV1Api.md#getLogHandler) | **GET** /api/v1/log_handler | List archived runs for user
 *VersionsV1Api* | [**getVersions**](docs/VersionsV1Api.md#getVersions) | **GET** /api/v1/version | List bookmarked runs for user
@@ -223,37 +263,83 @@ Class | Method | HTTP request | Description
 
 ## Documentation for Models
 
+ - [ProtobufNullValue](docs/ProtobufNullValue.md)
  - [V1Agent](docs/V1Agent.md)
+ - [V1ArtifactMount](docs/V1ArtifactMount.md)
  - [V1ArtifactTreeResponse](docs/V1ArtifactTreeResponse.md)
  - [V1ArtifactsStore](docs/V1ArtifactsStore.md)
  - [V1Auth](docs/V1Auth.md)
+ - [V1AverageStoppingPolicy](docs/V1AverageStoppingPolicy.md)
+ - [V1BO](docs/V1BO.md)
  - [V1CodeRef](docs/V1CodeRef.md)
+ - [V1Container](docs/V1Container.md)
  - [V1CredsBodyRequest](docs/V1CredsBodyRequest.md)
+ - [V1CronSchedule](docs/V1CronSchedule.md)
+ - [V1Dashboard](docs/V1Dashboard.md)
+ - [V1EarlyStoppingAllSchemas](docs/V1EarlyStoppingAllSchemas.md)
  - [V1EntityStatusBodyRequest](docs/V1EntityStatusBodyRequest.md)
+ - [V1ExactTimeSchedule](docs/V1ExactTimeSchedule.md)
+ - [V1FailureEarlyStopping](docs/V1FailureEarlyStopping.md)
+ - [V1GridSearch](docs/V1GridSearch.md)
  - [V1HostAccess](docs/V1HostAccess.md)
+ - [V1Hyperband](docs/V1Hyperband.md)
+ - [V1Hyperopt](docs/V1Hyperopt.md)
+ - [V1HyperoptAlgorithms](docs/V1HyperoptAlgorithms.md)
+ - [V1IntervalSchedule](docs/V1IntervalSchedule.md)
+ - [V1Iterative](docs/V1Iterative.md)
+ - [V1K8sMount](docs/V1K8sMount.md)
  - [V1K8sResource](docs/V1K8sResource.md)
  - [V1ListAgentsResponse](docs/V1ListAgentsResponse.md)
  - [V1ListArtifactsStoresResponse](docs/V1ListArtifactsStoresResponse.md)
+ - [V1ListDashboardsResponse](docs/V1ListDashboardsResponse.md)
  - [V1ListHostAccessesResponse](docs/V1ListHostAccessesResponse.md)
  - [V1ListK8sResourcesResponse](docs/V1ListK8sResourcesResponse.md)
+ - [V1ListOrganizationMembersResponse](docs/V1ListOrganizationMembersResponse.md)
+ - [V1ListOrganizationsResponse](docs/V1ListOrganizationsResponse.md)
  - [V1ListProjectsResponse](docs/V1ListProjectsResponse.md)
  - [V1ListQueuesResponse](docs/V1ListQueuesResponse.md)
  - [V1ListRunsResponse](docs/V1ListRunsResponse.md)
  - [V1ListSearchesResponse](docs/V1ListSearchesResponse.md)
+ - [V1ListTeamMembersResponse](docs/V1ListTeamMembersResponse.md)
+ - [V1ListTeamsResponse](docs/V1ListTeamsResponse.md)
  - [V1LogHandler](docs/V1LogHandler.md)
+ - [V1Mapping](docs/V1Mapping.md)
+ - [V1MedianStoppingPolicy](docs/V1MedianStoppingPolicy.md)
+ - [V1MetricEarlyStopping](docs/V1MetricEarlyStopping.md)
+ - [V1Mounts](docs/V1Mounts.md)
+ - [V1Optimization](docs/V1Optimization.md)
+ - [V1OptimizationMetric](docs/V1OptimizationMetric.md)
+ - [V1OptimizationResource](docs/V1OptimizationResource.md)
+ - [V1Organization](docs/V1Organization.md)
+ - [V1OrganizationMember](docs/V1OrganizationMember.md)
+ - [V1ParallelAllSchemas](docs/V1ParallelAllSchemas.md)
  - [V1Project](docs/V1Project.md)
  - [V1ProjectEntityResourceRequest](docs/V1ProjectEntityResourceRequest.md)
+ - [V1ProjectSettings](docs/V1ProjectSettings.md)
+ - [V1ProjectTeams](docs/V1ProjectTeams.md)
  - [V1Queue](docs/V1Queue.md)
+ - [V1RandomSearch](docs/V1RandomSearch.md)
+ - [V1RepeatableSchedule](docs/V1RepeatableSchedule.md)
+ - [V1ResourceType](docs/V1ResourceType.md)
  - [V1Run](docs/V1Run.md)
  - [V1RunMetaInfo](docs/V1RunMetaInfo.md)
+ - [V1RunSettings](docs/V1RunSettings.md)
+ - [V1RunSettingsCatalog](docs/V1RunSettingsCatalog.md)
+ - [V1ScheduleAllSchemas](docs/V1ScheduleAllSchemas.md)
+ - [V1Schemas](docs/V1Schemas.md)
  - [V1Search](docs/V1Search.md)
- - [V1SearchDefinition](docs/V1SearchDefinition.md)
+ - [V1SearchSpec](docs/V1SearchSpec.md)
  - [V1Status](docs/V1Status.md)
  - [V1StatusCondition](docs/V1StatusCondition.md)
+ - [V1Team](docs/V1Team.md)
+ - [V1TeamMember](docs/V1TeamMember.md)
+ - [V1Termination](docs/V1Termination.md)
+ - [V1TruncationStoppingPolicy](docs/V1TruncationStoppingPolicy.md)
  - [V1User](docs/V1User.md)
  - [V1Uuids](docs/V1Uuids.md)
  - [V1Version](docs/V1Version.md)
  - [V1Versions](docs/V1Versions.md)
+ - [V1WidgetSpec](docs/V1WidgetSpec.md)
 
 
 ## Documentation for Authorization

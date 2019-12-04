@@ -6,7 +6,7 @@ Name | Type | Description | Notes
 **uuid** | **str** |  | [optional] 
 **name** | **str** |  | [optional] 
 **namespace** | **str** |  | [optional] 
-**version_api** | **dict(str, str)** |  | [optional] 
+**version_api** | **object** |  | [optional] 
 **created_at** | **datetime** |  | [optional] 
 **updated_at** | **datetime** |  | [optional] 
 

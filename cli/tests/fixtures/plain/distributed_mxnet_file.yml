@@ -35,8 +35,8 @@ environment:
             values:
             - another-node-label-value
 
-workflow:
-  kind: replication
+run:
+  kind: mxnet_job
   Scheduler:
     replicas: 1
     environment:
@@ -51,10 +51,16 @@ workflow:
         memory:
           requests: 256
           limits: 256
+    container:
+      image: my_image
+      command: [video_prediction_train, --model=DNA, --num_masks=1]
 
 
   Server:
     replicas: 1
+    container:
+      image: my_image
+      command: [video_prediction_train, --model=DNA, --num_masks=1]
 
   Worker:
     replicas: 1
@@ -65,8 +71,7 @@ workflow:
         memory:
           requests: 300
           limits: 300
-
-container:
-  image: my_image
-  command: [video_prediction_train, --model=DNA, --num_masks=1]
+    container:
+      image: my_image
+      command: [video_prediction_train, --model=DNA, --num_masks=1]
 ...

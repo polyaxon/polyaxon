@@ -31,6 +31,8 @@ import io.swagger.client.ApiException;
 import java.io.File;
 import io.swagger.client.model.V1ListProjectsResponse;
 import io.swagger.client.model.V1Project;
+import io.swagger.client.model.V1ProjectSettings;
+import io.swagger.client.model.V1ProjectTeams;
 import org.junit.Test;
 import org.junit.Ignore;
 
@@ -168,6 +170,40 @@ public class ProjectsV1ApiTest {
     }
     
     /**
+     * Resume run
+     *
+     * 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void getProjectSettingsTest() throws ApiException {
+        String owner = null;
+        String project = null;
+        V1ProjectSettings response = api.getProjectSettings(owner, project);
+
+        // TODO: test validations
+    }
+    
+    /**
+     * Bookmark run
+     *
+     * 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void getProjectTeamsTest() throws ApiException {
+        String owner = null;
+        String project = null;
+        V1ProjectTeams response = api.getProjectTeams(owner, project);
+
+        // TODO: test validations
+    }
+    
+    /**
      * Get run
      *
      * 
@@ -266,6 +302,42 @@ public class ProjectsV1ApiTest {
     }
     
     /**
+     * Restore run
+     *
+     * 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void patchProjectSettingsTest() throws ApiException {
+        String owner = null;
+        String project = null;
+        V1ProjectSettings body = null;
+        V1ProjectSettings response = api.patchProjectSettings(owner, project, body);
+
+        // TODO: test validations
+    }
+    
+    /**
+     * Start run tensorboard
+     *
+     * 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void patchProjectTeamsTest() throws ApiException {
+        String owner = null;
+        String project = null;
+        V1ProjectTeams body = null;
+        V1ProjectTeams response = api.patchProjectTeams(owner, project, body);
+
+        // TODO: test validations
+    }
+    
+    /**
      * Stop runs
      *
      * 
@@ -313,6 +385,42 @@ public class ProjectsV1ApiTest {
         String projectName = null;
         V1Project body = null;
         V1Project response = api.updateProject(owner, projectName, body);
+
+        // TODO: test validations
+    }
+    
+    /**
+     * Archive run
+     *
+     * 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void updateProjectSettingsTest() throws ApiException {
+        String owner = null;
+        String project = null;
+        V1ProjectSettings body = null;
+        V1ProjectSettings response = api.updateProjectSettings(owner, project, body);
+
+        // TODO: test validations
+    }
+    
+    /**
+     * Unbookmark run
+     *
+     * 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void updateProjectTeamsTest() throws ApiException {
+        String owner = null;
+        String project = null;
+        V1ProjectTeams body = null;
+        V1ProjectTeams response = api.updateProjectTeams(owner, project, body);
 
         // TODO: test validations
     }

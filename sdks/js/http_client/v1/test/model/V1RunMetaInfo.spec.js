@@ -67,10 +67,16 @@
         // expect(instance.concurrency).to.be(expectedValueLiteral);
       });
 
-      it('should have the property workflow_kind (base name: "workflow_kind")', function() {
-        // TODO: update the code to test the property workflow_kind
-        expect(instance).to.have.property('workflow_kind');
-        // expect(instance.workflow_kind).to.be(expectedValueLiteral);
+      it('should have the property parallel_kind (base name: "parallel_kind")', function() {
+        // TODO: update the code to test the property parallel_kind
+        expect(instance).to.have.property('parallel_kind');
+        // expect(instance.parallel_kind).to.be(expectedValueLiteral);
+      });
+
+      it('should have the property run_kind (base name: "run_kind")', function() {
+        // TODO: update the code to test the property run_kind
+        expect(instance).to.have.property('run_kind');
+        // expect(instance.run_kind).to.be(expectedValueLiteral);
       });
 
     });

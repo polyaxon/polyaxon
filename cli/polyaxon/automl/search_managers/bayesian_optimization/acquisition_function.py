@@ -6,7 +6,7 @@ from sklearn.gaussian_process import GaussianProcessRegressor
 from sklearn.gaussian_process.kernels import RBF, Matern
 
 from polyaxon.automl.search_managers.utils import get_random_generator
-from polyaxon.schemas.polyflow.workflows.automl.bo import (
+from polyaxon.schemas.polyflow.parallel.bo import (
     AcquisitionFunctions,
     GaussianProcessConfig,
     GaussianProcessesKernels,

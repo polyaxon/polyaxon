@@ -24,14 +24,17 @@ import pytest
 from marshmallow.exceptions import ValidationError
 from tests.utils import assert_equal_dict
 
-from polyaxon.schemas.polyflow.workflows.automl.bo import (
+from polyaxon.schemas.polyflow.optimization import (
+    Optimization,
+    OptimizationMetricConfig,
+)
+from polyaxon.schemas.polyflow.parallel.bo import (
     AcquisitionFunctions,
     BOConfig,
     GaussianProcessConfig,
     GaussianProcessesKernels,
     UtilityFunctionConfig,
 )
-from polyaxon.schemas.polyflow.workflows.metrics import Optimization, SearchMetricConfig
 
 
 @pytest.mark.workflow_mark
@@ -84,7 +87,7 @@ class TestWorkflowBOConfigs(TestCase):
     def test_bo_config(self):
         config_dict = {
             "kind": "bo",
-            "metric": SearchMetricConfig(
+            "metric": OptimizationMetricConfig(
                 name="loss", optimization=Optimization.MINIMIZE
             ).to_dict(),
             "n_initial_trials": 2,

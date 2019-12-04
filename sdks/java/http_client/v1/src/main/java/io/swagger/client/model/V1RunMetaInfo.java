@@ -49,8 +49,11 @@ public class V1RunMetaInfo {
   @SerializedName("concurrency")
   private Integer concurrency = null;
 
-  @SerializedName("workflow_kind")
-  private String workflowKind = null;
+  @SerializedName("parallel_kind")
+  private String parallelKind = null;
+
+  @SerializedName("run_kind")
+  private String runKind = null;
 
   public V1RunMetaInfo service(Boolean service) {
     this.service = service;
@@ -88,22 +91,40 @@ public class V1RunMetaInfo {
     this.concurrency = concurrency;
   }
 
-  public V1RunMetaInfo workflowKind(String workflowKind) {
-    this.workflowKind = workflowKind;
+  public V1RunMetaInfo parallelKind(String parallelKind) {
+    this.parallelKind = parallelKind;
     return this;
   }
 
    /**
-   * Get workflowKind
-   * @return workflowKind
+   * Get parallelKind
+   * @return parallelKind
   **/
   @ApiModelProperty(value = "")
-  public String getWorkflowKind() {
-    return workflowKind;
+  public String getParallelKind() {
+    return parallelKind;
   }
 
-  public void setWorkflowKind(String workflowKind) {
-    this.workflowKind = workflowKind;
+  public void setParallelKind(String parallelKind) {
+    this.parallelKind = parallelKind;
+  }
+
+  public V1RunMetaInfo runKind(String runKind) {
+    this.runKind = runKind;
+    return this;
+  }
+
+   /**
+   * Get runKind
+   * @return runKind
+  **/
+  @ApiModelProperty(value = "")
+  public String getRunKind() {
+    return runKind;
+  }
+
+  public void setRunKind(String runKind) {
+    this.runKind = runKind;
   }
 
 
@@ -118,12 +139,13 @@ public class V1RunMetaInfo {
     V1RunMetaInfo v1RunMetaInfo = (V1RunMetaInfo) o;
     return Objects.equals(this.service, v1RunMetaInfo.service) &&
         Objects.equals(this.concurrency, v1RunMetaInfo.concurrency) &&
-        Objects.equals(this.workflowKind, v1RunMetaInfo.workflowKind);
+        Objects.equals(this.parallelKind, v1RunMetaInfo.parallelKind) &&
+        Objects.equals(this.runKind, v1RunMetaInfo.runKind);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(service, concurrency, workflowKind);
+    return Objects.hash(service, concurrency, parallelKind, runKind);
   }
 
 
@@ -134,7 +156,8 @@ public class V1RunMetaInfo {
     
     sb.append("    service: ").append(toIndentedString(service)).append("\n");
     sb.append("    concurrency: ").append(toIndentedString(concurrency)).append("\n");
-    sb.append("    workflowKind: ").append(toIndentedString(workflowKind)).append("\n");
+    sb.append("    parallelKind: ").append(toIndentedString(parallelKind)).append("\n");
+    sb.append("    runKind: ").append(toIndentedString(runKind)).append("\n");
     sb.append("}");
     return sb.toString();
   }

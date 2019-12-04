@@ -39,6 +39,15 @@ message ProjectResourceRequest {
     string project = 2;
 }
 
+// Request data with owner/team namespace
+message TeamResourceRequest {
+    // Owner of the namespace
+    string owner = 1;
+
+    // Team under namesapce
+    string team = 2;
+}
+
 message Uuids {
     repeated string uuids = 1;
 }

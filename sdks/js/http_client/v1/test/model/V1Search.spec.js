@@ -67,10 +67,22 @@
         // expect(instance.name).to.be(expectedValueLiteral);
       });
 
-      it('should have the property definition (base name: "definition")', function() {
-        // TODO: update the code to test the property definition
-        expect(instance).to.have.property('definition');
-        // expect(instance.definition).to.be(expectedValueLiteral);
+      it('should have the property spec (base name: "spec")', function() {
+        // TODO: update the code to test the property spec
+        expect(instance).to.have.property('spec');
+        // expect(instance.spec).to.be(expectedValueLiteral);
+      });
+
+      it('should have the property created_at (base name: "created_at")', function() {
+        // TODO: update the code to test the property created_at
+        expect(instance).to.have.property('created_at');
+        // expect(instance.created_at).to.be(expectedValueLiteral);
+      });
+
+      it('should have the property updated_at (base name: "updated_at")', function() {
+        // TODO: update the code to test the property updated_at
+        expect(instance).to.have.property('updated_at');
+        // expect(instance.updated_at).to.be(expectedValueLiteral);
       });
 
     });

@@ -3,7 +3,7 @@ version: 1.0
 
 kind: component
 
-workflow:
+parallel:
   kind: hyperband
   concurrency: 2
   max_iter: 10
@@ -35,7 +35,8 @@ workflow:
       kind: choice
       value: [CDNA, DNA, STP]
 
-container:
+run:
+  kind: container
   image: foo:latest
   command: train --lr={{ lr }} --loss={{ loss }}
 ...

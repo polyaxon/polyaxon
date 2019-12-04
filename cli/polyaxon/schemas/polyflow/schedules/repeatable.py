@@ -25,7 +25,7 @@ from polyaxon.schemas.fields.ref_or_obj import RefOrObject
 
 class RepeatableScheduleSchema(BaseSchema):
     kind = fields.Str(allow_none=True, validate=validate.Equal("repeatable"))
-    n_repetitions = RefOrObject(
+    limit = RefOrObject(
         fields.Int(required=True, validate=validate.Range(min=1)), required=True
     )
     depends_on_past = RefOrObject(fields.Bool(allow_none=True), required=True)
@@ -39,7 +39,7 @@ class RepeatableScheduleConfig(BaseConfig):
     SCHEMA = RepeatableScheduleSchema
     IDENTIFIER = "repeatable"
 
-    def __init__(self, n_repetitions=None, depends_on_past=None, kind=IDENTIFIER):
-        self.n_repetitions = n_repetitions
+    def __init__(self, limit=None, depends_on_past=None, kind=IDENTIFIER):
+        self.limit = limit
         self.depends_on_past = depends_on_past
         self.kind = kind

@@ -25,7 +25,7 @@ from marshmallow.exceptions import ValidationError
 from tests.utils import assert_equal_dict
 
 from polyaxon.schemas.polyflow.base import BaseComponentConfig
-from polyaxon.schemas.polyflow.workflows.automl.random_search import RandomSearchConfig
+from polyaxon.schemas.polyflow.parallel.random_search import RandomSearchConfig
 
 
 @pytest.mark.workflow_mark
@@ -59,7 +59,7 @@ class TestWorkflowRandomSearchConfigs(TestCase):
 
     def test_random_search_without_n_runs(self):
         config_dict = {
-            "workflow": {
+            "parallel": {
                 "kind": "random_search",
                 "concurrency": 1,
                 "matrix": {"lr": {"kind": "choice", "value": [1, 2, 3]}},
@@ -70,6 +70,6 @@ class TestWorkflowRandomSearchConfigs(TestCase):
         with self.assertRaises(ValidationError):
             BaseComponentConfig.from_dict(config_dict)
 
-        config_dict["workflow"]["n_runs"] = 10
+        config_dict["parallel"]["n_runs"] = 10
         config = BaseComponentConfig.from_dict(config_dict)
         assert config.to_dict() == config_dict

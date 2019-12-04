@@ -33,7 +33,7 @@ environment:
             values:
             - another-node-label-value
 
-workflow:
+run:
   kind: pytorch_job
   master:
     replicas: 5
@@ -45,6 +45,9 @@ workflow:
           memory: 300Mi
         limits:
           memory: 300Mi
+    container:
+      image: my_image
+      command: video_prediction_train --model=DNA --num_masks=1
 
   worker:
     replicas: 10
@@ -60,8 +63,7 @@ workflow:
         limits:
           cpu: 3
           memory: 256Mi
-
-container:
-  image: my_image
-  command: video_prediction_train --model=DNA --num_masks=1
+    container:
+      image: my_image
+      command: video_prediction_train --model=DNA --num_masks=1
 ...

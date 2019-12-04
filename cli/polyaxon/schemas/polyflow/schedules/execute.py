@@ -25,7 +25,7 @@ from polyaxon.schemas.fields.ref_or_obj import RefOrObject
 
 class ExactTimeScheduleSchema(BaseSchema):
     kind = fields.Str(allow_none=True, validate=validate.Equal("exact_time"))
-    execute_at = RefOrObject(fields.LocalDateTime(required=True), required=True)
+    start_at = RefOrObject(fields.LocalDateTime(required=True), required=True)
 
     @staticmethod
     def schema_config():
@@ -35,8 +35,7 @@ class ExactTimeScheduleSchema(BaseSchema):
 class ExactTimeScheduleConfig(BaseConfig):
     SCHEMA = ExactTimeScheduleSchema
     IDENTIFIER = "exact_time"
-    REDUCED_ATTRIBUTES = ["execute_at"]
 
-    def __init__(self, execute_at=None, kind=IDENTIFIER):
-        self.execute_at = execute_at
+    def __init__(self, start_at=None, kind=IDENTIFIER):
+        self.start_at = start_at
         self.kind = kind

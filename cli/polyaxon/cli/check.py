@@ -34,7 +34,9 @@ from polyaxon.utils import constants
 from polyaxon.utils.formatting import Printer, dict_tabulate
 
 
-def check_polyaxonfile(polyaxonfile, params=None, profile=None, nocache=None, log=True):
+def check_polyaxonfile(
+    polyaxonfile, params=None, profile=None, queue=None, nocache=None, log=True
+):
     if not polyaxonfile:
         polyaxonfile = PolyaxonFile.check_default_path(path=".")
     if not polyaxonfile:
@@ -57,7 +59,7 @@ def check_polyaxonfile(polyaxonfile, params=None, profile=None, nocache=None, lo
     try:
         plx_file = PolyaxonFile(polyaxonfile)
         plx_file = plx_file.get_op_specification(
-            params=parsed_params, profile=profile, nocache=nocache
+            params=parsed_params, profile=profile, queue=queue, nocache=nocache
         )
         if log:
             Printer.print_success("Polyaxonfile valid")
@@ -76,9 +78,9 @@ def check_polyaxonfile_kind(specification, kind):
         sys.exit(-1)
 
 
-def get_workflow_info(kind, concurrency, early_stopping=False, **kwargs):
+def get_parallel_info(kind, concurrency, early_stopping=False, **kwargs):
     info = OrderedDict()
-    info["Workflow kind"] = kind.lower()
+    info["Parallel kind"] = kind.lower()
     info["Concurrency"] = (
         "{} runs".format("sequential")
         if concurrency == 1

@@ -38,7 +38,7 @@ ApiKey.setApiKey("YOUR API KEY");
 SearchV1Api apiInstance = new SearchV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
 String project = "project_example"; // String | Project under namesapce
-V1Search body = new V1Search(); // V1Search | Artifact store body
+V1Search body = new V1Search(); // V1Search | Search body
 try {
     V1Search result = apiInstance.createSearch(owner, project, body);
     System.out.println(result);
@@ -54,7 +54,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
  **project** | **String**| Project under namesapce |
- **body** | [**V1Search**](V1Search.md)| Artifact store body |
+ **body** | [**V1Search**](V1Search.md)| Search body |
 
 ### Return type
 
@@ -272,7 +272,7 @@ SearchV1Api apiInstance = new SearchV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
 String project = "project_example"; // String | Project under namesapce
 String searchUuid = "searchUuid_example"; // String | UUID
-V1Search body = new V1Search(); // V1Search | Artifact store body
+V1Search body = new V1Search(); // V1Search | Search body
 try {
     V1Search result = apiInstance.patchSearch(owner, project, searchUuid, body);
     System.out.println(result);
@@ -289,7 +289,7 @@ Name | Type | Description  | Notes
  **owner** | **String**| Owner of the namespace |
  **project** | **String**| Project under namesapce |
  **searchUuid** | **String**| UUID |
- **body** | [**V1Search**](V1Search.md)| Artifact store body |
+ **body** | [**V1Search**](V1Search.md)| Search body |
 
 ### Return type
 
@@ -331,7 +331,7 @@ SearchV1Api apiInstance = new SearchV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
 String project = "project_example"; // String | Project under namesapce
 String searchUuid = "searchUuid_example"; // String | UUID
-V1Search body = new V1Search(); // V1Search | Artifact store body
+V1Search body = new V1Search(); // V1Search | Search body
 try {
     V1Search result = apiInstance.updateSearch(owner, project, searchUuid, body);
     System.out.println(result);
@@ -348,7 +348,7 @@ Name | Type | Description  | Notes
  **owner** | **String**| Owner of the namespace |
  **project** | **String**| Project under namesapce |
  **searchUuid** | **String**| UUID |
- **body** | [**V1Search**](V1Search.md)| Artifact store body |
+ **body** | [**V1Search**](V1Search.md)| Search body |
 
 ### Return type
 

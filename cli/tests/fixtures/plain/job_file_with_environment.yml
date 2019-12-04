@@ -46,7 +46,8 @@ environment:
 
   log_level: DEBUG
 
-container:
+run:
+  kind: container
   image: my_image
   command: echo
 ...

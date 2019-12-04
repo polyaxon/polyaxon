@@ -3,7 +3,6 @@ syntax = "proto3";
 package v1;
 
 import "google/api/annotations.proto";
-import "google/protobuf/struct.proto";
 import "google/protobuf/timestamp.proto";
 import "protoc-gen-swagger/options/annotations.proto";
 
@@ -69,3 +68,65 @@ message Project {
     // Next page
     string next = 4;
 }
+
+// Project Settings specification
+message ProjectSettings {
+    // Logs Store
+    string logs_store = 1;
+
+    // Outputs Store
+    string outputs_store = 2;
+
+    // Artifacts Store
+    repeated string artifacts_stores = 3;
+
+    // git Accesses
+    repeated string git_accesses = 4;
+
+    // Registry Accesses
+    repeated string registry_accesses = 5;
+
+    // K8S secrets
+    repeated string k8s_secrets = 6;
+
+    // K8S config maps
+    repeated string k8s_config_maps = 7;
+
+    // Run profile
+    string run_profile = 8;
+
+    // Run profiles
+    repeated string run_profiles = 9;
+}
+
+// Request data to update project settings
+message ProjectSettingsBodyRequest {
+    // Owner of the namespace
+    string owner = 1;
+
+    // Project name
+    string project = 2;
+
+    // Project settings body
+    ProjectSettings settings = 3;
+ }
+
+
+// Project teams specification
+message ProjectTeams {
+    // Teams
+    repeated string teams = 1;
+}
+
+
+// Request data to update project teams
+message ProjectTeamsBodyRequest {
+    // Owner of the namespace
+    string owner = 1;
+
+    // Project name
+    string project = 2;
+
+    // Project settings body
+    ProjectTeams teams = 3;
+ }

@@ -15,11 +15,13 @@ message RunMetaInfo {
     bool service = 1;
 
     // Optional an indicator if the run has a concurrency
-    int32 concurrency = 3;
+    int32 concurrency = 2;
 
-    // Optional the kind of workflow if it exists
-    string workflow_kind = 2;
+    // Optional the parallel kind
+    string parallel_kind = 3;
 
+    // Optional the run kind
+    string run_kind = 4;
 }
 
 // Run specification
@@ -69,44 +71,50 @@ message Run {
     // Optional latest status of this entity
     string status = 15;
 
-    // Optional run meta info
-    RunMetaInfo meta_info = 16;
-
     // Optional a readme text describing this entity
-    string readme = 17;
+    string readme = 16;
 
     // Optional if this entity was bookmarked
-    bool bookmarked = 18;
+    bool bookmarked = 17;
+
+    // Optional run meta info
+    RunMetaInfo meta_info = 18;
+
+    // Optional kind to tell the nature of this run
+    string kind = 19;
+
+    // Optional hub reference versioned component
+    string hub = 20;
 
     // Optional inputs of this entity
-    map<string, string> inputs = 19;
+    google.protobuf.Struct  inputs = 21;
 
     // Optional outputs of this entity
-    map<string, string> outputs = 20;
+    google.protobuf.Struct  outputs = 22;
 
     // Optional run environment tracked
-    map<string, string> run_env = 21;
+    google.protobuf.Struct run_env = 23;
 
     // Is resume
-    bool is_resume = 22;
+    bool is_resume = 24;
 
     // Is clone
-    bool is_clone = 23;
+    bool is_clone = 25;
 
-    // Optional if this run was restarted/copied/resumed
-    string cloning_strategy = 24;
+    // Optional if this run was restarted/copied/resumed/cached
+    string cloning_strategy = 26;
 
     // Optional uuid of the pipeline
-    string pipeline = 25;
+    string pipeline = 27;
 
     // Optional uuid of the original run
-    string original = 26;
+    string original = 28;
 
     // Optional name of the pipeline
-    string pipeline_name = 27;
+    string pipeline_name = 29;
 
     // Optional name of the original run
-    string original_name = 28;
+    string original_name = 30;
 }
 
 
@@ -144,4 +152,49 @@ message EntityRunBodyRequest{
 
     // Next page
     string next = 4;
+}
+
+
+// Run Settings specification
+message RunSettingsCatalog {
+    // Uuid
+    string uuid = 1;
+
+    // Name
+    string name = 2;
+}
+
+message RunSettings {
+    // Namespace
+    string namespace = 1;
+
+    // Agent
+    RunSettingsCatalog agent = 2;
+
+    // Queue
+    RunSettingsCatalog queue = 3;
+
+    // Logs Store
+    RunSettingsCatalog logs_store = 4;
+
+    // Outputs Store
+    RunSettingsCatalog outputs_store = 5;
+
+    // Init artifact Stores
+    repeated RunSettingsCatalog init_artifacts_stores = 6;
+
+    // Artifacts Store
+    repeated RunSettingsCatalog artifacts_stores = 7;
+
+    // git Accesses
+    repeated RunSettingsCatalog git_accesses = 8;
+
+    // Registry Access
+    RunSettingsCatalog registry_access = 9;
+
+    // K8S secrets
+    repeated RunSettingsCatalog k8s_secrets = 10;
+
+    // K8S config maps
+    repeated RunSettingsCatalog k8s_config_maps = 11;
 }

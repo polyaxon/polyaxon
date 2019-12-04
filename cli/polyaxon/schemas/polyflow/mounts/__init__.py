@@ -20,14 +20,14 @@ from __future__ import absolute_import, division, print_function
 from marshmallow import fields
 
 from polyaxon.schemas.base import BaseConfig, BaseSchema
-from polyaxon.schemas.polyflow.mounts.artifact_refs import ArtifactRefSchema
-from polyaxon.schemas.polyflow.mounts.k8s_resource_refs import K8SResourceRefSchema
+from polyaxon.schemas.polyflow.mounts.artifact_mounts import ArtifactMountSchema
+from polyaxon.schemas.polyflow.mounts.k8s_mounts import K8sMountSchema
 
 
 class MountsSchema(BaseSchema):
-    secrets = fields.Nested(K8SResourceRefSchema, many=True, allow_none=True)
-    config_maps = fields.Nested(K8SResourceRefSchema, many=True, allow_none=True)
-    artifacts = fields.Nested(ArtifactRefSchema, many=True, allow_none=True)
+    secrets = fields.Nested(K8sMountSchema, many=True, allow_none=True)
+    config_maps = fields.Nested(K8sMountSchema, many=True, allow_none=True)
+    artifacts = fields.Nested(ArtifactMountSchema, many=True, allow_none=True)
 
     @staticmethod
     def schema_config():

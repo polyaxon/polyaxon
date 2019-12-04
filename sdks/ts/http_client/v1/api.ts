@@ -93,6 +93,15 @@ export class RequiredError extends Error {
 }
 
 /**
+ * `NullValue` is a singleton enumeration to represent the null value for the `Value` type union.   The JSON representation for `NullValue` is JSON `null`.   - NULL_VALUE: Null value.
+ * @export
+ * @enum {string}
+ */
+export enum ProtobufNullValue {
+    NULLVALUE = <any> 'NULL_VALUE'
+}
+
+/**
  * 
  * @export
  * @interface V1Agent
@@ -118,10 +127,10 @@ export interface V1Agent {
     namespace?: string;
     /**
      * 
-     * @type {{ [key: string]: string; }}
+     * @type {any}
      * @memberof V1Agent
      */
-    version_api?: { [key: string]: string; };
+    version_api?: any;
     /**
      * 
      * @type {Date}
@@ -134,6 +143,26 @@ export interface V1Agent {
      * @memberof V1Agent
      */
     updated_at?: Date;
+}
+
+/**
+ * 
+ * @export
+ * @interface V1ArtifactMount
+ */
+export interface V1ArtifactMount {
+    /**
+     * 
+     * @type {string}
+     * @memberof V1ArtifactMount
+     */
+    name?: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof V1ArtifactMount
+     */
+    paths?: Array<string>;
 }
 
 /**
@@ -287,6 +316,88 @@ export interface V1Auth {
 }
 
 /**
+ * Early stopping with average stopping, this policy computes running averages across all runs and stops those whose best performance is worse than the median of the running runs.
+ * @export
+ * @interface V1AverageStoppingPolicy
+ */
+export interface V1AverageStoppingPolicy {
+    /**
+     * 
+     * @type {string}
+     * @memberof V1AverageStoppingPolicy
+     */
+    king?: string;
+    /**
+     * Interval/Frequency for applying the policy.
+     * @type {string}
+     * @memberof V1AverageStoppingPolicy
+     */
+    evaluation_interval?: string;
+}
+
+/**
+ * 
+ * @export
+ * @interface V1BO
+ */
+export interface V1BO {
+    /**
+     * 
+     * @type {string}
+     * @memberof V1BO
+     */
+    kind?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1BO
+     */
+    matrix?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof V1BO
+     */
+    n_initial_trials?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof V1BO
+     */
+    n_iterations?: number;
+    /**
+     * 
+     * @type {Array<any>}
+     * @memberof V1BO
+     */
+    utility_function?: Array<any>;
+    /**
+     * 
+     * @type {V1OptimizationMetric}
+     * @memberof V1BO
+     */
+    metric?: V1OptimizationMetric;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1BO
+     */
+    seed?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1BO
+     */
+    concurrency?: string;
+    /**
+     * 
+     * @type {Array<any>}
+     * @memberof V1BO
+     */
+    early_stopping?: Array<any>;
+}
+
+/**
  * 
  * @export
  * @interface V1CodeRef
@@ -309,6 +420,44 @@ export interface V1CodeRef {
 /**
  * 
  * @export
+ * @interface V1Container
+ */
+export interface V1Container {
+    /**
+     * 
+     * @type {string}
+     * @memberof V1Container
+     */
+    kind?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1Container
+     */
+    image?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1Container
+     */
+    image_pull_policy?: string;
+    /**
+     * The command to execute on the container.
+     * @type {Array<string>}
+     * @memberof V1Container
+     */
+    command?: Array<string>;
+    /**
+     * Arguments to the entrypoint.
+     * @type {Array<string>}
+     * @memberof V1Container
+     */
+    args?: Array<string>;
+}
+
+/**
+ * 
+ * @export
  * @interface V1CredsBodyRequest
  */
 export interface V1CredsBodyRequest {
@@ -324,6 +473,120 @@ export interface V1CredsBodyRequest {
      * @memberof V1CredsBodyRequest
      */
     password?: string;
+}
+
+/**
+ * 
+ * @export
+ * @interface V1CronSchedule
+ */
+export interface V1CronSchedule {
+    /**
+     * 
+     * @type {string}
+     * @memberof V1CronSchedule
+     */
+    kind?: string;
+    /**
+     * 
+     * @type {Date}
+     * @memberof V1CronSchedule
+     */
+    start_at?: Date;
+    /**
+     * 
+     * @type {Date}
+     * @memberof V1CronSchedule
+     */
+    end_at?: Date;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1CronSchedule
+     */
+    cron?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof V1CronSchedule
+     */
+    depends_on_past?: boolean;
+}
+
+/**
+ * 
+ * @export
+ * @interface V1Dashboard
+ */
+export interface V1Dashboard {
+    /**
+     * 
+     * @type {string}
+     * @memberof V1Dashboard
+     */
+    uuid?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1Dashboard
+     */
+    name?: string;
+    /**
+     * 
+     * @type {Array<V1WidgetSpec>}
+     * @memberof V1Dashboard
+     */
+    widgets?: Array<V1WidgetSpec>;
+    /**
+     * 
+     * @type {Date}
+     * @memberof V1Dashboard
+     */
+    created_at?: Date;
+    /**
+     * 
+     * @type {Date}
+     * @memberof V1Dashboard
+     */
+    updated_at?: Date;
+}
+
+/**
+ * 
+ * @export
+ * @interface V1EarlyStoppingAllSchemas
+ */
+export interface V1EarlyStoppingAllSchemas {
+    /**
+     * 
+     * @type {V1MedianStoppingPolicy}
+     * @memberof V1EarlyStoppingAllSchemas
+     */
+    median?: V1MedianStoppingPolicy;
+    /**
+     * 
+     * @type {V1AverageStoppingPolicy}
+     * @memberof V1EarlyStoppingAllSchemas
+     */
+    average?: V1AverageStoppingPolicy;
+    /**
+     * 
+     * @type {V1TruncationStoppingPolicy}
+     * @memberof V1EarlyStoppingAllSchemas
+     */
+    truncation?: V1TruncationStoppingPolicy;
+    /**
+     * 
+     * @type {V1MetricEarlyStopping}
+     * @memberof V1EarlyStoppingAllSchemas
+     */
+    metric?: V1MetricEarlyStopping;
+    /**
+     * 
+     * @type {V1FailureEarlyStopping}
+     * @memberof V1EarlyStoppingAllSchemas
+     */
+    failure?: V1FailureEarlyStopping;
 }
 
 /**
@@ -356,6 +619,96 @@ export interface V1EntityStatusBodyRequest {
      * @memberof V1EntityStatusBodyRequest
      */
     condition?: V1StatusCondition;
+}
+
+/**
+ * 
+ * @export
+ * @interface V1ExactTimeSchedule
+ */
+export interface V1ExactTimeSchedule {
+    /**
+     * 
+     * @type {string}
+     * @memberof V1ExactTimeSchedule
+     */
+    kind?: string;
+    /**
+     * 
+     * @type {Date}
+     * @memberof V1ExactTimeSchedule
+     */
+    start_at?: Date;
+}
+
+/**
+ * FailureEarlyStoppingSchema specification Early stopping based on failure config. this policy stops based on a percentage of failed runs at every evaluation.
+ * @export
+ * @interface V1FailureEarlyStopping
+ */
+export interface V1FailureEarlyStopping {
+    /**
+     * 
+     * @type {string}
+     * @memberof V1FailureEarlyStopping
+     */
+    kind?: string;
+    /**
+     * The percentage failed runs, at each evaluation interval. e.g. 1 - 99.
+     * @type {number}
+     * @memberof V1FailureEarlyStopping
+     */
+    percent?: number;
+    /**
+     * Interval/Frequency for applying the policy.
+     * @type {string}
+     * @memberof V1FailureEarlyStopping
+     */
+    evaluation_interval?: string;
+}
+
+/**
+ * 
+ * @export
+ * @interface V1GridSearch
+ */
+export interface V1GridSearch {
+    /**
+     * 
+     * @type {string}
+     * @memberof V1GridSearch
+     */
+    kind?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1GridSearch
+     */
+    matrix?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1GridSearch
+     */
+    n_runs?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1GridSearch
+     */
+    seed?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1GridSearch
+     */
+    concurrency?: string;
+    /**
+     * 
+     * @type {Array<any>}
+     * @memberof V1GridSearch
+     */
+    early_stopping?: Array<any>;
 }
 
 /**
@@ -442,6 +795,243 @@ export interface V1HostAccess {
      * @memberof V1HostAccess
      */
     url?: string;
+}
+
+/**
+ * 
+ * @export
+ * @interface V1Hyperband
+ */
+export interface V1Hyperband {
+    /**
+     * 
+     * @type {string}
+     * @memberof V1Hyperband
+     */
+    kind?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1Hyperband
+     */
+    matrix?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1Hyperband
+     */
+    eta?: string;
+    /**
+     * 
+     * @type {V1OptimizationResource}
+     * @memberof V1Hyperband
+     */
+    resource?: V1OptimizationResource;
+    /**
+     * 
+     * @type {V1OptimizationMetric}
+     * @memberof V1Hyperband
+     */
+    metric?: V1OptimizationMetric;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof V1Hyperband
+     */
+    resume?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1Hyperband
+     */
+    seed?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1Hyperband
+     */
+    concurrency?: string;
+    /**
+     * 
+     * @type {Array<any>}
+     * @memberof V1Hyperband
+     */
+    early_stopping?: Array<any>;
+}
+
+/**
+ * 
+ * @export
+ * @interface V1Hyperopt
+ */
+export interface V1Hyperopt {
+    /**
+     * 
+     * @type {string}
+     * @memberof V1Hyperopt
+     */
+    kind?: string;
+    /**
+     * 
+     * @type {V1HyperoptAlgorithms}
+     * @memberof V1Hyperopt
+     */
+    algorithm?: V1HyperoptAlgorithms;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1Hyperopt
+     */
+    matrix?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1Hyperopt
+     */
+    n_runs?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1Hyperopt
+     */
+    seed?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1Hyperopt
+     */
+    concurrency?: string;
+    /**
+     * 
+     * @type {Array<any>}
+     * @memberof V1Hyperopt
+     */
+    early_stopping?: Array<any>;
+}
+
+/**
+ * - TPE: tpe algorithm  - RAND: random algorithm  - ANNEAL: anneal algorithm
+ * @export
+ * @enum {string}
+ */
+export enum V1HyperoptAlgorithms {
+    TPE = <any> 'TPE',
+    RAND = <any> 'RAND',
+    ANNEAL = <any> 'ANNEAL'
+}
+
+/**
+ * 
+ * @export
+ * @interface V1IntervalSchedule
+ */
+export interface V1IntervalSchedule {
+    /**
+     * 
+     * @type {string}
+     * @memberof V1IntervalSchedule
+     */
+    kind?: string;
+    /**
+     * 
+     * @type {Date}
+     * @memberof V1IntervalSchedule
+     */
+    start_at?: Date;
+    /**
+     * 
+     * @type {Date}
+     * @memberof V1IntervalSchedule
+     */
+    end_at?: Date;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1IntervalSchedule
+     */
+    frequency?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof V1IntervalSchedule
+     */
+    depends_on_past?: boolean;
+}
+
+/**
+ * 
+ * @export
+ * @interface V1Iterative
+ */
+export interface V1Iterative {
+    /**
+     * 
+     * @type {string}
+     * @memberof V1Iterative
+     */
+    kind?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1Iterative
+     */
+    matrix?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof V1Iterative
+     */
+    n_iterations?: number;
+    /**
+     * 
+     * @type {V1Container}
+     * @memberof V1Iterative
+     */
+    container?: V1Container;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1Iterative
+     */
+    seed?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1Iterative
+     */
+    concurrency?: string;
+    /**
+     * 
+     * @type {Array<any>}
+     * @memberof V1Iterative
+     */
+    early_stopping?: Array<any>;
+}
+
+/**
+ * 
+ * @export
+ * @interface V1K8sMount
+ */
+export interface V1K8sMount {
+    /**
+     * 
+     * @type {string}
+     * @memberof V1K8sMount
+     */
+    name?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1K8sMount
+     */
+    mount_path?: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof V1K8sMount
+     */
+    items?: Array<string>;
 }
 
 /**
@@ -597,6 +1187,38 @@ export interface V1ListArtifactsStoresResponse {
 /**
  * 
  * @export
+ * @interface V1ListDashboardsResponse
+ */
+export interface V1ListDashboardsResponse {
+    /**
+     * 
+     * @type {number}
+     * @memberof V1ListDashboardsResponse
+     */
+    count?: number;
+    /**
+     * 
+     * @type {Array<V1Dashboard>}
+     * @memberof V1ListDashboardsResponse
+     */
+    results?: Array<V1Dashboard>;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1ListDashboardsResponse
+     */
+    previous?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1ListDashboardsResponse
+     */
+    next?: string;
+}
+
+/**
+ * 
+ * @export
  * @interface V1ListHostAccessesResponse
  */
 export interface V1ListHostAccessesResponse {
@@ -654,6 +1276,70 @@ export interface V1ListK8sResourcesResponse {
      * 
      * @type {string}
      * @memberof V1ListK8sResourcesResponse
+     */
+    next?: string;
+}
+
+/**
+ * 
+ * @export
+ * @interface V1ListOrganizationMembersResponse
+ */
+export interface V1ListOrganizationMembersResponse {
+    /**
+     * 
+     * @type {number}
+     * @memberof V1ListOrganizationMembersResponse
+     */
+    count?: number;
+    /**
+     * 
+     * @type {Array<V1OrganizationMember>}
+     * @memberof V1ListOrganizationMembersResponse
+     */
+    results?: Array<V1OrganizationMember>;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1ListOrganizationMembersResponse
+     */
+    previous?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1ListOrganizationMembersResponse
+     */
+    next?: string;
+}
+
+/**
+ * 
+ * @export
+ * @interface V1ListOrganizationsResponse
+ */
+export interface V1ListOrganizationsResponse {
+    /**
+     * 
+     * @type {number}
+     * @memberof V1ListOrganizationsResponse
+     */
+    count?: number;
+    /**
+     * 
+     * @type {Array<V1Organization>}
+     * @memberof V1ListOrganizationsResponse
+     */
+    results?: Array<V1Organization>;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1ListOrganizationsResponse
+     */
+    previous?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1ListOrganizationsResponse
      */
     next?: string;
 }
@@ -789,6 +1475,70 @@ export interface V1ListSearchesResponse {
 /**
  * 
  * @export
+ * @interface V1ListTeamMembersResponse
+ */
+export interface V1ListTeamMembersResponse {
+    /**
+     * 
+     * @type {number}
+     * @memberof V1ListTeamMembersResponse
+     */
+    count?: number;
+    /**
+     * 
+     * @type {Array<V1TeamMember>}
+     * @memberof V1ListTeamMembersResponse
+     */
+    results?: Array<V1TeamMember>;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1ListTeamMembersResponse
+     */
+    previous?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1ListTeamMembersResponse
+     */
+    next?: string;
+}
+
+/**
+ * 
+ * @export
+ * @interface V1ListTeamsResponse
+ */
+export interface V1ListTeamsResponse {
+    /**
+     * 
+     * @type {number}
+     * @memberof V1ListTeamsResponse
+     */
+    count?: number;
+    /**
+     * 
+     * @type {Array<V1Team>}
+     * @memberof V1ListTeamsResponse
+     */
+    results?: Array<V1Team>;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1ListTeamsResponse
+     */
+    previous?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1ListTeamsResponse
+     */
+    next?: string;
+}
+
+/**
+ * 
+ * @export
  * @interface V1LogHandler
  */
 export interface V1LogHandler {
@@ -804,6 +1554,292 @@ export interface V1LogHandler {
      * @memberof V1LogHandler
      */
     environment?: string;
+}
+
+/**
+ * 
+ * @export
+ * @interface V1Mapping
+ */
+export interface V1Mapping {
+    /**
+     * 
+     * @type {string}
+     * @memberof V1Mapping
+     */
+    kind?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1Mapping
+     */
+    values?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1Mapping
+     */
+    concurrency?: string;
+    /**
+     * 
+     * @type {Array<any>}
+     * @memberof V1Mapping
+     */
+    early_stopping?: Array<any>;
+}
+
+/**
+ * Early stopping with median stopping, this policy computes running medians across all runs and stops those whose best performance is worse than the median of the running runs.
+ * @export
+ * @interface V1MedianStoppingPolicy
+ */
+export interface V1MedianStoppingPolicy {
+    /**
+     * 
+     * @type {string}
+     * @memberof V1MedianStoppingPolicy
+     */
+    king?: string;
+    /**
+     * Interval/Frequency for applying the policy.
+     * @type {string}
+     * @memberof V1MedianStoppingPolicy
+     */
+    evaluation_interval?: string;
+}
+
+/**
+ * MetricEarlyStoppingSchema specification Early stopping based on metric config.
+ * @export
+ * @interface V1MetricEarlyStopping
+ */
+export interface V1MetricEarlyStopping {
+    /**
+     * 
+     * @type {string}
+     * @memberof V1MetricEarlyStopping
+     */
+    kind?: string;
+    /**
+     * Metric name to use for early stopping.
+     * @type {string}
+     * @memberof V1MetricEarlyStopping
+     */
+    metric?: string;
+    /**
+     * Metric value to use for the condition.
+     * @type {string}
+     * @memberof V1MetricEarlyStopping
+     */
+    value?: string;
+    /**
+     * Optimization to do: maximize or minimize.
+     * @type {V1Optimization}
+     * @memberof V1MetricEarlyStopping
+     */
+    optimization?: V1Optimization;
+    /**
+     * 
+     * @type {Array<any>}
+     * @memberof V1MetricEarlyStopping
+     */
+    policy?: Array<any>;
+}
+
+/**
+ * 
+ * @export
+ * @interface V1Mounts
+ */
+export interface V1Mounts {
+    /**
+     * 
+     * @type {Array<V1K8sMount>}
+     * @memberof V1Mounts
+     */
+    secrets?: Array<V1K8sMount>;
+    /**
+     * 
+     * @type {Array<V1K8sMount>}
+     * @memberof V1Mounts
+     */
+    config_maps?: Array<V1K8sMount>;
+    /**
+     * 
+     * @type {Array<V1ArtifactMount>}
+     * @memberof V1Mounts
+     */
+    artifacts?: Array<V1ArtifactMount>;
+}
+
+/**
+ * - MAXIMIZE: Minimize a metric  - MINIMIZE: Maximize a metric
+ * @export
+ * @enum {string}
+ */
+export enum V1Optimization {
+    MAXIMIZE = <any> 'MAXIMIZE',
+    MINIMIZE = <any> 'MINIMIZE'
+}
+
+/**
+ * 
+ * @export
+ * @interface V1OptimizationMetric
+ */
+export interface V1OptimizationMetric {
+    /**
+     * 
+     * @type {string}
+     * @memberof V1OptimizationMetric
+     */
+    name?: string;
+    /**
+     * 
+     * @type {V1Optimization}
+     * @memberof V1OptimizationMetric
+     */
+    optimization?: V1Optimization;
+}
+
+/**
+ * 
+ * @export
+ * @interface V1OptimizationResource
+ */
+export interface V1OptimizationResource {
+    /**
+     * 
+     * @type {string}
+     * @memberof V1OptimizationResource
+     */
+    name?: string;
+    /**
+     * 
+     * @type {V1ResourceType}
+     * @memberof V1OptimizationResource
+     */
+    type?: V1ResourceType;
+}
+
+/**
+ * 
+ * @export
+ * @interface V1Organization
+ */
+export interface V1Organization {
+    /**
+     * 
+     * @type {string}
+     * @memberof V1Organization
+     */
+    user?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1Organization
+     */
+    name?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1Organization
+     */
+    is_public?: string;
+    /**
+     * 
+     * @type {Date}
+     * @memberof V1Organization
+     */
+    created_at?: Date;
+    /**
+     * 
+     * @type {Date}
+     * @memberof V1Organization
+     */
+    updated_at?: Date;
+}
+
+/**
+ * 
+ * @export
+ * @interface V1OrganizationMember
+ */
+export interface V1OrganizationMember {
+    /**
+     * 
+     * @type {string}
+     * @memberof V1OrganizationMember
+     */
+    user?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1OrganizationMember
+     */
+    role?: string;
+    /**
+     * 
+     * @type {Date}
+     * @memberof V1OrganizationMember
+     */
+    created_at?: Date;
+    /**
+     * 
+     * @type {Date}
+     * @memberof V1OrganizationMember
+     */
+    updated_at?: Date;
+}
+
+/**
+ * 
+ * @export
+ * @interface V1ParallelAllSchemas
+ */
+export interface V1ParallelAllSchemas {
+    /**
+     * 
+     * @type {V1RandomSearch}
+     * @memberof V1ParallelAllSchemas
+     */
+    random?: V1RandomSearch;
+    /**
+     * 
+     * @type {V1GridSearch}
+     * @memberof V1ParallelAllSchemas
+     */
+    grid?: V1GridSearch;
+    /**
+     * 
+     * @type {V1Hyperband}
+     * @memberof V1ParallelAllSchemas
+     */
+    hyperband?: V1Hyperband;
+    /**
+     * 
+     * @type {V1BO}
+     * @memberof V1ParallelAllSchemas
+     */
+    bo?: V1BO;
+    /**
+     * 
+     * @type {V1Hyperopt}
+     * @memberof V1ParallelAllSchemas
+     */
+    hyperopt?: V1Hyperopt;
+    /**
+     * 
+     * @type {V1Iterative}
+     * @memberof V1ParallelAllSchemas
+     */
+    iterative?: V1Iterative;
+    /**
+     * 
+     * @type {V1Mapping}
+     * @memberof V1ParallelAllSchemas
+     */
+    mapping?: V1Mapping;
 }
 
 /**
@@ -915,6 +1951,82 @@ export interface V1ProjectEntityResourceRequest {
 /**
  * 
  * @export
+ * @interface V1ProjectSettings
+ */
+export interface V1ProjectSettings {
+    /**
+     * 
+     * @type {string}
+     * @memberof V1ProjectSettings
+     */
+    logs_store?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1ProjectSettings
+     */
+    outputs_store?: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof V1ProjectSettings
+     */
+    artifacts_stores?: Array<string>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof V1ProjectSettings
+     */
+    git_accesses?: Array<string>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof V1ProjectSettings
+     */
+    registry_accesses?: Array<string>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof V1ProjectSettings
+     */
+    k8s_secrets?: Array<string>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof V1ProjectSettings
+     */
+    k8s_config_maps?: Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1ProjectSettings
+     */
+    run_profile?: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof V1ProjectSettings
+     */
+    run_profiles?: Array<string>;
+}
+
+/**
+ * 
+ * @export
+ * @interface V1ProjectTeams
+ */
+export interface V1ProjectTeams {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof V1ProjectTeams
+     */
+    teams?: Array<string>;
+}
+
+/**
+ * 
+ * @export
  * @interface V1Queue
  */
 export interface V1Queue {
@@ -960,6 +2072,86 @@ export interface V1Queue {
      * @memberof V1Queue
      */
     updated_at?: Date;
+}
+
+/**
+ * 
+ * @export
+ * @interface V1RandomSearch
+ */
+export interface V1RandomSearch {
+    /**
+     * 
+     * @type {string}
+     * @memberof V1RandomSearch
+     */
+    kind?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1RandomSearch
+     */
+    matrix?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1RandomSearch
+     */
+    n_runs?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1RandomSearch
+     */
+    seed?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1RandomSearch
+     */
+    concurrency?: string;
+    /**
+     * 
+     * @type {Array<any>}
+     * @memberof V1RandomSearch
+     */
+    early_stopping?: Array<any>;
+}
+
+/**
+ * 
+ * @export
+ * @interface V1RepeatableSchedule
+ */
+export interface V1RepeatableSchedule {
+    /**
+     * 
+     * @type {string}
+     * @memberof V1RepeatableSchedule
+     */
+    kind?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1RepeatableSchedule
+     */
+    limit?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof V1RepeatableSchedule
+     */
+    depends_on_past?: boolean;
+}
+
+/**
+ * - INT: Int resource  - FLOAT: Float resource
+ * @export
+ * @enum {string}
+ */
+export enum V1ResourceType {
+    INT = <any> 'INT',
+    FLOAT = <any> 'FLOAT'
 }
 
 /**
@@ -1060,12 +2252,6 @@ export interface V1Run {
     status?: string;
     /**
      * 
-     * @type {V1RunMetaInfo}
-     * @memberof V1Run
-     */
-    meta_info?: V1RunMetaInfo;
-    /**
-     * 
      * @type {string}
      * @memberof V1Run
      */
@@ -1078,22 +2264,40 @@ export interface V1Run {
     bookmarked?: boolean;
     /**
      * 
-     * @type {{ [key: string]: string; }}
+     * @type {V1RunMetaInfo}
      * @memberof V1Run
      */
-    inputs?: { [key: string]: string; };
+    meta_info?: V1RunMetaInfo;
     /**
      * 
-     * @type {{ [key: string]: string; }}
+     * @type {string}
      * @memberof V1Run
      */
-    outputs?: { [key: string]: string; };
+    kind?: string;
     /**
      * 
-     * @type {{ [key: string]: string; }}
+     * @type {string}
      * @memberof V1Run
      */
-    run_env?: { [key: string]: string; };
+    hub?: string;
+    /**
+     * 
+     * @type {any}
+     * @memberof V1Run
+     */
+    inputs?: any;
+    /**
+     * 
+     * @type {any}
+     * @memberof V1Run
+     */
+    outputs?: any;
+    /**
+     * 
+     * @type {any}
+     * @memberof V1Run
+     */
+    run_env?: any;
     /**
      * 
      * @type {boolean}
@@ -1161,7 +2365,177 @@ export interface V1RunMetaInfo {
      * @type {string}
      * @memberof V1RunMetaInfo
      */
-    workflow_kind?: string;
+    parallel_kind?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1RunMetaInfo
+     */
+    run_kind?: string;
+}
+
+/**
+ * 
+ * @export
+ * @interface V1RunSettings
+ */
+export interface V1RunSettings {
+    /**
+     * 
+     * @type {string}
+     * @memberof V1RunSettings
+     */
+    namespace?: string;
+    /**
+     * 
+     * @type {V1RunSettingsCatalog}
+     * @memberof V1RunSettings
+     */
+    agent?: V1RunSettingsCatalog;
+    /**
+     * 
+     * @type {V1RunSettingsCatalog}
+     * @memberof V1RunSettings
+     */
+    queue?: V1RunSettingsCatalog;
+    /**
+     * 
+     * @type {V1RunSettingsCatalog}
+     * @memberof V1RunSettings
+     */
+    logs_store?: V1RunSettingsCatalog;
+    /**
+     * 
+     * @type {V1RunSettingsCatalog}
+     * @memberof V1RunSettings
+     */
+    outputs_store?: V1RunSettingsCatalog;
+    /**
+     * 
+     * @type {Array<V1RunSettingsCatalog>}
+     * @memberof V1RunSettings
+     */
+    init_artifacts_stores?: Array<V1RunSettingsCatalog>;
+    /**
+     * 
+     * @type {Array<V1RunSettingsCatalog>}
+     * @memberof V1RunSettings
+     */
+    artifacts_stores?: Array<V1RunSettingsCatalog>;
+    /**
+     * 
+     * @type {Array<V1RunSettingsCatalog>}
+     * @memberof V1RunSettings
+     */
+    git_accesses?: Array<V1RunSettingsCatalog>;
+    /**
+     * 
+     * @type {V1RunSettingsCatalog}
+     * @memberof V1RunSettings
+     */
+    registry_access?: V1RunSettingsCatalog;
+    /**
+     * 
+     * @type {Array<V1RunSettingsCatalog>}
+     * @memberof V1RunSettings
+     */
+    k8s_secrets?: Array<V1RunSettingsCatalog>;
+    /**
+     * 
+     * @type {Array<V1RunSettingsCatalog>}
+     * @memberof V1RunSettings
+     */
+    k8s_config_maps?: Array<V1RunSettingsCatalog>;
+}
+
+/**
+ * 
+ * @export
+ * @interface V1RunSettingsCatalog
+ */
+export interface V1RunSettingsCatalog {
+    /**
+     * 
+     * @type {string}
+     * @memberof V1RunSettingsCatalog
+     */
+    uuid?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1RunSettingsCatalog
+     */
+    name?: string;
+}
+
+/**
+ * 
+ * @export
+ * @interface V1ScheduleAllSchemas
+ */
+export interface V1ScheduleAllSchemas {
+    /**
+     * 
+     * @type {V1CronSchedule}
+     * @memberof V1ScheduleAllSchemas
+     */
+    cron?: V1CronSchedule;
+    /**
+     * 
+     * @type {V1ExactTimeSchedule}
+     * @memberof V1ScheduleAllSchemas
+     */
+    exact_time?: V1ExactTimeSchedule;
+    /**
+     * 
+     * @type {V1IntervalSchedule}
+     * @memberof V1ScheduleAllSchemas
+     */
+    interval?: V1IntervalSchedule;
+    /**
+     * 
+     * @type {V1RepeatableSchedule}
+     * @memberof V1ScheduleAllSchemas
+     */
+    repeatable?: V1RepeatableSchedule;
+}
+
+/**
+ * 
+ * @export
+ * @interface V1Schemas
+ */
+export interface V1Schemas {
+    /**
+     * 
+     * @type {V1EarlyStoppingAllSchemas}
+     * @memberof V1Schemas
+     */
+    early_stopping?: V1EarlyStoppingAllSchemas;
+    /**
+     * 
+     * @type {V1Mounts}
+     * @memberof V1Schemas
+     */
+    mount?: V1Mounts;
+    /**
+     * 
+     * @type {V1ParallelAllSchemas}
+     * @memberof V1Schemas
+     */
+    parallel?: V1ParallelAllSchemas;
+    /**
+     * 
+     * @type {V1ScheduleAllSchemas}
+     * @memberof V1Schemas
+     */
+    schedule?: V1ScheduleAllSchemas;
+    /**
+     * 
+     * @type {V1Termination}
+     * @memberof V1Schemas
+     */
+    termination?: V1Termination;
 }
 
 /**
@@ -1184,40 +2558,58 @@ export interface V1Search {
     name?: string;
     /**
      * 
-     * @type {V1SearchDefinition}
+     * @type {V1SearchSpec}
      * @memberof V1Search
      */
-    definition?: V1SearchDefinition;
+    spec?: V1SearchSpec;
+    /**
+     * 
+     * @type {Date}
+     * @memberof V1Search
+     */
+    created_at?: Date;
+    /**
+     * 
+     * @type {Date}
+     * @memberof V1Search
+     */
+    updated_at?: Date;
 }
 
 /**
  * 
  * @export
- * @interface V1SearchDefinition
+ * @interface V1SearchSpec
  */
-export interface V1SearchDefinition {
+export interface V1SearchSpec {
     /**
      * 
      * @type {string}
-     * @memberof V1SearchDefinition
+     * @memberof V1SearchSpec
      */
     query?: string;
     /**
      * 
      * @type {string}
-     * @memberof V1SearchDefinition
+     * @memberof V1SearchSpec
      */
     sort?: string;
     /**
      * 
+     * @type {number}
+     * @memberof V1SearchSpec
+     */
+    limit?: number;
+    /**
+     * 
      * @type {string}
-     * @memberof V1SearchDefinition
+     * @memberof V1SearchSpec
      */
     groupby?: string;
     /**
      * 
      * @type {string}
-     * @memberof V1SearchDefinition
+     * @memberof V1SearchSpec
      */
     columns?: string;
 }
@@ -1290,6 +2682,140 @@ export interface V1StatusCondition {
      * @memberof V1StatusCondition
      */
     last_transition_time?: Date;
+}
+
+/**
+ * 
+ * @export
+ * @interface V1Team
+ */
+export interface V1Team {
+    /**
+     * 
+     * @type {string}
+     * @memberof V1Team
+     */
+    uuid?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1Team
+     */
+    name?: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof V1Team
+     */
+    projects?: Array<string>;
+    /**
+     * 
+     * @type {Date}
+     * @memberof V1Team
+     */
+    created_at?: Date;
+    /**
+     * 
+     * @type {Date}
+     * @memberof V1Team
+     */
+    updated_at?: Date;
+}
+
+/**
+ * 
+ * @export
+ * @interface V1TeamMember
+ */
+export interface V1TeamMember {
+    /**
+     * 
+     * @type {string}
+     * @memberof V1TeamMember
+     */
+    user?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1TeamMember
+     */
+    role?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1TeamMember
+     */
+    org_role?: string;
+    /**
+     * 
+     * @type {Date}
+     * @memberof V1TeamMember
+     */
+    created_at?: Date;
+    /**
+     * 
+     * @type {Date}
+     * @memberof V1TeamMember
+     */
+    updated_at?: Date;
+}
+
+/**
+ * 
+ * @export
+ * @interface V1Termination
+ */
+export interface V1Termination {
+    /**
+     * 
+     * @type {number}
+     * @memberof V1Termination
+     */
+    max_retries?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1Termination
+     */
+    restart_policy?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1Termination
+     */
+    ttl?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1Termination
+     */
+    timeout?: string;
+}
+
+/**
+ * Early stopping with truncation stopping, this policy stops a percentage of all running runs at every evaluation.
+ * @export
+ * @interface V1TruncationStoppingPolicy
+ */
+export interface V1TruncationStoppingPolicy {
+    /**
+     * 
+     * @type {string}
+     * @memberof V1TruncationStoppingPolicy
+     */
+    king?: string;
+    /**
+     * The percentage of runs to stop, at each evaluation interval. e.g. 1 - 99.
+     * @type {number}
+     * @memberof V1TruncationStoppingPolicy
+     */
+    percent?: number;
+    /**
+     * Interval/Frequency for applying the policy.
+     * @type {string}
+     * @memberof V1TruncationStoppingPolicy
+     */
+    evaluation_interval?: string;
 }
 
 /**
@@ -1382,6 +2908,32 @@ export interface V1Versions {
      * @memberof V1Versions
      */
     agent?: V1Version;
+}
+
+/**
+ * 
+ * @export
+ * @interface V1WidgetSpec
+ */
+export interface V1WidgetSpec {
+    /**
+     * 
+     * @type {string}
+     * @memberof V1WidgetSpec
+     */
+    king?: string;
+    /**
+     * 
+     * @type {V1SearchSpec}
+     * @memberof V1WidgetSpec
+     */
+    search?: V1SearchSpec;
+    /**
+     * 
+     * @type {any}
+     * @memberof V1WidgetSpec
+     */
+    meta?: any;
 }
 
 
@@ -3053,6 +4605,668 @@ export class AuthV1Api extends BaseAPI {
      */
     public login(body: V1CredsBodyRequest, options?: any) {
         return AuthV1ApiFp(this.configuration).login(body, options)(this.fetch, this.basePath);
+    }
+
+}
+
+/**
+ * DashboardV1Api - fetch parameter creator
+ * @export
+ */
+export const DashboardV1ApiFetchParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary List archived runs for user
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project under namesapce
+         * @param {V1Dashboard} body Dashboard body
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createDashboard(owner: string, project: string, body: V1Dashboard, options: any = {}): FetchArgs {
+            // verify required parameter 'owner' is not null or undefined
+            if (owner === null || owner === undefined) {
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling createDashboard.');
+            }
+            // verify required parameter 'project' is not null or undefined
+            if (project === null || project === undefined) {
+                throw new RequiredError('project','Required parameter project was null or undefined when calling createDashboard.');
+            }
+            // verify required parameter 'body' is not null or undefined
+            if (body === null || body === undefined) {
+                throw new RequiredError('body','Required parameter body was null or undefined when calling createDashboard.');
+            }
+            const localVarPath = `/api/v1/{owner}/{project}/dashboards`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"project"}}`, encodeURIComponent(String(project)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("Authorization")
+					: configuration.apiKey;
+                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"V1Dashboard" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Update run
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project where the experiement will be assigned
+         * @param {string} uuid Unique integer identifier of the entity
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteDashboard(owner: string, project: string, uuid: string, options: any = {}): FetchArgs {
+            // verify required parameter 'owner' is not null or undefined
+            if (owner === null || owner === undefined) {
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling deleteDashboard.');
+            }
+            // verify required parameter 'project' is not null or undefined
+            if (project === null || project === undefined) {
+                throw new RequiredError('project','Required parameter project was null or undefined when calling deleteDashboard.');
+            }
+            // verify required parameter 'uuid' is not null or undefined
+            if (uuid === null || uuid === undefined) {
+                throw new RequiredError('uuid','Required parameter uuid was null or undefined when calling deleteDashboard.');
+            }
+            const localVarPath = `/api/v1/{owner}/{project}/dashboards/{uuid}`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"project"}}`, encodeURIComponent(String(project)))
+                .replace(`{${"uuid"}}`, encodeURIComponent(String(uuid)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'DELETE' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("Authorization")
+					: configuration.apiKey;
+                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary List runs
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project where the experiement will be assigned
+         * @param {string} uuid Unique integer identifier of the entity
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getDashboard(owner: string, project: string, uuid: string, options: any = {}): FetchArgs {
+            // verify required parameter 'owner' is not null or undefined
+            if (owner === null || owner === undefined) {
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling getDashboard.');
+            }
+            // verify required parameter 'project' is not null or undefined
+            if (project === null || project === undefined) {
+                throw new RequiredError('project','Required parameter project was null or undefined when calling getDashboard.');
+            }
+            // verify required parameter 'uuid' is not null or undefined
+            if (uuid === null || uuid === undefined) {
+                throw new RequiredError('uuid','Required parameter uuid was null or undefined when calling getDashboard.');
+            }
+            const localVarPath = `/api/v1/{owner}/{project}/dashboards/{uuid}`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"project"}}`, encodeURIComponent(String(project)))
+                .replace(`{${"uuid"}}`, encodeURIComponent(String(uuid)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("Authorization")
+					: configuration.apiKey;
+                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary List bookmarked runs for user
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project under namesapce
+         * @param {number} [offset] Pagination offset.
+         * @param {number} [limit] Limit size.
+         * @param {string} [sort] Sort to order the search.
+         * @param {string} [query] Query filter the search search.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listDashboard(owner: string, project: string, offset?: number, limit?: number, sort?: string, query?: string, options: any = {}): FetchArgs {
+            // verify required parameter 'owner' is not null or undefined
+            if (owner === null || owner === undefined) {
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling listDashboard.');
+            }
+            // verify required parameter 'project' is not null or undefined
+            if (project === null || project === undefined) {
+                throw new RequiredError('project','Required parameter project was null or undefined when calling listDashboard.');
+            }
+            const localVarPath = `/api/v1/{owner}/{project}/dashboards`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"project"}}`, encodeURIComponent(String(project)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("Authorization")
+					: configuration.apiKey;
+                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            if (offset !== undefined) {
+                localVarQueryParameter['offset'] = offset;
+            }
+
+            if (limit !== undefined) {
+                localVarQueryParameter['limit'] = limit;
+            }
+
+            if (sort !== undefined) {
+                localVarQueryParameter['sort'] = sort;
+            }
+
+            if (query !== undefined) {
+                localVarQueryParameter['query'] = query;
+            }
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get run
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project under namesapce
+         * @param {string} dashboard_uuid UUID
+         * @param {V1Dashboard} body Dashboard body
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchDashboard(owner: string, project: string, dashboard_uuid: string, body: V1Dashboard, options: any = {}): FetchArgs {
+            // verify required parameter 'owner' is not null or undefined
+            if (owner === null || owner === undefined) {
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling patchDashboard.');
+            }
+            // verify required parameter 'project' is not null or undefined
+            if (project === null || project === undefined) {
+                throw new RequiredError('project','Required parameter project was null or undefined when calling patchDashboard.');
+            }
+            // verify required parameter 'dashboard_uuid' is not null or undefined
+            if (dashboard_uuid === null || dashboard_uuid === undefined) {
+                throw new RequiredError('dashboard_uuid','Required parameter dashboard_uuid was null or undefined when calling patchDashboard.');
+            }
+            // verify required parameter 'body' is not null or undefined
+            if (body === null || body === undefined) {
+                throw new RequiredError('body','Required parameter body was null or undefined when calling patchDashboard.');
+            }
+            const localVarPath = `/api/v1/{owner}/{project}/dashboards/{dashboard.uuid}`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"project"}}`, encodeURIComponent(String(project)))
+                .replace(`{${"dashboard.uuid"}}`, encodeURIComponent(String(dashboard_uuid)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'PATCH' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("Authorization")
+					: configuration.apiKey;
+                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"V1Dashboard" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Create new run
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project under namesapce
+         * @param {string} dashboard_uuid UUID
+         * @param {V1Dashboard} body Dashboard body
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateDashboard(owner: string, project: string, dashboard_uuid: string, body: V1Dashboard, options: any = {}): FetchArgs {
+            // verify required parameter 'owner' is not null or undefined
+            if (owner === null || owner === undefined) {
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling updateDashboard.');
+            }
+            // verify required parameter 'project' is not null or undefined
+            if (project === null || project === undefined) {
+                throw new RequiredError('project','Required parameter project was null or undefined when calling updateDashboard.');
+            }
+            // verify required parameter 'dashboard_uuid' is not null or undefined
+            if (dashboard_uuid === null || dashboard_uuid === undefined) {
+                throw new RequiredError('dashboard_uuid','Required parameter dashboard_uuid was null or undefined when calling updateDashboard.');
+            }
+            // verify required parameter 'body' is not null or undefined
+            if (body === null || body === undefined) {
+                throw new RequiredError('body','Required parameter body was null or undefined when calling updateDashboard.');
+            }
+            const localVarPath = `/api/v1/{owner}/{project}/dashboards/{dashboard.uuid}`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"project"}}`, encodeURIComponent(String(project)))
+                .replace(`{${"dashboard.uuid"}}`, encodeURIComponent(String(dashboard_uuid)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'PUT' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("Authorization")
+					: configuration.apiKey;
+                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"V1Dashboard" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * DashboardV1Api - functional programming interface
+ * @export
+ */
+export const DashboardV1ApiFp = function(configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary List archived runs for user
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project under namesapce
+         * @param {V1Dashboard} body Dashboard body
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createDashboard(owner: string, project: string, body: V1Dashboard, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1Dashboard> {
+            const localVarFetchArgs = DashboardV1ApiFetchParamCreator(configuration).createDashboard(owner, project, body, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary Update run
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project where the experiement will be assigned
+         * @param {string} uuid Unique integer identifier of the entity
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteDashboard(owner: string, project: string, uuid: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+            const localVarFetchArgs = DashboardV1ApiFetchParamCreator(configuration).deleteDashboard(owner, project, uuid, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response;
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary List runs
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project where the experiement will be assigned
+         * @param {string} uuid Unique integer identifier of the entity
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getDashboard(owner: string, project: string, uuid: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1Dashboard> {
+            const localVarFetchArgs = DashboardV1ApiFetchParamCreator(configuration).getDashboard(owner, project, uuid, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary List bookmarked runs for user
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project under namesapce
+         * @param {number} [offset] Pagination offset.
+         * @param {number} [limit] Limit size.
+         * @param {string} [sort] Sort to order the search.
+         * @param {string} [query] Query filter the search search.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listDashboard(owner: string, project: string, offset?: number, limit?: number, sort?: string, query?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ListDashboardsResponse> {
+            const localVarFetchArgs = DashboardV1ApiFetchParamCreator(configuration).listDashboard(owner, project, offset, limit, sort, query, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary Get run
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project under namesapce
+         * @param {string} dashboard_uuid UUID
+         * @param {V1Dashboard} body Dashboard body
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchDashboard(owner: string, project: string, dashboard_uuid: string, body: V1Dashboard, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1Dashboard> {
+            const localVarFetchArgs = DashboardV1ApiFetchParamCreator(configuration).patchDashboard(owner, project, dashboard_uuid, body, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary Create new run
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project under namesapce
+         * @param {string} dashboard_uuid UUID
+         * @param {V1Dashboard} body Dashboard body
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateDashboard(owner: string, project: string, dashboard_uuid: string, body: V1Dashboard, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1Dashboard> {
+            const localVarFetchArgs = DashboardV1ApiFetchParamCreator(configuration).updateDashboard(owner, project, dashboard_uuid, body, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+    }
+};
+
+/**
+ * DashboardV1Api - factory interface
+ * @export
+ */
+export const DashboardV1ApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
+    return {
+        /**
+         * 
+         * @summary List archived runs for user
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project under namesapce
+         * @param {V1Dashboard} body Dashboard body
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createDashboard(owner: string, project: string, body: V1Dashboard, options?: any) {
+            return DashboardV1ApiFp(configuration).createDashboard(owner, project, body, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary Update run
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project where the experiement will be assigned
+         * @param {string} uuid Unique integer identifier of the entity
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteDashboard(owner: string, project: string, uuid: string, options?: any) {
+            return DashboardV1ApiFp(configuration).deleteDashboard(owner, project, uuid, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary List runs
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project where the experiement will be assigned
+         * @param {string} uuid Unique integer identifier of the entity
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getDashboard(owner: string, project: string, uuid: string, options?: any) {
+            return DashboardV1ApiFp(configuration).getDashboard(owner, project, uuid, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary List bookmarked runs for user
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project under namesapce
+         * @param {number} [offset] Pagination offset.
+         * @param {number} [limit] Limit size.
+         * @param {string} [sort] Sort to order the search.
+         * @param {string} [query] Query filter the search search.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listDashboard(owner: string, project: string, offset?: number, limit?: number, sort?: string, query?: string, options?: any) {
+            return DashboardV1ApiFp(configuration).listDashboard(owner, project, offset, limit, sort, query, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary Get run
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project under namesapce
+         * @param {string} dashboard_uuid UUID
+         * @param {V1Dashboard} body Dashboard body
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchDashboard(owner: string, project: string, dashboard_uuid: string, body: V1Dashboard, options?: any) {
+            return DashboardV1ApiFp(configuration).patchDashboard(owner, project, dashboard_uuid, body, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary Create new run
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project under namesapce
+         * @param {string} dashboard_uuid UUID
+         * @param {V1Dashboard} body Dashboard body
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateDashboard(owner: string, project: string, dashboard_uuid: string, body: V1Dashboard, options?: any) {
+            return DashboardV1ApiFp(configuration).updateDashboard(owner, project, dashboard_uuid, body, options)(fetch, basePath);
+        },
+    };
+};
+
+/**
+ * DashboardV1Api - object-oriented interface
+ * @export
+ * @class DashboardV1Api
+ * @extends {BaseAPI}
+ */
+export class DashboardV1Api extends BaseAPI {
+    /**
+     * 
+     * @summary List archived runs for user
+     * @param {string} owner Owner of the namespace
+     * @param {string} project Project under namesapce
+     * @param {V1Dashboard} body Dashboard body
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DashboardV1Api
+     */
+    public createDashboard(owner: string, project: string, body: V1Dashboard, options?: any) {
+        return DashboardV1ApiFp(this.configuration).createDashboard(owner, project, body, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary Update run
+     * @param {string} owner Owner of the namespace
+     * @param {string} project Project where the experiement will be assigned
+     * @param {string} uuid Unique integer identifier of the entity
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DashboardV1Api
+     */
+    public deleteDashboard(owner: string, project: string, uuid: string, options?: any) {
+        return DashboardV1ApiFp(this.configuration).deleteDashboard(owner, project, uuid, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary List runs
+     * @param {string} owner Owner of the namespace
+     * @param {string} project Project where the experiement will be assigned
+     * @param {string} uuid Unique integer identifier of the entity
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DashboardV1Api
+     */
+    public getDashboard(owner: string, project: string, uuid: string, options?: any) {
+        return DashboardV1ApiFp(this.configuration).getDashboard(owner, project, uuid, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary List bookmarked runs for user
+     * @param {string} owner Owner of the namespace
+     * @param {string} project Project under namesapce
+     * @param {number} [offset] Pagination offset.
+     * @param {number} [limit] Limit size.
+     * @param {string} [sort] Sort to order the search.
+     * @param {string} [query] Query filter the search search.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DashboardV1Api
+     */
+    public listDashboard(owner: string, project: string, offset?: number, limit?: number, sort?: string, query?: string, options?: any) {
+        return DashboardV1ApiFp(this.configuration).listDashboard(owner, project, offset, limit, sort, query, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary Get run
+     * @param {string} owner Owner of the namespace
+     * @param {string} project Project under namesapce
+     * @param {string} dashboard_uuid UUID
+     * @param {V1Dashboard} body Dashboard body
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DashboardV1Api
+     */
+    public patchDashboard(owner: string, project: string, dashboard_uuid: string, body: V1Dashboard, options?: any) {
+        return DashboardV1ApiFp(this.configuration).patchDashboard(owner, project, dashboard_uuid, body, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary Create new run
+     * @param {string} owner Owner of the namespace
+     * @param {string} project Project under namesapce
+     * @param {string} dashboard_uuid UUID
+     * @param {V1Dashboard} body Dashboard body
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DashboardV1Api
+     */
+    public updateDashboard(owner: string, project: string, dashboard_uuid: string, body: V1Dashboard, options?: any) {
+        return DashboardV1ApiFp(this.configuration).updateDashboard(owner, project, dashboard_uuid, body, options)(this.fetch, this.basePath);
     }
 
 }
@@ -5212,6 +7426,1185 @@ export class K8sSecretsV1Api extends BaseAPI {
 }
 
 /**
+ * OrganizationsV1Api - fetch parameter creator
+ * @export
+ */
+export const OrganizationsV1ApiFetchParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary List runs
+         * @param {V1Organization} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createOrganization(body: V1Organization, options: any = {}): FetchArgs {
+            // verify required parameter 'body' is not null or undefined
+            if (body === null || body === undefined) {
+                throw new RequiredError('body','Required parameter body was null or undefined when calling createOrganization.');
+            }
+            const localVarPath = `/api/v1/organizations/create`;
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("Authorization")
+					: configuration.apiKey;
+                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"V1Organization" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Delete runs
+         * @param {string} owner Owner of the namespace
+         * @param {V1OrganizationMember} body Organization body
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createOrganizationMember(owner: string, body: V1OrganizationMember, options: any = {}): FetchArgs {
+            // verify required parameter 'owner' is not null or undefined
+            if (owner === null || owner === undefined) {
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling createOrganizationMember.');
+            }
+            // verify required parameter 'body' is not null or undefined
+            if (body === null || body === undefined) {
+                throw new RequiredError('body','Required parameter body was null or undefined when calling createOrganizationMember.');
+            }
+            const localVarPath = `/api/v1/organizations/{owner}/members`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("Authorization")
+					: configuration.apiKey;
+                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"V1OrganizationMember" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Patch run
+         * @param {string} owner Owner of the namespace
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteOrganization(owner: string, options: any = {}): FetchArgs {
+            // verify required parameter 'owner' is not null or undefined
+            if (owner === null || owner === undefined) {
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling deleteOrganization.');
+            }
+            const localVarPath = `/api/v1/organizations/{owner}`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'DELETE' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("Authorization")
+					: configuration.apiKey;
+                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Invalidate runs
+         * @param {string} owner Owner of the namespace
+         * @param {string} member_user User
+         * @param {string} [member_role] Role.
+         * @param {Date} [member_created_at] Optional time when the entityt was created.
+         * @param {Date} [member_updated_at] Optional last time the entity was updated.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteOrganizationMember(owner: string, member_user: string, member_role?: string, member_created_at?: Date, member_updated_at?: Date, options: any = {}): FetchArgs {
+            // verify required parameter 'owner' is not null or undefined
+            if (owner === null || owner === undefined) {
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling deleteOrganizationMember.');
+            }
+            // verify required parameter 'member_user' is not null or undefined
+            if (member_user === null || member_user === undefined) {
+                throw new RequiredError('member_user','Required parameter member_user was null or undefined when calling deleteOrganizationMember.');
+            }
+            const localVarPath = `/api/v1/organizations/{owner}/members/{member.user}`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"member.user"}}`, encodeURIComponent(String(member_user)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'DELETE' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("Authorization")
+					: configuration.apiKey;
+                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            if (member_role !== undefined) {
+                localVarQueryParameter['member.role'] = member_role;
+            }
+
+            if (member_created_at !== undefined) {
+                localVarQueryParameter['member.created_at'] = (member_created_at as any).toISOString();
+            }
+
+            if (member_updated_at !== undefined) {
+                localVarQueryParameter['member.updated_at'] = (member_updated_at as any).toISOString();
+            }
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Create new run
+         * @param {string} owner Owner of the namespace
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getOrganization(owner: string, options: any = {}): FetchArgs {
+            // verify required parameter 'owner' is not null or undefined
+            if (owner === null || owner === undefined) {
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling getOrganization.');
+            }
+            const localVarPath = `/api/v1/organizations/{owner}`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("Authorization")
+					: configuration.apiKey;
+                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Stop run
+         * @param {string} owner Owner of the namespace
+         * @param {string} member_user User
+         * @param {string} [member_role] Role.
+         * @param {Date} [member_created_at] Optional time when the entityt was created.
+         * @param {Date} [member_updated_at] Optional last time the entity was updated.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getOrganizationMember(owner: string, member_user: string, member_role?: string, member_created_at?: Date, member_updated_at?: Date, options: any = {}): FetchArgs {
+            // verify required parameter 'owner' is not null or undefined
+            if (owner === null || owner === undefined) {
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling getOrganizationMember.');
+            }
+            // verify required parameter 'member_user' is not null or undefined
+            if (member_user === null || member_user === undefined) {
+                throw new RequiredError('member_user','Required parameter member_user was null or undefined when calling getOrganizationMember.');
+            }
+            const localVarPath = `/api/v1/organizations/{owner}/members/{member.user}`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"member.user"}}`, encodeURIComponent(String(member_user)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("Authorization")
+					: configuration.apiKey;
+                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            if (member_role !== undefined) {
+                localVarQueryParameter['member.role'] = member_role;
+            }
+
+            if (member_created_at !== undefined) {
+                localVarQueryParameter['member.created_at'] = (member_created_at as any).toISOString();
+            }
+
+            if (member_updated_at !== undefined) {
+                localVarQueryParameter['member.updated_at'] = (member_updated_at as any).toISOString();
+            }
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Delete run
+         * @param {string} owner Owner of the namespace
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listOrganizationMembers(owner: string, options: any = {}): FetchArgs {
+            // verify required parameter 'owner' is not null or undefined
+            if (owner === null || owner === undefined) {
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling listOrganizationMembers.');
+            }
+            const localVarPath = `/api/v1/organizations/{owner}/members`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("Authorization")
+					: configuration.apiKey;
+                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary List bookmarked runs for user
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listOrganizationNames(options: any = {}): FetchArgs {
+            const localVarPath = `/api/v1/organizations/names`;
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("Authorization")
+					: configuration.apiKey;
+                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary List archived runs for user
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listOrganizations(options: any = {}): FetchArgs {
+            const localVarPath = `/api/v1/organizations/list`;
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("Authorization")
+					: configuration.apiKey;
+                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Update run
+         * @param {string} owner Owner of the namespace
+         * @param {V1Organization} body Organization body
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchOrganization(owner: string, body: V1Organization, options: any = {}): FetchArgs {
+            // verify required parameter 'owner' is not null or undefined
+            if (owner === null || owner === undefined) {
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling patchOrganization.');
+            }
+            // verify required parameter 'body' is not null or undefined
+            if (body === null || body === undefined) {
+                throw new RequiredError('body','Required parameter body was null or undefined when calling patchOrganization.');
+            }
+            const localVarPath = `/api/v1/organizations/{owner}`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'PATCH' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("Authorization")
+					: configuration.apiKey;
+                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"V1Organization" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Invalidate run
+         * @param {string} owner Owner of the namespace
+         * @param {string} member_user User
+         * @param {V1OrganizationMember} body Organization body
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchOrganizationMember(owner: string, member_user: string, body: V1OrganizationMember, options: any = {}): FetchArgs {
+            // verify required parameter 'owner' is not null or undefined
+            if (owner === null || owner === undefined) {
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling patchOrganizationMember.');
+            }
+            // verify required parameter 'member_user' is not null or undefined
+            if (member_user === null || member_user === undefined) {
+                throw new RequiredError('member_user','Required parameter member_user was null or undefined when calling patchOrganizationMember.');
+            }
+            // verify required parameter 'body' is not null or undefined
+            if (body === null || body === undefined) {
+                throw new RequiredError('body','Required parameter body was null or undefined when calling patchOrganizationMember.');
+            }
+            const localVarPath = `/api/v1/organizations/{owner}/members/{member.user}`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"member.user"}}`, encodeURIComponent(String(member_user)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'PATCH' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("Authorization")
+					: configuration.apiKey;
+                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"V1OrganizationMember" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get run
+         * @param {string} owner Owner of the namespace
+         * @param {V1Organization} body Organization body
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateOrganization(owner: string, body: V1Organization, options: any = {}): FetchArgs {
+            // verify required parameter 'owner' is not null or undefined
+            if (owner === null || owner === undefined) {
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling updateOrganization.');
+            }
+            // verify required parameter 'body' is not null or undefined
+            if (body === null || body === undefined) {
+                throw new RequiredError('body','Required parameter body was null or undefined when calling updateOrganization.');
+            }
+            const localVarPath = `/api/v1/organizations/{owner}`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'PUT' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("Authorization")
+					: configuration.apiKey;
+                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"V1Organization" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Stop runs
+         * @param {string} owner Owner of the namespace
+         * @param {string} member_user User
+         * @param {V1OrganizationMember} body Organization body
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateOrganizationMember(owner: string, member_user: string, body: V1OrganizationMember, options: any = {}): FetchArgs {
+            // verify required parameter 'owner' is not null or undefined
+            if (owner === null || owner === undefined) {
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling updateOrganizationMember.');
+            }
+            // verify required parameter 'member_user' is not null or undefined
+            if (member_user === null || member_user === undefined) {
+                throw new RequiredError('member_user','Required parameter member_user was null or undefined when calling updateOrganizationMember.');
+            }
+            // verify required parameter 'body' is not null or undefined
+            if (body === null || body === undefined) {
+                throw new RequiredError('body','Required parameter body was null or undefined when calling updateOrganizationMember.');
+            }
+            const localVarPath = `/api/v1/organizations/{owner}/members/{member.user}`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"member.user"}}`, encodeURIComponent(String(member_user)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'PUT' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("Authorization")
+					: configuration.apiKey;
+                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"V1OrganizationMember" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * OrganizationsV1Api - functional programming interface
+ * @export
+ */
+export const OrganizationsV1ApiFp = function(configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary List runs
+         * @param {V1Organization} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createOrganization(body: V1Organization, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1Organization> {
+            const localVarFetchArgs = OrganizationsV1ApiFetchParamCreator(configuration).createOrganization(body, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary Delete runs
+         * @param {string} owner Owner of the namespace
+         * @param {V1OrganizationMember} body Organization body
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createOrganizationMember(owner: string, body: V1OrganizationMember, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1OrganizationMember> {
+            const localVarFetchArgs = OrganizationsV1ApiFetchParamCreator(configuration).createOrganizationMember(owner, body, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary Patch run
+         * @param {string} owner Owner of the namespace
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteOrganization(owner: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+            const localVarFetchArgs = OrganizationsV1ApiFetchParamCreator(configuration).deleteOrganization(owner, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response;
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary Invalidate runs
+         * @param {string} owner Owner of the namespace
+         * @param {string} member_user User
+         * @param {string} [member_role] Role.
+         * @param {Date} [member_created_at] Optional time when the entityt was created.
+         * @param {Date} [member_updated_at] Optional last time the entity was updated.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteOrganizationMember(owner: string, member_user: string, member_role?: string, member_created_at?: Date, member_updated_at?: Date, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+            const localVarFetchArgs = OrganizationsV1ApiFetchParamCreator(configuration).deleteOrganizationMember(owner, member_user, member_role, member_created_at, member_updated_at, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response;
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary Create new run
+         * @param {string} owner Owner of the namespace
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getOrganization(owner: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1Organization> {
+            const localVarFetchArgs = OrganizationsV1ApiFetchParamCreator(configuration).getOrganization(owner, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary Stop run
+         * @param {string} owner Owner of the namespace
+         * @param {string} member_user User
+         * @param {string} [member_role] Role.
+         * @param {Date} [member_created_at] Optional time when the entityt was created.
+         * @param {Date} [member_updated_at] Optional last time the entity was updated.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getOrganizationMember(owner: string, member_user: string, member_role?: string, member_created_at?: Date, member_updated_at?: Date, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1OrganizationMember> {
+            const localVarFetchArgs = OrganizationsV1ApiFetchParamCreator(configuration).getOrganizationMember(owner, member_user, member_role, member_created_at, member_updated_at, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary Delete run
+         * @param {string} owner Owner of the namespace
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listOrganizationMembers(owner: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ListOrganizationMembersResponse> {
+            const localVarFetchArgs = OrganizationsV1ApiFetchParamCreator(configuration).listOrganizationMembers(owner, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary List bookmarked runs for user
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listOrganizationNames(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ListOrganizationsResponse> {
+            const localVarFetchArgs = OrganizationsV1ApiFetchParamCreator(configuration).listOrganizationNames(options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary List archived runs for user
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listOrganizations(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ListOrganizationsResponse> {
+            const localVarFetchArgs = OrganizationsV1ApiFetchParamCreator(configuration).listOrganizations(options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary Update run
+         * @param {string} owner Owner of the namespace
+         * @param {V1Organization} body Organization body
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchOrganization(owner: string, body: V1Organization, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1Organization> {
+            const localVarFetchArgs = OrganizationsV1ApiFetchParamCreator(configuration).patchOrganization(owner, body, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary Invalidate run
+         * @param {string} owner Owner of the namespace
+         * @param {string} member_user User
+         * @param {V1OrganizationMember} body Organization body
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchOrganizationMember(owner: string, member_user: string, body: V1OrganizationMember, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1OrganizationMember> {
+            const localVarFetchArgs = OrganizationsV1ApiFetchParamCreator(configuration).patchOrganizationMember(owner, member_user, body, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary Get run
+         * @param {string} owner Owner of the namespace
+         * @param {V1Organization} body Organization body
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateOrganization(owner: string, body: V1Organization, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1Organization> {
+            const localVarFetchArgs = OrganizationsV1ApiFetchParamCreator(configuration).updateOrganization(owner, body, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary Stop runs
+         * @param {string} owner Owner of the namespace
+         * @param {string} member_user User
+         * @param {V1OrganizationMember} body Organization body
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateOrganizationMember(owner: string, member_user: string, body: V1OrganizationMember, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1OrganizationMember> {
+            const localVarFetchArgs = OrganizationsV1ApiFetchParamCreator(configuration).updateOrganizationMember(owner, member_user, body, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+    }
+};
+
+/**
+ * OrganizationsV1Api - factory interface
+ * @export
+ */
+export const OrganizationsV1ApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
+    return {
+        /**
+         * 
+         * @summary List runs
+         * @param {V1Organization} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createOrganization(body: V1Organization, options?: any) {
+            return OrganizationsV1ApiFp(configuration).createOrganization(body, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary Delete runs
+         * @param {string} owner Owner of the namespace
+         * @param {V1OrganizationMember} body Organization body
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createOrganizationMember(owner: string, body: V1OrganizationMember, options?: any) {
+            return OrganizationsV1ApiFp(configuration).createOrganizationMember(owner, body, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary Patch run
+         * @param {string} owner Owner of the namespace
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteOrganization(owner: string, options?: any) {
+            return OrganizationsV1ApiFp(configuration).deleteOrganization(owner, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary Invalidate runs
+         * @param {string} owner Owner of the namespace
+         * @param {string} member_user User
+         * @param {string} [member_role] Role.
+         * @param {Date} [member_created_at] Optional time when the entityt was created.
+         * @param {Date} [member_updated_at] Optional last time the entity was updated.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteOrganizationMember(owner: string, member_user: string, member_role?: string, member_created_at?: Date, member_updated_at?: Date, options?: any) {
+            return OrganizationsV1ApiFp(configuration).deleteOrganizationMember(owner, member_user, member_role, member_created_at, member_updated_at, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary Create new run
+         * @param {string} owner Owner of the namespace
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getOrganization(owner: string, options?: any) {
+            return OrganizationsV1ApiFp(configuration).getOrganization(owner, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary Stop run
+         * @param {string} owner Owner of the namespace
+         * @param {string} member_user User
+         * @param {string} [member_role] Role.
+         * @param {Date} [member_created_at] Optional time when the entityt was created.
+         * @param {Date} [member_updated_at] Optional last time the entity was updated.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getOrganizationMember(owner: string, member_user: string, member_role?: string, member_created_at?: Date, member_updated_at?: Date, options?: any) {
+            return OrganizationsV1ApiFp(configuration).getOrganizationMember(owner, member_user, member_role, member_created_at, member_updated_at, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary Delete run
+         * @param {string} owner Owner of the namespace
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listOrganizationMembers(owner: string, options?: any) {
+            return OrganizationsV1ApiFp(configuration).listOrganizationMembers(owner, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary List bookmarked runs for user
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listOrganizationNames(options?: any) {
+            return OrganizationsV1ApiFp(configuration).listOrganizationNames(options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary List archived runs for user
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listOrganizations(options?: any) {
+            return OrganizationsV1ApiFp(configuration).listOrganizations(options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary Update run
+         * @param {string} owner Owner of the namespace
+         * @param {V1Organization} body Organization body
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchOrganization(owner: string, body: V1Organization, options?: any) {
+            return OrganizationsV1ApiFp(configuration).patchOrganization(owner, body, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary Invalidate run
+         * @param {string} owner Owner of the namespace
+         * @param {string} member_user User
+         * @param {V1OrganizationMember} body Organization body
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchOrganizationMember(owner: string, member_user: string, body: V1OrganizationMember, options?: any) {
+            return OrganizationsV1ApiFp(configuration).patchOrganizationMember(owner, member_user, body, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary Get run
+         * @param {string} owner Owner of the namespace
+         * @param {V1Organization} body Organization body
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateOrganization(owner: string, body: V1Organization, options?: any) {
+            return OrganizationsV1ApiFp(configuration).updateOrganization(owner, body, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary Stop runs
+         * @param {string} owner Owner of the namespace
+         * @param {string} member_user User
+         * @param {V1OrganizationMember} body Organization body
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateOrganizationMember(owner: string, member_user: string, body: V1OrganizationMember, options?: any) {
+            return OrganizationsV1ApiFp(configuration).updateOrganizationMember(owner, member_user, body, options)(fetch, basePath);
+        },
+    };
+};
+
+/**
+ * OrganizationsV1Api - object-oriented interface
+ * @export
+ * @class OrganizationsV1Api
+ * @extends {BaseAPI}
+ */
+export class OrganizationsV1Api extends BaseAPI {
+    /**
+     * 
+     * @summary List runs
+     * @param {V1Organization} body 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrganizationsV1Api
+     */
+    public createOrganization(body: V1Organization, options?: any) {
+        return OrganizationsV1ApiFp(this.configuration).createOrganization(body, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary Delete runs
+     * @param {string} owner Owner of the namespace
+     * @param {V1OrganizationMember} body Organization body
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrganizationsV1Api
+     */
+    public createOrganizationMember(owner: string, body: V1OrganizationMember, options?: any) {
+        return OrganizationsV1ApiFp(this.configuration).createOrganizationMember(owner, body, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary Patch run
+     * @param {string} owner Owner of the namespace
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrganizationsV1Api
+     */
+    public deleteOrganization(owner: string, options?: any) {
+        return OrganizationsV1ApiFp(this.configuration).deleteOrganization(owner, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary Invalidate runs
+     * @param {string} owner Owner of the namespace
+     * @param {string} member_user User
+     * @param {string} [member_role] Role.
+     * @param {Date} [member_created_at] Optional time when the entityt was created.
+     * @param {Date} [member_updated_at] Optional last time the entity was updated.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrganizationsV1Api
+     */
+    public deleteOrganizationMember(owner: string, member_user: string, member_role?: string, member_created_at?: Date, member_updated_at?: Date, options?: any) {
+        return OrganizationsV1ApiFp(this.configuration).deleteOrganizationMember(owner, member_user, member_role, member_created_at, member_updated_at, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary Create new run
+     * @param {string} owner Owner of the namespace
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrganizationsV1Api
+     */
+    public getOrganization(owner: string, options?: any) {
+        return OrganizationsV1ApiFp(this.configuration).getOrganization(owner, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary Stop run
+     * @param {string} owner Owner of the namespace
+     * @param {string} member_user User
+     * @param {string} [member_role] Role.
+     * @param {Date} [member_created_at] Optional time when the entityt was created.
+     * @param {Date} [member_updated_at] Optional last time the entity was updated.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrganizationsV1Api
+     */
+    public getOrganizationMember(owner: string, member_user: string, member_role?: string, member_created_at?: Date, member_updated_at?: Date, options?: any) {
+        return OrganizationsV1ApiFp(this.configuration).getOrganizationMember(owner, member_user, member_role, member_created_at, member_updated_at, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary Delete run
+     * @param {string} owner Owner of the namespace
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrganizationsV1Api
+     */
+    public listOrganizationMembers(owner: string, options?: any) {
+        return OrganizationsV1ApiFp(this.configuration).listOrganizationMembers(owner, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary List bookmarked runs for user
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrganizationsV1Api
+     */
+    public listOrganizationNames(options?: any) {
+        return OrganizationsV1ApiFp(this.configuration).listOrganizationNames(options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary List archived runs for user
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrganizationsV1Api
+     */
+    public listOrganizations(options?: any) {
+        return OrganizationsV1ApiFp(this.configuration).listOrganizations(options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary Update run
+     * @param {string} owner Owner of the namespace
+     * @param {V1Organization} body Organization body
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrganizationsV1Api
+     */
+    public patchOrganization(owner: string, body: V1Organization, options?: any) {
+        return OrganizationsV1ApiFp(this.configuration).patchOrganization(owner, body, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary Invalidate run
+     * @param {string} owner Owner of the namespace
+     * @param {string} member_user User
+     * @param {V1OrganizationMember} body Organization body
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrganizationsV1Api
+     */
+    public patchOrganizationMember(owner: string, member_user: string, body: V1OrganizationMember, options?: any) {
+        return OrganizationsV1ApiFp(this.configuration).patchOrganizationMember(owner, member_user, body, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary Get run
+     * @param {string} owner Owner of the namespace
+     * @param {V1Organization} body Organization body
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrganizationsV1Api
+     */
+    public updateOrganization(owner: string, body: V1Organization, options?: any) {
+        return OrganizationsV1ApiFp(this.configuration).updateOrganization(owner, body, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary Stop runs
+     * @param {string} owner Owner of the namespace
+     * @param {string} member_user User
+     * @param {V1OrganizationMember} body Organization body
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrganizationsV1Api
+     */
+    public updateOrganizationMember(owner: string, member_user: string, body: V1OrganizationMember, options?: any) {
+        return OrganizationsV1ApiFp(this.configuration).updateOrganizationMember(owner, member_user, body, options)(this.fetch, this.basePath);
+    }
+
+}
+
+/**
  * ProjectsV1Api - fetch parameter creator
  * @export
  */
@@ -5523,6 +8916,92 @@ export const ProjectsV1ApiFetchParamCreator = function (configuration?: Configur
         },
         /**
          * 
+         * @summary Resume run
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project under namesapce
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getProjectSettings(owner: string, project: string, options: any = {}): FetchArgs {
+            // verify required parameter 'owner' is not null or undefined
+            if (owner === null || owner === undefined) {
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling getProjectSettings.');
+            }
+            // verify required parameter 'project' is not null or undefined
+            if (project === null || project === undefined) {
+                throw new RequiredError('project','Required parameter project was null or undefined when calling getProjectSettings.');
+            }
+            const localVarPath = `/api/v1/{owner}/{project}/settings`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"project"}}`, encodeURIComponent(String(project)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("Authorization")
+					: configuration.apiKey;
+                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Bookmark run
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project under namesapce
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getProjectTeams(owner: string, project: string, options: any = {}): FetchArgs {
+            // verify required parameter 'owner' is not null or undefined
+            if (owner === null || owner === undefined) {
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling getProjectTeams.');
+            }
+            // verify required parameter 'project' is not null or undefined
+            if (project === null || project === undefined) {
+                throw new RequiredError('project','Required parameter project was null or undefined when calling getProjectTeams.');
+            }
+            const localVarPath = `/api/v1/{owner}/{project}/teams`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"project"}}`, encodeURIComponent(String(project)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("Authorization")
+					: configuration.apiKey;
+                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Get run
          * @param {string} user User
          * @param {number} [offset] Pagination offset.
@@ -5803,6 +9282,110 @@ export const ProjectsV1ApiFetchParamCreator = function (configuration?: Configur
         },
         /**
          * 
+         * @summary Restore run
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project name
+         * @param {V1ProjectSettings} body Project settings body
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchProjectSettings(owner: string, project: string, body: V1ProjectSettings, options: any = {}): FetchArgs {
+            // verify required parameter 'owner' is not null or undefined
+            if (owner === null || owner === undefined) {
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling patchProjectSettings.');
+            }
+            // verify required parameter 'project' is not null or undefined
+            if (project === null || project === undefined) {
+                throw new RequiredError('project','Required parameter project was null or undefined when calling patchProjectSettings.');
+            }
+            // verify required parameter 'body' is not null or undefined
+            if (body === null || body === undefined) {
+                throw new RequiredError('body','Required parameter body was null or undefined when calling patchProjectSettings.');
+            }
+            const localVarPath = `/api/v1/{owner}/{project}/settings`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"project"}}`, encodeURIComponent(String(project)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'PATCH' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("Authorization")
+					: configuration.apiKey;
+                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"V1ProjectSettings" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Start run tensorboard
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project name
+         * @param {V1ProjectTeams} body Project settings body
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchProjectTeams(owner: string, project: string, body: V1ProjectTeams, options: any = {}): FetchArgs {
+            // verify required parameter 'owner' is not null or undefined
+            if (owner === null || owner === undefined) {
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling patchProjectTeams.');
+            }
+            // verify required parameter 'project' is not null or undefined
+            if (project === null || project === undefined) {
+                throw new RequiredError('project','Required parameter project was null or undefined when calling patchProjectTeams.');
+            }
+            // verify required parameter 'body' is not null or undefined
+            if (body === null || body === undefined) {
+                throw new RequiredError('body','Required parameter body was null or undefined when calling patchProjectTeams.');
+            }
+            const localVarPath = `/api/v1/{owner}/{project}/teams`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"project"}}`, encodeURIComponent(String(project)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'PATCH' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("Authorization")
+					: configuration.apiKey;
+                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"V1ProjectTeams" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Stop runs
          * @param {string} owner Owner of the namespace
          * @param {string} project Project under namesapce
@@ -5932,6 +9515,110 @@ export const ProjectsV1ApiFetchParamCreator = function (configuration?: Configur
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
             const needsSerialization = (<any>"V1Project" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Archive run
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project name
+         * @param {V1ProjectSettings} body Project settings body
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateProjectSettings(owner: string, project: string, body: V1ProjectSettings, options: any = {}): FetchArgs {
+            // verify required parameter 'owner' is not null or undefined
+            if (owner === null || owner === undefined) {
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling updateProjectSettings.');
+            }
+            // verify required parameter 'project' is not null or undefined
+            if (project === null || project === undefined) {
+                throw new RequiredError('project','Required parameter project was null or undefined when calling updateProjectSettings.');
+            }
+            // verify required parameter 'body' is not null or undefined
+            if (body === null || body === undefined) {
+                throw new RequiredError('body','Required parameter body was null or undefined when calling updateProjectSettings.');
+            }
+            const localVarPath = `/api/v1/{owner}/{project}/settings`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"project"}}`, encodeURIComponent(String(project)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'PUT' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("Authorization")
+					: configuration.apiKey;
+                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"V1ProjectSettings" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Unbookmark run
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project name
+         * @param {V1ProjectTeams} body Project settings body
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateProjectTeams(owner: string, project: string, body: V1ProjectTeams, options: any = {}): FetchArgs {
+            // verify required parameter 'owner' is not null or undefined
+            if (owner === null || owner === undefined) {
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling updateProjectTeams.');
+            }
+            // verify required parameter 'project' is not null or undefined
+            if (project === null || project === undefined) {
+                throw new RequiredError('project','Required parameter project was null or undefined when calling updateProjectTeams.');
+            }
+            // verify required parameter 'body' is not null or undefined
+            if (body === null || body === undefined) {
+                throw new RequiredError('body','Required parameter body was null or undefined when calling updateProjectTeams.');
+            }
+            const localVarPath = `/api/v1/{owner}/{project}/teams`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"project"}}`, encodeURIComponent(String(project)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'PUT' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("Authorization")
+					: configuration.apiKey;
+                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"V1ProjectTeams" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
             localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
 
             return {
@@ -6162,6 +9849,46 @@ export const ProjectsV1ApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Resume run
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project under namesapce
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getProjectSettings(owner: string, project: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ProjectSettings> {
+            const localVarFetchArgs = ProjectsV1ApiFetchParamCreator(configuration).getProjectSettings(owner, project, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary Bookmark run
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project under namesapce
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getProjectTeams(owner: string, project: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ProjectTeams> {
+            const localVarFetchArgs = ProjectsV1ApiFetchParamCreator(configuration).getProjectTeams(owner, project, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
          * @summary Get run
          * @param {string} user User
          * @param {number} [offset] Pagination offset.
@@ -6275,6 +10002,48 @@ export const ProjectsV1ApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Restore run
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project name
+         * @param {V1ProjectSettings} body Project settings body
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchProjectSettings(owner: string, project: string, body: V1ProjectSettings, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ProjectSettings> {
+            const localVarFetchArgs = ProjectsV1ApiFetchParamCreator(configuration).patchProjectSettings(owner, project, body, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary Start run tensorboard
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project name
+         * @param {V1ProjectTeams} body Project settings body
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchProjectTeams(owner: string, project: string, body: V1ProjectTeams, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ProjectTeams> {
+            const localVarFetchArgs = ProjectsV1ApiFetchParamCreator(configuration).patchProjectTeams(owner, project, body, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
          * @summary Stop runs
          * @param {string} owner Owner of the namespace
          * @param {string} project Project under namesapce
@@ -6324,6 +10093,48 @@ export const ProjectsV1ApiFp = function(configuration?: Configuration) {
          */
         updateProject(owner: string, project_name: string, body: V1Project, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1Project> {
             const localVarFetchArgs = ProjectsV1ApiFetchParamCreator(configuration).updateProject(owner, project_name, body, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary Archive run
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project name
+         * @param {V1ProjectSettings} body Project settings body
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateProjectSettings(owner: string, project: string, body: V1ProjectSettings, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ProjectSettings> {
+            const localVarFetchArgs = ProjectsV1ApiFetchParamCreator(configuration).updateProjectSettings(owner, project, body, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary Unbookmark run
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project name
+         * @param {V1ProjectTeams} body Project settings body
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateProjectTeams(owner: string, project: string, body: V1ProjectTeams, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ProjectTeams> {
+            const localVarFetchArgs = ProjectsV1ApiFetchParamCreator(configuration).updateProjectTeams(owner, project, body, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -6446,6 +10257,28 @@ export const ProjectsV1ApiFactory = function (configuration?: Configuration, fet
         },
         /**
          * 
+         * @summary Resume run
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project under namesapce
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getProjectSettings(owner: string, project: string, options?: any) {
+            return ProjectsV1ApiFp(configuration).getProjectSettings(owner, project, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary Bookmark run
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project under namesapce
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getProjectTeams(owner: string, project: string, options?: any) {
+            return ProjectsV1ApiFp(configuration).getProjectTeams(owner, project, options)(fetch, basePath);
+        },
+        /**
+         * 
          * @summary Get run
          * @param {string} user User
          * @param {number} [offset] Pagination offset.
@@ -6514,6 +10347,30 @@ export const ProjectsV1ApiFactory = function (configuration?: Configuration, fet
         },
         /**
          * 
+         * @summary Restore run
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project name
+         * @param {V1ProjectSettings} body Project settings body
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchProjectSettings(owner: string, project: string, body: V1ProjectSettings, options?: any) {
+            return ProjectsV1ApiFp(configuration).patchProjectSettings(owner, project, body, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary Start run tensorboard
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project name
+         * @param {V1ProjectTeams} body Project settings body
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchProjectTeams(owner: string, project: string, body: V1ProjectTeams, options?: any) {
+            return ProjectsV1ApiFp(configuration).patchProjectTeams(owner, project, body, options)(fetch, basePath);
+        },
+        /**
+         * 
          * @summary Stop runs
          * @param {string} owner Owner of the namespace
          * @param {string} project Project under namesapce
@@ -6545,6 +10402,30 @@ export const ProjectsV1ApiFactory = function (configuration?: Configuration, fet
          */
         updateProject(owner: string, project_name: string, body: V1Project, options?: any) {
             return ProjectsV1ApiFp(configuration).updateProject(owner, project_name, body, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary Archive run
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project name
+         * @param {V1ProjectSettings} body Project settings body
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateProjectSettings(owner: string, project: string, body: V1ProjectSettings, options?: any) {
+            return ProjectsV1ApiFp(configuration).updateProjectSettings(owner, project, body, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary Unbookmark run
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project name
+         * @param {V1ProjectTeams} body Project settings body
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateProjectTeams(owner: string, project: string, body: V1ProjectTeams, options?: any) {
+            return ProjectsV1ApiFp(configuration).updateProjectTeams(owner, project, body, options)(fetch, basePath);
         },
         /**
          * 
@@ -6664,6 +10545,32 @@ export class ProjectsV1Api extends BaseAPI {
 
     /**
      * 
+     * @summary Resume run
+     * @param {string} owner Owner of the namespace
+     * @param {string} project Project under namesapce
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ProjectsV1Api
+     */
+    public getProjectSettings(owner: string, project: string, options?: any) {
+        return ProjectsV1ApiFp(this.configuration).getProjectSettings(owner, project, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary Bookmark run
+     * @param {string} owner Owner of the namespace
+     * @param {string} project Project under namesapce
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ProjectsV1Api
+     */
+    public getProjectTeams(owner: string, project: string, options?: any) {
+        return ProjectsV1ApiFp(this.configuration).getProjectTeams(owner, project, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
      * @summary Get run
      * @param {string} user User
      * @param {number} [offset] Pagination offset.
@@ -6742,6 +10649,34 @@ export class ProjectsV1Api extends BaseAPI {
 
     /**
      * 
+     * @summary Restore run
+     * @param {string} owner Owner of the namespace
+     * @param {string} project Project name
+     * @param {V1ProjectSettings} body Project settings body
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ProjectsV1Api
+     */
+    public patchProjectSettings(owner: string, project: string, body: V1ProjectSettings, options?: any) {
+        return ProjectsV1ApiFp(this.configuration).patchProjectSettings(owner, project, body, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary Start run tensorboard
+     * @param {string} owner Owner of the namespace
+     * @param {string} project Project name
+     * @param {V1ProjectTeams} body Project settings body
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ProjectsV1Api
+     */
+    public patchProjectTeams(owner: string, project: string, body: V1ProjectTeams, options?: any) {
+        return ProjectsV1ApiFp(this.configuration).patchProjectTeams(owner, project, body, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
      * @summary Stop runs
      * @param {string} owner Owner of the namespace
      * @param {string} project Project under namesapce
@@ -6778,6 +10713,34 @@ export class ProjectsV1Api extends BaseAPI {
      */
     public updateProject(owner: string, project_name: string, body: V1Project, options?: any) {
         return ProjectsV1ApiFp(this.configuration).updateProject(owner, project_name, body, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary Archive run
+     * @param {string} owner Owner of the namespace
+     * @param {string} project Project name
+     * @param {V1ProjectSettings} body Project settings body
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ProjectsV1Api
+     */
+    public updateProjectSettings(owner: string, project: string, body: V1ProjectSettings, options?: any) {
+        return ProjectsV1ApiFp(this.configuration).updateProjectSettings(owner, project, body, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary Unbookmark run
+     * @param {string} owner Owner of the namespace
+     * @param {string} project Project name
+     * @param {V1ProjectTeams} body Project settings body
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ProjectsV1Api
+     */
+    public updateProjectTeams(owner: string, project: string, body: V1ProjectTeams, options?: any) {
+        return ProjectsV1ApiFp(this.configuration).updateProjectTeams(owner, project, body, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -8972,6 +12935,55 @@ export const RunsV1ApiFetchParamCreator = function (configuration?: Configuratio
         },
         /**
          * 
+         * @summary Get Run settings
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project where the experiement will be assigned
+         * @param {string} uuid Unique integer identifier of the entity
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getRunSettings(owner: string, project: string, uuid: string, options: any = {}): FetchArgs {
+            // verify required parameter 'owner' is not null or undefined
+            if (owner === null || owner === undefined) {
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling getRunSettings.');
+            }
+            // verify required parameter 'project' is not null or undefined
+            if (project === null || project === undefined) {
+                throw new RequiredError('project','Required parameter project was null or undefined when calling getRunSettings.');
+            }
+            // verify required parameter 'uuid' is not null or undefined
+            if (uuid === null || uuid === undefined) {
+                throw new RequiredError('uuid','Required parameter uuid was null or undefined when calling getRunSettings.');
+            }
+            const localVarPath = `/api/v1/{owner}/{project}/runs/{uuid}/settings`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"project"}}`, encodeURIComponent(String(project)))
+                .replace(`{${"uuid"}}`, encodeURIComponent(String(uuid)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("Authorization")
+					: configuration.apiKey;
+                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Get run status
          * @param {string} owner Owner of the namespace
          * @param {string} project Project where the experiement will be assigned
@@ -10312,6 +14324,27 @@ export const RunsV1ApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Get Run settings
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project where the experiement will be assigned
+         * @param {string} uuid Unique integer identifier of the entity
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getRunSettings(owner: string, project: string, uuid: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1RunSettings> {
+            const localVarFetchArgs = RunsV1ApiFetchParamCreator(configuration).getRunSettings(owner, project, uuid, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
          * @summary Get run status
          * @param {string} owner Owner of the namespace
          * @param {string} project Project where the experiement will be assigned
@@ -10895,6 +14928,18 @@ export const RunsV1ApiFactory = function (configuration?: Configuration, fetch?:
         },
         /**
          * 
+         * @summary Get Run settings
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project where the experiement will be assigned
+         * @param {string} uuid Unique integer identifier of the entity
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getRunSettings(owner: string, project: string, uuid: string, options?: any) {
+            return RunsV1ApiFp(configuration).getRunSettings(owner, project, uuid, options)(fetch, basePath);
+        },
+        /**
+         * 
          * @summary Get run status
          * @param {string} owner Owner of the namespace
          * @param {string} project Project where the experiement will be assigned
@@ -11332,6 +15377,20 @@ export class RunsV1Api extends BaseAPI {
 
     /**
      * 
+     * @summary Get Run settings
+     * @param {string} owner Owner of the namespace
+     * @param {string} project Project where the experiement will be assigned
+     * @param {string} uuid Unique integer identifier of the entity
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RunsV1Api
+     */
+    public getRunSettings(owner: string, project: string, uuid: string, options?: any) {
+        return RunsV1ApiFp(this.configuration).getRunSettings(owner, project, uuid, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
      * @summary Get run status
      * @param {string} owner Owner of the namespace
      * @param {string} project Project where the experiement will be assigned
@@ -11618,6 +15677,111 @@ export class RunsV1Api extends BaseAPI {
 }
 
 /**
+ * SchemasV1Api - fetch parameter creator
+ * @export
+ */
+export const SchemasV1ApiFetchParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary List bookmarked runs for user
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        noOp(options: any = {}): FetchArgs {
+            const localVarPath = `/schemas`;
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("Authorization")
+					: configuration.apiKey;
+                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * SchemasV1Api - functional programming interface
+ * @export
+ */
+export const SchemasV1ApiFp = function(configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary List bookmarked runs for user
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        noOp(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1Schemas> {
+            const localVarFetchArgs = SchemasV1ApiFetchParamCreator(configuration).noOp(options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+    }
+};
+
+/**
+ * SchemasV1Api - factory interface
+ * @export
+ */
+export const SchemasV1ApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
+    return {
+        /**
+         * 
+         * @summary List bookmarked runs for user
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        noOp(options?: any) {
+            return SchemasV1ApiFp(configuration).noOp(options)(fetch, basePath);
+        },
+    };
+};
+
+/**
+ * SchemasV1Api - object-oriented interface
+ * @export
+ * @class SchemasV1Api
+ * @extends {BaseAPI}
+ */
+export class SchemasV1Api extends BaseAPI {
+    /**
+     * 
+     * @summary List bookmarked runs for user
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SchemasV1Api
+     */
+    public noOp(options?: any) {
+        return SchemasV1ApiFp(this.configuration).noOp(options)(this.fetch, this.basePath);
+    }
+
+}
+
+/**
  * SearchV1Api - fetch parameter creator
  * @export
  */
@@ -11628,7 +15792,7 @@ export const SearchV1ApiFetchParamCreator = function (configuration?: Configurat
          * @summary List archived runs for user
          * @param {string} owner Owner of the namespace
          * @param {string} project Project under namesapce
-         * @param {V1Search} body Artifact store body
+         * @param {V1Search} body Search body
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -11842,7 +16006,7 @@ export const SearchV1ApiFetchParamCreator = function (configuration?: Configurat
          * @param {string} owner Owner of the namespace
          * @param {string} project Project under namesapce
          * @param {string} search_uuid UUID
-         * @param {V1Search} body Artifact store body
+         * @param {V1Search} body Search body
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -11900,7 +16064,7 @@ export const SearchV1ApiFetchParamCreator = function (configuration?: Configurat
          * @param {string} owner Owner of the namespace
          * @param {string} project Project under namesapce
          * @param {string} search_uuid UUID
-         * @param {V1Search} body Artifact store body
+         * @param {V1Search} body Search body
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -11966,7 +16130,7 @@ export const SearchV1ApiFp = function(configuration?: Configuration) {
          * @summary List archived runs for user
          * @param {string} owner Owner of the namespace
          * @param {string} project Project under namesapce
-         * @param {V1Search} body Artifact store body
+         * @param {V1Search} body Search body
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -12054,7 +16218,7 @@ export const SearchV1ApiFp = function(configuration?: Configuration) {
          * @param {string} owner Owner of the namespace
          * @param {string} project Project under namesapce
          * @param {string} search_uuid UUID
-         * @param {V1Search} body Artifact store body
+         * @param {V1Search} body Search body
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -12076,7 +16240,7 @@ export const SearchV1ApiFp = function(configuration?: Configuration) {
          * @param {string} owner Owner of the namespace
          * @param {string} project Project under namesapce
          * @param {string} search_uuid UUID
-         * @param {V1Search} body Artifact store body
+         * @param {V1Search} body Search body
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -12106,7 +16270,7 @@ export const SearchV1ApiFactory = function (configuration?: Configuration, fetch
          * @summary List archived runs for user
          * @param {string} owner Owner of the namespace
          * @param {string} project Project under namesapce
-         * @param {V1Search} body Artifact store body
+         * @param {V1Search} body Search body
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -12158,7 +16322,7 @@ export const SearchV1ApiFactory = function (configuration?: Configuration, fetch
          * @param {string} owner Owner of the namespace
          * @param {string} project Project under namesapce
          * @param {string} search_uuid UUID
-         * @param {V1Search} body Artifact store body
+         * @param {V1Search} body Search body
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -12171,7 +16335,7 @@ export const SearchV1ApiFactory = function (configuration?: Configuration, fetch
          * @param {string} owner Owner of the namespace
          * @param {string} project Project under namesapce
          * @param {string} search_uuid UUID
-         * @param {V1Search} body Artifact store body
+         * @param {V1Search} body Search body
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -12193,7 +16357,7 @@ export class SearchV1Api extends BaseAPI {
      * @summary List archived runs for user
      * @param {string} owner Owner of the namespace
      * @param {string} project Project under namesapce
-     * @param {V1Search} body Artifact store body
+     * @param {V1Search} body Search body
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SearchV1Api
@@ -12253,7 +16417,7 @@ export class SearchV1Api extends BaseAPI {
      * @param {string} owner Owner of the namespace
      * @param {string} project Project under namesapce
      * @param {string} search_uuid UUID
-     * @param {V1Search} body Artifact store body
+     * @param {V1Search} body Search body
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SearchV1Api
@@ -12268,13 +16432,1389 @@ export class SearchV1Api extends BaseAPI {
      * @param {string} owner Owner of the namespace
      * @param {string} project Project under namesapce
      * @param {string} search_uuid UUID
-     * @param {V1Search} body Artifact store body
+     * @param {V1Search} body Search body
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SearchV1Api
      */
     public updateSearch(owner: string, project: string, search_uuid: string, body: V1Search, options?: any) {
         return SearchV1ApiFp(this.configuration).updateSearch(owner, project, search_uuid, body, options)(this.fetch, this.basePath);
+    }
+
+}
+
+/**
+ * TeamsV1Api - fetch parameter creator
+ * @export
+ */
+export const TeamsV1ApiFetchParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary List runs
+         * @param {string} owner Owner of the namespace
+         * @param {V1Team} body Team body
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createTeam(owner: string, body: V1Team, options: any = {}): FetchArgs {
+            // verify required parameter 'owner' is not null or undefined
+            if (owner === null || owner === undefined) {
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling createTeam.');
+            }
+            // verify required parameter 'body' is not null or undefined
+            if (body === null || body === undefined) {
+                throw new RequiredError('body','Required parameter body was null or undefined when calling createTeam.');
+            }
+            const localVarPath = `/api/v1/{owner}/teams`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("Authorization")
+					: configuration.apiKey;
+                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"V1Team" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Delete runs
+         * @param {string} owner Owner of the namespace
+         * @param {string} team Team
+         * @param {V1TeamMember} body Team body
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createTeamMember(owner: string, team: string, body: V1TeamMember, options: any = {}): FetchArgs {
+            // verify required parameter 'owner' is not null or undefined
+            if (owner === null || owner === undefined) {
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling createTeamMember.');
+            }
+            // verify required parameter 'team' is not null or undefined
+            if (team === null || team === undefined) {
+                throw new RequiredError('team','Required parameter team was null or undefined when calling createTeamMember.');
+            }
+            // verify required parameter 'body' is not null or undefined
+            if (body === null || body === undefined) {
+                throw new RequiredError('body','Required parameter body was null or undefined when calling createTeamMember.');
+            }
+            const localVarPath = `/api/v1/{owner}/teams/{team}/members`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"team"}}`, encodeURIComponent(String(team)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("Authorization")
+					: configuration.apiKey;
+                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"V1TeamMember" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Patch run
+         * @param {string} owner Owner of the namespace
+         * @param {string} team Team under namesapce
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteTeam(owner: string, team: string, options: any = {}): FetchArgs {
+            // verify required parameter 'owner' is not null or undefined
+            if (owner === null || owner === undefined) {
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling deleteTeam.');
+            }
+            // verify required parameter 'team' is not null or undefined
+            if (team === null || team === undefined) {
+                throw new RequiredError('team','Required parameter team was null or undefined when calling deleteTeam.');
+            }
+            const localVarPath = `/api/v1/{owner}/teams/{team}`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"team"}}`, encodeURIComponent(String(team)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'DELETE' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("Authorization")
+					: configuration.apiKey;
+                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Invalidate runs
+         * @param {string} owner Owner of the namespace
+         * @param {string} team Team
+         * @param {string} member_user User
+         * @param {string} [member_role] Role.
+         * @param {string} [member_org_role] Organization Role.
+         * @param {Date} [member_created_at] Optional time when the entityt was created.
+         * @param {Date} [member_updated_at] Optional last time the entity was updated.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteTeamMember(owner: string, team: string, member_user: string, member_role?: string, member_org_role?: string, member_created_at?: Date, member_updated_at?: Date, options: any = {}): FetchArgs {
+            // verify required parameter 'owner' is not null or undefined
+            if (owner === null || owner === undefined) {
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling deleteTeamMember.');
+            }
+            // verify required parameter 'team' is not null or undefined
+            if (team === null || team === undefined) {
+                throw new RequiredError('team','Required parameter team was null or undefined when calling deleteTeamMember.');
+            }
+            // verify required parameter 'member_user' is not null or undefined
+            if (member_user === null || member_user === undefined) {
+                throw new RequiredError('member_user','Required parameter member_user was null or undefined when calling deleteTeamMember.');
+            }
+            const localVarPath = `/api/v1/{owner}/teams/{team}/members/{member.user}`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"team"}}`, encodeURIComponent(String(team)))
+                .replace(`{${"member.user"}}`, encodeURIComponent(String(member_user)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'DELETE' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("Authorization")
+					: configuration.apiKey;
+                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            if (member_role !== undefined) {
+                localVarQueryParameter['member.role'] = member_role;
+            }
+
+            if (member_org_role !== undefined) {
+                localVarQueryParameter['member.org_role'] = member_org_role;
+            }
+
+            if (member_created_at !== undefined) {
+                localVarQueryParameter['member.created_at'] = (member_created_at as any).toISOString();
+            }
+
+            if (member_updated_at !== undefined) {
+                localVarQueryParameter['member.updated_at'] = (member_updated_at as any).toISOString();
+            }
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Create new run
+         * @param {string} owner Owner of the namespace
+         * @param {string} team Team under namesapce
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTeam(owner: string, team: string, options: any = {}): FetchArgs {
+            // verify required parameter 'owner' is not null or undefined
+            if (owner === null || owner === undefined) {
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling getTeam.');
+            }
+            // verify required parameter 'team' is not null or undefined
+            if (team === null || team === undefined) {
+                throw new RequiredError('team','Required parameter team was null or undefined when calling getTeam.');
+            }
+            const localVarPath = `/api/v1/{owner}/teams/{team}`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"team"}}`, encodeURIComponent(String(team)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("Authorization")
+					: configuration.apiKey;
+                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Stop run
+         * @param {string} owner Owner of the namespace
+         * @param {string} team Team
+         * @param {string} member_user User
+         * @param {string} [member_role] Role.
+         * @param {string} [member_org_role] Organization Role.
+         * @param {Date} [member_created_at] Optional time when the entityt was created.
+         * @param {Date} [member_updated_at] Optional last time the entity was updated.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTeamMember(owner: string, team: string, member_user: string, member_role?: string, member_org_role?: string, member_created_at?: Date, member_updated_at?: Date, options: any = {}): FetchArgs {
+            // verify required parameter 'owner' is not null or undefined
+            if (owner === null || owner === undefined) {
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling getTeamMember.');
+            }
+            // verify required parameter 'team' is not null or undefined
+            if (team === null || team === undefined) {
+                throw new RequiredError('team','Required parameter team was null or undefined when calling getTeamMember.');
+            }
+            // verify required parameter 'member_user' is not null or undefined
+            if (member_user === null || member_user === undefined) {
+                throw new RequiredError('member_user','Required parameter member_user was null or undefined when calling getTeamMember.');
+            }
+            const localVarPath = `/api/v1/{owner}/teams/{team}/members/{member.user}`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"team"}}`, encodeURIComponent(String(team)))
+                .replace(`{${"member.user"}}`, encodeURIComponent(String(member_user)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("Authorization")
+					: configuration.apiKey;
+                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            if (member_role !== undefined) {
+                localVarQueryParameter['member.role'] = member_role;
+            }
+
+            if (member_org_role !== undefined) {
+                localVarQueryParameter['member.org_role'] = member_org_role;
+            }
+
+            if (member_created_at !== undefined) {
+                localVarQueryParameter['member.created_at'] = (member_created_at as any).toISOString();
+            }
+
+            if (member_updated_at !== undefined) {
+                localVarQueryParameter['member.updated_at'] = (member_updated_at as any).toISOString();
+            }
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Delete run
+         * @param {string} owner Owner of the namespace
+         * @param {string} team Team under namesapce
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listTeamMembers(owner: string, team: string, options: any = {}): FetchArgs {
+            // verify required parameter 'owner' is not null or undefined
+            if (owner === null || owner === undefined) {
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling listTeamMembers.');
+            }
+            // verify required parameter 'team' is not null or undefined
+            if (team === null || team === undefined) {
+                throw new RequiredError('team','Required parameter team was null or undefined when calling listTeamMembers.');
+            }
+            const localVarPath = `/api/v1/{owner}/teams/{team}/members`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"team"}}`, encodeURIComponent(String(team)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("Authorization")
+					: configuration.apiKey;
+                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary List bookmarked runs for user
+         * @param {string} owner Owner of the namespace
+         * @param {number} [offset] Pagination offset.
+         * @param {number} [limit] Limit size.
+         * @param {string} [sort] Sort to order the search.
+         * @param {string} [query] Query filter the search search.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listTeamNames(owner: string, offset?: number, limit?: number, sort?: string, query?: string, options: any = {}): FetchArgs {
+            // verify required parameter 'owner' is not null or undefined
+            if (owner === null || owner === undefined) {
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling listTeamNames.');
+            }
+            const localVarPath = `/api/v1/{owner}/teams/names`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("Authorization")
+					: configuration.apiKey;
+                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            if (offset !== undefined) {
+                localVarQueryParameter['offset'] = offset;
+            }
+
+            if (limit !== undefined) {
+                localVarQueryParameter['limit'] = limit;
+            }
+
+            if (sort !== undefined) {
+                localVarQueryParameter['sort'] = sort;
+            }
+
+            if (query !== undefined) {
+                localVarQueryParameter['query'] = query;
+            }
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary List archived runs for user
+         * @param {string} owner Owner of the namespace
+         * @param {number} [offset] Pagination offset.
+         * @param {number} [limit] Limit size.
+         * @param {string} [sort] Sort to order the search.
+         * @param {string} [query] Query filter the search search.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listTeams(owner: string, offset?: number, limit?: number, sort?: string, query?: string, options: any = {}): FetchArgs {
+            // verify required parameter 'owner' is not null or undefined
+            if (owner === null || owner === undefined) {
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling listTeams.');
+            }
+            const localVarPath = `/api/v1/{owner}/teams`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("Authorization")
+					: configuration.apiKey;
+                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            if (offset !== undefined) {
+                localVarQueryParameter['offset'] = offset;
+            }
+
+            if (limit !== undefined) {
+                localVarQueryParameter['limit'] = limit;
+            }
+
+            if (sort !== undefined) {
+                localVarQueryParameter['sort'] = sort;
+            }
+
+            if (query !== undefined) {
+                localVarQueryParameter['query'] = query;
+            }
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Update run
+         * @param {string} owner Owner of the namespace
+         * @param {string} team_name Name
+         * @param {V1Team} body Team body
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchTeam(owner: string, team_name: string, body: V1Team, options: any = {}): FetchArgs {
+            // verify required parameter 'owner' is not null or undefined
+            if (owner === null || owner === undefined) {
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling patchTeam.');
+            }
+            // verify required parameter 'team_name' is not null or undefined
+            if (team_name === null || team_name === undefined) {
+                throw new RequiredError('team_name','Required parameter team_name was null or undefined when calling patchTeam.');
+            }
+            // verify required parameter 'body' is not null or undefined
+            if (body === null || body === undefined) {
+                throw new RequiredError('body','Required parameter body was null or undefined when calling patchTeam.');
+            }
+            const localVarPath = `/api/v1/{owner}/teams/{team.name}`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"team.name"}}`, encodeURIComponent(String(team_name)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'PATCH' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("Authorization")
+					: configuration.apiKey;
+                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"V1Team" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Invalidate run
+         * @param {string} owner Owner of the namespace
+         * @param {string} team Team
+         * @param {string} member_user User
+         * @param {V1TeamMember} body Team body
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchTeamMember(owner: string, team: string, member_user: string, body: V1TeamMember, options: any = {}): FetchArgs {
+            // verify required parameter 'owner' is not null or undefined
+            if (owner === null || owner === undefined) {
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling patchTeamMember.');
+            }
+            // verify required parameter 'team' is not null or undefined
+            if (team === null || team === undefined) {
+                throw new RequiredError('team','Required parameter team was null or undefined when calling patchTeamMember.');
+            }
+            // verify required parameter 'member_user' is not null or undefined
+            if (member_user === null || member_user === undefined) {
+                throw new RequiredError('member_user','Required parameter member_user was null or undefined when calling patchTeamMember.');
+            }
+            // verify required parameter 'body' is not null or undefined
+            if (body === null || body === undefined) {
+                throw new RequiredError('body','Required parameter body was null or undefined when calling patchTeamMember.');
+            }
+            const localVarPath = `/api/v1/{owner}/teams/{team}/members/{member.user}`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"team"}}`, encodeURIComponent(String(team)))
+                .replace(`{${"member.user"}}`, encodeURIComponent(String(member_user)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'PATCH' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("Authorization")
+					: configuration.apiKey;
+                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"V1TeamMember" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get run
+         * @param {string} owner Owner of the namespace
+         * @param {string} team_name Name
+         * @param {V1Team} body Team body
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateTeam(owner: string, team_name: string, body: V1Team, options: any = {}): FetchArgs {
+            // verify required parameter 'owner' is not null or undefined
+            if (owner === null || owner === undefined) {
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling updateTeam.');
+            }
+            // verify required parameter 'team_name' is not null or undefined
+            if (team_name === null || team_name === undefined) {
+                throw new RequiredError('team_name','Required parameter team_name was null or undefined when calling updateTeam.');
+            }
+            // verify required parameter 'body' is not null or undefined
+            if (body === null || body === undefined) {
+                throw new RequiredError('body','Required parameter body was null or undefined when calling updateTeam.');
+            }
+            const localVarPath = `/api/v1/{owner}/teams/{team.name}`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"team.name"}}`, encodeURIComponent(String(team_name)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'PUT' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("Authorization")
+					: configuration.apiKey;
+                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"V1Team" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Stop runs
+         * @param {string} owner Owner of the namespace
+         * @param {string} team Team
+         * @param {string} member_user User
+         * @param {V1TeamMember} body Team body
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateTeamMember(owner: string, team: string, member_user: string, body: V1TeamMember, options: any = {}): FetchArgs {
+            // verify required parameter 'owner' is not null or undefined
+            if (owner === null || owner === undefined) {
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling updateTeamMember.');
+            }
+            // verify required parameter 'team' is not null or undefined
+            if (team === null || team === undefined) {
+                throw new RequiredError('team','Required parameter team was null or undefined when calling updateTeamMember.');
+            }
+            // verify required parameter 'member_user' is not null or undefined
+            if (member_user === null || member_user === undefined) {
+                throw new RequiredError('member_user','Required parameter member_user was null or undefined when calling updateTeamMember.');
+            }
+            // verify required parameter 'body' is not null or undefined
+            if (body === null || body === undefined) {
+                throw new RequiredError('body','Required parameter body was null or undefined when calling updateTeamMember.');
+            }
+            const localVarPath = `/api/v1/{owner}/teams/{team}/members/{member.user}`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"team"}}`, encodeURIComponent(String(team)))
+                .replace(`{${"member.user"}}`, encodeURIComponent(String(member_user)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'PUT' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("Authorization")
+					: configuration.apiKey;
+                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"V1TeamMember" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * TeamsV1Api - functional programming interface
+ * @export
+ */
+export const TeamsV1ApiFp = function(configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary List runs
+         * @param {string} owner Owner of the namespace
+         * @param {V1Team} body Team body
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createTeam(owner: string, body: V1Team, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1Team> {
+            const localVarFetchArgs = TeamsV1ApiFetchParamCreator(configuration).createTeam(owner, body, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary Delete runs
+         * @param {string} owner Owner of the namespace
+         * @param {string} team Team
+         * @param {V1TeamMember} body Team body
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createTeamMember(owner: string, team: string, body: V1TeamMember, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1TeamMember> {
+            const localVarFetchArgs = TeamsV1ApiFetchParamCreator(configuration).createTeamMember(owner, team, body, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary Patch run
+         * @param {string} owner Owner of the namespace
+         * @param {string} team Team under namesapce
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteTeam(owner: string, team: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+            const localVarFetchArgs = TeamsV1ApiFetchParamCreator(configuration).deleteTeam(owner, team, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response;
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary Invalidate runs
+         * @param {string} owner Owner of the namespace
+         * @param {string} team Team
+         * @param {string} member_user User
+         * @param {string} [member_role] Role.
+         * @param {string} [member_org_role] Organization Role.
+         * @param {Date} [member_created_at] Optional time when the entityt was created.
+         * @param {Date} [member_updated_at] Optional last time the entity was updated.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteTeamMember(owner: string, team: string, member_user: string, member_role?: string, member_org_role?: string, member_created_at?: Date, member_updated_at?: Date, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+            const localVarFetchArgs = TeamsV1ApiFetchParamCreator(configuration).deleteTeamMember(owner, team, member_user, member_role, member_org_role, member_created_at, member_updated_at, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response;
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary Create new run
+         * @param {string} owner Owner of the namespace
+         * @param {string} team Team under namesapce
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTeam(owner: string, team: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1Team> {
+            const localVarFetchArgs = TeamsV1ApiFetchParamCreator(configuration).getTeam(owner, team, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary Stop run
+         * @param {string} owner Owner of the namespace
+         * @param {string} team Team
+         * @param {string} member_user User
+         * @param {string} [member_role] Role.
+         * @param {string} [member_org_role] Organization Role.
+         * @param {Date} [member_created_at] Optional time when the entityt was created.
+         * @param {Date} [member_updated_at] Optional last time the entity was updated.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTeamMember(owner: string, team: string, member_user: string, member_role?: string, member_org_role?: string, member_created_at?: Date, member_updated_at?: Date, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1TeamMember> {
+            const localVarFetchArgs = TeamsV1ApiFetchParamCreator(configuration).getTeamMember(owner, team, member_user, member_role, member_org_role, member_created_at, member_updated_at, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary Delete run
+         * @param {string} owner Owner of the namespace
+         * @param {string} team Team under namesapce
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listTeamMembers(owner: string, team: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ListTeamMembersResponse> {
+            const localVarFetchArgs = TeamsV1ApiFetchParamCreator(configuration).listTeamMembers(owner, team, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary List bookmarked runs for user
+         * @param {string} owner Owner of the namespace
+         * @param {number} [offset] Pagination offset.
+         * @param {number} [limit] Limit size.
+         * @param {string} [sort] Sort to order the search.
+         * @param {string} [query] Query filter the search search.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listTeamNames(owner: string, offset?: number, limit?: number, sort?: string, query?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ListTeamsResponse> {
+            const localVarFetchArgs = TeamsV1ApiFetchParamCreator(configuration).listTeamNames(owner, offset, limit, sort, query, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary List archived runs for user
+         * @param {string} owner Owner of the namespace
+         * @param {number} [offset] Pagination offset.
+         * @param {number} [limit] Limit size.
+         * @param {string} [sort] Sort to order the search.
+         * @param {string} [query] Query filter the search search.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listTeams(owner: string, offset?: number, limit?: number, sort?: string, query?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ListTeamsResponse> {
+            const localVarFetchArgs = TeamsV1ApiFetchParamCreator(configuration).listTeams(owner, offset, limit, sort, query, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary Update run
+         * @param {string} owner Owner of the namespace
+         * @param {string} team_name Name
+         * @param {V1Team} body Team body
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchTeam(owner: string, team_name: string, body: V1Team, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1Team> {
+            const localVarFetchArgs = TeamsV1ApiFetchParamCreator(configuration).patchTeam(owner, team_name, body, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary Invalidate run
+         * @param {string} owner Owner of the namespace
+         * @param {string} team Team
+         * @param {string} member_user User
+         * @param {V1TeamMember} body Team body
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchTeamMember(owner: string, team: string, member_user: string, body: V1TeamMember, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1TeamMember> {
+            const localVarFetchArgs = TeamsV1ApiFetchParamCreator(configuration).patchTeamMember(owner, team, member_user, body, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary Get run
+         * @param {string} owner Owner of the namespace
+         * @param {string} team_name Name
+         * @param {V1Team} body Team body
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateTeam(owner: string, team_name: string, body: V1Team, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1Team> {
+            const localVarFetchArgs = TeamsV1ApiFetchParamCreator(configuration).updateTeam(owner, team_name, body, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary Stop runs
+         * @param {string} owner Owner of the namespace
+         * @param {string} team Team
+         * @param {string} member_user User
+         * @param {V1TeamMember} body Team body
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateTeamMember(owner: string, team: string, member_user: string, body: V1TeamMember, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1TeamMember> {
+            const localVarFetchArgs = TeamsV1ApiFetchParamCreator(configuration).updateTeamMember(owner, team, member_user, body, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+    }
+};
+
+/**
+ * TeamsV1Api - factory interface
+ * @export
+ */
+export const TeamsV1ApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
+    return {
+        /**
+         * 
+         * @summary List runs
+         * @param {string} owner Owner of the namespace
+         * @param {V1Team} body Team body
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createTeam(owner: string, body: V1Team, options?: any) {
+            return TeamsV1ApiFp(configuration).createTeam(owner, body, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary Delete runs
+         * @param {string} owner Owner of the namespace
+         * @param {string} team Team
+         * @param {V1TeamMember} body Team body
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createTeamMember(owner: string, team: string, body: V1TeamMember, options?: any) {
+            return TeamsV1ApiFp(configuration).createTeamMember(owner, team, body, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary Patch run
+         * @param {string} owner Owner of the namespace
+         * @param {string} team Team under namesapce
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteTeam(owner: string, team: string, options?: any) {
+            return TeamsV1ApiFp(configuration).deleteTeam(owner, team, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary Invalidate runs
+         * @param {string} owner Owner of the namespace
+         * @param {string} team Team
+         * @param {string} member_user User
+         * @param {string} [member_role] Role.
+         * @param {string} [member_org_role] Organization Role.
+         * @param {Date} [member_created_at] Optional time when the entityt was created.
+         * @param {Date} [member_updated_at] Optional last time the entity was updated.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteTeamMember(owner: string, team: string, member_user: string, member_role?: string, member_org_role?: string, member_created_at?: Date, member_updated_at?: Date, options?: any) {
+            return TeamsV1ApiFp(configuration).deleteTeamMember(owner, team, member_user, member_role, member_org_role, member_created_at, member_updated_at, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary Create new run
+         * @param {string} owner Owner of the namespace
+         * @param {string} team Team under namesapce
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTeam(owner: string, team: string, options?: any) {
+            return TeamsV1ApiFp(configuration).getTeam(owner, team, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary Stop run
+         * @param {string} owner Owner of the namespace
+         * @param {string} team Team
+         * @param {string} member_user User
+         * @param {string} [member_role] Role.
+         * @param {string} [member_org_role] Organization Role.
+         * @param {Date} [member_created_at] Optional time when the entityt was created.
+         * @param {Date} [member_updated_at] Optional last time the entity was updated.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTeamMember(owner: string, team: string, member_user: string, member_role?: string, member_org_role?: string, member_created_at?: Date, member_updated_at?: Date, options?: any) {
+            return TeamsV1ApiFp(configuration).getTeamMember(owner, team, member_user, member_role, member_org_role, member_created_at, member_updated_at, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary Delete run
+         * @param {string} owner Owner of the namespace
+         * @param {string} team Team under namesapce
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listTeamMembers(owner: string, team: string, options?: any) {
+            return TeamsV1ApiFp(configuration).listTeamMembers(owner, team, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary List bookmarked runs for user
+         * @param {string} owner Owner of the namespace
+         * @param {number} [offset] Pagination offset.
+         * @param {number} [limit] Limit size.
+         * @param {string} [sort] Sort to order the search.
+         * @param {string} [query] Query filter the search search.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listTeamNames(owner: string, offset?: number, limit?: number, sort?: string, query?: string, options?: any) {
+            return TeamsV1ApiFp(configuration).listTeamNames(owner, offset, limit, sort, query, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary List archived runs for user
+         * @param {string} owner Owner of the namespace
+         * @param {number} [offset] Pagination offset.
+         * @param {number} [limit] Limit size.
+         * @param {string} [sort] Sort to order the search.
+         * @param {string} [query] Query filter the search search.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listTeams(owner: string, offset?: number, limit?: number, sort?: string, query?: string, options?: any) {
+            return TeamsV1ApiFp(configuration).listTeams(owner, offset, limit, sort, query, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary Update run
+         * @param {string} owner Owner of the namespace
+         * @param {string} team_name Name
+         * @param {V1Team} body Team body
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchTeam(owner: string, team_name: string, body: V1Team, options?: any) {
+            return TeamsV1ApiFp(configuration).patchTeam(owner, team_name, body, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary Invalidate run
+         * @param {string} owner Owner of the namespace
+         * @param {string} team Team
+         * @param {string} member_user User
+         * @param {V1TeamMember} body Team body
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchTeamMember(owner: string, team: string, member_user: string, body: V1TeamMember, options?: any) {
+            return TeamsV1ApiFp(configuration).patchTeamMember(owner, team, member_user, body, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary Get run
+         * @param {string} owner Owner of the namespace
+         * @param {string} team_name Name
+         * @param {V1Team} body Team body
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateTeam(owner: string, team_name: string, body: V1Team, options?: any) {
+            return TeamsV1ApiFp(configuration).updateTeam(owner, team_name, body, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary Stop runs
+         * @param {string} owner Owner of the namespace
+         * @param {string} team Team
+         * @param {string} member_user User
+         * @param {V1TeamMember} body Team body
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateTeamMember(owner: string, team: string, member_user: string, body: V1TeamMember, options?: any) {
+            return TeamsV1ApiFp(configuration).updateTeamMember(owner, team, member_user, body, options)(fetch, basePath);
+        },
+    };
+};
+
+/**
+ * TeamsV1Api - object-oriented interface
+ * @export
+ * @class TeamsV1Api
+ * @extends {BaseAPI}
+ */
+export class TeamsV1Api extends BaseAPI {
+    /**
+     * 
+     * @summary List runs
+     * @param {string} owner Owner of the namespace
+     * @param {V1Team} body Team body
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TeamsV1Api
+     */
+    public createTeam(owner: string, body: V1Team, options?: any) {
+        return TeamsV1ApiFp(this.configuration).createTeam(owner, body, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary Delete runs
+     * @param {string} owner Owner of the namespace
+     * @param {string} team Team
+     * @param {V1TeamMember} body Team body
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TeamsV1Api
+     */
+    public createTeamMember(owner: string, team: string, body: V1TeamMember, options?: any) {
+        return TeamsV1ApiFp(this.configuration).createTeamMember(owner, team, body, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary Patch run
+     * @param {string} owner Owner of the namespace
+     * @param {string} team Team under namesapce
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TeamsV1Api
+     */
+    public deleteTeam(owner: string, team: string, options?: any) {
+        return TeamsV1ApiFp(this.configuration).deleteTeam(owner, team, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary Invalidate runs
+     * @param {string} owner Owner of the namespace
+     * @param {string} team Team
+     * @param {string} member_user User
+     * @param {string} [member_role] Role.
+     * @param {string} [member_org_role] Organization Role.
+     * @param {Date} [member_created_at] Optional time when the entityt was created.
+     * @param {Date} [member_updated_at] Optional last time the entity was updated.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TeamsV1Api
+     */
+    public deleteTeamMember(owner: string, team: string, member_user: string, member_role?: string, member_org_role?: string, member_created_at?: Date, member_updated_at?: Date, options?: any) {
+        return TeamsV1ApiFp(this.configuration).deleteTeamMember(owner, team, member_user, member_role, member_org_role, member_created_at, member_updated_at, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary Create new run
+     * @param {string} owner Owner of the namespace
+     * @param {string} team Team under namesapce
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TeamsV1Api
+     */
+    public getTeam(owner: string, team: string, options?: any) {
+        return TeamsV1ApiFp(this.configuration).getTeam(owner, team, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary Stop run
+     * @param {string} owner Owner of the namespace
+     * @param {string} team Team
+     * @param {string} member_user User
+     * @param {string} [member_role] Role.
+     * @param {string} [member_org_role] Organization Role.
+     * @param {Date} [member_created_at] Optional time when the entityt was created.
+     * @param {Date} [member_updated_at] Optional last time the entity was updated.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TeamsV1Api
+     */
+    public getTeamMember(owner: string, team: string, member_user: string, member_role?: string, member_org_role?: string, member_created_at?: Date, member_updated_at?: Date, options?: any) {
+        return TeamsV1ApiFp(this.configuration).getTeamMember(owner, team, member_user, member_role, member_org_role, member_created_at, member_updated_at, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary Delete run
+     * @param {string} owner Owner of the namespace
+     * @param {string} team Team under namesapce
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TeamsV1Api
+     */
+    public listTeamMembers(owner: string, team: string, options?: any) {
+        return TeamsV1ApiFp(this.configuration).listTeamMembers(owner, team, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary List bookmarked runs for user
+     * @param {string} owner Owner of the namespace
+     * @param {number} [offset] Pagination offset.
+     * @param {number} [limit] Limit size.
+     * @param {string} [sort] Sort to order the search.
+     * @param {string} [query] Query filter the search search.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TeamsV1Api
+     */
+    public listTeamNames(owner: string, offset?: number, limit?: number, sort?: string, query?: string, options?: any) {
+        return TeamsV1ApiFp(this.configuration).listTeamNames(owner, offset, limit, sort, query, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary List archived runs for user
+     * @param {string} owner Owner of the namespace
+     * @param {number} [offset] Pagination offset.
+     * @param {number} [limit] Limit size.
+     * @param {string} [sort] Sort to order the search.
+     * @param {string} [query] Query filter the search search.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TeamsV1Api
+     */
+    public listTeams(owner: string, offset?: number, limit?: number, sort?: string, query?: string, options?: any) {
+        return TeamsV1ApiFp(this.configuration).listTeams(owner, offset, limit, sort, query, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary Update run
+     * @param {string} owner Owner of the namespace
+     * @param {string} team_name Name
+     * @param {V1Team} body Team body
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TeamsV1Api
+     */
+    public patchTeam(owner: string, team_name: string, body: V1Team, options?: any) {
+        return TeamsV1ApiFp(this.configuration).patchTeam(owner, team_name, body, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary Invalidate run
+     * @param {string} owner Owner of the namespace
+     * @param {string} team Team
+     * @param {string} member_user User
+     * @param {V1TeamMember} body Team body
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TeamsV1Api
+     */
+    public patchTeamMember(owner: string, team: string, member_user: string, body: V1TeamMember, options?: any) {
+        return TeamsV1ApiFp(this.configuration).patchTeamMember(owner, team, member_user, body, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary Get run
+     * @param {string} owner Owner of the namespace
+     * @param {string} team_name Name
+     * @param {V1Team} body Team body
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TeamsV1Api
+     */
+    public updateTeam(owner: string, team_name: string, body: V1Team, options?: any) {
+        return TeamsV1ApiFp(this.configuration).updateTeam(owner, team_name, body, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary Stop runs
+     * @param {string} owner Owner of the namespace
+     * @param {string} team Team
+     * @param {string} member_user User
+     * @param {V1TeamMember} body Team body
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TeamsV1Api
+     */
+    public updateTeamMember(owner: string, team: string, member_user: string, body: V1TeamMember, options?: any) {
+        return TeamsV1ApiFp(this.configuration).updateTeamMember(owner, team, member_user, body, options)(this.fetch, this.basePath);
     }
 
 }

@@ -24,10 +24,10 @@ from polyaxon.schemas.fields.ref_or_obj import RefOrObject
 from polyaxon.schemas.polyflow.environments import EnvironmentSchema
 from polyaxon.schemas.polyflow.init import InitSchema
 from polyaxon.schemas.polyflow.mounts import MountsSchema
+from polyaxon.schemas.polyflow.parallel import ParallelMixin, ParallelSchema
 from polyaxon.schemas.polyflow.schedules import ScheduleSchema
 from polyaxon.schemas.polyflow.service import ServiceSchema
 from polyaxon.schemas.polyflow.termination import TerminationSchema
-from polyaxon.schemas.polyflow.workflows import WorkflowMixin, WorkflowSchema
 
 
 class BaseComponentSchema(BaseSchema):
@@ -37,13 +37,14 @@ class BaseComponentSchema(BaseSchema):
     description = fields.Str(allow_none=True)
     tags = fields.List(fields.Str(), allow_none=True)
     profile = fields.Str(allow_none=True)
+    queue = fields.Str(allow_none=True)
     nocache = RefOrObject(fields.Boolean(allow_none=True))
     environment = fields.Nested(EnvironmentSchema, allow_none=True)
     termination = fields.Nested(TerminationSchema, allow_none=True)
     init = fields.Nested(InitSchema, allow_none=True)
     mounts = fields.Nested(MountsSchema, allow_none=True)
     schedule = fields.Nested(ScheduleSchema, allow_none=True)
-    workflow = fields.Nested(WorkflowSchema, allow_none=True)
+    parallel = fields.Nested(ParallelSchema, allow_none=True)
     service = fields.Nested(ServiceSchema, allow_none=True)
 
     @staticmethod
@@ -51,7 +52,7 @@ class BaseComponentSchema(BaseSchema):
         return BaseComponentConfig
 
 
-class BaseComponentConfig(BaseConfig, WorkflowMixin):
+class BaseComponentConfig(BaseConfig, ParallelMixin):
     SCHEMA = BaseComponentSchema
     REDUCED_ATTRIBUTES = [
         "version",
@@ -60,13 +61,14 @@ class BaseComponentConfig(BaseConfig, WorkflowMixin):
         "description",
         "tags",
         "profile",
+        "queue",
         "nocache",
         "environment",
         "termination",
         "init",
         "schedule",
         "mounts",
-        "workflow",
+        "parallel",
         "service",
     ]
 
@@ -78,13 +80,14 @@ class BaseComponentConfig(BaseConfig, WorkflowMixin):
         description=None,
         tags=None,
         profile=None,
+        queue=None,
         nocache=None,
         environment=None,
         termination=None,
         init=None,
         mounts=None,
         schedule=None,
-        workflow=None,
+        parallel=None,
         service=None,
     ):
         self.version = version
@@ -93,14 +96,15 @@ class BaseComponentConfig(BaseConfig, WorkflowMixin):
         self.description = description
         self.tags = tags
         self.profile = profile
+        self.queue = queue
         self.nocache = nocache
         self.environment = environment
         self.termination = termination
         self.init = init
         self.mounts = mounts
         self.schedule = schedule
-        self.workflow = workflow
+        self.parallel = parallel
         self.service = service
 
-    def get_workflow_kind(self):
-        return self.workflow.kind if self.workflow else None
+    def get_parallel_kind(self):
+        return self.parallel.kind if self.parallel else None

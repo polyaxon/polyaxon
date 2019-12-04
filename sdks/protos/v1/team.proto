@@ -1,0 +1,95 @@
+syntax = "proto3";
+
+package v1;
+
+import "google/protobuf/timestamp.proto";
+
+// Team specification
+message Team {
+    // Uuid
+    string uuid = 1;
+
+    // Name
+    string name = 2;
+
+    // Name
+    repeated string projects = 3;
+
+    // Optional time when the entityt was created
+    google.protobuf.Timestamp created_at = 4;
+
+    // Optional last time the entity was updated
+    google.protobuf.Timestamp updated_at = 5;
+
+}
+
+ // Request data to update teams
+ message TeamBodyRequest {
+    // Owner of the namespace
+    string owner = 1;
+
+    // Team body
+    Team team = 2;
+ }
+
+
+// Contains list teams
+message ListTeamsResponse {
+    // Count of the entities
+    int32 count = 1;
+
+    // List of all entities
+    repeated Team results = 2;
+
+    // Previous page
+    string previous = 3;
+
+    // Next page
+    string next = 4;
+}
+
+// Team member specification
+message TeamMember {
+    // User
+    string user = 1;
+
+    // Role
+    string role = 2;
+
+    // Organization Role
+    string org_role = 3;
+
+    // Optional time when the entityt was created
+    google.protobuf.Timestamp created_at = 4;
+
+    // Optional last time the entity was updated
+    google.protobuf.Timestamp updated_at = 5;
+
+}
+
+// Request data to create/update organization members
+message TeamMemberBodyRequest {
+    // Owner of the namespace
+    string owner = 1;
+
+    // Team
+    string team = 2;
+
+    // Team body
+    TeamMember member = 3;
+ }
+
+// Contains list organization members
+message ListTeamMembersResponse {
+    // Count of the entities
+    int32 count = 1;
+
+    // List of all entities
+    repeated TeamMember results = 2;
+
+    // Previous page
+    string previous = 3;
+
+    // Next page
+    string next = 4;
+}

@@ -46,30 +46,39 @@ class V1RunMetaInfo(object):
       attribute_map (dict): The key is attribute name
                             and the value is json key in definition.
     """
-    swagger_types = {"service": "bool", "concurrency": "int", "workflow_kind": "str"}
+    swagger_types = {
+        "service": "bool",
+        "concurrency": "int",
+        "parallel_kind": "str",
+        "run_kind": "str",
+    }
 
     attribute_map = {
         "service": "service",
         "concurrency": "concurrency",
-        "workflow_kind": "workflow_kind",
+        "parallel_kind": "parallel_kind",
+        "run_kind": "run_kind",
     }
 
     def __init__(
-        self, service=None, concurrency=None, workflow_kind=None
+        self, service=None, concurrency=None, parallel_kind=None, run_kind=None
     ):  # noqa: E501
         """V1RunMetaInfo - a model defined in Swagger"""  # noqa: E501
 
         self._service = None
         self._concurrency = None
-        self._workflow_kind = None
+        self._parallel_kind = None
+        self._run_kind = None
         self.discriminator = None
 
         if service is not None:
             self.service = service
         if concurrency is not None:
             self.concurrency = concurrency
-        if workflow_kind is not None:
-            self.workflow_kind = workflow_kind
+        if parallel_kind is not None:
+            self.parallel_kind = parallel_kind
+        if run_kind is not None:
+            self.run_kind = run_kind
 
     @property
     def service(self):
@@ -114,25 +123,46 @@ class V1RunMetaInfo(object):
         self._concurrency = concurrency
 
     @property
-    def workflow_kind(self):
-        """Gets the workflow_kind of this V1RunMetaInfo.  # noqa: E501
+    def parallel_kind(self):
+        """Gets the parallel_kind of this V1RunMetaInfo.  # noqa: E501
 
 
-        :return: The workflow_kind of this V1RunMetaInfo.  # noqa: E501
+        :return: The parallel_kind of this V1RunMetaInfo.  # noqa: E501
         :rtype: str
         """
-        return self._workflow_kind
+        return self._parallel_kind
 
-    @workflow_kind.setter
-    def workflow_kind(self, workflow_kind):
-        """Sets the workflow_kind of this V1RunMetaInfo.
+    @parallel_kind.setter
+    def parallel_kind(self, parallel_kind):
+        """Sets the parallel_kind of this V1RunMetaInfo.
 
 
-        :param workflow_kind: The workflow_kind of this V1RunMetaInfo.  # noqa: E501
+        :param parallel_kind: The parallel_kind of this V1RunMetaInfo.  # noqa: E501
         :type: str
         """
 
-        self._workflow_kind = workflow_kind
+        self._parallel_kind = parallel_kind
+
+    @property
+    def run_kind(self):
+        """Gets the run_kind of this V1RunMetaInfo.  # noqa: E501
+
+
+        :return: The run_kind of this V1RunMetaInfo.  # noqa: E501
+        :rtype: str
+        """
+        return self._run_kind
+
+    @run_kind.setter
+    def run_kind(self, run_kind):
+        """Sets the run_kind of this V1RunMetaInfo.
+
+
+        :param run_kind: The run_kind of this V1RunMetaInfo.  # noqa: E501
+        :type: str
+        """
+
+        self._run_kind = run_kind
 
     def to_dict(self):
         """Returns the model properties as a dict"""

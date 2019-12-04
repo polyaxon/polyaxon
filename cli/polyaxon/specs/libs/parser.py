@@ -73,14 +73,14 @@ class Parser(object):
             ]
 
         # Check workflow
-        workflow_section = cls._get_section(config, spec.WORKFLOW)
-        if workflow_section:
-            parsed_data[spec.WORKFLOW] = cls.parse_expression(
-                spec, workflow_section, parsed_params
+        parallel_section = cls._get_section(config, spec.PARALLEL)
+        if parallel_section:
+            parsed_data[spec.PARALLEL] = cls.parse_expression(
+                spec, parallel_section, parsed_params
             )
-            workflow_params = copy.copy(parsed_data[spec.WORKFLOW])
-            if workflow_params:
-                parsed_params = deep_update(workflow_params, parsed_params)
+            parallel_params = copy.copy(parsed_data[spec.PARALLEL])
+            if parallel_params:
+                parsed_params = deep_update(parallel_params, parsed_params)
 
         for section in spec.PARSING_SECTIONS:
             config_section = cls._get_section(config, section)
@@ -96,19 +96,19 @@ class Parser(object):
                     spec, config_section, parsed_params
                 )
 
-        config_section = cls._get_section(config, spec.CONTAINER)
+        config_section = cls._get_section(config, spec.RUN)
         if config_section:
-            parsed_data[spec.CONTAINER] = config_section
+            parsed_data[spec.RUN] = config_section
 
         return parsed_data
 
     @classmethod
-    def parse_container(cls, spec, parsed_data, params):
+    def parse_run(cls, spec, parsed_data, params):
         params = params or {}
         parsed_params = {param: params[param].display_value for param in params}
-        config_section = parsed_data.get(spec.CONTAINER)
+        config_section = parsed_data.get(spec.RUN)
         if config_section:
-            parsed_data[spec.CONTAINER] = cls.parse_expression(
+            parsed_data[spec.RUN] = cls.parse_expression(
                 spec, config_section, parsed_params
             )
         return parsed_data

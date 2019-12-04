@@ -31,18 +31,18 @@
 (function(root, factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
-    define(['ApiClient', 'model/V1SearchDefinition'], factory);
+    define(['ApiClient', 'model/V1SearchSpec'], factory);
   } else if (typeof module === 'object' && module.exports) {
     // CommonJS-like environments that support module.exports, like Node.
-    module.exports = factory(require('../ApiClient'), require('./V1SearchDefinition'));
+    module.exports = factory(require('../ApiClient'), require('./V1SearchSpec'));
   } else {
     // Browser globals (root is window)
     if (!root.PolyaxonSdk) {
       root.PolyaxonSdk = {};
     }
-    root.PolyaxonSdk.V1Search = factory(root.PolyaxonSdk.ApiClient, root.PolyaxonSdk.V1SearchDefinition);
+    root.PolyaxonSdk.V1Search = factory(root.PolyaxonSdk.ApiClient, root.PolyaxonSdk.V1SearchSpec);
   }
-}(this, function(ApiClient, V1SearchDefinition) {
+}(this, function(ApiClient, V1SearchSpec) {
   'use strict';
 
   /**
@@ -73,8 +73,12 @@
         obj.uuid = ApiClient.convertToType(data['uuid'], 'String');
       if (data.hasOwnProperty('name'))
         obj.name = ApiClient.convertToType(data['name'], 'String');
-      if (data.hasOwnProperty('definition'))
-        obj.definition = V1SearchDefinition.constructFromObject(data['definition']);
+      if (data.hasOwnProperty('spec'))
+        obj.spec = V1SearchSpec.constructFromObject(data['spec']);
+      if (data.hasOwnProperty('created_at'))
+        obj.created_at = ApiClient.convertToType(data['created_at'], 'Date');
+      if (data.hasOwnProperty('updated_at'))
+        obj.updated_at = ApiClient.convertToType(data['updated_at'], 'Date');
     }
     return obj;
   }
@@ -90,9 +94,19 @@
   exports.prototype.name = undefined;
 
   /**
-   * @member {module:model/V1SearchDefinition} definition
+   * @member {module:model/V1SearchSpec} spec
    */
-  exports.prototype.definition = undefined;
+  exports.prototype.spec = undefined;
+
+  /**
+   * @member {Date} created_at
+   */
+  exports.prototype.created_at = undefined;
+
+  /**
+   * @member {Date} updated_at
+   */
+  exports.prototype.updated_at = undefined;
 
   return exports;
 

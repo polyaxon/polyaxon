@@ -5,6 +5,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **service** | **Boolean** |  | [optional] 
 **concurrency** | **Number** |  | [optional] 
-**workflow_kind** | **String** |  | [optional] 
+**parallel_kind** | **String** |  | [optional] 
+**run_kind** | **String** |  | [optional] 
 
 

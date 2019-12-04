@@ -99,18 +99,22 @@
         obj.content = ApiClient.convertToType(data['content'], 'String');
       if (data.hasOwnProperty('status'))
         obj.status = ApiClient.convertToType(data['status'], 'String');
-      if (data.hasOwnProperty('meta_info'))
-        obj.meta_info = V1RunMetaInfo.constructFromObject(data['meta_info']);
       if (data.hasOwnProperty('readme'))
         obj.readme = ApiClient.convertToType(data['readme'], 'String');
       if (data.hasOwnProperty('bookmarked'))
         obj.bookmarked = ApiClient.convertToType(data['bookmarked'], 'Boolean');
+      if (data.hasOwnProperty('meta_info'))
+        obj.meta_info = V1RunMetaInfo.constructFromObject(data['meta_info']);
+      if (data.hasOwnProperty('kind'))
+        obj.kind = ApiClient.convertToType(data['kind'], 'String');
+      if (data.hasOwnProperty('hub'))
+        obj.hub = ApiClient.convertToType(data['hub'], 'String');
       if (data.hasOwnProperty('inputs'))
-        obj.inputs = ApiClient.convertToType(data['inputs'], {'String': 'String'});
+        obj.inputs = ApiClient.convertToType(data['inputs'], Object);
       if (data.hasOwnProperty('outputs'))
-        obj.outputs = ApiClient.convertToType(data['outputs'], {'String': 'String'});
+        obj.outputs = ApiClient.convertToType(data['outputs'], Object);
       if (data.hasOwnProperty('run_env'))
-        obj.run_env = ApiClient.convertToType(data['run_env'], {'String': 'String'});
+        obj.run_env = ApiClient.convertToType(data['run_env'], Object);
       if (data.hasOwnProperty('is_resume'))
         obj.is_resume = ApiClient.convertToType(data['is_resume'], 'Boolean');
       if (data.hasOwnProperty('is_clone'))
@@ -205,11 +209,6 @@
   exports.prototype.status = undefined;
 
   /**
-   * @member {module:model/V1RunMetaInfo} meta_info
-   */
-  exports.prototype.meta_info = undefined;
-
-  /**
    * @member {String} readme
    */
   exports.prototype.readme = undefined;
@@ -220,17 +219,32 @@
   exports.prototype.bookmarked = undefined;
 
   /**
-   * @member {Object.<String, String>} inputs
+   * @member {module:model/V1RunMetaInfo} meta_info
+   */
+  exports.prototype.meta_info = undefined;
+
+  /**
+   * @member {String} kind
+   */
+  exports.prototype.kind = undefined;
+
+  /**
+   * @member {String} hub
+   */
+  exports.prototype.hub = undefined;
+
+  /**
+   * @member {Object} inputs
    */
   exports.prototype.inputs = undefined;
 
   /**
-   * @member {Object.<String, String>} outputs
+   * @member {Object} outputs
    */
   exports.prototype.outputs = undefined;
 
   /**
-   * @member {Object.<String, String>} run_env
+   * @member {Object} run_env
    */
   exports.prototype.run_env = undefined;
 

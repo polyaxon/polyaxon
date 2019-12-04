@@ -46,24 +46,44 @@ class V1Search(object):
       attribute_map (dict): The key is attribute name
                             and the value is json key in definition.
     """
-    swagger_types = {"uuid": "str", "name": "str", "definition": "V1SearchDefinition"}
+    swagger_types = {
+        "uuid": "str",
+        "name": "str",
+        "spec": "V1SearchSpec",
+        "created_at": "datetime",
+        "updated_at": "datetime",
+    }
 
-    attribute_map = {"uuid": "uuid", "name": "name", "definition": "definition"}
+    attribute_map = {
+        "uuid": "uuid",
+        "name": "name",
+        "spec": "spec",
+        "created_at": "created_at",
+        "updated_at": "updated_at",
+    }
 
-    def __init__(self, uuid=None, name=None, definition=None):  # noqa: E501
+    def __init__(
+        self, uuid=None, name=None, spec=None, created_at=None, updated_at=None
+    ):  # noqa: E501
         """V1Search - a model defined in Swagger"""  # noqa: E501
 
         self._uuid = None
         self._name = None
-        self._definition = None
+        self._spec = None
+        self._created_at = None
+        self._updated_at = None
         self.discriminator = None
 
         if uuid is not None:
             self.uuid = uuid
         if name is not None:
             self.name = name
-        if definition is not None:
-            self.definition = definition
+        if spec is not None:
+            self.spec = spec
+        if created_at is not None:
+            self.created_at = created_at
+        if updated_at is not None:
+            self.updated_at = updated_at
 
     @property
     def uuid(self):
@@ -108,25 +128,67 @@ class V1Search(object):
         self._name = name
 
     @property
-    def definition(self):
-        """Gets the definition of this V1Search.  # noqa: E501
+    def spec(self):
+        """Gets the spec of this V1Search.  # noqa: E501
 
 
-        :return: The definition of this V1Search.  # noqa: E501
-        :rtype: V1SearchDefinition
+        :return: The spec of this V1Search.  # noqa: E501
+        :rtype: V1SearchSpec
         """
-        return self._definition
+        return self._spec
 
-    @definition.setter
-    def definition(self, definition):
-        """Sets the definition of this V1Search.
+    @spec.setter
+    def spec(self, spec):
+        """Sets the spec of this V1Search.
 
 
-        :param definition: The definition of this V1Search.  # noqa: E501
-        :type: V1SearchDefinition
+        :param spec: The spec of this V1Search.  # noqa: E501
+        :type: V1SearchSpec
         """
 
-        self._definition = definition
+        self._spec = spec
+
+    @property
+    def created_at(self):
+        """Gets the created_at of this V1Search.  # noqa: E501
+
+
+        :return: The created_at of this V1Search.  # noqa: E501
+        :rtype: datetime
+        """
+        return self._created_at
+
+    @created_at.setter
+    def created_at(self, created_at):
+        """Sets the created_at of this V1Search.
+
+
+        :param created_at: The created_at of this V1Search.  # noqa: E501
+        :type: datetime
+        """
+
+        self._created_at = created_at
+
+    @property
+    def updated_at(self):
+        """Gets the updated_at of this V1Search.  # noqa: E501
+
+
+        :return: The updated_at of this V1Search.  # noqa: E501
+        :rtype: datetime
+        """
+        return self._updated_at
+
+    @updated_at.setter
+    def updated_at(self, updated_at):
+        """Sets the updated_at of this V1Search.
+
+
+        :param updated_at: The updated_at of this V1Search.  # noqa: E501
+        :type: datetime
+        """
+
+        self._updated_at = updated_at
 
     def to_dict(self):
         """Returns the model properties as a dict"""

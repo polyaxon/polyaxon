@@ -78,7 +78,7 @@ for the update search operation typically these are written to a http.Request
 type UpdateSearchParams struct {
 
 	/*Body
-	  Artifact store body
+	  Search body
 
 	*/
 	Body *service_model.V1Search

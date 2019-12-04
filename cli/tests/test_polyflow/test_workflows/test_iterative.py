@@ -25,7 +25,7 @@ from marshmallow.exceptions import ValidationError
 from tests.utils import assert_equal_dict
 
 from polyaxon.schemas.polyflow.base import BaseComponentConfig
-from polyaxon.schemas.polyflow.workflows.iterative import IterativeConfig
+from polyaxon.schemas.polyflow.parallel.iterative import IterativeConfig
 
 
 @pytest.mark.workflow_mark
@@ -55,17 +55,16 @@ class TestWorkflowIterativeConfigs(TestCase):
 
     def test_iterative_without_n_iterations(self):
         config_dict = {
-            "workflow": {
+            "parallel": {
                 "kind": "iterative",
                 "matrix": {"lr": {"kind": "choice", "value": [1, 2, 3]}},
                 "seed": 1,
-                "container": {"image": "foo"},
             }
         }
 
         with self.assertRaises(ValidationError):
             BaseComponentConfig.from_dict(config_dict)
 
-        config_dict["workflow"]["n_iterations"] = 10
+        config_dict["parallel"]["n_iterations"] = 10
         config = BaseComponentConfig.from_dict(config_dict)
         assert config.to_dict() == config_dict

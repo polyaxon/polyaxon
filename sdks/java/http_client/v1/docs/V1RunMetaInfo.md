@@ -6,7 +6,8 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **service** | **Boolean** |  |  [optional]
 **concurrency** | **Integer** |  |  [optional]
-**workflowKind** | **String** |  |  [optional]
+**parallelKind** | **String** |  |  [optional]
+**runKind** | **String** |  |  [optional]
 
 
 

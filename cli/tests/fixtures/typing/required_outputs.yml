@@ -19,7 +19,8 @@ init:
       - ['KEY1', 'en_US.UTF-8']
       - ['KEY2', 2]
 
-container:
+run:
+  kind: container
   image: my_image
   command: ["/bin/sh", "-c"]
   args: build -c /plx-context/build

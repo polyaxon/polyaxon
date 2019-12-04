@@ -32,11 +32,14 @@ type V1RunMetaInfo struct {
 	// Optional an indicator if the run has a concurrency
 	Concurrency int32 `json:"concurrency,omitempty"`
 
+	// Optional the parallel kind
+	ParallelKind string `json:"parallel_kind,omitempty"`
+
+	// Optional the run kind
+	RunKind string `json:"run_kind,omitempty"`
+
 	// Optional flag to tell if the run has a service
 	Service bool `json:"service,omitempty"`
-
-	// Optional the kind of workflow if it exists
-	WorkflowKind string `json:"workflow_kind,omitempty"`
 }
 
 // Validate validates this v1 run meta info

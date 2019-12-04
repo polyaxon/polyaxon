@@ -26,7 +26,7 @@ import pytest
 from marshmallow.exceptions import ValidationError
 
 from polyaxon.automl.matrix.utils import get_length, get_max, get_min, sample, to_numpy
-from polyaxon.schemas.polyflow.workflows.matrix import (
+from polyaxon.schemas.polyflow.parallel.matrix import (
     MatrixChoiceConfig,
     MatrixGeomSpaceConfig,
     MatrixLinSpaceConfig,

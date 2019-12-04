@@ -2,7 +2,8 @@ version: 1.0
 
 kind: component
 
-container:
+run:
+  kind: container
   image: continuumio/miniconda3
   command:
     - python

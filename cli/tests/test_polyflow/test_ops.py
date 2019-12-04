@@ -105,7 +105,7 @@ class TestOpConfigs(TestCase):
                 "not_supported_key": "build-template",
                 "tags": ["kaniko"],
                 "init": {"repos": [{"name": "foo", "branch": "dev"}]},
-                "container": {"image": "foo"},
+                "run": {"kind": "container", "image": "test"},
             },
         }
         with self.assertRaises(ValidationError):
@@ -138,7 +138,7 @@ class TestOpConfigs(TestCase):
                 "name": "build-template",
                 "tags": ["kaniko"],
                 "init": {"repos": [{"name": "foo", "branch": "dev"}]},
-                "container": {"image": "foo"},
+                "run": {"kind": "container", "image": "test"},
             },
         }
         config = OpConfig.from_dict(config_dict)
@@ -160,7 +160,7 @@ class TestOpConfigs(TestCase):
                 },
                 "init": {"repos": [{"name": "foo", "branch": "dev"}]},
                 "mounts": {"config_maps": [{"name": "config_map1"}]},
-                "container": {"image": "jupyterlab"},
+                "run": {"kind": "container", "image": "jupyterlab"},
             },
         }
         with self.assertRaises(ValidationError):
@@ -181,7 +181,7 @@ class TestOpConfigs(TestCase):
                 },
                 "init": {"repos": [{"name": "foo", "branch": "dev"}]},
                 "mounts": {"config_maps": [{"name": "config_map1"}]},
-                "container": {"image": "jupyterlab"},
+                "run": {"kind": "container", "image": "jupyterlab"},
             },
         }
         config = OpConfig.from_dict(config_dict)
@@ -205,13 +205,15 @@ class TestOpConfigs(TestCase):
                         "dependencies": ["A"],
                     },
                 ],
-                "workflow": {
+                "run": {
                     "kind": "dag",
                     "ops": [
                         {
                             "kind": "op",
                             "name": "job-template",
-                            "component": {"container": {"image": "test"}},
+                            "component": {
+                                "run": {"kind": "container", "image": "test"}
+                            },
                         },
                         {
                             "kind": "op",
@@ -232,22 +234,26 @@ class TestOpConfigs(TestCase):
             "dependencies": ["foo", "bar"],
             "params": {"param1": "foo", "param2": "bar"},
             "trigger": "all_succeeded",
-            "workflow": {
-                "kind": "dag",
-                "ops": [
-                    {
-                        "kind": "op",
-                        "name": "A",
-                        "component": {"container": {"image": "test"}},
-                    },
-                    {
-                        "kind": "op",
-                        "name": "B",
-                        "dependencies": ["A"],
-                        "tags": ["kaniko"],
-                        "init": {"repos": [{"name": "foo", "branch": "dev"}]},
-                    },
-                ],
+            "component": {
+                "run": {
+                    "kind": "dag",
+                    "ops": [
+                        {
+                            "kind": "op",
+                            "name": "A",
+                            "component": {
+                                "run": {"kind": "container", "image": "test"}
+                            },
+                        },
+                        {
+                            "kind": "op",
+                            "name": "B",
+                            "dependencies": ["A"],
+                            "tags": ["kaniko"],
+                            "init": {"repos": [{"name": "foo", "branch": "dev"}]},
+                        },
+                    ],
+                }
             },
         }
         with self.assertRaises(ValidationError):
@@ -259,23 +265,29 @@ class TestOpConfigs(TestCase):
             "dependencies": ["foo", "bar"],
             "params": {"param1": "foo", "param2": "bar"},
             "trigger": "all_succeeded",
-            "workflow": {
-                "kind": "dag",
-                "ops": [
-                    {
-                        "kind": "op",
-                        "name": "A",
-                        "component": {"container": {"image": "test"}},
-                    },
-                    {
-                        "kind": "op",
-                        "name": "B",
-                        "dependencies": ["A"],
-                        "tags": ["kaniko"],
-                        "init": {"repos": [{"name": "foo", "branch": "dev"}]},
-                        "component": {"container": {"image": "test"}},
-                    },
-                ],
+            "component": {
+                "run": {
+                    "kind": "dag",
+                    "ops": [
+                        {
+                            "kind": "op",
+                            "name": "A",
+                            "component": {
+                                "run": {"kind": "container", "image": "test"}
+                            },
+                        },
+                        {
+                            "kind": "op",
+                            "name": "B",
+                            "dependencies": ["A"],
+                            "tags": ["kaniko"],
+                            "init": {"repos": [{"name": "foo", "branch": "dev"}]},
+                            "component": {
+                                "run": {"kind": "container", "image": "test"}
+                            },
+                        },
+                    ],
+                }
             },
         }
         config = OpConfig.from_dict(config_dict)
@@ -287,7 +299,7 @@ class TestOpConfigs(TestCase):
             "dependencies": ["foo", "bar"],
             "params": {"param1": "foo", "param2": "bar"},
             "trigger": "all_succeeded",
-            "component": {"kind": "foo", "container": {"image": "test"}},
+            "component": {"kind": "foo", "run": {"kind": "container", "image": "test"}},
         }
         with self.assertRaises(ValidationError):
             OpConfig.from_dict(config_dict)

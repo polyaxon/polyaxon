@@ -41,7 +41,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='v1',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\x0cv1/run.proto\x12\x02v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a,protoc-gen-swagger/options/annotations.proto\x1a\rv1/base.proto\"J\n\x0bRunMetaInfo\x12\x0f\n\x07service\x18\x01 \x01(\x08\x12\x13\n\x0b\x63oncurrency\x18\x03 \x01(\x05\x12\x15\n\rworkflow_kind\x18\x02 \x01(\t\"\xd2\x06\n\x03Run\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x13\n\x0b\x64\x65scription\x18\x03 \x01(\t\x12\x0c\n\x04tags\x18\x04 \x03(\t\x12\x0f\n\x07\x64\x65leted\x18\x05 \x01(\x08\x12\x0c\n\x04user\x18\x06 \x01(\t\x12\r\n\x05owner\x18\x07 \x01(\t\x12\x0f\n\x07project\x18\x08 \x01(\t\x12.\n\ncreated_at\x18\t \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12.\n\nupdated_at\x18\n \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12.\n\nstarted_at\x18\x0b \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12/\n\x0b\x66inished_at\x18\x0c \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x12\n\nis_managed\x18\r \x01(\t\x12\x0f\n\x07\x63ontent\x18\x0e \x01(\t\x12\x0e\n\x06status\x18\x0f \x01(\t\x12\"\n\tmeta_info\x18\x10 \x01(\x0b\x32\x0f.v1.RunMetaInfo\x12\x0e\n\x06readme\x18\x11 \x01(\t\x12\x12\n\nbookmarked\x18\x12 \x01(\x08\x12#\n\x06inputs\x18\x13 \x03(\x0b\x32\x13.v1.Run.InputsEntry\x12%\n\x07outputs\x18\x14 \x03(\x0b\x32\x14.v1.Run.OutputsEntry\x12$\n\x07run_env\x18\x15 \x03(\x0b\x32\x13.v1.Run.RunEnvEntry\x12\x11\n\tis_resume\x18\x16 \x01(\x08\x12\x10\n\x08is_clone\x18\x17 \x01(\x08\x12\x18\n\x10\x63loning_strategy\x18\x18 \x01(\t\x12\x10\n\x08pipeline\x18\x19 \x01(\t\x12\x10\n\x08original\x18\x1a \x01(\t\x12\x15\n\rpipeline_name\x18\x1b \x01(\t\x12\x15\n\roriginal_name\x18\x1c \x01(\t\x1a-\n\x0bInputsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x1a.\n\x0cOutputsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x1a-\n\x0bRunEnvEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"F\n\x0eRunBodyRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0f\n\x07project\x18\x02 \x01(\t\x12\x14\n\x03run\x18\x03 \x01(\x0b\x32\x07.v1.Run\"^\n\x14\x45ntityRunBodyRequest\x12\x30\n\x06\x65ntity\x18\x01 \x01(\x0b\x32 .v1.ProjectEntityResourceRequest\x12\x14\n\x03run\x18\x02 \x01(\x0b\x32\x07.v1.Run\"[\n\x10ListRunsResponse\x12\r\n\x05\x63ount\x18\x01 \x01(\x05\x12\x18\n\x07results\x18\x02 \x03(\x0b\x32\x07.v1.Run\x12\x10\n\x08previous\x18\x03 \x01(\t\x12\x0c\n\x04next\x18\x04 \x01(\tb\x06proto3')
+  serialized_pb=_b('\n\x0cv1/run.proto\x12\x02v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a,protoc-gen-swagger/options/annotations.proto\x1a\rv1/base.proto\"\\\n\x0bRunMetaInfo\x12\x0f\n\x07service\x18\x01 \x01(\x08\x12\x13\n\x0b\x63oncurrency\x18\x02 \x01(\x05\x12\x15\n\rparallel_kind\x18\x03 \x01(\t\x12\x10\n\x08run_kind\x18\x04 \x01(\t\"\xea\x05\n\x03Run\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x13\n\x0b\x64\x65scription\x18\x03 \x01(\t\x12\x0c\n\x04tags\x18\x04 \x03(\t\x12\x0f\n\x07\x64\x65leted\x18\x05 \x01(\x08\x12\x0c\n\x04user\x18\x06 \x01(\t\x12\r\n\x05owner\x18\x07 \x01(\t\x12\x0f\n\x07project\x18\x08 \x01(\t\x12.\n\ncreated_at\x18\t \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12.\n\nupdated_at\x18\n \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12.\n\nstarted_at\x18\x0b \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12/\n\x0b\x66inished_at\x18\x0c \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x12\n\nis_managed\x18\r \x01(\t\x12\x0f\n\x07\x63ontent\x18\x0e \x01(\t\x12\x0e\n\x06status\x18\x0f \x01(\t\x12\x0e\n\x06readme\x18\x10 \x01(\t\x12\x12\n\nbookmarked\x18\x11 \x01(\x08\x12\"\n\tmeta_info\x18\x12 \x01(\x0b\x32\x0f.v1.RunMetaInfo\x12\x0c\n\x04kind\x18\x13 \x01(\t\x12\x0b\n\x03hub\x18\x14 \x01(\t\x12\'\n\x06inputs\x18\x15 \x01(\x0b\x32\x17.google.protobuf.Struct\x12(\n\x07outputs\x18\x16 \x01(\x0b\x32\x17.google.protobuf.Struct\x12(\n\x07run_env\x18\x17 \x01(\x0b\x32\x17.google.protobuf.Struct\x12\x11\n\tis_resume\x18\x18 \x01(\x08\x12\x10\n\x08is_clone\x18\x19 \x01(\x08\x12\x18\n\x10\x63loning_strategy\x18\x1a \x01(\t\x12\x10\n\x08pipeline\x18\x1b \x01(\t\x12\x10\n\x08original\x18\x1c \x01(\t\x12\x15\n\rpipeline_name\x18\x1d \x01(\t\x12\x15\n\roriginal_name\x18\x1e \x01(\t\"F\n\x0eRunBodyRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0f\n\x07project\x18\x02 \x01(\t\x12\x14\n\x03run\x18\x03 \x01(\x0b\x32\x07.v1.Run\"^\n\x14\x45ntityRunBodyRequest\x12\x30\n\x06\x65ntity\x18\x01 \x01(\x0b\x32 .v1.ProjectEntityResourceRequest\x12\x14\n\x03run\x18\x02 \x01(\x0b\x32\x07.v1.Run\"[\n\x10ListRunsResponse\x12\r\n\x05\x63ount\x18\x01 \x01(\x05\x12\x18\n\x07results\x18\x02 \x03(\x0b\x32\x07.v1.Run\x12\x10\n\x08previous\x18\x03 \x01(\t\x12\x0c\n\x04next\x18\x04 \x01(\t\"0\n\x12RunSettingsCatalog\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\"\xef\x03\n\x0bRunSettings\x12\x11\n\tnamespace\x18\x01 \x01(\t\x12%\n\x05\x61gent\x18\x02 \x01(\x0b\x32\x16.v1.RunSettingsCatalog\x12%\n\x05queue\x18\x03 \x01(\x0b\x32\x16.v1.RunSettingsCatalog\x12*\n\nlogs_store\x18\x04 \x01(\x0b\x32\x16.v1.RunSettingsCatalog\x12-\n\routputs_store\x18\x05 \x01(\x0b\x32\x16.v1.RunSettingsCatalog\x12\x35\n\x15init_artifacts_stores\x18\x06 \x03(\x0b\x32\x16.v1.RunSettingsCatalog\x12\x30\n\x10\x61rtifacts_stores\x18\x07 \x03(\x0b\x32\x16.v1.RunSettingsCatalog\x12,\n\x0cgit_accesses\x18\x08 \x03(\x0b\x32\x16.v1.RunSettingsCatalog\x12/\n\x0fregistry_access\x18\t \x01(\x0b\x32\x16.v1.RunSettingsCatalog\x12+\n\x0bk8s_secrets\x18\n \x03(\x0b\x32\x16.v1.RunSettingsCatalog\x12/\n\x0fk8s_config_maps\x18\x0b \x03(\x0b\x32\x16.v1.RunSettingsCatalogb\x06proto3')
   ,
   dependencies=[google_dot_api_dot_annotations__pb2.DESCRIPTOR,google_dot_protobuf_dot_struct__pb2.DESCRIPTOR,google_dot_protobuf_dot_timestamp__pb2.DESCRIPTOR,protoc__gen__swagger_dot_options_dot_annotations__pb2.DESCRIPTOR,v1_dot_base__pb2.DESCRIPTOR,])
 
@@ -64,14 +64,21 @@ _RUNMETAINFO = _descriptor.Descriptor(
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='concurrency', full_name='v1.RunMetaInfo.concurrency', index=1,
-      number=3, type=5, cpp_type=1, label=1,
+      number=2, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='workflow_kind', full_name='v1.RunMetaInfo.workflow_kind', index=2,
-      number=2, type=9, cpp_type=9, label=1,
+      name='parallel_kind', full_name='v1.RunMetaInfo.parallel_kind', index=2,
+      number=3, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='run_kind', full_name='v1.RunMetaInfo.run_kind', index=3,
+      number=4, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -89,120 +96,9 @@ _RUNMETAINFO = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=174,
-  serialized_end=248,
+  serialized_end=266,
 )
 
-
-_RUN_INPUTSENTRY = _descriptor.Descriptor(
-  name='InputsEntry',
-  full_name='v1.Run.InputsEntry',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='key', full_name='v1.Run.InputsEntry.key', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b("").decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='value', full_name='v1.Run.InputsEntry.value', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b("").decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=_b('8\001'),
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=961,
-  serialized_end=1006,
-)
-
-_RUN_OUTPUTSENTRY = _descriptor.Descriptor(
-  name='OutputsEntry',
-  full_name='v1.Run.OutputsEntry',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='key', full_name='v1.Run.OutputsEntry.key', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b("").decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='value', full_name='v1.Run.OutputsEntry.value', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b("").decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=_b('8\001'),
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=1008,
-  serialized_end=1054,
-)
-
-_RUN_RUNENVENTRY = _descriptor.Descriptor(
-  name='RunEnvEntry',
-  full_name='v1.Run.RunEnvEntry',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='key', full_name='v1.Run.RunEnvEntry.key', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b("").decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='value', full_name='v1.Run.RunEnvEntry.value', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b("").decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=_b('8\001'),
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=1056,
-  serialized_end=1101,
-)
 
 _RUN = _descriptor.Descriptor(
   name='Run',
@@ -317,92 +213,106 @@ _RUN = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='meta_info', full_name='v1.Run.meta_info', index=15,
-      number=16, type=11, cpp_type=10, label=1,
+      name='readme', full_name='v1.Run.readme', index=15,
+      number=16, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='bookmarked', full_name='v1.Run.bookmarked', index=16,
+      number=17, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='meta_info', full_name='v1.Run.meta_info', index=17,
+      number=18, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='readme', full_name='v1.Run.readme', index=16,
-      number=17, type=9, cpp_type=9, label=1,
+      name='kind', full_name='v1.Run.kind', index=18,
+      number=19, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='bookmarked', full_name='v1.Run.bookmarked', index=17,
-      number=18, type=8, cpp_type=7, label=1,
-      has_default_value=False, default_value=False,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='inputs', full_name='v1.Run.inputs', index=18,
-      number=19, type=11, cpp_type=10, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='outputs', full_name='v1.Run.outputs', index=19,
-      number=20, type=11, cpp_type=10, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='run_env', full_name='v1.Run.run_env', index=20,
-      number=21, type=11, cpp_type=10, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='is_resume', full_name='v1.Run.is_resume', index=21,
-      number=22, type=8, cpp_type=7, label=1,
-      has_default_value=False, default_value=False,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='is_clone', full_name='v1.Run.is_clone', index=22,
-      number=23, type=8, cpp_type=7, label=1,
-      has_default_value=False, default_value=False,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='cloning_strategy', full_name='v1.Run.cloning_strategy', index=23,
-      number=24, type=9, cpp_type=9, label=1,
+      name='hub', full_name='v1.Run.hub', index=19,
+      number=20, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='pipeline', full_name='v1.Run.pipeline', index=24,
-      number=25, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b("").decode('utf-8'),
+      name='inputs', full_name='v1.Run.inputs', index=20,
+      number=21, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='original', full_name='v1.Run.original', index=25,
+      name='outputs', full_name='v1.Run.outputs', index=21,
+      number=22, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='run_env', full_name='v1.Run.run_env', index=22,
+      number=23, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='is_resume', full_name='v1.Run.is_resume', index=23,
+      number=24, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='is_clone', full_name='v1.Run.is_clone', index=24,
+      number=25, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='cloning_strategy', full_name='v1.Run.cloning_strategy', index=25,
       number=26, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='pipeline_name', full_name='v1.Run.pipeline_name', index=26,
+      name='pipeline', full_name='v1.Run.pipeline', index=26,
       number=27, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='original_name', full_name='v1.Run.original_name', index=27,
+      name='original', full_name='v1.Run.original', index=27,
       number=28, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='pipeline_name', full_name='v1.Run.pipeline_name', index=28,
+      number=29, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='original_name', full_name='v1.Run.original_name', index=29,
+      number=30, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -410,7 +320,7 @@ _RUN = _descriptor.Descriptor(
   ],
   extensions=[
   ],
-  nested_types=[_RUN_INPUTSENTRY, _RUN_OUTPUTSENTRY, _RUN_RUNENVENTRY, ],
+  nested_types=[],
   enum_types=[
   ],
   serialized_options=None,
@@ -419,8 +329,8 @@ _RUN = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=251,
-  serialized_end=1101,
+  serialized_start=269,
+  serialized_end=1015,
 )
 
 
@@ -464,8 +374,8 @@ _RUNBODYREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1103,
-  serialized_end=1173,
+  serialized_start=1017,
+  serialized_end=1087,
 )
 
 
@@ -502,8 +412,8 @@ _ENTITYRUNBODYREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1175,
-  serialized_end=1269,
+  serialized_start=1089,
+  serialized_end=1183,
 )
 
 
@@ -554,30 +464,178 @@ _LISTRUNSRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1271,
-  serialized_end=1362,
+  serialized_start=1185,
+  serialized_end=1276,
 )
 
-_RUN_INPUTSENTRY.containing_type = _RUN
-_RUN_OUTPUTSENTRY.containing_type = _RUN
-_RUN_RUNENVENTRY.containing_type = _RUN
+
+_RUNSETTINGSCATALOG = _descriptor.Descriptor(
+  name='RunSettingsCatalog',
+  full_name='v1.RunSettingsCatalog',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='uuid', full_name='v1.RunSettingsCatalog.uuid', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='name', full_name='v1.RunSettingsCatalog.name', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1278,
+  serialized_end=1326,
+)
+
+
+_RUNSETTINGS = _descriptor.Descriptor(
+  name='RunSettings',
+  full_name='v1.RunSettings',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='namespace', full_name='v1.RunSettings.namespace', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='agent', full_name='v1.RunSettings.agent', index=1,
+      number=2, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='queue', full_name='v1.RunSettings.queue', index=2,
+      number=3, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='logs_store', full_name='v1.RunSettings.logs_store', index=3,
+      number=4, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='outputs_store', full_name='v1.RunSettings.outputs_store', index=4,
+      number=5, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='init_artifacts_stores', full_name='v1.RunSettings.init_artifacts_stores', index=5,
+      number=6, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='artifacts_stores', full_name='v1.RunSettings.artifacts_stores', index=6,
+      number=7, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='git_accesses', full_name='v1.RunSettings.git_accesses', index=7,
+      number=8, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='registry_access', full_name='v1.RunSettings.registry_access', index=8,
+      number=9, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='k8s_secrets', full_name='v1.RunSettings.k8s_secrets', index=9,
+      number=10, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='k8s_config_maps', full_name='v1.RunSettings.k8s_config_maps', index=10,
+      number=11, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1329,
+  serialized_end=1824,
+)
+
 _RUN.fields_by_name['created_at'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
 _RUN.fields_by_name['updated_at'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
 _RUN.fields_by_name['started_at'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
 _RUN.fields_by_name['finished_at'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
 _RUN.fields_by_name['meta_info'].message_type = _RUNMETAINFO
-_RUN.fields_by_name['inputs'].message_type = _RUN_INPUTSENTRY
-_RUN.fields_by_name['outputs'].message_type = _RUN_OUTPUTSENTRY
-_RUN.fields_by_name['run_env'].message_type = _RUN_RUNENVENTRY
+_RUN.fields_by_name['inputs'].message_type = google_dot_protobuf_dot_struct__pb2._STRUCT
+_RUN.fields_by_name['outputs'].message_type = google_dot_protobuf_dot_struct__pb2._STRUCT
+_RUN.fields_by_name['run_env'].message_type = google_dot_protobuf_dot_struct__pb2._STRUCT
 _RUNBODYREQUEST.fields_by_name['run'].message_type = _RUN
 _ENTITYRUNBODYREQUEST.fields_by_name['entity'].message_type = v1_dot_base__pb2._PROJECTENTITYRESOURCEREQUEST
 _ENTITYRUNBODYREQUEST.fields_by_name['run'].message_type = _RUN
 _LISTRUNSRESPONSE.fields_by_name['results'].message_type = _RUN
+_RUNSETTINGS.fields_by_name['agent'].message_type = _RUNSETTINGSCATALOG
+_RUNSETTINGS.fields_by_name['queue'].message_type = _RUNSETTINGSCATALOG
+_RUNSETTINGS.fields_by_name['logs_store'].message_type = _RUNSETTINGSCATALOG
+_RUNSETTINGS.fields_by_name['outputs_store'].message_type = _RUNSETTINGSCATALOG
+_RUNSETTINGS.fields_by_name['init_artifacts_stores'].message_type = _RUNSETTINGSCATALOG
+_RUNSETTINGS.fields_by_name['artifacts_stores'].message_type = _RUNSETTINGSCATALOG
+_RUNSETTINGS.fields_by_name['git_accesses'].message_type = _RUNSETTINGSCATALOG
+_RUNSETTINGS.fields_by_name['registry_access'].message_type = _RUNSETTINGSCATALOG
+_RUNSETTINGS.fields_by_name['k8s_secrets'].message_type = _RUNSETTINGSCATALOG
+_RUNSETTINGS.fields_by_name['k8s_config_maps'].message_type = _RUNSETTINGSCATALOG
 DESCRIPTOR.message_types_by_name['RunMetaInfo'] = _RUNMETAINFO
 DESCRIPTOR.message_types_by_name['Run'] = _RUN
 DESCRIPTOR.message_types_by_name['RunBodyRequest'] = _RUNBODYREQUEST
 DESCRIPTOR.message_types_by_name['EntityRunBodyRequest'] = _ENTITYRUNBODYREQUEST
 DESCRIPTOR.message_types_by_name['ListRunsResponse'] = _LISTRUNSRESPONSE
+DESCRIPTOR.message_types_by_name['RunSettingsCatalog'] = _RUNSETTINGSCATALOG
+DESCRIPTOR.message_types_by_name['RunSettings'] = _RUNSETTINGS
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 RunMetaInfo = _reflection.GeneratedProtocolMessageType('RunMetaInfo', (_message.Message,), {
@@ -588,35 +646,11 @@ RunMetaInfo = _reflection.GeneratedProtocolMessageType('RunMetaInfo', (_message.
 _sym_db.RegisterMessage(RunMetaInfo)
 
 Run = _reflection.GeneratedProtocolMessageType('Run', (_message.Message,), {
-
-  'InputsEntry' : _reflection.GeneratedProtocolMessageType('InputsEntry', (_message.Message,), {
-    'DESCRIPTOR' : _RUN_INPUTSENTRY,
-    '__module__' : 'v1.run_pb2'
-    # @@protoc_insertion_point(class_scope:v1.Run.InputsEntry)
-    })
-  ,
-
-  'OutputsEntry' : _reflection.GeneratedProtocolMessageType('OutputsEntry', (_message.Message,), {
-    'DESCRIPTOR' : _RUN_OUTPUTSENTRY,
-    '__module__' : 'v1.run_pb2'
-    # @@protoc_insertion_point(class_scope:v1.Run.OutputsEntry)
-    })
-  ,
-
-  'RunEnvEntry' : _reflection.GeneratedProtocolMessageType('RunEnvEntry', (_message.Message,), {
-    'DESCRIPTOR' : _RUN_RUNENVENTRY,
-    '__module__' : 'v1.run_pb2'
-    # @@protoc_insertion_point(class_scope:v1.Run.RunEnvEntry)
-    })
-  ,
   'DESCRIPTOR' : _RUN,
   '__module__' : 'v1.run_pb2'
   # @@protoc_insertion_point(class_scope:v1.Run)
   })
 _sym_db.RegisterMessage(Run)
-_sym_db.RegisterMessage(Run.InputsEntry)
-_sym_db.RegisterMessage(Run.OutputsEntry)
-_sym_db.RegisterMessage(Run.RunEnvEntry)
 
 RunBodyRequest = _reflection.GeneratedProtocolMessageType('RunBodyRequest', (_message.Message,), {
   'DESCRIPTOR' : _RUNBODYREQUEST,
@@ -639,8 +673,19 @@ ListRunsResponse = _reflection.GeneratedProtocolMessageType('ListRunsResponse', 
   })
 _sym_db.RegisterMessage(ListRunsResponse)
 
+RunSettingsCatalog = _reflection.GeneratedProtocolMessageType('RunSettingsCatalog', (_message.Message,), {
+  'DESCRIPTOR' : _RUNSETTINGSCATALOG,
+  '__module__' : 'v1.run_pb2'
+  # @@protoc_insertion_point(class_scope:v1.RunSettingsCatalog)
+  })
+_sym_db.RegisterMessage(RunSettingsCatalog)
 
-_RUN_INPUTSENTRY._options = None
-_RUN_OUTPUTSENTRY._options = None
-_RUN_RUNENVENTRY._options = None
+RunSettings = _reflection.GeneratedProtocolMessageType('RunSettings', (_message.Message,), {
+  'DESCRIPTOR' : _RUNSETTINGS,
+  '__module__' : 'v1.run_pb2'
+  # @@protoc_insertion_point(class_scope:v1.RunSettings)
+  })
+_sym_db.RegisterMessage(RunSettings)
+
+
 # @@protoc_insertion_point(module_scope)

@@ -13,7 +13,8 @@ inputs:
   - name: num_masks
     type: int
 
-container:
+run:
+  kind: container
   image: my_image
   command: ["/bin/sh", "-c"]
   args:

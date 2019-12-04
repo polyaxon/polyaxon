@@ -25,22 +25,20 @@ import pytest
 
 from polyaxon.exceptions import PolyaxonfileError
 from polyaxon.polyaxonfile import PolyaxonFile
+from polyaxon.schemas.polyflow.early_stopping import MetricEarlyStoppingConfig
 from polyaxon.schemas.polyflow.environments import EnvironmentConfig
 from polyaxon.schemas.polyflow.init import InitConfig
-from polyaxon.schemas.polyflow.termination import TerminationConfig
-from polyaxon.schemas.polyflow.workflows import (
+from polyaxon.schemas.polyflow.parallel import (
     GridSearchConfig,
     HyperbandConfig,
     MappingConfig,
     RandomSearchConfig,
 )
-from polyaxon.schemas.polyflow.workflows.early_stopping_policies import (
-    MetricEarlyStoppingConfig,
-)
-from polyaxon.schemas.polyflow.workflows.matrix import (
+from polyaxon.schemas.polyflow.parallel.matrix import (
     MatrixChoiceConfig,
     MatrixLinSpaceConfig,
 )
+from polyaxon.schemas.polyflow.termination import TerminationConfig
 from polyaxon.specs import ComponentSpecification
 
 
@@ -68,8 +66,8 @@ class TestPolyaxonfiles(TestCase):
         spec = spec.apply_context()
         assert spec.version == 1.0
         assert spec.tags is None
-        assert spec.container.image == "python-with-boto3"
-        assert spec.container.command == "python download-s3-bucket"
+        assert spec.run.image == "python-with-boto3"
+        assert spec.run.command == "python download-s3-bucket"
         assert spec.environment is not None
         assert spec.resources.to_dict() == {
             "requests": {"nvidia.com/gpu": 1},
@@ -99,12 +97,12 @@ class TestPolyaxonfiles(TestCase):
         assert spec.config.inputs[0].value == "some-loss"
         assert spec.config.inputs[1].value is True
         spec = spec.apply_context()
-        spec = spec.apply_container_contexts()
+        spec = spec.apply_run_contexts()
         assert spec.version == 1.0
         assert spec.tags == ["foo", "bar"]
-        assert spec.container.image == "my_image"
-        assert spec.container.command == ["/bin/sh", "-c"]
-        assert spec.container.args == "video_prediction_train --loss=some-loss --flag"
+        assert spec.run.image == "my_image"
+        assert spec.run.command == ["/bin/sh", "-c"]
+        assert spec.run.args == "video_prediction_train --loss=some-loss --flag"
         assert spec.environment is None
         assert spec.is_component
 
@@ -204,39 +202,39 @@ class TestPolyaxonfiles(TestCase):
         spec = spec.apply_context()
         assert spec.version == 1.0
         assert spec.is_component
-        assert isinstance(spec.workflow, HyperbandConfig)
-        assert isinstance(spec.workflow.matrix["lr"], MatrixLinSpaceConfig)
-        assert isinstance(spec.workflow.matrix["loss"], MatrixChoiceConfig)
-        assert spec.workflow.matrix["lr"].to_dict() == {
+        assert isinstance(spec.parallel, HyperbandConfig)
+        assert isinstance(spec.parallel.matrix["lr"], MatrixLinSpaceConfig)
+        assert isinstance(spec.parallel.matrix["loss"], MatrixChoiceConfig)
+        assert spec.parallel.matrix["lr"].to_dict() == {
             "kind": "linspace",
             "value": {"start": 0.01, "stop": 0.1, "num": 5},
         }
-        assert spec.workflow.matrix["loss"].to_dict() == {
+        assert spec.parallel.matrix["loss"].to_dict() == {
             "kind": "choice",
             "value": ["MeanSquaredError", "AbsoluteDifference"],
         }
-        assert spec.workflow.matrix["normal_rate"].to_dict() == {
+        assert spec.parallel.matrix["normal_rate"].to_dict() == {
             "kind": "normal",
             "value": {"loc": 0, "scale": 0.9},
         }
-        assert spec.workflow.matrix["dropout"].to_dict() == {
+        assert spec.parallel.matrix["dropout"].to_dict() == {
             "kind": "qloguniform",
             "value": {"high": 0.8, "low": 0, "q": 0.1},
         }
-        assert spec.workflow.matrix["activation"].to_dict() == {
+        assert spec.parallel.matrix["activation"].to_dict() == {
             "kind": "pchoice",
             "value": [["relu", 0.1], ["sigmoid", 0.8]],
         }
-        assert spec.workflow.matrix["model"].to_dict() == {
+        assert spec.parallel.matrix["model"].to_dict() == {
             "kind": "choice",
             "value": ["CDNA", "DNA", "STP"],
         }
-        assert spec.workflow.concurrency == 2
-        assert spec.concurrency == 2
-        assert isinstance(spec.workflow, HyperbandConfig)
-        assert spec.workflow_kind == HyperbandConfig.IDENTIFIER
-        assert spec.workflow.early_stopping is None
-        assert spec.early_stopping == []
+        assert spec.parallel.concurrency == 2
+        assert spec.parallel_concurrency == 2
+        assert isinstance(spec.parallel, HyperbandConfig)
+        assert spec.parallel_kind == HyperbandConfig.IDENTIFIER
+        assert spec.parallel.early_stopping is None
+        assert spec.parallel_early_stopping == []
 
     def test_matrix_file_passes_int_float_types(self):
         plxfile = PolyaxonFile(
@@ -248,22 +246,22 @@ class TestPolyaxonfiles(TestCase):
         spec = spec.apply_context()
         assert spec.version == 1.0
         assert spec.is_component
-        assert isinstance(spec.workflow, GridSearchConfig)
-        assert isinstance(spec.workflow.matrix["param1"], MatrixChoiceConfig)
-        assert isinstance(spec.workflow.matrix["param2"], MatrixChoiceConfig)
-        assert spec.workflow.matrix["param1"].to_dict() == {
+        assert isinstance(spec.parallel, GridSearchConfig)
+        assert isinstance(spec.parallel.matrix["param1"], MatrixChoiceConfig)
+        assert isinstance(spec.parallel.matrix["param2"], MatrixChoiceConfig)
+        assert spec.parallel.matrix["param1"].to_dict() == {
             "kind": "choice",
             "value": [1, 2],
         }
-        assert spec.workflow.matrix["param2"].to_dict() == {
+        assert spec.parallel.matrix["param2"].to_dict() == {
             "kind": "choice",
             "value": [3.3, 4.4],
         }
-        assert spec.workflow.concurrency == 2
-        assert isinstance(spec.workflow, GridSearchConfig)
-        assert spec.workflow_kind == GridSearchConfig.IDENTIFIER
-        assert spec.workflow.early_stopping is None
-        assert spec.early_stopping == []
+        assert spec.parallel.concurrency == 2
+        assert isinstance(spec.parallel, GridSearchConfig)
+        assert spec.parallel_kind == GridSearchConfig.IDENTIFIER
+        assert spec.parallel.early_stopping is None
+        assert spec.parallel_early_stopping == []
 
     def test_matrix_early_stopping_file_passes(self):
         plxfile = PolyaxonFile(
@@ -276,26 +274,27 @@ class TestPolyaxonfiles(TestCase):
         assert spec.meta_info.to_dict() == {
             "service": False,
             "concurrency": 2,
-            "workflow_kind": "random_search",
+            "parallel_kind": "random_search",
+            "run_kind": "container",
         }
-        assert isinstance(spec.workflow, RandomSearchConfig)
-        assert isinstance(spec.workflow.matrix["lr"], MatrixLinSpaceConfig)
-        assert isinstance(spec.workflow.matrix["loss"], MatrixChoiceConfig)
-        assert spec.workflow.matrix["lr"].to_dict() == {
+        assert isinstance(spec.parallel, RandomSearchConfig)
+        assert isinstance(spec.parallel.matrix["lr"], MatrixLinSpaceConfig)
+        assert isinstance(spec.parallel.matrix["loss"], MatrixChoiceConfig)
+        assert spec.parallel.matrix["lr"].to_dict() == {
             "kind": "linspace",
             "value": {"start": 0.01, "stop": 0.1, "num": 5},
         }
-        assert spec.workflow.matrix["loss"].to_dict() == {
+        assert spec.parallel.matrix["loss"].to_dict() == {
             "kind": "choice",
             "value": ["MeanSquaredError", "AbsoluteDifference"],
         }
-        assert spec.workflow.concurrency == 2
-        assert spec.workflow.n_runs == 300
-        assert isinstance(spec.workflow, RandomSearchConfig)
-        assert spec.workflow_kind == RandomSearchConfig.IDENTIFIER
-        assert spec.early_stopping == spec.workflow.early_stopping
-        assert len(spec.early_stopping) == 1
-        assert isinstance(spec.early_stopping[0], MetricEarlyStoppingConfig)
+        assert spec.parallel.concurrency == 2
+        assert spec.parallel.n_runs == 300
+        assert isinstance(spec.parallel, RandomSearchConfig)
+        assert spec.parallel_kind == RandomSearchConfig.IDENTIFIER
+        assert spec.parallel_early_stopping == spec.parallel.early_stopping
+        assert len(spec.parallel_early_stopping) == 1
+        assert isinstance(spec.parallel_early_stopping[0], MetricEarlyStoppingConfig)
 
     def test_mapping_early_stopping_file_passes(self):
         plxfile = PolyaxonFile(
@@ -306,21 +305,22 @@ class TestPolyaxonfiles(TestCase):
         assert spec.meta_info.to_dict() == {
             "service": False,
             "concurrency": 2,
-            "workflow_kind": "mapping",
+            "parallel_kind": "mapping",
+            "run_kind": "container",
         }
         assert spec.version == 1.0
         assert spec.is_component
-        assert isinstance(spec.workflow, MappingConfig)
-        assert spec.workflow.values == [
+        assert isinstance(spec.parallel, MappingConfig)
+        assert spec.parallel.values == [
             {"lr": 0.001, "loss": "MeanSquaredError"},
             {"lr": 0.1, "loss": "AbsoluteDifference"},
         ]
-        assert spec.workflow.concurrency == 2
-        assert isinstance(spec.workflow, MappingConfig)
-        assert spec.workflow_kind == MappingConfig.IDENTIFIER
-        assert spec.early_stopping == spec.workflow.early_stopping
-        assert len(spec.early_stopping) == 1
-        assert isinstance(spec.early_stopping[0], MetricEarlyStoppingConfig)
+        assert spec.parallel.concurrency == 2
+        assert isinstance(spec.parallel, MappingConfig)
+        assert spec.parallel_kind == MappingConfig.IDENTIFIER
+        assert spec.parallel_early_stopping == spec.parallel.early_stopping
+        assert len(spec.parallel_early_stopping) == 1
+        assert isinstance(spec.parallel_early_stopping[0], MetricEarlyStoppingConfig)
 
     def test_tf_passes(self):
         plxfile = PolyaxonFile(
@@ -331,7 +331,8 @@ class TestPolyaxonfiles(TestCase):
         assert spec.meta_info.to_dict() == {
             "service": False,
             "concurrency": None,
-            "workflow_kind": "tfjob",
+            "parallel_kind": None,
+            "run_kind": "tfjob",
         }
         assert spec.version == 1.0
         assert spec.log_level == "INFO"
@@ -346,18 +347,18 @@ class TestPolyaxonfiles(TestCase):
             "limits": {"cpu": 2},
         }
 
-        assert spec.config.has_tf_job_workflow
-        assert spec.config.workflow.worker.replicas == 5
-        assert spec.config.workflow.worker.termination is not None
-        assert spec.config.workflow.worker.termination.restart_policy == "OnFailure"
-        assert spec.config.workflow.worker.environment.resources.to_dict() == {
+        assert spec.config.has_tf_job_run
+        assert spec.config.run.worker.replicas == 5
+        assert spec.config.run.worker.termination is not None
+        assert spec.config.run.worker.termination.restart_policy == "OnFailure"
+        assert spec.config.run.worker.environment.resources.to_dict() == {
             "requests": {"memory": "300Mi"},
             "limits": {"memory": "300Mi"},
         }
-        assert spec.config.workflow.ps.replicas == 10
-        assert spec.config.workflow.ps.environment.affinity is None
-        assert isinstance(spec.config.workflow.ps.environment.tolerations, list)
-        assert spec.config.workflow.ps.environment.resources.to_dict() == {
+        assert spec.config.run.ps.replicas == 10
+        assert spec.config.run.ps.environment.affinity is None
+        assert isinstance(spec.config.run.ps.environment.tolerations, list)
+        assert spec.config.run.ps.environment.resources.to_dict() == {
             "requests": {"cpu": 3, "memory": "256Mi"},
             "limits": {"cpu": 3, "memory": "256Mi"},
         }
@@ -371,7 +372,8 @@ class TestPolyaxonfiles(TestCase):
         assert spec.meta_info.to_dict() == {
             "service": False,
             "concurrency": None,
-            "workflow_kind": "pytorch_job",
+            "parallel_kind": None,
+            "run_kind": "pytorch_job",
         }
         assert spec.version == 1.0
         assert spec.log_level == "INFO"
@@ -386,18 +388,18 @@ class TestPolyaxonfiles(TestCase):
             "limits": {"cpu": 2},
         }
 
-        assert spec.config.has_pytorch_job_workflow
-        assert spec.config.workflow.master.replicas == 5
-        assert spec.config.workflow.master.termination is not None
-        assert spec.config.workflow.master.termination.restart_policy == "OnFailure"
-        assert spec.config.workflow.master.environment.resources.to_dict() == {
+        assert spec.config.has_pytorch_job_run
+        assert spec.config.run.master.replicas == 5
+        assert spec.config.run.master.termination is not None
+        assert spec.config.run.master.termination.restart_policy == "OnFailure"
+        assert spec.config.run.master.environment.resources.to_dict() == {
             "requests": {"memory": "300Mi"},
             "limits": {"memory": "300Mi"},
         }
-        assert spec.config.workflow.worker.replicas == 10
-        assert spec.config.workflow.worker.environment.affinity is None
-        assert isinstance(spec.config.workflow.worker.environment.tolerations, list)
-        assert spec.config.workflow.worker.environment.resources.to_dict() == {
+        assert spec.config.run.worker.replicas == 10
+        assert spec.config.run.worker.environment.affinity is None
+        assert isinstance(spec.config.run.worker.environment.tolerations, list)
+        assert spec.config.run.worker.environment.resources.to_dict() == {
             "requests": {"cpu": 3, "memory": "256Mi"},
             "limits": {"cpu": 3, "memory": "256Mi"},
         }
@@ -411,26 +413,27 @@ class TestPolyaxonfiles(TestCase):
         assert spec.meta_info.to_dict() == {
             "service": False,
             "concurrency": None,
-            "workflow_kind": "mpi_job",
+            "parallel_kind": None,
+            "run_kind": "mpi_job",
         }
         assert spec.version == 1.0
         assert spec.log_level == "INFO"
         assert spec.is_component
 
-        assert spec.config.has_mpi_job_workflow
-        assert spec.config.workflow.launcher.replicas == 1
-        assert spec.config.workflow.launcher.container.to_dict() == {
+        assert spec.config.has_mpi_job_run
+        assert spec.config.run.launcher.replicas == 1
+        assert spec.config.run.launcher.container.to_dict() == {
             "image": "mpioperator/tensorflow-benchmarks:latest",
             "command": ["mpirun", "python", "run.py"],
         }
-        assert spec.config.workflow.launcher.termination is None
-        assert spec.config.workflow.launcher.environment is None
+        assert spec.config.run.launcher.termination is None
+        assert spec.config.run.launcher.environment is None
 
-        assert spec.config.workflow.worker.replicas == 2
-        assert spec.config.workflow.worker.environment.affinity is None
-        assert spec.config.workflow.worker.environment.node_selector is not None
-        assert isinstance(spec.config.workflow.worker.environment.tolerations, list)
-        assert spec.config.workflow.worker.environment.resources.to_dict() == {
+        assert spec.config.run.worker.replicas == 2
+        assert spec.config.run.worker.environment.affinity is None
+        assert spec.config.run.worker.environment.node_selector is not None
+        assert isinstance(spec.config.run.worker.environment.tolerations, list)
+        assert spec.config.run.worker.environment.resources.to_dict() == {
             "limits": {"nvidia.com/gpu": 1}
         }
 
@@ -440,11 +443,11 @@ class TestPolyaxonfiles(TestCase):
         )
         spec = plxfile.specification
         spec = spec.apply_context()
-        assert spec.container.image == "continuumio/miniconda3"
-        assert spec.container.command == ["python"]
-        assert spec.container.args == ["-c \"print('Tweet tweet')\""]
+        assert spec.run.image == "continuumio/miniconda3"
+        assert spec.run.command == ["python"]
+        assert spec.run.args == ["-c \"print('Tweet tweet')\""]
         spec = ComponentSpecification(spec.data)
         spec = spec.apply_context()
-        assert spec.container.image == "continuumio/miniconda3"
-        assert spec.container.command == ["python"]
-        assert spec.container.args == ["-c \"print('Tweet tweet')\""]
+        assert spec.run.image == "continuumio/miniconda3"
+        assert spec.run.command == ["python"]
+        assert spec.run.args == ["-c \"print('Tweet tweet')\""]

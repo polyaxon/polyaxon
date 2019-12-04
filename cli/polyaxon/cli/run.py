@@ -79,7 +79,8 @@ from polyaxon.utils.validation import validate_tags
     multiple=True,
     help="A parameter to override the default params of the run, form -P name=value.",
 )
-@click.option("--profile", type=str, help="Name of profile to use for this run.")
+@click.option("--profile", type=str, help="Name of the profile to use for this run.")
+@click.option("--queue", type=str, help="Name of the queue to use for this run.")
 @click.option(
     "--nocache",
     is_flag=True,

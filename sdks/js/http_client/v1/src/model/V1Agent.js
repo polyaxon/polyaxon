@@ -76,7 +76,7 @@
       if (data.hasOwnProperty('namespace'))
         obj.namespace = ApiClient.convertToType(data['namespace'], 'String');
       if (data.hasOwnProperty('version_api'))
-        obj.version_api = ApiClient.convertToType(data['version_api'], {'String': 'String'});
+        obj.version_api = ApiClient.convertToType(data['version_api'], Object);
       if (data.hasOwnProperty('created_at'))
         obj.created_at = ApiClient.convertToType(data['created_at'], 'Date');
       if (data.hasOwnProperty('updated_at'))
@@ -101,7 +101,7 @@
   exports.prototype.namespace = undefined;
 
   /**
-   * @member {Object.<String, String>} version_api
+   * @member {Object} version_api
    */
   exports.prototype.version_api = undefined;
 

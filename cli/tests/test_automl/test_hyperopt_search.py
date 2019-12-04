@@ -23,7 +23,7 @@ import hyperopt
 import pytest
 
 from polyaxon.automl.search_managers.hyperopt.manager import HyperoptManager
-from polyaxon.schemas.polyflow.workflows.automl.hyperopt import HyperoptConfig
+from polyaxon.schemas.polyflow.parallel.hyperopt import HyperoptConfig
 
 
 @pytest.mark.automl_mark

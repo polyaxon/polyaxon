@@ -261,6 +261,11 @@ def get_runs_with_meta(objects):
     # Extend run with params_keys
     for obj in objects:
         meta_info = obj.pop("meta_info", {}) or {}
-        obj.update({"workflow": meta_info.get("workflow_kind")})
+        obj.update(
+            {
+                "run": meta_info.get("run_kind"),
+                "parallel": meta_info.get("parallel_kind"),
+            }
+        )
 
     return objects

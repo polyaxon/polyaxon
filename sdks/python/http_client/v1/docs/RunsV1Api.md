@@ -16,6 +16,7 @@ Method | HTTP request | Description
 [**get_run_artifacts_tree**](RunsV1Api.md#get_run_artifacts_tree) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/artifacts/tree | Get run artifacts list
 [**get_run_logs_file**](RunsV1Api.md#get_run_logs_file) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/logs/file | Get run logs get file
 [**get_run_logs_tree**](RunsV1Api.md#get_run_logs_tree) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/logs/tree | Get run logs list
+[**get_run_settings**](RunsV1Api.md#get_run_settings) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/settings | Get Run settings
 [**get_run_statuses**](RunsV1Api.md#get_run_statuses) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/statuses | Get run status
 [**impersonate_token**](RunsV1Api.md#impersonate_token) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/impersonate | Impersonate run token
 [**invalidate_run**](RunsV1Api.md#invalidate_run) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/invalidate | Invalidate run
@@ -716,6 +717,62 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**V1ArtifactTreeResponse**](V1ArtifactTreeResponse.md)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **get_run_settings**
+> V1RunSettings get_run_settings(owner, project, uuid)
+
+Get Run settings
+
+### Example
+```python
+from __future__ import print_function
+import time
+import polyaxon_sdk
+from polyaxon_sdk.rest import ApiException
+from pprint import pprint
+
+# Configure API key authorization: ApiKey
+configuration = polyaxon_sdk.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
+owner = 'owner_example' # str | Owner of the namespace
+project = 'project_example' # str | Project where the experiement will be assigned
+uuid = 'uuid_example' # str | Unique integer identifier of the entity
+
+try:
+    # Get Run settings
+    api_response = api_instance.get_run_settings(owner, project, uuid)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling RunsV1Api->get_run_settings: %s\n" % e)
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **str**| Owner of the namespace | 
+ **project** | **str**| Project where the experiement will be assigned | 
+ **uuid** | **str**| Unique integer identifier of the entity | 
+
+### Return type
+
+[**V1RunSettings**](V1RunSettings.md)
 
 ### Authorization
 

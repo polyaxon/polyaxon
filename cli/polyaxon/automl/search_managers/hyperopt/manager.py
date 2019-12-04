@@ -4,15 +4,15 @@ from polyaxon.automl.matrix.hyperopt import to_hyperopt
 from polyaxon.automl.matrix.utils import to_numpy
 from polyaxon.automl.search_managers.base import BaseManager
 from polyaxon.automl.search_managers.utils import get_random_generator
-from polyaxon.schemas.polyflow.workflows.automl.hyperopt import HyperoptConfig
-from polyaxon.schemas.polyflow.workflows.matrix import (
+from polyaxon.schemas.polyflow.optimization import Optimization
+from polyaxon.schemas.polyflow.parallel import HyperoptConfig
+from polyaxon.schemas.polyflow.parallel.matrix import (
     MatrixChoiceConfig,
     MatrixGeomSpaceConfig,
     MatrixLinSpaceConfig,
     MatrixLogSpaceConfig,
     MatrixRangeConfig,
 )
-from polyaxon.schemas.polyflow.workflows.metrics import Optimization
 
 
 class HyperoptManager(BaseManager):

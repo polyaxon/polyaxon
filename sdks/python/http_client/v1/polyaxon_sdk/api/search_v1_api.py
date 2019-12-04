@@ -60,7 +60,7 @@ class SearchV1Api(object):
         :param async_req bool
         :param str owner: Owner of the namespace (required)
         :param str project: Project under namesapce (required)
-        :param V1Search body: Artifact store body (required)
+        :param V1Search body: Search body (required)
         :return: V1Search
                  If the method is called asynchronously,
                  returns the request thread.
@@ -89,7 +89,7 @@ class SearchV1Api(object):
         :param async_req bool
         :param str owner: Owner of the namespace (required)
         :param str project: Project under namesapce (required)
-        :param V1Search body: Artifact store body (required)
+        :param V1Search body: Search body (required)
         :return: V1Search
                  If the method is called asynchronously,
                  returns the request thread.
@@ -583,7 +583,7 @@ class SearchV1Api(object):
         :param str owner: Owner of the namespace (required)
         :param str project: Project under namesapce (required)
         :param str search_uuid: UUID (required)
-        :param V1Search body: Artifact store body (required)
+        :param V1Search body: Search body (required)
         :return: V1Search
                  If the method is called asynchronously,
                  returns the request thread.
@@ -613,7 +613,7 @@ class SearchV1Api(object):
         :param str owner: Owner of the namespace (required)
         :param str project: Project under namesapce (required)
         :param str search_uuid: UUID (required)
-        :param V1Search body: Artifact store body (required)
+        :param V1Search body: Search body (required)
         :return: V1Search
                  If the method is called asynchronously,
                  returns the request thread.
@@ -720,7 +720,7 @@ class SearchV1Api(object):
         :param str owner: Owner of the namespace (required)
         :param str project: Project under namesapce (required)
         :param str search_uuid: UUID (required)
-        :param V1Search body: Artifact store body (required)
+        :param V1Search body: Search body (required)
         :return: V1Search
                  If the method is called asynchronously,
                  returns the request thread.
@@ -750,7 +750,7 @@ class SearchV1Api(object):
         :param str owner: Owner of the namespace (required)
         :param str project: Project under namesapce (required)
         :param str search_uuid: UUID (required)
-        :param V1Search body: Artifact store body (required)
+        :param V1Search body: Search body (required)
         :return: V1Search
                  If the method is called asynchronously,
                  returns the request thread.

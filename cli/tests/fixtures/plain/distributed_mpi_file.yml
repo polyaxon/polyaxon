@@ -8,7 +8,7 @@ tags: [mpi, tensorflow]
 environment:
   log_level: INFO
 
-workflow:
+run:
   kind: mpi_job
   launcher:
     replicas: 1
@@ -28,4 +28,7 @@ workflow:
       resources:
         limits:
           nvidia.com/gpu: 1
+    container:
+      image: mpioperator/tensorflow-benchmarks:latest
+      command: [mpirun, python, run.py]
 ...

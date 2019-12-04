@@ -33,7 +33,7 @@ class TestInitConfigs(TestCase):
         config = InitConfig.from_dict(config_dict)
         assert_equal_dict(config_dict, config.to_dict())
 
-        # Add artifact_refs
+        # Add artifacts
         config_dict["artifacts"] = [
             {"name": "data2"},
             {"name": "data3", "paths": ["/subpath1", "subpath2"]},

@@ -74,7 +74,7 @@
      * List archived runs for user
      * @param {String} owner Owner of the namespace
      * @param {String} project Project under namesapce
-     * @param {module:model/V1Search} body Artifact store body
+     * @param {module:model/V1Search} body Search body
      * @param {module:api/SearchV1Api~createSearchCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1Search}
      */
@@ -320,7 +320,7 @@
      * @param {String} owner Owner of the namespace
      * @param {String} project Project under namesapce
      * @param {String} search_uuid UUID
-     * @param {module:model/V1Search} body Artifact store body
+     * @param {module:model/V1Search} body Search body
      * @param {module:api/SearchV1Api~patchSearchCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1Search}
      */
@@ -387,7 +387,7 @@
      * @param {String} owner Owner of the namespace
      * @param {String} project Project under namesapce
      * @param {String} search_uuid UUID
-     * @param {module:model/V1Search} body Artifact store body
+     * @param {module:model/V1Search} body Search body
      * @param {module:api/SearchV1Api~updateSearchCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1Search}
      */

@@ -31,12 +31,12 @@
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
-    define(['ApiClient', 'model/V1Agent', 'model/V1ArtifactTreeResponse', 'model/V1ArtifactsStore', 'model/V1Auth', 'model/V1CodeRef', 'model/V1CredsBodyRequest', 'model/V1EntityStatusBodyRequest', 'model/V1HostAccess', 'model/V1K8sResource', 'model/V1ListAgentsResponse', 'model/V1ListArtifactsStoresResponse', 'model/V1ListHostAccessesResponse', 'model/V1ListK8sResourcesResponse', 'model/V1ListProjectsResponse', 'model/V1ListQueuesResponse', 'model/V1ListRunsResponse', 'model/V1ListSearchesResponse', 'model/V1LogHandler', 'model/V1Project', 'model/V1ProjectEntityResourceRequest', 'model/V1Queue', 'model/V1Run', 'model/V1RunMetaInfo', 'model/V1Search', 'model/V1SearchDefinition', 'model/V1Status', 'model/V1StatusCondition', 'model/V1User', 'model/V1Uuids', 'model/V1Version', 'model/V1Versions', 'api/AgentsV1Api', 'api/ArtifactsStoresV1Api', 'api/AuthV1Api', 'api/GitAccessesV1Api', 'api/K8sConfigMapsV1Api', 'api/K8sSecretsV1Api', 'api/ProjectsV1Api', 'api/QueuesV1Api', 'api/RegistryAccessesV1Api', 'api/RunsV1Api', 'api/SearchV1Api', 'api/UsersV1Api', 'api/VersionsV1Api'], factory);
+    define(['ApiClient', 'model/ProtobufNullValue', 'model/V1Agent', 'model/V1ArtifactMount', 'model/V1ArtifactTreeResponse', 'model/V1ArtifactsStore', 'model/V1Auth', 'model/V1AverageStoppingPolicy', 'model/V1BO', 'model/V1CodeRef', 'model/V1Container', 'model/V1CredsBodyRequest', 'model/V1CronSchedule', 'model/V1Dashboard', 'model/V1EarlyStoppingAllSchemas', 'model/V1EntityStatusBodyRequest', 'model/V1ExactTimeSchedule', 'model/V1FailureEarlyStopping', 'model/V1GridSearch', 'model/V1HostAccess', 'model/V1Hyperband', 'model/V1Hyperopt', 'model/V1HyperoptAlgorithms', 'model/V1IntervalSchedule', 'model/V1Iterative', 'model/V1K8sMount', 'model/V1K8sResource', 'model/V1ListAgentsResponse', 'model/V1ListArtifactsStoresResponse', 'model/V1ListDashboardsResponse', 'model/V1ListHostAccessesResponse', 'model/V1ListK8sResourcesResponse', 'model/V1ListOrganizationMembersResponse', 'model/V1ListOrganizationsResponse', 'model/V1ListProjectsResponse', 'model/V1ListQueuesResponse', 'model/V1ListRunsResponse', 'model/V1ListSearchesResponse', 'model/V1ListTeamMembersResponse', 'model/V1ListTeamsResponse', 'model/V1LogHandler', 'model/V1Mapping', 'model/V1MedianStoppingPolicy', 'model/V1MetricEarlyStopping', 'model/V1Mounts', 'model/V1Optimization', 'model/V1OptimizationMetric', 'model/V1OptimizationResource', 'model/V1Organization', 'model/V1OrganizationMember', 'model/V1ParallelAllSchemas', 'model/V1Project', 'model/V1ProjectEntityResourceRequest', 'model/V1ProjectSettings', 'model/V1ProjectTeams', 'model/V1Queue', 'model/V1RandomSearch', 'model/V1RepeatableSchedule', 'model/V1ResourceType', 'model/V1Run', 'model/V1RunMetaInfo', 'model/V1RunSettings', 'model/V1RunSettingsCatalog', 'model/V1ScheduleAllSchemas', 'model/V1Schemas', 'model/V1Search', 'model/V1SearchSpec', 'model/V1Status', 'model/V1StatusCondition', 'model/V1Team', 'model/V1TeamMember', 'model/V1Termination', 'model/V1TruncationStoppingPolicy', 'model/V1User', 'model/V1Uuids', 'model/V1Version', 'model/V1Versions', 'model/V1WidgetSpec', 'api/AgentsV1Api', 'api/ArtifactsStoresV1Api', 'api/AuthV1Api', 'api/DashboardV1Api', 'api/GitAccessesV1Api', 'api/K8sConfigMapsV1Api', 'api/K8sSecretsV1Api', 'api/OrganizationsV1Api', 'api/ProjectsV1Api', 'api/QueuesV1Api', 'api/RegistryAccessesV1Api', 'api/RunsV1Api', 'api/SchemasV1Api', 'api/SearchV1Api', 'api/TeamsV1Api', 'api/UsersV1Api', 'api/VersionsV1Api'], factory);
   } else if (typeof module === 'object' && module.exports) {
     // CommonJS-like environments that support module.exports, like Node.
-    module.exports = factory(require('./ApiClient'), require('./model/V1Agent'), require('./model/V1ArtifactTreeResponse'), require('./model/V1ArtifactsStore'), require('./model/V1Auth'), require('./model/V1CodeRef'), require('./model/V1CredsBodyRequest'), require('./model/V1EntityStatusBodyRequest'), require('./model/V1HostAccess'), require('./model/V1K8sResource'), require('./model/V1ListAgentsResponse'), require('./model/V1ListArtifactsStoresResponse'), require('./model/V1ListHostAccessesResponse'), require('./model/V1ListK8sResourcesResponse'), require('./model/V1ListProjectsResponse'), require('./model/V1ListQueuesResponse'), require('./model/V1ListRunsResponse'), require('./model/V1ListSearchesResponse'), require('./model/V1LogHandler'), require('./model/V1Project'), require('./model/V1ProjectEntityResourceRequest'), require('./model/V1Queue'), require('./model/V1Run'), require('./model/V1RunMetaInfo'), require('./model/V1Search'), require('./model/V1SearchDefinition'), require('./model/V1Status'), require('./model/V1StatusCondition'), require('./model/V1User'), require('./model/V1Uuids'), require('./model/V1Version'), require('./model/V1Versions'), require('./api/AgentsV1Api'), require('./api/ArtifactsStoresV1Api'), require('./api/AuthV1Api'), require('./api/GitAccessesV1Api'), require('./api/K8sConfigMapsV1Api'), require('./api/K8sSecretsV1Api'), require('./api/ProjectsV1Api'), require('./api/QueuesV1Api'), require('./api/RegistryAccessesV1Api'), require('./api/RunsV1Api'), require('./api/SearchV1Api'), require('./api/UsersV1Api'), require('./api/VersionsV1Api'));
+    module.exports = factory(require('./ApiClient'), require('./model/ProtobufNullValue'), require('./model/V1Agent'), require('./model/V1ArtifactMount'), require('./model/V1ArtifactTreeResponse'), require('./model/V1ArtifactsStore'), require('./model/V1Auth'), require('./model/V1AverageStoppingPolicy'), require('./model/V1BO'), require('./model/V1CodeRef'), require('./model/V1Container'), require('./model/V1CredsBodyRequest'), require('./model/V1CronSchedule'), require('./model/V1Dashboard'), require('./model/V1EarlyStoppingAllSchemas'), require('./model/V1EntityStatusBodyRequest'), require('./model/V1ExactTimeSchedule'), require('./model/V1FailureEarlyStopping'), require('./model/V1GridSearch'), require('./model/V1HostAccess'), require('./model/V1Hyperband'), require('./model/V1Hyperopt'), require('./model/V1HyperoptAlgorithms'), require('./model/V1IntervalSchedule'), require('./model/V1Iterative'), require('./model/V1K8sMount'), require('./model/V1K8sResource'), require('./model/V1ListAgentsResponse'), require('./model/V1ListArtifactsStoresResponse'), require('./model/V1ListDashboardsResponse'), require('./model/V1ListHostAccessesResponse'), require('./model/V1ListK8sResourcesResponse'), require('./model/V1ListOrganizationMembersResponse'), require('./model/V1ListOrganizationsResponse'), require('./model/V1ListProjectsResponse'), require('./model/V1ListQueuesResponse'), require('./model/V1ListRunsResponse'), require('./model/V1ListSearchesResponse'), require('./model/V1ListTeamMembersResponse'), require('./model/V1ListTeamsResponse'), require('./model/V1LogHandler'), require('./model/V1Mapping'), require('./model/V1MedianStoppingPolicy'), require('./model/V1MetricEarlyStopping'), require('./model/V1Mounts'), require('./model/V1Optimization'), require('./model/V1OptimizationMetric'), require('./model/V1OptimizationResource'), require('./model/V1Organization'), require('./model/V1OrganizationMember'), require('./model/V1ParallelAllSchemas'), require('./model/V1Project'), require('./model/V1ProjectEntityResourceRequest'), require('./model/V1ProjectSettings'), require('./model/V1ProjectTeams'), require('./model/V1Queue'), require('./model/V1RandomSearch'), require('./model/V1RepeatableSchedule'), require('./model/V1ResourceType'), require('./model/V1Run'), require('./model/V1RunMetaInfo'), require('./model/V1RunSettings'), require('./model/V1RunSettingsCatalog'), require('./model/V1ScheduleAllSchemas'), require('./model/V1Schemas'), require('./model/V1Search'), require('./model/V1SearchSpec'), require('./model/V1Status'), require('./model/V1StatusCondition'), require('./model/V1Team'), require('./model/V1TeamMember'), require('./model/V1Termination'), require('./model/V1TruncationStoppingPolicy'), require('./model/V1User'), require('./model/V1Uuids'), require('./model/V1Version'), require('./model/V1Versions'), require('./model/V1WidgetSpec'), require('./api/AgentsV1Api'), require('./api/ArtifactsStoresV1Api'), require('./api/AuthV1Api'), require('./api/DashboardV1Api'), require('./api/GitAccessesV1Api'), require('./api/K8sConfigMapsV1Api'), require('./api/K8sSecretsV1Api'), require('./api/OrganizationsV1Api'), require('./api/ProjectsV1Api'), require('./api/QueuesV1Api'), require('./api/RegistryAccessesV1Api'), require('./api/RunsV1Api'), require('./api/SchemasV1Api'), require('./api/SearchV1Api'), require('./api/TeamsV1Api'), require('./api/UsersV1Api'), require('./api/VersionsV1Api'));
   }
-}(function(ApiClient, V1Agent, V1ArtifactTreeResponse, V1ArtifactsStore, V1Auth, V1CodeRef, V1CredsBodyRequest, V1EntityStatusBodyRequest, V1HostAccess, V1K8sResource, V1ListAgentsResponse, V1ListArtifactsStoresResponse, V1ListHostAccessesResponse, V1ListK8sResourcesResponse, V1ListProjectsResponse, V1ListQueuesResponse, V1ListRunsResponse, V1ListSearchesResponse, V1LogHandler, V1Project, V1ProjectEntityResourceRequest, V1Queue, V1Run, V1RunMetaInfo, V1Search, V1SearchDefinition, V1Status, V1StatusCondition, V1User, V1Uuids, V1Version, V1Versions, AgentsV1Api, ArtifactsStoresV1Api, AuthV1Api, GitAccessesV1Api, K8sConfigMapsV1Api, K8sSecretsV1Api, ProjectsV1Api, QueuesV1Api, RegistryAccessesV1Api, RunsV1Api, SearchV1Api, UsersV1Api, VersionsV1Api) {
+}(function(ApiClient, ProtobufNullValue, V1Agent, V1ArtifactMount, V1ArtifactTreeResponse, V1ArtifactsStore, V1Auth, V1AverageStoppingPolicy, V1BO, V1CodeRef, V1Container, V1CredsBodyRequest, V1CronSchedule, V1Dashboard, V1EarlyStoppingAllSchemas, V1EntityStatusBodyRequest, V1ExactTimeSchedule, V1FailureEarlyStopping, V1GridSearch, V1HostAccess, V1Hyperband, V1Hyperopt, V1HyperoptAlgorithms, V1IntervalSchedule, V1Iterative, V1K8sMount, V1K8sResource, V1ListAgentsResponse, V1ListArtifactsStoresResponse, V1ListDashboardsResponse, V1ListHostAccessesResponse, V1ListK8sResourcesResponse, V1ListOrganizationMembersResponse, V1ListOrganizationsResponse, V1ListProjectsResponse, V1ListQueuesResponse, V1ListRunsResponse, V1ListSearchesResponse, V1ListTeamMembersResponse, V1ListTeamsResponse, V1LogHandler, V1Mapping, V1MedianStoppingPolicy, V1MetricEarlyStopping, V1Mounts, V1Optimization, V1OptimizationMetric, V1OptimizationResource, V1Organization, V1OrganizationMember, V1ParallelAllSchemas, V1Project, V1ProjectEntityResourceRequest, V1ProjectSettings, V1ProjectTeams, V1Queue, V1RandomSearch, V1RepeatableSchedule, V1ResourceType, V1Run, V1RunMetaInfo, V1RunSettings, V1RunSettingsCatalog, V1ScheduleAllSchemas, V1Schemas, V1Search, V1SearchSpec, V1Status, V1StatusCondition, V1Team, V1TeamMember, V1Termination, V1TruncationStoppingPolicy, V1User, V1Uuids, V1Version, V1Versions, V1WidgetSpec, AgentsV1Api, ArtifactsStoresV1Api, AuthV1Api, DashboardV1Api, GitAccessesV1Api, K8sConfigMapsV1Api, K8sSecretsV1Api, OrganizationsV1Api, ProjectsV1Api, QueuesV1Api, RegistryAccessesV1Api, RunsV1Api, SchemasV1Api, SearchV1Api, TeamsV1Api, UsersV1Api, VersionsV1Api) {
   'use strict';
 
   /**
@@ -77,10 +77,20 @@
      */
     ApiClient: ApiClient,
     /**
+     * The ProtobufNullValue model constructor.
+     * @property {module:model/ProtobufNullValue}
+     */
+    ProtobufNullValue: ProtobufNullValue,
+    /**
      * The V1Agent model constructor.
      * @property {module:model/V1Agent}
      */
     V1Agent: V1Agent,
+    /**
+     * The V1ArtifactMount model constructor.
+     * @property {module:model/V1ArtifactMount}
+     */
+    V1ArtifactMount: V1ArtifactMount,
     /**
      * The V1ArtifactTreeResponse model constructor.
      * @property {module:model/V1ArtifactTreeResponse}
@@ -97,25 +107,100 @@
      */
     V1Auth: V1Auth,
     /**
+     * The V1AverageStoppingPolicy model constructor.
+     * @property {module:model/V1AverageStoppingPolicy}
+     */
+    V1AverageStoppingPolicy: V1AverageStoppingPolicy,
+    /**
+     * The V1BO model constructor.
+     * @property {module:model/V1BO}
+     */
+    V1BO: V1BO,
+    /**
      * The V1CodeRef model constructor.
      * @property {module:model/V1CodeRef}
      */
     V1CodeRef: V1CodeRef,
+    /**
+     * The V1Container model constructor.
+     * @property {module:model/V1Container}
+     */
+    V1Container: V1Container,
     /**
      * The V1CredsBodyRequest model constructor.
      * @property {module:model/V1CredsBodyRequest}
      */
     V1CredsBodyRequest: V1CredsBodyRequest,
     /**
+     * The V1CronSchedule model constructor.
+     * @property {module:model/V1CronSchedule}
+     */
+    V1CronSchedule: V1CronSchedule,
+    /**
+     * The V1Dashboard model constructor.
+     * @property {module:model/V1Dashboard}
+     */
+    V1Dashboard: V1Dashboard,
+    /**
+     * The V1EarlyStoppingAllSchemas model constructor.
+     * @property {module:model/V1EarlyStoppingAllSchemas}
+     */
+    V1EarlyStoppingAllSchemas: V1EarlyStoppingAllSchemas,
+    /**
      * The V1EntityStatusBodyRequest model constructor.
      * @property {module:model/V1EntityStatusBodyRequest}
      */
     V1EntityStatusBodyRequest: V1EntityStatusBodyRequest,
     /**
+     * The V1ExactTimeSchedule model constructor.
+     * @property {module:model/V1ExactTimeSchedule}
+     */
+    V1ExactTimeSchedule: V1ExactTimeSchedule,
+    /**
+     * The V1FailureEarlyStopping model constructor.
+     * @property {module:model/V1FailureEarlyStopping}
+     */
+    V1FailureEarlyStopping: V1FailureEarlyStopping,
+    /**
+     * The V1GridSearch model constructor.
+     * @property {module:model/V1GridSearch}
+     */
+    V1GridSearch: V1GridSearch,
+    /**
      * The V1HostAccess model constructor.
      * @property {module:model/V1HostAccess}
      */
     V1HostAccess: V1HostAccess,
+    /**
+     * The V1Hyperband model constructor.
+     * @property {module:model/V1Hyperband}
+     */
+    V1Hyperband: V1Hyperband,
+    /**
+     * The V1Hyperopt model constructor.
+     * @property {module:model/V1Hyperopt}
+     */
+    V1Hyperopt: V1Hyperopt,
+    /**
+     * The V1HyperoptAlgorithms model constructor.
+     * @property {module:model/V1HyperoptAlgorithms}
+     */
+    V1HyperoptAlgorithms: V1HyperoptAlgorithms,
+    /**
+     * The V1IntervalSchedule model constructor.
+     * @property {module:model/V1IntervalSchedule}
+     */
+    V1IntervalSchedule: V1IntervalSchedule,
+    /**
+     * The V1Iterative model constructor.
+     * @property {module:model/V1Iterative}
+     */
+    V1Iterative: V1Iterative,
+    /**
+     * The V1K8sMount model constructor.
+     * @property {module:model/V1K8sMount}
+     */
+    V1K8sMount: V1K8sMount,
     /**
      * The V1K8sResource model constructor.
      * @property {module:model/V1K8sResource}
@@ -132,6 +217,11 @@
      */
     V1ListArtifactsStoresResponse: V1ListArtifactsStoresResponse,
     /**
+     * The V1ListDashboardsResponse model constructor.
+     * @property {module:model/V1ListDashboardsResponse}
+     */
+    V1ListDashboardsResponse: V1ListDashboardsResponse,
+    /**
      * The V1ListHostAccessesResponse model constructor.
      * @property {module:model/V1ListHostAccessesResponse}
      */
@@ -141,6 +231,16 @@
      * @property {module:model/V1ListK8sResourcesResponse}
      */
     V1ListK8sResourcesResponse: V1ListK8sResourcesResponse,
+    /**
+     * The V1ListOrganizationMembersResponse model constructor.
+     * @property {module:model/V1ListOrganizationMembersResponse}
+     */
+    V1ListOrganizationMembersResponse: V1ListOrganizationMembersResponse,
+    /**
+     * The V1ListOrganizationsResponse model constructor.
+     * @property {module:model/V1ListOrganizationsResponse}
+     */
+    V1ListOrganizationsResponse: V1ListOrganizationsResponse,
     /**
      * The V1ListProjectsResponse model constructor.
      * @property {module:model/V1ListProjectsResponse}
@@ -162,10 +262,70 @@
      */
     V1ListSearchesResponse: V1ListSearchesResponse,
     /**
+     * The V1ListTeamMembersResponse model constructor.
+     * @property {module:model/V1ListTeamMembersResponse}
+     */
+    V1ListTeamMembersResponse: V1ListTeamMembersResponse,
+    /**
+     * The V1ListTeamsResponse model constructor.
+     * @property {module:model/V1ListTeamsResponse}
+     */
+    V1ListTeamsResponse: V1ListTeamsResponse,
+    /**
      * The V1LogHandler model constructor.
      * @property {module:model/V1LogHandler}
      */
     V1LogHandler: V1LogHandler,
+    /**
+     * The V1Mapping model constructor.
+     * @property {module:model/V1Mapping}
+     */
+    V1Mapping: V1Mapping,
+    /**
+     * The V1MedianStoppingPolicy model constructor.
+     * @property {module:model/V1MedianStoppingPolicy}
+     */
+    V1MedianStoppingPolicy: V1MedianStoppingPolicy,
+    /**
+     * The V1MetricEarlyStopping model constructor.
+     * @property {module:model/V1MetricEarlyStopping}
+     */
+    V1MetricEarlyStopping: V1MetricEarlyStopping,
+    /**
+     * The V1Mounts model constructor.
+     * @property {module:model/V1Mounts}
+     */
+    V1Mounts: V1Mounts,
+    /**
+     * The V1Optimization model constructor.
+     * @property {module:model/V1Optimization}
+     */
+    V1Optimization: V1Optimization,
+    /**
+     * The V1OptimizationMetric model constructor.
+     * @property {module:model/V1OptimizationMetric}
+     */
+    V1OptimizationMetric: V1OptimizationMetric,
+    /**
+     * The V1OptimizationResource model constructor.
+     * @property {module:model/V1OptimizationResource}
+     */
+    V1OptimizationResource: V1OptimizationResource,
+    /**
+     * The V1Organization model constructor.
+     * @property {module:model/V1Organization}
+     */
+    V1Organization: V1Organization,
+    /**
+     * The V1OrganizationMember model constructor.
+     * @property {module:model/V1OrganizationMember}
+     */
+    V1OrganizationMember: V1OrganizationMember,
+    /**
+     * The V1ParallelAllSchemas model constructor.
+     * @property {module:model/V1ParallelAllSchemas}
+     */
+    V1ParallelAllSchemas: V1ParallelAllSchemas,
     /**
      * The V1Project model constructor.
      * @property {module:model/V1Project}
@@ -177,10 +337,35 @@
      */
     V1ProjectEntityResourceRequest: V1ProjectEntityResourceRequest,
     /**
+     * The V1ProjectSettings model constructor.
+     * @property {module:model/V1ProjectSettings}
+     */
+    V1ProjectSettings: V1ProjectSettings,
+    /**
+     * The V1ProjectTeams model constructor.
+     * @property {module:model/V1ProjectTeams}
+     */
+    V1ProjectTeams: V1ProjectTeams,
+    /**
      * The V1Queue model constructor.
      * @property {module:model/V1Queue}
      */
     V1Queue: V1Queue,
+    /**
+     * The V1RandomSearch model constructor.
+     * @property {module:model/V1RandomSearch}
+     */
+    V1RandomSearch: V1RandomSearch,
+    /**
+     * The V1RepeatableSchedule model constructor.
+     * @property {module:model/V1RepeatableSchedule}
+     */
+    V1RepeatableSchedule: V1RepeatableSchedule,
+    /**
+     * The V1ResourceType model constructor.
+     * @property {module:model/V1ResourceType}
+     */
+    V1ResourceType: V1ResourceType,
     /**
      * The V1Run model constructor.
      * @property {module:model/V1Run}
@@ -192,15 +377,35 @@
      */
     V1RunMetaInfo: V1RunMetaInfo,
     /**
+     * The V1RunSettings model constructor.
+     * @property {module:model/V1RunSettings}
+     */
+    V1RunSettings: V1RunSettings,
+    /**
+     * The V1RunSettingsCatalog model constructor.
+     * @property {module:model/V1RunSettingsCatalog}
+     */
+    V1RunSettingsCatalog: V1RunSettingsCatalog,
+    /**
+     * The V1ScheduleAllSchemas model constructor.
+     * @property {module:model/V1ScheduleAllSchemas}
+     */
+    V1ScheduleAllSchemas: V1ScheduleAllSchemas,
+    /**
+     * The V1Schemas model constructor.
+     * @property {module:model/V1Schemas}
+     */
+    V1Schemas: V1Schemas,
+    /**
      * The V1Search model constructor.
      * @property {module:model/V1Search}
      */
     V1Search: V1Search,
     /**
-     * The V1SearchDefinition model constructor.
-     * @property {module:model/V1SearchDefinition}
+     * The V1SearchSpec model constructor.
+     * @property {module:model/V1SearchSpec}
      */
-    V1SearchDefinition: V1SearchDefinition,
+    V1SearchSpec: V1SearchSpec,
     /**
      * The V1Status model constructor.
      * @property {module:model/V1Status}
@@ -211,6 +416,26 @@
      * @property {module:model/V1StatusCondition}
      */
     V1StatusCondition: V1StatusCondition,
+    /**
+     * The V1Team model constructor.
+     * @property {module:model/V1Team}
+     */
+    V1Team: V1Team,
+    /**
+     * The V1TeamMember model constructor.
+     * @property {module:model/V1TeamMember}
+     */
+    V1TeamMember: V1TeamMember,
+    /**
+     * The V1Termination model constructor.
+     * @property {module:model/V1Termination}
+     */
+    V1Termination: V1Termination,
+    /**
+     * The V1TruncationStoppingPolicy model constructor.
+     * @property {module:model/V1TruncationStoppingPolicy}
+     */
+    V1TruncationStoppingPolicy: V1TruncationStoppingPolicy,
     /**
      * The V1User model constructor.
      * @property {module:model/V1User}
@@ -232,6 +457,11 @@
      */
     V1Versions: V1Versions,
     /**
+     * The V1WidgetSpec model constructor.
+     * @property {module:model/V1WidgetSpec}
+     */
+    V1WidgetSpec: V1WidgetSpec,
+    /**
      * The AgentsV1Api service constructor.
      * @property {module:api/AgentsV1Api}
      */
@@ -247,6 +477,11 @@
      */
     AuthV1Api: AuthV1Api,
     /**
+     * The DashboardV1Api service constructor.
+     * @property {module:api/DashboardV1Api}
+     */
+    DashboardV1Api: DashboardV1Api,
+    /**
      * The GitAccessesV1Api service constructor.
      * @property {module:api/GitAccessesV1Api}
      */
@@ -261,6 +496,11 @@
      * @property {module:api/K8sSecretsV1Api}
      */
     K8sSecretsV1Api: K8sSecretsV1Api,
+    /**
+     * The OrganizationsV1Api service constructor.
+     * @property {module:api/OrganizationsV1Api}
+     */
+    OrganizationsV1Api: OrganizationsV1Api,
     /**
      * The ProjectsV1Api service constructor.
      * @property {module:api/ProjectsV1Api}
@@ -282,10 +522,20 @@
      */
     RunsV1Api: RunsV1Api,
     /**
+     * The SchemasV1Api service constructor.
+     * @property {module:api/SchemasV1Api}
+     */
+    SchemasV1Api: SchemasV1Api,
+    /**
      * The SearchV1Api service constructor.
      * @property {module:api/SearchV1Api}
      */
     SearchV1Api: SearchV1Api,
+    /**
+     * The TeamsV1Api service constructor.
+     * @property {module:api/TeamsV1Api}
+     */
+    TeamsV1Api: TeamsV1Api,
     /**
      * The UsersV1Api service constructor.
      * @property {module:api/UsersV1Api}

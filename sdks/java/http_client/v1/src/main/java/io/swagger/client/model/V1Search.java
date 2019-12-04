@@ -36,8 +36,9 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import io.swagger.client.model.V1SearchDefinition;
+import io.swagger.client.model.V1SearchSpec;
 import java.io.IOException;
+import org.threeten.bp.OffsetDateTime;
 
 /**
  * V1Search
@@ -50,8 +51,14 @@ public class V1Search {
   @SerializedName("name")
   private String name = null;
 
-  @SerializedName("definition")
-  private V1SearchDefinition definition = null;
+  @SerializedName("spec")
+  private V1SearchSpec spec = null;
+
+  @SerializedName("created_at")
+  private OffsetDateTime createdAt = null;
+
+  @SerializedName("updated_at")
+  private OffsetDateTime updatedAt = null;
 
   public V1Search uuid(String uuid) {
     this.uuid = uuid;
@@ -89,22 +96,58 @@ public class V1Search {
     this.name = name;
   }
 
-  public V1Search definition(V1SearchDefinition definition) {
-    this.definition = definition;
+  public V1Search spec(V1SearchSpec spec) {
+    this.spec = spec;
     return this;
   }
 
    /**
-   * Get definition
-   * @return definition
+   * Get spec
+   * @return spec
   **/
   @ApiModelProperty(value = "")
-  public V1SearchDefinition getDefinition() {
-    return definition;
+  public V1SearchSpec getSpec() {
+    return spec;
   }
 
-  public void setDefinition(V1SearchDefinition definition) {
-    this.definition = definition;
+  public void setSpec(V1SearchSpec spec) {
+    this.spec = spec;
+  }
+
+  public V1Search createdAt(OffsetDateTime createdAt) {
+    this.createdAt = createdAt;
+    return this;
+  }
+
+   /**
+   * Get createdAt
+   * @return createdAt
+  **/
+  @ApiModelProperty(value = "")
+  public OffsetDateTime getCreatedAt() {
+    return createdAt;
+  }
+
+  public void setCreatedAt(OffsetDateTime createdAt) {
+    this.createdAt = createdAt;
+  }
+
+  public V1Search updatedAt(OffsetDateTime updatedAt) {
+    this.updatedAt = updatedAt;
+    return this;
+  }
+
+   /**
+   * Get updatedAt
+   * @return updatedAt
+  **/
+  @ApiModelProperty(value = "")
+  public OffsetDateTime getUpdatedAt() {
+    return updatedAt;
+  }
+
+  public void setUpdatedAt(OffsetDateTime updatedAt) {
+    this.updatedAt = updatedAt;
   }
 
 
@@ -119,12 +162,14 @@ public class V1Search {
     V1Search v1Search = (V1Search) o;
     return Objects.equals(this.uuid, v1Search.uuid) &&
         Objects.equals(this.name, v1Search.name) &&
-        Objects.equals(this.definition, v1Search.definition);
+        Objects.equals(this.spec, v1Search.spec) &&
+        Objects.equals(this.createdAt, v1Search.createdAt) &&
+        Objects.equals(this.updatedAt, v1Search.updatedAt);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(uuid, name, definition);
+    return Objects.hash(uuid, name, spec, createdAt, updatedAt);
   }
 
 
@@ -135,7 +180,9 @@ public class V1Search {
     
     sb.append("    uuid: ").append(toIndentedString(uuid)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
-    sb.append("    definition: ").append(toIndentedString(definition)).append("\n");
+    sb.append("    spec: ").append(toIndentedString(spec)).append("\n");
+    sb.append("    createdAt: ").append(toIndentedString(createdAt)).append("\n");
+    sb.append("    updatedAt: ").append(toIndentedString(updatedAt)).append("\n");
     sb.append("}");
     return sb.toString();
   }

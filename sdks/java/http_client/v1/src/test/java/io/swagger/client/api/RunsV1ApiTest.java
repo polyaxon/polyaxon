@@ -36,6 +36,7 @@ import io.swagger.client.model.V1EntityStatusBodyRequest;
 import io.swagger.client.model.V1ListRunsResponse;
 import io.swagger.client.model.V1ProjectEntityResourceRequest;
 import io.swagger.client.model.V1Run;
+import io.swagger.client.model.V1RunSettings;
 import io.swagger.client.model.V1Status;
 import io.swagger.client.model.V1Uuids;
 import org.junit.Test;
@@ -279,6 +280,24 @@ public class RunsV1ApiTest {
         Integer step = null;
         String type = null;
         V1ArtifactTreeResponse response = api.getRunLogsTree(owner, project, uuid, path, step, type);
+
+        // TODO: test validations
+    }
+    
+    /**
+     * Get Run settings
+     *
+     * 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void getRunSettingsTest() throws ApiException {
+        String owner = null;
+        String project = null;
+        String uuid = null;
+        V1RunSettings response = api.getRunSettings(owner, project, uuid);
 
         // TODO: test validations
     }

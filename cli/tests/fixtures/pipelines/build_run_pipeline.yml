@@ -7,7 +7,7 @@ name: test-build-run
 
 tags: [native]
 
-workflow:
+run:
   kind: dag
   ops:
     - name: build
@@ -39,7 +39,8 @@ workflow:
         image_pull_secrets: [secret1, secret2]
       termination:
         max_retries: 2
-      container:
+      run:
+        kind: container
         image: "{{ image }}"
         command: [python3, main.py]
         args: "--lr={{ lr }}"
@@ -66,4 +67,6 @@ workflow:
         build:
           image: base
           env: "{{ env_vars }}"
-      container: {image: base}
+      run:
+        kind: container
+        image: base

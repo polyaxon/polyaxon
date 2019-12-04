@@ -11,7 +11,7 @@ schedule:
   kind: cron
   cron: 0 0 * * *
 
-workflow:
+run:
   kind: dag
   ops:
     - name: cron-task
@@ -38,4 +38,6 @@ workflow:
       termination:
         max_retries: 2
         ttl: 22
-      container: {image: test}
+      run:
+        kind: container
+        image: test

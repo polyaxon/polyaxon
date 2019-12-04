@@ -51,7 +51,7 @@ class OpSpecification(BaseSpecification, OpSpecificationMixin):
     def apply_context(self):
         raise PolyaxonSchemaError("This method is not allowed on this specification.")
 
-    def apply_container_contexts(self, contexts=None):
+    def apply_run_contexts(self, contexts=None):
         raise PolyaxonSchemaError("This method is not allowed on this specification.")
 
     def generate_run_data(self, override=None, override_post=True):
@@ -71,7 +71,7 @@ class OpSpecification(BaseSpecification, OpSpecificationMixin):
             self.SERVICE,
             self.PROFILE,
             self.NOCACHE,
-            self.WORKFLOW,
+            self.PARALLEL,
         ]:
             override_field = getattr(self.config, field)
             if hasattr(override_field, "to_dict"):

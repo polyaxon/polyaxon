@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 **uuid** | **String** |  |  [optional]
 **name** | **String** |  |  [optional]
 **namespace** | **String** |  |  [optional]
-**versionApi** | **Map&lt;String, String&gt;** |  |  [optional]
+**versionApi** | **Object** |  |  [optional]
 **createdAt** | [**OffsetDateTime**](OffsetDateTime.md) |  |  [optional]
 **updatedAt** | [**OffsetDateTime**](OffsetDateTime.md) |  |  [optional]
 

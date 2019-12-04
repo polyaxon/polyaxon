@@ -25,11 +25,11 @@ import pytest
 
 from polyaxon.exceptions import PolyaxonfileError
 from polyaxon.polyaxonfile import PolyaxonFile
-from polyaxon.schemas.polyflow.container import ContainerConfig
 from polyaxon.schemas.polyflow.io import IOConfig
+from polyaxon.schemas.polyflow.parallel import GridSearchConfig
+from polyaxon.schemas.polyflow.parallel.matrix import MatrixChoiceConfig
 from polyaxon.schemas.polyflow.params import get_params_with_refs
-from polyaxon.schemas.polyflow.workflows import GridSearchConfig
-from polyaxon.schemas.polyflow.workflows.matrix import MatrixChoiceConfig
+from polyaxon.schemas.polyflow.run.container import ContainerConfig
 
 
 @pytest.mark.polyaxonfile_mark
@@ -62,12 +62,12 @@ class TestPolyaxonfileWithTypes(TestCase):
         assert spec.config.inputs[0].value == "bar"
         assert spec.config.inputs[1].value is False
         spec = spec.apply_context()
-        spec = spec.apply_container_contexts()
+        spec = spec.apply_run_contexts()
         assert spec.version == 1.0
         assert spec.tags == ["foo", "bar"]
-        assert spec.container.image == "my_image"
-        assert spec.container.command == ["/bin/sh", "-c"]
-        assert spec.container.args == "video_prediction_train --loss=bar "
+        assert spec.run.image == "my_image"
+        assert spec.run.command == ["/bin/sh", "-c"]
+        assert spec.run.args == "video_prediction_train --loss=bar "
         assert spec.environment is None
         assert spec.is_component
 
@@ -81,12 +81,12 @@ class TestPolyaxonfileWithTypes(TestCase):
         assert spec.config.inputs[0].value == "bar"
         assert spec.config.inputs[1].value is True
         spec = spec.apply_context()
-        spec = spec.apply_container_contexts()
+        spec = spec.apply_run_contexts()
         assert spec.version == 1.0
         assert spec.tags == ["foo", "bar"]
-        assert spec.container.image == "my_image"
-        assert spec.container.command == ["/bin/sh", "-c"]
-        assert spec.container.args == "video_prediction_train --loss=bar --flag"
+        assert spec.run.image == "my_image"
+        assert spec.run.command == ["/bin/sh", "-c"]
+        assert spec.run.args == "video_prediction_train --loss=bar --flag"
         assert spec.environment is None
         assert spec.is_component
 
@@ -114,22 +114,22 @@ class TestPolyaxonfileWithTypes(TestCase):
         assert spec.version == 1.0
         assert spec.is_component
         assert spec.has_pipeline
-        assert spec.has_dag is False
-        assert isinstance(spec.workflow.matrix["param1"], MatrixChoiceConfig)
-        assert isinstance(spec.workflow.matrix["param2"], MatrixChoiceConfig)
-        assert spec.workflow.matrix["param1"].to_dict() == {
+        assert spec.has_dag_run is False
+        assert isinstance(spec.parallel.matrix["param1"], MatrixChoiceConfig)
+        assert isinstance(spec.parallel.matrix["param2"], MatrixChoiceConfig)
+        assert spec.parallel.matrix["param1"].to_dict() == {
             "kind": "choice",
             "value": [1, 2],
         }
-        assert spec.workflow.matrix["param2"].to_dict() == {
+        assert spec.parallel.matrix["param2"].to_dict() == {
             "kind": "choice",
             "value": [3.3, 4.4],
         }
-        assert isinstance(spec.workflow, GridSearchConfig)
-        assert spec.concurrency == 2
-        assert spec.workflow_kind == GridSearchConfig.IDENTIFIER
-        assert spec.workflow.early_stopping is None
-        assert spec.early_stopping == []
+        assert isinstance(spec.parallel, GridSearchConfig)
+        assert spec.parallel_concurrency == 2
+        assert spec.parallel_kind == GridSearchConfig.IDENTIFIER
+        assert spec.parallel.early_stopping is None
+        assert spec.parallel_early_stopping == []
 
     def test_matrix_job_file_passes_int_float_types(self):
         plxfile = PolyaxonFile(
@@ -141,21 +141,21 @@ class TestPolyaxonfileWithTypes(TestCase):
         spec = spec.apply_context()
         assert spec.version == 1.0
         assert spec.is_component
-        assert isinstance(spec.workflow.matrix["param1"], MatrixChoiceConfig)
-        assert isinstance(spec.workflow.matrix["param2"], MatrixChoiceConfig)
-        assert spec.workflow.matrix["param1"].to_dict() == {
+        assert isinstance(spec.parallel.matrix["param1"], MatrixChoiceConfig)
+        assert isinstance(spec.parallel.matrix["param2"], MatrixChoiceConfig)
+        assert spec.parallel.matrix["param1"].to_dict() == {
             "kind": "choice",
             "value": [1, 2],
         }
-        assert spec.workflow.matrix["param2"].to_dict() == {
+        assert spec.parallel.matrix["param2"].to_dict() == {
             "kind": "choice",
             "value": [3.3, 4.4],
         }
-        assert isinstance(spec.workflow, GridSearchConfig)
-        assert spec.concurrency == 2
-        assert spec.workflow_kind == GridSearchConfig.IDENTIFIER
-        assert spec.workflow.early_stopping is None
-        assert spec.early_stopping == []
+        assert isinstance(spec.parallel, GridSearchConfig)
+        assert spec.parallel_concurrency == 2
+        assert spec.parallel_kind == GridSearchConfig.IDENTIFIER
+        assert spec.parallel.early_stopping is None
+        assert spec.parallel_early_stopping == []
 
     def test_run_simple_file_passes(self):
         plxfile = PolyaxonFile(
@@ -177,7 +177,7 @@ class TestPolyaxonfileWithTypes(TestCase):
         assert {"loss": "MeanSquaredError", "num_masks": 100} == {
             p.name: p.value for p in validated_params
         }
-        assert spec.container.args == [
+        assert spec.run.args == [
             "video_prediction_train",
             "--num_masks={{num_masks}}",
             "--loss={{loss}}",
@@ -190,12 +190,12 @@ class TestPolyaxonfileWithTypes(TestCase):
 
         spec.apply_params(params={"num_masks": 100})
         new_spec = spec.apply_context()
-        new_spec = new_spec.apply_container_contexts()
+        new_spec = new_spec.apply_run_contexts()
         assert new_spec.version == 1.0
         assert new_spec.tags == ["foo", "bar"]
         assert new_spec.is_component
         assert new_spec.environment is None
-        container = new_spec.container
+        container = new_spec.run
         assert isinstance(container, ContainerConfig)
         assert container.image == "my_image"
         assert container.command == ["/bin/sh", "-c"]

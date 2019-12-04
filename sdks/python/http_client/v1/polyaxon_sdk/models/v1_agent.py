@@ -50,7 +50,7 @@ class V1Agent(object):
         "uuid": "str",
         "name": "str",
         "namespace": "str",
-        "version_api": "dict(str, str)",
+        "version_api": "object",
         "created_at": "datetime",
         "updated_at": "datetime",
     }
@@ -165,7 +165,7 @@ class V1Agent(object):
 
 
         :return: The version_api of this V1Agent.  # noqa: E501
-        :rtype: dict(str, str)
+        :rtype: object
         """
         return self._version_api
 
@@ -175,7 +175,7 @@ class V1Agent(object):
 
 
         :param version_api: The version_api of this V1Agent.  # noqa: E501
-        :type: dict(str, str)
+        :type: object
         """
 
         self._version_api = version_api

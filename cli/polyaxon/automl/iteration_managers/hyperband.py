@@ -1,7 +1,7 @@
 from polyaxon.automl.exceptions import PolyaxonAutoMLException
 from polyaxon.automl.iteration_managers.base import BaseIterationManager
 from polyaxon.logger import logger
-from polyaxon.schemas.polyflow.workflows.metrics import Optimization
+from polyaxon.schemas.polyflow.optimization import Optimization
 
 
 class HyperbandIterationManager(BaseIterationManager):

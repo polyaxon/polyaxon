@@ -30,14 +30,12 @@ from polyaxon.deploy.schemas.security_context import SecurityContextSchema
 from polyaxon.deploy.schemas.service import (
     ApiSchema,
     DockerRegistrySchema,
-    EventMonitorsSchema,
     ExternalServicesSchema,
     HooksSchema,
     PostgresqlSchema,
     RabbitmqSchema,
     RedisSchema,
     ServiceSchema,
-    ThirdPartyServiceSchema,
     WorkerSchema,
 )
 from polyaxon.deploy.schemas.service_types import ServiceTypes

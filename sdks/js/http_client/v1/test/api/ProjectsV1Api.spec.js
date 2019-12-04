@@ -270,6 +270,126 @@
           done();
         });
       });
+      describe('getProjectSettings', function() {
+        it('should call getProjectSettings successfully', function(done) {
+          // TODO: uncomment, update parameter values for getProjectSettings call and complete the assertions
+          /*
+          var owner = "owner_example";
+          var project = "project_example";
+
+          instance.getProjectSettings(owner, project, function(error, data, response) {
+            if (error) {
+              done(error);
+              return;
+            }
+            // TODO: update response assertions
+            expect(data).to.be.a(PolyaxonSdk.V1ProjectSettings);
+            expect(data.logs_store).to.be.a('string');
+            expect(data.logs_store).to.be("");
+            expect(data.outputs_store).to.be.a('string');
+            expect(data.outputs_store).to.be("");
+            {
+              let dataCtr = data.artifacts_stores;
+              expect(dataCtr).to.be.an(Array);
+              expect(dataCtr).to.not.be.empty();
+              for (let p in dataCtr) {
+                let data = dataCtr[p];
+                expect(data).to.be.a('string');
+                expect(data).to.be("");
+              }
+            }
+            {
+              let dataCtr = data.git_accesses;
+              expect(dataCtr).to.be.an(Array);
+              expect(dataCtr).to.not.be.empty();
+              for (let p in dataCtr) {
+                let data = dataCtr[p];
+                expect(data).to.be.a('string');
+                expect(data).to.be("");
+              }
+            }
+            {
+              let dataCtr = data.registry_accesses;
+              expect(dataCtr).to.be.an(Array);
+              expect(dataCtr).to.not.be.empty();
+              for (let p in dataCtr) {
+                let data = dataCtr[p];
+                expect(data).to.be.a('string');
+                expect(data).to.be("");
+              }
+            }
+            {
+              let dataCtr = data.k8s_secrets;
+              expect(dataCtr).to.be.an(Array);
+              expect(dataCtr).to.not.be.empty();
+              for (let p in dataCtr) {
+                let data = dataCtr[p];
+                expect(data).to.be.a('string');
+                expect(data).to.be("");
+              }
+            }
+            {
+              let dataCtr = data.k8s_config_maps;
+              expect(dataCtr).to.be.an(Array);
+              expect(dataCtr).to.not.be.empty();
+              for (let p in dataCtr) {
+                let data = dataCtr[p];
+                expect(data).to.be.a('string');
+                expect(data).to.be("");
+              }
+            }
+            expect(data.run_profile).to.be.a('string');
+            expect(data.run_profile).to.be("");
+            {
+              let dataCtr = data.run_profiles;
+              expect(dataCtr).to.be.an(Array);
+              expect(dataCtr).to.not.be.empty();
+              for (let p in dataCtr) {
+                let data = dataCtr[p];
+                expect(data).to.be.a('string');
+                expect(data).to.be("");
+              }
+            }
+
+            done();
+          });
+          */
+          // TODO: uncomment and complete method invocation above, then delete this line and the next:
+          done();
+        });
+      });
+      describe('getProjectTeams', function() {
+        it('should call getProjectTeams successfully', function(done) {
+          // TODO: uncomment, update parameter values for getProjectTeams call and complete the assertions
+          /*
+          var owner = "owner_example";
+          var project = "project_example";
+
+          instance.getProjectTeams(owner, project, function(error, data, response) {
+            if (error) {
+              done(error);
+              return;
+            }
+            // TODO: update response assertions
+            expect(data).to.be.a(PolyaxonSdk.V1ProjectTeams);
+            {
+              let dataCtr = data.teams;
+              expect(dataCtr).to.be.an(Array);
+              expect(dataCtr).to.not.be.empty();
+              for (let p in dataCtr) {
+                let data = dataCtr[p];
+                expect(data).to.be.a('string');
+                expect(data).to.be("");
+              }
+            }
+
+            done();
+          });
+          */
+          // TODO: uncomment and complete method invocation above, then delete this line and the next:
+          done();
+        });
+      });
       describe('listArchivedProjects', function() {
         it('should call listArchivedProjects successfully', function(done) {
           // TODO: uncomment, update parameter values for listArchivedProjects call and complete the assertions
@@ -629,6 +749,138 @@
           done();
         });
       });
+      describe('patchProjectSettings', function() {
+        it('should call patchProjectSettings successfully', function(done) {
+          // TODO: uncomment, update parameter values for patchProjectSettings call and complete the assertions
+          /*
+          var owner = "owner_example";
+          var project = "project_example";
+          var body = new PolyaxonSdk.V1ProjectSettings();
+          body.logs_store = "";
+          body.outputs_store = "";
+          body.artifacts_stores = [""];
+          body.git_accesses = [""];
+          body.registry_accesses = [""];
+          body.k8s_secrets = [""];
+          body.k8s_config_maps = [""];
+          body.run_profile = "";
+          body.run_profiles = [""];
+
+          instance.patchProjectSettings(owner, project, body, function(error, data, response) {
+            if (error) {
+              done(error);
+              return;
+            }
+            // TODO: update response assertions
+            expect(data).to.be.a(PolyaxonSdk.V1ProjectSettings);
+            expect(data.logs_store).to.be.a('string');
+            expect(data.logs_store).to.be("");
+            expect(data.outputs_store).to.be.a('string');
+            expect(data.outputs_store).to.be("");
+            {
+              let dataCtr = data.artifacts_stores;
+              expect(dataCtr).to.be.an(Array);
+              expect(dataCtr).to.not.be.empty();
+              for (let p in dataCtr) {
+                let data = dataCtr[p];
+                expect(data).to.be.a('string');
+                expect(data).to.be("");
+              }
+            }
+            {
+              let dataCtr = data.git_accesses;
+              expect(dataCtr).to.be.an(Array);
+              expect(dataCtr).to.not.be.empty();
+              for (let p in dataCtr) {
+                let data = dataCtr[p];
+                expect(data).to.be.a('string');
+                expect(data).to.be("");
+              }
+            }
+            {
+              let dataCtr = data.registry_accesses;
+              expect(dataCtr).to.be.an(Array);
+              expect(dataCtr).to.not.be.empty();
+              for (let p in dataCtr) {
+                let data = dataCtr[p];
+                expect(data).to.be.a('string');
+                expect(data).to.be("");
+              }
+            }
+            {
+              let dataCtr = data.k8s_secrets;
+              expect(dataCtr).to.be.an(Array);
+              expect(dataCtr).to.not.be.empty();
+              for (let p in dataCtr) {
+                let data = dataCtr[p];
+                expect(data).to.be.a('string');
+                expect(data).to.be("");
+              }
+            }
+            {
+              let dataCtr = data.k8s_config_maps;
+              expect(dataCtr).to.be.an(Array);
+              expect(dataCtr).to.not.be.empty();
+              for (let p in dataCtr) {
+                let data = dataCtr[p];
+                expect(data).to.be.a('string');
+                expect(data).to.be("");
+              }
+            }
+            expect(data.run_profile).to.be.a('string');
+            expect(data.run_profile).to.be("");
+            {
+              let dataCtr = data.run_profiles;
+              expect(dataCtr).to.be.an(Array);
+              expect(dataCtr).to.not.be.empty();
+              for (let p in dataCtr) {
+                let data = dataCtr[p];
+                expect(data).to.be.a('string');
+                expect(data).to.be("");
+              }
+            }
+
+            done();
+          });
+          */
+          // TODO: uncomment and complete method invocation above, then delete this line and the next:
+          done();
+        });
+      });
+      describe('patchProjectTeams', function() {
+        it('should call patchProjectTeams successfully', function(done) {
+          // TODO: uncomment, update parameter values for patchProjectTeams call and complete the assertions
+          /*
+          var owner = "owner_example";
+          var project = "project_example";
+          var body = new PolyaxonSdk.V1ProjectTeams();
+          body.teams = [""];
+
+          instance.patchProjectTeams(owner, project, body, function(error, data, response) {
+            if (error) {
+              done(error);
+              return;
+            }
+            // TODO: update response assertions
+            expect(data).to.be.a(PolyaxonSdk.V1ProjectTeams);
+            {
+              let dataCtr = data.teams;
+              expect(dataCtr).to.be.an(Array);
+              expect(dataCtr).to.not.be.empty();
+              for (let p in dataCtr) {
+                let data = dataCtr[p];
+                expect(data).to.be.a('string');
+                expect(data).to.be("");
+              }
+            }
+
+            done();
+          });
+          */
+          // TODO: uncomment and complete method invocation above, then delete this line and the next:
+          done();
+        });
+      });
       describe('restoreProject', function() {
         it('should call restoreProject successfully', function(done) {
           // TODO: uncomment, update parameter values for restoreProject call
@@ -728,6 +980,138 @@
             expect(data.bookmarked).to.be(false);
             expect(data.readme).to.be.a('string');
             expect(data.readme).to.be("");
+
+            done();
+          });
+          */
+          // TODO: uncomment and complete method invocation above, then delete this line and the next:
+          done();
+        });
+      });
+      describe('updateProjectSettings', function() {
+        it('should call updateProjectSettings successfully', function(done) {
+          // TODO: uncomment, update parameter values for updateProjectSettings call and complete the assertions
+          /*
+          var owner = "owner_example";
+          var project = "project_example";
+          var body = new PolyaxonSdk.V1ProjectSettings();
+          body.logs_store = "";
+          body.outputs_store = "";
+          body.artifacts_stores = [""];
+          body.git_accesses = [""];
+          body.registry_accesses = [""];
+          body.k8s_secrets = [""];
+          body.k8s_config_maps = [""];
+          body.run_profile = "";
+          body.run_profiles = [""];
+
+          instance.updateProjectSettings(owner, project, body, function(error, data, response) {
+            if (error) {
+              done(error);
+              return;
+            }
+            // TODO: update response assertions
+            expect(data).to.be.a(PolyaxonSdk.V1ProjectSettings);
+            expect(data.logs_store).to.be.a('string');
+            expect(data.logs_store).to.be("");
+            expect(data.outputs_store).to.be.a('string');
+            expect(data.outputs_store).to.be("");
+            {
+              let dataCtr = data.artifacts_stores;
+              expect(dataCtr).to.be.an(Array);
+              expect(dataCtr).to.not.be.empty();
+              for (let p in dataCtr) {
+                let data = dataCtr[p];
+                expect(data).to.be.a('string');
+                expect(data).to.be("");
+              }
+            }
+            {
+              let dataCtr = data.git_accesses;
+              expect(dataCtr).to.be.an(Array);
+              expect(dataCtr).to.not.be.empty();
+              for (let p in dataCtr) {
+                let data = dataCtr[p];
+                expect(data).to.be.a('string');
+                expect(data).to.be("");
+              }
+            }
+            {
+              let dataCtr = data.registry_accesses;
+              expect(dataCtr).to.be.an(Array);
+              expect(dataCtr).to.not.be.empty();
+              for (let p in dataCtr) {
+                let data = dataCtr[p];
+                expect(data).to.be.a('string');
+                expect(data).to.be("");
+              }
+            }
+            {
+              let dataCtr = data.k8s_secrets;
+              expect(dataCtr).to.be.an(Array);
+              expect(dataCtr).to.not.be.empty();
+              for (let p in dataCtr) {
+                let data = dataCtr[p];
+                expect(data).to.be.a('string');
+                expect(data).to.be("");
+              }
+            }
+            {
+              let dataCtr = data.k8s_config_maps;
+              expect(dataCtr).to.be.an(Array);
+              expect(dataCtr).to.not.be.empty();
+              for (let p in dataCtr) {
+                let data = dataCtr[p];
+                expect(data).to.be.a('string');
+                expect(data).to.be("");
+              }
+            }
+            expect(data.run_profile).to.be.a('string');
+            expect(data.run_profile).to.be("");
+            {
+              let dataCtr = data.run_profiles;
+              expect(dataCtr).to.be.an(Array);
+              expect(dataCtr).to.not.be.empty();
+              for (let p in dataCtr) {
+                let data = dataCtr[p];
+                expect(data).to.be.a('string');
+                expect(data).to.be("");
+              }
+            }
+
+            done();
+          });
+          */
+          // TODO: uncomment and complete method invocation above, then delete this line and the next:
+          done();
+        });
+      });
+      describe('updateProjectTeams', function() {
+        it('should call updateProjectTeams successfully', function(done) {
+          // TODO: uncomment, update parameter values for updateProjectTeams call and complete the assertions
+          /*
+          var owner = "owner_example";
+          var project = "project_example";
+          var body = new PolyaxonSdk.V1ProjectTeams();
+          body.teams = [""];
+
+          instance.updateProjectTeams(owner, project, body, function(error, data, response) {
+            if (error) {
+              done(error);
+              return;
+            }
+            // TODO: update response assertions
+            expect(data).to.be.a(PolyaxonSdk.V1ProjectTeams);
+            {
+              let dataCtr = data.teams;
+              expect(dataCtr).to.be.an(Array);
+              expect(dataCtr).to.not.be.empty();
+              for (let p in dataCtr) {
+                let data = dataCtr[p];
+                expect(data).to.be.a('string');
+                expect(data).to.be("");
+              }
+            }
 
             done();
           });

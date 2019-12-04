@@ -5,7 +5,7 @@ name: test-pipeline
 tags: [native]
 environment:
   log_level: INFO
-workflow:
+run:
   kind: dag
   concurrency: 3
   ops:
@@ -54,7 +54,9 @@ workflow:
         image_pull_secrets: [secret1, secret2]
       termination:
         max_retries: 2
-      container: {image: test}
+      run:
+        kind: container
+        image: test
 
     - name: job-template
       description: job to process something
@@ -69,4 +71,6 @@ workflow:
         image_pull_secrets: [secret1, secret2]
       termination:
         max_retries: 2
-      container: {image: test}
+      run:
+        kind: container
+        image: test

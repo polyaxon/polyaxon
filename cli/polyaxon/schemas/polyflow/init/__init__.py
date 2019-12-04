@@ -22,12 +22,12 @@ from marshmallow import fields
 from polyaxon.schemas.base import BaseConfig, BaseSchema
 from polyaxon.schemas.polyflow.init.build_context import BuildContextSchema
 from polyaxon.schemas.polyflow.init.repo_refs import RepoRefSchema
-from polyaxon.schemas.polyflow.mounts import ArtifactRefSchema
+from polyaxon.schemas.polyflow.mounts import ArtifactMountSchema
 
 
 class InitSchema(BaseSchema):
     repos = fields.Nested(RepoRefSchema, many=True, allow_none=True)
-    artifacts = fields.Nested(ArtifactRefSchema, many=True, allow_none=True)
+    artifacts = fields.Nested(ArtifactMountSchema, many=True, allow_none=True)
     build = fields.Nested(BuildContextSchema, allow_none=True)
 
     @staticmethod

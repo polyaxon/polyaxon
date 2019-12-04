@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package v1;
+
+import "v1/schemas/early_stopping.proto";
+import "v1/schemas/mounts.proto";
+import "v1/schemas/parallel.proto";
+import "v1/schemas/schedule.proto";
+import "v1/schemas/termination.proto";
+
+message Schemas {
+    EarlyStoppingAllSchemas early_stopping = 1;
+    Mounts mount = 2;
+    ParallelAllSchemas parallel = 3;
+    ScheduleAllSchemas schedule = 4;
+    Termination termination = 5;
+}

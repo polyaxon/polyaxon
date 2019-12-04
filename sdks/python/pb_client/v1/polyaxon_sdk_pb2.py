@@ -34,17 +34,21 @@ from google.protobuf import empty_pb2 as google_dot_protobuf_dot_empty__pb2
 from protoc_gen_swagger.options import annotations_pb2 as protoc__gen__swagger_dot_options_dot_annotations__pb2
 from v1 import agent_pb2 as v1_dot_agent__pb2
 from v1 import artifacts_store_pb2 as v1_dot_artifacts__store__pb2
+from v1 import dashboard_pb2 as v1_dot_dashboard__pb2
 from v1 import host_access_pb2 as v1_dot_host__access__pb2
 from v1 import k8s_resource_pb2 as v1_dot_k8s__resource__pb2
 from v1 import base_pb2 as v1_dot_base__pb2
 from v1 import code_ref_pb2 as v1_dot_code__ref__pb2
 from v1 import run_pb2 as v1_dot_run__pb2
+from v1 import organization_pb2 as v1_dot_organization__pb2
 from v1 import project_pb2 as v1_dot_project__pb2
 from v1 import version_pb2 as v1_dot_version__pb2
 from v1 import auth_pb2 as v1_dot_auth__pb2
 from v1 import user_pb2 as v1_dot_user__pb2
 from v1 import search_pb2 as v1_dot_search__pb2
 from v1 import status_pb2 as v1_dot_status__pb2
+from v1 import team_pb2 as v1_dot_team__pb2
+from v1.schemas import all_pb2 as v1_dot_schemas_dot_all__pb2
 
 
 DESCRIPTOR = _descriptor.FileDescriptor(
@@ -52,9 +56,9 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='v1',
   syntax='proto3',
   serialized_options=_b('\222A\257\002\022a\n\014Polyaxon sdk\"J\n\014Polyaxon sdk\022$https://github.com/polyaxon/polyaxon\032\024contact@polyaxon.com2\0051.0.0*\002\001\0022\020application/json:\020application/jsonR\024\n\003204\022\r\n\013No content.R:\n\003403\0223\n1You don\'t have permission to access the resource.R!\n\003404\022\032\n\030Resource does not exist.Z\037\n\035\n\006ApiKey\022\023\010\002\032\rAuthorization \002b\014\n\n\n\006ApiKey\022\000'),
-  serialized_pb=_b('\n\x15v1/polyaxon_sdk.proto\x12\x02v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a,protoc-gen-swagger/options/annotations.proto\x1a\x0ev1/agent.proto\x1a\x18v1/artifacts_store.proto\x1a\x14v1/host_access.proto\x1a\x15v1/k8s_resource.proto\x1a\rv1/base.proto\x1a\x11v1/code_ref.proto\x1a\x0cv1/run.proto\x1a\x10v1/project.proto\x1a\x10v1/version.proto\x1a\rv1/auth.proto\x1a\rv1/user.proto\x1a\x0fv1/search.proto\x1a\x0fv1/status.proto2\x80\x1b\n\x06RunsV1\x12m\n\x12ListBookmarkedRuns\x12\x1a.v1.UserResouceListRequest\x1a\x14.v1.ListRunsResponse\"%\x82\xd3\xe4\x93\x02\x1f\x12\x1d/api/v1/bookmarks/{user}/runs\x12j\n\x10ListArchivedRuns\x12\x1a.v1.UserResouceListRequest\x1a\x14.v1.ListRunsResponse\"$\x82\xd3\xe4\x93\x02\x1e\x12\x1c/api/v1/archives/{user}/runs\x12h\n\x08ListRuns\x12\x1e.v1.ProjectResourceListRequest\x1a\x14.v1.ListRunsResponse\"&\x82\xd3\xe4\x93\x02 \x12\x1e/api/v1/{owner}/{project}/runs\x12U\n\tCreateRun\x12\x12.v1.RunBodyRequest\x1a\x07.v1.Run\"+\x82\xd3\xe4\x93\x02%\"\x1e/api/v1/{owner}/{project}/runs:\x03run\x12\x62\n\x06GetRun\x12 .v1.ProjectEntityResourceRequest\x1a\x07.v1.Run\"-\x82\xd3\xe4\x93\x02\'\x12%/api/v1/{owner}/{project}/runs/{uuid}\x12`\n\tUpdateRun\x12\x12.v1.RunBodyRequest\x1a\x07.v1.Run\"6\x82\xd3\xe4\x93\x02\x30\x1a)/api/v1/{owner}/{project}/runs/{run.uuid}:\x03run\x12_\n\x08PatchRun\x12\x12.v1.RunBodyRequest\x1a\x07.v1.Run\"6\x82\xd3\xe4\x93\x02\x30\x32)/api/v1/{owner}/{project}/runs/{run.uuid}:\x03run\x12t\n\tDeleteRun\x12 .v1.ProjectEntityResourceRequest\x1a\x16.google.protobuf.Empty\"-\x82\xd3\xe4\x93\x02\'*%/api/v1/{owner}/{project}/runs/{uuid}\x12\x7f\n\nDeleteRuns\x12#.v1.ProjectResourceUuidsBodyRequest\x1a\x16.google.protobuf.Empty\"4\x82\xd3\xe4\x93\x02.*%/api/v1/{owner}/{project}/runs/delete:\x05uuids\x12w\n\x07StopRun\x12 .v1.ProjectEntityResourceRequest\x1a\x16.google.protobuf.Empty\"2\x82\xd3\xe4\x93\x02,\"*/api/v1/{owner}/{project}/runs/{uuid}/stop\x12{\n\x08StopRuns\x12#.v1.ProjectResourceUuidsBodyRequest\x1a\x16.google.protobuf.Empty\"2\x82\xd3\xe4\x93\x02,\"#/api/v1/{owner}/{project}/runs/stop:\x05uuids\x12\x86\x01\n\rInvalidateRun\x12 .v1.ProjectEntityResourceRequest\x1a\x16.google.protobuf.Empty\";\x82\xd3\xe4\x93\x02\x35\"0/api/v1/{owner}/{project}/runs/{uuid}/invalidate:\x01*\x12\x87\x01\n\x0eInvalidateRuns\x12#.v1.ProjectResourceUuidsBodyRequest\x1a\x16.google.protobuf.Empty\"8\x82\xd3\xe4\x93\x02\x32\")/api/v1/{owner}/{project}/runs/invalidate:\x05uuids\x12z\n\x07\x43opyRun\x12\x18.v1.EntityRunBodyRequest\x1a\x07.v1.Run\"L\x82\xd3\xe4\x93\x02\x46\"?/api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/copy:\x03run\x12\x80\x01\n\nRestartRun\x12\x18.v1.EntityRunBodyRequest\x1a\x07.v1.Run\"O\x82\xd3\xe4\x93\x02I\"B/api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/restart:\x03run\x12~\n\tResumeRun\x12\x18.v1.EntityRunBodyRequest\x1a\x07.v1.Run\"N\x82\xd3\xe4\x93\x02H\"A/api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/resume:\x03run\x12}\n\nArchiveRun\x12 .v1.ProjectEntityResourceRequest\x1a\x16.google.protobuf.Empty\"5\x82\xd3\xe4\x93\x02/\"-/api/v1/{owner}/{project}/runs/{uuid}/archive\x12}\n\nRestoreRun\x12 .v1.ProjectEntityResourceRequest\x1a\x16.google.protobuf.Empty\"5\x82\xd3\xe4\x93\x02/\"-/api/v1/{owner}/{project}/runs/{uuid}/restore\x12\x7f\n\x0b\x42ookmarkRun\x12 .v1.ProjectEntityResourceRequest\x1a\x16.google.protobuf.Empty\"6\x82\xd3\xe4\x93\x02\x30\"./api/v1/{owner}/{project}/runs/{uuid}/bookmark\x12\x83\x01\n\rUnbookmarkRun\x12 .v1.ProjectEntityResourceRequest\x1a\x16.google.protobuf.Empty\"8\x82\xd3\xe4\x93\x02\x32*0/api/v1/{owner}/{project}/runs/{uuid}/unbookmark\x12\x93\x01\n\x13StartRunTensorboard\x12 .v1.ProjectEntityResourceRequest\x1a\x16.google.protobuf.Empty\"B\x82\xd3\xe4\x93\x02<\"7/api/v1/{owner}/{project}/runs/{uuid}/tensorboard/start:\x01*\x12\x8e\x01\n\x12StopRunTensorboard\x12 .v1.ProjectEntityResourceRequest\x1a\x16.google.protobuf.Empty\">\x82\xd3\xe4\x93\x02\x38\"6/api/v1/{owner}/{project}/runs/{uuid}/tensorboard/stop\x12v\n\x0eGetRunStatuses\x12 .v1.ProjectEntityResourceRequest\x1a\n.v1.Status\"6\x82\xd3\xe4\x93\x02\x30\x12./api/v1/{owner}/{project}/runs/{uuid}/statuses\x12u\n\x0f\x43reateRunStatus\x12\x1b.v1.EntityStatusBodyRequest\x1a\n.v1.Status\"9\x82\xd3\xe4\x93\x02\x33\"./api/v1/{owner}/{project}/runs/{uuid}/statuses:\x01*\x12\x98\x01\n\x10\x43reateRunCodeRef\x12\x16.v1.CodeRefBodyRequest\x1a\x16.google.protobuf.Empty\"T\x82\xd3\xe4\x93\x02N\"C/api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/coderefs:\x07\x63oderef\x12y\n\x10ImpersonateToken\x12 .v1.ProjectEntityResourceRequest\x1a\x08.v1.Auth\"9\x82\xd3\xe4\x93\x02\x33\"1/api/v1/{owner}/{project}/runs/{uuid}/impersonate\x12{\n\x0eGetRunLogsTree\x12\x16.v1.RunArtifactRequest\x1a\x18.v1.ArtifactTreeResponse\"7\x82\xd3\xe4\x93\x02\x31\x12//api/v1/{owner}/{project}/runs/{uuid}/logs/tree\x12\x85\x01\n\x13GetRunArtifactsTree\x12\x16.v1.RunArtifactRequest\x1a\x18.v1.ArtifactTreeResponse\"<\x82\xd3\xe4\x93\x02\x36\x12\x34/api/v1/{owner}/{project}/runs/{uuid}/artifacts/tree2\xfe\x0c\n\nProjectsV1\x12l\n\x0cListProjects\x12\x1b.v1.OwnerResouceListRequest\x1a\x18.v1.ListProjectsResponse\"%\x82\xd3\xe4\x93\x02\x1f\x12\x1d/api/v1/{owner}/projects/list\x12\x66\n\rCreateProject\x12\x16.v1.ProjectBodyRequest\x1a\x0b.v1.Project\"0\x82\xd3\xe4\x93\x02*\"\x1f/api/v1/{owner}/projects/create:\x07project\x12q\n\x10ListProjectNames\x12\x1b.v1.OwnerResouceListRequest\x1a\x18.v1.ListProjectsResponse\"&\x82\xd3\xe4\x93\x02 \x12\x1e/api/v1/{owner}/projects/names\x12y\n\x16ListBookmarkedProjects\x12\x1a.v1.UserResouceListRequest\x1a\x18.v1.ListProjectsResponse\")\x82\xd3\xe4\x93\x02#\x12!/api/v1/bookmarks/{user}/projects\x12v\n\x14ListArchivedProjects\x12\x1a.v1.UserResouceListRequest\x1a\x18.v1.ListProjectsResponse\"(\x82\xd3\xe4\x93\x02\"\x12 /api/v1/archives/{user}/projects\x12X\n\nGetProject\x12\x1a.v1.ProjectResourceRequest\x1a\x0b.v1.Project\"!\x82\xd3\xe4\x93\x02\x1b\x12\x19/api/v1/{owner}/{project}\x12\x65\n\rUpdateProject\x12\x16.v1.ProjectBodyRequest\x1a\x0b.v1.Project\"/\x82\xd3\xe4\x93\x02)\x1a\x1e/api/v1/{owner}/{project.name}:\x07project\x12\x64\n\x0cPatchProject\x12\x16.v1.ProjectBodyRequest\x1a\x0b.v1.Project\"/\x82\xd3\xe4\x93\x02)2\x1e/api/v1/{owner}/{project.name}:\x07project\x12\x66\n\rDeleteProject\x12\x1a.v1.ProjectResourceRequest\x1a\x16.google.protobuf.Empty\"!\x82\xd3\xe4\x93\x02\x1b*\x19/api/v1/{owner}/{project}\x12o\n\x0e\x41rchiveProject\x12\x1a.v1.ProjectResourceRequest\x1a\x16.google.protobuf.Empty\")\x82\xd3\xe4\x93\x02#\"!/api/v1/{owner}/{project}/archive\x12o\n\x0eRestoreProject\x12\x1a.v1.ProjectResourceRequest\x1a\x16.google.protobuf.Empty\")\x82\xd3\xe4\x93\x02#\"!/api/v1/{owner}/{project}/restore\x12q\n\x0f\x42ookmarkProject\x12\x1a.v1.ProjectResourceRequest\x1a\x16.google.protobuf.Empty\"*\x82\xd3\xe4\x93\x02$\"\"/api/v1/{owner}/{project}/bookmark\x12u\n\x11UnbookmarkProject\x12\x1a.v1.ProjectResourceRequest\x1a\x16.google.protobuf.Empty\",\x82\xd3\xe4\x93\x02&*$/api/v1/{owner}/{project}/unbookmark\x12k\n\x0f\x45nableProjectCI\x12\x1a.v1.ProjectResourceRequest\x1a\x16.google.protobuf.Empty\"$\x82\xd3\xe4\x93\x02\x1e\"\x1c/api/v1/{owner}/{project}/ci\x12l\n\x10\x44isableProjectCI\x12\x1a.v1.ProjectResourceRequest\x1a\x16.google.protobuf.Empty\"$\x82\xd3\xe4\x93\x02\x1e*\x1c/api/v1/{owner}/{project}/ci2\xd4\x07\n\x11\x41rtifactsStoresV1\x12\x87\x01\n\x17ListArtifactsStoreNames\x12\x1b.v1.OwnerResouceListRequest\x1a\x1f.v1.ListArtifactsStoresResponse\".\x82\xd3\xe4\x93\x02(\x12&/api/v1/{owner}/artifacts_stores/names\x12}\n\x13ListArtifactsStores\x12\x1b.v1.OwnerResouceListRequest\x1a\x1f.v1.ListArtifactsStoresResponse\"(\x82\xd3\xe4\x93\x02\"\x12 /api/v1/{owner}/artifacts_stores\x12\x83\x01\n\x14\x43reateArtifactsStore\x12\x1d.v1.ArtifactsStoreBodyRequest\x1a\x12.v1.ArtifactsStore\"8\x82\xd3\xe4\x93\x02\x32\" /api/v1/{owner}/artifacts_stores:\x0e\x61rtifact_store\x12x\n\x11GetArtifactsStore\x12\x1e.v1.OwnerEntityResourceRequest\x1a\x12.v1.ArtifactsStore\"/\x82\xd3\xe4\x93\x02)\x12\'/api/v1/{owner}/artifacts_stores/{uuid}\x12\x99\x01\n\x14UpdateArtifactsStore\x12\x1d.v1.ArtifactsStoreBodyRequest\x1a\x12.v1.ArtifactsStore\"N\x82\xd3\xe4\x93\x02H\x1a\x36/api/v1/{owner}/artifacts_stores/{artifact_store.uuid}:\x0e\x61rtifact_store\x12\x98\x01\n\x13PatchArtifactsStore\x12\x1d.v1.ArtifactsStoreBodyRequest\x1a\x12.v1.ArtifactsStore\"N\x82\xd3\xe4\x93\x02H26/api/v1/{owner}/artifacts_stores/{artifact_store.uuid}:\x0e\x61rtifact_store\x12\x7f\n\x14\x44\x65leteArtifactsStore\x12\x1e.v1.OwnerEntityResourceRequest\x1a\x16.google.protobuf.Empty\"/\x82\xd3\xe4\x93\x02)*\'/api/v1/{owner}/artifacts_stores/{uuid}2\x98\x07\n\x0fK8sConfigMapsV1\x12\x81\x01\n\x15ListK8sConfigMapNames\x12\x1b.v1.OwnerResouceListRequest\x1a\x1c.v1.ListK8sResourcesResponse\"-\x82\xd3\xe4\x93\x02\'\x12%/api/v1/{owner}/k8s_config_maps/names\x12w\n\x11ListK8sConfigMaps\x12\x1b.v1.OwnerResouceListRequest\x1a\x1c.v1.ListK8sResourcesResponse\"\'\x82\xd3\xe4\x93\x02!\x12\x1f/api/v1/{owner}/k8s_config_maps\x12y\n\x13\x43reateK8sConfigMaps\x12\x1a.v1.K8sResourceBodyRequest\x1a\x0f.v1.K8sResource\"5\x82\xd3\xe4\x93\x02/\"\x1f/api/v1/{owner}/k8s_config_maps:\x0ck8s_resource\x12r\n\x0fGetK8sConfigMap\x12\x1e.v1.OwnerEntityResourceRequest\x1a\x0f.v1.K8sResource\".\x82\xd3\xe4\x93\x02(\x12&/api/v1/{owner}/k8s_config_maps/{uuid}\x12\x8c\x01\n\x12UpdateK8sConfigMap\x12\x1a.v1.K8sResourceBodyRequest\x1a\x0f.v1.K8sResource\"I\x82\xd3\xe4\x93\x02\x43\x1a\x33/api/v1/{owner}/k8s_config_maps/{k8s_resource.uuid}:\x0ck8s_resource\x12\x8b\x01\n\x11PatchK8sConfigMap\x12\x1a.v1.K8sResourceBodyRequest\x1a\x0f.v1.K8sResource\"I\x82\xd3\xe4\x93\x02\x43\x32\x33/api/v1/{owner}/k8s_config_maps/{k8s_resource.uuid}:\x0ck8s_resource\x12|\n\x12\x44\x65leteK8sConfigMap\x12\x1e.v1.OwnerEntityResourceRequest\x1a\x16.google.protobuf.Empty\".\x82\xd3\xe4\x93\x02(*&/api/v1/{owner}/k8s_config_maps/{uuid}2\xe3\x06\n\x0cK8sSecretsV1\x12z\n\x12ListK8sSecretNames\x12\x1b.v1.OwnerResouceListRequest\x1a\x1c.v1.ListK8sResourcesResponse\")\x82\xd3\xe4\x93\x02#\x12!/api/v1/{owner}/k8s_secrets/names\x12p\n\x0eListK8sSecrets\x12\x1b.v1.OwnerResouceListRequest\x1a\x1c.v1.ListK8sResourcesResponse\"#\x82\xd3\xe4\x93\x02\x1d\x12\x1b/api/v1/{owner}/k8s_secrets\x12r\n\x10\x43reateK8sSecrets\x12\x1a.v1.K8sResourceBodyRequest\x1a\x0f.v1.K8sResource\"1\x82\xd3\xe4\x93\x02+\"\x1b/api/v1/{owner}/k8s_secrets:\x0ck8s_resource\x12k\n\x0cGetK8sSecret\x12\x1e.v1.OwnerEntityResourceRequest\x1a\x0f.v1.K8sResource\"*\x82\xd3\xe4\x93\x02$\x12\"/api/v1/{owner}/k8s_secrets/{uuid}\x12\x85\x01\n\x0fUpdateK8sSecret\x12\x1a.v1.K8sResourceBodyRequest\x1a\x0f.v1.K8sResource\"E\x82\xd3\xe4\x93\x02?\x1a//api/v1/{owner}/k8s_secrets/{k8s_resource.uuid}:\x0ck8s_resource\x12\x84\x01\n\x0ePatchK8sSecret\x12\x1a.v1.K8sResourceBodyRequest\x1a\x0f.v1.K8sResource\"E\x82\xd3\xe4\x93\x02?2//api/v1/{owner}/k8s_secrets/{k8s_resource.uuid}:\x0ck8s_resource\x12u\n\x0f\x44\x65leteK8sSecret\x12\x1e.v1.OwnerEntityResourceRequest\x1a\x16.google.protobuf.Empty\"*\x82\xd3\xe4\x93\x02$*\"/api/v1/{owner}/k8s_secrets/{uuid}2\xac\x07\n\x12RegistryAccessesV1\x12\x85\x01\n\x17ListRegistryAccessNames\x12\x1b.v1.OwnerResouceListRequest\x1a\x1c.v1.ListHostAccessesResponse\"/\x82\xd3\xe4\x93\x02)\x12\'/api/v1/{owner}/registry_accesses/names\x12|\n\x14ListRegistryAccesses\x12\x1b.v1.OwnerResouceListRequest\x1a\x1c.v1.ListHostAccessesResponse\")\x82\xd3\xe4\x93\x02#\x12!/api/v1/{owner}/registry_accesses\x12y\n\x14\x43reateRegistryAccess\x12\x19.v1.HostAccessBodyRequest\x1a\x0e.v1.HostAccess\"6\x82\xd3\xe4\x93\x02\x30\"!/api/v1/{owner}/registry_accesses:\x0bhost_access\x12u\n\x11GetRegistryAccess\x12\x1e.v1.OwnerEntityResourceRequest\x1a\x0e.v1.HostAccess\"0\x82\xd3\xe4\x93\x02*\x12(/api/v1/{owner}/registry_accesses/{uuid}\x12\x8c\x01\n\x14UpdateRegistryAccess\x12\x19.v1.HostAccessBodyRequest\x1a\x0e.v1.HostAccess\"I\x82\xd3\xe4\x93\x02\x43\x1a\x34/api/v1/{owner}/registry_accesses/{host_access.uuid}:\x0bhost_access\x12\x8b\x01\n\x13PatchRegistryAccess\x12\x19.v1.HostAccessBodyRequest\x1a\x0e.v1.HostAccess\"I\x82\xd3\xe4\x93\x02\x43\x32\x34/api/v1/{owner}/registry_accesses/{host_access.uuid}:\x0bhost_access\x12\x80\x01\n\x14\x44\x65leteRegistryAccess\x12\x1e.v1.OwnerEntityResourceRequest\x1a\x16.google.protobuf.Empty\"0\x82\xd3\xe4\x93\x02**(/api/v1/{owner}/registry_accesses/{uuid}2\xdf\x06\n\rGitAccessesV1\x12{\n\x12ListGitAccessNames\x12\x1b.v1.OwnerResouceListRequest\x1a\x1c.v1.ListHostAccessesResponse\"*\x82\xd3\xe4\x93\x02$\x12\"/api/v1/{owner}/git_accesses/names\x12r\n\x0fListGitAccesses\x12\x1b.v1.OwnerResouceListRequest\x1a\x1c.v1.ListHostAccessesResponse\"$\x82\xd3\xe4\x93\x02\x1e\x12\x1c/api/v1/{owner}/git_accesses\x12o\n\x0f\x43reateGitAccess\x12\x19.v1.HostAccessBodyRequest\x1a\x0e.v1.HostAccess\"1\x82\xd3\xe4\x93\x02+\"\x1c/api/v1/{owner}/git_accesses:\x0bhost_access\x12k\n\x0cGetGitAccess\x12\x1e.v1.OwnerEntityResourceRequest\x1a\x0e.v1.HostAccess\"+\x82\xd3\xe4\x93\x02%\x12#/api/v1/{owner}/git_accesses/{uuid}\x12\x82\x01\n\x0fUpdateGitAccess\x12\x19.v1.HostAccessBodyRequest\x1a\x0e.v1.HostAccess\"D\x82\xd3\xe4\x93\x02>\x1a//api/v1/{owner}/git_accesses/{host_access.uuid}:\x0bhost_access\x12\x81\x01\n\x0ePatchGitAccess\x12\x19.v1.HostAccessBodyRequest\x1a\x0e.v1.HostAccess\"D\x82\xd3\xe4\x93\x02>2//api/v1/{owner}/git_accesses/{host_access.uuid}:\x0bhost_access\x12v\n\x0f\x44\x65leteGitAccess\x12\x1e.v1.OwnerEntityResourceRequest\x1a\x16.google.protobuf.Empty\"+\x82\xd3\xe4\x93\x02%*#/api/v1/{owner}/git_accesses/{uuid}2\xbb\x05\n\x08SearchV1\x12t\n\x0cListSearches\x12\x1e.v1.ProjectResourceListRequest\x1a\x18.v1.ListSearchesResponse\"*\x82\xd3\xe4\x93\x02$\x12\"/api/v1/{owner}/{project}/searches\x12\x65\n\x0c\x43reateSearch\x12\x15.v1.SearchBodyRequest\x1a\n.v1.Search\"2\x82\xd3\xe4\x93\x02,\"\"/api/v1/{owner}/{project}/searches:\x06search\x12l\n\tGetSearch\x12 .v1.ProjectEntityResourceRequest\x1a\n.v1.Search\"1\x82\xd3\xe4\x93\x02+\x12)/api/v1/{owner}/{project}/searches/{uuid}\x12s\n\x0cUpdateSearch\x12\x15.v1.SearchBodyRequest\x1a\n.v1.Search\"@\x82\xd3\xe4\x93\x02:\x1a\x30/api/v1/{owner}/{project}/searches/{search.uuid}:\x06search\x12r\n\x0bPatchSearch\x12\x15.v1.SearchBodyRequest\x1a\n.v1.Search\"@\x82\xd3\xe4\x93\x02:20/api/v1/{owner}/{project}/searches/{search.uuid}:\x06search\x12{\n\x0c\x44\x65leteSearch\x12 .v1.ProjectEntityResourceRequest\x1a\x16.google.protobuf.Empty\"1\x82\xd3\xe4\x93\x02+*)/api/v1/{owner}/{project}/searches/{uuid}2\xc4\x05\n\x08\x41gentsV1\x12k\n\x0eListAgentNames\x12\x1b.v1.OwnerResouceListRequest\x1a\x16.v1.ListAgentsResponse\"$\x82\xd3\xe4\x93\x02\x1e\x12\x1c/api/v1/{owner}/agents/names\x12\x61\n\nListAgents\x12\x1b.v1.OwnerResouceListRequest\x1a\x16.v1.ListAgentsResponse\"\x1e\x82\xd3\xe4\x93\x02\x18\x12\x16/api/v1/{owner}/agents\x12U\n\x0b\x43reateAgent\x12\x14.v1.AgentBodyRequest\x1a\t.v1.Agent\"%\x82\xd3\xe4\x93\x02\x1f\"\x16/api/v1/{owner}/agents:\x05\x61gent\x12\\\n\x08GetAgent\x12\x1e.v1.OwnerEntityResourceRequest\x1a\t.v1.Agent\"%\x82\xd3\xe4\x93\x02\x1f\x12\x1d/api/v1/{owner}/agents/{uuid}\x12\x62\n\x0bUpdateAgent\x12\x14.v1.AgentBodyRequest\x1a\t.v1.Agent\"2\x82\xd3\xe4\x93\x02,\x1a#/api/v1/{owner}/agents/{agent.uuid}:\x05\x61gent\x12\x61\n\nPatchAgent\x12\x14.v1.AgentBodyRequest\x1a\t.v1.Agent\"2\x82\xd3\xe4\x93\x02,2#/api/v1/{owner}/agents/{agent.uuid}:\x05\x61gent\x12l\n\x0b\x44\x65leteAgent\x12\x1e.v1.OwnerEntityResourceRequest\x1a\x16.google.protobuf.Empty\"%\x82\xd3\xe4\x93\x02\x1f*\x1d/api/v1/{owner}/agents/{uuid}2\xbb\x06\n\x08QueuesV1\x12{\n\x0eListQueueNames\x12\x1c.v1.AgentResourceListRequest\x1a\x16.v1.ListQueuesResponse\"3\x82\xd3\xe4\x93\x02-\x12+/api/v1/{owner}/agents/{agent}/queues/names\x12q\n\nListQueues\x12\x1c.v1.AgentResourceListRequest\x1a\x16.v1.ListQueuesResponse\"-\x82\xd3\xe4\x93\x02\'\x12%/api/v1/{owner}/agents/{agent}/queues\x12\x64\n\x0b\x43reateQueue\x12\x14.v1.QueueBodyRequest\x1a\t.v1.Agent\"4\x82\xd3\xe4\x93\x02.\"%/api/v1/{owner}/agents/{agent}/queues:\x05queue\x12k\n\x08GetQueue\x12\x1e.v1.AgentEntityResourceRequest\x1a\t.v1.Queue\"4\x82\xd3\xe4\x93\x02.\x12,/api/v1/{owner}/agents/{agent}/queues/{uuid}\x12w\n\x0bUpdateQueue\x12\x14.v1.QueueBodyRequest\x1a\t.v1.Queue\"G\x82\xd3\xe4\x93\x02\x41\x1a\x38/api/v1/{owner}/agents/{queue.agent}/queues/{queue.uuid}:\x05queue\x12v\n\nPatchQueue\x12\x14.v1.QueueBodyRequest\x1a\t.v1.Queue\"G\x82\xd3\xe4\x93\x02\x41\x32\x38/api/v1/{owner}/agents/{queue.agent}/queues/{queue.uuid}:\x05queue\x12{\n\x0b\x44\x65leteQueue\x12\x1e.v1.AgentEntityResourceRequest\x1a\x16.google.protobuf.Empty\"4\x82\xd3\xe4\x93\x02.*,/api/v1/{owner}/agents/{agent}/queues/{uuid}2Q\n\x06\x41uthV1\x12G\n\x05Login\x12\x14.v1.CredsBodyRequest\x1a\x08.v1.Auth\"\x1e\x82\xd3\xe4\x93\x02\x18\"\x13/api/v1/users/token:\x01*2M\n\x07UsersV1\x12\x42\n\x07GetUser\x12\x16.google.protobuf.Empty\x1a\x08.v1.User\"\x15\x82\xd3\xe4\x93\x02\x0f\x12\r/api/v1/users2\xb0\x01\n\nVersionsV1\x12L\n\x0bGetVersions\x12\x16.google.protobuf.Empty\x1a\x0c.v1.Versions\"\x17\x82\xd3\xe4\x93\x02\x11\x12\x0f/api/v1/version\x12T\n\rGetLogHandler\x12\x16.google.protobuf.Empty\x1a\x0e.v1.LogHandler\"\x1b\x82\xd3\xe4\x93\x02\x15\x12\x13/api/v1/log_handlerB\xb3\x02\x92\x41\xaf\x02\x12\x61\n\x0cPolyaxon sdk\"J\n\x0cPolyaxon sdk\x12$https://github.com/polyaxon/polyaxon\x1a\x14\x63ontact@polyaxon.com2\x05\x31.0.0*\x02\x01\x02\x32\x10\x61pplication/json:\x10\x61pplication/jsonR\x14\n\x03\x32\x30\x34\x12\r\n\x0bNo content.R:\n\x03\x34\x30\x33\x12\x33\n1You don\'t have permission to access the resource.R!\n\x03\x34\x30\x34\x12\x1a\n\x18Resource does not exist.Z\x1f\n\x1d\n\x06\x41piKey\x12\x13\x08\x02\x1a\rAuthorization \x02\x62\x0c\n\n\n\x06\x41piKey\x12\x00\x62\x06proto3')
+  serialized_pb=_b('\n\x15v1/polyaxon_sdk.proto\x12\x02v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a,protoc-gen-swagger/options/annotations.proto\x1a\x0ev1/agent.proto\x1a\x18v1/artifacts_store.proto\x1a\x12v1/dashboard.proto\x1a\x14v1/host_access.proto\x1a\x15v1/k8s_resource.proto\x1a\rv1/base.proto\x1a\x11v1/code_ref.proto\x1a\x0cv1/run.proto\x1a\x15v1/organization.proto\x1a\x10v1/project.proto\x1a\x10v1/version.proto\x1a\rv1/auth.proto\x1a\rv1/user.proto\x1a\x0fv1/search.proto\x1a\x0fv1/status.proto\x1a\rv1/team.proto\x1a\x14v1/schemas/all.proto2\xfd\x1b\n\x06RunsV1\x12m\n\x12ListBookmarkedRuns\x12\x1a.v1.UserResouceListRequest\x1a\x14.v1.ListRunsResponse\"%\x82\xd3\xe4\x93\x02\x1f\x12\x1d/api/v1/bookmarks/{user}/runs\x12j\n\x10ListArchivedRuns\x12\x1a.v1.UserResouceListRequest\x1a\x14.v1.ListRunsResponse\"$\x82\xd3\xe4\x93\x02\x1e\x12\x1c/api/v1/archives/{user}/runs\x12h\n\x08ListRuns\x12\x1e.v1.ProjectResourceListRequest\x1a\x14.v1.ListRunsResponse\"&\x82\xd3\xe4\x93\x02 \x12\x1e/api/v1/{owner}/{project}/runs\x12U\n\tCreateRun\x12\x12.v1.RunBodyRequest\x1a\x07.v1.Run\"+\x82\xd3\xe4\x93\x02%\"\x1e/api/v1/{owner}/{project}/runs:\x03run\x12\x62\n\x06GetRun\x12 .v1.ProjectEntityResourceRequest\x1a\x07.v1.Run\"-\x82\xd3\xe4\x93\x02\'\x12%/api/v1/{owner}/{project}/runs/{uuid}\x12`\n\tUpdateRun\x12\x12.v1.RunBodyRequest\x1a\x07.v1.Run\"6\x82\xd3\xe4\x93\x02\x30\x1a)/api/v1/{owner}/{project}/runs/{run.uuid}:\x03run\x12_\n\x08PatchRun\x12\x12.v1.RunBodyRequest\x1a\x07.v1.Run\"6\x82\xd3\xe4\x93\x02\x30\x32)/api/v1/{owner}/{project}/runs/{run.uuid}:\x03run\x12t\n\tDeleteRun\x12 .v1.ProjectEntityResourceRequest\x1a\x16.google.protobuf.Empty\"-\x82\xd3\xe4\x93\x02\'*%/api/v1/{owner}/{project}/runs/{uuid}\x12\x7f\n\nDeleteRuns\x12#.v1.ProjectResourceUuidsBodyRequest\x1a\x16.google.protobuf.Empty\"4\x82\xd3\xe4\x93\x02.*%/api/v1/{owner}/{project}/runs/delete:\x05uuids\x12w\n\x07StopRun\x12 .v1.ProjectEntityResourceRequest\x1a\x16.google.protobuf.Empty\"2\x82\xd3\xe4\x93\x02,\"*/api/v1/{owner}/{project}/runs/{uuid}/stop\x12{\n\x08StopRuns\x12#.v1.ProjectResourceUuidsBodyRequest\x1a\x16.google.protobuf.Empty\"2\x82\xd3\xe4\x93\x02,\"#/api/v1/{owner}/{project}/runs/stop:\x05uuids\x12\x86\x01\n\rInvalidateRun\x12 .v1.ProjectEntityResourceRequest\x1a\x16.google.protobuf.Empty\";\x82\xd3\xe4\x93\x02\x35\"0/api/v1/{owner}/{project}/runs/{uuid}/invalidate:\x01*\x12\x87\x01\n\x0eInvalidateRuns\x12#.v1.ProjectResourceUuidsBodyRequest\x1a\x16.google.protobuf.Empty\"8\x82\xd3\xe4\x93\x02\x32\")/api/v1/{owner}/{project}/runs/invalidate:\x05uuids\x12z\n\x07\x43opyRun\x12\x18.v1.EntityRunBodyRequest\x1a\x07.v1.Run\"L\x82\xd3\xe4\x93\x02\x46\"?/api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/copy:\x03run\x12\x80\x01\n\nRestartRun\x12\x18.v1.EntityRunBodyRequest\x1a\x07.v1.Run\"O\x82\xd3\xe4\x93\x02I\"B/api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/restart:\x03run\x12~\n\tResumeRun\x12\x18.v1.EntityRunBodyRequest\x1a\x07.v1.Run\"N\x82\xd3\xe4\x93\x02H\"A/api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/resume:\x03run\x12}\n\nArchiveRun\x12 .v1.ProjectEntityResourceRequest\x1a\x16.google.protobuf.Empty\"5\x82\xd3\xe4\x93\x02/\"-/api/v1/{owner}/{project}/runs/{uuid}/archive\x12}\n\nRestoreRun\x12 .v1.ProjectEntityResourceRequest\x1a\x16.google.protobuf.Empty\"5\x82\xd3\xe4\x93\x02/\"-/api/v1/{owner}/{project}/runs/{uuid}/restore\x12\x7f\n\x0b\x42ookmarkRun\x12 .v1.ProjectEntityResourceRequest\x1a\x16.google.protobuf.Empty\"6\x82\xd3\xe4\x93\x02\x30\"./api/v1/{owner}/{project}/runs/{uuid}/bookmark\x12\x83\x01\n\rUnbookmarkRun\x12 .v1.ProjectEntityResourceRequest\x1a\x16.google.protobuf.Empty\"8\x82\xd3\xe4\x93\x02\x32*0/api/v1/{owner}/{project}/runs/{uuid}/unbookmark\x12\x93\x01\n\x13StartRunTensorboard\x12 .v1.ProjectEntityResourceRequest\x1a\x16.google.protobuf.Empty\"B\x82\xd3\xe4\x93\x02<\"7/api/v1/{owner}/{project}/runs/{uuid}/tensorboard/start:\x01*\x12\x8e\x01\n\x12StopRunTensorboard\x12 .v1.ProjectEntityResourceRequest\x1a\x16.google.protobuf.Empty\">\x82\xd3\xe4\x93\x02\x38\"6/api/v1/{owner}/{project}/runs/{uuid}/tensorboard/stop\x12v\n\x0eGetRunStatuses\x12 .v1.ProjectEntityResourceRequest\x1a\n.v1.Status\"6\x82\xd3\xe4\x93\x02\x30\x12./api/v1/{owner}/{project}/runs/{uuid}/statuses\x12u\n\x0f\x43reateRunStatus\x12\x1b.v1.EntityStatusBodyRequest\x1a\n.v1.Status\"9\x82\xd3\xe4\x93\x02\x33\"./api/v1/{owner}/{project}/runs/{uuid}/statuses:\x01*\x12\x98\x01\n\x10\x43reateRunCodeRef\x12\x16.v1.CodeRefBodyRequest\x1a\x16.google.protobuf.Empty\"T\x82\xd3\xe4\x93\x02N\"C/api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/coderefs:\x07\x63oderef\x12y\n\x10ImpersonateToken\x12 .v1.ProjectEntityResourceRequest\x1a\x08.v1.Auth\"9\x82\xd3\xe4\x93\x02\x33\"1/api/v1/{owner}/{project}/runs/{uuid}/impersonate\x12{\n\x0eGetRunLogsTree\x12\x16.v1.RunArtifactRequest\x1a\x18.v1.ArtifactTreeResponse\"7\x82\xd3\xe4\x93\x02\x31\x12//api/v1/{owner}/{project}/runs/{uuid}/logs/tree\x12\x85\x01\n\x13GetRunArtifactsTree\x12\x16.v1.RunArtifactRequest\x1a\x18.v1.ArtifactTreeResponse\"<\x82\xd3\xe4\x93\x02\x36\x12\x34/api/v1/{owner}/{project}/runs/{uuid}/artifacts/tree\x12{\n\x0eGetRunSettings\x12 .v1.ProjectEntityResourceRequest\x1a\x0f.v1.RunSettings\"6\x82\xd3\xe4\x93\x02\x30\x12./api/v1/{owner}/{project}/runs/{uuid}/settings2\xcd\x12\n\nProjectsV1\x12l\n\x0cListProjects\x12\x1b.v1.OwnerResouceListRequest\x1a\x18.v1.ListProjectsResponse\"%\x82\xd3\xe4\x93\x02\x1f\x12\x1d/api/v1/{owner}/projects/list\x12\x66\n\rCreateProject\x12\x16.v1.ProjectBodyRequest\x1a\x0b.v1.Project\"0\x82\xd3\xe4\x93\x02*\"\x1f/api/v1/{owner}/projects/create:\x07project\x12q\n\x10ListProjectNames\x12\x1b.v1.OwnerResouceListRequest\x1a\x18.v1.ListProjectsResponse\"&\x82\xd3\xe4\x93\x02 \x12\x1e/api/v1/{owner}/projects/names\x12y\n\x16ListBookmarkedProjects\x12\x1a.v1.UserResouceListRequest\x1a\x18.v1.ListProjectsResponse\")\x82\xd3\xe4\x93\x02#\x12!/api/v1/bookmarks/{user}/projects\x12v\n\x14ListArchivedProjects\x12\x1a.v1.UserResouceListRequest\x1a\x18.v1.ListProjectsResponse\"(\x82\xd3\xe4\x93\x02\"\x12 /api/v1/archives/{user}/projects\x12X\n\nGetProject\x12\x1a.v1.ProjectResourceRequest\x1a\x0b.v1.Project\"!\x82\xd3\xe4\x93\x02\x1b\x12\x19/api/v1/{owner}/{project}\x12\x65\n\rUpdateProject\x12\x16.v1.ProjectBodyRequest\x1a\x0b.v1.Project\"/\x82\xd3\xe4\x93\x02)\x1a\x1e/api/v1/{owner}/{project.name}:\x07project\x12\x64\n\x0cPatchProject\x12\x16.v1.ProjectBodyRequest\x1a\x0b.v1.Project\"/\x82\xd3\xe4\x93\x02)2\x1e/api/v1/{owner}/{project.name}:\x07project\x12\x66\n\rDeleteProject\x12\x1a.v1.ProjectResourceRequest\x1a\x16.google.protobuf.Empty\"!\x82\xd3\xe4\x93\x02\x1b*\x19/api/v1/{owner}/{project}\x12o\n\x0e\x41rchiveProject\x12\x1a.v1.ProjectResourceRequest\x1a\x16.google.protobuf.Empty\")\x82\xd3\xe4\x93\x02#\"!/api/v1/{owner}/{project}/archive\x12o\n\x0eRestoreProject\x12\x1a.v1.ProjectResourceRequest\x1a\x16.google.protobuf.Empty\")\x82\xd3\xe4\x93\x02#\"!/api/v1/{owner}/{project}/restore\x12q\n\x0f\x42ookmarkProject\x12\x1a.v1.ProjectResourceRequest\x1a\x16.google.protobuf.Empty\"*\x82\xd3\xe4\x93\x02$\"\"/api/v1/{owner}/{project}/bookmark\x12u\n\x11UnbookmarkProject\x12\x1a.v1.ProjectResourceRequest\x1a\x16.google.protobuf.Empty\",\x82\xd3\xe4\x93\x02&*$/api/v1/{owner}/{project}/unbookmark\x12k\n\x0f\x45nableProjectCI\x12\x1a.v1.ProjectResourceRequest\x1a\x16.google.protobuf.Empty\"$\x82\xd3\xe4\x93\x02\x1e\"\x1c/api/v1/{owner}/{project}/ci\x12l\n\x10\x44isableProjectCI\x12\x1a.v1.ProjectResourceRequest\x1a\x16.google.protobuf.Empty\"$\x82\xd3\xe4\x93\x02\x1e*\x1c/api/v1/{owner}/{project}/ci\x12q\n\x12GetProjectSettings\x12\x1a.v1.ProjectResourceRequest\x1a\x13.v1.ProjectSettings\"*\x82\xd3\xe4\x93\x02$\x12\"/api/v1/{owner}/{project}/settings\x12\x82\x01\n\x15UpdateProjectSettings\x12\x1e.v1.ProjectSettingsBodyRequest\x1a\x13.v1.ProjectSettings\"4\x82\xd3\xe4\x93\x02.\x1a\"/api/v1/{owner}/{project}/settings:\x08settings\x12\x81\x01\n\x14PatchProjectSettings\x12\x1e.v1.ProjectSettingsBodyRequest\x1a\x13.v1.ProjectSettings\"4\x82\xd3\xe4\x93\x02.2\"/api/v1/{owner}/{project}/settings:\x08settings\x12h\n\x0fGetProjectTeams\x12\x1a.v1.ProjectResourceRequest\x1a\x10.v1.ProjectTeams\"\'\x82\xd3\xe4\x93\x02!\x12\x1f/api/v1/{owner}/{project}/teams\x12s\n\x12UpdateProjectTeams\x12\x1b.v1.ProjectTeamsBodyRequest\x1a\x10.v1.ProjectTeams\".\x82\xd3\xe4\x93\x02(\x1a\x1f/api/v1/{owner}/{project}/teams:\x05teams\x12r\n\x11PatchProjectTeams\x12\x1b.v1.ProjectTeamsBodyRequest\x1a\x10.v1.ProjectTeams\".\x82\xd3\xe4\x93\x02(2\x1f/api/v1/{owner}/{project}/teams:\x05teams2\xd4\x07\n\x11\x41rtifactsStoresV1\x12\x87\x01\n\x17ListArtifactsStoreNames\x12\x1b.v1.OwnerResouceListRequest\x1a\x1f.v1.ListArtifactsStoresResponse\".\x82\xd3\xe4\x93\x02(\x12&/api/v1/{owner}/artifacts_stores/names\x12}\n\x13ListArtifactsStores\x12\x1b.v1.OwnerResouceListRequest\x1a\x1f.v1.ListArtifactsStoresResponse\"(\x82\xd3\xe4\x93\x02\"\x12 /api/v1/{owner}/artifacts_stores\x12\x83\x01\n\x14\x43reateArtifactsStore\x12\x1d.v1.ArtifactsStoreBodyRequest\x1a\x12.v1.ArtifactsStore\"8\x82\xd3\xe4\x93\x02\x32\" /api/v1/{owner}/artifacts_stores:\x0e\x61rtifact_store\x12x\n\x11GetArtifactsStore\x12\x1e.v1.OwnerEntityResourceRequest\x1a\x12.v1.ArtifactsStore\"/\x82\xd3\xe4\x93\x02)\x12\'/api/v1/{owner}/artifacts_stores/{uuid}\x12\x99\x01\n\x14UpdateArtifactsStore\x12\x1d.v1.ArtifactsStoreBodyRequest\x1a\x12.v1.ArtifactsStore\"N\x82\xd3\xe4\x93\x02H\x1a\x36/api/v1/{owner}/artifacts_stores/{artifact_store.uuid}:\x0e\x61rtifact_store\x12\x98\x01\n\x13PatchArtifactsStore\x12\x1d.v1.ArtifactsStoreBodyRequest\x1a\x12.v1.ArtifactsStore\"N\x82\xd3\xe4\x93\x02H26/api/v1/{owner}/artifacts_stores/{artifact_store.uuid}:\x0e\x61rtifact_store\x12\x7f\n\x14\x44\x65leteArtifactsStore\x12\x1e.v1.OwnerEntityResourceRequest\x1a\x16.google.protobuf.Empty\"/\x82\xd3\xe4\x93\x02)*\'/api/v1/{owner}/artifacts_stores/{uuid}2\x98\x07\n\x0fK8sConfigMapsV1\x12\x81\x01\n\x15ListK8sConfigMapNames\x12\x1b.v1.OwnerResouceListRequest\x1a\x1c.v1.ListK8sResourcesResponse\"-\x82\xd3\xe4\x93\x02\'\x12%/api/v1/{owner}/k8s_config_maps/names\x12w\n\x11ListK8sConfigMaps\x12\x1b.v1.OwnerResouceListRequest\x1a\x1c.v1.ListK8sResourcesResponse\"\'\x82\xd3\xe4\x93\x02!\x12\x1f/api/v1/{owner}/k8s_config_maps\x12y\n\x13\x43reateK8sConfigMaps\x12\x1a.v1.K8sResourceBodyRequest\x1a\x0f.v1.K8sResource\"5\x82\xd3\xe4\x93\x02/\"\x1f/api/v1/{owner}/k8s_config_maps:\x0ck8s_resource\x12r\n\x0fGetK8sConfigMap\x12\x1e.v1.OwnerEntityResourceRequest\x1a\x0f.v1.K8sResource\".\x82\xd3\xe4\x93\x02(\x12&/api/v1/{owner}/k8s_config_maps/{uuid}\x12\x8c\x01\n\x12UpdateK8sConfigMap\x12\x1a.v1.K8sResourceBodyRequest\x1a\x0f.v1.K8sResource\"I\x82\xd3\xe4\x93\x02\x43\x1a\x33/api/v1/{owner}/k8s_config_maps/{k8s_resource.uuid}:\x0ck8s_resource\x12\x8b\x01\n\x11PatchK8sConfigMap\x12\x1a.v1.K8sResourceBodyRequest\x1a\x0f.v1.K8sResource\"I\x82\xd3\xe4\x93\x02\x43\x32\x33/api/v1/{owner}/k8s_config_maps/{k8s_resource.uuid}:\x0ck8s_resource\x12|\n\x12\x44\x65leteK8sConfigMap\x12\x1e.v1.OwnerEntityResourceRequest\x1a\x16.google.protobuf.Empty\".\x82\xd3\xe4\x93\x02(*&/api/v1/{owner}/k8s_config_maps/{uuid}2\xe3\x06\n\x0cK8sSecretsV1\x12z\n\x12ListK8sSecretNames\x12\x1b.v1.OwnerResouceListRequest\x1a\x1c.v1.ListK8sResourcesResponse\")\x82\xd3\xe4\x93\x02#\x12!/api/v1/{owner}/k8s_secrets/names\x12p\n\x0eListK8sSecrets\x12\x1b.v1.OwnerResouceListRequest\x1a\x1c.v1.ListK8sResourcesResponse\"#\x82\xd3\xe4\x93\x02\x1d\x12\x1b/api/v1/{owner}/k8s_secrets\x12r\n\x10\x43reateK8sSecrets\x12\x1a.v1.K8sResourceBodyRequest\x1a\x0f.v1.K8sResource\"1\x82\xd3\xe4\x93\x02+\"\x1b/api/v1/{owner}/k8s_secrets:\x0ck8s_resource\x12k\n\x0cGetK8sSecret\x12\x1e.v1.OwnerEntityResourceRequest\x1a\x0f.v1.K8sResource\"*\x82\xd3\xe4\x93\x02$\x12\"/api/v1/{owner}/k8s_secrets/{uuid}\x12\x85\x01\n\x0fUpdateK8sSecret\x12\x1a.v1.K8sResourceBodyRequest\x1a\x0f.v1.K8sResource\"E\x82\xd3\xe4\x93\x02?\x1a//api/v1/{owner}/k8s_secrets/{k8s_resource.uuid}:\x0ck8s_resource\x12\x84\x01\n\x0ePatchK8sSecret\x12\x1a.v1.K8sResourceBodyRequest\x1a\x0f.v1.K8sResource\"E\x82\xd3\xe4\x93\x02?2//api/v1/{owner}/k8s_secrets/{k8s_resource.uuid}:\x0ck8s_resource\x12u\n\x0f\x44\x65leteK8sSecret\x12\x1e.v1.OwnerEntityResourceRequest\x1a\x16.google.protobuf.Empty\"*\x82\xd3\xe4\x93\x02$*\"/api/v1/{owner}/k8s_secrets/{uuid}2\xac\x07\n\x12RegistryAccessesV1\x12\x85\x01\n\x17ListRegistryAccessNames\x12\x1b.v1.OwnerResouceListRequest\x1a\x1c.v1.ListHostAccessesResponse\"/\x82\xd3\xe4\x93\x02)\x12\'/api/v1/{owner}/registry_accesses/names\x12|\n\x14ListRegistryAccesses\x12\x1b.v1.OwnerResouceListRequest\x1a\x1c.v1.ListHostAccessesResponse\")\x82\xd3\xe4\x93\x02#\x12!/api/v1/{owner}/registry_accesses\x12y\n\x14\x43reateRegistryAccess\x12\x19.v1.HostAccessBodyRequest\x1a\x0e.v1.HostAccess\"6\x82\xd3\xe4\x93\x02\x30\"!/api/v1/{owner}/registry_accesses:\x0bhost_access\x12u\n\x11GetRegistryAccess\x12\x1e.v1.OwnerEntityResourceRequest\x1a\x0e.v1.HostAccess\"0\x82\xd3\xe4\x93\x02*\x12(/api/v1/{owner}/registry_accesses/{uuid}\x12\x8c\x01\n\x14UpdateRegistryAccess\x12\x19.v1.HostAccessBodyRequest\x1a\x0e.v1.HostAccess\"I\x82\xd3\xe4\x93\x02\x43\x1a\x34/api/v1/{owner}/registry_accesses/{host_access.uuid}:\x0bhost_access\x12\x8b\x01\n\x13PatchRegistryAccess\x12\x19.v1.HostAccessBodyRequest\x1a\x0e.v1.HostAccess\"I\x82\xd3\xe4\x93\x02\x43\x32\x34/api/v1/{owner}/registry_accesses/{host_access.uuid}:\x0bhost_access\x12\x80\x01\n\x14\x44\x65leteRegistryAccess\x12\x1e.v1.OwnerEntityResourceRequest\x1a\x16.google.protobuf.Empty\"0\x82\xd3\xe4\x93\x02**(/api/v1/{owner}/registry_accesses/{uuid}2\xdf\x06\n\rGitAccessesV1\x12{\n\x12ListGitAccessNames\x12\x1b.v1.OwnerResouceListRequest\x1a\x1c.v1.ListHostAccessesResponse\"*\x82\xd3\xe4\x93\x02$\x12\"/api/v1/{owner}/git_accesses/names\x12r\n\x0fListGitAccesses\x12\x1b.v1.OwnerResouceListRequest\x1a\x1c.v1.ListHostAccessesResponse\"$\x82\xd3\xe4\x93\x02\x1e\x12\x1c/api/v1/{owner}/git_accesses\x12o\n\x0f\x43reateGitAccess\x12\x19.v1.HostAccessBodyRequest\x1a\x0e.v1.HostAccess\"1\x82\xd3\xe4\x93\x02+\"\x1c/api/v1/{owner}/git_accesses:\x0bhost_access\x12k\n\x0cGetGitAccess\x12\x1e.v1.OwnerEntityResourceRequest\x1a\x0e.v1.HostAccess\"+\x82\xd3\xe4\x93\x02%\x12#/api/v1/{owner}/git_accesses/{uuid}\x12\x82\x01\n\x0fUpdateGitAccess\x12\x19.v1.HostAccessBodyRequest\x1a\x0e.v1.HostAccess\"D\x82\xd3\xe4\x93\x02>\x1a//api/v1/{owner}/git_accesses/{host_access.uuid}:\x0bhost_access\x12\x81\x01\n\x0ePatchGitAccess\x12\x19.v1.HostAccessBodyRequest\x1a\x0e.v1.HostAccess\"D\x82\xd3\xe4\x93\x02>2//api/v1/{owner}/git_accesses/{host_access.uuid}:\x0bhost_access\x12v\n\x0f\x44\x65leteGitAccess\x12\x1e.v1.OwnerEntityResourceRequest\x1a\x16.google.protobuf.Empty\"+\x82\xd3\xe4\x93\x02%*#/api/v1/{owner}/git_accesses/{uuid}2\xbb\x05\n\x08SearchV1\x12t\n\x0cListSearches\x12\x1e.v1.ProjectResourceListRequest\x1a\x18.v1.ListSearchesResponse\"*\x82\xd3\xe4\x93\x02$\x12\"/api/v1/{owner}/{project}/searches\x12\x65\n\x0c\x43reateSearch\x12\x15.v1.SearchBodyRequest\x1a\n.v1.Search\"2\x82\xd3\xe4\x93\x02,\"\"/api/v1/{owner}/{project}/searches:\x06search\x12l\n\tGetSearch\x12 .v1.ProjectEntityResourceRequest\x1a\n.v1.Search\"1\x82\xd3\xe4\x93\x02+\x12)/api/v1/{owner}/{project}/searches/{uuid}\x12s\n\x0cUpdateSearch\x12\x15.v1.SearchBodyRequest\x1a\n.v1.Search\"@\x82\xd3\xe4\x93\x02:\x1a\x30/api/v1/{owner}/{project}/searches/{search.uuid}:\x06search\x12r\n\x0bPatchSearch\x12\x15.v1.SearchBodyRequest\x1a\n.v1.Search\"@\x82\xd3\xe4\x93\x02:20/api/v1/{owner}/{project}/searches/{search.uuid}:\x06search\x12{\n\x0c\x44\x65leteSearch\x12 .v1.ProjectEntityResourceRequest\x1a\x16.google.protobuf.Empty\"1\x82\xd3\xe4\x93\x02+*)/api/v1/{owner}/{project}/searches/{uuid}2\x83\x06\n\x0b\x44\x61shboardV1\x12y\n\rListDashboard\x12\x1e.v1.ProjectResourceListRequest\x1a\x1a.v1.ListDashboardsResponse\",\x82\xd3\xe4\x93\x02&\x12$/api/v1/{owner}/{project}/dashboards\x12s\n\x0f\x43reateDashboard\x12\x18.v1.DashboardBodyRequest\x1a\r.v1.Dashboard\"7\x82\xd3\xe4\x93\x02\x31\"$/api/v1/{owner}/{project}/dashboards:\tdashboard\x12t\n\x0cGetDashboard\x12 .v1.ProjectEntityResourceRequest\x1a\r.v1.Dashboard\"3\x82\xd3\xe4\x93\x02-\x12+/api/v1/{owner}/{project}/dashboards/{uuid}\x12\x84\x01\n\x0fUpdateDashboard\x12\x18.v1.DashboardBodyRequest\x1a\r.v1.Dashboard\"H\x82\xd3\xe4\x93\x02\x42\x1a\x35/api/v1/{owner}/{project}/dashboards/{dashboard.uuid}:\tdashboard\x12\x83\x01\n\x0ePatchDashboard\x12\x18.v1.DashboardBodyRequest\x1a\r.v1.Dashboard\"H\x82\xd3\xe4\x93\x02\x42\x32\x35/api/v1/{owner}/{project}/dashboards/{dashboard.uuid}:\tdashboard\x12\x80\x01\n\x0f\x44\x65leteDashboard\x12 .v1.ProjectEntityResourceRequest\x1a\x16.google.protobuf.Empty\"3\x82\xd3\xe4\x93\x02-*+/api/v1/{owner}/{project}/dashboards/{uuid}2\xc4\x05\n\x08\x41gentsV1\x12k\n\x0eListAgentNames\x12\x1b.v1.OwnerResouceListRequest\x1a\x16.v1.ListAgentsResponse\"$\x82\xd3\xe4\x93\x02\x1e\x12\x1c/api/v1/{owner}/agents/names\x12\x61\n\nListAgents\x12\x1b.v1.OwnerResouceListRequest\x1a\x16.v1.ListAgentsResponse\"\x1e\x82\xd3\xe4\x93\x02\x18\x12\x16/api/v1/{owner}/agents\x12U\n\x0b\x43reateAgent\x12\x14.v1.AgentBodyRequest\x1a\t.v1.Agent\"%\x82\xd3\xe4\x93\x02\x1f\"\x16/api/v1/{owner}/agents:\x05\x61gent\x12\\\n\x08GetAgent\x12\x1e.v1.OwnerEntityResourceRequest\x1a\t.v1.Agent\"%\x82\xd3\xe4\x93\x02\x1f\x12\x1d/api/v1/{owner}/agents/{uuid}\x12\x62\n\x0bUpdateAgent\x12\x14.v1.AgentBodyRequest\x1a\t.v1.Agent\"2\x82\xd3\xe4\x93\x02,\x1a#/api/v1/{owner}/agents/{agent.uuid}:\x05\x61gent\x12\x61\n\nPatchAgent\x12\x14.v1.AgentBodyRequest\x1a\t.v1.Agent\"2\x82\xd3\xe4\x93\x02,2#/api/v1/{owner}/agents/{agent.uuid}:\x05\x61gent\x12l\n\x0b\x44\x65leteAgent\x12\x1e.v1.OwnerEntityResourceRequest\x1a\x16.google.protobuf.Empty\"%\x82\xd3\xe4\x93\x02\x1f*\x1d/api/v1/{owner}/agents/{uuid}2\xbb\x06\n\x08QueuesV1\x12{\n\x0eListQueueNames\x12\x1c.v1.AgentResourceListRequest\x1a\x16.v1.ListQueuesResponse\"3\x82\xd3\xe4\x93\x02-\x12+/api/v1/{owner}/agents/{agent}/queues/names\x12q\n\nListQueues\x12\x1c.v1.AgentResourceListRequest\x1a\x16.v1.ListQueuesResponse\"-\x82\xd3\xe4\x93\x02\'\x12%/api/v1/{owner}/agents/{agent}/queues\x12\x64\n\x0b\x43reateQueue\x12\x14.v1.QueueBodyRequest\x1a\t.v1.Agent\"4\x82\xd3\xe4\x93\x02.\"%/api/v1/{owner}/agents/{agent}/queues:\x05queue\x12k\n\x08GetQueue\x12\x1e.v1.AgentEntityResourceRequest\x1a\t.v1.Queue\"4\x82\xd3\xe4\x93\x02.\x12,/api/v1/{owner}/agents/{agent}/queues/{uuid}\x12w\n\x0bUpdateQueue\x12\x14.v1.QueueBodyRequest\x1a\t.v1.Queue\"G\x82\xd3\xe4\x93\x02\x41\x1a\x38/api/v1/{owner}/agents/{queue.agent}/queues/{queue.uuid}:\x05queue\x12v\n\nPatchQueue\x12\x14.v1.QueueBodyRequest\x1a\t.v1.Queue\"G\x82\xd3\xe4\x93\x02\x41\x32\x38/api/v1/{owner}/agents/{queue.agent}/queues/{queue.uuid}:\x05queue\x12{\n\x0b\x44\x65leteQueue\x12\x1e.v1.AgentEntityResourceRequest\x1a\x16.google.protobuf.Empty\"4\x82\xd3\xe4\x93\x02.*,/api/v1/{owner}/agents/{agent}/queues/{uuid}2Q\n\x06\x41uthV1\x12G\n\x05Login\x12\x14.v1.CredsBodyRequest\x1a\x08.v1.Auth\"\x1e\x82\xd3\xe4\x93\x02\x18\"\x13/api/v1/users/token:\x01*2M\n\x07UsersV1\x12\x42\n\x07GetUser\x12\x16.google.protobuf.Empty\x1a\x08.v1.User\"\x15\x82\xd3\xe4\x93\x02\x0f\x12\r/api/v1/users2\xb0\x01\n\nVersionsV1\x12L\n\x0bGetVersions\x12\x16.google.protobuf.Empty\x1a\x0c.v1.Versions\"\x17\x82\xd3\xe4\x93\x02\x11\x12\x0f/api/v1/version\x12T\n\rGetLogHandler\x12\x16.google.protobuf.Empty\x1a\x0e.v1.LogHandler\"\x1b\x82\xd3\xe4\x93\x02\x15\x12\x13/api/v1/log_handler2\x9a\r\n\x0fOrganizationsV1\x12s\n\x15ListOrganizationNames\x12\x16.google.protobuf.Empty\x1a\x1d.v1.ListOrganizationsResponse\"#\x82\xd3\xe4\x93\x02\x1d\x12\x1b/api/v1/organizations/names\x12n\n\x11ListOrganizations\x12\x16.google.protobuf.Empty\x1a\x1d.v1.ListOrganizationsResponse\"\"\x82\xd3\xe4\x93\x02\x1c\x12\x1a/api/v1/organizations/list\x12\x61\n\x12\x43reateOrganization\x12\x10.v1.Organization\x1a\x10.v1.Organization\"\'\x82\xd3\xe4\x93\x02!\"\x1c/api/v1/organizations/create:\x01*\x12\x64\n\x0fGetOrganization\x12\x18.v1.OwnerResourceRequest\x1a\x10.v1.Organization\"%\x82\xd3\xe4\x93\x02\x1f\x12\x1d/api/v1/organizations/{owner}\x12x\n\x12UpdateOrganization\x12\x1b.v1.OrganizationBodyRequest\x1a\x10.v1.Organization\"3\x82\xd3\xe4\x93\x02-\x1a\x1d/api/v1/organizations/{owner}:\x0corganization\x12w\n\x11PatchOrganization\x12\x1b.v1.OrganizationBodyRequest\x1a\x10.v1.Organization\"3\x82\xd3\xe4\x93\x02-2\x1d/api/v1/organizations/{owner}:\x0corganization\x12m\n\x12\x44\x65leteOrganization\x12\x18.v1.OwnerResourceRequest\x1a\x16.google.protobuf.Empty\"%\x82\xd3\xe4\x93\x02\x1f*\x1d/api/v1/organizations/{owner}\x12\x87\x01\n\x17ListOrganizationMembers\x12\x18.v1.OwnerResourceRequest\x1a#.v1.ListOrganizationMembersResponse\"-\x82\xd3\xe4\x93\x02\'\x12%/api/v1/organizations/{owner}/members\x12\x8c\x01\n\x18\x43reateOrganizationMember\x12!.v1.OrganizationMemberBodyRequest\x1a\x16.v1.OrganizationMember\"5\x82\xd3\xe4\x93\x02/\"%/api/v1/organizations/{owner}/members:\x06member\x12\x8f\x01\n\x15GetOrganizationMember\x12!.v1.OrganizationMemberBodyRequest\x1a\x16.v1.OrganizationMember\";\x82\xd3\xe4\x93\x02\x35\x12\x33/api/v1/organizations/{owner}/members/{member.user}\x12\x9a\x01\n\x18UpdateOrganizationMember\x12!.v1.OrganizationMemberBodyRequest\x1a\x16.v1.OrganizationMember\"C\x82\xd3\xe4\x93\x02=\x1a\x33/api/v1/organizations/{owner}/members/{member.user}:\x06member\x12\x99\x01\n\x17PatchOrganizationMember\x12!.v1.OrganizationMemberBodyRequest\x1a\x16.v1.OrganizationMember\"C\x82\xd3\xe4\x93\x02=23/api/v1/organizations/{owner}/members/{member.user}:\x06member\x12\x92\x01\n\x18\x44\x65leteOrganizationMember\x12!.v1.OrganizationMemberBodyRequest\x1a\x16.google.protobuf.Empty\";\x82\xd3\xe4\x93\x02\x35*3/api/v1/organizations/{owner}/members/{member.user}2\x88\x0b\n\x07TeamsV1\x12h\n\rListTeamNames\x12\x1b.v1.OwnerResouceListRequest\x1a\x15.v1.ListTeamsResponse\"#\x82\xd3\xe4\x93\x02\x1d\x12\x1b/api/v1/{owner}/teams/names\x12^\n\tListTeams\x12\x1b.v1.OwnerResouceListRequest\x1a\x15.v1.ListTeamsResponse\"\x1d\x82\xd3\xe4\x93\x02\x17\x12\x15/api/v1/{owner}/teams\x12P\n\nCreateTeam\x12\x13.v1.TeamBodyRequest\x1a\x08.v1.Team\"#\x82\xd3\xe4\x93\x02\x1d\"\x15/api/v1/{owner}/teams:\x04team\x12R\n\x07GetTeam\x12\x17.v1.TeamResourceRequest\x1a\x08.v1.Team\"$\x82\xd3\xe4\x93\x02\x1e\x12\x1c/api/v1/{owner}/teams/{team}\x12\\\n\nUpdateTeam\x12\x13.v1.TeamBodyRequest\x1a\x08.v1.Team\"/\x82\xd3\xe4\x93\x02)\x1a!/api/v1/{owner}/teams/{team.name}:\x04team\x12[\n\tPatchTeam\x12\x13.v1.TeamBodyRequest\x1a\x08.v1.Team\"/\x82\xd3\xe4\x93\x02)2!/api/v1/{owner}/teams/{team.name}:\x04team\x12\x63\n\nDeleteTeam\x12\x17.v1.TeamResourceRequest\x1a\x16.google.protobuf.Empty\"$\x82\xd3\xe4\x93\x02\x1e*\x1c/api/v1/{owner}/teams/{team}\x12u\n\x0fListTeamMembers\x12\x17.v1.TeamResourceRequest\x1a\x1b.v1.ListTeamMembersResponse\",\x82\xd3\xe4\x93\x02&\x12$/api/v1/{owner}/teams/{team}/members\x12s\n\x10\x43reateTeamMember\x12\x19.v1.TeamMemberBodyRequest\x1a\x0e.v1.TeamMember\"4\x82\xd3\xe4\x93\x02.\"$/api/v1/{owner}/teams/{team}/members:\x06member\x12v\n\rGetTeamMember\x12\x19.v1.TeamMemberBodyRequest\x1a\x0e.v1.TeamMember\":\x82\xd3\xe4\x93\x02\x34\x12\x32/api/v1/{owner}/teams/{team}/members/{member.user}\x12\x81\x01\n\x10UpdateTeamMember\x12\x19.v1.TeamMemberBodyRequest\x1a\x0e.v1.TeamMember\"B\x82\xd3\xe4\x93\x02<\x1a\x32/api/v1/{owner}/teams/{team}/members/{member.user}:\x06member\x12\x80\x01\n\x0fPatchTeamMember\x12\x19.v1.TeamMemberBodyRequest\x1a\x0e.v1.TeamMember\"B\x82\xd3\xe4\x93\x02<22/api/v1/{owner}/teams/{team}/members/{member.user}:\x06member\x12\x81\x01\n\x10\x44\x65leteTeamMember\x12\x19.v1.TeamMemberBodyRequest\x1a\x16.google.protobuf.Empty\":\x82\xd3\xe4\x93\x02\x34*2/api/v1/{owner}/teams/{team}/members/{member.user}2J\n\tSchemasV1\x12=\n\x04NoOp\x12\x16.google.protobuf.Empty\x1a\x0b.v1.Schemas\"\x10\x82\xd3\xe4\x93\x02\n\x12\x08/schemasB\xb3\x02\x92\x41\xaf\x02\x12\x61\n\x0cPolyaxon sdk\"J\n\x0cPolyaxon sdk\x12$https://github.com/polyaxon/polyaxon\x1a\x14\x63ontact@polyaxon.com2\x05\x31.0.0*\x02\x01\x02\x32\x10\x61pplication/json:\x10\x61pplication/jsonR\x14\n\x03\x32\x30\x34\x12\r\n\x0bNo content.R:\n\x03\x34\x30\x33\x12\x33\n1You don\'t have permission to access the resource.R!\n\x03\x34\x30\x34\x12\x1a\n\x18Resource does not exist.Z\x1f\n\x1d\n\x06\x41piKey\x12\x13\x08\x02\x1a\rAuthorization \x02\x62\x0c\n\n\n\x06\x41piKey\x12\x00\x62\x06proto3')
   ,
-  dependencies=[google_dot_api_dot_annotations__pb2.DESCRIPTOR,google_dot_protobuf_dot_empty__pb2.DESCRIPTOR,protoc__gen__swagger_dot_options_dot_annotations__pb2.DESCRIPTOR,v1_dot_agent__pb2.DESCRIPTOR,v1_dot_artifacts__store__pb2.DESCRIPTOR,v1_dot_host__access__pb2.DESCRIPTOR,v1_dot_k8s__resource__pb2.DESCRIPTOR,v1_dot_base__pb2.DESCRIPTOR,v1_dot_code__ref__pb2.DESCRIPTOR,v1_dot_run__pb2.DESCRIPTOR,v1_dot_project__pb2.DESCRIPTOR,v1_dot_version__pb2.DESCRIPTOR,v1_dot_auth__pb2.DESCRIPTOR,v1_dot_user__pb2.DESCRIPTOR,v1_dot_search__pb2.DESCRIPTOR,v1_dot_status__pb2.DESCRIPTOR,])
+  dependencies=[google_dot_api_dot_annotations__pb2.DESCRIPTOR,google_dot_protobuf_dot_empty__pb2.DESCRIPTOR,protoc__gen__swagger_dot_options_dot_annotations__pb2.DESCRIPTOR,v1_dot_agent__pb2.DESCRIPTOR,v1_dot_artifacts__store__pb2.DESCRIPTOR,v1_dot_dashboard__pb2.DESCRIPTOR,v1_dot_host__access__pb2.DESCRIPTOR,v1_dot_k8s__resource__pb2.DESCRIPTOR,v1_dot_base__pb2.DESCRIPTOR,v1_dot_code__ref__pb2.DESCRIPTOR,v1_dot_run__pb2.DESCRIPTOR,v1_dot_organization__pb2.DESCRIPTOR,v1_dot_project__pb2.DESCRIPTOR,v1_dot_version__pb2.DESCRIPTOR,v1_dot_auth__pb2.DESCRIPTOR,v1_dot_user__pb2.DESCRIPTOR,v1_dot_search__pb2.DESCRIPTOR,v1_dot_status__pb2.DESCRIPTOR,v1_dot_team__pb2.DESCRIPTOR,v1_dot_schemas_dot_all__pb2.DESCRIPTOR,])
 
 
 
@@ -69,8 +73,8 @@ _RUNSV1 = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
-  serialized_start=370,
-  serialized_end=3826,
+  serialized_start=450,
+  serialized_end=4031,
   methods=[
   _descriptor.MethodDescriptor(
     name='ListBookmarkedRuns',
@@ -324,6 +328,15 @@ _RUNSV1 = _descriptor.ServiceDescriptor(
     output_type=v1_dot_artifacts__store__pb2._ARTIFACTTREERESPONSE,
     serialized_options=_b('\202\323\344\223\0026\0224/api/v1/{owner}/{project}/runs/{uuid}/artifacts/tree'),
   ),
+  _descriptor.MethodDescriptor(
+    name='GetRunSettings',
+    full_name='v1.RunsV1.GetRunSettings',
+    index=28,
+    containing_service=None,
+    input_type=v1_dot_base__pb2._PROJECTENTITYRESOURCEREQUEST,
+    output_type=v1_dot_run__pb2._RUNSETTINGS,
+    serialized_options=_b('\202\323\344\223\0020\022./api/v1/{owner}/{project}/runs/{uuid}/settings'),
+  ),
 ])
 _sym_db.RegisterServiceDescriptor(_RUNSV1)
 
@@ -336,8 +349,8 @@ _PROJECTSV1 = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=1,
   serialized_options=None,
-  serialized_start=3829,
-  serialized_end=5491,
+  serialized_start=4034,
+  serialized_end=6415,
   methods=[
   _descriptor.MethodDescriptor(
     name='ListProjects',
@@ -474,6 +487,60 @@ _PROJECTSV1 = _descriptor.ServiceDescriptor(
     output_type=google_dot_protobuf_dot_empty__pb2._EMPTY,
     serialized_options=_b('\202\323\344\223\002\036*\034/api/v1/{owner}/{project}/ci'),
   ),
+  _descriptor.MethodDescriptor(
+    name='GetProjectSettings',
+    full_name='v1.ProjectsV1.GetProjectSettings',
+    index=15,
+    containing_service=None,
+    input_type=v1_dot_base__pb2._PROJECTRESOURCEREQUEST,
+    output_type=v1_dot_project__pb2._PROJECTSETTINGS,
+    serialized_options=_b('\202\323\344\223\002$\022\"/api/v1/{owner}/{project}/settings'),
+  ),
+  _descriptor.MethodDescriptor(
+    name='UpdateProjectSettings',
+    full_name='v1.ProjectsV1.UpdateProjectSettings',
+    index=16,
+    containing_service=None,
+    input_type=v1_dot_project__pb2._PROJECTSETTINGSBODYREQUEST,
+    output_type=v1_dot_project__pb2._PROJECTSETTINGS,
+    serialized_options=_b('\202\323\344\223\002.\032\"/api/v1/{owner}/{project}/settings:\010settings'),
+  ),
+  _descriptor.MethodDescriptor(
+    name='PatchProjectSettings',
+    full_name='v1.ProjectsV1.PatchProjectSettings',
+    index=17,
+    containing_service=None,
+    input_type=v1_dot_project__pb2._PROJECTSETTINGSBODYREQUEST,
+    output_type=v1_dot_project__pb2._PROJECTSETTINGS,
+    serialized_options=_b('\202\323\344\223\002.2\"/api/v1/{owner}/{project}/settings:\010settings'),
+  ),
+  _descriptor.MethodDescriptor(
+    name='GetProjectTeams',
+    full_name='v1.ProjectsV1.GetProjectTeams',
+    index=18,
+    containing_service=None,
+    input_type=v1_dot_base__pb2._PROJECTRESOURCEREQUEST,
+    output_type=v1_dot_project__pb2._PROJECTTEAMS,
+    serialized_options=_b('\202\323\344\223\002!\022\037/api/v1/{owner}/{project}/teams'),
+  ),
+  _descriptor.MethodDescriptor(
+    name='UpdateProjectTeams',
+    full_name='v1.ProjectsV1.UpdateProjectTeams',
+    index=19,
+    containing_service=None,
+    input_type=v1_dot_project__pb2._PROJECTTEAMSBODYREQUEST,
+    output_type=v1_dot_project__pb2._PROJECTTEAMS,
+    serialized_options=_b('\202\323\344\223\002(\032\037/api/v1/{owner}/{project}/teams:\005teams'),
+  ),
+  _descriptor.MethodDescriptor(
+    name='PatchProjectTeams',
+    full_name='v1.ProjectsV1.PatchProjectTeams',
+    index=20,
+    containing_service=None,
+    input_type=v1_dot_project__pb2._PROJECTTEAMSBODYREQUEST,
+    output_type=v1_dot_project__pb2._PROJECTTEAMS,
+    serialized_options=_b('\202\323\344\223\002(2\037/api/v1/{owner}/{project}/teams:\005teams'),
+  ),
 ])
 _sym_db.RegisterServiceDescriptor(_PROJECTSV1)
 
@@ -486,8 +553,8 @@ _ARTIFACTSSTORESV1 = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=2,
   serialized_options=None,
-  serialized_start=5494,
-  serialized_end=6474,
+  serialized_start=6418,
+  serialized_end=7398,
   methods=[
   _descriptor.MethodDescriptor(
     name='ListArtifactsStoreNames',
@@ -564,8 +631,8 @@ _K8SCONFIGMAPSV1 = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=3,
   serialized_options=None,
-  serialized_start=6477,
-  serialized_end=7397,
+  serialized_start=7401,
+  serialized_end=8321,
   methods=[
   _descriptor.MethodDescriptor(
     name='ListK8sConfigMapNames',
@@ -642,8 +709,8 @@ _K8SSECRETSV1 = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=4,
   serialized_options=None,
-  serialized_start=7400,
-  serialized_end=8267,
+  serialized_start=8324,
+  serialized_end=9191,
   methods=[
   _descriptor.MethodDescriptor(
     name='ListK8sSecretNames',
@@ -720,8 +787,8 @@ _REGISTRYACCESSESV1 = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=5,
   serialized_options=None,
-  serialized_start=8270,
-  serialized_end=9210,
+  serialized_start=9194,
+  serialized_end=10134,
   methods=[
   _descriptor.MethodDescriptor(
     name='ListRegistryAccessNames',
@@ -798,8 +865,8 @@ _GITACCESSESV1 = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=6,
   serialized_options=None,
-  serialized_start=9213,
-  serialized_end=10076,
+  serialized_start=10137,
+  serialized_end=11000,
   methods=[
   _descriptor.MethodDescriptor(
     name='ListGitAccessNames',
@@ -876,8 +943,8 @@ _SEARCHV1 = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=7,
   serialized_options=None,
-  serialized_start=10079,
-  serialized_end=10778,
+  serialized_start=11003,
+  serialized_end=11702,
   methods=[
   _descriptor.MethodDescriptor(
     name='ListSearches',
@@ -939,14 +1006,83 @@ _sym_db.RegisterServiceDescriptor(_SEARCHV1)
 DESCRIPTOR.services_by_name['SearchV1'] = _SEARCHV1
 
 
+_DASHBOARDV1 = _descriptor.ServiceDescriptor(
+  name='DashboardV1',
+  full_name='v1.DashboardV1',
+  file=DESCRIPTOR,
+  index=8,
+  serialized_options=None,
+  serialized_start=11705,
+  serialized_end=12476,
+  methods=[
+  _descriptor.MethodDescriptor(
+    name='ListDashboard',
+    full_name='v1.DashboardV1.ListDashboard',
+    index=0,
+    containing_service=None,
+    input_type=v1_dot_base__pb2._PROJECTRESOURCELISTREQUEST,
+    output_type=v1_dot_dashboard__pb2._LISTDASHBOARDSRESPONSE,
+    serialized_options=_b('\202\323\344\223\002&\022$/api/v1/{owner}/{project}/dashboards'),
+  ),
+  _descriptor.MethodDescriptor(
+    name='CreateDashboard',
+    full_name='v1.DashboardV1.CreateDashboard',
+    index=1,
+    containing_service=None,
+    input_type=v1_dot_dashboard__pb2._DASHBOARDBODYREQUEST,
+    output_type=v1_dot_dashboard__pb2._DASHBOARD,
+    serialized_options=_b('\202\323\344\223\0021\"$/api/v1/{owner}/{project}/dashboards:\tdashboard'),
+  ),
+  _descriptor.MethodDescriptor(
+    name='GetDashboard',
+    full_name='v1.DashboardV1.GetDashboard',
+    index=2,
+    containing_service=None,
+    input_type=v1_dot_base__pb2._PROJECTENTITYRESOURCEREQUEST,
+    output_type=v1_dot_dashboard__pb2._DASHBOARD,
+    serialized_options=_b('\202\323\344\223\002-\022+/api/v1/{owner}/{project}/dashboards/{uuid}'),
+  ),
+  _descriptor.MethodDescriptor(
+    name='UpdateDashboard',
+    full_name='v1.DashboardV1.UpdateDashboard',
+    index=3,
+    containing_service=None,
+    input_type=v1_dot_dashboard__pb2._DASHBOARDBODYREQUEST,
+    output_type=v1_dot_dashboard__pb2._DASHBOARD,
+    serialized_options=_b('\202\323\344\223\002B\0325/api/v1/{owner}/{project}/dashboards/{dashboard.uuid}:\tdashboard'),
+  ),
+  _descriptor.MethodDescriptor(
+    name='PatchDashboard',
+    full_name='v1.DashboardV1.PatchDashboard',
+    index=4,
+    containing_service=None,
+    input_type=v1_dot_dashboard__pb2._DASHBOARDBODYREQUEST,
+    output_type=v1_dot_dashboard__pb2._DASHBOARD,
+    serialized_options=_b('\202\323\344\223\002B25/api/v1/{owner}/{project}/dashboards/{dashboard.uuid}:\tdashboard'),
+  ),
+  _descriptor.MethodDescriptor(
+    name='DeleteDashboard',
+    full_name='v1.DashboardV1.DeleteDashboard',
+    index=5,
+    containing_service=None,
+    input_type=v1_dot_base__pb2._PROJECTENTITYRESOURCEREQUEST,
+    output_type=google_dot_protobuf_dot_empty__pb2._EMPTY,
+    serialized_options=_b('\202\323\344\223\002-*+/api/v1/{owner}/{project}/dashboards/{uuid}'),
+  ),
+])
+_sym_db.RegisterServiceDescriptor(_DASHBOARDV1)
+
+DESCRIPTOR.services_by_name['DashboardV1'] = _DASHBOARDV1
+
+
 _AGENTSV1 = _descriptor.ServiceDescriptor(
   name='AgentsV1',
   full_name='v1.AgentsV1',
   file=DESCRIPTOR,
-  index=8,
+  index=9,
   serialized_options=None,
-  serialized_start=10781,
-  serialized_end=11489,
+  serialized_start=12479,
+  serialized_end=13187,
   methods=[
   _descriptor.MethodDescriptor(
     name='ListAgentNames',
@@ -1021,10 +1157,10 @@ _QUEUESV1 = _descriptor.ServiceDescriptor(
   name='QueuesV1',
   full_name='v1.QueuesV1',
   file=DESCRIPTOR,
-  index=9,
+  index=10,
   serialized_options=None,
-  serialized_start=11492,
-  serialized_end=12319,
+  serialized_start=13190,
+  serialized_end=14017,
   methods=[
   _descriptor.MethodDescriptor(
     name='ListQueueNames',
@@ -1099,10 +1235,10 @@ _AUTHV1 = _descriptor.ServiceDescriptor(
   name='AuthV1',
   full_name='v1.AuthV1',
   file=DESCRIPTOR,
-  index=10,
+  index=11,
   serialized_options=None,
-  serialized_start=12321,
-  serialized_end=12402,
+  serialized_start=14019,
+  serialized_end=14100,
   methods=[
   _descriptor.MethodDescriptor(
     name='Login',
@@ -1123,10 +1259,10 @@ _USERSV1 = _descriptor.ServiceDescriptor(
   name='UsersV1',
   full_name='v1.UsersV1',
   file=DESCRIPTOR,
-  index=11,
+  index=12,
   serialized_options=None,
-  serialized_start=12404,
-  serialized_end=12481,
+  serialized_start=14102,
+  serialized_end=14179,
   methods=[
   _descriptor.MethodDescriptor(
     name='GetUser',
@@ -1147,10 +1283,10 @@ _VERSIONSV1 = _descriptor.ServiceDescriptor(
   name='VersionsV1',
   full_name='v1.VersionsV1',
   file=DESCRIPTOR,
-  index=12,
+  index=13,
   serialized_options=None,
-  serialized_start=12484,
-  serialized_end=12660,
+  serialized_start=14182,
+  serialized_end=14358,
   methods=[
   _descriptor.MethodDescriptor(
     name='GetVersions',
@@ -1174,5 +1310,293 @@ _VERSIONSV1 = _descriptor.ServiceDescriptor(
 _sym_db.RegisterServiceDescriptor(_VERSIONSV1)
 
 DESCRIPTOR.services_by_name['VersionsV1'] = _VERSIONSV1
+
+
+_ORGANIZATIONSV1 = _descriptor.ServiceDescriptor(
+  name='OrganizationsV1',
+  full_name='v1.OrganizationsV1',
+  file=DESCRIPTOR,
+  index=14,
+  serialized_options=None,
+  serialized_start=14361,
+  serialized_end=16051,
+  methods=[
+  _descriptor.MethodDescriptor(
+    name='ListOrganizationNames',
+    full_name='v1.OrganizationsV1.ListOrganizationNames',
+    index=0,
+    containing_service=None,
+    input_type=google_dot_protobuf_dot_empty__pb2._EMPTY,
+    output_type=v1_dot_organization__pb2._LISTORGANIZATIONSRESPONSE,
+    serialized_options=_b('\202\323\344\223\002\035\022\033/api/v1/organizations/names'),
+  ),
+  _descriptor.MethodDescriptor(
+    name='ListOrganizations',
+    full_name='v1.OrganizationsV1.ListOrganizations',
+    index=1,
+    containing_service=None,
+    input_type=google_dot_protobuf_dot_empty__pb2._EMPTY,
+    output_type=v1_dot_organization__pb2._LISTORGANIZATIONSRESPONSE,
+    serialized_options=_b('\202\323\344\223\002\034\022\032/api/v1/organizations/list'),
+  ),
+  _descriptor.MethodDescriptor(
+    name='CreateOrganization',
+    full_name='v1.OrganizationsV1.CreateOrganization',
+    index=2,
+    containing_service=None,
+    input_type=v1_dot_organization__pb2._ORGANIZATION,
+    output_type=v1_dot_organization__pb2._ORGANIZATION,
+    serialized_options=_b('\202\323\344\223\002!\"\034/api/v1/organizations/create:\001*'),
+  ),
+  _descriptor.MethodDescriptor(
+    name='GetOrganization',
+    full_name='v1.OrganizationsV1.GetOrganization',
+    index=3,
+    containing_service=None,
+    input_type=v1_dot_base__pb2._OWNERRESOURCEREQUEST,
+    output_type=v1_dot_organization__pb2._ORGANIZATION,
+    serialized_options=_b('\202\323\344\223\002\037\022\035/api/v1/organizations/{owner}'),
+  ),
+  _descriptor.MethodDescriptor(
+    name='UpdateOrganization',
+    full_name='v1.OrganizationsV1.UpdateOrganization',
+    index=4,
+    containing_service=None,
+    input_type=v1_dot_organization__pb2._ORGANIZATIONBODYREQUEST,
+    output_type=v1_dot_organization__pb2._ORGANIZATION,
+    serialized_options=_b('\202\323\344\223\002-\032\035/api/v1/organizations/{owner}:\014organization'),
+  ),
+  _descriptor.MethodDescriptor(
+    name='PatchOrganization',
+    full_name='v1.OrganizationsV1.PatchOrganization',
+    index=5,
+    containing_service=None,
+    input_type=v1_dot_organization__pb2._ORGANIZATIONBODYREQUEST,
+    output_type=v1_dot_organization__pb2._ORGANIZATION,
+    serialized_options=_b('\202\323\344\223\002-2\035/api/v1/organizations/{owner}:\014organization'),
+  ),
+  _descriptor.MethodDescriptor(
+    name='DeleteOrganization',
+    full_name='v1.OrganizationsV1.DeleteOrganization',
+    index=6,
+    containing_service=None,
+    input_type=v1_dot_base__pb2._OWNERRESOURCEREQUEST,
+    output_type=google_dot_protobuf_dot_empty__pb2._EMPTY,
+    serialized_options=_b('\202\323\344\223\002\037*\035/api/v1/organizations/{owner}'),
+  ),
+  _descriptor.MethodDescriptor(
+    name='ListOrganizationMembers',
+    full_name='v1.OrganizationsV1.ListOrganizationMembers',
+    index=7,
+    containing_service=None,
+    input_type=v1_dot_base__pb2._OWNERRESOURCEREQUEST,
+    output_type=v1_dot_organization__pb2._LISTORGANIZATIONMEMBERSRESPONSE,
+    serialized_options=_b('\202\323\344\223\002\'\022%/api/v1/organizations/{owner}/members'),
+  ),
+  _descriptor.MethodDescriptor(
+    name='CreateOrganizationMember',
+    full_name='v1.OrganizationsV1.CreateOrganizationMember',
+    index=8,
+    containing_service=None,
+    input_type=v1_dot_organization__pb2._ORGANIZATIONMEMBERBODYREQUEST,
+    output_type=v1_dot_organization__pb2._ORGANIZATIONMEMBER,
+    serialized_options=_b('\202\323\344\223\002/\"%/api/v1/organizations/{owner}/members:\006member'),
+  ),
+  _descriptor.MethodDescriptor(
+    name='GetOrganizationMember',
+    full_name='v1.OrganizationsV1.GetOrganizationMember',
+    index=9,
+    containing_service=None,
+    input_type=v1_dot_organization__pb2._ORGANIZATIONMEMBERBODYREQUEST,
+    output_type=v1_dot_organization__pb2._ORGANIZATIONMEMBER,
+    serialized_options=_b('\202\323\344\223\0025\0223/api/v1/organizations/{owner}/members/{member.user}'),
+  ),
+  _descriptor.MethodDescriptor(
+    name='UpdateOrganizationMember',
+    full_name='v1.OrganizationsV1.UpdateOrganizationMember',
+    index=10,
+    containing_service=None,
+    input_type=v1_dot_organization__pb2._ORGANIZATIONMEMBERBODYREQUEST,
+    output_type=v1_dot_organization__pb2._ORGANIZATIONMEMBER,
+    serialized_options=_b('\202\323\344\223\002=\0323/api/v1/organizations/{owner}/members/{member.user}:\006member'),
+  ),
+  _descriptor.MethodDescriptor(
+    name='PatchOrganizationMember',
+    full_name='v1.OrganizationsV1.PatchOrganizationMember',
+    index=11,
+    containing_service=None,
+    input_type=v1_dot_organization__pb2._ORGANIZATIONMEMBERBODYREQUEST,
+    output_type=v1_dot_organization__pb2._ORGANIZATIONMEMBER,
+    serialized_options=_b('\202\323\344\223\002=23/api/v1/organizations/{owner}/members/{member.user}:\006member'),
+  ),
+  _descriptor.MethodDescriptor(
+    name='DeleteOrganizationMember',
+    full_name='v1.OrganizationsV1.DeleteOrganizationMember',
+    index=12,
+    containing_service=None,
+    input_type=v1_dot_organization__pb2._ORGANIZATIONMEMBERBODYREQUEST,
+    output_type=google_dot_protobuf_dot_empty__pb2._EMPTY,
+    serialized_options=_b('\202\323\344\223\0025*3/api/v1/organizations/{owner}/members/{member.user}'),
+  ),
+])
+_sym_db.RegisterServiceDescriptor(_ORGANIZATIONSV1)
+
+DESCRIPTOR.services_by_name['OrganizationsV1'] = _ORGANIZATIONSV1
+
+
+_TEAMSV1 = _descriptor.ServiceDescriptor(
+  name='TeamsV1',
+  full_name='v1.TeamsV1',
+  file=DESCRIPTOR,
+  index=15,
+  serialized_options=None,
+  serialized_start=16054,
+  serialized_end=17470,
+  methods=[
+  _descriptor.MethodDescriptor(
+    name='ListTeamNames',
+    full_name='v1.TeamsV1.ListTeamNames',
+    index=0,
+    containing_service=None,
+    input_type=v1_dot_base__pb2._OWNERRESOUCELISTREQUEST,
+    output_type=v1_dot_team__pb2._LISTTEAMSRESPONSE,
+    serialized_options=_b('\202\323\344\223\002\035\022\033/api/v1/{owner}/teams/names'),
+  ),
+  _descriptor.MethodDescriptor(
+    name='ListTeams',
+    full_name='v1.TeamsV1.ListTeams',
+    index=1,
+    containing_service=None,
+    input_type=v1_dot_base__pb2._OWNERRESOUCELISTREQUEST,
+    output_type=v1_dot_team__pb2._LISTTEAMSRESPONSE,
+    serialized_options=_b('\202\323\344\223\002\027\022\025/api/v1/{owner}/teams'),
+  ),
+  _descriptor.MethodDescriptor(
+    name='CreateTeam',
+    full_name='v1.TeamsV1.CreateTeam',
+    index=2,
+    containing_service=None,
+    input_type=v1_dot_team__pb2._TEAMBODYREQUEST,
+    output_type=v1_dot_team__pb2._TEAM,
+    serialized_options=_b('\202\323\344\223\002\035\"\025/api/v1/{owner}/teams:\004team'),
+  ),
+  _descriptor.MethodDescriptor(
+    name='GetTeam',
+    full_name='v1.TeamsV1.GetTeam',
+    index=3,
+    containing_service=None,
+    input_type=v1_dot_base__pb2._TEAMRESOURCEREQUEST,
+    output_type=v1_dot_team__pb2._TEAM,
+    serialized_options=_b('\202\323\344\223\002\036\022\034/api/v1/{owner}/teams/{team}'),
+  ),
+  _descriptor.MethodDescriptor(
+    name='UpdateTeam',
+    full_name='v1.TeamsV1.UpdateTeam',
+    index=4,
+    containing_service=None,
+    input_type=v1_dot_team__pb2._TEAMBODYREQUEST,
+    output_type=v1_dot_team__pb2._TEAM,
+    serialized_options=_b('\202\323\344\223\002)\032!/api/v1/{owner}/teams/{team.name}:\004team'),
+  ),
+  _descriptor.MethodDescriptor(
+    name='PatchTeam',
+    full_name='v1.TeamsV1.PatchTeam',
+    index=5,
+    containing_service=None,
+    input_type=v1_dot_team__pb2._TEAMBODYREQUEST,
+    output_type=v1_dot_team__pb2._TEAM,
+    serialized_options=_b('\202\323\344\223\002)2!/api/v1/{owner}/teams/{team.name}:\004team'),
+  ),
+  _descriptor.MethodDescriptor(
+    name='DeleteTeam',
+    full_name='v1.TeamsV1.DeleteTeam',
+    index=6,
+    containing_service=None,
+    input_type=v1_dot_base__pb2._TEAMRESOURCEREQUEST,
+    output_type=google_dot_protobuf_dot_empty__pb2._EMPTY,
+    serialized_options=_b('\202\323\344\223\002\036*\034/api/v1/{owner}/teams/{team}'),
+  ),
+  _descriptor.MethodDescriptor(
+    name='ListTeamMembers',
+    full_name='v1.TeamsV1.ListTeamMembers',
+    index=7,
+    containing_service=None,
+    input_type=v1_dot_base__pb2._TEAMRESOURCEREQUEST,
+    output_type=v1_dot_team__pb2._LISTTEAMMEMBERSRESPONSE,
+    serialized_options=_b('\202\323\344\223\002&\022$/api/v1/{owner}/teams/{team}/members'),
+  ),
+  _descriptor.MethodDescriptor(
+    name='CreateTeamMember',
+    full_name='v1.TeamsV1.CreateTeamMember',
+    index=8,
+    containing_service=None,
+    input_type=v1_dot_team__pb2._TEAMMEMBERBODYREQUEST,
+    output_type=v1_dot_team__pb2._TEAMMEMBER,
+    serialized_options=_b('\202\323\344\223\002.\"$/api/v1/{owner}/teams/{team}/members:\006member'),
+  ),
+  _descriptor.MethodDescriptor(
+    name='GetTeamMember',
+    full_name='v1.TeamsV1.GetTeamMember',
+    index=9,
+    containing_service=None,
+    input_type=v1_dot_team__pb2._TEAMMEMBERBODYREQUEST,
+    output_type=v1_dot_team__pb2._TEAMMEMBER,
+    serialized_options=_b('\202\323\344\223\0024\0222/api/v1/{owner}/teams/{team}/members/{member.user}'),
+  ),
+  _descriptor.MethodDescriptor(
+    name='UpdateTeamMember',
+    full_name='v1.TeamsV1.UpdateTeamMember',
+    index=10,
+    containing_service=None,
+    input_type=v1_dot_team__pb2._TEAMMEMBERBODYREQUEST,
+    output_type=v1_dot_team__pb2._TEAMMEMBER,
+    serialized_options=_b('\202\323\344\223\002<\0322/api/v1/{owner}/teams/{team}/members/{member.user}:\006member'),
+  ),
+  _descriptor.MethodDescriptor(
+    name='PatchTeamMember',
+    full_name='v1.TeamsV1.PatchTeamMember',
+    index=11,
+    containing_service=None,
+    input_type=v1_dot_team__pb2._TEAMMEMBERBODYREQUEST,
+    output_type=v1_dot_team__pb2._TEAMMEMBER,
+    serialized_options=_b('\202\323\344\223\002<22/api/v1/{owner}/teams/{team}/members/{member.user}:\006member'),
+  ),
+  _descriptor.MethodDescriptor(
+    name='DeleteTeamMember',
+    full_name='v1.TeamsV1.DeleteTeamMember',
+    index=12,
+    containing_service=None,
+    input_type=v1_dot_team__pb2._TEAMMEMBERBODYREQUEST,
+    output_type=google_dot_protobuf_dot_empty__pb2._EMPTY,
+    serialized_options=_b('\202\323\344\223\0024*2/api/v1/{owner}/teams/{team}/members/{member.user}'),
+  ),
+])
+_sym_db.RegisterServiceDescriptor(_TEAMSV1)
+
+DESCRIPTOR.services_by_name['TeamsV1'] = _TEAMSV1
+
+
+_SCHEMASV1 = _descriptor.ServiceDescriptor(
+  name='SchemasV1',
+  full_name='v1.SchemasV1',
+  file=DESCRIPTOR,
+  index=16,
+  serialized_options=None,
+  serialized_start=17472,
+  serialized_end=17546,
+  methods=[
+  _descriptor.MethodDescriptor(
+    name='NoOp',
+    full_name='v1.SchemasV1.NoOp',
+    index=0,
+    containing_service=None,
+    input_type=google_dot_protobuf_dot_empty__pb2._EMPTY,
+    output_type=v1_dot_schemas_dot_all__pb2._SCHEMAS,
+    serialized_options=_b('\202\323\344\223\002\n\022\010/schemas'),
+  ),
+])
+_sym_db.RegisterServiceDescriptor(_SCHEMASV1)
+
+DESCRIPTOR.services_by_name['SchemasV1'] = _SCHEMASV1
 
 # @@protoc_insertion_point(module_scope)

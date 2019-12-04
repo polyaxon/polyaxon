@@ -94,6 +94,20 @@ class TestProjectsV1Api(unittest.TestCase):
         """
         pass
 
+    def test_get_project_settings(self):
+        """Test case for get_project_settings
+
+        Resume run  # noqa: E501
+        """
+        pass
+
+    def test_get_project_teams(self):
+        """Test case for get_project_teams
+
+        Bookmark run  # noqa: E501
+        """
+        pass
+
     def test_list_archived_projects(self):
         """Test case for list_archived_projects
 
@@ -129,6 +143,20 @@ class TestProjectsV1Api(unittest.TestCase):
         """
         pass
 
+    def test_patch_project_settings(self):
+        """Test case for patch_project_settings
+
+        Restore run  # noqa: E501
+        """
+        pass
+
+    def test_patch_project_teams(self):
+        """Test case for patch_project_teams
+
+        Start run tensorboard  # noqa: E501
+        """
+        pass
+
     def test_restore_project(self):
         """Test case for restore_project
 
@@ -147,6 +175,20 @@ class TestProjectsV1Api(unittest.TestCase):
         """Test case for update_project
 
         Patch run  # noqa: E501
+        """
+        pass
+
+    def test_update_project_settings(self):
+        """Test case for update_project_settings
+
+        Archive run  # noqa: E501
+        """
+        pass
+
+    def test_update_project_teams(self):
+        """Test case for update_project_teams
+
+        Unbookmark run  # noqa: E501
         """
         pass
 

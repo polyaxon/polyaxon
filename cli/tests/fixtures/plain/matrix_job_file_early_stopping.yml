@@ -3,7 +3,7 @@ version: 1.0
 
 kind: component
 
-workflow:
+parallel:
   kind: random_search
   concurrency: 2
   n_runs: 300
@@ -21,7 +21,8 @@ workflow:
     value: 0.01
     optimization: maximize
 
-container:
+run:
+  kind: container
   image: foo:latest
   command: train --lr={{ lr }} --loss={{ loss }}
 ...

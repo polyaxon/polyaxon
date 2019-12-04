@@ -2,7 +2,7 @@ import itertools
 
 from polyaxon.automl.matrix.utils import to_numpy
 from polyaxon.automl.search_managers.base import BaseManager
-from polyaxon.schemas.polyflow.workflows.automl.grid_search import GridSearchConfig
+from polyaxon.schemas.polyflow.parallel import GridSearchConfig
 
 
 class GridSearchManager(BaseManager):

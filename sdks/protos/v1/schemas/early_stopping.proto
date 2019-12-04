@@ -1,0 +1,90 @@
+syntax = "proto3";
+
+package v1;
+
+import "google/protobuf/struct.proto";
+
+import "v1/schemas/optimization.proto";
+
+// Early stopping with median stopping, this policy computes running medians across
+// all runs and stops those whose best performance is worse than the median
+// of the running runs.
+message MedianStoppingPolicy {
+    // Kind of this stopping policy, should be equal to "median"
+    string king = 1;
+
+    // Interval/Frequency for applying the policy.
+    int64 evaluation_interval = 2;
+}
+
+// Early stopping with average stopping, this policy computes running averages across
+// all runs and stops those whose best performance is worse than the median
+// of the running runs.
+message AverageStoppingPolicy {
+    // Kind of this stopping policy, should be equal to "average"
+    string king = 1;
+
+    // Interval/Frequency for applying the policy.
+    int64 evaluation_interval = 2;
+}
+
+// Early stopping with truncation stopping, this policy stops a percentage of
+// all running runs at every evaluation.
+message TruncationStoppingPolicy {
+    // Kind of this stopping policy, should be equal to "truncation"
+    string king = 1;
+
+    // The percentage of runs to stop, at each evaluation interval.
+    // e.g. 1 - 99.
+    int32 percent = 2;
+
+    // Interval/Frequency for applying the policy.
+    int64 evaluation_interval = 3;
+}
+
+// MetricEarlyStoppingSchema specification
+// Early stopping based on metric config.
+message MetricEarlyStopping {
+    // Kind of this metric early stopping policy, should be equal to "metric_early_stopping"
+    string kind = 1;
+
+    // Metric name to use for early stopping.
+    string metric = 2;
+
+    // Metric value to use for the condition.
+    string value = 3;
+
+    // Optimization to do: maximize or minimize.
+    Optimization optimization = 4;
+
+    // Termination policy to use, should be one of the stopping policies:
+    // MedianStoppingPolicy, AverageStoppingPolicy, TruncationStoppingPolicy
+    repeated google.protobuf.Struct policy = 5;
+}
+
+
+// FailureEarlyStoppingSchema specification
+// Early stopping based on failure config.
+// this policy stops based on a percentage of
+// failed runs at every evaluation.
+message FailureEarlyStopping {
+    // Kind of this metric early stopping policy, should be equal to "failure_early_stopping"
+    string kind = 1;
+
+    // The percentage failed runs, at each evaluation interval.
+    // e.g. 1 - 99.
+    int32 percent = 2;
+
+    // Interval/Frequency for applying the policy.
+    string evaluation_interval = 3;
+}
+
+
+// All Schemas message
+message EarlyStoppingAllSchemas {
+    MedianStoppingPolicy median = 1;
+    AverageStoppingPolicy average = 2;
+    TruncationStoppingPolicy truncation = 3;
+    MetricEarlyStopping metric = 4;
+    FailureEarlyStopping failure = 5;
+}

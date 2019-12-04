@@ -35,7 +35,7 @@ var owner = "owner_example"; // String | Owner of the namespace
 
 var project = "project_example"; // String | Project under namesapce
 
-var body = new PolyaxonSdk.V1Search(); // V1Search | Artifact store body
+var body = new PolyaxonSdk.V1Search(); // V1Search | Search body
 
 
 var callback = function(error, data, response) {
@@ -54,7 +54,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace | 
  **project** | **String**| Project under namesapce | 
- **body** | [**V1Search**](V1Search.md)| Artifact store body | 
+ **body** | [**V1Search**](V1Search.md)| Search body | 
 
 ### Return type
 
@@ -272,7 +272,7 @@ var project = "project_example"; // String | Project under namesapce
 
 var search_uuid = "search_uuid_example"; // String | UUID
 
-var body = new PolyaxonSdk.V1Search(); // V1Search | Artifact store body
+var body = new PolyaxonSdk.V1Search(); // V1Search | Search body
 
 
 var callback = function(error, data, response) {
@@ -292,7 +292,7 @@ Name | Type | Description  | Notes
  **owner** | **String**| Owner of the namespace | 
  **project** | **String**| Project under namesapce | 
  **search_uuid** | **String**| UUID | 
- **body** | [**V1Search**](V1Search.md)| Artifact store body | 
+ **body** | [**V1Search**](V1Search.md)| Search body | 
 
 ### Return type
 
@@ -332,7 +332,7 @@ var project = "project_example"; // String | Project under namesapce
 
 var search_uuid = "search_uuid_example"; // String | UUID
 
-var body = new PolyaxonSdk.V1Search(); // V1Search | Artifact store body
+var body = new PolyaxonSdk.V1Search(); // V1Search | Search body
 
 
 var callback = function(error, data, response) {
@@ -352,7 +352,7 @@ Name | Type | Description  | Notes
  **owner** | **String**| Owner of the namespace | 
  **project** | **String**| Project under namesapce | 
  **search_uuid** | **String**| UUID | 
- **body** | [**V1Search**](V1Search.md)| Artifact store body | 
+ **body** | [**V1Search**](V1Search.md)| Search body | 
 
 ### Return type
 

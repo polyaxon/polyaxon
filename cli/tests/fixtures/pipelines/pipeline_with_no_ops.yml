@@ -7,7 +7,7 @@ name: test-pipeline
 
 tags: [native]
 
-workflow:
+run:
   kind: dag
   components:
   - name: job-template
@@ -29,4 +29,6 @@ workflow:
     termination:
       max_retries: 2
       ttl: 3600
-    container: {image: test}
+    run:
+      kind: container
+      image: test

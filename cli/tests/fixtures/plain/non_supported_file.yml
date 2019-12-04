@@ -3,7 +3,8 @@ version: 0.4
 
 kind: component
 
-container:
+run:
+  kind: container
   image: test:latest
   command: [docker, build, /plx-context/build/Dockerfile]
 ...

@@ -145,12 +145,6 @@
         // expect(instance.status).to.be(expectedValueLiteral);
       });
 
-      it('should have the property meta_info (base name: "meta_info")', function() {
-        // TODO: update the code to test the property meta_info
-        expect(instance).to.have.property('meta_info');
-        // expect(instance.meta_info).to.be(expectedValueLiteral);
-      });
-
       it('should have the property readme (base name: "readme")', function() {
         // TODO: update the code to test the property readme
         expect(instance).to.have.property('readme');
@@ -161,6 +155,24 @@
         // TODO: update the code to test the property bookmarked
         expect(instance).to.have.property('bookmarked');
         // expect(instance.bookmarked).to.be(expectedValueLiteral);
+      });
+
+      it('should have the property meta_info (base name: "meta_info")', function() {
+        // TODO: update the code to test the property meta_info
+        expect(instance).to.have.property('meta_info');
+        // expect(instance.meta_info).to.be(expectedValueLiteral);
+      });
+
+      it('should have the property kind (base name: "kind")', function() {
+        // TODO: update the code to test the property kind
+        expect(instance).to.have.property('kind');
+        // expect(instance.kind).to.be(expectedValueLiteral);
+      });
+
+      it('should have the property hub (base name: "hub")', function() {
+        // TODO: update the code to test the property hub
+        expect(instance).to.have.property('hub');
+        // expect(instance.hub).to.be(expectedValueLiteral);
       });
 
       it('should have the property inputs (base name: "inputs")', function() {

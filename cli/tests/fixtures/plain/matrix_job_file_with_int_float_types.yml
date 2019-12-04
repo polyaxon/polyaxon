@@ -3,7 +3,7 @@ version: 1.0
 
 kind: component
 
-workflow:
+parallel:
   kind: grid_search
   concurrency: 2
   matrix:
@@ -14,7 +14,8 @@ workflow:
       kind: choice
       value: [3.3, 4.4]
 
-container:
+run:
+  kind: container
   image: foo:latest
   command: train --param1={{ param1 }} --param2={{ param2 }}
 ...

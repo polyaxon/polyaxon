@@ -11,14 +11,20 @@ Method | HTTP request | Description
 [**disableProjectCI**](ProjectsV1Api.md#disableProjectCI) | **DELETE** /api/v1/{owner}/{project}/ci | Restart run
 [**enableProjectCI**](ProjectsV1Api.md#enableProjectCI) | **POST** /api/v1/{owner}/{project}/ci | Restart run with copy
 [**getProject**](ProjectsV1Api.md#getProject) | **GET** /api/v1/{owner}/{project} | Update run
+[**getProjectSettings**](ProjectsV1Api.md#getProjectSettings) | **GET** /api/v1/{owner}/{project}/settings | Resume run
+[**getProjectTeams**](ProjectsV1Api.md#getProjectTeams) | **GET** /api/v1/{owner}/{project}/teams | Bookmark run
 [**listArchivedProjects**](ProjectsV1Api.md#listArchivedProjects) | **GET** /api/v1/archives/{user}/projects | Get run
 [**listBookmarkedProjects**](ProjectsV1Api.md#listBookmarkedProjects) | **GET** /api/v1/bookmarks/{user}/projects | Create new run
 [**listProjectNames**](ProjectsV1Api.md#listProjectNames) | **GET** /api/v1/{owner}/projects/names | List runs
 [**listProjects**](ProjectsV1Api.md#listProjects) | **GET** /api/v1/{owner}/projects/list | List bookmarked runs for user
 [**patchProject**](ProjectsV1Api.md#patchProject) | **PATCH** /api/v1/{owner}/{project.name} | Delete run
+[**patchProjectSettings**](ProjectsV1Api.md#patchProjectSettings) | **PATCH** /api/v1/{owner}/{project}/settings | Restore run
+[**patchProjectTeams**](ProjectsV1Api.md#patchProjectTeams) | **PATCH** /api/v1/{owner}/{project}/teams | Start run tensorboard
 [**restoreProject**](ProjectsV1Api.md#restoreProject) | **POST** /api/v1/{owner}/{project}/restore | Stop runs
 [**unbookmarkProject**](ProjectsV1Api.md#unbookmarkProject) | **DELETE** /api/v1/{owner}/{project}/unbookmark | Invalidate runs
 [**updateProject**](ProjectsV1Api.md#updateProject) | **PUT** /api/v1/{owner}/{project.name} | Patch run
+[**updateProjectSettings**](ProjectsV1Api.md#updateProjectSettings) | **PUT** /api/v1/{owner}/{project}/settings | Archive run
+[**updateProjectTeams**](ProjectsV1Api.md#updateProjectTeams) | **PUT** /api/v1/{owner}/{project}/teams | Unbookmark run
 [**uploadProjectArtifact**](ProjectsV1Api.md#uploadProjectArtifact) | **POST** /api/v1/{owner}/{project}/artifacts_stores/{uuid}/upload | Upload artifact to a store via project access
 
 
@@ -400,6 +406,114 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
+<a name="getProjectSettings"></a>
+# **getProjectSettings**
+> V1ProjectSettings getProjectSettings(owner, project)
+
+Resume run
+
+### Example
+```javascript
+var PolyaxonSdk = require('polyaxon-sdk');
+var defaultClient = PolyaxonSdk.ApiClient.instance;
+
+// Configure API key authorization: ApiKey
+var ApiKey = defaultClient.authentications['ApiKey'];
+ApiKey.apiKey = 'YOUR API KEY';
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.apiKeyPrefix = 'Token';
+
+var apiInstance = new PolyaxonSdk.ProjectsV1Api();
+
+var owner = "owner_example"; // String | Owner of the namespace
+
+var project = "project_example"; // String | Project under namesapce
+
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+apiInstance.getProjectSettings(owner, project, callback);
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **String**| Owner of the namespace | 
+ **project** | **String**| Project under namesapce | 
+
+### Return type
+
+[**V1ProjectSettings**](V1ProjectSettings.md)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+<a name="getProjectTeams"></a>
+# **getProjectTeams**
+> V1ProjectTeams getProjectTeams(owner, project)
+
+Bookmark run
+
+### Example
+```javascript
+var PolyaxonSdk = require('polyaxon-sdk');
+var defaultClient = PolyaxonSdk.ApiClient.instance;
+
+// Configure API key authorization: ApiKey
+var ApiKey = defaultClient.authentications['ApiKey'];
+ApiKey.apiKey = 'YOUR API KEY';
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.apiKeyPrefix = 'Token';
+
+var apiInstance = new PolyaxonSdk.ProjectsV1Api();
+
+var owner = "owner_example"; // String | Owner of the namespace
+
+var project = "project_example"; // String | Project under namesapce
+
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+apiInstance.getProjectTeams(owner, project, callback);
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **String**| Owner of the namespace | 
+ **project** | **String**| Project under namesapce | 
+
+### Return type
+
+[**V1ProjectTeams**](V1ProjectTeams.md)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
 <a name="listArchivedProjects"></a>
 # **listArchivedProjects**
 > V1ListProjectsResponse listArchivedProjects(user, opts)
@@ -701,6 +815,120 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
+<a name="patchProjectSettings"></a>
+# **patchProjectSettings**
+> V1ProjectSettings patchProjectSettings(owner, project, body)
+
+Restore run
+
+### Example
+```javascript
+var PolyaxonSdk = require('polyaxon-sdk');
+var defaultClient = PolyaxonSdk.ApiClient.instance;
+
+// Configure API key authorization: ApiKey
+var ApiKey = defaultClient.authentications['ApiKey'];
+ApiKey.apiKey = 'YOUR API KEY';
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.apiKeyPrefix = 'Token';
+
+var apiInstance = new PolyaxonSdk.ProjectsV1Api();
+
+var owner = "owner_example"; // String | Owner of the namespace
+
+var project = "project_example"; // String | Project name
+
+var body = new PolyaxonSdk.V1ProjectSettings(); // V1ProjectSettings | Project settings body
+
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+apiInstance.patchProjectSettings(owner, project, body, callback);
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **String**| Owner of the namespace | 
+ **project** | **String**| Project name | 
+ **body** | [**V1ProjectSettings**](V1ProjectSettings.md)| Project settings body | 
+
+### Return type
+
+[**V1ProjectSettings**](V1ProjectSettings.md)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+<a name="patchProjectTeams"></a>
+# **patchProjectTeams**
+> V1ProjectTeams patchProjectTeams(owner, project, body)
+
+Start run tensorboard
+
+### Example
+```javascript
+var PolyaxonSdk = require('polyaxon-sdk');
+var defaultClient = PolyaxonSdk.ApiClient.instance;
+
+// Configure API key authorization: ApiKey
+var ApiKey = defaultClient.authentications['ApiKey'];
+ApiKey.apiKey = 'YOUR API KEY';
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.apiKeyPrefix = 'Token';
+
+var apiInstance = new PolyaxonSdk.ProjectsV1Api();
+
+var owner = "owner_example"; // String | Owner of the namespace
+
+var project = "project_example"; // String | Project name
+
+var body = new PolyaxonSdk.V1ProjectTeams(); // V1ProjectTeams | Project settings body
+
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+apiInstance.patchProjectTeams(owner, project, body, callback);
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **String**| Owner of the namespace | 
+ **project** | **String**| Project name | 
+ **body** | [**V1ProjectTeams**](V1ProjectTeams.md)| Project settings body | 
+
+### Return type
+
+[**V1ProjectTeams**](V1ProjectTeams.md)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
 <a name="restoreProject"></a>
 # **restoreProject**
 > restoreProject(owner, project)
@@ -856,6 +1084,120 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**V1Project**](V1Project.md)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+<a name="updateProjectSettings"></a>
+# **updateProjectSettings**
+> V1ProjectSettings updateProjectSettings(owner, project, body)
+
+Archive run
+
+### Example
+```javascript
+var PolyaxonSdk = require('polyaxon-sdk');
+var defaultClient = PolyaxonSdk.ApiClient.instance;
+
+// Configure API key authorization: ApiKey
+var ApiKey = defaultClient.authentications['ApiKey'];
+ApiKey.apiKey = 'YOUR API KEY';
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.apiKeyPrefix = 'Token';
+
+var apiInstance = new PolyaxonSdk.ProjectsV1Api();
+
+var owner = "owner_example"; // String | Owner of the namespace
+
+var project = "project_example"; // String | Project name
+
+var body = new PolyaxonSdk.V1ProjectSettings(); // V1ProjectSettings | Project settings body
+
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+apiInstance.updateProjectSettings(owner, project, body, callback);
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **String**| Owner of the namespace | 
+ **project** | **String**| Project name | 
+ **body** | [**V1ProjectSettings**](V1ProjectSettings.md)| Project settings body | 
+
+### Return type
+
+[**V1ProjectSettings**](V1ProjectSettings.md)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+<a name="updateProjectTeams"></a>
+# **updateProjectTeams**
+> V1ProjectTeams updateProjectTeams(owner, project, body)
+
+Unbookmark run
+
+### Example
+```javascript
+var PolyaxonSdk = require('polyaxon-sdk');
+var defaultClient = PolyaxonSdk.ApiClient.instance;
+
+// Configure API key authorization: ApiKey
+var ApiKey = defaultClient.authentications['ApiKey'];
+ApiKey.apiKey = 'YOUR API KEY';
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.apiKeyPrefix = 'Token';
+
+var apiInstance = new PolyaxonSdk.ProjectsV1Api();
+
+var owner = "owner_example"; // String | Owner of the namespace
+
+var project = "project_example"; // String | Project name
+
+var body = new PolyaxonSdk.V1ProjectTeams(); // V1ProjectTeams | Project settings body
+
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+apiInstance.updateProjectTeams(owner, project, body, callback);
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **String**| Owner of the namespace | 
+ **project** | **String**| Project name | 
+ **body** | [**V1ProjectTeams**](V1ProjectTeams.md)| Project settings body | 
+
+### Return type
+
+[**V1ProjectTeams**](V1ProjectTeams.md)
 
 ### Authorization
 

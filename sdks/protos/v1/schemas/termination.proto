@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package v1;
+
+// Termination specification
+message Termination {
+    // Max retries for a specific run
+    int32 max_retries = 1;
+
+    // A valid restart policy
+    string restart_policy = 2;
+
+    // A TTL definition
+    int64 ttl = 3;
+
+    // A timeout in seconds
+    int64 timeout = 4;
+}

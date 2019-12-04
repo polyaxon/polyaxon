@@ -24,17 +24,26 @@ import (
 
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 )
 
 // V1Search Search specification
 // swagger:model v1Search
 type V1Search struct {
 
-	// Optional Search definition
-	Definition *V1SearchDefinition `json:"definition,omitempty"`
+	// Optional time when the entityt was created
+	// Format: date-time
+	CreatedAt strfmt.DateTime `json:"created_at,omitempty"`
 
 	// Optional name
 	Name string `json:"name,omitempty"`
+
+	// Search spec
+	Spec *V1SearchSpec `json:"spec,omitempty"`
+
+	// Optional last time the entity was updated
+	// Format: date-time
+	UpdatedAt strfmt.DateTime `json:"updated_at,omitempty"`
 
 	// UUID
 	UUID string `json:"uuid,omitempty"`
@@ -44,7 +53,15 @@ type V1Search struct {
 func (m *V1Search) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	if err := m.validateDefinition(formats); err != nil {
+	if err := m.validateCreatedAt(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateSpec(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateUpdatedAt(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -54,19 +71,45 @@ func (m *V1Search) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *V1Search) validateDefinition(formats strfmt.Registry) error {
+func (m *V1Search) validateCreatedAt(formats strfmt.Registry) error {
 
-	if swag.IsZero(m.Definition) { // not required
+	if swag.IsZero(m.CreatedAt) { // not required
 		return nil
 	}
 
-	if m.Definition != nil {
-		if err := m.Definition.Validate(formats); err != nil {
+	if err := validate.FormatOf("created_at", "body", "date-time", m.CreatedAt.String(), formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *V1Search) validateSpec(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Spec) { // not required
+		return nil
+	}
+
+	if m.Spec != nil {
+		if err := m.Spec.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("definition")
+				return ve.ValidateName("spec")
 			}
 			return err
 		}
+	}
+
+	return nil
+}
+
+func (m *V1Search) validateUpdatedAt(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.UpdatedAt) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("updated_at", "body", "date-time", m.UpdatedAt.String(), formats); err != nil {
+		return err
 	}
 
 	return nil

@@ -62,12 +62,14 @@ class V1Run(object):
         "is_managed": "str",
         "content": "str",
         "status": "str",
-        "meta_info": "V1RunMetaInfo",
         "readme": "str",
         "bookmarked": "bool",
-        "inputs": "dict(str, str)",
-        "outputs": "dict(str, str)",
-        "run_env": "dict(str, str)",
+        "meta_info": "V1RunMetaInfo",
+        "kind": "str",
+        "hub": "str",
+        "inputs": "object",
+        "outputs": "object",
+        "run_env": "object",
         "is_resume": "bool",
         "is_clone": "bool",
         "cloning_strategy": "str",
@@ -93,9 +95,11 @@ class V1Run(object):
         "is_managed": "is_managed",
         "content": "content",
         "status": "status",
-        "meta_info": "meta_info",
         "readme": "readme",
         "bookmarked": "bookmarked",
+        "meta_info": "meta_info",
+        "kind": "kind",
+        "hub": "hub",
         "inputs": "inputs",
         "outputs": "outputs",
         "run_env": "run_env",
@@ -125,9 +129,11 @@ class V1Run(object):
         is_managed=None,
         content=None,
         status=None,
-        meta_info=None,
         readme=None,
         bookmarked=None,
+        meta_info=None,
+        kind=None,
+        hub=None,
         inputs=None,
         outputs=None,
         run_env=None,
@@ -156,9 +162,11 @@ class V1Run(object):
         self._is_managed = None
         self._content = None
         self._status = None
-        self._meta_info = None
         self._readme = None
         self._bookmarked = None
+        self._meta_info = None
+        self._kind = None
+        self._hub = None
         self._inputs = None
         self._outputs = None
         self._run_env = None
@@ -201,12 +209,16 @@ class V1Run(object):
             self.content = content
         if status is not None:
             self.status = status
-        if meta_info is not None:
-            self.meta_info = meta_info
         if readme is not None:
             self.readme = readme
         if bookmarked is not None:
             self.bookmarked = bookmarked
+        if meta_info is not None:
+            self.meta_info = meta_info
+        if kind is not None:
+            self.kind = kind
+        if hub is not None:
+            self.hub = hub
         if inputs is not None:
             self.inputs = inputs
         if outputs is not None:
@@ -544,27 +556,6 @@ class V1Run(object):
         self._status = status
 
     @property
-    def meta_info(self):
-        """Gets the meta_info of this V1Run.  # noqa: E501
-
-
-        :return: The meta_info of this V1Run.  # noqa: E501
-        :rtype: V1RunMetaInfo
-        """
-        return self._meta_info
-
-    @meta_info.setter
-    def meta_info(self, meta_info):
-        """Sets the meta_info of this V1Run.
-
-
-        :param meta_info: The meta_info of this V1Run.  # noqa: E501
-        :type: V1RunMetaInfo
-        """
-
-        self._meta_info = meta_info
-
-    @property
     def readme(self):
         """Gets the readme of this V1Run.  # noqa: E501
 
@@ -607,12 +598,75 @@ class V1Run(object):
         self._bookmarked = bookmarked
 
     @property
+    def meta_info(self):
+        """Gets the meta_info of this V1Run.  # noqa: E501
+
+
+        :return: The meta_info of this V1Run.  # noqa: E501
+        :rtype: V1RunMetaInfo
+        """
+        return self._meta_info
+
+    @meta_info.setter
+    def meta_info(self, meta_info):
+        """Sets the meta_info of this V1Run.
+
+
+        :param meta_info: The meta_info of this V1Run.  # noqa: E501
+        :type: V1RunMetaInfo
+        """
+
+        self._meta_info = meta_info
+
+    @property
+    def kind(self):
+        """Gets the kind of this V1Run.  # noqa: E501
+
+
+        :return: The kind of this V1Run.  # noqa: E501
+        :rtype: str
+        """
+        return self._kind
+
+    @kind.setter
+    def kind(self, kind):
+        """Sets the kind of this V1Run.
+
+
+        :param kind: The kind of this V1Run.  # noqa: E501
+        :type: str
+        """
+
+        self._kind = kind
+
+    @property
+    def hub(self):
+        """Gets the hub of this V1Run.  # noqa: E501
+
+
+        :return: The hub of this V1Run.  # noqa: E501
+        :rtype: str
+        """
+        return self._hub
+
+    @hub.setter
+    def hub(self, hub):
+        """Sets the hub of this V1Run.
+
+
+        :param hub: The hub of this V1Run.  # noqa: E501
+        :type: str
+        """
+
+        self._hub = hub
+
+    @property
     def inputs(self):
         """Gets the inputs of this V1Run.  # noqa: E501
 
 
         :return: The inputs of this V1Run.  # noqa: E501
-        :rtype: dict(str, str)
+        :rtype: object
         """
         return self._inputs
 
@@ -622,7 +676,7 @@ class V1Run(object):
 
 
         :param inputs: The inputs of this V1Run.  # noqa: E501
-        :type: dict(str, str)
+        :type: object
         """
 
         self._inputs = inputs
@@ -633,7 +687,7 @@ class V1Run(object):
 
 
         :return: The outputs of this V1Run.  # noqa: E501
-        :rtype: dict(str, str)
+        :rtype: object
         """
         return self._outputs
 
@@ -643,7 +697,7 @@ class V1Run(object):
 
 
         :param outputs: The outputs of this V1Run.  # noqa: E501
-        :type: dict(str, str)
+        :type: object
         """
 
         self._outputs = outputs
@@ -654,7 +708,7 @@ class V1Run(object):
 
 
         :return: The run_env of this V1Run.  # noqa: E501
-        :rtype: dict(str, str)
+        :rtype: object
         """
         return self._run_env
 
@@ -664,7 +718,7 @@ class V1Run(object):
 
 
         :param run_env: The run_env of this V1Run.  # noqa: E501
-        :type: dict(str, str)
+        :type: object
         """
 
         self._run_env = run_env

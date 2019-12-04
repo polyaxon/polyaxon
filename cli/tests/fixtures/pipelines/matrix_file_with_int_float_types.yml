@@ -1,7 +1,7 @@
 ---
 version: 1.0
 kind: component
-workflow:
+run:
   kind: dag
   concurrency: 4
   ops:
@@ -12,7 +12,7 @@ workflow:
   components:
   - name: grid-experiment
     description: hypertuning params experiment
-    workflow:
+    parallel:
       kind: grid_search
       concurrency: 2
       matrix:
@@ -22,7 +22,8 @@ workflow:
         param2:
           kind: choice
           value: [3.3, 4.4]
-    container:
+    run:
+      kind: container
       image: foo:latest
       command: train --param1={{ param1 }} --param2={{ param2 }}
 ...

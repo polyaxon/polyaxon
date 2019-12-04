@@ -37,44 +37,51 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='v1',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\x0fv1/search.proto\x12\x02v1\x1a\x1fgoogle/protobuf/timestamp.proto\"Q\n\x10SearchDefinition\x12\r\n\x05query\x18\x01 \x01(\t\x12\x0c\n\x04sort\x18\x02 \x01(\t\x12\x0f\n\x07groupby\x18\x03 \x01(\t\x12\x0f\n\x07\x63olumns\x18\x04 \x01(\t\"N\n\x06Search\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12(\n\ndefinition\x18\x03 \x01(\x0b\x32\x14.v1.SearchDefinition\"O\n\x11SearchBodyRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0f\n\x07project\x18\x02 \x01(\t\x12\x1a\n\x06search\x18\x03 \x01(\x0b\x32\n.v1.Search\"b\n\x14ListSearchesResponse\x12\r\n\x05\x63ount\x18\x01 \x01(\x05\x12\x1b\n\x07results\x18\x02 \x03(\x0b\x32\n.v1.Search\x12\x10\n\x08previous\x18\x03 \x01(\t\x12\x0c\n\x04next\x18\x04 \x01(\tb\x06proto3')
+  serialized_pb=_b('\n\x0fv1/search.proto\x12\x02v1\x1a\x1fgoogle/protobuf/timestamp.proto\"Z\n\nSearchSpec\x12\r\n\x05query\x18\x01 \x01(\t\x12\x0c\n\x04sort\x18\x02 \x01(\t\x12\r\n\x05limit\x18\x03 \x01(\x05\x12\x0f\n\x07groupby\x18\x04 \x01(\t\x12\x0f\n\x07\x63olumns\x18\x05 \x01(\t\"\xa2\x01\n\x06Search\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x1c\n\x04spec\x18\x03 \x01(\x0b\x32\x0e.v1.SearchSpec\x12.\n\ncreated_at\x18\x04 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12.\n\nupdated_at\x18\x05 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"O\n\x11SearchBodyRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0f\n\x07project\x18\x02 \x01(\t\x12\x1a\n\x06search\x18\x03 \x01(\x0b\x32\n.v1.Search\"b\n\x14ListSearchesResponse\x12\r\n\x05\x63ount\x18\x01 \x01(\x05\x12\x1b\n\x07results\x18\x02 \x03(\x0b\x32\n.v1.Search\x12\x10\n\x08previous\x18\x03 \x01(\t\x12\x0c\n\x04next\x18\x04 \x01(\tb\x06proto3')
   ,
   dependencies=[google_dot_protobuf_dot_timestamp__pb2.DESCRIPTOR,])
 
 
 
 
-_SEARCHDEFINITION = _descriptor.Descriptor(
-  name='SearchDefinition',
-  full_name='v1.SearchDefinition',
+_SEARCHSPEC = _descriptor.Descriptor(
+  name='SearchSpec',
+  full_name='v1.SearchSpec',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='query', full_name='v1.SearchDefinition.query', index=0,
+      name='query', full_name='v1.SearchSpec.query', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='sort', full_name='v1.SearchDefinition.sort', index=1,
+      name='sort', full_name='v1.SearchSpec.sort', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='groupby', full_name='v1.SearchDefinition.groupby', index=2,
-      number=3, type=9, cpp_type=9, label=1,
+      name='limit', full_name='v1.SearchSpec.limit', index=2,
+      number=3, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='groupby', full_name='v1.SearchSpec.groupby', index=3,
+      number=4, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='columns', full_name='v1.SearchDefinition.columns', index=3,
-      number=4, type=9, cpp_type=9, label=1,
+      name='columns', full_name='v1.SearchSpec.columns', index=4,
+      number=5, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -92,7 +99,7 @@ _SEARCHDEFINITION = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=56,
-  serialized_end=137,
+  serialized_end=146,
 )
 
 
@@ -118,8 +125,22 @@ _SEARCH = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='definition', full_name='v1.Search.definition', index=2,
+      name='spec', full_name='v1.Search.spec', index=2,
       number=3, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='created_at', full_name='v1.Search.created_at', index=3,
+      number=4, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='updated_at', full_name='v1.Search.updated_at', index=4,
+      number=5, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -136,8 +157,8 @@ _SEARCH = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=139,
-  serialized_end=217,
+  serialized_start=149,
+  serialized_end=311,
 )
 
 
@@ -181,8 +202,8 @@ _SEARCHBODYREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=219,
-  serialized_end=298,
+  serialized_start=313,
+  serialized_end=392,
 )
 
 
@@ -233,25 +254,27 @@ _LISTSEARCHESRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=300,
-  serialized_end=398,
+  serialized_start=394,
+  serialized_end=492,
 )
 
-_SEARCH.fields_by_name['definition'].message_type = _SEARCHDEFINITION
+_SEARCH.fields_by_name['spec'].message_type = _SEARCHSPEC
+_SEARCH.fields_by_name['created_at'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
+_SEARCH.fields_by_name['updated_at'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
 _SEARCHBODYREQUEST.fields_by_name['search'].message_type = _SEARCH
 _LISTSEARCHESRESPONSE.fields_by_name['results'].message_type = _SEARCH
-DESCRIPTOR.message_types_by_name['SearchDefinition'] = _SEARCHDEFINITION
+DESCRIPTOR.message_types_by_name['SearchSpec'] = _SEARCHSPEC
 DESCRIPTOR.message_types_by_name['Search'] = _SEARCH
 DESCRIPTOR.message_types_by_name['SearchBodyRequest'] = _SEARCHBODYREQUEST
 DESCRIPTOR.message_types_by_name['ListSearchesResponse'] = _LISTSEARCHESRESPONSE
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
-SearchDefinition = _reflection.GeneratedProtocolMessageType('SearchDefinition', (_message.Message,), {
-  'DESCRIPTOR' : _SEARCHDEFINITION,
+SearchSpec = _reflection.GeneratedProtocolMessageType('SearchSpec', (_message.Message,), {
+  'DESCRIPTOR' : _SEARCHSPEC,
   '__module__' : 'v1.search_pb2'
-  # @@protoc_insertion_point(class_scope:v1.SearchDefinition)
+  # @@protoc_insertion_point(class_scope:v1.SearchSpec)
   })
-_sym_db.RegisterMessage(SearchDefinition)
+_sym_db.RegisterMessage(SearchSpec)
 
 Search = _reflection.GeneratedProtocolMessageType('Search', (_message.Message,), {
   'DESCRIPTOR' : _SEARCH,
