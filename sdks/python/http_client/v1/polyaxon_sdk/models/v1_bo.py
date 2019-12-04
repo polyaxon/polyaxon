@@ -47,41 +47,30 @@ class V1BO(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        "kind": "str",
-        "matrix": "str",
-        "n_initial_trials": "int",
-        "n_iterations": "int",
-        "utility_function": "object",
-        "metric": "V1OptimizationMetric",
-        "seed": "int",
-        "concurrency": "int",
-        "early_stopping": "list[object]",
+        'kind': 'str',
+        'matrix': 'str',
+        'n_initial_trials': 'int',
+        'n_iterations': 'int',
+        'utility_function': 'object',
+        'metric': 'V1OptimizationMetric',
+        'seed': 'int',
+        'concurrency': 'int',
+        'early_stopping': 'list[object]'
     }
 
     attribute_map = {
-        "kind": "kind",
-        "matrix": "matrix",
-        "n_initial_trials": "n_initial_trials",
-        "n_iterations": "n_iterations",
-        "utility_function": "utility_function",
-        "metric": "metric",
-        "seed": "seed",
-        "concurrency": "concurrency",
-        "early_stopping": "early_stopping",
+        'kind': 'kind',
+        'matrix': 'matrix',
+        'n_initial_trials': 'n_initial_trials',
+        'n_iterations': 'n_iterations',
+        'utility_function': 'utility_function',
+        'metric': 'metric',
+        'seed': 'seed',
+        'concurrency': 'concurrency',
+        'early_stopping': 'early_stopping'
     }
 
-    def __init__(
-        self,
-        kind=None,
-        matrix=None,
-        n_initial_trials=None,
-        n_iterations=None,
-        utility_function=None,
-        metric=None,
-        seed=None,
-        concurrency=None,
-        early_stopping=None,
-    ):  # noqa: E501
+    def __init__(self, kind=None, matrix=None, n_initial_trials=None, n_iterations=None, utility_function=None, metric=None, seed=None, concurrency=None, early_stopping=None):  # noqa: E501
         """V1BO - a model defined in Swagger"""  # noqa: E501
 
         self._kind = None
@@ -310,20 +299,18 @@ class V1BO(object):
         for attr, _ in six.iteritems(self.swagger_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(
-                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
-                )
+                result[attr] = list(map(
+                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
+                    value
+                ))
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(
-                    map(
-                        lambda item: (item[0], item[1].to_dict())
-                        if hasattr(item[1], "to_dict")
-                        else item,
-                        value.items(),
-                    )
-                )
+                result[attr] = dict(map(
+                    lambda item: (item[0], item[1].to_dict())
+                    if hasattr(item[1], "to_dict") else item,
+                    value.items()
+                ))
             else:
                 result[attr] = value
         if issubclass(V1BO, dict):

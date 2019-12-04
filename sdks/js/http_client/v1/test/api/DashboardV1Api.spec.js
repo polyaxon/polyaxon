@@ -60,7 +60,7 @@
           body.uuid = "";
           body.name = "";
           body.widgets = [new PolyaxonSdk.V1WidgetSpec()];
-          body.widgets[0].king = "";
+          body.widgets[0].kind = "";
           body.widgets[0].search = new PolyaxonSdk.V1SearchSpec();
           body.widgets[0].search.query = "";
           body.widgets[0].search.sort = "";
@@ -89,8 +89,8 @@
               for (let p in dataCtr) {
                 let data = dataCtr[p];
                 expect(data).to.be.a(PolyaxonSdk.V1WidgetSpec);
-                expect(data.king).to.be.a('string');
-                expect(data.king).to.be("");
+                expect(data.kind).to.be.a('string');
+                expect(data.kind).to.be("");
                 expect(data.search).to.be.a(PolyaxonSdk.V1SearchSpec);
                       expect(data.search.query).to.be.a('string');
                   expect(data.search.query).to.be("");
@@ -165,8 +165,8 @@
               for (let p in dataCtr) {
                 let data = dataCtr[p];
                 expect(data).to.be.a(PolyaxonSdk.V1WidgetSpec);
-                expect(data.king).to.be.a('string');
-                expect(data.king).to.be("");
+                expect(data.kind).to.be.a('string');
+                expect(data.kind).to.be("");
                 expect(data.search).to.be.a(PolyaxonSdk.V1SearchSpec);
                       expect(data.search.query).to.be.a('string');
                   expect(data.search.query).to.be("");
@@ -233,8 +233,8 @@
                   for (let p in dataCtr) {
                     let data = dataCtr[p];
                     expect(data).to.be.a(PolyaxonSdk.V1WidgetSpec);
-                    expect(data.king).to.be.a('string');
-                    expect(data.king).to.be("");
+                    expect(data.kind).to.be.a('string');
+                    expect(data.kind).to.be("");
                     expect(data.search).to.be.a(PolyaxonSdk.V1SearchSpec);
                           expect(data.search.query).to.be.a('string');
                       expect(data.search.query).to.be("");
@@ -279,7 +279,7 @@
           body.uuid = "";
           body.name = "";
           body.widgets = [new PolyaxonSdk.V1WidgetSpec()];
-          body.widgets[0].king = "";
+          body.widgets[0].kind = "";
           body.widgets[0].search = new PolyaxonSdk.V1SearchSpec();
           body.widgets[0].search.query = "";
           body.widgets[0].search.sort = "";
@@ -308,8 +308,8 @@
               for (let p in dataCtr) {
                 let data = dataCtr[p];
                 expect(data).to.be.a(PolyaxonSdk.V1WidgetSpec);
-                expect(data.king).to.be.a('string');
-                expect(data.king).to.be("");
+                expect(data.kind).to.be.a('string');
+                expect(data.kind).to.be("");
                 expect(data.search).to.be.a(PolyaxonSdk.V1SearchSpec);
                       expect(data.search.query).to.be.a('string');
                   expect(data.search.query).to.be("");
@@ -348,7 +348,7 @@
           body.uuid = "";
           body.name = "";
           body.widgets = [new PolyaxonSdk.V1WidgetSpec()];
-          body.widgets[0].king = "";
+          body.widgets[0].kind = "";
           body.widgets[0].search = new PolyaxonSdk.V1SearchSpec();
           body.widgets[0].search.query = "";
           body.widgets[0].search.sort = "";
@@ -377,8 +377,8 @@
               for (let p in dataCtr) {
                 let data = dataCtr[p];
                 expect(data).to.be.a(PolyaxonSdk.V1WidgetSpec);
-                expect(data.king).to.be.a('string');
-                expect(data.king).to.be("");
+                expect(data.kind).to.be.a('string');
+                expect(data.kind).to.be("");
                 expect(data.search).to.be.a(PolyaxonSdk.V1SearchSpec);
                       expect(data.search.query).to.be.a('string');
                   expect(data.search.query).to.be("");

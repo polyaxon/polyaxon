@@ -34,7 +34,7 @@ type V1TruncationStoppingPolicy struct {
 	EvaluationInterval int32 `json:"evaluation_interval,omitempty"`
 
 	// Kind of this stopping policy, should be equal to "truncation"
-	King string `json:"king,omitempty"`
+	Kind string `json:"kind,omitempty"`
 
 	// The percentage of runs to stop, at each evaluation interval.
 	// e.g. 1 - 99.

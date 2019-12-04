@@ -10,7 +10,7 @@ import "v1/search.proto";
 // Widget spec definition
 message WidgetSpec {
     // Widget kind
-    string king = 1;
+    string kind = 1;
 
     // Search spec
     SearchSpec search = 2;

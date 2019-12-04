@@ -32,9 +32,7 @@ from __future__ import absolute_import
 import unittest
 
 import polyaxon_sdk
-from polyaxon_sdk.models.v1_median_stopping_policy import (
-    V1MedianStoppingPolicy,
-)  # noqa: E501
+from polyaxon_sdk.models.v1_median_stopping_policy import V1MedianStoppingPolicy  # noqa: E501
 from polyaxon_sdk.rest import ApiException
 
 
@@ -54,5 +52,5 @@ class TestV1MedianStoppingPolicy(unittest.TestCase):
         pass
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     unittest.main()

@@ -47,29 +47,22 @@ class V1Dag(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        "kind": "str",
-        "ops": "list[V1Op]",
-        "components": "list[V1Component]",
-        "concurrency": "int",
-        "early_stopping": "list[object]",
+        'kind': 'str',
+        'ops': 'list[V1Op]',
+        'components': 'list[V1Component]',
+        'concurrency': 'int',
+        'early_stopping': 'list[object]'
     }
 
     attribute_map = {
-        "kind": "kind",
-        "ops": "ops",
-        "components": "components",
-        "concurrency": "concurrency",
-        "early_stopping": "early_stopping",
+        'kind': 'kind',
+        'ops': 'ops',
+        'components': 'components',
+        'concurrency': 'concurrency',
+        'early_stopping': 'early_stopping'
     }
 
-    def __init__(
-        self,
-        kind=None,
-        ops=None,
-        components=None,
-        concurrency=None,
-        early_stopping=None,
-    ):  # noqa: E501
+    def __init__(self, kind=None, ops=None, components=None, concurrency=None, early_stopping=None):  # noqa: E501
         """V1Dag - a model defined in Swagger"""  # noqa: E501
 
         self._kind = None
@@ -202,20 +195,18 @@ class V1Dag(object):
         for attr, _ in six.iteritems(self.swagger_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(
-                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
-                )
+                result[attr] = list(map(
+                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
+                    value
+                ))
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(
-                    map(
-                        lambda item: (item[0], item[1].to_dict())
-                        if hasattr(item[1], "to_dict")
-                        else item,
-                        value.items(),
-                    )
-                )
+                result[attr] = dict(map(
+                    lambda item: (item[0], item[1].to_dict())
+                    if hasattr(item[1], "to_dict") else item,
+                    value.items()
+                ))
             else:
                 result[attr] = value
         if issubclass(V1Dag, dict):

@@ -47,71 +47,50 @@ class V1Environment(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        "resources": "V1ResourceRequirements",
-        "labels": "dict(str, str)",
-        "annotations": "dict(str, str)",
-        "node_selector": "dict(str, str)",
-        "affinity": "list[object]",
-        "tolerations": "list[object]",
-        "service_account": "str",
-        "image_pull_secrets": "list[str]",
-        "env_vars": "list[object]",
-        "security_context": "object",
-        "log_level": "str",
-        "auth": "bool",
-        "docker": "bool",
-        "shm": "bool",
-        "outputs": "bool",
-        "logs": "bool",
-        "registry": "str",
-        "init_container": "V1ContainerEnv",
-        "sidecar_container": "V1ContainerEnv",
+        'resources': 'V1ResourceRequirements',
+        'labels': 'dict(str, str)',
+        'annotations': 'dict(str, str)',
+        'node_selector': 'dict(str, str)',
+        'affinity': 'list[object]',
+        'tolerations': 'list[object]',
+        'service_account': 'str',
+        'image_pull_secrets': 'list[str]',
+        'env_vars': 'list[object]',
+        'security_context': 'object',
+        'log_level': 'str',
+        'auth': 'bool',
+        'docker': 'bool',
+        'shm': 'bool',
+        'outputs': 'bool',
+        'logs': 'bool',
+        'registry': 'str',
+        'init_container': 'V1ContainerEnv',
+        'sidecar_container': 'V1ContainerEnv'
     }
 
     attribute_map = {
-        "resources": "resources",
-        "labels": "labels",
-        "annotations": "annotations",
-        "node_selector": "node_selector",
-        "affinity": "affinity",
-        "tolerations": "tolerations",
-        "service_account": "service_account",
-        "image_pull_secrets": "image_pull_secrets",
-        "env_vars": "env_vars",
-        "security_context": "security_context",
-        "log_level": "log_level",
-        "auth": "auth",
-        "docker": "docker",
-        "shm": "shm",
-        "outputs": "outputs",
-        "logs": "logs",
-        "registry": "registry",
-        "init_container": "init_container",
-        "sidecar_container": "sidecar_container",
+        'resources': 'resources',
+        'labels': 'labels',
+        'annotations': 'annotations',
+        'node_selector': 'node_selector',
+        'affinity': 'affinity',
+        'tolerations': 'tolerations',
+        'service_account': 'service_account',
+        'image_pull_secrets': 'image_pull_secrets',
+        'env_vars': 'env_vars',
+        'security_context': 'security_context',
+        'log_level': 'log_level',
+        'auth': 'auth',
+        'docker': 'docker',
+        'shm': 'shm',
+        'outputs': 'outputs',
+        'logs': 'logs',
+        'registry': 'registry',
+        'init_container': 'init_container',
+        'sidecar_container': 'sidecar_container'
     }
 
-    def __init__(
-        self,
-        resources=None,
-        labels=None,
-        annotations=None,
-        node_selector=None,
-        affinity=None,
-        tolerations=None,
-        service_account=None,
-        image_pull_secrets=None,
-        env_vars=None,
-        security_context=None,
-        log_level=None,
-        auth=None,
-        docker=None,
-        shm=None,
-        outputs=None,
-        logs=None,
-        registry=None,
-        init_container=None,
-        sidecar_container=None,
-    ):  # noqa: E501
+    def __init__(self, resources=None, labels=None, annotations=None, node_selector=None, affinity=None, tolerations=None, service_account=None, image_pull_secrets=None, env_vars=None, security_context=None, log_level=None, auth=None, docker=None, shm=None, outputs=None, logs=None, registry=None, init_container=None, sidecar_container=None):  # noqa: E501
         """V1Environment - a model defined in Swagger"""  # noqa: E501
 
         self._resources = None
@@ -580,20 +559,18 @@ class V1Environment(object):
         for attr, _ in six.iteritems(self.swagger_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(
-                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
-                )
+                result[attr] = list(map(
+                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
+                    value
+                ))
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(
-                    map(
-                        lambda item: (item[0], item[1].to_dict())
-                        if hasattr(item[1], "to_dict")
-                        else item,
-                        value.items(),
-                    )
-                )
+                result[attr] = dict(map(
+                    lambda item: (item[0], item[1].to_dict())
+                    if hasattr(item[1], "to_dict") else item,
+                    value.items()
+                ))
             else:
                 result[attr] = value
         if issubclass(V1Environment, dict):

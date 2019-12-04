@@ -47,47 +47,34 @@ class V1RunSettings(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        "namespace": "str",
-        "agent": "V1RunSettingsCatalog",
-        "queue": "V1RunSettingsCatalog",
-        "logs_store": "V1RunSettingsCatalog",
-        "outputs_store": "V1RunSettingsCatalog",
-        "init_artifacts_stores": "list[V1RunSettingsCatalog]",
-        "artifacts_stores": "list[V1RunSettingsCatalog]",
-        "git_accesses": "list[V1RunSettingsCatalog]",
-        "registry_access": "V1RunSettingsCatalog",
-        "k8s_secrets": "list[V1RunSettingsCatalog]",
-        "k8s_config_maps": "list[V1RunSettingsCatalog]",
+        'namespace': 'str',
+        'agent': 'V1RunSettingsCatalog',
+        'queue': 'V1RunSettingsCatalog',
+        'logs_store': 'V1RunSettingsCatalog',
+        'outputs_store': 'V1RunSettingsCatalog',
+        'init_artifacts_stores': 'list[V1RunSettingsCatalog]',
+        'artifacts_stores': 'list[V1RunSettingsCatalog]',
+        'git_accesses': 'list[V1RunSettingsCatalog]',
+        'registry_access': 'V1RunSettingsCatalog',
+        'k8s_secrets': 'list[V1RunSettingsCatalog]',
+        'k8s_config_maps': 'list[V1RunSettingsCatalog]'
     }
 
     attribute_map = {
-        "namespace": "namespace",
-        "agent": "agent",
-        "queue": "queue",
-        "logs_store": "logs_store",
-        "outputs_store": "outputs_store",
-        "init_artifacts_stores": "init_artifacts_stores",
-        "artifacts_stores": "artifacts_stores",
-        "git_accesses": "git_accesses",
-        "registry_access": "registry_access",
-        "k8s_secrets": "k8s_secrets",
-        "k8s_config_maps": "k8s_config_maps",
+        'namespace': 'namespace',
+        'agent': 'agent',
+        'queue': 'queue',
+        'logs_store': 'logs_store',
+        'outputs_store': 'outputs_store',
+        'init_artifacts_stores': 'init_artifacts_stores',
+        'artifacts_stores': 'artifacts_stores',
+        'git_accesses': 'git_accesses',
+        'registry_access': 'registry_access',
+        'k8s_secrets': 'k8s_secrets',
+        'k8s_config_maps': 'k8s_config_maps'
     }
 
-    def __init__(
-        self,
-        namespace=None,
-        agent=None,
-        queue=None,
-        logs_store=None,
-        outputs_store=None,
-        init_artifacts_stores=None,
-        artifacts_stores=None,
-        git_accesses=None,
-        registry_access=None,
-        k8s_secrets=None,
-        k8s_config_maps=None,
-    ):  # noqa: E501
+    def __init__(self, namespace=None, agent=None, queue=None, logs_store=None, outputs_store=None, init_artifacts_stores=None, artifacts_stores=None, git_accesses=None, registry_access=None, k8s_secrets=None, k8s_config_maps=None):  # noqa: E501
         """V1RunSettings - a model defined in Swagger"""  # noqa: E501
 
         self._namespace = None
@@ -364,20 +351,18 @@ class V1RunSettings(object):
         for attr, _ in six.iteritems(self.swagger_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(
-                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
-                )
+                result[attr] = list(map(
+                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
+                    value
+                ))
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(
-                    map(
-                        lambda item: (item[0], item[1].to_dict())
-                        if hasattr(item[1], "to_dict")
-                        else item,
-                        value.items(),
-                    )
-                )
+                result[attr] = dict(map(
+                    lambda item: (item[0], item[1].to_dict())
+                    if hasattr(item[1], "to_dict") else item,
+                    value.items()
+                ))
             else:
                 result[attr] = value
         if issubclass(V1RunSettings, dict):

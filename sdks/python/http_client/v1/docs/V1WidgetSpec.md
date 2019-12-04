@@ -3,7 +3,7 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**king** | **str** |  | [optional] 
+**kind** | **str** |  | [optional] 
 **search** | [**V1SearchSpec**](V1SearchSpec.md) |  | [optional] 
 **meta** | **object** |  | [optional] 
 

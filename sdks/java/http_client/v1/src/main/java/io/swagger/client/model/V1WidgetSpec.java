@@ -44,8 +44,8 @@ import java.io.IOException;
  */
 
 public class V1WidgetSpec {
-  @SerializedName("king")
-  private String king = null;
+  @SerializedName("kind")
+  private String kind = null;
 
   @SerializedName("search")
   private V1SearchSpec search = null;
@@ -53,22 +53,22 @@ public class V1WidgetSpec {
   @SerializedName("meta")
   private Object meta = null;
 
-  public V1WidgetSpec king(String king) {
-    this.king = king;
+  public V1WidgetSpec kind(String kind) {
+    this.kind = kind;
     return this;
   }
 
    /**
-   * Get king
-   * @return king
+   * Get kind
+   * @return kind
   **/
   @ApiModelProperty(value = "")
-  public String getKing() {
-    return king;
+  public String getKind() {
+    return kind;
   }
 
-  public void setKing(String king) {
-    this.king = king;
+  public void setKind(String kind) {
+    this.kind = kind;
   }
 
   public V1WidgetSpec search(V1SearchSpec search) {
@@ -117,14 +117,14 @@ public class V1WidgetSpec {
       return false;
     }
     V1WidgetSpec v1WidgetSpec = (V1WidgetSpec) o;
-    return Objects.equals(this.king, v1WidgetSpec.king) &&
+    return Objects.equals(this.kind, v1WidgetSpec.kind) &&
         Objects.equals(this.search, v1WidgetSpec.search) &&
         Objects.equals(this.meta, v1WidgetSpec.meta);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(king, search, meta);
+    return Objects.hash(kind, search, meta);
   }
 
 
@@ -133,7 +133,7 @@ public class V1WidgetSpec {
     StringBuilder sb = new StringBuilder();
     sb.append("class V1WidgetSpec {\n");
     
-    sb.append("    king: ").append(toIndentedString(king)).append("\n");
+    sb.append("    kind: ").append(toIndentedString(kind)).append("\n");
     sb.append("    search: ").append(toIndentedString(search)).append("\n");
     sb.append("    meta: ").append(toIndentedString(meta)).append("\n");
     sb.append("}");

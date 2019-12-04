@@ -44,28 +44,28 @@ import java.io.IOException;
 @ApiModel(description = "Early stopping with median stopping, this policy computes running medians across all runs and stops those whose best performance is worse than the median of the running runs.")
 
 public class V1MedianStoppingPolicy {
-  @SerializedName("king")
-  private String king = null;
+  @SerializedName("kind")
+  private String kind = null;
 
   @SerializedName("evaluation_interval")
   private Integer evaluationInterval = null;
 
-  public V1MedianStoppingPolicy king(String king) {
-    this.king = king;
+  public V1MedianStoppingPolicy kind(String kind) {
+    this.kind = kind;
     return this;
   }
 
    /**
-   * Get king
-   * @return king
+   * Get kind
+   * @return kind
   **/
   @ApiModelProperty(value = "")
-  public String getKing() {
-    return king;
+  public String getKind() {
+    return kind;
   }
 
-  public void setKing(String king) {
-    this.king = king;
+  public void setKind(String kind) {
+    this.kind = kind;
   }
 
   public V1MedianStoppingPolicy evaluationInterval(Integer evaluationInterval) {
@@ -96,13 +96,13 @@ public class V1MedianStoppingPolicy {
       return false;
     }
     V1MedianStoppingPolicy v1MedianStoppingPolicy = (V1MedianStoppingPolicy) o;
-    return Objects.equals(this.king, v1MedianStoppingPolicy.king) &&
+    return Objects.equals(this.kind, v1MedianStoppingPolicy.kind) &&
         Objects.equals(this.evaluationInterval, v1MedianStoppingPolicy.evaluationInterval);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(king, evaluationInterval);
+    return Objects.hash(kind, evaluationInterval);
   }
 
 
@@ -111,7 +111,7 @@ public class V1MedianStoppingPolicy {
     StringBuilder sb = new StringBuilder();
     sb.append("class V1MedianStoppingPolicy {\n");
     
-    sb.append("    king: ").append(toIndentedString(king)).append("\n");
+    sb.append("    kind: ").append(toIndentedString(kind)).append("\n");
     sb.append("    evaluationInterval: ").append(toIndentedString(evaluationInterval)).append("\n");
     sb.append("}");
     return sb.toString();

@@ -326,7 +326,7 @@ export interface V1AverageStoppingPolicy {
      * @type {string}
      * @memberof V1AverageStoppingPolicy
      */
-    king?: string;
+    kind?: string;
     /**
      * Interval/Frequency for applying the policy.
      * @type {number}
@@ -2153,7 +2153,7 @@ export interface V1MedianStoppingPolicy {
      * @type {string}
      * @memberof V1MedianStoppingPolicy
      */
-    king?: string;
+    kind?: string;
     /**
      * Interval/Frequency for applying the policy.
      * @type {number}
@@ -3883,7 +3883,7 @@ export interface V1TruncationStoppingPolicy {
      * @type {string}
      * @memberof V1TruncationStoppingPolicy
      */
-    king?: string;
+    kind?: string;
     /**
      * The percentage of runs to stop, at each evaluation interval. e.g. 1 - 99.
      * @type {number}
@@ -4001,7 +4001,7 @@ export interface V1WidgetSpec {
      * @type {string}
      * @memberof V1WidgetSpec
      */
-    king?: string;
+    kind?: string;
     /**
      * 
      * @type {V1SearchSpec}

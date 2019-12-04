@@ -47,38 +47,28 @@ class V1IO(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        "name": "str",
-        "description": "str",
-        "iotype": "str",
-        "value": "object",
-        "is_optional": "bool",
-        "is_list": "bool",
-        "is_flag": "bool",
-        "options": "list[object]",
+        'name': 'str',
+        'description': 'str',
+        'iotype': 'str',
+        'value': 'object',
+        'is_optional': 'bool',
+        'is_list': 'bool',
+        'is_flag': 'bool',
+        'options': 'list[object]'
     }
 
     attribute_map = {
-        "name": "name",
-        "description": "description",
-        "iotype": "iotype",
-        "value": "value",
-        "is_optional": "is_optional",
-        "is_list": "is_list",
-        "is_flag": "is_flag",
-        "options": "options",
+        'name': 'name',
+        'description': 'description',
+        'iotype': 'iotype',
+        'value': 'value',
+        'is_optional': 'is_optional',
+        'is_list': 'is_list',
+        'is_flag': 'is_flag',
+        'options': 'options'
     }
 
-    def __init__(
-        self,
-        name=None,
-        description=None,
-        iotype=None,
-        value=None,
-        is_optional=None,
-        is_list=None,
-        is_flag=None,
-        options=None,
-    ):  # noqa: E501
+    def __init__(self, name=None, description=None, iotype=None, value=None, is_optional=None, is_list=None, is_flag=None, options=None):  # noqa: E501
         """V1IO - a model defined in Swagger"""  # noqa: E501
 
         self._name = None
@@ -283,20 +273,18 @@ class V1IO(object):
         for attr, _ in six.iteritems(self.swagger_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(
-                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
-                )
+                result[attr] = list(map(
+                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
+                    value
+                ))
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(
-                    map(
-                        lambda item: (item[0], item[1].to_dict())
-                        if hasattr(item[1], "to_dict")
-                        else item,
-                        value.items(),
-                    )
-                )
+                result[attr] = dict(map(
+                    lambda item: (item[0], item[1].to_dict())
+                    if hasattr(item[1], "to_dict") else item,
+                    value.items()
+                ))
             else:
                 result[attr] = value
         if issubclass(V1IO, dict):

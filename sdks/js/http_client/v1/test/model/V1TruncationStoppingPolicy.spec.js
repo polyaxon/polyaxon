@@ -55,10 +55,10 @@
         expect(instance).to.be.a(PolyaxonSdk.V1TruncationStoppingPolicy);
       });
 
-      it('should have the property king (base name: "king")', function() {
-        // TODO: update the code to test the property king
-        expect(instance).to.have.property('king');
-        // expect(instance.king).to.be(expectedValueLiteral);
+      it('should have the property kind (base name: "kind")', function() {
+        // TODO: update the code to test the property kind
+        expect(instance).to.have.property('kind');
+        // expect(instance.kind).to.be(expectedValueLiteral);
       });
 
       it('should have the property percent (base name: "percent")', function() {

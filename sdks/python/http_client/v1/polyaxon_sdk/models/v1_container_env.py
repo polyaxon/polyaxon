@@ -47,29 +47,22 @@ class V1ContainerEnv(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        "image": "str",
-        "image_pull_policy": "str",
-        "sleep_interval": "int",
-        "outputs_sync_interval": "int",
-        "logs_sync_interval": "int",
+        'image': 'str',
+        'image_pull_policy': 'str',
+        'sleep_interval': 'int',
+        'outputs_sync_interval': 'int',
+        'logs_sync_interval': 'int'
     }
 
     attribute_map = {
-        "image": "image",
-        "image_pull_policy": "image_pull_policy",
-        "sleep_interval": "sleep_interval",
-        "outputs_sync_interval": "outputs_sync_interval",
-        "logs_sync_interval": "logs_sync_interval",
+        'image': 'image',
+        'image_pull_policy': 'image_pull_policy',
+        'sleep_interval': 'sleep_interval',
+        'outputs_sync_interval': 'outputs_sync_interval',
+        'logs_sync_interval': 'logs_sync_interval'
     }
 
-    def __init__(
-        self,
-        image=None,
-        image_pull_policy=None,
-        sleep_interval=None,
-        outputs_sync_interval=None,
-        logs_sync_interval=None,
-    ):  # noqa: E501
+    def __init__(self, image=None, image_pull_policy=None, sleep_interval=None, outputs_sync_interval=None, logs_sync_interval=None):  # noqa: E501
         """V1ContainerEnv - a model defined in Swagger"""  # noqa: E501
 
         self._image = None
@@ -202,20 +195,18 @@ class V1ContainerEnv(object):
         for attr, _ in six.iteritems(self.swagger_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(
-                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
-                )
+                result[attr] = list(map(
+                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
+                    value
+                ))
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(
-                    map(
-                        lambda item: (item[0], item[1].to_dict())
-                        if hasattr(item[1], "to_dict")
-                        else item,
-                        value.items(),
-                    )
-                )
+                result[attr] = dict(map(
+                    lambda item: (item[0], item[1].to_dict())
+                    if hasattr(item[1], "to_dict") else item,
+                    value.items()
+                ))
             else:
                 result[attr] = value
         if issubclass(V1ContainerEnv, dict):

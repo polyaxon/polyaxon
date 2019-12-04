@@ -23,7 +23,7 @@ from polyaxon.schemas.base import BaseConfig, BaseSchema
 from polyaxon.schemas.polyflow.environment.container_resources import (
     ResourceRequirementsSchema,
 )
-from polyaxon.schemas.polyflow.environment.containers import ContainerEnvConfig
+from polyaxon.schemas.polyflow.environment.containers import ContainerEnvSchema
 from polyaxon_sdk import V1Environment
 
 
@@ -45,8 +45,8 @@ class EnvironmentSchema(BaseSchema):
     outputs = fields.Bool(allow_none=True)
     logs = fields.Bool(allow_none=True)
     registry = fields.Str(allow_none=True)
-    init_container = fields.Nested(ContainerEnvConfig, allow_none=True)
-    sidecar_container = fields.Nested(ContainerEnvConfig, allow_none=True)
+    init_container = fields.Nested(ContainerEnvSchema, allow_none=True)
+    sidecar_container = fields.Nested(ContainerEnvSchema, allow_none=True)
 
     @staticmethod
     def schema_config():

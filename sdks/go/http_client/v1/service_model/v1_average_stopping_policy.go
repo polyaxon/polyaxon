@@ -35,7 +35,7 @@ type V1AverageStoppingPolicy struct {
 	EvaluationInterval int32 `json:"evaluation_interval,omitempty"`
 
 	// Kind of this stopping policy, should be equal to "average"
-	King string `json:"king,omitempty"`
+	Kind string `json:"kind,omitempty"`
 }
 
 // Validate validates this v1 average stopping policy

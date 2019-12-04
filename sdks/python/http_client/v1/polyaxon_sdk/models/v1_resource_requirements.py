@@ -46,9 +46,15 @@ class V1ResourceRequirements(object):
       attribute_map (dict): The key is attribute name
                             and the value is json key in definition.
     """
-    swagger_types = {"limits": "object", "requests": "object"}
+    swagger_types = {
+        'limits': 'object',
+        'requests': 'object'
+    }
 
-    attribute_map = {"limits": "limits", "requests": "requests"}
+    attribute_map = {
+        'limits': 'limits',
+        'requests': 'requests'
+    }
 
     def __init__(self, limits=None, requests=None):  # noqa: E501
         """V1ResourceRequirements - a model defined in Swagger"""  # noqa: E501
@@ -115,20 +121,18 @@ class V1ResourceRequirements(object):
         for attr, _ in six.iteritems(self.swagger_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(
-                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
-                )
+                result[attr] = list(map(
+                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
+                    value
+                ))
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(
-                    map(
-                        lambda item: (item[0], item[1].to_dict())
-                        if hasattr(item[1], "to_dict")
-                        else item,
-                        value.items(),
-                    )
-                )
+                result[attr] = dict(map(
+                    lambda item: (item[0], item[1].to_dict())
+                    if hasattr(item[1], "to_dict") else item,
+                    value.items()
+                ))
             else:
                 result[attr] = value
         if issubclass(V1ResourceRequirements, dict):

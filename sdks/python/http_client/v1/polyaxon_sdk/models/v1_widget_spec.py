@@ -46,45 +46,53 @@ class V1WidgetSpec(object):
       attribute_map (dict): The key is attribute name
                             and the value is json key in definition.
     """
-    swagger_types = {"king": "str", "search": "V1SearchSpec", "meta": "object"}
+    swagger_types = {
+        'kind': 'str',
+        'search': 'V1SearchSpec',
+        'meta': 'object'
+    }
 
-    attribute_map = {"king": "king", "search": "search", "meta": "meta"}
+    attribute_map = {
+        'kind': 'kind',
+        'search': 'search',
+        'meta': 'meta'
+    }
 
-    def __init__(self, king=None, search=None, meta=None):  # noqa: E501
+    def __init__(self, kind=None, search=None, meta=None):  # noqa: E501
         """V1WidgetSpec - a model defined in Swagger"""  # noqa: E501
 
-        self._king = None
+        self._kind = None
         self._search = None
         self._meta = None
         self.discriminator = None
 
-        if king is not None:
-            self.king = king
+        if kind is not None:
+            self.kind = kind
         if search is not None:
             self.search = search
         if meta is not None:
             self.meta = meta
 
     @property
-    def king(self):
-        """Gets the king of this V1WidgetSpec.  # noqa: E501
+    def kind(self):
+        """Gets the kind of this V1WidgetSpec.  # noqa: E501
 
 
-        :return: The king of this V1WidgetSpec.  # noqa: E501
+        :return: The kind of this V1WidgetSpec.  # noqa: E501
         :rtype: str
         """
-        return self._king
+        return self._kind
 
-    @king.setter
-    def king(self, king):
-        """Sets the king of this V1WidgetSpec.
+    @kind.setter
+    def kind(self, kind):
+        """Sets the kind of this V1WidgetSpec.
 
 
-        :param king: The king of this V1WidgetSpec.  # noqa: E501
+        :param kind: The kind of this V1WidgetSpec.  # noqa: E501
         :type: str
         """
 
-        self._king = king
+        self._kind = kind
 
     @property
     def search(self):
@@ -135,20 +143,18 @@ class V1WidgetSpec(object):
         for attr, _ in six.iteritems(self.swagger_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(
-                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
-                )
+                result[attr] = list(map(
+                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
+                    value
+                ))
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(
-                    map(
-                        lambda item: (item[0], item[1].to_dict())
-                        if hasattr(item[1], "to_dict")
-                        else item,
-                        value.items(),
-                    )
-                )
+                result[attr] = dict(map(
+                    lambda item: (item[0], item[1].to_dict())
+                    if hasattr(item[1], "to_dict") else item,
+                    value.items()
+                ))
             else:
                 result[attr] = value
         if issubclass(V1WidgetSpec, dict):

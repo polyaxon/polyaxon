@@ -11,7 +11,7 @@ import "v1/schemas/optimization.proto";
 // of the running runs.
 message MedianStoppingPolicy {
     // Kind of this stopping policy, should be equal to "median"
-    string king = 1;
+    string kind = 1;
 
     // Interval/Frequency for applying the policy.
     int32 evaluation_interval = 2;
@@ -22,7 +22,7 @@ message MedianStoppingPolicy {
 // of the running runs.
 message AverageStoppingPolicy {
     // Kind of this stopping policy, should be equal to "average"
-    string king = 1;
+    string kind = 1;
 
     // Interval/Frequency for applying the policy.
     int32 evaluation_interval = 2;
@@ -32,7 +32,7 @@ message AverageStoppingPolicy {
 // all running runs at every evaluation.
 message TruncationStoppingPolicy {
     // Kind of this stopping policy, should be equal to "truncation"
-    string king = 1;
+    string kind = 1;
 
     // The percentage of runs to stop, at each evaluation interval.
     // e.g. 1 - 99.

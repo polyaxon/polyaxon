@@ -69,8 +69,8 @@
   exports.constructFromObject = function(data, obj) {
     if (data) {
       obj = obj || new exports();
-      if (data.hasOwnProperty('king'))
-        obj.king = ApiClient.convertToType(data['king'], 'String');
+      if (data.hasOwnProperty('kind'))
+        obj.kind = ApiClient.convertToType(data['kind'], 'String');
       if (data.hasOwnProperty('search'))
         obj.search = V1SearchSpec.constructFromObject(data['search']);
       if (data.hasOwnProperty('meta'))
@@ -80,9 +80,9 @@
   }
 
   /**
-   * @member {String} king
+   * @member {String} kind
    */
-  exports.prototype.king = undefined;
+  exports.prototype.kind = undefined;
 
   /**
    * @member {module:model/V1SearchSpec} search

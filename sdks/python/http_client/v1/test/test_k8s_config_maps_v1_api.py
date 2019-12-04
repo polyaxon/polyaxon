@@ -40,9 +40,7 @@ class TestK8sConfigMapsV1Api(unittest.TestCase):
     """K8sConfigMapsV1Api unit test stubs"""
 
     def setUp(self):
-        self.api = (
-            polyaxon_sdk.api.k8s_config_maps_v1_api.K8sConfigMapsV1Api()
-        )  # noqa: E501
+        self.api = polyaxon_sdk.api.k8s_config_maps_v1_api.K8sConfigMapsV1Api()  # noqa: E501
 
     def tearDown(self):
         pass
@@ -97,5 +95,5 @@ class TestK8sConfigMapsV1Api(unittest.TestCase):
         pass
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     unittest.main()

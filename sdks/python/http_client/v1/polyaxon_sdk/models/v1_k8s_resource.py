@@ -47,53 +47,38 @@ class V1K8sResource(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        "uuid": "str",
-        "name": "str",
-        "description": "str",
-        "readme": "str",
-        "tags": "list[str]",
-        "created_at": "datetime",
-        "updated_at": "datetime",
-        "k8s_ref": "str",
-        "frozen": "bool",
-        "disabled": "bool",
-        "deleted": "bool",
-        "mount_path": "str",
-        "items": "list[str]",
+        'uuid': 'str',
+        'name': 'str',
+        'description': 'str',
+        'readme': 'str',
+        'tags': 'list[str]',
+        'created_at': 'datetime',
+        'updated_at': 'datetime',
+        'k8s_ref': 'str',
+        'frozen': 'bool',
+        'disabled': 'bool',
+        'deleted': 'bool',
+        'mount_path': 'str',
+        'items': 'list[str]'
     }
 
     attribute_map = {
-        "uuid": "uuid",
-        "name": "name",
-        "description": "description",
-        "readme": "readme",
-        "tags": "tags",
-        "created_at": "created_at",
-        "updated_at": "updated_at",
-        "k8s_ref": "k8s_ref",
-        "frozen": "frozen",
-        "disabled": "disabled",
-        "deleted": "deleted",
-        "mount_path": "mount_path",
-        "items": "items",
+        'uuid': 'uuid',
+        'name': 'name',
+        'description': 'description',
+        'readme': 'readme',
+        'tags': 'tags',
+        'created_at': 'created_at',
+        'updated_at': 'updated_at',
+        'k8s_ref': 'k8s_ref',
+        'frozen': 'frozen',
+        'disabled': 'disabled',
+        'deleted': 'deleted',
+        'mount_path': 'mount_path',
+        'items': 'items'
     }
 
-    def __init__(
-        self,
-        uuid=None,
-        name=None,
-        description=None,
-        readme=None,
-        tags=None,
-        created_at=None,
-        updated_at=None,
-        k8s_ref=None,
-        frozen=None,
-        disabled=None,
-        deleted=None,
-        mount_path=None,
-        items=None,
-    ):  # noqa: E501
+    def __init__(self, uuid=None, name=None, description=None, readme=None, tags=None, created_at=None, updated_at=None, k8s_ref=None, frozen=None, disabled=None, deleted=None, mount_path=None, items=None):  # noqa: E501
         """V1K8sResource - a model defined in Swagger"""  # noqa: E501
 
         self._uuid = None
@@ -418,20 +403,18 @@ class V1K8sResource(object):
         for attr, _ in six.iteritems(self.swagger_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(
-                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
-                )
+                result[attr] = list(map(
+                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
+                    value
+                ))
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(
-                    map(
-                        lambda item: (item[0], item[1].to_dict())
-                        if hasattr(item[1], "to_dict")
-                        else item,
-                        value.items(),
-                    )
-                )
+                result[attr] = dict(map(
+                    lambda item: (item[0], item[1].to_dict())
+                    if hasattr(item[1], "to_dict") else item,
+                    value.items()
+                ))
             else:
                 result[attr] = value
         if issubclass(V1K8sResource, dict):

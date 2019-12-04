@@ -44,8 +44,8 @@ import java.io.IOException;
 @ApiModel(description = "Early stopping with truncation stopping, this policy stops a percentage of all running runs at every evaluation.")
 
 public class V1TruncationStoppingPolicy {
-  @SerializedName("king")
-  private String king = null;
+  @SerializedName("kind")
+  private String kind = null;
 
   @SerializedName("percent")
   private Integer percent = null;
@@ -53,22 +53,22 @@ public class V1TruncationStoppingPolicy {
   @SerializedName("evaluation_interval")
   private Integer evaluationInterval = null;
 
-  public V1TruncationStoppingPolicy king(String king) {
-    this.king = king;
+  public V1TruncationStoppingPolicy kind(String kind) {
+    this.kind = kind;
     return this;
   }
 
    /**
-   * Get king
-   * @return king
+   * Get kind
+   * @return kind
   **/
   @ApiModelProperty(value = "")
-  public String getKing() {
-    return king;
+  public String getKind() {
+    return kind;
   }
 
-  public void setKing(String king) {
-    this.king = king;
+  public void setKind(String kind) {
+    this.kind = kind;
   }
 
   public V1TruncationStoppingPolicy percent(Integer percent) {
@@ -117,14 +117,14 @@ public class V1TruncationStoppingPolicy {
       return false;
     }
     V1TruncationStoppingPolicy v1TruncationStoppingPolicy = (V1TruncationStoppingPolicy) o;
-    return Objects.equals(this.king, v1TruncationStoppingPolicy.king) &&
+    return Objects.equals(this.kind, v1TruncationStoppingPolicy.kind) &&
         Objects.equals(this.percent, v1TruncationStoppingPolicy.percent) &&
         Objects.equals(this.evaluationInterval, v1TruncationStoppingPolicy.evaluationInterval);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(king, percent, evaluationInterval);
+    return Objects.hash(kind, percent, evaluationInterval);
   }
 
 
@@ -133,7 +133,7 @@ public class V1TruncationStoppingPolicy {
     StringBuilder sb = new StringBuilder();
     sb.append("class V1TruncationStoppingPolicy {\n");
     
-    sb.append("    king: ").append(toIndentedString(king)).append("\n");
+    sb.append("    kind: ").append(toIndentedString(kind)).append("\n");
     sb.append("    percent: ").append(toIndentedString(percent)).append("\n");
     sb.append("    evaluationInterval: ").append(toIndentedString(evaluationInterval)).append("\n");
     sb.append("}");

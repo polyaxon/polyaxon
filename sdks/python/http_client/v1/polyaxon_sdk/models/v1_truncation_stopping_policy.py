@@ -46,49 +46,53 @@ class V1TruncationStoppingPolicy(object):
       attribute_map (dict): The key is attribute name
                             and the value is json key in definition.
     """
-    swagger_types = {"king": "str", "percent": "int", "evaluation_interval": "int"}
-
-    attribute_map = {
-        "king": "king",
-        "percent": "percent",
-        "evaluation_interval": "evaluation_interval",
+    swagger_types = {
+        'kind': 'str',
+        'percent': 'int',
+        'evaluation_interval': 'int'
     }
 
-    def __init__(self, king=None, percent=None, evaluation_interval=None):  # noqa: E501
+    attribute_map = {
+        'kind': 'kind',
+        'percent': 'percent',
+        'evaluation_interval': 'evaluation_interval'
+    }
+
+    def __init__(self, kind=None, percent=None, evaluation_interval=None):  # noqa: E501
         """V1TruncationStoppingPolicy - a model defined in Swagger"""  # noqa: E501
 
-        self._king = None
+        self._kind = None
         self._percent = None
         self._evaluation_interval = None
         self.discriminator = None
 
-        if king is not None:
-            self.king = king
+        if kind is not None:
+            self.kind = kind
         if percent is not None:
             self.percent = percent
         if evaluation_interval is not None:
             self.evaluation_interval = evaluation_interval
 
     @property
-    def king(self):
-        """Gets the king of this V1TruncationStoppingPolicy.  # noqa: E501
+    def kind(self):
+        """Gets the kind of this V1TruncationStoppingPolicy.  # noqa: E501
 
 
-        :return: The king of this V1TruncationStoppingPolicy.  # noqa: E501
+        :return: The kind of this V1TruncationStoppingPolicy.  # noqa: E501
         :rtype: str
         """
-        return self._king
+        return self._kind
 
-    @king.setter
-    def king(self, king):
-        """Sets the king of this V1TruncationStoppingPolicy.
+    @kind.setter
+    def kind(self, kind):
+        """Sets the kind of this V1TruncationStoppingPolicy.
 
 
-        :param king: The king of this V1TruncationStoppingPolicy.  # noqa: E501
+        :param kind: The kind of this V1TruncationStoppingPolicy.  # noqa: E501
         :type: str
         """
 
-        self._king = king
+        self._kind = kind
 
     @property
     def percent(self):
@@ -143,20 +147,18 @@ class V1TruncationStoppingPolicy(object):
         for attr, _ in six.iteritems(self.swagger_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(
-                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
-                )
+                result[attr] = list(map(
+                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
+                    value
+                ))
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(
-                    map(
-                        lambda item: (item[0], item[1].to_dict())
-                        if hasattr(item[1], "to_dict")
-                        else item,
-                        value.items(),
-                    )
-                )
+                result[attr] = dict(map(
+                    lambda item: (item[0], item[1].to_dict())
+                    if hasattr(item[1], "to_dict") else item,
+                    value.items()
+                ))
             else:
                 result[attr] = value
         if issubclass(V1TruncationStoppingPolicy, dict):

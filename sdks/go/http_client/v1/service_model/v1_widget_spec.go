@@ -31,7 +31,7 @@ import (
 type V1WidgetSpec struct {
 
 	// Widget kind
-	King string `json:"king,omitempty"`
+	Kind string `json:"kind,omitempty"`
 
 	// Meta inforation
 	Meta interface{} `json:"meta,omitempty"`

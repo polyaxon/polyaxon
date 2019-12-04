@@ -63,13 +63,11 @@ class OrganizationsV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs["_return_http_data_only"] = True
-        if kwargs.get("async_req"):
+        kwargs['_return_http_data_only'] = True
+        if kwargs.get('async_req'):
             return self.create_organization_with_http_info(body, **kwargs)  # noqa: E501
         else:
-            (data) = self.create_organization_with_http_info(
-                body, **kwargs
-            )  # noqa: E501
+            (data) = self.create_organization_with_http_info(body, **kwargs)  # noqa: E501
             return data
 
     def create_organization_with_http_info(self, body, **kwargs):  # noqa: E501
@@ -87,26 +85,25 @@ class OrganizationsV1Api(object):
                  returns the request thread.
         """
 
-        all_params = ["body"]  # noqa: E501
-        all_params.append("async_req")
-        all_params.append("_return_http_data_only")
-        all_params.append("_preload_content")
-        all_params.append("_request_timeout")
+        all_params = ['body']  # noqa: E501
+        all_params.append('async_req')
+        all_params.append('_return_http_data_only')
+        all_params.append('_preload_content')
+        all_params.append('_request_timeout')
 
         params = locals()
-        for key, val in six.iteritems(params["kwargs"]):
+        for key, val in six.iteritems(params['kwargs']):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method create_organization" % key
                 )
             params[key] = val
-        del params["kwargs"]
+        del params['kwargs']
         # verify the required parameter 'body' is set
-        if "body" not in params or params["body"] is None:
-            raise ValueError(
-                "Missing the required parameter `body` when calling `create_organization`"
-            )  # noqa: E501
+        if ('body' not in params or
+                params['body'] is None):
+            raise ValueError("Missing the required parameter `body` when calling `create_organization`")  # noqa: E501
 
         collection_formats = {}
 
@@ -120,40 +117,34 @@ class OrganizationsV1Api(object):
         local_var_files = {}
 
         body_params = None
-        if "body" in params:
-            body_params = params["body"]
+        if 'body' in params:
+            body_params = params['body']
         # HTTP header `Accept`
-        header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params[
-            "Content-Type"
-        ] = self.api_client.select_header_content_type(  # noqa: E501
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
+            ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = ["ApiKey"]  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/organizations/create",
-            "POST",
+            '/api/v1/organizations/create', 'POST',
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type="V1Organization",  # noqa: E501
+            response_type='V1Organization',  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get("async_req"),
-            _return_http_data_only=params.get("_return_http_data_only"),
-            _preload_content=params.get("_preload_content", True),
-            _request_timeout=params.get("_request_timeout"),
-            collection_formats=collection_formats,
-        )
+            async_req=params.get('async_req'),
+            _return_http_data_only=params.get('_return_http_data_only'),
+            _preload_content=params.get('_preload_content', True),
+            _request_timeout=params.get('_request_timeout'),
+            collection_formats=collection_formats)
 
     def create_organization_member(self, owner, body, **kwargs):  # noqa: E501
         """Delete runs  # noqa: E501
@@ -170,20 +161,14 @@ class OrganizationsV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs["_return_http_data_only"] = True
-        if kwargs.get("async_req"):
-            return self.create_organization_member_with_http_info(
-                owner, body, **kwargs
-            )  # noqa: E501
+        kwargs['_return_http_data_only'] = True
+        if kwargs.get('async_req'):
+            return self.create_organization_member_with_http_info(owner, body, **kwargs)  # noqa: E501
         else:
-            (data) = self.create_organization_member_with_http_info(
-                owner, body, **kwargs
-            )  # noqa: E501
+            (data) = self.create_organization_member_with_http_info(owner, body, **kwargs)  # noqa: E501
             return data
 
-    def create_organization_member_with_http_info(
-        self, owner, body, **kwargs
-    ):  # noqa: E501
+    def create_organization_member_with_http_info(self, owner, body, **kwargs):  # noqa: E501
         """Delete runs  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -199,37 +184,35 @@ class OrganizationsV1Api(object):
                  returns the request thread.
         """
 
-        all_params = ["owner", "body"]  # noqa: E501
-        all_params.append("async_req")
-        all_params.append("_return_http_data_only")
-        all_params.append("_preload_content")
-        all_params.append("_request_timeout")
+        all_params = ['owner', 'body']  # noqa: E501
+        all_params.append('async_req')
+        all_params.append('_return_http_data_only')
+        all_params.append('_preload_content')
+        all_params.append('_request_timeout')
 
         params = locals()
-        for key, val in six.iteritems(params["kwargs"]):
+        for key, val in six.iteritems(params['kwargs']):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method create_organization_member" % key
                 )
             params[key] = val
-        del params["kwargs"]
+        del params['kwargs']
         # verify the required parameter 'owner' is set
-        if "owner" not in params or params["owner"] is None:
-            raise ValueError(
-                "Missing the required parameter `owner` when calling `create_organization_member`"
-            )  # noqa: E501
+        if ('owner' not in params or
+                params['owner'] is None):
+            raise ValueError("Missing the required parameter `owner` when calling `create_organization_member`")  # noqa: E501
         # verify the required parameter 'body' is set
-        if "body" not in params or params["body"] is None:
-            raise ValueError(
-                "Missing the required parameter `body` when calling `create_organization_member`"
-            )  # noqa: E501
+        if ('body' not in params or
+                params['body'] is None):
+            raise ValueError("Missing the required parameter `body` when calling `create_organization_member`")  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if "owner" in params:
-            path_params["owner"] = params["owner"]  # noqa: E501
+        if 'owner' in params:
+            path_params['owner'] = params['owner']  # noqa: E501
 
         query_params = []
 
@@ -239,40 +222,34 @@ class OrganizationsV1Api(object):
         local_var_files = {}
 
         body_params = None
-        if "body" in params:
-            body_params = params["body"]
+        if 'body' in params:
+            body_params = params['body']
         # HTTP header `Accept`
-        header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params[
-            "Content-Type"
-        ] = self.api_client.select_header_content_type(  # noqa: E501
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
+            ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = ["ApiKey"]  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/organizations/{owner}/members",
-            "POST",
+            '/api/v1/organizations/{owner}/members', 'POST',
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type="V1OrganizationMember",  # noqa: E501
+            response_type='V1OrganizationMember',  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get("async_req"),
-            _return_http_data_only=params.get("_return_http_data_only"),
-            _preload_content=params.get("_preload_content", True),
-            _request_timeout=params.get("_request_timeout"),
-            collection_formats=collection_formats,
-        )
+            async_req=params.get('async_req'),
+            _return_http_data_only=params.get('_return_http_data_only'),
+            _preload_content=params.get('_preload_content', True),
+            _request_timeout=params.get('_request_timeout'),
+            collection_formats=collection_formats)
 
     def delete_organization(self, owner, **kwargs):  # noqa: E501
         """Patch run  # noqa: E501
@@ -288,15 +265,11 @@ class OrganizationsV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs["_return_http_data_only"] = True
-        if kwargs.get("async_req"):
-            return self.delete_organization_with_http_info(
-                owner, **kwargs
-            )  # noqa: E501
+        kwargs['_return_http_data_only'] = True
+        if kwargs.get('async_req'):
+            return self.delete_organization_with_http_info(owner, **kwargs)  # noqa: E501
         else:
-            (data) = self.delete_organization_with_http_info(
-                owner, **kwargs
-            )  # noqa: E501
+            (data) = self.delete_organization_with_http_info(owner, **kwargs)  # noqa: E501
             return data
 
     def delete_organization_with_http_info(self, owner, **kwargs):  # noqa: E501
@@ -314,32 +287,31 @@ class OrganizationsV1Api(object):
                  returns the request thread.
         """
 
-        all_params = ["owner"]  # noqa: E501
-        all_params.append("async_req")
-        all_params.append("_return_http_data_only")
-        all_params.append("_preload_content")
-        all_params.append("_request_timeout")
+        all_params = ['owner']  # noqa: E501
+        all_params.append('async_req')
+        all_params.append('_return_http_data_only')
+        all_params.append('_preload_content')
+        all_params.append('_request_timeout')
 
         params = locals()
-        for key, val in six.iteritems(params["kwargs"]):
+        for key, val in six.iteritems(params['kwargs']):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method delete_organization" % key
                 )
             params[key] = val
-        del params["kwargs"]
+        del params['kwargs']
         # verify the required parameter 'owner' is set
-        if "owner" not in params or params["owner"] is None:
-            raise ValueError(
-                "Missing the required parameter `owner` when calling `delete_organization`"
-            )  # noqa: E501
+        if ('owner' not in params or
+                params['owner'] is None):
+            raise ValueError("Missing the required parameter `owner` when calling `delete_organization`")  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if "owner" in params:
-            path_params["owner"] = params["owner"]  # noqa: E501
+        if 'owner' in params:
+            path_params['owner'] = params['owner']  # noqa: E501
 
         query_params = []
 
@@ -350,23 +322,18 @@ class OrganizationsV1Api(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params[
-            "Content-Type"
-        ] = self.api_client.select_header_content_type(  # noqa: E501
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
+            ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = ["ApiKey"]  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/organizations/{owner}",
-            "DELETE",
+            '/api/v1/organizations/{owner}', 'DELETE',
             path_params,
             query_params,
             header_params,
@@ -375,12 +342,11 @@ class OrganizationsV1Api(object):
             files=local_var_files,
             response_type=None,  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get("async_req"),
-            _return_http_data_only=params.get("_return_http_data_only"),
-            _preload_content=params.get("_preload_content", True),
-            _request_timeout=params.get("_request_timeout"),
-            collection_formats=collection_formats,
-        )
+            async_req=params.get('async_req'),
+            _return_http_data_only=params.get('_return_http_data_only'),
+            _preload_content=params.get('_preload_content', True),
+            _request_timeout=params.get('_request_timeout'),
+            collection_formats=collection_formats)
 
     def delete_organization_member(self, owner, member_user, **kwargs):  # noqa: E501
         """Invalidate runs  # noqa: E501
@@ -400,20 +366,14 @@ class OrganizationsV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs["_return_http_data_only"] = True
-        if kwargs.get("async_req"):
-            return self.delete_organization_member_with_http_info(
-                owner, member_user, **kwargs
-            )  # noqa: E501
+        kwargs['_return_http_data_only'] = True
+        if kwargs.get('async_req'):
+            return self.delete_organization_member_with_http_info(owner, member_user, **kwargs)  # noqa: E501
         else:
-            (data) = self.delete_organization_member_with_http_info(
-                owner, member_user, **kwargs
-            )  # noqa: E501
+            (data) = self.delete_organization_member_with_http_info(owner, member_user, **kwargs)  # noqa: E501
             return data
 
-    def delete_organization_member_with_http_info(
-        self, owner, member_user, **kwargs
-    ):  # noqa: E501
+    def delete_organization_member_with_http_info(self, owner, member_user, **kwargs):  # noqa: E501
         """Invalidate runs  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -432,57 +392,45 @@ class OrganizationsV1Api(object):
                  returns the request thread.
         """
 
-        all_params = [
-            "owner",
-            "member_user",
-            "member_role",
-            "member_created_at",
-            "member_updated_at",
-        ]  # noqa: E501
-        all_params.append("async_req")
-        all_params.append("_return_http_data_only")
-        all_params.append("_preload_content")
-        all_params.append("_request_timeout")
+        all_params = ['owner', 'member_user', 'member_role', 'member_created_at', 'member_updated_at']  # noqa: E501
+        all_params.append('async_req')
+        all_params.append('_return_http_data_only')
+        all_params.append('_preload_content')
+        all_params.append('_request_timeout')
 
         params = locals()
-        for key, val in six.iteritems(params["kwargs"]):
+        for key, val in six.iteritems(params['kwargs']):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method delete_organization_member" % key
                 )
             params[key] = val
-        del params["kwargs"]
+        del params['kwargs']
         # verify the required parameter 'owner' is set
-        if "owner" not in params or params["owner"] is None:
-            raise ValueError(
-                "Missing the required parameter `owner` when calling `delete_organization_member`"
-            )  # noqa: E501
+        if ('owner' not in params or
+                params['owner'] is None):
+            raise ValueError("Missing the required parameter `owner` when calling `delete_organization_member`")  # noqa: E501
         # verify the required parameter 'member_user' is set
-        if "member_user" not in params or params["member_user"] is None:
-            raise ValueError(
-                "Missing the required parameter `member_user` when calling `delete_organization_member`"
-            )  # noqa: E501
+        if ('member_user' not in params or
+                params['member_user'] is None):
+            raise ValueError("Missing the required parameter `member_user` when calling `delete_organization_member`")  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if "owner" in params:
-            path_params["owner"] = params["owner"]  # noqa: E501
-        if "member_user" in params:
-            path_params["member.user"] = params["member_user"]  # noqa: E501
+        if 'owner' in params:
+            path_params['owner'] = params['owner']  # noqa: E501
+        if 'member_user' in params:
+            path_params['member.user'] = params['member_user']  # noqa: E501
 
         query_params = []
-        if "member_role" in params:
-            query_params.append(("member.role", params["member_role"]))  # noqa: E501
-        if "member_created_at" in params:
-            query_params.append(
-                ("member.created_at", params["member_created_at"])
-            )  # noqa: E501
-        if "member_updated_at" in params:
-            query_params.append(
-                ("member.updated_at", params["member_updated_at"])
-            )  # noqa: E501
+        if 'member_role' in params:
+            query_params.append(('member.role', params['member_role']))  # noqa: E501
+        if 'member_created_at' in params:
+            query_params.append(('member.created_at', params['member_created_at']))  # noqa: E501
+        if 'member_updated_at' in params:
+            query_params.append(('member.updated_at', params['member_updated_at']))  # noqa: E501
 
         header_params = {}
 
@@ -491,23 +439,18 @@ class OrganizationsV1Api(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params[
-            "Content-Type"
-        ] = self.api_client.select_header_content_type(  # noqa: E501
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
+            ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = ["ApiKey"]  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/organizations/{owner}/members/{member.user}",
-            "DELETE",
+            '/api/v1/organizations/{owner}/members/{member.user}', 'DELETE',
             path_params,
             query_params,
             header_params,
@@ -516,12 +459,11 @@ class OrganizationsV1Api(object):
             files=local_var_files,
             response_type=None,  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get("async_req"),
-            _return_http_data_only=params.get("_return_http_data_only"),
-            _preload_content=params.get("_preload_content", True),
-            _request_timeout=params.get("_request_timeout"),
-            collection_formats=collection_formats,
-        )
+            async_req=params.get('async_req'),
+            _return_http_data_only=params.get('_return_http_data_only'),
+            _preload_content=params.get('_preload_content', True),
+            _request_timeout=params.get('_request_timeout'),
+            collection_formats=collection_formats)
 
     def get_organization(self, owner, **kwargs):  # noqa: E501
         """Create new run  # noqa: E501
@@ -537,8 +479,8 @@ class OrganizationsV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs["_return_http_data_only"] = True
-        if kwargs.get("async_req"):
+        kwargs['_return_http_data_only'] = True
+        if kwargs.get('async_req'):
             return self.get_organization_with_http_info(owner, **kwargs)  # noqa: E501
         else:
             (data) = self.get_organization_with_http_info(owner, **kwargs)  # noqa: E501
@@ -559,32 +501,31 @@ class OrganizationsV1Api(object):
                  returns the request thread.
         """
 
-        all_params = ["owner"]  # noqa: E501
-        all_params.append("async_req")
-        all_params.append("_return_http_data_only")
-        all_params.append("_preload_content")
-        all_params.append("_request_timeout")
+        all_params = ['owner']  # noqa: E501
+        all_params.append('async_req')
+        all_params.append('_return_http_data_only')
+        all_params.append('_preload_content')
+        all_params.append('_request_timeout')
 
         params = locals()
-        for key, val in six.iteritems(params["kwargs"]):
+        for key, val in six.iteritems(params['kwargs']):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method get_organization" % key
                 )
             params[key] = val
-        del params["kwargs"]
+        del params['kwargs']
         # verify the required parameter 'owner' is set
-        if "owner" not in params or params["owner"] is None:
-            raise ValueError(
-                "Missing the required parameter `owner` when calling `get_organization`"
-            )  # noqa: E501
+        if ('owner' not in params or
+                params['owner'] is None):
+            raise ValueError("Missing the required parameter `owner` when calling `get_organization`")  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if "owner" in params:
-            path_params["owner"] = params["owner"]  # noqa: E501
+        if 'owner' in params:
+            path_params['owner'] = params['owner']  # noqa: E501
 
         query_params = []
 
@@ -595,37 +536,31 @@ class OrganizationsV1Api(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params[
-            "Content-Type"
-        ] = self.api_client.select_header_content_type(  # noqa: E501
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
+            ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = ["ApiKey"]  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/organizations/{owner}",
-            "GET",
+            '/api/v1/organizations/{owner}', 'GET',
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type="V1Organization",  # noqa: E501
+            response_type='V1Organization',  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get("async_req"),
-            _return_http_data_only=params.get("_return_http_data_only"),
-            _preload_content=params.get("_preload_content", True),
-            _request_timeout=params.get("_request_timeout"),
-            collection_formats=collection_formats,
-        )
+            async_req=params.get('async_req'),
+            _return_http_data_only=params.get('_return_http_data_only'),
+            _preload_content=params.get('_preload_content', True),
+            _request_timeout=params.get('_request_timeout'),
+            collection_formats=collection_formats)
 
     def get_organization_member(self, owner, member_user, **kwargs):  # noqa: E501
         """Stop run  # noqa: E501
@@ -645,20 +580,14 @@ class OrganizationsV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs["_return_http_data_only"] = True
-        if kwargs.get("async_req"):
-            return self.get_organization_member_with_http_info(
-                owner, member_user, **kwargs
-            )  # noqa: E501
+        kwargs['_return_http_data_only'] = True
+        if kwargs.get('async_req'):
+            return self.get_organization_member_with_http_info(owner, member_user, **kwargs)  # noqa: E501
         else:
-            (data) = self.get_organization_member_with_http_info(
-                owner, member_user, **kwargs
-            )  # noqa: E501
+            (data) = self.get_organization_member_with_http_info(owner, member_user, **kwargs)  # noqa: E501
             return data
 
-    def get_organization_member_with_http_info(
-        self, owner, member_user, **kwargs
-    ):  # noqa: E501
+    def get_organization_member_with_http_info(self, owner, member_user, **kwargs):  # noqa: E501
         """Stop run  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -677,57 +606,45 @@ class OrganizationsV1Api(object):
                  returns the request thread.
         """
 
-        all_params = [
-            "owner",
-            "member_user",
-            "member_role",
-            "member_created_at",
-            "member_updated_at",
-        ]  # noqa: E501
-        all_params.append("async_req")
-        all_params.append("_return_http_data_only")
-        all_params.append("_preload_content")
-        all_params.append("_request_timeout")
+        all_params = ['owner', 'member_user', 'member_role', 'member_created_at', 'member_updated_at']  # noqa: E501
+        all_params.append('async_req')
+        all_params.append('_return_http_data_only')
+        all_params.append('_preload_content')
+        all_params.append('_request_timeout')
 
         params = locals()
-        for key, val in six.iteritems(params["kwargs"]):
+        for key, val in six.iteritems(params['kwargs']):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method get_organization_member" % key
                 )
             params[key] = val
-        del params["kwargs"]
+        del params['kwargs']
         # verify the required parameter 'owner' is set
-        if "owner" not in params or params["owner"] is None:
-            raise ValueError(
-                "Missing the required parameter `owner` when calling `get_organization_member`"
-            )  # noqa: E501
+        if ('owner' not in params or
+                params['owner'] is None):
+            raise ValueError("Missing the required parameter `owner` when calling `get_organization_member`")  # noqa: E501
         # verify the required parameter 'member_user' is set
-        if "member_user" not in params or params["member_user"] is None:
-            raise ValueError(
-                "Missing the required parameter `member_user` when calling `get_organization_member`"
-            )  # noqa: E501
+        if ('member_user' not in params or
+                params['member_user'] is None):
+            raise ValueError("Missing the required parameter `member_user` when calling `get_organization_member`")  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if "owner" in params:
-            path_params["owner"] = params["owner"]  # noqa: E501
-        if "member_user" in params:
-            path_params["member.user"] = params["member_user"]  # noqa: E501
+        if 'owner' in params:
+            path_params['owner'] = params['owner']  # noqa: E501
+        if 'member_user' in params:
+            path_params['member.user'] = params['member_user']  # noqa: E501
 
         query_params = []
-        if "member_role" in params:
-            query_params.append(("member.role", params["member_role"]))  # noqa: E501
-        if "member_created_at" in params:
-            query_params.append(
-                ("member.created_at", params["member_created_at"])
-            )  # noqa: E501
-        if "member_updated_at" in params:
-            query_params.append(
-                ("member.updated_at", params["member_updated_at"])
-            )  # noqa: E501
+        if 'member_role' in params:
+            query_params.append(('member.role', params['member_role']))  # noqa: E501
+        if 'member_created_at' in params:
+            query_params.append(('member.created_at', params['member_created_at']))  # noqa: E501
+        if 'member_updated_at' in params:
+            query_params.append(('member.updated_at', params['member_updated_at']))  # noqa: E501
 
         header_params = {}
 
@@ -736,37 +653,31 @@ class OrganizationsV1Api(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params[
-            "Content-Type"
-        ] = self.api_client.select_header_content_type(  # noqa: E501
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
+            ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = ["ApiKey"]  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/organizations/{owner}/members/{member.user}",
-            "GET",
+            '/api/v1/organizations/{owner}/members/{member.user}', 'GET',
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type="V1OrganizationMember",  # noqa: E501
+            response_type='V1OrganizationMember',  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get("async_req"),
-            _return_http_data_only=params.get("_return_http_data_only"),
-            _preload_content=params.get("_preload_content", True),
-            _request_timeout=params.get("_request_timeout"),
-            collection_formats=collection_formats,
-        )
+            async_req=params.get('async_req'),
+            _return_http_data_only=params.get('_return_http_data_only'),
+            _preload_content=params.get('_preload_content', True),
+            _request_timeout=params.get('_request_timeout'),
+            collection_formats=collection_formats)
 
     def list_organization_members(self, owner, **kwargs):  # noqa: E501
         """Delete run  # noqa: E501
@@ -782,15 +693,11 @@ class OrganizationsV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs["_return_http_data_only"] = True
-        if kwargs.get("async_req"):
-            return self.list_organization_members_with_http_info(
-                owner, **kwargs
-            )  # noqa: E501
+        kwargs['_return_http_data_only'] = True
+        if kwargs.get('async_req'):
+            return self.list_organization_members_with_http_info(owner, **kwargs)  # noqa: E501
         else:
-            (data) = self.list_organization_members_with_http_info(
-                owner, **kwargs
-            )  # noqa: E501
+            (data) = self.list_organization_members_with_http_info(owner, **kwargs)  # noqa: E501
             return data
 
     def list_organization_members_with_http_info(self, owner, **kwargs):  # noqa: E501
@@ -808,32 +715,31 @@ class OrganizationsV1Api(object):
                  returns the request thread.
         """
 
-        all_params = ["owner"]  # noqa: E501
-        all_params.append("async_req")
-        all_params.append("_return_http_data_only")
-        all_params.append("_preload_content")
-        all_params.append("_request_timeout")
+        all_params = ['owner']  # noqa: E501
+        all_params.append('async_req')
+        all_params.append('_return_http_data_only')
+        all_params.append('_preload_content')
+        all_params.append('_request_timeout')
 
         params = locals()
-        for key, val in six.iteritems(params["kwargs"]):
+        for key, val in six.iteritems(params['kwargs']):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method list_organization_members" % key
                 )
             params[key] = val
-        del params["kwargs"]
+        del params['kwargs']
         # verify the required parameter 'owner' is set
-        if "owner" not in params or params["owner"] is None:
-            raise ValueError(
-                "Missing the required parameter `owner` when calling `list_organization_members`"
-            )  # noqa: E501
+        if ('owner' not in params or
+                params['owner'] is None):
+            raise ValueError("Missing the required parameter `owner` when calling `list_organization_members`")  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if "owner" in params:
-            path_params["owner"] = params["owner"]  # noqa: E501
+        if 'owner' in params:
+            path_params['owner'] = params['owner']  # noqa: E501
 
         query_params = []
 
@@ -844,37 +750,31 @@ class OrganizationsV1Api(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params[
-            "Content-Type"
-        ] = self.api_client.select_header_content_type(  # noqa: E501
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
+            ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = ["ApiKey"]  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/organizations/{owner}/members",
-            "GET",
+            '/api/v1/organizations/{owner}/members', 'GET',
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type="V1ListOrganizationMembersResponse",  # noqa: E501
+            response_type='V1ListOrganizationMembersResponse',  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get("async_req"),
-            _return_http_data_only=params.get("_return_http_data_only"),
-            _preload_content=params.get("_preload_content", True),
-            _request_timeout=params.get("_request_timeout"),
-            collection_formats=collection_formats,
-        )
+            async_req=params.get('async_req'),
+            _return_http_data_only=params.get('_return_http_data_only'),
+            _preload_content=params.get('_preload_content', True),
+            _request_timeout=params.get('_request_timeout'),
+            collection_formats=collection_formats)
 
     def list_organization_names(self, **kwargs):  # noqa: E501
         """List bookmarked runs for user  # noqa: E501
@@ -889,8 +789,8 @@ class OrganizationsV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs["_return_http_data_only"] = True
-        if kwargs.get("async_req"):
+        kwargs['_return_http_data_only'] = True
+        if kwargs.get('async_req'):
             return self.list_organization_names_with_http_info(**kwargs)  # noqa: E501
         else:
             (data) = self.list_organization_names_with_http_info(**kwargs)  # noqa: E501
@@ -911,20 +811,20 @@ class OrganizationsV1Api(object):
         """
 
         all_params = []  # noqa: E501
-        all_params.append("async_req")
-        all_params.append("_return_http_data_only")
-        all_params.append("_preload_content")
-        all_params.append("_request_timeout")
+        all_params.append('async_req')
+        all_params.append('_return_http_data_only')
+        all_params.append('_preload_content')
+        all_params.append('_request_timeout')
 
         params = locals()
-        for key, val in six.iteritems(params["kwargs"]):
+        for key, val in six.iteritems(params['kwargs']):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method list_organization_names" % key
                 )
             params[key] = val
-        del params["kwargs"]
+        del params['kwargs']
 
         collection_formats = {}
 
@@ -939,37 +839,31 @@ class OrganizationsV1Api(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params[
-            "Content-Type"
-        ] = self.api_client.select_header_content_type(  # noqa: E501
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
+            ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = ["ApiKey"]  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/organizations/names",
-            "GET",
+            '/api/v1/organizations/names', 'GET',
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type="V1ListOrganizationsResponse",  # noqa: E501
+            response_type='V1ListOrganizationsResponse',  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get("async_req"),
-            _return_http_data_only=params.get("_return_http_data_only"),
-            _preload_content=params.get("_preload_content", True),
-            _request_timeout=params.get("_request_timeout"),
-            collection_formats=collection_formats,
-        )
+            async_req=params.get('async_req'),
+            _return_http_data_only=params.get('_return_http_data_only'),
+            _preload_content=params.get('_preload_content', True),
+            _request_timeout=params.get('_request_timeout'),
+            collection_formats=collection_formats)
 
     def list_organizations(self, **kwargs):  # noqa: E501
         """List archived runs for user  # noqa: E501
@@ -984,8 +878,8 @@ class OrganizationsV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs["_return_http_data_only"] = True
-        if kwargs.get("async_req"):
+        kwargs['_return_http_data_only'] = True
+        if kwargs.get('async_req'):
             return self.list_organizations_with_http_info(**kwargs)  # noqa: E501
         else:
             (data) = self.list_organizations_with_http_info(**kwargs)  # noqa: E501
@@ -1006,20 +900,20 @@ class OrganizationsV1Api(object):
         """
 
         all_params = []  # noqa: E501
-        all_params.append("async_req")
-        all_params.append("_return_http_data_only")
-        all_params.append("_preload_content")
-        all_params.append("_request_timeout")
+        all_params.append('async_req')
+        all_params.append('_return_http_data_only')
+        all_params.append('_preload_content')
+        all_params.append('_request_timeout')
 
         params = locals()
-        for key, val in six.iteritems(params["kwargs"]):
+        for key, val in six.iteritems(params['kwargs']):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method list_organizations" % key
                 )
             params[key] = val
-        del params["kwargs"]
+        del params['kwargs']
 
         collection_formats = {}
 
@@ -1034,37 +928,31 @@ class OrganizationsV1Api(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params[
-            "Content-Type"
-        ] = self.api_client.select_header_content_type(  # noqa: E501
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
+            ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = ["ApiKey"]  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/organizations/list",
-            "GET",
+            '/api/v1/organizations/list', 'GET',
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type="V1ListOrganizationsResponse",  # noqa: E501
+            response_type='V1ListOrganizationsResponse',  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get("async_req"),
-            _return_http_data_only=params.get("_return_http_data_only"),
-            _preload_content=params.get("_preload_content", True),
-            _request_timeout=params.get("_request_timeout"),
-            collection_formats=collection_formats,
-        )
+            async_req=params.get('async_req'),
+            _return_http_data_only=params.get('_return_http_data_only'),
+            _preload_content=params.get('_preload_content', True),
+            _request_timeout=params.get('_request_timeout'),
+            collection_formats=collection_formats)
 
     def patch_organization(self, owner, body, **kwargs):  # noqa: E501
         """Update run  # noqa: E501
@@ -1081,15 +969,11 @@ class OrganizationsV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs["_return_http_data_only"] = True
-        if kwargs.get("async_req"):
-            return self.patch_organization_with_http_info(
-                owner, body, **kwargs
-            )  # noqa: E501
+        kwargs['_return_http_data_only'] = True
+        if kwargs.get('async_req'):
+            return self.patch_organization_with_http_info(owner, body, **kwargs)  # noqa: E501
         else:
-            (data) = self.patch_organization_with_http_info(
-                owner, body, **kwargs
-            )  # noqa: E501
+            (data) = self.patch_organization_with_http_info(owner, body, **kwargs)  # noqa: E501
             return data
 
     def patch_organization_with_http_info(self, owner, body, **kwargs):  # noqa: E501
@@ -1108,37 +992,35 @@ class OrganizationsV1Api(object):
                  returns the request thread.
         """
 
-        all_params = ["owner", "body"]  # noqa: E501
-        all_params.append("async_req")
-        all_params.append("_return_http_data_only")
-        all_params.append("_preload_content")
-        all_params.append("_request_timeout")
+        all_params = ['owner', 'body']  # noqa: E501
+        all_params.append('async_req')
+        all_params.append('_return_http_data_only')
+        all_params.append('_preload_content')
+        all_params.append('_request_timeout')
 
         params = locals()
-        for key, val in six.iteritems(params["kwargs"]):
+        for key, val in six.iteritems(params['kwargs']):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method patch_organization" % key
                 )
             params[key] = val
-        del params["kwargs"]
+        del params['kwargs']
         # verify the required parameter 'owner' is set
-        if "owner" not in params or params["owner"] is None:
-            raise ValueError(
-                "Missing the required parameter `owner` when calling `patch_organization`"
-            )  # noqa: E501
+        if ('owner' not in params or
+                params['owner'] is None):
+            raise ValueError("Missing the required parameter `owner` when calling `patch_organization`")  # noqa: E501
         # verify the required parameter 'body' is set
-        if "body" not in params or params["body"] is None:
-            raise ValueError(
-                "Missing the required parameter `body` when calling `patch_organization`"
-            )  # noqa: E501
+        if ('body' not in params or
+                params['body'] is None):
+            raise ValueError("Missing the required parameter `body` when calling `patch_organization`")  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if "owner" in params:
-            path_params["owner"] = params["owner"]  # noqa: E501
+        if 'owner' in params:
+            path_params['owner'] = params['owner']  # noqa: E501
 
         query_params = []
 
@@ -1148,44 +1030,36 @@ class OrganizationsV1Api(object):
         local_var_files = {}
 
         body_params = None
-        if "body" in params:
-            body_params = params["body"]
+        if 'body' in params:
+            body_params = params['body']
         # HTTP header `Accept`
-        header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params[
-            "Content-Type"
-        ] = self.api_client.select_header_content_type(  # noqa: E501
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
+            ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = ["ApiKey"]  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/organizations/{owner}",
-            "PATCH",
+            '/api/v1/organizations/{owner}', 'PATCH',
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type="V1Organization",  # noqa: E501
+            response_type='V1Organization',  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get("async_req"),
-            _return_http_data_only=params.get("_return_http_data_only"),
-            _preload_content=params.get("_preload_content", True),
-            _request_timeout=params.get("_request_timeout"),
-            collection_formats=collection_formats,
-        )
+            async_req=params.get('async_req'),
+            _return_http_data_only=params.get('_return_http_data_only'),
+            _preload_content=params.get('_preload_content', True),
+            _request_timeout=params.get('_request_timeout'),
+            collection_formats=collection_formats)
 
-    def patch_organization_member(
-        self, owner, member_user, body, **kwargs
-    ):  # noqa: E501
+    def patch_organization_member(self, owner, member_user, body, **kwargs):  # noqa: E501
         """Invalidate run  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -1201,20 +1075,14 @@ class OrganizationsV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs["_return_http_data_only"] = True
-        if kwargs.get("async_req"):
-            return self.patch_organization_member_with_http_info(
-                owner, member_user, body, **kwargs
-            )  # noqa: E501
+        kwargs['_return_http_data_only'] = True
+        if kwargs.get('async_req'):
+            return self.patch_organization_member_with_http_info(owner, member_user, body, **kwargs)  # noqa: E501
         else:
-            (data) = self.patch_organization_member_with_http_info(
-                owner, member_user, body, **kwargs
-            )  # noqa: E501
+            (data) = self.patch_organization_member_with_http_info(owner, member_user, body, **kwargs)  # noqa: E501
             return data
 
-    def patch_organization_member_with_http_info(
-        self, owner, member_user, body, **kwargs
-    ):  # noqa: E501
+    def patch_organization_member_with_http_info(self, owner, member_user, body, **kwargs):  # noqa: E501
         """Invalidate run  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -1231,44 +1099,41 @@ class OrganizationsV1Api(object):
                  returns the request thread.
         """
 
-        all_params = ["owner", "member_user", "body"]  # noqa: E501
-        all_params.append("async_req")
-        all_params.append("_return_http_data_only")
-        all_params.append("_preload_content")
-        all_params.append("_request_timeout")
+        all_params = ['owner', 'member_user', 'body']  # noqa: E501
+        all_params.append('async_req')
+        all_params.append('_return_http_data_only')
+        all_params.append('_preload_content')
+        all_params.append('_request_timeout')
 
         params = locals()
-        for key, val in six.iteritems(params["kwargs"]):
+        for key, val in six.iteritems(params['kwargs']):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method patch_organization_member" % key
                 )
             params[key] = val
-        del params["kwargs"]
+        del params['kwargs']
         # verify the required parameter 'owner' is set
-        if "owner" not in params or params["owner"] is None:
-            raise ValueError(
-                "Missing the required parameter `owner` when calling `patch_organization_member`"
-            )  # noqa: E501
+        if ('owner' not in params or
+                params['owner'] is None):
+            raise ValueError("Missing the required parameter `owner` when calling `patch_organization_member`")  # noqa: E501
         # verify the required parameter 'member_user' is set
-        if "member_user" not in params or params["member_user"] is None:
-            raise ValueError(
-                "Missing the required parameter `member_user` when calling `patch_organization_member`"
-            )  # noqa: E501
+        if ('member_user' not in params or
+                params['member_user'] is None):
+            raise ValueError("Missing the required parameter `member_user` when calling `patch_organization_member`")  # noqa: E501
         # verify the required parameter 'body' is set
-        if "body" not in params or params["body"] is None:
-            raise ValueError(
-                "Missing the required parameter `body` when calling `patch_organization_member`"
-            )  # noqa: E501
+        if ('body' not in params or
+                params['body'] is None):
+            raise ValueError("Missing the required parameter `body` when calling `patch_organization_member`")  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if "owner" in params:
-            path_params["owner"] = params["owner"]  # noqa: E501
-        if "member_user" in params:
-            path_params["member.user"] = params["member_user"]  # noqa: E501
+        if 'owner' in params:
+            path_params['owner'] = params['owner']  # noqa: E501
+        if 'member_user' in params:
+            path_params['member.user'] = params['member_user']  # noqa: E501
 
         query_params = []
 
@@ -1278,40 +1143,34 @@ class OrganizationsV1Api(object):
         local_var_files = {}
 
         body_params = None
-        if "body" in params:
-            body_params = params["body"]
+        if 'body' in params:
+            body_params = params['body']
         # HTTP header `Accept`
-        header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params[
-            "Content-Type"
-        ] = self.api_client.select_header_content_type(  # noqa: E501
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
+            ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = ["ApiKey"]  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/organizations/{owner}/members/{member.user}",
-            "PATCH",
+            '/api/v1/organizations/{owner}/members/{member.user}', 'PATCH',
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type="V1OrganizationMember",  # noqa: E501
+            response_type='V1OrganizationMember',  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get("async_req"),
-            _return_http_data_only=params.get("_return_http_data_only"),
-            _preload_content=params.get("_preload_content", True),
-            _request_timeout=params.get("_request_timeout"),
-            collection_formats=collection_formats,
-        )
+            async_req=params.get('async_req'),
+            _return_http_data_only=params.get('_return_http_data_only'),
+            _preload_content=params.get('_preload_content', True),
+            _request_timeout=params.get('_request_timeout'),
+            collection_formats=collection_formats)
 
     def update_organization(self, owner, body, **kwargs):  # noqa: E501
         """Get run  # noqa: E501
@@ -1328,15 +1187,11 @@ class OrganizationsV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs["_return_http_data_only"] = True
-        if kwargs.get("async_req"):
-            return self.update_organization_with_http_info(
-                owner, body, **kwargs
-            )  # noqa: E501
+        kwargs['_return_http_data_only'] = True
+        if kwargs.get('async_req'):
+            return self.update_organization_with_http_info(owner, body, **kwargs)  # noqa: E501
         else:
-            (data) = self.update_organization_with_http_info(
-                owner, body, **kwargs
-            )  # noqa: E501
+            (data) = self.update_organization_with_http_info(owner, body, **kwargs)  # noqa: E501
             return data
 
     def update_organization_with_http_info(self, owner, body, **kwargs):  # noqa: E501
@@ -1355,37 +1210,35 @@ class OrganizationsV1Api(object):
                  returns the request thread.
         """
 
-        all_params = ["owner", "body"]  # noqa: E501
-        all_params.append("async_req")
-        all_params.append("_return_http_data_only")
-        all_params.append("_preload_content")
-        all_params.append("_request_timeout")
+        all_params = ['owner', 'body']  # noqa: E501
+        all_params.append('async_req')
+        all_params.append('_return_http_data_only')
+        all_params.append('_preload_content')
+        all_params.append('_request_timeout')
 
         params = locals()
-        for key, val in six.iteritems(params["kwargs"]):
+        for key, val in six.iteritems(params['kwargs']):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method update_organization" % key
                 )
             params[key] = val
-        del params["kwargs"]
+        del params['kwargs']
         # verify the required parameter 'owner' is set
-        if "owner" not in params or params["owner"] is None:
-            raise ValueError(
-                "Missing the required parameter `owner` when calling `update_organization`"
-            )  # noqa: E501
+        if ('owner' not in params or
+                params['owner'] is None):
+            raise ValueError("Missing the required parameter `owner` when calling `update_organization`")  # noqa: E501
         # verify the required parameter 'body' is set
-        if "body" not in params or params["body"] is None:
-            raise ValueError(
-                "Missing the required parameter `body` when calling `update_organization`"
-            )  # noqa: E501
+        if ('body' not in params or
+                params['body'] is None):
+            raise ValueError("Missing the required parameter `body` when calling `update_organization`")  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if "owner" in params:
-            path_params["owner"] = params["owner"]  # noqa: E501
+        if 'owner' in params:
+            path_params['owner'] = params['owner']  # noqa: E501
 
         query_params = []
 
@@ -1395,44 +1248,36 @@ class OrganizationsV1Api(object):
         local_var_files = {}
 
         body_params = None
-        if "body" in params:
-            body_params = params["body"]
+        if 'body' in params:
+            body_params = params['body']
         # HTTP header `Accept`
-        header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params[
-            "Content-Type"
-        ] = self.api_client.select_header_content_type(  # noqa: E501
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
+            ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = ["ApiKey"]  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/organizations/{owner}",
-            "PUT",
+            '/api/v1/organizations/{owner}', 'PUT',
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type="V1Organization",  # noqa: E501
+            response_type='V1Organization',  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get("async_req"),
-            _return_http_data_only=params.get("_return_http_data_only"),
-            _preload_content=params.get("_preload_content", True),
-            _request_timeout=params.get("_request_timeout"),
-            collection_formats=collection_formats,
-        )
+            async_req=params.get('async_req'),
+            _return_http_data_only=params.get('_return_http_data_only'),
+            _preload_content=params.get('_preload_content', True),
+            _request_timeout=params.get('_request_timeout'),
+            collection_formats=collection_formats)
 
-    def update_organization_member(
-        self, owner, member_user, body, **kwargs
-    ):  # noqa: E501
+    def update_organization_member(self, owner, member_user, body, **kwargs):  # noqa: E501
         """Stop runs  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -1448,20 +1293,14 @@ class OrganizationsV1Api(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs["_return_http_data_only"] = True
-        if kwargs.get("async_req"):
-            return self.update_organization_member_with_http_info(
-                owner, member_user, body, **kwargs
-            )  # noqa: E501
+        kwargs['_return_http_data_only'] = True
+        if kwargs.get('async_req'):
+            return self.update_organization_member_with_http_info(owner, member_user, body, **kwargs)  # noqa: E501
         else:
-            (data) = self.update_organization_member_with_http_info(
-                owner, member_user, body, **kwargs
-            )  # noqa: E501
+            (data) = self.update_organization_member_with_http_info(owner, member_user, body, **kwargs)  # noqa: E501
             return data
 
-    def update_organization_member_with_http_info(
-        self, owner, member_user, body, **kwargs
-    ):  # noqa: E501
+    def update_organization_member_with_http_info(self, owner, member_user, body, **kwargs):  # noqa: E501
         """Stop runs  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -1478,44 +1317,41 @@ class OrganizationsV1Api(object):
                  returns the request thread.
         """
 
-        all_params = ["owner", "member_user", "body"]  # noqa: E501
-        all_params.append("async_req")
-        all_params.append("_return_http_data_only")
-        all_params.append("_preload_content")
-        all_params.append("_request_timeout")
+        all_params = ['owner', 'member_user', 'body']  # noqa: E501
+        all_params.append('async_req')
+        all_params.append('_return_http_data_only')
+        all_params.append('_preload_content')
+        all_params.append('_request_timeout')
 
         params = locals()
-        for key, val in six.iteritems(params["kwargs"]):
+        for key, val in six.iteritems(params['kwargs']):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method update_organization_member" % key
                 )
             params[key] = val
-        del params["kwargs"]
+        del params['kwargs']
         # verify the required parameter 'owner' is set
-        if "owner" not in params or params["owner"] is None:
-            raise ValueError(
-                "Missing the required parameter `owner` when calling `update_organization_member`"
-            )  # noqa: E501
+        if ('owner' not in params or
+                params['owner'] is None):
+            raise ValueError("Missing the required parameter `owner` when calling `update_organization_member`")  # noqa: E501
         # verify the required parameter 'member_user' is set
-        if "member_user" not in params or params["member_user"] is None:
-            raise ValueError(
-                "Missing the required parameter `member_user` when calling `update_organization_member`"
-            )  # noqa: E501
+        if ('member_user' not in params or
+                params['member_user'] is None):
+            raise ValueError("Missing the required parameter `member_user` when calling `update_organization_member`")  # noqa: E501
         # verify the required parameter 'body' is set
-        if "body" not in params or params["body"] is None:
-            raise ValueError(
-                "Missing the required parameter `body` when calling `update_organization_member`"
-            )  # noqa: E501
+        if ('body' not in params or
+                params['body'] is None):
+            raise ValueError("Missing the required parameter `body` when calling `update_organization_member`")  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if "owner" in params:
-            path_params["owner"] = params["owner"]  # noqa: E501
-        if "member_user" in params:
-            path_params["member.user"] = params["member_user"]  # noqa: E501
+        if 'owner' in params:
+            path_params['owner'] = params['owner']  # noqa: E501
+        if 'member_user' in params:
+            path_params['member.user'] = params['member_user']  # noqa: E501
 
         query_params = []
 
@@ -1525,37 +1361,31 @@ class OrganizationsV1Api(object):
         local_var_files = {}
 
         body_params = None
-        if "body" in params:
-            body_params = params["body"]
+        if 'body' in params:
+            body_params = params['body']
         # HTTP header `Accept`
-        header_params["Accept"] = self.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params[
-            "Content-Type"
-        ] = self.api_client.select_header_content_type(  # noqa: E501
-            ["application/json"]
-        )  # noqa: E501
+        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
+            ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = ["ApiKey"]  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/organizations/{owner}/members/{member.user}",
-            "PUT",
+            '/api/v1/organizations/{owner}/members/{member.user}', 'PUT',
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type="V1OrganizationMember",  # noqa: E501
+            response_type='V1OrganizationMember',  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get("async_req"),
-            _return_http_data_only=params.get("_return_http_data_only"),
-            _preload_content=params.get("_preload_content", True),
-            _request_timeout=params.get("_request_timeout"),
-            collection_formats=collection_formats,
-        )
+            async_req=params.get('async_req'),
+            _return_http_data_only=params.get('_return_http_data_only'),
+            _preload_content=params.get('_preload_content', True),
+            _request_timeout=params.get('_request_timeout'),
+            collection_formats=collection_formats)

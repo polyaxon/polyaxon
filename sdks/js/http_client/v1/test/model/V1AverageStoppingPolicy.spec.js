@@ -55,10 +55,10 @@
         expect(instance).to.be.a(PolyaxonSdk.V1AverageStoppingPolicy);
       });
 
-      it('should have the property king (base name: "king")', function() {
-        // TODO: update the code to test the property king
-        expect(instance).to.have.property('king');
-        // expect(instance.king).to.be(expectedValueLiteral);
+      it('should have the property kind (base name: "kind")', function() {
+        // TODO: update the code to test the property kind
+        expect(instance).to.have.property('kind');
+        // expect(instance.kind).to.be(expectedValueLiteral);
       });
 
       it('should have the property evaluation_interval (base name: "evaluation_interval")', function() {

@@ -70,8 +70,8 @@
   exports.constructFromObject = function(data, obj) {
     if (data) {
       obj = obj || new exports();
-      if (data.hasOwnProperty('king'))
-        obj.king = ApiClient.convertToType(data['king'], 'String');
+      if (data.hasOwnProperty('kind'))
+        obj.kind = ApiClient.convertToType(data['kind'], 'String');
       if (data.hasOwnProperty('evaluation_interval'))
         obj.evaluation_interval = ApiClient.convertToType(data['evaluation_interval'], 'Number');
     }
@@ -79,9 +79,9 @@
   }
 
   /**
-   * @member {String} king
+   * @member {String} kind
    */
-  exports.prototype.king = undefined;
+  exports.prototype.kind = undefined;
 
   /**
    * Interval/Frequency for applying the policy.

@@ -4,7 +4,7 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**king** | **String** |  |  [optional]
+**kind** | **String** |  |  [optional]
 **evaluationInterval** | **Integer** | Interval/Frequency for applying the policy. |  [optional]
 
 

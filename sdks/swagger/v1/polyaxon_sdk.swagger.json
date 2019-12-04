@@ -8096,7 +8096,7 @@
     "v1AverageStoppingPolicy": {
       "type": "object",
       "properties": {
-        "king": {
+        "kind": {
           "type": "string",
           "title": "Kind of this stopping policy, should be equal to \"average\""
         },
@@ -9535,7 +9535,7 @@
     "v1MedianStoppingPolicy": {
       "type": "object",
       "properties": {
-        "king": {
+        "kind": {
           "type": "string",
           "title": "Kind of this stopping policy, should be equal to \"median\""
         },
@@ -10810,7 +10810,7 @@
     "v1TruncationStoppingPolicy": {
       "type": "object",
       "properties": {
-        "king": {
+        "kind": {
           "type": "string",
           "title": "Kind of this stopping policy, should be equal to \"truncation\""
         },
@@ -10890,7 +10890,7 @@
     "v1WidgetSpec": {
       "type": "object",
       "properties": {
-        "king": {
+        "kind": {
           "type": "string",
           "title": "Widget kind"
         },

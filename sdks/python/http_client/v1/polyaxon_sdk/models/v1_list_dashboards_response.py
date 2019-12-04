@@ -47,22 +47,20 @@ class V1ListDashboardsResponse(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        "count": "int",
-        "results": "list[V1Dashboard]",
-        "previous": "str",
-        "next": "str",
+        'count': 'int',
+        'results': 'list[V1Dashboard]',
+        'previous': 'str',
+        'next': 'str'
     }
 
     attribute_map = {
-        "count": "count",
-        "results": "results",
-        "previous": "previous",
-        "next": "next",
+        'count': 'count',
+        'results': 'results',
+        'previous': 'previous',
+        'next': 'next'
     }
 
-    def __init__(
-        self, count=None, results=None, previous=None, next=None
-    ):  # noqa: E501
+    def __init__(self, count=None, results=None, previous=None, next=None):  # noqa: E501
         """V1ListDashboardsResponse - a model defined in Swagger"""  # noqa: E501
 
         self._count = None
@@ -171,20 +169,18 @@ class V1ListDashboardsResponse(object):
         for attr, _ in six.iteritems(self.swagger_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(
-                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
-                )
+                result[attr] = list(map(
+                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
+                    value
+                ))
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(
-                    map(
-                        lambda item: (item[0], item[1].to_dict())
-                        if hasattr(item[1], "to_dict")
-                        else item,
-                        value.items(),
-                    )
-                )
+                result[attr] = dict(map(
+                    lambda item: (item[0], item[1].to_dict())
+                    if hasattr(item[1], "to_dict") else item,
+                    value.items()
+                ))
             else:
                 result[attr] = value
         if issubclass(V1ListDashboardsResponse, dict):

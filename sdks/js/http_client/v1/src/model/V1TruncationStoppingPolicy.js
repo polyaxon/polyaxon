@@ -70,8 +70,8 @@
   exports.constructFromObject = function(data, obj) {
     if (data) {
       obj = obj || new exports();
-      if (data.hasOwnProperty('king'))
-        obj.king = ApiClient.convertToType(data['king'], 'String');
+      if (data.hasOwnProperty('kind'))
+        obj.kind = ApiClient.convertToType(data['kind'], 'String');
       if (data.hasOwnProperty('percent'))
         obj.percent = ApiClient.convertToType(data['percent'], 'Number');
       if (data.hasOwnProperty('evaluation_interval'))
@@ -81,9 +81,9 @@
   }
 
   /**
-   * @member {String} king
+   * @member {String} kind
    */
-  exports.prototype.king = undefined;
+  exports.prototype.kind = undefined;
 
   /**
    * The percentage of runs to stop, at each evaluation interval. e.g. 1 - 99.
