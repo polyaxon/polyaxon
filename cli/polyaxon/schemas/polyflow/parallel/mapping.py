@@ -18,6 +18,7 @@
 from __future__ import absolute_import, division, print_function
 
 from marshmallow import fields, validate
+from polyaxon_sdk import V1Mapping
 
 from polyaxon.schemas.base import BaseConfig, BaseSchema
 from polyaxon.schemas.fields.ref_or_obj import RefOrObject
@@ -35,15 +36,8 @@ class MappingSchema(BaseSchema):
         return MappingConfig
 
 
-class MappingConfig(BaseConfig):
+class MappingConfig(BaseConfig, V1Mapping):
     SCHEMA = MappingSchema
     IDENTIFIER = "mapping"
     REDUCED_ATTRIBUTES = ["concurrency", "early_stopping"]
-
-    def __init__(
-        self, values=None, concurrency=None, early_stopping=None, kind=IDENTIFIER
-    ):
-        self.values = values
-        self.kind = kind
-        self.concurrency = concurrency
-        self.early_stopping = early_stopping
+    IDENTIFIER_KIND = True

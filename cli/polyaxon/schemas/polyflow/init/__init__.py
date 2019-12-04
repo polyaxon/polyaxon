@@ -21,12 +21,13 @@ from marshmallow import fields
 
 from polyaxon.schemas.base import BaseConfig, BaseSchema
 from polyaxon.schemas.polyflow.init.build_context import BuildContextSchema
-from polyaxon.schemas.polyflow.init.repo_refs import RepoRefSchema
+from polyaxon.schemas.polyflow.init.repo_init import RepoInitSchema
 from polyaxon.schemas.polyflow.mounts import ArtifactMountSchema
+from polyaxon_sdk import V1Init
 
 
 class InitSchema(BaseSchema):
-    repos = fields.Nested(RepoRefSchema, many=True, allow_none=True)
+    repos = fields.Nested(RepoInitSchema, many=True, allow_none=True)
     artifacts = fields.Nested(ArtifactMountSchema, many=True, allow_none=True)
     build = fields.Nested(BuildContextSchema, allow_none=True)
 
@@ -35,7 +36,7 @@ class InitSchema(BaseSchema):
         return InitConfig
 
 
-class InitConfig(BaseConfig):
+class InitConfig(BaseConfig, V1Init):
     """
     Init config.
     """
@@ -43,8 +44,3 @@ class InitConfig(BaseConfig):
     IDENTIFIER = "init"
     SCHEMA = InitSchema
     REDUCED_ATTRIBUTES = ["repos", "artifacts", "build"]
-
-    def __init__(self, repos=None, artifacts=None, build=None):
-        self.repos = repos
-        self.artifacts = artifacts
-        self.build = build

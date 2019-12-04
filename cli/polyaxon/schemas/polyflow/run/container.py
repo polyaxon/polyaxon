@@ -36,16 +36,4 @@ class ContainerSchema(ReplicaContainerSchema):
 class ContainerConfig(ReplicaContainerConfig):
     SCHEMA = ContainerSchema
     IDENTIFIER = "container"
-
-    def __init__(
-        self,
-        image=None,
-        image_pull_policy=None,
-        command=None,
-        args=None,
-        kind=IDENTIFIER,
-    ):
-        super(ContainerConfig, self).__init__(
-            image=image, image_pull_policy=image_pull_policy, command=command, args=args
-        )
-        self.kind = kind
+    IDENTIFIER_KIND = True

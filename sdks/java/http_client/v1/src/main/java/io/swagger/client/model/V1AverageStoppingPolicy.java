@@ -48,7 +48,7 @@ public class V1AverageStoppingPolicy {
   private String king = null;
 
   @SerializedName("evaluation_interval")
-  private String evaluationInterval = null;
+  private Integer evaluationInterval = null;
 
   public V1AverageStoppingPolicy king(String king) {
     this.king = king;
@@ -68,7 +68,7 @@ public class V1AverageStoppingPolicy {
     this.king = king;
   }
 
-  public V1AverageStoppingPolicy evaluationInterval(String evaluationInterval) {
+  public V1AverageStoppingPolicy evaluationInterval(Integer evaluationInterval) {
     this.evaluationInterval = evaluationInterval;
     return this;
   }
@@ -78,11 +78,11 @@ public class V1AverageStoppingPolicy {
    * @return evaluationInterval
   **/
   @ApiModelProperty(value = "Interval/Frequency for applying the policy.")
-  public String getEvaluationInterval() {
+  public Integer getEvaluationInterval() {
     return evaluationInterval;
   }
 
-  public void setEvaluationInterval(String evaluationInterval) {
+  public void setEvaluationInterval(Integer evaluationInterval) {
     this.evaluationInterval = evaluationInterval;
   }
 

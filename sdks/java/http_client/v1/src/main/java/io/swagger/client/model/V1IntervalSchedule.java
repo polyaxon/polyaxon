@@ -54,7 +54,7 @@ public class V1IntervalSchedule {
   private OffsetDateTime endAt = null;
 
   @SerializedName("frequency")
-  private String frequency = null;
+  private Integer frequency = null;
 
   @SerializedName("depends_on_past")
   private Boolean dependsOnPast = null;
@@ -113,7 +113,7 @@ public class V1IntervalSchedule {
     this.endAt = endAt;
   }
 
-  public V1IntervalSchedule frequency(String frequency) {
+  public V1IntervalSchedule frequency(Integer frequency) {
     this.frequency = frequency;
     return this;
   }
@@ -123,11 +123,11 @@ public class V1IntervalSchedule {
    * @return frequency
   **/
   @ApiModelProperty(value = "")
-  public String getFrequency() {
+  public Integer getFrequency() {
     return frequency;
   }
 
-  public void setFrequency(String frequency) {
+  public void setFrequency(Integer frequency) {
     this.frequency = frequency;
   }
 

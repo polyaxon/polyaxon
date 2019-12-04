@@ -18,6 +18,7 @@
 from __future__ import absolute_import, division, print_function
 
 from marshmallow import ValidationError, fields, validate, validates_schema
+from polyaxon_sdk import V1Op
 
 from polyaxon.schemas.polyflow.base import BaseComponentConfig, BaseComponentSchema
 from polyaxon.schemas.polyflow.component import ComponentSchema
@@ -50,7 +51,7 @@ class OpSchema(BaseComponentSchema):
         validate_op(data)
 
 
-class OpConfig(BaseComponentConfig):
+class OpConfig(BaseComponentConfig, V1Op):
     SCHEMA = OpSchema
     IDENTIFIER = "op"
     REDUCED_ATTRIBUTES = BaseComponentConfig.REDUCED_ATTRIBUTES + [
@@ -63,53 +64,5 @@ class OpConfig(BaseComponentConfig):
         "component",
     ]
 
-    def __init__(
-        self,
-        version=None,
-        kind=None,
-        name=None,
-        description=None,
-        tags=None,
-        profile=None,
-        queue=None,
-        nocache=None,
-        environment=None,
-        termination=None,
-        init=None,
-        mounts=None,
-        schedule=None,
-        parallel=None,
-        service=None,
-        dependencies=None,
-        params=None,
-        trigger=None,
-        conditions=None,
-        skip_on_upstream_skip=None,
-        component_ref=None,
-        component=None,
-    ):
-        super().__init__(
-            version=version,
-            kind=kind,
-            name=name,
-            description=description,
-            tags=tags,
-            profile=profile,
-            queue=queue,
-            nocache=nocache,
-            environment=environment,
-            termination=termination,
-            init=init,
-            mounts=mounts,
-            schedule=schedule,
-            parallel=parallel,
-            service=service,
-        )
-        validate_op({"component_ref": component_ref, "component": component})
-        self.component_ref = component_ref
-        self.params = params
-        self.dependencies = dependencies
-        self.trigger = trigger
-        self.conditions = conditions
-        self.skip_on_upstream_skip = skip_on_upstream_skip
-        self.component = component
+    def validate(self):
+        validate_op({"component_ref": self.component_ref, "component": self.component})

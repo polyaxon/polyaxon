@@ -39,14 +39,14 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 
 /**
- * - INT: Int resource  - FLOAT: Float resource
+ * - int: Int resource  - float: Float resource
  */
 @JsonAdapter(V1ResourceType.Adapter.class)
 public enum V1ResourceType {
   
-  INT("INT"),
+  INT("int"),
   
-  FLOAT("FLOAT");
+  FLOAT("float");
 
   private String value;
 

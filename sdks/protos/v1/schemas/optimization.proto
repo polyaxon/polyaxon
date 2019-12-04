@@ -8,19 +8,19 @@ import "google/protobuf/struct.proto";
 // Optimization enum for metrics
 enum Optimization {
     // Minimize a metric
-    MAXIMIZE = 0;
+    maximize = 0;
 
     // Maximize a metric
-    MINIMIZE = 1;
+    minimize = 1;
 }
 
 // ResourceTypes enum for optmiztion resources
 enum ResourceType {
     // Int resource
-    INT = 0;
+    int = 0;
 
     // Float resource
-    FLOAT = 1;
+    float = 1;
 }
 
 

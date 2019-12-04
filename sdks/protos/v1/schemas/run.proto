@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package v1;
+
+import "v1/schemas/dask.proto";
+import "v1/schemas/dag.proto";
+import "v1/schemas/spark.proto";
+import "v1/schemas/flink.proto";
+import "v1/schemas/kubeflow.proto";
+import "v1/schemas/container.proto";
+
+message RunSchema {
+    oneof run {
+        Container container = 1;
+        Dag dag = 2;
+        TFJob tf_job = 3;
+        PytorchJob pytorch_job = 4;
+        MpiJob mpi_job = 5;
+        Dask dask = 6;
+        Spark spark = 7;
+        Flink flink = 8;
+    }
+}

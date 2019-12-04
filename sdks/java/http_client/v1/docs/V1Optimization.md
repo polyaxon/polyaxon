@@ -4,9 +4,9 @@
 ## Enum
 
 
-* `MAXIMIZE` (value: `"MAXIMIZE"`)
+* `MAXIMIZE` (value: `"maximize"`)
 
-* `MINIMIZE` (value: `"MINIMIZE"`)
+* `MINIMIZE` (value: `"minimize"`)
 
 
 

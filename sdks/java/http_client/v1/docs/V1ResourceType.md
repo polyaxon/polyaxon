@@ -4,9 +4,9 @@
 ## Enum
 
 
-* `INT` (value: `"INT"`)
+* `INT` (value: `"int"`)
 
-* `FLOAT` (value: `"FLOAT"`)
+* `FLOAT` (value: `"float"`)
 
 
 

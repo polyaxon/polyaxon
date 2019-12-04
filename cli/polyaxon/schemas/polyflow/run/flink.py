@@ -18,6 +18,7 @@
 from __future__ import absolute_import, division, print_function
 
 from marshmallow import fields, validate
+from polyaxon_sdk import V1Flink
 
 from polyaxon.schemas.base import BaseConfig, BaseSchema
 from polyaxon.schemas.fields.ref_or_obj import RefOrObject
@@ -32,10 +33,7 @@ class FlinkSchema(BaseSchema):
         return FlinkConfig
 
 
-class FlinkConfig(BaseConfig):
+class FlinkConfig(BaseConfig, V1Flink):
     SCHEMA = FlinkSchema
     IDENTIFIER = "flink"
-
-    def __init__(self, spec=None, kind=IDENTIFIER):
-        self.spec = spec
-        self.kind = kind
+    IDENTIFIER_KIND = True

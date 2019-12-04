@@ -18,53 +18,35 @@
 from __future__ import absolute_import, division, print_function
 
 from marshmallow import fields, validate
+from polyaxon_sdk import V1Hyperband, V1OptimizationResource
 
 from polyaxon.schemas.base import BaseConfig, BaseSchema
 from polyaxon.schemas.fields.ref_or_obj import RefOrObject
 from polyaxon.schemas.polyflow.early_stopping import EarlyStoppingSchema
-from polyaxon.schemas.polyflow.optimization import OptimizationMetricSchema
+from polyaxon.schemas.polyflow.optimization import (
+    OptimizationMetricSchema,
+    ResourceType,
+)
 from polyaxon.schemas.polyflow.parallel.matrix import MatrixSchema
-
-
-class ResourceTypes(object):
-    INT = "int"
-    FLOAT = "float"
-
-    INT_VALUES = [INT, INT.upper(), INT.capitalize()]
-    FLOAT_VALUES = [FLOAT, FLOAT.upper(), FLOAT.capitalize()]
-
-    VALUES = INT_VALUES + FLOAT_VALUES
-
-    @classmethod
-    def is_int(cls, value):
-        return value in cls.INT_VALUES
-
-    @classmethod
-    def is_float(cls, value):
-        return value in cls.FLOAT_VALUES
 
 
 class ResourceSchema(BaseSchema):
     name = fields.Str()
-    type = fields.Str(allow_none=True, validate=validate.OneOf(ResourceTypes.VALUES))
+    type = fields.Str(allow_none=True, validate=validate.OneOf(ResourceType.VALUES))
 
     @staticmethod
     def schema_config():
         return ResourceConfig
 
 
-class ResourceConfig(BaseConfig):
+class ResourceConfig(BaseConfig, V1OptimizationResource):
     SCHEMA = ResourceSchema
     IDENTIFIER = "resource"
 
-    def __init__(self, name, type=ResourceTypes.FLOAT):  # noqa, redefined-builtin `len`
-        self.name = name
-        self.type = type
-
     def cast_value(self, value):
-        if ResourceTypes.is_int(self.type):
+        if ResourceType.is_int(self.type):
             return int(value)
-        if ResourceTypes.is_float(self.type):
+        if ResourceType.is_float(self.type):
             return float(value)
         return value
 
@@ -88,31 +70,8 @@ class HyperbandSchema(BaseSchema):
         return HyperbandConfig
 
 
-class HyperbandConfig(BaseConfig):
+class HyperbandConfig(BaseConfig, V1Hyperband):
     SCHEMA = HyperbandSchema
     IDENTIFIER = "hyperband"
     REDUCED_ATTRIBUTES = ["seed", "concurrency", "early_stopping"]
-
-    def __init__(
-        self,
-        matrix,
-        max_iter,
-        eta,
-        resource,
-        metric,
-        concurrency=None,
-        resume=False,
-        seed=None,
-        early_stopping=None,
-        kind=IDENTIFIER,
-    ):
-        self.matrix = matrix
-        self.kind = kind
-        self.max_iter = max_iter
-        self.eta = eta
-        self.resource = resource
-        self.metric = metric
-        self.resume = resume
-        self.seed = seed
-        self.concurrency = concurrency
-        self.early_stopping = early_stopping
+    IDENTIFIER_KIND = True

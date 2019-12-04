@@ -23,8 +23,8 @@ import pytest
 
 from tests.utils import assert_equal_dict
 
-from polyaxon.schemas.polyflow.environments.container_resources import (
-    ContainerResourcesConfig,
+from polyaxon.schemas.polyflow.environment.container_resources import (
+    ResourceRequirementsConfig,
 )
 
 
@@ -32,27 +32,27 @@ from polyaxon.schemas.polyflow.environments.container_resources import (
 class TestContainerResourceConfigs(TestCase):
     def test_container_resource_config(self):
         config_dict = {"limits": {"cpu": 0.1}}
-        config = ContainerResourcesConfig.from_dict(config_dict)
+        config = ResourceRequirementsConfig.from_dict(config_dict)
         assert_equal_dict(config.to_dict(), config_dict)
 
         config_dict = {"requests": {"cpu": 0.1}}
-        config = ContainerResourcesConfig.from_dict(config_dict)
+        config = ResourceRequirementsConfig.from_dict(config_dict)
         assert_equal_dict(config.to_dict(), config_dict)
 
         config_dict = {"requests": {"cpu": 0.1}, "limits": {"cpu": 0.1}}
-        config = ContainerResourcesConfig.from_dict(config_dict)
+        config = ResourceRequirementsConfig.from_dict(config_dict)
         assert_equal_dict(config.to_dict(), config_dict)
 
         config_dict = {
             "requests": {"cpu": 0.1, "memory": "10mi"},
             "limits": {"cpu": 0.1, "memory": 1024},
         }
-        config = ContainerResourcesConfig.from_dict(config_dict)
+        config = ResourceRequirementsConfig.from_dict(config_dict)
         assert_equal_dict(config.to_dict(), config_dict)
 
         config_dict = {
             "requests": {"cpu": 0.1, "memory": "10Mi", "amd.com/gpu": 2},
             "limits": {"cpu": 0.1, "memory": 1024, "amd.com/gpu": 2},
         }
-        config = ContainerResourcesConfig.from_dict(config_dict)
+        config = ResourceRequirementsConfig.from_dict(config_dict)
         assert_equal_dict(config.to_dict(), config_dict)

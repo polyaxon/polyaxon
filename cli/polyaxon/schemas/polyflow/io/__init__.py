@@ -22,6 +22,7 @@ from rhea import RheaError, parser
 
 from polyaxon.schemas.base import BaseConfig, BaseSchema
 from polyaxon.schemas.polyflow.io.types import IOTypes
+from polyaxon_sdk import V1IO
 
 
 def validate_io_value(
@@ -103,7 +104,7 @@ class IOSchema(BaseSchema):
         )
 
 
-class IOConfig(BaseConfig):
+class IOConfig(BaseConfig, V1IO):
     SCHEMA = IOSchema
     IDENTIFIER = "io"
     REDUCED_ATTRIBUTES = [
@@ -115,36 +116,6 @@ class IOConfig(BaseConfig):
         "is_list",
         "options",
     ]
-
-    def __init__(
-        self,
-        name=None,
-        description=None,
-        iotype=None,
-        value=None,
-        is_optional=None,
-        is_list=None,
-        is_flag=None,
-        options=None,
-    ):
-        validate_io(
-            name=name,
-            iotype=iotype,
-            value=value,
-            is_optional=is_optional,
-            is_list=is_list,
-            is_flag=is_flag,
-            options=options,
-        )
-
-        self.name = name
-        self.description = description
-        self.iotype = iotype
-        self.value = value
-        self.is_optional = is_optional
-        self.is_list = is_list
-        self.is_flag = is_flag
-        self.options = options
 
     def validate_value(self, value, parse=True):
         if self.iotype is None:

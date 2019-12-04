@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package v1;
+
+import "google/protobuf/struct.proto";
+
+// Flink specification
+message Flink {
+    // Kind of runtime, should be equal to "flink"
+    string kind = 1;
+
+    // Flink specification
+    google.protobuf.Struct spec = 2;
+}

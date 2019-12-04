@@ -30,7 +30,7 @@ import (
 type V1Mapping struct {
 
 	// Number of concurrent runs
-	Concurrency string `json:"concurrency,omitempty"`
+	Concurrency int32 `json:"concurrency,omitempty"`
 
 	// A list of Early stopping objects, accpets both metric and failure early stopping mechanisms
 	EarlyStopping []interface{} `json:"early_stopping"`

@@ -59,16 +59,16 @@ public class V1BO {
   private Integer nIterations = null;
 
   @SerializedName("utility_function")
-  private List<Object> utilityFunction = null;
+  private Object utilityFunction = null;
 
   @SerializedName("metric")
   private V1OptimizationMetric metric = null;
 
   @SerializedName("seed")
-  private String seed = null;
+  private Integer seed = null;
 
   @SerializedName("concurrency")
-  private String concurrency = null;
+  private Integer concurrency = null;
 
   @SerializedName("early_stopping")
   private List<Object> earlyStopping = null;
@@ -145,16 +145,8 @@ public class V1BO {
     this.nIterations = nIterations;
   }
 
-  public V1BO utilityFunction(List<Object> utilityFunction) {
+  public V1BO utilityFunction(Object utilityFunction) {
     this.utilityFunction = utilityFunction;
-    return this;
-  }
-
-  public V1BO addUtilityFunctionItem(Object utilityFunctionItem) {
-    if (this.utilityFunction == null) {
-      this.utilityFunction = new ArrayList<Object>();
-    }
-    this.utilityFunction.add(utilityFunctionItem);
     return this;
   }
 
@@ -163,11 +155,11 @@ public class V1BO {
    * @return utilityFunction
   **/
   @ApiModelProperty(value = "")
-  public List<Object> getUtilityFunction() {
+  public Object getUtilityFunction() {
     return utilityFunction;
   }
 
-  public void setUtilityFunction(List<Object> utilityFunction) {
+  public void setUtilityFunction(Object utilityFunction) {
     this.utilityFunction = utilityFunction;
   }
 
@@ -189,7 +181,7 @@ public class V1BO {
     this.metric = metric;
   }
 
-  public V1BO seed(String seed) {
+  public V1BO seed(Integer seed) {
     this.seed = seed;
     return this;
   }
@@ -199,15 +191,15 @@ public class V1BO {
    * @return seed
   **/
   @ApiModelProperty(value = "")
-  public String getSeed() {
+  public Integer getSeed() {
     return seed;
   }
 
-  public void setSeed(String seed) {
+  public void setSeed(Integer seed) {
     this.seed = seed;
   }
 
-  public V1BO concurrency(String concurrency) {
+  public V1BO concurrency(Integer concurrency) {
     this.concurrency = concurrency;
     return this;
   }
@@ -217,11 +209,11 @@ public class V1BO {
    * @return concurrency
   **/
   @ApiModelProperty(value = "")
-  public String getConcurrency() {
+  public Integer getConcurrency() {
     return concurrency;
   }
 
-  public void setConcurrency(String concurrency) {
+  public void setConcurrency(Integer concurrency) {
     this.concurrency = concurrency;
   }
 

@@ -31,7 +31,7 @@ import (
 type V1Iterative struct {
 
 	// Number of concurrent runs
-	Concurrency string `json:"concurrency,omitempty"`
+	Concurrency int32 `json:"concurrency,omitempty"`
 
 	// Container specification for crating new observations based on data from previous iterations
 	Container *V1Container `json:"container,omitempty"`
@@ -49,7 +49,7 @@ type V1Iterative struct {
 	NIterations int32 `json:"n_iterations,omitempty"`
 
 	// Seed for the random generator
-	Seed string `json:"seed,omitempty"`
+	Seed int32 `json:"seed,omitempty"`
 }
 
 // Validate validates this v1 iterative

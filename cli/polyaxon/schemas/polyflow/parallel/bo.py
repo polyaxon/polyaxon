@@ -20,6 +20,7 @@ from __future__ import absolute_import, division, print_function
 import six
 
 from marshmallow import ValidationError, fields, validate, validates_schema
+from polyaxon_sdk import V1BO
 
 from polyaxon.schemas.base import BaseConfig, BaseSchema
 from polyaxon.schemas.fields.ref_or_obj import RefOrObject
@@ -205,29 +206,8 @@ class BOSchema(BaseSchema):
         validate_matrix(data.get("matrix"))
 
 
-class BOConfig(BaseConfig):
+class BOConfig(BaseConfig, V1BO):
     SCHEMA = BOSchema
     IDENTIFIER = "bo"
     REDUCED_ATTRIBUTES = ["seed", "concurrency", "early_stopping"]
-
-    def __init__(
-        self,
-        matrix,
-        n_initial_trials,
-        n_iterations,
-        metric,
-        utility_function=None,
-        seed=None,
-        concurrency=None,
-        early_stopping=None,
-        kind=IDENTIFIER,
-    ):
-        self.matrix = validate_matrix(matrix)
-        self.kind = kind
-        self.n_initial_trials = n_initial_trials
-        self.n_iterations = n_iterations
-        self.utility_function = utility_function
-        self.metric = metric
-        self.seed = seed
-        self.concurrency = concurrency
-        self.early_stopping = early_stopping
+    IDENTIFIER_KIND = True

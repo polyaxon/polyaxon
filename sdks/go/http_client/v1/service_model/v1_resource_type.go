@@ -30,18 +30,18 @@ import (
 
 // V1ResourceType ResourceTypes enum for optmiztion resources
 //
-// - INT: Int resource
-//  - FLOAT: Float resource
+// - int: Int resource
+//  - float: Float resource
 // swagger:model v1ResourceType
 type V1ResourceType string
 
 const (
 
-	// V1ResourceTypeINT captures enum value "INT"
-	V1ResourceTypeINT V1ResourceType = "INT"
+	// V1ResourceTypeInt captures enum value "int"
+	V1ResourceTypeInt V1ResourceType = "int"
 
-	// V1ResourceTypeFLOAT captures enum value "FLOAT"
-	V1ResourceTypeFLOAT V1ResourceType = "FLOAT"
+	// V1ResourceTypeFloat captures enum value "float"
+	V1ResourceTypeFloat V1ResourceType = "float"
 )
 
 // for schema
@@ -49,7 +49,7 @@ var v1ResourceTypeEnum []interface{}
 
 func init() {
 	var res []V1ResourceType
-	if err := json.Unmarshal([]byte(`["INT","FLOAT"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["int","float"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {

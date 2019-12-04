@@ -26,7 +26,7 @@ import pytest
 from polyaxon.exceptions import PolyaxonfileError
 from polyaxon.polyaxonfile import PolyaxonFile
 from polyaxon.schemas.polyflow.early_stopping import MetricEarlyStoppingConfig
-from polyaxon.schemas.polyflow.environments import EnvironmentConfig
+from polyaxon.schemas.polyflow.environment import EnvironmentConfig
 from polyaxon.schemas.polyflow.init import InitConfig
 from polyaxon.schemas.polyflow.parallel import (
     GridSearchConfig,

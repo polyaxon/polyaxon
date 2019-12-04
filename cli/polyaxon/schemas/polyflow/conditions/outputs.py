@@ -18,30 +18,54 @@
 from __future__ import absolute_import, division, print_function
 
 from marshmallow import fields, validate
+from polyaxon_sdk import V1OpIOCondition
 
 from polyaxon.schemas.base import BaseConfig, BaseSchema
 from polyaxon.schemas.polyflow.trigger_policies import ExpressionTriggerPolicy
 
 
-class OutputsConditionSchema(BaseSchema):
-    kind = fields.Str(allow_none=True, validate=validate.Equal("outputs"))
+class OpIOConditionSchema(BaseSchema):
+    kind = fields.Str(allow_none=True)
     op = fields.Str(required=True)
-    exp = fields.Str(
-        required=True, validate=validate.OneOf(ExpressionTriggerPolicy.VALUES)
-    )
-    params = fields.List(fields.List(fields.Raw(), validate=validate.Length(equal=2)))
+    name = fields.Str(required=True)
+    trigger = fields.Str(required=True)
 
     @staticmethod
     def schema_config():
-        return OutputsConditionConfig
+        return OpIOConditionConfig
 
 
-class OutputsConditionConfig(BaseConfig):
-    SCHEMA = OutputsConditionSchema
+class OpIOConditionConfig(BaseConfig, V1OpIOCondition):
+    SCHEMA = OpIOConditionSchema
+    IDENTIFIER = "outputs"
+    IDENTIFIER_KIND = True
+
+    @staticmethod
+    def schema_config():
+        return OpIOConditionSchema
+
+
+class OpInputsConditionSchema(OpIOConditionSchema):
+    kind = fields.Str(allow_none=True, validate=validate.Equal("inputs"))
+
+    @staticmethod
+    def schema_config():
+        return OpInputsConditionConfig
+
+
+class OpInputsConditionConfig(OpIOConditionConfig):
+    SCHEMA = OpInputsConditionSchema
     IDENTIFIER = "outputs"
 
-    def __init__(self, op=None, exp=None, params=None, kind=None):
-        self.op = op
-        self.exp = exp
-        self.params = params
-        self.kind = kind
+
+class OpOutputsConditionSchema(OpIOConditionSchema):
+    kind = fields.Str(allow_none=True, validate=validate.Equal("outputs"))
+
+    @staticmethod
+    def schema_config():
+        return OpOutputsConditionConfig
+
+
+class OpOutputsConditionConfig(OpIOConditionConfig):
+    SCHEMA = OpOutputsConditionSchema
+    IDENTIFIER = "outputs"

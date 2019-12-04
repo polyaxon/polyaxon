@@ -8101,8 +8101,8 @@
           "title": "Kind of this stopping policy, should be equal to \"average\""
         },
         "evaluation_interval": {
-          "type": "string",
-          "format": "int64",
+          "type": "integer",
+          "format": "int32",
           "description": "Interval/Frequency for applying the policy."
         }
       },
@@ -8130,10 +8130,7 @@
           "title": "Number of iteration for producing new observations"
         },
         "utility_function": {
-          "type": "array",
-          "items": {
-            "type": "object"
-          },
+          "type": "object",
           "title": "A utility function to use for the bayesian optimization"
         },
         "metric": {
@@ -8141,13 +8138,13 @@
           "title": "Metric to optimize during the iterations"
         },
         "seed": {
-          "type": "string",
-          "format": "int64",
+          "type": "integer",
+          "format": "int32",
           "title": "Seed for the random generator"
         },
         "concurrency": {
-          "type": "string",
-          "format": "int64",
+          "type": "integer",
+          "format": "int32",
           "title": "Number of concurrent runs"
         },
         "early_stopping": {
@@ -8159,6 +8156,74 @@
         }
       },
       "title": "Parallelism based on Bayesian Optimization"
+    },
+    "v1BuildContext": {
+      "type": "object",
+      "properties": {
+        "image": {
+          "type": "string",
+          "title": "Docker image to use as a base"
+        },
+        "env": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          },
+          "title": "An optional list of tuples(key, value) for defining env vars, translate to an ENV statements"
+        },
+        "path": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          },
+          "title": "An optional list of tuples for exporting paths, translate to a PATH statements"
+        },
+        "copy": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          },
+          "title": "An optional list of tuples for copying paths, translate to a COPY statements"
+        },
+        "run": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          },
+          "title": "An optional list of tuples for executing Run commands, translate to a RUN statements"
+        },
+        "lang_env": {
+          "type": "string",
+          "title": "An optional string defining a language, e.g. en_US.UTF-8"
+        },
+        "uid": {
+          "type": "integer",
+          "format": "int32",
+          "title": "A uid to use when creating the docker image"
+        },
+        "gid": {
+          "type": "integer",
+          "format": "int32",
+          "title": "A gid to use when creating the docker image"
+        },
+        "filename": {
+          "type": "string",
+          "title": "A filename to give to the generated dockerfile"
+        },
+        "workdir": {
+          "type": "string",
+          "title": "A work dir to copy code to, default to /code"
+        },
+        "workdir_path": {
+          "type": "string",
+          "title": "An optional workdir path"
+        },
+        "shell": {
+          "type": "string",
+          "title": "An optional shell type, defaults to \"/bin/bash\""
+        }
+      },
+      "title": "Build context initializer specification"
     },
     "v1CodeRef": {
       "type": "object",
@@ -8174,12 +8239,123 @@
       },
       "title": "Code Reference specification"
     },
+    "v1Component": {
+      "type": "object",
+      "properties": {
+        "version": {
+          "type": "number",
+          "format": "float",
+          "title": "Spec version"
+        },
+        "kind": {
+          "type": "string",
+          "title": "Optional component kind, should be equal to \"op\""
+        },
+        "name": {
+          "type": "string",
+          "title": "Optional component name, should a valid slug"
+        },
+        "tag": {
+          "type": "string",
+          "title": "Optional component tag version"
+        },
+        "description": {
+          "type": "string",
+          "title": "Optional component description"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "Optional component tags"
+        },
+        "profile": {
+          "type": "string",
+          "title": "Optional profile to use for running this component"
+        },
+        "queue": {
+          "type": "string",
+          "title": "Optional queue to use for running this component"
+        },
+        "nocache": {
+          "type": "boolean",
+          "format": "boolean",
+          "title": "Optional flag to disable cache validation and force run this component"
+        },
+        "environment": {
+          "$ref": "#/definitions/v1Environment",
+          "title": "Optional environment section"
+        },
+        "termination": {
+          "$ref": "#/definitions/v1Termination",
+          "title": "optional termination section"
+        },
+        "init": {
+          "$ref": "#/definitions/v1Init",
+          "title": "Optional init section"
+        },
+        "mounts": {
+          "$ref": "#/definitions/v1Mounts",
+          "title": "Optioanl mount section"
+        },
+        "schedule": {
+          "type": "object",
+          "title": "Optional schedule section, must be a valid Schedule option (Cron/Interval/Repeatable/ExactTime)"
+        },
+        "parallel": {
+          "type": "object",
+          "title": "Optional parallel section, must be a valid Parallel option (Random/Grid/BO/Hyperband/Hyperopt/Mapping/Iterative)"
+        },
+        "service": {
+          "$ref": "#/definitions/v1Service",
+          "title": "Optional service section"
+        },
+        "inputs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1IO"
+          },
+          "title": "Optional inputs definition"
+        },
+        "outputs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1IO"
+          },
+          "title": "Optional outputs definition"
+        },
+        "run": {
+          "type": "object",
+          "title": "Run definiton, should be one of run composition: Container/Spark/Flink/Kubeflow/Dask/Dag"
+        }
+      },
+      "title": "Component specification"
+    },
+    "v1ComponentRef": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "path": {
+          "type": "string"
+        },
+        "hub": {
+          "type": "string"
+        }
+      },
+      "title": "Component reference specification"
+    },
     "v1Container": {
       "type": "object",
       "properties": {
         "kind": {
           "type": "string",
-          "title": "Kind of parallel, should be equal to \"container\""
+          "title": "Kind of runtime, should be equal to \"container\""
         },
         "image": {
           "type": "string",
@@ -8205,6 +8381,30 @@
         }
       },
       "title": "Container specification"
+    },
+    "v1ContainerEnv": {
+      "type": "object",
+      "properties": {
+        "image": {
+          "type": "string"
+        },
+        "image_pull_policy": {
+          "type": "string"
+        },
+        "sleep_interval": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "outputs_sync_interval": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "logs_sync_interval": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "Container environment specification"
     },
     "v1CredsBodyRequest": {
       "type": "object",
@@ -8249,6 +8449,42 @@
       },
       "title": "Cron schedule specification"
     },
+    "v1Dag": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "title": "Optional component kind, should be equal to \"dag\""
+        },
+        "ops": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1Op"
+          },
+          "title": "Ops used in the graph"
+        },
+        "components": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1Component"
+          },
+          "title": "Optional component refrences"
+        },
+        "concurrency": {
+          "type": "integer",
+          "format": "int32",
+          "title": "Optional component description"
+        },
+        "early_stopping": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          },
+          "title": "Optional component tags"
+        }
+      },
+      "title": "Dag specificaiton"
+    },
     "v1Dashboard": {
       "type": "object",
       "properties": {
@@ -8280,7 +8516,21 @@
       },
       "title": "Dashboard specification"
     },
-    "v1EarlyStoppingAllSchemas": {
+    "v1Dask": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "title": "Kind of runtime, should be equal to \"dask\""
+        },
+        "spec": {
+          "type": "object",
+          "title": "Dask specification"
+        }
+      },
+      "title": "Dask specification"
+    },
+    "v1EarlyStopping": {
       "type": "object",
       "properties": {
         "median": {
@@ -8323,6 +8573,114 @@
       },
       "title": "Request data to create/update entity status"
     },
+    "v1Environment": {
+      "type": "object",
+      "properties": {
+        "resources": {
+          "$ref": "#/definitions/v1ResourceRequirements",
+          "title": "Optional resource requirements"
+        },
+        "labels": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "title": "Optional labels to pass to the k8s"
+        },
+        "annotations": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "title": "Optional labels to pass to the k8s"
+        },
+        "node_selector": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "title": "Optional node seletors to pass to the k8s"
+        },
+        "affinity": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          },
+          "title": "Optional affinity to pass to the k8s"
+        },
+        "tolerations": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          },
+          "title": "Optional tolerations to pass to the k8s"
+        },
+        "service_account": {
+          "type": "string",
+          "title": "Optional service account to use for this run"
+        },
+        "image_pull_secrets": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "Optional image pull secrets to use for this run"
+        },
+        "env_vars": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          },
+          "title": "Optional list of tuples(key, value) for defining env vars"
+        },
+        "security_context": {
+          "type": "object",
+          "title": "Optional security context to use for this run"
+        },
+        "log_level": {
+          "type": "string",
+          "title": "Optional log level"
+        },
+        "auth": {
+          "type": "boolean",
+          "format": "boolean",
+          "title": "Optional flag to tell Polyaxon if it should set an auth context for the run, default true"
+        },
+        "docker": {
+          "type": "boolean",
+          "format": "boolean",
+          "title": "Optional flag to tell Polyaxon if it should set a docker socket context for the run, default false"
+        },
+        "shm": {
+          "type": "boolean",
+          "format": "boolean",
+          "title": "Optional flag to tell Polyaxon if it should set a shm context for the run, default false"
+        },
+        "outputs": {
+          "type": "boolean",
+          "format": "boolean",
+          "title": "Optional flag to tell Polyaxon if it set/handle an outputs context"
+        },
+        "logs": {
+          "type": "boolean",
+          "format": "boolean",
+          "title": "Optional flag to tell Polyaxon if it set/handle a logs context"
+        },
+        "registry": {
+          "type": "string",
+          "title": "Optional registy name to use for this run"
+        },
+        "init_container": {
+          "$ref": "#/definitions/v1ContainerEnv",
+          "title": "Optional specification fot the init container"
+        },
+        "sidecar_container": {
+          "$ref": "#/definitions/v1ContainerEnv",
+          "title": "Optional specification fot the sidecar container"
+        }
+      },
+      "title": "Environment specification"
+    },
     "v1ExactTimeSchedule": {
       "type": "object",
       "properties": {
@@ -8357,6 +8715,20 @@
       },
       "description": "FailureEarlyStoppingSchema specification\nEarly stopping based on failure config.\nthis policy stops based on a percentage of\nfailed runs at every evaluation."
     },
+    "v1Flink": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "title": "Kind of runtime, should be equal to \"flink\""
+        },
+        "spec": {
+          "type": "object",
+          "title": "Flink specification"
+        }
+      },
+      "title": "Flink specification"
+    },
     "v1GridSearch": {
       "type": "object",
       "properties": {
@@ -8369,18 +8741,18 @@
           "title": "Matrix/Space definition of params to traverse"
         },
         "n_runs": {
-          "type": "string",
-          "format": "int64",
+          "type": "integer",
+          "format": "int32",
           "title": "Number of runs to generate and search"
         },
         "seed": {
-          "type": "string",
-          "format": "int64",
+          "type": "integer",
+          "format": "int32",
           "title": "Seed for the random generator"
         },
         "concurrency": {
-          "type": "string",
-          "format": "int64",
+          "type": "integer",
+          "format": "int32",
           "title": "Number of concurrent runs"
         },
         "early_stopping": {
@@ -8472,8 +8844,8 @@
           "title": "Matrix/Space definition of params to traverse"
         },
         "eta": {
-          "type": "string",
-          "format": "int64",
+          "type": "integer",
+          "format": "int32",
           "title": "Eta"
         },
         "resource": {
@@ -8490,13 +8862,13 @@
           "title": "A flag to resume or restart the selected runs"
         },
         "seed": {
-          "type": "string",
-          "format": "int64",
+          "type": "integer",
+          "format": "int32",
           "title": "Seed for the random generator"
         },
         "concurrency": {
-          "type": "string",
-          "format": "int64",
+          "type": "integer",
+          "format": "int32",
           "title": "Number of concurrent runs"
         },
         "early_stopping": {
@@ -8525,18 +8897,18 @@
           "title": "Matrix/Space definition of params to traverse"
         },
         "n_runs": {
-          "type": "string",
-          "format": "int64",
+          "type": "integer",
+          "format": "int32",
           "title": "Number of runs to generate and search"
         },
         "seed": {
-          "type": "string",
-          "format": "int64",
+          "type": "integer",
+          "format": "int32",
           "title": "Seed for the random generator"
         },
         "concurrency": {
-          "type": "string",
-          "format": "int64",
+          "type": "integer",
+          "format": "int32",
           "title": "Number of concurrent runs"
         },
         "early_stopping": {
@@ -8560,6 +8932,71 @@
       "description": "- TPE: tpe algorithm\n - RAND: random algorithm\n - ANNEAL: anneal algorithm",
       "title": "Hyperopt algorithms enum"
     },
+    "v1IO": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "title": "Name for the input/output"
+        },
+        "description": {
+          "type": "string",
+          "title": "Description for the input/output"
+        },
+        "iotype": {
+          "type": "string",
+          "title": "The type of the input/output"
+        },
+        "value": {
+          "type": "object",
+          "title": "The value of the input/output should be compatible with the type"
+        },
+        "is_optional": {
+          "type": "boolean",
+          "format": "boolean",
+          "title": "A flag to tell if this input/output is optional"
+        },
+        "is_list": {
+          "type": "boolean",
+          "format": "boolean",
+          "title": "A flag to tell if this input/output is list"
+        },
+        "is_flag": {
+          "type": "boolean",
+          "format": "boolean",
+          "title": "A flag to tell if this input/output is flag, only valid for bool type"
+        },
+        "options": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          },
+          "title": "An optional field to provide possible values for validation"
+        }
+      },
+      "title": "Inputs/Outputs specification"
+    },
+    "v1Init": {
+      "type": "object",
+      "properties": {
+        "repos": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1RepoInit"
+          }
+        },
+        "artifacts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1ArtifactMount"
+          }
+        },
+        "build": {
+          "$ref": "#/definitions/v1BuildContext"
+        }
+      },
+      "title": "Init specificication"
+    },
     "v1IntervalSchedule": {
       "type": "object",
       "properties": {
@@ -8578,8 +9015,8 @@
           "title": "Whan to end this interval schedule"
         },
         "frequency": {
-          "type": "string",
-          "format": "int64",
+          "type": "integer",
+          "format": "int32",
           "title": "Frequency at which to execute the runs"
         },
         "depends_on_past": {
@@ -8611,13 +9048,13 @@
           "title": "Container specification for crating new observations based on data from previous iterations"
         },
         "seed": {
-          "type": "string",
-          "format": "int64",
+          "type": "integer",
+          "format": "int32",
           "title": "Seed for the random generator"
         },
         "concurrency": {
-          "type": "string",
-          "format": "int64",
+          "type": "integer",
+          "format": "int32",
           "title": "Number of concurrent runs"
         },
         "early_stopping": {
@@ -9081,8 +9518,8 @@
           "title": "The mapping values"
         },
         "concurrency": {
-          "type": "string",
-          "format": "int64",
+          "type": "integer",
+          "format": "int32",
           "title": "Number of concurrent runs"
         },
         "early_stopping": {
@@ -9103,8 +9540,8 @@
           "title": "Kind of this stopping policy, should be equal to \"median\""
         },
         "evaluation_interval": {
-          "type": "string",
-          "format": "int64",
+          "type": "integer",
+          "format": "int32",
           "description": "Interval/Frequency for applying the policy."
         }
       },
@@ -9166,14 +9603,197 @@
       },
       "title": "Mounts specification"
     },
+    "v1MpiJob": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "title": "Optional component kind, should be equal to \"mpi_job\""
+        },
+        "slots_per_worker": {
+          "type": "integer",
+          "format": "int32",
+          "title": "Optional slots per worker"
+        },
+        "launcher": {
+          "$ref": "#/definitions/v1Replica",
+          "title": "Optional launcher replica definition"
+        },
+        "worker": {
+          "$ref": "#/definitions/v1Replica",
+          "title": "Optional worker replica definition"
+        }
+      },
+      "title": "Mpi Job specification"
+    },
+    "v1Op": {
+      "type": "object",
+      "properties": {
+        "version": {
+          "type": "number",
+          "format": "float",
+          "title": "Spec version"
+        },
+        "kind": {
+          "type": "string",
+          "title": "Optional component kind, should be equal to \"component\""
+        },
+        "name": {
+          "type": "string",
+          "title": "Optional component name, should a valid slug"
+        },
+        "tag": {
+          "type": "string",
+          "title": "Optional component tag version"
+        },
+        "description": {
+          "type": "string",
+          "title": "Optional component description"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "Optional component tags"
+        },
+        "profile": {
+          "type": "string",
+          "title": "Optional profile to use for running this component"
+        },
+        "queue": {
+          "type": "string",
+          "title": "Optional queue to use for running this component"
+        },
+        "nocache": {
+          "type": "boolean",
+          "format": "boolean",
+          "title": "Optional flag to disable cache validation and force run this component"
+        },
+        "environment": {
+          "$ref": "#/definitions/v1Environment",
+          "title": "Optional environment section"
+        },
+        "termination": {
+          "$ref": "#/definitions/v1Termination",
+          "title": "optional termination section"
+        },
+        "init": {
+          "$ref": "#/definitions/v1Init",
+          "title": "Optional init section"
+        },
+        "mounts": {
+          "$ref": "#/definitions/v1Mounts",
+          "title": "Optioanl mount section"
+        },
+        "schedule": {
+          "type": "object",
+          "title": "Optional schedule section, must be a valid Schedule option (Cron/Interval/Repeatable/ExactTime)"
+        },
+        "parallel": {
+          "type": "object",
+          "title": "Optional parallel section, must be a valid Parallel option (Random/Grid/BO/Hyperband/Hyperopt/Mapping/Iterative)"
+        },
+        "service": {
+          "$ref": "#/definitions/v1Service",
+          "title": "Optional service section"
+        },
+        "dependencies": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "Optional graph dependencies of this op"
+        },
+        "trigger": {
+          "$ref": "#/definitions/v1TriggerPolicy",
+          "title": "Optional trigger policy"
+        },
+        "conditions": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          },
+          "title": "An optional list of condition to check before starting the run, entities should be a valid Condition"
+        },
+        "skip_on_upstream_skip": {
+          "type": "boolean",
+          "format": "boolean",
+          "title": "Optional flag to skip this run if upstream was skipped"
+        },
+        "params": {
+          "type": "object",
+          "title": "Optional dict of params"
+        },
+        "component_ref": {
+          "$ref": "#/definitions/v1ComponentRef",
+          "title": "Optional component reference if a component is not provided"
+        },
+        "component": {
+          "$ref": "#/definitions/v1Component",
+          "title": "Optional inline component to use for the op if a reference is not provided"
+        }
+      }
+    },
+    "v1OpCondition": {
+      "type": "object",
+      "properties": {
+        "op_io_conidtion": {
+          "$ref": "#/definitions/v1OpIOCondition"
+        },
+        "op_status_condition": {
+          "$ref": "#/definitions/v1OpStatusCondition"
+        }
+      }
+    },
+    "v1OpIOCondition": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "title": "Kind of runtime, should be equal to \"input\" or \"output\""
+        },
+        "op": {
+          "type": "string",
+          "title": "Op to set the condition on"
+        },
+        "name": {
+          "type": "string",
+          "title": "Input name to check check the condition on"
+        },
+        "trigger": {
+          "type": "string",
+          "title": "Trigger to check, trigger condition must conform to the iotype"
+        }
+      },
+      "title": "Input condition specification"
+    },
+    "v1OpStatusCondition": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "title": "Kind of runtime, should be equal to \"status\""
+        },
+        "op": {
+          "type": "string",
+          "title": "Op to set the condition on"
+        },
+        "trigger": {
+          "type": "string",
+          "title": "Trigger to check, must a valid status or union of statuses, e.g. succeeded  or succeeded | failed"
+        }
+      },
+      "title": "Status condition specification"
+    },
     "v1Optimization": {
       "type": "string",
       "enum": [
-        "MAXIMIZE",
-        "MINIMIZE"
+        "maximize",
+        "minimize"
       ],
-      "default": "MAXIMIZE",
-      "description": "- MAXIMIZE: Minimize a metric\n - MINIMIZE: Maximize a metric",
+      "default": "maximize",
+      "description": "- maximize: Minimize a metric\n - minimize: Maximize a metric",
       "title": "Optimization enum for metrics"
     },
     "v1OptimizationMetric": {
@@ -9256,7 +9876,7 @@
       },
       "title": "Organization member specification"
     },
-    "v1ParallelAllSchemas": {
+    "v1Parallel": {
       "type": "object",
       "properties": {
         "random": {
@@ -9435,6 +10055,24 @@
       },
       "title": "Project teams specification"
     },
+    "v1PytorchJob": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "title": "Optional component kind, should be equal to \"pytorch_job\""
+        },
+        "master": {
+          "$ref": "#/definitions/v1Replica",
+          "title": "Optional master replica definition"
+        },
+        "worker": {
+          "$ref": "#/definitions/v1Replica",
+          "title": "Optional worker replica definition"
+        }
+      },
+      "title": "Pytorch Job specification"
+    },
     "v1Queue": {
       "type": "object",
       "properties": {
@@ -9485,18 +10123,18 @@
           "title": "Matrix/Space definition of params to traverse"
         },
         "n_runs": {
-          "type": "string",
-          "format": "int64",
+          "type": "integer",
+          "format": "int32",
           "title": "Number of runs to generate and search"
         },
         "seed": {
-          "type": "string",
-          "format": "int64",
+          "type": "integer",
+          "format": "int32",
           "title": "Seed for the random generator"
         },
         "concurrency": {
-          "type": "string",
-          "format": "int64",
+          "type": "integer",
+          "format": "int32",
           "title": "Number of concurrent runs"
         },
         "early_stopping": {
@@ -9517,8 +10155,8 @@
           "title": "Kind of parallel, should be equal to \"repeatable\""
         },
         "limit": {
-          "type": "string",
-          "format": "int64",
+          "type": "integer",
+          "format": "int32",
           "title": "Limit to stop executing this schedule"
         },
         "depends_on_past": {
@@ -9529,14 +10167,73 @@
       },
       "title": "Repeatable schedule specification"
     },
+    "v1Replica": {
+      "type": "object",
+      "properties": {
+        "replicas": {
+          "type": "integer",
+          "format": "int32",
+          "title": "Number of replicas"
+        },
+        "environment": {
+          "$ref": "#/definitions/v1Environment",
+          "title": "Optional environment section"
+        },
+        "termination": {
+          "$ref": "#/definitions/v1Termination",
+          "title": "optional termination section"
+        },
+        "init": {
+          "$ref": "#/definitions/v1Init",
+          "title": "Optional init section"
+        },
+        "mounts": {
+          "$ref": "#/definitions/v1Mounts",
+          "title": "Optioanl mount section"
+        },
+        "container": {
+          "$ref": "#/definitions/v1Container",
+          "title": "Optioanl container to run"
+        }
+      },
+      "title": "Distributed Replica specification"
+    },
+    "v1RepoInit": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "commit": {
+          "type": "string"
+        },
+        "branch": {
+          "type": "string"
+        }
+      },
+      "title": "Repo initializer specification"
+    },
+    "v1ResourceRequirements": {
+      "type": "object",
+      "properties": {
+        "limits": {
+          "type": "object",
+          "description": "Limits describes the maximum amount of compute resources allowed."
+        },
+        "requests": {
+          "type": "object",
+          "description": "Requests describes the minimum amount of compute resources required."
+        }
+      }
+    },
     "v1ResourceType": {
       "type": "string",
       "enum": [
-        "INT",
-        "FLOAT"
+        "int",
+        "float"
       ],
-      "default": "INT",
-      "description": "- INT: Int resource\n - FLOAT: Float resource",
+      "default": "int",
+      "description": "- int: Int resource\n - float: Float resource",
       "title": "ResourceTypes enum for optmiztion resources"
     },
     "v1Run": {
@@ -9700,6 +10397,35 @@
       },
       "title": "Run meta info specification"
     },
+    "v1RunSchema": {
+      "type": "object",
+      "properties": {
+        "container": {
+          "$ref": "#/definitions/v1Container"
+        },
+        "dag": {
+          "$ref": "#/definitions/v1Dag"
+        },
+        "tf_job": {
+          "$ref": "#/definitions/v1TFJob"
+        },
+        "pytorch_job": {
+          "$ref": "#/definitions/v1PytorchJob"
+        },
+        "mpi_job": {
+          "$ref": "#/definitions/v1MpiJob"
+        },
+        "dask": {
+          "$ref": "#/definitions/v1Dask"
+        },
+        "spark": {
+          "$ref": "#/definitions/v1Spark"
+        },
+        "flink": {
+          "$ref": "#/definitions/v1Flink"
+        }
+      }
+    },
     "v1RunSettings": {
       "type": "object",
       "properties": {
@@ -9778,7 +10504,7 @@
       },
       "title": "Run Settings specification"
     },
-    "v1ScheduleAllSchemas": {
+    "v1Schedule": {
       "type": "object",
       "properties": {
         "cron": {
@@ -9799,20 +10525,23 @@
     "v1Schemas": {
       "type": "object",
       "properties": {
-        "early_stopping": {
-          "$ref": "#/definitions/v1EarlyStoppingAllSchemas"
+        "op_condition": {
+          "$ref": "#/definitions/v1OpCondition"
         },
-        "mount": {
-          "$ref": "#/definitions/v1Mounts"
+        "early_stopping": {
+          "$ref": "#/definitions/v1EarlyStopping"
         },
         "parallel": {
-          "$ref": "#/definitions/v1ParallelAllSchemas"
+          "$ref": "#/definitions/v1Parallel"
+        },
+        "op": {
+          "$ref": "#/definitions/v1Op"
+        },
+        "run": {
+          "$ref": "#/definitions/v1RunSchema"
         },
         "schedule": {
-          "$ref": "#/definitions/v1ScheduleAllSchemas"
-        },
-        "termination": {
-          "$ref": "#/definitions/v1Termination"
+          "$ref": "#/definitions/v1Schedule"
         }
       }
     },
@@ -9871,6 +10600,37 @@
       },
       "title": "Search spec definition"
     },
+    "v1Service": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "format": "boolean"
+        },
+        "ports": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "title": "Service specification"
+    },
+    "v1Spark": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "title": "Kind of runtime, should be equal to \"spark\""
+        },
+        "spec": {
+          "type": "object",
+          "title": "Spark specification"
+        }
+      },
+      "title": "Spark specification"
+    },
     "v1Status": {
       "type": "object",
       "properties": {
@@ -9923,6 +10683,32 @@
         }
       },
       "title": "Status condition specification"
+    },
+    "v1TFJob": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "title": "Optional component kind, should be equal to \"pytorch_job\""
+        },
+        "chief": {
+          "$ref": "#/definitions/v1Replica",
+          "title": "Optional chief replica definition"
+        },
+        "ps": {
+          "$ref": "#/definitions/v1Replica",
+          "title": "Optional ps replica definition"
+        },
+        "worker": {
+          "$ref": "#/definitions/v1Replica",
+          "title": "Optional worker replica definition"
+        },
+        "evaluator": {
+          "$ref": "#/definitions/v1Replica",
+          "title": "Optional evaluator replica definition"
+        }
+      },
+      "title": "TF Job specification"
     },
     "v1Team": {
       "type": "object",
@@ -9996,17 +10782,30 @@
           "title": "A valid restart policy"
         },
         "ttl": {
-          "type": "string",
-          "format": "int64",
+          "type": "integer",
+          "format": "int32",
           "title": "A TTL definition"
         },
         "timeout": {
-          "type": "string",
-          "format": "int64",
+          "type": "integer",
+          "format": "int32",
           "title": "A timeout in seconds"
         }
       },
-      "title": "Termination specification"
+      "description": "Termination specification\nTermination defines how to handle failures, job runtime, and cleanup policy."
+    },
+    "v1TriggerPolicy": {
+      "type": "string",
+      "enum": [
+        "all_succeeded",
+        "all_failed",
+        "all_done",
+        "one_succeeded",
+        "one_failed",
+        "one_done"
+      ],
+      "default": "all_succeeded",
+      "title": "TriggerPolicy enum"
     },
     "v1TruncationStoppingPolicy": {
       "type": "object",
@@ -10021,8 +10820,8 @@
           "description": "The percentage of runs to stop, at each evaluation interval.\ne.g. 1 - 99."
         },
         "evaluation_interval": {
-          "type": "string",
-          "format": "int64",
+          "type": "integer",
+          "format": "int32",
           "description": "Interval/Frequency for applying the policy."
         }
       },

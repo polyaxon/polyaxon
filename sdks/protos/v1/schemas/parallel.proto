@@ -17,13 +17,13 @@ message RandomSearch {
     string matrix = 2;
 
     // Number of runs to generate and search
-    int64 n_runs = 3;
+    int32 n_runs = 3;
 
     // Seed for the random generator
-    int64 seed = 4;
+    int32 seed = 4;
 
     // Number of concurrent runs
-    int64 concurrency = 5;
+    int32 concurrency = 5;
 
     // A list of Early stoppings, accpets both metric and failure early stopping mechanisms
     repeated google.protobuf.Struct early_stopping = 6;
@@ -39,13 +39,13 @@ message GridSearch {
     string matrix = 2;
 
     // Number of runs to generate and search
-    int64 n_runs = 3;
+    int32 n_runs = 3;
 
     // Seed for the random generator
-    int64 seed = 4;
+    int32 seed = 4;
 
     // Number of concurrent runs
-    int64 concurrency = 5;
+    int32 concurrency = 5;
 
     // A list of Early stopping objects, accpets both metric and failure early stopping mechanisms
     repeated google.protobuf.Struct early_stopping = 6;
@@ -60,7 +60,7 @@ message Hyperband {
     string matrix = 2;
 
     // Eta
-    int64 eta = 3;
+    int32 eta = 3;
 
     // Resource to optimize (should be an integer or a float)
     OptimizationResource resource = 4;
@@ -72,10 +72,10 @@ message Hyperband {
     bool resume = 6;
 
     // Seed for the random generator
-    int64 seed = 7;
+    int32 seed = 7;
 
     // Number of concurrent runs
-    int64 concurrency = 8;
+    int32 concurrency = 8;
 
     // A list of Early stopping objects, accpets both metric and failure early stopping mechanisms
     repeated google.protobuf.Struct early_stopping = 9;
@@ -97,16 +97,16 @@ message BO {
     int32 n_iterations = 4;
 
     // A utility function to use for the bayesian optimization
-    repeated google.protobuf.Struct utility_function = 5;
+    google.protobuf.Struct utility_function = 5;
 
     // Metric to optimize during the iterations
     OptimizationMetric metric = 6;
 
     // Seed for the random generator
-    int64 seed = 7;
+    int32 seed = 7;
 
     // Number of concurrent runs
-    int64 concurrency = 8;
+    int32 concurrency = 8;
 
     // A list of Early stopping objects, accpets both metric and failure early stopping mechanisms
     repeated google.protobuf.Struct early_stopping = 9;
@@ -137,13 +137,13 @@ message Hyperopt {
     string matrix = 3;
 
     // Number of runs to generate and search
-    int64 n_runs = 4;
+    int32 n_runs = 4;
 
     // Seed for the random generator
-    int64 seed = 5;
+    int32 seed = 5;
 
     // Number of concurrent runs
-    int64 concurrency = 6;
+    int32 concurrency = 6;
 
     // A list of Early stopping objects, accpets both metric and failure early stopping mechanisms
     repeated google.protobuf.Struct early_stopping = 7;
@@ -165,10 +165,10 @@ message Iterative {
     Container container = 4;
 
     // Seed for the random generator
-    int64 seed = 5;
+    int32 seed = 5;
 
     // Number of concurrent runs
-    int64 concurrency = 6;
+    int32 concurrency = 6;
 
     // A list of Early stopping objects, accpets both metric and failure early stopping mechanisms
     repeated google.protobuf.Struct early_stopping = 7;
@@ -184,19 +184,21 @@ message Mapping {
     string values = 2;
 
     // Number of concurrent runs
-    int64 concurrency = 6;
+    int32 concurrency = 6;
 
     // A list of Early stopping objects, accpets both metric and failure early stopping mechanisms
     repeated google.protobuf.Struct early_stopping = 7;
 }
 
 // All Schemas message
-message ParallelAllSchemas {
-    RandomSearch random = 1;
-    GridSearch grid = 2;
-    Hyperband hyperband = 3;
-    BO bo = 4;
-    Hyperopt hyperopt = 5;
-    Iterative iterative = 6;
-    Mapping mapping = 7;
+message Parallel {
+    oneof parallel {
+        RandomSearch random = 1;
+        GridSearch grid = 2;
+        Hyperband hyperband = 3;
+        BO bo = 4;
+        Hyperopt hyperopt = 5;
+        Iterative iterative = 6;
+        Mapping mapping = 7;
+    }
 }

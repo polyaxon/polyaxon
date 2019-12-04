@@ -5,7 +5,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **kind** | **String** |  | [optional] 
 **values** | **String** |  | [optional] 
-**concurrency** | **String** |  | [optional] 
+**concurrency** | **Number** |  | [optional] 
 **early_stopping** | **[Object]** |  | [optional] 
 
 

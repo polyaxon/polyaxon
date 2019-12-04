@@ -329,10 +329,10 @@ export interface V1AverageStoppingPolicy {
     king?: string;
     /**
      * Interval/Frequency for applying the policy.
-     * @type {string}
+     * @type {number}
      * @memberof V1AverageStoppingPolicy
      */
-    evaluation_interval?: string;
+    evaluation_interval?: number;
 }
 
 /**
@@ -367,10 +367,10 @@ export interface V1BO {
     n_iterations?: number;
     /**
      * 
-     * @type {Array<any>}
+     * @type {any}
      * @memberof V1BO
      */
-    utility_function?: Array<any>;
+    utility_function?: any;
     /**
      * 
      * @type {V1OptimizationMetric}
@@ -379,22 +379,102 @@ export interface V1BO {
     metric?: V1OptimizationMetric;
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof V1BO
      */
-    seed?: string;
+    seed?: number;
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof V1BO
      */
-    concurrency?: string;
+    concurrency?: number;
     /**
      * 
      * @type {Array<any>}
      * @memberof V1BO
      */
     early_stopping?: Array<any>;
+}
+
+/**
+ * 
+ * @export
+ * @interface V1BuildContext
+ */
+export interface V1BuildContext {
+    /**
+     * 
+     * @type {string}
+     * @memberof V1BuildContext
+     */
+    image?: string;
+    /**
+     * 
+     * @type {Array<any>}
+     * @memberof V1BuildContext
+     */
+    env?: Array<any>;
+    /**
+     * 
+     * @type {Array<any>}
+     * @memberof V1BuildContext
+     */
+    path?: Array<any>;
+    /**
+     * 
+     * @type {Array<any>}
+     * @memberof V1BuildContext
+     */
+    copy?: Array<any>;
+    /**
+     * 
+     * @type {Array<any>}
+     * @memberof V1BuildContext
+     */
+    run?: Array<any>;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1BuildContext
+     */
+    lang_env?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof V1BuildContext
+     */
+    uid?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof V1BuildContext
+     */
+    gid?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1BuildContext
+     */
+    filename?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1BuildContext
+     */
+    workdir?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1BuildContext
+     */
+    workdir_path?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1BuildContext
+     */
+    shell?: string;
 }
 
 /**
@@ -415,6 +495,160 @@ export interface V1CodeRef {
      * @memberof V1CodeRef
      */
     url?: string;
+}
+
+/**
+ * 
+ * @export
+ * @interface V1Component
+ */
+export interface V1Component {
+    /**
+     * 
+     * @type {number}
+     * @memberof V1Component
+     */
+    version?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1Component
+     */
+    kind?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1Component
+     */
+    name?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1Component
+     */
+    tag?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1Component
+     */
+    description?: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof V1Component
+     */
+    tags?: Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1Component
+     */
+    profile?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1Component
+     */
+    queue?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof V1Component
+     */
+    nocache?: boolean;
+    /**
+     * 
+     * @type {V1Environment}
+     * @memberof V1Component
+     */
+    environment?: V1Environment;
+    /**
+     * 
+     * @type {V1Termination}
+     * @memberof V1Component
+     */
+    termination?: V1Termination;
+    /**
+     * 
+     * @type {V1Init}
+     * @memberof V1Component
+     */
+    init?: V1Init;
+    /**
+     * 
+     * @type {V1Mounts}
+     * @memberof V1Component
+     */
+    mounts?: V1Mounts;
+    /**
+     * 
+     * @type {any}
+     * @memberof V1Component
+     */
+    schedule?: any;
+    /**
+     * 
+     * @type {any}
+     * @memberof V1Component
+     */
+    parallel?: any;
+    /**
+     * 
+     * @type {V1Service}
+     * @memberof V1Component
+     */
+    service?: V1Service;
+    /**
+     * 
+     * @type {Array<V1IO>}
+     * @memberof V1Component
+     */
+    inputs?: Array<V1IO>;
+    /**
+     * 
+     * @type {Array<V1IO>}
+     * @memberof V1Component
+     */
+    outputs?: Array<V1IO>;
+    /**
+     * 
+     * @type {any}
+     * @memberof V1Component
+     */
+    run?: any;
+}
+
+/**
+ * 
+ * @export
+ * @interface V1ComponentRef
+ */
+export interface V1ComponentRef {
+    /**
+     * 
+     * @type {string}
+     * @memberof V1ComponentRef
+     */
+    name?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1ComponentRef
+     */
+    url?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1ComponentRef
+     */
+    path?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1ComponentRef
+     */
+    hub?: string;
 }
 
 /**
@@ -453,6 +687,44 @@ export interface V1Container {
      * @memberof V1Container
      */
     args?: Array<string>;
+}
+
+/**
+ * 
+ * @export
+ * @interface V1ContainerEnv
+ */
+export interface V1ContainerEnv {
+    /**
+     * 
+     * @type {string}
+     * @memberof V1ContainerEnv
+     */
+    image?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1ContainerEnv
+     */
+    image_pull_policy?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof V1ContainerEnv
+     */
+    sleep_interval?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof V1ContainerEnv
+     */
+    outputs_sync_interval?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof V1ContainerEnv
+     */
+    logs_sync_interval?: number;
 }
 
 /**
@@ -516,6 +788,44 @@ export interface V1CronSchedule {
 /**
  * 
  * @export
+ * @interface V1Dag
+ */
+export interface V1Dag {
+    /**
+     * 
+     * @type {string}
+     * @memberof V1Dag
+     */
+    kind?: string;
+    /**
+     * 
+     * @type {Array<V1Op>}
+     * @memberof V1Dag
+     */
+    ops?: Array<V1Op>;
+    /**
+     * 
+     * @type {Array<V1Component>}
+     * @memberof V1Dag
+     */
+    components?: Array<V1Component>;
+    /**
+     * 
+     * @type {number}
+     * @memberof V1Dag
+     */
+    concurrency?: number;
+    /**
+     * 
+     * @type {Array<any>}
+     * @memberof V1Dag
+     */
+    early_stopping?: Array<any>;
+}
+
+/**
+ * 
+ * @export
  * @interface V1Dashboard
  */
 export interface V1Dashboard {
@@ -554,37 +864,57 @@ export interface V1Dashboard {
 /**
  * 
  * @export
- * @interface V1EarlyStoppingAllSchemas
+ * @interface V1Dask
  */
-export interface V1EarlyStoppingAllSchemas {
+export interface V1Dask {
+    /**
+     * 
+     * @type {string}
+     * @memberof V1Dask
+     */
+    kind?: string;
+    /**
+     * 
+     * @type {any}
+     * @memberof V1Dask
+     */
+    spec?: any;
+}
+
+/**
+ * 
+ * @export
+ * @interface V1EarlyStopping
+ */
+export interface V1EarlyStopping {
     /**
      * 
      * @type {V1MedianStoppingPolicy}
-     * @memberof V1EarlyStoppingAllSchemas
+     * @memberof V1EarlyStopping
      */
     median?: V1MedianStoppingPolicy;
     /**
      * 
      * @type {V1AverageStoppingPolicy}
-     * @memberof V1EarlyStoppingAllSchemas
+     * @memberof V1EarlyStopping
      */
     average?: V1AverageStoppingPolicy;
     /**
      * 
      * @type {V1TruncationStoppingPolicy}
-     * @memberof V1EarlyStoppingAllSchemas
+     * @memberof V1EarlyStopping
      */
     truncation?: V1TruncationStoppingPolicy;
     /**
      * 
      * @type {V1MetricEarlyStopping}
-     * @memberof V1EarlyStoppingAllSchemas
+     * @memberof V1EarlyStopping
      */
     metric?: V1MetricEarlyStopping;
     /**
      * 
      * @type {V1FailureEarlyStopping}
-     * @memberof V1EarlyStoppingAllSchemas
+     * @memberof V1EarlyStopping
      */
     failure?: V1FailureEarlyStopping;
 }
@@ -619,6 +949,128 @@ export interface V1EntityStatusBodyRequest {
      * @memberof V1EntityStatusBodyRequest
      */
     condition?: V1StatusCondition;
+}
+
+/**
+ * 
+ * @export
+ * @interface V1Environment
+ */
+export interface V1Environment {
+    /**
+     * 
+     * @type {V1ResourceRequirements}
+     * @memberof V1Environment
+     */
+    resources?: V1ResourceRequirements;
+    /**
+     * 
+     * @type {{ [key: string]: string; }}
+     * @memberof V1Environment
+     */
+    labels?: { [key: string]: string; };
+    /**
+     * 
+     * @type {{ [key: string]: string; }}
+     * @memberof V1Environment
+     */
+    annotations?: { [key: string]: string; };
+    /**
+     * 
+     * @type {{ [key: string]: string; }}
+     * @memberof V1Environment
+     */
+    node_selector?: { [key: string]: string; };
+    /**
+     * 
+     * @type {Array<any>}
+     * @memberof V1Environment
+     */
+    affinity?: Array<any>;
+    /**
+     * 
+     * @type {Array<any>}
+     * @memberof V1Environment
+     */
+    tolerations?: Array<any>;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1Environment
+     */
+    service_account?: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof V1Environment
+     */
+    image_pull_secrets?: Array<string>;
+    /**
+     * 
+     * @type {Array<any>}
+     * @memberof V1Environment
+     */
+    env_vars?: Array<any>;
+    /**
+     * 
+     * @type {any}
+     * @memberof V1Environment
+     */
+    security_context?: any;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1Environment
+     */
+    log_level?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof V1Environment
+     */
+    auth?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof V1Environment
+     */
+    docker?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof V1Environment
+     */
+    shm?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof V1Environment
+     */
+    outputs?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof V1Environment
+     */
+    logs?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1Environment
+     */
+    registry?: string;
+    /**
+     * 
+     * @type {V1ContainerEnv}
+     * @memberof V1Environment
+     */
+    init_container?: V1ContainerEnv;
+    /**
+     * 
+     * @type {V1ContainerEnv}
+     * @memberof V1Environment
+     */
+    sidecar_container?: V1ContainerEnv;
 }
 
 /**
@@ -670,6 +1122,26 @@ export interface V1FailureEarlyStopping {
 /**
  * 
  * @export
+ * @interface V1Flink
+ */
+export interface V1Flink {
+    /**
+     * 
+     * @type {string}
+     * @memberof V1Flink
+     */
+    kind?: string;
+    /**
+     * 
+     * @type {any}
+     * @memberof V1Flink
+     */
+    spec?: any;
+}
+
+/**
+ * 
+ * @export
  * @interface V1GridSearch
  */
 export interface V1GridSearch {
@@ -687,22 +1159,22 @@ export interface V1GridSearch {
     matrix?: string;
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof V1GridSearch
      */
-    n_runs?: string;
+    n_runs?: number;
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof V1GridSearch
      */
-    seed?: string;
+    seed?: number;
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof V1GridSearch
      */
-    concurrency?: string;
+    concurrency?: number;
     /**
      * 
      * @type {Array<any>}
@@ -817,10 +1289,10 @@ export interface V1Hyperband {
     matrix?: string;
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof V1Hyperband
      */
-    eta?: string;
+    eta?: number;
     /**
      * 
      * @type {V1OptimizationResource}
@@ -841,16 +1313,16 @@ export interface V1Hyperband {
     resume?: boolean;
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof V1Hyperband
      */
-    seed?: string;
+    seed?: number;
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof V1Hyperband
      */
-    concurrency?: string;
+    concurrency?: number;
     /**
      * 
      * @type {Array<any>}
@@ -885,22 +1357,22 @@ export interface V1Hyperopt {
     matrix?: string;
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof V1Hyperopt
      */
-    n_runs?: string;
+    n_runs?: number;
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof V1Hyperopt
      */
-    seed?: string;
+    seed?: number;
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof V1Hyperopt
      */
-    concurrency?: string;
+    concurrency?: number;
     /**
      * 
      * @type {Array<any>}
@@ -918,6 +1390,88 @@ export enum V1HyperoptAlgorithms {
     TPE = <any> 'TPE',
     RAND = <any> 'RAND',
     ANNEAL = <any> 'ANNEAL'
+}
+
+/**
+ * 
+ * @export
+ * @interface V1IO
+ */
+export interface V1IO {
+    /**
+     * 
+     * @type {string}
+     * @memberof V1IO
+     */
+    name?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1IO
+     */
+    description?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1IO
+     */
+    iotype?: string;
+    /**
+     * 
+     * @type {any}
+     * @memberof V1IO
+     */
+    value?: any;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof V1IO
+     */
+    is_optional?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof V1IO
+     */
+    is_list?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof V1IO
+     */
+    is_flag?: boolean;
+    /**
+     * 
+     * @type {Array<any>}
+     * @memberof V1IO
+     */
+    options?: Array<any>;
+}
+
+/**
+ * 
+ * @export
+ * @interface V1Init
+ */
+export interface V1Init {
+    /**
+     * 
+     * @type {Array<V1RepoInit>}
+     * @memberof V1Init
+     */
+    repos?: Array<V1RepoInit>;
+    /**
+     * 
+     * @type {Array<V1ArtifactMount>}
+     * @memberof V1Init
+     */
+    artifacts?: Array<V1ArtifactMount>;
+    /**
+     * 
+     * @type {V1BuildContext}
+     * @memberof V1Init
+     */
+    build?: V1BuildContext;
 }
 
 /**
@@ -946,10 +1500,10 @@ export interface V1IntervalSchedule {
     end_at?: Date;
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof V1IntervalSchedule
      */
-    frequency?: string;
+    frequency?: number;
     /**
      * 
      * @type {boolean}
@@ -990,16 +1544,16 @@ export interface V1Iterative {
     container?: V1Container;
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof V1Iterative
      */
-    seed?: string;
+    seed?: number;
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof V1Iterative
      */
-    concurrency?: string;
+    concurrency?: number;
     /**
      * 
      * @type {Array<any>}
@@ -1576,10 +2130,10 @@ export interface V1Mapping {
     values?: string;
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof V1Mapping
      */
-    concurrency?: string;
+    concurrency?: number;
     /**
      * 
      * @type {Array<any>}
@@ -1602,10 +2156,10 @@ export interface V1MedianStoppingPolicy {
     king?: string;
     /**
      * Interval/Frequency for applying the policy.
-     * @type {string}
+     * @type {number}
      * @memberof V1MedianStoppingPolicy
      */
-    evaluation_interval?: string;
+    evaluation_interval?: number;
 }
 
 /**
@@ -1673,13 +2227,269 @@ export interface V1Mounts {
 }
 
 /**
- * - MAXIMIZE: Minimize a metric  - MINIMIZE: Maximize a metric
+ * 
+ * @export
+ * @interface V1MpiJob
+ */
+export interface V1MpiJob {
+    /**
+     * 
+     * @type {string}
+     * @memberof V1MpiJob
+     */
+    kind?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof V1MpiJob
+     */
+    slots_per_worker?: number;
+    /**
+     * 
+     * @type {V1Replica}
+     * @memberof V1MpiJob
+     */
+    launcher?: V1Replica;
+    /**
+     * 
+     * @type {V1Replica}
+     * @memberof V1MpiJob
+     */
+    worker?: V1Replica;
+}
+
+/**
+ * 
+ * @export
+ * @interface V1Op
+ */
+export interface V1Op {
+    /**
+     * 
+     * @type {number}
+     * @memberof V1Op
+     */
+    version?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1Op
+     */
+    kind?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1Op
+     */
+    name?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1Op
+     */
+    tag?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1Op
+     */
+    description?: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof V1Op
+     */
+    tags?: Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1Op
+     */
+    profile?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1Op
+     */
+    queue?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof V1Op
+     */
+    nocache?: boolean;
+    /**
+     * 
+     * @type {V1Environment}
+     * @memberof V1Op
+     */
+    environment?: V1Environment;
+    /**
+     * 
+     * @type {V1Termination}
+     * @memberof V1Op
+     */
+    termination?: V1Termination;
+    /**
+     * 
+     * @type {V1Init}
+     * @memberof V1Op
+     */
+    init?: V1Init;
+    /**
+     * 
+     * @type {V1Mounts}
+     * @memberof V1Op
+     */
+    mounts?: V1Mounts;
+    /**
+     * 
+     * @type {any}
+     * @memberof V1Op
+     */
+    schedule?: any;
+    /**
+     * 
+     * @type {any}
+     * @memberof V1Op
+     */
+    parallel?: any;
+    /**
+     * 
+     * @type {V1Service}
+     * @memberof V1Op
+     */
+    service?: V1Service;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof V1Op
+     */
+    dependencies?: Array<string>;
+    /**
+     * 
+     * @type {V1TriggerPolicy}
+     * @memberof V1Op
+     */
+    trigger?: V1TriggerPolicy;
+    /**
+     * 
+     * @type {Array<any>}
+     * @memberof V1Op
+     */
+    conditions?: Array<any>;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof V1Op
+     */
+    skip_on_upstream_skip?: boolean;
+    /**
+     * 
+     * @type {any}
+     * @memberof V1Op
+     */
+    params?: any;
+    /**
+     * 
+     * @type {V1ComponentRef}
+     * @memberof V1Op
+     */
+    component_ref?: V1ComponentRef;
+    /**
+     * 
+     * @type {V1Component}
+     * @memberof V1Op
+     */
+    component?: V1Component;
+}
+
+/**
+ * 
+ * @export
+ * @interface V1OpCondition
+ */
+export interface V1OpCondition {
+    /**
+     * 
+     * @type {V1OpIOCondition}
+     * @memberof V1OpCondition
+     */
+    op_io_conidtion?: V1OpIOCondition;
+    /**
+     * 
+     * @type {V1OpStatusCondition}
+     * @memberof V1OpCondition
+     */
+    op_status_condition?: V1OpStatusCondition;
+}
+
+/**
+ * 
+ * @export
+ * @interface V1OpIOCondition
+ */
+export interface V1OpIOCondition {
+    /**
+     * 
+     * @type {string}
+     * @memberof V1OpIOCondition
+     */
+    kind?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1OpIOCondition
+     */
+    op?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1OpIOCondition
+     */
+    name?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1OpIOCondition
+     */
+    trigger?: string;
+}
+
+/**
+ * 
+ * @export
+ * @interface V1OpStatusCondition
+ */
+export interface V1OpStatusCondition {
+    /**
+     * 
+     * @type {string}
+     * @memberof V1OpStatusCondition
+     */
+    kind?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1OpStatusCondition
+     */
+    op?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1OpStatusCondition
+     */
+    trigger?: string;
+}
+
+/**
+ * - maximize: Minimize a metric  - minimize: Maximize a metric
  * @export
  * @enum {string}
  */
 export enum V1Optimization {
-    MAXIMIZE = <any> 'MAXIMIZE',
-    MINIMIZE = <any> 'MINIMIZE'
+    Maximize = <any> 'maximize',
+    Minimize = <any> 'minimize'
 }
 
 /**
@@ -1795,49 +2605,49 @@ export interface V1OrganizationMember {
 /**
  * 
  * @export
- * @interface V1ParallelAllSchemas
+ * @interface V1Parallel
  */
-export interface V1ParallelAllSchemas {
+export interface V1Parallel {
     /**
      * 
      * @type {V1RandomSearch}
-     * @memberof V1ParallelAllSchemas
+     * @memberof V1Parallel
      */
     random?: V1RandomSearch;
     /**
      * 
      * @type {V1GridSearch}
-     * @memberof V1ParallelAllSchemas
+     * @memberof V1Parallel
      */
     grid?: V1GridSearch;
     /**
      * 
      * @type {V1Hyperband}
-     * @memberof V1ParallelAllSchemas
+     * @memberof V1Parallel
      */
     hyperband?: V1Hyperband;
     /**
      * 
      * @type {V1BO}
-     * @memberof V1ParallelAllSchemas
+     * @memberof V1Parallel
      */
     bo?: V1BO;
     /**
      * 
      * @type {V1Hyperopt}
-     * @memberof V1ParallelAllSchemas
+     * @memberof V1Parallel
      */
     hyperopt?: V1Hyperopt;
     /**
      * 
      * @type {V1Iterative}
-     * @memberof V1ParallelAllSchemas
+     * @memberof V1Parallel
      */
     iterative?: V1Iterative;
     /**
      * 
      * @type {V1Mapping}
-     * @memberof V1ParallelAllSchemas
+     * @memberof V1Parallel
      */
     mapping?: V1Mapping;
 }
@@ -2027,6 +2837,32 @@ export interface V1ProjectTeams {
 /**
  * 
  * @export
+ * @interface V1PytorchJob
+ */
+export interface V1PytorchJob {
+    /**
+     * 
+     * @type {string}
+     * @memberof V1PytorchJob
+     */
+    kind?: string;
+    /**
+     * 
+     * @type {V1Replica}
+     * @memberof V1PytorchJob
+     */
+    master?: V1Replica;
+    /**
+     * 
+     * @type {V1Replica}
+     * @memberof V1PytorchJob
+     */
+    worker?: V1Replica;
+}
+
+/**
+ * 
+ * @export
  * @interface V1Queue
  */
 export interface V1Queue {
@@ -2094,22 +2930,22 @@ export interface V1RandomSearch {
     matrix?: string;
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof V1RandomSearch
      */
-    n_runs?: string;
+    n_runs?: number;
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof V1RandomSearch
      */
-    seed?: string;
+    seed?: number;
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof V1RandomSearch
      */
-    concurrency?: string;
+    concurrency?: number;
     /**
      * 
      * @type {Array<any>}
@@ -2132,10 +2968,10 @@ export interface V1RepeatableSchedule {
     kind?: string;
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof V1RepeatableSchedule
      */
-    limit?: string;
+    limit?: number;
     /**
      * 
      * @type {boolean}
@@ -2145,13 +2981,103 @@ export interface V1RepeatableSchedule {
 }
 
 /**
- * - INT: Int resource  - FLOAT: Float resource
+ * 
+ * @export
+ * @interface V1Replica
+ */
+export interface V1Replica {
+    /**
+     * 
+     * @type {number}
+     * @memberof V1Replica
+     */
+    replicas?: number;
+    /**
+     * 
+     * @type {V1Environment}
+     * @memberof V1Replica
+     */
+    environment?: V1Environment;
+    /**
+     * 
+     * @type {V1Termination}
+     * @memberof V1Replica
+     */
+    termination?: V1Termination;
+    /**
+     * 
+     * @type {V1Init}
+     * @memberof V1Replica
+     */
+    init?: V1Init;
+    /**
+     * 
+     * @type {V1Mounts}
+     * @memberof V1Replica
+     */
+    mounts?: V1Mounts;
+    /**
+     * 
+     * @type {V1Container}
+     * @memberof V1Replica
+     */
+    container?: V1Container;
+}
+
+/**
+ * 
+ * @export
+ * @interface V1RepoInit
+ */
+export interface V1RepoInit {
+    /**
+     * 
+     * @type {string}
+     * @memberof V1RepoInit
+     */
+    name?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1RepoInit
+     */
+    commit?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1RepoInit
+     */
+    branch?: string;
+}
+
+/**
+ * 
+ * @export
+ * @interface V1ResourceRequirements
+ */
+export interface V1ResourceRequirements {
+    /**
+     * Limits describes the maximum amount of compute resources allowed.
+     * @type {any}
+     * @memberof V1ResourceRequirements
+     */
+    limits?: any;
+    /**
+     * Requests describes the minimum amount of compute resources required.
+     * @type {any}
+     * @memberof V1ResourceRequirements
+     */
+    requests?: any;
+}
+
+/**
+ * - int: Int resource  - float: Float resource
  * @export
  * @enum {string}
  */
 export enum V1ResourceType {
-    INT = <any> 'INT',
-    FLOAT = <any> 'FLOAT'
+    Int = <any> 'int',
+    Float = <any> 'float'
 }
 
 /**
@@ -2377,6 +3303,62 @@ export interface V1RunMetaInfo {
 /**
  * 
  * @export
+ * @interface V1RunSchema
+ */
+export interface V1RunSchema {
+    /**
+     * 
+     * @type {V1Container}
+     * @memberof V1RunSchema
+     */
+    container?: V1Container;
+    /**
+     * 
+     * @type {V1Dag}
+     * @memberof V1RunSchema
+     */
+    dag?: V1Dag;
+    /**
+     * 
+     * @type {V1TFJob}
+     * @memberof V1RunSchema
+     */
+    tf_job?: V1TFJob;
+    /**
+     * 
+     * @type {V1PytorchJob}
+     * @memberof V1RunSchema
+     */
+    pytorch_job?: V1PytorchJob;
+    /**
+     * 
+     * @type {V1MpiJob}
+     * @memberof V1RunSchema
+     */
+    mpi_job?: V1MpiJob;
+    /**
+     * 
+     * @type {V1Dask}
+     * @memberof V1RunSchema
+     */
+    dask?: V1Dask;
+    /**
+     * 
+     * @type {V1Spark}
+     * @memberof V1RunSchema
+     */
+    spark?: V1Spark;
+    /**
+     * 
+     * @type {V1Flink}
+     * @memberof V1RunSchema
+     */
+    flink?: V1Flink;
+}
+
+/**
+ * 
+ * @export
  * @interface V1RunSettings
  */
 export interface V1RunSettings {
@@ -2471,31 +3453,31 @@ export interface V1RunSettingsCatalog {
 /**
  * 
  * @export
- * @interface V1ScheduleAllSchemas
+ * @interface V1Schedule
  */
-export interface V1ScheduleAllSchemas {
+export interface V1Schedule {
     /**
      * 
      * @type {V1CronSchedule}
-     * @memberof V1ScheduleAllSchemas
+     * @memberof V1Schedule
      */
     cron?: V1CronSchedule;
     /**
      * 
      * @type {V1ExactTimeSchedule}
-     * @memberof V1ScheduleAllSchemas
+     * @memberof V1Schedule
      */
     exact_time?: V1ExactTimeSchedule;
     /**
      * 
      * @type {V1IntervalSchedule}
-     * @memberof V1ScheduleAllSchemas
+     * @memberof V1Schedule
      */
     interval?: V1IntervalSchedule;
     /**
      * 
      * @type {V1RepeatableSchedule}
-     * @memberof V1ScheduleAllSchemas
+     * @memberof V1Schedule
      */
     repeatable?: V1RepeatableSchedule;
 }
@@ -2508,34 +3490,40 @@ export interface V1ScheduleAllSchemas {
 export interface V1Schemas {
     /**
      * 
-     * @type {V1EarlyStoppingAllSchemas}
+     * @type {V1OpCondition}
      * @memberof V1Schemas
      */
-    early_stopping?: V1EarlyStoppingAllSchemas;
+    op_condition?: V1OpCondition;
     /**
      * 
-     * @type {V1Mounts}
+     * @type {V1EarlyStopping}
      * @memberof V1Schemas
      */
-    mount?: V1Mounts;
+    early_stopping?: V1EarlyStopping;
     /**
      * 
-     * @type {V1ParallelAllSchemas}
+     * @type {V1Parallel}
      * @memberof V1Schemas
      */
-    parallel?: V1ParallelAllSchemas;
+    parallel?: V1Parallel;
     /**
      * 
-     * @type {V1ScheduleAllSchemas}
+     * @type {V1Op}
      * @memberof V1Schemas
      */
-    schedule?: V1ScheduleAllSchemas;
+    op?: V1Op;
     /**
      * 
-     * @type {V1Termination}
+     * @type {V1RunSchema}
      * @memberof V1Schemas
      */
-    termination?: V1Termination;
+    run?: V1RunSchema;
+    /**
+     * 
+     * @type {V1Schedule}
+     * @memberof V1Schemas
+     */
+    schedule?: V1Schedule;
 }
 
 /**
@@ -2617,6 +3605,46 @@ export interface V1SearchSpec {
 /**
  * 
  * @export
+ * @interface V1Service
+ */
+export interface V1Service {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof V1Service
+     */
+    enabled?: boolean;
+    /**
+     * 
+     * @type {Array<number>}
+     * @memberof V1Service
+     */
+    ports?: Array<number>;
+}
+
+/**
+ * 
+ * @export
+ * @interface V1Spark
+ */
+export interface V1Spark {
+    /**
+     * 
+     * @type {string}
+     * @memberof V1Spark
+     */
+    kind?: string;
+    /**
+     * 
+     * @type {any}
+     * @memberof V1Spark
+     */
+    spec?: any;
+}
+
+/**
+ * 
+ * @export
  * @interface V1Status
  */
 export interface V1Status {
@@ -2682,6 +3710,44 @@ export interface V1StatusCondition {
      * @memberof V1StatusCondition
      */
     last_transition_time?: Date;
+}
+
+/**
+ * 
+ * @export
+ * @interface V1TFJob
+ */
+export interface V1TFJob {
+    /**
+     * 
+     * @type {string}
+     * @memberof V1TFJob
+     */
+    kind?: string;
+    /**
+     * 
+     * @type {V1Replica}
+     * @memberof V1TFJob
+     */
+    chief?: V1Replica;
+    /**
+     * 
+     * @type {V1Replica}
+     * @memberof V1TFJob
+     */
+    ps?: V1Replica;
+    /**
+     * 
+     * @type {V1Replica}
+     * @memberof V1TFJob
+     */
+    worker?: V1Replica;
+    /**
+     * 
+     * @type {V1Replica}
+     * @memberof V1TFJob
+     */
+    evaluator?: V1Replica;
 }
 
 /**
@@ -2761,7 +3827,7 @@ export interface V1TeamMember {
 }
 
 /**
- * 
+ * Termination specification Termination defines how to handle failures, job runtime, and cleanup policy.
  * @export
  * @interface V1Termination
  */
@@ -2780,16 +3846,30 @@ export interface V1Termination {
     restart_policy?: string;
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof V1Termination
      */
-    ttl?: string;
+    ttl?: number;
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof V1Termination
      */
-    timeout?: string;
+    timeout?: number;
+}
+
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+export enum V1TriggerPolicy {
+    AllSucceeded = <any> 'all_succeeded',
+    AllFailed = <any> 'all_failed',
+    AllDone = <any> 'all_done',
+    OneSucceeded = <any> 'one_succeeded',
+    OneFailed = <any> 'one_failed',
+    OneDone = <any> 'one_done'
 }
 
 /**
@@ -2812,10 +3892,10 @@ export interface V1TruncationStoppingPolicy {
     percent?: number;
     /**
      * Interval/Frequency for applying the policy.
-     * @type {string}
+     * @type {number}
      * @memberof V1TruncationStoppingPolicy
      */
-    evaluation_interval?: string;
+    evaluation_interval?: number;
 }
 
 /**

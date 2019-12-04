@@ -28,6 +28,7 @@ from hestia.tz_utils import get_time_zone
 from hestia.units import to_percentage, to_unit_memory
 from marshmallow import RAISE, Schema, ValidationError, post_dump, post_load
 from marshmallow.utils import EXCLUDE, utc
+from mock.mock import self
 
 from polyaxon.exceptions import PolyaxonSchemaError
 from polyaxon.schemas.utils import to_camel_case
@@ -67,6 +68,7 @@ class BaseConfig(object):
     PERCENT_ATTRIBUTES = []
     ROUNDING = 2
     UNKNOWN_BEHAVIOUR = RAISE
+    IDENTIFIER_KIND = False
 
     def to_light_dict(
         self,
@@ -119,6 +121,8 @@ class BaseConfig(object):
     @classmethod
     def obj_to_dict(cls, obj, humanize_values=False, unknown=None):
         unknown = unknown or cls.UNKNOWN_BEHAVIOUR
+        if cls.IDENTIFIER_KIND:
+            obj.kind = cls.IDENTIFIER
         humanized_attrs = cls.humanize_attrs(obj) if humanize_values else {}
         data_dict = cls.SCHEMA(unknown=unknown).dump(  # pylint: disable=not-callable
             obj

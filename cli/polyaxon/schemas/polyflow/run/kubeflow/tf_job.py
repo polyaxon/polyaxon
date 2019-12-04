@@ -18,6 +18,7 @@
 from __future__ import absolute_import, division, print_function
 
 from marshmallow import fields, validate
+from polyaxon_sdk import V1TFJob
 
 from polyaxon.schemas.base import BaseConfig, BaseSchema
 from polyaxon.schemas.polyflow.run.replica import ReplicaSchema
@@ -35,16 +36,8 @@ class TFJobSchema(BaseSchema):
         return TFJobConfig
 
 
-class TFJobConfig(BaseConfig):
+class TFJobConfig(BaseConfig, V1TFJob):
     SCHEMA = TFJobSchema
     IDENTIFIER = "tfjob"
     REDUCED_ATTRIBUTES = ["chief", "ps", "worker", "evaluator"]
-
-    def __init__(
-        self, chief=None, ps=None, worker=None, evaluator=None, kind=IDENTIFIER
-    ):
-        self.kind = kind
-        self.chief = chief
-        self.ps = ps
-        self.worker = worker
-        self.evaluator = evaluator
+    IDENTIFIER_KIND = True

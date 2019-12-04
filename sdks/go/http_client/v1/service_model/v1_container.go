@@ -41,7 +41,7 @@ type V1Container struct {
 	// A valid image pull policy
 	ImagePullPolicy string `json:"image_pull_policy,omitempty"`
 
-	// Kind of parallel, should be equal to "container"
+	// Kind of runtime, should be equal to "container"
 	Kind string `json:"kind,omitempty"`
 }
 

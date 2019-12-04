@@ -18,6 +18,7 @@
 from __future__ import absolute_import, division, print_function
 
 from marshmallow import fields, validate
+from polyaxon_sdk import V1PytorchJob
 
 from polyaxon.schemas.base import BaseConfig, BaseSchema
 from polyaxon.schemas.polyflow.run.replica import ReplicaSchema
@@ -33,12 +34,8 @@ class PytorchJobSchema(BaseSchema):
         return PytorchJobConfig
 
 
-class PytorchJobConfig(BaseConfig):
+class PytorchJobConfig(BaseConfig, V1PytorchJob):
     SCHEMA = PytorchJobSchema
     IDENTIFIER = "pytorch_job"
     REDUCED_ATTRIBUTES = ["master", "worker"]
-
-    def __init__(self, master=None, worker=None, kind=IDENTIFIER):
-        self.kind = kind
-        self.master = master
-        self.worker = worker
+    IDENTIFIER_KIND = True

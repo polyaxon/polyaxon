@@ -39,7 +39,7 @@ type V1IntervalSchedule struct {
 	EndAt strfmt.DateTime `json:"end_at,omitempty"`
 
 	// Frequency at which to execute the runs
-	Frequency string `json:"frequency,omitempty"`
+	Frequency int32 `json:"frequency,omitempty"`
 
 	// Kind of parallel, should be equal to "interval"
 	Kind string `json:"kind,omitempty"`

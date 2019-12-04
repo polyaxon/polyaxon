@@ -1,0 +1,82 @@
+syntax = "proto3";
+
+package v1;
+
+import "google/protobuf/struct.proto";
+
+// Container environment specification
+message ContainerEnv {
+    string image = 1;
+    string image_pull_policy = 2;
+    int32 sleep_interval = 3;
+    int32 outputs_sync_interval = 4;
+    int32 logs_sync_interval = 5;
+}
+
+message ResourceRequirements {
+    // Limits describes the maximum amount of compute resources allowed.
+    google.protobuf.Struct limits = 1;
+
+    // Requests describes the minimum amount of compute resources required.
+    google.protobuf.Struct requests = 2;
+}
+
+// Environment specification
+message Environment {
+    // Optional resource requirements
+    ResourceRequirements resources = 1;
+
+    // Optional labels to pass to the k8s
+    map<string, string> labels = 2;
+
+    // Optional labels to pass to the k8s
+    map<string, string> annotations = 3;
+
+    // Optional node seletors to pass to the k8s
+    map<string, string> node_selector = 4;
+
+    // Optional affinity to pass to the k8s
+    repeated google.protobuf.Struct affinity = 5;
+
+    // Optional tolerations to pass to the k8s
+    repeated google.protobuf.Struct tolerations = 6;
+
+    // Optional service account to use for this run
+    string service_account = 8;
+
+    // Optional image pull secrets to use for this run
+    repeated string image_pull_secrets = 9;
+
+    // Optional list of tuples(key, value) for defining env vars
+    repeated google.protobuf.Struct env_vars = 10;
+
+    // Optional security context to use for this run
+    google.protobuf.Struct security_context = 11;
+
+    // Optional log level
+    string log_level = 12;
+
+    // Optional flag to tell Polyaxon if it should set an auth context for the run, default true
+    bool auth = 13;
+
+    // Optional flag to tell Polyaxon if it should set a docker socket context for the run, default false
+    bool docker = 14;
+
+    // Optional flag to tell Polyaxon if it should set a shm context for the run, default false
+    bool shm = 15;
+
+    // Optional flag to tell Polyaxon if it set/handle an outputs context
+    bool outputs = 16;
+
+    // Optional flag to tell Polyaxon if it set/handle a logs context
+    bool logs = 17;
+
+    // Optional registy name to use for this run
+    string registry = 18;
+
+    // Optional specification fot the init container
+    ContainerEnv init_container = 19;
+
+    // Optional specification fot the sidecar container
+    ContainerEnv sidecar_container = 20;
+}

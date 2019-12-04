@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **kind** | **String** |  |  [optional]
-**limit** | **String** |  |  [optional]
+**limit** | **Integer** |  |  [optional]
 **dependsOnPast** | **Boolean** |  |  [optional]
 
 

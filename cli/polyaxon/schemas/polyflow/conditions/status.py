@@ -18,28 +18,22 @@
 from __future__ import absolute_import, division, print_function
 
 from marshmallow import fields, validate
+from polyaxon_sdk import V1OpStatusCondition
 
 from polyaxon.schemas.base import BaseConfig, BaseSchema
-from polyaxon.schemas.polyflow.trigger_policies import StatusTriggerPolicy
 
 
-class StatusConditionSchema(BaseSchema):
+class OpStatusConditionSchema(BaseSchema):
     kind = fields.Str(allow_none=True, validate=validate.Equal("status"))
     op = fields.Str(required=True)
-    trigger = fields.Str(
-        required=True, validate=validate.OneOf(StatusTriggerPolicy.VALUES)
-    )
+    trigger = fields.Str(required=True)
 
     @staticmethod
     def schema_config():
-        return StatusConditionConfig
+        return OpStatusConditionConfig
 
 
-class StatusConditionConfig(BaseConfig):
-    SCHEMA = StatusConditionSchema
+class OpStatusConditionConfig(BaseConfig, V1OpStatusCondition):
+    SCHEMA = OpStatusConditionSchema
     IDENTIFIER = "status"
-
-    def __init__(self, op=None, trigger=None, kind=None):
-        self.op = op
-        self.trigger = trigger
-        self.kind = kind
+    IDENTIFIER_KIND = True

@@ -54,7 +54,7 @@ public class V1Hyperband {
   private String matrix = null;
 
   @SerializedName("eta")
-  private String eta = null;
+  private Integer eta = null;
 
   @SerializedName("resource")
   private V1OptimizationResource resource = null;
@@ -66,10 +66,10 @@ public class V1Hyperband {
   private Boolean resume = null;
 
   @SerializedName("seed")
-  private String seed = null;
+  private Integer seed = null;
 
   @SerializedName("concurrency")
-  private String concurrency = null;
+  private Integer concurrency = null;
 
   @SerializedName("early_stopping")
   private List<Object> earlyStopping = null;
@@ -110,7 +110,7 @@ public class V1Hyperband {
     this.matrix = matrix;
   }
 
-  public V1Hyperband eta(String eta) {
+  public V1Hyperband eta(Integer eta) {
     this.eta = eta;
     return this;
   }
@@ -120,11 +120,11 @@ public class V1Hyperband {
    * @return eta
   **/
   @ApiModelProperty(value = "")
-  public String getEta() {
+  public Integer getEta() {
     return eta;
   }
 
-  public void setEta(String eta) {
+  public void setEta(Integer eta) {
     this.eta = eta;
   }
 
@@ -182,7 +182,7 @@ public class V1Hyperband {
     this.resume = resume;
   }
 
-  public V1Hyperband seed(String seed) {
+  public V1Hyperband seed(Integer seed) {
     this.seed = seed;
     return this;
   }
@@ -192,15 +192,15 @@ public class V1Hyperband {
    * @return seed
   **/
   @ApiModelProperty(value = "")
-  public String getSeed() {
+  public Integer getSeed() {
     return seed;
   }
 
-  public void setSeed(String seed) {
+  public void setSeed(Integer seed) {
     this.seed = seed;
   }
 
-  public V1Hyperband concurrency(String concurrency) {
+  public V1Hyperband concurrency(Integer concurrency) {
     this.concurrency = concurrency;
     return this;
   }
@@ -210,11 +210,11 @@ public class V1Hyperband {
    * @return concurrency
   **/
   @ApiModelProperty(value = "")
-  public String getConcurrency() {
+  public Integer getConcurrency() {
     return concurrency;
   }
 
-  public void setConcurrency(String concurrency) {
+  public void setConcurrency(Integer concurrency) {
     this.concurrency = concurrency;
   }
 

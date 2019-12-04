@@ -1,0 +1,75 @@
+syntax = "proto3";
+
+package v1;
+
+import "v1/schemas/container.proto";
+import "v1/schemas/environment.proto";
+import "v1/schemas/init.proto";
+import "v1/schemas/mounts.proto";
+import "v1/schemas/termination.proto";
+
+// Distributed Replica specification
+message Replica {
+    // Number of replicas
+    int32 replicas = 1;
+
+    // Optional environment section
+    Environment environment = 2;
+
+    // optional termination section
+    Termination termination = 3;
+
+    // Optional init section
+    Init init = 4;
+
+    // Optioanl mount section
+    Mounts mounts = 5;
+
+    // Optioanl container to run
+    Container container = 6;
+}
+
+// Mpi Job specification
+message MpiJob {
+    // Optional component kind, should be equal to "mpi_job"
+    string kind = 1;
+
+    // Optional slots per worker
+    int32 slots_per_worker = 2;
+
+    // Optional launcher replica definition
+    Replica launcher = 3;
+
+    // Optional worker replica definition
+    Replica worker = 4;
+}
+
+// Pytorch Job specification
+message PytorchJob {
+    // Optional component kind, should be equal to "pytorch_job"
+    string kind = 1;
+
+    // Optional master replica definition
+    Replica master = 2;
+
+    // Optional worker replica definition
+    Replica worker = 3;
+}
+
+// TF Job specification
+message TFJob {
+    // Optional component kind, should be equal to "pytorch_job"
+    string kind = 1;
+
+    // Optional chief replica definition
+    Replica chief = 2;
+
+    // Optional ps replica definition
+    Replica ps = 3;
+
+    // Optional worker replica definition
+    Replica worker = 4;
+
+    // Optional evaluator replica definition
+    Replica evaluator = 5;
+}

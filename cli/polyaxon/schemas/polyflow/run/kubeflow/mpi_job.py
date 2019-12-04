@@ -18,6 +18,7 @@
 from __future__ import absolute_import, division, print_function
 
 from marshmallow import fields, validate
+from polyaxon_sdk import V1MpiJob
 
 from polyaxon.schemas.base import BaseConfig, BaseSchema
 from polyaxon.schemas.polyflow.run.replica import ReplicaSchema
@@ -34,15 +35,8 @@ class MpiJobSchema(BaseSchema):
         return MpiJobConfig
 
 
-class MpiJobConfig(BaseConfig):
+class MpiJobConfig(BaseConfig, V1MpiJob):
     SCHEMA = MpiJobSchema
     IDENTIFIER = "mpi_job"
     REDUCED_ATTRIBUTES = ["slots_per_worker", "launcher", "worker"]
-
-    def __init__(
-        self, slots_per_worker=None, launcher=None, worker=None, kind=IDENTIFIER
-    ):
-        self.kind = kind
-        self.launcher = launcher
-        self.worker = worker
-        self.slots_per_worker = slots_per_worker
+    IDENTIFIER_KIND = True

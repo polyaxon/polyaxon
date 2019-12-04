@@ -18,6 +18,13 @@
 from __future__ import absolute_import, division, print_function
 
 from marshmallow import fields, validate
+from polyaxon_sdk import (
+    V1AverageStoppingPolicy,
+    V1FailureEarlyStopping,
+    V1MedianStoppingPolicy,
+    V1MetricEarlyStopping,
+    V1TruncationStoppingPolicy,
+)
 
 from polyaxon.schemas.base import BaseConfig, BaseOneOfSchema, BaseSchema
 from polyaxon.schemas.fields.ref_or_obj import RefOrObject
@@ -33,22 +40,10 @@ class MedianStoppingPolicySchema(BaseSchema):
         return MedianStoppingPolicyConfig
 
 
-class MedianStoppingPolicyConfig(BaseConfig):
-    """
-    Early stopping with median stopping, this policy computes running medians across
-    all experiments and stops those whose best performance is worse than the median
-    of the running experiments.
-
-    Args:
-        evaluation_interval: `int`. Frequency for applying the policy.
-    """
-
+class MedianStoppingPolicyConfig(BaseConfig, V1MedianStoppingPolicy):
     IDENTIFIER = "median"
     SCHEMA = MedianStoppingPolicySchema
-
-    def __init__(self, evaluation_interval, kind=IDENTIFIER):
-        self.kind = kind
-        self.evaluation_interval = evaluation_interval
+    IDENTIFIER_KIND = True
 
 
 class AverageStoppingPolicySchema(BaseSchema):
@@ -60,22 +55,10 @@ class AverageStoppingPolicySchema(BaseSchema):
         return AverageStoppingPolicyConfig
 
 
-class AverageStoppingPolicyConfig(BaseConfig):
-    """
-    Early stopping with average stopping, this policy computes running averages across
-    all experiments and stops those whose best performance is worse than the median
-    of the running experiments.
-
-    Args:
-        evaluation_interval: `int`. Frequency for applying the policy.
-    """
-
+class AverageStoppingPolicyConfig(BaseConfig, V1AverageStoppingPolicy):
     IDENTIFIER = "average"
     SCHEMA = AverageStoppingPolicySchema
-
-    def __init__(self, evaluation_interval, kind=IDENTIFIER):
-        self.kind = kind
-        self.evaluation_interval = evaluation_interval
+    IDENTIFIER_KIND = True
 
 
 class TruncationStoppingPolicySchema(BaseSchema):
@@ -88,24 +71,10 @@ class TruncationStoppingPolicySchema(BaseSchema):
         return TruncationStoppingPolicyConfig
 
 
-class TruncationStoppingPolicyConfig(BaseConfig):
-    """
-    Early stopping with truncation stopping, this policy stops a percentage of
-    all running experiments at every evaluation.
-
-    Args:
-        percent: `int`. e.g. 1 - 99. The percentage of experiments to stop,
-                 at each evaluation interval.
-        evaluation_interval: `int`. Frequency for applying the policy.
-    """
-
+class TruncationStoppingPolicyConfig(BaseConfig, V1TruncationStoppingPolicy):
     IDENTIFIER = "truncation"
     SCHEMA = TruncationStoppingPolicySchema
-
-    def __init__(self, percent, evaluation_interval, kind=IDENTIFIER):
-        self.kind = kind
-        self.percent = percent
-        self.evaluation_interval = evaluation_interval
+    IDENTIFIER_KIND = True
 
 
 class StoppingPolicySchema(BaseOneOfSchema):
@@ -132,33 +101,10 @@ class MetricEarlyStoppingSchema(BaseSchema):
         return MetricEarlyStoppingConfig
 
 
-class MetricEarlyStoppingConfig(BaseConfig):
-    """
-    Early stopping based on metric config.
-
-    Args:
-        metric: `str`. The metric to use for early stopping.
-        value: `float`. The metric value to use for the condition.
-        optimization: `string`. The optimization to do: maximize or minimize.
-        policy: `Dict`. Optional, the termination policy to use.
-    """
-
+class MetricEarlyStoppingConfig(BaseConfig, V1MetricEarlyStopping):
     SCHEMA = MetricEarlyStoppingSchema
     IDENTIFIER = "metric_early_stopping"
-
-    def __init__(
-        self,
-        metric,
-        value=None,
-        optimization=Optimization.MAXIMIZE,
-        policy=None,
-        kind=IDENTIFIER,
-    ):
-        self.kind = kind
-        self.metric = metric
-        self.value = value
-        self.optimization = optimization
-        self.policy = policy
+    IDENTIFIER_KIND = True
 
 
 class FailureEarlyStoppingSchema(BaseSchema):
@@ -173,21 +119,7 @@ class FailureEarlyStoppingSchema(BaseSchema):
         return FailureEarlyStoppingConfig
 
 
-class FailureEarlyStoppingConfig(BaseConfig):
-    """
-    Early stopping with failure rate stopping, this policy stops based on a percentage of
-    failed experiments at every evaluation.
-
-    Args:
-        percent: `int`. e.g. 1 - 99. The percentage of experiments to stop,
-                 at each evaluation interval.
-        evaluation_interval: `int`. Frequency for applying the policy.
-    """
-
+class FailureEarlyStoppingConfig(BaseConfig, V1FailureEarlyStopping):
     IDENTIFIER = "failure_early_stopping"
     SCHEMA = FailureEarlyStoppingSchema
-
-    def __init__(self, percent, evaluation_interval=None, kind=IDENTIFIER):
-        self.kind = kind
-        self.percent = percent
-        self.evaluation_interval = evaluation_interval
+    IDENTIFIER_KIND = True

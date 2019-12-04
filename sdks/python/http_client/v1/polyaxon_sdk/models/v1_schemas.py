@@ -47,48 +47,75 @@ class V1Schemas(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        "early_stopping": "V1EarlyStoppingAllSchemas",
-        "mount": "V1Mounts",
-        "parallel": "V1ParallelAllSchemas",
-        "schedule": "V1ScheduleAllSchemas",
-        "termination": "V1Termination",
+        "op_condition": "V1OpCondition",
+        "early_stopping": "V1EarlyStopping",
+        "parallel": "V1Parallel",
+        "op": "V1Op",
+        "run": "V1RunSchema",
+        "schedule": "V1Schedule",
     }
 
     attribute_map = {
+        "op_condition": "op_condition",
         "early_stopping": "early_stopping",
-        "mount": "mount",
         "parallel": "parallel",
+        "op": "op",
+        "run": "run",
         "schedule": "schedule",
-        "termination": "termination",
     }
 
     def __init__(
         self,
+        op_condition=None,
         early_stopping=None,
-        mount=None,
         parallel=None,
+        op=None,
+        run=None,
         schedule=None,
-        termination=None,
     ):  # noqa: E501
         """V1Schemas - a model defined in Swagger"""  # noqa: E501
 
+        self._op_condition = None
         self._early_stopping = None
-        self._mount = None
         self._parallel = None
+        self._op = None
+        self._run = None
         self._schedule = None
-        self._termination = None
         self.discriminator = None
 
+        if op_condition is not None:
+            self.op_condition = op_condition
         if early_stopping is not None:
             self.early_stopping = early_stopping
-        if mount is not None:
-            self.mount = mount
         if parallel is not None:
             self.parallel = parallel
+        if op is not None:
+            self.op = op
+        if run is not None:
+            self.run = run
         if schedule is not None:
             self.schedule = schedule
-        if termination is not None:
-            self.termination = termination
+
+    @property
+    def op_condition(self):
+        """Gets the op_condition of this V1Schemas.  # noqa: E501
+
+
+        :return: The op_condition of this V1Schemas.  # noqa: E501
+        :rtype: V1OpCondition
+        """
+        return self._op_condition
+
+    @op_condition.setter
+    def op_condition(self, op_condition):
+        """Sets the op_condition of this V1Schemas.
+
+
+        :param op_condition: The op_condition of this V1Schemas.  # noqa: E501
+        :type: V1OpCondition
+        """
+
+        self._op_condition = op_condition
 
     @property
     def early_stopping(self):
@@ -96,7 +123,7 @@ class V1Schemas(object):
 
 
         :return: The early_stopping of this V1Schemas.  # noqa: E501
-        :rtype: V1EarlyStoppingAllSchemas
+        :rtype: V1EarlyStopping
         """
         return self._early_stopping
 
@@ -106,31 +133,10 @@ class V1Schemas(object):
 
 
         :param early_stopping: The early_stopping of this V1Schemas.  # noqa: E501
-        :type: V1EarlyStoppingAllSchemas
+        :type: V1EarlyStopping
         """
 
         self._early_stopping = early_stopping
-
-    @property
-    def mount(self):
-        """Gets the mount of this V1Schemas.  # noqa: E501
-
-
-        :return: The mount of this V1Schemas.  # noqa: E501
-        :rtype: V1Mounts
-        """
-        return self._mount
-
-    @mount.setter
-    def mount(self, mount):
-        """Sets the mount of this V1Schemas.
-
-
-        :param mount: The mount of this V1Schemas.  # noqa: E501
-        :type: V1Mounts
-        """
-
-        self._mount = mount
 
     @property
     def parallel(self):
@@ -138,7 +144,7 @@ class V1Schemas(object):
 
 
         :return: The parallel of this V1Schemas.  # noqa: E501
-        :rtype: V1ParallelAllSchemas
+        :rtype: V1Parallel
         """
         return self._parallel
 
@@ -148,10 +154,52 @@ class V1Schemas(object):
 
 
         :param parallel: The parallel of this V1Schemas.  # noqa: E501
-        :type: V1ParallelAllSchemas
+        :type: V1Parallel
         """
 
         self._parallel = parallel
+
+    @property
+    def op(self):
+        """Gets the op of this V1Schemas.  # noqa: E501
+
+
+        :return: The op of this V1Schemas.  # noqa: E501
+        :rtype: V1Op
+        """
+        return self._op
+
+    @op.setter
+    def op(self, op):
+        """Sets the op of this V1Schemas.
+
+
+        :param op: The op of this V1Schemas.  # noqa: E501
+        :type: V1Op
+        """
+
+        self._op = op
+
+    @property
+    def run(self):
+        """Gets the run of this V1Schemas.  # noqa: E501
+
+
+        :return: The run of this V1Schemas.  # noqa: E501
+        :rtype: V1RunSchema
+        """
+        return self._run
+
+    @run.setter
+    def run(self, run):
+        """Sets the run of this V1Schemas.
+
+
+        :param run: The run of this V1Schemas.  # noqa: E501
+        :type: V1RunSchema
+        """
+
+        self._run = run
 
     @property
     def schedule(self):
@@ -159,7 +207,7 @@ class V1Schemas(object):
 
 
         :return: The schedule of this V1Schemas.  # noqa: E501
-        :rtype: V1ScheduleAllSchemas
+        :rtype: V1Schedule
         """
         return self._schedule
 
@@ -169,31 +217,10 @@ class V1Schemas(object):
 
 
         :param schedule: The schedule of this V1Schemas.  # noqa: E501
-        :type: V1ScheduleAllSchemas
+        :type: V1Schedule
         """
 
         self._schedule = schedule
-
-    @property
-    def termination(self):
-        """Gets the termination of this V1Schemas.  # noqa: E501
-
-
-        :return: The termination of this V1Schemas.  # noqa: E501
-        :rtype: V1Termination
-        """
-        return self._termination
-
-    @termination.setter
-    def termination(self, termination):
-        """Sets the termination of this V1Schemas.
-
-
-        :param termination: The termination of this V1Schemas.  # noqa: E501
-        :type: V1Termination
-        """
-
-        self._termination = termination
 
     def to_dict(self):
         """Returns the model properties as a dict"""

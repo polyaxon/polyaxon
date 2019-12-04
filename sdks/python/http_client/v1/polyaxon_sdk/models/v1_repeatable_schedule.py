@@ -46,7 +46,7 @@ class V1RepeatableSchedule(object):
       attribute_map (dict): The key is attribute name
                             and the value is json key in definition.
     """
-    swagger_types = {"kind": "str", "limit": "str", "depends_on_past": "bool"}
+    swagger_types = {"kind": "str", "limit": "int", "depends_on_past": "bool"}
 
     attribute_map = {
         "kind": "kind",
@@ -96,7 +96,7 @@ class V1RepeatableSchedule(object):
 
 
         :return: The limit of this V1RepeatableSchedule.  # noqa: E501
-        :rtype: str
+        :rtype: int
         """
         return self._limit
 
@@ -106,7 +106,7 @@ class V1RepeatableSchedule(object):
 
 
         :param limit: The limit of this V1RepeatableSchedule.  # noqa: E501
-        :type: str
+        :type: int
         """
 
         self._limit = limit

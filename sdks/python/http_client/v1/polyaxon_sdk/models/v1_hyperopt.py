@@ -50,9 +50,9 @@ class V1Hyperopt(object):
         "kind": "str",
         "algorithm": "V1HyperoptAlgorithms",
         "matrix": "str",
-        "n_runs": "str",
-        "seed": "str",
-        "concurrency": "str",
+        "n_runs": "int",
+        "seed": "int",
+        "concurrency": "int",
         "early_stopping": "list[object]",
     }
 
@@ -171,7 +171,7 @@ class V1Hyperopt(object):
 
 
         :return: The n_runs of this V1Hyperopt.  # noqa: E501
-        :rtype: str
+        :rtype: int
         """
         return self._n_runs
 
@@ -181,7 +181,7 @@ class V1Hyperopt(object):
 
 
         :param n_runs: The n_runs of this V1Hyperopt.  # noqa: E501
-        :type: str
+        :type: int
         """
 
         self._n_runs = n_runs
@@ -192,7 +192,7 @@ class V1Hyperopt(object):
 
 
         :return: The seed of this V1Hyperopt.  # noqa: E501
-        :rtype: str
+        :rtype: int
         """
         return self._seed
 
@@ -202,7 +202,7 @@ class V1Hyperopt(object):
 
 
         :param seed: The seed of this V1Hyperopt.  # noqa: E501
-        :type: str
+        :type: int
         """
 
         self._seed = seed
@@ -213,7 +213,7 @@ class V1Hyperopt(object):
 
 
         :return: The concurrency of this V1Hyperopt.  # noqa: E501
-        :rtype: str
+        :rtype: int
         """
         return self._concurrency
 
@@ -223,7 +223,7 @@ class V1Hyperopt(object):
 
 
         :param concurrency: The concurrency of this V1Hyperopt.  # noqa: E501
-        :type: str
+        :type: int
         """
 
         self._concurrency = concurrency

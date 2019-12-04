@@ -8,10 +8,10 @@ Name | Type | Description | Notes
 **matrix** | **String** |  |  [optional]
 **nInitialTrials** | **Integer** |  |  [optional]
 **nIterations** | **Integer** |  |  [optional]
-**utilityFunction** | **List&lt;Object&gt;** |  |  [optional]
+**utilityFunction** | **Object** |  |  [optional]
 **metric** | [**V1OptimizationMetric**](V1OptimizationMetric.md) |  |  [optional]
-**seed** | **String** |  |  [optional]
-**concurrency** | **String** |  |  [optional]
+**seed** | **Integer** |  |  [optional]
+**concurrency** | **Integer** |  |  [optional]
 **earlyStopping** | **List&lt;Object&gt;** |  |  [optional]
 
 

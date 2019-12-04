@@ -42,8 +42,8 @@ class V1ResourceType(object):
     """
     allowed enum values
     """
-    INT = "INT"
-    FLOAT = "FLOAT"
+    INT = "int"
+    FLOAT = "float"
 
     """
     Attributes:

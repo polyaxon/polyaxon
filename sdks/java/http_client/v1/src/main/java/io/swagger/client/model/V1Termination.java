@@ -39,8 +39,9 @@ import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
 
 /**
- * V1Termination
+ * Termination specification Termination defines how to handle failures, job runtime, and cleanup policy.
  */
+@ApiModel(description = "Termination specification Termination defines how to handle failures, job runtime, and cleanup policy.")
 
 public class V1Termination {
   @SerializedName("max_retries")
@@ -50,10 +51,10 @@ public class V1Termination {
   private String restartPolicy = null;
 
   @SerializedName("ttl")
-  private String ttl = null;
+  private Integer ttl = null;
 
   @SerializedName("timeout")
-  private String timeout = null;
+  private Integer timeout = null;
 
   public V1Termination maxRetries(Integer maxRetries) {
     this.maxRetries = maxRetries;
@@ -91,7 +92,7 @@ public class V1Termination {
     this.restartPolicy = restartPolicy;
   }
 
-  public V1Termination ttl(String ttl) {
+  public V1Termination ttl(Integer ttl) {
     this.ttl = ttl;
     return this;
   }
@@ -101,15 +102,15 @@ public class V1Termination {
    * @return ttl
   **/
   @ApiModelProperty(value = "")
-  public String getTtl() {
+  public Integer getTtl() {
     return ttl;
   }
 
-  public void setTtl(String ttl) {
+  public void setTtl(Integer ttl) {
     this.ttl = ttl;
   }
 
-  public V1Termination timeout(String timeout) {
+  public V1Termination timeout(Integer timeout) {
     this.timeout = timeout;
     return this;
   }
@@ -119,11 +120,11 @@ public class V1Termination {
    * @return timeout
   **/
   @ApiModelProperty(value = "")
-  public String getTimeout() {
+  public Integer getTimeout() {
     return timeout;
   }
 
-  public void setTimeout(String timeout) {
+  public void setTimeout(Integer timeout) {
     this.timeout = timeout;
   }
 

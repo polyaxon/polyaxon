@@ -14,7 +14,7 @@ message MedianStoppingPolicy {
     string king = 1;
 
     // Interval/Frequency for applying the policy.
-    int64 evaluation_interval = 2;
+    int32 evaluation_interval = 2;
 }
 
 // Early stopping with average stopping, this policy computes running averages across
@@ -25,7 +25,7 @@ message AverageStoppingPolicy {
     string king = 1;
 
     // Interval/Frequency for applying the policy.
-    int64 evaluation_interval = 2;
+    int32 evaluation_interval = 2;
 }
 
 // Early stopping with truncation stopping, this policy stops a percentage of
@@ -39,7 +39,7 @@ message TruncationStoppingPolicy {
     int32 percent = 2;
 
     // Interval/Frequency for applying the policy.
-    int64 evaluation_interval = 3;
+    int32 evaluation_interval = 3;
 }
 
 // MetricEarlyStoppingSchema specification
@@ -81,10 +81,12 @@ message FailureEarlyStopping {
 
 
 // All Schemas message
-message EarlyStoppingAllSchemas {
-    MedianStoppingPolicy median = 1;
-    AverageStoppingPolicy average = 2;
-    TruncationStoppingPolicy truncation = 3;
-    MetricEarlyStopping metric = 4;
-    FailureEarlyStopping failure = 5;
+message EarlyStopping {
+    oneof early_stopping {
+        MedianStoppingPolicy median = 1;
+        AverageStoppingPolicy average = 2;
+        TruncationStoppingPolicy truncation = 3;
+        MetricEarlyStopping metric = 4;
+        FailureEarlyStopping failure = 5;
+    }
 }

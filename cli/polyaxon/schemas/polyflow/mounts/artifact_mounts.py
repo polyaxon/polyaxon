@@ -18,12 +18,13 @@
 from __future__ import absolute_import, division, print_function
 
 from marshmallow import fields
+from polyaxon_sdk import V1ArtifactMount
 
 from polyaxon.schemas.base import BaseConfig, BaseSchema
 
 
 class ArtifactMountSchema(BaseSchema):
-    name = fields.Str(allow_none=True)
+    name = fields.Str(required=True)
     paths = fields.List(fields.Str(), allow_none=True)
 
     @staticmethod
@@ -31,11 +32,8 @@ class ArtifactMountSchema(BaseSchema):
         return ArtifactMountConfig
 
 
-class ArtifactMountConfig(BaseConfig):
+class ArtifactMountConfig(BaseConfig, V1ArtifactMount):
     IDENTIFIER = "artifact_mount"
     SCHEMA = ArtifactMountSchema
-    REDUCED_ATTRIBUTES = ["name", "paths"]
-
-    def __init__(self, name, paths=None):
-        self.name = name
-        self.paths = paths
+    REDUCED_ATTRIBUTES = ["paths"]
+    IDENTIFIER_KIND = True

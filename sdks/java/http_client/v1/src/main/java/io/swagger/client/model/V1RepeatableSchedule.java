@@ -47,7 +47,7 @@ public class V1RepeatableSchedule {
   private String kind = null;
 
   @SerializedName("limit")
-  private String limit = null;
+  private Integer limit = null;
 
   @SerializedName("depends_on_past")
   private Boolean dependsOnPast = null;
@@ -70,7 +70,7 @@ public class V1RepeatableSchedule {
     this.kind = kind;
   }
 
-  public V1RepeatableSchedule limit(String limit) {
+  public V1RepeatableSchedule limit(Integer limit) {
     this.limit = limit;
     return this;
   }
@@ -80,11 +80,11 @@ public class V1RepeatableSchedule {
    * @return limit
   **/
   @ApiModelProperty(value = "")
-  public String getLimit() {
+  public Integer getLimit() {
     return limit;
   }
 
-  public void setLimit(String limit) {
+  public void setLimit(Integer limit) {
     this.limit = limit;
   }
 

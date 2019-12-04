@@ -52,7 +52,7 @@ public class V1Mapping {
   private String values = null;
 
   @SerializedName("concurrency")
-  private String concurrency = null;
+  private Integer concurrency = null;
 
   @SerializedName("early_stopping")
   private List<Object> earlyStopping = null;
@@ -93,7 +93,7 @@ public class V1Mapping {
     this.values = values;
   }
 
-  public V1Mapping concurrency(String concurrency) {
+  public V1Mapping concurrency(Integer concurrency) {
     this.concurrency = concurrency;
     return this;
   }
@@ -103,11 +103,11 @@ public class V1Mapping {
    * @return concurrency
   **/
   @ApiModelProperty(value = "")
-  public String getConcurrency() {
+  public Integer getConcurrency() {
     return concurrency;
   }
 
-  public void setConcurrency(String concurrency) {
+  public void setConcurrency(Integer concurrency) {
     this.concurrency = concurrency;
   }
 

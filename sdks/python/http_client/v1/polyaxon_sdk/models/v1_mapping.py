@@ -49,7 +49,7 @@ class V1Mapping(object):
     swagger_types = {
         "kind": "str",
         "values": "str",
-        "concurrency": "str",
+        "concurrency": "int",
         "early_stopping": "list[object]",
     }
 
@@ -128,7 +128,7 @@ class V1Mapping(object):
 
 
         :return: The concurrency of this V1Mapping.  # noqa: E501
-        :rtype: str
+        :rtype: int
         """
         return self._concurrency
 
@@ -138,7 +138,7 @@ class V1Mapping(object):
 
 
         :param concurrency: The concurrency of this V1Mapping.  # noqa: E501
-        :type: str
+        :type: int
         """
 
         self._concurrency = concurrency

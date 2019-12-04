@@ -49,8 +49,8 @@ class V1Termination(object):
     swagger_types = {
         "max_retries": "int",
         "restart_policy": "str",
-        "ttl": "str",
-        "timeout": "str",
+        "ttl": "int",
+        "timeout": "int",
     }
 
     attribute_map = {
@@ -128,7 +128,7 @@ class V1Termination(object):
 
 
         :return: The ttl of this V1Termination.  # noqa: E501
-        :rtype: str
+        :rtype: int
         """
         return self._ttl
 
@@ -138,7 +138,7 @@ class V1Termination(object):
 
 
         :param ttl: The ttl of this V1Termination.  # noqa: E501
-        :type: str
+        :type: int
         """
 
         self._ttl = ttl
@@ -149,7 +149,7 @@ class V1Termination(object):
 
 
         :return: The timeout of this V1Termination.  # noqa: E501
-        :rtype: str
+        :rtype: int
         """
         return self._timeout
 
@@ -159,7 +159,7 @@ class V1Termination(object):
 
 
         :param timeout: The timeout of this V1Termination.  # noqa: E501
-        :type: str
+        :type: int
         """
 
         self._timeout = timeout

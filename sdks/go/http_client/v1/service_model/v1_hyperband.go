@@ -31,13 +31,13 @@ import (
 type V1Hyperband struct {
 
 	// Number of concurrent runs
-	Concurrency string `json:"concurrency,omitempty"`
+	Concurrency int32 `json:"concurrency,omitempty"`
 
 	// A list of Early stopping objects, accpets both metric and failure early stopping mechanisms
 	EarlyStopping []interface{} `json:"early_stopping"`
 
 	// Eta
-	Eta string `json:"eta,omitempty"`
+	Eta int32 `json:"eta,omitempty"`
 
 	// Kind of parallel, should be equal to "hyperband"
 	Kind string `json:"kind,omitempty"`
@@ -55,7 +55,7 @@ type V1Hyperband struct {
 	Resume bool `json:"resume,omitempty"`
 
 	// Seed for the random generator
-	Seed string `json:"seed,omitempty"`
+	Seed int32 `json:"seed,omitempty"`
 }
 
 // Validate validates this v1 hyperband

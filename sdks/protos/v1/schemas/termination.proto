@@ -3,6 +3,7 @@ syntax = "proto3";
 package v1;
 
 // Termination specification
+// Termination defines how to handle failures, job runtime, and cleanup policy.
 message Termination {
     // Max retries for a specific run
     int32 max_retries = 1;
@@ -11,8 +12,8 @@ message Termination {
     string restart_policy = 2;
 
     // A TTL definition
-    int64 ttl = 3;
+    int32 ttl = 3;
 
     // A timeout in seconds
-    int64 timeout = 4;
+    int32 timeout = 4;
 }

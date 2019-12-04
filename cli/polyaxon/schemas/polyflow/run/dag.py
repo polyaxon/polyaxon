@@ -20,6 +20,7 @@ from __future__ import absolute_import, division, print_function
 from collections import Mapping
 
 from marshmallow import fields, validate
+from polyaxon_sdk import V1Dag
 
 from polyaxon.exceptions import PolyaxonSchemaError
 from polyaxon.schemas.base import BaseConfig, BaseSchema
@@ -40,10 +41,11 @@ class DagSchema(BaseSchema):
         return DagConfig
 
 
-class DagConfig(BaseConfig):
+class DagConfig(BaseConfig, V1Dag):
     SCHEMA = DagSchema
     IDENTIFIER = "dag"
     REDUCED_ATTRIBUTES = ["ops", "components", "concurrency", "early_stopping"]
+    IDENTIFIER_KIND = True
 
     def __init__(
         self,
@@ -51,13 +53,15 @@ class DagConfig(BaseConfig):
         components=None,
         concurrency=None,
         early_stopping=None,
-        kind=IDENTIFIER,
+        kind=None,
     ):
-        self.kind = kind
-        self.ops = ops
-        self.components = components
-        self.concurrency = concurrency
-        self.early_stopping = early_stopping
+        super(DagConfig, self).__init__(
+            kind=kind,
+            ops=ops,
+            components=components,
+            concurrency=concurrency,
+            early_stopping=early_stopping,
+        )
         self._dag = {}  # OpName -> DagOpSpec
         self._components_by_names = {}  # ComponentName -> Component
         self._op_component_mapping = {}  # OpName -> ComponentName

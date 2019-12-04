@@ -20,7 +20,7 @@ PYTHON := $(DOCKER_RUN) python
 GO := $(DOCKER_RUN) go
 SWAGGER := $(DOCKER_RUN) swagger
 DOCKER_PATH_AUTOGEN := /usr/local/bin/autogen/autogen
-PATH_SWAGGER_CLI := ~/bin/swagger-codegen-cli-2.4.9.jar
+PATH_SWAGGER_CLI := ~/bin/swagger-codegen-cli-2.4.10.jar
 LICENSE_OWNER := "Polyaxon, Inc."
 
 # Client

@@ -21,11 +21,11 @@ from marshmallow import fields, validate
 
 from polyaxon.schemas.base import NAME_REGEX, BaseConfig, BaseSchema
 from polyaxon.schemas.fields.ref_or_obj import RefOrObject
-from polyaxon.schemas.polyflow.environments import EnvironmentSchema
+from polyaxon.schemas.polyflow.environment import EnvironmentSchema
 from polyaxon.schemas.polyflow.init import InitSchema
 from polyaxon.schemas.polyflow.mounts import MountsSchema
 from polyaxon.schemas.polyflow.parallel import ParallelMixin, ParallelSchema
-from polyaxon.schemas.polyflow.schedules import ScheduleSchema
+from polyaxon.schemas.polyflow.schedule import ScheduleSchema
 from polyaxon.schemas.polyflow.service import ServiceSchema
 from polyaxon.schemas.polyflow.termination import TerminationSchema
 
@@ -36,8 +36,8 @@ class BaseComponentSchema(BaseSchema):
     name = fields.Str(validate=validate.Regexp(regex=NAME_REGEX), allow_none=True)
     description = fields.Str(allow_none=True)
     tags = fields.List(fields.Str(), allow_none=True)
-    profile = fields.Str(allow_none=True)
-    queue = fields.Str(allow_none=True)
+    profile = RefOrObject(fields.Str(allow_none=True))
+    queue = RefOrObject(fields.Str(allow_none=True))
     nocache = RefOrObject(fields.Boolean(allow_none=True))
     environment = fields.Nested(EnvironmentSchema, allow_none=True)
     termination = fields.Nested(TerminationSchema, allow_none=True)
@@ -71,40 +71,6 @@ class BaseComponentConfig(BaseConfig, ParallelMixin):
         "parallel",
         "service",
     ]
-
-    def __init__(
-        self,
-        version=None,
-        kind=None,
-        name=None,
-        description=None,
-        tags=None,
-        profile=None,
-        queue=None,
-        nocache=None,
-        environment=None,
-        termination=None,
-        init=None,
-        mounts=None,
-        schedule=None,
-        parallel=None,
-        service=None,
-    ):
-        self.version = version
-        self.kind = kind
-        self.name = name
-        self.description = description
-        self.tags = tags
-        self.profile = profile
-        self.queue = queue
-        self.nocache = nocache
-        self.environment = environment
-        self.termination = termination
-        self.init = init
-        self.mounts = mounts
-        self.schedule = schedule
-        self.parallel = parallel
-        self.service = service
 
     def get_parallel_kind(self):
         return self.parallel.kind if self.parallel else None

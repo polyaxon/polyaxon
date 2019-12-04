@@ -50,7 +50,7 @@ class V1IntervalSchedule(object):
         "kind": "str",
         "start_at": "datetime",
         "end_at": "datetime",
-        "frequency": "str",
+        "frequency": "int",
         "depends_on_past": "bool",
     }
 
@@ -159,7 +159,7 @@ class V1IntervalSchedule(object):
 
 
         :return: The frequency of this V1IntervalSchedule.  # noqa: E501
-        :rtype: str
+        :rtype: int
         """
         return self._frequency
 
@@ -169,7 +169,7 @@ class V1IntervalSchedule(object):
 
 
         :param frequency: The frequency of this V1IntervalSchedule.  # noqa: E501
-        :type: str
+        :type: int
         """
 
         self._frequency = frequency

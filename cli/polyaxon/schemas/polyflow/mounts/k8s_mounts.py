@@ -18,6 +18,7 @@
 from __future__ import absolute_import, division, print_function
 
 from marshmallow import fields
+from polyaxon_sdk import V1K8sMount
 
 from polyaxon.schemas.base import BaseConfig, BaseSchema
 from polyaxon.schemas.fields.ref_or_obj import RefOrObject
@@ -33,12 +34,8 @@ class K8sMountSchema(BaseSchema):
         return K8sMountConfig
 
 
-class K8sMountConfig(BaseConfig):
+class K8sMountConfig(BaseConfig, V1K8sMount):
     IDENTIFIER = "k8s_mount"
     SCHEMA = K8sMountSchema
-    REDUCED_ATTRIBUTES = ["name", "mount_path", "items"]
-
-    def __init__(self, name=None, mount_path=None, items=None):
-        self.name = name
-        self.mount_path = mount_path
-        self.items = items
+    REDUCED_ATTRIBUTES = ["mount_path", "items"]
+    IDENTIFIER_KIND = True

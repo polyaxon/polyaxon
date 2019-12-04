@@ -18,6 +18,7 @@
 from __future__ import absolute_import, division, print_function
 
 from marshmallow import fields, validate
+from polyaxon_sdk import V1RandomSearch
 
 from polyaxon.schemas.base import BaseConfig, BaseSchema
 from polyaxon.schemas.fields.ref_or_obj import RefOrObject
@@ -42,23 +43,8 @@ class RandomSearchSchema(BaseSchema):
         return RandomSearchConfig
 
 
-class RandomSearchConfig(BaseConfig):
+class RandomSearchConfig(BaseConfig, V1RandomSearch):
     SCHEMA = RandomSearchSchema
     IDENTIFIER = "random_search"
     REDUCED_ATTRIBUTES = ["n_runs", "seed", "concurrency", "early_stopping"]
-
-    def __init__(
-        self,
-        matrix=None,
-        n_runs=None,
-        seed=None,
-        concurrency=None,
-        early_stopping=None,
-        kind=IDENTIFIER,
-    ):
-        self.matrix = matrix
-        self.kind = kind
-        self.n_runs = n_runs
-        self.seed = seed
-        self.concurrency = concurrency
-        self.early_stopping = early_stopping
+    IDENTIFIER_KIND = True

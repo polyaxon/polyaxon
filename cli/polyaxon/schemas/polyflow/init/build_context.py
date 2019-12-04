@@ -18,6 +18,7 @@
 from __future__ import absolute_import, division, print_function
 
 from marshmallow import fields, validate, validates_schema
+from polyaxon_sdk import V1BuildContext
 
 from polyaxon.schemas.base import BaseConfig, BaseSchema
 from polyaxon.schemas.fields.docker_image import validate_image
@@ -42,7 +43,7 @@ class BuildContextSchema(BaseSchema):
     lang_env = RefOrObject(fields.Str(allow_none=True))
     uid = RefOrObject(fields.Int(allow_none=True))
     gid = RefOrObject(fields.Int(allow_none=True))
-    name = RefOrObject(fields.Str(allow_none=True))
+    filename = RefOrObject(fields.Str(allow_none=True))
     workdir = RefOrObject(fields.Str(allow_none=True))
     workdir_path = RefOrObject(fields.Str(allow_none=True))
     shell = RefOrObject(fields.Str(allow_none=True))
@@ -56,7 +57,7 @@ class BuildContextSchema(BaseSchema):
         validate_image(data.get("image"))
 
 
-class BuildContextConfig(BaseConfig):
+class BuildContextConfig(BaseConfig, V1BuildContext):
     IDENTIFIER = "build_context"
     SCHEMA = BuildContextSchema
     REDUCED_ATTRIBUTES = [
@@ -68,40 +69,23 @@ class BuildContextConfig(BaseConfig):
         "lang_env",
         "uid",
         "gid",
-        "name",
+        "filename",
         "workdir",
         "workdir_path",
         "shell",
     ]
 
-    def __init__(
-        self,
-        image=None,
-        env=None,
-        path=None,
-        copy=None,
-        run=None,
-        lang_env=None,
-        uid=None,
-        gid=None,
-        name=POLYAXON_DOCKERFILE_NAME,
-        workdir=POLYAXON_DOCKER_WORKDIR,
-        workdir_path=None,
-        shell=POLYAXON_DOCKER_SHELL,
-    ):
-        validate_image(image)
-        self.image = image
-        self.env = env
-        self.path = path
-        self.run = run
-        self.copy = copy
-        self.lang_env = lang_env
-        self.uid = uid
-        self.gid = gid
-        self.name = name
-        self.workdir = workdir
-        self.workdir_path = workdir_path
-        self.shell = shell
+    @property
+    def filename(self):
+        return self._filename or POLYAXON_DOCKERFILE_NAME
+
+    @property
+    def workdir(self):
+        return self._workdir or POLYAXON_DOCKER_WORKDIR
+
+    @property
+    def shell(self):
+        return self._shell or POLYAXON_DOCKER_SHELL
 
     @property
     def image_tag(self):

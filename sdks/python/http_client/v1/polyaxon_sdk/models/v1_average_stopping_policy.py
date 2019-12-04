@@ -46,7 +46,7 @@ class V1AverageStoppingPolicy(object):
       attribute_map (dict): The key is attribute name
                             and the value is json key in definition.
     """
-    swagger_types = {"king": "str", "evaluation_interval": "str"}
+    swagger_types = {"king": "str", "evaluation_interval": "int"}
 
     attribute_map = {"king": "king", "evaluation_interval": "evaluation_interval"}
 
@@ -90,7 +90,7 @@ class V1AverageStoppingPolicy(object):
         Interval/Frequency for applying the policy.  # noqa: E501
 
         :return: The evaluation_interval of this V1AverageStoppingPolicy.  # noqa: E501
-        :rtype: str
+        :rtype: int
         """
         return self._evaluation_interval
 
@@ -101,7 +101,7 @@ class V1AverageStoppingPolicy(object):
         Interval/Frequency for applying the policy.  # noqa: E501
 
         :param evaluation_interval: The evaluation_interval of this V1AverageStoppingPolicy.  # noqa: E501
-        :type: str
+        :type: int
         """
 
         self._evaluation_interval = evaluation_interval

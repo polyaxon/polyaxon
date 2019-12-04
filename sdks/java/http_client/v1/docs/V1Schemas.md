@@ -4,11 +4,12 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**earlyStopping** | [**V1EarlyStoppingAllSchemas**](V1EarlyStoppingAllSchemas.md) |  |  [optional]
-**mount** | [**V1Mounts**](V1Mounts.md) |  |  [optional]
-**parallel** | [**V1ParallelAllSchemas**](V1ParallelAllSchemas.md) |  |  [optional]
-**schedule** | [**V1ScheduleAllSchemas**](V1ScheduleAllSchemas.md) |  |  [optional]
-**termination** | [**V1Termination**](V1Termination.md) |  |  [optional]
+**opCondition** | [**V1OpCondition**](V1OpCondition.md) |  |  [optional]
+**earlyStopping** | [**V1EarlyStopping**](V1EarlyStopping.md) |  |  [optional]
+**parallel** | [**V1Parallel**](V1Parallel.md) |  |  [optional]
+**op** | [**V1Op**](V1Op.md) |  |  [optional]
+**run** | [**V1RunSchema**](V1RunSchema.md) |  |  [optional]
+**schedule** | [**V1Schedule**](V1Schedule.md) |  |  [optional]
 
 
 

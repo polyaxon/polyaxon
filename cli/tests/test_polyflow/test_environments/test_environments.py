@@ -23,7 +23,7 @@ import pytest
 
 from tests.utils import assert_equal_dict
 
-from polyaxon.schemas.polyflow.environments import EnvironmentConfig
+from polyaxon.schemas.polyflow.environment import EnvironmentConfig
 
 
 @pytest.mark.environment_mark

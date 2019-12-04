@@ -6,7 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **kind** | **String** |  |  [optional]
 **values** | **String** |  |  [optional]
-**concurrency** | **String** |  |  [optional]
+**concurrency** | **Integer** |  |  [optional]
 **earlyStopping** | **List&lt;Object&gt;** |  |  [optional]
 
 

@@ -45,7 +45,7 @@ message IntervalSchedule {
     google.protobuf.Timestamp end_at = 3;
 
     // Frequency at which to execute the runs
-    int64 frequency = 4;
+    int32 frequency = 4;
 
     // A flag to set a dependency on past executions
     bool depends_on_past = 5;
@@ -58,16 +58,18 @@ message RepeatableSchedule {
     string kind = 1;
 
     // Limit to stop executing this schedule
-    int64 limit = 2;
+    int32 limit = 2;
 
     // A flag to set a dependency on past executions
     bool depends_on_past = 3;
 }
 
 // All Schemas message
-message ScheduleAllSchemas {
-    CronSchedule cron = 1;
-    ExactTimeSchedule exact_time = 2;
-    IntervalSchedule interval = 3;
-    RepeatableSchedule repeatable = 4;
+message Schedule {
+    oneof schedule {
+        CronSchedule cron = 1;
+        ExactTimeSchedule exact_time = 2;
+        IntervalSchedule interval = 3;
+        RepeatableSchedule repeatable = 4;
+    }
 }

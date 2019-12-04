@@ -3,8 +3,8 @@
 ## Enum
 
 
-* `INT` (value: `"INT"`)
+* `_int` (value: `"int"`)
 
-* `FLOAT` (value: `"FLOAT"`)
+* `_float` (value: `"float"`)
 
 

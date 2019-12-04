@@ -28,7 +28,7 @@ from marshmallow import ValidationError
 from tests.utils import assert_equal_dict
 
 from polyaxon.exceptions import PolyaxonfileError, PolyaxonSchemaError
-from polyaxon.schemas.polyflow.environments import EnvironmentConfig
+from polyaxon.schemas.polyflow.environment import EnvironmentConfig
 from polyaxon.schemas.polyflow.io import IOTypes
 from polyaxon.schemas.utils import TaskType
 from polyaxon.specs import ComponentSpecification, OpSpecification, get_specification

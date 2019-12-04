@@ -15,15 +15,16 @@
 # limitations under the License.
 
 # coding: utf-8
+from polyaxon_sdk import V1TriggerPolicy
 
 
-class TriggerPolicy(object):
-    ALL_SUCCEEDED = "all_succeeded"
-    ALL_FAILED = "all_failed"
-    ALL_DONE = "all_done"
-    ONE_SUCCEEDED = "one_succeeded"
-    ONE_FAILED = "one_failed"
-    ONE_DONE = "one_done"
+class TriggerPolicy(V1TriggerPolicy):
+    ALL_SUCCEEDED = V1TriggerPolicy.ALL_SUCCEEDED
+    ALL_FAILED = V1TriggerPolicy.ALL_FAILED
+    ALL_DONE = V1TriggerPolicy.ALL_DONE
+    ONE_SUCCEEDED = V1TriggerPolicy.ONE_SUCCEEDED
+    ONE_FAILED = V1TriggerPolicy.ONE_FAILED
+    ONE_DONE = V1TriggerPolicy.ONE_DONE
 
     VALUES = {ALL_SUCCEEDED, ALL_FAILED, ALL_DONE, ONE_SUCCEEDED, ONE_FAILED, ONE_DONE}
     CHOICES = (
@@ -34,15 +35,6 @@ class TriggerPolicy(object):
         (ONE_FAILED, ONE_FAILED),
         (ONE_DONE, ONE_DONE),
     )
-
-
-class StatusTriggerPolicy(object):
-    SUCCEEDED = "succeeded"
-    FAILED = "failed"
-    DONE = "done"
-
-    VALUES = {SUCCEEDED, FAILED, DONE}
-    CHOICES = ((SUCCEEDED, SUCCEEDED), (FAILED, FAILED), (DONE, DONE))
 
 
 class ExpressionTriggerPolicy(object):

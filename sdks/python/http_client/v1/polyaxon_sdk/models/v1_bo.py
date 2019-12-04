@@ -51,10 +51,10 @@ class V1BO(object):
         "matrix": "str",
         "n_initial_trials": "int",
         "n_iterations": "int",
-        "utility_function": "list[object]",
+        "utility_function": "object",
         "metric": "V1OptimizationMetric",
-        "seed": "str",
-        "concurrency": "str",
+        "seed": "int",
+        "concurrency": "int",
         "early_stopping": "list[object]",
     }
 
@@ -204,7 +204,7 @@ class V1BO(object):
 
 
         :return: The utility_function of this V1BO.  # noqa: E501
-        :rtype: list[object]
+        :rtype: object
         """
         return self._utility_function
 
@@ -214,7 +214,7 @@ class V1BO(object):
 
 
         :param utility_function: The utility_function of this V1BO.  # noqa: E501
-        :type: list[object]
+        :type: object
         """
 
         self._utility_function = utility_function
@@ -246,7 +246,7 @@ class V1BO(object):
 
 
         :return: The seed of this V1BO.  # noqa: E501
-        :rtype: str
+        :rtype: int
         """
         return self._seed
 
@@ -256,7 +256,7 @@ class V1BO(object):
 
 
         :param seed: The seed of this V1BO.  # noqa: E501
-        :type: str
+        :type: int
         """
 
         self._seed = seed
@@ -267,7 +267,7 @@ class V1BO(object):
 
 
         :return: The concurrency of this V1BO.  # noqa: E501
-        :rtype: str
+        :rtype: int
         """
         return self._concurrency
 
@@ -277,7 +277,7 @@ class V1BO(object):
 
 
         :param concurrency: The concurrency of this V1BO.  # noqa: E501
-        :type: str
+        :type: int
         """
 
         self._concurrency = concurrency

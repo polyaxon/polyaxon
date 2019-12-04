@@ -20,6 +20,7 @@ from __future__ import absolute_import, division, print_function
 import six
 
 from marshmallow import ValidationError, fields, validates_schema
+from polyaxon_sdk import V1ComponentRef
 
 from polyaxon.schemas.base import BaseConfig, BaseSchema
 
@@ -51,14 +52,12 @@ class ComponentRefSchema(BaseSchema):
         )
 
 
-class ComponentRefConfig(BaseConfig):
+class ComponentRefConfig(BaseConfig, V1ComponentRef):
     SCHEMA = ComponentRefSchema
     IDENTIFIER = "component_ref"
     REDUCED_ATTRIBUTES = ["name", "url", "path", "hub"]
 
-    def __init__(self, name=None, url=None, path=None, hub=None):
-        validate_component_ref(name=name, url=url, path=path, hub=hub)
-        self.name = name
-        self.url = url
-        self.path = path
-        self.hub = hub
+    def validate(self):
+        validate_component_ref(
+            name=self.name, url=self.url, path=self.path, hub=self.hub
+        )

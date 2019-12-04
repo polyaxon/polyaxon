@@ -20,11 +20,13 @@ from __future__ import absolute_import, division, print_function
 from hestia.list_utils import to_list
 from hestia.string_utils import strip_spaces
 from marshmallow import fields, validates_schema
+from polyaxon_sdk import V1Container, V1Replica
 
 from polyaxon.schemas.base import BaseConfig, BaseSchema
 from polyaxon.schemas.fields import ObjectOrListObject
 from polyaxon.schemas.fields.docker_image import validate_image
-from polyaxon.schemas.polyflow.environments import EnvironmentSchema
+from polyaxon.schemas.polyflow.environment import EnvironmentSchema
+from polyaxon.schemas.polyflow.init import InitSchema
 from polyaxon.schemas.polyflow.mounts import MountsSchema
 from polyaxon.schemas.polyflow.termination import TerminationSchema
 
@@ -63,16 +65,10 @@ class ReplicaContainerSchema(BaseSchema):
         validate_image(values.get("image"))
 
 
-class ReplicaContainerConfig(BaseConfig):
+class ReplicaContainerConfig(BaseConfig, V1Container):
     SCHEMA = ReplicaContainerSchema
     IDENTIFIER = "container"
     REDUCED_ATTRIBUTES = ["image_pull_policy", "command", "args"]
-
-    def __init__(self, image=None, image_pull_policy=None, command=None, args=None):
-        self.image = image
-        self.image_pull_policy = image_pull_policy
-        self.command = command
-        self.args = args
 
     def get_container_command_args(self):
         return get_container_command_args(self)
@@ -82,6 +78,7 @@ class ReplicaSchema(BaseSchema):
     replicas = fields.Int(allow_none=True)
     environment = fields.Nested(EnvironmentSchema, allow_none=True)
     termination = fields.Nested(TerminationSchema, allow_none=True)
+    init = fields.Nested(InitSchema, allow_none=True)
     mounts = fields.Nested(MountsSchema, allow_none=True)
     container = fields.Nested(ReplicaContainerSchema, allow_none=True)
 
@@ -90,7 +87,7 @@ class ReplicaSchema(BaseSchema):
         return ReplicaConfig
 
 
-class ReplicaConfig(BaseConfig):
+class ReplicaConfig(BaseConfig, V1Replica):
     SCHEMA = ReplicaSchema
     IDENTIFIER = "replication"
     REDUCED_ATTRIBUTES = [
@@ -100,17 +97,3 @@ class ReplicaConfig(BaseConfig):
         "mounts",
         "container",
     ]
-
-    def __init__(
-        self,
-        replicas=None,
-        environment=None,
-        termination=None,
-        mounts=None,
-        container=None,
-    ):
-        self.replicas = replicas
-        self.environment = environment
-        self.termination = termination
-        self.mounts = mounts
-        self.container = container

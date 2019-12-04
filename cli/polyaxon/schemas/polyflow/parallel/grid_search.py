@@ -20,6 +20,7 @@ from __future__ import absolute_import, division, print_function
 import six
 
 from marshmallow import ValidationError, fields, validate, validates_schema
+from polyaxon_sdk import V1GridSearch
 
 from polyaxon.schemas.base import BaseConfig, BaseSchema
 from polyaxon.schemas.fields.ref_or_obj import RefOrObject
@@ -60,21 +61,8 @@ class GridSearchSchema(BaseSchema):
         validate_matrix(data.get("matrix"))
 
 
-class GridSearchConfig(BaseConfig):
+class GridSearchConfig(BaseConfig, V1GridSearch):
     SCHEMA = GridSearchSchema
     IDENTIFIER = "grid_search"
     REDUCED_ATTRIBUTES = ["n_runs", "concurrency", "early_stopping"]
-
-    def __init__(
-        self,
-        matrix=None,
-        concurrency=None,
-        n_runs=None,
-        early_stopping=None,
-        kind=IDENTIFIER,
-    ):
-        self.matrix = validate_matrix(matrix)
-        self.kind = kind
-        self.n_runs = n_runs
-        self.concurrency = concurrency
-        self.early_stopping = early_stopping
+    IDENTIFIER_KIND = True

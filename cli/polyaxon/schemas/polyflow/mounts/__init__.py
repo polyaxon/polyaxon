@@ -22,6 +22,7 @@ from marshmallow import fields
 from polyaxon.schemas.base import BaseConfig, BaseSchema
 from polyaxon.schemas.polyflow.mounts.artifact_mounts import ArtifactMountSchema
 from polyaxon.schemas.polyflow.mounts.k8s_mounts import K8sMountSchema
+from polyaxon_sdk import V1Mounts
 
 
 class MountsSchema(BaseSchema):
@@ -34,16 +35,8 @@ class MountsSchema(BaseSchema):
         return MountsConfig
 
 
-class MountsConfig(BaseConfig):
-    """
-    Mounts config.
-    """
-
+class MountsConfig(BaseConfig, V1Mounts):
     IDENTIFIER = "mounts"
     SCHEMA = MountsSchema
     REDUCED_ATTRIBUTES = ["secrets", "config_maps", "artifacts"]
-
-    def __init__(self, secrets=None, config_maps=None, artifacts=None):
-        self.secrets = secrets
-        self.config_maps = config_maps
-        self.artifacts = artifacts
+    IDENTIFIER_KIND = True

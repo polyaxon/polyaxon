@@ -7,10 +7,10 @@ Name | Type | Description | Notes
 **matrix** | **str** |  | [optional] 
 **n_initial_trials** | **int** |  | [optional] 
 **n_iterations** | **int** |  | [optional] 
-**utility_function** | **list[object]** |  | [optional] 
+**utility_function** | **object** |  | [optional] 
 **metric** | [**V1OptimizationMetric**](V1OptimizationMetric.md) |  | [optional] 
-**seed** | **str** |  | [optional] 
-**concurrency** | **str** |  | [optional] 
+**seed** | **int** |  | [optional] 
+**concurrency** | **int** |  | [optional] 
 **early_stopping** | **list[object]** |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

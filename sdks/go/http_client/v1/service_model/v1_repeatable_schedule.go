@@ -36,7 +36,7 @@ type V1RepeatableSchedule struct {
 	Kind string `json:"kind,omitempty"`
 
 	// Limit to stop executing this schedule
-	Limit string `json:"limit,omitempty"`
+	Limit int32 `json:"limit,omitempty"`
 }
 
 // Validate validates this v1 repeatable schedule

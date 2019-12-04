@@ -34,7 +34,7 @@ type V1Hyperopt struct {
 	Algorithm V1HyperoptAlgorithms `json:"algorithm,omitempty"`
 
 	// Number of concurrent runs
-	Concurrency string `json:"concurrency,omitempty"`
+	Concurrency int32 `json:"concurrency,omitempty"`
 
 	// A list of Early stopping objects, accpets both metric and failure early stopping mechanisms
 	EarlyStopping []interface{} `json:"early_stopping"`
@@ -46,10 +46,10 @@ type V1Hyperopt struct {
 	Matrix string `json:"matrix,omitempty"`
 
 	// Number of runs to generate and search
-	NRuns string `json:"n_runs,omitempty"`
+	NRuns int32 `json:"n_runs,omitempty"`
 
 	// Seed for the random generator
-	Seed string `json:"seed,omitempty"`
+	Seed int32 `json:"seed,omitempty"`
 }
 
 // Validate validates this v1 hyperopt

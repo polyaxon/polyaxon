@@ -24,7 +24,7 @@ import pytest
 from hestia.tz_utils import local_now
 from marshmallow import ValidationError
 
-from polyaxon.schemas.polyflow.schedules import (
+from polyaxon.schemas.polyflow.schedule import (
     CronScheduleConfig,
     ExactTimeScheduleConfig,
     IntervalScheduleConfig,

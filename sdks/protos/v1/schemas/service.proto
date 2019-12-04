@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+package v1;
+
+// Service specification
+message Service {
+    bool enabled = 1;
+    repeated int32 ports = 2;
+}

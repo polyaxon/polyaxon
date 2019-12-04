@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+package v1;
+
+
+// Status condition specification
+message OpStatusCondition {
+    // Kind of runtime, should be equal to "status"
+    string kind = 1;
+
+    // Op to set the condition on
+    string op = 2;
+
+    // Trigger to check, must a valid status or union of statuses, e.g. succeeded  or succeeded | failed
+    string trigger = 3;
+}
+
+
+// Input condition specification
+message OpIOCondition {
+    // Kind of runtime, should be equal to "input" or "output"
+    string kind = 1;
+
+    // Op to set the condition on
+    string op = 2;
+
+    // Input name to check check the condition on
+    string name = 3;
+
+    // Trigger to check, trigger condition must conform to the iotype
+    string trigger = 4;
+}
+
+
+message OpCondition {
+    oneof op_condition {
+        OpIOCondition op_io_conidtion = 1;
+        OpStatusCondition op_status_condition = 2;
+    }
+}

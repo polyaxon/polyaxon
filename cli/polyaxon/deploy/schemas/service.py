@@ -21,7 +21,7 @@ from marshmallow import EXCLUDE, fields
 
 from polyaxon.deploy.schemas.celery import CelerySchema
 from polyaxon.schemas.base import BaseConfig, BaseSchema
-from polyaxon.schemas.polyflow.environments import ContainerResourcesSchema
+from polyaxon.schemas.polyflow.environment import ResourceRequirementsSchema
 
 
 class ServiceSchema(BaseSchema):
@@ -31,7 +31,7 @@ class ServiceSchema(BaseSchema):
     imagePullPolicy = fields.Str(allow_none=True)
     replicas = fields.Int(allow_none=True)
     concurrency = fields.Int(allow_none=True)
-    resources = fields.Nested(ContainerResourcesSchema, allow_none=True)
+    resources = fields.Nested(ResourceRequirementsSchema, allow_none=True)
 
     class Meta:
         unknown = EXCLUDE

@@ -49,9 +49,9 @@ class V1RandomSearch(object):
     swagger_types = {
         "kind": "str",
         "matrix": "str",
-        "n_runs": "str",
-        "seed": "str",
-        "concurrency": "str",
+        "n_runs": "int",
+        "seed": "int",
+        "concurrency": "int",
         "early_stopping": "list[object]",
     }
 
@@ -144,7 +144,7 @@ class V1RandomSearch(object):
 
 
         :return: The n_runs of this V1RandomSearch.  # noqa: E501
-        :rtype: str
+        :rtype: int
         """
         return self._n_runs
 
@@ -154,7 +154,7 @@ class V1RandomSearch(object):
 
 
         :param n_runs: The n_runs of this V1RandomSearch.  # noqa: E501
-        :type: str
+        :type: int
         """
 
         self._n_runs = n_runs
@@ -165,7 +165,7 @@ class V1RandomSearch(object):
 
 
         :return: The seed of this V1RandomSearch.  # noqa: E501
-        :rtype: str
+        :rtype: int
         """
         return self._seed
 
@@ -175,7 +175,7 @@ class V1RandomSearch(object):
 
 
         :param seed: The seed of this V1RandomSearch.  # noqa: E501
-        :type: str
+        :type: int
         """
 
         self._seed = seed
@@ -186,7 +186,7 @@ class V1RandomSearch(object):
 
 
         :return: The concurrency of this V1RandomSearch.  # noqa: E501
-        :rtype: str
+        :rtype: int
         """
         return self._concurrency
 
@@ -196,7 +196,7 @@ class V1RandomSearch(object):
 
 
         :param concurrency: The concurrency of this V1RandomSearch.  # noqa: E501
-        :type: str
+        :type: int
         """
 
         self._concurrency = concurrency

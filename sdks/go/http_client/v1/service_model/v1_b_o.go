@@ -31,7 +31,7 @@ import (
 type V1BO struct {
 
 	// Number of concurrent runs
-	Concurrency string `json:"concurrency,omitempty"`
+	Concurrency int32 `json:"concurrency,omitempty"`
 
 	// A list of Early stopping objects, accpets both metric and failure early stopping mechanisms
 	EarlyStopping []interface{} `json:"early_stopping"`
@@ -52,10 +52,10 @@ type V1BO struct {
 	NIterations int32 `json:"n_iterations,omitempty"`
 
 	// Seed for the random generator
-	Seed string `json:"seed,omitempty"`
+	Seed int32 `json:"seed,omitempty"`
 
 	// A utility function to use for the bayesian optimization
-	UtilityFunction []interface{} `json:"utility_function"`
+	UtilityFunction interface{} `json:"utility_function,omitempty"`
 }
 
 // Validate validates this v1 b o

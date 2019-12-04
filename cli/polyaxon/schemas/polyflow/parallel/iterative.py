@@ -18,6 +18,7 @@
 from __future__ import absolute_import, division, print_function
 
 from marshmallow import fields, validate
+from polyaxon_sdk import V1Iterative
 
 from polyaxon.schemas.base import BaseConfig, BaseSchema
 from polyaxon.schemas.fields.ref_or_obj import RefOrObject
@@ -44,11 +45,7 @@ class IterativeSchema(BaseSchema):
         return IterativeConfig
 
 
-class IterativeConfig(BaseConfig):
-    """
-    Iterative config.
-    """
-
+class IterativeConfig(BaseConfig, V1Iterative):
     IDENTIFIER = "iterative"
     SCHEMA = IterativeSchema
     REDUCED_ATTRIBUTES = [
@@ -58,21 +55,4 @@ class IterativeConfig(BaseConfig):
         "early_stopping",
         "concurrency",
     ]
-
-    def __init__(
-        self,
-        n_iterations=None,
-        matrix=None,
-        seed=None,
-        container=None,
-        early_stopping=None,
-        concurrency=None,
-        kind=IDENTIFIER,
-    ):
-        self.kind = kind
-        self.n_iterations = n_iterations
-        self.matrix = matrix
-        self.seed = seed
-        self.concurrency = concurrency
-        self.container = container
-        self.early_stopping = early_stopping
+    IDENTIFIER_KIND = True

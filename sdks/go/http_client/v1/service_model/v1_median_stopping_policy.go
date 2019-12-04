@@ -32,7 +32,7 @@ import (
 type V1MedianStoppingPolicy struct {
 
 	// Interval/Frequency for applying the policy.
-	EvaluationInterval string `json:"evaluation_interval,omitempty"`
+	EvaluationInterval int32 `json:"evaluation_interval,omitempty"`
 
 	// Kind of this stopping policy, should be equal to "median"
 	King string `json:"king,omitempty"`

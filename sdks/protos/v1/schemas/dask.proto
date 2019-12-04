@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package v1;
+
+import "google/protobuf/struct.proto";
+
+// Dask specification
+message Dask {
+    // Kind of runtime, should be equal to "dask"
+    string kind = 1;
+
+    // Dask specification
+    google.protobuf.Struct spec = 2;
+}

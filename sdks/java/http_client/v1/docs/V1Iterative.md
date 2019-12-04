@@ -8,8 +8,8 @@ Name | Type | Description | Notes
 **matrix** | **String** |  |  [optional]
 **nIterations** | **Integer** |  |  [optional]
 **container** | [**V1Container**](V1Container.md) |  |  [optional]
-**seed** | **String** |  |  [optional]
-**concurrency** | **String** |  |  [optional]
+**seed** | **Integer** |  |  [optional]
+**concurrency** | **Integer** |  |  [optional]
 **earlyStopping** | **List&lt;Object&gt;** |  |  [optional]
 
 

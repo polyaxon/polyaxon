@@ -31,19 +31,22 @@ import (
 type V1Schemas struct {
 
 	// early stopping
-	EarlyStopping *V1EarlyStoppingAllSchemas `json:"early_stopping,omitempty"`
+	EarlyStopping *V1EarlyStopping `json:"early_stopping,omitempty"`
 
-	// mount
-	Mount *V1Mounts `json:"mount,omitempty"`
+	// op
+	Op *V1Op `json:"op,omitempty"`
+
+	// op condition
+	OpCondition *V1OpCondition `json:"op_condition,omitempty"`
 
 	// parallel
-	Parallel *V1ParallelAllSchemas `json:"parallel,omitempty"`
+	Parallel *V1Parallel `json:"parallel,omitempty"`
+
+	// run
+	Run *V1RunSchema `json:"run,omitempty"`
 
 	// schedule
-	Schedule *V1ScheduleAllSchemas `json:"schedule,omitempty"`
-
-	// termination
-	Termination *V1Termination `json:"termination,omitempty"`
+	Schedule *V1Schedule `json:"schedule,omitempty"`
 }
 
 // Validate validates this v1 schemas
@@ -54,7 +57,11 @@ func (m *V1Schemas) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
-	if err := m.validateMount(formats); err != nil {
+	if err := m.validateOp(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateOpCondition(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -62,11 +69,11 @@ func (m *V1Schemas) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
-	if err := m.validateSchedule(formats); err != nil {
+	if err := m.validateRun(formats); err != nil {
 		res = append(res, err)
 	}
 
-	if err := m.validateTermination(formats); err != nil {
+	if err := m.validateSchedule(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -94,16 +101,34 @@ func (m *V1Schemas) validateEarlyStopping(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *V1Schemas) validateMount(formats strfmt.Registry) error {
+func (m *V1Schemas) validateOp(formats strfmt.Registry) error {
 
-	if swag.IsZero(m.Mount) { // not required
+	if swag.IsZero(m.Op) { // not required
 		return nil
 	}
 
-	if m.Mount != nil {
-		if err := m.Mount.Validate(formats); err != nil {
+	if m.Op != nil {
+		if err := m.Op.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("mount")
+				return ve.ValidateName("op")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1Schemas) validateOpCondition(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.OpCondition) { // not required
+		return nil
+	}
+
+	if m.OpCondition != nil {
+		if err := m.OpCondition.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("op_condition")
 			}
 			return err
 		}
@@ -130,6 +155,24 @@ func (m *V1Schemas) validateParallel(formats strfmt.Registry) error {
 	return nil
 }
 
+func (m *V1Schemas) validateRun(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Run) { // not required
+		return nil
+	}
+
+	if m.Run != nil {
+		if err := m.Run.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("run")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
 func (m *V1Schemas) validateSchedule(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.Schedule) { // not required
@@ -140,24 +183,6 @@ func (m *V1Schemas) validateSchedule(formats strfmt.Registry) error {
 		if err := m.Schedule.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("schedule")
-			}
-			return err
-		}
-	}
-
-	return nil
-}
-
-func (m *V1Schemas) validateTermination(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.Termination) { // not required
-		return nil
-	}
-
-	if m.Termination != nil {
-		if err := m.Termination.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("termination")
 			}
 			return err
 		}

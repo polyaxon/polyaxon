@@ -36,11 +36,12 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import io.swagger.client.model.V1EarlyStoppingAllSchemas;
-import io.swagger.client.model.V1Mounts;
-import io.swagger.client.model.V1ParallelAllSchemas;
-import io.swagger.client.model.V1ScheduleAllSchemas;
-import io.swagger.client.model.V1Termination;
+import io.swagger.client.model.V1EarlyStopping;
+import io.swagger.client.model.V1Op;
+import io.swagger.client.model.V1OpCondition;
+import io.swagger.client.model.V1Parallel;
+import io.swagger.client.model.V1RunSchema;
+import io.swagger.client.model.V1Schedule;
 import java.io.IOException;
 
 /**
@@ -48,22 +49,43 @@ import java.io.IOException;
  */
 
 public class V1Schemas {
-  @SerializedName("early_stopping")
-  private V1EarlyStoppingAllSchemas earlyStopping = null;
+  @SerializedName("op_condition")
+  private V1OpCondition opCondition = null;
 
-  @SerializedName("mount")
-  private V1Mounts mount = null;
+  @SerializedName("early_stopping")
+  private V1EarlyStopping earlyStopping = null;
 
   @SerializedName("parallel")
-  private V1ParallelAllSchemas parallel = null;
+  private V1Parallel parallel = null;
+
+  @SerializedName("op")
+  private V1Op op = null;
+
+  @SerializedName("run")
+  private V1RunSchema run = null;
 
   @SerializedName("schedule")
-  private V1ScheduleAllSchemas schedule = null;
+  private V1Schedule schedule = null;
 
-  @SerializedName("termination")
-  private V1Termination termination = null;
+  public V1Schemas opCondition(V1OpCondition opCondition) {
+    this.opCondition = opCondition;
+    return this;
+  }
 
-  public V1Schemas earlyStopping(V1EarlyStoppingAllSchemas earlyStopping) {
+   /**
+   * Get opCondition
+   * @return opCondition
+  **/
+  @ApiModelProperty(value = "")
+  public V1OpCondition getOpCondition() {
+    return opCondition;
+  }
+
+  public void setOpCondition(V1OpCondition opCondition) {
+    this.opCondition = opCondition;
+  }
+
+  public V1Schemas earlyStopping(V1EarlyStopping earlyStopping) {
     this.earlyStopping = earlyStopping;
     return this;
   }
@@ -73,33 +95,15 @@ public class V1Schemas {
    * @return earlyStopping
   **/
   @ApiModelProperty(value = "")
-  public V1EarlyStoppingAllSchemas getEarlyStopping() {
+  public V1EarlyStopping getEarlyStopping() {
     return earlyStopping;
   }
 
-  public void setEarlyStopping(V1EarlyStoppingAllSchemas earlyStopping) {
+  public void setEarlyStopping(V1EarlyStopping earlyStopping) {
     this.earlyStopping = earlyStopping;
   }
 
-  public V1Schemas mount(V1Mounts mount) {
-    this.mount = mount;
-    return this;
-  }
-
-   /**
-   * Get mount
-   * @return mount
-  **/
-  @ApiModelProperty(value = "")
-  public V1Mounts getMount() {
-    return mount;
-  }
-
-  public void setMount(V1Mounts mount) {
-    this.mount = mount;
-  }
-
-  public V1Schemas parallel(V1ParallelAllSchemas parallel) {
+  public V1Schemas parallel(V1Parallel parallel) {
     this.parallel = parallel;
     return this;
   }
@@ -109,15 +113,51 @@ public class V1Schemas {
    * @return parallel
   **/
   @ApiModelProperty(value = "")
-  public V1ParallelAllSchemas getParallel() {
+  public V1Parallel getParallel() {
     return parallel;
   }
 
-  public void setParallel(V1ParallelAllSchemas parallel) {
+  public void setParallel(V1Parallel parallel) {
     this.parallel = parallel;
   }
 
-  public V1Schemas schedule(V1ScheduleAllSchemas schedule) {
+  public V1Schemas op(V1Op op) {
+    this.op = op;
+    return this;
+  }
+
+   /**
+   * Get op
+   * @return op
+  **/
+  @ApiModelProperty(value = "")
+  public V1Op getOp() {
+    return op;
+  }
+
+  public void setOp(V1Op op) {
+    this.op = op;
+  }
+
+  public V1Schemas run(V1RunSchema run) {
+    this.run = run;
+    return this;
+  }
+
+   /**
+   * Get run
+   * @return run
+  **/
+  @ApiModelProperty(value = "")
+  public V1RunSchema getRun() {
+    return run;
+  }
+
+  public void setRun(V1RunSchema run) {
+    this.run = run;
+  }
+
+  public V1Schemas schedule(V1Schedule schedule) {
     this.schedule = schedule;
     return this;
   }
@@ -127,30 +167,12 @@ public class V1Schemas {
    * @return schedule
   **/
   @ApiModelProperty(value = "")
-  public V1ScheduleAllSchemas getSchedule() {
+  public V1Schedule getSchedule() {
     return schedule;
   }
 
-  public void setSchedule(V1ScheduleAllSchemas schedule) {
+  public void setSchedule(V1Schedule schedule) {
     this.schedule = schedule;
-  }
-
-  public V1Schemas termination(V1Termination termination) {
-    this.termination = termination;
-    return this;
-  }
-
-   /**
-   * Get termination
-   * @return termination
-  **/
-  @ApiModelProperty(value = "")
-  public V1Termination getTermination() {
-    return termination;
-  }
-
-  public void setTermination(V1Termination termination) {
-    this.termination = termination;
   }
 
 
@@ -163,16 +185,17 @@ public class V1Schemas {
       return false;
     }
     V1Schemas v1Schemas = (V1Schemas) o;
-    return Objects.equals(this.earlyStopping, v1Schemas.earlyStopping) &&
-        Objects.equals(this.mount, v1Schemas.mount) &&
+    return Objects.equals(this.opCondition, v1Schemas.opCondition) &&
+        Objects.equals(this.earlyStopping, v1Schemas.earlyStopping) &&
         Objects.equals(this.parallel, v1Schemas.parallel) &&
-        Objects.equals(this.schedule, v1Schemas.schedule) &&
-        Objects.equals(this.termination, v1Schemas.termination);
+        Objects.equals(this.op, v1Schemas.op) &&
+        Objects.equals(this.run, v1Schemas.run) &&
+        Objects.equals(this.schedule, v1Schemas.schedule);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(earlyStopping, mount, parallel, schedule, termination);
+    return Objects.hash(opCondition, earlyStopping, parallel, op, run, schedule);
   }
 
 
@@ -181,11 +204,12 @@ public class V1Schemas {
     StringBuilder sb = new StringBuilder();
     sb.append("class V1Schemas {\n");
     
+    sb.append("    opCondition: ").append(toIndentedString(opCondition)).append("\n");
     sb.append("    earlyStopping: ").append(toIndentedString(earlyStopping)).append("\n");
-    sb.append("    mount: ").append(toIndentedString(mount)).append("\n");
     sb.append("    parallel: ").append(toIndentedString(parallel)).append("\n");
+    sb.append("    op: ").append(toIndentedString(op)).append("\n");
+    sb.append("    run: ").append(toIndentedString(run)).append("\n");
     sb.append("    schedule: ").append(toIndentedString(schedule)).append("\n");
-    sb.append("    termination: ").append(toIndentedString(termination)).append("\n");
     sb.append("}");
     return sb.toString();
   }

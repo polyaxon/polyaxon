@@ -5,12 +5,12 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **kind** | **str** |  | [optional] 
 **matrix** | **str** |  | [optional] 
-**eta** | **str** |  | [optional] 
+**eta** | **int** |  | [optional] 
 **resource** | [**V1OptimizationResource**](V1OptimizationResource.md) |  | [optional] 
 **metric** | [**V1OptimizationMetric**](V1OptimizationMetric.md) |  | [optional] 
 **resume** | **bool** |  | [optional] 
-**seed** | **str** |  | [optional] 
-**concurrency** | **str** |  | [optional] 
+**seed** | **int** |  | [optional] 
+**concurrency** | **int** |  | [optional] 
 **early_stopping** | **list[object]** |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

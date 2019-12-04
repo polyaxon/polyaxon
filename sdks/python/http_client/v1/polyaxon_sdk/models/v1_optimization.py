@@ -42,8 +42,8 @@ class V1Optimization(object):
     """
     allowed enum values
     """
-    MAXIMIZE = "MAXIMIZE"
-    MINIMIZE = "MINIMIZE"
+    MAXIMIZE = "maximize"
+    MINIMIZE = "minimize"
 
     """
     Attributes:

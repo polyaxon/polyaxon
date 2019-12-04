@@ -30,18 +30,18 @@ import (
 
 // V1Optimization Optimization enum for metrics
 //
-// - MAXIMIZE: Minimize a metric
-//  - MINIMIZE: Maximize a metric
+// - maximize: Minimize a metric
+//  - minimize: Maximize a metric
 // swagger:model v1Optimization
 type V1Optimization string
 
 const (
 
-	// V1OptimizationMAXIMIZE captures enum value "MAXIMIZE"
-	V1OptimizationMAXIMIZE V1Optimization = "MAXIMIZE"
+	// V1OptimizationMaximize captures enum value "maximize"
+	V1OptimizationMaximize V1Optimization = "maximize"
 
-	// V1OptimizationMINIMIZE captures enum value "MINIMIZE"
-	V1OptimizationMINIMIZE V1Optimization = "MINIMIZE"
+	// V1OptimizationMinimize captures enum value "minimize"
+	V1OptimizationMinimize V1Optimization = "minimize"
 )
 
 // for schema
@@ -49,7 +49,7 @@ var v1OptimizationEnum []interface{}
 
 func init() {
 	var res []V1Optimization
-	if err := json.Unmarshal([]byte(`["MAXIMIZE","MINIMIZE"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["maximize","minimize"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {

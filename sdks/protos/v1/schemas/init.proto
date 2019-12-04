@@ -1,0 +1,60 @@
+syntax = "proto3";
+
+package v1;
+
+import "v1/schemas/mounts.proto";
+import "google/protobuf/struct.proto";
+
+// Build context initializer specification
+message BuildContext {
+    // Docker image to use as a base
+    string image = 1;
+
+    // An optional list of tuples(key, value) for defining env vars, translate to an ENV statements
+    repeated google.protobuf.Struct env = 2;
+
+    // An optional list of tuples for exporting paths, translate to a PATH statements
+    repeated google.protobuf.Struct path = 3;
+
+    // An optional list of tuples for copying paths, translate to a COPY statements
+    repeated google.protobuf.Struct copy = 4;
+
+    // An optional list of tuples for executing Run commands, translate to a RUN statements
+    repeated google.protobuf.Struct run = 5;
+
+    // An optional string defining a language, e.g. en_US.UTF-8
+    string lang_env = 6;
+
+    // A uid to use when creating the docker image
+    int32 uid = 7;
+
+    // A gid to use when creating the docker image
+    int32 gid = 8;
+
+    // A filename to give to the generated dockerfile
+    string filename = 9;
+
+    // A work dir to copy code to, default to /code
+    string workdir = 10;
+
+    // An optional workdir path
+    string workdir_path = 11;
+
+    // An optional shell type, defaults to "/bin/bash"
+    string shell = 12;
+}
+
+// Repo initializer specification
+message RepoInit {
+    string name = 1;
+    string commit = 2;
+    string branch = 3;
+}
+
+
+// Init specificication
+message Init {
+    repeated RepoInit repos = 1;
+    repeated ArtifactMount artifacts = 2;
+    BuildContext build = 3;
+}

@@ -52,13 +52,13 @@ public class V1RandomSearch {
   private String matrix = null;
 
   @SerializedName("n_runs")
-  private String nRuns = null;
+  private Integer nRuns = null;
 
   @SerializedName("seed")
-  private String seed = null;
+  private Integer seed = null;
 
   @SerializedName("concurrency")
-  private String concurrency = null;
+  private Integer concurrency = null;
 
   @SerializedName("early_stopping")
   private List<Object> earlyStopping = null;
@@ -99,7 +99,7 @@ public class V1RandomSearch {
     this.matrix = matrix;
   }
 
-  public V1RandomSearch nRuns(String nRuns) {
+  public V1RandomSearch nRuns(Integer nRuns) {
     this.nRuns = nRuns;
     return this;
   }
@@ -109,15 +109,15 @@ public class V1RandomSearch {
    * @return nRuns
   **/
   @ApiModelProperty(value = "")
-  public String getNRuns() {
+  public Integer getNRuns() {
     return nRuns;
   }
 
-  public void setNRuns(String nRuns) {
+  public void setNRuns(Integer nRuns) {
     this.nRuns = nRuns;
   }
 
-  public V1RandomSearch seed(String seed) {
+  public V1RandomSearch seed(Integer seed) {
     this.seed = seed;
     return this;
   }
@@ -127,15 +127,15 @@ public class V1RandomSearch {
    * @return seed
   **/
   @ApiModelProperty(value = "")
-  public String getSeed() {
+  public Integer getSeed() {
     return seed;
   }
 
-  public void setSeed(String seed) {
+  public void setSeed(Integer seed) {
     this.seed = seed;
   }
 
-  public V1RandomSearch concurrency(String concurrency) {
+  public V1RandomSearch concurrency(Integer concurrency) {
     this.concurrency = concurrency;
     return this;
   }
@@ -145,11 +145,11 @@ public class V1RandomSearch {
    * @return concurrency
   **/
   @ApiModelProperty(value = "")
-  public String getConcurrency() {
+  public Integer getConcurrency() {
     return concurrency;
   }
 
-  public void setConcurrency(String concurrency) {
+  public void setConcurrency(Integer concurrency) {
     this.concurrency = concurrency;
   }
 

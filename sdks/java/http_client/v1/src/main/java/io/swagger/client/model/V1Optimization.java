@@ -39,14 +39,14 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 
 /**
- * - MAXIMIZE: Minimize a metric  - MINIMIZE: Maximize a metric
+ * - maximize: Minimize a metric  - minimize: Maximize a metric
  */
 @JsonAdapter(V1Optimization.Adapter.class)
 public enum V1Optimization {
   
-  MAXIMIZE("MAXIMIZE"),
+  MAXIMIZE("maximize"),
   
-  MINIMIZE("MINIMIZE");
+  MINIMIZE("minimize");
 
   private String value;
 

@@ -26,6 +26,7 @@ import (
 )
 
 // V1Termination Termination specification
+// Termination defines how to handle failures, job runtime, and cleanup policy.
 // swagger:model v1Termination
 type V1Termination struct {
 
@@ -36,10 +37,10 @@ type V1Termination struct {
 	RestartPolicy string `json:"restart_policy,omitempty"`
 
 	// A timeout in seconds
-	Timeout string `json:"timeout,omitempty"`
+	Timeout int32 `json:"timeout,omitempty"`
 
 	// A TTL definition
-	TTL string `json:"ttl,omitempty"`
+	TTL int32 `json:"ttl,omitempty"`
 }
 
 // Validate validates this v1 termination

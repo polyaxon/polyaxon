@@ -51,8 +51,8 @@ class V1Iterative(object):
         "matrix": "str",
         "n_iterations": "int",
         "container": "V1Container",
-        "seed": "str",
-        "concurrency": "str",
+        "seed": "int",
+        "concurrency": "int",
         "early_stopping": "list[object]",
     }
 
@@ -192,7 +192,7 @@ class V1Iterative(object):
 
 
         :return: The seed of this V1Iterative.  # noqa: E501
-        :rtype: str
+        :rtype: int
         """
         return self._seed
 
@@ -202,7 +202,7 @@ class V1Iterative(object):
 
 
         :param seed: The seed of this V1Iterative.  # noqa: E501
-        :type: str
+        :type: int
         """
 
         self._seed = seed
@@ -213,7 +213,7 @@ class V1Iterative(object):
 
 
         :return: The concurrency of this V1Iterative.  # noqa: E501
-        :rtype: str
+        :rtype: int
         """
         return self._concurrency
 
@@ -223,7 +223,7 @@ class V1Iterative(object):
 
 
         :param concurrency: The concurrency of this V1Iterative.  # noqa: E501
-        :type: str
+        :type: int
         """
 
         self._concurrency = concurrency

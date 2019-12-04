@@ -29,7 +29,6 @@ from google.protobuf import symbol_database as _symbol_database
 _sym_db = _symbol_database.Default()
 
 
-from google.protobuf import any_pb2 as google_dot_protobuf_dot_any__pb2
 from google.protobuf import timestamp_pb2 as google_dot_protobuf_dot_timestamp__pb2
 
 
@@ -38,9 +37,9 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='v1',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\x0fv1/status.proto\x12\x02v1\x1a\x19google/protobuf/any.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\xc0\x01\n\x0fStatusCondition\x12\x0c\n\x04type\x18\x01 \x01(\t\x12\x0e\n\x06status\x18\x02 \x01(\t\x12\x0e\n\x06reason\x18\x03 \x01(\t\x12\x0f\n\x07message\x18\x04 \x01(\t\x12\x34\n\x10last_update_time\x18\x05 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x38\n\x14last_transition_time\x18\x06 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"V\n\x06Status\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\x0e\n\x06status\x18\x02 \x01(\t\x12.\n\x11status_conditions\x18\x03 \x03(\x0b\x32\x13.v1.StatusCondition\"o\n\x17\x45ntityStatusBodyRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0f\n\x07project\x18\x02 \x01(\t\x12\x0c\n\x04uuid\x18\x03 \x01(\t\x12&\n\tcondition\x18\x04 \x01(\x0b\x32\x13.v1.StatusConditionb\x06proto3')
+  serialized_pb=_b('\n\x0fv1/status.proto\x12\x02v1\x1a\x1fgoogle/protobuf/timestamp.proto\"\xc0\x01\n\x0fStatusCondition\x12\x0c\n\x04type\x18\x01 \x01(\t\x12\x0e\n\x06status\x18\x02 \x01(\t\x12\x0e\n\x06reason\x18\x03 \x01(\t\x12\x0f\n\x07message\x18\x04 \x01(\t\x12\x34\n\x10last_update_time\x18\x05 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x38\n\x14last_transition_time\x18\x06 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"V\n\x06Status\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\x0e\n\x06status\x18\x02 \x01(\t\x12.\n\x11status_conditions\x18\x03 \x03(\x0b\x32\x13.v1.StatusCondition\"o\n\x17\x45ntityStatusBodyRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0f\n\x07project\x18\x02 \x01(\t\x12\x0c\n\x04uuid\x18\x03 \x01(\t\x12&\n\tcondition\x18\x04 \x01(\x0b\x32\x13.v1.StatusConditionb\x06proto3')
   ,
-  dependencies=[google_dot_protobuf_dot_any__pb2.DESCRIPTOR,google_dot_protobuf_dot_timestamp__pb2.DESCRIPTOR,])
+  dependencies=[google_dot_protobuf_dot_timestamp__pb2.DESCRIPTOR,])
 
 
 
@@ -106,8 +105,8 @@ _STATUSCONDITION = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=84,
-  serialized_end=276,
+  serialized_start=57,
+  serialized_end=249,
 )
 
 
@@ -151,8 +150,8 @@ _STATUS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=278,
-  serialized_end=364,
+  serialized_start=251,
+  serialized_end=337,
 )
 
 
@@ -203,8 +202,8 @@ _ENTITYSTATUSBODYREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=366,
-  serialized_end=477,
+  serialized_start=339,
+  serialized_end=450,
 )
 
 _STATUSCONDITION.fields_by_name['last_update_time'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP

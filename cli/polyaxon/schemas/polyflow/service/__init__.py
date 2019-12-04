@@ -21,7 +21,7 @@ from marshmallow import fields, validate
 
 from polyaxon.schemas.base import BaseConfig, BaseSchema
 from polyaxon.schemas.fields.ref_or_obj import RefOrObject
-from polyaxon.schemas.polyflow.service.validation import ServiceLevelSchema
+from polyaxon_sdk import V1Service
 
 
 class ServiceSchema(BaseSchema):
@@ -39,11 +39,7 @@ class ServiceSchema(BaseSchema):
         return ServiceConfig
 
 
-class ServiceConfig(BaseConfig):
+class ServiceConfig(BaseConfig, V1Service):
     IDENTIFIER = "service"
     SCHEMA = ServiceSchema
     REDUCED_ATTRIBUTES = ["ports"]
-
-    def __init__(self, enabled=True, ports=None):
-        self.enabled = enabled
-        self.ports = ports

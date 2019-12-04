@@ -4,6 +4,6 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **king** | **String** |  | [optional] 
-**evaluation_interval** | **String** | Interval/Frequency for applying the policy. | [optional] 
+**evaluation_interval** | **Number** | Interval/Frequency for applying the policy. | [optional] 
 
 

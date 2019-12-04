@@ -18,6 +18,7 @@
 from __future__ import absolute_import, division, print_function
 
 from marshmallow import fields, validate
+from polyaxon_sdk import V1Spark
 
 from polyaxon.schemas.base import BaseConfig, BaseSchema
 from polyaxon.schemas.fields.ref_or_obj import RefOrObject
@@ -32,10 +33,7 @@ class SparkSchema(BaseSchema):
         return SparkConfig
 
 
-class SparkConfig(BaseConfig):
+class SparkConfig(BaseConfig, V1Spark):
     SCHEMA = SparkSchema
     IDENTIFIER = "spark"
-
-    def __init__(self, spec=None, kind=IDENTIFIER):
-        self.spec = spec
-        self.kind = kind
+    IDENTIFIER_KIND = True

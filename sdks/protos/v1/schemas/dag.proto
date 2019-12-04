@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package v1;
+
+import "google/protobuf/struct.proto";
+
+import "v1/schemas/component.proto";
+import "v1/schemas/op.proto";
+
+// Dag specificaiton
+message Dag {
+    // Optional component kind, should be equal to "dag"
+    string kind = 1;
+
+    // Ops used in the graph
+    repeated Op ops = 2;
+
+    // Optional component refrences
+    repeated Component components = 4;
+
+    // Optional component description
+    int32 concurrency = 5;
+
+    // Optional component tags
+    repeated google.protobuf.Struct early_stopping = 6;
+}

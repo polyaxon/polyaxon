@@ -25,8 +25,9 @@ from marshmallow import ValidationError
 
 from polyaxon.schemas.polyflow.conditions import (
     ConditionSchema,
-    OutputsConditionConfig,
-    StatusConditionConfig,
+    OpInputsConditionConfig,
+    OpOutputsConditionConfig,
+    OpStatusConditionConfig,
 )
 
 
@@ -35,22 +36,22 @@ class TestCondsConfigs(TestCase):
     def test_status_cond(self):
         config_dict = {"foo": "bar", "op": "foo", "trigger": "done"}
         with self.assertRaises(ValidationError):
-            StatusConditionConfig.from_dict(config_dict)
+            OpStatusConditionConfig.from_dict(config_dict)
 
         config_dict = {"kind": "foo", "op": "foo", "trigger": "done"}
         with self.assertRaises(ValidationError):
-            StatusConditionConfig.from_dict(config_dict)
+            OpStatusConditionConfig.from_dict(config_dict)
 
         config_dict = {"op": "foo", "trigger": "done"}
-        StatusConditionConfig.from_dict(config_dict)
+        OpStatusConditionConfig.from_dict(config_dict)
 
         config_dict = {"kind": "status", "op": "foo", "trigger": "done"}
-        StatusConditionConfig.from_dict(config_dict)
+        OpStatusConditionConfig.from_dict(config_dict)
 
     def test_outputs_cond(self):
         config_dict = {"op": "foo", "exp": "done", "params": ["op1.done", "foo"]}
         with self.assertRaises(ValidationError):
-            OutputsConditionConfig.from_dict(config_dict)
+            OpOutputsConditionConfig.from_dict(config_dict)
 
         config_dict = {
             "kind": "foo",
@@ -59,14 +60,14 @@ class TestCondsConfigs(TestCase):
             "params": [["op1.done", "foo"]],
         }
         with self.assertRaises(ValidationError):
-            OutputsConditionConfig.from_dict(config_dict)
+            OpOutputsConditionConfig.from_dict(config_dict)
 
         config_dict = {"op": "foo", "exp": "eq", "params": ["op1.done", "foo"]}
         with self.assertRaises(ValidationError):
-            OutputsConditionConfig.from_dict(config_dict)
+            OpOutputsConditionConfig.from_dict(config_dict)
 
         config_dict = {"op": "foo", "exp": "eq", "params": [["op1.done", "foo"]]}
-        OutputsConditionConfig.from_dict(config_dict)
+        OpOutputsConditionConfig.from_dict(config_dict)
 
         config_dict = {
             "kind": "outputs",
@@ -74,7 +75,36 @@ class TestCondsConfigs(TestCase):
             "exp": "eq",
             "params": [["op1.done", "foo"]],
         }
-        OutputsConditionConfig.from_dict(config_dict)
+        OpOutputsConditionConfig.from_dict(config_dict)
+
+    def test_inputs_cond(self):
+        config_dict = {"op": "foo", "exp": "done", "params": ["op1.done", "foo"]}
+        with self.assertRaises(ValidationError):
+            OpInputsConditionConfig.from_dict(config_dict)
+
+        config_dict = {
+            "kind": "foo",
+            "op": "foo",
+            "exp": "eq",
+            "params": [["op1.done", "foo"]],
+        }
+        with self.assertRaises(ValidationError):
+            OpInputsConditionConfig.from_dict(config_dict)
+
+        config_dict = {"op": "foo", "exp": "eq", "params": ["op1.done", "foo"]}
+        with self.assertRaises(ValidationError):
+            OpInputsConditionConfig.from_dict(config_dict)
+
+        config_dict = {"op": "foo", "exp": "eq", "params": [["op1.done", "foo"]]}
+        OpInputsConditionConfig.from_dict(config_dict)
+
+        config_dict = {
+            "kind": "outputs",
+            "op": "foo",
+            "exp": "eq",
+            "params": [["op1.done", "foo"]],
+        }
+        OpInputsConditionConfig.from_dict(config_dict)
 
     def test_conds(self):
         configs = [

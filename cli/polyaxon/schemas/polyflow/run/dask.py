@@ -18,6 +18,7 @@
 from __future__ import absolute_import, division, print_function
 
 from marshmallow import fields, validate
+from polyaxon_sdk import V1Dask
 
 from polyaxon.schemas.base import BaseConfig, BaseSchema
 from polyaxon.schemas.fields.ref_or_obj import RefOrObject
@@ -32,10 +33,7 @@ class DaskSchema(BaseSchema):
         return DaskConfig
 
 
-class DaskConfig(BaseConfig):
+class DaskConfig(BaseConfig, V1Dask):
     SCHEMA = DaskSchema
     IDENTIFIER = "dask"
-
-    def __init__(self, spec=None, kind=IDENTIFIER):
-        self.spec = spec
-        self.kind = kind
+    IDENTIFIER_KIND = True

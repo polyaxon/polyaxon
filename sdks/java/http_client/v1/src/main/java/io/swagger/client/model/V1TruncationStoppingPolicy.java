@@ -51,7 +51,7 @@ public class V1TruncationStoppingPolicy {
   private Integer percent = null;
 
   @SerializedName("evaluation_interval")
-  private String evaluationInterval = null;
+  private Integer evaluationInterval = null;
 
   public V1TruncationStoppingPolicy king(String king) {
     this.king = king;
@@ -89,7 +89,7 @@ public class V1TruncationStoppingPolicy {
     this.percent = percent;
   }
 
-  public V1TruncationStoppingPolicy evaluationInterval(String evaluationInterval) {
+  public V1TruncationStoppingPolicy evaluationInterval(Integer evaluationInterval) {
     this.evaluationInterval = evaluationInterval;
     return this;
   }
@@ -99,11 +99,11 @@ public class V1TruncationStoppingPolicy {
    * @return evaluationInterval
   **/
   @ApiModelProperty(value = "Interval/Frequency for applying the policy.")
-  public String getEvaluationInterval() {
+  public Integer getEvaluationInterval() {
     return evaluationInterval;
   }
 
-  public void setEvaluationInterval(String evaluationInterval) {
+  public void setEvaluationInterval(Integer evaluationInterval) {
     this.evaluationInterval = evaluationInterval;
   }
 

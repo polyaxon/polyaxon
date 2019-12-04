@@ -59,10 +59,10 @@ public class V1Iterative {
   private V1Container container = null;
 
   @SerializedName("seed")
-  private String seed = null;
+  private Integer seed = null;
 
   @SerializedName("concurrency")
-  private String concurrency = null;
+  private Integer concurrency = null;
 
   @SerializedName("early_stopping")
   private List<Object> earlyStopping = null;
@@ -139,7 +139,7 @@ public class V1Iterative {
     this.container = container;
   }
 
-  public V1Iterative seed(String seed) {
+  public V1Iterative seed(Integer seed) {
     this.seed = seed;
     return this;
   }
@@ -149,15 +149,15 @@ public class V1Iterative {
    * @return seed
   **/
   @ApiModelProperty(value = "")
-  public String getSeed() {
+  public Integer getSeed() {
     return seed;
   }
 
-  public void setSeed(String seed) {
+  public void setSeed(Integer seed) {
     this.seed = seed;
   }
 
-  public V1Iterative concurrency(String concurrency) {
+  public V1Iterative concurrency(Integer concurrency) {
     this.concurrency = concurrency;
     return this;
   }
@@ -167,11 +167,11 @@ public class V1Iterative {
    * @return concurrency
   **/
   @ApiModelProperty(value = "")
-  public String getConcurrency() {
+  public Integer getConcurrency() {
     return concurrency;
   }
 
-  public void setConcurrency(String concurrency) {
+  public void setConcurrency(Integer concurrency) {
     this.concurrency = concurrency;
   }
 
