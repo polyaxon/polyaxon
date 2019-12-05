@@ -32,7 +32,9 @@ from __future__ import absolute_import
 import unittest
 
 import polyaxon_sdk
-from polyaxon_sdk.models.v1_entity_status_body_request import V1EntityStatusBodyRequest  # noqa: E501
+from polyaxon_sdk.models.v1_entity_status_body_request import (
+    V1EntityStatusBodyRequest,
+)  # noqa: E501
 from polyaxon_sdk.rest import ApiException
 
 
@@ -52,5 +54,5 @@ class TestV1EntityStatusBodyRequest(unittest.TestCase):
         pass
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

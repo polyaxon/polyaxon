@@ -47,15 +47,15 @@ class V1Mounts(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'secrets': 'list[V1K8sMount]',
-        'config_maps': 'list[V1K8sMount]',
-        'artifacts': 'list[V1ArtifactMount]'
+        "secrets": "list[V1K8sMount]",
+        "config_maps": "list[V1K8sMount]",
+        "artifacts": "list[V1ArtifactMount]",
     }
 
     attribute_map = {
-        'secrets': 'secrets',
-        'config_maps': 'config_maps',
-        'artifacts': 'artifacts'
+        "secrets": "secrets",
+        "config_maps": "config_maps",
+        "artifacts": "artifacts",
     }
 
     def __init__(self, secrets=None, config_maps=None, artifacts=None):  # noqa: E501
@@ -143,18 +143,20 @@ class V1Mounts(object):
         for attr, _ in six.iteritems(self.swagger_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(map(
-                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
-                    value
-                ))
+                result[attr] = list(
+                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
+                )
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(map(
-                    lambda item: (item[0], item[1].to_dict())
-                    if hasattr(item[1], "to_dict") else item,
-                    value.items()
-                ))
+                result[attr] = dict(
+                    map(
+                        lambda item: (item[0], item[1].to_dict())
+                        if hasattr(item[1], "to_dict")
+                        else item,
+                        value.items(),
+                    )
+                )
             else:
                 result[attr] = value
         if issubclass(V1Mounts, dict):

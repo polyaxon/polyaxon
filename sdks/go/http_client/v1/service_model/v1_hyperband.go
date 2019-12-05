@@ -45,6 +45,9 @@ type V1Hyperband struct {
 	// Matrix/Space definition of params to traverse
 	Matrix string `json:"matrix,omitempty"`
 
+	// Max iteration
+	MaxIter int32 `json:"max_iter,omitempty"`
+
 	// Metric to optimize during the iterations
 	Metric *V1OptimizationMetric `json:"metric,omitempty"`
 

@@ -47,24 +47,32 @@ class V1Replica(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'replicas': 'int',
-        'environment': 'V1Environment',
-        'termination': 'V1Termination',
-        'init': 'V1Init',
-        'mounts': 'V1Mounts',
-        'container': 'V1Container'
+        "replicas": "int",
+        "environment": "V1Environment",
+        "termination": "V1Termination",
+        "init": "V1Init",
+        "mounts": "V1Mounts",
+        "container": "V1Container",
     }
 
     attribute_map = {
-        'replicas': 'replicas',
-        'environment': 'environment',
-        'termination': 'termination',
-        'init': 'init',
-        'mounts': 'mounts',
-        'container': 'container'
+        "replicas": "replicas",
+        "environment": "environment",
+        "termination": "termination",
+        "init": "init",
+        "mounts": "mounts",
+        "container": "container",
     }
 
-    def __init__(self, replicas=None, environment=None, termination=None, init=None, mounts=None, container=None):  # noqa: E501
+    def __init__(
+        self,
+        replicas=None,
+        environment=None,
+        termination=None,
+        init=None,
+        mounts=None,
+        container=None,
+    ):  # noqa: E501
         """V1Replica - a model defined in Swagger"""  # noqa: E501
 
         self._replicas = None
@@ -221,18 +229,20 @@ class V1Replica(object):
         for attr, _ in six.iteritems(self.swagger_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(map(
-                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
-                    value
-                ))
+                result[attr] = list(
+                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
+                )
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(map(
-                    lambda item: (item[0], item[1].to_dict())
-                    if hasattr(item[1], "to_dict") else item,
-                    value.items()
-                ))
+                result[attr] = dict(
+                    map(
+                        lambda item: (item[0], item[1].to_dict())
+                        if hasattr(item[1], "to_dict")
+                        else item,
+                        value.items(),
+                    )
+                )
             else:
                 result[attr] = value
         if issubclass(V1Replica, dict):

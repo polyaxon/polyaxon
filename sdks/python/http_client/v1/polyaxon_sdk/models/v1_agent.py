@@ -47,24 +47,32 @@ class V1Agent(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'uuid': 'str',
-        'name': 'str',
-        'namespace': 'str',
-        'version_api': 'object',
-        'created_at': 'datetime',
-        'updated_at': 'datetime'
+        "uuid": "str",
+        "name": "str",
+        "namespace": "str",
+        "version_api": "object",
+        "created_at": "datetime",
+        "updated_at": "datetime",
     }
 
     attribute_map = {
-        'uuid': 'uuid',
-        'name': 'name',
-        'namespace': 'namespace',
-        'version_api': 'version_api',
-        'created_at': 'created_at',
-        'updated_at': 'updated_at'
+        "uuid": "uuid",
+        "name": "name",
+        "namespace": "namespace",
+        "version_api": "version_api",
+        "created_at": "created_at",
+        "updated_at": "updated_at",
     }
 
-    def __init__(self, uuid=None, name=None, namespace=None, version_api=None, created_at=None, updated_at=None):  # noqa: E501
+    def __init__(
+        self,
+        uuid=None,
+        name=None,
+        namespace=None,
+        version_api=None,
+        created_at=None,
+        updated_at=None,
+    ):  # noqa: E501
         """V1Agent - a model defined in Swagger"""  # noqa: E501
 
         self._uuid = None
@@ -221,18 +229,20 @@ class V1Agent(object):
         for attr, _ in six.iteritems(self.swagger_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(map(
-                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
-                    value
-                ))
+                result[attr] = list(
+                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
+                )
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(map(
-                    lambda item: (item[0], item[1].to_dict())
-                    if hasattr(item[1], "to_dict") else item,
-                    value.items()
-                ))
+                result[attr] = dict(
+                    map(
+                        lambda item: (item[0], item[1].to_dict())
+                        if hasattr(item[1], "to_dict")
+                        else item,
+                        value.items(),
+                    )
+                )
             else:
                 result[attr] = value
         if issubclass(V1Agent, dict):

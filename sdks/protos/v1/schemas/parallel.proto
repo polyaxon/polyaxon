@@ -59,26 +59,29 @@ message Hyperband {
     // Matrix/Space definition of params to traverse
     string matrix = 2;
 
+    // Max iteration
+    int32 max_iter = 3;
+
     // Eta
-    int32 eta = 3;
+    int32 eta = 4;
 
     // Resource to optimize (should be an integer or a float)
-    OptimizationResource resource = 4;
+    OptimizationResource resource = 5;
 
     // Metric to optimize during the iterations
-    OptimizationMetric metric = 5;
+    OptimizationMetric metric = 6;
 
     // A flag to resume or restart the selected runs
-    bool resume = 6;
+    bool resume = 7;
 
     // Seed for the random generator
-    int32 seed = 7;
+    int32 seed = 8;
 
     // Number of concurrent runs
-    int32 concurrency = 8;
+    int32 concurrency = 9;
 
     // A list of Early stopping objects, accpets both metric and failure early stopping mechanisms
-    repeated google.protobuf.Struct early_stopping = 9;
+    repeated google.protobuf.Struct early_stopping = 10;
 }
 
 

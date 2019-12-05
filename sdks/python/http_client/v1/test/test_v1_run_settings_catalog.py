@@ -32,7 +32,9 @@ from __future__ import absolute_import
 import unittest
 
 import polyaxon_sdk
-from polyaxon_sdk.models.v1_run_settings_catalog import V1RunSettingsCatalog  # noqa: E501
+from polyaxon_sdk.models.v1_run_settings_catalog import (
+    V1RunSettingsCatalog,
+)  # noqa: E501
 from polyaxon_sdk.rest import ApiException
 
 
@@ -52,5 +54,5 @@ class TestV1RunSettingsCatalog(unittest.TestCase):
         pass
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

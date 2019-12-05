@@ -47,22 +47,24 @@ class V1CronSchedule(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'kind': 'str',
-        'start_at': 'datetime',
-        'end_at': 'datetime',
-        'cron': 'str',
-        'depends_on_past': 'bool'
+        "kind": "str",
+        "start_at": "datetime",
+        "end_at": "datetime",
+        "cron": "str",
+        "depends_on_past": "bool",
     }
 
     attribute_map = {
-        'kind': 'kind',
-        'start_at': 'start_at',
-        'end_at': 'end_at',
-        'cron': 'cron',
-        'depends_on_past': 'depends_on_past'
+        "kind": "kind",
+        "start_at": "start_at",
+        "end_at": "end_at",
+        "cron": "cron",
+        "depends_on_past": "depends_on_past",
     }
 
-    def __init__(self, kind=None, start_at=None, end_at=None, cron=None, depends_on_past=None):  # noqa: E501
+    def __init__(
+        self, kind=None, start_at=None, end_at=None, cron=None, depends_on_past=None
+    ):  # noqa: E501
         """V1CronSchedule - a model defined in Swagger"""  # noqa: E501
 
         self._kind = None
@@ -195,18 +197,20 @@ class V1CronSchedule(object):
         for attr, _ in six.iteritems(self.swagger_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(map(
-                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
-                    value
-                ))
+                result[attr] = list(
+                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
+                )
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(map(
-                    lambda item: (item[0], item[1].to_dict())
-                    if hasattr(item[1], "to_dict") else item,
-                    value.items()
-                ))
+                result[attr] = dict(
+                    map(
+                        lambda item: (item[0], item[1].to_dict())
+                        if hasattr(item[1], "to_dict")
+                        else item,
+                        value.items(),
+                    )
+                )
             else:
                 result[attr] = value
         if issubclass(V1CronSchedule, dict):

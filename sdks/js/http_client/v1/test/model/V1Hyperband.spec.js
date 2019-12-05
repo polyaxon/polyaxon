@@ -67,6 +67,12 @@
         // expect(instance.matrix).to.be(expectedValueLiteral);
       });
 
+      it('should have the property max_iter (base name: "max_iter")', function() {
+        // TODO: update the code to test the property max_iter
+        expect(instance).to.have.property('max_iter');
+        // expect(instance.max_iter).to.be(expectedValueLiteral);
+      });
+
       it('should have the property eta (base name: "eta")', function() {
         // TODO: update the code to test the property eta
         expect(instance).to.have.property('eta');

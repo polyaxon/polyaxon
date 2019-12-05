@@ -5,6 +5,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **kind** | **str** |  | [optional] 
 **matrix** | **str** |  | [optional] 
+**max_iter** | **int** |  | [optional] 
 **eta** | **int** |  | [optional] 
 **resource** | [**V1OptimizationResource**](V1OptimizationResource.md) |  | [optional] 
 **metric** | [**V1OptimizationMetric**](V1OptimizationMetric.md) |  | [optional] 

@@ -32,7 +32,9 @@ from __future__ import absolute_import
 import unittest
 
 import polyaxon_sdk
-from polyaxon_sdk.api.registry_accesses_v1_api import RegistryAccessesV1Api  # noqa: E501
+from polyaxon_sdk.api.registry_accesses_v1_api import (
+    RegistryAccessesV1Api,
+)  # noqa: E501
 from polyaxon_sdk.rest import ApiException
 
 
@@ -40,7 +42,9 @@ class TestRegistryAccessesV1Api(unittest.TestCase):
     """RegistryAccessesV1Api unit test stubs"""
 
     def setUp(self):
-        self.api = polyaxon_sdk.api.registry_accesses_v1_api.RegistryAccessesV1Api()  # noqa: E501
+        self.api = (
+            polyaxon_sdk.api.registry_accesses_v1_api.RegistryAccessesV1Api()
+        )  # noqa: E501
 
     def tearDown(self):
         pass
@@ -95,5 +99,5 @@ class TestRegistryAccessesV1Api(unittest.TestCase):
         pass
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

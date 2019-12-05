@@ -47,34 +47,49 @@ class V1Hyperband(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'kind': 'str',
-        'matrix': 'str',
-        'eta': 'int',
-        'resource': 'V1OptimizationResource',
-        'metric': 'V1OptimizationMetric',
-        'resume': 'bool',
-        'seed': 'int',
-        'concurrency': 'int',
-        'early_stopping': 'list[object]'
+        "kind": "str",
+        "matrix": "str",
+        "max_iter": "int",
+        "eta": "int",
+        "resource": "V1OptimizationResource",
+        "metric": "V1OptimizationMetric",
+        "resume": "bool",
+        "seed": "int",
+        "concurrency": "int",
+        "early_stopping": "list[object]",
     }
 
     attribute_map = {
-        'kind': 'kind',
-        'matrix': 'matrix',
-        'eta': 'eta',
-        'resource': 'resource',
-        'metric': 'metric',
-        'resume': 'resume',
-        'seed': 'seed',
-        'concurrency': 'concurrency',
-        'early_stopping': 'early_stopping'
+        "kind": "kind",
+        "matrix": "matrix",
+        "max_iter": "max_iter",
+        "eta": "eta",
+        "resource": "resource",
+        "metric": "metric",
+        "resume": "resume",
+        "seed": "seed",
+        "concurrency": "concurrency",
+        "early_stopping": "early_stopping",
     }
 
-    def __init__(self, kind=None, matrix=None, eta=None, resource=None, metric=None, resume=None, seed=None, concurrency=None, early_stopping=None):  # noqa: E501
+    def __init__(
+        self,
+        kind=None,
+        matrix=None,
+        max_iter=None,
+        eta=None,
+        resource=None,
+        metric=None,
+        resume=None,
+        seed=None,
+        concurrency=None,
+        early_stopping=None,
+    ):  # noqa: E501
         """V1Hyperband - a model defined in Swagger"""  # noqa: E501
 
         self._kind = None
         self._matrix = None
+        self._max_iter = None
         self._eta = None
         self._resource = None
         self._metric = None
@@ -88,6 +103,8 @@ class V1Hyperband(object):
             self.kind = kind
         if matrix is not None:
             self.matrix = matrix
+        if max_iter is not None:
+            self.max_iter = max_iter
         if eta is not None:
             self.eta = eta
         if resource is not None:
@@ -144,6 +161,27 @@ class V1Hyperband(object):
         """
 
         self._matrix = matrix
+
+    @property
+    def max_iter(self):
+        """Gets the max_iter of this V1Hyperband.  # noqa: E501
+
+
+        :return: The max_iter of this V1Hyperband.  # noqa: E501
+        :rtype: int
+        """
+        return self._max_iter
+
+    @max_iter.setter
+    def max_iter(self, max_iter):
+        """Sets the max_iter of this V1Hyperband.
+
+
+        :param max_iter: The max_iter of this V1Hyperband.  # noqa: E501
+        :type: int
+        """
+
+        self._max_iter = max_iter
 
     @property
     def eta(self):
@@ -299,18 +337,20 @@ class V1Hyperband(object):
         for attr, _ in six.iteritems(self.swagger_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(map(
-                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
-                    value
-                ))
+                result[attr] = list(
+                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
+                )
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(map(
-                    lambda item: (item[0], item[1].to_dict())
-                    if hasattr(item[1], "to_dict") else item,
-                    value.items()
-                ))
+                result[attr] = dict(
+                    map(
+                        lambda item: (item[0], item[1].to_dict())
+                        if hasattr(item[1], "to_dict")
+                        else item,
+                        value.items(),
+                    )
+                )
             else:
                 result[attr] = value
         if issubclass(V1Hyperband, dict):

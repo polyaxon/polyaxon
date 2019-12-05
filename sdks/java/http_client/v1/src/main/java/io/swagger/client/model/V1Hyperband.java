@@ -53,6 +53,9 @@ public class V1Hyperband {
   @SerializedName("matrix")
   private String matrix = null;
 
+  @SerializedName("max_iter")
+  private Integer maxIter = null;
+
   @SerializedName("eta")
   private Integer eta = null;
 
@@ -108,6 +111,24 @@ public class V1Hyperband {
 
   public void setMatrix(String matrix) {
     this.matrix = matrix;
+  }
+
+  public V1Hyperband maxIter(Integer maxIter) {
+    this.maxIter = maxIter;
+    return this;
+  }
+
+   /**
+   * Get maxIter
+   * @return maxIter
+  **/
+  @ApiModelProperty(value = "")
+  public Integer getMaxIter() {
+    return maxIter;
+  }
+
+  public void setMaxIter(Integer maxIter) {
+    this.maxIter = maxIter;
   }
 
   public V1Hyperband eta(Integer eta) {
@@ -256,6 +277,7 @@ public class V1Hyperband {
     V1Hyperband v1Hyperband = (V1Hyperband) o;
     return Objects.equals(this.kind, v1Hyperband.kind) &&
         Objects.equals(this.matrix, v1Hyperband.matrix) &&
+        Objects.equals(this.maxIter, v1Hyperband.maxIter) &&
         Objects.equals(this.eta, v1Hyperband.eta) &&
         Objects.equals(this.resource, v1Hyperband.resource) &&
         Objects.equals(this.metric, v1Hyperband.metric) &&
@@ -267,7 +289,7 @@ public class V1Hyperband {
 
   @Override
   public int hashCode() {
-    return Objects.hash(kind, matrix, eta, resource, metric, resume, seed, concurrency, earlyStopping);
+    return Objects.hash(kind, matrix, maxIter, eta, resource, metric, resume, seed, concurrency, earlyStopping);
   }
 
 
@@ -278,6 +300,7 @@ public class V1Hyperband {
     
     sb.append("    kind: ").append(toIndentedString(kind)).append("\n");
     sb.append("    matrix: ").append(toIndentedString(matrix)).append("\n");
+    sb.append("    maxIter: ").append(toIndentedString(maxIter)).append("\n");
     sb.append("    eta: ").append(toIndentedString(eta)).append("\n");
     sb.append("    resource: ").append(toIndentedString(resource)).append("\n");
     sb.append("    metric: ").append(toIndentedString(metric)).append("\n");

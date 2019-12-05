@@ -47,24 +47,32 @@ class V1Schemas(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'op_condition': 'V1OpCondition',
-        'early_stopping': 'V1EarlyStopping',
-        'parallel': 'V1Parallel',
-        'op': 'V1Op',
-        'run': 'V1RunSchema',
-        'schedule': 'V1Schedule'
+        "op_condition": "V1OpCondition",
+        "early_stopping": "V1EarlyStopping",
+        "parallel": "V1Parallel",
+        "op": "V1Op",
+        "run": "V1RunSchema",
+        "schedule": "V1Schedule",
     }
 
     attribute_map = {
-        'op_condition': 'op_condition',
-        'early_stopping': 'early_stopping',
-        'parallel': 'parallel',
-        'op': 'op',
-        'run': 'run',
-        'schedule': 'schedule'
+        "op_condition": "op_condition",
+        "early_stopping": "early_stopping",
+        "parallel": "parallel",
+        "op": "op",
+        "run": "run",
+        "schedule": "schedule",
     }
 
-    def __init__(self, op_condition=None, early_stopping=None, parallel=None, op=None, run=None, schedule=None):  # noqa: E501
+    def __init__(
+        self,
+        op_condition=None,
+        early_stopping=None,
+        parallel=None,
+        op=None,
+        run=None,
+        schedule=None,
+    ):  # noqa: E501
         """V1Schemas - a model defined in Swagger"""  # noqa: E501
 
         self._op_condition = None
@@ -221,18 +229,20 @@ class V1Schemas(object):
         for attr, _ in six.iteritems(self.swagger_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(map(
-                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
-                    value
-                ))
+                result[attr] = list(
+                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
+                )
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(map(
-                    lambda item: (item[0], item[1].to_dict())
-                    if hasattr(item[1], "to_dict") else item,
-                    value.items()
-                ))
+                result[attr] = dict(
+                    map(
+                        lambda item: (item[0], item[1].to_dict())
+                        if hasattr(item[1], "to_dict")
+                        else item,
+                        value.items(),
+                    )
+                )
             else:
                 result[attr] = value
         if issubclass(V1Schemas, dict):

@@ -47,50 +47,71 @@ class V1Component(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'version': 'float',
-        'kind': 'str',
-        'name': 'str',
-        'tag': 'str',
-        'description': 'str',
-        'tags': 'list[str]',
-        'profile': 'str',
-        'queue': 'str',
-        'nocache': 'bool',
-        'environment': 'V1Environment',
-        'termination': 'V1Termination',
-        'init': 'V1Init',
-        'mounts': 'V1Mounts',
-        'schedule': 'object',
-        'parallel': 'object',
-        'service': 'V1Service',
-        'inputs': 'list[V1IO]',
-        'outputs': 'list[V1IO]',
-        'run': 'object'
+        "version": "float",
+        "kind": "str",
+        "name": "str",
+        "tag": "str",
+        "description": "str",
+        "tags": "list[str]",
+        "profile": "str",
+        "queue": "str",
+        "nocache": "bool",
+        "environment": "V1Environment",
+        "termination": "V1Termination",
+        "init": "V1Init",
+        "mounts": "V1Mounts",
+        "schedule": "object",
+        "parallel": "object",
+        "service": "V1Service",
+        "inputs": "list[V1IO]",
+        "outputs": "list[V1IO]",
+        "run": "object",
     }
 
     attribute_map = {
-        'version': 'version',
-        'kind': 'kind',
-        'name': 'name',
-        'tag': 'tag',
-        'description': 'description',
-        'tags': 'tags',
-        'profile': 'profile',
-        'queue': 'queue',
-        'nocache': 'nocache',
-        'environment': 'environment',
-        'termination': 'termination',
-        'init': 'init',
-        'mounts': 'mounts',
-        'schedule': 'schedule',
-        'parallel': 'parallel',
-        'service': 'service',
-        'inputs': 'inputs',
-        'outputs': 'outputs',
-        'run': 'run'
+        "version": "version",
+        "kind": "kind",
+        "name": "name",
+        "tag": "tag",
+        "description": "description",
+        "tags": "tags",
+        "profile": "profile",
+        "queue": "queue",
+        "nocache": "nocache",
+        "environment": "environment",
+        "termination": "termination",
+        "init": "init",
+        "mounts": "mounts",
+        "schedule": "schedule",
+        "parallel": "parallel",
+        "service": "service",
+        "inputs": "inputs",
+        "outputs": "outputs",
+        "run": "run",
     }
 
-    def __init__(self, version=None, kind=None, name=None, tag=None, description=None, tags=None, profile=None, queue=None, nocache=None, environment=None, termination=None, init=None, mounts=None, schedule=None, parallel=None, service=None, inputs=None, outputs=None, run=None):  # noqa: E501
+    def __init__(
+        self,
+        version=None,
+        kind=None,
+        name=None,
+        tag=None,
+        description=None,
+        tags=None,
+        profile=None,
+        queue=None,
+        nocache=None,
+        environment=None,
+        termination=None,
+        init=None,
+        mounts=None,
+        schedule=None,
+        parallel=None,
+        service=None,
+        inputs=None,
+        outputs=None,
+        run=None,
+    ):  # noqa: E501
         """V1Component - a model defined in Swagger"""  # noqa: E501
 
         self._version = None
@@ -559,18 +580,20 @@ class V1Component(object):
         for attr, _ in six.iteritems(self.swagger_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(map(
-                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
-                    value
-                ))
+                result[attr] = list(
+                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
+                )
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(map(
-                    lambda item: (item[0], item[1].to_dict())
-                    if hasattr(item[1], "to_dict") else item,
-                    value.items()
-                ))
+                result[attr] = dict(
+                    map(
+                        lambda item: (item[0], item[1].to_dict())
+                        if hasattr(item[1], "to_dict")
+                        else item,
+                        value.items(),
+                    )
+                )
             else:
                 result[attr] = value
         if issubclass(V1Component, dict):

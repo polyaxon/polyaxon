@@ -1292,6 +1292,12 @@ export interface V1Hyperband {
      * @type {number}
      * @memberof V1Hyperband
      */
+    max_iter?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof V1Hyperband
+     */
     eta?: number;
     /**
      * 

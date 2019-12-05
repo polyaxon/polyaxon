@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **kind** | **String** |  |  [optional]
 **matrix** | **String** |  |  [optional]
+**maxIter** | **Integer** |  |  [optional]
 **eta** | **Integer** |  |  [optional]
 **resource** | [**V1OptimizationResource**](V1OptimizationResource.md) |  |  [optional]
 **metric** | [**V1OptimizationMetric**](V1OptimizationMetric.md) |  |  [optional]

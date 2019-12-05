@@ -170,6 +170,8 @@
                 expect(data.parallel.hyperband.kind).to.be("");
                 expect(data.parallel.hyperband.matrix).to.be.a('string');
                 expect(data.parallel.hyperband.matrix).to.be("");
+                expect(data.parallel.hyperband.max_iter).to.be.a('number');
+                expect(data.parallel.hyperband.max_iter).to.be(0);
                 expect(data.parallel.hyperband.eta).to.be.a('number');
                 expect(data.parallel.hyperband.eta).to.be(0);
                 expect(data.parallel.hyperband.resource).to.be.a(PolyaxonSdk.V1OptimizationResource);

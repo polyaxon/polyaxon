@@ -47,58 +47,83 @@ class V1Op(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'version': 'float',
-        'kind': 'str',
-        'name': 'str',
-        'tag': 'str',
-        'description': 'str',
-        'tags': 'list[str]',
-        'profile': 'str',
-        'queue': 'str',
-        'nocache': 'bool',
-        'environment': 'V1Environment',
-        'termination': 'V1Termination',
-        'init': 'V1Init',
-        'mounts': 'V1Mounts',
-        'schedule': 'object',
-        'parallel': 'object',
-        'service': 'V1Service',
-        'dependencies': 'list[str]',
-        'trigger': 'V1TriggerPolicy',
-        'conditions': 'list[object]',
-        'skip_on_upstream_skip': 'bool',
-        'params': 'object',
-        'component_ref': 'V1ComponentRef',
-        'component': 'V1Component'
+        "version": "float",
+        "kind": "str",
+        "name": "str",
+        "tag": "str",
+        "description": "str",
+        "tags": "list[str]",
+        "profile": "str",
+        "queue": "str",
+        "nocache": "bool",
+        "environment": "V1Environment",
+        "termination": "V1Termination",
+        "init": "V1Init",
+        "mounts": "V1Mounts",
+        "schedule": "object",
+        "parallel": "object",
+        "service": "V1Service",
+        "dependencies": "list[str]",
+        "trigger": "V1TriggerPolicy",
+        "conditions": "list[object]",
+        "skip_on_upstream_skip": "bool",
+        "params": "object",
+        "component_ref": "V1ComponentRef",
+        "component": "V1Component",
     }
 
     attribute_map = {
-        'version': 'version',
-        'kind': 'kind',
-        'name': 'name',
-        'tag': 'tag',
-        'description': 'description',
-        'tags': 'tags',
-        'profile': 'profile',
-        'queue': 'queue',
-        'nocache': 'nocache',
-        'environment': 'environment',
-        'termination': 'termination',
-        'init': 'init',
-        'mounts': 'mounts',
-        'schedule': 'schedule',
-        'parallel': 'parallel',
-        'service': 'service',
-        'dependencies': 'dependencies',
-        'trigger': 'trigger',
-        'conditions': 'conditions',
-        'skip_on_upstream_skip': 'skip_on_upstream_skip',
-        'params': 'params',
-        'component_ref': 'component_ref',
-        'component': 'component'
+        "version": "version",
+        "kind": "kind",
+        "name": "name",
+        "tag": "tag",
+        "description": "description",
+        "tags": "tags",
+        "profile": "profile",
+        "queue": "queue",
+        "nocache": "nocache",
+        "environment": "environment",
+        "termination": "termination",
+        "init": "init",
+        "mounts": "mounts",
+        "schedule": "schedule",
+        "parallel": "parallel",
+        "service": "service",
+        "dependencies": "dependencies",
+        "trigger": "trigger",
+        "conditions": "conditions",
+        "skip_on_upstream_skip": "skip_on_upstream_skip",
+        "params": "params",
+        "component_ref": "component_ref",
+        "component": "component",
     }
 
-    def __init__(self, version=None, kind=None, name=None, tag=None, description=None, tags=None, profile=None, queue=None, nocache=None, environment=None, termination=None, init=None, mounts=None, schedule=None, parallel=None, service=None, dependencies=None, trigger=None, conditions=None, skip_on_upstream_skip=None, params=None, component_ref=None, component=None):  # noqa: E501
+    def __init__(
+        self,
+        version=None,
+        kind=None,
+        name=None,
+        tag=None,
+        description=None,
+        tags=None,
+        profile=None,
+        queue=None,
+        nocache=None,
+        environment=None,
+        termination=None,
+        init=None,
+        mounts=None,
+        schedule=None,
+        parallel=None,
+        service=None,
+        dependencies=None,
+        trigger=None,
+        conditions=None,
+        skip_on_upstream_skip=None,
+        params=None,
+        component_ref=None,
+        component=None,
+    ):  # noqa: E501
         """V1Op - a model defined in Swagger"""  # noqa: E501
 
         self._version = None
@@ -663,18 +688,20 @@ class V1Op(object):
         for attr, _ in six.iteritems(self.swagger_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(map(
-                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
-                    value
-                ))
+                result[attr] = list(
+                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
+                )
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(map(
-                    lambda item: (item[0], item[1].to_dict())
-                    if hasattr(item[1], "to_dict") else item,
-                    value.items()
-                ))
+                result[attr] = dict(
+                    map(
+                        lambda item: (item[0], item[1].to_dict())
+                        if hasattr(item[1], "to_dict")
+                        else item,
+                        value.items(),
+                    )
+                )
             else:
                 result[attr] = value
         if issubclass(V1Op, dict):

@@ -8843,6 +8843,11 @@
           "type": "string",
           "title": "Matrix/Space definition of params to traverse"
         },
+        "max_iter": {
+          "type": "integer",
+          "format": "int32",
+          "title": "Max iteration"
+        },
         "eta": {
           "type": "integer",
           "format": "int32",

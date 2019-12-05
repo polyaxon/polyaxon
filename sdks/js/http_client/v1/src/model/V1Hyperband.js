@@ -73,6 +73,8 @@
         obj.kind = ApiClient.convertToType(data['kind'], 'String');
       if (data.hasOwnProperty('matrix'))
         obj.matrix = ApiClient.convertToType(data['matrix'], 'String');
+      if (data.hasOwnProperty('max_iter'))
+        obj.max_iter = ApiClient.convertToType(data['max_iter'], 'Number');
       if (data.hasOwnProperty('eta'))
         obj.eta = ApiClient.convertToType(data['eta'], 'Number');
       if (data.hasOwnProperty('resource'))
@@ -100,6 +102,11 @@
    * @member {String} matrix
    */
   exports.prototype.matrix = undefined;
+
+  /**
+   * @member {Number} max_iter
+   */
+  exports.prototype.max_iter = undefined;
 
   /**
    * @member {Number} eta

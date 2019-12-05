@@ -47,30 +47,41 @@ class V1ProjectSettings(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'logs_store': 'str',
-        'outputs_store': 'str',
-        'artifacts_stores': 'list[str]',
-        'git_accesses': 'list[str]',
-        'registry_accesses': 'list[str]',
-        'k8s_secrets': 'list[str]',
-        'k8s_config_maps': 'list[str]',
-        'run_profile': 'str',
-        'run_profiles': 'list[str]'
+        "logs_store": "str",
+        "outputs_store": "str",
+        "artifacts_stores": "list[str]",
+        "git_accesses": "list[str]",
+        "registry_accesses": "list[str]",
+        "k8s_secrets": "list[str]",
+        "k8s_config_maps": "list[str]",
+        "run_profile": "str",
+        "run_profiles": "list[str]",
     }
 
     attribute_map = {
-        'logs_store': 'logs_store',
-        'outputs_store': 'outputs_store',
-        'artifacts_stores': 'artifacts_stores',
-        'git_accesses': 'git_accesses',
-        'registry_accesses': 'registry_accesses',
-        'k8s_secrets': 'k8s_secrets',
-        'k8s_config_maps': 'k8s_config_maps',
-        'run_profile': 'run_profile',
-        'run_profiles': 'run_profiles'
+        "logs_store": "logs_store",
+        "outputs_store": "outputs_store",
+        "artifacts_stores": "artifacts_stores",
+        "git_accesses": "git_accesses",
+        "registry_accesses": "registry_accesses",
+        "k8s_secrets": "k8s_secrets",
+        "k8s_config_maps": "k8s_config_maps",
+        "run_profile": "run_profile",
+        "run_profiles": "run_profiles",
     }
 
-    def __init__(self, logs_store=None, outputs_store=None, artifacts_stores=None, git_accesses=None, registry_accesses=None, k8s_secrets=None, k8s_config_maps=None, run_profile=None, run_profiles=None):  # noqa: E501
+    def __init__(
+        self,
+        logs_store=None,
+        outputs_store=None,
+        artifacts_stores=None,
+        git_accesses=None,
+        registry_accesses=None,
+        k8s_secrets=None,
+        k8s_config_maps=None,
+        run_profile=None,
+        run_profiles=None,
+    ):  # noqa: E501
         """V1ProjectSettings - a model defined in Swagger"""  # noqa: E501
 
         self._logs_store = None
@@ -299,18 +310,20 @@ class V1ProjectSettings(object):
         for attr, _ in six.iteritems(self.swagger_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(map(
-                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
-                    value
-                ))
+                result[attr] = list(
+                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
+                )
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(map(
-                    lambda item: (item[0], item[1].to_dict())
-                    if hasattr(item[1], "to_dict") else item,
-                    value.items()
-                ))
+                result[attr] = dict(
+                    map(
+                        lambda item: (item[0], item[1].to_dict())
+                        if hasattr(item[1], "to_dict")
+                        else item,
+                        value.items(),
+                    )
+                )
             else:
                 result[attr] = value
         if issubclass(V1ProjectSettings, dict):

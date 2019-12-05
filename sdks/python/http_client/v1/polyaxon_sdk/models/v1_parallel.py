@@ -47,26 +47,35 @@ class V1Parallel(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'random': 'V1RandomSearch',
-        'grid': 'V1GridSearch',
-        'hyperband': 'V1Hyperband',
-        'bo': 'V1BO',
-        'hyperopt': 'V1Hyperopt',
-        'iterative': 'V1Iterative',
-        'mapping': 'V1Mapping'
+        "random": "V1RandomSearch",
+        "grid": "V1GridSearch",
+        "hyperband": "V1Hyperband",
+        "bo": "V1BO",
+        "hyperopt": "V1Hyperopt",
+        "iterative": "V1Iterative",
+        "mapping": "V1Mapping",
     }
 
     attribute_map = {
-        'random': 'random',
-        'grid': 'grid',
-        'hyperband': 'hyperband',
-        'bo': 'bo',
-        'hyperopt': 'hyperopt',
-        'iterative': 'iterative',
-        'mapping': 'mapping'
+        "random": "random",
+        "grid": "grid",
+        "hyperband": "hyperband",
+        "bo": "bo",
+        "hyperopt": "hyperopt",
+        "iterative": "iterative",
+        "mapping": "mapping",
     }
 
-    def __init__(self, random=None, grid=None, hyperband=None, bo=None, hyperopt=None, iterative=None, mapping=None):  # noqa: E501
+    def __init__(
+        self,
+        random=None,
+        grid=None,
+        hyperband=None,
+        bo=None,
+        hyperopt=None,
+        iterative=None,
+        mapping=None,
+    ):  # noqa: E501
         """V1Parallel - a model defined in Swagger"""  # noqa: E501
 
         self._random = None
@@ -247,18 +256,20 @@ class V1Parallel(object):
         for attr, _ in six.iteritems(self.swagger_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(map(
-                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
-                    value
-                ))
+                result[attr] = list(
+                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
+                )
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(map(
-                    lambda item: (item[0], item[1].to_dict())
-                    if hasattr(item[1], "to_dict") else item,
-                    value.items()
-                ))
+                result[attr] = dict(
+                    map(
+                        lambda item: (item[0], item[1].to_dict())
+                        if hasattr(item[1], "to_dict")
+                        else item,
+                        value.items(),
+                    )
+                )
             else:
                 result[attr] = value
         if issubclass(V1Parallel, dict):

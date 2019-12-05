@@ -47,20 +47,22 @@ class V1OrganizationMember(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'user': 'str',
-        'role': 'str',
-        'created_at': 'datetime',
-        'updated_at': 'datetime'
+        "user": "str",
+        "role": "str",
+        "created_at": "datetime",
+        "updated_at": "datetime",
     }
 
     attribute_map = {
-        'user': 'user',
-        'role': 'role',
-        'created_at': 'created_at',
-        'updated_at': 'updated_at'
+        "user": "user",
+        "role": "role",
+        "created_at": "created_at",
+        "updated_at": "updated_at",
     }
 
-    def __init__(self, user=None, role=None, created_at=None, updated_at=None):  # noqa: E501
+    def __init__(
+        self, user=None, role=None, created_at=None, updated_at=None
+    ):  # noqa: E501
         """V1OrganizationMember - a model defined in Swagger"""  # noqa: E501
 
         self._user = None
@@ -169,18 +171,20 @@ class V1OrganizationMember(object):
         for attr, _ in six.iteritems(self.swagger_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(map(
-                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
-                    value
-                ))
+                result[attr] = list(
+                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
+                )
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(map(
-                    lambda item: (item[0], item[1].to_dict())
-                    if hasattr(item[1], "to_dict") else item,
-                    value.items()
-                ))
+                result[attr] = dict(
+                    map(
+                        lambda item: (item[0], item[1].to_dict())
+                        if hasattr(item[1], "to_dict")
+                        else item,
+                        value.items(),
+                    )
+                )
             else:
                 result[attr] = value
         if issubclass(V1OrganizationMember, dict):

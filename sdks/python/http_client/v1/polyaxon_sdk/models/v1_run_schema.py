@@ -47,28 +47,38 @@ class V1RunSchema(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'container': 'V1Container',
-        'dag': 'V1Dag',
-        'tf_job': 'V1TFJob',
-        'pytorch_job': 'V1PytorchJob',
-        'mpi_job': 'V1MpiJob',
-        'dask': 'V1Dask',
-        'spark': 'V1Spark',
-        'flink': 'V1Flink'
+        "container": "V1Container",
+        "dag": "V1Dag",
+        "tf_job": "V1TFJob",
+        "pytorch_job": "V1PytorchJob",
+        "mpi_job": "V1MpiJob",
+        "dask": "V1Dask",
+        "spark": "V1Spark",
+        "flink": "V1Flink",
     }
 
     attribute_map = {
-        'container': 'container',
-        'dag': 'dag',
-        'tf_job': 'tf_job',
-        'pytorch_job': 'pytorch_job',
-        'mpi_job': 'mpi_job',
-        'dask': 'dask',
-        'spark': 'spark',
-        'flink': 'flink'
+        "container": "container",
+        "dag": "dag",
+        "tf_job": "tf_job",
+        "pytorch_job": "pytorch_job",
+        "mpi_job": "mpi_job",
+        "dask": "dask",
+        "spark": "spark",
+        "flink": "flink",
     }
 
-    def __init__(self, container=None, dag=None, tf_job=None, pytorch_job=None, mpi_job=None, dask=None, spark=None, flink=None):  # noqa: E501
+    def __init__(
+        self,
+        container=None,
+        dag=None,
+        tf_job=None,
+        pytorch_job=None,
+        mpi_job=None,
+        dask=None,
+        spark=None,
+        flink=None,
+    ):  # noqa: E501
         """V1RunSchema - a model defined in Swagger"""  # noqa: E501
 
         self._container = None
@@ -273,18 +283,20 @@ class V1RunSchema(object):
         for attr, _ in six.iteritems(self.swagger_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(map(
-                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
-                    value
-                ))
+                result[attr] = list(
+                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
+                )
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(map(
-                    lambda item: (item[0], item[1].to_dict())
-                    if hasattr(item[1], "to_dict") else item,
-                    value.items()
-                ))
+                result[attr] = dict(
+                    map(
+                        lambda item: (item[0], item[1].to_dict())
+                        if hasattr(item[1], "to_dict")
+                        else item,
+                        value.items(),
+                    )
+                )
             else:
                 result[attr] = value
         if issubclass(V1RunSchema, dict):
