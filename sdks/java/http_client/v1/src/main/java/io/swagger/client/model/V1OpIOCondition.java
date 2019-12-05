@@ -46,11 +46,8 @@ public class V1OpIOCondition {
   @SerializedName("kind")
   private String kind = null;
 
-  @SerializedName("op")
-  private String op = null;
-
-  @SerializedName("name")
-  private String name = null;
+  @SerializedName("param")
+  private String param = null;
 
   @SerializedName("trigger")
   private String trigger = null;
@@ -73,40 +70,22 @@ public class V1OpIOCondition {
     this.kind = kind;
   }
 
-  public V1OpIOCondition op(String op) {
-    this.op = op;
+  public V1OpIOCondition param(String param) {
+    this.param = param;
     return this;
   }
 
    /**
-   * Get op
-   * @return op
+   * Get param
+   * @return param
   **/
   @ApiModelProperty(value = "")
-  public String getOp() {
-    return op;
+  public String getParam() {
+    return param;
   }
 
-  public void setOp(String op) {
-    this.op = op;
-  }
-
-  public V1OpIOCondition name(String name) {
-    this.name = name;
-    return this;
-  }
-
-   /**
-   * Get name
-   * @return name
-  **/
-  @ApiModelProperty(value = "")
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
+  public void setParam(String param) {
+    this.param = param;
   }
 
   public V1OpIOCondition trigger(String trigger) {
@@ -138,14 +117,13 @@ public class V1OpIOCondition {
     }
     V1OpIOCondition v1OpIOCondition = (V1OpIOCondition) o;
     return Objects.equals(this.kind, v1OpIOCondition.kind) &&
-        Objects.equals(this.op, v1OpIOCondition.op) &&
-        Objects.equals(this.name, v1OpIOCondition.name) &&
+        Objects.equals(this.param, v1OpIOCondition.param) &&
         Objects.equals(this.trigger, v1OpIOCondition.trigger);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(kind, op, name, trigger);
+    return Objects.hash(kind, param, trigger);
   }
 
 
@@ -155,8 +133,7 @@ public class V1OpIOCondition {
     sb.append("class V1OpIOCondition {\n");
     
     sb.append("    kind: ").append(toIndentedString(kind)).append("\n");
-    sb.append("    op: ").append(toIndentedString(op)).append("\n");
-    sb.append("    name: ").append(toIndentedString(name)).append("\n");
+    sb.append("    param: ").append(toIndentedString(param)).append("\n");
     sb.append("    trigger: ").append(toIndentedString(trigger)).append("\n");
     sb.append("}");
     return sb.toString();

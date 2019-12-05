@@ -9756,19 +9756,15 @@
       "properties": {
         "kind": {
           "type": "string",
-          "title": "Kind of runtime, should be equal to \"input\" or \"output\""
+          "title": "Kind of runtime, should be equal to \"io\""
         },
-        "op": {
+        "param": {
           "type": "string",
-          "title": "Op to set the condition on"
-        },
-        "name": {
-          "type": "string",
-          "title": "Input name to check check the condition on"
+          "title": "Param to condition on: e.g. builds.outputs.param1"
         },
         "trigger": {
           "type": "string",
-          "title": "Trigger to check, trigger condition must conform to the iotype"
+          "title": "Trigger to check, trigger condition must conform to the iotype, e.g. value condition: v1|v2|V3"
         }
       },
       "title": "Input condition specification"

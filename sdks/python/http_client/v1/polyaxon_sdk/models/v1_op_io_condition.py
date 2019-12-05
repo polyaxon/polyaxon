@@ -46,25 +46,22 @@ class V1OpIOCondition(object):
       attribute_map (dict): The key is attribute name
                             and the value is json key in definition.
     """
-    swagger_types = {"kind": "str", "op": "str", "name": "str", "trigger": "str"}
+    swagger_types = {"kind": "str", "param": "str", "trigger": "str"}
 
-    attribute_map = {"kind": "kind", "op": "op", "name": "name", "trigger": "trigger"}
+    attribute_map = {"kind": "kind", "param": "param", "trigger": "trigger"}
 
-    def __init__(self, kind=None, op=None, name=None, trigger=None):  # noqa: E501
+    def __init__(self, kind=None, param=None, trigger=None):  # noqa: E501
         """V1OpIOCondition - a model defined in Swagger"""  # noqa: E501
 
         self._kind = None
-        self._op = None
-        self._name = None
+        self._param = None
         self._trigger = None
         self.discriminator = None
 
         if kind is not None:
             self.kind = kind
-        if op is not None:
-            self.op = op
-        if name is not None:
-            self.name = name
+        if param is not None:
+            self.param = param
         if trigger is not None:
             self.trigger = trigger
 
@@ -90,46 +87,25 @@ class V1OpIOCondition(object):
         self._kind = kind
 
     @property
-    def op(self):
-        """Gets the op of this V1OpIOCondition.  # noqa: E501
+    def param(self):
+        """Gets the param of this V1OpIOCondition.  # noqa: E501
 
 
-        :return: The op of this V1OpIOCondition.  # noqa: E501
+        :return: The param of this V1OpIOCondition.  # noqa: E501
         :rtype: str
         """
-        return self._op
+        return self._param
 
-    @op.setter
-    def op(self, op):
-        """Sets the op of this V1OpIOCondition.
+    @param.setter
+    def param(self, param):
+        """Sets the param of this V1OpIOCondition.
 
 
-        :param op: The op of this V1OpIOCondition.  # noqa: E501
+        :param param: The param of this V1OpIOCondition.  # noqa: E501
         :type: str
         """
 
-        self._op = op
-
-    @property
-    def name(self):
-        """Gets the name of this V1OpIOCondition.  # noqa: E501
-
-
-        :return: The name of this V1OpIOCondition.  # noqa: E501
-        :rtype: str
-        """
-        return self._name
-
-    @name.setter
-    def name(self, name):
-        """Sets the name of this V1OpIOCondition.
-
-
-        :param name: The name of this V1OpIOCondition.  # noqa: E501
-        :type: str
-        """
-
-        self._name = name
+        self._param = param
 
     @property
     def trigger(self):

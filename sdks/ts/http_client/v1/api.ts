@@ -2447,13 +2447,7 @@ export interface V1OpIOCondition {
      * @type {string}
      * @memberof V1OpIOCondition
      */
-    op?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1OpIOCondition
-     */
-    name?: string;
+    param?: string;
     /**
      * 
      * @type {string}

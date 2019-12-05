@@ -18,17 +18,14 @@ message OpStatusCondition {
 
 // Input condition specification
 message OpIOCondition {
-    // Kind of runtime, should be equal to "input" or "output"
+    // Kind of runtime, should be equal to "io"
     string kind = 1;
 
-    // Op to set the condition on
-    string op = 2;
+    // Param to condition on: e.g. builds.outputs.param1
+    string param = 2;
 
-    // Input name to check check the condition on
-    string name = 3;
-
-    // Trigger to check, trigger condition must conform to the iotype
-    string trigger = 4;
+    // Trigger to check, trigger condition must conform to the iotype, e.g. value condition: v1|v2|V3
+    string trigger = 3;
 }
 
 

@@ -61,16 +61,10 @@
         // expect(instance.kind).to.be(expectedValueLiteral);
       });
 
-      it('should have the property op (base name: "op")', function() {
-        // TODO: update the code to test the property op
-        expect(instance).to.have.property('op');
-        // expect(instance.op).to.be(expectedValueLiteral);
-      });
-
-      it('should have the property name (base name: "name")', function() {
-        // TODO: update the code to test the property name
-        expect(instance).to.have.property('name');
-        // expect(instance.name).to.be(expectedValueLiteral);
+      it('should have the property param (base name: "param")', function() {
+        // TODO: update the code to test the property param
+        expect(instance).to.have.property('param');
+        // expect(instance.param).to.be(expectedValueLiteral);
       });
 
       it('should have the property trigger (base name: "trigger")', function() {

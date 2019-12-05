@@ -66,10 +66,8 @@
                   expect(data.op_condition.op_io_conidtion).to.be.a(PolyaxonSdk.V1OpIOCondition);
                     expect(data.op_condition.op_io_conidtion.kind).to.be.a('string');
                 expect(data.op_condition.op_io_conidtion.kind).to.be("");
-                expect(data.op_condition.op_io_conidtion.op).to.be.a('string');
-                expect(data.op_condition.op_io_conidtion.op).to.be("");
-                expect(data.op_condition.op_io_conidtion.name).to.be.a('string');
-                expect(data.op_condition.op_io_conidtion.name).to.be("");
+                expect(data.op_condition.op_io_conidtion.param).to.be.a('string');
+                expect(data.op_condition.op_io_conidtion.param).to.be("");
                 expect(data.op_condition.op_io_conidtion.trigger).to.be.a('string');
                 expect(data.op_condition.op_io_conidtion.trigger).to.be("");
               expect(data.op_condition.op_status_condition).to.be.a(PolyaxonSdk.V1OpStatusCondition);

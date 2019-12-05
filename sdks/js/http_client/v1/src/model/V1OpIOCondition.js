@@ -71,10 +71,8 @@
       obj = obj || new exports();
       if (data.hasOwnProperty('kind'))
         obj.kind = ApiClient.convertToType(data['kind'], 'String');
-      if (data.hasOwnProperty('op'))
-        obj.op = ApiClient.convertToType(data['op'], 'String');
-      if (data.hasOwnProperty('name'))
-        obj.name = ApiClient.convertToType(data['name'], 'String');
+      if (data.hasOwnProperty('param'))
+        obj.param = ApiClient.convertToType(data['param'], 'String');
       if (data.hasOwnProperty('trigger'))
         obj.trigger = ApiClient.convertToType(data['trigger'], 'String');
     }
@@ -87,14 +85,9 @@
   exports.prototype.kind = undefined;
 
   /**
-   * @member {String} op
+   * @member {String} param
    */
-  exports.prototype.op = undefined;
-
-  /**
-   * @member {String} name
-   */
-  exports.prototype.name = undefined;
+  exports.prototype.param = undefined;
 
   /**
    * @member {String} trigger

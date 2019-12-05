@@ -29,16 +29,13 @@ import (
 // swagger:model v1OpIOCondition
 type V1OpIOCondition struct {
 
-	// Kind of runtime, should be equal to "input" or "output"
+	// Kind of runtime, should be equal to "io"
 	Kind string `json:"kind,omitempty"`
 
-	// Input name to check check the condition on
-	Name string `json:"name,omitempty"`
+	// Param to condition on: e.g. builds.outputs.param1
+	Param string `json:"param,omitempty"`
 
-	// Op to set the condition on
-	Op string `json:"op,omitempty"`
-
-	// Trigger to check, trigger condition must conform to the iotype
+	// Trigger to check, trigger condition must conform to the iotype, e.g. value condition: v1|v2|V3
 	Trigger string `json:"trigger,omitempty"`
 }
 
