@@ -21,13 +21,11 @@ from marshmallow import fields, validate
 from polyaxon_sdk import V1OpIOCondition
 
 from polyaxon.schemas.base import BaseConfig, BaseSchema
-from polyaxon.schemas.polyflow.trigger_policies import ExpressionTriggerPolicy
 
 
 class OpIOConditionSchema(BaseSchema):
-    kind = fields.Str(allow_none=True)
-    op = fields.Str(required=True)
-    name = fields.Str(required=True)
+    kind = fields.Str(allow_none=True, validate=validate.Equal("io"))
+    param = fields.Str(required=True)
     trigger = fields.Str(required=True)
 
     @staticmethod
@@ -37,35 +35,9 @@ class OpIOConditionSchema(BaseSchema):
 
 class OpIOConditionConfig(BaseConfig, V1OpIOCondition):
     SCHEMA = OpIOConditionSchema
-    IDENTIFIER = "outputs"
+    IDENTIFIER = "io"
     IDENTIFIER_KIND = True
 
     @staticmethod
     def schema_config():
         return OpIOConditionSchema
-
-
-class OpInputsConditionSchema(OpIOConditionSchema):
-    kind = fields.Str(allow_none=True, validate=validate.Equal("inputs"))
-
-    @staticmethod
-    def schema_config():
-        return OpInputsConditionConfig
-
-
-class OpInputsConditionConfig(OpIOConditionConfig):
-    SCHEMA = OpInputsConditionSchema
-    IDENTIFIER = "outputs"
-
-
-class OpOutputsConditionSchema(OpIOConditionSchema):
-    kind = fields.Str(allow_none=True, validate=validate.Equal("outputs"))
-
-    @staticmethod
-    def schema_config():
-        return OpOutputsConditionConfig
-
-
-class OpOutputsConditionConfig(OpIOConditionConfig):
-    SCHEMA = OpOutputsConditionSchema
-    IDENTIFIER = "outputs"

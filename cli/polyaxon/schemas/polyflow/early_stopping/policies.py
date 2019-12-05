@@ -33,7 +33,7 @@ from polyaxon.schemas.polyflow.optimization import Optimization
 
 class MedianStoppingPolicySchema(BaseSchema):
     kind = fields.Str(allow_none=True, validate=validate.Equal("median"))
-    evaluation_interval = fields.Int(required=True)
+    evaluation_interval = RefOrObject(fields.Int(), required=True)
 
     @staticmethod
     def schema_config():
@@ -48,7 +48,7 @@ class MedianStoppingPolicyConfig(BaseConfig, V1MedianStoppingPolicy):
 
 class AverageStoppingPolicySchema(BaseSchema):
     kind = fields.Str(allow_none=True, validate=validate.Equal("average"))
-    evaluation_interval = fields.Int()
+    evaluation_interval = RefOrObject(fields.Int(), required=True)
 
     @staticmethod
     def schema_config():
@@ -63,8 +63,8 @@ class AverageStoppingPolicyConfig(BaseConfig, V1AverageStoppingPolicy):
 
 class TruncationStoppingPolicySchema(BaseSchema):
     kind = fields.Str(allow_none=True, validate=validate.Equal("truncation"))
-    percent = fields.Float()
-    evaluation_interval = fields.Int()
+    percent = RefOrObject(fields.Float(), required=True)
+    evaluation_interval = RefOrObject(fields.Int(), required=True)
 
     @staticmethod
     def schema_config():
@@ -89,10 +89,10 @@ class StoppingPolicySchema(BaseOneOfSchema):
 
 class MetricEarlyStoppingSchema(BaseSchema):
     kind = fields.Str(allow_none=True, validate=validate.Equal("metric_early_stopping"))
-    metric = fields.Str()
-    value = RefOrObject(fields.Float())
-    optimization = fields.Str(
-        allow_none=True, validate=validate.OneOf(Optimization.VALUES)
+    metric = RefOrObject(fields.Str(), required=True)
+    value = RefOrObject(fields.Float(), required=True)
+    optimization = RefOrObject(
+        fields.Str(validate=validate.OneOf(Optimization.VALUES)), required=True
     )
     policy = fields.Nested(StoppingPolicySchema, allow_none=True)
 
@@ -111,8 +111,8 @@ class FailureEarlyStoppingSchema(BaseSchema):
     kind = fields.Str(
         allow_none=True, validate=validate.Equal("failure_early_stopping")
     )
-    percent = fields.Float()
-    evaluation_interval = RefOrObject(fields.Int())
+    percent = RefOrObject(fields.Float(), required=True)
+    evaluation_interval = RefOrObject(fields.Int(), required=True)
 
     @staticmethod
     def schema_config():

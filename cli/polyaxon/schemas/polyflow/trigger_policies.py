@@ -35,13 +35,3 @@ class TriggerPolicy(V1TriggerPolicy):
         (ONE_FAILED, ONE_FAILED),
         (ONE_DONE, ONE_DONE),
     )
-
-
-class ExpressionTriggerPolicy(object):
-    EQ = "eq"
-    NE = "ne"
-    IS_NULL = "isnull"
-    NOT_NULL = "not_null"
-
-    VALUES = {EQ, NE}
-    CHOICES = ((EQ, EQ), (NE, NE), (IS_NULL, IS_NULL), (NOT_NULL, NOT_NULL))

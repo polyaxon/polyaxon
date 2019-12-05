@@ -25,8 +25,7 @@ from marshmallow import ValidationError
 
 from polyaxon.schemas.polyflow.conditions import (
     ConditionSchema,
-    OpInputsConditionConfig,
-    OpOutputsConditionConfig,
+    OpIOConditionConfig,
     OpStatusConditionConfig,
 )
 
@@ -48,72 +47,44 @@ class TestCondsConfigs(TestCase):
         config_dict = {"kind": "status", "op": "foo", "trigger": "done"}
         OpStatusConditionConfig.from_dict(config_dict)
 
-    def test_outputs_cond(self):
-        config_dict = {"op": "foo", "exp": "done", "params": ["op1.done", "foo"]}
+    def test_io_cond(self):
+        config_dict = {"op": "foo", "param": "done", "trigger": ["op1.done", "foo"]}
         with self.assertRaises(ValidationError):
-            OpOutputsConditionConfig.from_dict(config_dict)
+            OpIOConditionConfig.from_dict(config_dict)
 
-        config_dict = {
-            "kind": "foo",
-            "op": "foo",
-            "exp": "eq",
-            "params": [["op1.done", "foo"]],
+        config_dict = {"kind": "io", "param": "done", "trigger": ["foo"]}
+        with self.assertRaises(ValidationError):
+            OpIOConditionConfig.from_dict(config_dict)
+
+        config_dict = {"kind": "foo", "param": "done", "trigger": "true"}
+        with self.assertRaises(ValidationError):
+            OpIOConditionConfig.from_dict(config_dict)
+
+        config_dict = {"kind": "outputs", "param": "foo", "trigger": "done"}
+        with self.assertRaises(ValidationError):
+            OpIOConditionConfig.from_dict(config_dict)
+
+        config_dict = {"param": "name", "trigger": ["true"]}
+        with self.assertRaises(ValidationError):
+            OpIOConditionConfig.from_dict(config_dict)
+
+        config_dict1 = {"param": "build.outputs.image", "trigger": "value1"}
+        OpIOConditionConfig.from_dict(config_dict1)
+
+        config_dict2 = {
+            "kind": "io",
+            "param": "build.outputs.image",
+            "trigger": "~value1|value2|value3",
         }
-        with self.assertRaises(ValidationError):
-            OpOutputsConditionConfig.from_dict(config_dict)
-
-        config_dict = {"op": "foo", "exp": "eq", "params": ["op1.done", "foo"]}
-        with self.assertRaises(ValidationError):
-            OpOutputsConditionConfig.from_dict(config_dict)
-
-        config_dict = {"op": "foo", "exp": "eq", "params": [["op1.done", "foo"]]}
-        OpOutputsConditionConfig.from_dict(config_dict)
-
-        config_dict = {
-            "kind": "outputs",
-            "op": "foo",
-            "exp": "eq",
-            "params": [["op1.done", "foo"]],
-        }
-        OpOutputsConditionConfig.from_dict(config_dict)
-
-    def test_inputs_cond(self):
-        config_dict = {"op": "foo", "exp": "done", "params": ["op1.done", "foo"]}
-        with self.assertRaises(ValidationError):
-            OpInputsConditionConfig.from_dict(config_dict)
-
-        config_dict = {
-            "kind": "foo",
-            "op": "foo",
-            "exp": "eq",
-            "params": [["op1.done", "foo"]],
-        }
-        with self.assertRaises(ValidationError):
-            OpInputsConditionConfig.from_dict(config_dict)
-
-        config_dict = {"op": "foo", "exp": "eq", "params": ["op1.done", "foo"]}
-        with self.assertRaises(ValidationError):
-            OpInputsConditionConfig.from_dict(config_dict)
-
-        config_dict = {"op": "foo", "exp": "eq", "params": [["op1.done", "foo"]]}
-        OpInputsConditionConfig.from_dict(config_dict)
-
-        config_dict = {
-            "kind": "outputs",
-            "op": "foo",
-            "exp": "eq",
-            "params": [["op1.done", "foo"]],
-        }
-        OpInputsConditionConfig.from_dict(config_dict)
+        OpIOConditionConfig.from_dict(config_dict2)
 
     def test_conds(self):
         configs = [
             {"kind": "status", "op": "foo", "trigger": "done"},
             {
-                "kind": "outputs",
-                "op": "foo",
-                "exp": "eq",
-                "params": [["op1.done", "foo"]],
+                "kind": "io",
+                "param": "foo.outputs.param1",
+                "trigger": "~value1|value2",
             },
         ]
 

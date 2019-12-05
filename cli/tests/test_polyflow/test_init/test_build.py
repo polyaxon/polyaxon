@@ -129,7 +129,7 @@ class TestBuildConfigs(TestCase):
             "copy": ["/foo/bar"],
             "run": ["pip install tensor2tensor"],
             "env": [["LC_ALL", "en_US.UTF-8"]],
-            "name": "dockerfile",
+            "filename": "dockerfile",
             "workdir": "",
             "shell": "sh",
         }
@@ -144,7 +144,7 @@ class TestBuildConfigs(TestCase):
             "env": [["LC_ALL", "en_US.UTF-8"]],
             "uid": 1000,
             "gid": 3000,
-            "name": "dockerfile",
+            "filename": "dockerfile",
             "workdir": "",
             "shell": "sh",
         }
@@ -158,7 +158,7 @@ class TestBuildConfigs(TestCase):
         config_dict = {"image": "some_image_name"}
         config = BuildContextConfig.from_dict(config_dict)
         assert config.image_tag == "latest"
-        assert config.name == POLYAXON_DOCKERFILE_NAME
+        assert config.filename == POLYAXON_DOCKERFILE_NAME
         assert config.shell == POLYAXON_DOCKER_SHELL
         assert config.workdir == POLYAXON_DOCKER_WORKDIR
 

@@ -24,7 +24,7 @@ import pytest
 from marshmallow.exceptions import ValidationError
 from tests.utils import assert_equal_dict
 
-from polyaxon.schemas.polyflow.base import BaseComponentConfig
+from polyaxon.schemas.polyflow.component import ComponentConfig
 from polyaxon.schemas.polyflow.optimization import (
     Optimization,
     OptimizationMetricConfig,
@@ -43,15 +43,16 @@ class TestWorkflowConfigs(TestCase):
                 "kind": "mapping",
                 "concurrency": 2,
                 "values": [{"foo": 1}, {"foo": 2}, {"foo": 3}],
-            }
+            },
+            "run": {"kind": "container", "image": "foo/bar"},
         }
-        config = BaseComponentConfig.from_dict(config_dict)
-        assert_equal_dict(config.to_dict(), config_dict)
+        config = ComponentConfig.from_dict(config_dict)
+        assert config.to_dict() == config_dict
 
         # Add random_search without matrix should raise
         config_dict["parallel"] = {"kind": "random_search", "n_runs": 10}
         with self.assertRaises(ValidationError):
-            BaseComponentConfig.from_dict(config_dict)
+            ComponentConfig.from_dict(config_dict)
 
         # Add a matrix definition with 2 methods
         config_dict["parallel"]["matrix"] = {
@@ -62,43 +63,43 @@ class TestWorkflowConfigs(TestCase):
             }
         }
         with self.assertRaises(ValidationError):
-            BaseComponentConfig.from_dict(config_dict)
+            ComponentConfig.from_dict(config_dict)
 
         # Using a distribution with random search should pass
         config_dict["parallel"]["matrix"] = {
             "lr": {"kind": "pchoice", "value": [(1, 0.3), (2, 0.3), (3, 0.3)]}
         }
-        config = BaseComponentConfig.from_dict(config_dict)
-        assert_equal_dict(config.to_light_dict(), config_dict)
+        config = ComponentConfig.from_dict(config_dict)
+        assert config.to_dict() == config_dict
 
         # Add matrix definition should pass
         config_dict["parallel"]["matrix"] = {
             "lr": {"kind": "choice", "value": [1, 2, 3]}
         }
-        config = BaseComponentConfig.from_dict(config_dict)
-        assert_equal_dict(config.to_dict(), config_dict)
+        config = ComponentConfig.from_dict(config_dict)
+        assert config.to_dict() == config_dict
 
         # Add grid_search should raise
         config_dict["parallel"] = {"kind": "grid_search", "n_runs": 10}
         config_dict["parallel"]["matrix"] = {
             "lr": {"kind": "choice", "value": [1, 2, 3]}
         }
-        config = BaseComponentConfig.from_dict(config_dict)
-        assert_equal_dict(config.to_dict(), config_dict)
+        config = ComponentConfig.from_dict(config_dict)
+        assert config.to_dict() == config_dict
 
         # Adding a distribution should raise
         config_dict["parallel"]["matrix"] = {
             "lr": {"kind": "pchoice", "value": [(1, 0.3), (2, 0.3), (3, 0.3)]}
         }
         with self.assertRaises(ValidationError):
-            BaseComponentConfig.from_dict(config_dict)
+            ComponentConfig.from_dict(config_dict)
 
         # Updating the matrix should pass
         config_dict["parallel"]["matrix"] = {
             "lr": {"kind": "choice", "value": [1, 2, 3]}
         }
-        config = BaseComponentConfig.from_dict(config_dict)
-        assert_equal_dict(config.to_dict(), config_dict)
+        config = ComponentConfig.from_dict(config_dict)
+        assert config.to_dict() == config_dict
 
         # Add hyperband should raise
         config_dict["parallel"] = {
@@ -115,8 +116,8 @@ class TestWorkflowConfigs(TestCase):
             },
             "seed": 1,
         }
-        config = BaseComponentConfig.from_dict(config_dict)
-        assert_equal_dict(config.to_dict(), config_dict)
+        config = ComponentConfig.from_dict(config_dict)
+        assert config.to_dict() == config_dict
 
         # Add early stopping
         config_dict["parallel"]["early_stopping"] = [
@@ -139,8 +140,8 @@ class TestWorkflowConfigs(TestCase):
                 },
             },
         ]
-        config = BaseComponentConfig.from_dict(config_dict)
-        assert_equal_dict(config.to_dict(), config_dict)
+        config = ComponentConfig.from_dict(config_dict)
+        assert config.to_dict() == config_dict
 
         # Add bo should raise
         config_dict["parallel"] = {
@@ -166,7 +167,7 @@ class TestWorkflowConfigs(TestCase):
             "seed": 1,
         }
         with self.assertRaises(ValidationError):
-            BaseComponentConfig.from_dict(config_dict)
+            ComponentConfig.from_dict(config_dict)
 
         # Using non uniform distribution should raise
         # Updating the matrix should pass
@@ -174,17 +175,17 @@ class TestWorkflowConfigs(TestCase):
             "lr": {"kind": "pchoice", "value": [[0.1, 0.1], [0.2, 0.9]]}
         }
         with self.assertRaises(ValidationError):
-            BaseComponentConfig.from_dict(config_dict)
+            ComponentConfig.from_dict(config_dict)
 
         config_dict["parallel"]["matrix"] = {
             "lr": {"kind": "normal", "value": [0.1, 0.2]}
         }
         with self.assertRaises(ValidationError):
-            BaseComponentConfig.from_dict(config_dict)
+            ComponentConfig.from_dict(config_dict)
 
         # Using uniform distribution should not raise
         config_dict["parallel"]["matrix"] = {
             "lr": {"kind": "uniform", "value": {"low": 0.1, "high": 0.2}}
         }
-        config = BaseComponentConfig.from_dict(config_dict)
+        config = ComponentConfig.from_dict(config_dict)
         assert_equal_dict(config.to_dict(), config_dict)

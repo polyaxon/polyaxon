@@ -44,7 +44,6 @@ class ComponentConfig(BaseComponentConfig, RunMixin, V1Component):
         "outputs",
         "run",
     ]
-    IDENTIFIER_KIND = True
 
     def get_run_kind(self):
         return self.run.kind if self.run else None

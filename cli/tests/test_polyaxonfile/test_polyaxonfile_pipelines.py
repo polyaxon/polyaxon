@@ -238,7 +238,7 @@ class TestPolyaxonfileWithPipelines(TestCase):
         assert spec.run.components[1].init.build.to_light_dict() == {
             "image": "base",
             "env": "{{ env_vars }}",
-            "name": POLYAXON_DOCKERFILE_NAME,
+            "filename": POLYAXON_DOCKERFILE_NAME,
             "workdir": POLYAXON_DOCKER_WORKDIR,
             "shell": POLYAXON_DOCKER_SHELL,
         }

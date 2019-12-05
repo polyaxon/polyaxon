@@ -58,7 +58,7 @@ class TestInitConfigs(TestCase):
                 "run": ["pip install tensor2tensor"],
                 "env": [["LC_ALL", "en_US.UTF-8"]],
                 "shell": "foo",
-                "name": "foo.yaml",
+                "filename": "foo.yaml",
                 "workdir": "/test",
             }
         }

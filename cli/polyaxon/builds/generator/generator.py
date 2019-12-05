@@ -28,7 +28,7 @@ from polyaxon.builds.generator.dockerfile import POLYAXON_DOCKER_TEMPLATE
 class DockerFileGenerator(object):
     def __init__(self, build_context, destination="."):
         self.build_context = build_context
-        self.dockerfile_path = os.path.join(destination, build_context.name)
+        self.dockerfile_path = os.path.join(destination, build_context.filename)
 
     def clean(self):
         # Clean dockerfile

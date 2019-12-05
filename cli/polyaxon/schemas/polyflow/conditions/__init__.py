@@ -18,11 +18,9 @@
 from __future__ import absolute_import, division, print_function
 
 from polyaxon.schemas.base import BaseOneOfSchema
-from polyaxon.schemas.polyflow.conditions.outputs import (
-    OpOutputsConditionConfig,
-    OpOutputsConditionSchema,
-    OpInputsConditionConfig,
-    OpInputsConditionSchema,
+from polyaxon.schemas.polyflow.conditions.io import (
+    OpIOConditionConfig,
+    OpIOConditionSchema,
 )
 from polyaxon.schemas.polyflow.conditions.status import (
     OpStatusConditionConfig,
@@ -35,6 +33,5 @@ class ConditionSchema(BaseOneOfSchema):
     TYPE_FIELD_REMOVE = False
     SCHEMAS = {
         OpStatusConditionConfig.IDENTIFIER: OpStatusConditionSchema,
-        OpOutputsConditionConfig.IDENTIFIER: OpOutputsConditionSchema,
-        OpInputsConditionConfig.IDENTIFIER: OpInputsConditionSchema,
+        OpIOConditionConfig.IDENTIFIER: OpIOConditionSchema,
     }

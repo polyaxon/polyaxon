@@ -33,7 +33,12 @@ from polyaxon.schemas.polyflow.optimization import Optimization
 @pytest.mark.workflow_mark
 class TestEarlyStoppingConfigs(TestCase):
     def test_metric_early_stopping(self):
-        config_dict = {"kind": "metric_early_stopping", "metric": "loss", "value": 0.1}
+        config_dict = {
+            "kind": "metric_early_stopping",
+            "metric": "loss",
+            "value": 0.1,
+            "optimization": Optimization.MAXIMIZE,
+        }
         config = MetricEarlyStoppingConfig.from_dict(config_dict)
         config_to_dict = config.to_dict()
         assert config_to_dict.pop("optimization") == Optimization.MAXIMIZE

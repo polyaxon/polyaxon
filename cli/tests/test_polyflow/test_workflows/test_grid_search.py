@@ -24,7 +24,7 @@ import pytest
 from marshmallow.exceptions import ValidationError
 from tests.utils import assert_equal_dict
 
-from polyaxon.schemas.polyflow.base import BaseComponentConfig
+from polyaxon.schemas.polyflow.component import ComponentConfig
 from polyaxon.schemas.polyflow.parallel.grid_search import GridSearchConfig
 
 
@@ -64,7 +64,8 @@ class TestWorkflowGridSearchConfigs(TestCase):
                 "concurrency": 1,
                 "matrix": {"lr": {"kind": "choice", "value": [1, 2, 3]}},
                 "early_stopping": [],
-            }
+            },
+            "run": {"kind": "container", "image": "foo/bar"},
         }
-        config = BaseComponentConfig.from_dict(config_dict)
+        config = ComponentConfig.from_dict(config_dict)
         assert config.to_dict() == config_dict

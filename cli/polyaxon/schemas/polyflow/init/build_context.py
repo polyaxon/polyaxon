@@ -77,15 +77,29 @@ class BuildContextConfig(BaseConfig, V1BuildContext):
 
     @property
     def filename(self):
-        return self._filename or POLYAXON_DOCKERFILE_NAME
+        return (
+            self._filename if self._filename is not None else POLYAXON_DOCKERFILE_NAME
+        )
+
+    @filename.setter
+    def filename(self, filename):
+        self._filename = filename
 
     @property
     def workdir(self):
-        return self._workdir or POLYAXON_DOCKER_WORKDIR
+        return self._workdir if self._workdir is not None else POLYAXON_DOCKER_WORKDIR
+
+    @workdir.setter
+    def workdir(self, workdir):
+        self._workdir = workdir
 
     @property
     def shell(self):
-        return self._shell or POLYAXON_DOCKER_SHELL
+        return self._shell if self._shell is not None else POLYAXON_DOCKER_SHELL
+
+    @shell.setter
+    def shell(self, shell):
+        self._shell = shell
 
     @property
     def image_tag(self):

@@ -24,7 +24,7 @@ import pytest
 from marshmallow.exceptions import ValidationError
 from tests.utils import assert_equal_dict
 
-from polyaxon.schemas.polyflow.base import BaseComponentConfig
+from polyaxon.schemas.polyflow.component import ComponentConfig
 from polyaxon.schemas.polyflow.parallel.iterative import IterativeConfig
 
 
@@ -59,12 +59,13 @@ class TestWorkflowIterativeConfigs(TestCase):
                 "kind": "iterative",
                 "matrix": {"lr": {"kind": "choice", "value": [1, 2, 3]}},
                 "seed": 1,
-            }
+            },
+            "run": {"kind": "container", "image": "foo/bar"},
         }
 
         with self.assertRaises(ValidationError):
-            BaseComponentConfig.from_dict(config_dict)
+            ComponentConfig.from_dict(config_dict)
 
         config_dict["parallel"]["n_iterations"] = 10
-        config = BaseComponentConfig.from_dict(config_dict)
+        config = ComponentConfig.from_dict(config_dict)
         assert config.to_dict() == config_dict
