@@ -10,7 +10,7 @@ enum Optimization {
     // Minimize a metric
     maximize = 0;
 
-    // Maximize a metric
+    // Minimize a metric
     minimize = 1;
 }
 

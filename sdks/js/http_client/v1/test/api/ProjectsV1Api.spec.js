@@ -98,6 +98,7 @@
           var body = new PolyaxonSdk.V1Project();
           body.uuid = "";
           body.user = "";
+          body.user_email = "";
           body.owner = "";
           body.name = "";
           body.description = "";
@@ -120,6 +121,8 @@
             expect(data.uuid).to.be("");
             expect(data.user).to.be.a('string');
             expect(data.user).to.be("");
+            expect(data.user_email).to.be.a('string');
+            expect(data.user_email).to.be("");
             expect(data.owner).to.be.a('string');
             expect(data.owner).to.be("");
             expect(data.name).to.be.a('string');
@@ -234,6 +237,8 @@
             expect(data.uuid).to.be("");
             expect(data.user).to.be.a('string');
             expect(data.user).to.be("");
+            expect(data.user_email).to.be.a('string');
+            expect(data.user_email).to.be("");
             expect(data.owner).to.be.a('string');
             expect(data.owner).to.be("");
             expect(data.name).to.be.a('string');
@@ -421,6 +426,8 @@
                 expect(data.uuid).to.be("");
                 expect(data.user).to.be.a('string');
                 expect(data.user).to.be("");
+                expect(data.user_email).to.be.a('string');
+                expect(data.user_email).to.be("");
                 expect(data.owner).to.be.a('string');
                 expect(data.owner).to.be("");
                 expect(data.name).to.be.a('string');
@@ -494,6 +501,8 @@
                 expect(data.uuid).to.be("");
                 expect(data.user).to.be.a('string');
                 expect(data.user).to.be("");
+                expect(data.user_email).to.be.a('string');
+                expect(data.user_email).to.be("");
                 expect(data.owner).to.be.a('string');
                 expect(data.owner).to.be("");
                 expect(data.name).to.be.a('string');
@@ -567,6 +576,8 @@
                 expect(data.uuid).to.be("");
                 expect(data.user).to.be.a('string');
                 expect(data.user).to.be("");
+                expect(data.user_email).to.be.a('string');
+                expect(data.user_email).to.be("");
                 expect(data.owner).to.be.a('string');
                 expect(data.owner).to.be("");
                 expect(data.name).to.be.a('string');
@@ -640,6 +651,8 @@
                 expect(data.uuid).to.be("");
                 expect(data.user).to.be.a('string');
                 expect(data.user).to.be("");
+                expect(data.user_email).to.be.a('string');
+                expect(data.user_email).to.be("");
                 expect(data.owner).to.be.a('string');
                 expect(data.owner).to.be("");
                 expect(data.name).to.be.a('string');
@@ -691,6 +704,7 @@
           var body = new PolyaxonSdk.V1Project();
           body.uuid = "";
           body.user = "";
+          body.user_email = "";
           body.owner = "";
           body.name = "";
           body.description = "";
@@ -713,6 +727,8 @@
             expect(data.uuid).to.be("");
             expect(data.user).to.be.a('string');
             expect(data.user).to.be("");
+            expect(data.user_email).to.be.a('string');
+            expect(data.user_email).to.be("");
             expect(data.owner).to.be.a('string');
             expect(data.owner).to.be("");
             expect(data.name).to.be.a('string');
@@ -930,6 +946,7 @@
           var body = new PolyaxonSdk.V1Project();
           body.uuid = "";
           body.user = "";
+          body.user_email = "";
           body.owner = "";
           body.name = "";
           body.description = "";
@@ -952,6 +969,8 @@
             expect(data.uuid).to.be("");
             expect(data.user).to.be.a('string');
             expect(data.user).to.be("");
+            expect(data.user_email).to.be.a('string');
+            expect(data.user_email).to.be("");
             expect(data.owner).to.be.a('string');
             expect(data.owner).to.be("");
             expect(data.name).to.be.a('string');

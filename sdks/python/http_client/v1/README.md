@@ -124,9 +124,9 @@ Class | Method | HTTP request | Description
 *OrganizationsV1Api* | [**create_organization**](docs/OrganizationsV1Api.md#create_organization) | **POST** /api/v1/organizations/create | List runs
 *OrganizationsV1Api* | [**create_organization_member**](docs/OrganizationsV1Api.md#create_organization_member) | **POST** /api/v1/organizations/{owner}/members | Delete runs
 *OrganizationsV1Api* | [**delete_organization**](docs/OrganizationsV1Api.md#delete_organization) | **DELETE** /api/v1/organizations/{owner} | Patch run
-*OrganizationsV1Api* | [**delete_organization_member**](docs/OrganizationsV1Api.md#delete_organization_member) | **DELETE** /api/v1/organizations/{owner}/members/{member.user} | Invalidate runs
+*OrganizationsV1Api* | [**delete_organization_member**](docs/OrganizationsV1Api.md#delete_organization_member) | **DELETE** /api/v1/organizations/{owner}/members/{user} | Invalidate runs
 *OrganizationsV1Api* | [**get_organization**](docs/OrganizationsV1Api.md#get_organization) | **GET** /api/v1/organizations/{owner} | Create new run
-*OrganizationsV1Api* | [**get_organization_member**](docs/OrganizationsV1Api.md#get_organization_member) | **GET** /api/v1/organizations/{owner}/members/{member.user} | Stop run
+*OrganizationsV1Api* | [**get_organization_member**](docs/OrganizationsV1Api.md#get_organization_member) | **GET** /api/v1/organizations/{owner}/members/{user} | Stop run
 *OrganizationsV1Api* | [**list_organization_members**](docs/OrganizationsV1Api.md#list_organization_members) | **GET** /api/v1/organizations/{owner}/members | Delete run
 *OrganizationsV1Api* | [**list_organization_names**](docs/OrganizationsV1Api.md#list_organization_names) | **GET** /api/v1/organizations/names | List bookmarked runs for user
 *OrganizationsV1Api* | [**list_organizations**](docs/OrganizationsV1Api.md#list_organizations) | **GET** /api/v1/organizations/list | List archived runs for user
@@ -214,7 +214,7 @@ Class | Method | HTTP request | Description
 *TeamsV1Api* | [**delete_team**](docs/TeamsV1Api.md#delete_team) | **DELETE** /api/v1/{owner}/teams/{team} | Patch run
 *TeamsV1Api* | [**delete_team_member**](docs/TeamsV1Api.md#delete_team_member) | **DELETE** /api/v1/{owner}/teams/{team}/members/{member.user} | Invalidate runs
 *TeamsV1Api* | [**get_team**](docs/TeamsV1Api.md#get_team) | **GET** /api/v1/{owner}/teams/{team} | Create new run
-*TeamsV1Api* | [**get_team_member**](docs/TeamsV1Api.md#get_team_member) | **GET** /api/v1/{owner}/teams/{team}/members/{member.user} | Stop run
+*TeamsV1Api* | [**get_team_member**](docs/TeamsV1Api.md#get_team_member) | **GET** /api/v1/{owner}/teams/{team}/members/{user} | Stop run
 *TeamsV1Api* | [**list_team_members**](docs/TeamsV1Api.md#list_team_members) | **GET** /api/v1/{owner}/teams/{team}/members | Delete run
 *TeamsV1Api* | [**list_team_names**](docs/TeamsV1Api.md#list_team_names) | **GET** /api/v1/{owner}/teams/names | List bookmarked runs for user
 *TeamsV1Api* | [**list_teams**](docs/TeamsV1Api.md#list_teams) | **GET** /api/v1/{owner}/teams | List archived runs for user
@@ -307,6 +307,7 @@ Class | Method | HTTP request | Description
  - [V1ResourceRequirements](docs/V1ResourceRequirements.md)
  - [V1ResourceType](docs/V1ResourceType.md)
  - [V1Run](docs/V1Run.md)
+ - [V1RunKind](docs/V1RunKind.md)
  - [V1RunMetaInfo](docs/V1RunMetaInfo.md)
  - [V1RunSchema](docs/V1RunSchema.md)
  - [V1RunSettings](docs/V1RunSettings.md)

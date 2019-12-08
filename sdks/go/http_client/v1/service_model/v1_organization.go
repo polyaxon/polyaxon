@@ -47,6 +47,9 @@ type V1Organization struct {
 
 	// User
 	User string `json:"user,omitempty"`
+
+	// Read-only User email
+	UserEmail string `json:"user_email,omitempty"`
 }
 
 // Validate validates this v1 organization

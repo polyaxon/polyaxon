@@ -48,6 +48,7 @@ class V1Organization(object):
     """
     swagger_types = {
         "user": "str",
+        "user_email": "str",
         "name": "str",
         "is_public": "str",
         "created_at": "datetime",
@@ -56,6 +57,7 @@ class V1Organization(object):
 
     attribute_map = {
         "user": "user",
+        "user_email": "user_email",
         "name": "name",
         "is_public": "is_public",
         "created_at": "created_at",
@@ -63,11 +65,18 @@ class V1Organization(object):
     }
 
     def __init__(
-        self, user=None, name=None, is_public=None, created_at=None, updated_at=None
+        self,
+        user=None,
+        user_email=None,
+        name=None,
+        is_public=None,
+        created_at=None,
+        updated_at=None,
     ):  # noqa: E501
         """V1Organization - a model defined in Swagger"""  # noqa: E501
 
         self._user = None
+        self._user_email = None
         self._name = None
         self._is_public = None
         self._created_at = None
@@ -76,6 +85,8 @@ class V1Organization(object):
 
         if user is not None:
             self.user = user
+        if user_email is not None:
+            self.user_email = user_email
         if name is not None:
             self.name = name
         if is_public is not None:
@@ -105,6 +116,27 @@ class V1Organization(object):
         """
 
         self._user = user
+
+    @property
+    def user_email(self):
+        """Gets the user_email of this V1Organization.  # noqa: E501
+
+
+        :return: The user_email of this V1Organization.  # noqa: E501
+        :rtype: str
+        """
+        return self._user_email
+
+    @user_email.setter
+    def user_email(self, user_email):
+        """Sets the user_email of this V1Organization.
+
+
+        :param user_email: The user_email of this V1Organization.  # noqa: E501
+        :type: str
+        """
+
+        self._user_email = user_email
 
     @property
     def name(self):

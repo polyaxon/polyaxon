@@ -36,6 +36,7 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import io.swagger.client.model.V1RunKind;
 import io.swagger.client.model.V1RunMetaInfo;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -102,7 +103,7 @@ public class V1Run {
   private V1RunMetaInfo metaInfo = null;
 
   @SerializedName("kind")
-  private String kind = null;
+  private V1RunKind kind = null;
 
   @SerializedName("hub")
   private String hub = null;
@@ -469,7 +470,7 @@ public class V1Run {
     this.metaInfo = metaInfo;
   }
 
-  public V1Run kind(String kind) {
+  public V1Run kind(V1RunKind kind) {
     this.kind = kind;
     return this;
   }
@@ -479,11 +480,11 @@ public class V1Run {
    * @return kind
   **/
   @ApiModelProperty(value = "")
-  public String getKind() {
+  public V1RunKind getKind() {
     return kind;
   }
 
-  public void setKind(String kind) {
+  public void setKind(V1RunKind kind) {
     this.kind = kind;
   }
 

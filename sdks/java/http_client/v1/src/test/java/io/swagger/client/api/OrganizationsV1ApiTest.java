@@ -28,7 +28,6 @@
 package io.swagger.client.api;
 
 import io.swagger.client.ApiException;
-import org.threeten.bp.OffsetDateTime;
 import io.swagger.client.model.V1ListOrganizationMembersResponse;
 import io.swagger.client.model.V1ListOrganizationsResponse;
 import io.swagger.client.model.V1Organization;
@@ -110,11 +109,8 @@ public class OrganizationsV1ApiTest {
     @Test
     public void deleteOrganizationMemberTest() throws ApiException {
         String owner = null;
-        String memberUser = null;
-        String memberRole = null;
-        OffsetDateTime memberCreatedAt = null;
-        OffsetDateTime memberUpdatedAt = null;
-        api.deleteOrganizationMember(owner, memberUser, memberRole, memberCreatedAt, memberUpdatedAt);
+        String user = null;
+        api.deleteOrganizationMember(owner, user);
 
         // TODO: test validations
     }
@@ -146,11 +142,8 @@ public class OrganizationsV1ApiTest {
     @Test
     public void getOrganizationMemberTest() throws ApiException {
         String owner = null;
-        String memberUser = null;
-        String memberRole = null;
-        OffsetDateTime memberCreatedAt = null;
-        OffsetDateTime memberUpdatedAt = null;
-        V1OrganizationMember response = api.getOrganizationMember(owner, memberUser, memberRole, memberCreatedAt, memberUpdatedAt);
+        String user = null;
+        V1OrganizationMember response = api.getOrganizationMember(owner, user);
 
         // TODO: test validations
     }

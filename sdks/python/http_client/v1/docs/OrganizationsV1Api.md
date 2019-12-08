@@ -7,9 +7,9 @@ Method | HTTP request | Description
 [**create_organization**](OrganizationsV1Api.md#create_organization) | **POST** /api/v1/organizations/create | List runs
 [**create_organization_member**](OrganizationsV1Api.md#create_organization_member) | **POST** /api/v1/organizations/{owner}/members | Delete runs
 [**delete_organization**](OrganizationsV1Api.md#delete_organization) | **DELETE** /api/v1/organizations/{owner} | Patch run
-[**delete_organization_member**](OrganizationsV1Api.md#delete_organization_member) | **DELETE** /api/v1/organizations/{owner}/members/{member.user} | Invalidate runs
+[**delete_organization_member**](OrganizationsV1Api.md#delete_organization_member) | **DELETE** /api/v1/organizations/{owner}/members/{user} | Invalidate runs
 [**get_organization**](OrganizationsV1Api.md#get_organization) | **GET** /api/v1/organizations/{owner} | Create new run
-[**get_organization_member**](OrganizationsV1Api.md#get_organization_member) | **GET** /api/v1/organizations/{owner}/members/{member.user} | Stop run
+[**get_organization_member**](OrganizationsV1Api.md#get_organization_member) | **GET** /api/v1/organizations/{owner}/members/{user} | Stop run
 [**list_organization_members**](OrganizationsV1Api.md#list_organization_members) | **GET** /api/v1/organizations/{owner}/members | Delete run
 [**list_organization_names**](OrganizationsV1Api.md#list_organization_names) | **GET** /api/v1/organizations/names | List bookmarked runs for user
 [**list_organizations**](OrganizationsV1Api.md#list_organizations) | **GET** /api/v1/organizations/list | List archived runs for user
@@ -177,7 +177,7 @@ void (empty response body)
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **delete_organization_member**
-> delete_organization_member(owner, member_user, member_role=member_role, member_created_at=member_created_at, member_updated_at=member_updated_at)
+> delete_organization_member(owner, user)
 
 Invalidate runs
 
@@ -198,14 +198,11 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = polyaxon_sdk.OrganizationsV1Api(polyaxon_sdk.ApiClient(configuration))
 owner = 'owner_example' # str | Owner of the namespace
-member_user = 'member_user_example' # str | User
-member_role = 'member_role_example' # str | Role. (optional)
-member_created_at = '2013-10-20T19:20:30+01:00' # datetime | Optional time when the entityt was created. (optional)
-member_updated_at = '2013-10-20T19:20:30+01:00' # datetime | Optional last time the entity was updated. (optional)
+user = 'user_example' # str | Memeber under namesapce
 
 try:
     # Invalidate runs
-    api_instance.delete_organization_member(owner, member_user, member_role=member_role, member_created_at=member_created_at, member_updated_at=member_updated_at)
+    api_instance.delete_organization_member(owner, user)
 except ApiException as e:
     print("Exception when calling OrganizationsV1Api->delete_organization_member: %s\n" % e)
 ```
@@ -215,10 +212,7 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **str**| Owner of the namespace | 
- **member_user** | **str**| User | 
- **member_role** | **str**| Role. | [optional] 
- **member_created_at** | **datetime**| Optional time when the entityt was created. | [optional] 
- **member_updated_at** | **datetime**| Optional last time the entity was updated. | [optional] 
+ **user** | **str**| Memeber under namesapce | 
 
 ### Return type
 
@@ -288,7 +282,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_organization_member**
-> V1OrganizationMember get_organization_member(owner, member_user, member_role=member_role, member_created_at=member_created_at, member_updated_at=member_updated_at)
+> V1OrganizationMember get_organization_member(owner, user)
 
 Stop run
 
@@ -309,14 +303,11 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = polyaxon_sdk.OrganizationsV1Api(polyaxon_sdk.ApiClient(configuration))
 owner = 'owner_example' # str | Owner of the namespace
-member_user = 'member_user_example' # str | User
-member_role = 'member_role_example' # str | Role. (optional)
-member_created_at = '2013-10-20T19:20:30+01:00' # datetime | Optional time when the entityt was created. (optional)
-member_updated_at = '2013-10-20T19:20:30+01:00' # datetime | Optional last time the entity was updated. (optional)
+user = 'user_example' # str | Memeber under namesapce
 
 try:
     # Stop run
-    api_response = api_instance.get_organization_member(owner, member_user, member_role=member_role, member_created_at=member_created_at, member_updated_at=member_updated_at)
+    api_response = api_instance.get_organization_member(owner, user)
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling OrganizationsV1Api->get_organization_member: %s\n" % e)
@@ -327,10 +318,7 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **str**| Owner of the namespace | 
- **member_user** | **str**| User | 
- **member_role** | **str**| Role. | [optional] 
- **member_created_at** | **datetime**| Optional time when the entityt was created. | [optional] 
- **member_updated_at** | **datetime**| Optional last time the entity was updated. | [optional] 
+ **user** | **str**| Memeber under namesapce | 
 
 ### Return type
 

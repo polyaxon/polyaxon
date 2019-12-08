@@ -7,9 +7,9 @@ Method | HTTP request | Description
 [**createOrganization**](OrganizationsV1Api.md#createOrganization) | **POST** /api/v1/organizations/create | List runs
 [**createOrganizationMember**](OrganizationsV1Api.md#createOrganizationMember) | **POST** /api/v1/organizations/{owner}/members | Delete runs
 [**deleteOrganization**](OrganizationsV1Api.md#deleteOrganization) | **DELETE** /api/v1/organizations/{owner} | Patch run
-[**deleteOrganizationMember**](OrganizationsV1Api.md#deleteOrganizationMember) | **DELETE** /api/v1/organizations/{owner}/members/{member.user} | Invalidate runs
+[**deleteOrganizationMember**](OrganizationsV1Api.md#deleteOrganizationMember) | **DELETE** /api/v1/organizations/{owner}/members/{user} | Invalidate runs
 [**getOrganization**](OrganizationsV1Api.md#getOrganization) | **GET** /api/v1/organizations/{owner} | Create new run
-[**getOrganizationMember**](OrganizationsV1Api.md#getOrganizationMember) | **GET** /api/v1/organizations/{owner}/members/{member.user} | Stop run
+[**getOrganizationMember**](OrganizationsV1Api.md#getOrganizationMember) | **GET** /api/v1/organizations/{owner}/members/{user} | Stop run
 [**listOrganizationMembers**](OrganizationsV1Api.md#listOrganizationMembers) | **GET** /api/v1/organizations/{owner}/members | Delete run
 [**listOrganizationNames**](OrganizationsV1Api.md#listOrganizationNames) | **GET** /api/v1/organizations/names | List bookmarked runs for user
 [**listOrganizations**](OrganizationsV1Api.md#listOrganizations) | **GET** /api/v1/organizations/list | List archived runs for user
@@ -181,7 +181,7 @@ null (empty response body)
 
 <a name="deleteOrganizationMember"></a>
 # **deleteOrganizationMember**
-> deleteOrganizationMember(owner, memberUser, memberRole, memberCreatedAt, memberUpdatedAt)
+> deleteOrganizationMember(owner, user)
 
 Invalidate runs
 
@@ -204,12 +204,9 @@ ApiKey.setApiKey("YOUR API KEY");
 
 OrganizationsV1Api apiInstance = new OrganizationsV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
-String memberUser = "memberUser_example"; // String | User
-String memberRole = "memberRole_example"; // String | Role.
-OffsetDateTime memberCreatedAt = OffsetDateTime.now(); // OffsetDateTime | Optional time when the entityt was created.
-OffsetDateTime memberUpdatedAt = OffsetDateTime.now(); // OffsetDateTime | Optional last time the entity was updated.
+String user = "user_example"; // String | Memeber under namesapce
 try {
-    apiInstance.deleteOrganizationMember(owner, memberUser, memberRole, memberCreatedAt, memberUpdatedAt);
+    apiInstance.deleteOrganizationMember(owner, user);
 } catch (ApiException e) {
     System.err.println("Exception when calling OrganizationsV1Api#deleteOrganizationMember");
     e.printStackTrace();
@@ -221,10 +218,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
- **memberUser** | **String**| User |
- **memberRole** | **String**| Role. | [optional]
- **memberCreatedAt** | **OffsetDateTime**| Optional time when the entityt was created. | [optional]
- **memberUpdatedAt** | **OffsetDateTime**| Optional last time the entity was updated. | [optional]
+ **user** | **String**| Memeber under namesapce |
 
 ### Return type
 
@@ -294,7 +288,7 @@ Name | Type | Description  | Notes
 
 <a name="getOrganizationMember"></a>
 # **getOrganizationMember**
-> V1OrganizationMember getOrganizationMember(owner, memberUser, memberRole, memberCreatedAt, memberUpdatedAt)
+> V1OrganizationMember getOrganizationMember(owner, user)
 
 Stop run
 
@@ -317,12 +311,9 @@ ApiKey.setApiKey("YOUR API KEY");
 
 OrganizationsV1Api apiInstance = new OrganizationsV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
-String memberUser = "memberUser_example"; // String | User
-String memberRole = "memberRole_example"; // String | Role.
-OffsetDateTime memberCreatedAt = OffsetDateTime.now(); // OffsetDateTime | Optional time when the entityt was created.
-OffsetDateTime memberUpdatedAt = OffsetDateTime.now(); // OffsetDateTime | Optional last time the entity was updated.
+String user = "user_example"; // String | Memeber under namesapce
 try {
-    V1OrganizationMember result = apiInstance.getOrganizationMember(owner, memberUser, memberRole, memberCreatedAt, memberUpdatedAt);
+    V1OrganizationMember result = apiInstance.getOrganizationMember(owner, user);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling OrganizationsV1Api#getOrganizationMember");
@@ -335,10 +326,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
- **memberUser** | **String**| User |
- **memberRole** | **String**| Role. | [optional]
- **memberCreatedAt** | **OffsetDateTime**| Optional time when the entityt was created. | [optional]
- **memberUpdatedAt** | **OffsetDateTime**| Optional last time the entity was updated. | [optional]
+ **user** | **String**| Memeber under namesapce |
 
 ### Return type
 

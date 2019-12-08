@@ -9,7 +9,7 @@ Method | HTTP request | Description
 [**deleteTeam**](TeamsV1Api.md#deleteTeam) | **DELETE** /api/v1/{owner}/teams/{team} | Patch run
 [**deleteTeamMember**](TeamsV1Api.md#deleteTeamMember) | **DELETE** /api/v1/{owner}/teams/{team}/members/{member.user} | Invalidate runs
 [**getTeam**](TeamsV1Api.md#getTeam) | **GET** /api/v1/{owner}/teams/{team} | Create new run
-[**getTeamMember**](TeamsV1Api.md#getTeamMember) | **GET** /api/v1/{owner}/teams/{team}/members/{member.user} | Stop run
+[**getTeamMember**](TeamsV1Api.md#getTeamMember) | **GET** /api/v1/{owner}/teams/{team}/members/{user} | Stop run
 [**listTeamMembers**](TeamsV1Api.md#listTeamMembers) | **GET** /api/v1/{owner}/teams/{team}/members | Delete run
 [**listTeamNames**](TeamsV1Api.md#listTeamNames) | **GET** /api/v1/{owner}/teams/names | List bookmarked runs for user
 [**listTeams**](TeamsV1Api.md#listTeams) | **GET** /api/v1/{owner}/teams | List archived runs for user
@@ -307,7 +307,7 @@ Name | Type | Description  | Notes
 
 <a name="getTeamMember"></a>
 # **getTeamMember**
-> V1TeamMember getTeamMember(owner, team, member_user, opts)
+> V1TeamMember getTeamMember(owner, team, user)
 
 Stop run
 
@@ -326,16 +326,10 @@ var apiInstance = new PolyaxonSdk.TeamsV1Api();
 
 var owner = "owner_example"; // String | Owner of the namespace
 
-var team = "team_example"; // String | Team
+var team = "team_example"; // String | Team under namesapce
 
-var member_user = "member_user_example"; // String | User
+var user = "user_example"; // String | Member under team
 
-var opts = { 
-  'member_role': "member_role_example", // String | Role.
-  'member_org_role': "member_org_role_example", // String | Organization Role.
-  'member_created_at': new Date("2013-10-20T19:20:30+01:00"), // Date | Optional time when the entityt was created.
-  'member_updated_at': new Date("2013-10-20T19:20:30+01:00") // Date | Optional last time the entity was updated.
-};
 
 var callback = function(error, data, response) {
   if (error) {
@@ -344,7 +338,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.getTeamMember(owner, team, member_user, opts, callback);
+apiInstance.getTeamMember(owner, team, user, callback);
 ```
 
 ### Parameters
@@ -352,12 +346,8 @@ apiInstance.getTeamMember(owner, team, member_user, opts, callback);
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace | 
- **team** | **String**| Team | 
- **member_user** | **String**| User | 
- **member_role** | **String**| Role. | [optional] 
- **member_org_role** | **String**| Organization Role. | [optional] 
- **member_created_at** | **Date**| Optional time when the entityt was created. | [optional] 
- **member_updated_at** | **Date**| Optional last time the entity was updated. | [optional] 
+ **team** | **String**| Team under namesapce | 
+ **user** | **String**| Member under team | 
 
 ### Return type
 

@@ -65,7 +65,7 @@ class V1Run(object):
         "readme": "str",
         "bookmarked": "bool",
         "meta_info": "V1RunMetaInfo",
-        "kind": "str",
+        "kind": "V1RunKind",
         "hub": "str",
         "inputs": "object",
         "outputs": "object",
@@ -624,7 +624,7 @@ class V1Run(object):
 
 
         :return: The kind of this V1Run.  # noqa: E501
-        :rtype: str
+        :rtype: V1RunKind
         """
         return self._kind
 
@@ -634,7 +634,7 @@ class V1Run(object):
 
 
         :param kind: The kind of this V1Run.  # noqa: E501
-        :type: str
+        :type: V1RunKind
         """
 
         self._kind = kind

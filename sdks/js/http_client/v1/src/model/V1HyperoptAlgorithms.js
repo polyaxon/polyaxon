@@ -52,22 +52,22 @@
    */
   var exports = {
     /**
-     * value: "TPE"
+     * value: "tpe"
      * @const
      */
-    TPE: "TPE",
+    tpe: "tpe",
 
     /**
-     * value: "RAND"
+     * value: "rand"
      * @const
      */
-    RAND: "RAND",
+    rand: "rand",
 
     /**
-     * value: "ANNEAL"
+     * value: "anneal"
      * @const
      */
-    ANNEAL: "ANNEAL"
+    anneal: "anneal"
   };
 
   /**

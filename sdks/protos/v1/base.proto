@@ -48,6 +48,27 @@ message TeamResourceRequest {
     string team = 2;
 }
 
+// Request data with owner/team/member namespace
+message TeamMemeberResourceRequest {
+    // Owner of the namespace
+    string owner = 1;
+
+    // Team under namesapce
+    string team = 2;
+
+    // Member under team
+    string user = 3;
+}
+
+// Request data with owner/member namespace
+message OrgMemeberResourceRequest {
+    // Owner of the namespace
+    string owner = 1;
+
+    // Memeber under namesapce
+    string user = 2;
+}
+
 message Uuids {
     repeated string uuids = 1;
 }

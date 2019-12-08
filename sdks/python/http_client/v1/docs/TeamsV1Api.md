@@ -9,7 +9,7 @@ Method | HTTP request | Description
 [**delete_team**](TeamsV1Api.md#delete_team) | **DELETE** /api/v1/{owner}/teams/{team} | Patch run
 [**delete_team_member**](TeamsV1Api.md#delete_team_member) | **DELETE** /api/v1/{owner}/teams/{team}/members/{member.user} | Invalidate runs
 [**get_team**](TeamsV1Api.md#get_team) | **GET** /api/v1/{owner}/teams/{team} | Create new run
-[**get_team_member**](TeamsV1Api.md#get_team_member) | **GET** /api/v1/{owner}/teams/{team}/members/{member.user} | Stop run
+[**get_team_member**](TeamsV1Api.md#get_team_member) | **GET** /api/v1/{owner}/teams/{team}/members/{user} | Stop run
 [**list_team_members**](TeamsV1Api.md#list_team_members) | **GET** /api/v1/{owner}/teams/{team}/members | Delete run
 [**list_team_names**](TeamsV1Api.md#list_team_names) | **GET** /api/v1/{owner}/teams/names | List bookmarked runs for user
 [**list_teams**](TeamsV1Api.md#list_teams) | **GET** /api/v1/{owner}/teams | List archived runs for user
@@ -300,7 +300,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_team_member**
-> V1TeamMember get_team_member(owner, team, member_user, member_role=member_role, member_org_role=member_org_role, member_created_at=member_created_at, member_updated_at=member_updated_at)
+> V1TeamMember get_team_member(owner, team, user)
 
 Stop run
 
@@ -321,16 +321,12 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = polyaxon_sdk.TeamsV1Api(polyaxon_sdk.ApiClient(configuration))
 owner = 'owner_example' # str | Owner of the namespace
-team = 'team_example' # str | Team
-member_user = 'member_user_example' # str | User
-member_role = 'member_role_example' # str | Role. (optional)
-member_org_role = 'member_org_role_example' # str | Organization Role. (optional)
-member_created_at = '2013-10-20T19:20:30+01:00' # datetime | Optional time when the entityt was created. (optional)
-member_updated_at = '2013-10-20T19:20:30+01:00' # datetime | Optional last time the entity was updated. (optional)
+team = 'team_example' # str | Team under namesapce
+user = 'user_example' # str | Member under team
 
 try:
     # Stop run
-    api_response = api_instance.get_team_member(owner, team, member_user, member_role=member_role, member_org_role=member_org_role, member_created_at=member_created_at, member_updated_at=member_updated_at)
+    api_response = api_instance.get_team_member(owner, team, user)
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling TeamsV1Api->get_team_member: %s\n" % e)
@@ -341,12 +337,8 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **str**| Owner of the namespace | 
- **team** | **str**| Team | 
- **member_user** | **str**| User | 
- **member_role** | **str**| Role. | [optional] 
- **member_org_role** | **str**| Organization Role. | [optional] 
- **member_created_at** | **datetime**| Optional time when the entityt was created. | [optional] 
- **member_updated_at** | **datetime**| Optional last time the entity was updated. | [optional] 
+ **team** | **str**| Team under namesapce | 
+ **user** | **str**| Member under team | 
 
 ### Return type
 

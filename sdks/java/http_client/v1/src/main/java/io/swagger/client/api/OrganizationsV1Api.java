@@ -41,7 +41,6 @@ import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 
 
-import org.threeten.bp.OffsetDateTime;
 import io.swagger.client.model.V1ListOrganizationMembersResponse;
 import io.swagger.client.model.V1ListOrganizationsResponse;
 import io.swagger.client.model.V1Organization;
@@ -448,31 +447,22 @@ public class OrganizationsV1Api {
     /**
      * Build call for deleteOrganizationMember
      * @param owner Owner of the namespace (required)
-     * @param memberUser User (required)
-     * @param memberRole Role. (optional)
-     * @param memberCreatedAt Optional time when the entityt was created. (optional)
-     * @param memberUpdatedAt Optional last time the entity was updated. (optional)
+     * @param user Memeber under namesapce (required)
      * @param progressListener Progress listener
      * @param progressRequestListener Progress request listener
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call deleteOrganizationMemberCall(String owner, String memberUser, String memberRole, OffsetDateTime memberCreatedAt, OffsetDateTime memberUpdatedAt, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call deleteOrganizationMemberCall(String owner, String user, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
-        String localVarPath = "/api/v1/organizations/{owner}/members/{member.user}"
+        String localVarPath = "/api/v1/organizations/{owner}/members/{user}"
             .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()))
-            .replaceAll("\\{" + "member.user" + "\\}", apiClient.escapeString(memberUser.toString()));
+            .replaceAll("\\{" + "user" + "\\}", apiClient.escapeString(user.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-        if (memberRole != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("member.role", memberRole));
-        if (memberCreatedAt != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("member.created_at", memberCreatedAt));
-        if (memberUpdatedAt != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("member.updated_at", memberUpdatedAt));
 
         Map<String, String> localVarHeaderParams = new HashMap<String, String>();
 
@@ -507,20 +497,20 @@ public class OrganizationsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call deleteOrganizationMemberValidateBeforeCall(String owner, String memberUser, String memberRole, OffsetDateTime memberCreatedAt, OffsetDateTime memberUpdatedAt, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call deleteOrganizationMemberValidateBeforeCall(String owner, String user, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
             throw new ApiException("Missing the required parameter 'owner' when calling deleteOrganizationMember(Async)");
         }
         
-        // verify the required parameter 'memberUser' is set
-        if (memberUser == null) {
-            throw new ApiException("Missing the required parameter 'memberUser' when calling deleteOrganizationMember(Async)");
+        // verify the required parameter 'user' is set
+        if (user == null) {
+            throw new ApiException("Missing the required parameter 'user' when calling deleteOrganizationMember(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = deleteOrganizationMemberCall(owner, memberUser, memberRole, memberCreatedAt, memberUpdatedAt, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = deleteOrganizationMemberCall(owner, user, progressListener, progressRequestListener);
         return call;
 
     }
@@ -529,29 +519,23 @@ public class OrganizationsV1Api {
      * Invalidate runs
      * 
      * @param owner Owner of the namespace (required)
-     * @param memberUser User (required)
-     * @param memberRole Role. (optional)
-     * @param memberCreatedAt Optional time when the entityt was created. (optional)
-     * @param memberUpdatedAt Optional last time the entity was updated. (optional)
+     * @param user Memeber under namesapce (required)
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public void deleteOrganizationMember(String owner, String memberUser, String memberRole, OffsetDateTime memberCreatedAt, OffsetDateTime memberUpdatedAt) throws ApiException {
-        deleteOrganizationMemberWithHttpInfo(owner, memberUser, memberRole, memberCreatedAt, memberUpdatedAt);
+    public void deleteOrganizationMember(String owner, String user) throws ApiException {
+        deleteOrganizationMemberWithHttpInfo(owner, user);
     }
 
     /**
      * Invalidate runs
      * 
      * @param owner Owner of the namespace (required)
-     * @param memberUser User (required)
-     * @param memberRole Role. (optional)
-     * @param memberCreatedAt Optional time when the entityt was created. (optional)
-     * @param memberUpdatedAt Optional last time the entity was updated. (optional)
+     * @param user Memeber under namesapce (required)
      * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<Void> deleteOrganizationMemberWithHttpInfo(String owner, String memberUser, String memberRole, OffsetDateTime memberCreatedAt, OffsetDateTime memberUpdatedAt) throws ApiException {
-        com.squareup.okhttp.Call call = deleteOrganizationMemberValidateBeforeCall(owner, memberUser, memberRole, memberCreatedAt, memberUpdatedAt, null, null);
+    public ApiResponse<Void> deleteOrganizationMemberWithHttpInfo(String owner, String user) throws ApiException {
+        com.squareup.okhttp.Call call = deleteOrganizationMemberValidateBeforeCall(owner, user, null, null);
         return apiClient.execute(call);
     }
 
@@ -559,15 +543,12 @@ public class OrganizationsV1Api {
      * Invalidate runs (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
-     * @param memberUser User (required)
-     * @param memberRole Role. (optional)
-     * @param memberCreatedAt Optional time when the entityt was created. (optional)
-     * @param memberUpdatedAt Optional last time the entity was updated. (optional)
+     * @param user Memeber under namesapce (required)
      * @param callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call deleteOrganizationMemberAsync(String owner, String memberUser, String memberRole, OffsetDateTime memberCreatedAt, OffsetDateTime memberUpdatedAt, final ApiCallback<Void> callback) throws ApiException {
+    public com.squareup.okhttp.Call deleteOrganizationMemberAsync(String owner, String user, final ApiCallback<Void> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -588,7 +569,7 @@ public class OrganizationsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = deleteOrganizationMemberValidateBeforeCall(owner, memberUser, memberRole, memberCreatedAt, memberUpdatedAt, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = deleteOrganizationMemberValidateBeforeCall(owner, user, progressListener, progressRequestListener);
         apiClient.executeAsync(call, callback);
         return call;
     }
@@ -718,31 +699,22 @@ public class OrganizationsV1Api {
     /**
      * Build call for getOrganizationMember
      * @param owner Owner of the namespace (required)
-     * @param memberUser User (required)
-     * @param memberRole Role. (optional)
-     * @param memberCreatedAt Optional time when the entityt was created. (optional)
-     * @param memberUpdatedAt Optional last time the entity was updated. (optional)
+     * @param user Memeber under namesapce (required)
      * @param progressListener Progress listener
      * @param progressRequestListener Progress request listener
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call getOrganizationMemberCall(String owner, String memberUser, String memberRole, OffsetDateTime memberCreatedAt, OffsetDateTime memberUpdatedAt, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call getOrganizationMemberCall(String owner, String user, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
-        String localVarPath = "/api/v1/organizations/{owner}/members/{member.user}"
+        String localVarPath = "/api/v1/organizations/{owner}/members/{user}"
             .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()))
-            .replaceAll("\\{" + "member.user" + "\\}", apiClient.escapeString(memberUser.toString()));
+            .replaceAll("\\{" + "user" + "\\}", apiClient.escapeString(user.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-        if (memberRole != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("member.role", memberRole));
-        if (memberCreatedAt != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("member.created_at", memberCreatedAt));
-        if (memberUpdatedAt != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("member.updated_at", memberUpdatedAt));
 
         Map<String, String> localVarHeaderParams = new HashMap<String, String>();
 
@@ -777,20 +749,20 @@ public class OrganizationsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call getOrganizationMemberValidateBeforeCall(String owner, String memberUser, String memberRole, OffsetDateTime memberCreatedAt, OffsetDateTime memberUpdatedAt, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call getOrganizationMemberValidateBeforeCall(String owner, String user, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
             throw new ApiException("Missing the required parameter 'owner' when calling getOrganizationMember(Async)");
         }
         
-        // verify the required parameter 'memberUser' is set
-        if (memberUser == null) {
-            throw new ApiException("Missing the required parameter 'memberUser' when calling getOrganizationMember(Async)");
+        // verify the required parameter 'user' is set
+        if (user == null) {
+            throw new ApiException("Missing the required parameter 'user' when calling getOrganizationMember(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = getOrganizationMemberCall(owner, memberUser, memberRole, memberCreatedAt, memberUpdatedAt, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = getOrganizationMemberCall(owner, user, progressListener, progressRequestListener);
         return call;
 
     }
@@ -799,15 +771,12 @@ public class OrganizationsV1Api {
      * Stop run
      * 
      * @param owner Owner of the namespace (required)
-     * @param memberUser User (required)
-     * @param memberRole Role. (optional)
-     * @param memberCreatedAt Optional time when the entityt was created. (optional)
-     * @param memberUpdatedAt Optional last time the entity was updated. (optional)
+     * @param user Memeber under namesapce (required)
      * @return V1OrganizationMember
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1OrganizationMember getOrganizationMember(String owner, String memberUser, String memberRole, OffsetDateTime memberCreatedAt, OffsetDateTime memberUpdatedAt) throws ApiException {
-        ApiResponse<V1OrganizationMember> resp = getOrganizationMemberWithHttpInfo(owner, memberUser, memberRole, memberCreatedAt, memberUpdatedAt);
+    public V1OrganizationMember getOrganizationMember(String owner, String user) throws ApiException {
+        ApiResponse<V1OrganizationMember> resp = getOrganizationMemberWithHttpInfo(owner, user);
         return resp.getData();
     }
 
@@ -815,15 +784,12 @@ public class OrganizationsV1Api {
      * Stop run
      * 
      * @param owner Owner of the namespace (required)
-     * @param memberUser User (required)
-     * @param memberRole Role. (optional)
-     * @param memberCreatedAt Optional time when the entityt was created. (optional)
-     * @param memberUpdatedAt Optional last time the entity was updated. (optional)
+     * @param user Memeber under namesapce (required)
      * @return ApiResponse&lt;V1OrganizationMember&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1OrganizationMember> getOrganizationMemberWithHttpInfo(String owner, String memberUser, String memberRole, OffsetDateTime memberCreatedAt, OffsetDateTime memberUpdatedAt) throws ApiException {
-        com.squareup.okhttp.Call call = getOrganizationMemberValidateBeforeCall(owner, memberUser, memberRole, memberCreatedAt, memberUpdatedAt, null, null);
+    public ApiResponse<V1OrganizationMember> getOrganizationMemberWithHttpInfo(String owner, String user) throws ApiException {
+        com.squareup.okhttp.Call call = getOrganizationMemberValidateBeforeCall(owner, user, null, null);
         Type localVarReturnType = new TypeToken<V1OrganizationMember>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -832,15 +798,12 @@ public class OrganizationsV1Api {
      * Stop run (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
-     * @param memberUser User (required)
-     * @param memberRole Role. (optional)
-     * @param memberCreatedAt Optional time when the entityt was created. (optional)
-     * @param memberUpdatedAt Optional last time the entity was updated. (optional)
+     * @param user Memeber under namesapce (required)
      * @param callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call getOrganizationMemberAsync(String owner, String memberUser, String memberRole, OffsetDateTime memberCreatedAt, OffsetDateTime memberUpdatedAt, final ApiCallback<V1OrganizationMember> callback) throws ApiException {
+    public com.squareup.okhttp.Call getOrganizationMemberAsync(String owner, String user, final ApiCallback<V1OrganizationMember> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -861,7 +824,7 @@ public class OrganizationsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = getOrganizationMemberValidateBeforeCall(owner, memberUser, memberRole, memberCreatedAt, memberUpdatedAt, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = getOrganizationMemberValidateBeforeCall(owner, user, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1OrganizationMember>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;

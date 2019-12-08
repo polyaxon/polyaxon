@@ -218,15 +218,10 @@
     /**
      * Invalidate runs
      * @param {String} owner Owner of the namespace
-     * @param {String} member_user User
-     * @param {Object} opts Optional parameters
-     * @param {String} opts.member_role Role.
-     * @param {Date} opts.member_created_at Optional time when the entityt was created.
-     * @param {Date} opts.member_updated_at Optional last time the entity was updated.
+     * @param {String} user Memeber under namesapce
      * @param {module:api/OrganizationsV1Api~deleteOrganizationMemberCallback} callback The callback function, accepting three arguments: error, data, response
      */
-    this.deleteOrganizationMember = function(owner, member_user, opts, callback) {
-      opts = opts || {};
+    this.deleteOrganizationMember = function(owner, user, callback) {
       var postBody = null;
 
       // verify the required parameter 'owner' is set
@@ -234,20 +229,17 @@
         throw new Error("Missing the required parameter 'owner' when calling deleteOrganizationMember");
       }
 
-      // verify the required parameter 'member_user' is set
-      if (member_user === undefined || member_user === null) {
-        throw new Error("Missing the required parameter 'member_user' when calling deleteOrganizationMember");
+      // verify the required parameter 'user' is set
+      if (user === undefined || user === null) {
+        throw new Error("Missing the required parameter 'user' when calling deleteOrganizationMember");
       }
 
 
       var pathParams = {
         'owner': owner,
-        'member.user': member_user
+        'user': user
       };
       var queryParams = {
-        'member.role': opts['member_role'],
-        'member.created_at': opts['member_created_at'],
-        'member.updated_at': opts['member_updated_at'],
       };
       var collectionQueryParams = {
       };
@@ -262,7 +254,7 @@
       var returnType = null;
 
       return this.apiClient.callApi(
-        '/api/v1/organizations/{owner}/members/{member.user}', 'DELETE',
+        '/api/v1/organizations/{owner}/members/{user}', 'DELETE',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -326,16 +318,11 @@
     /**
      * Stop run
      * @param {String} owner Owner of the namespace
-     * @param {String} member_user User
-     * @param {Object} opts Optional parameters
-     * @param {String} opts.member_role Role.
-     * @param {Date} opts.member_created_at Optional time when the entityt was created.
-     * @param {Date} opts.member_updated_at Optional last time the entity was updated.
+     * @param {String} user Memeber under namesapce
      * @param {module:api/OrganizationsV1Api~getOrganizationMemberCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1OrganizationMember}
      */
-    this.getOrganizationMember = function(owner, member_user, opts, callback) {
-      opts = opts || {};
+    this.getOrganizationMember = function(owner, user, callback) {
       var postBody = null;
 
       // verify the required parameter 'owner' is set
@@ -343,20 +330,17 @@
         throw new Error("Missing the required parameter 'owner' when calling getOrganizationMember");
       }
 
-      // verify the required parameter 'member_user' is set
-      if (member_user === undefined || member_user === null) {
-        throw new Error("Missing the required parameter 'member_user' when calling getOrganizationMember");
+      // verify the required parameter 'user' is set
+      if (user === undefined || user === null) {
+        throw new Error("Missing the required parameter 'user' when calling getOrganizationMember");
       }
 
 
       var pathParams = {
         'owner': owner,
-        'member.user': member_user
+        'user': user
       };
       var queryParams = {
-        'member.role': opts['member_role'],
-        'member.created_at': opts['member_created_at'],
-        'member.updated_at': opts['member_updated_at'],
       };
       var collectionQueryParams = {
       };
@@ -371,7 +355,7 @@
       var returnType = V1OrganizationMember;
 
       return this.apiClient.callApi(
-        '/api/v1/organizations/{owner}/members/{member.user}', 'GET',
+        '/api/v1/organizations/{owner}/members/{user}', 'GET',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );

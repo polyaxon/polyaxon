@@ -52,6 +52,9 @@ public class V1Project {
   @SerializedName("user")
   private String user = null;
 
+  @SerializedName("user_email")
+  private String userEmail = null;
+
   @SerializedName("owner")
   private String owner = null;
 
@@ -116,6 +119,24 @@ public class V1Project {
 
   public void setUser(String user) {
     this.user = user;
+  }
+
+  public V1Project userEmail(String userEmail) {
+    this.userEmail = userEmail;
+    return this;
+  }
+
+   /**
+   * Get userEmail
+   * @return userEmail
+  **/
+  @ApiModelProperty(value = "")
+  public String getUserEmail() {
+    return userEmail;
+  }
+
+  public void setUserEmail(String userEmail) {
+    this.userEmail = userEmail;
   }
 
   public V1Project owner(String owner) {
@@ -318,6 +339,7 @@ public class V1Project {
     V1Project v1Project = (V1Project) o;
     return Objects.equals(this.uuid, v1Project.uuid) &&
         Objects.equals(this.user, v1Project.user) &&
+        Objects.equals(this.userEmail, v1Project.userEmail) &&
         Objects.equals(this.owner, v1Project.owner) &&
         Objects.equals(this.name, v1Project.name) &&
         Objects.equals(this.description, v1Project.description) &&
@@ -332,7 +354,7 @@ public class V1Project {
 
   @Override
   public int hashCode() {
-    return Objects.hash(uuid, user, owner, name, description, tags, createdAt, updatedAt, isPublic, deleted, bookmarked, readme);
+    return Objects.hash(uuid, user, userEmail, owner, name, description, tags, createdAt, updatedAt, isPublic, deleted, bookmarked, readme);
   }
 
 
@@ -343,6 +365,7 @@ public class V1Project {
     
     sb.append("    uuid: ").append(toIndentedString(uuid)).append("\n");
     sb.append("    user: ").append(toIndentedString(user)).append("\n");
+    sb.append("    userEmail: ").append(toIndentedString(userEmail)).append("\n");
     sb.append("    owner: ").append(toIndentedString(owner)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    description: ").append(toIndentedString(description)).append("\n");

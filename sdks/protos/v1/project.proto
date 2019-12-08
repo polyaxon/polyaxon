@@ -14,35 +14,38 @@ message Project {
     // Required name of user who created this entity
     string user = 2;
 
+    // Read-only email of user who created this entity
+    string user_email = 3;
+
     // Required owner/namespace where the projet was created
-    string owner = 3;
+    string owner = 4;
 
     // Required name
-    string name = 4;
+    string name = 5;
 
     // Optional description
-    string description = 5;
+    string description = 6;
 
     // Optional Tags of this entity
-    repeated string tags = 6;
+    repeated string tags = 7;
 
     // Optional time when the entityt was created
-    google.protobuf.Timestamp created_at = 7;
+    google.protobuf.Timestamp created_at = 8;
 
     // Optional last time the entity was updated
-    google.protobuf.Timestamp updated_at = 8;
+    google.protobuf.Timestamp updated_at = 9;
 
     // Optional flag to tell if this project is public
-    string is_public = 9;
+    string is_public = 10;
 
     // Optional flag to tell if this project is deleted
-    bool deleted = 10;
+    bool deleted = 11;
 
     // Optional if this entity was bookmarked
-    bool bookmarked = 11;
+    bool bookmarked = 12;
 
     // Optional a readme text describing this entity
-    string readme = 12;
+    string readme = 13;
 }
 
  // Request data to create/update project

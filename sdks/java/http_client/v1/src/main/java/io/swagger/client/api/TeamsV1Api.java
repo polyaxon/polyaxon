@@ -774,36 +774,24 @@ public class TeamsV1Api {
     /**
      * Build call for getTeamMember
      * @param owner Owner of the namespace (required)
-     * @param team Team (required)
-     * @param memberUser User (required)
-     * @param memberRole Role. (optional)
-     * @param memberOrgRole Organization Role. (optional)
-     * @param memberCreatedAt Optional time when the entityt was created. (optional)
-     * @param memberUpdatedAt Optional last time the entity was updated. (optional)
+     * @param team Team under namesapce (required)
+     * @param user Member under team (required)
      * @param progressListener Progress listener
      * @param progressRequestListener Progress request listener
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call getTeamMemberCall(String owner, String team, String memberUser, String memberRole, String memberOrgRole, OffsetDateTime memberCreatedAt, OffsetDateTime memberUpdatedAt, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call getTeamMemberCall(String owner, String team, String user, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
-        String localVarPath = "/api/v1/{owner}/teams/{team}/members/{member.user}"
+        String localVarPath = "/api/v1/{owner}/teams/{team}/members/{user}"
             .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()))
             .replaceAll("\\{" + "team" + "\\}", apiClient.escapeString(team.toString()))
-            .replaceAll("\\{" + "member.user" + "\\}", apiClient.escapeString(memberUser.toString()));
+            .replaceAll("\\{" + "user" + "\\}", apiClient.escapeString(user.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-        if (memberRole != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("member.role", memberRole));
-        if (memberOrgRole != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("member.org_role", memberOrgRole));
-        if (memberCreatedAt != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("member.created_at", memberCreatedAt));
-        if (memberUpdatedAt != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("member.updated_at", memberUpdatedAt));
 
         Map<String, String> localVarHeaderParams = new HashMap<String, String>();
 
@@ -838,7 +826,7 @@ public class TeamsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call getTeamMemberValidateBeforeCall(String owner, String team, String memberUser, String memberRole, String memberOrgRole, OffsetDateTime memberCreatedAt, OffsetDateTime memberUpdatedAt, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call getTeamMemberValidateBeforeCall(String owner, String team, String user, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
@@ -850,13 +838,13 @@ public class TeamsV1Api {
             throw new ApiException("Missing the required parameter 'team' when calling getTeamMember(Async)");
         }
         
-        // verify the required parameter 'memberUser' is set
-        if (memberUser == null) {
-            throw new ApiException("Missing the required parameter 'memberUser' when calling getTeamMember(Async)");
+        // verify the required parameter 'user' is set
+        if (user == null) {
+            throw new ApiException("Missing the required parameter 'user' when calling getTeamMember(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = getTeamMemberCall(owner, team, memberUser, memberRole, memberOrgRole, memberCreatedAt, memberUpdatedAt, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = getTeamMemberCall(owner, team, user, progressListener, progressRequestListener);
         return call;
 
     }
@@ -865,17 +853,13 @@ public class TeamsV1Api {
      * Stop run
      * 
      * @param owner Owner of the namespace (required)
-     * @param team Team (required)
-     * @param memberUser User (required)
-     * @param memberRole Role. (optional)
-     * @param memberOrgRole Organization Role. (optional)
-     * @param memberCreatedAt Optional time when the entityt was created. (optional)
-     * @param memberUpdatedAt Optional last time the entity was updated. (optional)
+     * @param team Team under namesapce (required)
+     * @param user Member under team (required)
      * @return V1TeamMember
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1TeamMember getTeamMember(String owner, String team, String memberUser, String memberRole, String memberOrgRole, OffsetDateTime memberCreatedAt, OffsetDateTime memberUpdatedAt) throws ApiException {
-        ApiResponse<V1TeamMember> resp = getTeamMemberWithHttpInfo(owner, team, memberUser, memberRole, memberOrgRole, memberCreatedAt, memberUpdatedAt);
+    public V1TeamMember getTeamMember(String owner, String team, String user) throws ApiException {
+        ApiResponse<V1TeamMember> resp = getTeamMemberWithHttpInfo(owner, team, user);
         return resp.getData();
     }
 
@@ -883,17 +867,13 @@ public class TeamsV1Api {
      * Stop run
      * 
      * @param owner Owner of the namespace (required)
-     * @param team Team (required)
-     * @param memberUser User (required)
-     * @param memberRole Role. (optional)
-     * @param memberOrgRole Organization Role. (optional)
-     * @param memberCreatedAt Optional time when the entityt was created. (optional)
-     * @param memberUpdatedAt Optional last time the entity was updated. (optional)
+     * @param team Team under namesapce (required)
+     * @param user Member under team (required)
      * @return ApiResponse&lt;V1TeamMember&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1TeamMember> getTeamMemberWithHttpInfo(String owner, String team, String memberUser, String memberRole, String memberOrgRole, OffsetDateTime memberCreatedAt, OffsetDateTime memberUpdatedAt) throws ApiException {
-        com.squareup.okhttp.Call call = getTeamMemberValidateBeforeCall(owner, team, memberUser, memberRole, memberOrgRole, memberCreatedAt, memberUpdatedAt, null, null);
+    public ApiResponse<V1TeamMember> getTeamMemberWithHttpInfo(String owner, String team, String user) throws ApiException {
+        com.squareup.okhttp.Call call = getTeamMemberValidateBeforeCall(owner, team, user, null, null);
         Type localVarReturnType = new TypeToken<V1TeamMember>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -902,17 +882,13 @@ public class TeamsV1Api {
      * Stop run (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
-     * @param team Team (required)
-     * @param memberUser User (required)
-     * @param memberRole Role. (optional)
-     * @param memberOrgRole Organization Role. (optional)
-     * @param memberCreatedAt Optional time when the entityt was created. (optional)
-     * @param memberUpdatedAt Optional last time the entity was updated. (optional)
+     * @param team Team under namesapce (required)
+     * @param user Member under team (required)
      * @param callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call getTeamMemberAsync(String owner, String team, String memberUser, String memberRole, String memberOrgRole, OffsetDateTime memberCreatedAt, OffsetDateTime memberUpdatedAt, final ApiCallback<V1TeamMember> callback) throws ApiException {
+    public com.squareup.okhttp.Call getTeamMemberAsync(String owner, String team, String user, final ApiCallback<V1TeamMember> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -933,7 +909,7 @@ public class TeamsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = getTeamMemberValidateBeforeCall(owner, team, memberUser, memberRole, memberOrgRole, memberCreatedAt, memberUpdatedAt, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = getTeamMemberValidateBeforeCall(owner, team, user, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1TeamMember>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;

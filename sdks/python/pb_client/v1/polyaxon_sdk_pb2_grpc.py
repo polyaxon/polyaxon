@@ -2400,7 +2400,7 @@ class OrganizationsV1Stub(object):
         )
     self.GetOrganizationMember = channel.unary_unary(
         '/v1.OrganizationsV1/GetOrganizationMember',
-        request_serializer=v1_dot_organization__pb2.OrganizationMemberBodyRequest.SerializeToString,
+        request_serializer=v1_dot_base__pb2.OrgMemeberResourceRequest.SerializeToString,
         response_deserializer=v1_dot_organization__pb2.OrganizationMember.FromString,
         )
     self.UpdateOrganizationMember = channel.unary_unary(
@@ -2415,7 +2415,7 @@ class OrganizationsV1Stub(object):
         )
     self.DeleteOrganizationMember = channel.unary_unary(
         '/v1.OrganizationsV1/DeleteOrganizationMember',
-        request_serializer=v1_dot_organization__pb2.OrganizationMemberBodyRequest.SerializeToString,
+        request_serializer=v1_dot_base__pb2.OrgMemeberResourceRequest.SerializeToString,
         response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
         )
 
@@ -2565,7 +2565,7 @@ def add_OrganizationsV1Servicer_to_server(servicer, server):
       ),
       'GetOrganizationMember': grpc.unary_unary_rpc_method_handler(
           servicer.GetOrganizationMember,
-          request_deserializer=v1_dot_organization__pb2.OrganizationMemberBodyRequest.FromString,
+          request_deserializer=v1_dot_base__pb2.OrgMemeberResourceRequest.FromString,
           response_serializer=v1_dot_organization__pb2.OrganizationMember.SerializeToString,
       ),
       'UpdateOrganizationMember': grpc.unary_unary_rpc_method_handler(
@@ -2580,7 +2580,7 @@ def add_OrganizationsV1Servicer_to_server(servicer, server):
       ),
       'DeleteOrganizationMember': grpc.unary_unary_rpc_method_handler(
           servicer.DeleteOrganizationMember,
-          request_deserializer=v1_dot_organization__pb2.OrganizationMemberBodyRequest.FromString,
+          request_deserializer=v1_dot_base__pb2.OrgMemeberResourceRequest.FromString,
           response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
       ),
   }
@@ -2646,7 +2646,7 @@ class TeamsV1Stub(object):
         )
     self.GetTeamMember = channel.unary_unary(
         '/v1.TeamsV1/GetTeamMember',
-        request_serializer=v1_dot_team__pb2.TeamMemberBodyRequest.SerializeToString,
+        request_serializer=v1_dot_base__pb2.TeamMemeberResourceRequest.SerializeToString,
         response_deserializer=v1_dot_team__pb2.TeamMember.FromString,
         )
     self.UpdateTeamMember = channel.unary_unary(
@@ -2811,7 +2811,7 @@ def add_TeamsV1Servicer_to_server(servicer, server):
       ),
       'GetTeamMember': grpc.unary_unary_rpc_method_handler(
           servicer.GetTeamMember,
-          request_deserializer=v1_dot_team__pb2.TeamMemberBodyRequest.FromString,
+          request_deserializer=v1_dot_base__pb2.TeamMemeberResourceRequest.FromString,
           response_serializer=v1_dot_team__pb2.TeamMember.SerializeToString,
       ),
       'UpdateTeamMember': grpc.unary_unary_rpc_method_handler(

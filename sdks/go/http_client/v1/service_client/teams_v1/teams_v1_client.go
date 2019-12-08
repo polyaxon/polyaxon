@@ -232,7 +232,7 @@ func (a *Client) GetTeamMember(params *GetTeamMemberParams, authInfo runtime.Cli
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "GetTeamMember",
 		Method:             "GET",
-		PathPattern:        "/api/v1/{owner}/teams/{team}/members/{member.user}",
+		PathPattern:        "/api/v1/{owner}/teams/{team}/members/{user}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},

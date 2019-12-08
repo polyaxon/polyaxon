@@ -28,48 +28,51 @@ import (
 	"github.com/go-openapi/validate"
 )
 
-// V1Optimization Optimization enum for metrics
-//
-// - maximize: Minimize a metric
-//  - minimize: Minimize a metric
-// swagger:model v1Optimization
-type V1Optimization string
+// V1RunKind Run kind enum
+// swagger:model v1RunKind
+type V1RunKind string
 
 const (
 
-	// V1OptimizationMaximize captures enum value "maximize"
-	V1OptimizationMaximize V1Optimization = "maximize"
+	// V1RunKindJob captures enum value "job"
+	V1RunKindJob V1RunKind = "job"
 
-	// V1OptimizationMinimize captures enum value "minimize"
-	V1OptimizationMinimize V1Optimization = "minimize"
+	// V1RunKindService captures enum value "service"
+	V1RunKindService V1RunKind = "service"
+
+	// V1RunKindDag captures enum value "dag"
+	V1RunKindDag V1RunKind = "dag"
+
+	// V1RunKindParallel captures enum value "parallel"
+	V1RunKindParallel V1RunKind = "parallel"
 )
 
 // for schema
-var v1OptimizationEnum []interface{}
+var v1RunKindEnum []interface{}
 
 func init() {
-	var res []V1Optimization
-	if err := json.Unmarshal([]byte(`["maximize","minimize"]`), &res); err != nil {
+	var res []V1RunKind
+	if err := json.Unmarshal([]byte(`["job","service","dag","parallel"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
-		v1OptimizationEnum = append(v1OptimizationEnum, v)
+		v1RunKindEnum = append(v1RunKindEnum, v)
 	}
 }
 
-func (m V1Optimization) validateV1OptimizationEnum(path, location string, value V1Optimization) error {
-	if err := validate.Enum(path, location, value, v1OptimizationEnum); err != nil {
+func (m V1RunKind) validateV1RunKindEnum(path, location string, value V1RunKind) error {
+	if err := validate.Enum(path, location, value, v1RunKindEnum); err != nil {
 		return err
 	}
 	return nil
 }
 
-// Validate validates this v1 optimization
-func (m V1Optimization) Validate(formats strfmt.Registry) error {
+// Validate validates this v1 run kind
+func (m V1RunKind) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	// value enum
-	if err := m.validateV1OptimizationEnum("", "body", m); err != nil {
+	if err := m.validateV1RunKindEnum("", "body", m); err != nil {
 		return err
 	}
 

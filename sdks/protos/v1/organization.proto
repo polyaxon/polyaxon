@@ -9,17 +9,20 @@ message Organization {
     // User
     string user = 1;
 
+    // Read-only User email
+    string user_email = 2;
+
     // Name
-    string name = 2;
+    string name = 3;
 
     // Optional flag to tell if this organization is public
-    string is_public = 3;
+    string is_public = 4;
 
     // Optional time when the entityt was created
-    google.protobuf.Timestamp created_at = 4;
+    google.protobuf.Timestamp created_at = 5;
 
     // Optional last time the entity was updated
-    google.protobuf.Timestamp updated_at = 5;
+    google.protobuf.Timestamp updated_at = 6;
 
 }
 

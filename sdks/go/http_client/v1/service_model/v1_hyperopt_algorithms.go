@@ -30,22 +30,22 @@ import (
 
 // V1HyperoptAlgorithms Hyperopt algorithms enum
 //
-// - TPE: tpe algorithm
-//  - RAND: random algorithm
-//  - ANNEAL: anneal algorithm
+// - tpe: tpe algorithm
+//  - rand: random algorithm
+//  - anneal: anneal algorithm
 // swagger:model v1HyperoptAlgorithms
 type V1HyperoptAlgorithms string
 
 const (
 
-	// V1HyperoptAlgorithmsTPE captures enum value "TPE"
-	V1HyperoptAlgorithmsTPE V1HyperoptAlgorithms = "TPE"
+	// V1HyperoptAlgorithmsTpe captures enum value "tpe"
+	V1HyperoptAlgorithmsTpe V1HyperoptAlgorithms = "tpe"
 
-	// V1HyperoptAlgorithmsRAND captures enum value "RAND"
-	V1HyperoptAlgorithmsRAND V1HyperoptAlgorithms = "RAND"
+	// V1HyperoptAlgorithmsRand captures enum value "rand"
+	V1HyperoptAlgorithmsRand V1HyperoptAlgorithms = "rand"
 
-	// V1HyperoptAlgorithmsANNEAL captures enum value "ANNEAL"
-	V1HyperoptAlgorithmsANNEAL V1HyperoptAlgorithms = "ANNEAL"
+	// V1HyperoptAlgorithmsAnneal captures enum value "anneal"
+	V1HyperoptAlgorithmsAnneal V1HyperoptAlgorithms = "anneal"
 )
 
 // for schema
@@ -53,7 +53,7 @@ var v1HyperoptAlgorithmsEnum []interface{}
 
 func init() {
 	var res []V1HyperoptAlgorithms
-	if err := json.Unmarshal([]byte(`["TPE","RAND","ANNEAL"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["tpe","rand","anneal"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {

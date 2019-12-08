@@ -1388,14 +1388,14 @@ export interface V1Hyperopt {
 }
 
 /**
- * - TPE: tpe algorithm  - RAND: random algorithm  - ANNEAL: anneal algorithm
+ * - tpe: tpe algorithm  - rand: random algorithm  - anneal: anneal algorithm
  * @export
  * @enum {string}
  */
 export enum V1HyperoptAlgorithms {
-    TPE = <any> 'TPE',
-    RAND = <any> 'RAND',
-    ANNEAL = <any> 'ANNEAL'
+    Tpe = <any> 'tpe',
+    Rand = <any> 'rand',
+    Anneal = <any> 'anneal'
 }
 
 /**
@@ -2483,7 +2483,7 @@ export interface V1OpStatusCondition {
 }
 
 /**
- * - maximize: Minimize a metric  - minimize: Maximize a metric
+ * - maximize: Minimize a metric  - minimize: Minimize a metric
  * @export
  * @enum {string}
  */
@@ -2544,6 +2544,12 @@ export interface V1Organization {
      * @memberof V1Organization
      */
     user?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1Organization
+     */
+    user_email?: string;
     /**
      * 
      * @type {string}
@@ -2670,6 +2676,12 @@ export interface V1Project {
      * @memberof V1Project
      */
     user?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1Project
+     */
+    user_email?: string;
     /**
      * 
      * @type {string}
@@ -3196,10 +3208,10 @@ export interface V1Run {
     meta_info?: V1RunMetaInfo;
     /**
      * 
-     * @type {string}
+     * @type {V1RunKind}
      * @memberof V1Run
      */
-    kind?: string;
+    kind?: V1RunKind;
     /**
      * 
      * @type {string}
@@ -3266,6 +3278,18 @@ export interface V1Run {
      * @memberof V1Run
      */
     original_name?: string;
+}
+
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+export enum V1RunKind {
+    Job = <any> 'job',
+    Service = <any> 'service',
+    Dag = <any> 'dag',
+    Parallel = <any> 'parallel'
 }
 
 /**
@@ -8638,25 +8662,22 @@ export const OrganizationsV1ApiFetchParamCreator = function (configuration?: Con
          * 
          * @summary Invalidate runs
          * @param {string} owner Owner of the namespace
-         * @param {string} member_user User
-         * @param {string} [member_role] Role.
-         * @param {Date} [member_created_at] Optional time when the entityt was created.
-         * @param {Date} [member_updated_at] Optional last time the entity was updated.
+         * @param {string} user Memeber under namesapce
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteOrganizationMember(owner: string, member_user: string, member_role?: string, member_created_at?: Date, member_updated_at?: Date, options: any = {}): FetchArgs {
+        deleteOrganizationMember(owner: string, user: string, options: any = {}): FetchArgs {
             // verify required parameter 'owner' is not null or undefined
             if (owner === null || owner === undefined) {
                 throw new RequiredError('owner','Required parameter owner was null or undefined when calling deleteOrganizationMember.');
             }
-            // verify required parameter 'member_user' is not null or undefined
-            if (member_user === null || member_user === undefined) {
-                throw new RequiredError('member_user','Required parameter member_user was null or undefined when calling deleteOrganizationMember.');
+            // verify required parameter 'user' is not null or undefined
+            if (user === null || user === undefined) {
+                throw new RequiredError('user','Required parameter user was null or undefined when calling deleteOrganizationMember.');
             }
-            const localVarPath = `/api/v1/organizations/{owner}/members/{member.user}`
+            const localVarPath = `/api/v1/organizations/{owner}/members/{user}`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
-                .replace(`{${"member.user"}}`, encodeURIComponent(String(member_user)));
+                .replace(`{${"user"}}`, encodeURIComponent(String(user)));
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'DELETE' }, options);
             const localVarHeaderParameter = {} as any;
@@ -8668,18 +8689,6 @@ export const OrganizationsV1ApiFetchParamCreator = function (configuration?: Con
 					? configuration.apiKey("Authorization")
 					: configuration.apiKey;
                 localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
-            }
-
-            if (member_role !== undefined) {
-                localVarQueryParameter['member.role'] = member_role;
-            }
-
-            if (member_created_at !== undefined) {
-                localVarQueryParameter['member.created_at'] = (member_created_at as any).toISOString();
-            }
-
-            if (member_updated_at !== undefined) {
-                localVarQueryParameter['member.updated_at'] = (member_updated_at as any).toISOString();
             }
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
@@ -8733,25 +8742,22 @@ export const OrganizationsV1ApiFetchParamCreator = function (configuration?: Con
          * 
          * @summary Stop run
          * @param {string} owner Owner of the namespace
-         * @param {string} member_user User
-         * @param {string} [member_role] Role.
-         * @param {Date} [member_created_at] Optional time when the entityt was created.
-         * @param {Date} [member_updated_at] Optional last time the entity was updated.
+         * @param {string} user Memeber under namesapce
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getOrganizationMember(owner: string, member_user: string, member_role?: string, member_created_at?: Date, member_updated_at?: Date, options: any = {}): FetchArgs {
+        getOrganizationMember(owner: string, user: string, options: any = {}): FetchArgs {
             // verify required parameter 'owner' is not null or undefined
             if (owner === null || owner === undefined) {
                 throw new RequiredError('owner','Required parameter owner was null or undefined when calling getOrganizationMember.');
             }
-            // verify required parameter 'member_user' is not null or undefined
-            if (member_user === null || member_user === undefined) {
-                throw new RequiredError('member_user','Required parameter member_user was null or undefined when calling getOrganizationMember.');
+            // verify required parameter 'user' is not null or undefined
+            if (user === null || user === undefined) {
+                throw new RequiredError('user','Required parameter user was null or undefined when calling getOrganizationMember.');
             }
-            const localVarPath = `/api/v1/organizations/{owner}/members/{member.user}`
+            const localVarPath = `/api/v1/organizations/{owner}/members/{user}`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
-                .replace(`{${"member.user"}}`, encodeURIComponent(String(member_user)));
+                .replace(`{${"user"}}`, encodeURIComponent(String(user)));
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
             const localVarHeaderParameter = {} as any;
@@ -8763,18 +8769,6 @@ export const OrganizationsV1ApiFetchParamCreator = function (configuration?: Con
 					? configuration.apiKey("Authorization")
 					: configuration.apiKey;
                 localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
-            }
-
-            if (member_role !== undefined) {
-                localVarQueryParameter['member.role'] = member_role;
-            }
-
-            if (member_created_at !== undefined) {
-                localVarQueryParameter['member.created_at'] = (member_created_at as any).toISOString();
-            }
-
-            if (member_updated_at !== undefined) {
-                localVarQueryParameter['member.updated_at'] = (member_updated_at as any).toISOString();
             }
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
@@ -9153,15 +9147,12 @@ export const OrganizationsV1ApiFp = function(configuration?: Configuration) {
          * 
          * @summary Invalidate runs
          * @param {string} owner Owner of the namespace
-         * @param {string} member_user User
-         * @param {string} [member_role] Role.
-         * @param {Date} [member_created_at] Optional time when the entityt was created.
-         * @param {Date} [member_updated_at] Optional last time the entity was updated.
+         * @param {string} user Memeber under namesapce
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteOrganizationMember(owner: string, member_user: string, member_role?: string, member_created_at?: Date, member_updated_at?: Date, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
-            const localVarFetchArgs = OrganizationsV1ApiFetchParamCreator(configuration).deleteOrganizationMember(owner, member_user, member_role, member_created_at, member_updated_at, options);
+        deleteOrganizationMember(owner: string, user: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+            const localVarFetchArgs = OrganizationsV1ApiFetchParamCreator(configuration).deleteOrganizationMember(owner, user, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -9195,15 +9186,12 @@ export const OrganizationsV1ApiFp = function(configuration?: Configuration) {
          * 
          * @summary Stop run
          * @param {string} owner Owner of the namespace
-         * @param {string} member_user User
-         * @param {string} [member_role] Role.
-         * @param {Date} [member_created_at] Optional time when the entityt was created.
-         * @param {Date} [member_updated_at] Optional last time the entity was updated.
+         * @param {string} user Memeber under namesapce
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getOrganizationMember(owner: string, member_user: string, member_role?: string, member_created_at?: Date, member_updated_at?: Date, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1OrganizationMember> {
-            const localVarFetchArgs = OrganizationsV1ApiFetchParamCreator(configuration).getOrganizationMember(owner, member_user, member_role, member_created_at, member_updated_at, options);
+        getOrganizationMember(owner: string, user: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1OrganizationMember> {
+            const localVarFetchArgs = OrganizationsV1ApiFetchParamCreator(configuration).getOrganizationMember(owner, user, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -9395,15 +9383,12 @@ export const OrganizationsV1ApiFactory = function (configuration?: Configuration
          * 
          * @summary Invalidate runs
          * @param {string} owner Owner of the namespace
-         * @param {string} member_user User
-         * @param {string} [member_role] Role.
-         * @param {Date} [member_created_at] Optional time when the entityt was created.
-         * @param {Date} [member_updated_at] Optional last time the entity was updated.
+         * @param {string} user Memeber under namesapce
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteOrganizationMember(owner: string, member_user: string, member_role?: string, member_created_at?: Date, member_updated_at?: Date, options?: any) {
-            return OrganizationsV1ApiFp(configuration).deleteOrganizationMember(owner, member_user, member_role, member_created_at, member_updated_at, options)(fetch, basePath);
+        deleteOrganizationMember(owner: string, user: string, options?: any) {
+            return OrganizationsV1ApiFp(configuration).deleteOrganizationMember(owner, user, options)(fetch, basePath);
         },
         /**
          * 
@@ -9419,15 +9404,12 @@ export const OrganizationsV1ApiFactory = function (configuration?: Configuration
          * 
          * @summary Stop run
          * @param {string} owner Owner of the namespace
-         * @param {string} member_user User
-         * @param {string} [member_role] Role.
-         * @param {Date} [member_created_at] Optional time when the entityt was created.
-         * @param {Date} [member_updated_at] Optional last time the entity was updated.
+         * @param {string} user Memeber under namesapce
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getOrganizationMember(owner: string, member_user: string, member_role?: string, member_created_at?: Date, member_updated_at?: Date, options?: any) {
-            return OrganizationsV1ApiFp(configuration).getOrganizationMember(owner, member_user, member_role, member_created_at, member_updated_at, options)(fetch, basePath);
+        getOrganizationMember(owner: string, user: string, options?: any) {
+            return OrganizationsV1ApiFp(configuration).getOrganizationMember(owner, user, options)(fetch, basePath);
         },
         /**
          * 
@@ -9554,16 +9536,13 @@ export class OrganizationsV1Api extends BaseAPI {
      * 
      * @summary Invalidate runs
      * @param {string} owner Owner of the namespace
-     * @param {string} member_user User
-     * @param {string} [member_role] Role.
-     * @param {Date} [member_created_at] Optional time when the entityt was created.
-     * @param {Date} [member_updated_at] Optional last time the entity was updated.
+     * @param {string} user Memeber under namesapce
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OrganizationsV1Api
      */
-    public deleteOrganizationMember(owner: string, member_user: string, member_role?: string, member_created_at?: Date, member_updated_at?: Date, options?: any) {
-        return OrganizationsV1ApiFp(this.configuration).deleteOrganizationMember(owner, member_user, member_role, member_created_at, member_updated_at, options)(this.fetch, this.basePath);
+    public deleteOrganizationMember(owner: string, user: string, options?: any) {
+        return OrganizationsV1ApiFp(this.configuration).deleteOrganizationMember(owner, user, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -9582,16 +9561,13 @@ export class OrganizationsV1Api extends BaseAPI {
      * 
      * @summary Stop run
      * @param {string} owner Owner of the namespace
-     * @param {string} member_user User
-     * @param {string} [member_role] Role.
-     * @param {Date} [member_created_at] Optional time when the entityt was created.
-     * @param {Date} [member_updated_at] Optional last time the entity was updated.
+     * @param {string} user Memeber under namesapce
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OrganizationsV1Api
      */
-    public getOrganizationMember(owner: string, member_user: string, member_role?: string, member_created_at?: Date, member_updated_at?: Date, options?: any) {
-        return OrganizationsV1ApiFp(this.configuration).getOrganizationMember(owner, member_user, member_role, member_created_at, member_updated_at, options)(this.fetch, this.basePath);
+    public getOrganizationMember(owner: string, user: string, options?: any) {
+        return OrganizationsV1ApiFp(this.configuration).getOrganizationMember(owner, user, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -17786,16 +17762,12 @@ export const TeamsV1ApiFetchParamCreator = function (configuration?: Configurati
          * 
          * @summary Stop run
          * @param {string} owner Owner of the namespace
-         * @param {string} team Team
-         * @param {string} member_user User
-         * @param {string} [member_role] Role.
-         * @param {string} [member_org_role] Organization Role.
-         * @param {Date} [member_created_at] Optional time when the entityt was created.
-         * @param {Date} [member_updated_at] Optional last time the entity was updated.
+         * @param {string} team Team under namesapce
+         * @param {string} user Member under team
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTeamMember(owner: string, team: string, member_user: string, member_role?: string, member_org_role?: string, member_created_at?: Date, member_updated_at?: Date, options: any = {}): FetchArgs {
+        getTeamMember(owner: string, team: string, user: string, options: any = {}): FetchArgs {
             // verify required parameter 'owner' is not null or undefined
             if (owner === null || owner === undefined) {
                 throw new RequiredError('owner','Required parameter owner was null or undefined when calling getTeamMember.');
@@ -17804,14 +17776,14 @@ export const TeamsV1ApiFetchParamCreator = function (configuration?: Configurati
             if (team === null || team === undefined) {
                 throw new RequiredError('team','Required parameter team was null or undefined when calling getTeamMember.');
             }
-            // verify required parameter 'member_user' is not null or undefined
-            if (member_user === null || member_user === undefined) {
-                throw new RequiredError('member_user','Required parameter member_user was null or undefined when calling getTeamMember.');
+            // verify required parameter 'user' is not null or undefined
+            if (user === null || user === undefined) {
+                throw new RequiredError('user','Required parameter user was null or undefined when calling getTeamMember.');
             }
-            const localVarPath = `/api/v1/{owner}/teams/{team}/members/{member.user}`
+            const localVarPath = `/api/v1/{owner}/teams/{team}/members/{user}`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"team"}}`, encodeURIComponent(String(team)))
-                .replace(`{${"member.user"}}`, encodeURIComponent(String(member_user)));
+                .replace(`{${"user"}}`, encodeURIComponent(String(user)));
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
             const localVarHeaderParameter = {} as any;
@@ -17823,22 +17795,6 @@ export const TeamsV1ApiFetchParamCreator = function (configuration?: Configurati
 					? configuration.apiKey("Authorization")
 					: configuration.apiKey;
                 localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
-            }
-
-            if (member_role !== undefined) {
-                localVarQueryParameter['member.role'] = member_role;
-            }
-
-            if (member_org_role !== undefined) {
-                localVarQueryParameter['member.org_role'] = member_org_role;
-            }
-
-            if (member_created_at !== undefined) {
-                localVarQueryParameter['member.created_at'] = (member_created_at as any).toISOString();
-            }
-
-            if (member_updated_at !== undefined) {
-                localVarQueryParameter['member.updated_at'] = (member_updated_at as any).toISOString();
             }
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
@@ -18347,17 +18303,13 @@ export const TeamsV1ApiFp = function(configuration?: Configuration) {
          * 
          * @summary Stop run
          * @param {string} owner Owner of the namespace
-         * @param {string} team Team
-         * @param {string} member_user User
-         * @param {string} [member_role] Role.
-         * @param {string} [member_org_role] Organization Role.
-         * @param {Date} [member_created_at] Optional time when the entityt was created.
-         * @param {Date} [member_updated_at] Optional last time the entity was updated.
+         * @param {string} team Team under namesapce
+         * @param {string} user Member under team
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTeamMember(owner: string, team: string, member_user: string, member_role?: string, member_org_role?: string, member_created_at?: Date, member_updated_at?: Date, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1TeamMember> {
-            const localVarFetchArgs = TeamsV1ApiFetchParamCreator(configuration).getTeamMember(owner, team, member_user, member_role, member_org_role, member_created_at, member_updated_at, options);
+        getTeamMember(owner: string, team: string, user: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1TeamMember> {
+            const localVarFetchArgs = TeamsV1ApiFetchParamCreator(configuration).getTeamMember(owner, team, user, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -18594,17 +18546,13 @@ export const TeamsV1ApiFactory = function (configuration?: Configuration, fetch?
          * 
          * @summary Stop run
          * @param {string} owner Owner of the namespace
-         * @param {string} team Team
-         * @param {string} member_user User
-         * @param {string} [member_role] Role.
-         * @param {string} [member_org_role] Organization Role.
-         * @param {Date} [member_created_at] Optional time when the entityt was created.
-         * @param {Date} [member_updated_at] Optional last time the entity was updated.
+         * @param {string} team Team under namesapce
+         * @param {string} user Member under team
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTeamMember(owner: string, team: string, member_user: string, member_role?: string, member_org_role?: string, member_created_at?: Date, member_updated_at?: Date, options?: any) {
-            return TeamsV1ApiFp(configuration).getTeamMember(owner, team, member_user, member_role, member_org_role, member_created_at, member_updated_at, options)(fetch, basePath);
+        getTeamMember(owner: string, team: string, user: string, options?: any) {
+            return TeamsV1ApiFp(configuration).getTeamMember(owner, team, user, options)(fetch, basePath);
         },
         /**
          * 
@@ -18780,18 +18728,14 @@ export class TeamsV1Api extends BaseAPI {
      * 
      * @summary Stop run
      * @param {string} owner Owner of the namespace
-     * @param {string} team Team
-     * @param {string} member_user User
-     * @param {string} [member_role] Role.
-     * @param {string} [member_org_role] Organization Role.
-     * @param {Date} [member_created_at] Optional time when the entityt was created.
-     * @param {Date} [member_updated_at] Optional last time the entity was updated.
+     * @param {string} team Team under namesapce
+     * @param {string} user Member under team
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TeamsV1Api
      */
-    public getTeamMember(owner: string, team: string, member_user: string, member_role?: string, member_org_role?: string, member_created_at?: Date, member_updated_at?: Date, options?: any) {
-        return TeamsV1ApiFp(this.configuration).getTeamMember(owner, team, member_user, member_role, member_org_role, member_created_at, member_updated_at, options)(this.fetch, this.basePath);
+    public getTeamMember(owner: string, team: string, user: string, options?: any) {
+        return TeamsV1ApiFp(this.configuration).getTeamMember(owner, team, user, options)(this.fetch, this.basePath);
     }
 
     /**

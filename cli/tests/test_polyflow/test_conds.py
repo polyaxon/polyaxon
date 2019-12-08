@@ -81,11 +81,7 @@ class TestCondsConfigs(TestCase):
     def test_conds(self):
         configs = [
             {"kind": "status", "op": "foo", "trigger": "done"},
-            {
-                "kind": "io",
-                "param": "foo.outputs.param1",
-                "trigger": "~value1|value2",
-            },
+            {"kind": "io", "param": "foo.outputs.param1", "trigger": "~value1|value2"},
         ]
 
         ConditionSchema().load(configs, many=True)

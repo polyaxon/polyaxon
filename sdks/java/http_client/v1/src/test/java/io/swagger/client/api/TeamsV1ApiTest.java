@@ -153,12 +153,8 @@ public class TeamsV1ApiTest {
     public void getTeamMemberTest() throws ApiException {
         String owner = null;
         String team = null;
-        String memberUser = null;
-        String memberRole = null;
-        String memberOrgRole = null;
-        OffsetDateTime memberCreatedAt = null;
-        OffsetDateTime memberUpdatedAt = null;
-        V1TeamMember response = api.getTeamMember(owner, team, memberUser, memberRole, memberOrgRole, memberCreatedAt, memberUpdatedAt);
+        String user = null;
+        V1TeamMember response = api.getTeamMember(owner, team, user);
 
         // TODO: test validations
     }

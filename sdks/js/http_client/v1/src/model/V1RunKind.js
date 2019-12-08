@@ -30,47 +30,60 @@
 
 (function(root, factory) {
   if (typeof define === 'function' && define.amd) {
-    // AMD.
-    define(['expect.js', '../../src/index'], factory);
+    // AMD. Register as an anonymous module.
+    define(['ApiClient'], factory);
   } else if (typeof module === 'object' && module.exports) {
     // CommonJS-like environments that support module.exports, like Node.
-    factory(require('expect.js'), require('../../src/index'));
+    module.exports = factory(require('../ApiClient'));
   } else {
     // Browser globals (root is window)
-    factory(root.expect, root.PolyaxonSdk);
+    if (!root.PolyaxonSdk) {
+      root.PolyaxonSdk = {};
+    }
+    root.PolyaxonSdk.V1RunKind = factory(root.PolyaxonSdk.ApiClient);
   }
-}(this, function(expect, PolyaxonSdk) {
+}(this, function(ApiClient) {
   'use strict';
 
-  var instance;
+  /**
+   * Enum class V1RunKind.
+   * @enum {String}
+   * @readonly
+   */
+  var exports = {
+    /**
+     * value: "job"
+     * @const
+     */
+    job: "job",
 
-  describe('(package)', function() {
-    describe('V1HyperoptAlgorithms', function() {
-      beforeEach(function() {
-        instance = PolyaxonSdk.V1HyperoptAlgorithms;
-      });
+    /**
+     * value: "service"
+     * @const
+     */
+    service: "service",
 
-      it('should create an instance of V1HyperoptAlgorithms', function() {
-        // TODO: update the code to test V1HyperoptAlgorithms
-        expect(instance).to.be.a('object');
-      });
+    /**
+     * value: "dag"
+     * @const
+     */
+    dag: "dag",
 
-      it('should have the property tpe', function() {
-        expect(instance).to.have.property('tpe');
-        expect(instance.tpe).to.be("tpe");
-      });
+    /**
+     * value: "parallel"
+     * @const
+     */
+    parallel: "parallel"
+  };
 
-      it('should have the property rand', function() {
-        expect(instance).to.have.property('rand');
-        expect(instance.rand).to.be("rand");
-      });
+  /**
+   * Returns a <code>V1RunKind</code> enum value from a JavaScript object name.
+   * @param {Object} data The plain JavaScript object containing the name of the enum value.
+   * @return {module:model/V1RunKind} The enum <code>V1RunKind</code> value.
+   */
+  exports.constructFromObject = function(object) {
+    return object;
+  }
 
-      it('should have the property anneal', function() {
-        expect(instance).to.have.property('anneal');
-        expect(instance.anneal).to.be("anneal");
-      });
-
-    });
-  });
-
+  return exports;
 }));

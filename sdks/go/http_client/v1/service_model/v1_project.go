@@ -66,6 +66,9 @@ type V1Project struct {
 	// Required name of user who created this entity
 	User string `json:"user,omitempty"`
 
+	// Read-only email of user who created this entity
+	UserEmail string `json:"user_email,omitempty"`
+
 	// UUID
 	UUID string `json:"uuid,omitempty"`
 }

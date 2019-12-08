@@ -121,6 +121,7 @@ from polyaxon_sdk.models.v1_repo_init import V1RepoInit
 from polyaxon_sdk.models.v1_resource_requirements import V1ResourceRequirements
 from polyaxon_sdk.models.v1_resource_type import V1ResourceType
 from polyaxon_sdk.models.v1_run import V1Run
+from polyaxon_sdk.models.v1_run_kind import V1RunKind
 from polyaxon_sdk.models.v1_run_meta_info import V1RunMetaInfo
 from polyaxon_sdk.models.v1_run_schema import V1RunSchema
 from polyaxon_sdk.models.v1_run_settings import V1RunSettings

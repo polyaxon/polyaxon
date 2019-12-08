@@ -31,18 +31,18 @@
 (function(root, factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
-    define(['ApiClient', 'model/V1RunMetaInfo'], factory);
+    define(['ApiClient', 'model/V1RunKind', 'model/V1RunMetaInfo'], factory);
   } else if (typeof module === 'object' && module.exports) {
     // CommonJS-like environments that support module.exports, like Node.
-    module.exports = factory(require('../ApiClient'), require('./V1RunMetaInfo'));
+    module.exports = factory(require('../ApiClient'), require('./V1RunKind'), require('./V1RunMetaInfo'));
   } else {
     // Browser globals (root is window)
     if (!root.PolyaxonSdk) {
       root.PolyaxonSdk = {};
     }
-    root.PolyaxonSdk.V1Run = factory(root.PolyaxonSdk.ApiClient, root.PolyaxonSdk.V1RunMetaInfo);
+    root.PolyaxonSdk.V1Run = factory(root.PolyaxonSdk.ApiClient, root.PolyaxonSdk.V1RunKind, root.PolyaxonSdk.V1RunMetaInfo);
   }
-}(this, function(ApiClient, V1RunMetaInfo) {
+}(this, function(ApiClient, V1RunKind, V1RunMetaInfo) {
   'use strict';
 
   /**
@@ -106,7 +106,7 @@
       if (data.hasOwnProperty('meta_info'))
         obj.meta_info = V1RunMetaInfo.constructFromObject(data['meta_info']);
       if (data.hasOwnProperty('kind'))
-        obj.kind = ApiClient.convertToType(data['kind'], 'String');
+        obj.kind = V1RunKind.constructFromObject(data['kind']);
       if (data.hasOwnProperty('hub'))
         obj.hub = ApiClient.convertToType(data['hub'], 'String');
       if (data.hasOwnProperty('inputs'))
@@ -224,7 +224,7 @@
   exports.prototype.meta_info = undefined;
 
   /**
-   * @member {String} kind
+   * @member {module:model/V1RunKind} kind
    */
   exports.prototype.kind = undefined;
 

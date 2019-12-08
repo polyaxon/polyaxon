@@ -21,7 +21,7 @@ Name | Type | Description | Notes
 **readme** | **String** |  | [optional] 
 **bookmarked** | **Boolean** |  | [optional] 
 **meta_info** | [**V1RunMetaInfo**](V1RunMetaInfo.md) |  | [optional] 
-**kind** | **String** |  | [optional] 
+**kind** | [**V1RunKind**](V1RunKind.md) |  | [optional] 
 **hub** | **String** |  | [optional] 
 **inputs** | **Object** |  | [optional] 
 **outputs** | **Object** |  | [optional] 

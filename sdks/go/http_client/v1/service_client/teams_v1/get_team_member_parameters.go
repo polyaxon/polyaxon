@@ -75,41 +75,21 @@ for the get team member operation typically these are written to a http.Request
 */
 type GetTeamMemberParams struct {
 
-	/*MemberCreatedAt
-	  Optional time when the entityt was created.
-
-	*/
-	MemberCreatedAt *strfmt.DateTime
-	/*MemberOrgRole
-	  Organization Role.
-
-	*/
-	MemberOrgRole *string
-	/*MemberRole
-	  Role.
-
-	*/
-	MemberRole *string
-	/*MemberUpdatedAt
-	  Optional last time the entity was updated.
-
-	*/
-	MemberUpdatedAt *strfmt.DateTime
-	/*MemberUser
-	  User
-
-	*/
-	MemberUser string
 	/*Owner
 	  Owner of the namespace
 
 	*/
 	Owner string
 	/*Team
-	  Team
+	  Team under namesapce
 
 	*/
 	Team string
+	/*User
+	  Member under team
+
+	*/
+	User string
 
 	timeout    time.Duration
 	Context    context.Context
@@ -149,61 +129,6 @@ func (o *GetTeamMemberParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
 }
 
-// WithMemberCreatedAt adds the memberCreatedAt to the get team member params
-func (o *GetTeamMemberParams) WithMemberCreatedAt(memberCreatedAt *strfmt.DateTime) *GetTeamMemberParams {
-	o.SetMemberCreatedAt(memberCreatedAt)
-	return o
-}
-
-// SetMemberCreatedAt adds the memberCreatedAt to the get team member params
-func (o *GetTeamMemberParams) SetMemberCreatedAt(memberCreatedAt *strfmt.DateTime) {
-	o.MemberCreatedAt = memberCreatedAt
-}
-
-// WithMemberOrgRole adds the memberOrgRole to the get team member params
-func (o *GetTeamMemberParams) WithMemberOrgRole(memberOrgRole *string) *GetTeamMemberParams {
-	o.SetMemberOrgRole(memberOrgRole)
-	return o
-}
-
-// SetMemberOrgRole adds the memberOrgRole to the get team member params
-func (o *GetTeamMemberParams) SetMemberOrgRole(memberOrgRole *string) {
-	o.MemberOrgRole = memberOrgRole
-}
-
-// WithMemberRole adds the memberRole to the get team member params
-func (o *GetTeamMemberParams) WithMemberRole(memberRole *string) *GetTeamMemberParams {
-	o.SetMemberRole(memberRole)
-	return o
-}
-
-// SetMemberRole adds the memberRole to the get team member params
-func (o *GetTeamMemberParams) SetMemberRole(memberRole *string) {
-	o.MemberRole = memberRole
-}
-
-// WithMemberUpdatedAt adds the memberUpdatedAt to the get team member params
-func (o *GetTeamMemberParams) WithMemberUpdatedAt(memberUpdatedAt *strfmt.DateTime) *GetTeamMemberParams {
-	o.SetMemberUpdatedAt(memberUpdatedAt)
-	return o
-}
-
-// SetMemberUpdatedAt adds the memberUpdatedAt to the get team member params
-func (o *GetTeamMemberParams) SetMemberUpdatedAt(memberUpdatedAt *strfmt.DateTime) {
-	o.MemberUpdatedAt = memberUpdatedAt
-}
-
-// WithMemberUser adds the memberUser to the get team member params
-func (o *GetTeamMemberParams) WithMemberUser(memberUser string) *GetTeamMemberParams {
-	o.SetMemberUser(memberUser)
-	return o
-}
-
-// SetMemberUser adds the memberUser to the get team member params
-func (o *GetTeamMemberParams) SetMemberUser(memberUser string) {
-	o.MemberUser = memberUser
-}
-
 // WithOwner adds the owner to the get team member params
 func (o *GetTeamMemberParams) WithOwner(owner string) *GetTeamMemberParams {
 	o.SetOwner(owner)
@@ -226,6 +151,17 @@ func (o *GetTeamMemberParams) SetTeam(team string) {
 	o.Team = team
 }
 
+// WithUser adds the user to the get team member params
+func (o *GetTeamMemberParams) WithUser(user string) *GetTeamMemberParams {
+	o.SetUser(user)
+	return o
+}
+
+// SetUser adds the user to the get team member params
+func (o *GetTeamMemberParams) SetUser(user string) {
+	o.User = user
+}
+
 // WriteToRequest writes these params to a swagger request
 func (o *GetTeamMemberParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
 
@@ -234,75 +170,6 @@ func (o *GetTeamMemberParams) WriteToRequest(r runtime.ClientRequest, reg strfmt
 	}
 	var res []error
 
-	if o.MemberCreatedAt != nil {
-
-		// query param member.created_at
-		var qrMemberCreatedAt strfmt.DateTime
-		if o.MemberCreatedAt != nil {
-			qrMemberCreatedAt = *o.MemberCreatedAt
-		}
-		qMemberCreatedAt := qrMemberCreatedAt.String()
-		if qMemberCreatedAt != "" {
-			if err := r.SetQueryParam("member.created_at", qMemberCreatedAt); err != nil {
-				return err
-			}
-		}
-
-	}
-
-	if o.MemberOrgRole != nil {
-
-		// query param member.org_role
-		var qrMemberOrgRole string
-		if o.MemberOrgRole != nil {
-			qrMemberOrgRole = *o.MemberOrgRole
-		}
-		qMemberOrgRole := qrMemberOrgRole
-		if qMemberOrgRole != "" {
-			if err := r.SetQueryParam("member.org_role", qMemberOrgRole); err != nil {
-				return err
-			}
-		}
-
-	}
-
-	if o.MemberRole != nil {
-
-		// query param member.role
-		var qrMemberRole string
-		if o.MemberRole != nil {
-			qrMemberRole = *o.MemberRole
-		}
-		qMemberRole := qrMemberRole
-		if qMemberRole != "" {
-			if err := r.SetQueryParam("member.role", qMemberRole); err != nil {
-				return err
-			}
-		}
-
-	}
-
-	if o.MemberUpdatedAt != nil {
-
-		// query param member.updated_at
-		var qrMemberUpdatedAt strfmt.DateTime
-		if o.MemberUpdatedAt != nil {
-			qrMemberUpdatedAt = *o.MemberUpdatedAt
-		}
-		qMemberUpdatedAt := qrMemberUpdatedAt.String()
-		if qMemberUpdatedAt != "" {
-			if err := r.SetQueryParam("member.updated_at", qMemberUpdatedAt); err != nil {
-				return err
-			}
-		}
-
-	}
-
-	// path param member.user
-	if err := r.SetPathParam("member.user", o.MemberUser); err != nil {
-		return err
-	}
-
 	// path param owner
 	if err := r.SetPathParam("owner", o.Owner); err != nil {
 		return err
@@ -310,6 +177,11 @@ func (o *GetTeamMemberParams) WriteToRequest(r runtime.ClientRequest, reg strfmt
 
 	// path param team
 	if err := r.SetPathParam("team", o.Team); err != nil {
+		return err
+	}
+
+	// path param user
+	if err := r.SetPathParam("user", o.User); err != nil {
 		return err
 	}
 

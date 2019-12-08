@@ -47,6 +47,9 @@ public class V1Organization {
   @SerializedName("user")
   private String user = null;
 
+  @SerializedName("user_email")
+  private String userEmail = null;
+
   @SerializedName("name")
   private String name = null;
 
@@ -75,6 +78,24 @@ public class V1Organization {
 
   public void setUser(String user) {
     this.user = user;
+  }
+
+  public V1Organization userEmail(String userEmail) {
+    this.userEmail = userEmail;
+    return this;
+  }
+
+   /**
+   * Get userEmail
+   * @return userEmail
+  **/
+  @ApiModelProperty(value = "")
+  public String getUserEmail() {
+    return userEmail;
+  }
+
+  public void setUserEmail(String userEmail) {
+    this.userEmail = userEmail;
   }
 
   public V1Organization name(String name) {
@@ -160,6 +181,7 @@ public class V1Organization {
     }
     V1Organization v1Organization = (V1Organization) o;
     return Objects.equals(this.user, v1Organization.user) &&
+        Objects.equals(this.userEmail, v1Organization.userEmail) &&
         Objects.equals(this.name, v1Organization.name) &&
         Objects.equals(this.isPublic, v1Organization.isPublic) &&
         Objects.equals(this.createdAt, v1Organization.createdAt) &&
@@ -168,7 +190,7 @@ public class V1Organization {
 
   @Override
   public int hashCode() {
-    return Objects.hash(user, name, isPublic, createdAt, updatedAt);
+    return Objects.hash(user, userEmail, name, isPublic, createdAt, updatedAt);
   }
 
 
@@ -178,6 +200,7 @@ public class V1Organization {
     sb.append("class V1Organization {\n");
     
     sb.append("    user: ").append(toIndentedString(user)).append("\n");
+    sb.append("    userEmail: ").append(toIndentedString(userEmail)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    isPublic: ").append(toIndentedString(isPublic)).append("\n");
     sb.append("    createdAt: ").append(toIndentedString(createdAt)).append("\n");

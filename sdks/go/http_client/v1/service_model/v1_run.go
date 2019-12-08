@@ -70,7 +70,7 @@ type V1Run struct {
 	IsResume bool `json:"is_resume,omitempty"`
 
 	// Optional kind to tell the nature of this run
-	Kind string `json:"kind,omitempty"`
+	Kind V1RunKind `json:"kind,omitempty"`
 
 	// Optional run meta info
 	MetaInfo *V1RunMetaInfo `json:"meta_info,omitempty"`
@@ -138,6 +138,10 @@ func (m *V1Run) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
+	if err := m.validateKind(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateMetaInfo(formats); err != nil {
 		res = append(res, err)
 	}
@@ -176,6 +180,22 @@ func (m *V1Run) validateFinishedAt(formats strfmt.Registry) error {
 	}
 
 	if err := validate.FormatOf("finished_at", "body", "date-time", m.FinishedAt.String(), formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *V1Run) validateKind(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Kind) { // not required
+		return nil
+	}
+
+	if err := m.Kind.Validate(formats); err != nil {
+		if ve, ok := err.(*errors.Validation); ok {
+			return ve.ValidateName("kind")
+		}
 		return err
 	}
 

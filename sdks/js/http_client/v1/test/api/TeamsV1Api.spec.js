@@ -225,14 +225,9 @@
           /*
           var owner = "owner_example";
           var team = "team_example";
-          var member_user = "member_user_example";
-          var opts = {};
-          opts.member_role = "member_role_example";
-          opts.member_org_role = "member_org_role_example";
-          opts.member_created_at = new Date("2013-10-20T19:20:30+01:00");
-          opts.member_updated_at = new Date("2013-10-20T19:20:30+01:00");
+          var user = "user_example";
 
-          instance.getTeamMember(owner, team, member_user, opts, function(error, data, response) {
+          instance.getTeamMember(owner, team, user, function(error, data, response) {
             if (error) {
               done(error);
               return;

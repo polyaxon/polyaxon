@@ -5,6 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **user** | **String** |  |  [optional]
+**userEmail** | **String** |  |  [optional]
 **name** | **String** |  |  [optional]
 **isPublic** | **String** |  |  [optional]
 **createdAt** | [**OffsetDateTime**](OffsetDateTime.md) |  |  [optional]

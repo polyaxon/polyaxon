@@ -29,7 +29,6 @@ package io.swagger.client.model;
 
 import java.util.Objects;
 import java.util.Arrays;
-import io.swagger.annotations.ApiModel;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.IOException;
@@ -39,20 +38,22 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 
 /**
- * - tpe: tpe algorithm  - rand: random algorithm  - anneal: anneal algorithm
+ * Gets or Sets v1RunKind
  */
-@JsonAdapter(V1HyperoptAlgorithms.Adapter.class)
-public enum V1HyperoptAlgorithms {
+@JsonAdapter(V1RunKind.Adapter.class)
+public enum V1RunKind {
   
-  TPE("tpe"),
+  JOB("job"),
   
-  RAND("rand"),
+  SERVICE("service"),
   
-  ANNEAL("anneal");
+  DAG("dag"),
+  
+  PARALLEL("parallel");
 
   private String value;
 
-  V1HyperoptAlgorithms(String value) {
+  V1RunKind(String value) {
     this.value = value;
   }
 
@@ -65,8 +66,8 @@ public enum V1HyperoptAlgorithms {
     return String.valueOf(value);
   }
 
-  public static V1HyperoptAlgorithms fromValue(String text) {
-    for (V1HyperoptAlgorithms b : V1HyperoptAlgorithms.values()) {
+  public static V1RunKind fromValue(String text) {
+    for (V1RunKind b : V1RunKind.values()) {
       if (String.valueOf(b.value).equals(text)) {
         return b;
       }
@@ -74,16 +75,16 @@ public enum V1HyperoptAlgorithms {
     return null;
   }
 
-  public static class Adapter extends TypeAdapter<V1HyperoptAlgorithms> {
+  public static class Adapter extends TypeAdapter<V1RunKind> {
     @Override
-    public void write(final JsonWriter jsonWriter, final V1HyperoptAlgorithms enumeration) throws IOException {
+    public void write(final JsonWriter jsonWriter, final V1RunKind enumeration) throws IOException {
       jsonWriter.value(enumeration.getValue());
     }
 
     @Override
-    public V1HyperoptAlgorithms read(final JsonReader jsonReader) throws IOException {
+    public V1RunKind read(final JsonReader jsonReader) throws IOException {
       String value = jsonReader.nextString();
-      return V1HyperoptAlgorithms.fromValue(String.valueOf(value));
+      return V1RunKind.fromValue(String.valueOf(value));
     }
   }
 }

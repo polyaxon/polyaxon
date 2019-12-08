@@ -363,18 +363,12 @@
     /**
      * Stop run
      * @param {String} owner Owner of the namespace
-     * @param {String} team Team
-     * @param {String} member_user User
-     * @param {Object} opts Optional parameters
-     * @param {String} opts.member_role Role.
-     * @param {String} opts.member_org_role Organization Role.
-     * @param {Date} opts.member_created_at Optional time when the entityt was created.
-     * @param {Date} opts.member_updated_at Optional last time the entity was updated.
+     * @param {String} team Team under namesapce
+     * @param {String} user Member under team
      * @param {module:api/TeamsV1Api~getTeamMemberCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1TeamMember}
      */
-    this.getTeamMember = function(owner, team, member_user, opts, callback) {
-      opts = opts || {};
+    this.getTeamMember = function(owner, team, user, callback) {
       var postBody = null;
 
       // verify the required parameter 'owner' is set
@@ -387,22 +381,18 @@
         throw new Error("Missing the required parameter 'team' when calling getTeamMember");
       }
 
-      // verify the required parameter 'member_user' is set
-      if (member_user === undefined || member_user === null) {
-        throw new Error("Missing the required parameter 'member_user' when calling getTeamMember");
+      // verify the required parameter 'user' is set
+      if (user === undefined || user === null) {
+        throw new Error("Missing the required parameter 'user' when calling getTeamMember");
       }
 
 
       var pathParams = {
         'owner': owner,
         'team': team,
-        'member.user': member_user
+        'user': user
       };
       var queryParams = {
-        'member.role': opts['member_role'],
-        'member.org_role': opts['member_org_role'],
-        'member.created_at': opts['member_created_at'],
-        'member.updated_at': opts['member_updated_at'],
       };
       var collectionQueryParams = {
       };
@@ -417,7 +407,7 @@
       var returnType = V1TeamMember;
 
       return this.apiClient.callApi(
-        '/api/v1/{owner}/teams/{team}/members/{member.user}', 'GET',
+        '/api/v1/{owner}/teams/{team}/members/{user}', 'GET',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );

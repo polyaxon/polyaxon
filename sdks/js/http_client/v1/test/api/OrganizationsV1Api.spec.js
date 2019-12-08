@@ -56,6 +56,7 @@
           /*
           var body = new PolyaxonSdk.V1Organization();
           body.user = "";
+          body.user_email = "";
           body.name = "";
           body.is_public = "";
           body.created_at = new Date();
@@ -70,6 +71,8 @@
             expect(data).to.be.a(PolyaxonSdk.V1Organization);
             expect(data.user).to.be.a('string');
             expect(data.user).to.be("");
+            expect(data.user_email).to.be.a('string');
+            expect(data.user_email).to.be("");
             expect(data.name).to.be.a('string');
             expect(data.name).to.be("");
             expect(data.is_public).to.be.a('string');
@@ -144,13 +147,9 @@
           // TODO: uncomment, update parameter values for deleteOrganizationMember call
           /*
           var owner = "owner_example";
-          var member_user = "member_user_example";
-          var opts = {};
-          opts.member_role = "member_role_example";
-          opts.member_created_at = new Date("2013-10-20T19:20:30+01:00");
-          opts.member_updated_at = new Date("2013-10-20T19:20:30+01:00");
+          var user = "user_example";
 
-          instance.deleteOrganizationMember(owner, member_user, opts, function(error, data, response) {
+          instance.deleteOrganizationMember(owner, user, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -178,6 +177,8 @@
             expect(data).to.be.a(PolyaxonSdk.V1Organization);
             expect(data.user).to.be.a('string');
             expect(data.user).to.be("");
+            expect(data.user_email).to.be.a('string');
+            expect(data.user_email).to.be("");
             expect(data.name).to.be.a('string');
             expect(data.name).to.be("");
             expect(data.is_public).to.be.a('string');
@@ -199,13 +200,9 @@
           // TODO: uncomment, update parameter values for getOrganizationMember call and complete the assertions
           /*
           var owner = "owner_example";
-          var member_user = "member_user_example";
-          var opts = {};
-          opts.member_role = "member_role_example";
-          opts.member_created_at = new Date("2013-10-20T19:20:30+01:00");
-          opts.member_updated_at = new Date("2013-10-20T19:20:30+01:00");
+          var user = "user_example";
 
-          instance.getOrganizationMember(owner, member_user, opts, function(error, data, response) {
+          instance.getOrganizationMember(owner, user, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -295,6 +292,8 @@
                 expect(data).to.be.a(PolyaxonSdk.V1Organization);
                 expect(data.user).to.be.a('string');
                 expect(data.user).to.be("");
+                expect(data.user_email).to.be.a('string');
+                expect(data.user_email).to.be("");
                 expect(data.name).to.be.a('string');
                 expect(data.name).to.be("");
                 expect(data.is_public).to.be.a('string');
@@ -340,6 +339,8 @@
                 expect(data).to.be.a(PolyaxonSdk.V1Organization);
                 expect(data.user).to.be.a('string');
                 expect(data.user).to.be("");
+                expect(data.user_email).to.be.a('string');
+                expect(data.user_email).to.be("");
                 expect(data.name).to.be.a('string');
                 expect(data.name).to.be("");
                 expect(data.is_public).to.be.a('string');
@@ -369,6 +370,7 @@
           var owner = "owner_example";
           var body = new PolyaxonSdk.V1Organization();
           body.user = "";
+          body.user_email = "";
           body.name = "";
           body.is_public = "";
           body.created_at = new Date();
@@ -383,6 +385,8 @@
             expect(data).to.be.a(PolyaxonSdk.V1Organization);
             expect(data.user).to.be.a('string');
             expect(data.user).to.be("");
+            expect(data.user_email).to.be.a('string');
+            expect(data.user_email).to.be("");
             expect(data.name).to.be.a('string');
             expect(data.name).to.be("");
             expect(data.is_public).to.be.a('string');
@@ -441,6 +445,7 @@
           var owner = "owner_example";
           var body = new PolyaxonSdk.V1Organization();
           body.user = "";
+          body.user_email = "";
           body.name = "";
           body.is_public = "";
           body.created_at = new Date();
@@ -455,6 +460,8 @@
             expect(data).to.be.a(PolyaxonSdk.V1Organization);
             expect(data.user).to.be.a('string');
             expect(data.user).to.be("");
+            expect(data.user_email).to.be.a('string');
+            expect(data.user_email).to.be("");
             expect(data.name).to.be.a('string');
             expect(data.name).to.be("");
             expect(data.is_public).to.be.a('string');

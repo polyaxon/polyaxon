@@ -4,11 +4,11 @@
 ## Enum
 
 
-* `TPE` (value: `"TPE"`)
+* `TPE` (value: `"tpe"`)
 
-* `RAND` (value: `"RAND"`)
+* `RAND` (value: `"rand"`)
 
-* `ANNEAL` (value: `"ANNEAL"`)
+* `ANNEAL` (value: `"anneal"`)
 
 
 

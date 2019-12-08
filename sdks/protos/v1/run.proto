@@ -24,6 +24,14 @@ message RunMetaInfo {
     string run_kind = 4;
 }
 
+// Run kind enum
+enum RunKind {
+    job = 0;
+    service = 1;
+    dag = 2;
+    parallel = 3;
+}
+
 // Run specification
 message Run {
     // UUID
@@ -81,7 +89,7 @@ message Run {
     RunMetaInfo meta_info = 18;
 
     // Optional kind to tell the nature of this run
-    string kind = 19;
+    RunKind kind = 19;
 
     // Optional hub reference versioned component
     string hub = 20;

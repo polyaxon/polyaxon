@@ -664,135 +664,6 @@
       }
     },
     "/api/v1/organizations/{owner}/members/{member.user}": {
-      "get": {
-        "summary": "Stop run",
-        "operationId": "GetOrganizationMember",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1OrganizationMember"
-            }
-          },
-          "204": {
-            "description": "No content.",
-            "schema": {}
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {}
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "member.user",
-            "description": "User",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "member.role",
-            "description": "Role.",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "member.created_at",
-            "description": "Optional time when the entityt was created.",
-            "in": "query",
-            "required": false,
-            "type": "string",
-            "format": "date-time"
-          },
-          {
-            "name": "member.updated_at",
-            "description": "Optional last time the entity was updated.",
-            "in": "query",
-            "required": false,
-            "type": "string",
-            "format": "date-time"
-          }
-        ],
-        "tags": [
-          "OrganizationsV1"
-        ]
-      },
-      "delete": {
-        "summary": "Invalidate runs",
-        "operationId": "DeleteOrganizationMember",
-        "responses": {
-          "200": {
-            "description": "A successful response."
-          },
-          "204": {
-            "description": "No content.",
-            "schema": {}
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {}
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "member.user",
-            "description": "User",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "member.role",
-            "description": "Role.",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "member.created_at",
-            "description": "Optional time when the entityt was created.",
-            "in": "query",
-            "required": false,
-            "type": "string",
-            "format": "date-time"
-          },
-          {
-            "name": "member.updated_at",
-            "description": "Optional last time the entity was updated.",
-            "in": "query",
-            "required": false,
-            "type": "string",
-            "format": "date-time"
-          }
-        ],
-        "tags": [
-          "OrganizationsV1"
-        ]
-      },
       "put": {
         "summary": "Stop runs",
         "operationId": "UpdateOrganizationMember",
@@ -891,6 +762,91 @@
             "schema": {
               "$ref": "#/definitions/v1OrganizationMember"
             }
+          }
+        ],
+        "tags": [
+          "OrganizationsV1"
+        ]
+      }
+    },
+    "/api/v1/organizations/{owner}/members/{user}": {
+      "get": {
+        "summary": "Stop run",
+        "operationId": "GetOrganizationMember",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1OrganizationMember"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "user",
+            "description": "Memeber under namesapce",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "OrganizationsV1"
+        ]
+      },
+      "delete": {
+        "summary": "Invalidate runs",
+        "operationId": "DeleteOrganizationMember",
+        "responses": {
+          "200": {
+            "description": "A successful response."
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "user",
+            "description": "Memeber under namesapce",
+            "in": "path",
+            "required": true,
+            "type": "string"
           }
         ],
         "tags": [
@@ -4542,86 +4498,6 @@
       }
     },
     "/api/v1/{owner}/teams/{team}/members/{member.user}": {
-      "get": {
-        "summary": "Stop run",
-        "operationId": "GetTeamMember",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1TeamMember"
-            }
-          },
-          "204": {
-            "description": "No content.",
-            "schema": {}
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {}
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "team",
-            "description": "Team",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "member.user",
-            "description": "User",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "member.role",
-            "description": "Role.",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "member.org_role",
-            "description": "Organization Role.",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "member.created_at",
-            "description": "Optional time when the entityt was created.",
-            "in": "query",
-            "required": false,
-            "type": "string",
-            "format": "date-time"
-          },
-          {
-            "name": "member.updated_at",
-            "description": "Optional last time the entity was updated.",
-            "in": "query",
-            "required": false,
-            "type": "string",
-            "format": "date-time"
-          }
-        ],
-        "tags": [
-          "TeamsV1"
-        ]
-      },
       "delete": {
         "summary": "Invalidate runs",
         "operationId": "DeleteTeamMember",
@@ -4811,6 +4687,58 @@
             "schema": {
               "$ref": "#/definitions/v1TeamMember"
             }
+          }
+        ],
+        "tags": [
+          "TeamsV1"
+        ]
+      }
+    },
+    "/api/v1/{owner}/teams/{team}/members/{user}": {
+      "get": {
+        "summary": "Stop run",
+        "operationId": "GetTeamMember",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1TeamMember"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "team",
+            "description": "Team under namesapce",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "user",
+            "description": "Member under team",
+            "in": "path",
+            "required": true,
+            "type": "string"
           }
         ],
         "tags": [
@@ -8929,12 +8857,12 @@
     "v1HyperoptAlgorithms": {
       "type": "string",
       "enum": [
-        "TPE",
-        "RAND",
-        "ANNEAL"
+        "tpe",
+        "rand",
+        "anneal"
       ],
-      "default": "TPE",
-      "description": "- TPE: tpe algorithm\n - RAND: random algorithm\n - ANNEAL: anneal algorithm",
+      "default": "tpe",
+      "description": "- tpe: tpe algorithm\n - rand: random algorithm\n - anneal: anneal algorithm",
       "title": "Hyperopt algorithms enum"
     },
     "v1IO": {
@@ -9794,7 +9722,7 @@
         "minimize"
       ],
       "default": "maximize",
-      "description": "- maximize: Minimize a metric\n - minimize: Maximize a metric",
+      "description": "- maximize: Minimize a metric\n - minimize: Minimize a metric",
       "title": "Optimization enum for metrics"
     },
     "v1OptimizationMetric": {
@@ -9831,6 +9759,10 @@
         "user": {
           "type": "string",
           "title": "User"
+        },
+        "user_email": {
+          "type": "string",
+          "title": "Read-only User email"
         },
         "name": {
           "type": "string",
@@ -9914,6 +9846,10 @@
         "user": {
           "type": "string",
           "title": "Required name of user who created this entity"
+        },
+        "user_email": {
+          "type": "string",
+          "title": "Read-only email of user who created this entity"
         },
         "owner": {
           "type": "string",
@@ -10322,7 +10258,7 @@
           "title": "Optional run meta info"
         },
         "kind": {
-          "type": "string",
+          "$ref": "#/definitions/v1RunKind",
           "title": "Optional kind to tell the nature of this run"
         },
         "hub": {
@@ -10373,6 +10309,17 @@
         }
       },
       "title": "Run specification"
+    },
+    "v1RunKind": {
+      "type": "string",
+      "enum": [
+        "job",
+        "service",
+        "dag",
+        "parallel"
+      ],
+      "default": "job",
+      "title": "Run kind enum"
     },
     "v1RunMetaInfo": {
       "type": "object",

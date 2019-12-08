@@ -73,6 +73,8 @@
         obj.uuid = ApiClient.convertToType(data['uuid'], 'String');
       if (data.hasOwnProperty('user'))
         obj.user = ApiClient.convertToType(data['user'], 'String');
+      if (data.hasOwnProperty('user_email'))
+        obj.user_email = ApiClient.convertToType(data['user_email'], 'String');
       if (data.hasOwnProperty('owner'))
         obj.owner = ApiClient.convertToType(data['owner'], 'String');
       if (data.hasOwnProperty('name'))
@@ -106,6 +108,11 @@
    * @member {String} user
    */
   exports.prototype.user = undefined;
+
+  /**
+   * @member {String} user_email
+   */
+  exports.prototype.user_email = undefined;
 
   /**
    * @member {String} owner

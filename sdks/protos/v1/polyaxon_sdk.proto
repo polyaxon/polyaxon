@@ -1053,9 +1053,9 @@ service OrganizationsV1 {
     }
 
     // Get organization member details
-    rpc GetOrganizationMember(OrganizationMemberBodyRequest) returns (OrganizationMember) {
+    rpc GetOrganizationMember(OrgMemeberResourceRequest) returns (OrganizationMember) {
         option (google.api.http) = {
-            get: "/api/v1/organizations/{owner}/members/{member.user}"
+            get: "/api/v1/organizations/{owner}/members/{user}"
         };
     }
 
@@ -1076,9 +1076,9 @@ service OrganizationsV1 {
     }
 
     // Delete organization member details
-    rpc DeleteOrganizationMember(OrganizationMemberBodyRequest) returns (google.protobuf.Empty) {
+    rpc DeleteOrganizationMember(OrgMemeberResourceRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
-            delete: "/api/v1/organizations/{owner}/members/{member.user}"
+            delete: "/api/v1/organizations/{owner}/members/{user}"
         };
     }
 }
@@ -1155,9 +1155,9 @@ service TeamsV1 {
     }
 
     // Get team member details
-    rpc GetTeamMember(TeamMemberBodyRequest) returns (TeamMember) {
+    rpc GetTeamMember(TeamMemeberResourceRequest) returns (TeamMember) {
         option (google.api.http) = {
-            get: "/api/v1/{owner}/teams/{team}/members/{member.user}"
+            get: "/api/v1/{owner}/teams/{team}/members/{user}"
         };
     }
 

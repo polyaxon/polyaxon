@@ -9,7 +9,7 @@ Method | HTTP request | Description
 [**deleteTeam**](TeamsV1Api.md#deleteTeam) | **DELETE** /api/v1/{owner}/teams/{team} | Patch run
 [**deleteTeamMember**](TeamsV1Api.md#deleteTeamMember) | **DELETE** /api/v1/{owner}/teams/{team}/members/{member.user} | Invalidate runs
 [**getTeam**](TeamsV1Api.md#getTeam) | **GET** /api/v1/{owner}/teams/{team} | Create new run
-[**getTeamMember**](TeamsV1Api.md#getTeamMember) | **GET** /api/v1/{owner}/teams/{team}/members/{member.user} | Stop run
+[**getTeamMember**](TeamsV1Api.md#getTeamMember) | **GET** /api/v1/{owner}/teams/{team}/members/{user} | Stop run
 [**listTeamMembers**](TeamsV1Api.md#listTeamMembers) | **GET** /api/v1/{owner}/teams/{team}/members | Delete run
 [**listTeamNames**](TeamsV1Api.md#listTeamNames) | **GET** /api/v1/{owner}/teams/names | List bookmarked runs for user
 [**listTeams**](TeamsV1Api.md#listTeams) | **GET** /api/v1/{owner}/teams | List archived runs for user
@@ -306,7 +306,7 @@ Name | Type | Description  | Notes
 
 <a name="getTeamMember"></a>
 # **getTeamMember**
-> V1TeamMember getTeamMember(owner, team, memberUser, memberRole, memberOrgRole, memberCreatedAt, memberUpdatedAt)
+> V1TeamMember getTeamMember(owner, team, user)
 
 Stop run
 
@@ -329,14 +329,10 @@ ApiKey.setApiKey("YOUR API KEY");
 
 TeamsV1Api apiInstance = new TeamsV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
-String team = "team_example"; // String | Team
-String memberUser = "memberUser_example"; // String | User
-String memberRole = "memberRole_example"; // String | Role.
-String memberOrgRole = "memberOrgRole_example"; // String | Organization Role.
-OffsetDateTime memberCreatedAt = OffsetDateTime.now(); // OffsetDateTime | Optional time when the entityt was created.
-OffsetDateTime memberUpdatedAt = OffsetDateTime.now(); // OffsetDateTime | Optional last time the entity was updated.
+String team = "team_example"; // String | Team under namesapce
+String user = "user_example"; // String | Member under team
 try {
-    V1TeamMember result = apiInstance.getTeamMember(owner, team, memberUser, memberRole, memberOrgRole, memberCreatedAt, memberUpdatedAt);
+    V1TeamMember result = apiInstance.getTeamMember(owner, team, user);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling TeamsV1Api#getTeamMember");
@@ -349,12 +345,8 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
- **team** | **String**| Team |
- **memberUser** | **String**| User |
- **memberRole** | **String**| Role. | [optional]
- **memberOrgRole** | **String**| Organization Role. | [optional]
- **memberCreatedAt** | **OffsetDateTime**| Optional time when the entityt was created. | [optional]
- **memberUpdatedAt** | **OffsetDateTime**| Optional last time the entity was updated. | [optional]
+ **team** | **String**| Team under namesapce |
+ **user** | **String**| Member under team |
 
 ### Return type
 

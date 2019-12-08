@@ -10427,12 +10427,8 @@ func local_request_OrganizationsV1_CreateOrganizationMember_0(ctx context.Contex
 
 }
 
-var (
-	filter_OrganizationsV1_GetOrganizationMember_0 = &utilities.DoubleArray{Encoding: map[string]int{"owner": 0, "member": 1, "user": 2}, Base: []int{1, 1, 1, 2, 0, 0}, Check: []int{0, 1, 1, 3, 2, 4}}
-)
-
 func request_OrganizationsV1_GetOrganizationMember_0(ctx context.Context, marshaler runtime.Marshaler, client OrganizationsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OrganizationMemberBodyRequest
+	var protoReq OrgMemeberResourceRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -10453,22 +10449,15 @@ func request_OrganizationsV1_GetOrganizationMember_0(ctx context.Context, marsha
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
 	}
 
-	val, ok = pathParams["member.user"]
+	val, ok = pathParams["user"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "member.user")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "user")
 	}
 
-	err = runtime.PopulateFieldFromPath(&protoReq, "member.user", val)
+	protoReq.User, err = runtime.String(val)
 
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "member.user", err)
-	}
-
-	if err := req.ParseForm(); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
-	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_OrganizationsV1_GetOrganizationMember_0); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "user", err)
 	}
 
 	msg, err := client.GetOrganizationMember(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -10477,7 +10466,7 @@ func request_OrganizationsV1_GetOrganizationMember_0(ctx context.Context, marsha
 }
 
 func local_request_OrganizationsV1_GetOrganizationMember_0(ctx context.Context, marshaler runtime.Marshaler, server OrganizationsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OrganizationMemberBodyRequest
+	var protoReq OrgMemeberResourceRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -10498,19 +10487,15 @@ func local_request_OrganizationsV1_GetOrganizationMember_0(ctx context.Context, 
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
 	}
 
-	val, ok = pathParams["member.user"]
+	val, ok = pathParams["user"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "member.user")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "user")
 	}
 
-	err = runtime.PopulateFieldFromPath(&protoReq, "member.user", val)
+	protoReq.User, err = runtime.String(val)
 
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "member.user", err)
-	}
-
-	if err := runtime.PopulateQueryParameters(&protoReq, req.URL.Query(), filter_OrganizationsV1_GetOrganizationMember_0); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "user", err)
 	}
 
 	msg, err := server.GetOrganizationMember(ctx, &protoReq)
@@ -10702,12 +10687,8 @@ func local_request_OrganizationsV1_PatchOrganizationMember_0(ctx context.Context
 
 }
 
-var (
-	filter_OrganizationsV1_DeleteOrganizationMember_0 = &utilities.DoubleArray{Encoding: map[string]int{"owner": 0, "member": 1, "user": 2}, Base: []int{1, 1, 1, 2, 0, 0}, Check: []int{0, 1, 1, 3, 2, 4}}
-)
-
 func request_OrganizationsV1_DeleteOrganizationMember_0(ctx context.Context, marshaler runtime.Marshaler, client OrganizationsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OrganizationMemberBodyRequest
+	var protoReq OrgMemeberResourceRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -10728,22 +10709,15 @@ func request_OrganizationsV1_DeleteOrganizationMember_0(ctx context.Context, mar
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
 	}
 
-	val, ok = pathParams["member.user"]
+	val, ok = pathParams["user"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "member.user")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "user")
 	}
 
-	err = runtime.PopulateFieldFromPath(&protoReq, "member.user", val)
+	protoReq.User, err = runtime.String(val)
 
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "member.user", err)
-	}
-
-	if err := req.ParseForm(); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
-	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_OrganizationsV1_DeleteOrganizationMember_0); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "user", err)
 	}
 
 	msg, err := client.DeleteOrganizationMember(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -10752,7 +10726,7 @@ func request_OrganizationsV1_DeleteOrganizationMember_0(ctx context.Context, mar
 }
 
 func local_request_OrganizationsV1_DeleteOrganizationMember_0(ctx context.Context, marshaler runtime.Marshaler, server OrganizationsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OrganizationMemberBodyRequest
+	var protoReq OrgMemeberResourceRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -10773,19 +10747,15 @@ func local_request_OrganizationsV1_DeleteOrganizationMember_0(ctx context.Contex
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
 	}
 
-	val, ok = pathParams["member.user"]
+	val, ok = pathParams["user"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "member.user")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "user")
 	}
 
-	err = runtime.PopulateFieldFromPath(&protoReq, "member.user", val)
+	protoReq.User, err = runtime.String(val)
 
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "member.user", err)
-	}
-
-	if err := runtime.PopulateQueryParameters(&protoReq, req.URL.Query(), filter_OrganizationsV1_DeleteOrganizationMember_0); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "user", err)
 	}
 
 	msg, err := server.DeleteOrganizationMember(ctx, &protoReq)
@@ -11505,12 +11475,8 @@ func local_request_TeamsV1_CreateTeamMember_0(ctx context.Context, marshaler run
 
 }
 
-var (
-	filter_TeamsV1_GetTeamMember_0 = &utilities.DoubleArray{Encoding: map[string]int{"owner": 0, "team": 1, "member": 2, "user": 3}, Base: []int{1, 1, 2, 1, 3, 0, 0, 0}, Check: []int{0, 1, 1, 1, 4, 2, 3, 5}}
-)
-
 func request_TeamsV1_GetTeamMember_0(ctx context.Context, marshaler runtime.Marshaler, client TeamsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq TeamMemberBodyRequest
+	var protoReq TeamMemeberResourceRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -11542,22 +11508,15 @@ func request_TeamsV1_GetTeamMember_0(ctx context.Context, marshaler runtime.Mars
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "team", err)
 	}
 
-	val, ok = pathParams["member.user"]
+	val, ok = pathParams["user"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "member.user")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "user")
 	}
 
-	err = runtime.PopulateFieldFromPath(&protoReq, "member.user", val)
+	protoReq.User, err = runtime.String(val)
 
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "member.user", err)
-	}
-
-	if err := req.ParseForm(); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
-	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_TeamsV1_GetTeamMember_0); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "user", err)
 	}
 
 	msg, err := client.GetTeamMember(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -11566,7 +11525,7 @@ func request_TeamsV1_GetTeamMember_0(ctx context.Context, marshaler runtime.Mars
 }
 
 func local_request_TeamsV1_GetTeamMember_0(ctx context.Context, marshaler runtime.Marshaler, server TeamsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq TeamMemberBodyRequest
+	var protoReq TeamMemeberResourceRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -11598,19 +11557,15 @@ func local_request_TeamsV1_GetTeamMember_0(ctx context.Context, marshaler runtim
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "team", err)
 	}
 
-	val, ok = pathParams["member.user"]
+	val, ok = pathParams["user"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "member.user")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "user")
 	}
 
-	err = runtime.PopulateFieldFromPath(&protoReq, "member.user", val)
+	protoReq.User, err = runtime.String(val)
 
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "member.user", err)
-	}
-
-	if err := runtime.PopulateQueryParameters(&protoReq, req.URL.Query(), filter_TeamsV1_GetTeamMember_0); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "user", err)
 	}
 
 	msg, err := server.GetTeamMember(ctx, &protoReq)
@@ -18663,13 +18618,13 @@ var (
 
 	pattern_OrganizationsV1_CreateOrganizationMember_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "organizations", "owner", "members"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_OrganizationsV1_GetOrganizationMember_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "organizations", "owner", "members", "member.user"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_OrganizationsV1_GetOrganizationMember_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "organizations", "owner", "members", "user"}, "", runtime.AssumeColonVerbOpt(true)))
 
 	pattern_OrganizationsV1_UpdateOrganizationMember_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "organizations", "owner", "members", "member.user"}, "", runtime.AssumeColonVerbOpt(true)))
 
 	pattern_OrganizationsV1_PatchOrganizationMember_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "organizations", "owner", "members", "member.user"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_OrganizationsV1_DeleteOrganizationMember_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "organizations", "owner", "members", "member.user"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_OrganizationsV1_DeleteOrganizationMember_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "organizations", "owner", "members", "user"}, "", runtime.AssumeColonVerbOpt(true)))
 )
 
 var (
@@ -19020,7 +18975,7 @@ var (
 
 	pattern_TeamsV1_CreateTeamMember_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"api", "v1", "owner", "teams", "team", "members"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_TeamsV1_GetTeamMember_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 1, 0, 4, 1, 5, 6}, []string{"api", "v1", "owner", "teams", "team", "members", "member.user"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_TeamsV1_GetTeamMember_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 1, 0, 4, 1, 5, 6}, []string{"api", "v1", "owner", "teams", "team", "members", "user"}, "", runtime.AssumeColonVerbOpt(true)))
 
 	pattern_TeamsV1_UpdateTeamMember_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 1, 0, 4, 1, 5, 6}, []string{"api", "v1", "owner", "teams", "team", "members", "member.user"}, "", runtime.AssumeColonVerbOpt(true)))
 

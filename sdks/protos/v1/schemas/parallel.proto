@@ -119,13 +119,13 @@ message BO {
 // Hyperopt algorithms enum
 enum HyperoptAlgorithms {
     // tpe algorithm
-    TPE = 0;
+    tpe = 0;
 
     // random algorithm
-    RAND = 1;
+    rand = 1;
 
     // anneal algorithm
-    ANNEAL = 2;
+    anneal = 2;
 }
 
 // Parallelism based on hyperopt

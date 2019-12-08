@@ -49,6 +49,7 @@ class V1Project(object):
     swagger_types = {
         "uuid": "str",
         "user": "str",
+        "user_email": "str",
         "owner": "str",
         "name": "str",
         "description": "str",
@@ -64,6 +65,7 @@ class V1Project(object):
     attribute_map = {
         "uuid": "uuid",
         "user": "user",
+        "user_email": "user_email",
         "owner": "owner",
         "name": "name",
         "description": "description",
@@ -80,6 +82,7 @@ class V1Project(object):
         self,
         uuid=None,
         user=None,
+        user_email=None,
         owner=None,
         name=None,
         description=None,
@@ -95,6 +98,7 @@ class V1Project(object):
 
         self._uuid = None
         self._user = None
+        self._user_email = None
         self._owner = None
         self._name = None
         self._description = None
@@ -111,6 +115,8 @@ class V1Project(object):
             self.uuid = uuid
         if user is not None:
             self.user = user
+        if user_email is not None:
+            self.user_email = user_email
         if owner is not None:
             self.owner = owner
         if name is not None:
@@ -173,6 +179,27 @@ class V1Project(object):
         """
 
         self._user = user
+
+    @property
+    def user_email(self):
+        """Gets the user_email of this V1Project.  # noqa: E501
+
+
+        :return: The user_email of this V1Project.  # noqa: E501
+        :rtype: str
+        """
+        return self._user_email
+
+    @user_email.setter
+    def user_email(self, user_email):
+        """Sets the user_email of this V1Project.
+
+
+        :param user_email: The user_email of this V1Project.  # noqa: E501
+        :type: str
+        """
+
+        self._user_email = user_email
 
     @property
     def owner(self):

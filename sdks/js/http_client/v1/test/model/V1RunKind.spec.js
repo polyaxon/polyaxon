@@ -45,29 +45,34 @@
   var instance;
 
   describe('(package)', function() {
-    describe('V1HyperoptAlgorithms', function() {
+    describe('V1RunKind', function() {
       beforeEach(function() {
-        instance = PolyaxonSdk.V1HyperoptAlgorithms;
+        instance = PolyaxonSdk.V1RunKind;
       });
 
-      it('should create an instance of V1HyperoptAlgorithms', function() {
-        // TODO: update the code to test V1HyperoptAlgorithms
+      it('should create an instance of V1RunKind', function() {
+        // TODO: update the code to test V1RunKind
         expect(instance).to.be.a('object');
       });
 
-      it('should have the property tpe', function() {
-        expect(instance).to.have.property('tpe');
-        expect(instance.tpe).to.be("tpe");
+      it('should have the property job', function() {
+        expect(instance).to.have.property('job');
+        expect(instance.job).to.be("job");
       });
 
-      it('should have the property rand', function() {
-        expect(instance).to.have.property('rand');
-        expect(instance.rand).to.be("rand");
+      it('should have the property service', function() {
+        expect(instance).to.have.property('service');
+        expect(instance.service).to.be("service");
       });
 
-      it('should have the property anneal', function() {
-        expect(instance).to.have.property('anneal');
-        expect(instance.anneal).to.be("anneal");
+      it('should have the property dag', function() {
+        expect(instance).to.have.property('dag');
+        expect(instance.dag).to.be("dag");
+      });
+
+      it('should have the property parallel', function() {
+        expect(instance).to.have.property('parallel');
+        expect(instance.parallel).to.be("parallel");
       });
 
     });

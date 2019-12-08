@@ -7,9 +7,9 @@ Method | HTTP request | Description
 [**createOrganization**](OrganizationsV1Api.md#createOrganization) | **POST** /api/v1/organizations/create | List runs
 [**createOrganizationMember**](OrganizationsV1Api.md#createOrganizationMember) | **POST** /api/v1/organizations/{owner}/members | Delete runs
 [**deleteOrganization**](OrganizationsV1Api.md#deleteOrganization) | **DELETE** /api/v1/organizations/{owner} | Patch run
-[**deleteOrganizationMember**](OrganizationsV1Api.md#deleteOrganizationMember) | **DELETE** /api/v1/organizations/{owner}/members/{member.user} | Invalidate runs
+[**deleteOrganizationMember**](OrganizationsV1Api.md#deleteOrganizationMember) | **DELETE** /api/v1/organizations/{owner}/members/{user} | Invalidate runs
 [**getOrganization**](OrganizationsV1Api.md#getOrganization) | **GET** /api/v1/organizations/{owner} | Create new run
-[**getOrganizationMember**](OrganizationsV1Api.md#getOrganizationMember) | **GET** /api/v1/organizations/{owner}/members/{member.user} | Stop run
+[**getOrganizationMember**](OrganizationsV1Api.md#getOrganizationMember) | **GET** /api/v1/organizations/{owner}/members/{user} | Stop run
 [**listOrganizationMembers**](OrganizationsV1Api.md#listOrganizationMembers) | **GET** /api/v1/organizations/{owner}/members | Delete run
 [**listOrganizationNames**](OrganizationsV1Api.md#listOrganizationNames) | **GET** /api/v1/organizations/names | List bookmarked runs for user
 [**listOrganizations**](OrganizationsV1Api.md#listOrganizations) | **GET** /api/v1/organizations/list | List archived runs for user
@@ -177,7 +177,7 @@ null (empty response body)
 
 <a name="deleteOrganizationMember"></a>
 # **deleteOrganizationMember**
-> deleteOrganizationMember(owner, member_user, opts)
+> deleteOrganizationMember(owner, user)
 
 Invalidate runs
 
@@ -196,13 +196,8 @@ var apiInstance = new PolyaxonSdk.OrganizationsV1Api();
 
 var owner = "owner_example"; // String | Owner of the namespace
 
-var member_user = "member_user_example"; // String | User
+var user = "user_example"; // String | Memeber under namesapce
 
-var opts = { 
-  'member_role': "member_role_example", // String | Role.
-  'member_created_at': new Date("2013-10-20T19:20:30+01:00"), // Date | Optional time when the entityt was created.
-  'member_updated_at': new Date("2013-10-20T19:20:30+01:00") // Date | Optional last time the entity was updated.
-};
 
 var callback = function(error, data, response) {
   if (error) {
@@ -211,7 +206,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully.');
   }
 };
-apiInstance.deleteOrganizationMember(owner, member_user, opts, callback);
+apiInstance.deleteOrganizationMember(owner, user, callback);
 ```
 
 ### Parameters
@@ -219,10 +214,7 @@ apiInstance.deleteOrganizationMember(owner, member_user, opts, callback);
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace | 
- **member_user** | **String**| User | 
- **member_role** | **String**| Role. | [optional] 
- **member_created_at** | **Date**| Optional time when the entityt was created. | [optional] 
- **member_updated_at** | **Date**| Optional last time the entity was updated. | [optional] 
+ **user** | **String**| Memeber under namesapce | 
 
 ### Return type
 
@@ -290,7 +282,7 @@ Name | Type | Description  | Notes
 
 <a name="getOrganizationMember"></a>
 # **getOrganizationMember**
-> V1OrganizationMember getOrganizationMember(owner, member_user, opts)
+> V1OrganizationMember getOrganizationMember(owner, user)
 
 Stop run
 
@@ -309,13 +301,8 @@ var apiInstance = new PolyaxonSdk.OrganizationsV1Api();
 
 var owner = "owner_example"; // String | Owner of the namespace
 
-var member_user = "member_user_example"; // String | User
+var user = "user_example"; // String | Memeber under namesapce
 
-var opts = { 
-  'member_role': "member_role_example", // String | Role.
-  'member_created_at': new Date("2013-10-20T19:20:30+01:00"), // Date | Optional time when the entityt was created.
-  'member_updated_at': new Date("2013-10-20T19:20:30+01:00") // Date | Optional last time the entity was updated.
-};
 
 var callback = function(error, data, response) {
   if (error) {
@@ -324,7 +311,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.getOrganizationMember(owner, member_user, opts, callback);
+apiInstance.getOrganizationMember(owner, user, callback);
 ```
 
 ### Parameters
@@ -332,10 +319,7 @@ apiInstance.getOrganizationMember(owner, member_user, opts, callback);
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace | 
- **member_user** | **String**| User | 
- **member_role** | **String**| Role. | [optional] 
- **member_created_at** | **Date**| Optional time when the entityt was created. | [optional] 
- **member_updated_at** | **Date**| Optional last time the entity was updated. | [optional] 
+ **user** | **String**| Memeber under namesapce | 
 
 ### Return type
 
