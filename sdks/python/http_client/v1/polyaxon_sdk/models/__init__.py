@@ -86,6 +86,7 @@ from polyaxon_sdk.models.v1_list_organizations_response import (
 )
 from polyaxon_sdk.models.v1_list_projects_response import V1ListProjectsResponse
 from polyaxon_sdk.models.v1_list_queues_response import V1ListQueuesResponse
+from polyaxon_sdk.models.v1_list_run_profiles_response import V1ListRunProfilesResponse
 from polyaxon_sdk.models.v1_list_runs_response import V1ListRunsResponse
 from polyaxon_sdk.models.v1_list_searches_response import V1ListSearchesResponse
 from polyaxon_sdk.models.v1_list_team_members_response import V1ListTeamMembersResponse
@@ -123,6 +124,7 @@ from polyaxon_sdk.models.v1_resource_type import V1ResourceType
 from polyaxon_sdk.models.v1_run import V1Run
 from polyaxon_sdk.models.v1_run_kind import V1RunKind
 from polyaxon_sdk.models.v1_run_meta_info import V1RunMetaInfo
+from polyaxon_sdk.models.v1_run_profile import V1RunProfile
 from polyaxon_sdk.models.v1_run_schema import V1RunSchema
 from polyaxon_sdk.models.v1_run_settings import V1RunSettings
 from polyaxon_sdk.models.v1_run_settings_catalog import V1RunSettingsCatalog

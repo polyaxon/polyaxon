@@ -4,13 +4,13 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**createRegistryAccess**](RegistryAccessesV1Api.md#createRegistryAccess) | **POST** /api/v1/{owner}/registry_accesses | List runs
-[**deleteRegistryAccess**](RegistryAccessesV1Api.md#deleteRegistryAccess) | **DELETE** /api/v1/{owner}/registry_accesses/{uuid} | Patch run
-[**getRegistryAccess**](RegistryAccessesV1Api.md#getRegistryAccess) | **GET** /api/v1/{owner}/registry_accesses/{uuid} | Create new run
-[**listRegistryAccessNames**](RegistryAccessesV1Api.md#listRegistryAccessNames) | **GET** /api/v1/{owner}/registry_accesses/names | List bookmarked runs for user
-[**listRegistryAccesses**](RegistryAccessesV1Api.md#listRegistryAccesses) | **GET** /api/v1/{owner}/registry_accesses | List archived runs for user
-[**patchRegistryAccess**](RegistryAccessesV1Api.md#patchRegistryAccess) | **PATCH** /api/v1/{owner}/registry_accesses/{host_access.uuid} | Update run
-[**updateRegistryAccess**](RegistryAccessesV1Api.md#updateRegistryAccess) | **PUT** /api/v1/{owner}/registry_accesses/{host_access.uuid} | Get run
+[**createRegistryAccess**](RegistryAccessesV1Api.md#createRegistryAccess) | **POST** /api/v1/orgs/{owner}/registry_accesses | List runs
+[**deleteRegistryAccess**](RegistryAccessesV1Api.md#deleteRegistryAccess) | **DELETE** /api/v1/orgs/{owner}/registry_accesses/{uuid} | Patch run
+[**getRegistryAccess**](RegistryAccessesV1Api.md#getRegistryAccess) | **GET** /api/v1/orgs/{owner}/registry_accesses/{uuid} | Create new run
+[**listRegistryAccessNames**](RegistryAccessesV1Api.md#listRegistryAccessNames) | **GET** /api/v1/orgs/{owner}/registry_accesses/names | List bookmarked runs for user
+[**listRegistryAccesses**](RegistryAccessesV1Api.md#listRegistryAccesses) | **GET** /api/v1/orgs/{owner}/registry_accesses | List archived runs for user
+[**patchRegistryAccess**](RegistryAccessesV1Api.md#patchRegistryAccess) | **PATCH** /api/v1/orgs/{owner}/registry_accesses/{host_access.uuid} | Update run
+[**updateRegistryAccess**](RegistryAccessesV1Api.md#updateRegistryAccess) | **PUT** /api/v1/orgs/{owner}/registry_accesses/{host_access.uuid} | Get run
 
 
 <a name="createRegistryAccess"></a>

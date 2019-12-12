@@ -151,7 +151,7 @@ class ArtifactsStoresV1Api(object):
         auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/artifacts_stores",
+            "/api/v1/orgs/{owner}/artifacts_stores",
             "POST",
             path_params,
             query_params,
@@ -270,7 +270,7 @@ class ArtifactsStoresV1Api(object):
         auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/artifacts_stores/{uuid}",
+            "/api/v1/orgs/{owner}/artifacts_stores/{uuid}",
             "DELETE",
             path_params,
             query_params,
@@ -387,7 +387,7 @@ class ArtifactsStoresV1Api(object):
         auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/artifacts_stores/{uuid}",
+            "/api/v1/orgs/{owner}/artifacts_stores/{uuid}",
             "GET",
             path_params,
             query_params,
@@ -511,7 +511,7 @@ class ArtifactsStoresV1Api(object):
         auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/artifacts_stores/names",
+            "/api/v1/orgs/{owner}/artifacts_stores/names",
             "GET",
             path_params,
             query_params,
@@ -635,7 +635,7 @@ class ArtifactsStoresV1Api(object):
         auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/artifacts_stores",
+            "/api/v1/orgs/{owner}/artifacts_stores",
             "GET",
             path_params,
             query_params,
@@ -767,7 +767,7 @@ class ArtifactsStoresV1Api(object):
         auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/artifacts_stores/{artifact_store.uuid}",
+            "/api/v1/orgs/{owner}/artifacts_stores/{artifact_store.uuid}",
             "PATCH",
             path_params,
             query_params,
@@ -899,7 +899,7 @@ class ArtifactsStoresV1Api(object):
         auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/artifacts_stores/{artifact_store.uuid}",
+            "/api/v1/orgs/{owner}/artifacts_stores/{artifact_store.uuid}",
             "PUT",
             path_params,
             query_params,

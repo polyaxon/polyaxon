@@ -82,7 +82,7 @@ type PatchK8sConfigMapOK struct {
 }
 
 func (o *PatchK8sConfigMapOK) Error() string {
-	return fmt.Sprintf("[PATCH /api/v1/{owner}/k8s_config_maps/{k8s_resource.uuid}][%d] patchK8sConfigMapOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/k8s_config_maps/{k8s_resource.uuid}][%d] patchK8sConfigMapOK  %+v", 200, o.Payload)
 }
 
 func (o *PatchK8sConfigMapOK) GetPayload() *service_model.V1K8sResource {
@@ -115,7 +115,7 @@ type PatchK8sConfigMapNoContent struct {
 }
 
 func (o *PatchK8sConfigMapNoContent) Error() string {
-	return fmt.Sprintf("[PATCH /api/v1/{owner}/k8s_config_maps/{k8s_resource.uuid}][%d] patchK8sConfigMapNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/k8s_config_maps/{k8s_resource.uuid}][%d] patchK8sConfigMapNoContent  %+v", 204, o.Payload)
 }
 
 func (o *PatchK8sConfigMapNoContent) GetPayload() interface{} {
@@ -146,7 +146,7 @@ type PatchK8sConfigMapForbidden struct {
 }
 
 func (o *PatchK8sConfigMapForbidden) Error() string {
-	return fmt.Sprintf("[PATCH /api/v1/{owner}/k8s_config_maps/{k8s_resource.uuid}][%d] patchK8sConfigMapForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/k8s_config_maps/{k8s_resource.uuid}][%d] patchK8sConfigMapForbidden  %+v", 403, o.Payload)
 }
 
 func (o *PatchK8sConfigMapForbidden) GetPayload() interface{} {
@@ -177,7 +177,7 @@ type PatchK8sConfigMapNotFound struct {
 }
 
 func (o *PatchK8sConfigMapNotFound) Error() string {
-	return fmt.Sprintf("[PATCH /api/v1/{owner}/k8s_config_maps/{k8s_resource.uuid}][%d] patchK8sConfigMapNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/k8s_config_maps/{k8s_resource.uuid}][%d] patchK8sConfigMapNotFound  %+v", 404, o.Payload)
 }
 
 func (o *PatchK8sConfigMapNotFound) GetPayload() interface{} {

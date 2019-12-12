@@ -4,19 +4,19 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**createTeam**](TeamsV1Api.md#createTeam) | **POST** /api/v1/{owner}/teams | List runs
-[**createTeamMember**](TeamsV1Api.md#createTeamMember) | **POST** /api/v1/{owner}/teams/{team}/members | Delete runs
-[**deleteTeam**](TeamsV1Api.md#deleteTeam) | **DELETE** /api/v1/{owner}/teams/{team} | Patch run
-[**deleteTeamMember**](TeamsV1Api.md#deleteTeamMember) | **DELETE** /api/v1/{owner}/teams/{team}/members/{member.user} | Invalidate runs
-[**getTeam**](TeamsV1Api.md#getTeam) | **GET** /api/v1/{owner}/teams/{team} | Create new run
-[**getTeamMember**](TeamsV1Api.md#getTeamMember) | **GET** /api/v1/{owner}/teams/{team}/members/{user} | Stop run
-[**listTeamMembers**](TeamsV1Api.md#listTeamMembers) | **GET** /api/v1/{owner}/teams/{team}/members | Delete run
-[**listTeamNames**](TeamsV1Api.md#listTeamNames) | **GET** /api/v1/{owner}/teams/names | List bookmarked runs for user
-[**listTeams**](TeamsV1Api.md#listTeams) | **GET** /api/v1/{owner}/teams | List archived runs for user
-[**patchTeam**](TeamsV1Api.md#patchTeam) | **PATCH** /api/v1/{owner}/teams/{team.name} | Update run
-[**patchTeamMember**](TeamsV1Api.md#patchTeamMember) | **PATCH** /api/v1/{owner}/teams/{team}/members/{member.user} | Invalidate run
-[**updateTeam**](TeamsV1Api.md#updateTeam) | **PUT** /api/v1/{owner}/teams/{team.name} | Get run
-[**updateTeamMember**](TeamsV1Api.md#updateTeamMember) | **PUT** /api/v1/{owner}/teams/{team}/members/{member.user} | Stop runs
+[**createTeam**](TeamsV1Api.md#createTeam) | **POST** /api/v1/orgs/{owner}/teams | List runs
+[**createTeamMember**](TeamsV1Api.md#createTeamMember) | **POST** /api/v1/orgs/{owner}/teams/{team}/members | Delete runs
+[**deleteTeam**](TeamsV1Api.md#deleteTeam) | **DELETE** /api/v1/orgs/{owner}/teams/{team} | Patch run
+[**deleteTeamMember**](TeamsV1Api.md#deleteTeamMember) | **DELETE** /api/v1/orgs/{owner}/teams/{team}/members/{user} | Invalidate runs
+[**getTeam**](TeamsV1Api.md#getTeam) | **GET** /api/v1/orgs/{owner}/teams/{team} | Create new run
+[**getTeamMember**](TeamsV1Api.md#getTeamMember) | **GET** /api/v1/orgs/{owner}/teams/{team}/members/{user} | Stop run
+[**listTeamMembers**](TeamsV1Api.md#listTeamMembers) | **GET** /api/v1/orgs/{owner}/teams/{team}/members | Delete run
+[**listTeamNames**](TeamsV1Api.md#listTeamNames) | **GET** /api/v1/orgs/{owner}/teams/names | List bookmarked runs for user
+[**listTeams**](TeamsV1Api.md#listTeams) | **GET** /api/v1/orgs/{owner}/teams | List archived runs for user
+[**patchTeam**](TeamsV1Api.md#patchTeam) | **PATCH** /api/v1/orgs/{owner}/teams/{team.name} | Update run
+[**patchTeamMember**](TeamsV1Api.md#patchTeamMember) | **PATCH** /api/v1/orgs/{owner}/teams/{team}/members/{member.user} | Invalidate run
+[**updateTeam**](TeamsV1Api.md#updateTeam) | **PUT** /api/v1/orgs/{owner}/teams/{team.name} | Get run
+[**updateTeamMember**](TeamsV1Api.md#updateTeamMember) | **PUT** /api/v1/orgs/{owner}/teams/{team}/members/{member.user} | Stop runs
 
 
 <a name="createTeam"></a>
@@ -187,7 +187,7 @@ null (empty response body)
 
 <a name="deleteTeamMember"></a>
 # **deleteTeamMember**
-> deleteTeamMember(owner, team, memberUser, memberRole, memberOrgRole, memberCreatedAt, memberUpdatedAt)
+> deleteTeamMember(owner, team, user)
 
 Invalidate runs
 
@@ -210,14 +210,10 @@ ApiKey.setApiKey("YOUR API KEY");
 
 TeamsV1Api apiInstance = new TeamsV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
-String team = "team_example"; // String | Team
-String memberUser = "memberUser_example"; // String | User
-String memberRole = "memberRole_example"; // String | Role.
-String memberOrgRole = "memberOrgRole_example"; // String | Organization Role.
-OffsetDateTime memberCreatedAt = OffsetDateTime.now(); // OffsetDateTime | Optional time when the entityt was created.
-OffsetDateTime memberUpdatedAt = OffsetDateTime.now(); // OffsetDateTime | Optional last time the entity was updated.
+String team = "team_example"; // String | Team under namesapce
+String user = "user_example"; // String | Member under team
 try {
-    apiInstance.deleteTeamMember(owner, team, memberUser, memberRole, memberOrgRole, memberCreatedAt, memberUpdatedAt);
+    apiInstance.deleteTeamMember(owner, team, user);
 } catch (ApiException e) {
     System.err.println("Exception when calling TeamsV1Api#deleteTeamMember");
     e.printStackTrace();
@@ -229,12 +225,8 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
- **team** | **String**| Team |
- **memberUser** | **String**| User |
- **memberRole** | **String**| Role. | [optional]
- **memberOrgRole** | **String**| Organization Role. | [optional]
- **memberCreatedAt** | **OffsetDateTime**| Optional time when the entityt was created. | [optional]
- **memberUpdatedAt** | **OffsetDateTime**| Optional last time the entity was updated. | [optional]
+ **team** | **String**| Team under namesapce |
+ **user** | **String**| Member under team |
 
 ### Return type
 
@@ -363,7 +355,7 @@ Name | Type | Description  | Notes
 
 <a name="listTeamMembers"></a>
 # **listTeamMembers**
-> V1ListTeamMembersResponse listTeamMembers(owner, team)
+> V1ListTeamMembersResponse listTeamMembers(owner, team, offset, limit, sort, query)
 
 Delete run
 
@@ -387,8 +379,12 @@ ApiKey.setApiKey("YOUR API KEY");
 TeamsV1Api apiInstance = new TeamsV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
 String team = "team_example"; // String | Team under namesapce
+Integer offset = 56; // Integer | Pagination offset.
+Integer limit = 56; // Integer | Limit size.
+String sort = "sort_example"; // String | Sort to order the search.
+String query = "query_example"; // String | Query filter the search search.
 try {
-    V1ListTeamMembersResponse result = apiInstance.listTeamMembers(owner, team);
+    V1ListTeamMembersResponse result = apiInstance.listTeamMembers(owner, team, offset, limit, sort, query);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling TeamsV1Api#listTeamMembers");
@@ -402,6 +398,10 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
  **team** | **String**| Team under namesapce |
+ **offset** | **Integer**| Pagination offset. | [optional]
+ **limit** | **Integer**| Limit size. | [optional]
+ **sort** | **String**| Sort to order the search. | [optional]
+ **query** | **String**| Query filter the search search. | [optional]
 
 ### Return type
 

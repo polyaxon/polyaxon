@@ -79,7 +79,7 @@ type DeleteOrganizationOK struct {
 }
 
 func (o *DeleteOrganizationOK) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/organizations/{owner}][%d] deleteOrganizationOK ", 200)
+	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}][%d] deleteOrganizationOK ", 200)
 }
 
 func (o *DeleteOrganizationOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -101,7 +101,7 @@ type DeleteOrganizationNoContent struct {
 }
 
 func (o *DeleteOrganizationNoContent) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/organizations/{owner}][%d] deleteOrganizationNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}][%d] deleteOrganizationNoContent  %+v", 204, o.Payload)
 }
 
 func (o *DeleteOrganizationNoContent) GetPayload() interface{} {
@@ -132,7 +132,7 @@ type DeleteOrganizationForbidden struct {
 }
 
 func (o *DeleteOrganizationForbidden) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/organizations/{owner}][%d] deleteOrganizationForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}][%d] deleteOrganizationForbidden  %+v", 403, o.Payload)
 }
 
 func (o *DeleteOrganizationForbidden) GetPayload() interface{} {
@@ -163,7 +163,7 @@ type DeleteOrganizationNotFound struct {
 }
 
 func (o *DeleteOrganizationNotFound) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/organizations/{owner}][%d] deleteOrganizationNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}][%d] deleteOrganizationNotFound  %+v", 404, o.Payload)
 }
 
 func (o *DeleteOrganizationNotFound) GetPayload() interface{} {

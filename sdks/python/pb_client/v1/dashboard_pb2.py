@@ -39,7 +39,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='v1',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\x12v1/dashboard.proto\x12\x02v1\x1a\x1cgoogle/protobuf/struct.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x0fv1/search.proto\"a\n\nWidgetSpec\x12\x0c\n\x04kind\x18\x01 \x01(\t\x12\x1e\n\x06search\x18\x02 \x01(\x0b\x32\x0e.v1.SearchSpec\x12%\n\x04meta\x18\x03 \x01(\x0b\x32\x17.google.protobuf.Struct\"\xa8\x01\n\tDashboard\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x1f\n\x07widgets\x18\x03 \x03(\x0b\x32\x0e.v1.WidgetSpec\x12.\n\ncreated_at\x18\x04 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12.\n\nupdated_at\x18\x05 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"X\n\x14\x44\x61shboardBodyRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0f\n\x07project\x18\x02 \x01(\t\x12 \n\tdashboard\x18\x03 \x01(\x0b\x32\r.v1.Dashboard\"g\n\x16ListDashboardsResponse\x12\r\n\x05\x63ount\x18\x01 \x01(\x05\x12\x1e\n\x07results\x18\x02 \x03(\x0b\x32\r.v1.Dashboard\x12\x10\n\x08previous\x18\x03 \x01(\t\x12\x0c\n\x04next\x18\x04 \x01(\tb\x06proto3')
+  serialized_pb=_b('\n\x12v1/dashboard.proto\x12\x02v1\x1a\x1cgoogle/protobuf/struct.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x0fv1/search.proto\"a\n\nWidgetSpec\x12\x0c\n\x04kind\x18\x01 \x01(\t\x12\x1e\n\x06search\x18\x02 \x01(\x0b\x32\x0e.v1.SearchSpec\x12%\n\x04meta\x18\x03 \x01(\x0b\x32\x17.google.protobuf.Struct\"\xa8\x01\n\tDashboard\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x1f\n\x07widgets\x18\x03 \x03(\x0b\x32\x0e.v1.WidgetSpec\x12.\n\ncreated_at\x18\x04 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12.\n\nupdated_at\x18\x05 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"G\n\x14\x44\x61shboardBodyRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12 \n\tdashboard\x18\x02 \x01(\x0b\x32\r.v1.Dashboard\"_\n\x1bProjectDashboardBodyRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0f\n\x07project\x18\x02 \x01(\t\x12 \n\tdashboard\x18\x03 \x01(\x0b\x32\r.v1.Dashboard\"g\n\x16ListDashboardsResponse\x12\r\n\x05\x63ount\x18\x01 \x01(\x05\x12\x1e\n\x07results\x18\x02 \x03(\x0b\x32\r.v1.Dashboard\x12\x10\n\x08previous\x18\x03 \x01(\t\x12\x0c\n\x04next\x18\x04 \x01(\tb\x06proto3')
   ,
   dependencies=[google_dot_protobuf_dot_struct__pb2.DESCRIPTOR,google_dot_protobuf_dot_timestamp__pb2.DESCRIPTOR,v1_dot_search__pb2.DESCRIPTOR,])
 
@@ -165,15 +165,8 @@ _DASHBOARDBODYREQUEST = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='project', full_name='v1.DashboardBodyRequest.project', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b("").decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='dashboard', full_name='v1.DashboardBodyRequest.dashboard', index=2,
-      number=3, type=11, cpp_type=10, label=1,
+      name='dashboard', full_name='v1.DashboardBodyRequest.dashboard', index=1,
+      number=2, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -191,7 +184,52 @@ _DASHBOARDBODYREQUEST = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=376,
-  serialized_end=464,
+  serialized_end=447,
+)
+
+
+_PROJECTDASHBOARDBODYREQUEST = _descriptor.Descriptor(
+  name='ProjectDashboardBodyRequest',
+  full_name='v1.ProjectDashboardBodyRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='owner', full_name='v1.ProjectDashboardBodyRequest.owner', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='project', full_name='v1.ProjectDashboardBodyRequest.project', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='dashboard', full_name='v1.ProjectDashboardBodyRequest.dashboard', index=2,
+      number=3, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=449,
+  serialized_end=544,
 )
 
 
@@ -242,8 +280,8 @@ _LISTDASHBOARDSRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=466,
-  serialized_end=569,
+  serialized_start=546,
+  serialized_end=649,
 )
 
 _WIDGETSPEC.fields_by_name['search'].message_type = v1_dot_search__pb2._SEARCHSPEC
@@ -252,10 +290,12 @@ _DASHBOARD.fields_by_name['widgets'].message_type = _WIDGETSPEC
 _DASHBOARD.fields_by_name['created_at'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
 _DASHBOARD.fields_by_name['updated_at'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
 _DASHBOARDBODYREQUEST.fields_by_name['dashboard'].message_type = _DASHBOARD
+_PROJECTDASHBOARDBODYREQUEST.fields_by_name['dashboard'].message_type = _DASHBOARD
 _LISTDASHBOARDSRESPONSE.fields_by_name['results'].message_type = _DASHBOARD
 DESCRIPTOR.message_types_by_name['WidgetSpec'] = _WIDGETSPEC
 DESCRIPTOR.message_types_by_name['Dashboard'] = _DASHBOARD
 DESCRIPTOR.message_types_by_name['DashboardBodyRequest'] = _DASHBOARDBODYREQUEST
+DESCRIPTOR.message_types_by_name['ProjectDashboardBodyRequest'] = _PROJECTDASHBOARDBODYREQUEST
 DESCRIPTOR.message_types_by_name['ListDashboardsResponse'] = _LISTDASHBOARDSRESPONSE
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
@@ -279,6 +319,13 @@ DashboardBodyRequest = _reflection.GeneratedProtocolMessageType('DashboardBodyRe
   # @@protoc_insertion_point(class_scope:v1.DashboardBodyRequest)
   })
 _sym_db.RegisterMessage(DashboardBodyRequest)
+
+ProjectDashboardBodyRequest = _reflection.GeneratedProtocolMessageType('ProjectDashboardBodyRequest', (_message.Message,), {
+  'DESCRIPTOR' : _PROJECTDASHBOARDBODYREQUEST,
+  '__module__' : 'v1.dashboard_pb2'
+  # @@protoc_insertion_point(class_scope:v1.ProjectDashboardBodyRequest)
+  })
+_sym_db.RegisterMessage(ProjectDashboardBodyRequest)
 
 ListDashboardsResponse = _reflection.GeneratedProtocolMessageType('ListDashboardsResponse', (_message.Message,), {
   'DESCRIPTOR' : _LISTDASHBOARDSRESPONSE,

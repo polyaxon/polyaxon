@@ -28,17 +28,20 @@ import (
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_client/agents_v1"
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_client/artifacts_stores_v1"
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_client/auth_v1"
-	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_client/dashboard_v1"
+	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_client/dashboards_v1"
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_client/git_accesses_v1"
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_client/k8s_config_maps_v1"
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_client/k8s_secrets_v1"
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_client/organizations_v1"
+	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_client/project_dashboards_v1"
+	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_client/project_searches_v1"
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_client/projects_v1"
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_client/queues_v1"
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_client/registry_accesses_v1"
+	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_client/run_profiles_v1"
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_client/runs_v1"
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_client/schemas_v1"
-	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_client/search_v1"
+	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_client/searches_v1"
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_client/teams_v1"
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_client/users_v1"
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_client/versions_v1"
@@ -93,7 +96,7 @@ func New(transport runtime.ClientTransport, formats strfmt.Registry) *PolyaxonSd
 
 	cli.AuthV1 = auth_v1.New(transport, formats)
 
-	cli.DashboardV1 = dashboard_v1.New(transport, formats)
+	cli.DashboardsV1 = dashboards_v1.New(transport, formats)
 
 	cli.GitAccessesV1 = git_accesses_v1.New(transport, formats)
 
@@ -103,17 +106,23 @@ func New(transport runtime.ClientTransport, formats strfmt.Registry) *PolyaxonSd
 
 	cli.OrganizationsV1 = organizations_v1.New(transport, formats)
 
+	cli.ProjectDashboardsV1 = project_dashboards_v1.New(transport, formats)
+
+	cli.ProjectSearchesV1 = project_searches_v1.New(transport, formats)
+
 	cli.ProjectsV1 = projects_v1.New(transport, formats)
 
 	cli.QueuesV1 = queues_v1.New(transport, formats)
 
 	cli.RegistryAccessesV1 = registry_accesses_v1.New(transport, formats)
 
+	cli.RunProfilesV1 = run_profiles_v1.New(transport, formats)
+
 	cli.RunsV1 = runs_v1.New(transport, formats)
 
 	cli.SchemasV1 = schemas_v1.New(transport, formats)
 
-	cli.SearchV1 = search_v1.New(transport, formats)
+	cli.SearchesV1 = searches_v1.New(transport, formats)
 
 	cli.TeamsV1 = teams_v1.New(transport, formats)
 
@@ -171,7 +180,7 @@ type PolyaxonSdk struct {
 
 	AuthV1 *auth_v1.Client
 
-	DashboardV1 *dashboard_v1.Client
+	DashboardsV1 *dashboards_v1.Client
 
 	GitAccessesV1 *git_accesses_v1.Client
 
@@ -181,17 +190,23 @@ type PolyaxonSdk struct {
 
 	OrganizationsV1 *organizations_v1.Client
 
+	ProjectDashboardsV1 *project_dashboards_v1.Client
+
+	ProjectSearchesV1 *project_searches_v1.Client
+
 	ProjectsV1 *projects_v1.Client
 
 	QueuesV1 *queues_v1.Client
 
 	RegistryAccessesV1 *registry_accesses_v1.Client
 
+	RunProfilesV1 *run_profiles_v1.Client
+
 	RunsV1 *runs_v1.Client
 
 	SchemasV1 *schemas_v1.Client
 
-	SearchV1 *search_v1.Client
+	SearchesV1 *searches_v1.Client
 
 	TeamsV1 *teams_v1.Client
 
@@ -212,7 +227,7 @@ func (c *PolyaxonSdk) SetTransport(transport runtime.ClientTransport) {
 
 	c.AuthV1.SetTransport(transport)
 
-	c.DashboardV1.SetTransport(transport)
+	c.DashboardsV1.SetTransport(transport)
 
 	c.GitAccessesV1.SetTransport(transport)
 
@@ -222,17 +237,23 @@ func (c *PolyaxonSdk) SetTransport(transport runtime.ClientTransport) {
 
 	c.OrganizationsV1.SetTransport(transport)
 
+	c.ProjectDashboardsV1.SetTransport(transport)
+
+	c.ProjectSearchesV1.SetTransport(transport)
+
 	c.ProjectsV1.SetTransport(transport)
 
 	c.QueuesV1.SetTransport(transport)
 
 	c.RegistryAccessesV1.SetTransport(transport)
 
+	c.RunProfilesV1.SetTransport(transport)
+
 	c.RunsV1.SetTransport(transport)
 
 	c.SchemasV1.SetTransport(transport)
 
-	c.SearchV1.SetTransport(transport)
+	c.SearchesV1.SetTransport(transport)
 
 	c.TeamsV1.SetTransport(transport)
 

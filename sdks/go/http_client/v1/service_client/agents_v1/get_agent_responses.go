@@ -82,7 +82,7 @@ type GetAgentOK struct {
 }
 
 func (o *GetAgentOK) Error() string {
-	return fmt.Sprintf("[GET /api/v1/{owner}/agents/{uuid}][%d] getAgentOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/agents/{uuid}][%d] getAgentOK  %+v", 200, o.Payload)
 }
 
 func (o *GetAgentOK) GetPayload() *service_model.V1Agent {
@@ -115,7 +115,7 @@ type GetAgentNoContent struct {
 }
 
 func (o *GetAgentNoContent) Error() string {
-	return fmt.Sprintf("[GET /api/v1/{owner}/agents/{uuid}][%d] getAgentNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/agents/{uuid}][%d] getAgentNoContent  %+v", 204, o.Payload)
 }
 
 func (o *GetAgentNoContent) GetPayload() interface{} {
@@ -146,7 +146,7 @@ type GetAgentForbidden struct {
 }
 
 func (o *GetAgentForbidden) Error() string {
-	return fmt.Sprintf("[GET /api/v1/{owner}/agents/{uuid}][%d] getAgentForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/agents/{uuid}][%d] getAgentForbidden  %+v", 403, o.Payload)
 }
 
 func (o *GetAgentForbidden) GetPayload() interface{} {
@@ -177,7 +177,7 @@ type GetAgentNotFound struct {
 }
 
 func (o *GetAgentNotFound) Error() string {
-	return fmt.Sprintf("[GET /api/v1/{owner}/agents/{uuid}][%d] getAgentNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/agents/{uuid}][%d] getAgentNotFound  %+v", 404, o.Payload)
 }
 
 func (o *GetAgentNotFound) GetPayload() interface{} {

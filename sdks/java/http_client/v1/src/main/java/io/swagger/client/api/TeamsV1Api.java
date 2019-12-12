@@ -41,7 +41,6 @@ import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 
 
-import org.threeten.bp.OffsetDateTime;
 import io.swagger.client.model.V1ListTeamMembersResponse;
 import io.swagger.client.model.V1ListTeamsResponse;
 import io.swagger.client.model.V1Team;
@@ -85,7 +84,7 @@ public class TeamsV1Api {
         Object localVarPostBody = body;
 
         // create path and map variables
-        String localVarPath = "/api/v1/{owner}/teams"
+        String localVarPath = "/api/v1/orgs/{owner}/teams"
             .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
@@ -218,7 +217,7 @@ public class TeamsV1Api {
         Object localVarPostBody = body;
 
         // create path and map variables
-        String localVarPath = "/api/v1/{owner}/teams/{team}/members"
+        String localVarPath = "/api/v1/orgs/{owner}/teams/{team}/members"
             .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()))
             .replaceAll("\\{" + "team" + "\\}", apiClient.escapeString(team.toString()));
 
@@ -359,7 +358,7 @@ public class TeamsV1Api {
         Object localVarPostBody = null;
 
         // create path and map variables
-        String localVarPath = "/api/v1/{owner}/teams/{team}"
+        String localVarPath = "/api/v1/orgs/{owner}/teams/{team}"
             .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()))
             .replaceAll("\\{" + "team" + "\\}", apiClient.escapeString(team.toString()));
 
@@ -478,36 +477,24 @@ public class TeamsV1Api {
     /**
      * Build call for deleteTeamMember
      * @param owner Owner of the namespace (required)
-     * @param team Team (required)
-     * @param memberUser User (required)
-     * @param memberRole Role. (optional)
-     * @param memberOrgRole Organization Role. (optional)
-     * @param memberCreatedAt Optional time when the entityt was created. (optional)
-     * @param memberUpdatedAt Optional last time the entity was updated. (optional)
+     * @param team Team under namesapce (required)
+     * @param user Member under team (required)
      * @param progressListener Progress listener
      * @param progressRequestListener Progress request listener
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call deleteTeamMemberCall(String owner, String team, String memberUser, String memberRole, String memberOrgRole, OffsetDateTime memberCreatedAt, OffsetDateTime memberUpdatedAt, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call deleteTeamMemberCall(String owner, String team, String user, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
-        String localVarPath = "/api/v1/{owner}/teams/{team}/members/{member.user}"
+        String localVarPath = "/api/v1/orgs/{owner}/teams/{team}/members/{user}"
             .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()))
             .replaceAll("\\{" + "team" + "\\}", apiClient.escapeString(team.toString()))
-            .replaceAll("\\{" + "member.user" + "\\}", apiClient.escapeString(memberUser.toString()));
+            .replaceAll("\\{" + "user" + "\\}", apiClient.escapeString(user.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-        if (memberRole != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("member.role", memberRole));
-        if (memberOrgRole != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("member.org_role", memberOrgRole));
-        if (memberCreatedAt != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("member.created_at", memberCreatedAt));
-        if (memberUpdatedAt != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("member.updated_at", memberUpdatedAt));
 
         Map<String, String> localVarHeaderParams = new HashMap<String, String>();
 
@@ -542,7 +529,7 @@ public class TeamsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call deleteTeamMemberValidateBeforeCall(String owner, String team, String memberUser, String memberRole, String memberOrgRole, OffsetDateTime memberCreatedAt, OffsetDateTime memberUpdatedAt, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call deleteTeamMemberValidateBeforeCall(String owner, String team, String user, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
@@ -554,13 +541,13 @@ public class TeamsV1Api {
             throw new ApiException("Missing the required parameter 'team' when calling deleteTeamMember(Async)");
         }
         
-        // verify the required parameter 'memberUser' is set
-        if (memberUser == null) {
-            throw new ApiException("Missing the required parameter 'memberUser' when calling deleteTeamMember(Async)");
+        // verify the required parameter 'user' is set
+        if (user == null) {
+            throw new ApiException("Missing the required parameter 'user' when calling deleteTeamMember(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = deleteTeamMemberCall(owner, team, memberUser, memberRole, memberOrgRole, memberCreatedAt, memberUpdatedAt, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = deleteTeamMemberCall(owner, team, user, progressListener, progressRequestListener);
         return call;
 
     }
@@ -569,33 +556,25 @@ public class TeamsV1Api {
      * Invalidate runs
      * 
      * @param owner Owner of the namespace (required)
-     * @param team Team (required)
-     * @param memberUser User (required)
-     * @param memberRole Role. (optional)
-     * @param memberOrgRole Organization Role. (optional)
-     * @param memberCreatedAt Optional time when the entityt was created. (optional)
-     * @param memberUpdatedAt Optional last time the entity was updated. (optional)
+     * @param team Team under namesapce (required)
+     * @param user Member under team (required)
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public void deleteTeamMember(String owner, String team, String memberUser, String memberRole, String memberOrgRole, OffsetDateTime memberCreatedAt, OffsetDateTime memberUpdatedAt) throws ApiException {
-        deleteTeamMemberWithHttpInfo(owner, team, memberUser, memberRole, memberOrgRole, memberCreatedAt, memberUpdatedAt);
+    public void deleteTeamMember(String owner, String team, String user) throws ApiException {
+        deleteTeamMemberWithHttpInfo(owner, team, user);
     }
 
     /**
      * Invalidate runs
      * 
      * @param owner Owner of the namespace (required)
-     * @param team Team (required)
-     * @param memberUser User (required)
-     * @param memberRole Role. (optional)
-     * @param memberOrgRole Organization Role. (optional)
-     * @param memberCreatedAt Optional time when the entityt was created. (optional)
-     * @param memberUpdatedAt Optional last time the entity was updated. (optional)
+     * @param team Team under namesapce (required)
+     * @param user Member under team (required)
      * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<Void> deleteTeamMemberWithHttpInfo(String owner, String team, String memberUser, String memberRole, String memberOrgRole, OffsetDateTime memberCreatedAt, OffsetDateTime memberUpdatedAt) throws ApiException {
-        com.squareup.okhttp.Call call = deleteTeamMemberValidateBeforeCall(owner, team, memberUser, memberRole, memberOrgRole, memberCreatedAt, memberUpdatedAt, null, null);
+    public ApiResponse<Void> deleteTeamMemberWithHttpInfo(String owner, String team, String user) throws ApiException {
+        com.squareup.okhttp.Call call = deleteTeamMemberValidateBeforeCall(owner, team, user, null, null);
         return apiClient.execute(call);
     }
 
@@ -603,17 +582,13 @@ public class TeamsV1Api {
      * Invalidate runs (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
-     * @param team Team (required)
-     * @param memberUser User (required)
-     * @param memberRole Role. (optional)
-     * @param memberOrgRole Organization Role. (optional)
-     * @param memberCreatedAt Optional time when the entityt was created. (optional)
-     * @param memberUpdatedAt Optional last time the entity was updated. (optional)
+     * @param team Team under namesapce (required)
+     * @param user Member under team (required)
      * @param callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call deleteTeamMemberAsync(String owner, String team, String memberUser, String memberRole, String memberOrgRole, OffsetDateTime memberCreatedAt, OffsetDateTime memberUpdatedAt, final ApiCallback<Void> callback) throws ApiException {
+    public com.squareup.okhttp.Call deleteTeamMemberAsync(String owner, String team, String user, final ApiCallback<Void> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -634,7 +609,7 @@ public class TeamsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = deleteTeamMemberValidateBeforeCall(owner, team, memberUser, memberRole, memberOrgRole, memberCreatedAt, memberUpdatedAt, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = deleteTeamMemberValidateBeforeCall(owner, team, user, progressListener, progressRequestListener);
         apiClient.executeAsync(call, callback);
         return call;
     }
@@ -651,7 +626,7 @@ public class TeamsV1Api {
         Object localVarPostBody = null;
 
         // create path and map variables
-        String localVarPath = "/api/v1/{owner}/teams/{team}"
+        String localVarPath = "/api/v1/orgs/{owner}/teams/{team}"
             .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()))
             .replaceAll("\\{" + "team" + "\\}", apiClient.escapeString(team.toString()));
 
@@ -785,7 +760,7 @@ public class TeamsV1Api {
         Object localVarPostBody = null;
 
         // create path and map variables
-        String localVarPath = "/api/v1/{owner}/teams/{team}/members/{user}"
+        String localVarPath = "/api/v1/orgs/{owner}/teams/{team}/members/{user}"
             .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()))
             .replaceAll("\\{" + "team" + "\\}", apiClient.escapeString(team.toString()))
             .replaceAll("\\{" + "user" + "\\}", apiClient.escapeString(user.toString()));
@@ -918,21 +893,33 @@ public class TeamsV1Api {
      * Build call for listTeamMembers
      * @param owner Owner of the namespace (required)
      * @param team Team under namesapce (required)
+     * @param offset Pagination offset. (optional)
+     * @param limit Limit size. (optional)
+     * @param sort Sort to order the search. (optional)
+     * @param query Query filter the search search. (optional)
      * @param progressListener Progress listener
      * @param progressRequestListener Progress request listener
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call listTeamMembersCall(String owner, String team, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call listTeamMembersCall(String owner, String team, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
-        String localVarPath = "/api/v1/{owner}/teams/{team}/members"
+        String localVarPath = "/api/v1/orgs/{owner}/teams/{team}/members"
             .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()))
             .replaceAll("\\{" + "team" + "\\}", apiClient.escapeString(team.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        if (offset != null)
+        localVarQueryParams.addAll(apiClient.parameterToPair("offset", offset));
+        if (limit != null)
+        localVarQueryParams.addAll(apiClient.parameterToPair("limit", limit));
+        if (sort != null)
+        localVarQueryParams.addAll(apiClient.parameterToPair("sort", sort));
+        if (query != null)
+        localVarQueryParams.addAll(apiClient.parameterToPair("query", query));
 
         Map<String, String> localVarHeaderParams = new HashMap<String, String>();
 
@@ -967,7 +954,7 @@ public class TeamsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call listTeamMembersValidateBeforeCall(String owner, String team, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call listTeamMembersValidateBeforeCall(String owner, String team, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
@@ -980,7 +967,7 @@ public class TeamsV1Api {
         }
         
 
-        com.squareup.okhttp.Call call = listTeamMembersCall(owner, team, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = listTeamMembersCall(owner, team, offset, limit, sort, query, progressListener, progressRequestListener);
         return call;
 
     }
@@ -990,11 +977,15 @@ public class TeamsV1Api {
      * 
      * @param owner Owner of the namespace (required)
      * @param team Team under namesapce (required)
+     * @param offset Pagination offset. (optional)
+     * @param limit Limit size. (optional)
+     * @param sort Sort to order the search. (optional)
+     * @param query Query filter the search search. (optional)
      * @return V1ListTeamMembersResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1ListTeamMembersResponse listTeamMembers(String owner, String team) throws ApiException {
-        ApiResponse<V1ListTeamMembersResponse> resp = listTeamMembersWithHttpInfo(owner, team);
+    public V1ListTeamMembersResponse listTeamMembers(String owner, String team, Integer offset, Integer limit, String sort, String query) throws ApiException {
+        ApiResponse<V1ListTeamMembersResponse> resp = listTeamMembersWithHttpInfo(owner, team, offset, limit, sort, query);
         return resp.getData();
     }
 
@@ -1003,11 +994,15 @@ public class TeamsV1Api {
      * 
      * @param owner Owner of the namespace (required)
      * @param team Team under namesapce (required)
+     * @param offset Pagination offset. (optional)
+     * @param limit Limit size. (optional)
+     * @param sort Sort to order the search. (optional)
+     * @param query Query filter the search search. (optional)
      * @return ApiResponse&lt;V1ListTeamMembersResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1ListTeamMembersResponse> listTeamMembersWithHttpInfo(String owner, String team) throws ApiException {
-        com.squareup.okhttp.Call call = listTeamMembersValidateBeforeCall(owner, team, null, null);
+    public ApiResponse<V1ListTeamMembersResponse> listTeamMembersWithHttpInfo(String owner, String team, Integer offset, Integer limit, String sort, String query) throws ApiException {
+        com.squareup.okhttp.Call call = listTeamMembersValidateBeforeCall(owner, team, offset, limit, sort, query, null, null);
         Type localVarReturnType = new TypeToken<V1ListTeamMembersResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -1017,11 +1012,15 @@ public class TeamsV1Api {
      * 
      * @param owner Owner of the namespace (required)
      * @param team Team under namesapce (required)
+     * @param offset Pagination offset. (optional)
+     * @param limit Limit size. (optional)
+     * @param sort Sort to order the search. (optional)
+     * @param query Query filter the search search. (optional)
      * @param callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call listTeamMembersAsync(String owner, String team, final ApiCallback<V1ListTeamMembersResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call listTeamMembersAsync(String owner, String team, Integer offset, Integer limit, String sort, String query, final ApiCallback<V1ListTeamMembersResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -1042,7 +1041,7 @@ public class TeamsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = listTeamMembersValidateBeforeCall(owner, team, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = listTeamMembersValidateBeforeCall(owner, team, offset, limit, sort, query, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1ListTeamMembersResponse>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
@@ -1063,7 +1062,7 @@ public class TeamsV1Api {
         Object localVarPostBody = null;
 
         // create path and map variables
-        String localVarPath = "/api/v1/{owner}/teams/names"
+        String localVarPath = "/api/v1/orgs/{owner}/teams/names"
             .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
@@ -1210,7 +1209,7 @@ public class TeamsV1Api {
         Object localVarPostBody = null;
 
         // create path and map variables
-        String localVarPath = "/api/v1/{owner}/teams"
+        String localVarPath = "/api/v1/orgs/{owner}/teams"
             .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
@@ -1355,7 +1354,7 @@ public class TeamsV1Api {
         Object localVarPostBody = body;
 
         // create path and map variables
-        String localVarPath = "/api/v1/{owner}/teams/{team.name}"
+        String localVarPath = "/api/v1/orgs/{owner}/teams/{team.name}"
             .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()))
             .replaceAll("\\{" + "team.name" + "\\}", apiClient.escapeString(teamName.toString()));
 
@@ -1498,7 +1497,7 @@ public class TeamsV1Api {
         Object localVarPostBody = body;
 
         // create path and map variables
-        String localVarPath = "/api/v1/{owner}/teams/{team}/members/{member.user}"
+        String localVarPath = "/api/v1/orgs/{owner}/teams/{team}/members/{member.user}"
             .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()))
             .replaceAll("\\{" + "team" + "\\}", apiClient.escapeString(team.toString()))
             .replaceAll("\\{" + "member.user" + "\\}", apiClient.escapeString(memberUser.toString()));
@@ -1649,7 +1648,7 @@ public class TeamsV1Api {
         Object localVarPostBody = body;
 
         // create path and map variables
-        String localVarPath = "/api/v1/{owner}/teams/{team.name}"
+        String localVarPath = "/api/v1/orgs/{owner}/teams/{team.name}"
             .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()))
             .replaceAll("\\{" + "team.name" + "\\}", apiClient.escapeString(teamName.toString()));
 
@@ -1792,7 +1791,7 @@ public class TeamsV1Api {
         Object localVarPostBody = body;
 
         // create path and map variables
-        String localVarPath = "/api/v1/{owner}/teams/{team}/members/{member.user}"
+        String localVarPath = "/api/v1/orgs/{owner}/teams/{team}/members/{member.user}"
             .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()))
             .replaceAll("\\{" + "team" + "\\}", apiClient.escapeString(team.toString()))
             .replaceAll("\\{" + "member.user" + "\\}", apiClient.escapeString(memberUser.toString()));

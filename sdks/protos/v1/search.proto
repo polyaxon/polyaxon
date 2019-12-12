@@ -40,8 +40,17 @@ message Search {
     google.protobuf.Timestamp updated_at = 5;
 }
 
- // Request data to create/update artifacts store
+ // Request data to create/update search
  message SearchBodyRequest {
+    // Owner of the namespace
+    string owner = 1;
+
+    // Search body
+    Search search = 2;
+ }
+
+// Request data to create/update project search
+ message ProjectSearchBodyRequest {
     // Owner of the namespace
     string owner = 1;
 

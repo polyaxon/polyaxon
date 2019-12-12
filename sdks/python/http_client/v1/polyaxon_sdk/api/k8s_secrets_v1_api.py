@@ -49,12 +49,12 @@ class K8sSecretsV1Api(object):
             api_client = ApiClient()
         self.api_client = api_client
 
-    def create_k8s_secrets(self, owner, body, **kwargs):  # noqa: E501
+    def create_k8s_secret(self, owner, body, **kwargs):  # noqa: E501
         """List runs  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.create_k8s_secrets(owner, body, async_req=True)
+        >>> thread = api.create_k8s_secret(owner, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -66,21 +66,21 @@ class K8sSecretsV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.create_k8s_secrets_with_http_info(
+            return self.create_k8s_secret_with_http_info(
                 owner, body, **kwargs
             )  # noqa: E501
         else:
-            (data) = self.create_k8s_secrets_with_http_info(
+            (data) = self.create_k8s_secret_with_http_info(
                 owner, body, **kwargs
             )  # noqa: E501
             return data
 
-    def create_k8s_secrets_with_http_info(self, owner, body, **kwargs):  # noqa: E501
+    def create_k8s_secret_with_http_info(self, owner, body, **kwargs):  # noqa: E501
         """List runs  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.create_k8s_secrets_with_http_info(owner, body, async_req=True)
+        >>> thread = api.create_k8s_secret_with_http_info(owner, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -102,19 +102,19 @@ class K8sSecretsV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method create_k8s_secrets" % key
+                    " to method create_k8s_secret" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `create_k8s_secrets`"
+                "Missing the required parameter `owner` when calling `create_k8s_secret`"
             )  # noqa: E501
         # verify the required parameter 'body' is set
         if "body" not in params or params["body"] is None:
             raise ValueError(
-                "Missing the required parameter `body` when calling `create_k8s_secrets`"
+                "Missing the required parameter `body` when calling `create_k8s_secret`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -149,7 +149,7 @@ class K8sSecretsV1Api(object):
         auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/k8s_secrets",
+            "/api/v1/orgs/{owner}/k8s_secrets",
             "POST",
             path_params,
             query_params,
@@ -266,7 +266,7 @@ class K8sSecretsV1Api(object):
         auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/k8s_secrets/{uuid}",
+            "/api/v1/orgs/{owner}/k8s_secrets/{uuid}",
             "DELETE",
             path_params,
             query_params,
@@ -383,7 +383,7 @@ class K8sSecretsV1Api(object):
         auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/k8s_secrets/{uuid}",
+            "/api/v1/orgs/{owner}/k8s_secrets/{uuid}",
             "GET",
             path_params,
             query_params,
@@ -507,7 +507,7 @@ class K8sSecretsV1Api(object):
         auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/k8s_secrets/names",
+            "/api/v1/orgs/{owner}/k8s_secrets/names",
             "GET",
             path_params,
             query_params,
@@ -627,7 +627,7 @@ class K8sSecretsV1Api(object):
         auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/k8s_secrets",
+            "/api/v1/orgs/{owner}/k8s_secrets",
             "GET",
             path_params,
             query_params,
@@ -755,7 +755,7 @@ class K8sSecretsV1Api(object):
         auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/k8s_secrets/{k8s_resource.uuid}",
+            "/api/v1/orgs/{owner}/k8s_secrets/{k8s_resource.uuid}",
             "PATCH",
             path_params,
             query_params,
@@ -883,7 +883,7 @@ class K8sSecretsV1Api(object):
         auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/k8s_secrets/{k8s_resource.uuid}",
+            "/api/v1/orgs/{owner}/k8s_secrets/{k8s_resource.uuid}",
             "PUT",
             path_params,
             query_params,

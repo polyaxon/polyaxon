@@ -82,7 +82,7 @@ type ListOrganizationNamesOK struct {
 }
 
 func (o *ListOrganizationNamesOK) Error() string {
-	return fmt.Sprintf("[GET /api/v1/organizations/names][%d] listOrganizationNamesOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/orgs/names][%d] listOrganizationNamesOK  %+v", 200, o.Payload)
 }
 
 func (o *ListOrganizationNamesOK) GetPayload() *service_model.V1ListOrganizationsResponse {
@@ -115,7 +115,7 @@ type ListOrganizationNamesNoContent struct {
 }
 
 func (o *ListOrganizationNamesNoContent) Error() string {
-	return fmt.Sprintf("[GET /api/v1/organizations/names][%d] listOrganizationNamesNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/orgs/names][%d] listOrganizationNamesNoContent  %+v", 204, o.Payload)
 }
 
 func (o *ListOrganizationNamesNoContent) GetPayload() interface{} {
@@ -146,7 +146,7 @@ type ListOrganizationNamesForbidden struct {
 }
 
 func (o *ListOrganizationNamesForbidden) Error() string {
-	return fmt.Sprintf("[GET /api/v1/organizations/names][%d] listOrganizationNamesForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/orgs/names][%d] listOrganizationNamesForbidden  %+v", 403, o.Payload)
 }
 
 func (o *ListOrganizationNamesForbidden) GetPayload() interface{} {
@@ -177,7 +177,7 @@ type ListOrganizationNamesNotFound struct {
 }
 
 func (o *ListOrganizationNamesNotFound) Error() string {
-	return fmt.Sprintf("[GET /api/v1/organizations/names][%d] listOrganizationNamesNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/orgs/names][%d] listOrganizationNamesNotFound  %+v", 404, o.Payload)
 }
 
 func (o *ListOrganizationNamesNotFound) GetPayload() interface{} {

@@ -4,13 +4,13 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**create_registry_access**](RegistryAccessesV1Api.md#create_registry_access) | **POST** /api/v1/{owner}/registry_accesses | List runs
-[**delete_registry_access**](RegistryAccessesV1Api.md#delete_registry_access) | **DELETE** /api/v1/{owner}/registry_accesses/{uuid} | Patch run
-[**get_registry_access**](RegistryAccessesV1Api.md#get_registry_access) | **GET** /api/v1/{owner}/registry_accesses/{uuid} | Create new run
-[**list_registry_access_names**](RegistryAccessesV1Api.md#list_registry_access_names) | **GET** /api/v1/{owner}/registry_accesses/names | List bookmarked runs for user
-[**list_registry_accesses**](RegistryAccessesV1Api.md#list_registry_accesses) | **GET** /api/v1/{owner}/registry_accesses | List archived runs for user
-[**patch_registry_access**](RegistryAccessesV1Api.md#patch_registry_access) | **PATCH** /api/v1/{owner}/registry_accesses/{host_access.uuid} | Update run
-[**update_registry_access**](RegistryAccessesV1Api.md#update_registry_access) | **PUT** /api/v1/{owner}/registry_accesses/{host_access.uuid} | Get run
+[**create_registry_access**](RegistryAccessesV1Api.md#create_registry_access) | **POST** /api/v1/orgs/{owner}/registry_accesses | List runs
+[**delete_registry_access**](RegistryAccessesV1Api.md#delete_registry_access) | **DELETE** /api/v1/orgs/{owner}/registry_accesses/{uuid} | Patch run
+[**get_registry_access**](RegistryAccessesV1Api.md#get_registry_access) | **GET** /api/v1/orgs/{owner}/registry_accesses/{uuid} | Create new run
+[**list_registry_access_names**](RegistryAccessesV1Api.md#list_registry_access_names) | **GET** /api/v1/orgs/{owner}/registry_accesses/names | List bookmarked runs for user
+[**list_registry_accesses**](RegistryAccessesV1Api.md#list_registry_accesses) | **GET** /api/v1/orgs/{owner}/registry_accesses | List archived runs for user
+[**patch_registry_access**](RegistryAccessesV1Api.md#patch_registry_access) | **PATCH** /api/v1/orgs/{owner}/registry_accesses/{host_access.uuid} | Update run
+[**update_registry_access**](RegistryAccessesV1Api.md#update_registry_access) | **PUT** /api/v1/orgs/{owner}/registry_accesses/{host_access.uuid} | Get run
 
 
 # **create_registry_access**

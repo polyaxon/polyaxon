@@ -82,7 +82,7 @@ type PatchAgentOK struct {
 }
 
 func (o *PatchAgentOK) Error() string {
-	return fmt.Sprintf("[PATCH /api/v1/{owner}/agents/{agent.uuid}][%d] patchAgentOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/agents/{agent.uuid}][%d] patchAgentOK  %+v", 200, o.Payload)
 }
 
 func (o *PatchAgentOK) GetPayload() *service_model.V1Agent {
@@ -115,7 +115,7 @@ type PatchAgentNoContent struct {
 }
 
 func (o *PatchAgentNoContent) Error() string {
-	return fmt.Sprintf("[PATCH /api/v1/{owner}/agents/{agent.uuid}][%d] patchAgentNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/agents/{agent.uuid}][%d] patchAgentNoContent  %+v", 204, o.Payload)
 }
 
 func (o *PatchAgentNoContent) GetPayload() interface{} {
@@ -146,7 +146,7 @@ type PatchAgentForbidden struct {
 }
 
 func (o *PatchAgentForbidden) Error() string {
-	return fmt.Sprintf("[PATCH /api/v1/{owner}/agents/{agent.uuid}][%d] patchAgentForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/agents/{agent.uuid}][%d] patchAgentForbidden  %+v", 403, o.Payload)
 }
 
 func (o *PatchAgentForbidden) GetPayload() interface{} {
@@ -177,7 +177,7 @@ type PatchAgentNotFound struct {
 }
 
 func (o *PatchAgentNotFound) Error() string {
-	return fmt.Sprintf("[PATCH /api/v1/{owner}/agents/{agent.uuid}][%d] patchAgentNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/agents/{agent.uuid}][%d] patchAgentNotFound  %+v", 404, o.Payload)
 }
 
 func (o *PatchAgentNotFound) GetPayload() interface{} {

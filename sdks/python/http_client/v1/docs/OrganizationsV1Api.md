@@ -4,19 +4,19 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**create_organization**](OrganizationsV1Api.md#create_organization) | **POST** /api/v1/organizations/create | List runs
-[**create_organization_member**](OrganizationsV1Api.md#create_organization_member) | **POST** /api/v1/organizations/{owner}/members | Delete runs
-[**delete_organization**](OrganizationsV1Api.md#delete_organization) | **DELETE** /api/v1/organizations/{owner} | Patch run
-[**delete_organization_member**](OrganizationsV1Api.md#delete_organization_member) | **DELETE** /api/v1/organizations/{owner}/members/{user} | Invalidate runs
-[**get_organization**](OrganizationsV1Api.md#get_organization) | **GET** /api/v1/organizations/{owner} | Create new run
-[**get_organization_member**](OrganizationsV1Api.md#get_organization_member) | **GET** /api/v1/organizations/{owner}/members/{user} | Stop run
-[**list_organization_members**](OrganizationsV1Api.md#list_organization_members) | **GET** /api/v1/organizations/{owner}/members | Delete run
-[**list_organization_names**](OrganizationsV1Api.md#list_organization_names) | **GET** /api/v1/organizations/names | List bookmarked runs for user
-[**list_organizations**](OrganizationsV1Api.md#list_organizations) | **GET** /api/v1/organizations/list | List archived runs for user
-[**patch_organization**](OrganizationsV1Api.md#patch_organization) | **PATCH** /api/v1/organizations/{owner} | Update run
-[**patch_organization_member**](OrganizationsV1Api.md#patch_organization_member) | **PATCH** /api/v1/organizations/{owner}/members/{member.user} | Invalidate run
-[**update_organization**](OrganizationsV1Api.md#update_organization) | **PUT** /api/v1/organizations/{owner} | Get run
-[**update_organization_member**](OrganizationsV1Api.md#update_organization_member) | **PUT** /api/v1/organizations/{owner}/members/{member.user} | Stop runs
+[**create_organization**](OrganizationsV1Api.md#create_organization) | **POST** /api/v1/orgs/create | List runs
+[**create_organization_member**](OrganizationsV1Api.md#create_organization_member) | **POST** /api/v1/orgs/{owner}/members | Delete runs
+[**delete_organization**](OrganizationsV1Api.md#delete_organization) | **DELETE** /api/v1/orgs/{owner} | Patch run
+[**delete_organization_member**](OrganizationsV1Api.md#delete_organization_member) | **DELETE** /api/v1/orgs/{owner}/members/{user} | Invalidate runs
+[**get_organization**](OrganizationsV1Api.md#get_organization) | **GET** /api/v1/orgs/{owner} | Create new run
+[**get_organization_member**](OrganizationsV1Api.md#get_organization_member) | **GET** /api/v1/orgs/{owner}/members/{user} | Stop run
+[**list_organization_members**](OrganizationsV1Api.md#list_organization_members) | **GET** /api/v1/orgs/{owner}/members | Delete run
+[**list_organization_names**](OrganizationsV1Api.md#list_organization_names) | **GET** /api/v1/orgs/names | List bookmarked runs for user
+[**list_organizations**](OrganizationsV1Api.md#list_organizations) | **GET** /api/v1/orgs/list | List archived runs for user
+[**patch_organization**](OrganizationsV1Api.md#patch_organization) | **PATCH** /api/v1/orgs/{owner} | Update run
+[**patch_organization_member**](OrganizationsV1Api.md#patch_organization_member) | **PATCH** /api/v1/orgs/{owner}/members/{member.user} | Invalidate run
+[**update_organization**](OrganizationsV1Api.md#update_organization) | **PUT** /api/v1/orgs/{owner} | Get run
+[**update_organization_member**](OrganizationsV1Api.md#update_organization_member) | **PUT** /api/v1/orgs/{owner}/members/{member.user} | Stop runs
 
 
 # **create_organization**
@@ -336,7 +336,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_organization_members**
-> V1ListOrganizationMembersResponse list_organization_members(owner)
+> V1ListOrganizationMembersResponse list_organization_members(owner, offset=offset, limit=limit, sort=sort, query=query)
 
 Delete run
 
@@ -357,10 +357,14 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = polyaxon_sdk.OrganizationsV1Api(polyaxon_sdk.ApiClient(configuration))
 owner = 'owner_example' # str | Owner of the namespace
+offset = 56 # int | Pagination offset. (optional)
+limit = 56 # int | Limit size. (optional)
+sort = 'sort_example' # str | Sort to order the search. (optional)
+query = 'query_example' # str | Query filter the search search. (optional)
 
 try:
     # Delete run
-    api_response = api_instance.list_organization_members(owner)
+    api_response = api_instance.list_organization_members(owner, offset=offset, limit=limit, sort=sort, query=query)
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling OrganizationsV1Api->list_organization_members: %s\n" % e)
@@ -371,6 +375,10 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **str**| Owner of the namespace | 
+ **offset** | **int**| Pagination offset. | [optional] 
+ **limit** | **int**| Limit size. | [optional] 
+ **sort** | **str**| Sort to order the search. | [optional] 
+ **query** | **str**| Query filter the search search. | [optional] 
 
 ### Return type
 

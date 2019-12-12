@@ -41,23 +41,23 @@ type Client struct {
 }
 
 /*
-CreateK8sSecrets lists runs
+CreateK8sSecret lists runs
 */
-func (a *Client) CreateK8sSecrets(params *CreateK8sSecretsParams, authInfo runtime.ClientAuthInfoWriter) (*CreateK8sSecretsOK, *CreateK8sSecretsNoContent, error) {
+func (a *Client) CreateK8sSecret(params *CreateK8sSecretParams, authInfo runtime.ClientAuthInfoWriter) (*CreateK8sSecretOK, *CreateK8sSecretNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewCreateK8sSecretsParams()
+		params = NewCreateK8sSecretParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "CreateK8sSecrets",
+		ID:                 "CreateK8sSecret",
 		Method:             "POST",
-		PathPattern:        "/api/v1/{owner}/k8s_secrets",
+		PathPattern:        "/api/v1/orgs/{owner}/k8s_secrets",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &CreateK8sSecretsReader{formats: a.formats},
+		Reader:             &CreateK8sSecretReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -66,9 +66,9 @@ func (a *Client) CreateK8sSecrets(params *CreateK8sSecretsParams, authInfo runti
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *CreateK8sSecretsOK:
+	case *CreateK8sSecretOK:
 		return value, nil, nil
-	case *CreateK8sSecretsNoContent:
+	case *CreateK8sSecretNoContent:
 		return nil, value, nil
 	}
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
@@ -88,7 +88,7 @@ func (a *Client) DeleteK8sSecret(params *DeleteK8sSecretParams, authInfo runtime
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "DeleteK8sSecret",
 		Method:             "DELETE",
-		PathPattern:        "/api/v1/{owner}/k8s_secrets/{uuid}",
+		PathPattern:        "/api/v1/orgs/{owner}/k8s_secrets/{uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -124,7 +124,7 @@ func (a *Client) GetK8sSecret(params *GetK8sSecretParams, authInfo runtime.Clien
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "GetK8sSecret",
 		Method:             "GET",
-		PathPattern:        "/api/v1/{owner}/k8s_secrets/{uuid}",
+		PathPattern:        "/api/v1/orgs/{owner}/k8s_secrets/{uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -160,7 +160,7 @@ func (a *Client) ListK8sSecretNames(params *ListK8sSecretNamesParams, authInfo r
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "ListK8sSecretNames",
 		Method:             "GET",
-		PathPattern:        "/api/v1/{owner}/k8s_secrets/names",
+		PathPattern:        "/api/v1/orgs/{owner}/k8s_secrets/names",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -196,7 +196,7 @@ func (a *Client) ListK8sSecrets(params *ListK8sSecretsParams, authInfo runtime.C
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "ListK8sSecrets",
 		Method:             "GET",
-		PathPattern:        "/api/v1/{owner}/k8s_secrets",
+		PathPattern:        "/api/v1/orgs/{owner}/k8s_secrets",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -232,7 +232,7 @@ func (a *Client) PatchK8sSecret(params *PatchK8sSecretParams, authInfo runtime.C
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "PatchK8sSecret",
 		Method:             "PATCH",
-		PathPattern:        "/api/v1/{owner}/k8s_secrets/{k8s_resource.uuid}",
+		PathPattern:        "/api/v1/orgs/{owner}/k8s_secrets/{k8s_resource.uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -268,7 +268,7 @@ func (a *Client) UpdateK8sSecret(params *UpdateK8sSecretParams, authInfo runtime
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "UpdateK8sSecret",
 		Method:             "PUT",
-		PathPattern:        "/api/v1/{owner}/k8s_secrets/{k8s_resource.uuid}",
+		PathPattern:        "/api/v1/orgs/{owner}/k8s_secrets/{k8s_resource.uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},

@@ -4,18 +4,18 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**createK8sSecrets**](K8sSecretsV1Api.md#createK8sSecrets) | **POST** /api/v1/{owner}/k8s_secrets | List runs
-[**deleteK8sSecret**](K8sSecretsV1Api.md#deleteK8sSecret) | **DELETE** /api/v1/{owner}/k8s_secrets/{uuid} | Patch run
-[**getK8sSecret**](K8sSecretsV1Api.md#getK8sSecret) | **GET** /api/v1/{owner}/k8s_secrets/{uuid} | Create new run
-[**listK8sSecretNames**](K8sSecretsV1Api.md#listK8sSecretNames) | **GET** /api/v1/{owner}/k8s_secrets/names | List bookmarked runs for user
-[**listK8sSecrets**](K8sSecretsV1Api.md#listK8sSecrets) | **GET** /api/v1/{owner}/k8s_secrets | List archived runs for user
-[**patchK8sSecret**](K8sSecretsV1Api.md#patchK8sSecret) | **PATCH** /api/v1/{owner}/k8s_secrets/{k8s_resource.uuid} | Update run
-[**updateK8sSecret**](K8sSecretsV1Api.md#updateK8sSecret) | **PUT** /api/v1/{owner}/k8s_secrets/{k8s_resource.uuid} | Get run
+[**createK8sSecret**](K8sSecretsV1Api.md#createK8sSecret) | **POST** /api/v1/orgs/{owner}/k8s_secrets | List runs
+[**deleteK8sSecret**](K8sSecretsV1Api.md#deleteK8sSecret) | **DELETE** /api/v1/orgs/{owner}/k8s_secrets/{uuid} | Patch run
+[**getK8sSecret**](K8sSecretsV1Api.md#getK8sSecret) | **GET** /api/v1/orgs/{owner}/k8s_secrets/{uuid} | Create new run
+[**listK8sSecretNames**](K8sSecretsV1Api.md#listK8sSecretNames) | **GET** /api/v1/orgs/{owner}/k8s_secrets/names | List bookmarked runs for user
+[**listK8sSecrets**](K8sSecretsV1Api.md#listK8sSecrets) | **GET** /api/v1/orgs/{owner}/k8s_secrets | List archived runs for user
+[**patchK8sSecret**](K8sSecretsV1Api.md#patchK8sSecret) | **PATCH** /api/v1/orgs/{owner}/k8s_secrets/{k8s_resource.uuid} | Update run
+[**updateK8sSecret**](K8sSecretsV1Api.md#updateK8sSecret) | **PUT** /api/v1/orgs/{owner}/k8s_secrets/{k8s_resource.uuid} | Get run
 
 
-<a name="createK8sSecrets"></a>
-# **createK8sSecrets**
-> V1K8sResource createK8sSecrets(owner, body)
+<a name="createK8sSecret"></a>
+# **createK8sSecret**
+> V1K8sResource createK8sSecret(owner, body)
 
 List runs
 
@@ -40,10 +40,10 @@ K8sSecretsV1Api apiInstance = new K8sSecretsV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
 V1K8sResource body = new V1K8sResource(); // V1K8sResource | Artifact store body
 try {
-    V1K8sResource result = apiInstance.createK8sSecrets(owner, body);
+    V1K8sResource result = apiInstance.createK8sSecret(owner, body);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling K8sSecretsV1Api#createK8sSecrets");
+    System.err.println("Exception when calling K8sSecretsV1Api#createK8sSecret");
     e.printStackTrace();
 }
 ```

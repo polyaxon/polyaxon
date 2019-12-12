@@ -52,7 +52,7 @@ func (a *Client) CreateOrganization(params *CreateOrganizationParams, authInfo r
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "CreateOrganization",
 		Method:             "POST",
-		PathPattern:        "/api/v1/organizations/create",
+		PathPattern:        "/api/v1/orgs/create",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -88,7 +88,7 @@ func (a *Client) CreateOrganizationMember(params *CreateOrganizationMemberParams
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "CreateOrganizationMember",
 		Method:             "POST",
-		PathPattern:        "/api/v1/organizations/{owner}/members",
+		PathPattern:        "/api/v1/orgs/{owner}/members",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -124,7 +124,7 @@ func (a *Client) DeleteOrganization(params *DeleteOrganizationParams, authInfo r
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "DeleteOrganization",
 		Method:             "DELETE",
-		PathPattern:        "/api/v1/organizations/{owner}",
+		PathPattern:        "/api/v1/orgs/{owner}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -160,7 +160,7 @@ func (a *Client) DeleteOrganizationMember(params *DeleteOrganizationMemberParams
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "DeleteOrganizationMember",
 		Method:             "DELETE",
-		PathPattern:        "/api/v1/organizations/{owner}/members/{user}",
+		PathPattern:        "/api/v1/orgs/{owner}/members/{user}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -196,7 +196,7 @@ func (a *Client) GetOrganization(params *GetOrganizationParams, authInfo runtime
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "GetOrganization",
 		Method:             "GET",
-		PathPattern:        "/api/v1/organizations/{owner}",
+		PathPattern:        "/api/v1/orgs/{owner}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -232,7 +232,7 @@ func (a *Client) GetOrganizationMember(params *GetOrganizationMemberParams, auth
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "GetOrganizationMember",
 		Method:             "GET",
-		PathPattern:        "/api/v1/organizations/{owner}/members/{user}",
+		PathPattern:        "/api/v1/orgs/{owner}/members/{user}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -268,7 +268,7 @@ func (a *Client) ListOrganizationMembers(params *ListOrganizationMembersParams, 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "ListOrganizationMembers",
 		Method:             "GET",
-		PathPattern:        "/api/v1/organizations/{owner}/members",
+		PathPattern:        "/api/v1/orgs/{owner}/members",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -304,7 +304,7 @@ func (a *Client) ListOrganizationNames(params *ListOrganizationNamesParams, auth
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "ListOrganizationNames",
 		Method:             "GET",
-		PathPattern:        "/api/v1/organizations/names",
+		PathPattern:        "/api/v1/orgs/names",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -340,7 +340,7 @@ func (a *Client) ListOrganizations(params *ListOrganizationsParams, authInfo run
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "ListOrganizations",
 		Method:             "GET",
-		PathPattern:        "/api/v1/organizations/list",
+		PathPattern:        "/api/v1/orgs/list",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -376,7 +376,7 @@ func (a *Client) PatchOrganization(params *PatchOrganizationParams, authInfo run
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "PatchOrganization",
 		Method:             "PATCH",
-		PathPattern:        "/api/v1/organizations/{owner}",
+		PathPattern:        "/api/v1/orgs/{owner}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -412,7 +412,7 @@ func (a *Client) PatchOrganizationMember(params *PatchOrganizationMemberParams, 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "PatchOrganizationMember",
 		Method:             "PATCH",
-		PathPattern:        "/api/v1/organizations/{owner}/members/{member.user}",
+		PathPattern:        "/api/v1/orgs/{owner}/members/{member.user}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -448,7 +448,7 @@ func (a *Client) UpdateOrganization(params *UpdateOrganizationParams, authInfo r
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "UpdateOrganization",
 		Method:             "PUT",
-		PathPattern:        "/api/v1/organizations/{owner}",
+		PathPattern:        "/api/v1/orgs/{owner}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -484,7 +484,7 @@ func (a *Client) UpdateOrganizationMember(params *UpdateOrganizationMemberParams
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "UpdateOrganizationMember",
 		Method:             "PUT",
-		PathPattern:        "/api/v1/organizations/{owner}/members/{member.user}",
+		PathPattern:        "/api/v1/orgs/{owner}/members/{member.user}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},

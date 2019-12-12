@@ -79,7 +79,7 @@ type DeleteQueueOK struct {
 }
 
 func (o *DeleteQueueOK) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/{owner}/agents/{agent}/queues/{uuid}][%d] deleteQueueOK ", 200)
+	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/agents/{agent}/queues/{uuid}][%d] deleteQueueOK ", 200)
 }
 
 func (o *DeleteQueueOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -101,7 +101,7 @@ type DeleteQueueNoContent struct {
 }
 
 func (o *DeleteQueueNoContent) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/{owner}/agents/{agent}/queues/{uuid}][%d] deleteQueueNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/agents/{agent}/queues/{uuid}][%d] deleteQueueNoContent  %+v", 204, o.Payload)
 }
 
 func (o *DeleteQueueNoContent) GetPayload() interface{} {
@@ -132,7 +132,7 @@ type DeleteQueueForbidden struct {
 }
 
 func (o *DeleteQueueForbidden) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/{owner}/agents/{agent}/queues/{uuid}][%d] deleteQueueForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/agents/{agent}/queues/{uuid}][%d] deleteQueueForbidden  %+v", 403, o.Payload)
 }
 
 func (o *DeleteQueueForbidden) GetPayload() interface{} {
@@ -163,7 +163,7 @@ type DeleteQueueNotFound struct {
 }
 
 func (o *DeleteQueueNotFound) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/{owner}/agents/{agent}/queues/{uuid}][%d] deleteQueueNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/agents/{agent}/queues/{uuid}][%d] deleteQueueNotFound  %+v", 404, o.Payload)
 }
 
 func (o *DeleteQueueNotFound) GetPayload() interface{} {

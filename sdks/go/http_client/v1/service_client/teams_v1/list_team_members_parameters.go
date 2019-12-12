@@ -27,6 +27,7 @@ import (
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
 	cr "github.com/go-openapi/runtime/client"
+	"github.com/go-openapi/swag"
 
 	strfmt "github.com/go-openapi/strfmt"
 )
@@ -75,11 +76,31 @@ for the list team members operation typically these are written to a http.Reques
 */
 type ListTeamMembersParams struct {
 
+	/*Limit
+	  Limit size.
+
+	*/
+	Limit *int32
+	/*Offset
+	  Pagination offset.
+
+	*/
+	Offset *int32
 	/*Owner
 	  Owner of the namespace
 
 	*/
 	Owner string
+	/*Query
+	  Query filter the search search.
+
+	*/
+	Query *string
+	/*Sort
+	  Sort to order the search.
+
+	*/
+	Sort *string
 	/*Team
 	  Team under namesapce
 
@@ -124,6 +145,28 @@ func (o *ListTeamMembersParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
 }
 
+// WithLimit adds the limit to the list team members params
+func (o *ListTeamMembersParams) WithLimit(limit *int32) *ListTeamMembersParams {
+	o.SetLimit(limit)
+	return o
+}
+
+// SetLimit adds the limit to the list team members params
+func (o *ListTeamMembersParams) SetLimit(limit *int32) {
+	o.Limit = limit
+}
+
+// WithOffset adds the offset to the list team members params
+func (o *ListTeamMembersParams) WithOffset(offset *int32) *ListTeamMembersParams {
+	o.SetOffset(offset)
+	return o
+}
+
+// SetOffset adds the offset to the list team members params
+func (o *ListTeamMembersParams) SetOffset(offset *int32) {
+	o.Offset = offset
+}
+
 // WithOwner adds the owner to the list team members params
 func (o *ListTeamMembersParams) WithOwner(owner string) *ListTeamMembersParams {
 	o.SetOwner(owner)
@@ -133,6 +176,28 @@ func (o *ListTeamMembersParams) WithOwner(owner string) *ListTeamMembersParams {
 // SetOwner adds the owner to the list team members params
 func (o *ListTeamMembersParams) SetOwner(owner string) {
 	o.Owner = owner
+}
+
+// WithQuery adds the query to the list team members params
+func (o *ListTeamMembersParams) WithQuery(query *string) *ListTeamMembersParams {
+	o.SetQuery(query)
+	return o
+}
+
+// SetQuery adds the query to the list team members params
+func (o *ListTeamMembersParams) SetQuery(query *string) {
+	o.Query = query
+}
+
+// WithSort adds the sort to the list team members params
+func (o *ListTeamMembersParams) WithSort(sort *string) *ListTeamMembersParams {
+	o.SetSort(sort)
+	return o
+}
+
+// SetSort adds the sort to the list team members params
+func (o *ListTeamMembersParams) SetSort(sort *string) {
+	o.Sort = sort
 }
 
 // WithTeam adds the team to the list team members params
@@ -154,9 +219,73 @@ func (o *ListTeamMembersParams) WriteToRequest(r runtime.ClientRequest, reg strf
 	}
 	var res []error
 
+	if o.Limit != nil {
+
+		// query param limit
+		var qrLimit int32
+		if o.Limit != nil {
+			qrLimit = *o.Limit
+		}
+		qLimit := swag.FormatInt32(qrLimit)
+		if qLimit != "" {
+			if err := r.SetQueryParam("limit", qLimit); err != nil {
+				return err
+			}
+		}
+
+	}
+
+	if o.Offset != nil {
+
+		// query param offset
+		var qrOffset int32
+		if o.Offset != nil {
+			qrOffset = *o.Offset
+		}
+		qOffset := swag.FormatInt32(qrOffset)
+		if qOffset != "" {
+			if err := r.SetQueryParam("offset", qOffset); err != nil {
+				return err
+			}
+		}
+
+	}
+
 	// path param owner
 	if err := r.SetPathParam("owner", o.Owner); err != nil {
 		return err
+	}
+
+	if o.Query != nil {
+
+		// query param query
+		var qrQuery string
+		if o.Query != nil {
+			qrQuery = *o.Query
+		}
+		qQuery := qrQuery
+		if qQuery != "" {
+			if err := r.SetQueryParam("query", qQuery); err != nil {
+				return err
+			}
+		}
+
+	}
+
+	if o.Sort != nil {
+
+		// query param sort
+		var qrSort string
+		if o.Sort != nil {
+			qrSort = *o.Sort
+		}
+		qSort := qrSort
+		if qSort != "" {
+			if err := r.SetQueryParam("sort", qSort); err != nil {
+				return err
+			}
+		}
+
 	}
 
 	// path param team

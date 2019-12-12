@@ -37,7 +37,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='v1',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\rv1/team.proto\x12\x02v1\x1a\x1fgoogle/protobuf/timestamp.proto\"\x94\x01\n\x04Team\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x10\n\x08projects\x18\x03 \x03(\t\x12.\n\ncreated_at\x18\x04 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12.\n\nupdated_at\x18\x05 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"8\n\x0fTeamBodyRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x16\n\x04team\x18\x02 \x01(\x0b\x32\x08.v1.Team\"]\n\x11ListTeamsResponse\x12\r\n\x05\x63ount\x18\x01 \x01(\x05\x12\x19\n\x07results\x18\x02 \x03(\x0b\x32\x08.v1.Team\x12\x10\n\x08previous\x18\x03 \x01(\t\x12\x0c\n\x04next\x18\x04 \x01(\t\"\x9a\x01\n\nTeamMember\x12\x0c\n\x04user\x18\x01 \x01(\t\x12\x0c\n\x04role\x18\x02 \x01(\t\x12\x10\n\x08org_role\x18\x03 \x01(\t\x12.\n\ncreated_at\x18\x04 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12.\n\nupdated_at\x18\x05 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"T\n\x15TeamMemberBodyRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0c\n\x04team\x18\x02 \x01(\t\x12\x1e\n\x06member\x18\x03 \x01(\x0b\x32\x0e.v1.TeamMember\"i\n\x17ListTeamMembersResponse\x12\r\n\x05\x63ount\x18\x01 \x01(\x05\x12\x1f\n\x07results\x18\x02 \x03(\x0b\x32\x0e.v1.TeamMember\x12\x10\n\x08previous\x18\x03 \x01(\t\x12\x0c\n\x04next\x18\x04 \x01(\tb\x06proto3')
+  serialized_pb=_b('\n\rv1/team.proto\x12\x02v1\x1a\x1fgoogle/protobuf/timestamp.proto\"\x94\x01\n\x04Team\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x10\n\x08projects\x18\x03 \x03(\t\x12.\n\ncreated_at\x18\x04 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12.\n\nupdated_at\x18\x05 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"8\n\x0fTeamBodyRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x16\n\x04team\x18\x02 \x01(\x0b\x32\x08.v1.Team\"]\n\x11ListTeamsResponse\x12\r\n\x05\x63ount\x18\x01 \x01(\x05\x12\x19\n\x07results\x18\x02 \x03(\x0b\x32\x08.v1.Team\x12\x10\n\x08previous\x18\x03 \x01(\t\x12\x0c\n\x04next\x18\x04 \x01(\t\"\xae\x01\n\nTeamMember\x12\x0c\n\x04user\x18\x01 \x01(\t\x12\x12\n\nuser_email\x18\x02 \x01(\t\x12\x0c\n\x04role\x18\x03 \x01(\t\x12\x10\n\x08org_role\x18\x04 \x01(\t\x12.\n\ncreated_at\x18\x05 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12.\n\nupdated_at\x18\x06 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"T\n\x15TeamMemberBodyRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0c\n\x04team\x18\x02 \x01(\t\x12\x1e\n\x06member\x18\x03 \x01(\x0b\x32\x0e.v1.TeamMember\"i\n\x17ListTeamMembersResponse\x12\r\n\x05\x63ount\x18\x01 \x01(\x05\x12\x1f\n\x07results\x18\x02 \x03(\x0b\x32\x0e.v1.TeamMember\x12\x10\n\x08previous\x18\x03 \x01(\t\x12\x0c\n\x04next\x18\x04 \x01(\tb\x06proto3')
   ,
   dependencies=[google_dot_protobuf_dot_timestamp__pb2.DESCRIPTOR,])
 
@@ -208,29 +208,36 @@ _TEAMMEMBER = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='role', full_name='v1.TeamMember.role', index=1,
+      name='user_email', full_name='v1.TeamMember.user_email', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='org_role', full_name='v1.TeamMember.org_role', index=2,
+      name='role', full_name='v1.TeamMember.role', index=2,
       number=3, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='created_at', full_name='v1.TeamMember.created_at', index=3,
-      number=4, type=11, cpp_type=10, label=1,
+      name='org_role', full_name='v1.TeamMember.org_role', index=3,
+      number=4, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='created_at', full_name='v1.TeamMember.created_at', index=4,
+      number=5, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='updated_at', full_name='v1.TeamMember.updated_at', index=4,
-      number=5, type=11, cpp_type=10, label=1,
+      name='updated_at', full_name='v1.TeamMember.updated_at', index=5,
+      number=6, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -248,7 +255,7 @@ _TEAMMEMBER = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=359,
-  serialized_end=513,
+  serialized_end=533,
 )
 
 
@@ -292,8 +299,8 @@ _TEAMMEMBERBODYREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=515,
-  serialized_end=599,
+  serialized_start=535,
+  serialized_end=619,
 )
 
 
@@ -344,8 +351,8 @@ _LISTTEAMMEMBERSRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=601,
-  serialized_end=706,
+  serialized_start=621,
+  serialized_end=726,
 )
 
 _TEAM.fields_by_name['created_at'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP

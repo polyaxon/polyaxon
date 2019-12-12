@@ -15,35 +15,32 @@ message K8sResource {
     // Optional description
     string description = 3;
 
-    // Optional a readme text describing this entity
-    string readme = 4;
-
     // Optional Tags of this entity
-    repeated string tags = 5;
+    repeated string tags = 4;
 
     // Optional time when the entityt was created
-    google.protobuf.Timestamp created_at = 6;
+    google.protobuf.Timestamp created_at = 5;
 
     // Optional last time the entity was updated
-    google.protobuf.Timestamp updated_at = 7;
+    google.protobuf.Timestamp updated_at = 6;
 
     // Optional the k8s ref
-    string k8s_ref = 8;
+    string k8s_ref = 7;
 
-    // Optional a flag to freeze an access
-    bool frozen = 9;
+    // Optional a flag to freeze the resource
+    bool frozen = 8;
 
-    // Optional a flag to disable an access
-    bool disabled = 10;
+    // Optional a flag to disable the resource
+    bool disabled = 9;
 
     // Optional if the entity has been deleted
-    bool deleted = 11;
+    bool deleted = 10;
 
     //Optional a mount path to specifiy where to mount this resource
-    string mount_path = 12;
+    string mount_path = 11;
 
     // Optional the k8s secret to use
-    repeated string items = 13;
+    repeated string items = 12;
 }
 
  // Request data to create/update k8s resource

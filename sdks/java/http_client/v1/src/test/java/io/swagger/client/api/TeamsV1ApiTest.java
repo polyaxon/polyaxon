@@ -28,7 +28,6 @@
 package io.swagger.client.api;
 
 import io.swagger.client.ApiException;
-import org.threeten.bp.OffsetDateTime;
 import io.swagger.client.model.V1ListTeamMembersResponse;
 import io.swagger.client.model.V1ListTeamsResponse;
 import io.swagger.client.model.V1Team;
@@ -114,12 +113,8 @@ public class TeamsV1ApiTest {
     public void deleteTeamMemberTest() throws ApiException {
         String owner = null;
         String team = null;
-        String memberUser = null;
-        String memberRole = null;
-        String memberOrgRole = null;
-        OffsetDateTime memberCreatedAt = null;
-        OffsetDateTime memberUpdatedAt = null;
-        api.deleteTeamMember(owner, team, memberUser, memberRole, memberOrgRole, memberCreatedAt, memberUpdatedAt);
+        String user = null;
+        api.deleteTeamMember(owner, team, user);
 
         // TODO: test validations
     }
@@ -171,7 +166,11 @@ public class TeamsV1ApiTest {
     public void listTeamMembersTest() throws ApiException {
         String owner = null;
         String team = null;
-        V1ListTeamMembersResponse response = api.listTeamMembers(owner, team);
+        Integer offset = null;
+        Integer limit = null;
+        String sort = null;
+        String query = null;
+        V1ListTeamMembersResponse response = api.listTeamMembers(owner, team, offset, limit, sort, query);
 
         // TODO: test validations
     }

@@ -42,6 +42,15 @@ message Dashboard {
     // Owner of the namespace
     string owner = 1;
 
+    // Dashboard body
+    Dashboard dashboard = 2;
+ }
+
+ // Request data to create/update project dashboard
+ message ProjectDashboardBodyRequest {
+    // Owner of the namespace
+    string owner = 1;
+
     // Project under namesapce
     string project = 2;
 

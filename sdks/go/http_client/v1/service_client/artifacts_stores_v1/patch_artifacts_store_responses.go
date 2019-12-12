@@ -82,7 +82,7 @@ type PatchArtifactsStoreOK struct {
 }
 
 func (o *PatchArtifactsStoreOK) Error() string {
-	return fmt.Sprintf("[PATCH /api/v1/{owner}/artifacts_stores/{artifact_store.uuid}][%d] patchArtifactsStoreOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/artifacts_stores/{artifact_store.uuid}][%d] patchArtifactsStoreOK  %+v", 200, o.Payload)
 }
 
 func (o *PatchArtifactsStoreOK) GetPayload() *service_model.V1ArtifactsStore {
@@ -115,7 +115,7 @@ type PatchArtifactsStoreNoContent struct {
 }
 
 func (o *PatchArtifactsStoreNoContent) Error() string {
-	return fmt.Sprintf("[PATCH /api/v1/{owner}/artifacts_stores/{artifact_store.uuid}][%d] patchArtifactsStoreNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/artifacts_stores/{artifact_store.uuid}][%d] patchArtifactsStoreNoContent  %+v", 204, o.Payload)
 }
 
 func (o *PatchArtifactsStoreNoContent) GetPayload() interface{} {
@@ -146,7 +146,7 @@ type PatchArtifactsStoreForbidden struct {
 }
 
 func (o *PatchArtifactsStoreForbidden) Error() string {
-	return fmt.Sprintf("[PATCH /api/v1/{owner}/artifacts_stores/{artifact_store.uuid}][%d] patchArtifactsStoreForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/artifacts_stores/{artifact_store.uuid}][%d] patchArtifactsStoreForbidden  %+v", 403, o.Payload)
 }
 
 func (o *PatchArtifactsStoreForbidden) GetPayload() interface{} {
@@ -177,7 +177,7 @@ type PatchArtifactsStoreNotFound struct {
 }
 
 func (o *PatchArtifactsStoreNotFound) Error() string {
-	return fmt.Sprintf("[PATCH /api/v1/{owner}/artifacts_stores/{artifact_store.uuid}][%d] patchArtifactsStoreNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/artifacts_stores/{artifact_store.uuid}][%d] patchArtifactsStoreNotFound  %+v", 404, o.Payload)
 }
 
 func (o *PatchArtifactsStoreNotFound) GetPayload() interface{} {

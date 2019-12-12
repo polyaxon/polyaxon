@@ -147,7 +147,7 @@ class TeamsV1Api(object):
         auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/teams",
+            "/api/v1/orgs/{owner}/teams",
             "POST",
             path_params,
             query_params,
@@ -275,7 +275,7 @@ class TeamsV1Api(object):
         auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/teams/{team}/members",
+            "/api/v1/orgs/{owner}/teams/{team}/members",
             "POST",
             path_params,
             query_params,
@@ -390,7 +390,7 @@ class TeamsV1Api(object):
         auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/teams/{team}",
+            "/api/v1/orgs/{owner}/teams/{team}",
             "DELETE",
             path_params,
             query_params,
@@ -407,22 +407,18 @@ class TeamsV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def delete_team_member(self, owner, team, member_user, **kwargs):  # noqa: E501
+    def delete_team_member(self, owner, team, user, **kwargs):  # noqa: E501
         """Invalidate runs  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.delete_team_member(owner, team, member_user, async_req=True)
+        >>> thread = api.delete_team_member(owner, team, user, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
         :param str owner: Owner of the namespace (required)
-        :param str team: Team (required)
-        :param str member_user: User (required)
-        :param str member_role: Role.
-        :param str member_org_role: Organization Role.
-        :param datetime member_created_at: Optional time when the entityt was created.
-        :param datetime member_updated_at: Optional last time the entity was updated.
+        :param str team: Team under namesapce (required)
+        :param str user: Member under team (required)
         :return: None
                  If the method is called asynchronously,
                  returns the request thread.
@@ -430,46 +426,34 @@ class TeamsV1Api(object):
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
             return self.delete_team_member_with_http_info(
-                owner, team, member_user, **kwargs
+                owner, team, user, **kwargs
             )  # noqa: E501
         else:
             (data) = self.delete_team_member_with_http_info(
-                owner, team, member_user, **kwargs
+                owner, team, user, **kwargs
             )  # noqa: E501
             return data
 
     def delete_team_member_with_http_info(
-        self, owner, team, member_user, **kwargs
+        self, owner, team, user, **kwargs
     ):  # noqa: E501
         """Invalidate runs  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.delete_team_member_with_http_info(owner, team, member_user, async_req=True)
+        >>> thread = api.delete_team_member_with_http_info(owner, team, user, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
         :param str owner: Owner of the namespace (required)
-        :param str team: Team (required)
-        :param str member_user: User (required)
-        :param str member_role: Role.
-        :param str member_org_role: Organization Role.
-        :param datetime member_created_at: Optional time when the entityt was created.
-        :param datetime member_updated_at: Optional last time the entity was updated.
+        :param str team: Team under namesapce (required)
+        :param str user: Member under team (required)
         :return: None
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = [
-            "owner",
-            "team",
-            "member_user",
-            "member_role",
-            "member_org_role",
-            "member_created_at",
-            "member_updated_at",
-        ]  # noqa: E501
+        all_params = ["owner", "team", "user"]  # noqa: E501
         all_params.append("async_req")
         all_params.append("_return_http_data_only")
         all_params.append("_preload_content")
@@ -494,10 +478,10 @@ class TeamsV1Api(object):
             raise ValueError(
                 "Missing the required parameter `team` when calling `delete_team_member`"
             )  # noqa: E501
-        # verify the required parameter 'member_user' is set
-        if "member_user" not in params or params["member_user"] is None:
+        # verify the required parameter 'user' is set
+        if "user" not in params or params["user"] is None:
             raise ValueError(
-                "Missing the required parameter `member_user` when calling `delete_team_member`"
+                "Missing the required parameter `user` when calling `delete_team_member`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -507,24 +491,10 @@ class TeamsV1Api(object):
             path_params["owner"] = params["owner"]  # noqa: E501
         if "team" in params:
             path_params["team"] = params["team"]  # noqa: E501
-        if "member_user" in params:
-            path_params["member.user"] = params["member_user"]  # noqa: E501
+        if "user" in params:
+            path_params["user"] = params["user"]  # noqa: E501
 
         query_params = []
-        if "member_role" in params:
-            query_params.append(("member.role", params["member_role"]))  # noqa: E501
-        if "member_org_role" in params:
-            query_params.append(
-                ("member.org_role", params["member_org_role"])
-            )  # noqa: E501
-        if "member_created_at" in params:
-            query_params.append(
-                ("member.created_at", params["member_created_at"])
-            )  # noqa: E501
-        if "member_updated_at" in params:
-            query_params.append(
-                ("member.updated_at", params["member_updated_at"])
-            )  # noqa: E501
 
         header_params = {}
 
@@ -548,7 +518,7 @@ class TeamsV1Api(object):
         auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/teams/{team}/members/{member.user}",
+            "/api/v1/orgs/{owner}/teams/{team}/members/{user}",
             "DELETE",
             path_params,
             query_params,
@@ -661,7 +631,7 @@ class TeamsV1Api(object):
         auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/teams/{team}",
+            "/api/v1/orgs/{owner}/teams/{team}",
             "GET",
             path_params,
             query_params,
@@ -787,7 +757,7 @@ class TeamsV1Api(object):
         auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/teams/{team}/members/{user}",
+            "/api/v1/orgs/{owner}/teams/{team}/members/{user}",
             "GET",
             path_params,
             query_params,
@@ -815,6 +785,10 @@ class TeamsV1Api(object):
         :param async_req bool
         :param str owner: Owner of the namespace (required)
         :param str team: Team under namesapce (required)
+        :param int offset: Pagination offset.
+        :param int limit: Limit size.
+        :param str sort: Sort to order the search.
+        :param str query: Query filter the search search.
         :return: V1ListTeamMembersResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -841,12 +815,16 @@ class TeamsV1Api(object):
         :param async_req bool
         :param str owner: Owner of the namespace (required)
         :param str team: Team under namesapce (required)
+        :param int offset: Pagination offset.
+        :param int limit: Limit size.
+        :param str sort: Sort to order the search.
+        :param str query: Query filter the search search.
         :return: V1ListTeamMembersResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = ["owner", "team"]  # noqa: E501
+        all_params = ["owner", "team", "offset", "limit", "sort", "query"]  # noqa: E501
         all_params.append("async_req")
         all_params.append("_return_http_data_only")
         all_params.append("_preload_content")
@@ -881,6 +859,14 @@ class TeamsV1Api(object):
             path_params["team"] = params["team"]  # noqa: E501
 
         query_params = []
+        if "offset" in params:
+            query_params.append(("offset", params["offset"]))  # noqa: E501
+        if "limit" in params:
+            query_params.append(("limit", params["limit"]))  # noqa: E501
+        if "sort" in params:
+            query_params.append(("sort", params["sort"]))  # noqa: E501
+        if "query" in params:
+            query_params.append(("query", params["query"]))  # noqa: E501
 
         header_params = {}
 
@@ -904,7 +890,7 @@ class TeamsV1Api(object):
         auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/teams/{team}/members",
+            "/api/v1/orgs/{owner}/teams/{team}/members",
             "GET",
             path_params,
             query_params,
@@ -1024,7 +1010,7 @@ class TeamsV1Api(object):
         auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/teams/names",
+            "/api/v1/orgs/{owner}/teams/names",
             "GET",
             path_params,
             query_params,
@@ -1144,7 +1130,7 @@ class TeamsV1Api(object):
         auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/teams",
+            "/api/v1/orgs/{owner}/teams",
             "GET",
             path_params,
             query_params,
@@ -1270,7 +1256,7 @@ class TeamsV1Api(object):
         auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/teams/{team.name}",
+            "/api/v1/orgs/{owner}/teams/{team.name}",
             "PATCH",
             path_params,
             query_params,
@@ -1407,7 +1393,7 @@ class TeamsV1Api(object):
         auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/teams/{team}/members/{member.user}",
+            "/api/v1/orgs/{owner}/teams/{team}/members/{member.user}",
             "PATCH",
             path_params,
             query_params,
@@ -1535,7 +1521,7 @@ class TeamsV1Api(object):
         auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/teams/{team.name}",
+            "/api/v1/orgs/{owner}/teams/{team.name}",
             "PUT",
             path_params,
             query_params,
@@ -1674,7 +1660,7 @@ class TeamsV1Api(object):
         auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/teams/{team}/members/{member.user}",
+            "/api/v1/orgs/{owner}/teams/{team}/members/{member.user}",
             "PUT",
             path_params,
             query_params,

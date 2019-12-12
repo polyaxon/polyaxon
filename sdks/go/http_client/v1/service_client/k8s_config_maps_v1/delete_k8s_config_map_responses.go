@@ -79,7 +79,7 @@ type DeleteK8sConfigMapOK struct {
 }
 
 func (o *DeleteK8sConfigMapOK) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/{owner}/k8s_config_maps/{uuid}][%d] deleteK8sConfigMapOK ", 200)
+	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/k8s_config_maps/{uuid}][%d] deleteK8sConfigMapOK ", 200)
 }
 
 func (o *DeleteK8sConfigMapOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -101,7 +101,7 @@ type DeleteK8sConfigMapNoContent struct {
 }
 
 func (o *DeleteK8sConfigMapNoContent) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/{owner}/k8s_config_maps/{uuid}][%d] deleteK8sConfigMapNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/k8s_config_maps/{uuid}][%d] deleteK8sConfigMapNoContent  %+v", 204, o.Payload)
 }
 
 func (o *DeleteK8sConfigMapNoContent) GetPayload() interface{} {
@@ -132,7 +132,7 @@ type DeleteK8sConfigMapForbidden struct {
 }
 
 func (o *DeleteK8sConfigMapForbidden) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/{owner}/k8s_config_maps/{uuid}][%d] deleteK8sConfigMapForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/k8s_config_maps/{uuid}][%d] deleteK8sConfigMapForbidden  %+v", 403, o.Payload)
 }
 
 func (o *DeleteK8sConfigMapForbidden) GetPayload() interface{} {
@@ -163,7 +163,7 @@ type DeleteK8sConfigMapNotFound struct {
 }
 
 func (o *DeleteK8sConfigMapNotFound) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/{owner}/k8s_config_maps/{uuid}][%d] deleteK8sConfigMapNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/k8s_config_maps/{uuid}][%d] deleteK8sConfigMapNotFound  %+v", 404, o.Payload)
 }
 
 func (o *DeleteK8sConfigMapNotFound) GetPayload() interface{} {

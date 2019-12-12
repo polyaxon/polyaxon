@@ -79,7 +79,7 @@ type DeleteK8sSecretOK struct {
 }
 
 func (o *DeleteK8sSecretOK) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/{owner}/k8s_secrets/{uuid}][%d] deleteK8sSecretOK ", 200)
+	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/k8s_secrets/{uuid}][%d] deleteK8sSecretOK ", 200)
 }
 
 func (o *DeleteK8sSecretOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -101,7 +101,7 @@ type DeleteK8sSecretNoContent struct {
 }
 
 func (o *DeleteK8sSecretNoContent) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/{owner}/k8s_secrets/{uuid}][%d] deleteK8sSecretNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/k8s_secrets/{uuid}][%d] deleteK8sSecretNoContent  %+v", 204, o.Payload)
 }
 
 func (o *DeleteK8sSecretNoContent) GetPayload() interface{} {
@@ -132,7 +132,7 @@ type DeleteK8sSecretForbidden struct {
 }
 
 func (o *DeleteK8sSecretForbidden) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/{owner}/k8s_secrets/{uuid}][%d] deleteK8sSecretForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/k8s_secrets/{uuid}][%d] deleteK8sSecretForbidden  %+v", 403, o.Payload)
 }
 
 func (o *DeleteK8sSecretForbidden) GetPayload() interface{} {
@@ -163,7 +163,7 @@ type DeleteK8sSecretNotFound struct {
 }
 
 func (o *DeleteK8sSecretNotFound) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/{owner}/k8s_secrets/{uuid}][%d] deleteK8sSecretNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/k8s_secrets/{uuid}][%d] deleteK8sSecretNotFound  %+v", 404, o.Payload)
 }
 
 func (o *DeleteK8sSecretNotFound) GetPayload() interface{} {

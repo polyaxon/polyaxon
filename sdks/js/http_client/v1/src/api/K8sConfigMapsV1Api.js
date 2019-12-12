@@ -63,8 +63,8 @@
 
 
     /**
-     * Callback function to receive the result of the createK8sConfigMaps operation.
-     * @callback module:api/K8sConfigMapsV1Api~createK8sConfigMapsCallback
+     * Callback function to receive the result of the createK8sConfigMap operation.
+     * @callback module:api/K8sConfigMapsV1Api~createK8sConfigMapCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1K8sResource} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -74,20 +74,20 @@
      * List runs
      * @param {String} owner Owner of the namespace
      * @param {module:model/V1K8sResource} body Artifact store body
-     * @param {module:api/K8sConfigMapsV1Api~createK8sConfigMapsCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/K8sConfigMapsV1Api~createK8sConfigMapCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1K8sResource}
      */
-    this.createK8sConfigMaps = function(owner, body, callback) {
+    this.createK8sConfigMap = function(owner, body, callback) {
       var postBody = body;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling createK8sConfigMaps");
+        throw new Error("Missing the required parameter 'owner' when calling createK8sConfigMap");
       }
 
       // verify the required parameter 'body' is set
       if (body === undefined || body === null) {
-        throw new Error("Missing the required parameter 'body' when calling createK8sConfigMaps");
+        throw new Error("Missing the required parameter 'body' when calling createK8sConfigMap");
       }
 
 
@@ -109,7 +109,7 @@
       var returnType = V1K8sResource;
 
       return this.apiClient.callApi(
-        '/api/v1/{owner}/k8s_config_maps', 'POST',
+        '/api/v1/orgs/{owner}/k8s_config_maps', 'POST',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -162,7 +162,7 @@
       var returnType = null;
 
       return this.apiClient.callApi(
-        '/api/v1/{owner}/k8s_config_maps/{uuid}', 'DELETE',
+        '/api/v1/orgs/{owner}/k8s_config_maps/{uuid}', 'DELETE',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -216,7 +216,7 @@
       var returnType = V1K8sResource;
 
       return this.apiClient.callApi(
-        '/api/v1/{owner}/k8s_config_maps/{uuid}', 'GET',
+        '/api/v1/orgs/{owner}/k8s_config_maps/{uuid}', 'GET',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -273,7 +273,7 @@
       var returnType = V1ListK8sResourcesResponse;
 
       return this.apiClient.callApi(
-        '/api/v1/{owner}/k8s_config_maps/names', 'GET',
+        '/api/v1/orgs/{owner}/k8s_config_maps/names', 'GET',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -330,7 +330,7 @@
       var returnType = V1ListK8sResourcesResponse;
 
       return this.apiClient.callApi(
-        '/api/v1/{owner}/k8s_config_maps', 'GET',
+        '/api/v1/orgs/{owner}/k8s_config_maps', 'GET',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -390,7 +390,7 @@
       var returnType = V1K8sResource;
 
       return this.apiClient.callApi(
-        '/api/v1/{owner}/k8s_config_maps/{k8s_resource.uuid}', 'PATCH',
+        '/api/v1/orgs/{owner}/k8s_config_maps/{k8s_resource.uuid}', 'PATCH',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -450,7 +450,7 @@
       var returnType = V1K8sResource;
 
       return this.apiClient.callApi(
-        '/api/v1/{owner}/k8s_config_maps/{k8s_resource.uuid}', 'PUT',
+        '/api/v1/orgs/{owner}/k8s_config_maps/{k8s_resource.uuid}', 'PUT',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );

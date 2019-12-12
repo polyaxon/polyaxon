@@ -82,7 +82,7 @@ type ListQueueNamesOK struct {
 }
 
 func (o *ListQueueNamesOK) Error() string {
-	return fmt.Sprintf("[GET /api/v1/{owner}/agents/{agent}/queues/names][%d] listQueueNamesOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/agents/{agent}/queues/names][%d] listQueueNamesOK  %+v", 200, o.Payload)
 }
 
 func (o *ListQueueNamesOK) GetPayload() *service_model.V1ListQueuesResponse {
@@ -115,7 +115,7 @@ type ListQueueNamesNoContent struct {
 }
 
 func (o *ListQueueNamesNoContent) Error() string {
-	return fmt.Sprintf("[GET /api/v1/{owner}/agents/{agent}/queues/names][%d] listQueueNamesNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/agents/{agent}/queues/names][%d] listQueueNamesNoContent  %+v", 204, o.Payload)
 }
 
 func (o *ListQueueNamesNoContent) GetPayload() interface{} {
@@ -146,7 +146,7 @@ type ListQueueNamesForbidden struct {
 }
 
 func (o *ListQueueNamesForbidden) Error() string {
-	return fmt.Sprintf("[GET /api/v1/{owner}/agents/{agent}/queues/names][%d] listQueueNamesForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/agents/{agent}/queues/names][%d] listQueueNamesForbidden  %+v", 403, o.Payload)
 }
 
 func (o *ListQueueNamesForbidden) GetPayload() interface{} {
@@ -177,7 +177,7 @@ type ListQueueNamesNotFound struct {
 }
 
 func (o *ListQueueNamesNotFound) Error() string {
-	return fmt.Sprintf("[GET /api/v1/{owner}/agents/{agent}/queues/names][%d] listQueueNamesNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/agents/{agent}/queues/names][%d] listQueueNamesNotFound  %+v", 404, o.Payload)
 }
 
 func (o *ListQueueNamesNotFound) GetPayload() interface{} {

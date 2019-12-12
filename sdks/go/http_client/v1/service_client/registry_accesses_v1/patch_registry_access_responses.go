@@ -82,7 +82,7 @@ type PatchRegistryAccessOK struct {
 }
 
 func (o *PatchRegistryAccessOK) Error() string {
-	return fmt.Sprintf("[PATCH /api/v1/{owner}/registry_accesses/{host_access.uuid}][%d] patchRegistryAccessOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/registry_accesses/{host_access.uuid}][%d] patchRegistryAccessOK  %+v", 200, o.Payload)
 }
 
 func (o *PatchRegistryAccessOK) GetPayload() *service_model.V1HostAccess {
@@ -115,7 +115,7 @@ type PatchRegistryAccessNoContent struct {
 }
 
 func (o *PatchRegistryAccessNoContent) Error() string {
-	return fmt.Sprintf("[PATCH /api/v1/{owner}/registry_accesses/{host_access.uuid}][%d] patchRegistryAccessNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/registry_accesses/{host_access.uuid}][%d] patchRegistryAccessNoContent  %+v", 204, o.Payload)
 }
 
 func (o *PatchRegistryAccessNoContent) GetPayload() interface{} {
@@ -146,7 +146,7 @@ type PatchRegistryAccessForbidden struct {
 }
 
 func (o *PatchRegistryAccessForbidden) Error() string {
-	return fmt.Sprintf("[PATCH /api/v1/{owner}/registry_accesses/{host_access.uuid}][%d] patchRegistryAccessForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/registry_accesses/{host_access.uuid}][%d] patchRegistryAccessForbidden  %+v", 403, o.Payload)
 }
 
 func (o *PatchRegistryAccessForbidden) GetPayload() interface{} {
@@ -177,7 +177,7 @@ type PatchRegistryAccessNotFound struct {
 }
 
 func (o *PatchRegistryAccessNotFound) Error() string {
-	return fmt.Sprintf("[PATCH /api/v1/{owner}/registry_accesses/{host_access.uuid}][%d] patchRegistryAccessNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/registry_accesses/{host_access.uuid}][%d] patchRegistryAccessNotFound  %+v", 404, o.Payload)
 }
 
 func (o *PatchRegistryAccessNotFound) GetPayload() interface{} {

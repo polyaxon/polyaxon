@@ -82,7 +82,7 @@ type UpdateOrganizationMemberOK struct {
 }
 
 func (o *UpdateOrganizationMemberOK) Error() string {
-	return fmt.Sprintf("[PUT /api/v1/organizations/{owner}/members/{member.user}][%d] updateOrganizationMemberOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/members/{member.user}][%d] updateOrganizationMemberOK  %+v", 200, o.Payload)
 }
 
 func (o *UpdateOrganizationMemberOK) GetPayload() *service_model.V1OrganizationMember {
@@ -115,7 +115,7 @@ type UpdateOrganizationMemberNoContent struct {
 }
 
 func (o *UpdateOrganizationMemberNoContent) Error() string {
-	return fmt.Sprintf("[PUT /api/v1/organizations/{owner}/members/{member.user}][%d] updateOrganizationMemberNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/members/{member.user}][%d] updateOrganizationMemberNoContent  %+v", 204, o.Payload)
 }
 
 func (o *UpdateOrganizationMemberNoContent) GetPayload() interface{} {
@@ -146,7 +146,7 @@ type UpdateOrganizationMemberForbidden struct {
 }
 
 func (o *UpdateOrganizationMemberForbidden) Error() string {
-	return fmt.Sprintf("[PUT /api/v1/organizations/{owner}/members/{member.user}][%d] updateOrganizationMemberForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/members/{member.user}][%d] updateOrganizationMemberForbidden  %+v", 403, o.Payload)
 }
 
 func (o *UpdateOrganizationMemberForbidden) GetPayload() interface{} {
@@ -177,7 +177,7 @@ type UpdateOrganizationMemberNotFound struct {
 }
 
 func (o *UpdateOrganizationMemberNotFound) Error() string {
-	return fmt.Sprintf("[PUT /api/v1/organizations/{owner}/members/{member.user}][%d] updateOrganizationMemberNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/members/{member.user}][%d] updateOrganizationMemberNotFound  %+v", 404, o.Payload)
 }
 
 func (o *UpdateOrganizationMemberNotFound) GetPayload() interface{} {

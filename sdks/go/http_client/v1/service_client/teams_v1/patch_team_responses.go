@@ -82,7 +82,7 @@ type PatchTeamOK struct {
 }
 
 func (o *PatchTeamOK) Error() string {
-	return fmt.Sprintf("[PATCH /api/v1/{owner}/teams/{team.name}][%d] patchTeamOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/teams/{team.name}][%d] patchTeamOK  %+v", 200, o.Payload)
 }
 
 func (o *PatchTeamOK) GetPayload() *service_model.V1Team {
@@ -115,7 +115,7 @@ type PatchTeamNoContent struct {
 }
 
 func (o *PatchTeamNoContent) Error() string {
-	return fmt.Sprintf("[PATCH /api/v1/{owner}/teams/{team.name}][%d] patchTeamNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/teams/{team.name}][%d] patchTeamNoContent  %+v", 204, o.Payload)
 }
 
 func (o *PatchTeamNoContent) GetPayload() interface{} {
@@ -146,7 +146,7 @@ type PatchTeamForbidden struct {
 }
 
 func (o *PatchTeamForbidden) Error() string {
-	return fmt.Sprintf("[PATCH /api/v1/{owner}/teams/{team.name}][%d] patchTeamForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/teams/{team.name}][%d] patchTeamForbidden  %+v", 403, o.Payload)
 }
 
 func (o *PatchTeamForbidden) GetPayload() interface{} {
@@ -177,7 +177,7 @@ type PatchTeamNotFound struct {
 }
 
 func (o *PatchTeamNotFound) Error() string {
-	return fmt.Sprintf("[PATCH /api/v1/{owner}/teams/{team.name}][%d] patchTeamNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/teams/{team.name}][%d] patchTeamNotFound  %+v", 404, o.Payload)
 }
 
 func (o *PatchTeamNotFound) GetPayload() interface{} {

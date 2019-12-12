@@ -82,7 +82,7 @@ type UpdateRegistryAccessOK struct {
 }
 
 func (o *UpdateRegistryAccessOK) Error() string {
-	return fmt.Sprintf("[PUT /api/v1/{owner}/registry_accesses/{host_access.uuid}][%d] updateRegistryAccessOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/registry_accesses/{host_access.uuid}][%d] updateRegistryAccessOK  %+v", 200, o.Payload)
 }
 
 func (o *UpdateRegistryAccessOK) GetPayload() *service_model.V1HostAccess {
@@ -115,7 +115,7 @@ type UpdateRegistryAccessNoContent struct {
 }
 
 func (o *UpdateRegistryAccessNoContent) Error() string {
-	return fmt.Sprintf("[PUT /api/v1/{owner}/registry_accesses/{host_access.uuid}][%d] updateRegistryAccessNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/registry_accesses/{host_access.uuid}][%d] updateRegistryAccessNoContent  %+v", 204, o.Payload)
 }
 
 func (o *UpdateRegistryAccessNoContent) GetPayload() interface{} {
@@ -146,7 +146,7 @@ type UpdateRegistryAccessForbidden struct {
 }
 
 func (o *UpdateRegistryAccessForbidden) Error() string {
-	return fmt.Sprintf("[PUT /api/v1/{owner}/registry_accesses/{host_access.uuid}][%d] updateRegistryAccessForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/registry_accesses/{host_access.uuid}][%d] updateRegistryAccessForbidden  %+v", 403, o.Payload)
 }
 
 func (o *UpdateRegistryAccessForbidden) GetPayload() interface{} {
@@ -177,7 +177,7 @@ type UpdateRegistryAccessNotFound struct {
 }
 
 func (o *UpdateRegistryAccessNotFound) Error() string {
-	return fmt.Sprintf("[PUT /api/v1/{owner}/registry_accesses/{host_access.uuid}][%d] updateRegistryAccessNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/registry_accesses/{host_access.uuid}][%d] updateRegistryAccessNotFound  %+v", 404, o.Payload)
 }
 
 func (o *UpdateRegistryAccessNotFound) GetPayload() interface{} {

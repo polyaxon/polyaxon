@@ -82,7 +82,7 @@ type PatchQueueOK struct {
 }
 
 func (o *PatchQueueOK) Error() string {
-	return fmt.Sprintf("[PATCH /api/v1/{owner}/agents/{queue.agent}/queues/{queue.uuid}][%d] patchQueueOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/agents/{queue.agent}/queues/{queue.uuid}][%d] patchQueueOK  %+v", 200, o.Payload)
 }
 
 func (o *PatchQueueOK) GetPayload() *service_model.V1Queue {
@@ -115,7 +115,7 @@ type PatchQueueNoContent struct {
 }
 
 func (o *PatchQueueNoContent) Error() string {
-	return fmt.Sprintf("[PATCH /api/v1/{owner}/agents/{queue.agent}/queues/{queue.uuid}][%d] patchQueueNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/agents/{queue.agent}/queues/{queue.uuid}][%d] patchQueueNoContent  %+v", 204, o.Payload)
 }
 
 func (o *PatchQueueNoContent) GetPayload() interface{} {
@@ -146,7 +146,7 @@ type PatchQueueForbidden struct {
 }
 
 func (o *PatchQueueForbidden) Error() string {
-	return fmt.Sprintf("[PATCH /api/v1/{owner}/agents/{queue.agent}/queues/{queue.uuid}][%d] patchQueueForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/agents/{queue.agent}/queues/{queue.uuid}][%d] patchQueueForbidden  %+v", 403, o.Payload)
 }
 
 func (o *PatchQueueForbidden) GetPayload() interface{} {
@@ -177,7 +177,7 @@ type PatchQueueNotFound struct {
 }
 
 func (o *PatchQueueNotFound) Error() string {
-	return fmt.Sprintf("[PATCH /api/v1/{owner}/agents/{queue.agent}/queues/{queue.uuid}][%d] patchQueueNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/agents/{queue.agent}/queues/{queue.uuid}][%d] patchQueueNotFound  %+v", 404, o.Payload)
 }
 
 func (o *PatchQueueNotFound) GetPayload() interface{} {

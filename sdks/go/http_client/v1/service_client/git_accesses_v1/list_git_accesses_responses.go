@@ -82,7 +82,7 @@ type ListGitAccessesOK struct {
 }
 
 func (o *ListGitAccessesOK) Error() string {
-	return fmt.Sprintf("[GET /api/v1/{owner}/git_accesses][%d] listGitAccessesOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/git_accesses][%d] listGitAccessesOK  %+v", 200, o.Payload)
 }
 
 func (o *ListGitAccessesOK) GetPayload() *service_model.V1ListHostAccessesResponse {
@@ -115,7 +115,7 @@ type ListGitAccessesNoContent struct {
 }
 
 func (o *ListGitAccessesNoContent) Error() string {
-	return fmt.Sprintf("[GET /api/v1/{owner}/git_accesses][%d] listGitAccessesNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/git_accesses][%d] listGitAccessesNoContent  %+v", 204, o.Payload)
 }
 
 func (o *ListGitAccessesNoContent) GetPayload() interface{} {
@@ -146,7 +146,7 @@ type ListGitAccessesForbidden struct {
 }
 
 func (o *ListGitAccessesForbidden) Error() string {
-	return fmt.Sprintf("[GET /api/v1/{owner}/git_accesses][%d] listGitAccessesForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/git_accesses][%d] listGitAccessesForbidden  %+v", 403, o.Payload)
 }
 
 func (o *ListGitAccessesForbidden) GetPayload() interface{} {
@@ -177,7 +177,7 @@ type ListGitAccessesNotFound struct {
 }
 
 func (o *ListGitAccessesNotFound) Error() string {
-	return fmt.Sprintf("[GET /api/v1/{owner}/git_accesses][%d] listGitAccessesNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/git_accesses][%d] listGitAccessesNotFound  %+v", 404, o.Payload)
 }
 
 func (o *ListGitAccessesNotFound) GetPayload() interface{} {

@@ -151,7 +151,7 @@ class RegistryAccessesV1Api(object):
         auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/registry_accesses",
+            "/api/v1/orgs/{owner}/registry_accesses",
             "POST",
             path_params,
             query_params,
@@ -270,7 +270,7 @@ class RegistryAccessesV1Api(object):
         auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/registry_accesses/{uuid}",
+            "/api/v1/orgs/{owner}/registry_accesses/{uuid}",
             "DELETE",
             path_params,
             query_params,
@@ -387,7 +387,7 @@ class RegistryAccessesV1Api(object):
         auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/registry_accesses/{uuid}",
+            "/api/v1/orgs/{owner}/registry_accesses/{uuid}",
             "GET",
             path_params,
             query_params,
@@ -511,7 +511,7 @@ class RegistryAccessesV1Api(object):
         auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/registry_accesses/names",
+            "/api/v1/orgs/{owner}/registry_accesses/names",
             "GET",
             path_params,
             query_params,
@@ -635,7 +635,7 @@ class RegistryAccessesV1Api(object):
         auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/registry_accesses",
+            "/api/v1/orgs/{owner}/registry_accesses",
             "GET",
             path_params,
             query_params,
@@ -765,7 +765,7 @@ class RegistryAccessesV1Api(object):
         auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/registry_accesses/{host_access.uuid}",
+            "/api/v1/orgs/{owner}/registry_accesses/{host_access.uuid}",
             "PATCH",
             path_params,
             query_params,
@@ -895,7 +895,7 @@ class RegistryAccessesV1Api(object):
         auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/registry_accesses/{host_access.uuid}",
+            "/api/v1/orgs/{owner}/registry_accesses/{host_access.uuid}",
             "PUT",
             path_params,
             query_params,

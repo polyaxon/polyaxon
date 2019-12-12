@@ -56,9 +56,6 @@ type V1HostAccess struct {
 	// Name
 	Name string `json:"name,omitempty"`
 
-	// Optional a readme text describing this entity
-	Readme string `json:"readme,omitempty"`
-
 	// Optional Tags of this entity
 	Tags []string `json:"tags"`
 

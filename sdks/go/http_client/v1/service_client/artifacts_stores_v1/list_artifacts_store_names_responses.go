@@ -82,7 +82,7 @@ type ListArtifactsStoreNamesOK struct {
 }
 
 func (o *ListArtifactsStoreNamesOK) Error() string {
-	return fmt.Sprintf("[GET /api/v1/{owner}/artifacts_stores/names][%d] listArtifactsStoreNamesOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/artifacts_stores/names][%d] listArtifactsStoreNamesOK  %+v", 200, o.Payload)
 }
 
 func (o *ListArtifactsStoreNamesOK) GetPayload() *service_model.V1ListArtifactsStoresResponse {
@@ -115,7 +115,7 @@ type ListArtifactsStoreNamesNoContent struct {
 }
 
 func (o *ListArtifactsStoreNamesNoContent) Error() string {
-	return fmt.Sprintf("[GET /api/v1/{owner}/artifacts_stores/names][%d] listArtifactsStoreNamesNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/artifacts_stores/names][%d] listArtifactsStoreNamesNoContent  %+v", 204, o.Payload)
 }
 
 func (o *ListArtifactsStoreNamesNoContent) GetPayload() interface{} {
@@ -146,7 +146,7 @@ type ListArtifactsStoreNamesForbidden struct {
 }
 
 func (o *ListArtifactsStoreNamesForbidden) Error() string {
-	return fmt.Sprintf("[GET /api/v1/{owner}/artifacts_stores/names][%d] listArtifactsStoreNamesForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/artifacts_stores/names][%d] listArtifactsStoreNamesForbidden  %+v", 403, o.Payload)
 }
 
 func (o *ListArtifactsStoreNamesForbidden) GetPayload() interface{} {
@@ -177,7 +177,7 @@ type ListArtifactsStoreNamesNotFound struct {
 }
 
 func (o *ListArtifactsStoreNamesNotFound) Error() string {
-	return fmt.Sprintf("[GET /api/v1/{owner}/artifacts_stores/names][%d] listArtifactsStoreNamesNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/artifacts_stores/names][%d] listArtifactsStoreNamesNotFound  %+v", 404, o.Payload)
 }
 
 func (o *ListArtifactsStoreNamesNotFound) GetPayload() interface{} {

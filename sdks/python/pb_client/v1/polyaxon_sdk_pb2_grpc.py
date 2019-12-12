@@ -29,6 +29,7 @@ from v1 import k8s_resource_pb2 as v1_dot_k8s__resource__pb2
 from v1 import organization_pb2 as v1_dot_organization__pb2
 from v1 import project_pb2 as v1_dot_project__pb2
 from v1 import run_pb2 as v1_dot_run__pb2
+from v1 import run_profile_pb2 as v1_dot_run__profile__pb2
 from v1.schemas import all_pb2 as v1_dot_schemas_dot_all__pb2
 from v1 import search_pb2 as v1_dot_search__pb2
 from v1 import status_pb2 as v1_dot_status__pb2
@@ -49,12 +50,12 @@ class RunsV1Stub(object):
     """
     self.ListBookmarkedRuns = channel.unary_unary(
         '/v1.RunsV1/ListBookmarkedRuns',
-        request_serializer=v1_dot_base__pb2.UserResouceListRequest.SerializeToString,
+        request_serializer=v1_dot_base__pb2.UserResourceListRequest.SerializeToString,
         response_deserializer=v1_dot_run__pb2.ListRunsResponse.FromString,
         )
     self.ListArchivedRuns = channel.unary_unary(
         '/v1.RunsV1/ListArchivedRuns',
-        request_serializer=v1_dot_base__pb2.UserResouceListRequest.SerializeToString,
+        request_serializer=v1_dot_base__pb2.UserResourceListRequest.SerializeToString,
         response_deserializer=v1_dot_run__pb2.ListRunsResponse.FromString,
         )
     self.ListRuns = channel.unary_unary(
@@ -407,12 +408,12 @@ def add_RunsV1Servicer_to_server(servicer, server):
   rpc_method_handlers = {
       'ListBookmarkedRuns': grpc.unary_unary_rpc_method_handler(
           servicer.ListBookmarkedRuns,
-          request_deserializer=v1_dot_base__pb2.UserResouceListRequest.FromString,
+          request_deserializer=v1_dot_base__pb2.UserResourceListRequest.FromString,
           response_serializer=v1_dot_run__pb2.ListRunsResponse.SerializeToString,
       ),
       'ListArchivedRuns': grpc.unary_unary_rpc_method_handler(
           servicer.ListArchivedRuns,
-          request_deserializer=v1_dot_base__pb2.UserResouceListRequest.FromString,
+          request_deserializer=v1_dot_base__pb2.UserResourceListRequest.FromString,
           response_serializer=v1_dot_run__pb2.ListRunsResponse.SerializeToString,
       ),
       'ListRuns': grpc.unary_unary_rpc_method_handler(
@@ -568,7 +569,7 @@ class ProjectsV1Stub(object):
     """
     self.ListProjects = channel.unary_unary(
         '/v1.ProjectsV1/ListProjects',
-        request_serializer=v1_dot_base__pb2.OwnerResouceListRequest.SerializeToString,
+        request_serializer=v1_dot_base__pb2.OwnerResourceListRequest.SerializeToString,
         response_deserializer=v1_dot_project__pb2.ListProjectsResponse.FromString,
         )
     self.CreateProject = channel.unary_unary(
@@ -578,17 +579,17 @@ class ProjectsV1Stub(object):
         )
     self.ListProjectNames = channel.unary_unary(
         '/v1.ProjectsV1/ListProjectNames',
-        request_serializer=v1_dot_base__pb2.OwnerResouceListRequest.SerializeToString,
+        request_serializer=v1_dot_base__pb2.OwnerResourceListRequest.SerializeToString,
         response_deserializer=v1_dot_project__pb2.ListProjectsResponse.FromString,
         )
     self.ListBookmarkedProjects = channel.unary_unary(
         '/v1.ProjectsV1/ListBookmarkedProjects',
-        request_serializer=v1_dot_base__pb2.UserResouceListRequest.SerializeToString,
+        request_serializer=v1_dot_base__pb2.UserResourceListRequest.SerializeToString,
         response_deserializer=v1_dot_project__pb2.ListProjectsResponse.FromString,
         )
     self.ListArchivedProjects = channel.unary_unary(
         '/v1.ProjectsV1/ListArchivedProjects',
-        request_serializer=v1_dot_base__pb2.UserResouceListRequest.SerializeToString,
+        request_serializer=v1_dot_base__pb2.UserResourceListRequest.SerializeToString,
         response_deserializer=v1_dot_project__pb2.ListProjectsResponse.FromString,
         )
     self.GetProject = channel.unary_unary(
@@ -829,7 +830,7 @@ def add_ProjectsV1Servicer_to_server(servicer, server):
   rpc_method_handlers = {
       'ListProjects': grpc.unary_unary_rpc_method_handler(
           servicer.ListProjects,
-          request_deserializer=v1_dot_base__pb2.OwnerResouceListRequest.FromString,
+          request_deserializer=v1_dot_base__pb2.OwnerResourceListRequest.FromString,
           response_serializer=v1_dot_project__pb2.ListProjectsResponse.SerializeToString,
       ),
       'CreateProject': grpc.unary_unary_rpc_method_handler(
@@ -839,17 +840,17 @@ def add_ProjectsV1Servicer_to_server(servicer, server):
       ),
       'ListProjectNames': grpc.unary_unary_rpc_method_handler(
           servicer.ListProjectNames,
-          request_deserializer=v1_dot_base__pb2.OwnerResouceListRequest.FromString,
+          request_deserializer=v1_dot_base__pb2.OwnerResourceListRequest.FromString,
           response_serializer=v1_dot_project__pb2.ListProjectsResponse.SerializeToString,
       ),
       'ListBookmarkedProjects': grpc.unary_unary_rpc_method_handler(
           servicer.ListBookmarkedProjects,
-          request_deserializer=v1_dot_base__pb2.UserResouceListRequest.FromString,
+          request_deserializer=v1_dot_base__pb2.UserResourceListRequest.FromString,
           response_serializer=v1_dot_project__pb2.ListProjectsResponse.SerializeToString,
       ),
       'ListArchivedProjects': grpc.unary_unary_rpc_method_handler(
           servicer.ListArchivedProjects,
-          request_deserializer=v1_dot_base__pb2.UserResouceListRequest.FromString,
+          request_deserializer=v1_dot_base__pb2.UserResourceListRequest.FromString,
           response_serializer=v1_dot_project__pb2.ListProjectsResponse.SerializeToString,
       ),
       'GetProject': grpc.unary_unary_rpc_method_handler(
@@ -950,12 +951,12 @@ class ArtifactsStoresV1Stub(object):
     """
     self.ListArtifactsStoreNames = channel.unary_unary(
         '/v1.ArtifactsStoresV1/ListArtifactsStoreNames',
-        request_serializer=v1_dot_base__pb2.OwnerResouceListRequest.SerializeToString,
+        request_serializer=v1_dot_base__pb2.OwnerResourceListRequest.SerializeToString,
         response_deserializer=v1_dot_artifacts__store__pb2.ListArtifactsStoresResponse.FromString,
         )
     self.ListArtifactsStores = channel.unary_unary(
         '/v1.ArtifactsStoresV1/ListArtifactsStores',
-        request_serializer=v1_dot_base__pb2.OwnerResouceListRequest.SerializeToString,
+        request_serializer=v1_dot_base__pb2.OwnerResourceListRequest.SerializeToString,
         response_deserializer=v1_dot_artifacts__store__pb2.ListArtifactsStoresResponse.FromString,
         )
     self.CreateArtifactsStore = channel.unary_unary(
@@ -1043,12 +1044,12 @@ def add_ArtifactsStoresV1Servicer_to_server(servicer, server):
   rpc_method_handlers = {
       'ListArtifactsStoreNames': grpc.unary_unary_rpc_method_handler(
           servicer.ListArtifactsStoreNames,
-          request_deserializer=v1_dot_base__pb2.OwnerResouceListRequest.FromString,
+          request_deserializer=v1_dot_base__pb2.OwnerResourceListRequest.FromString,
           response_serializer=v1_dot_artifacts__store__pb2.ListArtifactsStoresResponse.SerializeToString,
       ),
       'ListArtifactsStores': grpc.unary_unary_rpc_method_handler(
           servicer.ListArtifactsStores,
-          request_deserializer=v1_dot_base__pb2.OwnerResouceListRequest.FromString,
+          request_deserializer=v1_dot_base__pb2.OwnerResourceListRequest.FromString,
           response_serializer=v1_dot_artifacts__store__pb2.ListArtifactsStoresResponse.SerializeToString,
       ),
       'CreateArtifactsStore': grpc.unary_unary_rpc_method_handler(
@@ -1094,16 +1095,16 @@ class K8sConfigMapsV1Stub(object):
     """
     self.ListK8sConfigMapNames = channel.unary_unary(
         '/v1.K8sConfigMapsV1/ListK8sConfigMapNames',
-        request_serializer=v1_dot_base__pb2.OwnerResouceListRequest.SerializeToString,
+        request_serializer=v1_dot_base__pb2.OwnerResourceListRequest.SerializeToString,
         response_deserializer=v1_dot_k8s__resource__pb2.ListK8sResourcesResponse.FromString,
         )
     self.ListK8sConfigMaps = channel.unary_unary(
         '/v1.K8sConfigMapsV1/ListK8sConfigMaps',
-        request_serializer=v1_dot_base__pb2.OwnerResouceListRequest.SerializeToString,
+        request_serializer=v1_dot_base__pb2.OwnerResourceListRequest.SerializeToString,
         response_deserializer=v1_dot_k8s__resource__pb2.ListK8sResourcesResponse.FromString,
         )
-    self.CreateK8sConfigMaps = channel.unary_unary(
-        '/v1.K8sConfigMapsV1/CreateK8sConfigMaps',
+    self.CreateK8sConfigMap = channel.unary_unary(
+        '/v1.K8sConfigMapsV1/CreateK8sConfigMap',
         request_serializer=v1_dot_k8s__resource__pb2.K8sResourceBodyRequest.SerializeToString,
         response_deserializer=v1_dot_k8s__resource__pb2.K8sResource.FromString,
         )
@@ -1147,7 +1148,7 @@ class K8sConfigMapsV1Servicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
-  def CreateK8sConfigMaps(self, request, context):
+  def CreateK8sConfigMap(self, request, context):
     """Create k8s config map
     """
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -1187,16 +1188,16 @@ def add_K8sConfigMapsV1Servicer_to_server(servicer, server):
   rpc_method_handlers = {
       'ListK8sConfigMapNames': grpc.unary_unary_rpc_method_handler(
           servicer.ListK8sConfigMapNames,
-          request_deserializer=v1_dot_base__pb2.OwnerResouceListRequest.FromString,
+          request_deserializer=v1_dot_base__pb2.OwnerResourceListRequest.FromString,
           response_serializer=v1_dot_k8s__resource__pb2.ListK8sResourcesResponse.SerializeToString,
       ),
       'ListK8sConfigMaps': grpc.unary_unary_rpc_method_handler(
           servicer.ListK8sConfigMaps,
-          request_deserializer=v1_dot_base__pb2.OwnerResouceListRequest.FromString,
+          request_deserializer=v1_dot_base__pb2.OwnerResourceListRequest.FromString,
           response_serializer=v1_dot_k8s__resource__pb2.ListK8sResourcesResponse.SerializeToString,
       ),
-      'CreateK8sConfigMaps': grpc.unary_unary_rpc_method_handler(
-          servicer.CreateK8sConfigMaps,
+      'CreateK8sConfigMap': grpc.unary_unary_rpc_method_handler(
+          servicer.CreateK8sConfigMap,
           request_deserializer=v1_dot_k8s__resource__pb2.K8sResourceBodyRequest.FromString,
           response_serializer=v1_dot_k8s__resource__pb2.K8sResource.SerializeToString,
       ),
@@ -1238,16 +1239,16 @@ class K8sSecretsV1Stub(object):
     """
     self.ListK8sSecretNames = channel.unary_unary(
         '/v1.K8sSecretsV1/ListK8sSecretNames',
-        request_serializer=v1_dot_base__pb2.OwnerResouceListRequest.SerializeToString,
+        request_serializer=v1_dot_base__pb2.OwnerResourceListRequest.SerializeToString,
         response_deserializer=v1_dot_k8s__resource__pb2.ListK8sResourcesResponse.FromString,
         )
     self.ListK8sSecrets = channel.unary_unary(
         '/v1.K8sSecretsV1/ListK8sSecrets',
-        request_serializer=v1_dot_base__pb2.OwnerResouceListRequest.SerializeToString,
+        request_serializer=v1_dot_base__pb2.OwnerResourceListRequest.SerializeToString,
         response_deserializer=v1_dot_k8s__resource__pb2.ListK8sResourcesResponse.FromString,
         )
-    self.CreateK8sSecrets = channel.unary_unary(
-        '/v1.K8sSecretsV1/CreateK8sSecrets',
+    self.CreateK8sSecret = channel.unary_unary(
+        '/v1.K8sSecretsV1/CreateK8sSecret',
         request_serializer=v1_dot_k8s__resource__pb2.K8sResourceBodyRequest.SerializeToString,
         response_deserializer=v1_dot_k8s__resource__pb2.K8sResource.FromString,
         )
@@ -1291,7 +1292,7 @@ class K8sSecretsV1Servicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
-  def CreateK8sSecrets(self, request, context):
+  def CreateK8sSecret(self, request, context):
     """Create k8s secret
     """
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -1331,16 +1332,16 @@ def add_K8sSecretsV1Servicer_to_server(servicer, server):
   rpc_method_handlers = {
       'ListK8sSecretNames': grpc.unary_unary_rpc_method_handler(
           servicer.ListK8sSecretNames,
-          request_deserializer=v1_dot_base__pb2.OwnerResouceListRequest.FromString,
+          request_deserializer=v1_dot_base__pb2.OwnerResourceListRequest.FromString,
           response_serializer=v1_dot_k8s__resource__pb2.ListK8sResourcesResponse.SerializeToString,
       ),
       'ListK8sSecrets': grpc.unary_unary_rpc_method_handler(
           servicer.ListK8sSecrets,
-          request_deserializer=v1_dot_base__pb2.OwnerResouceListRequest.FromString,
+          request_deserializer=v1_dot_base__pb2.OwnerResourceListRequest.FromString,
           response_serializer=v1_dot_k8s__resource__pb2.ListK8sResourcesResponse.SerializeToString,
       ),
-      'CreateK8sSecrets': grpc.unary_unary_rpc_method_handler(
-          servicer.CreateK8sSecrets,
+      'CreateK8sSecret': grpc.unary_unary_rpc_method_handler(
+          servicer.CreateK8sSecret,
           request_deserializer=v1_dot_k8s__resource__pb2.K8sResourceBodyRequest.FromString,
           response_serializer=v1_dot_k8s__resource__pb2.K8sResource.SerializeToString,
       ),
@@ -1382,12 +1383,12 @@ class RegistryAccessesV1Stub(object):
     """
     self.ListRegistryAccessNames = channel.unary_unary(
         '/v1.RegistryAccessesV1/ListRegistryAccessNames',
-        request_serializer=v1_dot_base__pb2.OwnerResouceListRequest.SerializeToString,
+        request_serializer=v1_dot_base__pb2.OwnerResourceListRequest.SerializeToString,
         response_deserializer=v1_dot_host__access__pb2.ListHostAccessesResponse.FromString,
         )
     self.ListRegistryAccesses = channel.unary_unary(
         '/v1.RegistryAccessesV1/ListRegistryAccesses',
-        request_serializer=v1_dot_base__pb2.OwnerResouceListRequest.SerializeToString,
+        request_serializer=v1_dot_base__pb2.OwnerResourceListRequest.SerializeToString,
         response_deserializer=v1_dot_host__access__pb2.ListHostAccessesResponse.FromString,
         )
     self.CreateRegistryAccess = channel.unary_unary(
@@ -1475,12 +1476,12 @@ def add_RegistryAccessesV1Servicer_to_server(servicer, server):
   rpc_method_handlers = {
       'ListRegistryAccessNames': grpc.unary_unary_rpc_method_handler(
           servicer.ListRegistryAccessNames,
-          request_deserializer=v1_dot_base__pb2.OwnerResouceListRequest.FromString,
+          request_deserializer=v1_dot_base__pb2.OwnerResourceListRequest.FromString,
           response_serializer=v1_dot_host__access__pb2.ListHostAccessesResponse.SerializeToString,
       ),
       'ListRegistryAccesses': grpc.unary_unary_rpc_method_handler(
           servicer.ListRegistryAccesses,
-          request_deserializer=v1_dot_base__pb2.OwnerResouceListRequest.FromString,
+          request_deserializer=v1_dot_base__pb2.OwnerResourceListRequest.FromString,
           response_serializer=v1_dot_host__access__pb2.ListHostAccessesResponse.SerializeToString,
       ),
       'CreateRegistryAccess': grpc.unary_unary_rpc_method_handler(
@@ -1526,12 +1527,12 @@ class GitAccessesV1Stub(object):
     """
     self.ListGitAccessNames = channel.unary_unary(
         '/v1.GitAccessesV1/ListGitAccessNames',
-        request_serializer=v1_dot_base__pb2.OwnerResouceListRequest.SerializeToString,
+        request_serializer=v1_dot_base__pb2.OwnerResourceListRequest.SerializeToString,
         response_deserializer=v1_dot_host__access__pb2.ListHostAccessesResponse.FromString,
         )
     self.ListGitAccesses = channel.unary_unary(
         '/v1.GitAccessesV1/ListGitAccesses',
-        request_serializer=v1_dot_base__pb2.OwnerResouceListRequest.SerializeToString,
+        request_serializer=v1_dot_base__pb2.OwnerResourceListRequest.SerializeToString,
         response_deserializer=v1_dot_host__access__pb2.ListHostAccessesResponse.FromString,
         )
     self.CreateGitAccess = channel.unary_unary(
@@ -1619,12 +1620,12 @@ def add_GitAccessesV1Servicer_to_server(servicer, server):
   rpc_method_handlers = {
       'ListGitAccessNames': grpc.unary_unary_rpc_method_handler(
           servicer.ListGitAccessNames,
-          request_deserializer=v1_dot_base__pb2.OwnerResouceListRequest.FromString,
+          request_deserializer=v1_dot_base__pb2.OwnerResourceListRequest.FromString,
           response_serializer=v1_dot_host__access__pb2.ListHostAccessesResponse.SerializeToString,
       ),
       'ListGitAccesses': grpc.unary_unary_rpc_method_handler(
           servicer.ListGitAccesses,
-          request_deserializer=v1_dot_base__pb2.OwnerResouceListRequest.FromString,
+          request_deserializer=v1_dot_base__pb2.OwnerResourceListRequest.FromString,
           response_serializer=v1_dot_host__access__pb2.ListHostAccessesResponse.SerializeToString,
       ),
       'CreateGitAccess': grpc.unary_unary_rpc_method_handler(
@@ -1658,7 +1659,168 @@ def add_GitAccessesV1Servicer_to_server(servicer, server):
   server.add_generic_rpc_handlers((generic_handler,))
 
 
-class SearchV1Stub(object):
+class ProjectSearchesV1Stub(object):
+  """Service to manage project searches
+  """
+
+  def __init__(self, channel):
+    """Constructor.
+
+    Args:
+      channel: A grpc.Channel.
+    """
+    self.ListProjectSearchNames = channel.unary_unary(
+        '/v1.ProjectSearchesV1/ListProjectSearchNames',
+        request_serializer=v1_dot_base__pb2.ProjectResourceListRequest.SerializeToString,
+        response_deserializer=v1_dot_search__pb2.ListSearchesResponse.FromString,
+        )
+    self.ListProjectSearches = channel.unary_unary(
+        '/v1.ProjectSearchesV1/ListProjectSearches',
+        request_serializer=v1_dot_base__pb2.ProjectResourceListRequest.SerializeToString,
+        response_deserializer=v1_dot_search__pb2.ListSearchesResponse.FromString,
+        )
+    self.CreateProjectSearch = channel.unary_unary(
+        '/v1.ProjectSearchesV1/CreateProjectSearch',
+        request_serializer=v1_dot_search__pb2.ProjectSearchBodyRequest.SerializeToString,
+        response_deserializer=v1_dot_search__pb2.Search.FromString,
+        )
+    self.GetProjectSearch = channel.unary_unary(
+        '/v1.ProjectSearchesV1/GetProjectSearch',
+        request_serializer=v1_dot_base__pb2.ProjectEntityResourceRequest.SerializeToString,
+        response_deserializer=v1_dot_search__pb2.Search.FromString,
+        )
+    self.UpdateProjectSearch = channel.unary_unary(
+        '/v1.ProjectSearchesV1/UpdateProjectSearch',
+        request_serializer=v1_dot_search__pb2.ProjectSearchBodyRequest.SerializeToString,
+        response_deserializer=v1_dot_search__pb2.Search.FromString,
+        )
+    self.PatchProjectSearch = channel.unary_unary(
+        '/v1.ProjectSearchesV1/PatchProjectSearch',
+        request_serializer=v1_dot_search__pb2.ProjectSearchBodyRequest.SerializeToString,
+        response_deserializer=v1_dot_search__pb2.Search.FromString,
+        )
+    self.DeleteProjectSearch = channel.unary_unary(
+        '/v1.ProjectSearchesV1/DeleteProjectSearch',
+        request_serializer=v1_dot_base__pb2.ProjectEntityResourceRequest.SerializeToString,
+        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+        )
+    self.PromoteProjectSearch = channel.unary_unary(
+        '/v1.ProjectSearchesV1/PromoteProjectSearch',
+        request_serializer=v1_dot_base__pb2.ProjectEntityResourceRequest.SerializeToString,
+        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+        )
+
+
+class ProjectSearchesV1Servicer(object):
+  """Service to manage project searches
+  """
+
+  def ListProjectSearchNames(self, request, context):
+    """List project search names
+    """
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def ListProjectSearches(self, request, context):
+    """List project searches
+    """
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def CreateProjectSearch(self, request, context):
+    """Create project search
+    """
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def GetProjectSearch(self, request, context):
+    """Get project search
+    """
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def UpdateProjectSearch(self, request, context):
+    """Update project search
+    """
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def PatchProjectSearch(self, request, context):
+    """Patch project search
+    """
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def DeleteProjectSearch(self, request, context):
+    """Delete project search
+    """
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def PromoteProjectSearch(self, request, context):
+    """Promote project search
+    """
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+
+def add_ProjectSearchesV1Servicer_to_server(servicer, server):
+  rpc_method_handlers = {
+      'ListProjectSearchNames': grpc.unary_unary_rpc_method_handler(
+          servicer.ListProjectSearchNames,
+          request_deserializer=v1_dot_base__pb2.ProjectResourceListRequest.FromString,
+          response_serializer=v1_dot_search__pb2.ListSearchesResponse.SerializeToString,
+      ),
+      'ListProjectSearches': grpc.unary_unary_rpc_method_handler(
+          servicer.ListProjectSearches,
+          request_deserializer=v1_dot_base__pb2.ProjectResourceListRequest.FromString,
+          response_serializer=v1_dot_search__pb2.ListSearchesResponse.SerializeToString,
+      ),
+      'CreateProjectSearch': grpc.unary_unary_rpc_method_handler(
+          servicer.CreateProjectSearch,
+          request_deserializer=v1_dot_search__pb2.ProjectSearchBodyRequest.FromString,
+          response_serializer=v1_dot_search__pb2.Search.SerializeToString,
+      ),
+      'GetProjectSearch': grpc.unary_unary_rpc_method_handler(
+          servicer.GetProjectSearch,
+          request_deserializer=v1_dot_base__pb2.ProjectEntityResourceRequest.FromString,
+          response_serializer=v1_dot_search__pb2.Search.SerializeToString,
+      ),
+      'UpdateProjectSearch': grpc.unary_unary_rpc_method_handler(
+          servicer.UpdateProjectSearch,
+          request_deserializer=v1_dot_search__pb2.ProjectSearchBodyRequest.FromString,
+          response_serializer=v1_dot_search__pb2.Search.SerializeToString,
+      ),
+      'PatchProjectSearch': grpc.unary_unary_rpc_method_handler(
+          servicer.PatchProjectSearch,
+          request_deserializer=v1_dot_search__pb2.ProjectSearchBodyRequest.FromString,
+          response_serializer=v1_dot_search__pb2.Search.SerializeToString,
+      ),
+      'DeleteProjectSearch': grpc.unary_unary_rpc_method_handler(
+          servicer.DeleteProjectSearch,
+          request_deserializer=v1_dot_base__pb2.ProjectEntityResourceRequest.FromString,
+          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+      ),
+      'PromoteProjectSearch': grpc.unary_unary_rpc_method_handler(
+          servicer.PromoteProjectSearch,
+          request_deserializer=v1_dot_base__pb2.ProjectEntityResourceRequest.FromString,
+          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+      ),
+  }
+  generic_handler = grpc.method_handlers_generic_handler(
+      'v1.ProjectSearchesV1', rpc_method_handlers)
+  server.add_generic_rpc_handlers((generic_handler,))
+
+
+class SearchesV1Stub(object):
   """Service to manage searches
   """
 
@@ -1668,41 +1830,53 @@ class SearchV1Stub(object):
     Args:
       channel: A grpc.Channel.
     """
+    self.ListSearchNames = channel.unary_unary(
+        '/v1.SearchesV1/ListSearchNames',
+        request_serializer=v1_dot_base__pb2.OwnerResourceListRequest.SerializeToString,
+        response_deserializer=v1_dot_search__pb2.ListSearchesResponse.FromString,
+        )
     self.ListSearches = channel.unary_unary(
-        '/v1.SearchV1/ListSearches',
-        request_serializer=v1_dot_base__pb2.ProjectResourceListRequest.SerializeToString,
+        '/v1.SearchesV1/ListSearches',
+        request_serializer=v1_dot_base__pb2.OwnerResourceListRequest.SerializeToString,
         response_deserializer=v1_dot_search__pb2.ListSearchesResponse.FromString,
         )
     self.CreateSearch = channel.unary_unary(
-        '/v1.SearchV1/CreateSearch',
+        '/v1.SearchesV1/CreateSearch',
         request_serializer=v1_dot_search__pb2.SearchBodyRequest.SerializeToString,
         response_deserializer=v1_dot_search__pb2.Search.FromString,
         )
     self.GetSearch = channel.unary_unary(
-        '/v1.SearchV1/GetSearch',
-        request_serializer=v1_dot_base__pb2.ProjectEntityResourceRequest.SerializeToString,
+        '/v1.SearchesV1/GetSearch',
+        request_serializer=v1_dot_base__pb2.OwnerEntityResourceRequest.SerializeToString,
         response_deserializer=v1_dot_search__pb2.Search.FromString,
         )
     self.UpdateSearch = channel.unary_unary(
-        '/v1.SearchV1/UpdateSearch',
+        '/v1.SearchesV1/UpdateSearch',
         request_serializer=v1_dot_search__pb2.SearchBodyRequest.SerializeToString,
         response_deserializer=v1_dot_search__pb2.Search.FromString,
         )
     self.PatchSearch = channel.unary_unary(
-        '/v1.SearchV1/PatchSearch',
+        '/v1.SearchesV1/PatchSearch',
         request_serializer=v1_dot_search__pb2.SearchBodyRequest.SerializeToString,
         response_deserializer=v1_dot_search__pb2.Search.FromString,
         )
     self.DeleteSearch = channel.unary_unary(
-        '/v1.SearchV1/DeleteSearch',
-        request_serializer=v1_dot_base__pb2.ProjectEntityResourceRequest.SerializeToString,
+        '/v1.SearchesV1/DeleteSearch',
+        request_serializer=v1_dot_base__pb2.OwnerEntityResourceRequest.SerializeToString,
         response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
         )
 
 
-class SearchV1Servicer(object):
+class SearchesV1Servicer(object):
   """Service to manage searches
   """
+
+  def ListSearchNames(self, request, context):
+    """List search names
+    """
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
 
   def ListSearches(self, request, context):
     """List searches
@@ -1747,11 +1921,16 @@ class SearchV1Servicer(object):
     raise NotImplementedError('Method not implemented!')
 
 
-def add_SearchV1Servicer_to_server(servicer, server):
+def add_SearchesV1Servicer_to_server(servicer, server):
   rpc_method_handlers = {
+      'ListSearchNames': grpc.unary_unary_rpc_method_handler(
+          servicer.ListSearchNames,
+          request_deserializer=v1_dot_base__pb2.OwnerResourceListRequest.FromString,
+          response_serializer=v1_dot_search__pb2.ListSearchesResponse.SerializeToString,
+      ),
       'ListSearches': grpc.unary_unary_rpc_method_handler(
           servicer.ListSearches,
-          request_deserializer=v1_dot_base__pb2.ProjectResourceListRequest.FromString,
+          request_deserializer=v1_dot_base__pb2.OwnerResourceListRequest.FromString,
           response_serializer=v1_dot_search__pb2.ListSearchesResponse.SerializeToString,
       ),
       'CreateSearch': grpc.unary_unary_rpc_method_handler(
@@ -1761,7 +1940,7 @@ def add_SearchV1Servicer_to_server(servicer, server):
       ),
       'GetSearch': grpc.unary_unary_rpc_method_handler(
           servicer.GetSearch,
-          request_deserializer=v1_dot_base__pb2.ProjectEntityResourceRequest.FromString,
+          request_deserializer=v1_dot_base__pb2.OwnerEntityResourceRequest.FromString,
           response_serializer=v1_dot_search__pb2.Search.SerializeToString,
       ),
       'UpdateSearch': grpc.unary_unary_rpc_method_handler(
@@ -1776,16 +1955,177 @@ def add_SearchV1Servicer_to_server(servicer, server):
       ),
       'DeleteSearch': grpc.unary_unary_rpc_method_handler(
           servicer.DeleteSearch,
-          request_deserializer=v1_dot_base__pb2.ProjectEntityResourceRequest.FromString,
+          request_deserializer=v1_dot_base__pb2.OwnerEntityResourceRequest.FromString,
           response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
       ),
   }
   generic_handler = grpc.method_handlers_generic_handler(
-      'v1.SearchV1', rpc_method_handlers)
+      'v1.SearchesV1', rpc_method_handlers)
   server.add_generic_rpc_handlers((generic_handler,))
 
 
-class DashboardV1Stub(object):
+class ProjectDashboardsV1Stub(object):
+  """Service to manage project dashboards
+  """
+
+  def __init__(self, channel):
+    """Constructor.
+
+    Args:
+      channel: A grpc.Channel.
+    """
+    self.ListProjectDashboardNames = channel.unary_unary(
+        '/v1.ProjectDashboardsV1/ListProjectDashboardNames',
+        request_serializer=v1_dot_base__pb2.ProjectResourceListRequest.SerializeToString,
+        response_deserializer=v1_dot_dashboard__pb2.ListDashboardsResponse.FromString,
+        )
+    self.ListProjectDashboards = channel.unary_unary(
+        '/v1.ProjectDashboardsV1/ListProjectDashboards',
+        request_serializer=v1_dot_base__pb2.ProjectResourceListRequest.SerializeToString,
+        response_deserializer=v1_dot_dashboard__pb2.ListDashboardsResponse.FromString,
+        )
+    self.CreateProjectDashboard = channel.unary_unary(
+        '/v1.ProjectDashboardsV1/CreateProjectDashboard',
+        request_serializer=v1_dot_dashboard__pb2.ProjectDashboardBodyRequest.SerializeToString,
+        response_deserializer=v1_dot_dashboard__pb2.Dashboard.FromString,
+        )
+    self.GetProjectDashboard = channel.unary_unary(
+        '/v1.ProjectDashboardsV1/GetProjectDashboard',
+        request_serializer=v1_dot_base__pb2.ProjectEntityResourceRequest.SerializeToString,
+        response_deserializer=v1_dot_dashboard__pb2.Dashboard.FromString,
+        )
+    self.UpdateProjectDashboard = channel.unary_unary(
+        '/v1.ProjectDashboardsV1/UpdateProjectDashboard',
+        request_serializer=v1_dot_dashboard__pb2.ProjectDashboardBodyRequest.SerializeToString,
+        response_deserializer=v1_dot_dashboard__pb2.Dashboard.FromString,
+        )
+    self.PatchProjectDashboard = channel.unary_unary(
+        '/v1.ProjectDashboardsV1/PatchProjectDashboard',
+        request_serializer=v1_dot_dashboard__pb2.ProjectDashboardBodyRequest.SerializeToString,
+        response_deserializer=v1_dot_dashboard__pb2.Dashboard.FromString,
+        )
+    self.DeleteProjectDashboard = channel.unary_unary(
+        '/v1.ProjectDashboardsV1/DeleteProjectDashboard',
+        request_serializer=v1_dot_base__pb2.ProjectEntityResourceRequest.SerializeToString,
+        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+        )
+    self.PromoteProjectDashboard = channel.unary_unary(
+        '/v1.ProjectDashboardsV1/PromoteProjectDashboard',
+        request_serializer=v1_dot_dashboard__pb2.ProjectDashboardBodyRequest.SerializeToString,
+        response_deserializer=v1_dot_dashboard__pb2.Dashboard.FromString,
+        )
+
+
+class ProjectDashboardsV1Servicer(object):
+  """Service to manage project dashboards
+  """
+
+  def ListProjectDashboardNames(self, request, context):
+    """List project dashboard
+    """
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def ListProjectDashboards(self, request, context):
+    """List project dashboards
+    """
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def CreateProjectDashboard(self, request, context):
+    """Create project dashboard
+    """
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def GetProjectDashboard(self, request, context):
+    """Get project dashboard
+    """
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def UpdateProjectDashboard(self, request, context):
+    """Update project dashboard
+    """
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def PatchProjectDashboard(self, request, context):
+    """Patch project dashboard
+    """
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def DeleteProjectDashboard(self, request, context):
+    """Delete project dashboard
+    """
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def PromoteProjectDashboard(self, request, context):
+    """Promote project dashboard
+    """
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+
+def add_ProjectDashboardsV1Servicer_to_server(servicer, server):
+  rpc_method_handlers = {
+      'ListProjectDashboardNames': grpc.unary_unary_rpc_method_handler(
+          servicer.ListProjectDashboardNames,
+          request_deserializer=v1_dot_base__pb2.ProjectResourceListRequest.FromString,
+          response_serializer=v1_dot_dashboard__pb2.ListDashboardsResponse.SerializeToString,
+      ),
+      'ListProjectDashboards': grpc.unary_unary_rpc_method_handler(
+          servicer.ListProjectDashboards,
+          request_deserializer=v1_dot_base__pb2.ProjectResourceListRequest.FromString,
+          response_serializer=v1_dot_dashboard__pb2.ListDashboardsResponse.SerializeToString,
+      ),
+      'CreateProjectDashboard': grpc.unary_unary_rpc_method_handler(
+          servicer.CreateProjectDashboard,
+          request_deserializer=v1_dot_dashboard__pb2.ProjectDashboardBodyRequest.FromString,
+          response_serializer=v1_dot_dashboard__pb2.Dashboard.SerializeToString,
+      ),
+      'GetProjectDashboard': grpc.unary_unary_rpc_method_handler(
+          servicer.GetProjectDashboard,
+          request_deserializer=v1_dot_base__pb2.ProjectEntityResourceRequest.FromString,
+          response_serializer=v1_dot_dashboard__pb2.Dashboard.SerializeToString,
+      ),
+      'UpdateProjectDashboard': grpc.unary_unary_rpc_method_handler(
+          servicer.UpdateProjectDashboard,
+          request_deserializer=v1_dot_dashboard__pb2.ProjectDashboardBodyRequest.FromString,
+          response_serializer=v1_dot_dashboard__pb2.Dashboard.SerializeToString,
+      ),
+      'PatchProjectDashboard': grpc.unary_unary_rpc_method_handler(
+          servicer.PatchProjectDashboard,
+          request_deserializer=v1_dot_dashboard__pb2.ProjectDashboardBodyRequest.FromString,
+          response_serializer=v1_dot_dashboard__pb2.Dashboard.SerializeToString,
+      ),
+      'DeleteProjectDashboard': grpc.unary_unary_rpc_method_handler(
+          servicer.DeleteProjectDashboard,
+          request_deserializer=v1_dot_base__pb2.ProjectEntityResourceRequest.FromString,
+          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+      ),
+      'PromoteProjectDashboard': grpc.unary_unary_rpc_method_handler(
+          servicer.PromoteProjectDashboard,
+          request_deserializer=v1_dot_dashboard__pb2.ProjectDashboardBodyRequest.FromString,
+          response_serializer=v1_dot_dashboard__pb2.Dashboard.SerializeToString,
+      ),
+  }
+  generic_handler = grpc.method_handlers_generic_handler(
+      'v1.ProjectDashboardsV1', rpc_method_handlers)
+  server.add_generic_rpc_handlers((generic_handler,))
+
+
+class DashboardsV1Stub(object):
   """Service to manage dashboards
   """
 
@@ -1795,43 +2135,55 @@ class DashboardV1Stub(object):
     Args:
       channel: A grpc.Channel.
     """
-    self.ListDashboard = channel.unary_unary(
-        '/v1.DashboardV1/ListDashboard',
-        request_serializer=v1_dot_base__pb2.ProjectResourceListRequest.SerializeToString,
+    self.ListDashboardNames = channel.unary_unary(
+        '/v1.DashboardsV1/ListDashboardNames',
+        request_serializer=v1_dot_base__pb2.OwnerResourceListRequest.SerializeToString,
+        response_deserializer=v1_dot_dashboard__pb2.ListDashboardsResponse.FromString,
+        )
+    self.ListDashboards = channel.unary_unary(
+        '/v1.DashboardsV1/ListDashboards',
+        request_serializer=v1_dot_base__pb2.OwnerResourceListRequest.SerializeToString,
         response_deserializer=v1_dot_dashboard__pb2.ListDashboardsResponse.FromString,
         )
     self.CreateDashboard = channel.unary_unary(
-        '/v1.DashboardV1/CreateDashboard',
+        '/v1.DashboardsV1/CreateDashboard',
         request_serializer=v1_dot_dashboard__pb2.DashboardBodyRequest.SerializeToString,
         response_deserializer=v1_dot_dashboard__pb2.Dashboard.FromString,
         )
     self.GetDashboard = channel.unary_unary(
-        '/v1.DashboardV1/GetDashboard',
-        request_serializer=v1_dot_base__pb2.ProjectEntityResourceRequest.SerializeToString,
+        '/v1.DashboardsV1/GetDashboard',
+        request_serializer=v1_dot_base__pb2.OwnerEntityResourceRequest.SerializeToString,
         response_deserializer=v1_dot_dashboard__pb2.Dashboard.FromString,
         )
     self.UpdateDashboard = channel.unary_unary(
-        '/v1.DashboardV1/UpdateDashboard',
+        '/v1.DashboardsV1/UpdateDashboard',
         request_serializer=v1_dot_dashboard__pb2.DashboardBodyRequest.SerializeToString,
         response_deserializer=v1_dot_dashboard__pb2.Dashboard.FromString,
         )
     self.PatchDashboard = channel.unary_unary(
-        '/v1.DashboardV1/PatchDashboard',
+        '/v1.DashboardsV1/PatchDashboard',
         request_serializer=v1_dot_dashboard__pb2.DashboardBodyRequest.SerializeToString,
         response_deserializer=v1_dot_dashboard__pb2.Dashboard.FromString,
         )
     self.DeleteDashboard = channel.unary_unary(
-        '/v1.DashboardV1/DeleteDashboard',
-        request_serializer=v1_dot_base__pb2.ProjectEntityResourceRequest.SerializeToString,
+        '/v1.DashboardsV1/DeleteDashboard',
+        request_serializer=v1_dot_base__pb2.OwnerEntityResourceRequest.SerializeToString,
         response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
         )
 
 
-class DashboardV1Servicer(object):
+class DashboardsV1Servicer(object):
   """Service to manage dashboards
   """
 
-  def ListDashboard(self, request, context):
+  def ListDashboardNames(self, request, context):
+    """List dashboard names
+    """
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def ListDashboards(self, request, context):
     """List dashboards
     """
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -1874,11 +2226,16 @@ class DashboardV1Servicer(object):
     raise NotImplementedError('Method not implemented!')
 
 
-def add_DashboardV1Servicer_to_server(servicer, server):
+def add_DashboardsV1Servicer_to_server(servicer, server):
   rpc_method_handlers = {
-      'ListDashboard': grpc.unary_unary_rpc_method_handler(
-          servicer.ListDashboard,
-          request_deserializer=v1_dot_base__pb2.ProjectResourceListRequest.FromString,
+      'ListDashboardNames': grpc.unary_unary_rpc_method_handler(
+          servicer.ListDashboardNames,
+          request_deserializer=v1_dot_base__pb2.OwnerResourceListRequest.FromString,
+          response_serializer=v1_dot_dashboard__pb2.ListDashboardsResponse.SerializeToString,
+      ),
+      'ListDashboards': grpc.unary_unary_rpc_method_handler(
+          servicer.ListDashboards,
+          request_deserializer=v1_dot_base__pb2.OwnerResourceListRequest.FromString,
           response_serializer=v1_dot_dashboard__pb2.ListDashboardsResponse.SerializeToString,
       ),
       'CreateDashboard': grpc.unary_unary_rpc_method_handler(
@@ -1888,7 +2245,7 @@ def add_DashboardV1Servicer_to_server(servicer, server):
       ),
       'GetDashboard': grpc.unary_unary_rpc_method_handler(
           servicer.GetDashboard,
-          request_deserializer=v1_dot_base__pb2.ProjectEntityResourceRequest.FromString,
+          request_deserializer=v1_dot_base__pb2.OwnerEntityResourceRequest.FromString,
           response_serializer=v1_dot_dashboard__pb2.Dashboard.SerializeToString,
       ),
       'UpdateDashboard': grpc.unary_unary_rpc_method_handler(
@@ -1903,12 +2260,156 @@ def add_DashboardV1Servicer_to_server(servicer, server):
       ),
       'DeleteDashboard': grpc.unary_unary_rpc_method_handler(
           servicer.DeleteDashboard,
-          request_deserializer=v1_dot_base__pb2.ProjectEntityResourceRequest.FromString,
+          request_deserializer=v1_dot_base__pb2.OwnerEntityResourceRequest.FromString,
           response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
       ),
   }
   generic_handler = grpc.method_handlers_generic_handler(
-      'v1.DashboardV1', rpc_method_handlers)
+      'v1.DashboardsV1', rpc_method_handlers)
+  server.add_generic_rpc_handlers((generic_handler,))
+
+
+class RunProfilesV1Stub(object):
+  """Service to manage run profiles
+  """
+
+  def __init__(self, channel):
+    """Constructor.
+
+    Args:
+      channel: A grpc.Channel.
+    """
+    self.ListRunProfileNames = channel.unary_unary(
+        '/v1.RunProfilesV1/ListRunProfileNames',
+        request_serializer=v1_dot_base__pb2.OwnerResourceListRequest.SerializeToString,
+        response_deserializer=v1_dot_run__profile__pb2.ListRunProfilesResponse.FromString,
+        )
+    self.ListRunProfiles = channel.unary_unary(
+        '/v1.RunProfilesV1/ListRunProfiles',
+        request_serializer=v1_dot_base__pb2.OwnerResourceListRequest.SerializeToString,
+        response_deserializer=v1_dot_run__profile__pb2.ListRunProfilesResponse.FromString,
+        )
+    self.CreateRunProfile = channel.unary_unary(
+        '/v1.RunProfilesV1/CreateRunProfile',
+        request_serializer=v1_dot_run__profile__pb2.RunProfileBodyRequest.SerializeToString,
+        response_deserializer=v1_dot_run__profile__pb2.RunProfile.FromString,
+        )
+    self.GetRunProfile = channel.unary_unary(
+        '/v1.RunProfilesV1/GetRunProfile',
+        request_serializer=v1_dot_base__pb2.OwnerEntityResourceRequest.SerializeToString,
+        response_deserializer=v1_dot_run__profile__pb2.RunProfile.FromString,
+        )
+    self.UpdateRunProfile = channel.unary_unary(
+        '/v1.RunProfilesV1/UpdateRunProfile',
+        request_serializer=v1_dot_run__profile__pb2.RunProfileBodyRequest.SerializeToString,
+        response_deserializer=v1_dot_run__profile__pb2.RunProfile.FromString,
+        )
+    self.PatchRunProfile = channel.unary_unary(
+        '/v1.RunProfilesV1/PatchRunProfile',
+        request_serializer=v1_dot_run__profile__pb2.RunProfileBodyRequest.SerializeToString,
+        response_deserializer=v1_dot_run__profile__pb2.RunProfile.FromString,
+        )
+    self.DeleteRunProfile = channel.unary_unary(
+        '/v1.RunProfilesV1/DeleteRunProfile',
+        request_serializer=v1_dot_base__pb2.OwnerEntityResourceRequest.SerializeToString,
+        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+        )
+
+
+class RunProfilesV1Servicer(object):
+  """Service to manage run profiles
+  """
+
+  def ListRunProfileNames(self, request, context):
+    """List run profiles names
+    """
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def ListRunProfiles(self, request, context):
+    """List run profiles
+    """
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def CreateRunProfile(self, request, context):
+    """Create run profile
+    """
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def GetRunProfile(self, request, context):
+    """Get run profile
+    """
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def UpdateRunProfile(self, request, context):
+    """Update run profile
+    """
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def PatchRunProfile(self, request, context):
+    """Patch run profile
+    """
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def DeleteRunProfile(self, request, context):
+    """Delete run profile
+    """
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+
+def add_RunProfilesV1Servicer_to_server(servicer, server):
+  rpc_method_handlers = {
+      'ListRunProfileNames': grpc.unary_unary_rpc_method_handler(
+          servicer.ListRunProfileNames,
+          request_deserializer=v1_dot_base__pb2.OwnerResourceListRequest.FromString,
+          response_serializer=v1_dot_run__profile__pb2.ListRunProfilesResponse.SerializeToString,
+      ),
+      'ListRunProfiles': grpc.unary_unary_rpc_method_handler(
+          servicer.ListRunProfiles,
+          request_deserializer=v1_dot_base__pb2.OwnerResourceListRequest.FromString,
+          response_serializer=v1_dot_run__profile__pb2.ListRunProfilesResponse.SerializeToString,
+      ),
+      'CreateRunProfile': grpc.unary_unary_rpc_method_handler(
+          servicer.CreateRunProfile,
+          request_deserializer=v1_dot_run__profile__pb2.RunProfileBodyRequest.FromString,
+          response_serializer=v1_dot_run__profile__pb2.RunProfile.SerializeToString,
+      ),
+      'GetRunProfile': grpc.unary_unary_rpc_method_handler(
+          servicer.GetRunProfile,
+          request_deserializer=v1_dot_base__pb2.OwnerEntityResourceRequest.FromString,
+          response_serializer=v1_dot_run__profile__pb2.RunProfile.SerializeToString,
+      ),
+      'UpdateRunProfile': grpc.unary_unary_rpc_method_handler(
+          servicer.UpdateRunProfile,
+          request_deserializer=v1_dot_run__profile__pb2.RunProfileBodyRequest.FromString,
+          response_serializer=v1_dot_run__profile__pb2.RunProfile.SerializeToString,
+      ),
+      'PatchRunProfile': grpc.unary_unary_rpc_method_handler(
+          servicer.PatchRunProfile,
+          request_deserializer=v1_dot_run__profile__pb2.RunProfileBodyRequest.FromString,
+          response_serializer=v1_dot_run__profile__pb2.RunProfile.SerializeToString,
+      ),
+      'DeleteRunProfile': grpc.unary_unary_rpc_method_handler(
+          servicer.DeleteRunProfile,
+          request_deserializer=v1_dot_base__pb2.OwnerEntityResourceRequest.FromString,
+          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+      ),
+  }
+  generic_handler = grpc.method_handlers_generic_handler(
+      'v1.RunProfilesV1', rpc_method_handlers)
   server.add_generic_rpc_handlers((generic_handler,))
 
 
@@ -1924,12 +2425,12 @@ class AgentsV1Stub(object):
     """
     self.ListAgentNames = channel.unary_unary(
         '/v1.AgentsV1/ListAgentNames',
-        request_serializer=v1_dot_base__pb2.OwnerResouceListRequest.SerializeToString,
+        request_serializer=v1_dot_base__pb2.OwnerResourceListRequest.SerializeToString,
         response_deserializer=v1_dot_agent__pb2.ListAgentsResponse.FromString,
         )
     self.ListAgents = channel.unary_unary(
         '/v1.AgentsV1/ListAgents',
-        request_serializer=v1_dot_base__pb2.OwnerResouceListRequest.SerializeToString,
+        request_serializer=v1_dot_base__pb2.OwnerResourceListRequest.SerializeToString,
         response_deserializer=v1_dot_agent__pb2.ListAgentsResponse.FromString,
         )
     self.CreateAgent = channel.unary_unary(
@@ -2017,12 +2518,12 @@ def add_AgentsV1Servicer_to_server(servicer, server):
   rpc_method_handlers = {
       'ListAgentNames': grpc.unary_unary_rpc_method_handler(
           servicer.ListAgentNames,
-          request_deserializer=v1_dot_base__pb2.OwnerResouceListRequest.FromString,
+          request_deserializer=v1_dot_base__pb2.OwnerResourceListRequest.FromString,
           response_serializer=v1_dot_agent__pb2.ListAgentsResponse.SerializeToString,
       ),
       'ListAgents': grpc.unary_unary_rpc_method_handler(
           servicer.ListAgents,
-          request_deserializer=v1_dot_base__pb2.OwnerResouceListRequest.FromString,
+          request_deserializer=v1_dot_base__pb2.OwnerResourceListRequest.FromString,
           response_serializer=v1_dot_agent__pb2.ListAgentsResponse.SerializeToString,
       ),
       'CreateAgent': grpc.unary_unary_rpc_method_handler(
@@ -2390,7 +2891,7 @@ class OrganizationsV1Stub(object):
         )
     self.ListOrganizationMembers = channel.unary_unary(
         '/v1.OrganizationsV1/ListOrganizationMembers',
-        request_serializer=v1_dot_base__pb2.OwnerResourceRequest.SerializeToString,
+        request_serializer=v1_dot_base__pb2.OwnerResourceListRequest.SerializeToString,
         response_deserializer=v1_dot_organization__pb2.ListOrganizationMembersResponse.FromString,
         )
     self.CreateOrganizationMember = channel.unary_unary(
@@ -2555,7 +3056,7 @@ def add_OrganizationsV1Servicer_to_server(servicer, server):
       ),
       'ListOrganizationMembers': grpc.unary_unary_rpc_method_handler(
           servicer.ListOrganizationMembers,
-          request_deserializer=v1_dot_base__pb2.OwnerResourceRequest.FromString,
+          request_deserializer=v1_dot_base__pb2.OwnerResourceListRequest.FromString,
           response_serializer=v1_dot_organization__pb2.ListOrganizationMembersResponse.SerializeToString,
       ),
       'CreateOrganizationMember': grpc.unary_unary_rpc_method_handler(
@@ -2601,12 +3102,12 @@ class TeamsV1Stub(object):
     """
     self.ListTeamNames = channel.unary_unary(
         '/v1.TeamsV1/ListTeamNames',
-        request_serializer=v1_dot_base__pb2.OwnerResouceListRequest.SerializeToString,
+        request_serializer=v1_dot_base__pb2.OwnerResourceListRequest.SerializeToString,
         response_deserializer=v1_dot_team__pb2.ListTeamsResponse.FromString,
         )
     self.ListTeams = channel.unary_unary(
         '/v1.TeamsV1/ListTeams',
-        request_serializer=v1_dot_base__pb2.OwnerResouceListRequest.SerializeToString,
+        request_serializer=v1_dot_base__pb2.OwnerResourceListRequest.SerializeToString,
         response_deserializer=v1_dot_team__pb2.ListTeamsResponse.FromString,
         )
     self.CreateTeam = channel.unary_unary(
@@ -2636,7 +3137,7 @@ class TeamsV1Stub(object):
         )
     self.ListTeamMembers = channel.unary_unary(
         '/v1.TeamsV1/ListTeamMembers',
-        request_serializer=v1_dot_base__pb2.TeamResourceRequest.SerializeToString,
+        request_serializer=v1_dot_base__pb2.TeamResourceListRequest.SerializeToString,
         response_deserializer=v1_dot_team__pb2.ListTeamMembersResponse.FromString,
         )
     self.CreateTeamMember = channel.unary_unary(
@@ -2661,7 +3162,7 @@ class TeamsV1Stub(object):
         )
     self.DeleteTeamMember = channel.unary_unary(
         '/v1.TeamsV1/DeleteTeamMember',
-        request_serializer=v1_dot_team__pb2.TeamMemberBodyRequest.SerializeToString,
+        request_serializer=v1_dot_base__pb2.TeamMemeberResourceRequest.SerializeToString,
         response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
         )
 
@@ -2766,12 +3267,12 @@ def add_TeamsV1Servicer_to_server(servicer, server):
   rpc_method_handlers = {
       'ListTeamNames': grpc.unary_unary_rpc_method_handler(
           servicer.ListTeamNames,
-          request_deserializer=v1_dot_base__pb2.OwnerResouceListRequest.FromString,
+          request_deserializer=v1_dot_base__pb2.OwnerResourceListRequest.FromString,
           response_serializer=v1_dot_team__pb2.ListTeamsResponse.SerializeToString,
       ),
       'ListTeams': grpc.unary_unary_rpc_method_handler(
           servicer.ListTeams,
-          request_deserializer=v1_dot_base__pb2.OwnerResouceListRequest.FromString,
+          request_deserializer=v1_dot_base__pb2.OwnerResourceListRequest.FromString,
           response_serializer=v1_dot_team__pb2.ListTeamsResponse.SerializeToString,
       ),
       'CreateTeam': grpc.unary_unary_rpc_method_handler(
@@ -2801,7 +3302,7 @@ def add_TeamsV1Servicer_to_server(servicer, server):
       ),
       'ListTeamMembers': grpc.unary_unary_rpc_method_handler(
           servicer.ListTeamMembers,
-          request_deserializer=v1_dot_base__pb2.TeamResourceRequest.FromString,
+          request_deserializer=v1_dot_base__pb2.TeamResourceListRequest.FromString,
           response_serializer=v1_dot_team__pb2.ListTeamMembersResponse.SerializeToString,
       ),
       'CreateTeamMember': grpc.unary_unary_rpc_method_handler(
@@ -2826,7 +3327,7 @@ def add_TeamsV1Servicer_to_server(servicer, server):
       ),
       'DeleteTeamMember': grpc.unary_unary_rpc_method_handler(
           servicer.DeleteTeamMember,
-          request_deserializer=v1_dot_team__pb2.TeamMemberBodyRequest.FromString,
+          request_deserializer=v1_dot_base__pb2.TeamMemeberResourceRequest.FromString,
           response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
       ),
   }

@@ -82,7 +82,7 @@ public class AgentsV1Api {
         Object localVarPostBody = body;
 
         // create path and map variables
-        String localVarPath = "/api/v1/{owner}/agents"
+        String localVarPath = "/api/v1/orgs/{owner}/agents"
             .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
@@ -214,7 +214,7 @@ public class AgentsV1Api {
         Object localVarPostBody = null;
 
         // create path and map variables
-        String localVarPath = "/api/v1/{owner}/agents/{uuid}"
+        String localVarPath = "/api/v1/orgs/{owner}/agents/{uuid}"
             .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()))
             .replaceAll("\\{" + "uuid" + "\\}", apiClient.escapeString(uuid.toString()));
 
@@ -343,7 +343,7 @@ public class AgentsV1Api {
         Object localVarPostBody = null;
 
         // create path and map variables
-        String localVarPath = "/api/v1/{owner}/agents/{uuid}"
+        String localVarPath = "/api/v1/orgs/{owner}/agents/{uuid}"
             .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()))
             .replaceAll("\\{" + "uuid" + "\\}", apiClient.escapeString(uuid.toString()));
 
@@ -479,7 +479,7 @@ public class AgentsV1Api {
         Object localVarPostBody = null;
 
         // create path and map variables
-        String localVarPath = "/api/v1/{owner}/agents/names"
+        String localVarPath = "/api/v1/orgs/{owner}/agents/names"
             .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
@@ -626,7 +626,7 @@ public class AgentsV1Api {
         Object localVarPostBody = null;
 
         // create path and map variables
-        String localVarPath = "/api/v1/{owner}/agents"
+        String localVarPath = "/api/v1/orgs/{owner}/agents"
             .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
@@ -771,7 +771,7 @@ public class AgentsV1Api {
         Object localVarPostBody = body;
 
         // create path and map variables
-        String localVarPath = "/api/v1/{owner}/agents/{agent.uuid}"
+        String localVarPath = "/api/v1/orgs/{owner}/agents/{agent.uuid}"
             .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()))
             .replaceAll("\\{" + "agent.uuid" + "\\}", apiClient.escapeString(agentUuid.toString()));
 
@@ -913,7 +913,7 @@ public class AgentsV1Api {
         Object localVarPostBody = body;
 
         // create path and map variables
-        String localVarPath = "/api/v1/{owner}/agents/{agent.uuid}"
+        String localVarPath = "/api/v1/orgs/{owner}/agents/{agent.uuid}"
             .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()))
             .replaceAll("\\{" + "agent.uuid" + "\\}", apiClient.escapeString(agentUuid.toString()));
 

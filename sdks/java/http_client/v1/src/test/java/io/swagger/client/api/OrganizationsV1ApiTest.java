@@ -159,7 +159,11 @@ public class OrganizationsV1ApiTest {
     @Test
     public void listOrganizationMembersTest() throws ApiException {
         String owner = null;
-        V1ListOrganizationMembersResponse response = api.listOrganizationMembers(owner);
+        Integer offset = null;
+        Integer limit = null;
+        String sort = null;
+        String query = null;
+        V1ListOrganizationMembersResponse response = api.listOrganizationMembers(owner, offset, limit, sort, query);
 
         // TODO: test validations
     }

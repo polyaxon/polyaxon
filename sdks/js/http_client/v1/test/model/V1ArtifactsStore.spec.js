@@ -73,12 +73,6 @@
         // expect(instance.description).to.be(expectedValueLiteral);
       });
 
-      it('should have the property readme (base name: "readme")', function() {
-        // TODO: update the code to test the property readme
-        expect(instance).to.have.property('readme');
-        // expect(instance.readme).to.be(expectedValueLiteral);
-      });
-
       it('should have the property tags (base name: "tags")', function() {
         // TODO: update the code to test the property tags
         expect(instance).to.have.property('tags');

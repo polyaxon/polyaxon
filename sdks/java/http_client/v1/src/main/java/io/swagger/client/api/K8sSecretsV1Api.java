@@ -70,7 +70,7 @@ public class K8sSecretsV1Api {
     }
 
     /**
-     * Build call for createK8sSecrets
+     * Build call for createK8sSecret
      * @param owner Owner of the namespace (required)
      * @param body Artifact store body (required)
      * @param progressListener Progress listener
@@ -78,11 +78,11 @@ public class K8sSecretsV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call createK8sSecretsCall(String owner, V1K8sResource body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call createK8sSecretCall(String owner, V1K8sResource body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
-        String localVarPath = "/api/v1/{owner}/k8s_secrets"
+        String localVarPath = "/api/v1/orgs/{owner}/k8s_secrets"
             .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
@@ -121,20 +121,20 @@ public class K8sSecretsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call createK8sSecretsValidateBeforeCall(String owner, V1K8sResource body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call createK8sSecretValidateBeforeCall(String owner, V1K8sResource body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling createK8sSecrets(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling createK8sSecret(Async)");
         }
         
         // verify the required parameter 'body' is set
         if (body == null) {
-            throw new ApiException("Missing the required parameter 'body' when calling createK8sSecrets(Async)");
+            throw new ApiException("Missing the required parameter 'body' when calling createK8sSecret(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = createK8sSecretsCall(owner, body, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = createK8sSecretCall(owner, body, progressListener, progressRequestListener);
         return call;
 
     }
@@ -147,8 +147,8 @@ public class K8sSecretsV1Api {
      * @return V1K8sResource
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1K8sResource createK8sSecrets(String owner, V1K8sResource body) throws ApiException {
-        ApiResponse<V1K8sResource> resp = createK8sSecretsWithHttpInfo(owner, body);
+    public V1K8sResource createK8sSecret(String owner, V1K8sResource body) throws ApiException {
+        ApiResponse<V1K8sResource> resp = createK8sSecretWithHttpInfo(owner, body);
         return resp.getData();
     }
 
@@ -160,8 +160,8 @@ public class K8sSecretsV1Api {
      * @return ApiResponse&lt;V1K8sResource&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1K8sResource> createK8sSecretsWithHttpInfo(String owner, V1K8sResource body) throws ApiException {
-        com.squareup.okhttp.Call call = createK8sSecretsValidateBeforeCall(owner, body, null, null);
+    public ApiResponse<V1K8sResource> createK8sSecretWithHttpInfo(String owner, V1K8sResource body) throws ApiException {
+        com.squareup.okhttp.Call call = createK8sSecretValidateBeforeCall(owner, body, null, null);
         Type localVarReturnType = new TypeToken<V1K8sResource>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -175,7 +175,7 @@ public class K8sSecretsV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call createK8sSecretsAsync(String owner, V1K8sResource body, final ApiCallback<V1K8sResource> callback) throws ApiException {
+    public com.squareup.okhttp.Call createK8sSecretAsync(String owner, V1K8sResource body, final ApiCallback<V1K8sResource> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -196,7 +196,7 @@ public class K8sSecretsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = createK8sSecretsValidateBeforeCall(owner, body, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = createK8sSecretValidateBeforeCall(owner, body, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1K8sResource>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
@@ -214,7 +214,7 @@ public class K8sSecretsV1Api {
         Object localVarPostBody = null;
 
         // create path and map variables
-        String localVarPath = "/api/v1/{owner}/k8s_secrets/{uuid}"
+        String localVarPath = "/api/v1/orgs/{owner}/k8s_secrets/{uuid}"
             .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()))
             .replaceAll("\\{" + "uuid" + "\\}", apiClient.escapeString(uuid.toString()));
 
@@ -343,7 +343,7 @@ public class K8sSecretsV1Api {
         Object localVarPostBody = null;
 
         // create path and map variables
-        String localVarPath = "/api/v1/{owner}/k8s_secrets/{uuid}"
+        String localVarPath = "/api/v1/orgs/{owner}/k8s_secrets/{uuid}"
             .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()))
             .replaceAll("\\{" + "uuid" + "\\}", apiClient.escapeString(uuid.toString()));
 
@@ -479,7 +479,7 @@ public class K8sSecretsV1Api {
         Object localVarPostBody = null;
 
         // create path and map variables
-        String localVarPath = "/api/v1/{owner}/k8s_secrets/names"
+        String localVarPath = "/api/v1/orgs/{owner}/k8s_secrets/names"
             .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
@@ -626,7 +626,7 @@ public class K8sSecretsV1Api {
         Object localVarPostBody = null;
 
         // create path and map variables
-        String localVarPath = "/api/v1/{owner}/k8s_secrets"
+        String localVarPath = "/api/v1/orgs/{owner}/k8s_secrets"
             .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
@@ -771,7 +771,7 @@ public class K8sSecretsV1Api {
         Object localVarPostBody = body;
 
         // create path and map variables
-        String localVarPath = "/api/v1/{owner}/k8s_secrets/{k8s_resource.uuid}"
+        String localVarPath = "/api/v1/orgs/{owner}/k8s_secrets/{k8s_resource.uuid}"
             .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()))
             .replaceAll("\\{" + "k8s_resource.uuid" + "\\}", apiClient.escapeString(k8sResourceUuid.toString()));
 
@@ -913,7 +913,7 @@ public class K8sSecretsV1Api {
         Object localVarPostBody = body;
 
         // create path and map variables
-        String localVarPath = "/api/v1/{owner}/k8s_secrets/{k8s_resource.uuid}"
+        String localVarPath = "/api/v1/orgs/{owner}/k8s_secrets/{k8s_resource.uuid}"
             .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()))
             .replaceAll("\\{" + "k8s_resource.uuid" + "\\}", apiClient.escapeString(k8sResourceUuid.toString()));
 

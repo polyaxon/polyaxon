@@ -82,7 +82,7 @@ type CreateArtifactsStoreOK struct {
 }
 
 func (o *CreateArtifactsStoreOK) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/artifacts_stores][%d] createArtifactsStoreOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/orgs/{owner}/artifacts_stores][%d] createArtifactsStoreOK  %+v", 200, o.Payload)
 }
 
 func (o *CreateArtifactsStoreOK) GetPayload() *service_model.V1ArtifactsStore {
@@ -115,7 +115,7 @@ type CreateArtifactsStoreNoContent struct {
 }
 
 func (o *CreateArtifactsStoreNoContent) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/artifacts_stores][%d] createArtifactsStoreNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/orgs/{owner}/artifacts_stores][%d] createArtifactsStoreNoContent  %+v", 204, o.Payload)
 }
 
 func (o *CreateArtifactsStoreNoContent) GetPayload() interface{} {
@@ -146,7 +146,7 @@ type CreateArtifactsStoreForbidden struct {
 }
 
 func (o *CreateArtifactsStoreForbidden) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/artifacts_stores][%d] createArtifactsStoreForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/orgs/{owner}/artifacts_stores][%d] createArtifactsStoreForbidden  %+v", 403, o.Payload)
 }
 
 func (o *CreateArtifactsStoreForbidden) GetPayload() interface{} {
@@ -177,7 +177,7 @@ type CreateArtifactsStoreNotFound struct {
 }
 
 func (o *CreateArtifactsStoreNotFound) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/artifacts_stores][%d] createArtifactsStoreNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/orgs/{owner}/artifacts_stores][%d] createArtifactsStoreNotFound  %+v", 404, o.Payload)
 }
 
 func (o *CreateArtifactsStoreNotFound) GetPayload() interface{} {

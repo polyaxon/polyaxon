@@ -35,6 +35,9 @@ type V1OrganizationMember struct {
 	// Format: date-time
 	CreatedAt strfmt.DateTime `json:"created_at,omitempty"`
 
+	// Write-only email for inviting new user
+	Email string `json:"email,omitempty"`
+
 	// Role
 	Role string `json:"role,omitempty"`
 
@@ -44,6 +47,9 @@ type V1OrganizationMember struct {
 
 	// User
 	User string `json:"user,omitempty"`
+
+	// Read-only User email
+	UserEmail string `json:"user_email,omitempty"`
 }
 
 // Validate validates this v1 organization member

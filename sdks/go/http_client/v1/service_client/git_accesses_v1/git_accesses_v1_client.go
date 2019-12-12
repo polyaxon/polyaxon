@@ -52,7 +52,7 @@ func (a *Client) CreateGitAccess(params *CreateGitAccessParams, authInfo runtime
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "CreateGitAccess",
 		Method:             "POST",
-		PathPattern:        "/api/v1/{owner}/git_accesses",
+		PathPattern:        "/api/v1/orgs/{owner}/git_accesses",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -88,7 +88,7 @@ func (a *Client) DeleteGitAccess(params *DeleteGitAccessParams, authInfo runtime
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "DeleteGitAccess",
 		Method:             "DELETE",
-		PathPattern:        "/api/v1/{owner}/git_accesses/{uuid}",
+		PathPattern:        "/api/v1/orgs/{owner}/git_accesses/{uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -124,7 +124,7 @@ func (a *Client) GetGitAccess(params *GetGitAccessParams, authInfo runtime.Clien
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "GetGitAccess",
 		Method:             "GET",
-		PathPattern:        "/api/v1/{owner}/git_accesses/{uuid}",
+		PathPattern:        "/api/v1/orgs/{owner}/git_accesses/{uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -160,7 +160,7 @@ func (a *Client) ListGitAccessNames(params *ListGitAccessNamesParams, authInfo r
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "ListGitAccessNames",
 		Method:             "GET",
-		PathPattern:        "/api/v1/{owner}/git_accesses/names",
+		PathPattern:        "/api/v1/orgs/{owner}/git_accesses/names",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -196,7 +196,7 @@ func (a *Client) ListGitAccesses(params *ListGitAccessesParams, authInfo runtime
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "ListGitAccesses",
 		Method:             "GET",
-		PathPattern:        "/api/v1/{owner}/git_accesses",
+		PathPattern:        "/api/v1/orgs/{owner}/git_accesses",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -232,7 +232,7 @@ func (a *Client) PatchGitAccess(params *PatchGitAccessParams, authInfo runtime.C
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "PatchGitAccess",
 		Method:             "PATCH",
-		PathPattern:        "/api/v1/{owner}/git_accesses/{host_access.uuid}",
+		PathPattern:        "/api/v1/orgs/{owner}/git_accesses/{host_access.uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -268,7 +268,7 @@ func (a *Client) UpdateGitAccess(params *UpdateGitAccessParams, authInfo runtime
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "UpdateGitAccess",
 		Method:             "PUT",
-		PathPattern:        "/api/v1/{owner}/git_accesses/{host_access.uuid}",
+		PathPattern:        "/api/v1/orgs/{owner}/git_accesses/{host_access.uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},

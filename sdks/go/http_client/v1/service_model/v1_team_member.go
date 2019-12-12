@@ -47,6 +47,9 @@ type V1TeamMember struct {
 
 	// User
 	User string `json:"user,omitempty"`
+
+	// User email
+	UserEmail string `json:"user_email,omitempty"`
 }
 
 // Validate validates this v1 team member

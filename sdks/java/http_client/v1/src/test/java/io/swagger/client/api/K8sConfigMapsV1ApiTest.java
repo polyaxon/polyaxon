@@ -56,10 +56,10 @@ public class K8sConfigMapsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void createK8sConfigMapsTest() throws ApiException {
+    public void createK8sConfigMapTest() throws ApiException {
         String owner = null;
         V1K8sResource body = null;
-        V1K8sResource response = api.createK8sConfigMaps(owner, body);
+        V1K8sResource response = api.createK8sConfigMap(owner, body);
 
         // TODO: test validations
     }

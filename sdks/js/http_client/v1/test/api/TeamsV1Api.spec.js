@@ -103,6 +103,7 @@
           var team = "team_example";
           var body = new PolyaxonSdk.V1TeamMember();
           body.user = "";
+          body.user_email = "";
           body.role = "";
           body.org_role = "";
           body.created_at = new Date();
@@ -117,6 +118,8 @@
             expect(data).to.be.a(PolyaxonSdk.V1TeamMember);
             expect(data.user).to.be.a('string');
             expect(data.user).to.be("");
+            expect(data.user_email).to.be.a('string');
+            expect(data.user_email).to.be("");
             expect(data.role).to.be.a('string');
             expect(data.role).to.be("");
             expect(data.org_role).to.be.a('string');
@@ -159,14 +162,9 @@
           /*
           var owner = "owner_example";
           var team = "team_example";
-          var member_user = "member_user_example";
-          var opts = {};
-          opts.member_role = "member_role_example";
-          opts.member_org_role = "member_org_role_example";
-          opts.member_created_at = new Date("2013-10-20T19:20:30+01:00");
-          opts.member_updated_at = new Date("2013-10-20T19:20:30+01:00");
+          var user = "user_example";
 
-          instance.deleteTeamMember(owner, team, member_user, opts, function(error, data, response) {
+          instance.deleteTeamMember(owner, team, user, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -236,6 +234,8 @@
             expect(data).to.be.a(PolyaxonSdk.V1TeamMember);
             expect(data.user).to.be.a('string');
             expect(data.user).to.be("");
+            expect(data.user_email).to.be.a('string');
+            expect(data.user_email).to.be("");
             expect(data.role).to.be.a('string');
             expect(data.role).to.be("");
             expect(data.org_role).to.be.a('string');
@@ -258,8 +258,13 @@
           /*
           var owner = "owner_example";
           var team = "team_example";
+          var opts = {};
+          opts.offset = 56;
+          opts.limit = 56;
+          opts.sort = "sort_example";
+          opts.query = "query_example";
 
-          instance.listTeamMembers(owner, team, function(error, data, response) {
+          instance.listTeamMembers(owner, team, opts, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -277,6 +282,8 @@
                 expect(data).to.be.a(PolyaxonSdk.V1TeamMember);
                 expect(data.user).to.be.a('string');
                 expect(data.user).to.be("");
+                expect(data.user_email).to.be.a('string');
+                expect(data.user_email).to.be("");
                 expect(data.role).to.be.a('string');
                 expect(data.role).to.be("");
                 expect(data.org_role).to.be.a('string');
@@ -472,6 +479,7 @@
           var member_user = "member_user_example";
           var body = new PolyaxonSdk.V1TeamMember();
           body.user = "";
+          body.user_email = "";
           body.role = "";
           body.org_role = "";
           body.created_at = new Date();
@@ -486,6 +494,8 @@
             expect(data).to.be.a(PolyaxonSdk.V1TeamMember);
             expect(data.user).to.be.a('string');
             expect(data.user).to.be("");
+            expect(data.user_email).to.be.a('string');
+            expect(data.user_email).to.be("");
             expect(data.role).to.be.a('string');
             expect(data.role).to.be("");
             expect(data.org_role).to.be.a('string');
@@ -557,6 +567,7 @@
           var member_user = "member_user_example";
           var body = new PolyaxonSdk.V1TeamMember();
           body.user = "";
+          body.user_email = "";
           body.role = "";
           body.org_role = "";
           body.created_at = new Date();
@@ -571,6 +582,8 @@
             expect(data).to.be.a(PolyaxonSdk.V1TeamMember);
             expect(data.user).to.be.a('string');
             expect(data.user).to.be("");
+            expect(data.user_email).to.be.a('string');
+            expect(data.user_email).to.be("");
             expect(data.role).to.be.a('string');
             expect(data.role).to.be("");
             expect(data.org_role).to.be.a('string');

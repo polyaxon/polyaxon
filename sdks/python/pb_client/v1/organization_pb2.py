@@ -37,7 +37,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='v1',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\x15v1/organization.proto\x12\x02v1\x1a\x1fgoogle/protobuf/timestamp.proto\"\xb1\x01\n\x0cOrganization\x12\x0c\n\x04user\x18\x01 \x01(\t\x12\x12\n\nuser_email\x18\x02 \x01(\t\x12\x0c\n\x04name\x18\x03 \x01(\t\x12\x11\n\tis_public\x18\x04 \x01(\t\x12.\n\ncreated_at\x18\x05 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12.\n\nupdated_at\x18\x06 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"P\n\x17OrganizationBodyRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12&\n\x0corganization\x18\x02 \x01(\x0b\x32\x10.v1.Organization\"m\n\x19ListOrganizationsResponse\x12\r\n\x05\x63ount\x18\x01 \x01(\x05\x12!\n\x07results\x18\x02 \x03(\x0b\x32\x10.v1.Organization\x12\x10\n\x08previous\x18\x03 \x01(\t\x12\x0c\n\x04next\x18\x04 \x01(\t\"\x90\x01\n\x12OrganizationMember\x12\x0c\n\x04user\x18\x01 \x01(\t\x12\x0c\n\x04role\x18\x02 \x01(\t\x12.\n\ncreated_at\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12.\n\nupdated_at\x18\x04 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"V\n\x1dOrganizationMemberBodyRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12&\n\x06member\x18\x02 \x01(\x0b\x32\x16.v1.OrganizationMember\"y\n\x1fListOrganizationMembersResponse\x12\r\n\x05\x63ount\x18\x01 \x01(\x05\x12\'\n\x07results\x18\x02 \x03(\x0b\x32\x16.v1.OrganizationMember\x12\x10\n\x08previous\x18\x03 \x01(\t\x12\x0c\n\x04next\x18\x04 \x01(\tb\x06proto3')
+  serialized_pb=_b('\n\x15v1/organization.proto\x12\x02v1\x1a\x1fgoogle/protobuf/timestamp.proto\"\xb1\x01\n\x0cOrganization\x12\x0c\n\x04user\x18\x01 \x01(\t\x12\x12\n\nuser_email\x18\x02 \x01(\t\x12\x0c\n\x04name\x18\x03 \x01(\t\x12\x11\n\tis_public\x18\x04 \x01(\t\x12.\n\ncreated_at\x18\x05 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12.\n\nupdated_at\x18\x06 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"P\n\x17OrganizationBodyRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12&\n\x0corganization\x18\x02 \x01(\x0b\x32\x10.v1.Organization\"m\n\x19ListOrganizationsResponse\x12\r\n\x05\x63ount\x18\x01 \x01(\x05\x12!\n\x07results\x18\x02 \x03(\x0b\x32\x10.v1.Organization\x12\x10\n\x08previous\x18\x03 \x01(\t\x12\x0c\n\x04next\x18\x04 \x01(\t\"\xb3\x01\n\x12OrganizationMember\x12\x0c\n\x04user\x18\x01 \x01(\t\x12\x12\n\nuser_email\x18\x02 \x01(\t\x12\r\n\x05\x65mail\x18\x03 \x01(\t\x12\x0c\n\x04role\x18\x04 \x01(\t\x12.\n\ncreated_at\x18\x05 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12.\n\nupdated_at\x18\x06 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"V\n\x1dOrganizationMemberBodyRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12&\n\x06member\x18\x02 \x01(\x0b\x32\x16.v1.OrganizationMember\"y\n\x1fListOrganizationMembersResponse\x12\r\n\x05\x63ount\x18\x01 \x01(\x05\x12\'\n\x07results\x18\x02 \x03(\x0b\x32\x16.v1.OrganizationMember\x12\x10\n\x08previous\x18\x03 \x01(\t\x12\x0c\n\x04next\x18\x04 \x01(\tb\x06proto3')
   ,
   dependencies=[google_dot_protobuf_dot_timestamp__pb2.DESCRIPTOR,])
 
@@ -215,22 +215,36 @@ _ORGANIZATIONMEMBER = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='role', full_name='v1.OrganizationMember.role', index=1,
+      name='user_email', full_name='v1.OrganizationMember.user_email', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='created_at', full_name='v1.OrganizationMember.created_at', index=2,
-      number=3, type=11, cpp_type=10, label=1,
+      name='email', full_name='v1.OrganizationMember.email', index=2,
+      number=3, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='role', full_name='v1.OrganizationMember.role', index=3,
+      number=4, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='created_at', full_name='v1.OrganizationMember.created_at', index=4,
+      number=5, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='updated_at', full_name='v1.OrganizationMember.updated_at', index=3,
-      number=4, type=11, cpp_type=10, label=1,
+      name='updated_at', full_name='v1.OrganizationMember.updated_at', index=5,
+      number=6, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -248,7 +262,7 @@ _ORGANIZATIONMEMBER = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=436,
-  serialized_end=580,
+  serialized_end=615,
 )
 
 
@@ -285,8 +299,8 @@ _ORGANIZATIONMEMBERBODYREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=582,
-  serialized_end=668,
+  serialized_start=617,
+  serialized_end=703,
 )
 
 
@@ -337,8 +351,8 @@ _LISTORGANIZATIONMEMBERSRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=670,
-  serialized_end=791,
+  serialized_start=705,
+  serialized_end=826,
 )
 
 _ORGANIZATION.fields_by_name['created_at'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP

@@ -82,7 +82,7 @@ type CreateAgentOK struct {
 }
 
 func (o *CreateAgentOK) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/agents][%d] createAgentOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/orgs/{owner}/agents][%d] createAgentOK  %+v", 200, o.Payload)
 }
 
 func (o *CreateAgentOK) GetPayload() *service_model.V1Agent {
@@ -115,7 +115,7 @@ type CreateAgentNoContent struct {
 }
 
 func (o *CreateAgentNoContent) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/agents][%d] createAgentNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/orgs/{owner}/agents][%d] createAgentNoContent  %+v", 204, o.Payload)
 }
 
 func (o *CreateAgentNoContent) GetPayload() interface{} {
@@ -146,7 +146,7 @@ type CreateAgentForbidden struct {
 }
 
 func (o *CreateAgentForbidden) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/agents][%d] createAgentForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/orgs/{owner}/agents][%d] createAgentForbidden  %+v", 403, o.Payload)
 }
 
 func (o *CreateAgentForbidden) GetPayload() interface{} {
@@ -177,7 +177,7 @@ type CreateAgentNotFound struct {
 }
 
 func (o *CreateAgentNotFound) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/agents][%d] createAgentNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/orgs/{owner}/agents][%d] createAgentNotFound  %+v", 404, o.Payload)
 }
 
 func (o *CreateAgentNotFound) GetPayload() interface{} {

@@ -109,7 +109,7 @@
       var returnType = V1Agent;
 
       return this.apiClient.callApi(
-        '/api/v1/{owner}/agents', 'POST',
+        '/api/v1/orgs/{owner}/agents', 'POST',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -162,7 +162,7 @@
       var returnType = null;
 
       return this.apiClient.callApi(
-        '/api/v1/{owner}/agents/{uuid}', 'DELETE',
+        '/api/v1/orgs/{owner}/agents/{uuid}', 'DELETE',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -216,7 +216,7 @@
       var returnType = V1Agent;
 
       return this.apiClient.callApi(
-        '/api/v1/{owner}/agents/{uuid}', 'GET',
+        '/api/v1/orgs/{owner}/agents/{uuid}', 'GET',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -273,7 +273,7 @@
       var returnType = V1ListAgentsResponse;
 
       return this.apiClient.callApi(
-        '/api/v1/{owner}/agents/names', 'GET',
+        '/api/v1/orgs/{owner}/agents/names', 'GET',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -330,7 +330,7 @@
       var returnType = V1ListAgentsResponse;
 
       return this.apiClient.callApi(
-        '/api/v1/{owner}/agents', 'GET',
+        '/api/v1/orgs/{owner}/agents', 'GET',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -390,7 +390,7 @@
       var returnType = V1Agent;
 
       return this.apiClient.callApi(
-        '/api/v1/{owner}/agents/{agent.uuid}', 'PATCH',
+        '/api/v1/orgs/{owner}/agents/{agent.uuid}', 'PATCH',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -450,7 +450,7 @@
       var returnType = V1Agent;
 
       return this.apiClient.callApi(
-        '/api/v1/{owner}/agents/{agent.uuid}', 'PUT',
+        '/api/v1/orgs/{owner}/agents/{agent.uuid}', 'PUT',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );

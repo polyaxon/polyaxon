@@ -41,23 +41,23 @@ type Client struct {
 }
 
 /*
-CreateK8sConfigMaps lists runs
+CreateK8sConfigMap lists runs
 */
-func (a *Client) CreateK8sConfigMaps(params *CreateK8sConfigMapsParams, authInfo runtime.ClientAuthInfoWriter) (*CreateK8sConfigMapsOK, *CreateK8sConfigMapsNoContent, error) {
+func (a *Client) CreateK8sConfigMap(params *CreateK8sConfigMapParams, authInfo runtime.ClientAuthInfoWriter) (*CreateK8sConfigMapOK, *CreateK8sConfigMapNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewCreateK8sConfigMapsParams()
+		params = NewCreateK8sConfigMapParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "CreateK8sConfigMaps",
+		ID:                 "CreateK8sConfigMap",
 		Method:             "POST",
-		PathPattern:        "/api/v1/{owner}/k8s_config_maps",
+		PathPattern:        "/api/v1/orgs/{owner}/k8s_config_maps",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &CreateK8sConfigMapsReader{formats: a.formats},
+		Reader:             &CreateK8sConfigMapReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -66,9 +66,9 @@ func (a *Client) CreateK8sConfigMaps(params *CreateK8sConfigMapsParams, authInfo
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *CreateK8sConfigMapsOK:
+	case *CreateK8sConfigMapOK:
 		return value, nil, nil
-	case *CreateK8sConfigMapsNoContent:
+	case *CreateK8sConfigMapNoContent:
 		return nil, value, nil
 	}
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
@@ -88,7 +88,7 @@ func (a *Client) DeleteK8sConfigMap(params *DeleteK8sConfigMapParams, authInfo r
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "DeleteK8sConfigMap",
 		Method:             "DELETE",
-		PathPattern:        "/api/v1/{owner}/k8s_config_maps/{uuid}",
+		PathPattern:        "/api/v1/orgs/{owner}/k8s_config_maps/{uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -124,7 +124,7 @@ func (a *Client) GetK8sConfigMap(params *GetK8sConfigMapParams, authInfo runtime
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "GetK8sConfigMap",
 		Method:             "GET",
-		PathPattern:        "/api/v1/{owner}/k8s_config_maps/{uuid}",
+		PathPattern:        "/api/v1/orgs/{owner}/k8s_config_maps/{uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -160,7 +160,7 @@ func (a *Client) ListK8sConfigMapNames(params *ListK8sConfigMapNamesParams, auth
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "ListK8sConfigMapNames",
 		Method:             "GET",
-		PathPattern:        "/api/v1/{owner}/k8s_config_maps/names",
+		PathPattern:        "/api/v1/orgs/{owner}/k8s_config_maps/names",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -196,7 +196,7 @@ func (a *Client) ListK8sConfigMaps(params *ListK8sConfigMapsParams, authInfo run
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "ListK8sConfigMaps",
 		Method:             "GET",
-		PathPattern:        "/api/v1/{owner}/k8s_config_maps",
+		PathPattern:        "/api/v1/orgs/{owner}/k8s_config_maps",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -232,7 +232,7 @@ func (a *Client) PatchK8sConfigMap(params *PatchK8sConfigMapParams, authInfo run
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "PatchK8sConfigMap",
 		Method:             "PATCH",
-		PathPattern:        "/api/v1/{owner}/k8s_config_maps/{k8s_resource.uuid}",
+		PathPattern:        "/api/v1/orgs/{owner}/k8s_config_maps/{k8s_resource.uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -268,7 +268,7 @@ func (a *Client) UpdateK8sConfigMap(params *UpdateK8sConfigMapParams, authInfo r
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "UpdateK8sConfigMap",
 		Method:             "PUT",
-		PathPattern:        "/api/v1/{owner}/k8s_config_maps/{k8s_resource.uuid}",
+		PathPattern:        "/api/v1/orgs/{owner}/k8s_config_maps/{k8s_resource.uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},

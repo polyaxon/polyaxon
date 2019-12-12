@@ -4,13 +4,13 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**createAgent**](AgentsV1Api.md#createAgent) | **POST** /api/v1/{owner}/agents | List runs
-[**deleteAgent**](AgentsV1Api.md#deleteAgent) | **DELETE** /api/v1/{owner}/agents/{uuid} | Patch run
-[**getAgent**](AgentsV1Api.md#getAgent) | **GET** /api/v1/{owner}/agents/{uuid} | Create new run
-[**listAgentNames**](AgentsV1Api.md#listAgentNames) | **GET** /api/v1/{owner}/agents/names | List bookmarked runs for user
-[**listAgents**](AgentsV1Api.md#listAgents) | **GET** /api/v1/{owner}/agents | List archived runs for user
-[**patchAgent**](AgentsV1Api.md#patchAgent) | **PATCH** /api/v1/{owner}/agents/{agent.uuid} | Update run
-[**updateAgent**](AgentsV1Api.md#updateAgent) | **PUT** /api/v1/{owner}/agents/{agent.uuid} | Get run
+[**createAgent**](AgentsV1Api.md#createAgent) | **POST** /api/v1/orgs/{owner}/agents | List runs
+[**deleteAgent**](AgentsV1Api.md#deleteAgent) | **DELETE** /api/v1/orgs/{owner}/agents/{uuid} | Patch run
+[**getAgent**](AgentsV1Api.md#getAgent) | **GET** /api/v1/orgs/{owner}/agents/{uuid} | Create new run
+[**listAgentNames**](AgentsV1Api.md#listAgentNames) | **GET** /api/v1/orgs/{owner}/agents/names | List bookmarked runs for user
+[**listAgents**](AgentsV1Api.md#listAgents) | **GET** /api/v1/orgs/{owner}/agents | List archived runs for user
+[**patchAgent**](AgentsV1Api.md#patchAgent) | **PATCH** /api/v1/orgs/{owner}/agents/{agent.uuid} | Update run
+[**updateAgent**](AgentsV1Api.md#updateAgent) | **PUT** /api/v1/orgs/{owner}/agents/{agent.uuid} | Get run
 
 
 <a name="createAgent"></a>

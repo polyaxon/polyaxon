@@ -79,7 +79,7 @@ type DeleteArtifactsStoreOK struct {
 }
 
 func (o *DeleteArtifactsStoreOK) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/{owner}/artifacts_stores/{uuid}][%d] deleteArtifactsStoreOK ", 200)
+	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/artifacts_stores/{uuid}][%d] deleteArtifactsStoreOK ", 200)
 }
 
 func (o *DeleteArtifactsStoreOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -101,7 +101,7 @@ type DeleteArtifactsStoreNoContent struct {
 }
 
 func (o *DeleteArtifactsStoreNoContent) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/{owner}/artifacts_stores/{uuid}][%d] deleteArtifactsStoreNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/artifacts_stores/{uuid}][%d] deleteArtifactsStoreNoContent  %+v", 204, o.Payload)
 }
 
 func (o *DeleteArtifactsStoreNoContent) GetPayload() interface{} {
@@ -132,7 +132,7 @@ type DeleteArtifactsStoreForbidden struct {
 }
 
 func (o *DeleteArtifactsStoreForbidden) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/{owner}/artifacts_stores/{uuid}][%d] deleteArtifactsStoreForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/artifacts_stores/{uuid}][%d] deleteArtifactsStoreForbidden  %+v", 403, o.Payload)
 }
 
 func (o *DeleteArtifactsStoreForbidden) GetPayload() interface{} {
@@ -163,7 +163,7 @@ type DeleteArtifactsStoreNotFound struct {
 }
 
 func (o *DeleteArtifactsStoreNotFound) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/{owner}/artifacts_stores/{uuid}][%d] deleteArtifactsStoreNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/artifacts_stores/{uuid}][%d] deleteArtifactsStoreNotFound  %+v", 404, o.Payload)
 }
 
 func (o *DeleteArtifactsStoreNotFound) GetPayload() interface{} {

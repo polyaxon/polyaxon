@@ -79,7 +79,7 @@ type DeleteGitAccessOK struct {
 }
 
 func (o *DeleteGitAccessOK) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/{owner}/git_accesses/{uuid}][%d] deleteGitAccessOK ", 200)
+	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/git_accesses/{uuid}][%d] deleteGitAccessOK ", 200)
 }
 
 func (o *DeleteGitAccessOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -101,7 +101,7 @@ type DeleteGitAccessNoContent struct {
 }
 
 func (o *DeleteGitAccessNoContent) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/{owner}/git_accesses/{uuid}][%d] deleteGitAccessNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/git_accesses/{uuid}][%d] deleteGitAccessNoContent  %+v", 204, o.Payload)
 }
 
 func (o *DeleteGitAccessNoContent) GetPayload() interface{} {
@@ -132,7 +132,7 @@ type DeleteGitAccessForbidden struct {
 }
 
 func (o *DeleteGitAccessForbidden) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/{owner}/git_accesses/{uuid}][%d] deleteGitAccessForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/git_accesses/{uuid}][%d] deleteGitAccessForbidden  %+v", 403, o.Payload)
 }
 
 func (o *DeleteGitAccessForbidden) GetPayload() interface{} {
@@ -163,7 +163,7 @@ type DeleteGitAccessNotFound struct {
 }
 
 func (o *DeleteGitAccessNotFound) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/{owner}/git_accesses/{uuid}][%d] deleteGitAccessNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/git_accesses/{uuid}][%d] deleteGitAccessNotFound  %+v", 404, o.Payload)
 }
 
 func (o *DeleteGitAccessNotFound) GetPayload() interface{} {

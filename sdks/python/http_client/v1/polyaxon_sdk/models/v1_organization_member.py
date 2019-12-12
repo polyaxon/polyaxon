@@ -48,6 +48,8 @@ class V1OrganizationMember(object):
     """
     swagger_types = {
         "user": "str",
+        "user_email": "str",
+        "email": "str",
         "role": "str",
         "created_at": "datetime",
         "updated_at": "datetime",
@@ -55,17 +57,27 @@ class V1OrganizationMember(object):
 
     attribute_map = {
         "user": "user",
+        "user_email": "user_email",
+        "email": "email",
         "role": "role",
         "created_at": "created_at",
         "updated_at": "updated_at",
     }
 
     def __init__(
-        self, user=None, role=None, created_at=None, updated_at=None
+        self,
+        user=None,
+        user_email=None,
+        email=None,
+        role=None,
+        created_at=None,
+        updated_at=None,
     ):  # noqa: E501
         """V1OrganizationMember - a model defined in Swagger"""  # noqa: E501
 
         self._user = None
+        self._user_email = None
+        self._email = None
         self._role = None
         self._created_at = None
         self._updated_at = None
@@ -73,6 +85,10 @@ class V1OrganizationMember(object):
 
         if user is not None:
             self.user = user
+        if user_email is not None:
+            self.user_email = user_email
+        if email is not None:
+            self.email = email
         if role is not None:
             self.role = role
         if created_at is not None:
@@ -100,6 +116,48 @@ class V1OrganizationMember(object):
         """
 
         self._user = user
+
+    @property
+    def user_email(self):
+        """Gets the user_email of this V1OrganizationMember.  # noqa: E501
+
+
+        :return: The user_email of this V1OrganizationMember.  # noqa: E501
+        :rtype: str
+        """
+        return self._user_email
+
+    @user_email.setter
+    def user_email(self, user_email):
+        """Sets the user_email of this V1OrganizationMember.
+
+
+        :param user_email: The user_email of this V1OrganizationMember.  # noqa: E501
+        :type: str
+        """
+
+        self._user_email = user_email
+
+    @property
+    def email(self):
+        """Gets the email of this V1OrganizationMember.  # noqa: E501
+
+
+        :return: The email of this V1OrganizationMember.  # noqa: E501
+        :rtype: str
+        """
+        return self._email
+
+    @email.setter
+    def email(self, email):
+        """Sets the email of this V1OrganizationMember.
+
+
+        :param email: The email of this V1OrganizationMember.  # noqa: E501
+        :type: str
+        """
+
+        self._email = email
 
     @property
     def role(self):

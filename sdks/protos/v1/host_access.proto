@@ -15,35 +15,32 @@ message HostAccess {
     // Optional description
     string description = 3;
 
-    // Optional a readme text describing this entity
-    string readme = 4;
-
     // Optional Tags of this entity
-    repeated string tags = 5;
+    repeated string tags = 4;
 
     // Optional time when the entityt was created
-    google.protobuf.Timestamp created_at = 6;
+    google.protobuf.Timestamp created_at = 7;
 
     // Optional last time the entity was updated
-    google.protobuf.Timestamp updated_at = 7;
+    google.protobuf.Timestamp updated_at = 8;
 
     // Optional a flag to freeze an access
-    bool frozen = 8;
+    bool frozen = 9;
 
     // Optional a flag to disable an access
-    bool disabled = 9;
+    bool disabled = 10;
 
     // Optional a flag to mark the host as insecure
-    bool insecure = 10;
+    bool insecure = 11;
 
     // Optional if the entity has been deleted
-    bool deleted = 11;
+    bool deleted = 12;
 
     // Optional the k8s secret to use
-    string k8s_secret = 12;
+    string k8s_secret = 13;
 
     // Optional the url value
-    string url = 13;
+    string url = 14;
 }
 
  // Request data to create/update host access

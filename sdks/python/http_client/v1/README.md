@@ -78,62 +78,79 @@ All URIs are relative to *http://localhost*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*AgentsV1Api* | [**create_agent**](docs/AgentsV1Api.md#create_agent) | **POST** /api/v1/{owner}/agents | List runs
-*AgentsV1Api* | [**delete_agent**](docs/AgentsV1Api.md#delete_agent) | **DELETE** /api/v1/{owner}/agents/{uuid} | Patch run
-*AgentsV1Api* | [**get_agent**](docs/AgentsV1Api.md#get_agent) | **GET** /api/v1/{owner}/agents/{uuid} | Create new run
-*AgentsV1Api* | [**list_agent_names**](docs/AgentsV1Api.md#list_agent_names) | **GET** /api/v1/{owner}/agents/names | List bookmarked runs for user
-*AgentsV1Api* | [**list_agents**](docs/AgentsV1Api.md#list_agents) | **GET** /api/v1/{owner}/agents | List archived runs for user
-*AgentsV1Api* | [**patch_agent**](docs/AgentsV1Api.md#patch_agent) | **PATCH** /api/v1/{owner}/agents/{agent.uuid} | Update run
-*AgentsV1Api* | [**update_agent**](docs/AgentsV1Api.md#update_agent) | **PUT** /api/v1/{owner}/agents/{agent.uuid} | Get run
-*ArtifactsStoresV1Api* | [**create_artifacts_store**](docs/ArtifactsStoresV1Api.md#create_artifacts_store) | **POST** /api/v1/{owner}/artifacts_stores | List runs
-*ArtifactsStoresV1Api* | [**delete_artifacts_store**](docs/ArtifactsStoresV1Api.md#delete_artifacts_store) | **DELETE** /api/v1/{owner}/artifacts_stores/{uuid} | Patch run
-*ArtifactsStoresV1Api* | [**get_artifacts_store**](docs/ArtifactsStoresV1Api.md#get_artifacts_store) | **GET** /api/v1/{owner}/artifacts_stores/{uuid} | Create new run
-*ArtifactsStoresV1Api* | [**list_artifacts_store_names**](docs/ArtifactsStoresV1Api.md#list_artifacts_store_names) | **GET** /api/v1/{owner}/artifacts_stores/names | List bookmarked runs for user
-*ArtifactsStoresV1Api* | [**list_artifacts_stores**](docs/ArtifactsStoresV1Api.md#list_artifacts_stores) | **GET** /api/v1/{owner}/artifacts_stores | List archived runs for user
-*ArtifactsStoresV1Api* | [**patch_artifacts_store**](docs/ArtifactsStoresV1Api.md#patch_artifacts_store) | **PATCH** /api/v1/{owner}/artifacts_stores/{artifact_store.uuid} | Update run
-*ArtifactsStoresV1Api* | [**update_artifacts_store**](docs/ArtifactsStoresV1Api.md#update_artifacts_store) | **PUT** /api/v1/{owner}/artifacts_stores/{artifact_store.uuid} | Get run
+*AgentsV1Api* | [**create_agent**](docs/AgentsV1Api.md#create_agent) | **POST** /api/v1/orgs/{owner}/agents | List runs
+*AgentsV1Api* | [**delete_agent**](docs/AgentsV1Api.md#delete_agent) | **DELETE** /api/v1/orgs/{owner}/agents/{uuid} | Patch run
+*AgentsV1Api* | [**get_agent**](docs/AgentsV1Api.md#get_agent) | **GET** /api/v1/orgs/{owner}/agents/{uuid} | Create new run
+*AgentsV1Api* | [**list_agent_names**](docs/AgentsV1Api.md#list_agent_names) | **GET** /api/v1/orgs/{owner}/agents/names | List bookmarked runs for user
+*AgentsV1Api* | [**list_agents**](docs/AgentsV1Api.md#list_agents) | **GET** /api/v1/orgs/{owner}/agents | List archived runs for user
+*AgentsV1Api* | [**patch_agent**](docs/AgentsV1Api.md#patch_agent) | **PATCH** /api/v1/orgs/{owner}/agents/{agent.uuid} | Update run
+*AgentsV1Api* | [**update_agent**](docs/AgentsV1Api.md#update_agent) | **PUT** /api/v1/orgs/{owner}/agents/{agent.uuid} | Get run
+*ArtifactsStoresV1Api* | [**create_artifacts_store**](docs/ArtifactsStoresV1Api.md#create_artifacts_store) | **POST** /api/v1/orgs/{owner}/artifacts_stores | List runs
+*ArtifactsStoresV1Api* | [**delete_artifacts_store**](docs/ArtifactsStoresV1Api.md#delete_artifacts_store) | **DELETE** /api/v1/orgs/{owner}/artifacts_stores/{uuid} | Patch run
+*ArtifactsStoresV1Api* | [**get_artifacts_store**](docs/ArtifactsStoresV1Api.md#get_artifacts_store) | **GET** /api/v1/orgs/{owner}/artifacts_stores/{uuid} | Create new run
+*ArtifactsStoresV1Api* | [**list_artifacts_store_names**](docs/ArtifactsStoresV1Api.md#list_artifacts_store_names) | **GET** /api/v1/orgs/{owner}/artifacts_stores/names | List bookmarked runs for user
+*ArtifactsStoresV1Api* | [**list_artifacts_stores**](docs/ArtifactsStoresV1Api.md#list_artifacts_stores) | **GET** /api/v1/orgs/{owner}/artifacts_stores | List archived runs for user
+*ArtifactsStoresV1Api* | [**patch_artifacts_store**](docs/ArtifactsStoresV1Api.md#patch_artifacts_store) | **PATCH** /api/v1/orgs/{owner}/artifacts_stores/{artifact_store.uuid} | Update run
+*ArtifactsStoresV1Api* | [**update_artifacts_store**](docs/ArtifactsStoresV1Api.md#update_artifacts_store) | **PUT** /api/v1/orgs/{owner}/artifacts_stores/{artifact_store.uuid} | Get run
 *ArtifactsStoresV1Api* | [**upload_artifact**](docs/ArtifactsStoresV1Api.md#upload_artifact) | **POST** /api/v1/catalogs/{owner}/artifacts_stores/{uuid}/upload | Upload artifact to a store
 *AuthV1Api* | [**login**](docs/AuthV1Api.md#login) | **POST** /api/v1/users/token | List bookmarked runs for user
-*DashboardV1Api* | [**create_dashboard**](docs/DashboardV1Api.md#create_dashboard) | **POST** /api/v1/{owner}/{project}/dashboards | List archived runs for user
-*DashboardV1Api* | [**delete_dashboard**](docs/DashboardV1Api.md#delete_dashboard) | **DELETE** /api/v1/{owner}/{project}/dashboards/{uuid} | Update run
-*DashboardV1Api* | [**get_dashboard**](docs/DashboardV1Api.md#get_dashboard) | **GET** /api/v1/{owner}/{project}/dashboards/{uuid} | List runs
-*DashboardV1Api* | [**list_dashboard**](docs/DashboardV1Api.md#list_dashboard) | **GET** /api/v1/{owner}/{project}/dashboards | List bookmarked runs for user
-*DashboardV1Api* | [**patch_dashboard**](docs/DashboardV1Api.md#patch_dashboard) | **PATCH** /api/v1/{owner}/{project}/dashboards/{dashboard.uuid} | Get run
-*DashboardV1Api* | [**update_dashboard**](docs/DashboardV1Api.md#update_dashboard) | **PUT** /api/v1/{owner}/{project}/dashboards/{dashboard.uuid} | Create new run
-*GitAccessesV1Api* | [**create_git_access**](docs/GitAccessesV1Api.md#create_git_access) | **POST** /api/v1/{owner}/git_accesses | List runs
-*GitAccessesV1Api* | [**delete_git_access**](docs/GitAccessesV1Api.md#delete_git_access) | **DELETE** /api/v1/{owner}/git_accesses/{uuid} | Patch run
-*GitAccessesV1Api* | [**get_git_access**](docs/GitAccessesV1Api.md#get_git_access) | **GET** /api/v1/{owner}/git_accesses/{uuid} | Create new run
-*GitAccessesV1Api* | [**list_git_access_names**](docs/GitAccessesV1Api.md#list_git_access_names) | **GET** /api/v1/{owner}/git_accesses/names | List bookmarked runs for user
-*GitAccessesV1Api* | [**list_git_accesses**](docs/GitAccessesV1Api.md#list_git_accesses) | **GET** /api/v1/{owner}/git_accesses | List archived runs for user
-*GitAccessesV1Api* | [**patch_git_access**](docs/GitAccessesV1Api.md#patch_git_access) | **PATCH** /api/v1/{owner}/git_accesses/{host_access.uuid} | Update run
-*GitAccessesV1Api* | [**update_git_access**](docs/GitAccessesV1Api.md#update_git_access) | **PUT** /api/v1/{owner}/git_accesses/{host_access.uuid} | Get run
-*K8sConfigMapsV1Api* | [**create_k8s_config_maps**](docs/K8sConfigMapsV1Api.md#create_k8s_config_maps) | **POST** /api/v1/{owner}/k8s_config_maps | List runs
-*K8sConfigMapsV1Api* | [**delete_k8s_config_map**](docs/K8sConfigMapsV1Api.md#delete_k8s_config_map) | **DELETE** /api/v1/{owner}/k8s_config_maps/{uuid} | Patch run
-*K8sConfigMapsV1Api* | [**get_k8s_config_map**](docs/K8sConfigMapsV1Api.md#get_k8s_config_map) | **GET** /api/v1/{owner}/k8s_config_maps/{uuid} | Create new run
-*K8sConfigMapsV1Api* | [**list_k8s_config_map_names**](docs/K8sConfigMapsV1Api.md#list_k8s_config_map_names) | **GET** /api/v1/{owner}/k8s_config_maps/names | List bookmarked runs for user
-*K8sConfigMapsV1Api* | [**list_k8s_config_maps**](docs/K8sConfigMapsV1Api.md#list_k8s_config_maps) | **GET** /api/v1/{owner}/k8s_config_maps | List archived runs for user
-*K8sConfigMapsV1Api* | [**patch_k8s_config_map**](docs/K8sConfigMapsV1Api.md#patch_k8s_config_map) | **PATCH** /api/v1/{owner}/k8s_config_maps/{k8s_resource.uuid} | Update run
-*K8sConfigMapsV1Api* | [**update_k8s_config_map**](docs/K8sConfigMapsV1Api.md#update_k8s_config_map) | **PUT** /api/v1/{owner}/k8s_config_maps/{k8s_resource.uuid} | Get run
-*K8sSecretsV1Api* | [**create_k8s_secrets**](docs/K8sSecretsV1Api.md#create_k8s_secrets) | **POST** /api/v1/{owner}/k8s_secrets | List runs
-*K8sSecretsV1Api* | [**delete_k8s_secret**](docs/K8sSecretsV1Api.md#delete_k8s_secret) | **DELETE** /api/v1/{owner}/k8s_secrets/{uuid} | Patch run
-*K8sSecretsV1Api* | [**get_k8s_secret**](docs/K8sSecretsV1Api.md#get_k8s_secret) | **GET** /api/v1/{owner}/k8s_secrets/{uuid} | Create new run
-*K8sSecretsV1Api* | [**list_k8s_secret_names**](docs/K8sSecretsV1Api.md#list_k8s_secret_names) | **GET** /api/v1/{owner}/k8s_secrets/names | List bookmarked runs for user
-*K8sSecretsV1Api* | [**list_k8s_secrets**](docs/K8sSecretsV1Api.md#list_k8s_secrets) | **GET** /api/v1/{owner}/k8s_secrets | List archived runs for user
-*K8sSecretsV1Api* | [**patch_k8s_secret**](docs/K8sSecretsV1Api.md#patch_k8s_secret) | **PATCH** /api/v1/{owner}/k8s_secrets/{k8s_resource.uuid} | Update run
-*K8sSecretsV1Api* | [**update_k8s_secret**](docs/K8sSecretsV1Api.md#update_k8s_secret) | **PUT** /api/v1/{owner}/k8s_secrets/{k8s_resource.uuid} | Get run
-*OrganizationsV1Api* | [**create_organization**](docs/OrganizationsV1Api.md#create_organization) | **POST** /api/v1/organizations/create | List runs
-*OrganizationsV1Api* | [**create_organization_member**](docs/OrganizationsV1Api.md#create_organization_member) | **POST** /api/v1/organizations/{owner}/members | Delete runs
-*OrganizationsV1Api* | [**delete_organization**](docs/OrganizationsV1Api.md#delete_organization) | **DELETE** /api/v1/organizations/{owner} | Patch run
-*OrganizationsV1Api* | [**delete_organization_member**](docs/OrganizationsV1Api.md#delete_organization_member) | **DELETE** /api/v1/organizations/{owner}/members/{user} | Invalidate runs
-*OrganizationsV1Api* | [**get_organization**](docs/OrganizationsV1Api.md#get_organization) | **GET** /api/v1/organizations/{owner} | Create new run
-*OrganizationsV1Api* | [**get_organization_member**](docs/OrganizationsV1Api.md#get_organization_member) | **GET** /api/v1/organizations/{owner}/members/{user} | Stop run
-*OrganizationsV1Api* | [**list_organization_members**](docs/OrganizationsV1Api.md#list_organization_members) | **GET** /api/v1/organizations/{owner}/members | Delete run
-*OrganizationsV1Api* | [**list_organization_names**](docs/OrganizationsV1Api.md#list_organization_names) | **GET** /api/v1/organizations/names | List bookmarked runs for user
-*OrganizationsV1Api* | [**list_organizations**](docs/OrganizationsV1Api.md#list_organizations) | **GET** /api/v1/organizations/list | List archived runs for user
-*OrganizationsV1Api* | [**patch_organization**](docs/OrganizationsV1Api.md#patch_organization) | **PATCH** /api/v1/organizations/{owner} | Update run
-*OrganizationsV1Api* | [**patch_organization_member**](docs/OrganizationsV1Api.md#patch_organization_member) | **PATCH** /api/v1/organizations/{owner}/members/{member.user} | Invalidate run
-*OrganizationsV1Api* | [**update_organization**](docs/OrganizationsV1Api.md#update_organization) | **PUT** /api/v1/organizations/{owner} | Get run
-*OrganizationsV1Api* | [**update_organization_member**](docs/OrganizationsV1Api.md#update_organization_member) | **PUT** /api/v1/organizations/{owner}/members/{member.user} | Stop runs
+*DashboardsV1Api* | [**create_dashboard**](docs/DashboardsV1Api.md#create_dashboard) | **POST** /api/v1/orgs/{owner}/dashboards | List runs
+*DashboardsV1Api* | [**delete_dashboard**](docs/DashboardsV1Api.md#delete_dashboard) | **DELETE** /api/v1/orgs/{owner}/dashboards/{uuid} | Patch run
+*DashboardsV1Api* | [**get_dashboard**](docs/DashboardsV1Api.md#get_dashboard) | **GET** /api/v1/orgs/{owner}/dashboards/{uuid} | Create new run
+*DashboardsV1Api* | [**list_dashboard_names**](docs/DashboardsV1Api.md#list_dashboard_names) | **GET** /api/v1/orgs/{owner}/dashboards/names | List bookmarked runs for user
+*DashboardsV1Api* | [**list_dashboards**](docs/DashboardsV1Api.md#list_dashboards) | **GET** /api/v1/orgs/{owner}/dashboards | List archived runs for user
+*DashboardsV1Api* | [**patch_dashboard**](docs/DashboardsV1Api.md#patch_dashboard) | **PATCH** /api/v1/orgs/{owner}/dashboards/{dashboard.uuid} | Update run
+*DashboardsV1Api* | [**update_dashboard**](docs/DashboardsV1Api.md#update_dashboard) | **PUT** /api/v1/orgs/{owner}/dashboards/{dashboard.uuid} | Get run
+*GitAccessesV1Api* | [**create_git_access**](docs/GitAccessesV1Api.md#create_git_access) | **POST** /api/v1/orgs/{owner}/git_accesses | List runs
+*GitAccessesV1Api* | [**delete_git_access**](docs/GitAccessesV1Api.md#delete_git_access) | **DELETE** /api/v1/orgs/{owner}/git_accesses/{uuid} | Patch run
+*GitAccessesV1Api* | [**get_git_access**](docs/GitAccessesV1Api.md#get_git_access) | **GET** /api/v1/orgs/{owner}/git_accesses/{uuid} | Create new run
+*GitAccessesV1Api* | [**list_git_access_names**](docs/GitAccessesV1Api.md#list_git_access_names) | **GET** /api/v1/orgs/{owner}/git_accesses/names | List bookmarked runs for user
+*GitAccessesV1Api* | [**list_git_accesses**](docs/GitAccessesV1Api.md#list_git_accesses) | **GET** /api/v1/orgs/{owner}/git_accesses | List archived runs for user
+*GitAccessesV1Api* | [**patch_git_access**](docs/GitAccessesV1Api.md#patch_git_access) | **PATCH** /api/v1/orgs/{owner}/git_accesses/{host_access.uuid} | Update run
+*GitAccessesV1Api* | [**update_git_access**](docs/GitAccessesV1Api.md#update_git_access) | **PUT** /api/v1/orgs/{owner}/git_accesses/{host_access.uuid} | Get run
+*K8sConfigMapsV1Api* | [**create_k8s_config_map**](docs/K8sConfigMapsV1Api.md#create_k8s_config_map) | **POST** /api/v1/orgs/{owner}/k8s_config_maps | List runs
+*K8sConfigMapsV1Api* | [**delete_k8s_config_map**](docs/K8sConfigMapsV1Api.md#delete_k8s_config_map) | **DELETE** /api/v1/orgs/{owner}/k8s_config_maps/{uuid} | Patch run
+*K8sConfigMapsV1Api* | [**get_k8s_config_map**](docs/K8sConfigMapsV1Api.md#get_k8s_config_map) | **GET** /api/v1/orgs/{owner}/k8s_config_maps/{uuid} | Create new run
+*K8sConfigMapsV1Api* | [**list_k8s_config_map_names**](docs/K8sConfigMapsV1Api.md#list_k8s_config_map_names) | **GET** /api/v1/orgs/{owner}/k8s_config_maps/names | List bookmarked runs for user
+*K8sConfigMapsV1Api* | [**list_k8s_config_maps**](docs/K8sConfigMapsV1Api.md#list_k8s_config_maps) | **GET** /api/v1/orgs/{owner}/k8s_config_maps | List archived runs for user
+*K8sConfigMapsV1Api* | [**patch_k8s_config_map**](docs/K8sConfigMapsV1Api.md#patch_k8s_config_map) | **PATCH** /api/v1/orgs/{owner}/k8s_config_maps/{k8s_resource.uuid} | Update run
+*K8sConfigMapsV1Api* | [**update_k8s_config_map**](docs/K8sConfigMapsV1Api.md#update_k8s_config_map) | **PUT** /api/v1/orgs/{owner}/k8s_config_maps/{k8s_resource.uuid} | Get run
+*K8sSecretsV1Api* | [**create_k8s_secret**](docs/K8sSecretsV1Api.md#create_k8s_secret) | **POST** /api/v1/orgs/{owner}/k8s_secrets | List runs
+*K8sSecretsV1Api* | [**delete_k8s_secret**](docs/K8sSecretsV1Api.md#delete_k8s_secret) | **DELETE** /api/v1/orgs/{owner}/k8s_secrets/{uuid} | Patch run
+*K8sSecretsV1Api* | [**get_k8s_secret**](docs/K8sSecretsV1Api.md#get_k8s_secret) | **GET** /api/v1/orgs/{owner}/k8s_secrets/{uuid} | Create new run
+*K8sSecretsV1Api* | [**list_k8s_secret_names**](docs/K8sSecretsV1Api.md#list_k8s_secret_names) | **GET** /api/v1/orgs/{owner}/k8s_secrets/names | List bookmarked runs for user
+*K8sSecretsV1Api* | [**list_k8s_secrets**](docs/K8sSecretsV1Api.md#list_k8s_secrets) | **GET** /api/v1/orgs/{owner}/k8s_secrets | List archived runs for user
+*K8sSecretsV1Api* | [**patch_k8s_secret**](docs/K8sSecretsV1Api.md#patch_k8s_secret) | **PATCH** /api/v1/orgs/{owner}/k8s_secrets/{k8s_resource.uuid} | Update run
+*K8sSecretsV1Api* | [**update_k8s_secret**](docs/K8sSecretsV1Api.md#update_k8s_secret) | **PUT** /api/v1/orgs/{owner}/k8s_secrets/{k8s_resource.uuid} | Get run
+*OrganizationsV1Api* | [**create_organization**](docs/OrganizationsV1Api.md#create_organization) | **POST** /api/v1/orgs/create | List runs
+*OrganizationsV1Api* | [**create_organization_member**](docs/OrganizationsV1Api.md#create_organization_member) | **POST** /api/v1/orgs/{owner}/members | Delete runs
+*OrganizationsV1Api* | [**delete_organization**](docs/OrganizationsV1Api.md#delete_organization) | **DELETE** /api/v1/orgs/{owner} | Patch run
+*OrganizationsV1Api* | [**delete_organization_member**](docs/OrganizationsV1Api.md#delete_organization_member) | **DELETE** /api/v1/orgs/{owner}/members/{user} | Invalidate runs
+*OrganizationsV1Api* | [**get_organization**](docs/OrganizationsV1Api.md#get_organization) | **GET** /api/v1/orgs/{owner} | Create new run
+*OrganizationsV1Api* | [**get_organization_member**](docs/OrganizationsV1Api.md#get_organization_member) | **GET** /api/v1/orgs/{owner}/members/{user} | Stop run
+*OrganizationsV1Api* | [**list_organization_members**](docs/OrganizationsV1Api.md#list_organization_members) | **GET** /api/v1/orgs/{owner}/members | Delete run
+*OrganizationsV1Api* | [**list_organization_names**](docs/OrganizationsV1Api.md#list_organization_names) | **GET** /api/v1/orgs/names | List bookmarked runs for user
+*OrganizationsV1Api* | [**list_organizations**](docs/OrganizationsV1Api.md#list_organizations) | **GET** /api/v1/orgs/list | List archived runs for user
+*OrganizationsV1Api* | [**patch_organization**](docs/OrganizationsV1Api.md#patch_organization) | **PATCH** /api/v1/orgs/{owner} | Update run
+*OrganizationsV1Api* | [**patch_organization_member**](docs/OrganizationsV1Api.md#patch_organization_member) | **PATCH** /api/v1/orgs/{owner}/members/{member.user} | Invalidate run
+*OrganizationsV1Api* | [**update_organization**](docs/OrganizationsV1Api.md#update_organization) | **PUT** /api/v1/orgs/{owner} | Get run
+*OrganizationsV1Api* | [**update_organization_member**](docs/OrganizationsV1Api.md#update_organization_member) | **PUT** /api/v1/orgs/{owner}/members/{member.user} | Stop runs
+*ProjectDashboardsV1Api* | [**create_project_dashboard**](docs/ProjectDashboardsV1Api.md#create_project_dashboard) | **POST** /api/v1/{owner}/{project}/dashboards | List runs
+*ProjectDashboardsV1Api* | [**delete_project_dashboard**](docs/ProjectDashboardsV1Api.md#delete_project_dashboard) | **DELETE** /api/v1/{owner}/{project}/dashboards/{uuid} | Patch run
+*ProjectDashboardsV1Api* | [**get_project_dashboard**](docs/ProjectDashboardsV1Api.md#get_project_dashboard) | **GET** /api/v1/{owner}/{project}/dashboards/{uuid} | Create new run
+*ProjectDashboardsV1Api* | [**list_project_dashboard_names**](docs/ProjectDashboardsV1Api.md#list_project_dashboard_names) | **GET** /api/v1/{owner}/{project}/dashboards/names | List bookmarked runs for user
+*ProjectDashboardsV1Api* | [**list_project_dashboards**](docs/ProjectDashboardsV1Api.md#list_project_dashboards) | **GET** /api/v1/{owner}/{project}/dashboards | List archived runs for user
+*ProjectDashboardsV1Api* | [**patch_project_dashboard**](docs/ProjectDashboardsV1Api.md#patch_project_dashboard) | **PATCH** /api/v1/{owner}/{project}/dashboards/{dashboard.uuid} | Update run
+*ProjectDashboardsV1Api* | [**promote_project_dashboard**](docs/ProjectDashboardsV1Api.md#promote_project_dashboard) | **POST** /api/v1/{owner}/{project}/dashboards/{dashboard.uuid}/promote | Delete run
+*ProjectDashboardsV1Api* | [**update_project_dashboard**](docs/ProjectDashboardsV1Api.md#update_project_dashboard) | **PUT** /api/v1/{owner}/{project}/dashboards/{dashboard.uuid} | Get run
+*ProjectSearchesV1Api* | [**create_project_search**](docs/ProjectSearchesV1Api.md#create_project_search) | **POST** /api/v1/{owner}/{project}/searches | List runs
+*ProjectSearchesV1Api* | [**delete_project_search**](docs/ProjectSearchesV1Api.md#delete_project_search) | **DELETE** /api/v1/{owner}/{project}/searches/{uuid} | Patch run
+*ProjectSearchesV1Api* | [**get_project_search**](docs/ProjectSearchesV1Api.md#get_project_search) | **GET** /api/v1/{owner}/{project}/searches/{uuid} | Create new run
+*ProjectSearchesV1Api* | [**list_project_search_names**](docs/ProjectSearchesV1Api.md#list_project_search_names) | **GET** /api/v1/{owner}/{project}/searches/names | List bookmarked runs for user
+*ProjectSearchesV1Api* | [**list_project_searches**](docs/ProjectSearchesV1Api.md#list_project_searches) | **GET** /api/v1/{owner}/{project}/searches | List archived runs for user
+*ProjectSearchesV1Api* | [**patch_project_search**](docs/ProjectSearchesV1Api.md#patch_project_search) | **PATCH** /api/v1/{owner}/{project}/searches/{search.uuid} | Update run
+*ProjectSearchesV1Api* | [**promote_project_search**](docs/ProjectSearchesV1Api.md#promote_project_search) | **POST** /api/v1/{owner}/{project}/searches/{uuid}/promote | Delete run
+*ProjectSearchesV1Api* | [**update_project_search**](docs/ProjectSearchesV1Api.md#update_project_search) | **PUT** /api/v1/{owner}/{project}/searches/{search.uuid} | Get run
 *ProjectsV1Api* | [**archive_project**](docs/ProjectsV1Api.md#archive_project) | **POST** /api/v1/{owner}/{project}/archive | Stop run
 *ProjectsV1Api* | [**bookmark_project**](docs/ProjectsV1Api.md#bookmark_project) | **POST** /api/v1/{owner}/{project}/bookmark | Invalidate run
 *ProjectsV1Api* | [**create_project**](docs/ProjectsV1Api.md#create_project) | **POST** /api/v1/{owner}/projects/create | List archived runs for user
@@ -156,20 +173,27 @@ Class | Method | HTTP request | Description
 *ProjectsV1Api* | [**update_project_settings**](docs/ProjectsV1Api.md#update_project_settings) | **PUT** /api/v1/{owner}/{project}/settings | Archive run
 *ProjectsV1Api* | [**update_project_teams**](docs/ProjectsV1Api.md#update_project_teams) | **PUT** /api/v1/{owner}/{project}/teams | Unbookmark run
 *ProjectsV1Api* | [**upload_project_artifact**](docs/ProjectsV1Api.md#upload_project_artifact) | **POST** /api/v1/{owner}/{project}/artifacts_stores/{uuid}/upload | Upload artifact to a store via project access
-*QueuesV1Api* | [**create_queue**](docs/QueuesV1Api.md#create_queue) | **POST** /api/v1/{owner}/agents/{agent}/queues | List runs
-*QueuesV1Api* | [**delete_queue**](docs/QueuesV1Api.md#delete_queue) | **DELETE** /api/v1/{owner}/agents/{agent}/queues/{uuid} | Patch run
-*QueuesV1Api* | [**get_queue**](docs/QueuesV1Api.md#get_queue) | **GET** /api/v1/{owner}/agents/{agent}/queues/{uuid} | Create new run
-*QueuesV1Api* | [**list_queue_names**](docs/QueuesV1Api.md#list_queue_names) | **GET** /api/v1/{owner}/agents/{agent}/queues/names | List bookmarked runs for user
-*QueuesV1Api* | [**list_queues**](docs/QueuesV1Api.md#list_queues) | **GET** /api/v1/{owner}/agents/{agent}/queues | List archived runs for user
-*QueuesV1Api* | [**patch_queue**](docs/QueuesV1Api.md#patch_queue) | **PATCH** /api/v1/{owner}/agents/{queue.agent}/queues/{queue.uuid} | Update run
-*QueuesV1Api* | [**update_queue**](docs/QueuesV1Api.md#update_queue) | **PUT** /api/v1/{owner}/agents/{queue.agent}/queues/{queue.uuid} | Get run
-*RegistryAccessesV1Api* | [**create_registry_access**](docs/RegistryAccessesV1Api.md#create_registry_access) | **POST** /api/v1/{owner}/registry_accesses | List runs
-*RegistryAccessesV1Api* | [**delete_registry_access**](docs/RegistryAccessesV1Api.md#delete_registry_access) | **DELETE** /api/v1/{owner}/registry_accesses/{uuid} | Patch run
-*RegistryAccessesV1Api* | [**get_registry_access**](docs/RegistryAccessesV1Api.md#get_registry_access) | **GET** /api/v1/{owner}/registry_accesses/{uuid} | Create new run
-*RegistryAccessesV1Api* | [**list_registry_access_names**](docs/RegistryAccessesV1Api.md#list_registry_access_names) | **GET** /api/v1/{owner}/registry_accesses/names | List bookmarked runs for user
-*RegistryAccessesV1Api* | [**list_registry_accesses**](docs/RegistryAccessesV1Api.md#list_registry_accesses) | **GET** /api/v1/{owner}/registry_accesses | List archived runs for user
-*RegistryAccessesV1Api* | [**patch_registry_access**](docs/RegistryAccessesV1Api.md#patch_registry_access) | **PATCH** /api/v1/{owner}/registry_accesses/{host_access.uuid} | Update run
-*RegistryAccessesV1Api* | [**update_registry_access**](docs/RegistryAccessesV1Api.md#update_registry_access) | **PUT** /api/v1/{owner}/registry_accesses/{host_access.uuid} | Get run
+*QueuesV1Api* | [**create_queue**](docs/QueuesV1Api.md#create_queue) | **POST** /api/v1/orgs/{owner}/agents/{agent}/queues | List runs
+*QueuesV1Api* | [**delete_queue**](docs/QueuesV1Api.md#delete_queue) | **DELETE** /api/v1/orgs/{owner}/agents/{agent}/queues/{uuid} | Patch run
+*QueuesV1Api* | [**get_queue**](docs/QueuesV1Api.md#get_queue) | **GET** /api/v1/orgs/{owner}/agents/{agent}/queues/{uuid} | Create new run
+*QueuesV1Api* | [**list_queue_names**](docs/QueuesV1Api.md#list_queue_names) | **GET** /api/v1/orgs/{owner}/agents/{agent}/queues/names | List bookmarked runs for user
+*QueuesV1Api* | [**list_queues**](docs/QueuesV1Api.md#list_queues) | **GET** /api/v1/orgs/{owner}/agents/{agent}/queues | List archived runs for user
+*QueuesV1Api* | [**patch_queue**](docs/QueuesV1Api.md#patch_queue) | **PATCH** /api/v1/orgs/{owner}/agents/{queue.agent}/queues/{queue.uuid} | Update run
+*QueuesV1Api* | [**update_queue**](docs/QueuesV1Api.md#update_queue) | **PUT** /api/v1/orgs/{owner}/agents/{queue.agent}/queues/{queue.uuid} | Get run
+*RegistryAccessesV1Api* | [**create_registry_access**](docs/RegistryAccessesV1Api.md#create_registry_access) | **POST** /api/v1/orgs/{owner}/registry_accesses | List runs
+*RegistryAccessesV1Api* | [**delete_registry_access**](docs/RegistryAccessesV1Api.md#delete_registry_access) | **DELETE** /api/v1/orgs/{owner}/registry_accesses/{uuid} | Patch run
+*RegistryAccessesV1Api* | [**get_registry_access**](docs/RegistryAccessesV1Api.md#get_registry_access) | **GET** /api/v1/orgs/{owner}/registry_accesses/{uuid} | Create new run
+*RegistryAccessesV1Api* | [**list_registry_access_names**](docs/RegistryAccessesV1Api.md#list_registry_access_names) | **GET** /api/v1/orgs/{owner}/registry_accesses/names | List bookmarked runs for user
+*RegistryAccessesV1Api* | [**list_registry_accesses**](docs/RegistryAccessesV1Api.md#list_registry_accesses) | **GET** /api/v1/orgs/{owner}/registry_accesses | List archived runs for user
+*RegistryAccessesV1Api* | [**patch_registry_access**](docs/RegistryAccessesV1Api.md#patch_registry_access) | **PATCH** /api/v1/orgs/{owner}/registry_accesses/{host_access.uuid} | Update run
+*RegistryAccessesV1Api* | [**update_registry_access**](docs/RegistryAccessesV1Api.md#update_registry_access) | **PUT** /api/v1/orgs/{owner}/registry_accesses/{host_access.uuid} | Get run
+*RunProfilesV1Api* | [**create_run_profile**](docs/RunProfilesV1Api.md#create_run_profile) | **POST** /api/v1/orgs/{owner}/run_profiles | List runs
+*RunProfilesV1Api* | [**delete_run_profile**](docs/RunProfilesV1Api.md#delete_run_profile) | **DELETE** /api/v1/orgs/{owner}/run_profiles/{uuid} | Patch run
+*RunProfilesV1Api* | [**get_run_profile**](docs/RunProfilesV1Api.md#get_run_profile) | **GET** /api/v1/orgs/{owner}/run_profiles/{uuid} | Create new run
+*RunProfilesV1Api* | [**list_run_profile_names**](docs/RunProfilesV1Api.md#list_run_profile_names) | **GET** /api/v1/orgs/{owner}/run_profiles/names | List bookmarked runs for user
+*RunProfilesV1Api* | [**list_run_profiles**](docs/RunProfilesV1Api.md#list_run_profiles) | **GET** /api/v1/orgs/{owner}/run_profiles | List archived runs for user
+*RunProfilesV1Api* | [**patch_run_profile**](docs/RunProfilesV1Api.md#patch_run_profile) | **PATCH** /api/v1/orgs/{owner}/run_profiles/{run_profile.uuid} | Update run
+*RunProfilesV1Api* | [**update_run_profile**](docs/RunProfilesV1Api.md#update_run_profile) | **PUT** /api/v1/orgs/{owner}/run_profiles/{run_profile.uuid} | Get run
 *RunsV1Api* | [**archive_run**](docs/RunsV1Api.md#archive_run) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/archive | Archive run
 *RunsV1Api* | [**bookmark_run**](docs/RunsV1Api.md#bookmark_run) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/bookmark | Bookmark run
 *RunsV1Api* | [**copy_run**](docs/RunsV1Api.md#copy_run) | **POST** /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/copy | Restart run with copy
@@ -203,25 +227,26 @@ Class | Method | HTTP request | Description
 *RunsV1Api* | [**upload_run_artifact**](docs/RunsV1Api.md#upload_run_artifact) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/artifacts/upload | Upload an artifact file to a store via run access
 *RunsV1Api* | [**upload_run_logs**](docs/RunsV1Api.md#upload_run_logs) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/logs/upload | Upload a logs file to a store via run access
 *SchemasV1Api* | [**no_op**](docs/SchemasV1Api.md#no_op) | **GET** /schemas | List bookmarked runs for user
-*SearchV1Api* | [**create_search**](docs/SearchV1Api.md#create_search) | **POST** /api/v1/{owner}/{project}/searches | List archived runs for user
-*SearchV1Api* | [**delete_search**](docs/SearchV1Api.md#delete_search) | **DELETE** /api/v1/{owner}/{project}/searches/{uuid} | Update run
-*SearchV1Api* | [**get_search**](docs/SearchV1Api.md#get_search) | **GET** /api/v1/{owner}/{project}/searches/{uuid} | List runs
-*SearchV1Api* | [**list_searches**](docs/SearchV1Api.md#list_searches) | **GET** /api/v1/{owner}/{project}/searches | List bookmarked runs for user
-*SearchV1Api* | [**patch_search**](docs/SearchV1Api.md#patch_search) | **PATCH** /api/v1/{owner}/{project}/searches/{search.uuid} | Get run
-*SearchV1Api* | [**update_search**](docs/SearchV1Api.md#update_search) | **PUT** /api/v1/{owner}/{project}/searches/{search.uuid} | Create new run
-*TeamsV1Api* | [**create_team**](docs/TeamsV1Api.md#create_team) | **POST** /api/v1/{owner}/teams | List runs
-*TeamsV1Api* | [**create_team_member**](docs/TeamsV1Api.md#create_team_member) | **POST** /api/v1/{owner}/teams/{team}/members | Delete runs
-*TeamsV1Api* | [**delete_team**](docs/TeamsV1Api.md#delete_team) | **DELETE** /api/v1/{owner}/teams/{team} | Patch run
-*TeamsV1Api* | [**delete_team_member**](docs/TeamsV1Api.md#delete_team_member) | **DELETE** /api/v1/{owner}/teams/{team}/members/{member.user} | Invalidate runs
-*TeamsV1Api* | [**get_team**](docs/TeamsV1Api.md#get_team) | **GET** /api/v1/{owner}/teams/{team} | Create new run
-*TeamsV1Api* | [**get_team_member**](docs/TeamsV1Api.md#get_team_member) | **GET** /api/v1/{owner}/teams/{team}/members/{user} | Stop run
-*TeamsV1Api* | [**list_team_members**](docs/TeamsV1Api.md#list_team_members) | **GET** /api/v1/{owner}/teams/{team}/members | Delete run
-*TeamsV1Api* | [**list_team_names**](docs/TeamsV1Api.md#list_team_names) | **GET** /api/v1/{owner}/teams/names | List bookmarked runs for user
-*TeamsV1Api* | [**list_teams**](docs/TeamsV1Api.md#list_teams) | **GET** /api/v1/{owner}/teams | List archived runs for user
-*TeamsV1Api* | [**patch_team**](docs/TeamsV1Api.md#patch_team) | **PATCH** /api/v1/{owner}/teams/{team.name} | Update run
-*TeamsV1Api* | [**patch_team_member**](docs/TeamsV1Api.md#patch_team_member) | **PATCH** /api/v1/{owner}/teams/{team}/members/{member.user} | Invalidate run
-*TeamsV1Api* | [**update_team**](docs/TeamsV1Api.md#update_team) | **PUT** /api/v1/{owner}/teams/{team.name} | Get run
-*TeamsV1Api* | [**update_team_member**](docs/TeamsV1Api.md#update_team_member) | **PUT** /api/v1/{owner}/teams/{team}/members/{member.user} | Stop runs
+*SearchesV1Api* | [**create_search**](docs/SearchesV1Api.md#create_search) | **POST** /api/v1/orgs/{owner}/searches | List runs
+*SearchesV1Api* | [**delete_search**](docs/SearchesV1Api.md#delete_search) | **DELETE** /api/v1/orgs/{owner}/searches/{uuid} | Patch run
+*SearchesV1Api* | [**get_search**](docs/SearchesV1Api.md#get_search) | **GET** /api/v1/orgs/{owner}/searches/{uuid} | Create new run
+*SearchesV1Api* | [**list_search_names**](docs/SearchesV1Api.md#list_search_names) | **GET** /api/v1/orgs/{owner}/searches/names | List bookmarked runs for user
+*SearchesV1Api* | [**list_searches**](docs/SearchesV1Api.md#list_searches) | **GET** /api/v1/orgs/{owner}/searches | List archived runs for user
+*SearchesV1Api* | [**patch_search**](docs/SearchesV1Api.md#patch_search) | **PATCH** /api/v1/orgs/{owner}/searches/{search.uuid} | Update run
+*SearchesV1Api* | [**update_search**](docs/SearchesV1Api.md#update_search) | **PUT** /api/v1/orgs/{owner}/searches/{search.uuid} | Get run
+*TeamsV1Api* | [**create_team**](docs/TeamsV1Api.md#create_team) | **POST** /api/v1/orgs/{owner}/teams | List runs
+*TeamsV1Api* | [**create_team_member**](docs/TeamsV1Api.md#create_team_member) | **POST** /api/v1/orgs/{owner}/teams/{team}/members | Delete runs
+*TeamsV1Api* | [**delete_team**](docs/TeamsV1Api.md#delete_team) | **DELETE** /api/v1/orgs/{owner}/teams/{team} | Patch run
+*TeamsV1Api* | [**delete_team_member**](docs/TeamsV1Api.md#delete_team_member) | **DELETE** /api/v1/orgs/{owner}/teams/{team}/members/{user} | Invalidate runs
+*TeamsV1Api* | [**get_team**](docs/TeamsV1Api.md#get_team) | **GET** /api/v1/orgs/{owner}/teams/{team} | Create new run
+*TeamsV1Api* | [**get_team_member**](docs/TeamsV1Api.md#get_team_member) | **GET** /api/v1/orgs/{owner}/teams/{team}/members/{user} | Stop run
+*TeamsV1Api* | [**list_team_members**](docs/TeamsV1Api.md#list_team_members) | **GET** /api/v1/orgs/{owner}/teams/{team}/members | Delete run
+*TeamsV1Api* | [**list_team_names**](docs/TeamsV1Api.md#list_team_names) | **GET** /api/v1/orgs/{owner}/teams/names | List bookmarked runs for user
+*TeamsV1Api* | [**list_teams**](docs/TeamsV1Api.md#list_teams) | **GET** /api/v1/orgs/{owner}/teams | List archived runs for user
+*TeamsV1Api* | [**patch_team**](docs/TeamsV1Api.md#patch_team) | **PATCH** /api/v1/orgs/{owner}/teams/{team.name} | Update run
+*TeamsV1Api* | [**patch_team_member**](docs/TeamsV1Api.md#patch_team_member) | **PATCH** /api/v1/orgs/{owner}/teams/{team}/members/{member.user} | Invalidate run
+*TeamsV1Api* | [**update_team**](docs/TeamsV1Api.md#update_team) | **PUT** /api/v1/orgs/{owner}/teams/{team.name} | Get run
+*TeamsV1Api* | [**update_team_member**](docs/TeamsV1Api.md#update_team_member) | **PUT** /api/v1/orgs/{owner}/teams/{team}/members/{member.user} | Stop runs
 *UsersV1Api* | [**get_user**](docs/UsersV1Api.md#get_user) | **GET** /api/v1/users | List bookmarked runs for user
 *VersionsV1Api* | [**get_log_handler**](docs/VersionsV1Api.md#get_log_handler) | **GET** /api/v1/log_handler | List archived runs for user
 *VersionsV1Api* | [**get_versions**](docs/VersionsV1Api.md#get_versions) | **GET** /api/v1/version | List bookmarked runs for user
@@ -274,6 +299,7 @@ Class | Method | HTTP request | Description
  - [V1ListOrganizationsResponse](docs/V1ListOrganizationsResponse.md)
  - [V1ListProjectsResponse](docs/V1ListProjectsResponse.md)
  - [V1ListQueuesResponse](docs/V1ListQueuesResponse.md)
+ - [V1ListRunProfilesResponse](docs/V1ListRunProfilesResponse.md)
  - [V1ListRunsResponse](docs/V1ListRunsResponse.md)
  - [V1ListSearchesResponse](docs/V1ListSearchesResponse.md)
  - [V1ListTeamMembersResponse](docs/V1ListTeamMembersResponse.md)
@@ -309,6 +335,7 @@ Class | Method | HTTP request | Description
  - [V1Run](docs/V1Run.md)
  - [V1RunKind](docs/V1RunKind.md)
  - [V1RunMetaInfo](docs/V1RunMetaInfo.md)
+ - [V1RunProfile](docs/V1RunProfile.md)
  - [V1RunSchema](docs/V1RunSchema.md)
  - [V1RunSettings](docs/V1RunSettings.md)
  - [V1RunSettingsCatalog](docs/V1RunSettingsCatalog.md)

@@ -82,7 +82,7 @@ type CreateTeamOK struct {
 }
 
 func (o *CreateTeamOK) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/teams][%d] createTeamOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/orgs/{owner}/teams][%d] createTeamOK  %+v", 200, o.Payload)
 }
 
 func (o *CreateTeamOK) GetPayload() *service_model.V1Team {
@@ -115,7 +115,7 @@ type CreateTeamNoContent struct {
 }
 
 func (o *CreateTeamNoContent) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/teams][%d] createTeamNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/orgs/{owner}/teams][%d] createTeamNoContent  %+v", 204, o.Payload)
 }
 
 func (o *CreateTeamNoContent) GetPayload() interface{} {
@@ -146,7 +146,7 @@ type CreateTeamForbidden struct {
 }
 
 func (o *CreateTeamForbidden) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/teams][%d] createTeamForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/orgs/{owner}/teams][%d] createTeamForbidden  %+v", 403, o.Payload)
 }
 
 func (o *CreateTeamForbidden) GetPayload() interface{} {
@@ -177,7 +177,7 @@ type CreateTeamNotFound struct {
 }
 
 func (o *CreateTeamNotFound) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/teams][%d] createTeamNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/orgs/{owner}/teams][%d] createTeamNotFound  %+v", 404, o.Payload)
 }
 
 func (o *CreateTeamNotFound) GetPayload() interface{} {

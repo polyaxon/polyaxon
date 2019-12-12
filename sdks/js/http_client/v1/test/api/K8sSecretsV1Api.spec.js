@@ -50,16 +50,15 @@
 
   describe('(package)', function() {
     describe('K8sSecretsV1Api', function() {
-      describe('createK8sSecrets', function() {
-        it('should call createK8sSecrets successfully', function(done) {
-          // TODO: uncomment, update parameter values for createK8sSecrets call and complete the assertions
+      describe('createK8sSecret', function() {
+        it('should call createK8sSecret successfully', function(done) {
+          // TODO: uncomment, update parameter values for createK8sSecret call and complete the assertions
           /*
           var owner = "owner_example";
           var body = new PolyaxonSdk.V1K8sResource();
           body.uuid = "";
           body.name = "";
           body.description = "";
-          body.readme = "";
           body.tags = [""];
           body.created_at = new Date();
           body.updated_at = new Date();
@@ -70,7 +69,7 @@
           body.mount_path = "";
           body.items = [""];
 
-          instance.createK8sSecrets(owner, body, function(error, data, response) {
+          instance.createK8sSecret(owner, body, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -83,8 +82,6 @@
             expect(data.name).to.be("");
             expect(data.description).to.be.a('string');
             expect(data.description).to.be("");
-            expect(data.readme).to.be.a('string');
-            expect(data.readme).to.be("");
             {
               let dataCtr = data.tags;
               expect(dataCtr).to.be.an(Array);
@@ -167,8 +164,6 @@
             expect(data.name).to.be("");
             expect(data.description).to.be.a('string');
             expect(data.description).to.be("");
-            expect(data.readme).to.be.a('string');
-            expect(data.readme).to.be("");
             {
               let dataCtr = data.tags;
               expect(dataCtr).to.be.an(Array);
@@ -244,8 +239,6 @@
                 expect(data.name).to.be("");
                 expect(data.description).to.be.a('string');
                 expect(data.description).to.be("");
-                expect(data.readme).to.be.a('string');
-                expect(data.readme).to.be("");
                 {
                   let dataCtr = data.tags;
                   expect(dataCtr).to.be.an(Array);
@@ -327,8 +320,6 @@
                 expect(data.name).to.be("");
                 expect(data.description).to.be.a('string');
                 expect(data.description).to.be("");
-                expect(data.readme).to.be.a('string');
-                expect(data.readme).to.be("");
                 {
                   let dataCtr = data.tags;
                   expect(dataCtr).to.be.an(Array);
@@ -387,7 +378,6 @@
           body.uuid = "";
           body.name = "";
           body.description = "";
-          body.readme = "";
           body.tags = [""];
           body.created_at = new Date();
           body.updated_at = new Date();
@@ -411,8 +401,6 @@
             expect(data.name).to.be("");
             expect(data.description).to.be.a('string');
             expect(data.description).to.be("");
-            expect(data.readme).to.be.a('string');
-            expect(data.readme).to.be("");
             {
               let dataCtr = data.tags;
               expect(dataCtr).to.be.an(Array);
@@ -465,7 +453,6 @@
           body.uuid = "";
           body.name = "";
           body.description = "";
-          body.readme = "";
           body.tags = [""];
           body.created_at = new Date();
           body.updated_at = new Date();
@@ -489,8 +476,6 @@
             expect(data.name).to.be("");
             expect(data.description).to.be.a('string');
             expect(data.description).to.be("");
-            expect(data.readme).to.be.a('string');
-            expect(data.readme).to.be("");
             {
               let dataCtr = data.tags;
               expect(dataCtr).to.be.an(Array);

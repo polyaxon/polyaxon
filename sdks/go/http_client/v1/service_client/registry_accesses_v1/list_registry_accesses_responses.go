@@ -82,7 +82,7 @@ type ListRegistryAccessesOK struct {
 }
 
 func (o *ListRegistryAccessesOK) Error() string {
-	return fmt.Sprintf("[GET /api/v1/{owner}/registry_accesses][%d] listRegistryAccessesOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/registry_accesses][%d] listRegistryAccessesOK  %+v", 200, o.Payload)
 }
 
 func (o *ListRegistryAccessesOK) GetPayload() *service_model.V1ListHostAccessesResponse {
@@ -115,7 +115,7 @@ type ListRegistryAccessesNoContent struct {
 }
 
 func (o *ListRegistryAccessesNoContent) Error() string {
-	return fmt.Sprintf("[GET /api/v1/{owner}/registry_accesses][%d] listRegistryAccessesNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/registry_accesses][%d] listRegistryAccessesNoContent  %+v", 204, o.Payload)
 }
 
 func (o *ListRegistryAccessesNoContent) GetPayload() interface{} {
@@ -146,7 +146,7 @@ type ListRegistryAccessesForbidden struct {
 }
 
 func (o *ListRegistryAccessesForbidden) Error() string {
-	return fmt.Sprintf("[GET /api/v1/{owner}/registry_accesses][%d] listRegistryAccessesForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/registry_accesses][%d] listRegistryAccessesForbidden  %+v", 403, o.Payload)
 }
 
 func (o *ListRegistryAccessesForbidden) GetPayload() interface{} {
@@ -177,7 +177,7 @@ type ListRegistryAccessesNotFound struct {
 }
 
 func (o *ListRegistryAccessesNotFound) Error() string {
-	return fmt.Sprintf("[GET /api/v1/{owner}/registry_accesses][%d] listRegistryAccessesNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/registry_accesses][%d] listRegistryAccessesNotFound  %+v", 404, o.Payload)
 }
 
 func (o *ListRegistryAccessesNotFound) GetPayload() interface{} {

@@ -47,8 +47,8 @@ class TestK8sConfigMapsV1Api(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def test_create_k8s_config_maps(self):
-        """Test case for create_k8s_config_maps
+    def test_create_k8s_config_map(self):
+        """Test case for create_k8s_config_map
 
         List runs  # noqa: E501
         """

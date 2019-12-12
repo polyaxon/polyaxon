@@ -61,6 +61,18 @@
         // expect(instance.user).to.be(expectedValueLiteral);
       });
 
+      it('should have the property user_email (base name: "user_email")', function() {
+        // TODO: update the code to test the property user_email
+        expect(instance).to.have.property('user_email');
+        // expect(instance.user_email).to.be(expectedValueLiteral);
+      });
+
+      it('should have the property email (base name: "email")', function() {
+        // TODO: update the code to test the property email
+        expect(instance).to.have.property('email');
+        // expect(instance.email).to.be(expectedValueLiteral);
+      });
+
       it('should have the property role (base name: "role")', function() {
         // TODO: update the code to test the property role
         expect(instance).to.have.property('role');

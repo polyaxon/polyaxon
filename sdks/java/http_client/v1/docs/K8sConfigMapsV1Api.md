@@ -4,18 +4,18 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**createK8sConfigMaps**](K8sConfigMapsV1Api.md#createK8sConfigMaps) | **POST** /api/v1/{owner}/k8s_config_maps | List runs
-[**deleteK8sConfigMap**](K8sConfigMapsV1Api.md#deleteK8sConfigMap) | **DELETE** /api/v1/{owner}/k8s_config_maps/{uuid} | Patch run
-[**getK8sConfigMap**](K8sConfigMapsV1Api.md#getK8sConfigMap) | **GET** /api/v1/{owner}/k8s_config_maps/{uuid} | Create new run
-[**listK8sConfigMapNames**](K8sConfigMapsV1Api.md#listK8sConfigMapNames) | **GET** /api/v1/{owner}/k8s_config_maps/names | List bookmarked runs for user
-[**listK8sConfigMaps**](K8sConfigMapsV1Api.md#listK8sConfigMaps) | **GET** /api/v1/{owner}/k8s_config_maps | List archived runs for user
-[**patchK8sConfigMap**](K8sConfigMapsV1Api.md#patchK8sConfigMap) | **PATCH** /api/v1/{owner}/k8s_config_maps/{k8s_resource.uuid} | Update run
-[**updateK8sConfigMap**](K8sConfigMapsV1Api.md#updateK8sConfigMap) | **PUT** /api/v1/{owner}/k8s_config_maps/{k8s_resource.uuid} | Get run
+[**createK8sConfigMap**](K8sConfigMapsV1Api.md#createK8sConfigMap) | **POST** /api/v1/orgs/{owner}/k8s_config_maps | List runs
+[**deleteK8sConfigMap**](K8sConfigMapsV1Api.md#deleteK8sConfigMap) | **DELETE** /api/v1/orgs/{owner}/k8s_config_maps/{uuid} | Patch run
+[**getK8sConfigMap**](K8sConfigMapsV1Api.md#getK8sConfigMap) | **GET** /api/v1/orgs/{owner}/k8s_config_maps/{uuid} | Create new run
+[**listK8sConfigMapNames**](K8sConfigMapsV1Api.md#listK8sConfigMapNames) | **GET** /api/v1/orgs/{owner}/k8s_config_maps/names | List bookmarked runs for user
+[**listK8sConfigMaps**](K8sConfigMapsV1Api.md#listK8sConfigMaps) | **GET** /api/v1/orgs/{owner}/k8s_config_maps | List archived runs for user
+[**patchK8sConfigMap**](K8sConfigMapsV1Api.md#patchK8sConfigMap) | **PATCH** /api/v1/orgs/{owner}/k8s_config_maps/{k8s_resource.uuid} | Update run
+[**updateK8sConfigMap**](K8sConfigMapsV1Api.md#updateK8sConfigMap) | **PUT** /api/v1/orgs/{owner}/k8s_config_maps/{k8s_resource.uuid} | Get run
 
 
-<a name="createK8sConfigMaps"></a>
-# **createK8sConfigMaps**
-> V1K8sResource createK8sConfigMaps(owner, body)
+<a name="createK8sConfigMap"></a>
+# **createK8sConfigMap**
+> V1K8sResource createK8sConfigMap(owner, body)
 
 List runs
 
@@ -40,10 +40,10 @@ K8sConfigMapsV1Api apiInstance = new K8sConfigMapsV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
 V1K8sResource body = new V1K8sResource(); // V1K8sResource | Artifact store body
 try {
-    V1K8sResource result = apiInstance.createK8sConfigMaps(owner, body);
+    V1K8sResource result = apiInstance.createK8sConfigMap(owner, body);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling K8sConfigMapsV1Api#createK8sConfigMaps");
+    System.err.println("Exception when calling K8sConfigMapsV1Api#createK8sConfigMap");
     e.printStackTrace();
 }
 ```

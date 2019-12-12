@@ -111,7 +111,7 @@ message AgentEntityResourceRequest {
 
 
 // Request list data with user namespace
-message UserResouceListRequest {
+message UserResourceListRequest {
     // User
     string user = 1;
 
@@ -129,7 +129,7 @@ message UserResouceListRequest {
 }
 
 // Request list data with owner namespace
-message OwnerResouceListRequest {
+message OwnerResourceListRequest {
     // Owner of the namespace
     string owner = 1;
 
@@ -144,6 +144,27 @@ message OwnerResouceListRequest {
 
     // Query filter the search search
     string query = 5;
+}
+
+// Request list data with owner/team namespace
+message TeamResourceListRequest {
+    // Owner of the namespace
+    string owner = 1;
+
+    // Team under namesapce
+    string team = 2;
+
+    // Pagination offset
+    int32 offset = 3;
+
+    // Limit size
+    int32 limit = 4;
+
+     // Sort to order the search
+    string sort = 5;
+
+     // Query filter the search search
+    string query = 6;
 }
 
 // Request list data with owner/project namespace

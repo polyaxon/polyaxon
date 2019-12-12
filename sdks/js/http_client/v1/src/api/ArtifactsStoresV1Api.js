@@ -109,7 +109,7 @@
       var returnType = V1ArtifactsStore;
 
       return this.apiClient.callApi(
-        '/api/v1/{owner}/artifacts_stores', 'POST',
+        '/api/v1/orgs/{owner}/artifacts_stores', 'POST',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -162,7 +162,7 @@
       var returnType = null;
 
       return this.apiClient.callApi(
-        '/api/v1/{owner}/artifacts_stores/{uuid}', 'DELETE',
+        '/api/v1/orgs/{owner}/artifacts_stores/{uuid}', 'DELETE',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -216,7 +216,7 @@
       var returnType = V1ArtifactsStore;
 
       return this.apiClient.callApi(
-        '/api/v1/{owner}/artifacts_stores/{uuid}', 'GET',
+        '/api/v1/orgs/{owner}/artifacts_stores/{uuid}', 'GET',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -273,7 +273,7 @@
       var returnType = V1ListArtifactsStoresResponse;
 
       return this.apiClient.callApi(
-        '/api/v1/{owner}/artifacts_stores/names', 'GET',
+        '/api/v1/orgs/{owner}/artifacts_stores/names', 'GET',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -330,7 +330,7 @@
       var returnType = V1ListArtifactsStoresResponse;
 
       return this.apiClient.callApi(
-        '/api/v1/{owner}/artifacts_stores', 'GET',
+        '/api/v1/orgs/{owner}/artifacts_stores', 'GET',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -390,7 +390,7 @@
       var returnType = V1ArtifactsStore;
 
       return this.apiClient.callApi(
-        '/api/v1/{owner}/artifacts_stores/{artifact_store.uuid}', 'PATCH',
+        '/api/v1/orgs/{owner}/artifacts_stores/{artifact_store.uuid}', 'PATCH',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -450,7 +450,7 @@
       var returnType = V1ArtifactsStore;
 
       return this.apiClient.callApi(
-        '/api/v1/{owner}/artifacts_stores/{artifact_store.uuid}', 'PUT',
+        '/api/v1/orgs/{owner}/artifacts_stores/{artifact_store.uuid}', 'PUT',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );

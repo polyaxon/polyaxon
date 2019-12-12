@@ -102,7 +102,7 @@
       var returnType = V1Organization;
 
       return this.apiClient.callApi(
-        '/api/v1/organizations/create', 'POST',
+        '/api/v1/orgs/create', 'POST',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -155,7 +155,7 @@
       var returnType = V1OrganizationMember;
 
       return this.apiClient.callApi(
-        '/api/v1/organizations/{owner}/members', 'POST',
+        '/api/v1/orgs/{owner}/members', 'POST',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -201,7 +201,7 @@
       var returnType = null;
 
       return this.apiClient.callApi(
-        '/api/v1/organizations/{owner}', 'DELETE',
+        '/api/v1/orgs/{owner}', 'DELETE',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -254,7 +254,7 @@
       var returnType = null;
 
       return this.apiClient.callApi(
-        '/api/v1/organizations/{owner}/members/{user}', 'DELETE',
+        '/api/v1/orgs/{owner}/members/{user}', 'DELETE',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -301,7 +301,7 @@
       var returnType = V1Organization;
 
       return this.apiClient.callApi(
-        '/api/v1/organizations/{owner}', 'GET',
+        '/api/v1/orgs/{owner}', 'GET',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -355,7 +355,7 @@
       var returnType = V1OrganizationMember;
 
       return this.apiClient.callApi(
-        '/api/v1/organizations/{owner}/members/{user}', 'GET',
+        '/api/v1/orgs/{owner}/members/{user}', 'GET',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -372,10 +372,16 @@
     /**
      * Delete run
      * @param {String} owner Owner of the namespace
+     * @param {Object} opts Optional parameters
+     * @param {Number} opts.offset Pagination offset.
+     * @param {Number} opts.limit Limit size.
+     * @param {String} opts.sort Sort to order the search.
+     * @param {String} opts.query Query filter the search search.
      * @param {module:api/OrganizationsV1Api~listOrganizationMembersCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1ListOrganizationMembersResponse}
      */
-    this.listOrganizationMembers = function(owner, callback) {
+    this.listOrganizationMembers = function(owner, opts, callback) {
+      opts = opts || {};
       var postBody = null;
 
       // verify the required parameter 'owner' is set
@@ -388,6 +394,10 @@
         'owner': owner
       };
       var queryParams = {
+        'offset': opts['offset'],
+        'limit': opts['limit'],
+        'sort': opts['sort'],
+        'query': opts['query'],
       };
       var collectionQueryParams = {
       };
@@ -402,7 +412,7 @@
       var returnType = V1ListOrganizationMembersResponse;
 
       return this.apiClient.callApi(
-        '/api/v1/organizations/{owner}/members', 'GET',
+        '/api/v1/orgs/{owner}/members', 'GET',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -442,7 +452,7 @@
       var returnType = V1ListOrganizationsResponse;
 
       return this.apiClient.callApi(
-        '/api/v1/organizations/names', 'GET',
+        '/api/v1/orgs/names', 'GET',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -482,7 +492,7 @@
       var returnType = V1ListOrganizationsResponse;
 
       return this.apiClient.callApi(
-        '/api/v1/organizations/list', 'GET',
+        '/api/v1/orgs/list', 'GET',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -535,7 +545,7 @@
       var returnType = V1Organization;
 
       return this.apiClient.callApi(
-        '/api/v1/organizations/{owner}', 'PATCH',
+        '/api/v1/orgs/{owner}', 'PATCH',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -595,7 +605,7 @@
       var returnType = V1OrganizationMember;
 
       return this.apiClient.callApi(
-        '/api/v1/organizations/{owner}/members/{member.user}', 'PATCH',
+        '/api/v1/orgs/{owner}/members/{member.user}', 'PATCH',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -648,7 +658,7 @@
       var returnType = V1Organization;
 
       return this.apiClient.callApi(
-        '/api/v1/organizations/{owner}', 'PUT',
+        '/api/v1/orgs/{owner}', 'PUT',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -708,7 +718,7 @@
       var returnType = V1OrganizationMember;
 
       return this.apiClient.callApi(
-        '/api/v1/organizations/{owner}/members/{member.user}', 'PUT',
+        '/api/v1/orgs/{owner}/members/{member.user}', 'PUT',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );

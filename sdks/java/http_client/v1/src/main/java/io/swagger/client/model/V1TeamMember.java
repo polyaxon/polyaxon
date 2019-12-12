@@ -47,6 +47,9 @@ public class V1TeamMember {
   @SerializedName("user")
   private String user = null;
 
+  @SerializedName("user_email")
+  private String userEmail = null;
+
   @SerializedName("role")
   private String role = null;
 
@@ -75,6 +78,24 @@ public class V1TeamMember {
 
   public void setUser(String user) {
     this.user = user;
+  }
+
+  public V1TeamMember userEmail(String userEmail) {
+    this.userEmail = userEmail;
+    return this;
+  }
+
+   /**
+   * Get userEmail
+   * @return userEmail
+  **/
+  @ApiModelProperty(value = "")
+  public String getUserEmail() {
+    return userEmail;
+  }
+
+  public void setUserEmail(String userEmail) {
+    this.userEmail = userEmail;
   }
 
   public V1TeamMember role(String role) {
@@ -160,6 +181,7 @@ public class V1TeamMember {
     }
     V1TeamMember v1TeamMember = (V1TeamMember) o;
     return Objects.equals(this.user, v1TeamMember.user) &&
+        Objects.equals(this.userEmail, v1TeamMember.userEmail) &&
         Objects.equals(this.role, v1TeamMember.role) &&
         Objects.equals(this.orgRole, v1TeamMember.orgRole) &&
         Objects.equals(this.createdAt, v1TeamMember.createdAt) &&
@@ -168,7 +190,7 @@ public class V1TeamMember {
 
   @Override
   public int hashCode() {
-    return Objects.hash(user, role, orgRole, createdAt, updatedAt);
+    return Objects.hash(user, userEmail, role, orgRole, createdAt, updatedAt);
   }
 
 
@@ -178,6 +200,7 @@ public class V1TeamMember {
     sb.append("class V1TeamMember {\n");
     
     sb.append("    user: ").append(toIndentedString(user)).append("\n");
+    sb.append("    userEmail: ").append(toIndentedString(userEmail)).append("\n");
     sb.append("    role: ").append(toIndentedString(role)).append("\n");
     sb.append("    orgRole: ").append(toIndentedString(orgRole)).append("\n");
     sb.append("    createdAt: ").append(toIndentedString(createdAt)).append("\n");

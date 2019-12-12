@@ -149,7 +149,7 @@ class GitAccessesV1Api(object):
         auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/git_accesses",
+            "/api/v1/orgs/{owner}/git_accesses",
             "POST",
             path_params,
             query_params,
@@ -266,7 +266,7 @@ class GitAccessesV1Api(object):
         auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/git_accesses/{uuid}",
+            "/api/v1/orgs/{owner}/git_accesses/{uuid}",
             "DELETE",
             path_params,
             query_params,
@@ -383,7 +383,7 @@ class GitAccessesV1Api(object):
         auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/git_accesses/{uuid}",
+            "/api/v1/orgs/{owner}/git_accesses/{uuid}",
             "GET",
             path_params,
             query_params,
@@ -507,7 +507,7 @@ class GitAccessesV1Api(object):
         auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/git_accesses/names",
+            "/api/v1/orgs/{owner}/git_accesses/names",
             "GET",
             path_params,
             query_params,
@@ -629,7 +629,7 @@ class GitAccessesV1Api(object):
         auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/git_accesses",
+            "/api/v1/orgs/{owner}/git_accesses",
             "GET",
             path_params,
             query_params,
@@ -757,7 +757,7 @@ class GitAccessesV1Api(object):
         auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/git_accesses/{host_access.uuid}",
+            "/api/v1/orgs/{owner}/git_accesses/{host_access.uuid}",
             "PATCH",
             path_params,
             query_params,
@@ -885,7 +885,7 @@ class GitAccessesV1Api(object):
         auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/git_accesses/{host_access.uuid}",
+            "/api/v1/orgs/{owner}/git_accesses/{host_access.uuid}",
             "PUT",
             path_params,
             query_params,

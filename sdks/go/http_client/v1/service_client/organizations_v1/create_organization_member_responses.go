@@ -82,7 +82,7 @@ type CreateOrganizationMemberOK struct {
 }
 
 func (o *CreateOrganizationMemberOK) Error() string {
-	return fmt.Sprintf("[POST /api/v1/organizations/{owner}/members][%d] createOrganizationMemberOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/orgs/{owner}/members][%d] createOrganizationMemberOK  %+v", 200, o.Payload)
 }
 
 func (o *CreateOrganizationMemberOK) GetPayload() *service_model.V1OrganizationMember {
@@ -115,7 +115,7 @@ type CreateOrganizationMemberNoContent struct {
 }
 
 func (o *CreateOrganizationMemberNoContent) Error() string {
-	return fmt.Sprintf("[POST /api/v1/organizations/{owner}/members][%d] createOrganizationMemberNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/orgs/{owner}/members][%d] createOrganizationMemberNoContent  %+v", 204, o.Payload)
 }
 
 func (o *CreateOrganizationMemberNoContent) GetPayload() interface{} {
@@ -146,7 +146,7 @@ type CreateOrganizationMemberForbidden struct {
 }
 
 func (o *CreateOrganizationMemberForbidden) Error() string {
-	return fmt.Sprintf("[POST /api/v1/organizations/{owner}/members][%d] createOrganizationMemberForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/orgs/{owner}/members][%d] createOrganizationMemberForbidden  %+v", 403, o.Payload)
 }
 
 func (o *CreateOrganizationMemberForbidden) GetPayload() interface{} {
@@ -177,7 +177,7 @@ type CreateOrganizationMemberNotFound struct {
 }
 
 func (o *CreateOrganizationMemberNotFound) Error() string {
-	return fmt.Sprintf("[POST /api/v1/organizations/{owner}/members][%d] createOrganizationMemberNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/orgs/{owner}/members][%d] createOrganizationMemberNotFound  %+v", 404, o.Payload)
 }
 
 func (o *CreateOrganizationMemberNotFound) GetPayload() interface{} {

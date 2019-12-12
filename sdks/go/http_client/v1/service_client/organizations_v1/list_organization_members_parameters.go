@@ -27,6 +27,7 @@ import (
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
 	cr "github.com/go-openapi/runtime/client"
+	"github.com/go-openapi/swag"
 
 	strfmt "github.com/go-openapi/strfmt"
 )
@@ -75,11 +76,31 @@ for the list organization members operation typically these are written to a htt
 */
 type ListOrganizationMembersParams struct {
 
+	/*Limit
+	  Limit size.
+
+	*/
+	Limit *int32
+	/*Offset
+	  Pagination offset.
+
+	*/
+	Offset *int32
 	/*Owner
 	  Owner of the namespace
 
 	*/
 	Owner string
+	/*Query
+	  Query filter the search search.
+
+	*/
+	Query *string
+	/*Sort
+	  Sort to order the search.
+
+	*/
+	Sort *string
 
 	timeout    time.Duration
 	Context    context.Context
@@ -119,6 +140,28 @@ func (o *ListOrganizationMembersParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
 }
 
+// WithLimit adds the limit to the list organization members params
+func (o *ListOrganizationMembersParams) WithLimit(limit *int32) *ListOrganizationMembersParams {
+	o.SetLimit(limit)
+	return o
+}
+
+// SetLimit adds the limit to the list organization members params
+func (o *ListOrganizationMembersParams) SetLimit(limit *int32) {
+	o.Limit = limit
+}
+
+// WithOffset adds the offset to the list organization members params
+func (o *ListOrganizationMembersParams) WithOffset(offset *int32) *ListOrganizationMembersParams {
+	o.SetOffset(offset)
+	return o
+}
+
+// SetOffset adds the offset to the list organization members params
+func (o *ListOrganizationMembersParams) SetOffset(offset *int32) {
+	o.Offset = offset
+}
+
 // WithOwner adds the owner to the list organization members params
 func (o *ListOrganizationMembersParams) WithOwner(owner string) *ListOrganizationMembersParams {
 	o.SetOwner(owner)
@@ -130,6 +173,28 @@ func (o *ListOrganizationMembersParams) SetOwner(owner string) {
 	o.Owner = owner
 }
 
+// WithQuery adds the query to the list organization members params
+func (o *ListOrganizationMembersParams) WithQuery(query *string) *ListOrganizationMembersParams {
+	o.SetQuery(query)
+	return o
+}
+
+// SetQuery adds the query to the list organization members params
+func (o *ListOrganizationMembersParams) SetQuery(query *string) {
+	o.Query = query
+}
+
+// WithSort adds the sort to the list organization members params
+func (o *ListOrganizationMembersParams) WithSort(sort *string) *ListOrganizationMembersParams {
+	o.SetSort(sort)
+	return o
+}
+
+// SetSort adds the sort to the list organization members params
+func (o *ListOrganizationMembersParams) SetSort(sort *string) {
+	o.Sort = sort
+}
+
 // WriteToRequest writes these params to a swagger request
 func (o *ListOrganizationMembersParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
 
@@ -138,9 +203,73 @@ func (o *ListOrganizationMembersParams) WriteToRequest(r runtime.ClientRequest, 
 	}
 	var res []error
 
+	if o.Limit != nil {
+
+		// query param limit
+		var qrLimit int32
+		if o.Limit != nil {
+			qrLimit = *o.Limit
+		}
+		qLimit := swag.FormatInt32(qrLimit)
+		if qLimit != "" {
+			if err := r.SetQueryParam("limit", qLimit); err != nil {
+				return err
+			}
+		}
+
+	}
+
+	if o.Offset != nil {
+
+		// query param offset
+		var qrOffset int32
+		if o.Offset != nil {
+			qrOffset = *o.Offset
+		}
+		qOffset := swag.FormatInt32(qrOffset)
+		if qOffset != "" {
+			if err := r.SetQueryParam("offset", qOffset); err != nil {
+				return err
+			}
+		}
+
+	}
+
 	// path param owner
 	if err := r.SetPathParam("owner", o.Owner); err != nil {
 		return err
+	}
+
+	if o.Query != nil {
+
+		// query param query
+		var qrQuery string
+		if o.Query != nil {
+			qrQuery = *o.Query
+		}
+		qQuery := qrQuery
+		if qQuery != "" {
+			if err := r.SetQueryParam("query", qQuery); err != nil {
+				return err
+			}
+		}
+
+	}
+
+	if o.Sort != nil {
+
+		// query param sort
+		var qrSort string
+		if o.Sort != nil {
+			qrSort = *o.Sort
+		}
+		qSort := qrSort
+		if qSort != "" {
+			if err := r.SetQueryParam("sort", qSort); err != nil {
+				return err
+			}
+		}
+
 	}
 
 	if len(res) > 0 {

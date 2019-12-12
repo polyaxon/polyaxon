@@ -56,14 +56,20 @@ message OrganizationMember {
     // User
     string user = 1;
 
+    // Read-only User email
+    string user_email = 2;
+
+    // Write-only email for inviting new user
+    string email = 3;
+
     // Role
-    string role = 2;
+    string role = 4;
 
     // Optional time when the entityt was created
-    google.protobuf.Timestamp created_at = 3;
+    google.protobuf.Timestamp created_at = 5;
 
     // Optional last time the entity was updated
-    google.protobuf.Timestamp updated_at = 4;
+    google.protobuf.Timestamp updated_at = 6;
 
 }
 

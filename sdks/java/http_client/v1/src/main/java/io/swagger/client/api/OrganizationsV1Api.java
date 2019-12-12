@@ -83,7 +83,7 @@ public class OrganizationsV1Api {
         Object localVarPostBody = body;
 
         // create path and map variables
-        String localVarPath = "/api/v1/organizations/create";
+        String localVarPath = "/api/v1/orgs/create";
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
@@ -206,7 +206,7 @@ public class OrganizationsV1Api {
         Object localVarPostBody = body;
 
         // create path and map variables
-        String localVarPath = "/api/v1/organizations/{owner}/members"
+        String localVarPath = "/api/v1/orgs/{owner}/members"
             .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
@@ -337,7 +337,7 @@ public class OrganizationsV1Api {
         Object localVarPostBody = null;
 
         // create path and map variables
-        String localVarPath = "/api/v1/organizations/{owner}"
+        String localVarPath = "/api/v1/orgs/{owner}"
             .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
@@ -457,7 +457,7 @@ public class OrganizationsV1Api {
         Object localVarPostBody = null;
 
         // create path and map variables
-        String localVarPath = "/api/v1/organizations/{owner}/members/{user}"
+        String localVarPath = "/api/v1/orgs/{owner}/members/{user}"
             .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()))
             .replaceAll("\\{" + "user" + "\\}", apiClient.escapeString(user.toString()));
 
@@ -585,7 +585,7 @@ public class OrganizationsV1Api {
         Object localVarPostBody = null;
 
         // create path and map variables
-        String localVarPath = "/api/v1/organizations/{owner}"
+        String localVarPath = "/api/v1/orgs/{owner}"
             .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
@@ -709,7 +709,7 @@ public class OrganizationsV1Api {
         Object localVarPostBody = null;
 
         // create path and map variables
-        String localVarPath = "/api/v1/organizations/{owner}/members/{user}"
+        String localVarPath = "/api/v1/orgs/{owner}/members/{user}"
             .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()))
             .replaceAll("\\{" + "user" + "\\}", apiClient.escapeString(user.toString()));
 
@@ -832,20 +832,32 @@ public class OrganizationsV1Api {
     /**
      * Build call for listOrganizationMembers
      * @param owner Owner of the namespace (required)
+     * @param offset Pagination offset. (optional)
+     * @param limit Limit size. (optional)
+     * @param sort Sort to order the search. (optional)
+     * @param query Query filter the search search. (optional)
      * @param progressListener Progress listener
      * @param progressRequestListener Progress request listener
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call listOrganizationMembersCall(String owner, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call listOrganizationMembersCall(String owner, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
-        String localVarPath = "/api/v1/organizations/{owner}/members"
+        String localVarPath = "/api/v1/orgs/{owner}/members"
             .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        if (offset != null)
+        localVarQueryParams.addAll(apiClient.parameterToPair("offset", offset));
+        if (limit != null)
+        localVarQueryParams.addAll(apiClient.parameterToPair("limit", limit));
+        if (sort != null)
+        localVarQueryParams.addAll(apiClient.parameterToPair("sort", sort));
+        if (query != null)
+        localVarQueryParams.addAll(apiClient.parameterToPair("query", query));
 
         Map<String, String> localVarHeaderParams = new HashMap<String, String>();
 
@@ -880,7 +892,7 @@ public class OrganizationsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call listOrganizationMembersValidateBeforeCall(String owner, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call listOrganizationMembersValidateBeforeCall(String owner, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
@@ -888,7 +900,7 @@ public class OrganizationsV1Api {
         }
         
 
-        com.squareup.okhttp.Call call = listOrganizationMembersCall(owner, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = listOrganizationMembersCall(owner, offset, limit, sort, query, progressListener, progressRequestListener);
         return call;
 
     }
@@ -897,11 +909,15 @@ public class OrganizationsV1Api {
      * Delete run
      * 
      * @param owner Owner of the namespace (required)
+     * @param offset Pagination offset. (optional)
+     * @param limit Limit size. (optional)
+     * @param sort Sort to order the search. (optional)
+     * @param query Query filter the search search. (optional)
      * @return V1ListOrganizationMembersResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1ListOrganizationMembersResponse listOrganizationMembers(String owner) throws ApiException {
-        ApiResponse<V1ListOrganizationMembersResponse> resp = listOrganizationMembersWithHttpInfo(owner);
+    public V1ListOrganizationMembersResponse listOrganizationMembers(String owner, Integer offset, Integer limit, String sort, String query) throws ApiException {
+        ApiResponse<V1ListOrganizationMembersResponse> resp = listOrganizationMembersWithHttpInfo(owner, offset, limit, sort, query);
         return resp.getData();
     }
 
@@ -909,11 +925,15 @@ public class OrganizationsV1Api {
      * Delete run
      * 
      * @param owner Owner of the namespace (required)
+     * @param offset Pagination offset. (optional)
+     * @param limit Limit size. (optional)
+     * @param sort Sort to order the search. (optional)
+     * @param query Query filter the search search. (optional)
      * @return ApiResponse&lt;V1ListOrganizationMembersResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1ListOrganizationMembersResponse> listOrganizationMembersWithHttpInfo(String owner) throws ApiException {
-        com.squareup.okhttp.Call call = listOrganizationMembersValidateBeforeCall(owner, null, null);
+    public ApiResponse<V1ListOrganizationMembersResponse> listOrganizationMembersWithHttpInfo(String owner, Integer offset, Integer limit, String sort, String query) throws ApiException {
+        com.squareup.okhttp.Call call = listOrganizationMembersValidateBeforeCall(owner, offset, limit, sort, query, null, null);
         Type localVarReturnType = new TypeToken<V1ListOrganizationMembersResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -922,11 +942,15 @@ public class OrganizationsV1Api {
      * Delete run (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
+     * @param offset Pagination offset. (optional)
+     * @param limit Limit size. (optional)
+     * @param sort Sort to order the search. (optional)
+     * @param query Query filter the search search. (optional)
      * @param callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call listOrganizationMembersAsync(String owner, final ApiCallback<V1ListOrganizationMembersResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call listOrganizationMembersAsync(String owner, Integer offset, Integer limit, String sort, String query, final ApiCallback<V1ListOrganizationMembersResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -947,7 +971,7 @@ public class OrganizationsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = listOrganizationMembersValidateBeforeCall(owner, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = listOrganizationMembersValidateBeforeCall(owner, offset, limit, sort, query, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1ListOrganizationMembersResponse>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
@@ -963,7 +987,7 @@ public class OrganizationsV1Api {
         Object localVarPostBody = null;
 
         // create path and map variables
-        String localVarPath = "/api/v1/organizations/names";
+        String localVarPath = "/api/v1/orgs/names";
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
@@ -1076,7 +1100,7 @@ public class OrganizationsV1Api {
         Object localVarPostBody = null;
 
         // create path and map variables
-        String localVarPath = "/api/v1/organizations/list";
+        String localVarPath = "/api/v1/orgs/list";
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
@@ -1191,7 +1215,7 @@ public class OrganizationsV1Api {
         Object localVarPostBody = body;
 
         // create path and map variables
-        String localVarPath = "/api/v1/organizations/{owner}"
+        String localVarPath = "/api/v1/orgs/{owner}"
             .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
@@ -1324,7 +1348,7 @@ public class OrganizationsV1Api {
         Object localVarPostBody = body;
 
         // create path and map variables
-        String localVarPath = "/api/v1/organizations/{owner}/members/{member.user}"
+        String localVarPath = "/api/v1/orgs/{owner}/members/{member.user}"
             .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()))
             .replaceAll("\\{" + "member.user" + "\\}", apiClient.escapeString(memberUser.toString()));
 
@@ -1465,7 +1489,7 @@ public class OrganizationsV1Api {
         Object localVarPostBody = body;
 
         // create path and map variables
-        String localVarPath = "/api/v1/organizations/{owner}"
+        String localVarPath = "/api/v1/orgs/{owner}"
             .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
@@ -1598,7 +1622,7 @@ public class OrganizationsV1Api {
         Object localVarPostBody = body;
 
         // create path and map variables
-        String localVarPath = "/api/v1/organizations/{owner}/members/{member.user}"
+        String localVarPath = "/api/v1/orgs/{owner}/members/{member.user}"
             .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()))
             .replaceAll("\\{" + "member.user" + "\\}", apiClient.escapeString(memberUser.toString()));
 

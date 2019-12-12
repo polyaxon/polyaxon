@@ -52,7 +52,7 @@ func (a *Client) CreateRegistryAccess(params *CreateRegistryAccessParams, authIn
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "CreateRegistryAccess",
 		Method:             "POST",
-		PathPattern:        "/api/v1/{owner}/registry_accesses",
+		PathPattern:        "/api/v1/orgs/{owner}/registry_accesses",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -88,7 +88,7 @@ func (a *Client) DeleteRegistryAccess(params *DeleteRegistryAccessParams, authIn
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "DeleteRegistryAccess",
 		Method:             "DELETE",
-		PathPattern:        "/api/v1/{owner}/registry_accesses/{uuid}",
+		PathPattern:        "/api/v1/orgs/{owner}/registry_accesses/{uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -124,7 +124,7 @@ func (a *Client) GetRegistryAccess(params *GetRegistryAccessParams, authInfo run
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "GetRegistryAccess",
 		Method:             "GET",
-		PathPattern:        "/api/v1/{owner}/registry_accesses/{uuid}",
+		PathPattern:        "/api/v1/orgs/{owner}/registry_accesses/{uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -160,7 +160,7 @@ func (a *Client) ListRegistryAccessNames(params *ListRegistryAccessNamesParams, 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "ListRegistryAccessNames",
 		Method:             "GET",
-		PathPattern:        "/api/v1/{owner}/registry_accesses/names",
+		PathPattern:        "/api/v1/orgs/{owner}/registry_accesses/names",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -196,7 +196,7 @@ func (a *Client) ListRegistryAccesses(params *ListRegistryAccessesParams, authIn
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "ListRegistryAccesses",
 		Method:             "GET",
-		PathPattern:        "/api/v1/{owner}/registry_accesses",
+		PathPattern:        "/api/v1/orgs/{owner}/registry_accesses",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -232,7 +232,7 @@ func (a *Client) PatchRegistryAccess(params *PatchRegistryAccessParams, authInfo
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "PatchRegistryAccess",
 		Method:             "PATCH",
-		PathPattern:        "/api/v1/{owner}/registry_accesses/{host_access.uuid}",
+		PathPattern:        "/api/v1/orgs/{owner}/registry_accesses/{host_access.uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -268,7 +268,7 @@ func (a *Client) UpdateRegistryAccess(params *UpdateRegistryAccessParams, authIn
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "UpdateRegistryAccess",
 		Method:             "PUT",
-		PathPattern:        "/api/v1/{owner}/registry_accesses/{host_access.uuid}",
+		PathPattern:        "/api/v1/orgs/{owner}/registry_accesses/{host_access.uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},

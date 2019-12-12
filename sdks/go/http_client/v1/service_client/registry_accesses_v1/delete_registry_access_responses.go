@@ -79,7 +79,7 @@ type DeleteRegistryAccessOK struct {
 }
 
 func (o *DeleteRegistryAccessOK) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/{owner}/registry_accesses/{uuid}][%d] deleteRegistryAccessOK ", 200)
+	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/registry_accesses/{uuid}][%d] deleteRegistryAccessOK ", 200)
 }
 
 func (o *DeleteRegistryAccessOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -101,7 +101,7 @@ type DeleteRegistryAccessNoContent struct {
 }
 
 func (o *DeleteRegistryAccessNoContent) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/{owner}/registry_accesses/{uuid}][%d] deleteRegistryAccessNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/registry_accesses/{uuid}][%d] deleteRegistryAccessNoContent  %+v", 204, o.Payload)
 }
 
 func (o *DeleteRegistryAccessNoContent) GetPayload() interface{} {
@@ -132,7 +132,7 @@ type DeleteRegistryAccessForbidden struct {
 }
 
 func (o *DeleteRegistryAccessForbidden) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/{owner}/registry_accesses/{uuid}][%d] deleteRegistryAccessForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/registry_accesses/{uuid}][%d] deleteRegistryAccessForbidden  %+v", 403, o.Payload)
 }
 
 func (o *DeleteRegistryAccessForbidden) GetPayload() interface{} {
@@ -163,7 +163,7 @@ type DeleteRegistryAccessNotFound struct {
 }
 
 func (o *DeleteRegistryAccessNotFound) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/{owner}/registry_accesses/{uuid}][%d] deleteRegistryAccessNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/registry_accesses/{uuid}][%d] deleteRegistryAccessNotFound  %+v", 404, o.Payload)
 }
 
 func (o *DeleteRegistryAccessNotFound) GetPayload() interface{} {

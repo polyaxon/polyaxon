@@ -71,6 +71,10 @@
       obj = obj || new exports();
       if (data.hasOwnProperty('user'))
         obj.user = ApiClient.convertToType(data['user'], 'String');
+      if (data.hasOwnProperty('user_email'))
+        obj.user_email = ApiClient.convertToType(data['user_email'], 'String');
+      if (data.hasOwnProperty('email'))
+        obj.email = ApiClient.convertToType(data['email'], 'String');
       if (data.hasOwnProperty('role'))
         obj.role = ApiClient.convertToType(data['role'], 'String');
       if (data.hasOwnProperty('created_at'))
@@ -85,6 +89,16 @@
    * @member {String} user
    */
   exports.prototype.user = undefined;
+
+  /**
+   * @member {String} user_email
+   */
+  exports.prototype.user_email = undefined;
+
+  /**
+   * @member {String} email
+   */
+  exports.prototype.email = undefined;
 
   /**
    * @member {String} role

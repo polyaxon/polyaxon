@@ -109,7 +109,7 @@
       var returnType = V1HostAccess;
 
       return this.apiClient.callApi(
-        '/api/v1/{owner}/registry_accesses', 'POST',
+        '/api/v1/orgs/{owner}/registry_accesses', 'POST',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -162,7 +162,7 @@
       var returnType = null;
 
       return this.apiClient.callApi(
-        '/api/v1/{owner}/registry_accesses/{uuid}', 'DELETE',
+        '/api/v1/orgs/{owner}/registry_accesses/{uuid}', 'DELETE',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -216,7 +216,7 @@
       var returnType = V1HostAccess;
 
       return this.apiClient.callApi(
-        '/api/v1/{owner}/registry_accesses/{uuid}', 'GET',
+        '/api/v1/orgs/{owner}/registry_accesses/{uuid}', 'GET',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -273,7 +273,7 @@
       var returnType = V1ListHostAccessesResponse;
 
       return this.apiClient.callApi(
-        '/api/v1/{owner}/registry_accesses/names', 'GET',
+        '/api/v1/orgs/{owner}/registry_accesses/names', 'GET',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -330,7 +330,7 @@
       var returnType = V1ListHostAccessesResponse;
 
       return this.apiClient.callApi(
-        '/api/v1/{owner}/registry_accesses', 'GET',
+        '/api/v1/orgs/{owner}/registry_accesses', 'GET',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -390,7 +390,7 @@
       var returnType = V1HostAccess;
 
       return this.apiClient.callApi(
-        '/api/v1/{owner}/registry_accesses/{host_access.uuid}', 'PATCH',
+        '/api/v1/orgs/{owner}/registry_accesses/{host_access.uuid}', 'PATCH',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -450,7 +450,7 @@
       var returnType = V1HostAccess;
 
       return this.apiClient.callApi(
-        '/api/v1/{owner}/registry_accesses/{host_access.uuid}', 'PUT',
+        '/api/v1/orgs/{owner}/registry_accesses/{host_access.uuid}', 'PUT',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );

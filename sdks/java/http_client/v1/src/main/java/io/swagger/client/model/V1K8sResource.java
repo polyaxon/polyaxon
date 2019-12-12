@@ -55,9 +55,6 @@ public class V1K8sResource {
   @SerializedName("description")
   private String description = null;
 
-  @SerializedName("readme")
-  private String readme = null;
-
   @SerializedName("tags")
   private List<String> tags = null;
 
@@ -137,24 +134,6 @@ public class V1K8sResource {
 
   public void setDescription(String description) {
     this.description = description;
-  }
-
-  public V1K8sResource readme(String readme) {
-    this.readme = readme;
-    return this;
-  }
-
-   /**
-   * Get readme
-   * @return readme
-  **/
-  @ApiModelProperty(value = "")
-  public String getReadme() {
-    return readme;
-  }
-
-  public void setReadme(String readme) {
-    this.readme = readme;
   }
 
   public V1K8sResource tags(List<String> tags) {
@@ -348,7 +327,6 @@ public class V1K8sResource {
     return Objects.equals(this.uuid, v1K8sResource.uuid) &&
         Objects.equals(this.name, v1K8sResource.name) &&
         Objects.equals(this.description, v1K8sResource.description) &&
-        Objects.equals(this.readme, v1K8sResource.readme) &&
         Objects.equals(this.tags, v1K8sResource.tags) &&
         Objects.equals(this.createdAt, v1K8sResource.createdAt) &&
         Objects.equals(this.updatedAt, v1K8sResource.updatedAt) &&
@@ -362,7 +340,7 @@ public class V1K8sResource {
 
   @Override
   public int hashCode() {
-    return Objects.hash(uuid, name, description, readme, tags, createdAt, updatedAt, k8sRef, frozen, disabled, deleted, mountPath, items);
+    return Objects.hash(uuid, name, description, tags, createdAt, updatedAt, k8sRef, frozen, disabled, deleted, mountPath, items);
   }
 
 
@@ -374,7 +352,6 @@ public class V1K8sResource {
     sb.append("    uuid: ").append(toIndentedString(uuid)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
-    sb.append("    readme: ").append(toIndentedString(readme)).append("\n");
     sb.append("    tags: ").append(toIndentedString(tags)).append("\n");
     sb.append("    createdAt: ").append(toIndentedString(createdAt)).append("\n");
     sb.append("    updatedAt: ").append(toIndentedString(updatedAt)).append("\n");

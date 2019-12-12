@@ -4,6 +4,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **user** | **String** |  | [optional] 
+**user_email** | **String** |  | [optional] 
 **role** | **String** |  | [optional] 
 **org_role** | **String** |  | [optional] 
 **created_at** | **Date** |  | [optional] 

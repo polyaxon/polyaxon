@@ -4,17 +4,17 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**create_k8s_config_maps**](K8sConfigMapsV1Api.md#create_k8s_config_maps) | **POST** /api/v1/{owner}/k8s_config_maps | List runs
-[**delete_k8s_config_map**](K8sConfigMapsV1Api.md#delete_k8s_config_map) | **DELETE** /api/v1/{owner}/k8s_config_maps/{uuid} | Patch run
-[**get_k8s_config_map**](K8sConfigMapsV1Api.md#get_k8s_config_map) | **GET** /api/v1/{owner}/k8s_config_maps/{uuid} | Create new run
-[**list_k8s_config_map_names**](K8sConfigMapsV1Api.md#list_k8s_config_map_names) | **GET** /api/v1/{owner}/k8s_config_maps/names | List bookmarked runs for user
-[**list_k8s_config_maps**](K8sConfigMapsV1Api.md#list_k8s_config_maps) | **GET** /api/v1/{owner}/k8s_config_maps | List archived runs for user
-[**patch_k8s_config_map**](K8sConfigMapsV1Api.md#patch_k8s_config_map) | **PATCH** /api/v1/{owner}/k8s_config_maps/{k8s_resource.uuid} | Update run
-[**update_k8s_config_map**](K8sConfigMapsV1Api.md#update_k8s_config_map) | **PUT** /api/v1/{owner}/k8s_config_maps/{k8s_resource.uuid} | Get run
+[**create_k8s_config_map**](K8sConfigMapsV1Api.md#create_k8s_config_map) | **POST** /api/v1/orgs/{owner}/k8s_config_maps | List runs
+[**delete_k8s_config_map**](K8sConfigMapsV1Api.md#delete_k8s_config_map) | **DELETE** /api/v1/orgs/{owner}/k8s_config_maps/{uuid} | Patch run
+[**get_k8s_config_map**](K8sConfigMapsV1Api.md#get_k8s_config_map) | **GET** /api/v1/orgs/{owner}/k8s_config_maps/{uuid} | Create new run
+[**list_k8s_config_map_names**](K8sConfigMapsV1Api.md#list_k8s_config_map_names) | **GET** /api/v1/orgs/{owner}/k8s_config_maps/names | List bookmarked runs for user
+[**list_k8s_config_maps**](K8sConfigMapsV1Api.md#list_k8s_config_maps) | **GET** /api/v1/orgs/{owner}/k8s_config_maps | List archived runs for user
+[**patch_k8s_config_map**](K8sConfigMapsV1Api.md#patch_k8s_config_map) | **PATCH** /api/v1/orgs/{owner}/k8s_config_maps/{k8s_resource.uuid} | Update run
+[**update_k8s_config_map**](K8sConfigMapsV1Api.md#update_k8s_config_map) | **PUT** /api/v1/orgs/{owner}/k8s_config_maps/{k8s_resource.uuid} | Get run
 
 
-# **create_k8s_config_maps**
-> V1K8sResource create_k8s_config_maps(owner, body)
+# **create_k8s_config_map**
+> V1K8sResource create_k8s_config_map(owner, body)
 
 List runs
 
@@ -39,10 +39,10 @@ body = polyaxon_sdk.V1K8sResource() # V1K8sResource | Artifact store body
 
 try:
     # List runs
-    api_response = api_instance.create_k8s_config_maps(owner, body)
+    api_response = api_instance.create_k8s_config_map(owner, body)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling K8sConfigMapsV1Api->create_k8s_config_maps: %s\n" % e)
+    print("Exception when calling K8sConfigMapsV1Api->create_k8s_config_map: %s\n" % e)
 ```
 
 ### Parameters

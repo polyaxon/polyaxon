@@ -59,7 +59,6 @@
           body.uuid = "";
           body.name = "";
           body.description = "";
-          body.readme = "";
           body.tags = [""];
           body.created_at = new Date();
           body.updated_at = new Date();
@@ -87,8 +86,6 @@
             expect(data.name).to.be("");
             expect(data.description).to.be.a('string');
             expect(data.description).to.be("");
-            expect(data.readme).to.be.a('string');
-            expect(data.readme).to.be("");
             {
               let dataCtr = data.tags;
               expect(dataCtr).to.be.an(Array);
@@ -171,8 +168,6 @@
             expect(data.name).to.be("");
             expect(data.description).to.be.a('string');
             expect(data.description).to.be("");
-            expect(data.readme).to.be.a('string');
-            expect(data.readme).to.be("");
             {
               let dataCtr = data.tags;
               expect(dataCtr).to.be.an(Array);
@@ -248,8 +243,6 @@
                 expect(data.name).to.be("");
                 expect(data.description).to.be.a('string');
                 expect(data.description).to.be("");
-                expect(data.readme).to.be.a('string');
-                expect(data.readme).to.be("");
                 {
                   let dataCtr = data.tags;
                   expect(dataCtr).to.be.an(Array);
@@ -331,8 +324,6 @@
                 expect(data.name).to.be("");
                 expect(data.description).to.be.a('string');
                 expect(data.description).to.be("");
-                expect(data.readme).to.be.a('string');
-                expect(data.readme).to.be("");
                 {
                   let dataCtr = data.tags;
                   expect(dataCtr).to.be.an(Array);
@@ -391,7 +382,6 @@
           body.uuid = "";
           body.name = "";
           body.description = "";
-          body.readme = "";
           body.tags = [""];
           body.created_at = new Date();
           body.updated_at = new Date();
@@ -419,8 +409,6 @@
             expect(data.name).to.be("");
             expect(data.description).to.be.a('string');
             expect(data.description).to.be("");
-            expect(data.readme).to.be.a('string');
-            expect(data.readme).to.be("");
             {
               let dataCtr = data.tags;
               expect(dataCtr).to.be.an(Array);
@@ -473,7 +461,6 @@
           body.uuid = "";
           body.name = "";
           body.description = "";
-          body.readme = "";
           body.tags = [""];
           body.created_at = new Date();
           body.updated_at = new Date();
@@ -501,8 +488,6 @@
             expect(data.name).to.be("");
             expect(data.description).to.be.a('string');
             expect(data.description).to.be("");
-            expect(data.readme).to.be.a('string');
-            expect(data.readme).to.be("");
             {
               let dataCtr = data.tags;
               expect(dataCtr).to.be.an(Array);

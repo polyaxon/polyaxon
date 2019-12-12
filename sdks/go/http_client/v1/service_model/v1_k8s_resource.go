@@ -41,10 +41,10 @@ type V1K8sResource struct {
 	// Optional description
 	Description string `json:"description,omitempty"`
 
-	// Optional a flag to disable an access
+	// Optional a flag to disable the resource
 	Disabled bool `json:"disabled,omitempty"`
 
-	// Optional a flag to freeze an access
+	// Optional a flag to freeze the resource
 	Frozen bool `json:"frozen,omitempty"`
 
 	// Optional the k8s secret to use
@@ -58,9 +58,6 @@ type V1K8sResource struct {
 
 	// Name
 	Name string `json:"name,omitempty"`
-
-	// Optional a readme text describing this entity
-	Readme string `json:"readme,omitempty"`
 
 	// Optional Tags of this entity
 	Tags []string `json:"tags"`

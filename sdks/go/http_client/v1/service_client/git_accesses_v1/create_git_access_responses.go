@@ -82,7 +82,7 @@ type CreateGitAccessOK struct {
 }
 
 func (o *CreateGitAccessOK) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/git_accesses][%d] createGitAccessOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/orgs/{owner}/git_accesses][%d] createGitAccessOK  %+v", 200, o.Payload)
 }
 
 func (o *CreateGitAccessOK) GetPayload() *service_model.V1HostAccess {
@@ -115,7 +115,7 @@ type CreateGitAccessNoContent struct {
 }
 
 func (o *CreateGitAccessNoContent) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/git_accesses][%d] createGitAccessNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/orgs/{owner}/git_accesses][%d] createGitAccessNoContent  %+v", 204, o.Payload)
 }
 
 func (o *CreateGitAccessNoContent) GetPayload() interface{} {
@@ -146,7 +146,7 @@ type CreateGitAccessForbidden struct {
 }
 
 func (o *CreateGitAccessForbidden) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/git_accesses][%d] createGitAccessForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/orgs/{owner}/git_accesses][%d] createGitAccessForbidden  %+v", 403, o.Payload)
 }
 
 func (o *CreateGitAccessForbidden) GetPayload() interface{} {
@@ -177,7 +177,7 @@ type CreateGitAccessNotFound struct {
 }
 
 func (o *CreateGitAccessNotFound) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/git_accesses][%d] createGitAccessNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/orgs/{owner}/git_accesses][%d] createGitAccessNotFound  %+v", 404, o.Payload)
 }
 
 func (o *CreateGitAccessNotFound) GetPayload() interface{} {

@@ -84,7 +84,7 @@ public class QueuesV1Api {
         Object localVarPostBody = body;
 
         // create path and map variables
-        String localVarPath = "/api/v1/{owner}/agents/{agent}/queues"
+        String localVarPath = "/api/v1/orgs/{owner}/agents/{agent}/queues"
             .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()))
             .replaceAll("\\{" + "agent" + "\\}", apiClient.escapeString(agent.toString()));
 
@@ -226,7 +226,7 @@ public class QueuesV1Api {
         Object localVarPostBody = null;
 
         // create path and map variables
-        String localVarPath = "/api/v1/{owner}/agents/{agent}/queues/{uuid}"
+        String localVarPath = "/api/v1/orgs/{owner}/agents/{agent}/queues/{uuid}"
             .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()))
             .replaceAll("\\{" + "agent" + "\\}", apiClient.escapeString(agent.toString()))
             .replaceAll("\\{" + "uuid" + "\\}", apiClient.escapeString(uuid.toString()));
@@ -365,7 +365,7 @@ public class QueuesV1Api {
         Object localVarPostBody = null;
 
         // create path and map variables
-        String localVarPath = "/api/v1/{owner}/agents/{agent}/queues/{uuid}"
+        String localVarPath = "/api/v1/orgs/{owner}/agents/{agent}/queues/{uuid}"
             .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()))
             .replaceAll("\\{" + "agent" + "\\}", apiClient.escapeString(agent.toString()))
             .replaceAll("\\{" + "uuid" + "\\}", apiClient.escapeString(uuid.toString()));
@@ -511,7 +511,7 @@ public class QueuesV1Api {
         Object localVarPostBody = null;
 
         // create path and map variables
-        String localVarPath = "/api/v1/{owner}/agents/{agent}/queues/names"
+        String localVarPath = "/api/v1/orgs/{owner}/agents/{agent}/queues/names"
             .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()))
             .replaceAll("\\{" + "agent" + "\\}", apiClient.escapeString(agent.toString()));
 
@@ -668,7 +668,7 @@ public class QueuesV1Api {
         Object localVarPostBody = null;
 
         // create path and map variables
-        String localVarPath = "/api/v1/{owner}/agents/{agent}/queues"
+        String localVarPath = "/api/v1/orgs/{owner}/agents/{agent}/queues"
             .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()))
             .replaceAll("\\{" + "agent" + "\\}", apiClient.escapeString(agent.toString()));
 
@@ -823,7 +823,7 @@ public class QueuesV1Api {
         Object localVarPostBody = body;
 
         // create path and map variables
-        String localVarPath = "/api/v1/{owner}/agents/{queue.agent}/queues/{queue.uuid}"
+        String localVarPath = "/api/v1/orgs/{owner}/agents/{queue.agent}/queues/{queue.uuid}"
             .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()))
             .replaceAll("\\{" + "queue.agent" + "\\}", apiClient.escapeString(queueAgent.toString()))
             .replaceAll("\\{" + "queue.uuid" + "\\}", apiClient.escapeString(queueUuid.toString()));
@@ -975,7 +975,7 @@ public class QueuesV1Api {
         Object localVarPostBody = body;
 
         // create path and map variables
-        String localVarPath = "/api/v1/{owner}/agents/{queue.agent}/queues/{queue.uuid}"
+        String localVarPath = "/api/v1/orgs/{owner}/agents/{queue.agent}/queues/{queue.uuid}"
             .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()))
             .replaceAll("\\{" + "queue.agent" + "\\}", apiClient.escapeString(queueAgent.toString()))
             .replaceAll("\\{" + "queue.uuid" + "\\}", apiClient.escapeString(queueUuid.toString()));

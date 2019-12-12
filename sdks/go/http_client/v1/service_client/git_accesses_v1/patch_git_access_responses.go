@@ -82,7 +82,7 @@ type PatchGitAccessOK struct {
 }
 
 func (o *PatchGitAccessOK) Error() string {
-	return fmt.Sprintf("[PATCH /api/v1/{owner}/git_accesses/{host_access.uuid}][%d] patchGitAccessOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/git_accesses/{host_access.uuid}][%d] patchGitAccessOK  %+v", 200, o.Payload)
 }
 
 func (o *PatchGitAccessOK) GetPayload() *service_model.V1HostAccess {
@@ -115,7 +115,7 @@ type PatchGitAccessNoContent struct {
 }
 
 func (o *PatchGitAccessNoContent) Error() string {
-	return fmt.Sprintf("[PATCH /api/v1/{owner}/git_accesses/{host_access.uuid}][%d] patchGitAccessNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/git_accesses/{host_access.uuid}][%d] patchGitAccessNoContent  %+v", 204, o.Payload)
 }
 
 func (o *PatchGitAccessNoContent) GetPayload() interface{} {
@@ -146,7 +146,7 @@ type PatchGitAccessForbidden struct {
 }
 
 func (o *PatchGitAccessForbidden) Error() string {
-	return fmt.Sprintf("[PATCH /api/v1/{owner}/git_accesses/{host_access.uuid}][%d] patchGitAccessForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/git_accesses/{host_access.uuid}][%d] patchGitAccessForbidden  %+v", 403, o.Payload)
 }
 
 func (o *PatchGitAccessForbidden) GetPayload() interface{} {
@@ -177,7 +177,7 @@ type PatchGitAccessNotFound struct {
 }
 
 func (o *PatchGitAccessNotFound) Error() string {
-	return fmt.Sprintf("[PATCH /api/v1/{owner}/git_accesses/{host_access.uuid}][%d] patchGitAccessNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/git_accesses/{host_access.uuid}][%d] patchGitAccessNotFound  %+v", 404, o.Payload)
 }
 
 func (o *PatchGitAccessNotFound) GetPayload() interface{} {

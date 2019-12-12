@@ -4,13 +4,13 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**createArtifactsStore**](ArtifactsStoresV1Api.md#createArtifactsStore) | **POST** /api/v1/{owner}/artifacts_stores | List runs
-[**deleteArtifactsStore**](ArtifactsStoresV1Api.md#deleteArtifactsStore) | **DELETE** /api/v1/{owner}/artifacts_stores/{uuid} | Patch run
-[**getArtifactsStore**](ArtifactsStoresV1Api.md#getArtifactsStore) | **GET** /api/v1/{owner}/artifacts_stores/{uuid} | Create new run
-[**listArtifactsStoreNames**](ArtifactsStoresV1Api.md#listArtifactsStoreNames) | **GET** /api/v1/{owner}/artifacts_stores/names | List bookmarked runs for user
-[**listArtifactsStores**](ArtifactsStoresV1Api.md#listArtifactsStores) | **GET** /api/v1/{owner}/artifacts_stores | List archived runs for user
-[**patchArtifactsStore**](ArtifactsStoresV1Api.md#patchArtifactsStore) | **PATCH** /api/v1/{owner}/artifacts_stores/{artifact_store.uuid} | Update run
-[**updateArtifactsStore**](ArtifactsStoresV1Api.md#updateArtifactsStore) | **PUT** /api/v1/{owner}/artifacts_stores/{artifact_store.uuid} | Get run
+[**createArtifactsStore**](ArtifactsStoresV1Api.md#createArtifactsStore) | **POST** /api/v1/orgs/{owner}/artifacts_stores | List runs
+[**deleteArtifactsStore**](ArtifactsStoresV1Api.md#deleteArtifactsStore) | **DELETE** /api/v1/orgs/{owner}/artifacts_stores/{uuid} | Patch run
+[**getArtifactsStore**](ArtifactsStoresV1Api.md#getArtifactsStore) | **GET** /api/v1/orgs/{owner}/artifacts_stores/{uuid} | Create new run
+[**listArtifactsStoreNames**](ArtifactsStoresV1Api.md#listArtifactsStoreNames) | **GET** /api/v1/orgs/{owner}/artifacts_stores/names | List bookmarked runs for user
+[**listArtifactsStores**](ArtifactsStoresV1Api.md#listArtifactsStores) | **GET** /api/v1/orgs/{owner}/artifacts_stores | List archived runs for user
+[**patchArtifactsStore**](ArtifactsStoresV1Api.md#patchArtifactsStore) | **PATCH** /api/v1/orgs/{owner}/artifacts_stores/{artifact_store.uuid} | Update run
+[**updateArtifactsStore**](ArtifactsStoresV1Api.md#updateArtifactsStore) | **PUT** /api/v1/orgs/{owner}/artifacts_stores/{artifact_store.uuid} | Get run
 [**uploadArtifact**](ArtifactsStoresV1Api.md#uploadArtifact) | **POST** /api/v1/catalogs/{owner}/artifacts_stores/{uuid}/upload | Upload artifact to a store
 
 

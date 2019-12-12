@@ -45,8 +45,8 @@ class TestK8sSecretsV1Api(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def test_create_k8s_secrets(self):
-        """Test case for create_k8s_secrets
+    def test_create_k8s_secret(self):
+        """Test case for create_k8s_secret
 
         List runs  # noqa: E501
         """

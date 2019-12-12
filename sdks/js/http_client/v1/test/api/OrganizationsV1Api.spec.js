@@ -96,6 +96,8 @@
           var owner = "owner_example";
           var body = new PolyaxonSdk.V1OrganizationMember();
           body.user = "";
+          body.user_email = "";
+          body.email = "";
           body.role = "";
           body.created_at = new Date();
           body.updated_at = new Date();
@@ -109,6 +111,10 @@
             expect(data).to.be.a(PolyaxonSdk.V1OrganizationMember);
             expect(data.user).to.be.a('string');
             expect(data.user).to.be("");
+            expect(data.user_email).to.be.a('string');
+            expect(data.user_email).to.be("");
+            expect(data.email).to.be.a('string');
+            expect(data.email).to.be("");
             expect(data.role).to.be.a('string');
             expect(data.role).to.be("");
             expect(data.created_at).to.be.a(Date);
@@ -211,6 +217,10 @@
             expect(data).to.be.a(PolyaxonSdk.V1OrganizationMember);
             expect(data.user).to.be.a('string');
             expect(data.user).to.be("");
+            expect(data.user_email).to.be.a('string');
+            expect(data.user_email).to.be("");
+            expect(data.email).to.be.a('string');
+            expect(data.email).to.be("");
             expect(data.role).to.be.a('string');
             expect(data.role).to.be("");
             expect(data.created_at).to.be.a(Date);
@@ -230,8 +240,13 @@
           // TODO: uncomment, update parameter values for listOrganizationMembers call and complete the assertions
           /*
           var owner = "owner_example";
+          var opts = {};
+          opts.offset = 56;
+          opts.limit = 56;
+          opts.sort = "sort_example";
+          opts.query = "query_example";
 
-          instance.listOrganizationMembers(owner, function(error, data, response) {
+          instance.listOrganizationMembers(owner, opts, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -249,6 +264,10 @@
                 expect(data).to.be.a(PolyaxonSdk.V1OrganizationMember);
                 expect(data.user).to.be.a('string');
                 expect(data.user).to.be("");
+                expect(data.user_email).to.be.a('string');
+                expect(data.user_email).to.be("");
+                expect(data.email).to.be.a('string');
+                expect(data.email).to.be("");
                 expect(data.role).to.be.a('string');
                 expect(data.role).to.be("");
                 expect(data.created_at).to.be.a(Date);
@@ -411,6 +430,8 @@
           var member_user = "member_user_example";
           var body = new PolyaxonSdk.V1OrganizationMember();
           body.user = "";
+          body.user_email = "";
+          body.email = "";
           body.role = "";
           body.created_at = new Date();
           body.updated_at = new Date();
@@ -424,6 +445,10 @@
             expect(data).to.be.a(PolyaxonSdk.V1OrganizationMember);
             expect(data.user).to.be.a('string');
             expect(data.user).to.be("");
+            expect(data.user_email).to.be.a('string');
+            expect(data.user_email).to.be("");
+            expect(data.email).to.be.a('string');
+            expect(data.email).to.be("");
             expect(data.role).to.be.a('string');
             expect(data.role).to.be("");
             expect(data.created_at).to.be.a(Date);
@@ -486,6 +511,8 @@
           var member_user = "member_user_example";
           var body = new PolyaxonSdk.V1OrganizationMember();
           body.user = "";
+          body.user_email = "";
+          body.email = "";
           body.role = "";
           body.created_at = new Date();
           body.updated_at = new Date();
@@ -499,6 +526,10 @@
             expect(data).to.be.a(PolyaxonSdk.V1OrganizationMember);
             expect(data.user).to.be.a('string');
             expect(data.user).to.be("");
+            expect(data.user_email).to.be.a('string');
+            expect(data.user_email).to.be("");
+            expect(data.email).to.be.a('string');
+            expect(data.email).to.be("");
             expect(data.role).to.be.a('string');
             expect(data.role).to.be("");
             expect(data.created_at).to.be.a(Date);

@@ -56,10 +56,10 @@ public class K8sSecretsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void createK8sSecretsTest() throws ApiException {
+    public void createK8sSecretTest() throws ApiException {
         String owner = null;
         V1K8sResource body = null;
-        V1K8sResource response = api.createK8sSecrets(owner, body);
+        V1K8sResource response = api.createK8sSecret(owner, body);
 
         // TODO: test validations
     }

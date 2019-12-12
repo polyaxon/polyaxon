@@ -52,7 +52,7 @@ func (a *Client) CreateArtifactsStore(params *CreateArtifactsStoreParams, authIn
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "CreateArtifactsStore",
 		Method:             "POST",
-		PathPattern:        "/api/v1/{owner}/artifacts_stores",
+		PathPattern:        "/api/v1/orgs/{owner}/artifacts_stores",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -88,7 +88,7 @@ func (a *Client) DeleteArtifactsStore(params *DeleteArtifactsStoreParams, authIn
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "DeleteArtifactsStore",
 		Method:             "DELETE",
-		PathPattern:        "/api/v1/{owner}/artifacts_stores/{uuid}",
+		PathPattern:        "/api/v1/orgs/{owner}/artifacts_stores/{uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -124,7 +124,7 @@ func (a *Client) GetArtifactsStore(params *GetArtifactsStoreParams, authInfo run
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "GetArtifactsStore",
 		Method:             "GET",
-		PathPattern:        "/api/v1/{owner}/artifacts_stores/{uuid}",
+		PathPattern:        "/api/v1/orgs/{owner}/artifacts_stores/{uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -160,7 +160,7 @@ func (a *Client) ListArtifactsStoreNames(params *ListArtifactsStoreNamesParams, 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "ListArtifactsStoreNames",
 		Method:             "GET",
-		PathPattern:        "/api/v1/{owner}/artifacts_stores/names",
+		PathPattern:        "/api/v1/orgs/{owner}/artifacts_stores/names",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -196,7 +196,7 @@ func (a *Client) ListArtifactsStores(params *ListArtifactsStoresParams, authInfo
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "ListArtifactsStores",
 		Method:             "GET",
-		PathPattern:        "/api/v1/{owner}/artifacts_stores",
+		PathPattern:        "/api/v1/orgs/{owner}/artifacts_stores",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -232,7 +232,7 @@ func (a *Client) PatchArtifactsStore(params *PatchArtifactsStoreParams, authInfo
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "PatchArtifactsStore",
 		Method:             "PATCH",
-		PathPattern:        "/api/v1/{owner}/artifacts_stores/{artifact_store.uuid}",
+		PathPattern:        "/api/v1/orgs/{owner}/artifacts_stores/{artifact_store.uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -268,7 +268,7 @@ func (a *Client) UpdateArtifactsStore(params *UpdateArtifactsStoreParams, authIn
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "UpdateArtifactsStore",
 		Method:             "PUT",
-		PathPattern:        "/api/v1/{owner}/artifacts_stores/{artifact_store.uuid}",
+		PathPattern:        "/api/v1/orgs/{owner}/artifacts_stores/{artifact_store.uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},

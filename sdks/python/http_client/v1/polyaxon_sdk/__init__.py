@@ -35,17 +35,20 @@ from __future__ import absolute_import
 from polyaxon_sdk.api.agents_v1_api import AgentsV1Api
 from polyaxon_sdk.api.artifacts_stores_v1_api import ArtifactsStoresV1Api
 from polyaxon_sdk.api.auth_v1_api import AuthV1Api
-from polyaxon_sdk.api.dashboard_v1_api import DashboardV1Api
+from polyaxon_sdk.api.dashboards_v1_api import DashboardsV1Api
 from polyaxon_sdk.api.git_accesses_v1_api import GitAccessesV1Api
 from polyaxon_sdk.api.k8s_config_maps_v1_api import K8sConfigMapsV1Api
 from polyaxon_sdk.api.k8s_secrets_v1_api import K8sSecretsV1Api
 from polyaxon_sdk.api.organizations_v1_api import OrganizationsV1Api
+from polyaxon_sdk.api.project_dashboards_v1_api import ProjectDashboardsV1Api
+from polyaxon_sdk.api.project_searches_v1_api import ProjectSearchesV1Api
 from polyaxon_sdk.api.projects_v1_api import ProjectsV1Api
 from polyaxon_sdk.api.queues_v1_api import QueuesV1Api
 from polyaxon_sdk.api.registry_accesses_v1_api import RegistryAccessesV1Api
+from polyaxon_sdk.api.run_profiles_v1_api import RunProfilesV1Api
 from polyaxon_sdk.api.runs_v1_api import RunsV1Api
 from polyaxon_sdk.api.schemas_v1_api import SchemasV1Api
-from polyaxon_sdk.api.search_v1_api import SearchV1Api
+from polyaxon_sdk.api.searches_v1_api import SearchesV1Api
 from polyaxon_sdk.api.teams_v1_api import TeamsV1Api
 from polyaxon_sdk.api.users_v1_api import UsersV1Api
 from polyaxon_sdk.api.versions_v1_api import VersionsV1Api
@@ -110,6 +113,7 @@ from polyaxon_sdk.models.v1_list_organizations_response import (
 )
 from polyaxon_sdk.models.v1_list_projects_response import V1ListProjectsResponse
 from polyaxon_sdk.models.v1_list_queues_response import V1ListQueuesResponse
+from polyaxon_sdk.models.v1_list_run_profiles_response import V1ListRunProfilesResponse
 from polyaxon_sdk.models.v1_list_runs_response import V1ListRunsResponse
 from polyaxon_sdk.models.v1_list_searches_response import V1ListSearchesResponse
 from polyaxon_sdk.models.v1_list_team_members_response import V1ListTeamMembersResponse
@@ -147,6 +151,7 @@ from polyaxon_sdk.models.v1_resource_type import V1ResourceType
 from polyaxon_sdk.models.v1_run import V1Run
 from polyaxon_sdk.models.v1_run_kind import V1RunKind
 from polyaxon_sdk.models.v1_run_meta_info import V1RunMetaInfo
+from polyaxon_sdk.models.v1_run_profile import V1RunProfile
 from polyaxon_sdk.models.v1_run_schema import V1RunSchema
 from polyaxon_sdk.models.v1_run_settings import V1RunSettings
 from polyaxon_sdk.models.v1_run_settings_catalog import V1RunSettingsCatalog

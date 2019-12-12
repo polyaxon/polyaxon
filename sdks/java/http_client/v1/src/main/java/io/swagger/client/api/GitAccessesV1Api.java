@@ -82,7 +82,7 @@ public class GitAccessesV1Api {
         Object localVarPostBody = body;
 
         // create path and map variables
-        String localVarPath = "/api/v1/{owner}/git_accesses"
+        String localVarPath = "/api/v1/orgs/{owner}/git_accesses"
             .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
@@ -214,7 +214,7 @@ public class GitAccessesV1Api {
         Object localVarPostBody = null;
 
         // create path and map variables
-        String localVarPath = "/api/v1/{owner}/git_accesses/{uuid}"
+        String localVarPath = "/api/v1/orgs/{owner}/git_accesses/{uuid}"
             .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()))
             .replaceAll("\\{" + "uuid" + "\\}", apiClient.escapeString(uuid.toString()));
 
@@ -343,7 +343,7 @@ public class GitAccessesV1Api {
         Object localVarPostBody = null;
 
         // create path and map variables
-        String localVarPath = "/api/v1/{owner}/git_accesses/{uuid}"
+        String localVarPath = "/api/v1/orgs/{owner}/git_accesses/{uuid}"
             .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()))
             .replaceAll("\\{" + "uuid" + "\\}", apiClient.escapeString(uuid.toString()));
 
@@ -479,7 +479,7 @@ public class GitAccessesV1Api {
         Object localVarPostBody = null;
 
         // create path and map variables
-        String localVarPath = "/api/v1/{owner}/git_accesses/names"
+        String localVarPath = "/api/v1/orgs/{owner}/git_accesses/names"
             .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
@@ -626,7 +626,7 @@ public class GitAccessesV1Api {
         Object localVarPostBody = null;
 
         // create path and map variables
-        String localVarPath = "/api/v1/{owner}/git_accesses"
+        String localVarPath = "/api/v1/orgs/{owner}/git_accesses"
             .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
@@ -771,7 +771,7 @@ public class GitAccessesV1Api {
         Object localVarPostBody = body;
 
         // create path and map variables
-        String localVarPath = "/api/v1/{owner}/git_accesses/{host_access.uuid}"
+        String localVarPath = "/api/v1/orgs/{owner}/git_accesses/{host_access.uuid}"
             .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()))
             .replaceAll("\\{" + "host_access.uuid" + "\\}", apiClient.escapeString(hostAccessUuid.toString()));
 
@@ -913,7 +913,7 @@ public class GitAccessesV1Api {
         Object localVarPostBody = body;
 
         // create path and map variables
-        String localVarPath = "/api/v1/{owner}/git_accesses/{host_access.uuid}"
+        String localVarPath = "/api/v1/orgs/{owner}/git_accesses/{host_access.uuid}"
             .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()))
             .replaceAll("\\{" + "host_access.uuid" + "\\}", apiClient.escapeString(hostAccessUuid.toString()));
 

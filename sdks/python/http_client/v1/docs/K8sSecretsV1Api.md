@@ -4,17 +4,17 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**create_k8s_secrets**](K8sSecretsV1Api.md#create_k8s_secrets) | **POST** /api/v1/{owner}/k8s_secrets | List runs
-[**delete_k8s_secret**](K8sSecretsV1Api.md#delete_k8s_secret) | **DELETE** /api/v1/{owner}/k8s_secrets/{uuid} | Patch run
-[**get_k8s_secret**](K8sSecretsV1Api.md#get_k8s_secret) | **GET** /api/v1/{owner}/k8s_secrets/{uuid} | Create new run
-[**list_k8s_secret_names**](K8sSecretsV1Api.md#list_k8s_secret_names) | **GET** /api/v1/{owner}/k8s_secrets/names | List bookmarked runs for user
-[**list_k8s_secrets**](K8sSecretsV1Api.md#list_k8s_secrets) | **GET** /api/v1/{owner}/k8s_secrets | List archived runs for user
-[**patch_k8s_secret**](K8sSecretsV1Api.md#patch_k8s_secret) | **PATCH** /api/v1/{owner}/k8s_secrets/{k8s_resource.uuid} | Update run
-[**update_k8s_secret**](K8sSecretsV1Api.md#update_k8s_secret) | **PUT** /api/v1/{owner}/k8s_secrets/{k8s_resource.uuid} | Get run
+[**create_k8s_secret**](K8sSecretsV1Api.md#create_k8s_secret) | **POST** /api/v1/orgs/{owner}/k8s_secrets | List runs
+[**delete_k8s_secret**](K8sSecretsV1Api.md#delete_k8s_secret) | **DELETE** /api/v1/orgs/{owner}/k8s_secrets/{uuid} | Patch run
+[**get_k8s_secret**](K8sSecretsV1Api.md#get_k8s_secret) | **GET** /api/v1/orgs/{owner}/k8s_secrets/{uuid} | Create new run
+[**list_k8s_secret_names**](K8sSecretsV1Api.md#list_k8s_secret_names) | **GET** /api/v1/orgs/{owner}/k8s_secrets/names | List bookmarked runs for user
+[**list_k8s_secrets**](K8sSecretsV1Api.md#list_k8s_secrets) | **GET** /api/v1/orgs/{owner}/k8s_secrets | List archived runs for user
+[**patch_k8s_secret**](K8sSecretsV1Api.md#patch_k8s_secret) | **PATCH** /api/v1/orgs/{owner}/k8s_secrets/{k8s_resource.uuid} | Update run
+[**update_k8s_secret**](K8sSecretsV1Api.md#update_k8s_secret) | **PUT** /api/v1/orgs/{owner}/k8s_secrets/{k8s_resource.uuid} | Get run
 
 
-# **create_k8s_secrets**
-> V1K8sResource create_k8s_secrets(owner, body)
+# **create_k8s_secret**
+> V1K8sResource create_k8s_secret(owner, body)
 
 List runs
 
@@ -39,10 +39,10 @@ body = polyaxon_sdk.V1K8sResource() # V1K8sResource | Artifact store body
 
 try:
     # List runs
-    api_response = api_instance.create_k8s_secrets(owner, body)
+    api_response = api_instance.create_k8s_secret(owner, body)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling K8sSecretsV1Api->create_k8s_secrets: %s\n" % e)
+    print("Exception when calling K8sSecretsV1Api->create_k8s_secret: %s\n" % e)
 ```
 
 ### Parameters

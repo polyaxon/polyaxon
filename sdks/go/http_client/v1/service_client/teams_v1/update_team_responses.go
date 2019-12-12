@@ -82,7 +82,7 @@ type UpdateTeamOK struct {
 }
 
 func (o *UpdateTeamOK) Error() string {
-	return fmt.Sprintf("[PUT /api/v1/{owner}/teams/{team.name}][%d] updateTeamOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/teams/{team.name}][%d] updateTeamOK  %+v", 200, o.Payload)
 }
 
 func (o *UpdateTeamOK) GetPayload() *service_model.V1Team {
@@ -115,7 +115,7 @@ type UpdateTeamNoContent struct {
 }
 
 func (o *UpdateTeamNoContent) Error() string {
-	return fmt.Sprintf("[PUT /api/v1/{owner}/teams/{team.name}][%d] updateTeamNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/teams/{team.name}][%d] updateTeamNoContent  %+v", 204, o.Payload)
 }
 
 func (o *UpdateTeamNoContent) GetPayload() interface{} {
@@ -146,7 +146,7 @@ type UpdateTeamForbidden struct {
 }
 
 func (o *UpdateTeamForbidden) Error() string {
-	return fmt.Sprintf("[PUT /api/v1/{owner}/teams/{team.name}][%d] updateTeamForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/teams/{team.name}][%d] updateTeamForbidden  %+v", 403, o.Payload)
 }
 
 func (o *UpdateTeamForbidden) GetPayload() interface{} {
@@ -177,7 +177,7 @@ type UpdateTeamNotFound struct {
 }
 
 func (o *UpdateTeamNotFound) Error() string {
-	return fmt.Sprintf("[PUT /api/v1/{owner}/teams/{team.name}][%d] updateTeamNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/teams/{team.name}][%d] updateTeamNotFound  %+v", 404, o.Payload)
 }
 
 func (o *UpdateTeamNotFound) GetPayload() interface{} {

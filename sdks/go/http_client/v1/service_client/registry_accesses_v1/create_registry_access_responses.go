@@ -82,7 +82,7 @@ type CreateRegistryAccessOK struct {
 }
 
 func (o *CreateRegistryAccessOK) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/registry_accesses][%d] createRegistryAccessOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/orgs/{owner}/registry_accesses][%d] createRegistryAccessOK  %+v", 200, o.Payload)
 }
 
 func (o *CreateRegistryAccessOK) GetPayload() *service_model.V1HostAccess {
@@ -115,7 +115,7 @@ type CreateRegistryAccessNoContent struct {
 }
 
 func (o *CreateRegistryAccessNoContent) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/registry_accesses][%d] createRegistryAccessNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/orgs/{owner}/registry_accesses][%d] createRegistryAccessNoContent  %+v", 204, o.Payload)
 }
 
 func (o *CreateRegistryAccessNoContent) GetPayload() interface{} {
@@ -146,7 +146,7 @@ type CreateRegistryAccessForbidden struct {
 }
 
 func (o *CreateRegistryAccessForbidden) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/registry_accesses][%d] createRegistryAccessForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/orgs/{owner}/registry_accesses][%d] createRegistryAccessForbidden  %+v", 403, o.Payload)
 }
 
 func (o *CreateRegistryAccessForbidden) GetPayload() interface{} {
@@ -177,7 +177,7 @@ type CreateRegistryAccessNotFound struct {
 }
 
 func (o *CreateRegistryAccessNotFound) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/registry_accesses][%d] createRegistryAccessNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/orgs/{owner}/registry_accesses][%d] createRegistryAccessNotFound  %+v", 404, o.Payload)
 }
 
 func (o *CreateRegistryAccessNotFound) GetPayload() interface{} {

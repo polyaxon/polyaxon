@@ -4,13 +4,13 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**create_queue**](QueuesV1Api.md#create_queue) | **POST** /api/v1/{owner}/agents/{agent}/queues | List runs
-[**delete_queue**](QueuesV1Api.md#delete_queue) | **DELETE** /api/v1/{owner}/agents/{agent}/queues/{uuid} | Patch run
-[**get_queue**](QueuesV1Api.md#get_queue) | **GET** /api/v1/{owner}/agents/{agent}/queues/{uuid} | Create new run
-[**list_queue_names**](QueuesV1Api.md#list_queue_names) | **GET** /api/v1/{owner}/agents/{agent}/queues/names | List bookmarked runs for user
-[**list_queues**](QueuesV1Api.md#list_queues) | **GET** /api/v1/{owner}/agents/{agent}/queues | List archived runs for user
-[**patch_queue**](QueuesV1Api.md#patch_queue) | **PATCH** /api/v1/{owner}/agents/{queue.agent}/queues/{queue.uuid} | Update run
-[**update_queue**](QueuesV1Api.md#update_queue) | **PUT** /api/v1/{owner}/agents/{queue.agent}/queues/{queue.uuid} | Get run
+[**create_queue**](QueuesV1Api.md#create_queue) | **POST** /api/v1/orgs/{owner}/agents/{agent}/queues | List runs
+[**delete_queue**](QueuesV1Api.md#delete_queue) | **DELETE** /api/v1/orgs/{owner}/agents/{agent}/queues/{uuid} | Patch run
+[**get_queue**](QueuesV1Api.md#get_queue) | **GET** /api/v1/orgs/{owner}/agents/{agent}/queues/{uuid} | Create new run
+[**list_queue_names**](QueuesV1Api.md#list_queue_names) | **GET** /api/v1/orgs/{owner}/agents/{agent}/queues/names | List bookmarked runs for user
+[**list_queues**](QueuesV1Api.md#list_queues) | **GET** /api/v1/orgs/{owner}/agents/{agent}/queues | List archived runs for user
+[**patch_queue**](QueuesV1Api.md#patch_queue) | **PATCH** /api/v1/orgs/{owner}/agents/{queue.agent}/queues/{queue.uuid} | Update run
+[**update_queue**](QueuesV1Api.md#update_queue) | **PUT** /api/v1/orgs/{owner}/agents/{queue.agent}/queues/{queue.uuid} | Get run
 
 
 # **create_queue**

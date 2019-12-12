@@ -82,7 +82,7 @@ type UpdateAgentOK struct {
 }
 
 func (o *UpdateAgentOK) Error() string {
-	return fmt.Sprintf("[PUT /api/v1/{owner}/agents/{agent.uuid}][%d] updateAgentOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/agents/{agent.uuid}][%d] updateAgentOK  %+v", 200, o.Payload)
 }
 
 func (o *UpdateAgentOK) GetPayload() *service_model.V1Agent {
@@ -115,7 +115,7 @@ type UpdateAgentNoContent struct {
 }
 
 func (o *UpdateAgentNoContent) Error() string {
-	return fmt.Sprintf("[PUT /api/v1/{owner}/agents/{agent.uuid}][%d] updateAgentNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/agents/{agent.uuid}][%d] updateAgentNoContent  %+v", 204, o.Payload)
 }
 
 func (o *UpdateAgentNoContent) GetPayload() interface{} {
@@ -146,7 +146,7 @@ type UpdateAgentForbidden struct {
 }
 
 func (o *UpdateAgentForbidden) Error() string {
-	return fmt.Sprintf("[PUT /api/v1/{owner}/agents/{agent.uuid}][%d] updateAgentForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/agents/{agent.uuid}][%d] updateAgentForbidden  %+v", 403, o.Payload)
 }
 
 func (o *UpdateAgentForbidden) GetPayload() interface{} {
@@ -177,7 +177,7 @@ type UpdateAgentNotFound struct {
 }
 
 func (o *UpdateAgentNotFound) Error() string {
-	return fmt.Sprintf("[PUT /api/v1/{owner}/agents/{agent.uuid}][%d] updateAgentNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/agents/{agent.uuid}][%d] updateAgentNotFound  %+v", 404, o.Payload)
 }
 
 func (o *UpdateAgentNotFound) GetPayload() interface{} {

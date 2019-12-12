@@ -158,7 +158,7 @@ class QueuesV1Api(object):
         auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/agents/{agent}/queues",
+            "/api/v1/orgs/{owner}/agents/{agent}/queues",
             "POST",
             path_params,
             query_params,
@@ -284,7 +284,7 @@ class QueuesV1Api(object):
         auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/agents/{agent}/queues/{uuid}",
+            "/api/v1/orgs/{owner}/agents/{agent}/queues/{uuid}",
             "DELETE",
             path_params,
             query_params,
@@ -410,7 +410,7 @@ class QueuesV1Api(object):
         auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/agents/{agent}/queues/{uuid}",
+            "/api/v1/orgs/{owner}/agents/{agent}/queues/{uuid}",
             "GET",
             path_params,
             query_params,
@@ -550,7 +550,7 @@ class QueuesV1Api(object):
         auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/agents/{agent}/queues/names",
+            "/api/v1/orgs/{owner}/agents/{agent}/queues/names",
             "GET",
             path_params,
             query_params,
@@ -688,7 +688,7 @@ class QueuesV1Api(object):
         auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/agents/{agent}/queues",
+            "/api/v1/orgs/{owner}/agents/{agent}/queues",
             "GET",
             path_params,
             query_params,
@@ -825,7 +825,7 @@ class QueuesV1Api(object):
         auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/agents/{queue.agent}/queues/{queue.uuid}",
+            "/api/v1/orgs/{owner}/agents/{queue.agent}/queues/{queue.uuid}",
             "PATCH",
             path_params,
             query_params,
@@ -964,7 +964,7 @@ class QueuesV1Api(object):
         auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/agents/{queue.agent}/queues/{queue.uuid}",
+            "/api/v1/orgs/{owner}/agents/{queue.agent}/queues/{queue.uuid}",
             "PUT",
             path_params,
             query_params,

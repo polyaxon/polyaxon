@@ -50,7 +50,6 @@ class V1K8sResource(object):
         "uuid": "str",
         "name": "str",
         "description": "str",
-        "readme": "str",
         "tags": "list[str]",
         "created_at": "datetime",
         "updated_at": "datetime",
@@ -66,7 +65,6 @@ class V1K8sResource(object):
         "uuid": "uuid",
         "name": "name",
         "description": "description",
-        "readme": "readme",
         "tags": "tags",
         "created_at": "created_at",
         "updated_at": "updated_at",
@@ -83,7 +81,6 @@ class V1K8sResource(object):
         uuid=None,
         name=None,
         description=None,
-        readme=None,
         tags=None,
         created_at=None,
         updated_at=None,
@@ -99,7 +96,6 @@ class V1K8sResource(object):
         self._uuid = None
         self._name = None
         self._description = None
-        self._readme = None
         self._tags = None
         self._created_at = None
         self._updated_at = None
@@ -117,8 +113,6 @@ class V1K8sResource(object):
             self.name = name
         if description is not None:
             self.description = description
-        if readme is not None:
-            self.readme = readme
         if tags is not None:
             self.tags = tags
         if created_at is not None:
@@ -200,27 +194,6 @@ class V1K8sResource(object):
         """
 
         self._description = description
-
-    @property
-    def readme(self):
-        """Gets the readme of this V1K8sResource.  # noqa: E501
-
-
-        :return: The readme of this V1K8sResource.  # noqa: E501
-        :rtype: str
-        """
-        return self._readme
-
-    @readme.setter
-    def readme(self, readme):
-        """Sets the readme of this V1K8sResource.
-
-
-        :param readme: The readme of this V1K8sResource.  # noqa: E501
-        :type: str
-        """
-
-        self._readme = readme
 
     @property
     def tags(self):

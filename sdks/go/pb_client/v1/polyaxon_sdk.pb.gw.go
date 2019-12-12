@@ -51,7 +51,7 @@ var (
 )
 
 func request_RunsV1_ListBookmarkedRuns_0(ctx context.Context, marshaler runtime.Marshaler, client RunsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq UserResouceListRequest
+	var protoReq UserResourceListRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -85,7 +85,7 @@ func request_RunsV1_ListBookmarkedRuns_0(ctx context.Context, marshaler runtime.
 }
 
 func local_request_RunsV1_ListBookmarkedRuns_0(ctx context.Context, marshaler runtime.Marshaler, server RunsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq UserResouceListRequest
+	var protoReq UserResourceListRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -120,7 +120,7 @@ var (
 )
 
 func request_RunsV1_ListArchivedRuns_0(ctx context.Context, marshaler runtime.Marshaler, client RunsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq UserResouceListRequest
+	var protoReq UserResourceListRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -154,7 +154,7 @@ func request_RunsV1_ListArchivedRuns_0(ctx context.Context, marshaler runtime.Ma
 }
 
 func local_request_RunsV1_ListArchivedRuns_0(ctx context.Context, marshaler runtime.Marshaler, server RunsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq UserResouceListRequest
+	var protoReq UserResourceListRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -3038,7 +3038,7 @@ var (
 )
 
 func request_ProjectsV1_ListProjects_0(ctx context.Context, marshaler runtime.Marshaler, client ProjectsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OwnerResouceListRequest
+	var protoReq OwnerResourceListRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -3072,7 +3072,7 @@ func request_ProjectsV1_ListProjects_0(ctx context.Context, marshaler runtime.Ma
 }
 
 func local_request_ProjectsV1_ListProjects_0(ctx context.Context, marshaler runtime.Marshaler, server ProjectsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OwnerResouceListRequest
+	var protoReq OwnerResourceListRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -3177,7 +3177,7 @@ var (
 )
 
 func request_ProjectsV1_ListProjectNames_0(ctx context.Context, marshaler runtime.Marshaler, client ProjectsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OwnerResouceListRequest
+	var protoReq OwnerResourceListRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -3211,7 +3211,7 @@ func request_ProjectsV1_ListProjectNames_0(ctx context.Context, marshaler runtim
 }
 
 func local_request_ProjectsV1_ListProjectNames_0(ctx context.Context, marshaler runtime.Marshaler, server ProjectsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OwnerResouceListRequest
+	var protoReq OwnerResourceListRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -3246,7 +3246,7 @@ var (
 )
 
 func request_ProjectsV1_ListBookmarkedProjects_0(ctx context.Context, marshaler runtime.Marshaler, client ProjectsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq UserResouceListRequest
+	var protoReq UserResourceListRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -3280,7 +3280,7 @@ func request_ProjectsV1_ListBookmarkedProjects_0(ctx context.Context, marshaler 
 }
 
 func local_request_ProjectsV1_ListBookmarkedProjects_0(ctx context.Context, marshaler runtime.Marshaler, server ProjectsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq UserResouceListRequest
+	var protoReq UserResourceListRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -3315,7 +3315,7 @@ var (
 )
 
 func request_ProjectsV1_ListArchivedProjects_0(ctx context.Context, marshaler runtime.Marshaler, client ProjectsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq UserResouceListRequest
+	var protoReq UserResourceListRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -3349,7 +3349,7 @@ func request_ProjectsV1_ListArchivedProjects_0(ctx context.Context, marshaler ru
 }
 
 func local_request_ProjectsV1_ListArchivedProjects_0(ctx context.Context, marshaler runtime.Marshaler, server ProjectsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq UserResouceListRequest
+	var protoReq UserResourceListRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -4696,7 +4696,7 @@ var (
 )
 
 func request_ArtifactsStoresV1_ListArtifactsStoreNames_0(ctx context.Context, marshaler runtime.Marshaler, client ArtifactsStoresV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OwnerResouceListRequest
+	var protoReq OwnerResourceListRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -4730,7 +4730,7 @@ func request_ArtifactsStoresV1_ListArtifactsStoreNames_0(ctx context.Context, ma
 }
 
 func local_request_ArtifactsStoresV1_ListArtifactsStoreNames_0(ctx context.Context, marshaler runtime.Marshaler, server ArtifactsStoresV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OwnerResouceListRequest
+	var protoReq OwnerResourceListRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -4765,7 +4765,7 @@ var (
 )
 
 func request_ArtifactsStoresV1_ListArtifactsStores_0(ctx context.Context, marshaler runtime.Marshaler, client ArtifactsStoresV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OwnerResouceListRequest
+	var protoReq OwnerResourceListRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -4799,7 +4799,7 @@ func request_ArtifactsStoresV1_ListArtifactsStores_0(ctx context.Context, marsha
 }
 
 func local_request_ArtifactsStoresV1_ListArtifactsStores_0(ctx context.Context, marshaler runtime.Marshaler, server ArtifactsStoresV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OwnerResouceListRequest
+	var protoReq OwnerResourceListRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -5240,7 +5240,7 @@ var (
 )
 
 func request_K8SConfigMapsV1_ListK8SConfigMapNames_0(ctx context.Context, marshaler runtime.Marshaler, client K8SConfigMapsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OwnerResouceListRequest
+	var protoReq OwnerResourceListRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -5274,7 +5274,7 @@ func request_K8SConfigMapsV1_ListK8SConfigMapNames_0(ctx context.Context, marsha
 }
 
 func local_request_K8SConfigMapsV1_ListK8SConfigMapNames_0(ctx context.Context, marshaler runtime.Marshaler, server K8SConfigMapsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OwnerResouceListRequest
+	var protoReq OwnerResourceListRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -5309,7 +5309,7 @@ var (
 )
 
 func request_K8SConfigMapsV1_ListK8SConfigMaps_0(ctx context.Context, marshaler runtime.Marshaler, client K8SConfigMapsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OwnerResouceListRequest
+	var protoReq OwnerResourceListRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -5343,7 +5343,7 @@ func request_K8SConfigMapsV1_ListK8SConfigMaps_0(ctx context.Context, marshaler 
 }
 
 func local_request_K8SConfigMapsV1_ListK8SConfigMaps_0(ctx context.Context, marshaler runtime.Marshaler, server K8SConfigMapsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OwnerResouceListRequest
+	var protoReq OwnerResourceListRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -5373,7 +5373,7 @@ func local_request_K8SConfigMapsV1_ListK8SConfigMaps_0(ctx context.Context, mars
 
 }
 
-func request_K8SConfigMapsV1_CreateK8SConfigMaps_0(ctx context.Context, marshaler runtime.Marshaler, client K8SConfigMapsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_K8SConfigMapsV1_CreateK8SConfigMap_0(ctx context.Context, marshaler runtime.Marshaler, client K8SConfigMapsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq K8SResourceBodyRequest
 	var metadata runtime.ServerMetadata
 
@@ -5403,12 +5403,12 @@ func request_K8SConfigMapsV1_CreateK8SConfigMaps_0(ctx context.Context, marshale
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
 	}
 
-	msg, err := client.CreateK8SConfigMaps(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	msg, err := client.CreateK8SConfigMap(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
 }
 
-func local_request_K8SConfigMapsV1_CreateK8SConfigMaps_0(ctx context.Context, marshaler runtime.Marshaler, server K8SConfigMapsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_K8SConfigMapsV1_CreateK8SConfigMap_0(ctx context.Context, marshaler runtime.Marshaler, server K8SConfigMapsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq K8SResourceBodyRequest
 	var metadata runtime.ServerMetadata
 
@@ -5438,7 +5438,7 @@ func local_request_K8SConfigMapsV1_CreateK8SConfigMaps_0(ctx context.Context, ma
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
 	}
 
-	msg, err := server.CreateK8SConfigMaps(ctx, &protoReq)
+	msg, err := server.CreateK8SConfigMap(ctx, &protoReq)
 	return msg, metadata, err
 
 }
@@ -5784,7 +5784,7 @@ var (
 )
 
 func request_K8SSecretsV1_ListK8SSecretNames_0(ctx context.Context, marshaler runtime.Marshaler, client K8SSecretsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OwnerResouceListRequest
+	var protoReq OwnerResourceListRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -5818,7 +5818,7 @@ func request_K8SSecretsV1_ListK8SSecretNames_0(ctx context.Context, marshaler ru
 }
 
 func local_request_K8SSecretsV1_ListK8SSecretNames_0(ctx context.Context, marshaler runtime.Marshaler, server K8SSecretsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OwnerResouceListRequest
+	var protoReq OwnerResourceListRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -5853,7 +5853,7 @@ var (
 )
 
 func request_K8SSecretsV1_ListK8SSecrets_0(ctx context.Context, marshaler runtime.Marshaler, client K8SSecretsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OwnerResouceListRequest
+	var protoReq OwnerResourceListRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -5887,7 +5887,7 @@ func request_K8SSecretsV1_ListK8SSecrets_0(ctx context.Context, marshaler runtim
 }
 
 func local_request_K8SSecretsV1_ListK8SSecrets_0(ctx context.Context, marshaler runtime.Marshaler, server K8SSecretsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OwnerResouceListRequest
+	var protoReq OwnerResourceListRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -5917,7 +5917,7 @@ func local_request_K8SSecretsV1_ListK8SSecrets_0(ctx context.Context, marshaler 
 
 }
 
-func request_K8SSecretsV1_CreateK8SSecrets_0(ctx context.Context, marshaler runtime.Marshaler, client K8SSecretsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_K8SSecretsV1_CreateK8SSecret_0(ctx context.Context, marshaler runtime.Marshaler, client K8SSecretsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq K8SResourceBodyRequest
 	var metadata runtime.ServerMetadata
 
@@ -5947,12 +5947,12 @@ func request_K8SSecretsV1_CreateK8SSecrets_0(ctx context.Context, marshaler runt
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
 	}
 
-	msg, err := client.CreateK8SSecrets(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	msg, err := client.CreateK8SSecret(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
 }
 
-func local_request_K8SSecretsV1_CreateK8SSecrets_0(ctx context.Context, marshaler runtime.Marshaler, server K8SSecretsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_K8SSecretsV1_CreateK8SSecret_0(ctx context.Context, marshaler runtime.Marshaler, server K8SSecretsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq K8SResourceBodyRequest
 	var metadata runtime.ServerMetadata
 
@@ -5982,7 +5982,7 @@ func local_request_K8SSecretsV1_CreateK8SSecrets_0(ctx context.Context, marshale
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
 	}
 
-	msg, err := server.CreateK8SSecrets(ctx, &protoReq)
+	msg, err := server.CreateK8SSecret(ctx, &protoReq)
 	return msg, metadata, err
 
 }
@@ -6328,7 +6328,7 @@ var (
 )
 
 func request_RegistryAccessesV1_ListRegistryAccessNames_0(ctx context.Context, marshaler runtime.Marshaler, client RegistryAccessesV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OwnerResouceListRequest
+	var protoReq OwnerResourceListRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -6362,7 +6362,7 @@ func request_RegistryAccessesV1_ListRegistryAccessNames_0(ctx context.Context, m
 }
 
 func local_request_RegistryAccessesV1_ListRegistryAccessNames_0(ctx context.Context, marshaler runtime.Marshaler, server RegistryAccessesV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OwnerResouceListRequest
+	var protoReq OwnerResourceListRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -6397,7 +6397,7 @@ var (
 )
 
 func request_RegistryAccessesV1_ListRegistryAccesses_0(ctx context.Context, marshaler runtime.Marshaler, client RegistryAccessesV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OwnerResouceListRequest
+	var protoReq OwnerResourceListRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -6431,7 +6431,7 @@ func request_RegistryAccessesV1_ListRegistryAccesses_0(ctx context.Context, mars
 }
 
 func local_request_RegistryAccessesV1_ListRegistryAccesses_0(ctx context.Context, marshaler runtime.Marshaler, server RegistryAccessesV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OwnerResouceListRequest
+	var protoReq OwnerResourceListRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -6872,7 +6872,7 @@ var (
 )
 
 func request_GitAccessesV1_ListGitAccessNames_0(ctx context.Context, marshaler runtime.Marshaler, client GitAccessesV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OwnerResouceListRequest
+	var protoReq OwnerResourceListRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -6906,7 +6906,7 @@ func request_GitAccessesV1_ListGitAccessNames_0(ctx context.Context, marshaler r
 }
 
 func local_request_GitAccessesV1_ListGitAccessNames_0(ctx context.Context, marshaler runtime.Marshaler, server GitAccessesV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OwnerResouceListRequest
+	var protoReq OwnerResourceListRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -6941,7 +6941,7 @@ var (
 )
 
 func request_GitAccessesV1_ListGitAccesses_0(ctx context.Context, marshaler runtime.Marshaler, client GitAccessesV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OwnerResouceListRequest
+	var protoReq OwnerResourceListRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -6975,7 +6975,7 @@ func request_GitAccessesV1_ListGitAccesses_0(ctx context.Context, marshaler runt
 }
 
 func local_request_GitAccessesV1_ListGitAccesses_0(ctx context.Context, marshaler runtime.Marshaler, server GitAccessesV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OwnerResouceListRequest
+	var protoReq OwnerResourceListRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -7412,10 +7412,10 @@ func local_request_GitAccessesV1_DeleteGitAccess_0(ctx context.Context, marshale
 }
 
 var (
-	filter_SearchV1_ListSearches_0 = &utilities.DoubleArray{Encoding: map[string]int{"owner": 0, "project": 1}, Base: []int{1, 1, 2, 0, 0}, Check: []int{0, 1, 1, 2, 3}}
+	filter_ProjectSearchesV1_ListProjectSearchNames_0 = &utilities.DoubleArray{Encoding: map[string]int{"owner": 0, "project": 1}, Base: []int{1, 1, 2, 0, 0}, Check: []int{0, 1, 1, 2, 3}}
 )
 
-func request_SearchV1_ListSearches_0(ctx context.Context, marshaler runtime.Marshaler, client SearchV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_ProjectSearchesV1_ListProjectSearchNames_0(ctx context.Context, marshaler runtime.Marshaler, client ProjectSearchesV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq ProjectResourceListRequest
 	var metadata runtime.ServerMetadata
 
@@ -7451,16 +7451,16 @@ func request_SearchV1_ListSearches_0(ctx context.Context, marshaler runtime.Mars
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_SearchV1_ListSearches_0); err != nil {
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_ProjectSearchesV1_ListProjectSearchNames_0); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
-	msg, err := client.ListSearches(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	msg, err := client.ListProjectSearchNames(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
 }
 
-func local_request_SearchV1_ListSearches_0(ctx context.Context, marshaler runtime.Marshaler, server SearchV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_ProjectSearchesV1_ListProjectSearchNames_0(ctx context.Context, marshaler runtime.Marshaler, server ProjectSearchesV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq ProjectResourceListRequest
 	var metadata runtime.ServerMetadata
 
@@ -7493,17 +7493,108 @@ func local_request_SearchV1_ListSearches_0(ctx context.Context, marshaler runtim
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "project", err)
 	}
 
-	if err := runtime.PopulateQueryParameters(&protoReq, req.URL.Query(), filter_SearchV1_ListSearches_0); err != nil {
+	if err := runtime.PopulateQueryParameters(&protoReq, req.URL.Query(), filter_ProjectSearchesV1_ListProjectSearchNames_0); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
-	msg, err := server.ListSearches(ctx, &protoReq)
+	msg, err := server.ListProjectSearchNames(ctx, &protoReq)
 	return msg, metadata, err
 
 }
 
-func request_SearchV1_CreateSearch_0(ctx context.Context, marshaler runtime.Marshaler, client SearchV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq SearchBodyRequest
+var (
+	filter_ProjectSearchesV1_ListProjectSearches_0 = &utilities.DoubleArray{Encoding: map[string]int{"owner": 0, "project": 1}, Base: []int{1, 1, 2, 0, 0}, Check: []int{0, 1, 1, 2, 3}}
+)
+
+func request_ProjectSearchesV1_ListProjectSearches_0(ctx context.Context, marshaler runtime.Marshaler, client ProjectSearchesV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq ProjectResourceListRequest
+	var metadata runtime.ServerMetadata
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["owner"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "owner")
+	}
+
+	protoReq.Owner, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
+	}
+
+	val, ok = pathParams["project"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "project")
+	}
+
+	protoReq.Project, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "project", err)
+	}
+
+	if err := req.ParseForm(); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_ProjectSearchesV1_ListProjectSearches_0); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	msg, err := client.ListProjectSearches(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	return msg, metadata, err
+
+}
+
+func local_request_ProjectSearchesV1_ListProjectSearches_0(ctx context.Context, marshaler runtime.Marshaler, server ProjectSearchesV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq ProjectResourceListRequest
+	var metadata runtime.ServerMetadata
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["owner"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "owner")
+	}
+
+	protoReq.Owner, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
+	}
+
+	val, ok = pathParams["project"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "project")
+	}
+
+	protoReq.Project, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "project", err)
+	}
+
+	if err := runtime.PopulateQueryParameters(&protoReq, req.URL.Query(), filter_ProjectSearchesV1_ListProjectSearches_0); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	msg, err := server.ListProjectSearches(ctx, &protoReq)
+	return msg, metadata, err
+
+}
+
+func request_ProjectSearchesV1_CreateProjectSearch_0(ctx context.Context, marshaler runtime.Marshaler, client ProjectSearchesV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq ProjectSearchBodyRequest
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
@@ -7543,13 +7634,13 @@ func request_SearchV1_CreateSearch_0(ctx context.Context, marshaler runtime.Mars
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "project", err)
 	}
 
-	msg, err := client.CreateSearch(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	msg, err := client.CreateProjectSearch(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
 }
 
-func local_request_SearchV1_CreateSearch_0(ctx context.Context, marshaler runtime.Marshaler, server SearchV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq SearchBodyRequest
+func local_request_ProjectSearchesV1_CreateProjectSearch_0(ctx context.Context, marshaler runtime.Marshaler, server ProjectSearchesV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq ProjectSearchBodyRequest
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
@@ -7589,12 +7680,12 @@ func local_request_SearchV1_CreateSearch_0(ctx context.Context, marshaler runtim
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "project", err)
 	}
 
-	msg, err := server.CreateSearch(ctx, &protoReq)
+	msg, err := server.CreateProjectSearch(ctx, &protoReq)
 	return msg, metadata, err
 
 }
 
-func request_SearchV1_GetSearch_0(ctx context.Context, marshaler runtime.Marshaler, client SearchV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_ProjectSearchesV1_GetProjectSearch_0(ctx context.Context, marshaler runtime.Marshaler, client ProjectSearchesV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq ProjectEntityResourceRequest
 	var metadata runtime.ServerMetadata
 
@@ -7625,6 +7716,725 @@ func request_SearchV1_GetSearch_0(ctx context.Context, marshaler runtime.Marshal
 
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "project", err)
+	}
+
+	val, ok = pathParams["uuid"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "uuid")
+	}
+
+	protoReq.Uuid, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "uuid", err)
+	}
+
+	msg, err := client.GetProjectSearch(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	return msg, metadata, err
+
+}
+
+func local_request_ProjectSearchesV1_GetProjectSearch_0(ctx context.Context, marshaler runtime.Marshaler, server ProjectSearchesV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq ProjectEntityResourceRequest
+	var metadata runtime.ServerMetadata
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["owner"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "owner")
+	}
+
+	protoReq.Owner, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
+	}
+
+	val, ok = pathParams["project"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "project")
+	}
+
+	protoReq.Project, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "project", err)
+	}
+
+	val, ok = pathParams["uuid"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "uuid")
+	}
+
+	protoReq.Uuid, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "uuid", err)
+	}
+
+	msg, err := server.GetProjectSearch(ctx, &protoReq)
+	return msg, metadata, err
+
+}
+
+func request_ProjectSearchesV1_UpdateProjectSearch_0(ctx context.Context, marshaler runtime.Marshaler, client ProjectSearchesV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq ProjectSearchBodyRequest
+	var metadata runtime.ServerMetadata
+
+	newReader, berr := utilities.IOReaderFactory(req.Body)
+	if berr != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
+	}
+	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq.Search); err != nil && err != io.EOF {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["owner"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "owner")
+	}
+
+	protoReq.Owner, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
+	}
+
+	val, ok = pathParams["project"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "project")
+	}
+
+	protoReq.Project, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "project", err)
+	}
+
+	val, ok = pathParams["search.uuid"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "search.uuid")
+	}
+
+	err = runtime.PopulateFieldFromPath(&protoReq, "search.uuid", val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "search.uuid", err)
+	}
+
+	msg, err := client.UpdateProjectSearch(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	return msg, metadata, err
+
+}
+
+func local_request_ProjectSearchesV1_UpdateProjectSearch_0(ctx context.Context, marshaler runtime.Marshaler, server ProjectSearchesV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq ProjectSearchBodyRequest
+	var metadata runtime.ServerMetadata
+
+	newReader, berr := utilities.IOReaderFactory(req.Body)
+	if berr != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
+	}
+	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq.Search); err != nil && err != io.EOF {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["owner"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "owner")
+	}
+
+	protoReq.Owner, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
+	}
+
+	val, ok = pathParams["project"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "project")
+	}
+
+	protoReq.Project, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "project", err)
+	}
+
+	val, ok = pathParams["search.uuid"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "search.uuid")
+	}
+
+	err = runtime.PopulateFieldFromPath(&protoReq, "search.uuid", val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "search.uuid", err)
+	}
+
+	msg, err := server.UpdateProjectSearch(ctx, &protoReq)
+	return msg, metadata, err
+
+}
+
+func request_ProjectSearchesV1_PatchProjectSearch_0(ctx context.Context, marshaler runtime.Marshaler, client ProjectSearchesV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq ProjectSearchBodyRequest
+	var metadata runtime.ServerMetadata
+
+	newReader, berr := utilities.IOReaderFactory(req.Body)
+	if berr != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
+	}
+	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq.Search); err != nil && err != io.EOF {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["owner"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "owner")
+	}
+
+	protoReq.Owner, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
+	}
+
+	val, ok = pathParams["project"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "project")
+	}
+
+	protoReq.Project, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "project", err)
+	}
+
+	val, ok = pathParams["search.uuid"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "search.uuid")
+	}
+
+	err = runtime.PopulateFieldFromPath(&protoReq, "search.uuid", val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "search.uuid", err)
+	}
+
+	msg, err := client.PatchProjectSearch(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	return msg, metadata, err
+
+}
+
+func local_request_ProjectSearchesV1_PatchProjectSearch_0(ctx context.Context, marshaler runtime.Marshaler, server ProjectSearchesV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq ProjectSearchBodyRequest
+	var metadata runtime.ServerMetadata
+
+	newReader, berr := utilities.IOReaderFactory(req.Body)
+	if berr != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
+	}
+	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq.Search); err != nil && err != io.EOF {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["owner"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "owner")
+	}
+
+	protoReq.Owner, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
+	}
+
+	val, ok = pathParams["project"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "project")
+	}
+
+	protoReq.Project, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "project", err)
+	}
+
+	val, ok = pathParams["search.uuid"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "search.uuid")
+	}
+
+	err = runtime.PopulateFieldFromPath(&protoReq, "search.uuid", val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "search.uuid", err)
+	}
+
+	msg, err := server.PatchProjectSearch(ctx, &protoReq)
+	return msg, metadata, err
+
+}
+
+func request_ProjectSearchesV1_DeleteProjectSearch_0(ctx context.Context, marshaler runtime.Marshaler, client ProjectSearchesV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq ProjectEntityResourceRequest
+	var metadata runtime.ServerMetadata
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["owner"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "owner")
+	}
+
+	protoReq.Owner, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
+	}
+
+	val, ok = pathParams["project"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "project")
+	}
+
+	protoReq.Project, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "project", err)
+	}
+
+	val, ok = pathParams["uuid"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "uuid")
+	}
+
+	protoReq.Uuid, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "uuid", err)
+	}
+
+	msg, err := client.DeleteProjectSearch(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	return msg, metadata, err
+
+}
+
+func local_request_ProjectSearchesV1_DeleteProjectSearch_0(ctx context.Context, marshaler runtime.Marshaler, server ProjectSearchesV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq ProjectEntityResourceRequest
+	var metadata runtime.ServerMetadata
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["owner"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "owner")
+	}
+
+	protoReq.Owner, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
+	}
+
+	val, ok = pathParams["project"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "project")
+	}
+
+	protoReq.Project, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "project", err)
+	}
+
+	val, ok = pathParams["uuid"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "uuid")
+	}
+
+	protoReq.Uuid, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "uuid", err)
+	}
+
+	msg, err := server.DeleteProjectSearch(ctx, &protoReq)
+	return msg, metadata, err
+
+}
+
+func request_ProjectSearchesV1_PromoteProjectSearch_0(ctx context.Context, marshaler runtime.Marshaler, client ProjectSearchesV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq ProjectEntityResourceRequest
+	var metadata runtime.ServerMetadata
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["owner"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "owner")
+	}
+
+	protoReq.Owner, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
+	}
+
+	val, ok = pathParams["project"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "project")
+	}
+
+	protoReq.Project, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "project", err)
+	}
+
+	val, ok = pathParams["uuid"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "uuid")
+	}
+
+	protoReq.Uuid, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "uuid", err)
+	}
+
+	msg, err := client.PromoteProjectSearch(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	return msg, metadata, err
+
+}
+
+func local_request_ProjectSearchesV1_PromoteProjectSearch_0(ctx context.Context, marshaler runtime.Marshaler, server ProjectSearchesV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq ProjectEntityResourceRequest
+	var metadata runtime.ServerMetadata
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["owner"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "owner")
+	}
+
+	protoReq.Owner, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
+	}
+
+	val, ok = pathParams["project"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "project")
+	}
+
+	protoReq.Project, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "project", err)
+	}
+
+	val, ok = pathParams["uuid"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "uuid")
+	}
+
+	protoReq.Uuid, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "uuid", err)
+	}
+
+	msg, err := server.PromoteProjectSearch(ctx, &protoReq)
+	return msg, metadata, err
+
+}
+
+var (
+	filter_SearchesV1_ListSearchNames_0 = &utilities.DoubleArray{Encoding: map[string]int{"owner": 0}, Base: []int{1, 1, 0}, Check: []int{0, 1, 2}}
+)
+
+func request_SearchesV1_ListSearchNames_0(ctx context.Context, marshaler runtime.Marshaler, client SearchesV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq OwnerResourceListRequest
+	var metadata runtime.ServerMetadata
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["owner"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "owner")
+	}
+
+	protoReq.Owner, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
+	}
+
+	if err := req.ParseForm(); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_SearchesV1_ListSearchNames_0); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	msg, err := client.ListSearchNames(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	return msg, metadata, err
+
+}
+
+func local_request_SearchesV1_ListSearchNames_0(ctx context.Context, marshaler runtime.Marshaler, server SearchesV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq OwnerResourceListRequest
+	var metadata runtime.ServerMetadata
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["owner"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "owner")
+	}
+
+	protoReq.Owner, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
+	}
+
+	if err := runtime.PopulateQueryParameters(&protoReq, req.URL.Query(), filter_SearchesV1_ListSearchNames_0); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	msg, err := server.ListSearchNames(ctx, &protoReq)
+	return msg, metadata, err
+
+}
+
+var (
+	filter_SearchesV1_ListSearches_0 = &utilities.DoubleArray{Encoding: map[string]int{"owner": 0}, Base: []int{1, 1, 0}, Check: []int{0, 1, 2}}
+)
+
+func request_SearchesV1_ListSearches_0(ctx context.Context, marshaler runtime.Marshaler, client SearchesV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq OwnerResourceListRequest
+	var metadata runtime.ServerMetadata
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["owner"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "owner")
+	}
+
+	protoReq.Owner, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
+	}
+
+	if err := req.ParseForm(); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_SearchesV1_ListSearches_0); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	msg, err := client.ListSearches(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	return msg, metadata, err
+
+}
+
+func local_request_SearchesV1_ListSearches_0(ctx context.Context, marshaler runtime.Marshaler, server SearchesV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq OwnerResourceListRequest
+	var metadata runtime.ServerMetadata
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["owner"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "owner")
+	}
+
+	protoReq.Owner, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
+	}
+
+	if err := runtime.PopulateQueryParameters(&protoReq, req.URL.Query(), filter_SearchesV1_ListSearches_0); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	msg, err := server.ListSearches(ctx, &protoReq)
+	return msg, metadata, err
+
+}
+
+func request_SearchesV1_CreateSearch_0(ctx context.Context, marshaler runtime.Marshaler, client SearchesV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq SearchBodyRequest
+	var metadata runtime.ServerMetadata
+
+	newReader, berr := utilities.IOReaderFactory(req.Body)
+	if berr != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
+	}
+	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq.Search); err != nil && err != io.EOF {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["owner"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "owner")
+	}
+
+	protoReq.Owner, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
+	}
+
+	msg, err := client.CreateSearch(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	return msg, metadata, err
+
+}
+
+func local_request_SearchesV1_CreateSearch_0(ctx context.Context, marshaler runtime.Marshaler, server SearchesV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq SearchBodyRequest
+	var metadata runtime.ServerMetadata
+
+	newReader, berr := utilities.IOReaderFactory(req.Body)
+	if berr != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
+	}
+	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq.Search); err != nil && err != io.EOF {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["owner"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "owner")
+	}
+
+	protoReq.Owner, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
+	}
+
+	msg, err := server.CreateSearch(ctx, &protoReq)
+	return msg, metadata, err
+
+}
+
+func request_SearchesV1_GetSearch_0(ctx context.Context, marshaler runtime.Marshaler, client SearchesV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq OwnerEntityResourceRequest
+	var metadata runtime.ServerMetadata
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["owner"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "owner")
+	}
+
+	protoReq.Owner, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
 	}
 
 	val, ok = pathParams["uuid"]
@@ -7643,8 +8453,8 @@ func request_SearchV1_GetSearch_0(ctx context.Context, marshaler runtime.Marshal
 
 }
 
-func local_request_SearchV1_GetSearch_0(ctx context.Context, marshaler runtime.Marshaler, server SearchV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq ProjectEntityResourceRequest
+func local_request_SearchesV1_GetSearch_0(ctx context.Context, marshaler runtime.Marshaler, server SearchesV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq OwnerEntityResourceRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -7663,17 +8473,6 @@ func local_request_SearchV1_GetSearch_0(ctx context.Context, marshaler runtime.M
 
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
-	}
-
-	val, ok = pathParams["project"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "project")
-	}
-
-	protoReq.Project, err = runtime.String(val)
-
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "project", err)
 	}
 
 	val, ok = pathParams["uuid"]
@@ -7692,7 +8491,7 @@ func local_request_SearchV1_GetSearch_0(ctx context.Context, marshaler runtime.M
 
 }
 
-func request_SearchV1_UpdateSearch_0(ctx context.Context, marshaler runtime.Marshaler, client SearchV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_SearchesV1_UpdateSearch_0(ctx context.Context, marshaler runtime.Marshaler, client SearchesV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq SearchBodyRequest
 	var metadata runtime.ServerMetadata
 
@@ -7720,17 +8519,6 @@ func request_SearchV1_UpdateSearch_0(ctx context.Context, marshaler runtime.Mars
 
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
-	}
-
-	val, ok = pathParams["project"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "project")
-	}
-
-	protoReq.Project, err = runtime.String(val)
-
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "project", err)
 	}
 
 	val, ok = pathParams["search.uuid"]
@@ -7749,7 +8537,7 @@ func request_SearchV1_UpdateSearch_0(ctx context.Context, marshaler runtime.Mars
 
 }
 
-func local_request_SearchV1_UpdateSearch_0(ctx context.Context, marshaler runtime.Marshaler, server SearchV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_SearchesV1_UpdateSearch_0(ctx context.Context, marshaler runtime.Marshaler, server SearchesV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq SearchBodyRequest
 	var metadata runtime.ServerMetadata
 
@@ -7777,17 +8565,6 @@ func local_request_SearchV1_UpdateSearch_0(ctx context.Context, marshaler runtim
 
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
-	}
-
-	val, ok = pathParams["project"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "project")
-	}
-
-	protoReq.Project, err = runtime.String(val)
-
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "project", err)
 	}
 
 	val, ok = pathParams["search.uuid"]
@@ -7806,7 +8583,7 @@ func local_request_SearchV1_UpdateSearch_0(ctx context.Context, marshaler runtim
 
 }
 
-func request_SearchV1_PatchSearch_0(ctx context.Context, marshaler runtime.Marshaler, client SearchV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_SearchesV1_PatchSearch_0(ctx context.Context, marshaler runtime.Marshaler, client SearchesV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq SearchBodyRequest
 	var metadata runtime.ServerMetadata
 
@@ -7834,17 +8611,6 @@ func request_SearchV1_PatchSearch_0(ctx context.Context, marshaler runtime.Marsh
 
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
-	}
-
-	val, ok = pathParams["project"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "project")
-	}
-
-	protoReq.Project, err = runtime.String(val)
-
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "project", err)
 	}
 
 	val, ok = pathParams["search.uuid"]
@@ -7863,7 +8629,7 @@ func request_SearchV1_PatchSearch_0(ctx context.Context, marshaler runtime.Marsh
 
 }
 
-func local_request_SearchV1_PatchSearch_0(ctx context.Context, marshaler runtime.Marshaler, server SearchV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_SearchesV1_PatchSearch_0(ctx context.Context, marshaler runtime.Marshaler, server SearchesV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq SearchBodyRequest
 	var metadata runtime.ServerMetadata
 
@@ -7893,17 +8659,6 @@ func local_request_SearchV1_PatchSearch_0(ctx context.Context, marshaler runtime
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
 	}
 
-	val, ok = pathParams["project"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "project")
-	}
-
-	protoReq.Project, err = runtime.String(val)
-
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "project", err)
-	}
-
 	val, ok = pathParams["search.uuid"]
 	if !ok {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "search.uuid")
@@ -7920,8 +8675,8 @@ func local_request_SearchV1_PatchSearch_0(ctx context.Context, marshaler runtime
 
 }
 
-func request_SearchV1_DeleteSearch_0(ctx context.Context, marshaler runtime.Marshaler, client SearchV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq ProjectEntityResourceRequest
+func request_SearchesV1_DeleteSearch_0(ctx context.Context, marshaler runtime.Marshaler, client SearchesV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq OwnerEntityResourceRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -7940,17 +8695,6 @@ func request_SearchV1_DeleteSearch_0(ctx context.Context, marshaler runtime.Mars
 
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
-	}
-
-	val, ok = pathParams["project"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "project")
-	}
-
-	protoReq.Project, err = runtime.String(val)
-
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "project", err)
 	}
 
 	val, ok = pathParams["uuid"]
@@ -7969,8 +8713,8 @@ func request_SearchV1_DeleteSearch_0(ctx context.Context, marshaler runtime.Mars
 
 }
 
-func local_request_SearchV1_DeleteSearch_0(ctx context.Context, marshaler runtime.Marshaler, server SearchV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq ProjectEntityResourceRequest
+func local_request_SearchesV1_DeleteSearch_0(ctx context.Context, marshaler runtime.Marshaler, server SearchesV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq OwnerEntityResourceRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -7989,17 +8733,6 @@ func local_request_SearchV1_DeleteSearch_0(ctx context.Context, marshaler runtim
 
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
-	}
-
-	val, ok = pathParams["project"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "project")
-	}
-
-	protoReq.Project, err = runtime.String(val)
-
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "project", err)
 	}
 
 	val, ok = pathParams["uuid"]
@@ -8019,10 +8752,10 @@ func local_request_SearchV1_DeleteSearch_0(ctx context.Context, marshaler runtim
 }
 
 var (
-	filter_DashboardV1_ListDashboard_0 = &utilities.DoubleArray{Encoding: map[string]int{"owner": 0, "project": 1}, Base: []int{1, 1, 2, 0, 0}, Check: []int{0, 1, 1, 2, 3}}
+	filter_ProjectDashboardsV1_ListProjectDashboardNames_0 = &utilities.DoubleArray{Encoding: map[string]int{"owner": 0, "project": 1}, Base: []int{1, 1, 2, 0, 0}, Check: []int{0, 1, 1, 2, 3}}
 )
 
-func request_DashboardV1_ListDashboard_0(ctx context.Context, marshaler runtime.Marshaler, client DashboardV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_ProjectDashboardsV1_ListProjectDashboardNames_0(ctx context.Context, marshaler runtime.Marshaler, client ProjectDashboardsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq ProjectResourceListRequest
 	var metadata runtime.ServerMetadata
 
@@ -8058,16 +8791,16 @@ func request_DashboardV1_ListDashboard_0(ctx context.Context, marshaler runtime.
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_DashboardV1_ListDashboard_0); err != nil {
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_ProjectDashboardsV1_ListProjectDashboardNames_0); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
-	msg, err := client.ListDashboard(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	msg, err := client.ListProjectDashboardNames(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
 }
 
-func local_request_DashboardV1_ListDashboard_0(ctx context.Context, marshaler runtime.Marshaler, server DashboardV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_ProjectDashboardsV1_ListProjectDashboardNames_0(ctx context.Context, marshaler runtime.Marshaler, server ProjectDashboardsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq ProjectResourceListRequest
 	var metadata runtime.ServerMetadata
 
@@ -8100,17 +8833,108 @@ func local_request_DashboardV1_ListDashboard_0(ctx context.Context, marshaler ru
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "project", err)
 	}
 
-	if err := runtime.PopulateQueryParameters(&protoReq, req.URL.Query(), filter_DashboardV1_ListDashboard_0); err != nil {
+	if err := runtime.PopulateQueryParameters(&protoReq, req.URL.Query(), filter_ProjectDashboardsV1_ListProjectDashboardNames_0); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
-	msg, err := server.ListDashboard(ctx, &protoReq)
+	msg, err := server.ListProjectDashboardNames(ctx, &protoReq)
 	return msg, metadata, err
 
 }
 
-func request_DashboardV1_CreateDashboard_0(ctx context.Context, marshaler runtime.Marshaler, client DashboardV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq DashboardBodyRequest
+var (
+	filter_ProjectDashboardsV1_ListProjectDashboards_0 = &utilities.DoubleArray{Encoding: map[string]int{"owner": 0, "project": 1}, Base: []int{1, 1, 2, 0, 0}, Check: []int{0, 1, 1, 2, 3}}
+)
+
+func request_ProjectDashboardsV1_ListProjectDashboards_0(ctx context.Context, marshaler runtime.Marshaler, client ProjectDashboardsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq ProjectResourceListRequest
+	var metadata runtime.ServerMetadata
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["owner"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "owner")
+	}
+
+	protoReq.Owner, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
+	}
+
+	val, ok = pathParams["project"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "project")
+	}
+
+	protoReq.Project, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "project", err)
+	}
+
+	if err := req.ParseForm(); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_ProjectDashboardsV1_ListProjectDashboards_0); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	msg, err := client.ListProjectDashboards(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	return msg, metadata, err
+
+}
+
+func local_request_ProjectDashboardsV1_ListProjectDashboards_0(ctx context.Context, marshaler runtime.Marshaler, server ProjectDashboardsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq ProjectResourceListRequest
+	var metadata runtime.ServerMetadata
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["owner"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "owner")
+	}
+
+	protoReq.Owner, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
+	}
+
+	val, ok = pathParams["project"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "project")
+	}
+
+	protoReq.Project, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "project", err)
+	}
+
+	if err := runtime.PopulateQueryParameters(&protoReq, req.URL.Query(), filter_ProjectDashboardsV1_ListProjectDashboards_0); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	msg, err := server.ListProjectDashboards(ctx, &protoReq)
+	return msg, metadata, err
+
+}
+
+func request_ProjectDashboardsV1_CreateProjectDashboard_0(ctx context.Context, marshaler runtime.Marshaler, client ProjectDashboardsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq ProjectDashboardBodyRequest
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
@@ -8150,13 +8974,13 @@ func request_DashboardV1_CreateDashboard_0(ctx context.Context, marshaler runtim
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "project", err)
 	}
 
-	msg, err := client.CreateDashboard(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	msg, err := client.CreateProjectDashboard(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
 }
 
-func local_request_DashboardV1_CreateDashboard_0(ctx context.Context, marshaler runtime.Marshaler, server DashboardV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq DashboardBodyRequest
+func local_request_ProjectDashboardsV1_CreateProjectDashboard_0(ctx context.Context, marshaler runtime.Marshaler, server ProjectDashboardsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq ProjectDashboardBodyRequest
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
@@ -8196,12 +9020,12 @@ func local_request_DashboardV1_CreateDashboard_0(ctx context.Context, marshaler 
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "project", err)
 	}
 
-	msg, err := server.CreateDashboard(ctx, &protoReq)
+	msg, err := server.CreateProjectDashboard(ctx, &protoReq)
 	return msg, metadata, err
 
 }
 
-func request_DashboardV1_GetDashboard_0(ctx context.Context, marshaler runtime.Marshaler, client DashboardV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_ProjectDashboardsV1_GetProjectDashboard_0(ctx context.Context, marshaler runtime.Marshaler, client ProjectDashboardsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq ProjectEntityResourceRequest
 	var metadata runtime.ServerMetadata
 
@@ -8232,6 +9056,740 @@ func request_DashboardV1_GetDashboard_0(ctx context.Context, marshaler runtime.M
 
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "project", err)
+	}
+
+	val, ok = pathParams["uuid"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "uuid")
+	}
+
+	protoReq.Uuid, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "uuid", err)
+	}
+
+	msg, err := client.GetProjectDashboard(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	return msg, metadata, err
+
+}
+
+func local_request_ProjectDashboardsV1_GetProjectDashboard_0(ctx context.Context, marshaler runtime.Marshaler, server ProjectDashboardsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq ProjectEntityResourceRequest
+	var metadata runtime.ServerMetadata
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["owner"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "owner")
+	}
+
+	protoReq.Owner, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
+	}
+
+	val, ok = pathParams["project"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "project")
+	}
+
+	protoReq.Project, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "project", err)
+	}
+
+	val, ok = pathParams["uuid"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "uuid")
+	}
+
+	protoReq.Uuid, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "uuid", err)
+	}
+
+	msg, err := server.GetProjectDashboard(ctx, &protoReq)
+	return msg, metadata, err
+
+}
+
+func request_ProjectDashboardsV1_UpdateProjectDashboard_0(ctx context.Context, marshaler runtime.Marshaler, client ProjectDashboardsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq ProjectDashboardBodyRequest
+	var metadata runtime.ServerMetadata
+
+	newReader, berr := utilities.IOReaderFactory(req.Body)
+	if berr != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
+	}
+	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq.Dashboard); err != nil && err != io.EOF {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["owner"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "owner")
+	}
+
+	protoReq.Owner, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
+	}
+
+	val, ok = pathParams["project"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "project")
+	}
+
+	protoReq.Project, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "project", err)
+	}
+
+	val, ok = pathParams["dashboard.uuid"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "dashboard.uuid")
+	}
+
+	err = runtime.PopulateFieldFromPath(&protoReq, "dashboard.uuid", val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "dashboard.uuid", err)
+	}
+
+	msg, err := client.UpdateProjectDashboard(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	return msg, metadata, err
+
+}
+
+func local_request_ProjectDashboardsV1_UpdateProjectDashboard_0(ctx context.Context, marshaler runtime.Marshaler, server ProjectDashboardsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq ProjectDashboardBodyRequest
+	var metadata runtime.ServerMetadata
+
+	newReader, berr := utilities.IOReaderFactory(req.Body)
+	if berr != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
+	}
+	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq.Dashboard); err != nil && err != io.EOF {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["owner"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "owner")
+	}
+
+	protoReq.Owner, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
+	}
+
+	val, ok = pathParams["project"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "project")
+	}
+
+	protoReq.Project, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "project", err)
+	}
+
+	val, ok = pathParams["dashboard.uuid"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "dashboard.uuid")
+	}
+
+	err = runtime.PopulateFieldFromPath(&protoReq, "dashboard.uuid", val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "dashboard.uuid", err)
+	}
+
+	msg, err := server.UpdateProjectDashboard(ctx, &protoReq)
+	return msg, metadata, err
+
+}
+
+func request_ProjectDashboardsV1_PatchProjectDashboard_0(ctx context.Context, marshaler runtime.Marshaler, client ProjectDashboardsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq ProjectDashboardBodyRequest
+	var metadata runtime.ServerMetadata
+
+	newReader, berr := utilities.IOReaderFactory(req.Body)
+	if berr != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
+	}
+	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq.Dashboard); err != nil && err != io.EOF {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["owner"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "owner")
+	}
+
+	protoReq.Owner, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
+	}
+
+	val, ok = pathParams["project"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "project")
+	}
+
+	protoReq.Project, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "project", err)
+	}
+
+	val, ok = pathParams["dashboard.uuid"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "dashboard.uuid")
+	}
+
+	err = runtime.PopulateFieldFromPath(&protoReq, "dashboard.uuid", val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "dashboard.uuid", err)
+	}
+
+	msg, err := client.PatchProjectDashboard(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	return msg, metadata, err
+
+}
+
+func local_request_ProjectDashboardsV1_PatchProjectDashboard_0(ctx context.Context, marshaler runtime.Marshaler, server ProjectDashboardsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq ProjectDashboardBodyRequest
+	var metadata runtime.ServerMetadata
+
+	newReader, berr := utilities.IOReaderFactory(req.Body)
+	if berr != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
+	}
+	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq.Dashboard); err != nil && err != io.EOF {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["owner"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "owner")
+	}
+
+	protoReq.Owner, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
+	}
+
+	val, ok = pathParams["project"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "project")
+	}
+
+	protoReq.Project, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "project", err)
+	}
+
+	val, ok = pathParams["dashboard.uuid"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "dashboard.uuid")
+	}
+
+	err = runtime.PopulateFieldFromPath(&protoReq, "dashboard.uuid", val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "dashboard.uuid", err)
+	}
+
+	msg, err := server.PatchProjectDashboard(ctx, &protoReq)
+	return msg, metadata, err
+
+}
+
+func request_ProjectDashboardsV1_DeleteProjectDashboard_0(ctx context.Context, marshaler runtime.Marshaler, client ProjectDashboardsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq ProjectEntityResourceRequest
+	var metadata runtime.ServerMetadata
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["owner"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "owner")
+	}
+
+	protoReq.Owner, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
+	}
+
+	val, ok = pathParams["project"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "project")
+	}
+
+	protoReq.Project, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "project", err)
+	}
+
+	val, ok = pathParams["uuid"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "uuid")
+	}
+
+	protoReq.Uuid, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "uuid", err)
+	}
+
+	msg, err := client.DeleteProjectDashboard(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	return msg, metadata, err
+
+}
+
+func local_request_ProjectDashboardsV1_DeleteProjectDashboard_0(ctx context.Context, marshaler runtime.Marshaler, server ProjectDashboardsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq ProjectEntityResourceRequest
+	var metadata runtime.ServerMetadata
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["owner"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "owner")
+	}
+
+	protoReq.Owner, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
+	}
+
+	val, ok = pathParams["project"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "project")
+	}
+
+	protoReq.Project, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "project", err)
+	}
+
+	val, ok = pathParams["uuid"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "uuid")
+	}
+
+	protoReq.Uuid, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "uuid", err)
+	}
+
+	msg, err := server.DeleteProjectDashboard(ctx, &protoReq)
+	return msg, metadata, err
+
+}
+
+var (
+	filter_ProjectDashboardsV1_PromoteProjectDashboard_0 = &utilities.DoubleArray{Encoding: map[string]int{"owner": 0, "project": 1, "dashboard": 2, "uuid": 3}, Base: []int{1, 1, 2, 1, 3, 0, 0, 0}, Check: []int{0, 1, 1, 1, 4, 2, 3, 5}}
+)
+
+func request_ProjectDashboardsV1_PromoteProjectDashboard_0(ctx context.Context, marshaler runtime.Marshaler, client ProjectDashboardsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq ProjectDashboardBodyRequest
+	var metadata runtime.ServerMetadata
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["owner"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "owner")
+	}
+
+	protoReq.Owner, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
+	}
+
+	val, ok = pathParams["project"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "project")
+	}
+
+	protoReq.Project, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "project", err)
+	}
+
+	val, ok = pathParams["dashboard.uuid"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "dashboard.uuid")
+	}
+
+	err = runtime.PopulateFieldFromPath(&protoReq, "dashboard.uuid", val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "dashboard.uuid", err)
+	}
+
+	if err := req.ParseForm(); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_ProjectDashboardsV1_PromoteProjectDashboard_0); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	msg, err := client.PromoteProjectDashboard(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	return msg, metadata, err
+
+}
+
+func local_request_ProjectDashboardsV1_PromoteProjectDashboard_0(ctx context.Context, marshaler runtime.Marshaler, server ProjectDashboardsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq ProjectDashboardBodyRequest
+	var metadata runtime.ServerMetadata
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["owner"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "owner")
+	}
+
+	protoReq.Owner, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
+	}
+
+	val, ok = pathParams["project"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "project")
+	}
+
+	protoReq.Project, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "project", err)
+	}
+
+	val, ok = pathParams["dashboard.uuid"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "dashboard.uuid")
+	}
+
+	err = runtime.PopulateFieldFromPath(&protoReq, "dashboard.uuid", val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "dashboard.uuid", err)
+	}
+
+	if err := runtime.PopulateQueryParameters(&protoReq, req.URL.Query(), filter_ProjectDashboardsV1_PromoteProjectDashboard_0); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	msg, err := server.PromoteProjectDashboard(ctx, &protoReq)
+	return msg, metadata, err
+
+}
+
+var (
+	filter_DashboardsV1_ListDashboardNames_0 = &utilities.DoubleArray{Encoding: map[string]int{"owner": 0}, Base: []int{1, 1, 0}, Check: []int{0, 1, 2}}
+)
+
+func request_DashboardsV1_ListDashboardNames_0(ctx context.Context, marshaler runtime.Marshaler, client DashboardsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq OwnerResourceListRequest
+	var metadata runtime.ServerMetadata
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["owner"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "owner")
+	}
+
+	protoReq.Owner, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
+	}
+
+	if err := req.ParseForm(); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_DashboardsV1_ListDashboardNames_0); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	msg, err := client.ListDashboardNames(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	return msg, metadata, err
+
+}
+
+func local_request_DashboardsV1_ListDashboardNames_0(ctx context.Context, marshaler runtime.Marshaler, server DashboardsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq OwnerResourceListRequest
+	var metadata runtime.ServerMetadata
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["owner"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "owner")
+	}
+
+	protoReq.Owner, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
+	}
+
+	if err := runtime.PopulateQueryParameters(&protoReq, req.URL.Query(), filter_DashboardsV1_ListDashboardNames_0); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	msg, err := server.ListDashboardNames(ctx, &protoReq)
+	return msg, metadata, err
+
+}
+
+var (
+	filter_DashboardsV1_ListDashboards_0 = &utilities.DoubleArray{Encoding: map[string]int{"owner": 0}, Base: []int{1, 1, 0}, Check: []int{0, 1, 2}}
+)
+
+func request_DashboardsV1_ListDashboards_0(ctx context.Context, marshaler runtime.Marshaler, client DashboardsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq OwnerResourceListRequest
+	var metadata runtime.ServerMetadata
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["owner"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "owner")
+	}
+
+	protoReq.Owner, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
+	}
+
+	if err := req.ParseForm(); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_DashboardsV1_ListDashboards_0); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	msg, err := client.ListDashboards(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	return msg, metadata, err
+
+}
+
+func local_request_DashboardsV1_ListDashboards_0(ctx context.Context, marshaler runtime.Marshaler, server DashboardsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq OwnerResourceListRequest
+	var metadata runtime.ServerMetadata
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["owner"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "owner")
+	}
+
+	protoReq.Owner, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
+	}
+
+	if err := runtime.PopulateQueryParameters(&protoReq, req.URL.Query(), filter_DashboardsV1_ListDashboards_0); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	msg, err := server.ListDashboards(ctx, &protoReq)
+	return msg, metadata, err
+
+}
+
+func request_DashboardsV1_CreateDashboard_0(ctx context.Context, marshaler runtime.Marshaler, client DashboardsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq DashboardBodyRequest
+	var metadata runtime.ServerMetadata
+
+	newReader, berr := utilities.IOReaderFactory(req.Body)
+	if berr != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
+	}
+	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq.Dashboard); err != nil && err != io.EOF {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["owner"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "owner")
+	}
+
+	protoReq.Owner, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
+	}
+
+	msg, err := client.CreateDashboard(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	return msg, metadata, err
+
+}
+
+func local_request_DashboardsV1_CreateDashboard_0(ctx context.Context, marshaler runtime.Marshaler, server DashboardsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq DashboardBodyRequest
+	var metadata runtime.ServerMetadata
+
+	newReader, berr := utilities.IOReaderFactory(req.Body)
+	if berr != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
+	}
+	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq.Dashboard); err != nil && err != io.EOF {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["owner"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "owner")
+	}
+
+	protoReq.Owner, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
+	}
+
+	msg, err := server.CreateDashboard(ctx, &protoReq)
+	return msg, metadata, err
+
+}
+
+func request_DashboardsV1_GetDashboard_0(ctx context.Context, marshaler runtime.Marshaler, client DashboardsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq OwnerEntityResourceRequest
+	var metadata runtime.ServerMetadata
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["owner"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "owner")
+	}
+
+	protoReq.Owner, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
 	}
 
 	val, ok = pathParams["uuid"]
@@ -8250,8 +9808,8 @@ func request_DashboardV1_GetDashboard_0(ctx context.Context, marshaler runtime.M
 
 }
 
-func local_request_DashboardV1_GetDashboard_0(ctx context.Context, marshaler runtime.Marshaler, server DashboardV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq ProjectEntityResourceRequest
+func local_request_DashboardsV1_GetDashboard_0(ctx context.Context, marshaler runtime.Marshaler, server DashboardsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq OwnerEntityResourceRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -8270,17 +9828,6 @@ func local_request_DashboardV1_GetDashboard_0(ctx context.Context, marshaler run
 
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
-	}
-
-	val, ok = pathParams["project"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "project")
-	}
-
-	protoReq.Project, err = runtime.String(val)
-
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "project", err)
 	}
 
 	val, ok = pathParams["uuid"]
@@ -8299,7 +9846,7 @@ func local_request_DashboardV1_GetDashboard_0(ctx context.Context, marshaler run
 
 }
 
-func request_DashboardV1_UpdateDashboard_0(ctx context.Context, marshaler runtime.Marshaler, client DashboardV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_DashboardsV1_UpdateDashboard_0(ctx context.Context, marshaler runtime.Marshaler, client DashboardsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq DashboardBodyRequest
 	var metadata runtime.ServerMetadata
 
@@ -8327,17 +9874,6 @@ func request_DashboardV1_UpdateDashboard_0(ctx context.Context, marshaler runtim
 
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
-	}
-
-	val, ok = pathParams["project"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "project")
-	}
-
-	protoReq.Project, err = runtime.String(val)
-
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "project", err)
 	}
 
 	val, ok = pathParams["dashboard.uuid"]
@@ -8356,7 +9892,7 @@ func request_DashboardV1_UpdateDashboard_0(ctx context.Context, marshaler runtim
 
 }
 
-func local_request_DashboardV1_UpdateDashboard_0(ctx context.Context, marshaler runtime.Marshaler, server DashboardV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_DashboardsV1_UpdateDashboard_0(ctx context.Context, marshaler runtime.Marshaler, server DashboardsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq DashboardBodyRequest
 	var metadata runtime.ServerMetadata
 
@@ -8384,17 +9920,6 @@ func local_request_DashboardV1_UpdateDashboard_0(ctx context.Context, marshaler 
 
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
-	}
-
-	val, ok = pathParams["project"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "project")
-	}
-
-	protoReq.Project, err = runtime.String(val)
-
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "project", err)
 	}
 
 	val, ok = pathParams["dashboard.uuid"]
@@ -8413,7 +9938,7 @@ func local_request_DashboardV1_UpdateDashboard_0(ctx context.Context, marshaler 
 
 }
 
-func request_DashboardV1_PatchDashboard_0(ctx context.Context, marshaler runtime.Marshaler, client DashboardV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_DashboardsV1_PatchDashboard_0(ctx context.Context, marshaler runtime.Marshaler, client DashboardsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq DashboardBodyRequest
 	var metadata runtime.ServerMetadata
 
@@ -8441,17 +9966,6 @@ func request_DashboardV1_PatchDashboard_0(ctx context.Context, marshaler runtime
 
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
-	}
-
-	val, ok = pathParams["project"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "project")
-	}
-
-	protoReq.Project, err = runtime.String(val)
-
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "project", err)
 	}
 
 	val, ok = pathParams["dashboard.uuid"]
@@ -8470,7 +9984,7 @@ func request_DashboardV1_PatchDashboard_0(ctx context.Context, marshaler runtime
 
 }
 
-func local_request_DashboardV1_PatchDashboard_0(ctx context.Context, marshaler runtime.Marshaler, server DashboardV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_DashboardsV1_PatchDashboard_0(ctx context.Context, marshaler runtime.Marshaler, server DashboardsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq DashboardBodyRequest
 	var metadata runtime.ServerMetadata
 
@@ -8500,17 +10014,6 @@ func local_request_DashboardV1_PatchDashboard_0(ctx context.Context, marshaler r
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
 	}
 
-	val, ok = pathParams["project"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "project")
-	}
-
-	protoReq.Project, err = runtime.String(val)
-
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "project", err)
-	}
-
 	val, ok = pathParams["dashboard.uuid"]
 	if !ok {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "dashboard.uuid")
@@ -8527,8 +10030,8 @@ func local_request_DashboardV1_PatchDashboard_0(ctx context.Context, marshaler r
 
 }
 
-func request_DashboardV1_DeleteDashboard_0(ctx context.Context, marshaler runtime.Marshaler, client DashboardV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq ProjectEntityResourceRequest
+func request_DashboardsV1_DeleteDashboard_0(ctx context.Context, marshaler runtime.Marshaler, client DashboardsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq OwnerEntityResourceRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -8547,17 +10050,6 @@ func request_DashboardV1_DeleteDashboard_0(ctx context.Context, marshaler runtim
 
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
-	}
-
-	val, ok = pathParams["project"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "project")
-	}
-
-	protoReq.Project, err = runtime.String(val)
-
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "project", err)
 	}
 
 	val, ok = pathParams["uuid"]
@@ -8576,8 +10068,8 @@ func request_DashboardV1_DeleteDashboard_0(ctx context.Context, marshaler runtim
 
 }
 
-func local_request_DashboardV1_DeleteDashboard_0(ctx context.Context, marshaler runtime.Marshaler, server DashboardV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq ProjectEntityResourceRequest
+func local_request_DashboardsV1_DeleteDashboard_0(ctx context.Context, marshaler runtime.Marshaler, server DashboardsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq OwnerEntityResourceRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -8596,17 +10088,6 @@ func local_request_DashboardV1_DeleteDashboard_0(ctx context.Context, marshaler 
 
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
-	}
-
-	val, ok = pathParams["project"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "project")
-	}
-
-	protoReq.Project, err = runtime.String(val)
-
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "project", err)
 	}
 
 	val, ok = pathParams["uuid"]
@@ -8626,11 +10107,555 @@ func local_request_DashboardV1_DeleteDashboard_0(ctx context.Context, marshaler 
 }
 
 var (
+	filter_RunProfilesV1_ListRunProfileNames_0 = &utilities.DoubleArray{Encoding: map[string]int{"owner": 0}, Base: []int{1, 1, 0}, Check: []int{0, 1, 2}}
+)
+
+func request_RunProfilesV1_ListRunProfileNames_0(ctx context.Context, marshaler runtime.Marshaler, client RunProfilesV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq OwnerResourceListRequest
+	var metadata runtime.ServerMetadata
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["owner"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "owner")
+	}
+
+	protoReq.Owner, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
+	}
+
+	if err := req.ParseForm(); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_RunProfilesV1_ListRunProfileNames_0); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	msg, err := client.ListRunProfileNames(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	return msg, metadata, err
+
+}
+
+func local_request_RunProfilesV1_ListRunProfileNames_0(ctx context.Context, marshaler runtime.Marshaler, server RunProfilesV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq OwnerResourceListRequest
+	var metadata runtime.ServerMetadata
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["owner"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "owner")
+	}
+
+	protoReq.Owner, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
+	}
+
+	if err := runtime.PopulateQueryParameters(&protoReq, req.URL.Query(), filter_RunProfilesV1_ListRunProfileNames_0); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	msg, err := server.ListRunProfileNames(ctx, &protoReq)
+	return msg, metadata, err
+
+}
+
+var (
+	filter_RunProfilesV1_ListRunProfiles_0 = &utilities.DoubleArray{Encoding: map[string]int{"owner": 0}, Base: []int{1, 1, 0}, Check: []int{0, 1, 2}}
+)
+
+func request_RunProfilesV1_ListRunProfiles_0(ctx context.Context, marshaler runtime.Marshaler, client RunProfilesV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq OwnerResourceListRequest
+	var metadata runtime.ServerMetadata
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["owner"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "owner")
+	}
+
+	protoReq.Owner, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
+	}
+
+	if err := req.ParseForm(); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_RunProfilesV1_ListRunProfiles_0); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	msg, err := client.ListRunProfiles(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	return msg, metadata, err
+
+}
+
+func local_request_RunProfilesV1_ListRunProfiles_0(ctx context.Context, marshaler runtime.Marshaler, server RunProfilesV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq OwnerResourceListRequest
+	var metadata runtime.ServerMetadata
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["owner"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "owner")
+	}
+
+	protoReq.Owner, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
+	}
+
+	if err := runtime.PopulateQueryParameters(&protoReq, req.URL.Query(), filter_RunProfilesV1_ListRunProfiles_0); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	msg, err := server.ListRunProfiles(ctx, &protoReq)
+	return msg, metadata, err
+
+}
+
+func request_RunProfilesV1_CreateRunProfile_0(ctx context.Context, marshaler runtime.Marshaler, client RunProfilesV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq RunProfileBodyRequest
+	var metadata runtime.ServerMetadata
+
+	newReader, berr := utilities.IOReaderFactory(req.Body)
+	if berr != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
+	}
+	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq.RunProfile); err != nil && err != io.EOF {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["owner"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "owner")
+	}
+
+	protoReq.Owner, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
+	}
+
+	msg, err := client.CreateRunProfile(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	return msg, metadata, err
+
+}
+
+func local_request_RunProfilesV1_CreateRunProfile_0(ctx context.Context, marshaler runtime.Marshaler, server RunProfilesV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq RunProfileBodyRequest
+	var metadata runtime.ServerMetadata
+
+	newReader, berr := utilities.IOReaderFactory(req.Body)
+	if berr != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
+	}
+	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq.RunProfile); err != nil && err != io.EOF {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["owner"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "owner")
+	}
+
+	protoReq.Owner, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
+	}
+
+	msg, err := server.CreateRunProfile(ctx, &protoReq)
+	return msg, metadata, err
+
+}
+
+func request_RunProfilesV1_GetRunProfile_0(ctx context.Context, marshaler runtime.Marshaler, client RunProfilesV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq OwnerEntityResourceRequest
+	var metadata runtime.ServerMetadata
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["owner"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "owner")
+	}
+
+	protoReq.Owner, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
+	}
+
+	val, ok = pathParams["uuid"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "uuid")
+	}
+
+	protoReq.Uuid, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "uuid", err)
+	}
+
+	msg, err := client.GetRunProfile(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	return msg, metadata, err
+
+}
+
+func local_request_RunProfilesV1_GetRunProfile_0(ctx context.Context, marshaler runtime.Marshaler, server RunProfilesV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq OwnerEntityResourceRequest
+	var metadata runtime.ServerMetadata
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["owner"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "owner")
+	}
+
+	protoReq.Owner, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
+	}
+
+	val, ok = pathParams["uuid"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "uuid")
+	}
+
+	protoReq.Uuid, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "uuid", err)
+	}
+
+	msg, err := server.GetRunProfile(ctx, &protoReq)
+	return msg, metadata, err
+
+}
+
+func request_RunProfilesV1_UpdateRunProfile_0(ctx context.Context, marshaler runtime.Marshaler, client RunProfilesV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq RunProfileBodyRequest
+	var metadata runtime.ServerMetadata
+
+	newReader, berr := utilities.IOReaderFactory(req.Body)
+	if berr != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
+	}
+	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq.RunProfile); err != nil && err != io.EOF {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["owner"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "owner")
+	}
+
+	protoReq.Owner, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
+	}
+
+	val, ok = pathParams["run_profile.uuid"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "run_profile.uuid")
+	}
+
+	err = runtime.PopulateFieldFromPath(&protoReq, "run_profile.uuid", val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "run_profile.uuid", err)
+	}
+
+	msg, err := client.UpdateRunProfile(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	return msg, metadata, err
+
+}
+
+func local_request_RunProfilesV1_UpdateRunProfile_0(ctx context.Context, marshaler runtime.Marshaler, server RunProfilesV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq RunProfileBodyRequest
+	var metadata runtime.ServerMetadata
+
+	newReader, berr := utilities.IOReaderFactory(req.Body)
+	if berr != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
+	}
+	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq.RunProfile); err != nil && err != io.EOF {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["owner"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "owner")
+	}
+
+	protoReq.Owner, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
+	}
+
+	val, ok = pathParams["run_profile.uuid"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "run_profile.uuid")
+	}
+
+	err = runtime.PopulateFieldFromPath(&protoReq, "run_profile.uuid", val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "run_profile.uuid", err)
+	}
+
+	msg, err := server.UpdateRunProfile(ctx, &protoReq)
+	return msg, metadata, err
+
+}
+
+func request_RunProfilesV1_PatchRunProfile_0(ctx context.Context, marshaler runtime.Marshaler, client RunProfilesV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq RunProfileBodyRequest
+	var metadata runtime.ServerMetadata
+
+	newReader, berr := utilities.IOReaderFactory(req.Body)
+	if berr != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
+	}
+	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq.RunProfile); err != nil && err != io.EOF {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["owner"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "owner")
+	}
+
+	protoReq.Owner, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
+	}
+
+	val, ok = pathParams["run_profile.uuid"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "run_profile.uuid")
+	}
+
+	err = runtime.PopulateFieldFromPath(&protoReq, "run_profile.uuid", val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "run_profile.uuid", err)
+	}
+
+	msg, err := client.PatchRunProfile(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	return msg, metadata, err
+
+}
+
+func local_request_RunProfilesV1_PatchRunProfile_0(ctx context.Context, marshaler runtime.Marshaler, server RunProfilesV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq RunProfileBodyRequest
+	var metadata runtime.ServerMetadata
+
+	newReader, berr := utilities.IOReaderFactory(req.Body)
+	if berr != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
+	}
+	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq.RunProfile); err != nil && err != io.EOF {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["owner"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "owner")
+	}
+
+	protoReq.Owner, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
+	}
+
+	val, ok = pathParams["run_profile.uuid"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "run_profile.uuid")
+	}
+
+	err = runtime.PopulateFieldFromPath(&protoReq, "run_profile.uuid", val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "run_profile.uuid", err)
+	}
+
+	msg, err := server.PatchRunProfile(ctx, &protoReq)
+	return msg, metadata, err
+
+}
+
+func request_RunProfilesV1_DeleteRunProfile_0(ctx context.Context, marshaler runtime.Marshaler, client RunProfilesV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq OwnerEntityResourceRequest
+	var metadata runtime.ServerMetadata
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["owner"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "owner")
+	}
+
+	protoReq.Owner, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
+	}
+
+	val, ok = pathParams["uuid"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "uuid")
+	}
+
+	protoReq.Uuid, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "uuid", err)
+	}
+
+	msg, err := client.DeleteRunProfile(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	return msg, metadata, err
+
+}
+
+func local_request_RunProfilesV1_DeleteRunProfile_0(ctx context.Context, marshaler runtime.Marshaler, server RunProfilesV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq OwnerEntityResourceRequest
+	var metadata runtime.ServerMetadata
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["owner"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "owner")
+	}
+
+	protoReq.Owner, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
+	}
+
+	val, ok = pathParams["uuid"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "uuid")
+	}
+
+	protoReq.Uuid, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "uuid", err)
+	}
+
+	msg, err := server.DeleteRunProfile(ctx, &protoReq)
+	return msg, metadata, err
+
+}
+
+var (
 	filter_AgentsV1_ListAgentNames_0 = &utilities.DoubleArray{Encoding: map[string]int{"owner": 0}, Base: []int{1, 1, 0}, Check: []int{0, 1, 2}}
 )
 
 func request_AgentsV1_ListAgentNames_0(ctx context.Context, marshaler runtime.Marshaler, client AgentsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OwnerResouceListRequest
+	var protoReq OwnerResourceListRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -8664,7 +10689,7 @@ func request_AgentsV1_ListAgentNames_0(ctx context.Context, marshaler runtime.Ma
 }
 
 func local_request_AgentsV1_ListAgentNames_0(ctx context.Context, marshaler runtime.Marshaler, server AgentsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OwnerResouceListRequest
+	var protoReq OwnerResourceListRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -8699,7 +10724,7 @@ var (
 )
 
 func request_AgentsV1_ListAgents_0(ctx context.Context, marshaler runtime.Marshaler, client AgentsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OwnerResouceListRequest
+	var protoReq OwnerResourceListRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -8733,7 +10758,7 @@ func request_AgentsV1_ListAgents_0(ctx context.Context, marshaler runtime.Marsha
 }
 
 func local_request_AgentsV1_ListAgents_0(ctx context.Context, marshaler runtime.Marshaler, server AgentsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OwnerResouceListRequest
+	var protoReq OwnerResourceListRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -10303,8 +12328,12 @@ func local_request_OrganizationsV1_DeleteOrganization_0(ctx context.Context, mar
 
 }
 
+var (
+	filter_OrganizationsV1_ListOrganizationMembers_0 = &utilities.DoubleArray{Encoding: map[string]int{"owner": 0}, Base: []int{1, 1, 0}, Check: []int{0, 1, 2}}
+)
+
 func request_OrganizationsV1_ListOrganizationMembers_0(ctx context.Context, marshaler runtime.Marshaler, client OrganizationsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OwnerResourceRequest
+	var protoReq OwnerResourceListRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -10323,6 +12352,13 @@ func request_OrganizationsV1_ListOrganizationMembers_0(ctx context.Context, mars
 
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
+	}
+
+	if err := req.ParseForm(); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_OrganizationsV1_ListOrganizationMembers_0); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
 	msg, err := client.ListOrganizationMembers(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -10331,7 +12367,7 @@ func request_OrganizationsV1_ListOrganizationMembers_0(ctx context.Context, mars
 }
 
 func local_request_OrganizationsV1_ListOrganizationMembers_0(ctx context.Context, marshaler runtime.Marshaler, server OrganizationsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OwnerResourceRequest
+	var protoReq OwnerResourceListRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -10350,6 +12386,10 @@ func local_request_OrganizationsV1_ListOrganizationMembers_0(ctx context.Context
 
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
+	}
+
+	if err := runtime.PopulateQueryParameters(&protoReq, req.URL.Query(), filter_OrganizationsV1_ListOrganizationMembers_0); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
 	msg, err := server.ListOrganizationMembers(ctx, &protoReq)
@@ -10768,7 +12808,7 @@ var (
 )
 
 func request_TeamsV1_ListTeamNames_0(ctx context.Context, marshaler runtime.Marshaler, client TeamsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OwnerResouceListRequest
+	var protoReq OwnerResourceListRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -10802,7 +12842,7 @@ func request_TeamsV1_ListTeamNames_0(ctx context.Context, marshaler runtime.Mars
 }
 
 func local_request_TeamsV1_ListTeamNames_0(ctx context.Context, marshaler runtime.Marshaler, server TeamsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OwnerResouceListRequest
+	var protoReq OwnerResourceListRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -10837,7 +12877,7 @@ var (
 )
 
 func request_TeamsV1_ListTeams_0(ctx context.Context, marshaler runtime.Marshaler, client TeamsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OwnerResouceListRequest
+	var protoReq OwnerResourceListRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -10871,7 +12911,7 @@ func request_TeamsV1_ListTeams_0(ctx context.Context, marshaler runtime.Marshale
 }
 
 func local_request_TeamsV1_ListTeams_0(ctx context.Context, marshaler runtime.Marshaler, server TeamsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OwnerResouceListRequest
+	var protoReq OwnerResourceListRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -11307,8 +13347,12 @@ func local_request_TeamsV1_DeleteTeam_0(ctx context.Context, marshaler runtime.M
 
 }
 
+var (
+	filter_TeamsV1_ListTeamMembers_0 = &utilities.DoubleArray{Encoding: map[string]int{"owner": 0, "team": 1}, Base: []int{1, 1, 2, 0, 0}, Check: []int{0, 1, 1, 2, 3}}
+)
+
 func request_TeamsV1_ListTeamMembers_0(ctx context.Context, marshaler runtime.Marshaler, client TeamsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq TeamResourceRequest
+	var protoReq TeamResourceListRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -11338,6 +13382,13 @@ func request_TeamsV1_ListTeamMembers_0(ctx context.Context, marshaler runtime.Ma
 
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "team", err)
+	}
+
+	if err := req.ParseForm(); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_TeamsV1_ListTeamMembers_0); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
 	msg, err := client.ListTeamMembers(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -11346,7 +13397,7 @@ func request_TeamsV1_ListTeamMembers_0(ctx context.Context, marshaler runtime.Ma
 }
 
 func local_request_TeamsV1_ListTeamMembers_0(ctx context.Context, marshaler runtime.Marshaler, server TeamsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq TeamResourceRequest
+	var protoReq TeamResourceListRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -11376,6 +13427,10 @@ func local_request_TeamsV1_ListTeamMembers_0(ctx context.Context, marshaler runt
 
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "team", err)
+	}
+
+	if err := runtime.PopulateQueryParameters(&protoReq, req.URL.Query(), filter_TeamsV1_ListTeamMembers_0); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
 	msg, err := server.ListTeamMembers(ctx, &protoReq)
@@ -11801,12 +13856,8 @@ func local_request_TeamsV1_PatchTeamMember_0(ctx context.Context, marshaler runt
 
 }
 
-var (
-	filter_TeamsV1_DeleteTeamMember_0 = &utilities.DoubleArray{Encoding: map[string]int{"owner": 0, "team": 1, "member": 2, "user": 3}, Base: []int{1, 1, 2, 1, 3, 0, 0, 0}, Check: []int{0, 1, 1, 1, 4, 2, 3, 5}}
-)
-
 func request_TeamsV1_DeleteTeamMember_0(ctx context.Context, marshaler runtime.Marshaler, client TeamsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq TeamMemberBodyRequest
+	var protoReq TeamMemeberResourceRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -11838,22 +13889,15 @@ func request_TeamsV1_DeleteTeamMember_0(ctx context.Context, marshaler runtime.M
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "team", err)
 	}
 
-	val, ok = pathParams["member.user"]
+	val, ok = pathParams["user"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "member.user")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "user")
 	}
 
-	err = runtime.PopulateFieldFromPath(&protoReq, "member.user", val)
+	protoReq.User, err = runtime.String(val)
 
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "member.user", err)
-	}
-
-	if err := req.ParseForm(); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
-	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_TeamsV1_DeleteTeamMember_0); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "user", err)
 	}
 
 	msg, err := client.DeleteTeamMember(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -11862,7 +13906,7 @@ func request_TeamsV1_DeleteTeamMember_0(ctx context.Context, marshaler runtime.M
 }
 
 func local_request_TeamsV1_DeleteTeamMember_0(ctx context.Context, marshaler runtime.Marshaler, server TeamsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq TeamMemberBodyRequest
+	var protoReq TeamMemeberResourceRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -11894,19 +13938,15 @@ func local_request_TeamsV1_DeleteTeamMember_0(ctx context.Context, marshaler run
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "team", err)
 	}
 
-	val, ok = pathParams["member.user"]
+	val, ok = pathParams["user"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "member.user")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "user")
 	}
 
-	err = runtime.PopulateFieldFromPath(&protoReq, "member.user", val)
+	protoReq.User, err = runtime.String(val)
 
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "member.user", err)
-	}
-
-	if err := runtime.PopulateQueryParameters(&protoReq, req.URL.Query(), filter_TeamsV1_DeleteTeamMember_0); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "user", err)
 	}
 
 	msg, err := server.DeleteTeamMember(ctx, &protoReq)
@@ -13141,7 +15181,7 @@ func RegisterK8SConfigMapsV1HandlerServer(ctx context.Context, mux *runtime.Serv
 
 	})
 
-	mux.Handle("POST", pattern_K8SConfigMapsV1_CreateK8SConfigMaps_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_K8SConfigMapsV1_CreateK8SConfigMap_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -13150,14 +15190,14 @@ func RegisterK8SConfigMapsV1HandlerServer(ctx context.Context, mux *runtime.Serv
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_K8SConfigMapsV1_CreateK8SConfigMaps_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_K8SConfigMapsV1_CreateK8SConfigMap_0(rctx, inboundMarshaler, server, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_K8SConfigMapsV1_CreateK8SConfigMaps_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_K8SConfigMapsV1_CreateK8SConfigMap_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -13289,7 +15329,7 @@ func RegisterK8SSecretsV1HandlerServer(ctx context.Context, mux *runtime.ServeMu
 
 	})
 
-	mux.Handle("POST", pattern_K8SSecretsV1_CreateK8SSecrets_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_K8SSecretsV1_CreateK8SSecret_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -13298,14 +15338,14 @@ func RegisterK8SSecretsV1HandlerServer(ctx context.Context, mux *runtime.ServeMu
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_K8SSecretsV1_CreateK8SSecrets_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_K8SSecretsV1_CreateK8SSecret_0(rctx, inboundMarshaler, server, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_K8SSecretsV1_CreateK8SSecrets_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_K8SSecretsV1_CreateK8SSecret_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -13688,12 +15728,12 @@ func RegisterGitAccessesV1HandlerServer(ctx context.Context, mux *runtime.ServeM
 	return nil
 }
 
-// RegisterSearchV1HandlerServer registers the http handlers for service SearchV1 to "mux".
-// UnaryRPC     :call SearchV1Server directly.
+// RegisterProjectSearchesV1HandlerServer registers the http handlers for service ProjectSearchesV1 to "mux".
+// UnaryRPC     :call ProjectSearchesV1Server directly.
 // StreamingRPC :currently unsupported pending https://github.com/grpc/grpc-go/issues/906.
-func RegisterSearchV1HandlerServer(ctx context.Context, mux *runtime.ServeMux, server SearchV1Server) error {
+func RegisterProjectSearchesV1HandlerServer(ctx context.Context, mux *runtime.ServeMux, server ProjectSearchesV1Server) error {
 
-	mux.Handle("GET", pattern_SearchV1_ListSearches_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_ProjectSearchesV1_ListProjectSearchNames_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -13702,18 +15742,18 @@ func RegisterSearchV1HandlerServer(ctx context.Context, mux *runtime.ServeMux, s
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_SearchV1_ListSearches_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_ProjectSearchesV1_ListProjectSearchNames_0(rctx, inboundMarshaler, server, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_SearchV1_ListSearches_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_ProjectSearchesV1_ListProjectSearchNames_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("POST", pattern_SearchV1_CreateSearch_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_ProjectSearchesV1_ListProjectSearches_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -13722,18 +15762,18 @@ func RegisterSearchV1HandlerServer(ctx context.Context, mux *runtime.ServeMux, s
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_SearchV1_CreateSearch_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_ProjectSearchesV1_ListProjectSearches_0(rctx, inboundMarshaler, server, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_SearchV1_CreateSearch_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_ProjectSearchesV1_ListProjectSearches_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("GET", pattern_SearchV1_GetSearch_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_ProjectSearchesV1_CreateProjectSearch_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -13742,18 +15782,18 @@ func RegisterSearchV1HandlerServer(ctx context.Context, mux *runtime.ServeMux, s
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_SearchV1_GetSearch_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_ProjectSearchesV1_CreateProjectSearch_0(rctx, inboundMarshaler, server, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_SearchV1_GetSearch_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_ProjectSearchesV1_CreateProjectSearch_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("PUT", pattern_SearchV1_UpdateSearch_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_ProjectSearchesV1_GetProjectSearch_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -13762,18 +15802,18 @@ func RegisterSearchV1HandlerServer(ctx context.Context, mux *runtime.ServeMux, s
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_SearchV1_UpdateSearch_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_ProjectSearchesV1_GetProjectSearch_0(rctx, inboundMarshaler, server, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_SearchV1_UpdateSearch_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_ProjectSearchesV1_GetProjectSearch_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("PATCH", pattern_SearchV1_PatchSearch_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("PUT", pattern_ProjectSearchesV1_UpdateProjectSearch_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -13782,18 +15822,18 @@ func RegisterSearchV1HandlerServer(ctx context.Context, mux *runtime.ServeMux, s
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_SearchV1_PatchSearch_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_ProjectSearchesV1_UpdateProjectSearch_0(rctx, inboundMarshaler, server, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_SearchV1_PatchSearch_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_ProjectSearchesV1_UpdateProjectSearch_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("DELETE", pattern_SearchV1_DeleteSearch_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("PATCH", pattern_ProjectSearchesV1_PatchProjectSearch_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -13802,26 +15842,66 @@ func RegisterSearchV1HandlerServer(ctx context.Context, mux *runtime.ServeMux, s
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_SearchV1_DeleteSearch_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_ProjectSearchesV1_PatchProjectSearch_0(rctx, inboundMarshaler, server, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_SearchV1_DeleteSearch_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_ProjectSearchesV1_PatchProjectSearch_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("DELETE", pattern_ProjectSearchesV1_DeleteProjectSearch_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := local_request_ProjectSearchesV1_DeleteProjectSearch_0(rctx, inboundMarshaler, server, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_ProjectSearchesV1_DeleteProjectSearch_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("POST", pattern_ProjectSearchesV1_PromoteProjectSearch_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := local_request_ProjectSearchesV1_PromoteProjectSearch_0(rctx, inboundMarshaler, server, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_ProjectSearchesV1_PromoteProjectSearch_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
 	return nil
 }
 
-// RegisterDashboardV1HandlerServer registers the http handlers for service DashboardV1 to "mux".
-// UnaryRPC     :call DashboardV1Server directly.
+// RegisterSearchesV1HandlerServer registers the http handlers for service SearchesV1 to "mux".
+// UnaryRPC     :call SearchesV1Server directly.
 // StreamingRPC :currently unsupported pending https://github.com/grpc/grpc-go/issues/906.
-func RegisterDashboardV1HandlerServer(ctx context.Context, mux *runtime.ServeMux, server DashboardV1Server) error {
+func RegisterSearchesV1HandlerServer(ctx context.Context, mux *runtime.ServeMux, server SearchesV1Server) error {
 
-	mux.Handle("GET", pattern_DashboardV1_ListDashboard_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_SearchesV1_ListSearchNames_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -13830,18 +15910,18 @@ func RegisterDashboardV1HandlerServer(ctx context.Context, mux *runtime.ServeMux
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_DashboardV1_ListDashboard_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_SearchesV1_ListSearchNames_0(rctx, inboundMarshaler, server, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_DashboardV1_ListDashboard_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_SearchesV1_ListSearchNames_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("POST", pattern_DashboardV1_CreateDashboard_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_SearchesV1_ListSearches_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -13850,18 +15930,18 @@ func RegisterDashboardV1HandlerServer(ctx context.Context, mux *runtime.ServeMux
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_DashboardV1_CreateDashboard_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_SearchesV1_ListSearches_0(rctx, inboundMarshaler, server, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_DashboardV1_CreateDashboard_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_SearchesV1_ListSearches_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("GET", pattern_DashboardV1_GetDashboard_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_SearchesV1_CreateSearch_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -13870,18 +15950,18 @@ func RegisterDashboardV1HandlerServer(ctx context.Context, mux *runtime.ServeMux
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_DashboardV1_GetDashboard_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_SearchesV1_CreateSearch_0(rctx, inboundMarshaler, server, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_DashboardV1_GetDashboard_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_SearchesV1_CreateSearch_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("PUT", pattern_DashboardV1_UpdateDashboard_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_SearchesV1_GetSearch_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -13890,18 +15970,18 @@ func RegisterDashboardV1HandlerServer(ctx context.Context, mux *runtime.ServeMux
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_DashboardV1_UpdateDashboard_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_SearchesV1_GetSearch_0(rctx, inboundMarshaler, server, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_DashboardV1_UpdateDashboard_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_SearchesV1_GetSearch_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("PATCH", pattern_DashboardV1_PatchDashboard_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("PUT", pattern_SearchesV1_UpdateSearch_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -13910,18 +15990,18 @@ func RegisterDashboardV1HandlerServer(ctx context.Context, mux *runtime.ServeMux
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_DashboardV1_PatchDashboard_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_SearchesV1_UpdateSearch_0(rctx, inboundMarshaler, server, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_DashboardV1_PatchDashboard_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_SearchesV1_UpdateSearch_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("DELETE", pattern_DashboardV1_DeleteDashboard_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("PATCH", pattern_SearchesV1_PatchSearch_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -13930,14 +16010,498 @@ func RegisterDashboardV1HandlerServer(ctx context.Context, mux *runtime.ServeMux
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_DashboardV1_DeleteDashboard_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_SearchesV1_PatchSearch_0(rctx, inboundMarshaler, server, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_DashboardV1_DeleteDashboard_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_SearchesV1_PatchSearch_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("DELETE", pattern_SearchesV1_DeleteSearch_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := local_request_SearchesV1_DeleteSearch_0(rctx, inboundMarshaler, server, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_SearchesV1_DeleteSearch_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	return nil
+}
+
+// RegisterProjectDashboardsV1HandlerServer registers the http handlers for service ProjectDashboardsV1 to "mux".
+// UnaryRPC     :call ProjectDashboardsV1Server directly.
+// StreamingRPC :currently unsupported pending https://github.com/grpc/grpc-go/issues/906.
+func RegisterProjectDashboardsV1HandlerServer(ctx context.Context, mux *runtime.ServeMux, server ProjectDashboardsV1Server) error {
+
+	mux.Handle("GET", pattern_ProjectDashboardsV1_ListProjectDashboardNames_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := local_request_ProjectDashboardsV1_ListProjectDashboardNames_0(rctx, inboundMarshaler, server, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_ProjectDashboardsV1_ListProjectDashboardNames_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("GET", pattern_ProjectDashboardsV1_ListProjectDashboards_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := local_request_ProjectDashboardsV1_ListProjectDashboards_0(rctx, inboundMarshaler, server, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_ProjectDashboardsV1_ListProjectDashboards_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("POST", pattern_ProjectDashboardsV1_CreateProjectDashboard_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := local_request_ProjectDashboardsV1_CreateProjectDashboard_0(rctx, inboundMarshaler, server, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_ProjectDashboardsV1_CreateProjectDashboard_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("GET", pattern_ProjectDashboardsV1_GetProjectDashboard_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := local_request_ProjectDashboardsV1_GetProjectDashboard_0(rctx, inboundMarshaler, server, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_ProjectDashboardsV1_GetProjectDashboard_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("PUT", pattern_ProjectDashboardsV1_UpdateProjectDashboard_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := local_request_ProjectDashboardsV1_UpdateProjectDashboard_0(rctx, inboundMarshaler, server, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_ProjectDashboardsV1_UpdateProjectDashboard_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("PATCH", pattern_ProjectDashboardsV1_PatchProjectDashboard_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := local_request_ProjectDashboardsV1_PatchProjectDashboard_0(rctx, inboundMarshaler, server, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_ProjectDashboardsV1_PatchProjectDashboard_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("DELETE", pattern_ProjectDashboardsV1_DeleteProjectDashboard_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := local_request_ProjectDashboardsV1_DeleteProjectDashboard_0(rctx, inboundMarshaler, server, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_ProjectDashboardsV1_DeleteProjectDashboard_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("POST", pattern_ProjectDashboardsV1_PromoteProjectDashboard_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := local_request_ProjectDashboardsV1_PromoteProjectDashboard_0(rctx, inboundMarshaler, server, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_ProjectDashboardsV1_PromoteProjectDashboard_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	return nil
+}
+
+// RegisterDashboardsV1HandlerServer registers the http handlers for service DashboardsV1 to "mux".
+// UnaryRPC     :call DashboardsV1Server directly.
+// StreamingRPC :currently unsupported pending https://github.com/grpc/grpc-go/issues/906.
+func RegisterDashboardsV1HandlerServer(ctx context.Context, mux *runtime.ServeMux, server DashboardsV1Server) error {
+
+	mux.Handle("GET", pattern_DashboardsV1_ListDashboardNames_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := local_request_DashboardsV1_ListDashboardNames_0(rctx, inboundMarshaler, server, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_DashboardsV1_ListDashboardNames_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("GET", pattern_DashboardsV1_ListDashboards_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := local_request_DashboardsV1_ListDashboards_0(rctx, inboundMarshaler, server, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_DashboardsV1_ListDashboards_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("POST", pattern_DashboardsV1_CreateDashboard_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := local_request_DashboardsV1_CreateDashboard_0(rctx, inboundMarshaler, server, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_DashboardsV1_CreateDashboard_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("GET", pattern_DashboardsV1_GetDashboard_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := local_request_DashboardsV1_GetDashboard_0(rctx, inboundMarshaler, server, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_DashboardsV1_GetDashboard_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("PUT", pattern_DashboardsV1_UpdateDashboard_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := local_request_DashboardsV1_UpdateDashboard_0(rctx, inboundMarshaler, server, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_DashboardsV1_UpdateDashboard_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("PATCH", pattern_DashboardsV1_PatchDashboard_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := local_request_DashboardsV1_PatchDashboard_0(rctx, inboundMarshaler, server, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_DashboardsV1_PatchDashboard_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("DELETE", pattern_DashboardsV1_DeleteDashboard_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := local_request_DashboardsV1_DeleteDashboard_0(rctx, inboundMarshaler, server, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_DashboardsV1_DeleteDashboard_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	return nil
+}
+
+// RegisterRunProfilesV1HandlerServer registers the http handlers for service RunProfilesV1 to "mux".
+// UnaryRPC     :call RunProfilesV1Server directly.
+// StreamingRPC :currently unsupported pending https://github.com/grpc/grpc-go/issues/906.
+func RegisterRunProfilesV1HandlerServer(ctx context.Context, mux *runtime.ServeMux, server RunProfilesV1Server) error {
+
+	mux.Handle("GET", pattern_RunProfilesV1_ListRunProfileNames_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := local_request_RunProfilesV1_ListRunProfileNames_0(rctx, inboundMarshaler, server, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_RunProfilesV1_ListRunProfileNames_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("GET", pattern_RunProfilesV1_ListRunProfiles_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := local_request_RunProfilesV1_ListRunProfiles_0(rctx, inboundMarshaler, server, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_RunProfilesV1_ListRunProfiles_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("POST", pattern_RunProfilesV1_CreateRunProfile_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := local_request_RunProfilesV1_CreateRunProfile_0(rctx, inboundMarshaler, server, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_RunProfilesV1_CreateRunProfile_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("GET", pattern_RunProfilesV1_GetRunProfile_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := local_request_RunProfilesV1_GetRunProfile_0(rctx, inboundMarshaler, server, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_RunProfilesV1_GetRunProfile_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("PUT", pattern_RunProfilesV1_UpdateRunProfile_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := local_request_RunProfilesV1_UpdateRunProfile_0(rctx, inboundMarshaler, server, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_RunProfilesV1_UpdateRunProfile_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("PATCH", pattern_RunProfilesV1_PatchRunProfile_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := local_request_RunProfilesV1_PatchRunProfile_0(rctx, inboundMarshaler, server, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_RunProfilesV1_PatchRunProfile_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("DELETE", pattern_RunProfilesV1_DeleteRunProfile_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := local_request_RunProfilesV1_DeleteRunProfile_0(rctx, inboundMarshaler, server, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_RunProfilesV1_DeleteRunProfile_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -16380,19 +18944,19 @@ func RegisterArtifactsStoresV1HandlerClient(ctx context.Context, mux *runtime.Se
 }
 
 var (
-	pattern_ArtifactsStoresV1_ListArtifactsStoreNames_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 2, 4}, []string{"api", "v1", "owner", "artifacts_stores", "names"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ArtifactsStoresV1_ListArtifactsStoreNames_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 2, 5}, []string{"api", "v1", "orgs", "owner", "artifacts_stores", "names"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_ArtifactsStoresV1_ListArtifactsStores_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3}, []string{"api", "v1", "owner", "artifacts_stores"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ArtifactsStoresV1_ListArtifactsStores_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "orgs", "owner", "artifacts_stores"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_ArtifactsStoresV1_CreateArtifactsStore_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3}, []string{"api", "v1", "owner", "artifacts_stores"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ArtifactsStoresV1_CreateArtifactsStore_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "orgs", "owner", "artifacts_stores"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_ArtifactsStoresV1_GetArtifactsStore_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"api", "v1", "owner", "artifacts_stores", "uuid"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ArtifactsStoresV1_GetArtifactsStore_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "orgs", "owner", "artifacts_stores", "uuid"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_ArtifactsStoresV1_UpdateArtifactsStore_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"api", "v1", "owner", "artifacts_stores", "artifact_store.uuid"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ArtifactsStoresV1_UpdateArtifactsStore_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "orgs", "owner", "artifacts_stores", "artifact_store.uuid"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_ArtifactsStoresV1_PatchArtifactsStore_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"api", "v1", "owner", "artifacts_stores", "artifact_store.uuid"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ArtifactsStoresV1_PatchArtifactsStore_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "orgs", "owner", "artifacts_stores", "artifact_store.uuid"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_ArtifactsStoresV1_DeleteArtifactsStore_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"api", "v1", "owner", "artifacts_stores", "uuid"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ArtifactsStoresV1_DeleteArtifactsStore_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "orgs", "owner", "artifacts_stores", "uuid"}, "", runtime.AssumeColonVerbOpt(true)))
 )
 
 var (
@@ -16489,7 +19053,7 @@ func RegisterK8SConfigMapsV1HandlerClient(ctx context.Context, mux *runtime.Serv
 
 	})
 
-	mux.Handle("POST", pattern_K8SConfigMapsV1_CreateK8SConfigMaps_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_K8SConfigMapsV1_CreateK8SConfigMap_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -16498,14 +19062,14 @@ func RegisterK8SConfigMapsV1HandlerClient(ctx context.Context, mux *runtime.Serv
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_K8SConfigMapsV1_CreateK8SConfigMaps_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_K8SConfigMapsV1_CreateK8SConfigMap_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_K8SConfigMapsV1_CreateK8SConfigMaps_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_K8SConfigMapsV1_CreateK8SConfigMap_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -16593,19 +19157,19 @@ func RegisterK8SConfigMapsV1HandlerClient(ctx context.Context, mux *runtime.Serv
 }
 
 var (
-	pattern_K8SConfigMapsV1_ListK8SConfigMapNames_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 2, 4}, []string{"api", "v1", "owner", "k8s_config_maps", "names"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_K8SConfigMapsV1_ListK8SConfigMapNames_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 2, 5}, []string{"api", "v1", "orgs", "owner", "k8s_config_maps", "names"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_K8SConfigMapsV1_ListK8SConfigMaps_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3}, []string{"api", "v1", "owner", "k8s_config_maps"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_K8SConfigMapsV1_ListK8SConfigMaps_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "orgs", "owner", "k8s_config_maps"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_K8SConfigMapsV1_CreateK8SConfigMaps_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3}, []string{"api", "v1", "owner", "k8s_config_maps"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_K8SConfigMapsV1_CreateK8SConfigMap_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "orgs", "owner", "k8s_config_maps"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_K8SConfigMapsV1_GetK8SConfigMap_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"api", "v1", "owner", "k8s_config_maps", "uuid"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_K8SConfigMapsV1_GetK8SConfigMap_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "orgs", "owner", "k8s_config_maps", "uuid"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_K8SConfigMapsV1_UpdateK8SConfigMap_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"api", "v1", "owner", "k8s_config_maps", "k8s_resource.uuid"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_K8SConfigMapsV1_UpdateK8SConfigMap_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "orgs", "owner", "k8s_config_maps", "k8s_resource.uuid"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_K8SConfigMapsV1_PatchK8SConfigMap_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"api", "v1", "owner", "k8s_config_maps", "k8s_resource.uuid"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_K8SConfigMapsV1_PatchK8SConfigMap_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "orgs", "owner", "k8s_config_maps", "k8s_resource.uuid"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_K8SConfigMapsV1_DeleteK8SConfigMap_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"api", "v1", "owner", "k8s_config_maps", "uuid"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_K8SConfigMapsV1_DeleteK8SConfigMap_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "orgs", "owner", "k8s_config_maps", "uuid"}, "", runtime.AssumeColonVerbOpt(true)))
 )
 
 var (
@@ -16613,7 +19177,7 @@ var (
 
 	forward_K8SConfigMapsV1_ListK8SConfigMaps_0 = runtime.ForwardResponseMessage
 
-	forward_K8SConfigMapsV1_CreateK8SConfigMaps_0 = runtime.ForwardResponseMessage
+	forward_K8SConfigMapsV1_CreateK8SConfigMap_0 = runtime.ForwardResponseMessage
 
 	forward_K8SConfigMapsV1_GetK8SConfigMap_0 = runtime.ForwardResponseMessage
 
@@ -16702,7 +19266,7 @@ func RegisterK8SSecretsV1HandlerClient(ctx context.Context, mux *runtime.ServeMu
 
 	})
 
-	mux.Handle("POST", pattern_K8SSecretsV1_CreateK8SSecrets_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_K8SSecretsV1_CreateK8SSecret_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -16711,14 +19275,14 @@ func RegisterK8SSecretsV1HandlerClient(ctx context.Context, mux *runtime.ServeMu
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_K8SSecretsV1_CreateK8SSecrets_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_K8SSecretsV1_CreateK8SSecret_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_K8SSecretsV1_CreateK8SSecrets_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_K8SSecretsV1_CreateK8SSecret_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -16806,19 +19370,19 @@ func RegisterK8SSecretsV1HandlerClient(ctx context.Context, mux *runtime.ServeMu
 }
 
 var (
-	pattern_K8SSecretsV1_ListK8SSecretNames_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 2, 4}, []string{"api", "v1", "owner", "k8s_secrets", "names"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_K8SSecretsV1_ListK8SSecretNames_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 2, 5}, []string{"api", "v1", "orgs", "owner", "k8s_secrets", "names"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_K8SSecretsV1_ListK8SSecrets_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3}, []string{"api", "v1", "owner", "k8s_secrets"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_K8SSecretsV1_ListK8SSecrets_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "orgs", "owner", "k8s_secrets"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_K8SSecretsV1_CreateK8SSecrets_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3}, []string{"api", "v1", "owner", "k8s_secrets"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_K8SSecretsV1_CreateK8SSecret_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "orgs", "owner", "k8s_secrets"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_K8SSecretsV1_GetK8SSecret_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"api", "v1", "owner", "k8s_secrets", "uuid"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_K8SSecretsV1_GetK8SSecret_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "orgs", "owner", "k8s_secrets", "uuid"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_K8SSecretsV1_UpdateK8SSecret_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"api", "v1", "owner", "k8s_secrets", "k8s_resource.uuid"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_K8SSecretsV1_UpdateK8SSecret_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "orgs", "owner", "k8s_secrets", "k8s_resource.uuid"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_K8SSecretsV1_PatchK8SSecret_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"api", "v1", "owner", "k8s_secrets", "k8s_resource.uuid"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_K8SSecretsV1_PatchK8SSecret_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "orgs", "owner", "k8s_secrets", "k8s_resource.uuid"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_K8SSecretsV1_DeleteK8SSecret_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"api", "v1", "owner", "k8s_secrets", "uuid"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_K8SSecretsV1_DeleteK8SSecret_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "orgs", "owner", "k8s_secrets", "uuid"}, "", runtime.AssumeColonVerbOpt(true)))
 )
 
 var (
@@ -16826,7 +19390,7 @@ var (
 
 	forward_K8SSecretsV1_ListK8SSecrets_0 = runtime.ForwardResponseMessage
 
-	forward_K8SSecretsV1_CreateK8SSecrets_0 = runtime.ForwardResponseMessage
+	forward_K8SSecretsV1_CreateK8SSecret_0 = runtime.ForwardResponseMessage
 
 	forward_K8SSecretsV1_GetK8SSecret_0 = runtime.ForwardResponseMessage
 
@@ -17019,19 +19583,19 @@ func RegisterRegistryAccessesV1HandlerClient(ctx context.Context, mux *runtime.S
 }
 
 var (
-	pattern_RegistryAccessesV1_ListRegistryAccessNames_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 2, 4}, []string{"api", "v1", "owner", "registry_accesses", "names"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_RegistryAccessesV1_ListRegistryAccessNames_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 2, 5}, []string{"api", "v1", "orgs", "owner", "registry_accesses", "names"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_RegistryAccessesV1_ListRegistryAccesses_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3}, []string{"api", "v1", "owner", "registry_accesses"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_RegistryAccessesV1_ListRegistryAccesses_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "orgs", "owner", "registry_accesses"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_RegistryAccessesV1_CreateRegistryAccess_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3}, []string{"api", "v1", "owner", "registry_accesses"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_RegistryAccessesV1_CreateRegistryAccess_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "orgs", "owner", "registry_accesses"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_RegistryAccessesV1_GetRegistryAccess_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"api", "v1", "owner", "registry_accesses", "uuid"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_RegistryAccessesV1_GetRegistryAccess_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "orgs", "owner", "registry_accesses", "uuid"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_RegistryAccessesV1_UpdateRegistryAccess_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"api", "v1", "owner", "registry_accesses", "host_access.uuid"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_RegistryAccessesV1_UpdateRegistryAccess_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "orgs", "owner", "registry_accesses", "host_access.uuid"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_RegistryAccessesV1_PatchRegistryAccess_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"api", "v1", "owner", "registry_accesses", "host_access.uuid"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_RegistryAccessesV1_PatchRegistryAccess_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "orgs", "owner", "registry_accesses", "host_access.uuid"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_RegistryAccessesV1_DeleteRegistryAccess_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"api", "v1", "owner", "registry_accesses", "uuid"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_RegistryAccessesV1_DeleteRegistryAccess_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "orgs", "owner", "registry_accesses", "uuid"}, "", runtime.AssumeColonVerbOpt(true)))
 )
 
 var (
@@ -17232,19 +19796,19 @@ func RegisterGitAccessesV1HandlerClient(ctx context.Context, mux *runtime.ServeM
 }
 
 var (
-	pattern_GitAccessesV1_ListGitAccessNames_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 2, 4}, []string{"api", "v1", "owner", "git_accesses", "names"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_GitAccessesV1_ListGitAccessNames_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 2, 5}, []string{"api", "v1", "orgs", "owner", "git_accesses", "names"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_GitAccessesV1_ListGitAccesses_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3}, []string{"api", "v1", "owner", "git_accesses"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_GitAccessesV1_ListGitAccesses_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "orgs", "owner", "git_accesses"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_GitAccessesV1_CreateGitAccess_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3}, []string{"api", "v1", "owner", "git_accesses"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_GitAccessesV1_CreateGitAccess_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "orgs", "owner", "git_accesses"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_GitAccessesV1_GetGitAccess_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"api", "v1", "owner", "git_accesses", "uuid"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_GitAccessesV1_GetGitAccess_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "orgs", "owner", "git_accesses", "uuid"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_GitAccessesV1_UpdateGitAccess_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"api", "v1", "owner", "git_accesses", "host_access.uuid"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_GitAccessesV1_UpdateGitAccess_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "orgs", "owner", "git_accesses", "host_access.uuid"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_GitAccessesV1_PatchGitAccess_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"api", "v1", "owner", "git_accesses", "host_access.uuid"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_GitAccessesV1_PatchGitAccess_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "orgs", "owner", "git_accesses", "host_access.uuid"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_GitAccessesV1_DeleteGitAccess_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"api", "v1", "owner", "git_accesses", "uuid"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_GitAccessesV1_DeleteGitAccess_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "orgs", "owner", "git_accesses", "uuid"}, "", runtime.AssumeColonVerbOpt(true)))
 )
 
 var (
@@ -17263,9 +19827,9 @@ var (
 	forward_GitAccessesV1_DeleteGitAccess_0 = runtime.ForwardResponseMessage
 )
 
-// RegisterSearchV1HandlerFromEndpoint is same as RegisterSearchV1Handler but
+// RegisterProjectSearchesV1HandlerFromEndpoint is same as RegisterProjectSearchesV1Handler but
 // automatically dials to "endpoint" and closes the connection when "ctx" gets done.
-func RegisterSearchV1HandlerFromEndpoint(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) (err error) {
+func RegisterProjectSearchesV1HandlerFromEndpoint(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) (err error) {
 	conn, err := grpc.Dial(endpoint, opts...)
 	if err != nil {
 		return err
@@ -17285,23 +19849,23 @@ func RegisterSearchV1HandlerFromEndpoint(ctx context.Context, mux *runtime.Serve
 		}()
 	}()
 
-	return RegisterSearchV1Handler(ctx, mux, conn)
+	return RegisterProjectSearchesV1Handler(ctx, mux, conn)
 }
 
-// RegisterSearchV1Handler registers the http handlers for service SearchV1 to "mux".
+// RegisterProjectSearchesV1Handler registers the http handlers for service ProjectSearchesV1 to "mux".
 // The handlers forward requests to the grpc endpoint over "conn".
-func RegisterSearchV1Handler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
-	return RegisterSearchV1HandlerClient(ctx, mux, NewSearchV1Client(conn))
+func RegisterProjectSearchesV1Handler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
+	return RegisterProjectSearchesV1HandlerClient(ctx, mux, NewProjectSearchesV1Client(conn))
 }
 
-// RegisterSearchV1HandlerClient registers the http handlers for service SearchV1
-// to "mux". The handlers forward requests to the grpc endpoint over the given implementation of "SearchV1Client".
-// Note: the gRPC framework executes interceptors within the gRPC handler. If the passed in "SearchV1Client"
+// RegisterProjectSearchesV1HandlerClient registers the http handlers for service ProjectSearchesV1
+// to "mux". The handlers forward requests to the grpc endpoint over the given implementation of "ProjectSearchesV1Client".
+// Note: the gRPC framework executes interceptors within the gRPC handler. If the passed in "ProjectSearchesV1Client"
 // doesn't go through the normal gRPC flow (creating a gRPC client etc.) then it will be up to the passed in
-// "SearchV1Client" to call the correct interceptors.
-func RegisterSearchV1HandlerClient(ctx context.Context, mux *runtime.ServeMux, client SearchV1Client) error {
+// "ProjectSearchesV1Client" to call the correct interceptors.
+func RegisterProjectSearchesV1HandlerClient(ctx context.Context, mux *runtime.ServeMux, client ProjectSearchesV1Client) error {
 
-	mux.Handle("GET", pattern_SearchV1_ListSearches_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_ProjectSearchesV1_ListProjectSearchNames_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -17310,18 +19874,18 @@ func RegisterSearchV1HandlerClient(ctx context.Context, mux *runtime.ServeMux, c
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_SearchV1_ListSearches_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_ProjectSearchesV1_ListProjectSearchNames_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_SearchV1_ListSearches_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_ProjectSearchesV1_ListProjectSearchNames_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("POST", pattern_SearchV1_CreateSearch_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_ProjectSearchesV1_ListProjectSearches_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -17330,18 +19894,18 @@ func RegisterSearchV1HandlerClient(ctx context.Context, mux *runtime.ServeMux, c
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_SearchV1_CreateSearch_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_ProjectSearchesV1_ListProjectSearches_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_SearchV1_CreateSearch_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_ProjectSearchesV1_ListProjectSearches_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("GET", pattern_SearchV1_GetSearch_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_ProjectSearchesV1_CreateProjectSearch_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -17350,18 +19914,18 @@ func RegisterSearchV1HandlerClient(ctx context.Context, mux *runtime.ServeMux, c
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_SearchV1_GetSearch_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_ProjectSearchesV1_CreateProjectSearch_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_SearchV1_GetSearch_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_ProjectSearchesV1_CreateProjectSearch_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("PUT", pattern_SearchV1_UpdateSearch_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_ProjectSearchesV1_GetProjectSearch_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -17370,18 +19934,18 @@ func RegisterSearchV1HandlerClient(ctx context.Context, mux *runtime.ServeMux, c
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_SearchV1_UpdateSearch_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_ProjectSearchesV1_GetProjectSearch_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_SearchV1_UpdateSearch_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_ProjectSearchesV1_GetProjectSearch_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("PATCH", pattern_SearchV1_PatchSearch_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("PUT", pattern_ProjectSearchesV1_UpdateProjectSearch_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -17390,18 +19954,18 @@ func RegisterSearchV1HandlerClient(ctx context.Context, mux *runtime.ServeMux, c
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_SearchV1_PatchSearch_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_ProjectSearchesV1_UpdateProjectSearch_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_SearchV1_PatchSearch_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_ProjectSearchesV1_UpdateProjectSearch_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("DELETE", pattern_SearchV1_DeleteSearch_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("PATCH", pattern_ProjectSearchesV1_PatchProjectSearch_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -17410,14 +19974,54 @@ func RegisterSearchV1HandlerClient(ctx context.Context, mux *runtime.ServeMux, c
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_SearchV1_DeleteSearch_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_ProjectSearchesV1_PatchProjectSearch_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_SearchV1_DeleteSearch_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_ProjectSearchesV1_PatchProjectSearch_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("DELETE", pattern_ProjectSearchesV1_DeleteProjectSearch_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateContext(ctx, mux, req)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := request_ProjectSearchesV1_DeleteProjectSearch_0(rctx, inboundMarshaler, client, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_ProjectSearchesV1_DeleteProjectSearch_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("POST", pattern_ProjectSearchesV1_PromoteProjectSearch_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateContext(ctx, mux, req)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := request_ProjectSearchesV1_PromoteProjectSearch_0(rctx, inboundMarshaler, client, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_ProjectSearchesV1_PromoteProjectSearch_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -17425,36 +20029,44 @@ func RegisterSearchV1HandlerClient(ctx context.Context, mux *runtime.ServeMux, c
 }
 
 var (
-	pattern_SearchV1_ListSearches_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "owner", "project", "searches"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ProjectSearchesV1_ListProjectSearchNames_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 2, 5}, []string{"api", "v1", "owner", "project", "searches", "names"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_SearchV1_CreateSearch_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "owner", "project", "searches"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ProjectSearchesV1_ListProjectSearches_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "owner", "project", "searches"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_SearchV1_GetSearch_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "owner", "project", "searches", "uuid"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ProjectSearchesV1_CreateProjectSearch_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "owner", "project", "searches"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_SearchV1_UpdateSearch_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "owner", "project", "searches", "search.uuid"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ProjectSearchesV1_GetProjectSearch_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "owner", "project", "searches", "uuid"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_SearchV1_PatchSearch_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "owner", "project", "searches", "search.uuid"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ProjectSearchesV1_UpdateProjectSearch_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "owner", "project", "searches", "search.uuid"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_SearchV1_DeleteSearch_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "owner", "project", "searches", "uuid"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ProjectSearchesV1_PatchProjectSearch_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "owner", "project", "searches", "search.uuid"}, "", runtime.AssumeColonVerbOpt(true)))
+
+	pattern_ProjectSearchesV1_DeleteProjectSearch_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "owner", "project", "searches", "uuid"}, "", runtime.AssumeColonVerbOpt(true)))
+
+	pattern_ProjectSearchesV1_PromoteProjectSearch_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6}, []string{"api", "v1", "owner", "project", "searches", "uuid", "promote"}, "", runtime.AssumeColonVerbOpt(true)))
 )
 
 var (
-	forward_SearchV1_ListSearches_0 = runtime.ForwardResponseMessage
+	forward_ProjectSearchesV1_ListProjectSearchNames_0 = runtime.ForwardResponseMessage
 
-	forward_SearchV1_CreateSearch_0 = runtime.ForwardResponseMessage
+	forward_ProjectSearchesV1_ListProjectSearches_0 = runtime.ForwardResponseMessage
 
-	forward_SearchV1_GetSearch_0 = runtime.ForwardResponseMessage
+	forward_ProjectSearchesV1_CreateProjectSearch_0 = runtime.ForwardResponseMessage
 
-	forward_SearchV1_UpdateSearch_0 = runtime.ForwardResponseMessage
+	forward_ProjectSearchesV1_GetProjectSearch_0 = runtime.ForwardResponseMessage
 
-	forward_SearchV1_PatchSearch_0 = runtime.ForwardResponseMessage
+	forward_ProjectSearchesV1_UpdateProjectSearch_0 = runtime.ForwardResponseMessage
 
-	forward_SearchV1_DeleteSearch_0 = runtime.ForwardResponseMessage
+	forward_ProjectSearchesV1_PatchProjectSearch_0 = runtime.ForwardResponseMessage
+
+	forward_ProjectSearchesV1_DeleteProjectSearch_0 = runtime.ForwardResponseMessage
+
+	forward_ProjectSearchesV1_PromoteProjectSearch_0 = runtime.ForwardResponseMessage
 )
 
-// RegisterDashboardV1HandlerFromEndpoint is same as RegisterDashboardV1Handler but
+// RegisterSearchesV1HandlerFromEndpoint is same as RegisterSearchesV1Handler but
 // automatically dials to "endpoint" and closes the connection when "ctx" gets done.
-func RegisterDashboardV1HandlerFromEndpoint(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) (err error) {
+func RegisterSearchesV1HandlerFromEndpoint(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) (err error) {
 	conn, err := grpc.Dial(endpoint, opts...)
 	if err != nil {
 		return err
@@ -17474,23 +20086,23 @@ func RegisterDashboardV1HandlerFromEndpoint(ctx context.Context, mux *runtime.Se
 		}()
 	}()
 
-	return RegisterDashboardV1Handler(ctx, mux, conn)
+	return RegisterSearchesV1Handler(ctx, mux, conn)
 }
 
-// RegisterDashboardV1Handler registers the http handlers for service DashboardV1 to "mux".
+// RegisterSearchesV1Handler registers the http handlers for service SearchesV1 to "mux".
 // The handlers forward requests to the grpc endpoint over "conn".
-func RegisterDashboardV1Handler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
-	return RegisterDashboardV1HandlerClient(ctx, mux, NewDashboardV1Client(conn))
+func RegisterSearchesV1Handler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
+	return RegisterSearchesV1HandlerClient(ctx, mux, NewSearchesV1Client(conn))
 }
 
-// RegisterDashboardV1HandlerClient registers the http handlers for service DashboardV1
-// to "mux". The handlers forward requests to the grpc endpoint over the given implementation of "DashboardV1Client".
-// Note: the gRPC framework executes interceptors within the gRPC handler. If the passed in "DashboardV1Client"
+// RegisterSearchesV1HandlerClient registers the http handlers for service SearchesV1
+// to "mux". The handlers forward requests to the grpc endpoint over the given implementation of "SearchesV1Client".
+// Note: the gRPC framework executes interceptors within the gRPC handler. If the passed in "SearchesV1Client"
 // doesn't go through the normal gRPC flow (creating a gRPC client etc.) then it will be up to the passed in
-// "DashboardV1Client" to call the correct interceptors.
-func RegisterDashboardV1HandlerClient(ctx context.Context, mux *runtime.ServeMux, client DashboardV1Client) error {
+// "SearchesV1Client" to call the correct interceptors.
+func RegisterSearchesV1HandlerClient(ctx context.Context, mux *runtime.ServeMux, client SearchesV1Client) error {
 
-	mux.Handle("GET", pattern_DashboardV1_ListDashboard_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_SearchesV1_ListSearchNames_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -17499,18 +20111,18 @@ func RegisterDashboardV1HandlerClient(ctx context.Context, mux *runtime.ServeMux
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_DashboardV1_ListDashboard_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_SearchesV1_ListSearchNames_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_DashboardV1_ListDashboard_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_SearchesV1_ListSearchNames_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("POST", pattern_DashboardV1_CreateDashboard_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_SearchesV1_ListSearches_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -17519,18 +20131,18 @@ func RegisterDashboardV1HandlerClient(ctx context.Context, mux *runtime.ServeMux
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_DashboardV1_CreateDashboard_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_SearchesV1_ListSearches_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_DashboardV1_CreateDashboard_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_SearchesV1_ListSearches_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("GET", pattern_DashboardV1_GetDashboard_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_SearchesV1_CreateSearch_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -17539,18 +20151,18 @@ func RegisterDashboardV1HandlerClient(ctx context.Context, mux *runtime.ServeMux
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_DashboardV1_GetDashboard_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_SearchesV1_CreateSearch_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_DashboardV1_GetDashboard_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_SearchesV1_CreateSearch_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("PUT", pattern_DashboardV1_UpdateDashboard_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_SearchesV1_GetSearch_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -17559,18 +20171,18 @@ func RegisterDashboardV1HandlerClient(ctx context.Context, mux *runtime.ServeMux
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_DashboardV1_UpdateDashboard_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_SearchesV1_GetSearch_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_DashboardV1_UpdateDashboard_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_SearchesV1_GetSearch_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("PATCH", pattern_DashboardV1_PatchDashboard_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("PUT", pattern_SearchesV1_UpdateSearch_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -17579,18 +20191,18 @@ func RegisterDashboardV1HandlerClient(ctx context.Context, mux *runtime.ServeMux
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_DashboardV1_PatchDashboard_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_SearchesV1_UpdateSearch_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_DashboardV1_PatchDashboard_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_SearchesV1_UpdateSearch_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("DELETE", pattern_DashboardV1_DeleteDashboard_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("PATCH", pattern_SearchesV1_PatchSearch_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -17599,14 +20211,34 @@ func RegisterDashboardV1HandlerClient(ctx context.Context, mux *runtime.ServeMux
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_DashboardV1_DeleteDashboard_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_SearchesV1_PatchSearch_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_DashboardV1_DeleteDashboard_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_SearchesV1_PatchSearch_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("DELETE", pattern_SearchesV1_DeleteSearch_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateContext(ctx, mux, req)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := request_SearchesV1_DeleteSearch_0(rctx, inboundMarshaler, client, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_SearchesV1_DeleteSearch_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -17614,31 +20246,698 @@ func RegisterDashboardV1HandlerClient(ctx context.Context, mux *runtime.ServeMux
 }
 
 var (
-	pattern_DashboardV1_ListDashboard_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "owner", "project", "dashboards"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_SearchesV1_ListSearchNames_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 2, 5}, []string{"api", "v1", "orgs", "owner", "searches", "names"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_DashboardV1_CreateDashboard_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "owner", "project", "dashboards"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_SearchesV1_ListSearches_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "orgs", "owner", "searches"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_DashboardV1_GetDashboard_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "owner", "project", "dashboards", "uuid"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_SearchesV1_CreateSearch_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "orgs", "owner", "searches"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_DashboardV1_UpdateDashboard_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "owner", "project", "dashboards", "dashboard.uuid"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_SearchesV1_GetSearch_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "orgs", "owner", "searches", "uuid"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_DashboardV1_PatchDashboard_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "owner", "project", "dashboards", "dashboard.uuid"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_SearchesV1_UpdateSearch_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "orgs", "owner", "searches", "search.uuid"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_DashboardV1_DeleteDashboard_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "owner", "project", "dashboards", "uuid"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_SearchesV1_PatchSearch_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "orgs", "owner", "searches", "search.uuid"}, "", runtime.AssumeColonVerbOpt(true)))
+
+	pattern_SearchesV1_DeleteSearch_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "orgs", "owner", "searches", "uuid"}, "", runtime.AssumeColonVerbOpt(true)))
 )
 
 var (
-	forward_DashboardV1_ListDashboard_0 = runtime.ForwardResponseMessage
+	forward_SearchesV1_ListSearchNames_0 = runtime.ForwardResponseMessage
 
-	forward_DashboardV1_CreateDashboard_0 = runtime.ForwardResponseMessage
+	forward_SearchesV1_ListSearches_0 = runtime.ForwardResponseMessage
 
-	forward_DashboardV1_GetDashboard_0 = runtime.ForwardResponseMessage
+	forward_SearchesV1_CreateSearch_0 = runtime.ForwardResponseMessage
 
-	forward_DashboardV1_UpdateDashboard_0 = runtime.ForwardResponseMessage
+	forward_SearchesV1_GetSearch_0 = runtime.ForwardResponseMessage
 
-	forward_DashboardV1_PatchDashboard_0 = runtime.ForwardResponseMessage
+	forward_SearchesV1_UpdateSearch_0 = runtime.ForwardResponseMessage
 
-	forward_DashboardV1_DeleteDashboard_0 = runtime.ForwardResponseMessage
+	forward_SearchesV1_PatchSearch_0 = runtime.ForwardResponseMessage
+
+	forward_SearchesV1_DeleteSearch_0 = runtime.ForwardResponseMessage
+)
+
+// RegisterProjectDashboardsV1HandlerFromEndpoint is same as RegisterProjectDashboardsV1Handler but
+// automatically dials to "endpoint" and closes the connection when "ctx" gets done.
+func RegisterProjectDashboardsV1HandlerFromEndpoint(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) (err error) {
+	conn, err := grpc.Dial(endpoint, opts...)
+	if err != nil {
+		return err
+	}
+	defer func() {
+		if err != nil {
+			if cerr := conn.Close(); cerr != nil {
+				grpclog.Infof("Failed to close conn to %s: %v", endpoint, cerr)
+			}
+			return
+		}
+		go func() {
+			<-ctx.Done()
+			if cerr := conn.Close(); cerr != nil {
+				grpclog.Infof("Failed to close conn to %s: %v", endpoint, cerr)
+			}
+		}()
+	}()
+
+	return RegisterProjectDashboardsV1Handler(ctx, mux, conn)
+}
+
+// RegisterProjectDashboardsV1Handler registers the http handlers for service ProjectDashboardsV1 to "mux".
+// The handlers forward requests to the grpc endpoint over "conn".
+func RegisterProjectDashboardsV1Handler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
+	return RegisterProjectDashboardsV1HandlerClient(ctx, mux, NewProjectDashboardsV1Client(conn))
+}
+
+// RegisterProjectDashboardsV1HandlerClient registers the http handlers for service ProjectDashboardsV1
+// to "mux". The handlers forward requests to the grpc endpoint over the given implementation of "ProjectDashboardsV1Client".
+// Note: the gRPC framework executes interceptors within the gRPC handler. If the passed in "ProjectDashboardsV1Client"
+// doesn't go through the normal gRPC flow (creating a gRPC client etc.) then it will be up to the passed in
+// "ProjectDashboardsV1Client" to call the correct interceptors.
+func RegisterProjectDashboardsV1HandlerClient(ctx context.Context, mux *runtime.ServeMux, client ProjectDashboardsV1Client) error {
+
+	mux.Handle("GET", pattern_ProjectDashboardsV1_ListProjectDashboardNames_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateContext(ctx, mux, req)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := request_ProjectDashboardsV1_ListProjectDashboardNames_0(rctx, inboundMarshaler, client, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_ProjectDashboardsV1_ListProjectDashboardNames_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("GET", pattern_ProjectDashboardsV1_ListProjectDashboards_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateContext(ctx, mux, req)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := request_ProjectDashboardsV1_ListProjectDashboards_0(rctx, inboundMarshaler, client, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_ProjectDashboardsV1_ListProjectDashboards_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("POST", pattern_ProjectDashboardsV1_CreateProjectDashboard_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateContext(ctx, mux, req)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := request_ProjectDashboardsV1_CreateProjectDashboard_0(rctx, inboundMarshaler, client, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_ProjectDashboardsV1_CreateProjectDashboard_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("GET", pattern_ProjectDashboardsV1_GetProjectDashboard_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateContext(ctx, mux, req)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := request_ProjectDashboardsV1_GetProjectDashboard_0(rctx, inboundMarshaler, client, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_ProjectDashboardsV1_GetProjectDashboard_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("PUT", pattern_ProjectDashboardsV1_UpdateProjectDashboard_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateContext(ctx, mux, req)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := request_ProjectDashboardsV1_UpdateProjectDashboard_0(rctx, inboundMarshaler, client, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_ProjectDashboardsV1_UpdateProjectDashboard_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("PATCH", pattern_ProjectDashboardsV1_PatchProjectDashboard_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateContext(ctx, mux, req)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := request_ProjectDashboardsV1_PatchProjectDashboard_0(rctx, inboundMarshaler, client, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_ProjectDashboardsV1_PatchProjectDashboard_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("DELETE", pattern_ProjectDashboardsV1_DeleteProjectDashboard_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateContext(ctx, mux, req)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := request_ProjectDashboardsV1_DeleteProjectDashboard_0(rctx, inboundMarshaler, client, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_ProjectDashboardsV1_DeleteProjectDashboard_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("POST", pattern_ProjectDashboardsV1_PromoteProjectDashboard_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateContext(ctx, mux, req)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := request_ProjectDashboardsV1_PromoteProjectDashboard_0(rctx, inboundMarshaler, client, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_ProjectDashboardsV1_PromoteProjectDashboard_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	return nil
+}
+
+var (
+	pattern_ProjectDashboardsV1_ListProjectDashboardNames_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 2, 5}, []string{"api", "v1", "owner", "project", "dashboards", "names"}, "", runtime.AssumeColonVerbOpt(true)))
+
+	pattern_ProjectDashboardsV1_ListProjectDashboards_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "owner", "project", "dashboards"}, "", runtime.AssumeColonVerbOpt(true)))
+
+	pattern_ProjectDashboardsV1_CreateProjectDashboard_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "owner", "project", "dashboards"}, "", runtime.AssumeColonVerbOpt(true)))
+
+	pattern_ProjectDashboardsV1_GetProjectDashboard_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "owner", "project", "dashboards", "uuid"}, "", runtime.AssumeColonVerbOpt(true)))
+
+	pattern_ProjectDashboardsV1_UpdateProjectDashboard_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "owner", "project", "dashboards", "dashboard.uuid"}, "", runtime.AssumeColonVerbOpt(true)))
+
+	pattern_ProjectDashboardsV1_PatchProjectDashboard_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "owner", "project", "dashboards", "dashboard.uuid"}, "", runtime.AssumeColonVerbOpt(true)))
+
+	pattern_ProjectDashboardsV1_DeleteProjectDashboard_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "owner", "project", "dashboards", "uuid"}, "", runtime.AssumeColonVerbOpt(true)))
+
+	pattern_ProjectDashboardsV1_PromoteProjectDashboard_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6}, []string{"api", "v1", "owner", "project", "dashboards", "dashboard.uuid", "promote"}, "", runtime.AssumeColonVerbOpt(true)))
+)
+
+var (
+	forward_ProjectDashboardsV1_ListProjectDashboardNames_0 = runtime.ForwardResponseMessage
+
+	forward_ProjectDashboardsV1_ListProjectDashboards_0 = runtime.ForwardResponseMessage
+
+	forward_ProjectDashboardsV1_CreateProjectDashboard_0 = runtime.ForwardResponseMessage
+
+	forward_ProjectDashboardsV1_GetProjectDashboard_0 = runtime.ForwardResponseMessage
+
+	forward_ProjectDashboardsV1_UpdateProjectDashboard_0 = runtime.ForwardResponseMessage
+
+	forward_ProjectDashboardsV1_PatchProjectDashboard_0 = runtime.ForwardResponseMessage
+
+	forward_ProjectDashboardsV1_DeleteProjectDashboard_0 = runtime.ForwardResponseMessage
+
+	forward_ProjectDashboardsV1_PromoteProjectDashboard_0 = runtime.ForwardResponseMessage
+)
+
+// RegisterDashboardsV1HandlerFromEndpoint is same as RegisterDashboardsV1Handler but
+// automatically dials to "endpoint" and closes the connection when "ctx" gets done.
+func RegisterDashboardsV1HandlerFromEndpoint(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) (err error) {
+	conn, err := grpc.Dial(endpoint, opts...)
+	if err != nil {
+		return err
+	}
+	defer func() {
+		if err != nil {
+			if cerr := conn.Close(); cerr != nil {
+				grpclog.Infof("Failed to close conn to %s: %v", endpoint, cerr)
+			}
+			return
+		}
+		go func() {
+			<-ctx.Done()
+			if cerr := conn.Close(); cerr != nil {
+				grpclog.Infof("Failed to close conn to %s: %v", endpoint, cerr)
+			}
+		}()
+	}()
+
+	return RegisterDashboardsV1Handler(ctx, mux, conn)
+}
+
+// RegisterDashboardsV1Handler registers the http handlers for service DashboardsV1 to "mux".
+// The handlers forward requests to the grpc endpoint over "conn".
+func RegisterDashboardsV1Handler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
+	return RegisterDashboardsV1HandlerClient(ctx, mux, NewDashboardsV1Client(conn))
+}
+
+// RegisterDashboardsV1HandlerClient registers the http handlers for service DashboardsV1
+// to "mux". The handlers forward requests to the grpc endpoint over the given implementation of "DashboardsV1Client".
+// Note: the gRPC framework executes interceptors within the gRPC handler. If the passed in "DashboardsV1Client"
+// doesn't go through the normal gRPC flow (creating a gRPC client etc.) then it will be up to the passed in
+// "DashboardsV1Client" to call the correct interceptors.
+func RegisterDashboardsV1HandlerClient(ctx context.Context, mux *runtime.ServeMux, client DashboardsV1Client) error {
+
+	mux.Handle("GET", pattern_DashboardsV1_ListDashboardNames_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateContext(ctx, mux, req)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := request_DashboardsV1_ListDashboardNames_0(rctx, inboundMarshaler, client, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_DashboardsV1_ListDashboardNames_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("GET", pattern_DashboardsV1_ListDashboards_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateContext(ctx, mux, req)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := request_DashboardsV1_ListDashboards_0(rctx, inboundMarshaler, client, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_DashboardsV1_ListDashboards_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("POST", pattern_DashboardsV1_CreateDashboard_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateContext(ctx, mux, req)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := request_DashboardsV1_CreateDashboard_0(rctx, inboundMarshaler, client, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_DashboardsV1_CreateDashboard_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("GET", pattern_DashboardsV1_GetDashboard_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateContext(ctx, mux, req)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := request_DashboardsV1_GetDashboard_0(rctx, inboundMarshaler, client, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_DashboardsV1_GetDashboard_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("PUT", pattern_DashboardsV1_UpdateDashboard_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateContext(ctx, mux, req)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := request_DashboardsV1_UpdateDashboard_0(rctx, inboundMarshaler, client, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_DashboardsV1_UpdateDashboard_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("PATCH", pattern_DashboardsV1_PatchDashboard_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateContext(ctx, mux, req)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := request_DashboardsV1_PatchDashboard_0(rctx, inboundMarshaler, client, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_DashboardsV1_PatchDashboard_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("DELETE", pattern_DashboardsV1_DeleteDashboard_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateContext(ctx, mux, req)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := request_DashboardsV1_DeleteDashboard_0(rctx, inboundMarshaler, client, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_DashboardsV1_DeleteDashboard_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	return nil
+}
+
+var (
+	pattern_DashboardsV1_ListDashboardNames_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 2, 5}, []string{"api", "v1", "orgs", "owner", "dashboards", "names"}, "", runtime.AssumeColonVerbOpt(true)))
+
+	pattern_DashboardsV1_ListDashboards_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "orgs", "owner", "dashboards"}, "", runtime.AssumeColonVerbOpt(true)))
+
+	pattern_DashboardsV1_CreateDashboard_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "orgs", "owner", "dashboards"}, "", runtime.AssumeColonVerbOpt(true)))
+
+	pattern_DashboardsV1_GetDashboard_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "orgs", "owner", "dashboards", "uuid"}, "", runtime.AssumeColonVerbOpt(true)))
+
+	pattern_DashboardsV1_UpdateDashboard_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "orgs", "owner", "dashboards", "dashboard.uuid"}, "", runtime.AssumeColonVerbOpt(true)))
+
+	pattern_DashboardsV1_PatchDashboard_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "orgs", "owner", "dashboards", "dashboard.uuid"}, "", runtime.AssumeColonVerbOpt(true)))
+
+	pattern_DashboardsV1_DeleteDashboard_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "orgs", "owner", "dashboards", "uuid"}, "", runtime.AssumeColonVerbOpt(true)))
+)
+
+var (
+	forward_DashboardsV1_ListDashboardNames_0 = runtime.ForwardResponseMessage
+
+	forward_DashboardsV1_ListDashboards_0 = runtime.ForwardResponseMessage
+
+	forward_DashboardsV1_CreateDashboard_0 = runtime.ForwardResponseMessage
+
+	forward_DashboardsV1_GetDashboard_0 = runtime.ForwardResponseMessage
+
+	forward_DashboardsV1_UpdateDashboard_0 = runtime.ForwardResponseMessage
+
+	forward_DashboardsV1_PatchDashboard_0 = runtime.ForwardResponseMessage
+
+	forward_DashboardsV1_DeleteDashboard_0 = runtime.ForwardResponseMessage
+)
+
+// RegisterRunProfilesV1HandlerFromEndpoint is same as RegisterRunProfilesV1Handler but
+// automatically dials to "endpoint" and closes the connection when "ctx" gets done.
+func RegisterRunProfilesV1HandlerFromEndpoint(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) (err error) {
+	conn, err := grpc.Dial(endpoint, opts...)
+	if err != nil {
+		return err
+	}
+	defer func() {
+		if err != nil {
+			if cerr := conn.Close(); cerr != nil {
+				grpclog.Infof("Failed to close conn to %s: %v", endpoint, cerr)
+			}
+			return
+		}
+		go func() {
+			<-ctx.Done()
+			if cerr := conn.Close(); cerr != nil {
+				grpclog.Infof("Failed to close conn to %s: %v", endpoint, cerr)
+			}
+		}()
+	}()
+
+	return RegisterRunProfilesV1Handler(ctx, mux, conn)
+}
+
+// RegisterRunProfilesV1Handler registers the http handlers for service RunProfilesV1 to "mux".
+// The handlers forward requests to the grpc endpoint over "conn".
+func RegisterRunProfilesV1Handler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
+	return RegisterRunProfilesV1HandlerClient(ctx, mux, NewRunProfilesV1Client(conn))
+}
+
+// RegisterRunProfilesV1HandlerClient registers the http handlers for service RunProfilesV1
+// to "mux". The handlers forward requests to the grpc endpoint over the given implementation of "RunProfilesV1Client".
+// Note: the gRPC framework executes interceptors within the gRPC handler. If the passed in "RunProfilesV1Client"
+// doesn't go through the normal gRPC flow (creating a gRPC client etc.) then it will be up to the passed in
+// "RunProfilesV1Client" to call the correct interceptors.
+func RegisterRunProfilesV1HandlerClient(ctx context.Context, mux *runtime.ServeMux, client RunProfilesV1Client) error {
+
+	mux.Handle("GET", pattern_RunProfilesV1_ListRunProfileNames_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateContext(ctx, mux, req)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := request_RunProfilesV1_ListRunProfileNames_0(rctx, inboundMarshaler, client, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_RunProfilesV1_ListRunProfileNames_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("GET", pattern_RunProfilesV1_ListRunProfiles_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateContext(ctx, mux, req)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := request_RunProfilesV1_ListRunProfiles_0(rctx, inboundMarshaler, client, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_RunProfilesV1_ListRunProfiles_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("POST", pattern_RunProfilesV1_CreateRunProfile_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateContext(ctx, mux, req)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := request_RunProfilesV1_CreateRunProfile_0(rctx, inboundMarshaler, client, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_RunProfilesV1_CreateRunProfile_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("GET", pattern_RunProfilesV1_GetRunProfile_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateContext(ctx, mux, req)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := request_RunProfilesV1_GetRunProfile_0(rctx, inboundMarshaler, client, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_RunProfilesV1_GetRunProfile_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("PUT", pattern_RunProfilesV1_UpdateRunProfile_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateContext(ctx, mux, req)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := request_RunProfilesV1_UpdateRunProfile_0(rctx, inboundMarshaler, client, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_RunProfilesV1_UpdateRunProfile_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("PATCH", pattern_RunProfilesV1_PatchRunProfile_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateContext(ctx, mux, req)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := request_RunProfilesV1_PatchRunProfile_0(rctx, inboundMarshaler, client, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_RunProfilesV1_PatchRunProfile_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("DELETE", pattern_RunProfilesV1_DeleteRunProfile_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateContext(ctx, mux, req)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := request_RunProfilesV1_DeleteRunProfile_0(rctx, inboundMarshaler, client, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_RunProfilesV1_DeleteRunProfile_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	return nil
+}
+
+var (
+	pattern_RunProfilesV1_ListRunProfileNames_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 2, 5}, []string{"api", "v1", "orgs", "owner", "run_profiles", "names"}, "", runtime.AssumeColonVerbOpt(true)))
+
+	pattern_RunProfilesV1_ListRunProfiles_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "orgs", "owner", "run_profiles"}, "", runtime.AssumeColonVerbOpt(true)))
+
+	pattern_RunProfilesV1_CreateRunProfile_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "orgs", "owner", "run_profiles"}, "", runtime.AssumeColonVerbOpt(true)))
+
+	pattern_RunProfilesV1_GetRunProfile_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "orgs", "owner", "run_profiles", "uuid"}, "", runtime.AssumeColonVerbOpt(true)))
+
+	pattern_RunProfilesV1_UpdateRunProfile_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "orgs", "owner", "run_profiles", "run_profile.uuid"}, "", runtime.AssumeColonVerbOpt(true)))
+
+	pattern_RunProfilesV1_PatchRunProfile_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "orgs", "owner", "run_profiles", "run_profile.uuid"}, "", runtime.AssumeColonVerbOpt(true)))
+
+	pattern_RunProfilesV1_DeleteRunProfile_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "orgs", "owner", "run_profiles", "uuid"}, "", runtime.AssumeColonVerbOpt(true)))
+)
+
+var (
+	forward_RunProfilesV1_ListRunProfileNames_0 = runtime.ForwardResponseMessage
+
+	forward_RunProfilesV1_ListRunProfiles_0 = runtime.ForwardResponseMessage
+
+	forward_RunProfilesV1_CreateRunProfile_0 = runtime.ForwardResponseMessage
+
+	forward_RunProfilesV1_GetRunProfile_0 = runtime.ForwardResponseMessage
+
+	forward_RunProfilesV1_UpdateRunProfile_0 = runtime.ForwardResponseMessage
+
+	forward_RunProfilesV1_PatchRunProfile_0 = runtime.ForwardResponseMessage
+
+	forward_RunProfilesV1_DeleteRunProfile_0 = runtime.ForwardResponseMessage
 )
 
 // RegisterAgentsV1HandlerFromEndpoint is same as RegisterAgentsV1Handler but
@@ -17823,19 +21122,19 @@ func RegisterAgentsV1HandlerClient(ctx context.Context, mux *runtime.ServeMux, c
 }
 
 var (
-	pattern_AgentsV1_ListAgentNames_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 2, 4}, []string{"api", "v1", "owner", "agents", "names"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_AgentsV1_ListAgentNames_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 2, 5}, []string{"api", "v1", "orgs", "owner", "agents", "names"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_AgentsV1_ListAgents_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3}, []string{"api", "v1", "owner", "agents"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_AgentsV1_ListAgents_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "orgs", "owner", "agents"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_AgentsV1_CreateAgent_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3}, []string{"api", "v1", "owner", "agents"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_AgentsV1_CreateAgent_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "orgs", "owner", "agents"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_AgentsV1_GetAgent_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"api", "v1", "owner", "agents", "uuid"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_AgentsV1_GetAgent_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "orgs", "owner", "agents", "uuid"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_AgentsV1_UpdateAgent_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"api", "v1", "owner", "agents", "agent.uuid"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_AgentsV1_UpdateAgent_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "orgs", "owner", "agents", "agent.uuid"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_AgentsV1_PatchAgent_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"api", "v1", "owner", "agents", "agent.uuid"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_AgentsV1_PatchAgent_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "orgs", "owner", "agents", "agent.uuid"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_AgentsV1_DeleteAgent_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"api", "v1", "owner", "agents", "uuid"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_AgentsV1_DeleteAgent_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "orgs", "owner", "agents", "uuid"}, "", runtime.AssumeColonVerbOpt(true)))
 )
 
 var (
@@ -18036,19 +21335,19 @@ func RegisterQueuesV1HandlerClient(ctx context.Context, mux *runtime.ServeMux, c
 }
 
 var (
-	pattern_QueuesV1_ListQueueNames_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 2, 6}, []string{"api", "v1", "owner", "agents", "agent", "queues", "names"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_QueuesV1_ListQueueNames_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6, 2, 7}, []string{"api", "v1", "orgs", "owner", "agents", "agent", "queues", "names"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_QueuesV1_ListQueues_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"api", "v1", "owner", "agents", "agent", "queues"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_QueuesV1_ListQueues_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6}, []string{"api", "v1", "orgs", "owner", "agents", "agent", "queues"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_QueuesV1_CreateQueue_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"api", "v1", "owner", "agents", "agent", "queues"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_QueuesV1_CreateQueue_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6}, []string{"api", "v1", "orgs", "owner", "agents", "agent", "queues"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_QueuesV1_GetQueue_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 1, 0, 4, 1, 5, 6}, []string{"api", "v1", "owner", "agents", "agent", "queues", "uuid"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_QueuesV1_GetQueue_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6, 1, 0, 4, 1, 5, 7}, []string{"api", "v1", "orgs", "owner", "agents", "agent", "queues", "uuid"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_QueuesV1_UpdateQueue_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 1, 0, 4, 1, 5, 6}, []string{"api", "v1", "owner", "agents", "queue.agent", "queues", "queue.uuid"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_QueuesV1_UpdateQueue_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6, 1, 0, 4, 1, 5, 7}, []string{"api", "v1", "orgs", "owner", "agents", "queue.agent", "queues", "queue.uuid"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_QueuesV1_PatchQueue_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 1, 0, 4, 1, 5, 6}, []string{"api", "v1", "owner", "agents", "queue.agent", "queues", "queue.uuid"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_QueuesV1_PatchQueue_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6, 1, 0, 4, 1, 5, 7}, []string{"api", "v1", "orgs", "owner", "agents", "queue.agent", "queues", "queue.uuid"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_QueuesV1_DeleteQueue_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 1, 0, 4, 1, 5, 6}, []string{"api", "v1", "owner", "agents", "agent", "queues", "uuid"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_QueuesV1_DeleteQueue_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6, 1, 0, 4, 1, 5, 7}, []string{"api", "v1", "orgs", "owner", "agents", "agent", "queues", "uuid"}, "", runtime.AssumeColonVerbOpt(true)))
 )
 
 var (
@@ -18600,31 +21899,31 @@ func RegisterOrganizationsV1HandlerClient(ctx context.Context, mux *runtime.Serv
 }
 
 var (
-	pattern_OrganizationsV1_ListOrganizationNames_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"api", "v1", "organizations", "names"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_OrganizationsV1_ListOrganizationNames_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"api", "v1", "orgs", "names"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_OrganizationsV1_ListOrganizations_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"api", "v1", "organizations", "list"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_OrganizationsV1_ListOrganizations_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"api", "v1", "orgs", "list"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_OrganizationsV1_CreateOrganization_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"api", "v1", "organizations", "create"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_OrganizationsV1_CreateOrganization_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"api", "v1", "orgs", "create"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_OrganizationsV1_GetOrganization_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"api", "v1", "organizations", "owner"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_OrganizationsV1_GetOrganization_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"api", "v1", "orgs", "owner"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_OrganizationsV1_UpdateOrganization_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"api", "v1", "organizations", "owner"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_OrganizationsV1_UpdateOrganization_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"api", "v1", "orgs", "owner"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_OrganizationsV1_PatchOrganization_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"api", "v1", "organizations", "owner"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_OrganizationsV1_PatchOrganization_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"api", "v1", "orgs", "owner"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_OrganizationsV1_DeleteOrganization_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"api", "v1", "organizations", "owner"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_OrganizationsV1_DeleteOrganization_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"api", "v1", "orgs", "owner"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_OrganizationsV1_ListOrganizationMembers_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "organizations", "owner", "members"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_OrganizationsV1_ListOrganizationMembers_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "orgs", "owner", "members"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_OrganizationsV1_CreateOrganizationMember_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "organizations", "owner", "members"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_OrganizationsV1_CreateOrganizationMember_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "orgs", "owner", "members"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_OrganizationsV1_GetOrganizationMember_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "organizations", "owner", "members", "user"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_OrganizationsV1_GetOrganizationMember_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "orgs", "owner", "members", "user"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_OrganizationsV1_UpdateOrganizationMember_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "organizations", "owner", "members", "member.user"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_OrganizationsV1_UpdateOrganizationMember_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "orgs", "owner", "members", "member.user"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_OrganizationsV1_PatchOrganizationMember_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "organizations", "owner", "members", "member.user"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_OrganizationsV1_PatchOrganizationMember_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "orgs", "owner", "members", "member.user"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_OrganizationsV1_DeleteOrganizationMember_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "organizations", "owner", "members", "user"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_OrganizationsV1_DeleteOrganizationMember_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "orgs", "owner", "members", "user"}, "", runtime.AssumeColonVerbOpt(true)))
 )
 
 var (
@@ -18957,31 +22256,31 @@ func RegisterTeamsV1HandlerClient(ctx context.Context, mux *runtime.ServeMux, cl
 }
 
 var (
-	pattern_TeamsV1_ListTeamNames_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 2, 4}, []string{"api", "v1", "owner", "teams", "names"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_TeamsV1_ListTeamNames_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 2, 5}, []string{"api", "v1", "orgs", "owner", "teams", "names"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_TeamsV1_ListTeams_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3}, []string{"api", "v1", "owner", "teams"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_TeamsV1_ListTeams_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "orgs", "owner", "teams"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_TeamsV1_CreateTeam_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3}, []string{"api", "v1", "owner", "teams"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_TeamsV1_CreateTeam_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "orgs", "owner", "teams"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_TeamsV1_GetTeam_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"api", "v1", "owner", "teams", "team"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_TeamsV1_GetTeam_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "orgs", "owner", "teams", "team"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_TeamsV1_UpdateTeam_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"api", "v1", "owner", "teams", "team.name"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_TeamsV1_UpdateTeam_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "orgs", "owner", "teams", "team.name"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_TeamsV1_PatchTeam_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"api", "v1", "owner", "teams", "team.name"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_TeamsV1_PatchTeam_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "orgs", "owner", "teams", "team.name"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_TeamsV1_DeleteTeam_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"api", "v1", "owner", "teams", "team"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_TeamsV1_DeleteTeam_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "orgs", "owner", "teams", "team"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_TeamsV1_ListTeamMembers_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"api", "v1", "owner", "teams", "team", "members"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_TeamsV1_ListTeamMembers_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6}, []string{"api", "v1", "orgs", "owner", "teams", "team", "members"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_TeamsV1_CreateTeamMember_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"api", "v1", "owner", "teams", "team", "members"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_TeamsV1_CreateTeamMember_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6}, []string{"api", "v1", "orgs", "owner", "teams", "team", "members"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_TeamsV1_GetTeamMember_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 1, 0, 4, 1, 5, 6}, []string{"api", "v1", "owner", "teams", "team", "members", "user"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_TeamsV1_GetTeamMember_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6, 1, 0, 4, 1, 5, 7}, []string{"api", "v1", "orgs", "owner", "teams", "team", "members", "user"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_TeamsV1_UpdateTeamMember_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 1, 0, 4, 1, 5, 6}, []string{"api", "v1", "owner", "teams", "team", "members", "member.user"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_TeamsV1_UpdateTeamMember_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6, 1, 0, 4, 1, 5, 7}, []string{"api", "v1", "orgs", "owner", "teams", "team", "members", "member.user"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_TeamsV1_PatchTeamMember_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 1, 0, 4, 1, 5, 6}, []string{"api", "v1", "owner", "teams", "team", "members", "member.user"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_TeamsV1_PatchTeamMember_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6, 1, 0, 4, 1, 5, 7}, []string{"api", "v1", "orgs", "owner", "teams", "team", "members", "member.user"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_TeamsV1_DeleteTeamMember_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 1, 0, 4, 1, 5, 6}, []string{"api", "v1", "owner", "teams", "team", "members", "member.user"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_TeamsV1_DeleteTeamMember_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6, 1, 0, 4, 1, 5, 7}, []string{"api", "v1", "orgs", "owner", "teams", "team", "members", "user"}, "", runtime.AssumeColonVerbOpt(true)))
 )
 
 var (

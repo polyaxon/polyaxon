@@ -138,7 +138,7 @@ class OrganizationsV1Api(object):
         auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/organizations/create",
+            "/api/v1/orgs/create",
             "POST",
             path_params,
             query_params,
@@ -257,7 +257,7 @@ class OrganizationsV1Api(object):
         auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/organizations/{owner}/members",
+            "/api/v1/orgs/{owner}/members",
             "POST",
             path_params,
             query_params,
@@ -365,7 +365,7 @@ class OrganizationsV1Api(object):
         auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/organizations/{owner}",
+            "/api/v1/orgs/{owner}",
             "DELETE",
             path_params,
             query_params,
@@ -484,7 +484,7 @@ class OrganizationsV1Api(object):
         auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/organizations/{owner}/members/{user}",
+            "/api/v1/orgs/{owner}/members/{user}",
             "DELETE",
             path_params,
             query_params,
@@ -588,7 +588,7 @@ class OrganizationsV1Api(object):
         auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/organizations/{owner}",
+            "/api/v1/orgs/{owner}",
             "GET",
             path_params,
             query_params,
@@ -707,7 +707,7 @@ class OrganizationsV1Api(object):
         auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/organizations/{owner}/members/{user}",
+            "/api/v1/orgs/{owner}/members/{user}",
             "GET",
             path_params,
             query_params,
@@ -734,6 +734,10 @@ class OrganizationsV1Api(object):
 
         :param async_req bool
         :param str owner: Owner of the namespace (required)
+        :param int offset: Pagination offset.
+        :param int limit: Limit size.
+        :param str sort: Sort to order the search.
+        :param str query: Query filter the search search.
         :return: V1ListOrganizationMembersResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -759,12 +763,16 @@ class OrganizationsV1Api(object):
 
         :param async_req bool
         :param str owner: Owner of the namespace (required)
+        :param int offset: Pagination offset.
+        :param int limit: Limit size.
+        :param str sort: Sort to order the search.
+        :param str query: Query filter the search search.
         :return: V1ListOrganizationMembersResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = ["owner"]  # noqa: E501
+        all_params = ["owner", "offset", "limit", "sort", "query"]  # noqa: E501
         all_params.append("async_req")
         all_params.append("_return_http_data_only")
         all_params.append("_preload_content")
@@ -792,6 +800,14 @@ class OrganizationsV1Api(object):
             path_params["owner"] = params["owner"]  # noqa: E501
 
         query_params = []
+        if "offset" in params:
+            query_params.append(("offset", params["offset"]))  # noqa: E501
+        if "limit" in params:
+            query_params.append(("limit", params["limit"]))  # noqa: E501
+        if "sort" in params:
+            query_params.append(("sort", params["sort"]))  # noqa: E501
+        if "query" in params:
+            query_params.append(("query", params["query"]))  # noqa: E501
 
         header_params = {}
 
@@ -815,7 +831,7 @@ class OrganizationsV1Api(object):
         auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/organizations/{owner}/members",
+            "/api/v1/orgs/{owner}/members",
             "GET",
             path_params,
             query_params,
@@ -910,7 +926,7 @@ class OrganizationsV1Api(object):
         auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/organizations/names",
+            "/api/v1/orgs/names",
             "GET",
             path_params,
             query_params,
@@ -1005,7 +1021,7 @@ class OrganizationsV1Api(object):
         auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/organizations/list",
+            "/api/v1/orgs/list",
             "GET",
             path_params,
             query_params,
@@ -1122,7 +1138,7 @@ class OrganizationsV1Api(object):
         auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/organizations/{owner}",
+            "/api/v1/orgs/{owner}",
             "PATCH",
             path_params,
             query_params,
@@ -1252,7 +1268,7 @@ class OrganizationsV1Api(object):
         auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/organizations/{owner}/members/{member.user}",
+            "/api/v1/orgs/{owner}/members/{member.user}",
             "PATCH",
             path_params,
             query_params,
@@ -1369,7 +1385,7 @@ class OrganizationsV1Api(object):
         auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/organizations/{owner}",
+            "/api/v1/orgs/{owner}",
             "PUT",
             path_params,
             query_params,
@@ -1499,7 +1515,7 @@ class OrganizationsV1Api(object):
         auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/organizations/{owner}/members/{member.user}",
+            "/api/v1/orgs/{owner}/members/{member.user}",
             "PUT",
             path_params,
             query_params,

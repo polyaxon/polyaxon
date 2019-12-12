@@ -79,7 +79,7 @@ type DeleteAgentOK struct {
 }
 
 func (o *DeleteAgentOK) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/{owner}/agents/{uuid}][%d] deleteAgentOK ", 200)
+	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/agents/{uuid}][%d] deleteAgentOK ", 200)
 }
 
 func (o *DeleteAgentOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -101,7 +101,7 @@ type DeleteAgentNoContent struct {
 }
 
 func (o *DeleteAgentNoContent) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/{owner}/agents/{uuid}][%d] deleteAgentNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/agents/{uuid}][%d] deleteAgentNoContent  %+v", 204, o.Payload)
 }
 
 func (o *DeleteAgentNoContent) GetPayload() interface{} {
@@ -132,7 +132,7 @@ type DeleteAgentForbidden struct {
 }
 
 func (o *DeleteAgentForbidden) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/{owner}/agents/{uuid}][%d] deleteAgentForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/agents/{uuid}][%d] deleteAgentForbidden  %+v", 403, o.Payload)
 }
 
 func (o *DeleteAgentForbidden) GetPayload() interface{} {
@@ -163,7 +163,7 @@ type DeleteAgentNotFound struct {
 }
 
 func (o *DeleteAgentNotFound) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/{owner}/agents/{uuid}][%d] deleteAgentNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/agents/{uuid}][%d] deleteAgentNotFound  %+v", 404, o.Payload)
 }
 
 func (o *DeleteAgentNotFound) GetPayload() interface{} {

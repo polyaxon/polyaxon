@@ -53,17 +53,20 @@ message TeamMember {
     // User
     string user = 1;
 
+    // User email
+    string user_email = 2;
+
     // Role
-    string role = 2;
+    string role = 3;
 
     // Organization Role
-    string org_role = 3;
+    string org_role = 4;
 
     // Optional time when the entityt was created
-    google.protobuf.Timestamp created_at = 4;
+    google.protobuf.Timestamp created_at = 5;
 
     // Optional last time the entity was updated
-    google.protobuf.Timestamp updated_at = 5;
+    google.protobuf.Timestamp updated_at = 6;
 
 }
 

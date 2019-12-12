@@ -82,7 +82,7 @@ type PatchOrganizationOK struct {
 }
 
 func (o *PatchOrganizationOK) Error() string {
-	return fmt.Sprintf("[PATCH /api/v1/organizations/{owner}][%d] patchOrganizationOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}][%d] patchOrganizationOK  %+v", 200, o.Payload)
 }
 
 func (o *PatchOrganizationOK) GetPayload() *service_model.V1Organization {
@@ -115,7 +115,7 @@ type PatchOrganizationNoContent struct {
 }
 
 func (o *PatchOrganizationNoContent) Error() string {
-	return fmt.Sprintf("[PATCH /api/v1/organizations/{owner}][%d] patchOrganizationNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}][%d] patchOrganizationNoContent  %+v", 204, o.Payload)
 }
 
 func (o *PatchOrganizationNoContent) GetPayload() interface{} {
@@ -146,7 +146,7 @@ type PatchOrganizationForbidden struct {
 }
 
 func (o *PatchOrganizationForbidden) Error() string {
-	return fmt.Sprintf("[PATCH /api/v1/organizations/{owner}][%d] patchOrganizationForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}][%d] patchOrganizationForbidden  %+v", 403, o.Payload)
 }
 
 func (o *PatchOrganizationForbidden) GetPayload() interface{} {
@@ -177,7 +177,7 @@ type PatchOrganizationNotFound struct {
 }
 
 func (o *PatchOrganizationNotFound) Error() string {
-	return fmt.Sprintf("[PATCH /api/v1/organizations/{owner}][%d] patchOrganizationNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}][%d] patchOrganizationNotFound  %+v", 404, o.Payload)
 }
 
 func (o *PatchOrganizationNotFound) GetPayload() interface{} {

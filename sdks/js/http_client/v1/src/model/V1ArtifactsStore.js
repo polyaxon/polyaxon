@@ -75,8 +75,6 @@
         obj.name = ApiClient.convertToType(data['name'], 'String');
       if (data.hasOwnProperty('description'))
         obj.description = ApiClient.convertToType(data['description'], 'String');
-      if (data.hasOwnProperty('readme'))
-        obj.readme = ApiClient.convertToType(data['readme'], 'String');
       if (data.hasOwnProperty('tags'))
         obj.tags = ApiClient.convertToType(data['tags'], ['String']);
       if (data.hasOwnProperty('created_at'))
@@ -121,11 +119,6 @@
    * @member {String} description
    */
   exports.prototype.description = undefined;
-
-  /**
-   * @member {String} readme
-   */
-  exports.prototype.readme = undefined;
 
   /**
    * @member {Array.<String>} tags

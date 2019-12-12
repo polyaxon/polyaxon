@@ -82,7 +82,7 @@ type UpdateGitAccessOK struct {
 }
 
 func (o *UpdateGitAccessOK) Error() string {
-	return fmt.Sprintf("[PUT /api/v1/{owner}/git_accesses/{host_access.uuid}][%d] updateGitAccessOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/git_accesses/{host_access.uuid}][%d] updateGitAccessOK  %+v", 200, o.Payload)
 }
 
 func (o *UpdateGitAccessOK) GetPayload() *service_model.V1HostAccess {
@@ -115,7 +115,7 @@ type UpdateGitAccessNoContent struct {
 }
 
 func (o *UpdateGitAccessNoContent) Error() string {
-	return fmt.Sprintf("[PUT /api/v1/{owner}/git_accesses/{host_access.uuid}][%d] updateGitAccessNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/git_accesses/{host_access.uuid}][%d] updateGitAccessNoContent  %+v", 204, o.Payload)
 }
 
 func (o *UpdateGitAccessNoContent) GetPayload() interface{} {
@@ -146,7 +146,7 @@ type UpdateGitAccessForbidden struct {
 }
 
 func (o *UpdateGitAccessForbidden) Error() string {
-	return fmt.Sprintf("[PUT /api/v1/{owner}/git_accesses/{host_access.uuid}][%d] updateGitAccessForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/git_accesses/{host_access.uuid}][%d] updateGitAccessForbidden  %+v", 403, o.Payload)
 }
 
 func (o *UpdateGitAccessForbidden) GetPayload() interface{} {
@@ -177,7 +177,7 @@ type UpdateGitAccessNotFound struct {
 }
 
 func (o *UpdateGitAccessNotFound) Error() string {
-	return fmt.Sprintf("[PUT /api/v1/{owner}/git_accesses/{host_access.uuid}][%d] updateGitAccessNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[PUT /api/v1/orgs/{owner}/git_accesses/{host_access.uuid}][%d] updateGitAccessNotFound  %+v", 404, o.Payload)
 }
 
 func (o *UpdateGitAccessNotFound) GetPayload() interface{} {

@@ -4,19 +4,19 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**createTeam**](TeamsV1Api.md#createTeam) | **POST** /api/v1/{owner}/teams | List runs
-[**createTeamMember**](TeamsV1Api.md#createTeamMember) | **POST** /api/v1/{owner}/teams/{team}/members | Delete runs
-[**deleteTeam**](TeamsV1Api.md#deleteTeam) | **DELETE** /api/v1/{owner}/teams/{team} | Patch run
-[**deleteTeamMember**](TeamsV1Api.md#deleteTeamMember) | **DELETE** /api/v1/{owner}/teams/{team}/members/{member.user} | Invalidate runs
-[**getTeam**](TeamsV1Api.md#getTeam) | **GET** /api/v1/{owner}/teams/{team} | Create new run
-[**getTeamMember**](TeamsV1Api.md#getTeamMember) | **GET** /api/v1/{owner}/teams/{team}/members/{user} | Stop run
-[**listTeamMembers**](TeamsV1Api.md#listTeamMembers) | **GET** /api/v1/{owner}/teams/{team}/members | Delete run
-[**listTeamNames**](TeamsV1Api.md#listTeamNames) | **GET** /api/v1/{owner}/teams/names | List bookmarked runs for user
-[**listTeams**](TeamsV1Api.md#listTeams) | **GET** /api/v1/{owner}/teams | List archived runs for user
-[**patchTeam**](TeamsV1Api.md#patchTeam) | **PATCH** /api/v1/{owner}/teams/{team.name} | Update run
-[**patchTeamMember**](TeamsV1Api.md#patchTeamMember) | **PATCH** /api/v1/{owner}/teams/{team}/members/{member.user} | Invalidate run
-[**updateTeam**](TeamsV1Api.md#updateTeam) | **PUT** /api/v1/{owner}/teams/{team.name} | Get run
-[**updateTeamMember**](TeamsV1Api.md#updateTeamMember) | **PUT** /api/v1/{owner}/teams/{team}/members/{member.user} | Stop runs
+[**createTeam**](TeamsV1Api.md#createTeam) | **POST** /api/v1/orgs/{owner}/teams | List runs
+[**createTeamMember**](TeamsV1Api.md#createTeamMember) | **POST** /api/v1/orgs/{owner}/teams/{team}/members | Delete runs
+[**deleteTeam**](TeamsV1Api.md#deleteTeam) | **DELETE** /api/v1/orgs/{owner}/teams/{team} | Patch run
+[**deleteTeamMember**](TeamsV1Api.md#deleteTeamMember) | **DELETE** /api/v1/orgs/{owner}/teams/{team}/members/{user} | Invalidate runs
+[**getTeam**](TeamsV1Api.md#getTeam) | **GET** /api/v1/orgs/{owner}/teams/{team} | Create new run
+[**getTeamMember**](TeamsV1Api.md#getTeamMember) | **GET** /api/v1/orgs/{owner}/teams/{team}/members/{user} | Stop run
+[**listTeamMembers**](TeamsV1Api.md#listTeamMembers) | **GET** /api/v1/orgs/{owner}/teams/{team}/members | Delete run
+[**listTeamNames**](TeamsV1Api.md#listTeamNames) | **GET** /api/v1/orgs/{owner}/teams/names | List bookmarked runs for user
+[**listTeams**](TeamsV1Api.md#listTeams) | **GET** /api/v1/orgs/{owner}/teams | List archived runs for user
+[**patchTeam**](TeamsV1Api.md#patchTeam) | **PATCH** /api/v1/orgs/{owner}/teams/{team.name} | Update run
+[**patchTeamMember**](TeamsV1Api.md#patchTeamMember) | **PATCH** /api/v1/orgs/{owner}/teams/{team}/members/{member.user} | Invalidate run
+[**updateTeam**](TeamsV1Api.md#updateTeam) | **PUT** /api/v1/orgs/{owner}/teams/{team.name} | Get run
+[**updateTeamMember**](TeamsV1Api.md#updateTeamMember) | **PUT** /api/v1/orgs/{owner}/teams/{team}/members/{member.user} | Stop runs
 
 
 <a name="createTeam"></a>
@@ -186,7 +186,7 @@ null (empty response body)
 
 <a name="deleteTeamMember"></a>
 # **deleteTeamMember**
-> deleteTeamMember(owner, team, member_user, opts)
+> deleteTeamMember(owner, team, user)
 
 Invalidate runs
 
@@ -205,16 +205,10 @@ var apiInstance = new PolyaxonSdk.TeamsV1Api();
 
 var owner = "owner_example"; // String | Owner of the namespace
 
-var team = "team_example"; // String | Team
+var team = "team_example"; // String | Team under namesapce
 
-var member_user = "member_user_example"; // String | User
+var user = "user_example"; // String | Member under team
 
-var opts = { 
-  'member_role': "member_role_example", // String | Role.
-  'member_org_role': "member_org_role_example", // String | Organization Role.
-  'member_created_at': new Date("2013-10-20T19:20:30+01:00"), // Date | Optional time when the entityt was created.
-  'member_updated_at': new Date("2013-10-20T19:20:30+01:00") // Date | Optional last time the entity was updated.
-};
 
 var callback = function(error, data, response) {
   if (error) {
@@ -223,7 +217,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully.');
   }
 };
-apiInstance.deleteTeamMember(owner, team, member_user, opts, callback);
+apiInstance.deleteTeamMember(owner, team, user, callback);
 ```
 
 ### Parameters
@@ -231,12 +225,8 @@ apiInstance.deleteTeamMember(owner, team, member_user, opts, callback);
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace | 
- **team** | **String**| Team | 
- **member_user** | **String**| User | 
- **member_role** | **String**| Role. | [optional] 
- **member_org_role** | **String**| Organization Role. | [optional] 
- **member_created_at** | **Date**| Optional time when the entityt was created. | [optional] 
- **member_updated_at** | **Date**| Optional last time the entity was updated. | [optional] 
+ **team** | **String**| Team under namesapce | 
+ **user** | **String**| Member under team | 
 
 ### Return type
 
@@ -364,7 +354,7 @@ Name | Type | Description  | Notes
 
 <a name="listTeamMembers"></a>
 # **listTeamMembers**
-> V1ListTeamMembersResponse listTeamMembers(owner, team)
+> V1ListTeamMembersResponse listTeamMembers(owner, team, opts)
 
 Delete run
 
@@ -385,6 +375,12 @@ var owner = "owner_example"; // String | Owner of the namespace
 
 var team = "team_example"; // String | Team under namesapce
 
+var opts = { 
+  'offset': 56, // Number | Pagination offset.
+  'limit': 56, // Number | Limit size.
+  'sort': "sort_example", // String | Sort to order the search.
+  'query': "query_example" // String | Query filter the search search.
+};
 
 var callback = function(error, data, response) {
   if (error) {
@@ -393,7 +389,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.listTeamMembers(owner, team, callback);
+apiInstance.listTeamMembers(owner, team, opts, callback);
 ```
 
 ### Parameters
@@ -402,6 +398,10 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace | 
  **team** | **String**| Team under namesapce | 
+ **offset** | **Number**| Pagination offset. | [optional] 
+ **limit** | **Number**| Limit size. | [optional] 
+ **sort** | **String**| Sort to order the search. | [optional] 
+ **query** | **String**| Query filter the search search. | [optional] 
 
 ### Return type
 

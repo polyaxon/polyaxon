@@ -44,10 +44,10 @@ type V1ArtifactsStore struct {
 	// Optional description
 	Description string `json:"description,omitempty"`
 
-	// Optional a flag to disable an access
+	// Optional a flag to disable the store
 	Disabled bool `json:"disabled,omitempty"`
 
-	// Optional a flag to freeze an access
+	// Optional a flag to freeze the store
 	Frozen bool `json:"frozen,omitempty"`
 
 	// Optional host path
@@ -64,9 +64,6 @@ type V1ArtifactsStore struct {
 
 	// Optional flag to set this store to read only mode
 	ReadOnly bool `json:"read_only,omitempty"`
-
-	// Optional a readme text describing this entity
-	Readme string `json:"readme,omitempty"`
 
 	// Optional Tags of this entity
 	Tags []string `json:"tags"`

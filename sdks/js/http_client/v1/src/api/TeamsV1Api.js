@@ -109,7 +109,7 @@
       var returnType = V1Team;
 
       return this.apiClient.callApi(
-        '/api/v1/{owner}/teams', 'POST',
+        '/api/v1/orgs/{owner}/teams', 'POST',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -169,7 +169,7 @@
       var returnType = V1TeamMember;
 
       return this.apiClient.callApi(
-        '/api/v1/{owner}/teams/{team}/members', 'POST',
+        '/api/v1/orgs/{owner}/teams/{team}/members', 'POST',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -222,7 +222,7 @@
       var returnType = null;
 
       return this.apiClient.callApi(
-        '/api/v1/{owner}/teams/{team}', 'DELETE',
+        '/api/v1/orgs/{owner}/teams/{team}', 'DELETE',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -239,17 +239,11 @@
     /**
      * Invalidate runs
      * @param {String} owner Owner of the namespace
-     * @param {String} team Team
-     * @param {String} member_user User
-     * @param {Object} opts Optional parameters
-     * @param {String} opts.member_role Role.
-     * @param {String} opts.member_org_role Organization Role.
-     * @param {Date} opts.member_created_at Optional time when the entityt was created.
-     * @param {Date} opts.member_updated_at Optional last time the entity was updated.
+     * @param {String} team Team under namesapce
+     * @param {String} user Member under team
      * @param {module:api/TeamsV1Api~deleteTeamMemberCallback} callback The callback function, accepting three arguments: error, data, response
      */
-    this.deleteTeamMember = function(owner, team, member_user, opts, callback) {
-      opts = opts || {};
+    this.deleteTeamMember = function(owner, team, user, callback) {
       var postBody = null;
 
       // verify the required parameter 'owner' is set
@@ -262,22 +256,18 @@
         throw new Error("Missing the required parameter 'team' when calling deleteTeamMember");
       }
 
-      // verify the required parameter 'member_user' is set
-      if (member_user === undefined || member_user === null) {
-        throw new Error("Missing the required parameter 'member_user' when calling deleteTeamMember");
+      // verify the required parameter 'user' is set
+      if (user === undefined || user === null) {
+        throw new Error("Missing the required parameter 'user' when calling deleteTeamMember");
       }
 
 
       var pathParams = {
         'owner': owner,
         'team': team,
-        'member.user': member_user
+        'user': user
       };
       var queryParams = {
-        'member.role': opts['member_role'],
-        'member.org_role': opts['member_org_role'],
-        'member.created_at': opts['member_created_at'],
-        'member.updated_at': opts['member_updated_at'],
       };
       var collectionQueryParams = {
       };
@@ -292,7 +282,7 @@
       var returnType = null;
 
       return this.apiClient.callApi(
-        '/api/v1/{owner}/teams/{team}/members/{member.user}', 'DELETE',
+        '/api/v1/orgs/{owner}/teams/{team}/members/{user}', 'DELETE',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -346,7 +336,7 @@
       var returnType = V1Team;
 
       return this.apiClient.callApi(
-        '/api/v1/{owner}/teams/{team}', 'GET',
+        '/api/v1/orgs/{owner}/teams/{team}', 'GET',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -407,7 +397,7 @@
       var returnType = V1TeamMember;
 
       return this.apiClient.callApi(
-        '/api/v1/{owner}/teams/{team}/members/{user}', 'GET',
+        '/api/v1/orgs/{owner}/teams/{team}/members/{user}', 'GET',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -425,10 +415,16 @@
      * Delete run
      * @param {String} owner Owner of the namespace
      * @param {String} team Team under namesapce
+     * @param {Object} opts Optional parameters
+     * @param {Number} opts.offset Pagination offset.
+     * @param {Number} opts.limit Limit size.
+     * @param {String} opts.sort Sort to order the search.
+     * @param {String} opts.query Query filter the search search.
      * @param {module:api/TeamsV1Api~listTeamMembersCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1ListTeamMembersResponse}
      */
-    this.listTeamMembers = function(owner, team, callback) {
+    this.listTeamMembers = function(owner, team, opts, callback) {
+      opts = opts || {};
       var postBody = null;
 
       // verify the required parameter 'owner' is set
@@ -447,6 +443,10 @@
         'team': team
       };
       var queryParams = {
+        'offset': opts['offset'],
+        'limit': opts['limit'],
+        'sort': opts['sort'],
+        'query': opts['query'],
       };
       var collectionQueryParams = {
       };
@@ -461,7 +461,7 @@
       var returnType = V1ListTeamMembersResponse;
 
       return this.apiClient.callApi(
-        '/api/v1/{owner}/teams/{team}/members', 'GET',
+        '/api/v1/orgs/{owner}/teams/{team}/members', 'GET',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -518,7 +518,7 @@
       var returnType = V1ListTeamsResponse;
 
       return this.apiClient.callApi(
-        '/api/v1/{owner}/teams/names', 'GET',
+        '/api/v1/orgs/{owner}/teams/names', 'GET',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -575,7 +575,7 @@
       var returnType = V1ListTeamsResponse;
 
       return this.apiClient.callApi(
-        '/api/v1/{owner}/teams', 'GET',
+        '/api/v1/orgs/{owner}/teams', 'GET',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -635,7 +635,7 @@
       var returnType = V1Team;
 
       return this.apiClient.callApi(
-        '/api/v1/{owner}/teams/{team.name}', 'PATCH',
+        '/api/v1/orgs/{owner}/teams/{team.name}', 'PATCH',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -702,7 +702,7 @@
       var returnType = V1TeamMember;
 
       return this.apiClient.callApi(
-        '/api/v1/{owner}/teams/{team}/members/{member.user}', 'PATCH',
+        '/api/v1/orgs/{owner}/teams/{team}/members/{member.user}', 'PATCH',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -762,7 +762,7 @@
       var returnType = V1Team;
 
       return this.apiClient.callApi(
-        '/api/v1/{owner}/teams/{team.name}', 'PUT',
+        '/api/v1/orgs/{owner}/teams/{team.name}', 'PUT',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -829,7 +829,7 @@
       var returnType = V1TeamMember;
 
       return this.apiClient.callApi(
-        '/api/v1/{owner}/teams/{team}/members/{member.user}', 'PUT',
+        '/api/v1/orgs/{owner}/teams/{team}/members/{member.user}', 'PUT',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );

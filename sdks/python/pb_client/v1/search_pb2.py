@@ -37,7 +37,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='v1',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\x0fv1/search.proto\x12\x02v1\x1a\x1fgoogle/protobuf/timestamp.proto\"Z\n\nSearchSpec\x12\r\n\x05query\x18\x01 \x01(\t\x12\x0c\n\x04sort\x18\x02 \x01(\t\x12\r\n\x05limit\x18\x03 \x01(\x05\x12\x0f\n\x07groupby\x18\x04 \x01(\t\x12\x0f\n\x07\x63olumns\x18\x05 \x01(\t\"\xa2\x01\n\x06Search\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x1c\n\x04spec\x18\x03 \x01(\x0b\x32\x0e.v1.SearchSpec\x12.\n\ncreated_at\x18\x04 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12.\n\nupdated_at\x18\x05 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"O\n\x11SearchBodyRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0f\n\x07project\x18\x02 \x01(\t\x12\x1a\n\x06search\x18\x03 \x01(\x0b\x32\n.v1.Search\"b\n\x14ListSearchesResponse\x12\r\n\x05\x63ount\x18\x01 \x01(\x05\x12\x1b\n\x07results\x18\x02 \x03(\x0b\x32\n.v1.Search\x12\x10\n\x08previous\x18\x03 \x01(\t\x12\x0c\n\x04next\x18\x04 \x01(\tb\x06proto3')
+  serialized_pb=_b('\n\x0fv1/search.proto\x12\x02v1\x1a\x1fgoogle/protobuf/timestamp.proto\"Z\n\nSearchSpec\x12\r\n\x05query\x18\x01 \x01(\t\x12\x0c\n\x04sort\x18\x02 \x01(\t\x12\r\n\x05limit\x18\x03 \x01(\x05\x12\x0f\n\x07groupby\x18\x04 \x01(\t\x12\x0f\n\x07\x63olumns\x18\x05 \x01(\t\"\xa2\x01\n\x06Search\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x1c\n\x04spec\x18\x03 \x01(\x0b\x32\x0e.v1.SearchSpec\x12.\n\ncreated_at\x18\x04 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12.\n\nupdated_at\x18\x05 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\">\n\x11SearchBodyRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x1a\n\x06search\x18\x02 \x01(\x0b\x32\n.v1.Search\"V\n\x18ProjectSearchBodyRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0f\n\x07project\x18\x02 \x01(\t\x12\x1a\n\x06search\x18\x03 \x01(\x0b\x32\n.v1.Search\"b\n\x14ListSearchesResponse\x12\r\n\x05\x63ount\x18\x01 \x01(\x05\x12\x1b\n\x07results\x18\x02 \x03(\x0b\x32\n.v1.Search\x12\x10\n\x08previous\x18\x03 \x01(\t\x12\x0c\n\x04next\x18\x04 \x01(\tb\x06proto3')
   ,
   dependencies=[google_dot_protobuf_dot_timestamp__pb2.DESCRIPTOR,])
 
@@ -177,15 +177,8 @@ _SEARCHBODYREQUEST = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='project', full_name='v1.SearchBodyRequest.project', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b("").decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='search', full_name='v1.SearchBodyRequest.search', index=2,
-      number=3, type=11, cpp_type=10, label=1,
+      name='search', full_name='v1.SearchBodyRequest.search', index=1,
+      number=2, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -203,7 +196,52 @@ _SEARCHBODYREQUEST = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=313,
-  serialized_end=392,
+  serialized_end=375,
+)
+
+
+_PROJECTSEARCHBODYREQUEST = _descriptor.Descriptor(
+  name='ProjectSearchBodyRequest',
+  full_name='v1.ProjectSearchBodyRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='owner', full_name='v1.ProjectSearchBodyRequest.owner', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='project', full_name='v1.ProjectSearchBodyRequest.project', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='search', full_name='v1.ProjectSearchBodyRequest.search', index=2,
+      number=3, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=377,
+  serialized_end=463,
 )
 
 
@@ -254,18 +292,20 @@ _LISTSEARCHESRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=394,
-  serialized_end=492,
+  serialized_start=465,
+  serialized_end=563,
 )
 
 _SEARCH.fields_by_name['spec'].message_type = _SEARCHSPEC
 _SEARCH.fields_by_name['created_at'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
 _SEARCH.fields_by_name['updated_at'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
 _SEARCHBODYREQUEST.fields_by_name['search'].message_type = _SEARCH
+_PROJECTSEARCHBODYREQUEST.fields_by_name['search'].message_type = _SEARCH
 _LISTSEARCHESRESPONSE.fields_by_name['results'].message_type = _SEARCH
 DESCRIPTOR.message_types_by_name['SearchSpec'] = _SEARCHSPEC
 DESCRIPTOR.message_types_by_name['Search'] = _SEARCH
 DESCRIPTOR.message_types_by_name['SearchBodyRequest'] = _SEARCHBODYREQUEST
+DESCRIPTOR.message_types_by_name['ProjectSearchBodyRequest'] = _PROJECTSEARCHBODYREQUEST
 DESCRIPTOR.message_types_by_name['ListSearchesResponse'] = _LISTSEARCHESRESPONSE
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
@@ -289,6 +329,13 @@ SearchBodyRequest = _reflection.GeneratedProtocolMessageType('SearchBodyRequest'
   # @@protoc_insertion_point(class_scope:v1.SearchBodyRequest)
   })
 _sym_db.RegisterMessage(SearchBodyRequest)
+
+ProjectSearchBodyRequest = _reflection.GeneratedProtocolMessageType('ProjectSearchBodyRequest', (_message.Message,), {
+  'DESCRIPTOR' : _PROJECTSEARCHBODYREQUEST,
+  '__module__' : 'v1.search_pb2'
+  # @@protoc_insertion_point(class_scope:v1.ProjectSearchBodyRequest)
+  })
+_sym_db.RegisterMessage(ProjectSearchBodyRequest)
 
 ListSearchesResponse = _reflection.GeneratedProtocolMessageType('ListSearchesResponse', (_message.Message,), {
   'DESCRIPTOR' : _LISTSEARCHESRESPONSE,

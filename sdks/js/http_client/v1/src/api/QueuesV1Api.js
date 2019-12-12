@@ -116,7 +116,7 @@
       var returnType = V1Agent;
 
       return this.apiClient.callApi(
-        '/api/v1/{owner}/agents/{agent}/queues', 'POST',
+        '/api/v1/orgs/{owner}/agents/{agent}/queues', 'POST',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -176,7 +176,7 @@
       var returnType = null;
 
       return this.apiClient.callApi(
-        '/api/v1/{owner}/agents/{agent}/queues/{uuid}', 'DELETE',
+        '/api/v1/orgs/{owner}/agents/{agent}/queues/{uuid}', 'DELETE',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -237,7 +237,7 @@
       var returnType = V1Queue;
 
       return this.apiClient.callApi(
-        '/api/v1/{owner}/agents/{agent}/queues/{uuid}', 'GET',
+        '/api/v1/orgs/{owner}/agents/{agent}/queues/{uuid}', 'GET',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -301,7 +301,7 @@
       var returnType = V1ListQueuesResponse;
 
       return this.apiClient.callApi(
-        '/api/v1/{owner}/agents/{agent}/queues/names', 'GET',
+        '/api/v1/orgs/{owner}/agents/{agent}/queues/names', 'GET',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -365,7 +365,7 @@
       var returnType = V1ListQueuesResponse;
 
       return this.apiClient.callApi(
-        '/api/v1/{owner}/agents/{agent}/queues', 'GET',
+        '/api/v1/orgs/{owner}/agents/{agent}/queues', 'GET',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -432,7 +432,7 @@
       var returnType = V1Queue;
 
       return this.apiClient.callApi(
-        '/api/v1/{owner}/agents/{queue.agent}/queues/{queue.uuid}', 'PATCH',
+        '/api/v1/orgs/{owner}/agents/{queue.agent}/queues/{queue.uuid}', 'PATCH',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -499,7 +499,7 @@
       var returnType = V1Queue;
 
       return this.apiClient.callApi(
-        '/api/v1/{owner}/agents/{queue.agent}/queues/{queue.uuid}', 'PUT',
+        '/api/v1/orgs/{owner}/agents/{queue.agent}/queues/{queue.uuid}', 'PUT',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );

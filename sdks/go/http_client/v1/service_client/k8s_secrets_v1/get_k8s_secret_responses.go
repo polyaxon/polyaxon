@@ -82,7 +82,7 @@ type GetK8sSecretOK struct {
 }
 
 func (o *GetK8sSecretOK) Error() string {
-	return fmt.Sprintf("[GET /api/v1/{owner}/k8s_secrets/{uuid}][%d] getK8sSecretOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/k8s_secrets/{uuid}][%d] getK8sSecretOK  %+v", 200, o.Payload)
 }
 
 func (o *GetK8sSecretOK) GetPayload() *service_model.V1K8sResource {
@@ -115,7 +115,7 @@ type GetK8sSecretNoContent struct {
 }
 
 func (o *GetK8sSecretNoContent) Error() string {
-	return fmt.Sprintf("[GET /api/v1/{owner}/k8s_secrets/{uuid}][%d] getK8sSecretNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/k8s_secrets/{uuid}][%d] getK8sSecretNoContent  %+v", 204, o.Payload)
 }
 
 func (o *GetK8sSecretNoContent) GetPayload() interface{} {
@@ -146,7 +146,7 @@ type GetK8sSecretForbidden struct {
 }
 
 func (o *GetK8sSecretForbidden) Error() string {
-	return fmt.Sprintf("[GET /api/v1/{owner}/k8s_secrets/{uuid}][%d] getK8sSecretForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/k8s_secrets/{uuid}][%d] getK8sSecretForbidden  %+v", 403, o.Payload)
 }
 
 func (o *GetK8sSecretForbidden) GetPayload() interface{} {
@@ -177,7 +177,7 @@ type GetK8sSecretNotFound struct {
 }
 
 func (o *GetK8sSecretNotFound) Error() string {
-	return fmt.Sprintf("[GET /api/v1/{owner}/k8s_secrets/{uuid}][%d] getK8sSecretNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/k8s_secrets/{uuid}][%d] getK8sSecretNotFound  %+v", 404, o.Payload)
 }
 
 func (o *GetK8sSecretNotFound) GetPayload() interface{} {

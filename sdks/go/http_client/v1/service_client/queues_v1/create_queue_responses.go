@@ -82,7 +82,7 @@ type CreateQueueOK struct {
 }
 
 func (o *CreateQueueOK) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/agents/{agent}/queues][%d] createQueueOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/orgs/{owner}/agents/{agent}/queues][%d] createQueueOK  %+v", 200, o.Payload)
 }
 
 func (o *CreateQueueOK) GetPayload() *service_model.V1Agent {
@@ -115,7 +115,7 @@ type CreateQueueNoContent struct {
 }
 
 func (o *CreateQueueNoContent) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/agents/{agent}/queues][%d] createQueueNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/orgs/{owner}/agents/{agent}/queues][%d] createQueueNoContent  %+v", 204, o.Payload)
 }
 
 func (o *CreateQueueNoContent) GetPayload() interface{} {
@@ -146,7 +146,7 @@ type CreateQueueForbidden struct {
 }
 
 func (o *CreateQueueForbidden) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/agents/{agent}/queues][%d] createQueueForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/orgs/{owner}/agents/{agent}/queues][%d] createQueueForbidden  %+v", 403, o.Payload)
 }
 
 func (o *CreateQueueForbidden) GetPayload() interface{} {
@@ -177,7 +177,7 @@ type CreateQueueNotFound struct {
 }
 
 func (o *CreateQueueNotFound) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/agents/{agent}/queues][%d] createQueueNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/orgs/{owner}/agents/{agent}/queues][%d] createQueueNotFound  %+v", 404, o.Payload)
 }
 
 func (o *CreateQueueNotFound) GetPayload() interface{} {

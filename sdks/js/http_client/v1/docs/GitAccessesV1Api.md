@@ -4,13 +4,13 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**createGitAccess**](GitAccessesV1Api.md#createGitAccess) | **POST** /api/v1/{owner}/git_accesses | List runs
-[**deleteGitAccess**](GitAccessesV1Api.md#deleteGitAccess) | **DELETE** /api/v1/{owner}/git_accesses/{uuid} | Patch run
-[**getGitAccess**](GitAccessesV1Api.md#getGitAccess) | **GET** /api/v1/{owner}/git_accesses/{uuid} | Create new run
-[**listGitAccessNames**](GitAccessesV1Api.md#listGitAccessNames) | **GET** /api/v1/{owner}/git_accesses/names | List bookmarked runs for user
-[**listGitAccesses**](GitAccessesV1Api.md#listGitAccesses) | **GET** /api/v1/{owner}/git_accesses | List archived runs for user
-[**patchGitAccess**](GitAccessesV1Api.md#patchGitAccess) | **PATCH** /api/v1/{owner}/git_accesses/{host_access.uuid} | Update run
-[**updateGitAccess**](GitAccessesV1Api.md#updateGitAccess) | **PUT** /api/v1/{owner}/git_accesses/{host_access.uuid} | Get run
+[**createGitAccess**](GitAccessesV1Api.md#createGitAccess) | **POST** /api/v1/orgs/{owner}/git_accesses | List runs
+[**deleteGitAccess**](GitAccessesV1Api.md#deleteGitAccess) | **DELETE** /api/v1/orgs/{owner}/git_accesses/{uuid} | Patch run
+[**getGitAccess**](GitAccessesV1Api.md#getGitAccess) | **GET** /api/v1/orgs/{owner}/git_accesses/{uuid} | Create new run
+[**listGitAccessNames**](GitAccessesV1Api.md#listGitAccessNames) | **GET** /api/v1/orgs/{owner}/git_accesses/names | List bookmarked runs for user
+[**listGitAccesses**](GitAccessesV1Api.md#listGitAccesses) | **GET** /api/v1/orgs/{owner}/git_accesses | List archived runs for user
+[**patchGitAccess**](GitAccessesV1Api.md#patchGitAccess) | **PATCH** /api/v1/orgs/{owner}/git_accesses/{host_access.uuid} | Update run
+[**updateGitAccess**](GitAccessesV1Api.md#updateGitAccess) | **PUT** /api/v1/orgs/{owner}/git_accesses/{host_access.uuid} | Get run
 
 
 <a name="createGitAccess"></a>

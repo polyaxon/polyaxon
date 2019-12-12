@@ -6,7 +6,6 @@ Name | Type | Description | Notes
 **uuid** | **str** |  | [optional] 
 **name** | **str** |  | [optional] 
 **description** | **str** |  | [optional] 
-**readme** | **str** |  | [optional] 
 **tags** | **list[str]** |  | [optional] 
 **created_at** | **datetime** |  | [optional] 
 **updated_at** | **datetime** |  | [optional] 

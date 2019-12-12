@@ -52,7 +52,7 @@ func (a *Client) CreateTeam(params *CreateTeamParams, authInfo runtime.ClientAut
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "CreateTeam",
 		Method:             "POST",
-		PathPattern:        "/api/v1/{owner}/teams",
+		PathPattern:        "/api/v1/orgs/{owner}/teams",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -88,7 +88,7 @@ func (a *Client) CreateTeamMember(params *CreateTeamMemberParams, authInfo runti
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "CreateTeamMember",
 		Method:             "POST",
-		PathPattern:        "/api/v1/{owner}/teams/{team}/members",
+		PathPattern:        "/api/v1/orgs/{owner}/teams/{team}/members",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -124,7 +124,7 @@ func (a *Client) DeleteTeam(params *DeleteTeamParams, authInfo runtime.ClientAut
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "DeleteTeam",
 		Method:             "DELETE",
-		PathPattern:        "/api/v1/{owner}/teams/{team}",
+		PathPattern:        "/api/v1/orgs/{owner}/teams/{team}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -160,7 +160,7 @@ func (a *Client) DeleteTeamMember(params *DeleteTeamMemberParams, authInfo runti
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "DeleteTeamMember",
 		Method:             "DELETE",
-		PathPattern:        "/api/v1/{owner}/teams/{team}/members/{member.user}",
+		PathPattern:        "/api/v1/orgs/{owner}/teams/{team}/members/{user}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -196,7 +196,7 @@ func (a *Client) GetTeam(params *GetTeamParams, authInfo runtime.ClientAuthInfoW
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "GetTeam",
 		Method:             "GET",
-		PathPattern:        "/api/v1/{owner}/teams/{team}",
+		PathPattern:        "/api/v1/orgs/{owner}/teams/{team}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -232,7 +232,7 @@ func (a *Client) GetTeamMember(params *GetTeamMemberParams, authInfo runtime.Cli
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "GetTeamMember",
 		Method:             "GET",
-		PathPattern:        "/api/v1/{owner}/teams/{team}/members/{user}",
+		PathPattern:        "/api/v1/orgs/{owner}/teams/{team}/members/{user}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -268,7 +268,7 @@ func (a *Client) ListTeamMembers(params *ListTeamMembersParams, authInfo runtime
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "ListTeamMembers",
 		Method:             "GET",
-		PathPattern:        "/api/v1/{owner}/teams/{team}/members",
+		PathPattern:        "/api/v1/orgs/{owner}/teams/{team}/members",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -304,7 +304,7 @@ func (a *Client) ListTeamNames(params *ListTeamNamesParams, authInfo runtime.Cli
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "ListTeamNames",
 		Method:             "GET",
-		PathPattern:        "/api/v1/{owner}/teams/names",
+		PathPattern:        "/api/v1/orgs/{owner}/teams/names",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -340,7 +340,7 @@ func (a *Client) ListTeams(params *ListTeamsParams, authInfo runtime.ClientAuthI
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "ListTeams",
 		Method:             "GET",
-		PathPattern:        "/api/v1/{owner}/teams",
+		PathPattern:        "/api/v1/orgs/{owner}/teams",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -376,7 +376,7 @@ func (a *Client) PatchTeam(params *PatchTeamParams, authInfo runtime.ClientAuthI
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "PatchTeam",
 		Method:             "PATCH",
-		PathPattern:        "/api/v1/{owner}/teams/{team.name}",
+		PathPattern:        "/api/v1/orgs/{owner}/teams/{team.name}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -412,7 +412,7 @@ func (a *Client) PatchTeamMember(params *PatchTeamMemberParams, authInfo runtime
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "PatchTeamMember",
 		Method:             "PATCH",
-		PathPattern:        "/api/v1/{owner}/teams/{team}/members/{member.user}",
+		PathPattern:        "/api/v1/orgs/{owner}/teams/{team}/members/{member.user}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -448,7 +448,7 @@ func (a *Client) UpdateTeam(params *UpdateTeamParams, authInfo runtime.ClientAut
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "UpdateTeam",
 		Method:             "PUT",
-		PathPattern:        "/api/v1/{owner}/teams/{team.name}",
+		PathPattern:        "/api/v1/orgs/{owner}/teams/{team.name}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -484,7 +484,7 @@ func (a *Client) UpdateTeamMember(params *UpdateTeamMemberParams, authInfo runti
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "UpdateTeamMember",
 		Method:             "PUT",
-		PathPattern:        "/api/v1/{owner}/teams/{team}/members/{member.user}",
+		PathPattern:        "/api/v1/orgs/{owner}/teams/{team}/members/{member.user}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},

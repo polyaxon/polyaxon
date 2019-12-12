@@ -147,7 +147,7 @@ class AgentsV1Api(object):
         auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/agents",
+            "/api/v1/orgs/{owner}/agents",
             "POST",
             path_params,
             query_params,
@@ -262,7 +262,7 @@ class AgentsV1Api(object):
         auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/agents/{uuid}",
+            "/api/v1/orgs/{owner}/agents/{uuid}",
             "DELETE",
             path_params,
             query_params,
@@ -375,7 +375,7 @@ class AgentsV1Api(object):
         auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/agents/{uuid}",
+            "/api/v1/orgs/{owner}/agents/{uuid}",
             "GET",
             path_params,
             query_params,
@@ -495,7 +495,7 @@ class AgentsV1Api(object):
         auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/agents/names",
+            "/api/v1/orgs/{owner}/agents/names",
             "GET",
             path_params,
             query_params,
@@ -615,7 +615,7 @@ class AgentsV1Api(object):
         auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/agents",
+            "/api/v1/orgs/{owner}/agents",
             "GET",
             path_params,
             query_params,
@@ -743,7 +743,7 @@ class AgentsV1Api(object):
         auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/agents/{agent.uuid}",
+            "/api/v1/orgs/{owner}/agents/{agent.uuid}",
             "PATCH",
             path_params,
             query_params,
@@ -871,7 +871,7 @@ class AgentsV1Api(object):
         auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/{owner}/agents/{agent.uuid}",
+            "/api/v1/orgs/{owner}/agents/{agent.uuid}",
             "PUT",
             path_params,
             query_params,

@@ -82,7 +82,7 @@ type PatchK8sSecretOK struct {
 }
 
 func (o *PatchK8sSecretOK) Error() string {
-	return fmt.Sprintf("[PATCH /api/v1/{owner}/k8s_secrets/{k8s_resource.uuid}][%d] patchK8sSecretOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/k8s_secrets/{k8s_resource.uuid}][%d] patchK8sSecretOK  %+v", 200, o.Payload)
 }
 
 func (o *PatchK8sSecretOK) GetPayload() *service_model.V1K8sResource {
@@ -115,7 +115,7 @@ type PatchK8sSecretNoContent struct {
 }
 
 func (o *PatchK8sSecretNoContent) Error() string {
-	return fmt.Sprintf("[PATCH /api/v1/{owner}/k8s_secrets/{k8s_resource.uuid}][%d] patchK8sSecretNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/k8s_secrets/{k8s_resource.uuid}][%d] patchK8sSecretNoContent  %+v", 204, o.Payload)
 }
 
 func (o *PatchK8sSecretNoContent) GetPayload() interface{} {
@@ -146,7 +146,7 @@ type PatchK8sSecretForbidden struct {
 }
 
 func (o *PatchK8sSecretForbidden) Error() string {
-	return fmt.Sprintf("[PATCH /api/v1/{owner}/k8s_secrets/{k8s_resource.uuid}][%d] patchK8sSecretForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/k8s_secrets/{k8s_resource.uuid}][%d] patchK8sSecretForbidden  %+v", 403, o.Payload)
 }
 
 func (o *PatchK8sSecretForbidden) GetPayload() interface{} {
@@ -177,7 +177,7 @@ type PatchK8sSecretNotFound struct {
 }
 
 func (o *PatchK8sSecretNotFound) Error() string {
-	return fmt.Sprintf("[PATCH /api/v1/{owner}/k8s_secrets/{k8s_resource.uuid}][%d] patchK8sSecretNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/k8s_secrets/{k8s_resource.uuid}][%d] patchK8sSecretNotFound  %+v", 404, o.Payload)
 }
 
 func (o *PatchK8sSecretNotFound) GetPayload() interface{} {

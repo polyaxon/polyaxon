@@ -55,9 +55,6 @@ public class V1HostAccess {
   @SerializedName("description")
   private String description = null;
 
-  @SerializedName("readme")
-  private String readme = null;
-
   @SerializedName("tags")
   private List<String> tags = null;
 
@@ -137,24 +134,6 @@ public class V1HostAccess {
 
   public void setDescription(String description) {
     this.description = description;
-  }
-
-  public V1HostAccess readme(String readme) {
-    this.readme = readme;
-    return this;
-  }
-
-   /**
-   * Get readme
-   * @return readme
-  **/
-  @ApiModelProperty(value = "")
-  public String getReadme() {
-    return readme;
-  }
-
-  public void setReadme(String readme) {
-    this.readme = readme;
   }
 
   public V1HostAccess tags(List<String> tags) {
@@ -340,7 +319,6 @@ public class V1HostAccess {
     return Objects.equals(this.uuid, v1HostAccess.uuid) &&
         Objects.equals(this.name, v1HostAccess.name) &&
         Objects.equals(this.description, v1HostAccess.description) &&
-        Objects.equals(this.readme, v1HostAccess.readme) &&
         Objects.equals(this.tags, v1HostAccess.tags) &&
         Objects.equals(this.createdAt, v1HostAccess.createdAt) &&
         Objects.equals(this.updatedAt, v1HostAccess.updatedAt) &&
@@ -354,7 +332,7 @@ public class V1HostAccess {
 
   @Override
   public int hashCode() {
-    return Objects.hash(uuid, name, description, readme, tags, createdAt, updatedAt, frozen, disabled, insecure, deleted, k8sSecret, url);
+    return Objects.hash(uuid, name, description, tags, createdAt, updatedAt, frozen, disabled, insecure, deleted, k8sSecret, url);
   }
 
 
@@ -366,7 +344,6 @@ public class V1HostAccess {
     sb.append("    uuid: ").append(toIndentedString(uuid)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
-    sb.append("    readme: ").append(toIndentedString(readme)).append("\n");
     sb.append("    tags: ").append(toIndentedString(tags)).append("\n");
     sb.append("    createdAt: ").append(toIndentedString(createdAt)).append("\n");
     sb.append("    updatedAt: ").append(toIndentedString(updatedAt)).append("\n");

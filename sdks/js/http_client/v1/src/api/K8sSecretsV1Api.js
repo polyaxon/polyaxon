@@ -63,8 +63,8 @@
 
 
     /**
-     * Callback function to receive the result of the createK8sSecrets operation.
-     * @callback module:api/K8sSecretsV1Api~createK8sSecretsCallback
+     * Callback function to receive the result of the createK8sSecret operation.
+     * @callback module:api/K8sSecretsV1Api~createK8sSecretCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1K8sResource} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -74,20 +74,20 @@
      * List runs
      * @param {String} owner Owner of the namespace
      * @param {module:model/V1K8sResource} body Artifact store body
-     * @param {module:api/K8sSecretsV1Api~createK8sSecretsCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/K8sSecretsV1Api~createK8sSecretCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1K8sResource}
      */
-    this.createK8sSecrets = function(owner, body, callback) {
+    this.createK8sSecret = function(owner, body, callback) {
       var postBody = body;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling createK8sSecrets");
+        throw new Error("Missing the required parameter 'owner' when calling createK8sSecret");
       }
 
       // verify the required parameter 'body' is set
       if (body === undefined || body === null) {
-        throw new Error("Missing the required parameter 'body' when calling createK8sSecrets");
+        throw new Error("Missing the required parameter 'body' when calling createK8sSecret");
       }
 
 
@@ -109,7 +109,7 @@
       var returnType = V1K8sResource;
 
       return this.apiClient.callApi(
-        '/api/v1/{owner}/k8s_secrets', 'POST',
+        '/api/v1/orgs/{owner}/k8s_secrets', 'POST',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -162,7 +162,7 @@
       var returnType = null;
 
       return this.apiClient.callApi(
-        '/api/v1/{owner}/k8s_secrets/{uuid}', 'DELETE',
+        '/api/v1/orgs/{owner}/k8s_secrets/{uuid}', 'DELETE',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -216,7 +216,7 @@
       var returnType = V1K8sResource;
 
       return this.apiClient.callApi(
-        '/api/v1/{owner}/k8s_secrets/{uuid}', 'GET',
+        '/api/v1/orgs/{owner}/k8s_secrets/{uuid}', 'GET',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -273,7 +273,7 @@
       var returnType = V1ListK8sResourcesResponse;
 
       return this.apiClient.callApi(
-        '/api/v1/{owner}/k8s_secrets/names', 'GET',
+        '/api/v1/orgs/{owner}/k8s_secrets/names', 'GET',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -330,7 +330,7 @@
       var returnType = V1ListK8sResourcesResponse;
 
       return this.apiClient.callApi(
-        '/api/v1/{owner}/k8s_secrets', 'GET',
+        '/api/v1/orgs/{owner}/k8s_secrets', 'GET',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -390,7 +390,7 @@
       var returnType = V1K8sResource;
 
       return this.apiClient.callApi(
-        '/api/v1/{owner}/k8s_secrets/{k8s_resource.uuid}', 'PATCH',
+        '/api/v1/orgs/{owner}/k8s_secrets/{k8s_resource.uuid}', 'PATCH',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -450,7 +450,7 @@
       var returnType = V1K8sResource;
 
       return this.apiClient.callApi(
-        '/api/v1/{owner}/k8s_secrets/{k8s_resource.uuid}', 'PUT',
+        '/api/v1/orgs/{owner}/k8s_secrets/{k8s_resource.uuid}', 'PUT',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );

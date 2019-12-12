@@ -47,6 +47,12 @@ public class V1OrganizationMember {
   @SerializedName("user")
   private String user = null;
 
+  @SerializedName("user_email")
+  private String userEmail = null;
+
+  @SerializedName("email")
+  private String email = null;
+
   @SerializedName("role")
   private String role = null;
 
@@ -72,6 +78,42 @@ public class V1OrganizationMember {
 
   public void setUser(String user) {
     this.user = user;
+  }
+
+  public V1OrganizationMember userEmail(String userEmail) {
+    this.userEmail = userEmail;
+    return this;
+  }
+
+   /**
+   * Get userEmail
+   * @return userEmail
+  **/
+  @ApiModelProperty(value = "")
+  public String getUserEmail() {
+    return userEmail;
+  }
+
+  public void setUserEmail(String userEmail) {
+    this.userEmail = userEmail;
+  }
+
+  public V1OrganizationMember email(String email) {
+    this.email = email;
+    return this;
+  }
+
+   /**
+   * Get email
+   * @return email
+  **/
+  @ApiModelProperty(value = "")
+  public String getEmail() {
+    return email;
+  }
+
+  public void setEmail(String email) {
+    this.email = email;
   }
 
   public V1OrganizationMember role(String role) {
@@ -139,6 +181,8 @@ public class V1OrganizationMember {
     }
     V1OrganizationMember v1OrganizationMember = (V1OrganizationMember) o;
     return Objects.equals(this.user, v1OrganizationMember.user) &&
+        Objects.equals(this.userEmail, v1OrganizationMember.userEmail) &&
+        Objects.equals(this.email, v1OrganizationMember.email) &&
         Objects.equals(this.role, v1OrganizationMember.role) &&
         Objects.equals(this.createdAt, v1OrganizationMember.createdAt) &&
         Objects.equals(this.updatedAt, v1OrganizationMember.updatedAt);
@@ -146,7 +190,7 @@ public class V1OrganizationMember {
 
   @Override
   public int hashCode() {
-    return Objects.hash(user, role, createdAt, updatedAt);
+    return Objects.hash(user, userEmail, email, role, createdAt, updatedAt);
   }
 
 
@@ -156,6 +200,8 @@ public class V1OrganizationMember {
     sb.append("class V1OrganizationMember {\n");
     
     sb.append("    user: ").append(toIndentedString(user)).append("\n");
+    sb.append("    userEmail: ").append(toIndentedString(userEmail)).append("\n");
+    sb.append("    email: ").append(toIndentedString(email)).append("\n");
     sb.append("    role: ").append(toIndentedString(role)).append("\n");
     sb.append("    createdAt: ").append(toIndentedString(createdAt)).append("\n");
     sb.append("    updatedAt: ").append(toIndentedString(updatedAt)).append("\n");
