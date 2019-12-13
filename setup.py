@@ -50,12 +50,12 @@ setup(name='polyaxon-schemas',
       ],
       install_requires=[
           'hestia==0.3.1',
-          'Jinja2==2.10.1',
+          'Jinja2~=2.10.1',
           'marshmallow==3.0.0rc5',
           'numpy>=1.15.2',
           'python-dateutil>=2.7.3',
           'pytz>=2018.9',
-          'rhea==0.5.4'
+          'rhea==0.5.5'
       ],
       classifiers=[
           'Programming Language :: Python',
