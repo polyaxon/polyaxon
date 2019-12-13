@@ -50,7 +50,7 @@ class QueuesV1Api(object):
         self.api_client = api_client
 
     def create_queue(self, owner, agent, body, **kwargs):  # noqa: E501
-        """List runs  # noqa: E501
+        """Get run  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -77,7 +77,7 @@ class QueuesV1Api(object):
             return data
 
     def create_queue_with_http_info(self, owner, agent, body, **kwargs):  # noqa: E501
-        """List runs  # noqa: E501
+        """Get run  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -176,7 +176,7 @@ class QueuesV1Api(object):
         )
 
     def delete_queue(self, owner, agent, uuid, **kwargs):  # noqa: E501
-        """Patch run  # noqa: E501
+        """Delete runs  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -203,7 +203,7 @@ class QueuesV1Api(object):
             return data
 
     def delete_queue_with_http_info(self, owner, agent, uuid, **kwargs):  # noqa: E501
-        """Patch run  # noqa: E501
+        """Delete runs  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -302,7 +302,7 @@ class QueuesV1Api(object):
         )
 
     def get_queue(self, owner, agent, uuid, **kwargs):  # noqa: E501
-        """Create new run  # noqa: E501
+        """Update run  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -329,7 +329,7 @@ class QueuesV1Api(object):
             return data
 
     def get_queue_with_http_info(self, owner, agent, uuid, **kwargs):  # noqa: E501
-        """Create new run  # noqa: E501
+        """Update run  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -427,8 +427,258 @@ class QueuesV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def list_queue_names(self, owner, agent, **kwargs):  # noqa: E501
+    def list_organization_queue_names(self, owner, **kwargs):  # noqa: E501
         """List bookmarked runs for user  # noqa: E501
+
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.list_organization_queue_names(owner, async_req=True)
+        >>> result = thread.get()
+
+        :param async_req bool
+        :param str owner: Owner of the namespace (required)
+        :param int offset: Pagination offset.
+        :param int limit: Limit size.
+        :param str sort: Sort to order the search.
+        :param str query: Query filter the search search.
+        :return: V1ListQueuesResponse
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+        kwargs["_return_http_data_only"] = True
+        if kwargs.get("async_req"):
+            return self.list_organization_queue_names_with_http_info(
+                owner, **kwargs
+            )  # noqa: E501
+        else:
+            (data) = self.list_organization_queue_names_with_http_info(
+                owner, **kwargs
+            )  # noqa: E501
+            return data
+
+    def list_organization_queue_names_with_http_info(
+        self, owner, **kwargs
+    ):  # noqa: E501
+        """List bookmarked runs for user  # noqa: E501
+
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.list_organization_queue_names_with_http_info(owner, async_req=True)
+        >>> result = thread.get()
+
+        :param async_req bool
+        :param str owner: Owner of the namespace (required)
+        :param int offset: Pagination offset.
+        :param int limit: Limit size.
+        :param str sort: Sort to order the search.
+        :param str query: Query filter the search search.
+        :return: V1ListQueuesResponse
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+
+        all_params = ["owner", "offset", "limit", "sort", "query"]  # noqa: E501
+        all_params.append("async_req")
+        all_params.append("_return_http_data_only")
+        all_params.append("_preload_content")
+        all_params.append("_request_timeout")
+
+        params = locals()
+        for key, val in six.iteritems(params["kwargs"]):
+            if key not in all_params:
+                raise TypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method list_organization_queue_names" % key
+                )
+            params[key] = val
+        del params["kwargs"]
+        # verify the required parameter 'owner' is set
+        if "owner" not in params or params["owner"] is None:
+            raise ValueError(
+                "Missing the required parameter `owner` when calling `list_organization_queue_names`"
+            )  # noqa: E501
+
+        collection_formats = {}
+
+        path_params = {}
+        if "owner" in params:
+            path_params["owner"] = params["owner"]  # noqa: E501
+
+        query_params = []
+        if "offset" in params:
+            query_params.append(("offset", params["offset"]))  # noqa: E501
+        if "limit" in params:
+            query_params.append(("limit", params["limit"]))  # noqa: E501
+        if "sort" in params:
+            query_params.append(("sort", params["sort"]))  # noqa: E501
+        if "query" in params:
+            query_params.append(("query", params["query"]))  # noqa: E501
+
+        header_params = {}
+
+        form_params = []
+        local_var_files = {}
+
+        body_params = None
+        # HTTP header `Accept`
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
+
+        # HTTP header `Content-Type`
+        header_params[
+            "Content-Type"
+        ] = self.api_client.select_header_content_type(  # noqa: E501
+            ["application/json"]
+        )  # noqa: E501
+
+        # Authentication setting
+        auth_settings = ["ApiKey"]  # noqa: E501
+
+        return self.api_client.call_api(
+            "/api/v1/orgs/{owner}/queues/names",
+            "GET",
+            path_params,
+            query_params,
+            header_params,
+            body=body_params,
+            post_params=form_params,
+            files=local_var_files,
+            response_type="V1ListQueuesResponse",  # noqa: E501
+            auth_settings=auth_settings,
+            async_req=params.get("async_req"),
+            _return_http_data_only=params.get("_return_http_data_only"),
+            _preload_content=params.get("_preload_content", True),
+            _request_timeout=params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
+
+    def list_organization_queues(self, owner, **kwargs):  # noqa: E501
+        """List archived runs for user  # noqa: E501
+
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.list_organization_queues(owner, async_req=True)
+        >>> result = thread.get()
+
+        :param async_req bool
+        :param str owner: Owner of the namespace (required)
+        :param int offset: Pagination offset.
+        :param int limit: Limit size.
+        :param str sort: Sort to order the search.
+        :param str query: Query filter the search search.
+        :return: V1ListQueuesResponse
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+        kwargs["_return_http_data_only"] = True
+        if kwargs.get("async_req"):
+            return self.list_organization_queues_with_http_info(
+                owner, **kwargs
+            )  # noqa: E501
+        else:
+            (data) = self.list_organization_queues_with_http_info(
+                owner, **kwargs
+            )  # noqa: E501
+            return data
+
+    def list_organization_queues_with_http_info(self, owner, **kwargs):  # noqa: E501
+        """List archived runs for user  # noqa: E501
+
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.list_organization_queues_with_http_info(owner, async_req=True)
+        >>> result = thread.get()
+
+        :param async_req bool
+        :param str owner: Owner of the namespace (required)
+        :param int offset: Pagination offset.
+        :param int limit: Limit size.
+        :param str sort: Sort to order the search.
+        :param str query: Query filter the search search.
+        :return: V1ListQueuesResponse
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+
+        all_params = ["owner", "offset", "limit", "sort", "query"]  # noqa: E501
+        all_params.append("async_req")
+        all_params.append("_return_http_data_only")
+        all_params.append("_preload_content")
+        all_params.append("_request_timeout")
+
+        params = locals()
+        for key, val in six.iteritems(params["kwargs"]):
+            if key not in all_params:
+                raise TypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method list_organization_queues" % key
+                )
+            params[key] = val
+        del params["kwargs"]
+        # verify the required parameter 'owner' is set
+        if "owner" not in params or params["owner"] is None:
+            raise ValueError(
+                "Missing the required parameter `owner` when calling `list_organization_queues`"
+            )  # noqa: E501
+
+        collection_formats = {}
+
+        path_params = {}
+        if "owner" in params:
+            path_params["owner"] = params["owner"]  # noqa: E501
+
+        query_params = []
+        if "offset" in params:
+            query_params.append(("offset", params["offset"]))  # noqa: E501
+        if "limit" in params:
+            query_params.append(("limit", params["limit"]))  # noqa: E501
+        if "sort" in params:
+            query_params.append(("sort", params["sort"]))  # noqa: E501
+        if "query" in params:
+            query_params.append(("query", params["query"]))  # noqa: E501
+
+        header_params = {}
+
+        form_params = []
+        local_var_files = {}
+
+        body_params = None
+        # HTTP header `Accept`
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
+
+        # HTTP header `Content-Type`
+        header_params[
+            "Content-Type"
+        ] = self.api_client.select_header_content_type(  # noqa: E501
+            ["application/json"]
+        )  # noqa: E501
+
+        # Authentication setting
+        auth_settings = ["ApiKey"]  # noqa: E501
+
+        return self.api_client.call_api(
+            "/api/v1/orgs/{owner}/queues",
+            "GET",
+            path_params,
+            query_params,
+            header_params,
+            body=body_params,
+            post_params=form_params,
+            files=local_var_files,
+            response_type="V1ListQueuesResponse",  # noqa: E501
+            auth_settings=auth_settings,
+            async_req=params.get("async_req"),
+            _return_http_data_only=params.get("_return_http_data_only"),
+            _preload_content=params.get("_preload_content", True),
+            _request_timeout=params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
+
+    def list_queue_names(self, owner, agent, **kwargs):  # noqa: E501
+        """List runs  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -458,7 +708,7 @@ class QueuesV1Api(object):
             return data
 
     def list_queue_names_with_http_info(self, owner, agent, **kwargs):  # noqa: E501
-        """List bookmarked runs for user  # noqa: E501
+        """List runs  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -568,7 +818,7 @@ class QueuesV1Api(object):
         )
 
     def list_queues(self, owner, agent, **kwargs):  # noqa: E501
-        """List archived runs for user  # noqa: E501
+        """Create new run  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -596,7 +846,7 @@ class QueuesV1Api(object):
             return data
 
     def list_queues_with_http_info(self, owner, agent, **kwargs):  # noqa: E501
-        """List archived runs for user  # noqa: E501
+        """Create new run  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -706,7 +956,7 @@ class QueuesV1Api(object):
         )
 
     def patch_queue(self, owner, queue_agent, queue_uuid, body, **kwargs):  # noqa: E501
-        """Update run  # noqa: E501
+        """Delete run  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -736,7 +986,7 @@ class QueuesV1Api(object):
     def patch_queue_with_http_info(
         self, owner, queue_agent, queue_uuid, body, **kwargs
     ):  # noqa: E501
-        """Update run  # noqa: E501
+        """Delete run  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -845,7 +1095,7 @@ class QueuesV1Api(object):
     def update_queue(
         self, owner, queue_agent, queue_uuid, body, **kwargs
     ):  # noqa: E501
-        """Get run  # noqa: E501
+        """Patch run  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -875,7 +1125,7 @@ class QueuesV1Api(object):
     def update_queue_with_http_info(
         self, owner, queue_agent, queue_uuid, body, **kwargs
     ):  # noqa: E501
-        """Get run  # noqa: E501
+        """Patch run  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True

@@ -71,7 +71,7 @@
      */
 
     /**
-     * List runs
+     * Get run
      * @param {String} owner Owner of the namespace
      * @param {String} agent Agent that consumes the queue
      * @param {module:model/V1Queue} body Queue body
@@ -131,7 +131,7 @@
      */
 
     /**
-     * Patch run
+     * Delete runs
      * @param {String} owner Owner of the namespace
      * @param {String} agent Agent managing the resource
      * @param {String} uuid Unique integer identifier of the entity
@@ -191,7 +191,7 @@
      */
 
     /**
-     * Create new run
+     * Update run
      * @param {String} owner Owner of the namespace
      * @param {String} agent Agent managing the resource
      * @param {String} uuid Unique integer identifier of the entity
@@ -244,6 +244,120 @@
     }
 
     /**
+     * Callback function to receive the result of the listOrganizationQueueNames operation.
+     * @callback module:api/QueuesV1Api~listOrganizationQueueNamesCallback
+     * @param {String} error Error message, if any.
+     * @param {module:model/V1ListQueuesResponse} data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * List bookmarked runs for user
+     * @param {String} owner Owner of the namespace
+     * @param {Object} opts Optional parameters
+     * @param {Number} opts.offset Pagination offset.
+     * @param {Number} opts.limit Limit size.
+     * @param {String} opts.sort Sort to order the search.
+     * @param {String} opts.query Query filter the search search.
+     * @param {module:api/QueuesV1Api~listOrganizationQueueNamesCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link module:model/V1ListQueuesResponse}
+     */
+    this.listOrganizationQueueNames = function(owner, opts, callback) {
+      opts = opts || {};
+      var postBody = null;
+
+      // verify the required parameter 'owner' is set
+      if (owner === undefined || owner === null) {
+        throw new Error("Missing the required parameter 'owner' when calling listOrganizationQueueNames");
+      }
+
+
+      var pathParams = {
+        'owner': owner
+      };
+      var queryParams = {
+        'offset': opts['offset'],
+        'limit': opts['limit'],
+        'sort': opts['sort'],
+        'query': opts['query'],
+      };
+      var collectionQueryParams = {
+      };
+      var headerParams = {
+      };
+      var formParams = {
+      };
+
+      var authNames = ['ApiKey'];
+      var contentTypes = ['application/json'];
+      var accepts = ['application/json'];
+      var returnType = V1ListQueuesResponse;
+
+      return this.apiClient.callApi(
+        '/api/v1/orgs/{owner}/queues/names', 'GET',
+        pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
+
+    /**
+     * Callback function to receive the result of the listOrganizationQueues operation.
+     * @callback module:api/QueuesV1Api~listOrganizationQueuesCallback
+     * @param {String} error Error message, if any.
+     * @param {module:model/V1ListQueuesResponse} data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * List archived runs for user
+     * @param {String} owner Owner of the namespace
+     * @param {Object} opts Optional parameters
+     * @param {Number} opts.offset Pagination offset.
+     * @param {Number} opts.limit Limit size.
+     * @param {String} opts.sort Sort to order the search.
+     * @param {String} opts.query Query filter the search search.
+     * @param {module:api/QueuesV1Api~listOrganizationQueuesCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link module:model/V1ListQueuesResponse}
+     */
+    this.listOrganizationQueues = function(owner, opts, callback) {
+      opts = opts || {};
+      var postBody = null;
+
+      // verify the required parameter 'owner' is set
+      if (owner === undefined || owner === null) {
+        throw new Error("Missing the required parameter 'owner' when calling listOrganizationQueues");
+      }
+
+
+      var pathParams = {
+        'owner': owner
+      };
+      var queryParams = {
+        'offset': opts['offset'],
+        'limit': opts['limit'],
+        'sort': opts['sort'],
+        'query': opts['query'],
+      };
+      var collectionQueryParams = {
+      };
+      var headerParams = {
+      };
+      var formParams = {
+      };
+
+      var authNames = ['ApiKey'];
+      var contentTypes = ['application/json'];
+      var accepts = ['application/json'];
+      var returnType = V1ListQueuesResponse;
+
+      return this.apiClient.callApi(
+        '/api/v1/orgs/{owner}/queues', 'GET',
+        pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
+
+    /**
      * Callback function to receive the result of the listQueueNames operation.
      * @callback module:api/QueuesV1Api~listQueueNamesCallback
      * @param {String} error Error message, if any.
@@ -252,7 +366,7 @@
      */
 
     /**
-     * List bookmarked runs for user
+     * List runs
      * @param {String} owner Owner of the namespace
      * @param {String} agent Agent man managing the resource
      * @param {Object} opts Optional parameters
@@ -316,7 +430,7 @@
      */
 
     /**
-     * List archived runs for user
+     * Create new run
      * @param {String} owner Owner of the namespace
      * @param {String} agent Agent man managing the resource
      * @param {Object} opts Optional parameters
@@ -380,7 +494,7 @@
      */
 
     /**
-     * Update run
+     * Delete run
      * @param {String} owner Owner of the namespace
      * @param {String} queue_agent Agent
      * @param {String} queue_uuid UUID
@@ -447,7 +561,7 @@
      */
 
     /**
-     * Get run
+     * Patch run
      * @param {String} owner Owner of the namespace
      * @param {String} queue_agent Agent
      * @param {String} queue_uuid UUID

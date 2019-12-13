@@ -869,7 +869,7 @@
     },
     "/api/v1/orgs/{owner}/agents/{agent}/queues": {
       "get": {
-        "summary": "List archived runs for user",
+        "summary": "Create new run",
         "operationId": "ListQueues",
         "responses": {
           "200": {
@@ -942,7 +942,7 @@
         ]
       },
       "post": {
-        "summary": "List runs",
+        "summary": "Get run",
         "operationId": "CreateQueue",
         "responses": {
           "200": {
@@ -996,7 +996,7 @@
     },
     "/api/v1/orgs/{owner}/agents/{agent}/queues/names": {
       "get": {
-        "summary": "List bookmarked runs for user",
+        "summary": "List runs",
         "operationId": "ListQueueNames",
         "responses": {
           "200": {
@@ -1071,7 +1071,7 @@
     },
     "/api/v1/orgs/{owner}/agents/{agent}/queues/{uuid}": {
       "get": {
-        "summary": "Create new run",
+        "summary": "Update run",
         "operationId": "GetQueue",
         "responses": {
           "200": {
@@ -1121,7 +1121,7 @@
         ]
       },
       "delete": {
-        "summary": "Patch run",
+        "summary": "Delete runs",
         "operationId": "DeleteQueue",
         "responses": {
           "200": {
@@ -1170,7 +1170,7 @@
     },
     "/api/v1/orgs/{owner}/agents/{queue.agent}/queues/{queue.uuid}": {
       "put": {
-        "summary": "Get run",
+        "summary": "Patch run",
         "operationId": "UpdateQueue",
         "responses": {
           "200": {
@@ -1229,7 +1229,7 @@
         ]
       },
       "patch": {
-        "summary": "Update run",
+        "summary": "Delete run",
         "operationId": "PatchQueue",
         "responses": {
           "200": {
@@ -3534,6 +3534,142 @@
         ],
         "tags": [
           "OrganizationsV1"
+        ]
+      }
+    },
+    "/api/v1/orgs/{owner}/queues": {
+      "get": {
+        "summary": "List archived runs for user",
+        "operationId": "ListOrganizationQueues",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ListQueuesResponse"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "offset",
+            "description": "Pagination offset.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "limit",
+            "description": "Limit size.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "sort",
+            "description": "Sort to order the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "query",
+            "description": "Query filter the search search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "QueuesV1"
+        ]
+      }
+    },
+    "/api/v1/orgs/{owner}/queues/names": {
+      "get": {
+        "summary": "List bookmarked runs for user",
+        "operationId": "ListOrganizationQueueNames",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ListQueuesResponse"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "offset",
+            "description": "Pagination offset.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "limit",
+            "description": "Limit size.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "sort",
+            "description": "Sort to order the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "query",
+            "description": "Query filter the search search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "QueuesV1"
         ]
       }
     },

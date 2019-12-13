@@ -49,7 +49,7 @@ public class QueuesV1ApiTest {
 
     
     /**
-     * List runs
+     * Get run
      *
      * 
      *
@@ -67,7 +67,7 @@ public class QueuesV1ApiTest {
     }
     
     /**
-     * Patch run
+     * Delete runs
      *
      * 
      *
@@ -85,7 +85,7 @@ public class QueuesV1ApiTest {
     }
     
     /**
-     * Create new run
+     * Update run
      *
      * 
      *
@@ -111,6 +111,46 @@ public class QueuesV1ApiTest {
      *          if the Api call fails
      */
     @Test
+    public void listOrganizationQueueNamesTest() throws ApiException {
+        String owner = null;
+        Integer offset = null;
+        Integer limit = null;
+        String sort = null;
+        String query = null;
+        V1ListQueuesResponse response = api.listOrganizationQueueNames(owner, offset, limit, sort, query);
+
+        // TODO: test validations
+    }
+    
+    /**
+     * List archived runs for user
+     *
+     * 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void listOrganizationQueuesTest() throws ApiException {
+        String owner = null;
+        Integer offset = null;
+        Integer limit = null;
+        String sort = null;
+        String query = null;
+        V1ListQueuesResponse response = api.listOrganizationQueues(owner, offset, limit, sort, query);
+
+        // TODO: test validations
+    }
+    
+    /**
+     * List runs
+     *
+     * 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
     public void listQueueNamesTest() throws ApiException {
         String owner = null;
         String agent = null;
@@ -124,7 +164,7 @@ public class QueuesV1ApiTest {
     }
     
     /**
-     * List archived runs for user
+     * Create new run
      *
      * 
      *
@@ -145,7 +185,7 @@ public class QueuesV1ApiTest {
     }
     
     /**
-     * Update run
+     * Delete run
      *
      * 
      *
@@ -164,7 +204,7 @@ public class QueuesV1ApiTest {
     }
     
     /**
-     * Get run
+     * Patch run
      *
      * 
      *

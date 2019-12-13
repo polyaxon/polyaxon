@@ -1088,6 +1088,20 @@ service AgentsV1 {
 // Service to manage queues
 service QueuesV1 {
 
+    // List organization level queues names
+    rpc ListOrganizationQueueNames(OwnerResourceListRequest) returns (ListQueuesResponse) {
+        option (google.api.http) = {
+            get: "/api/v1/orgs/{owner}/queues/names"
+        };
+    }
+
+    // List organization level queues
+    rpc ListOrganizationQueues(OwnerResourceListRequest) returns (ListQueuesResponse) {
+        option (google.api.http) = {
+            get: "/api/v1/orgs/{owner}/queues"
+        };
+    }
+
     // List queues names
     rpc ListQueueNames(AgentResourceListRequest) returns (ListQueuesResponse) {
         option (google.api.http) = {

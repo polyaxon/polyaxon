@@ -207,13 +207,15 @@ Class | Method | HTTP request | Description
 *ProjectsV1Api* | [**updateProjectSettings**](docs/ProjectsV1Api.md#updateProjectSettings) | **PUT** /api/v1/{owner}/{project}/settings | Archive run
 *ProjectsV1Api* | [**updateProjectTeams**](docs/ProjectsV1Api.md#updateProjectTeams) | **PUT** /api/v1/{owner}/{project}/teams | Unbookmark run
 *ProjectsV1Api* | [**uploadProjectArtifact**](docs/ProjectsV1Api.md#uploadProjectArtifact) | **POST** /api/v1/{owner}/{project}/artifacts_stores/{uuid}/upload | Upload artifact to a store via project access
-*QueuesV1Api* | [**createQueue**](docs/QueuesV1Api.md#createQueue) | **POST** /api/v1/orgs/{owner}/agents/{agent}/queues | List runs
-*QueuesV1Api* | [**deleteQueue**](docs/QueuesV1Api.md#deleteQueue) | **DELETE** /api/v1/orgs/{owner}/agents/{agent}/queues/{uuid} | Patch run
-*QueuesV1Api* | [**getQueue**](docs/QueuesV1Api.md#getQueue) | **GET** /api/v1/orgs/{owner}/agents/{agent}/queues/{uuid} | Create new run
-*QueuesV1Api* | [**listQueueNames**](docs/QueuesV1Api.md#listQueueNames) | **GET** /api/v1/orgs/{owner}/agents/{agent}/queues/names | List bookmarked runs for user
-*QueuesV1Api* | [**listQueues**](docs/QueuesV1Api.md#listQueues) | **GET** /api/v1/orgs/{owner}/agents/{agent}/queues | List archived runs for user
-*QueuesV1Api* | [**patchQueue**](docs/QueuesV1Api.md#patchQueue) | **PATCH** /api/v1/orgs/{owner}/agents/{queue.agent}/queues/{queue.uuid} | Update run
-*QueuesV1Api* | [**updateQueue**](docs/QueuesV1Api.md#updateQueue) | **PUT** /api/v1/orgs/{owner}/agents/{queue.agent}/queues/{queue.uuid} | Get run
+*QueuesV1Api* | [**createQueue**](docs/QueuesV1Api.md#createQueue) | **POST** /api/v1/orgs/{owner}/agents/{agent}/queues | Get run
+*QueuesV1Api* | [**deleteQueue**](docs/QueuesV1Api.md#deleteQueue) | **DELETE** /api/v1/orgs/{owner}/agents/{agent}/queues/{uuid} | Delete runs
+*QueuesV1Api* | [**getQueue**](docs/QueuesV1Api.md#getQueue) | **GET** /api/v1/orgs/{owner}/agents/{agent}/queues/{uuid} | Update run
+*QueuesV1Api* | [**listOrganizationQueueNames**](docs/QueuesV1Api.md#listOrganizationQueueNames) | **GET** /api/v1/orgs/{owner}/queues/names | List bookmarked runs for user
+*QueuesV1Api* | [**listOrganizationQueues**](docs/QueuesV1Api.md#listOrganizationQueues) | **GET** /api/v1/orgs/{owner}/queues | List archived runs for user
+*QueuesV1Api* | [**listQueueNames**](docs/QueuesV1Api.md#listQueueNames) | **GET** /api/v1/orgs/{owner}/agents/{agent}/queues/names | List runs
+*QueuesV1Api* | [**listQueues**](docs/QueuesV1Api.md#listQueues) | **GET** /api/v1/orgs/{owner}/agents/{agent}/queues | Create new run
+*QueuesV1Api* | [**patchQueue**](docs/QueuesV1Api.md#patchQueue) | **PATCH** /api/v1/orgs/{owner}/agents/{queue.agent}/queues/{queue.uuid} | Delete run
+*QueuesV1Api* | [**updateQueue**](docs/QueuesV1Api.md#updateQueue) | **PUT** /api/v1/orgs/{owner}/agents/{queue.agent}/queues/{queue.uuid} | Patch run
 *RegistryAccessesV1Api* | [**createRegistryAccess**](docs/RegistryAccessesV1Api.md#createRegistryAccess) | **POST** /api/v1/orgs/{owner}/registry_accesses | List runs
 *RegistryAccessesV1Api* | [**deleteRegistryAccess**](docs/RegistryAccessesV1Api.md#deleteRegistryAccess) | **DELETE** /api/v1/orgs/{owner}/registry_accesses/{uuid} | Patch run
 *RegistryAccessesV1Api* | [**getRegistryAccess**](docs/RegistryAccessesV1Api.md#getRegistryAccess) | **GET** /api/v1/orgs/{owner}/registry_accesses/{uuid} | Create new run

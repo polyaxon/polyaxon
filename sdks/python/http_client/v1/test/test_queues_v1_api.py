@@ -48,49 +48,63 @@ class TestQueuesV1Api(unittest.TestCase):
     def test_create_queue(self):
         """Test case for create_queue
 
-        List runs  # noqa: E501
+        Get run  # noqa: E501
         """
         pass
 
     def test_delete_queue(self):
         """Test case for delete_queue
 
-        Patch run  # noqa: E501
+        Delete runs  # noqa: E501
         """
         pass
 
     def test_get_queue(self):
         """Test case for get_queue
 
-        Create new run  # noqa: E501
+        Update run  # noqa: E501
+        """
+        pass
+
+    def test_list_organization_queue_names(self):
+        """Test case for list_organization_queue_names
+
+        List bookmarked runs for user  # noqa: E501
+        """
+        pass
+
+    def test_list_organization_queues(self):
+        """Test case for list_organization_queues
+
+        List archived runs for user  # noqa: E501
         """
         pass
 
     def test_list_queue_names(self):
         """Test case for list_queue_names
 
-        List bookmarked runs for user  # noqa: E501
+        List runs  # noqa: E501
         """
         pass
 
     def test_list_queues(self):
         """Test case for list_queues
 
-        List archived runs for user  # noqa: E501
+        Create new run  # noqa: E501
         """
         pass
 
     def test_patch_queue(self):
         """Test case for patch_queue
 
-        Update run  # noqa: E501
+        Delete run  # noqa: E501
         """
         pass
 
     def test_update_queue(self):
         """Test case for update_queue
 
-        Get run  # noqa: E501
+        Patch run  # noqa: E501
         """
         pass
 

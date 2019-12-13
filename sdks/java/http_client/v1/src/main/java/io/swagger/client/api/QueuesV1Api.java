@@ -148,7 +148,7 @@ public class QueuesV1Api {
     }
 
     /**
-     * List runs
+     * Get run
      * 
      * @param owner Owner of the namespace (required)
      * @param agent Agent that consumes the queue (required)
@@ -162,7 +162,7 @@ public class QueuesV1Api {
     }
 
     /**
-     * List runs
+     * Get run
      * 
      * @param owner Owner of the namespace (required)
      * @param agent Agent that consumes the queue (required)
@@ -177,7 +177,7 @@ public class QueuesV1Api {
     }
 
     /**
-     * List runs (asynchronously)
+     * Get run (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
      * @param agent Agent that consumes the queue (required)
@@ -291,7 +291,7 @@ public class QueuesV1Api {
     }
 
     /**
-     * Patch run
+     * Delete runs
      * 
      * @param owner Owner of the namespace (required)
      * @param agent Agent managing the resource (required)
@@ -303,7 +303,7 @@ public class QueuesV1Api {
     }
 
     /**
-     * Patch run
+     * Delete runs
      * 
      * @param owner Owner of the namespace (required)
      * @param agent Agent managing the resource (required)
@@ -317,7 +317,7 @@ public class QueuesV1Api {
     }
 
     /**
-     * Patch run (asynchronously)
+     * Delete runs (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
      * @param agent Agent managing the resource (required)
@@ -430,7 +430,7 @@ public class QueuesV1Api {
     }
 
     /**
-     * Create new run
+     * Update run
      * 
      * @param owner Owner of the namespace (required)
      * @param agent Agent managing the resource (required)
@@ -444,7 +444,7 @@ public class QueuesV1Api {
     }
 
     /**
-     * Create new run
+     * Update run
      * 
      * @param owner Owner of the namespace (required)
      * @param agent Agent managing the resource (required)
@@ -459,7 +459,7 @@ public class QueuesV1Api {
     }
 
     /**
-     * Create new run (asynchronously)
+     * Update run (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
      * @param agent Agent managing the resource (required)
@@ -491,6 +491,300 @@ public class QueuesV1Api {
 
         com.squareup.okhttp.Call call = getQueueValidateBeforeCall(owner, agent, uuid, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1Queue>(){}.getType();
+        apiClient.executeAsync(call, localVarReturnType, callback);
+        return call;
+    }
+    /**
+     * Build call for listOrganizationQueueNames
+     * @param owner Owner of the namespace (required)
+     * @param offset Pagination offset. (optional)
+     * @param limit Limit size. (optional)
+     * @param sort Sort to order the search. (optional)
+     * @param query Query filter the search search. (optional)
+     * @param progressListener Progress listener
+     * @param progressRequestListener Progress request listener
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     */
+    public com.squareup.okhttp.Call listOrganizationQueueNamesCall(String owner, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        Object localVarPostBody = null;
+
+        // create path and map variables
+        String localVarPath = "/api/v1/orgs/{owner}/queues/names"
+            .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()));
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        if (offset != null)
+        localVarQueryParams.addAll(apiClient.parameterToPair("offset", offset));
+        if (limit != null)
+        localVarQueryParams.addAll(apiClient.parameterToPair("limit", limit));
+        if (sort != null)
+        localVarQueryParams.addAll(apiClient.parameterToPair("sort", sort));
+        if (query != null)
+        localVarQueryParams.addAll(apiClient.parameterToPair("query", query));
+
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
+
+        final String[] localVarContentTypes = {
+            "application/json"
+        };
+        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+        localVarHeaderParams.put("Content-Type", localVarContentType);
+
+        if(progressListener != null) {
+            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
+                @Override
+                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
+                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
+                    return originalResponse.newBuilder()
+                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
+                    .build();
+                }
+            });
+        }
+
+        String[] localVarAuthNames = new String[] { "ApiKey" };
+        return apiClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private com.squareup.okhttp.Call listOrganizationQueueNamesValidateBeforeCall(String owner, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        
+        // verify the required parameter 'owner' is set
+        if (owner == null) {
+            throw new ApiException("Missing the required parameter 'owner' when calling listOrganizationQueueNames(Async)");
+        }
+        
+
+        com.squareup.okhttp.Call call = listOrganizationQueueNamesCall(owner, offset, limit, sort, query, progressListener, progressRequestListener);
+        return call;
+
+    }
+
+    /**
+     * List bookmarked runs for user
+     * 
+     * @param owner Owner of the namespace (required)
+     * @param offset Pagination offset. (optional)
+     * @param limit Limit size. (optional)
+     * @param sort Sort to order the search. (optional)
+     * @param query Query filter the search search. (optional)
+     * @return V1ListQueuesResponse
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public V1ListQueuesResponse listOrganizationQueueNames(String owner, Integer offset, Integer limit, String sort, String query) throws ApiException {
+        ApiResponse<V1ListQueuesResponse> resp = listOrganizationQueueNamesWithHttpInfo(owner, offset, limit, sort, query);
+        return resp.getData();
+    }
+
+    /**
+     * List bookmarked runs for user
+     * 
+     * @param owner Owner of the namespace (required)
+     * @param offset Pagination offset. (optional)
+     * @param limit Limit size. (optional)
+     * @param sort Sort to order the search. (optional)
+     * @param query Query filter the search search. (optional)
+     * @return ApiResponse&lt;V1ListQueuesResponse&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public ApiResponse<V1ListQueuesResponse> listOrganizationQueueNamesWithHttpInfo(String owner, Integer offset, Integer limit, String sort, String query) throws ApiException {
+        com.squareup.okhttp.Call call = listOrganizationQueueNamesValidateBeforeCall(owner, offset, limit, sort, query, null, null);
+        Type localVarReturnType = new TypeToken<V1ListQueuesResponse>(){}.getType();
+        return apiClient.execute(call, localVarReturnType);
+    }
+
+    /**
+     * List bookmarked runs for user (asynchronously)
+     * 
+     * @param owner Owner of the namespace (required)
+     * @param offset Pagination offset. (optional)
+     * @param limit Limit size. (optional)
+     * @param sort Sort to order the search. (optional)
+     * @param query Query filter the search search. (optional)
+     * @param callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     */
+    public com.squareup.okhttp.Call listOrganizationQueueNamesAsync(String owner, Integer offset, Integer limit, String sort, String query, final ApiCallback<V1ListQueuesResponse> callback) throws ApiException {
+
+        ProgressResponseBody.ProgressListener progressListener = null;
+        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
+
+        if (callback != null) {
+            progressListener = new ProgressResponseBody.ProgressListener() {
+                @Override
+                public void update(long bytesRead, long contentLength, boolean done) {
+                    callback.onDownloadProgress(bytesRead, contentLength, done);
+                }
+            };
+
+            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
+                @Override
+                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
+                    callback.onUploadProgress(bytesWritten, contentLength, done);
+                }
+            };
+        }
+
+        com.squareup.okhttp.Call call = listOrganizationQueueNamesValidateBeforeCall(owner, offset, limit, sort, query, progressListener, progressRequestListener);
+        Type localVarReturnType = new TypeToken<V1ListQueuesResponse>(){}.getType();
+        apiClient.executeAsync(call, localVarReturnType, callback);
+        return call;
+    }
+    /**
+     * Build call for listOrganizationQueues
+     * @param owner Owner of the namespace (required)
+     * @param offset Pagination offset. (optional)
+     * @param limit Limit size. (optional)
+     * @param sort Sort to order the search. (optional)
+     * @param query Query filter the search search. (optional)
+     * @param progressListener Progress listener
+     * @param progressRequestListener Progress request listener
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     */
+    public com.squareup.okhttp.Call listOrganizationQueuesCall(String owner, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        Object localVarPostBody = null;
+
+        // create path and map variables
+        String localVarPath = "/api/v1/orgs/{owner}/queues"
+            .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()));
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        if (offset != null)
+        localVarQueryParams.addAll(apiClient.parameterToPair("offset", offset));
+        if (limit != null)
+        localVarQueryParams.addAll(apiClient.parameterToPair("limit", limit));
+        if (sort != null)
+        localVarQueryParams.addAll(apiClient.parameterToPair("sort", sort));
+        if (query != null)
+        localVarQueryParams.addAll(apiClient.parameterToPair("query", query));
+
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
+
+        final String[] localVarContentTypes = {
+            "application/json"
+        };
+        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+        localVarHeaderParams.put("Content-Type", localVarContentType);
+
+        if(progressListener != null) {
+            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
+                @Override
+                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
+                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
+                    return originalResponse.newBuilder()
+                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
+                    .build();
+                }
+            });
+        }
+
+        String[] localVarAuthNames = new String[] { "ApiKey" };
+        return apiClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private com.squareup.okhttp.Call listOrganizationQueuesValidateBeforeCall(String owner, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        
+        // verify the required parameter 'owner' is set
+        if (owner == null) {
+            throw new ApiException("Missing the required parameter 'owner' when calling listOrganizationQueues(Async)");
+        }
+        
+
+        com.squareup.okhttp.Call call = listOrganizationQueuesCall(owner, offset, limit, sort, query, progressListener, progressRequestListener);
+        return call;
+
+    }
+
+    /**
+     * List archived runs for user
+     * 
+     * @param owner Owner of the namespace (required)
+     * @param offset Pagination offset. (optional)
+     * @param limit Limit size. (optional)
+     * @param sort Sort to order the search. (optional)
+     * @param query Query filter the search search. (optional)
+     * @return V1ListQueuesResponse
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public V1ListQueuesResponse listOrganizationQueues(String owner, Integer offset, Integer limit, String sort, String query) throws ApiException {
+        ApiResponse<V1ListQueuesResponse> resp = listOrganizationQueuesWithHttpInfo(owner, offset, limit, sort, query);
+        return resp.getData();
+    }
+
+    /**
+     * List archived runs for user
+     * 
+     * @param owner Owner of the namespace (required)
+     * @param offset Pagination offset. (optional)
+     * @param limit Limit size. (optional)
+     * @param sort Sort to order the search. (optional)
+     * @param query Query filter the search search. (optional)
+     * @return ApiResponse&lt;V1ListQueuesResponse&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public ApiResponse<V1ListQueuesResponse> listOrganizationQueuesWithHttpInfo(String owner, Integer offset, Integer limit, String sort, String query) throws ApiException {
+        com.squareup.okhttp.Call call = listOrganizationQueuesValidateBeforeCall(owner, offset, limit, sort, query, null, null);
+        Type localVarReturnType = new TypeToken<V1ListQueuesResponse>(){}.getType();
+        return apiClient.execute(call, localVarReturnType);
+    }
+
+    /**
+     * List archived runs for user (asynchronously)
+     * 
+     * @param owner Owner of the namespace (required)
+     * @param offset Pagination offset. (optional)
+     * @param limit Limit size. (optional)
+     * @param sort Sort to order the search. (optional)
+     * @param query Query filter the search search. (optional)
+     * @param callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     */
+    public com.squareup.okhttp.Call listOrganizationQueuesAsync(String owner, Integer offset, Integer limit, String sort, String query, final ApiCallback<V1ListQueuesResponse> callback) throws ApiException {
+
+        ProgressResponseBody.ProgressListener progressListener = null;
+        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
+
+        if (callback != null) {
+            progressListener = new ProgressResponseBody.ProgressListener() {
+                @Override
+                public void update(long bytesRead, long contentLength, boolean done) {
+                    callback.onDownloadProgress(bytesRead, contentLength, done);
+                }
+            };
+
+            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
+                @Override
+                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
+                    callback.onUploadProgress(bytesWritten, contentLength, done);
+                }
+            };
+        }
+
+        com.squareup.okhttp.Call call = listOrganizationQueuesValidateBeforeCall(owner, offset, limit, sort, query, progressListener, progressRequestListener);
+        Type localVarReturnType = new TypeToken<V1ListQueuesResponse>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
@@ -578,7 +872,7 @@ public class QueuesV1Api {
     }
 
     /**
-     * List bookmarked runs for user
+     * List runs
      * 
      * @param owner Owner of the namespace (required)
      * @param agent Agent man managing the resource (required)
@@ -595,7 +889,7 @@ public class QueuesV1Api {
     }
 
     /**
-     * List bookmarked runs for user
+     * List runs
      * 
      * @param owner Owner of the namespace (required)
      * @param agent Agent man managing the resource (required)
@@ -613,7 +907,7 @@ public class QueuesV1Api {
     }
 
     /**
-     * List bookmarked runs for user (asynchronously)
+     * List runs (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
      * @param agent Agent man managing the resource (required)
@@ -735,7 +1029,7 @@ public class QueuesV1Api {
     }
 
     /**
-     * List archived runs for user
+     * Create new run
      * 
      * @param owner Owner of the namespace (required)
      * @param agent Agent man managing the resource (required)
@@ -752,7 +1046,7 @@ public class QueuesV1Api {
     }
 
     /**
-     * List archived runs for user
+     * Create new run
      * 
      * @param owner Owner of the namespace (required)
      * @param agent Agent man managing the resource (required)
@@ -770,7 +1064,7 @@ public class QueuesV1Api {
     }
 
     /**
-     * List archived runs for user (asynchronously)
+     * Create new run (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
      * @param agent Agent man managing the resource (required)
@@ -893,7 +1187,7 @@ public class QueuesV1Api {
     }
 
     /**
-     * Update run
+     * Delete run
      * 
      * @param owner Owner of the namespace (required)
      * @param queueAgent Agent (required)
@@ -908,7 +1202,7 @@ public class QueuesV1Api {
     }
 
     /**
-     * Update run
+     * Delete run
      * 
      * @param owner Owner of the namespace (required)
      * @param queueAgent Agent (required)
@@ -924,7 +1218,7 @@ public class QueuesV1Api {
     }
 
     /**
-     * Update run (asynchronously)
+     * Delete run (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
      * @param queueAgent Agent (required)
@@ -1045,7 +1339,7 @@ public class QueuesV1Api {
     }
 
     /**
-     * Get run
+     * Patch run
      * 
      * @param owner Owner of the namespace (required)
      * @param queueAgent Agent (required)
@@ -1060,7 +1354,7 @@ public class QueuesV1Api {
     }
 
     /**
-     * Get run
+     * Patch run
      * 
      * @param owner Owner of the namespace (required)
      * @param queueAgent Agent (required)
@@ -1076,7 +1370,7 @@ public class QueuesV1Api {
     }
 
     /**
-     * Get run (asynchronously)
+     * Patch run (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
      * @param queueAgent Agent (required)

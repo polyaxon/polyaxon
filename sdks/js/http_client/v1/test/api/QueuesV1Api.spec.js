@@ -150,6 +150,116 @@
           done();
         });
       });
+      describe('listOrganizationQueueNames', function() {
+        it('should call listOrganizationQueueNames successfully', function(done) {
+          // TODO: uncomment, update parameter values for listOrganizationQueueNames call and complete the assertions
+          /*
+          var owner = "owner_example";
+          var opts = {};
+          opts.offset = 56;
+          opts.limit = 56;
+          opts.sort = "sort_example";
+          opts.query = "query_example";
+
+          instance.listOrganizationQueueNames(owner, opts, function(error, data, response) {
+            if (error) {
+              done(error);
+              return;
+            }
+            // TODO: update response assertions
+            expect(data).to.be.a(PolyaxonSdk.V1ListQueuesResponse);
+            expect(data.count).to.be.a('number');
+            expect(data.count).to.be(0);
+            {
+              let dataCtr = data.results;
+              expect(dataCtr).to.be.an(Array);
+              expect(dataCtr).to.not.be.empty();
+              for (let p in dataCtr) {
+                let data = dataCtr[p];
+                expect(data).to.be.a(PolyaxonSdk.V1Queue);
+                expect(data.uuid).to.be.a('string');
+                expect(data.uuid).to.be("");
+                expect(data.agent).to.be.a('string');
+                expect(data.agent).to.be("");
+                expect(data.name).to.be.a('string');
+                expect(data.name).to.be("");
+                expect(data.priority).to.be.a('number');
+                expect(data.priority).to.be(0);
+                expect(data.concurrency).to.be.a('number');
+                expect(data.concurrency).to.be(0);
+                expect(data.created_at).to.be.a(Date);
+                expect(data.created_at).to.be(new Date());
+                expect(data.updated_at).to.be.a(Date);
+                expect(data.updated_at).to.be(new Date());
+              }
+            }
+            expect(data.previous).to.be.a('string');
+            expect(data.previous).to.be("");
+            expect(data.next).to.be.a('string');
+            expect(data.next).to.be("");
+
+            done();
+          });
+          */
+          // TODO: uncomment and complete method invocation above, then delete this line and the next:
+          done();
+        });
+      });
+      describe('listOrganizationQueues', function() {
+        it('should call listOrganizationQueues successfully', function(done) {
+          // TODO: uncomment, update parameter values for listOrganizationQueues call and complete the assertions
+          /*
+          var owner = "owner_example";
+          var opts = {};
+          opts.offset = 56;
+          opts.limit = 56;
+          opts.sort = "sort_example";
+          opts.query = "query_example";
+
+          instance.listOrganizationQueues(owner, opts, function(error, data, response) {
+            if (error) {
+              done(error);
+              return;
+            }
+            // TODO: update response assertions
+            expect(data).to.be.a(PolyaxonSdk.V1ListQueuesResponse);
+            expect(data.count).to.be.a('number');
+            expect(data.count).to.be(0);
+            {
+              let dataCtr = data.results;
+              expect(dataCtr).to.be.an(Array);
+              expect(dataCtr).to.not.be.empty();
+              for (let p in dataCtr) {
+                let data = dataCtr[p];
+                expect(data).to.be.a(PolyaxonSdk.V1Queue);
+                expect(data.uuid).to.be.a('string');
+                expect(data.uuid).to.be("");
+                expect(data.agent).to.be.a('string');
+                expect(data.agent).to.be("");
+                expect(data.name).to.be.a('string');
+                expect(data.name).to.be("");
+                expect(data.priority).to.be.a('number');
+                expect(data.priority).to.be(0);
+                expect(data.concurrency).to.be.a('number');
+                expect(data.concurrency).to.be(0);
+                expect(data.created_at).to.be.a(Date);
+                expect(data.created_at).to.be(new Date());
+                expect(data.updated_at).to.be.a(Date);
+                expect(data.updated_at).to.be(new Date());
+              }
+            }
+            expect(data.previous).to.be.a('string');
+            expect(data.previous).to.be("");
+            expect(data.next).to.be.a('string');
+            expect(data.next).to.be("");
+
+            done();
+          });
+          */
+          // TODO: uncomment and complete method invocation above, then delete this line and the next:
+          done();
+        });
+      });
       describe('listQueueNames', function() {
         it('should call listQueueNames successfully', function(done) {
           // TODO: uncomment, update parameter values for listQueueNames call and complete the assertions

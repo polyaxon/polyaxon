@@ -4,20 +4,22 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**createQueue**](QueuesV1Api.md#createQueue) | **POST** /api/v1/orgs/{owner}/agents/{agent}/queues | List runs
-[**deleteQueue**](QueuesV1Api.md#deleteQueue) | **DELETE** /api/v1/orgs/{owner}/agents/{agent}/queues/{uuid} | Patch run
-[**getQueue**](QueuesV1Api.md#getQueue) | **GET** /api/v1/orgs/{owner}/agents/{agent}/queues/{uuid} | Create new run
-[**listQueueNames**](QueuesV1Api.md#listQueueNames) | **GET** /api/v1/orgs/{owner}/agents/{agent}/queues/names | List bookmarked runs for user
-[**listQueues**](QueuesV1Api.md#listQueues) | **GET** /api/v1/orgs/{owner}/agents/{agent}/queues | List archived runs for user
-[**patchQueue**](QueuesV1Api.md#patchQueue) | **PATCH** /api/v1/orgs/{owner}/agents/{queue.agent}/queues/{queue.uuid} | Update run
-[**updateQueue**](QueuesV1Api.md#updateQueue) | **PUT** /api/v1/orgs/{owner}/agents/{queue.agent}/queues/{queue.uuid} | Get run
+[**createQueue**](QueuesV1Api.md#createQueue) | **POST** /api/v1/orgs/{owner}/agents/{agent}/queues | Get run
+[**deleteQueue**](QueuesV1Api.md#deleteQueue) | **DELETE** /api/v1/orgs/{owner}/agents/{agent}/queues/{uuid} | Delete runs
+[**getQueue**](QueuesV1Api.md#getQueue) | **GET** /api/v1/orgs/{owner}/agents/{agent}/queues/{uuid} | Update run
+[**listOrganizationQueueNames**](QueuesV1Api.md#listOrganizationQueueNames) | **GET** /api/v1/orgs/{owner}/queues/names | List bookmarked runs for user
+[**listOrganizationQueues**](QueuesV1Api.md#listOrganizationQueues) | **GET** /api/v1/orgs/{owner}/queues | List archived runs for user
+[**listQueueNames**](QueuesV1Api.md#listQueueNames) | **GET** /api/v1/orgs/{owner}/agents/{agent}/queues/names | List runs
+[**listQueues**](QueuesV1Api.md#listQueues) | **GET** /api/v1/orgs/{owner}/agents/{agent}/queues | Create new run
+[**patchQueue**](QueuesV1Api.md#patchQueue) | **PATCH** /api/v1/orgs/{owner}/agents/{queue.agent}/queues/{queue.uuid} | Delete run
+[**updateQueue**](QueuesV1Api.md#updateQueue) | **PUT** /api/v1/orgs/{owner}/agents/{queue.agent}/queues/{queue.uuid} | Patch run
 
 
 <a name="createQueue"></a>
 # **createQueue**
 > V1Agent createQueue(owner, agent, body)
 
-List runs
+Get run
 
 ### Example
 ```java
@@ -74,7 +76,7 @@ Name | Type | Description  | Notes
 # **deleteQueue**
 > deleteQueue(owner, agent, uuid)
 
-Patch run
+Delete runs
 
 ### Example
 ```java
@@ -130,7 +132,7 @@ null (empty response body)
 # **getQueue**
 > V1Queue getQueue(owner, agent, uuid)
 
-Create new run
+Update run
 
 ### Example
 ```java
@@ -183,11 +185,133 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
+<a name="listOrganizationQueueNames"></a>
+# **listOrganizationQueueNames**
+> V1ListQueuesResponse listOrganizationQueueNames(owner, offset, limit, sort, query)
+
+List bookmarked runs for user
+
+### Example
+```java
+// Import classes:
+//import io.swagger.client.ApiClient;
+//import io.swagger.client.ApiException;
+//import io.swagger.client.Configuration;
+//import io.swagger.client.auth.*;
+//import io.swagger.client.api.QueuesV1Api;
+
+ApiClient defaultClient = Configuration.getDefaultApiClient();
+
+// Configure API key authorization: ApiKey
+ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+ApiKey.setApiKey("YOUR API KEY");
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.setApiKeyPrefix("Token");
+
+QueuesV1Api apiInstance = new QueuesV1Api();
+String owner = "owner_example"; // String | Owner of the namespace
+Integer offset = 56; // Integer | Pagination offset.
+Integer limit = 56; // Integer | Limit size.
+String sort = "sort_example"; // String | Sort to order the search.
+String query = "query_example"; // String | Query filter the search search.
+try {
+    V1ListQueuesResponse result = apiInstance.listOrganizationQueueNames(owner, offset, limit, sort, query);
+    System.out.println(result);
+} catch (ApiException e) {
+    System.err.println("Exception when calling QueuesV1Api#listOrganizationQueueNames");
+    e.printStackTrace();
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **String**| Owner of the namespace |
+ **offset** | **Integer**| Pagination offset. | [optional]
+ **limit** | **Integer**| Limit size. | [optional]
+ **sort** | **String**| Sort to order the search. | [optional]
+ **query** | **String**| Query filter the search search. | [optional]
+
+### Return type
+
+[**V1ListQueuesResponse**](V1ListQueuesResponse.md)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+<a name="listOrganizationQueues"></a>
+# **listOrganizationQueues**
+> V1ListQueuesResponse listOrganizationQueues(owner, offset, limit, sort, query)
+
+List archived runs for user
+
+### Example
+```java
+// Import classes:
+//import io.swagger.client.ApiClient;
+//import io.swagger.client.ApiException;
+//import io.swagger.client.Configuration;
+//import io.swagger.client.auth.*;
+//import io.swagger.client.api.QueuesV1Api;
+
+ApiClient defaultClient = Configuration.getDefaultApiClient();
+
+// Configure API key authorization: ApiKey
+ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+ApiKey.setApiKey("YOUR API KEY");
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.setApiKeyPrefix("Token");
+
+QueuesV1Api apiInstance = new QueuesV1Api();
+String owner = "owner_example"; // String | Owner of the namespace
+Integer offset = 56; // Integer | Pagination offset.
+Integer limit = 56; // Integer | Limit size.
+String sort = "sort_example"; // String | Sort to order the search.
+String query = "query_example"; // String | Query filter the search search.
+try {
+    V1ListQueuesResponse result = apiInstance.listOrganizationQueues(owner, offset, limit, sort, query);
+    System.out.println(result);
+} catch (ApiException e) {
+    System.err.println("Exception when calling QueuesV1Api#listOrganizationQueues");
+    e.printStackTrace();
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **String**| Owner of the namespace |
+ **offset** | **Integer**| Pagination offset. | [optional]
+ **limit** | **Integer**| Limit size. | [optional]
+ **sort** | **String**| Sort to order the search. | [optional]
+ **query** | **String**| Query filter the search search. | [optional]
+
+### Return type
+
+[**V1ListQueuesResponse**](V1ListQueuesResponse.md)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
 <a name="listQueueNames"></a>
 # **listQueueNames**
 > V1ListQueuesResponse listQueueNames(owner, agent, offset, limit, sort, query)
 
-List bookmarked runs for user
+List runs
 
 ### Example
 ```java
@@ -250,7 +374,7 @@ Name | Type | Description  | Notes
 # **listQueues**
 > V1ListQueuesResponse listQueues(owner, agent, offset, limit, sort, query)
 
-List archived runs for user
+Create new run
 
 ### Example
 ```java
@@ -313,7 +437,7 @@ Name | Type | Description  | Notes
 # **patchQueue**
 > V1Queue patchQueue(owner, queueAgent, queueUuid, body)
 
-Update run
+Delete run
 
 ### Example
 ```java
@@ -372,7 +496,7 @@ Name | Type | Description  | Notes
 # **updateQueue**
 > V1Queue updateQueue(owner, queueAgent, queueUuid, body)
 
-Get run
+Patch run
 
 ### Example
 ```java

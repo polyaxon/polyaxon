@@ -41,7 +41,7 @@ type Client struct {
 }
 
 /*
-CreateQueue lists runs
+CreateQueue gets run
 */
 func (a *Client) CreateQueue(params *CreateQueueParams, authInfo runtime.ClientAuthInfoWriter) (*CreateQueueOK, *CreateQueueNoContent, error) {
 	// TODO: Validate the params before sending
@@ -77,7 +77,7 @@ func (a *Client) CreateQueue(params *CreateQueueParams, authInfo runtime.ClientA
 }
 
 /*
-DeleteQueue patches run
+DeleteQueue deletes runs
 */
 func (a *Client) DeleteQueue(params *DeleteQueueParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteQueueOK, *DeleteQueueNoContent, error) {
 	// TODO: Validate the params before sending
@@ -113,7 +113,7 @@ func (a *Client) DeleteQueue(params *DeleteQueueParams, authInfo runtime.ClientA
 }
 
 /*
-GetQueue creates new run
+GetQueue updates run
 */
 func (a *Client) GetQueue(params *GetQueueParams, authInfo runtime.ClientAuthInfoWriter) (*GetQueueOK, *GetQueueNoContent, error) {
 	// TODO: Validate the params before sending
@@ -149,7 +149,79 @@ func (a *Client) GetQueue(params *GetQueueParams, authInfo runtime.ClientAuthInf
 }
 
 /*
-ListQueueNames lists bookmarked runs for user
+ListOrganizationQueueNames lists bookmarked runs for user
+*/
+func (a *Client) ListOrganizationQueueNames(params *ListOrganizationQueueNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListOrganizationQueueNamesOK, *ListOrganizationQueueNamesNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewListOrganizationQueueNamesParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "ListOrganizationQueueNames",
+		Method:             "GET",
+		PathPattern:        "/api/v1/orgs/{owner}/queues/names",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &ListOrganizationQueueNamesReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *ListOrganizationQueueNamesOK:
+		return value, nil, nil
+	case *ListOrganizationQueueNamesNoContent:
+		return nil, value, nil
+	}
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for queues_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+ListOrganizationQueues lists archived runs for user
+*/
+func (a *Client) ListOrganizationQueues(params *ListOrganizationQueuesParams, authInfo runtime.ClientAuthInfoWriter) (*ListOrganizationQueuesOK, *ListOrganizationQueuesNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewListOrganizationQueuesParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "ListOrganizationQueues",
+		Method:             "GET",
+		PathPattern:        "/api/v1/orgs/{owner}/queues",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &ListOrganizationQueuesReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *ListOrganizationQueuesOK:
+		return value, nil, nil
+	case *ListOrganizationQueuesNoContent:
+		return nil, value, nil
+	}
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for queues_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+ListQueueNames lists runs
 */
 func (a *Client) ListQueueNames(params *ListQueueNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListQueueNamesOK, *ListQueueNamesNoContent, error) {
 	// TODO: Validate the params before sending
@@ -185,7 +257,7 @@ func (a *Client) ListQueueNames(params *ListQueueNamesParams, authInfo runtime.C
 }
 
 /*
-ListQueues lists archived runs for user
+ListQueues creates new run
 */
 func (a *Client) ListQueues(params *ListQueuesParams, authInfo runtime.ClientAuthInfoWriter) (*ListQueuesOK, *ListQueuesNoContent, error) {
 	// TODO: Validate the params before sending
@@ -221,7 +293,7 @@ func (a *Client) ListQueues(params *ListQueuesParams, authInfo runtime.ClientAut
 }
 
 /*
-PatchQueue updates run
+PatchQueue deletes run
 */
 func (a *Client) PatchQueue(params *PatchQueueParams, authInfo runtime.ClientAuthInfoWriter) (*PatchQueueOK, *PatchQueueNoContent, error) {
 	// TODO: Validate the params before sending
@@ -257,7 +329,7 @@ func (a *Client) PatchQueue(params *PatchQueueParams, authInfo runtime.ClientAut
 }
 
 /*
-UpdateQueue gets run
+UpdateQueue patches run
 */
 func (a *Client) UpdateQueue(params *UpdateQueueParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateQueueOK, *UpdateQueueNoContent, error) {
 	// TODO: Validate the params before sending

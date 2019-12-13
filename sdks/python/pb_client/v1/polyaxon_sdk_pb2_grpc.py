@@ -2567,6 +2567,16 @@ class QueuesV1Stub(object):
     Args:
       channel: A grpc.Channel.
     """
+    self.ListOrganizationQueueNames = channel.unary_unary(
+        '/v1.QueuesV1/ListOrganizationQueueNames',
+        request_serializer=v1_dot_base__pb2.OwnerResourceListRequest.SerializeToString,
+        response_deserializer=v1_dot_agent__pb2.ListQueuesResponse.FromString,
+        )
+    self.ListOrganizationQueues = channel.unary_unary(
+        '/v1.QueuesV1/ListOrganizationQueues',
+        request_serializer=v1_dot_base__pb2.OwnerResourceListRequest.SerializeToString,
+        response_deserializer=v1_dot_agent__pb2.ListQueuesResponse.FromString,
+        )
     self.ListQueueNames = channel.unary_unary(
         '/v1.QueuesV1/ListQueueNames',
         request_serializer=v1_dot_base__pb2.AgentResourceListRequest.SerializeToString,
@@ -2607,6 +2617,20 @@ class QueuesV1Stub(object):
 class QueuesV1Servicer(object):
   """Service to manage queues
   """
+
+  def ListOrganizationQueueNames(self, request, context):
+    """List organization level queues names
+    """
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def ListOrganizationQueues(self, request, context):
+    """List organization level queues
+    """
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
 
   def ListQueueNames(self, request, context):
     """List queues names
@@ -2660,6 +2684,16 @@ class QueuesV1Servicer(object):
 
 def add_QueuesV1Servicer_to_server(servicer, server):
   rpc_method_handlers = {
+      'ListOrganizationQueueNames': grpc.unary_unary_rpc_method_handler(
+          servicer.ListOrganizationQueueNames,
+          request_deserializer=v1_dot_base__pb2.OwnerResourceListRequest.FromString,
+          response_serializer=v1_dot_agent__pb2.ListQueuesResponse.SerializeToString,
+      ),
+      'ListOrganizationQueues': grpc.unary_unary_rpc_method_handler(
+          servicer.ListOrganizationQueues,
+          request_deserializer=v1_dot_base__pb2.OwnerResourceListRequest.FromString,
+          response_serializer=v1_dot_agent__pb2.ListQueuesResponse.SerializeToString,
+      ),
       'ListQueueNames': grpc.unary_unary_rpc_method_handler(
           servicer.ListQueueNames,
           request_deserializer=v1_dot_base__pb2.AgentResourceListRequest.FromString,

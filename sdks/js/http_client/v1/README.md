@@ -223,13 +223,15 @@ Class | Method | HTTP request | Description
 *PolyaxonSdk.ProjectsV1Api* | [**updateProjectSettings**](docs/ProjectsV1Api.md#updateProjectSettings) | **PUT** /api/v1/{owner}/{project}/settings | Archive run
 *PolyaxonSdk.ProjectsV1Api* | [**updateProjectTeams**](docs/ProjectsV1Api.md#updateProjectTeams) | **PUT** /api/v1/{owner}/{project}/teams | Unbookmark run
 *PolyaxonSdk.ProjectsV1Api* | [**uploadProjectArtifact**](docs/ProjectsV1Api.md#uploadProjectArtifact) | **POST** /api/v1/{owner}/{project}/artifacts_stores/{uuid}/upload | Upload artifact to a store via project access
-*PolyaxonSdk.QueuesV1Api* | [**createQueue**](docs/QueuesV1Api.md#createQueue) | **POST** /api/v1/orgs/{owner}/agents/{agent}/queues | List runs
-*PolyaxonSdk.QueuesV1Api* | [**deleteQueue**](docs/QueuesV1Api.md#deleteQueue) | **DELETE** /api/v1/orgs/{owner}/agents/{agent}/queues/{uuid} | Patch run
-*PolyaxonSdk.QueuesV1Api* | [**getQueue**](docs/QueuesV1Api.md#getQueue) | **GET** /api/v1/orgs/{owner}/agents/{agent}/queues/{uuid} | Create new run
-*PolyaxonSdk.QueuesV1Api* | [**listQueueNames**](docs/QueuesV1Api.md#listQueueNames) | **GET** /api/v1/orgs/{owner}/agents/{agent}/queues/names | List bookmarked runs for user
-*PolyaxonSdk.QueuesV1Api* | [**listQueues**](docs/QueuesV1Api.md#listQueues) | **GET** /api/v1/orgs/{owner}/agents/{agent}/queues | List archived runs for user
-*PolyaxonSdk.QueuesV1Api* | [**patchQueue**](docs/QueuesV1Api.md#patchQueue) | **PATCH** /api/v1/orgs/{owner}/agents/{queue.agent}/queues/{queue.uuid} | Update run
-*PolyaxonSdk.QueuesV1Api* | [**updateQueue**](docs/QueuesV1Api.md#updateQueue) | **PUT** /api/v1/orgs/{owner}/agents/{queue.agent}/queues/{queue.uuid} | Get run
+*PolyaxonSdk.QueuesV1Api* | [**createQueue**](docs/QueuesV1Api.md#createQueue) | **POST** /api/v1/orgs/{owner}/agents/{agent}/queues | Get run
+*PolyaxonSdk.QueuesV1Api* | [**deleteQueue**](docs/QueuesV1Api.md#deleteQueue) | **DELETE** /api/v1/orgs/{owner}/agents/{agent}/queues/{uuid} | Delete runs
+*PolyaxonSdk.QueuesV1Api* | [**getQueue**](docs/QueuesV1Api.md#getQueue) | **GET** /api/v1/orgs/{owner}/agents/{agent}/queues/{uuid} | Update run
+*PolyaxonSdk.QueuesV1Api* | [**listOrganizationQueueNames**](docs/QueuesV1Api.md#listOrganizationQueueNames) | **GET** /api/v1/orgs/{owner}/queues/names | List bookmarked runs for user
+*PolyaxonSdk.QueuesV1Api* | [**listOrganizationQueues**](docs/QueuesV1Api.md#listOrganizationQueues) | **GET** /api/v1/orgs/{owner}/queues | List archived runs for user
+*PolyaxonSdk.QueuesV1Api* | [**listQueueNames**](docs/QueuesV1Api.md#listQueueNames) | **GET** /api/v1/orgs/{owner}/agents/{agent}/queues/names | List runs
+*PolyaxonSdk.QueuesV1Api* | [**listQueues**](docs/QueuesV1Api.md#listQueues) | **GET** /api/v1/orgs/{owner}/agents/{agent}/queues | Create new run
+*PolyaxonSdk.QueuesV1Api* | [**patchQueue**](docs/QueuesV1Api.md#patchQueue) | **PATCH** /api/v1/orgs/{owner}/agents/{queue.agent}/queues/{queue.uuid} | Delete run
+*PolyaxonSdk.QueuesV1Api* | [**updateQueue**](docs/QueuesV1Api.md#updateQueue) | **PUT** /api/v1/orgs/{owner}/agents/{queue.agent}/queues/{queue.uuid} | Patch run
 *PolyaxonSdk.RegistryAccessesV1Api* | [**createRegistryAccess**](docs/RegistryAccessesV1Api.md#createRegistryAccess) | **POST** /api/v1/orgs/{owner}/registry_accesses | List runs
 *PolyaxonSdk.RegistryAccessesV1Api* | [**deleteRegistryAccess**](docs/RegistryAccessesV1Api.md#deleteRegistryAccess) | **DELETE** /api/v1/orgs/{owner}/registry_accesses/{uuid} | Patch run
 *PolyaxonSdk.RegistryAccessesV1Api* | [**getRegistryAccess**](docs/RegistryAccessesV1Api.md#getRegistryAccess) | **GET** /api/v1/orgs/{owner}/registry_accesses/{uuid} | Create new run
