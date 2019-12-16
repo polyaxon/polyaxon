@@ -1,0 +1,35 @@
+---
+version: 1
+
+kind: group
+
+framework: scikit-learn
+
+tags: [examples]
+
+hptuning:
+  concurrency: 5
+  random_search:
+    n_experiments: 50
+
+  matrix:
+    l1_ratio:
+      uniform: 0:1
+
+declarations:
+  loss: log
+  penalty: elasticnet
+  max_iter: 1000
+  tol: 0.001
+
+build:
+  image: python:2.7
+  build_steps:
+    - pip install --no-cache-dir -r requirements.txt
+
+run:
+  cmd: python -u model.py --loss={{ loss }} \
+                          --penalty={{ penalty }} \
+                          --l1_ratio={{ l1_ratio }} \
+                          --max_iter={{ max_iter }} \
+                          --tol={{ tol }}

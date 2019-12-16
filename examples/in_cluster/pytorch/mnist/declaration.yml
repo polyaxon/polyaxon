@@ -1,0 +1,10 @@
+---
+version: 1
+
+declarations:
+  batch_size_train: 64
+  batch_size_test: 1000
+  epochs: 10
+  lr: 0.005
+  train_steps: 400
+  momentum: 0.06
