@@ -1,0 +1,15 @@
+---
+version: 1
+
+kind: build
+
+backend: kaniko
+
+image: tensorflow/tensorflow:1.4.1-py3
+
+build_steps:
+  - pip3 install --no-cache-dir -U polyaxon-client==0.5.5
+
+lang_env: 'C.UTF-8'
+
+nocache: true

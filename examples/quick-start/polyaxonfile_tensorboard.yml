@@ -1,0 +1,7 @@
+---
+version: 1
+
+kind: tensorboard
+
+build:
+  image: tensorflow/tensorflow:1.6.0-py3

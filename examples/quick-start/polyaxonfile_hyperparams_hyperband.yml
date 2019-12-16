@@ -1,0 +1,66 @@
+---
+version: 1
+
+kind: group
+
+framework: tensorflow
+
+inputs:
+  - name: batch_size
+    is_optional: true
+    default: 128
+    type: int
+  - name: num_steps
+    is_optional: true
+    default: 300
+    type: int
+  - name: learning_rate
+    is_optional: true
+    default: 0.001
+    type: float
+  - name: dropout
+    is_optional: true
+    default: 0.25
+    type: float
+  - name: num_epochs
+    is_optional: true
+    default: 1
+    type: int
+  - name: activation
+    is_optional: true
+    default: relu
+    type: str
+
+hptuning:
+  concurrency: 20
+  hyperband:
+    max_iter: 500
+    eta: 3
+    resource:
+      name: num_steps
+      type: int
+    metric:
+      name: loss
+      optimization: minimize
+    resume: False
+
+  matrix:
+    learning_rate:
+      uniform: [0, 0.01]
+    dropout:
+      values: [0.25, 0.3]
+    activation:
+      pvalues: [[relu, 0.1], [sigmoid, 0.8]]
+
+build:
+  image: tensorflow/tensorflow:1.4.1-py3
+  build_steps:
+    - pip3 install --no-cache-dir -U polyaxon-client[gcs]==0.5.5
+
+run:
+  cmd:  python3 model.py --batch_size={{ batch_size }} \
+                         --num_steps={{ num_steps }} \
+                         --learning_rate={{ learning_rate }} \
+                         --dropout={{ dropout }} \
+                         --num_epochs={{ num_epochs }} \
+                         --activation={{ activation }}

@@ -1,0 +1,12 @@
+---
+version: 1
+#
+#environment:
+#  outputs:
+#    jobs: [1]
+
+build:
+  build_steps:
+    - apt-get -y update && apt-get -y install git
+    - pip3 install --no-cache-dir -U git+https://github.com/polyaxon/polyaxon-client.git@master#egg=polyaxon-client
+    - pip3 install --no-cache-dir -U git+https://github.com/polyaxon/polyaxon-schemas.git@master#egg=polyaxon-schemas

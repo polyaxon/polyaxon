@@ -14,10 +14,11 @@ If you don't see something you need, Don't hesitate to contact us.
 
 ## Examples Structure
 
-This repository has 2 main directories containing examples for running experiments in-cluster, i.e. scheduled and managed by a Polyaxon Deployment, 
-as well as experiment running on different platforms and tracked by Polyaxon, i.e. experiments running on laptops, spark, other platforms.
+This repository has 3 main directories containing examples for running experiments in-cluster, i.e. scheduled and managed by a Polyaxon Deployment, 
+as well as experiment running on different platforms and tracked by Polyaxon, i.e. experiments running on laptops, spark, other platforms, and a quick start.
 
 The examples have a comment `# Polyaxon` to show what is added to a raw code to enable the lightweight Polyaxon integration.
+
 
 ### Getting Started
 
@@ -28,6 +29,19 @@ If you are new to Polyaxon we recommend reading our [quick-start](https://docs.p
 Please check our [documentation](https://docs.polyaxon.com) to learn about how to deploy Polyaxon.
 
 All examples (in-cluster and on other examples running on other platforms) require our [client](https://github.com/polyaxon/polyaxon-client) to track and add instrumentation to the experiments.
+
+### polyaxon-quick-start
+
+This example is used for the quick start [section in the documentation](https://docs.polyaxon.com/concepts/quick_start/)
+
+> If you are looking for the quick-start example used for v0.4, please go to the [v0.4 branch](https://github.com/polyaxon/polyaxon-quick-start/tree/v0.4) 
+
+This example also includes different `polyaxonfiles`:
+
+   * A simple polyaxonfile for running the default values in the model.py.
+   * A polyaxonfile that defines the params in the declaration sections.
+   * A polyaxonfile that defines declarations and a matrix, and will generate an experiment group for hyperparameters search.
+
  
 ### in-cluster Examples
 

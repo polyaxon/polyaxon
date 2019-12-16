@@ -1,0 +1,12 @@
+---
+version: 1
+
+kind: notebook
+
+
+backend: lab
+
+build:
+  image: python:3
+  build_steps:
+    - pip3 install jupyterlab

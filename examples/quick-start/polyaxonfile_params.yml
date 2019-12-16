@@ -1,0 +1,25 @@
+---
+version: 1
+
+kind: experiment
+
+params:
+  batch_size: 128
+  num_steps: 500
+  learning_rate: 0.001
+  dropout: 0.25
+  num_epochs: 1
+  activation: relu
+
+build:
+  image: tensorflow/tensorflow:1.4.1-py3
+  build_steps:
+    - pip3 install --no-cache-dir -U polyaxon-client==0.5.5
+
+run:
+  cmd:  python3 model.py --batch_size={{ batch_size }} \
+                         --num_steps={{ num_steps }} \
+                         --learning_rate={{ learning_rate }} \
+                         --dropout={{ dropout }} \
+                         --num_epochs={{ num_epochs }} \
+                         --activation={{ activation }}

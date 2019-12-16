@@ -1,0 +1,14 @@
+---
+version: 1
+
+kind: experiment
+
+framework: tensorflow
+
+build:
+  image: tensorflow/tensorflow:1.4.1-py3
+  build_steps:
+    - pip3 install --no-cache-dir -U polyaxon-client[gcs]==0.5.5
+
+run:
+  cmd:  python3 -u model.py  # Use default params

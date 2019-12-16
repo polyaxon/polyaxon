@@ -1,0 +1,37 @@
+---
+version: 1
+
+kind: group
+
+framework: tensorflow
+
+hptuning:
+  concurrency: 5
+  random_search:
+    n_experiments: 10
+
+  matrix:
+    learning_rate:
+      linspace: 0.001:0.1:5
+    dropout:
+      values: [0.25, 0.3]
+    activation:
+      values: [relu, sigmoid]
+
+params:
+  batch_size: 128
+  num_steps: 500
+  num_epochs: 1
+
+build:
+  image: tensorflow/tensorflow:1.4.1-py3
+  build_steps:
+    - pip3 install --no-cache-dir -U polyaxon-client==0.5.5
+
+run:
+  cmd:  python3 model.py --batch_size={{ batch_size }} \
+                         --num_steps={{ num_steps }} \
+                         --learning_rate={{ learning_rate }} \
+                         --dropout={{ dropout }} \
+                         --num_epochs={{ num_epochs }} \
+                         --activation={{ activation }}

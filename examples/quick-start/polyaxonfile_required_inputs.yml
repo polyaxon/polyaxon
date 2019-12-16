@@ -1,0 +1,40 @@
+---
+version: 1
+
+kind: experiment
+
+inputs:
+  - name: batch_size
+    description: batch size
+    is_optional: true
+    default: 128
+    type: int
+  - name: num_steps
+    is_optional: true
+    default: 500
+    type: int
+  - name: dropout
+    is_optional: true
+    default: 0.25
+    type: float
+  - name: num_epochs
+    is_optional: true
+    default: 1
+    type: int
+  - name: learning_rate  # required
+    type: float
+  - name: activation  # required
+    type: str
+
+build:
+  image: tensorflow/tensorflow:1.4.1-py3
+  build_steps:
+    - pip3 install --no-cache-dir -U polyaxon-client==0.5.5
+
+run:
+  cmd:  python3 model.py --batch_size={{ batch_size }} \
+                         --num_steps={{ num_steps }} \
+                         --learning_rate={{ learning_rate }} \
+                         --dropout={{ dropout }} \
+                         --num_epochs={{ num_epochs }} \
+                         --activation={{ activation }}
