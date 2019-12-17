@@ -588,7 +588,7 @@ var uuid = "uuid_example"; // String | Unique integer identifier of the entity
 var opts = { 
   'path': "path_example", // String | Artifact filepath.
   'step': 56, // Number | Artifact logging step.
-  'type': "type_example" // String | Artifact type.
+  'kind': "kind_example" // String | Artifact kind.
 };
 
 var callback = function(error, data, response) {
@@ -610,7 +610,7 @@ Name | Type | Description  | Notes
  **uuid** | **String**| Unique integer identifier of the entity | 
  **path** | **String**| Artifact filepath. | [optional] 
  **step** | **Number**| Artifact logging step. | [optional] 
- **type** | **String**| Artifact type. | [optional] 
+ **kind** | **String**| Artifact kind. | [optional] 
 
 ### Return type
 
@@ -718,7 +718,7 @@ var uuid = "uuid_example"; // String | Unique integer identifier of the entity
 var opts = { 
   'path': "path_example", // String | Artifact filepath.
   'step': 56, // Number | Artifact logging step.
-  'type': "type_example" // String | Artifact type.
+  'kind': "kind_example" // String | Artifact kind.
 };
 
 var callback = function(error, data, response) {
@@ -740,7 +740,7 @@ Name | Type | Description  | Notes
  **uuid** | **String**| Unique integer identifier of the entity | 
  **path** | **String**| Artifact filepath. | [optional] 
  **step** | **Number**| Artifact logging step. | [optional] 
- **type** | **String**| Artifact type. | [optional] 
+ **kind** | **String**| Artifact kind. | [optional] 
 
 ### Return type
 

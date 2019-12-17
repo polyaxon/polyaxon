@@ -27,8 +27,9 @@ import pytest
 from marshmallow import ValidationError
 from tests.utils import assert_equal_dict
 
-from polyaxon.schemas.polyflow.io import IOConfig, IOTypes
+from polyaxon.schemas.polyflow.io import IOConfig
 from polyaxon.schemas.polyflow.params import ParamSpec, get_param
+from polyaxon.types import types
 
 
 @pytest.mark.polyflow_mark
@@ -44,25 +45,17 @@ class TestIOConfigs(TestCase):
 
     def test_wrong_io_config_default(self):
         with self.assertRaises(ValidationError):
-            IOConfig.from_dict(
-                {"name": "input1", "type": IOTypes.FLOAT, "value": "foo"}
-            )
+            IOConfig.from_dict({"name": "input1", "type": types.FLOAT, "value": "foo"})
 
         with self.assertRaises(ValidationError):
-            IOConfig.from_dict(
-                {"name": "input1", "type": IOTypes.GCS_PATH, "value": 234}
-            )
+            IOConfig.from_dict({"name": "input1", "type": types.GCS, "value": 234})
 
     def test_wrong_io_config_flag(self):
         with self.assertRaises(ValidationError):
-            IOConfig.from_dict(
-                {"name": "input1", "type": IOTypes.S3_PATH, "is_flag": True}
-            )
+            IOConfig.from_dict({"name": "input1", "type": types.S3, "is_flag": True})
 
         with self.assertRaises(ValidationError):
-            IOConfig.from_dict(
-                {"name": "input1", "type": IOTypes.FLOAT, "is_flag": True}
-            )
+            IOConfig.from_dict({"name": "input1", "type": types.FLOAT, "is_flag": True})
 
     def test_io_config_optionals(self):
         config_dict = {"name": "input1"}
@@ -76,37 +69,29 @@ class TestIOConfigs(TestCase):
         assert_equal_dict(config.to_dict(), config_dict)
 
     def test_io_config_types(self):
-        config_dict = {
-            "name": "input1",
-            "description": "some text",
-            "type": IOTypes.INT,
-        }
+        config_dict = {"name": "input1", "description": "some text", "type": types.INT}
         config = IOConfig.from_dict(config_dict)
         assert_equal_dict(config.to_dict(), config_dict)
         expected_repr = OrderedDict((("name", "input1"), ("type", "int"), ("value", 3)))
         assert config.get_repr_from_value(3) == expected_repr
         assert config.get_repr() == OrderedDict((("name", "input1"), ("type", "int")))
 
-        config_dict = {
-            "name": "input1",
-            "description": "some text",
-            "type": IOTypes.S3_PATH,
-        }
+        config_dict = {"name": "input1", "description": "some text", "type": types.S3}
         config = IOConfig.from_dict(config_dict)
         assert_equal_dict(config.to_dict(), config_dict)
         expected_repr = OrderedDict(
-            (("name", "input1"), ("type", IOTypes.S3_PATH), ("value", "s3://foo"))
+            (("name", "input1"), ("type", types.S3), ("value", "s3://foo"))
         )
         assert config.get_repr_from_value("s3://foo") == expected_repr
         assert config.get_repr() == OrderedDict(
-            (("name", "input1"), ("type", IOTypes.S3_PATH))
+            (("name", "input1"), ("type", types.S3))
         )
 
     def test_io_config_default(self):
         config_dict = {
             "name": "input1",
             "description": "some text",
-            "type": IOTypes.BOOL,
+            "type": types.BOOL,
             "is_optional": True,
             "value": True,
         }
@@ -121,7 +106,7 @@ class TestIOConfigs(TestCase):
         config_dict = {
             "name": "input1",
             "description": "some text",
-            "type": IOTypes.FLOAT,
+            "type": types.FLOAT,
             "is_optional": True,
             "value": 3.4,
         }
@@ -137,7 +122,7 @@ class TestIOConfigs(TestCase):
         config_dict = {
             "name": "input1",
             "description": "some text",
-            "type": IOTypes.BOOL,
+            "type": types.BOOL,
             "value": True,
             "is_optional": True,
         }
@@ -147,7 +132,7 @@ class TestIOConfigs(TestCase):
         config_dict = {
             "name": "input1",
             "description": "some text",
-            "type": IOTypes.STR,
+            "type": types.STR,
             "value": "foo",
         }
         with self.assertRaises(ValidationError):
@@ -172,7 +157,7 @@ class TestIOConfigs(TestCase):
         config_dict = {
             "name": "input1",
             "description": "some text",
-            "type": IOTypes.BOOL,
+            "type": types.BOOL,
             "is_flag": True,
         }
         config = IOConfig.from_dict(config_dict)
@@ -194,7 +179,7 @@ class TestIOConfigs(TestCase):
         assert config.get_repr() == OrderedDict(name="input1")
 
     def test_value_typed_input(self):
-        config_dict = {"name": "input1", "type": IOTypes.BOOL}
+        config_dict = {"name": "input1", "type": types.BOOL}
         config = IOConfig.from_dict(config_dict)
         with self.assertRaises(ValidationError):
             config.validate_value("foo")
@@ -208,7 +193,7 @@ class TestIOConfigs(TestCase):
     def test_value_typed_input_with_default(self):
         config_dict = {
             "name": "input1",
-            "type": IOTypes.INT,
+            "type": types.INT,
             "value": 12,
             "is_optional": True,
         }
@@ -229,10 +214,10 @@ class TestIOConfigs(TestCase):
     def test_get_param(self):
         # None string values should exit fast
         assert get_param(
-            name="foo", value=1, iotype=IOTypes.INT, is_flag=False
+            name="foo", value=1, iotype=types.INT, is_flag=False
         ) == ParamSpec(
             name="foo",
-            iotype=IOTypes.INT,
+            iotype=types.INT,
             value=1,
             entity=None,
             entity_ref=None,
@@ -242,10 +227,10 @@ class TestIOConfigs(TestCase):
 
         # Str values none regex
         assert get_param(
-            name="foo", value="1", iotype=IOTypes.INT, is_flag=False
+            name="foo", value="1", iotype=types.INT, is_flag=False
         ) == ParamSpec(
             name="foo",
-            iotype=IOTypes.INT,
+            iotype=types.INT,
             value="1",
             entity=None,
             entity_ref=None,
@@ -254,10 +239,10 @@ class TestIOConfigs(TestCase):
         )
 
         assert get_param(
-            name="foo", value="SDfd", iotype=IOTypes.STR, is_flag=False
+            name="foo", value="SDfd", iotype=types.STR, is_flag=False
         ) == ParamSpec(
             name="foo",
-            iotype=IOTypes.STR,
+            iotype=types.STR,
             value="SDfd",
             entity=None,
             entity_ref=None,
@@ -267,10 +252,10 @@ class TestIOConfigs(TestCase):
 
         # Regex validation dag
         assert get_param(
-            name="foo", value="{{ dag.inputs.foo }}", iotype=IOTypes.BOOL, is_flag=True
+            name="foo", value="{{ dag.inputs.foo }}", iotype=types.BOOL, is_flag=True
         ) == ParamSpec(
             name="foo",
-            iotype=IOTypes.BOOL,
+            iotype=types.BOOL,
             value="dag.inputs.foo",
             entity="dag",
             entity_ref="_",
@@ -283,30 +268,30 @@ class TestIOConfigs(TestCase):
             get_param(
                 name="foo",
                 value="{{ dag.outputs.foo }}",
-                iotype=IOTypes.BOOL,
+                iotype=types.BOOL,
                 is_flag=True,
             )
         with self.assertRaises(ValidationError):
             get_param(
                 name="foo",
                 value="{{ dag.1.inputs.foo }}",
-                iotype=IOTypes.BOOL,
+                iotype=types.BOOL,
                 is_flag=True,
             )
         with self.assertRaises(ValidationError):
             get_param(
-                name="foo", value="{{ dag.inputs }}", iotype=IOTypes.BOOL, is_flag=True
+                name="foo", value="{{ dag.inputs }}", iotype=types.BOOL, is_flag=True
             )
 
         # Regex validation ops
         assert get_param(
             name="foo",
             value="{{ ops.foo-bar.outputs.foo }}",
-            iotype=IOTypes.BOOL,
+            iotype=types.BOOL,
             is_flag=True,
         ) == ParamSpec(
             name="foo",
-            iotype=IOTypes.BOOL,
+            iotype=types.BOOL,
             value="ops.foo-bar.outputs.foo",
             entity="ops",
             entity_ref="foo-bar",
@@ -316,11 +301,11 @@ class TestIOConfigs(TestCase):
         assert get_param(
             name="foo",
             value="{{ ops.foo-bar.inputs.foo }}",
-            iotype=IOTypes.BOOL,
+            iotype=types.BOOL,
             is_flag=True,
         ) == ParamSpec(
             name="foo",
-            iotype=IOTypes.BOOL,
+            iotype=types.BOOL,
             value="ops.foo-bar.inputs.foo",
             entity="ops",
             entity_ref="foo-bar",
@@ -333,14 +318,14 @@ class TestIOConfigs(TestCase):
             get_param(
                 name="foo",
                 value="{{ ops.foo-bar.outputs }}",
-                iotype=IOTypes.BOOL,
+                iotype=types.BOOL,
                 is_flag=True,
             )
         with self.assertRaises(ValidationError):
             get_param(
                 name="foo",
                 value="{{ ops.foo-bar.inputs }}",
-                iotype=IOTypes.BOOL,
+                iotype=types.BOOL,
                 is_flag=True,
             )
 
@@ -349,11 +334,11 @@ class TestIOConfigs(TestCase):
         assert get_param(
             name="foo",
             value="{{" + "runs.{}.outputs.foo".format(uid) + "}}",
-            iotype=IOTypes.BOOL,
+            iotype=types.BOOL,
             is_flag=True,
         ) == ParamSpec(
             name="foo",
-            iotype=IOTypes.BOOL,
+            iotype=types.BOOL,
             value="runs.{}.outputs.foo".format(uid),
             entity="runs",
             entity_ref=uid,
@@ -366,13 +351,13 @@ class TestIOConfigs(TestCase):
             get_param(
                 name="foo",
                 value="{{ runs.foo-bar.outputs.foo }}",
-                iotype=IOTypes.BOOL,
+                iotype=types.BOOL,
                 is_flag=True,
             )
         with self.assertRaises(ValidationError):
             get_param(
                 name="foo",
                 value="{{" + "runs.{}.inputs.foo".format(uid) + "}}",
-                iotype=IOTypes.BOOL,
+                iotype=types.BOOL,
                 is_flag=True,
             )

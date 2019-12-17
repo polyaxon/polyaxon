@@ -23,22 +23,26 @@ import six
 
 from collections import namedtuple
 
-import rhea
 import ujson
 
 from hestia.list_utils import to_list
 from marshmallow import ValidationError
 
 from polyaxon import kinds
-from polyaxon.exceptions import PolyaxonfileError, PolyaxonSchemaError
+from polyaxon.config_reader import reader
+from polyaxon.exceptions import (
+    PolyaxonException,
+    PolyaxonfileError,
+    PolyaxonSchemaError,
+)
 from polyaxon.pkg import SCHEMA_VERSION
 from polyaxon.schemas.polyflow import params as ops_params
-from polyaxon.schemas.polyflow.io import IOTypes
 from polyaxon.schemas.polyflow.operators import ForConfig, IfConfig
 from polyaxon.schemas.polyflow.parallel import ParallelMixin
 from polyaxon.schemas.polyflow.params import ParamSpec
 from polyaxon.schemas.polyflow.run import RunMixin
 from polyaxon.specs.libs.parser import Parser
+from polyaxon.types import types
 
 
 class MetaInfoSpec(
@@ -441,12 +445,9 @@ class BaseSpecification(
     def __init__(self, values):
         self._values = to_list(values)
 
-        try:
-            self._data = rhea.read(
-                [{"kind": self._SPEC_KIND, "version": SCHEMA_VERSION}] + self._values
-            )
-        except rhea.RheaError as e:
-            raise PolyaxonSchemaError("%s" % e)
+        self._data = reader.read(
+            [{"kind": self._SPEC_KIND, "version": SCHEMA_VERSION}] + self._values
+        )
         try:
             self._config = self.CONFIG.from_dict(copy.deepcopy(self.data))
         except (ValidationError, TypeError) as e:
@@ -543,7 +544,7 @@ class BaseSpecification(
             k: ParamSpec(
                 name=k,
                 value=v,
-                iotype=IOTypes.STR,
+                iotype=types.STR,
                 entity=None,
                 entity_ref=None,
                 entity_value=None,

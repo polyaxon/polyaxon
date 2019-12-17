@@ -37,7 +37,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='v1',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\x0fv1/search.proto\x12\x02v1\x1a\x1fgoogle/protobuf/timestamp.proto\"Z\n\nSearchSpec\x12\r\n\x05query\x18\x01 \x01(\t\x12\x0c\n\x04sort\x18\x02 \x01(\t\x12\r\n\x05limit\x18\x03 \x01(\x05\x12\x0f\n\x07groupby\x18\x04 \x01(\t\x12\x0f\n\x07\x63olumns\x18\x05 \x01(\t\"\xa2\x01\n\x06Search\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x1c\n\x04spec\x18\x03 \x01(\x0b\x32\x0e.v1.SearchSpec\x12.\n\ncreated_at\x18\x04 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12.\n\nupdated_at\x18\x05 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\">\n\x11SearchBodyRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x1a\n\x06search\x18\x02 \x01(\x0b\x32\n.v1.Search\"V\n\x18ProjectSearchBodyRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0f\n\x07project\x18\x02 \x01(\t\x12\x1a\n\x06search\x18\x03 \x01(\x0b\x32\n.v1.Search\"b\n\x14ListSearchesResponse\x12\r\n\x05\x63ount\x18\x01 \x01(\x05\x12\x1b\n\x07results\x18\x02 \x03(\x0b\x32\n.v1.Search\x12\x10\n\x08previous\x18\x03 \x01(\t\x12\x0c\n\x04next\x18\x04 \x01(\tb\x06proto3')
+  serialized_pb=_b('\n\x0fv1/search.proto\x12\x02v1\x1a\x1fgoogle/protobuf/timestamp.proto\"Z\n\nSearchSpec\x12\r\n\x05query\x18\x01 \x01(\t\x12\x0c\n\x04sort\x18\x02 \x01(\t\x12\r\n\x05limit\x18\x03 \x01(\x05\x12\x0f\n\x07groupby\x18\x04 \x01(\t\x12\x0f\n\x07\x63olumns\x18\x05 \x01(\t\"\xe8\x01\n\x06Search\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x13\n\x0b\x64\x65scription\x18\x03 \x01(\t\x12\x0c\n\x04tags\x18\x04 \x03(\t\x12\x10\n\x08\x64isabled\x18\x05 \x01(\x08\x12\x0f\n\x07\x64\x65leted\x18\x06 \x01(\x08\x12\x1c\n\x04spec\x18\x07 \x01(\x0b\x32\x0e.v1.SearchSpec\x12.\n\ncreated_at\x18\x08 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12.\n\nupdated_at\x18\t \x01(\x0b\x32\x1a.google.protobuf.Timestamp\">\n\x11SearchBodyRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x1a\n\x06search\x18\x02 \x01(\x0b\x32\n.v1.Search\"V\n\x18ProjectSearchBodyRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0f\n\x07project\x18\x02 \x01(\t\x12\x1a\n\x06search\x18\x03 \x01(\x0b\x32\n.v1.Search\"b\n\x14ListSearchesResponse\x12\r\n\x05\x63ount\x18\x01 \x01(\x05\x12\x1b\n\x07results\x18\x02 \x03(\x0b\x32\n.v1.Search\x12\x10\n\x08previous\x18\x03 \x01(\t\x12\x0c\n\x04next\x18\x04 \x01(\tb\x06proto3')
   ,
   dependencies=[google_dot_protobuf_dot_timestamp__pb2.DESCRIPTOR,])
 
@@ -125,22 +125,50 @@ _SEARCH = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='spec', full_name='v1.Search.spec', index=2,
-      number=3, type=11, cpp_type=10, label=1,
+      name='description', full_name='v1.Search.description', index=2,
+      number=3, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='tags', full_name='v1.Search.tags', index=3,
+      number=4, type=9, cpp_type=9, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='disabled', full_name='v1.Search.disabled', index=4,
+      number=5, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='deleted', full_name='v1.Search.deleted', index=5,
+      number=6, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='spec', full_name='v1.Search.spec', index=6,
+      number=7, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='created_at', full_name='v1.Search.created_at', index=3,
-      number=4, type=11, cpp_type=10, label=1,
+      name='created_at', full_name='v1.Search.created_at', index=7,
+      number=8, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='updated_at', full_name='v1.Search.updated_at', index=4,
-      number=5, type=11, cpp_type=10, label=1,
+      name='updated_at', full_name='v1.Search.updated_at', index=8,
+      number=9, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -158,7 +186,7 @@ _SEARCH = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=149,
-  serialized_end=311,
+  serialized_end=381,
 )
 
 
@@ -195,8 +223,8 @@ _SEARCHBODYREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=313,
-  serialized_end=375,
+  serialized_start=383,
+  serialized_end=445,
 )
 
 
@@ -240,8 +268,8 @@ _PROJECTSEARCHBODYREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=377,
-  serialized_end=463,
+  serialized_start=447,
+  serialized_end=533,
 )
 
 
@@ -292,8 +320,8 @@ _LISTSEARCHESRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=465,
-  serialized_end=563,
+  serialized_start=535,
+  serialized_end=633,
 )
 
 _SEARCH.fields_by_name['spec'].message_type = _SEARCHSPEC

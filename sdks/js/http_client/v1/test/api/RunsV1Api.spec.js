@@ -588,7 +588,7 @@
           var opts = {};
           opts.path = "path_example";
           opts.step = 56;
-          opts.type = "type_example";
+          opts.kind = "kind_example";
 
           instance.getRunArtifactsTree(owner, project, uuid, opts, function(error, data, response) {
             if (error) {
@@ -665,7 +665,7 @@
           var opts = {};
           opts.path = "path_example";
           opts.step = 56;
-          opts.type = "type_example";
+          opts.kind = "kind_example";
 
           instance.getRunLogsTree(owner, project, uuid, opts, function(error, data, response) {
             if (error) {

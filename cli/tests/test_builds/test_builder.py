@@ -22,11 +22,11 @@ from unittest import TestCase
 import mock
 import pytest
 
-from rhea.specs import UriSpec
 from urllib3.exceptions import ReadTimeoutError
 
 from polyaxon.builds.builder import DockerBuilder, DockerPusher, build, build_and_push
 from polyaxon.exceptions import PolyaxonBuildException
+from polyaxon.types.specs import UriSpec
 
 
 @pytest.mark.api_builds

@@ -22,8 +22,8 @@ from __future__ import absolute_import
 from polyaxon_sdk.api.agents_v1_api import AgentsV1Api
 from polyaxon_sdk.api.artifacts_stores_v1_api import ArtifactsStoresV1Api
 from polyaxon_sdk.api.auth_v1_api import AuthV1Api
+from polyaxon_sdk.api.connections_v1_api import ConnectionsV1Api
 from polyaxon_sdk.api.dashboards_v1_api import DashboardsV1Api
-from polyaxon_sdk.api.git_accesses_v1_api import GitAccessesV1Api
 from polyaxon_sdk.api.k8s_config_maps_v1_api import K8sConfigMapsV1Api
 from polyaxon_sdk.api.k8s_secrets_v1_api import K8sSecretsV1Api
 from polyaxon_sdk.api.organizations_v1_api import OrganizationsV1Api
@@ -31,7 +31,6 @@ from polyaxon_sdk.api.project_dashboards_v1_api import ProjectDashboardsV1Api
 from polyaxon_sdk.api.project_searches_v1_api import ProjectSearchesV1Api
 from polyaxon_sdk.api.projects_v1_api import ProjectsV1Api
 from polyaxon_sdk.api.queues_v1_api import QueuesV1Api
-from polyaxon_sdk.api.registry_accesses_v1_api import RegistryAccessesV1Api
 from polyaxon_sdk.api.run_profiles_v1_api import RunProfilesV1Api
 from polyaxon_sdk.api.runs_v1_api import RunsV1Api
 from polyaxon_sdk.api.schemas_v1_api import SchemasV1Api

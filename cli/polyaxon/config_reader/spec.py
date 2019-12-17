@@ -1,4 +1,21 @@
-# -*- coding: utf-8 -*-
+#!/usr/bin/python
+#
+# Copyright 2019 Polyaxon, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# coding: utf-8
+
 from __future__ import absolute_import, division, print_function
 
 import json
@@ -10,7 +27,7 @@ from collections import Mapping
 from yaml.parser import ParserError  # noqa
 from yaml.scanner import ScannerError  # noqa
 
-from rhea.exceptions import RheaError
+from polyaxon.exceptions import PolyaxonSchemaError
 
 
 class ConfigSpec(object):
@@ -27,13 +44,14 @@ class ConfigSpec(object):
         return cls(value=value)
 
     def check_type(self):
-        type_check = (
-            self.config_type is None and
-            not isinstance(self.value, (Mapping, six.string_types)))
+        type_check = self.config_type is None and not isinstance(
+            self.value, (Mapping, six.string_types)
+        )
         if type_check:
-            raise RheaError(
+            raise PolyaxonSchemaError(
                 "Expects Mapping, string, or list of Mapping/string instances, "
-                "received {} instead".format(type(self.value)))
+                "received {} instead".format(type(self.value))
+            )
 
     def read(self):
         if isinstance(self.value, Mapping):
@@ -45,8 +63,9 @@ class ConfigSpec(object):
             try:
                 config_results = _read_from_stream(self.value)
             except (ScannerError, ParserError):
-                raise RheaError(
-                    'Received non valid yaml stream: `{}`'.format(self.value))
+                raise PolyaxonSchemaError(
+                    "Received non valid yaml stream: `{}`".format(self.value)
+                )
         return config_results
 
 
@@ -59,13 +78,14 @@ def _read_from_stream(stream):
 
 def _read_from_file(f_path, file_type):
     _, ext = os.path.splitext(f_path)
-    if ext in ('.yml', '.yaml') or file_type in ('.yml', '.yaml'):
+    if ext in (".yml", ".yaml") or file_type in (".yml", ".yaml"):
         return _read_from_yml(f_path)
-    elif ext == '.json' or file_type == '.json':
+    elif ext == ".json" or file_type == ".json":
         return _read_from_json(f_path)
-    raise RheaError(
+    raise PolyaxonSchemaError(
         "Expects a file with extension: `.yml`, `.yaml`, or `json`, "
-        "received instead `{}`".format(ext))
+        "received instead `{}`".format(ext)
+    )
 
 
 def _read_from_yml(f_path, is_stream=False):
@@ -75,8 +95,7 @@ def _read_from_yml(f_path, is_stream=False):
         with open(f_path) as f:
             return yaml.safe_load(f)
     except (ScannerError, ParserError):
-        raise RheaError(
-            'Received non valid yaml: `{}`'.format(f_path))
+        raise PolyaxonSchemaError("Received non valid yaml: `{}`".format(f_path))
 
 
 def _read_from_json(f_path, is_stream=False):
@@ -84,8 +103,8 @@ def _read_from_json(f_path, is_stream=False):
         try:
             return json.loads(f_path)
         except ValueError as e:
-            raise RheaError(e)
+            raise PolyaxonSchemaError(e)
     try:
         return json.loads(open(f_path).read())
     except ValueError as e:
-        raise RheaError(e)
+        raise PolyaxonSchemaError(e)

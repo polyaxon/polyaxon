@@ -26,7 +26,6 @@ from datetime import datetime
 import polyaxon_sdk
 
 from polyaxon_sdk.rest import ApiException
-from polystores import StoreManager
 from urllib3.exceptions import HTTPError
 
 from polyaxon import settings
@@ -35,6 +34,7 @@ from polyaxon.client.handlers.conf import setup_logging
 from polyaxon.client.statuses import get_run_statuses
 from polyaxon.exceptions import PolyaxonClientException
 from polyaxon.specs import get_specification
+from polyaxon.stores import StoreManager
 from polyaxon.tracking.is_managed import ensure_is_managed
 from polyaxon.tracking.no_op import check_no_op
 from polyaxon.tracking.offline import check_offline

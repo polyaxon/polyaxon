@@ -18,10 +18,11 @@
 from __future__ import absolute_import, division, print_function
 
 from marshmallow import ValidationError, fields, validate, validates_schema
-from rhea import RheaError, parser
 
+from polyaxon.exceptions import PolyaxonSchemaError
 from polyaxon.schemas.base import BaseConfig, BaseSchema
-from polyaxon.schemas.polyflow.io.types import IOTypes
+from polyaxon.types import types
+from polyaxon.types import parser
 from polyaxon_sdk import V1IO
 
 
@@ -43,7 +44,7 @@ def validate_io_value(
         if value is not None:
             return value
         return default
-    except RheaError as e:
+    except PolyaxonSchemaError as e:
         raise ValidationError(
             "Could not parse value `%s`, an error was encountered: %s" % (value, e)
         )
@@ -67,10 +68,10 @@ def validate_io(name, iotype, value, is_optional, is_list, is_flag, options):
             "Please either make it optional or remove the default value."
         )
 
-    if is_flag and iotype != IOTypes.BOOL:
+    if is_flag and iotype != types.BOOL:
         raise ValidationError(
             "IO type `{}` cannot be a flag, iut must be a `{}`".format(
-                iotype, IOTypes.BOOL
+                iotype, types.BOOL
             )
         )
 
@@ -79,7 +80,7 @@ class IOSchema(BaseSchema):
     name = fields.Str(required=True)
     description = fields.Str(allow_none=True)
     iotype = fields.Str(
-        allow_none=True, data_key="type", validate=validate.OneOf(IOTypes.VALUES)
+        allow_none=True, data_key="type", validate=validate.OneOf(types.VALUES)
     )
     value = fields.Raw(allow_none=True)
     is_optional = fields.Bool(allow_none=True)

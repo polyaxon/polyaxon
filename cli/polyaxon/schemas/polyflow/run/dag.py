@@ -65,7 +65,7 @@ class DagConfig(BaseConfig, V1Dag):
         self._dag = {}  # OpName -> DagOpSpec
         self._components_by_names = {}  # ComponentName -> Component
         self._op_component_mapping = {}  # OpName -> ComponentName
-        self._context = {}  # Ops output names -> IOTypes
+        self._context = {}  # Ops output names -> types
 
     @property
     def dag(self):

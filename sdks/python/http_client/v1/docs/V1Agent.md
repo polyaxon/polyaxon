@@ -5,6 +5,10 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **uuid** | **str** |  | [optional] 
 **name** | **str** |  | [optional] 
+**description** | **str** |  | [optional] 
+**tags** | **list[str]** |  | [optional] 
+**disabled** | **bool** |  | [optional] 
+**deleted** | **bool** |  | [optional] 
 **namespace** | **str** |  | [optional] 
 **version_api** | **object** |  | [optional] 
 **created_at** | **datetime** |  | [optional] 

@@ -21,11 +21,10 @@ import os
 
 from collections import Mapping
 
-import rhea
-
 from hestia.list_utils import to_list
 
 from polyaxon import kinds
+from polyaxon.config_reader import reader
 from polyaxon.exceptions import PolyaxonfileError
 from polyaxon.specs import get_specification
 
@@ -50,7 +49,7 @@ class PolyaxonFile(object):
                 raise PolyaxonfileError("`{}` must be a valid file".format(filepath))
         self._filenames = [os.path.basename(filepath) for filepath in filepaths]
 
-        self.specification = get_specification(data=rhea.read(filepaths))
+        self.specification = get_specification(data=reader.read(filepaths))
 
     @property
     def filenames(self):

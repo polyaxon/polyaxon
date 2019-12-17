@@ -15,7 +15,7 @@ run:
     tags: [tag11, tag12]
     inputs:
     - name: bucket
-      type: s3_path
+      type: s3
     init:
       build:
         image: my_image

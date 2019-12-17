@@ -2,7 +2,9 @@ syntax = "proto3";
 
 package v1;
 
+import "v1/schemas/artifact.proto";
 import "v1/schemas/condition.proto";
+import "v1/schemas/connection.proto";
 import "v1/schemas/early_stopping.proto";
 import "v1/schemas/parallel.proto";
 import "v1/schemas/op.proto";
@@ -16,4 +18,6 @@ message Schemas {
     Op op = 4;
     RunSchema run = 5;
     Schedule schedule = 6;
+    ArtifactFormat artifact_format = 7;
+    ConnectionScema connection_schema = 8;
 }

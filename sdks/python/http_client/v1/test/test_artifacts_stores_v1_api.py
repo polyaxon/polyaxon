@@ -47,55 +47,6 @@ class TestArtifactsStoresV1Api(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def test_create_artifacts_store(self):
-        """Test case for create_artifacts_store
-
-        List runs  # noqa: E501
-        """
-        pass
-
-    def test_delete_artifacts_store(self):
-        """Test case for delete_artifacts_store
-
-        Patch run  # noqa: E501
-        """
-        pass
-
-    def test_get_artifacts_store(self):
-        """Test case for get_artifacts_store
-
-        Create new run  # noqa: E501
-        """
-        pass
-
-    def test_list_artifacts_store_names(self):
-        """Test case for list_artifacts_store_names
-
-        List bookmarked runs for user  # noqa: E501
-        """
-        pass
-
-    def test_list_artifacts_stores(self):
-        """Test case for list_artifacts_stores
-
-        List archived runs for user  # noqa: E501
-        """
-        pass
-
-    def test_patch_artifacts_store(self):
-        """Test case for patch_artifacts_store
-
-        Update run  # noqa: E501
-        """
-        pass
-
-    def test_update_artifacts_store(self):
-        """Test case for update_artifacts_store
-
-        Get run  # noqa: E501
-        """
-        pass
-
     def test_upload_artifact(self):
         """Test case for upload_artifact
 

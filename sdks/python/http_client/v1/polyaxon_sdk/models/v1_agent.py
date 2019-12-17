@@ -49,6 +49,10 @@ class V1Agent(object):
     swagger_types = {
         "uuid": "str",
         "name": "str",
+        "description": "str",
+        "tags": "list[str]",
+        "disabled": "bool",
+        "deleted": "bool",
         "namespace": "str",
         "version_api": "object",
         "created_at": "datetime",
@@ -58,6 +62,10 @@ class V1Agent(object):
     attribute_map = {
         "uuid": "uuid",
         "name": "name",
+        "description": "description",
+        "tags": "tags",
+        "disabled": "disabled",
+        "deleted": "deleted",
         "namespace": "namespace",
         "version_api": "version_api",
         "created_at": "created_at",
@@ -68,6 +76,10 @@ class V1Agent(object):
         self,
         uuid=None,
         name=None,
+        description=None,
+        tags=None,
+        disabled=None,
+        deleted=None,
         namespace=None,
         version_api=None,
         created_at=None,
@@ -77,6 +89,10 @@ class V1Agent(object):
 
         self._uuid = None
         self._name = None
+        self._description = None
+        self._tags = None
+        self._disabled = None
+        self._deleted = None
         self._namespace = None
         self._version_api = None
         self._created_at = None
@@ -87,6 +103,14 @@ class V1Agent(object):
             self.uuid = uuid
         if name is not None:
             self.name = name
+        if description is not None:
+            self.description = description
+        if tags is not None:
+            self.tags = tags
+        if disabled is not None:
+            self.disabled = disabled
+        if deleted is not None:
+            self.deleted = deleted
         if namespace is not None:
             self.namespace = namespace
         if version_api is not None:
@@ -137,6 +161,90 @@ class V1Agent(object):
         """
 
         self._name = name
+
+    @property
+    def description(self):
+        """Gets the description of this V1Agent.  # noqa: E501
+
+
+        :return: The description of this V1Agent.  # noqa: E501
+        :rtype: str
+        """
+        return self._description
+
+    @description.setter
+    def description(self, description):
+        """Sets the description of this V1Agent.
+
+
+        :param description: The description of this V1Agent.  # noqa: E501
+        :type: str
+        """
+
+        self._description = description
+
+    @property
+    def tags(self):
+        """Gets the tags of this V1Agent.  # noqa: E501
+
+
+        :return: The tags of this V1Agent.  # noqa: E501
+        :rtype: list[str]
+        """
+        return self._tags
+
+    @tags.setter
+    def tags(self, tags):
+        """Sets the tags of this V1Agent.
+
+
+        :param tags: The tags of this V1Agent.  # noqa: E501
+        :type: list[str]
+        """
+
+        self._tags = tags
+
+    @property
+    def disabled(self):
+        """Gets the disabled of this V1Agent.  # noqa: E501
+
+
+        :return: The disabled of this V1Agent.  # noqa: E501
+        :rtype: bool
+        """
+        return self._disabled
+
+    @disabled.setter
+    def disabled(self, disabled):
+        """Sets the disabled of this V1Agent.
+
+
+        :param disabled: The disabled of this V1Agent.  # noqa: E501
+        :type: bool
+        """
+
+        self._disabled = disabled
+
+    @property
+    def deleted(self):
+        """Gets the deleted of this V1Agent.  # noqa: E501
+
+
+        :return: The deleted of this V1Agent.  # noqa: E501
+        :rtype: bool
+        """
+        return self._deleted
+
+    @deleted.setter
+    def deleted(self, deleted):
+        """Sets the deleted of this V1Agent.
+
+
+        :param deleted: The deleted of this V1Agent.  # noqa: E501
+        :type: bool
+        """
+
+        self._deleted = deleted
 
     @property
     def namespace(self):

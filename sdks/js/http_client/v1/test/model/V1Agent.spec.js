@@ -67,6 +67,30 @@
         // expect(instance.name).to.be(expectedValueLiteral);
       });
 
+      it('should have the property description (base name: "description")', function() {
+        // TODO: update the code to test the property description
+        expect(instance).to.have.property('description');
+        // expect(instance.description).to.be(expectedValueLiteral);
+      });
+
+      it('should have the property tags (base name: "tags")', function() {
+        // TODO: update the code to test the property tags
+        expect(instance).to.have.property('tags');
+        // expect(instance.tags).to.be(expectedValueLiteral);
+      });
+
+      it('should have the property disabled (base name: "disabled")', function() {
+        // TODO: update the code to test the property disabled
+        expect(instance).to.have.property('disabled');
+        // expect(instance.disabled).to.be(expectedValueLiteral);
+      });
+
+      it('should have the property deleted (base name: "deleted")', function() {
+        // TODO: update the code to test the property deleted
+        expect(instance).to.have.property('deleted');
+        // expect(instance.deleted).to.be(expectedValueLiteral);
+      });
+
       it('should have the property namespace (base name: "namespace")', function() {
         // TODO: update the code to test the property namespace
         expect(instance).to.have.property('namespace');

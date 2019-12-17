@@ -91,6 +91,18 @@
         // expect(instance.schedule).to.be(expectedValueLiteral);
       });
 
+      it('should have the property artifact_format (base name: "artifact_format")', function() {
+        // TODO: update the code to test the property artifact_format
+        expect(instance).to.have.property('artifact_format');
+        // expect(instance.artifact_format).to.be(expectedValueLiteral);
+      });
+
+      it('should have the property connection_schema (base name: "connection_schema")', function() {
+        // TODO: update the code to test the property connection_schema
+        expect(instance).to.have.property('connection_schema');
+        // expect(instance.connection_schema).to.be(expectedValueLiteral);
+      });
+
     });
   });
 

@@ -31,18 +31,18 @@
 (function(root, factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
-    define(['ApiClient', 'model/V1EarlyStopping', 'model/V1Op', 'model/V1OpCondition', 'model/V1Parallel', 'model/V1RunSchema', 'model/V1Schedule'], factory);
+    define(['ApiClient', 'model/V1ArtifactFormat', 'model/V1ConnectionScema', 'model/V1EarlyStopping', 'model/V1Op', 'model/V1OpCondition', 'model/V1Parallel', 'model/V1RunSchema', 'model/V1Schedule'], factory);
   } else if (typeof module === 'object' && module.exports) {
     // CommonJS-like environments that support module.exports, like Node.
-    module.exports = factory(require('../ApiClient'), require('./V1EarlyStopping'), require('./V1Op'), require('./V1OpCondition'), require('./V1Parallel'), require('./V1RunSchema'), require('./V1Schedule'));
+    module.exports = factory(require('../ApiClient'), require('./V1ArtifactFormat'), require('./V1ConnectionScema'), require('./V1EarlyStopping'), require('./V1Op'), require('./V1OpCondition'), require('./V1Parallel'), require('./V1RunSchema'), require('./V1Schedule'));
   } else {
     // Browser globals (root is window)
     if (!root.PolyaxonSdk) {
       root.PolyaxonSdk = {};
     }
-    root.PolyaxonSdk.V1Schemas = factory(root.PolyaxonSdk.ApiClient, root.PolyaxonSdk.V1EarlyStopping, root.PolyaxonSdk.V1Op, root.PolyaxonSdk.V1OpCondition, root.PolyaxonSdk.V1Parallel, root.PolyaxonSdk.V1RunSchema, root.PolyaxonSdk.V1Schedule);
+    root.PolyaxonSdk.V1Schemas = factory(root.PolyaxonSdk.ApiClient, root.PolyaxonSdk.V1ArtifactFormat, root.PolyaxonSdk.V1ConnectionScema, root.PolyaxonSdk.V1EarlyStopping, root.PolyaxonSdk.V1Op, root.PolyaxonSdk.V1OpCondition, root.PolyaxonSdk.V1Parallel, root.PolyaxonSdk.V1RunSchema, root.PolyaxonSdk.V1Schedule);
   }
-}(this, function(ApiClient, V1EarlyStopping, V1Op, V1OpCondition, V1Parallel, V1RunSchema, V1Schedule) {
+}(this, function(ApiClient, V1ArtifactFormat, V1ConnectionScema, V1EarlyStopping, V1Op, V1OpCondition, V1Parallel, V1RunSchema, V1Schedule) {
   'use strict';
 
   /**
@@ -81,6 +81,10 @@
         obj.run = V1RunSchema.constructFromObject(data['run']);
       if (data.hasOwnProperty('schedule'))
         obj.schedule = V1Schedule.constructFromObject(data['schedule']);
+      if (data.hasOwnProperty('artifact_format'))
+        obj.artifact_format = V1ArtifactFormat.constructFromObject(data['artifact_format']);
+      if (data.hasOwnProperty('connection_schema'))
+        obj.connection_schema = V1ConnectionScema.constructFromObject(data['connection_schema']);
     }
     return obj;
   }
@@ -114,6 +118,16 @@
    * @member {module:model/V1Schedule} schedule
    */
   exports.prototype.schedule = undefined;
+
+  /**
+   * @member {module:model/V1ArtifactFormat} artifact_format
+   */
+  exports.prototype.artifact_format = undefined;
+
+  /**
+   * @member {module:model/V1ConnectionScema} connection_schema
+   */
+  exports.prototype.connection_schema = undefined;
 
   return exports;
 

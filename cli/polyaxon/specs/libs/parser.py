@@ -25,8 +25,8 @@ import six
 from collections import Mapping, defaultdict
 
 from hestia.list_utils import to_list
-from rhea.utils import deep_update
 
+from polyaxon.config_reader.utils import deep_update
 from polyaxon.exceptions import PolyaxonfileError
 
 try:

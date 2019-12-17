@@ -21,10 +21,10 @@ import time
 from docker import APIClient
 from docker.errors import APIError, BuildError
 from hestia.logging_utils import LogLevels
-from rhea.specs import UriSpec
 from urllib3.exceptions import ReadTimeoutError
 
 from polyaxon.exceptions import PolyaxonBuildException
+from polyaxon.types.specs import UriSpec
 
 _logger = logging.getLogger("polyaxon.dockerizer")
 

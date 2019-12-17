@@ -1,24 +1,39 @@
-# -*- coding: utf-8 -*-
+#!/usr/bin/python
+#
+# Copyright 2019 Polyaxon, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# coding: utf-8
 from __future__ import absolute_import, division, print_function
 
 import json
 import os
 
+from google.api_core.exceptions import GoogleAPIError, NotFound
 from rhea import RheaError
 from rhea import parser as rhea_parser
 
-from google.api_core.exceptions import GoogleAPIError, NotFound
-
-from polystores import settings
-from polystores.clients import gc_client
-from polystores.exceptions import PolyaxonStoresException
-from polystores.logger import logger
-from polystores.stores.base_store import BaseStore
-from polystores.utils import (
+from polyaxon.exceptions import PolyaxonStoresException
+from polyaxon.logger import logger
+from polyaxon.stores import settings
+from polyaxon.stores.clients import gc_client
+from polyaxon.stores.stores.base_store import BaseStore
+from polyaxon.stores.utils import (
     append_basename,
     check_dirname_exists,
     create_polyaxon_tmp,
-    get_files_in_current_directory
+    get_files_in_current_directory,
 )
 
 # pylint:disable=arguments-differ
@@ -28,33 +43,38 @@ class GCSStore(BaseStore):
     """
     Google cloud store Service.
     """
+
     STORE_TYPE = BaseStore._GCS_STORE  # pylint:disable=protected-access
 
     def __init__(self, client=None, **kwargs):
         self._client = client
-        self._project_id = kwargs.get('project_id')
-        self._credentials = kwargs.get('credentials')
-        self._key_path = kwargs.get('key_path')
-        self._keyfile_dict = kwargs.get('keyfile_dict')
-        self._scopes = kwargs.get('scopes')
-        self._encoding = kwargs.get('encoding', 'utf-8')
+        self._project_id = kwargs.get("project_id")
+        self._credentials = kwargs.get("credentials")
+        self._key_path = kwargs.get("key_path")
+        self._keyfile_dict = kwargs.get("keyfile_dict")
+        self._scopes = kwargs.get("scopes")
+        self._encoding = kwargs.get("encoding", "utf-8")
 
     @property
     def client(self):
         if self._client is None:
-            self.set_client(project_id=self._project_id,
-                            key_path=self._key_path,
-                            keyfile_dict=self._keyfile_dict,
-                            scopes=self._scopes,
-                            credentials=self._credentials)
+            self.set_client(
+                project_id=self._project_id,
+                key_path=self._key_path,
+                keyfile_dict=self._keyfile_dict,
+                scopes=self._scopes,
+                credentials=self._credentials,
+            )
         return self._client
 
-    def set_client(self,
-                   project_id=None,
-                   key_path=None,
-                   keyfile_dict=None,
-                   credentials=None,
-                   scopes=None):
+    def set_client(
+        self,
+        project_id=None,
+        key_path=None,
+        keyfile_dict=None,
+        credentials=None,
+        scopes=None,
+    ):
         """
         Sets a new gc client.
 
@@ -78,12 +98,14 @@ class GCSStore(BaseStore):
 
     def set_env_vars(self):
         if self._key_path:
-            os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = self._key_path
+            os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = self._key_path
         elif self._keyfile_dict:
             create_polyaxon_tmp()
-            with open(settings.TMP_AUTH_GCS_ACCESS_PATH, 'w') as outfile:
+            with open(settings.TMP_AUTH_GCS_ACCESS_PATH, "w") as outfile:
                 json.dump(self._keyfile_dict, outfile)
-            os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = settings.TMP_AUTH_GCS_ACCESS_PATH
+            os.environ[
+                "GOOGLE_APPLICATION_CREDENTIALS"
+            ] = settings.TMP_AUTH_GCS_ACCESS_PATH
 
     @staticmethod
     def parse_gcs_url(gcs_url):
@@ -119,7 +141,7 @@ class GCSStore(BaseStore):
         try:
             return bool(self.get_blob(blob=blob, bucket_name=bucket_name))
         except Exception as e:
-            logger.info('Block does not exist %s', e)
+            logger.info("Block does not exist %s", e)
             return False
 
     def get_blob(self, blob, bucket_name=None):
@@ -138,15 +160,17 @@ class GCSStore(BaseStore):
         obj = bucket.get_blob(blob)
 
         if obj is None:
-            raise PolyaxonStoresException('File does not exist: {}'.format(blob))
+            raise PolyaxonStoresException("File does not exist: {}".format(blob))
 
         return obj
 
     def ls(self, path):
         results = self.list(key=path)
-        return {'files': results['blobs'], 'dirs': results['prefixes']}
+        return {"files": results["blobs"], "dirs": results["prefixes"]}
 
-    def list(self, key, bucket_name=None, path=None, delimiter='/', blobs=True, prefixes=True):
+    def list(
+        self, key, bucket_name=None, path=None, delimiter="/", blobs=True, prefixes=True
+    ):
         """
         List prefixes and blobs in a bucket.
 
@@ -166,15 +190,15 @@ class GCSStore(BaseStore):
 
         bucket = self.get_bucket(bucket_name)
 
-        if key and not key.endswith('/'):
-            key += '/'
+        if key and not key.endswith("/"):
+            key += "/"
 
         prefix = key
         if path:
             prefix = os.path.join(prefix, path)
 
-        if prefix and not prefix.endswith('/'):
-            prefix += '/'
+        if prefix and not prefix.endswith("/"):
+            prefix += "/"
 
         def get_iterator():
             return bucket.list_blobs(prefix=prefix, delimiter=delimiter)
@@ -182,7 +206,7 @@ class GCSStore(BaseStore):
         def get_blobs(_blobs):
             list_blobs = []
             for blob in _blobs:
-                name = blob.name[len(key):]
+                name = blob.name[len(key) :]
                 size = blob.size
                 if all([name, size]):
                     list_blobs.append((name, blob.size))
@@ -191,23 +215,20 @@ class GCSStore(BaseStore):
         def get_prefixes(_prefixes):
             list_prefixes = []
             for folder_path in _prefixes:
-                name = folder_path[len(key): -1]
+                name = folder_path[len(key) : -1]
                 list_prefixes.append(name)
             return list_prefixes
 
-        results = {
-            'blobs': [],
-            'prefixes': []
-        }
+        results = {"blobs": [], "prefixes": []}
 
         if blobs:
             iterator = get_iterator()
-            results['blobs'] = get_blobs(list(iterator))
+            results["blobs"] = get_blobs(list(iterator))
 
         if prefixes:
             iterator = get_iterator()
             for page in iterator.pages:
-                results['prefixes'] += get_prefixes(page.prefixes)
+                results["prefixes"] += get_prefixes(page.prefixes)
 
         return results
 
@@ -277,10 +298,12 @@ class GCSStore(BaseStore):
         with get_files_in_current_directory(dirname) as files:
             for f in files:
                 file_blob = os.path.join(blob, os.path.relpath(f, dirname))
-                self.upload_file(filename=f,
-                                 blob=file_blob,
-                                 bucket_name=bucket_name,
-                                 use_basename=False)
+                self.upload_file(
+                    filename=f,
+                    blob=file_blob,
+                    bucket_name=bucket_name,
+                    use_basename=False,
+                )
 
     def download_dir(self, blob, local_path, bucket_name=None, use_basename=True):
         """
@@ -305,44 +328,48 @@ class GCSStore(BaseStore):
         except PolyaxonStoresException:
             os.makedirs(local_path)
 
-        results = self.list(bucket_name=bucket_name, key=blob, delimiter='/')
+        results = self.list(bucket_name=bucket_name, key=blob, delimiter="/")
 
         # Create directories
-        for prefix in sorted(results['prefixes']):
+        for prefix in sorted(results["prefixes"]):
             direname = os.path.join(local_path, prefix)
             prefix = os.path.join(blob, prefix)
             # Download files under
-            self.download_dir(blob=prefix,
-                              local_path=direname,
-                              bucket_name=bucket_name,
-                              use_basename=False)
+            self.download_dir(
+                blob=prefix,
+                local_path=direname,
+                bucket_name=bucket_name,
+                use_basename=False,
+            )
 
         # Download files
-        for file_key in results['blobs']:
+        for file_key in results["blobs"]:
             file_key = file_key[0]
             filename = os.path.join(local_path, file_key)
             file_key = os.path.join(blob, file_key)
-            self.download_file(blob=file_key,
-                               local_path=filename,
-                               bucket_name=bucket_name,
-                               use_basename=False)
+            self.download_file(
+                blob=file_key,
+                local_path=filename,
+                bucket_name=bucket_name,
+                use_basename=False,
+            )
 
     def delete(self, key, bucket_name=None):
         if not bucket_name:
             bucket_name, key = self.parse_gcs_url(key)
 
-        results = self.list(bucket_name=bucket_name, key=key, delimiter='/')
-        if not any([results['prefixes'], results['blobs']]):
+        results = self.list(bucket_name=bucket_name, key=key, delimiter="/")
+        if not any([results["prefixes"], results["blobs"]]):
             self.delete_file(key=key, bucket_name=bucket_name)
 
         # Delete directories
-        for prefix in sorted(results['prefixes']):
+        for prefix in sorted(results["prefixes"]):
             prefix = os.path.join(key, prefix)
             # Download files under
             self.delete(key=prefix, bucket_name=bucket_name)
 
         # Delete files
-        for file_key in results['blobs']:
+        for file_key in results["blobs"]:
             file_key = file_key[0]
             file_key = os.path.join(key, file_key)
             self.delete_file(key=file_key, bucket_name=bucket_name)

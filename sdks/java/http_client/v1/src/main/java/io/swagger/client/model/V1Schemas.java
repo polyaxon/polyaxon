@@ -36,6 +36,8 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import io.swagger.client.model.V1ArtifactFormat;
+import io.swagger.client.model.V1ConnectionScema;
 import io.swagger.client.model.V1EarlyStopping;
 import io.swagger.client.model.V1Op;
 import io.swagger.client.model.V1OpCondition;
@@ -66,6 +68,12 @@ public class V1Schemas {
 
   @SerializedName("schedule")
   private V1Schedule schedule = null;
+
+  @SerializedName("artifact_format")
+  private V1ArtifactFormat artifactFormat = null;
+
+  @SerializedName("connection_schema")
+  private V1ConnectionScema connectionSchema = null;
 
   public V1Schemas opCondition(V1OpCondition opCondition) {
     this.opCondition = opCondition;
@@ -175,6 +183,42 @@ public class V1Schemas {
     this.schedule = schedule;
   }
 
+  public V1Schemas artifactFormat(V1ArtifactFormat artifactFormat) {
+    this.artifactFormat = artifactFormat;
+    return this;
+  }
+
+   /**
+   * Get artifactFormat
+   * @return artifactFormat
+  **/
+  @ApiModelProperty(value = "")
+  public V1ArtifactFormat getArtifactFormat() {
+    return artifactFormat;
+  }
+
+  public void setArtifactFormat(V1ArtifactFormat artifactFormat) {
+    this.artifactFormat = artifactFormat;
+  }
+
+  public V1Schemas connectionSchema(V1ConnectionScema connectionSchema) {
+    this.connectionSchema = connectionSchema;
+    return this;
+  }
+
+   /**
+   * Get connectionSchema
+   * @return connectionSchema
+  **/
+  @ApiModelProperty(value = "")
+  public V1ConnectionScema getConnectionSchema() {
+    return connectionSchema;
+  }
+
+  public void setConnectionSchema(V1ConnectionScema connectionSchema) {
+    this.connectionSchema = connectionSchema;
+  }
+
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -190,12 +234,14 @@ public class V1Schemas {
         Objects.equals(this.parallel, v1Schemas.parallel) &&
         Objects.equals(this.op, v1Schemas.op) &&
         Objects.equals(this.run, v1Schemas.run) &&
-        Objects.equals(this.schedule, v1Schemas.schedule);
+        Objects.equals(this.schedule, v1Schemas.schedule) &&
+        Objects.equals(this.artifactFormat, v1Schemas.artifactFormat) &&
+        Objects.equals(this.connectionSchema, v1Schemas.connectionSchema);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(opCondition, earlyStopping, parallel, op, run, schedule);
+    return Objects.hash(opCondition, earlyStopping, parallel, op, run, schedule, artifactFormat, connectionSchema);
   }
 
 
@@ -210,6 +256,8 @@ public class V1Schemas {
     sb.append("    op: ").append(toIndentedString(op)).append("\n");
     sb.append("    run: ").append(toIndentedString(run)).append("\n");
     sb.append("    schedule: ").append(toIndentedString(schedule)).append("\n");
+    sb.append("    artifactFormat: ").append(toIndentedString(artifactFormat)).append("\n");
+    sb.append("    connectionSchema: ").append(toIndentedString(connectionSchema)).append("\n");
     sb.append("}");
     return sb.toString();
   }

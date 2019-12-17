@@ -53,6 +53,8 @@ class V1Schemas(object):
         "op": "V1Op",
         "run": "V1RunSchema",
         "schedule": "V1Schedule",
+        "artifact_format": "V1ArtifactFormat",
+        "connection_schema": "V1ConnectionScema",
     }
 
     attribute_map = {
@@ -62,6 +64,8 @@ class V1Schemas(object):
         "op": "op",
         "run": "run",
         "schedule": "schedule",
+        "artifact_format": "artifact_format",
+        "connection_schema": "connection_schema",
     }
 
     def __init__(
@@ -72,6 +76,8 @@ class V1Schemas(object):
         op=None,
         run=None,
         schedule=None,
+        artifact_format=None,
+        connection_schema=None,
     ):  # noqa: E501
         """V1Schemas - a model defined in Swagger"""  # noqa: E501
 
@@ -81,6 +87,8 @@ class V1Schemas(object):
         self._op = None
         self._run = None
         self._schedule = None
+        self._artifact_format = None
+        self._connection_schema = None
         self.discriminator = None
 
         if op_condition is not None:
@@ -95,6 +103,10 @@ class V1Schemas(object):
             self.run = run
         if schedule is not None:
             self.schedule = schedule
+        if artifact_format is not None:
+            self.artifact_format = artifact_format
+        if connection_schema is not None:
+            self.connection_schema = connection_schema
 
     @property
     def op_condition(self):
@@ -221,6 +233,48 @@ class V1Schemas(object):
         """
 
         self._schedule = schedule
+
+    @property
+    def artifact_format(self):
+        """Gets the artifact_format of this V1Schemas.  # noqa: E501
+
+
+        :return: The artifact_format of this V1Schemas.  # noqa: E501
+        :rtype: V1ArtifactFormat
+        """
+        return self._artifact_format
+
+    @artifact_format.setter
+    def artifact_format(self, artifact_format):
+        """Sets the artifact_format of this V1Schemas.
+
+
+        :param artifact_format: The artifact_format of this V1Schemas.  # noqa: E501
+        :type: V1ArtifactFormat
+        """
+
+        self._artifact_format = artifact_format
+
+    @property
+    def connection_schema(self):
+        """Gets the connection_schema of this V1Schemas.  # noqa: E501
+
+
+        :return: The connection_schema of this V1Schemas.  # noqa: E501
+        :rtype: V1ConnectionScema
+        """
+        return self._connection_schema
+
+    @connection_schema.setter
+    def connection_schema(self, connection_schema):
+        """Sets the connection_schema of this V1Schemas.
+
+
+        :param connection_schema: The connection_schema of this V1Schemas.  # noqa: E501
+        :type: V1ConnectionScema
+        """
+
+        self._connection_schema = connection_schema
 
     def to_dict(self):
         """Returns the model properties as a dict"""

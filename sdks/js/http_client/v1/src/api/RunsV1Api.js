@@ -638,7 +638,7 @@
      * @param {Object} opts Optional parameters
      * @param {String} opts.path Artifact filepath.
      * @param {Number} opts.step Artifact logging step.
-     * @param {String} opts.type Artifact type.
+     * @param {String} opts.kind Artifact kind.
      * @param {module:api/RunsV1Api~getRunArtifactsTreeCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1ArtifactTreeResponse}
      */
@@ -670,7 +670,7 @@
       var queryParams = {
         'path': opts['path'],
         'step': opts['step'],
-        'type': opts['type'],
+        'kind': opts['kind'],
       };
       var collectionQueryParams = {
       };
@@ -776,7 +776,7 @@
      * @param {Object} opts Optional parameters
      * @param {String} opts.path Artifact filepath.
      * @param {Number} opts.step Artifact logging step.
-     * @param {String} opts.type Artifact type.
+     * @param {String} opts.kind Artifact kind.
      * @param {module:api/RunsV1Api~getRunLogsTreeCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1ArtifactTreeResponse}
      */
@@ -808,7 +808,7 @@
       var queryParams = {
         'path': opts['path'],
         'step': opts['step'],
-        'type': opts['type'],
+        'kind': opts['kind'],
       };
       var collectionQueryParams = {
       };

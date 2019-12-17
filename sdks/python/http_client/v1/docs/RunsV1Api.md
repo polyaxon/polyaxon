@@ -544,7 +544,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_run_artifacts_tree**
-> V1ArtifactTreeResponse get_run_artifacts_tree(owner, project, uuid, path=path, step=step, type=type)
+> V1ArtifactTreeResponse get_run_artifacts_tree(owner, project, uuid, path=path, step=step, kind=kind)
 
 Get run artifacts list
 
@@ -569,11 +569,11 @@ project = 'project_example' # str | Project where the experiement will be assign
 uuid = 'uuid_example' # str | Unique integer identifier of the entity
 path = 'path_example' # str | Artifact filepath. (optional)
 step = 56 # int | Artifact logging step. (optional)
-type = 'type_example' # str | Artifact type. (optional)
+kind = 'kind_example' # str | Artifact kind. (optional)
 
 try:
     # Get run artifacts list
-    api_response = api_instance.get_run_artifacts_tree(owner, project, uuid, path=path, step=step, type=type)
+    api_response = api_instance.get_run_artifacts_tree(owner, project, uuid, path=path, step=step, kind=kind)
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling RunsV1Api->get_run_artifacts_tree: %s\n" % e)
@@ -588,7 +588,7 @@ Name | Type | Description  | Notes
  **uuid** | **str**| Unique integer identifier of the entity | 
  **path** | **str**| Artifact filepath. | [optional] 
  **step** | **int**| Artifact logging step. | [optional] 
- **type** | **str**| Artifact type. | [optional] 
+ **kind** | **str**| Artifact kind. | [optional] 
 
 ### Return type
 
@@ -668,7 +668,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_run_logs_tree**
-> V1ArtifactTreeResponse get_run_logs_tree(owner, project, uuid, path=path, step=step, type=type)
+> V1ArtifactTreeResponse get_run_logs_tree(owner, project, uuid, path=path, step=step, kind=kind)
 
 Get run logs list
 
@@ -693,11 +693,11 @@ project = 'project_example' # str | Project where the experiement will be assign
 uuid = 'uuid_example' # str | Unique integer identifier of the entity
 path = 'path_example' # str | Artifact filepath. (optional)
 step = 56 # int | Artifact logging step. (optional)
-type = 'type_example' # str | Artifact type. (optional)
+kind = 'kind_example' # str | Artifact kind. (optional)
 
 try:
     # Get run logs list
-    api_response = api_instance.get_run_logs_tree(owner, project, uuid, path=path, step=step, type=type)
+    api_response = api_instance.get_run_logs_tree(owner, project, uuid, path=path, step=step, kind=kind)
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling RunsV1Api->get_run_logs_tree: %s\n" % e)
@@ -712,7 +712,7 @@ Name | Type | Description  | Notes
  **uuid** | **str**| Unique integer identifier of the entity | 
  **path** | **str**| Artifact filepath. | [optional] 
  **step** | **int**| Artifact logging step. | [optional] 
- **type** | **str**| Artifact type. | [optional] 
+ **kind** | **str**| Artifact kind. | [optional] 
 
 ### Return type
 

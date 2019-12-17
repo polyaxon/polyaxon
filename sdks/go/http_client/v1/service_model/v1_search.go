@@ -35,11 +35,23 @@ type V1Search struct {
 	// Format: date-time
 	CreatedAt strfmt.DateTime `json:"created_at,omitempty"`
 
+	// Optional if the entity has been deleted
+	Deleted bool `json:"deleted,omitempty"`
+
+	// Optional description
+	Description string `json:"description,omitempty"`
+
+	// Optional a flag to disable the store
+	Disabled bool `json:"disabled,omitempty"`
+
 	// Optional name
 	Name string `json:"name,omitempty"`
 
 	// Search spec
 	Spec *V1SearchSpec `json:"spec,omitempty"`
+
+	// Optional Tags of this entity
+	Tags []string `json:"tags"`
 
 	// Optional last time the entity was updated
 	// Format: date-time

@@ -73,6 +73,14 @@
         obj.uuid = ApiClient.convertToType(data['uuid'], 'String');
       if (data.hasOwnProperty('name'))
         obj.name = ApiClient.convertToType(data['name'], 'String');
+      if (data.hasOwnProperty('description'))
+        obj.description = ApiClient.convertToType(data['description'], 'String');
+      if (data.hasOwnProperty('tags'))
+        obj.tags = ApiClient.convertToType(data['tags'], ['String']);
+      if (data.hasOwnProperty('disabled'))
+        obj.disabled = ApiClient.convertToType(data['disabled'], 'Boolean');
+      if (data.hasOwnProperty('deleted'))
+        obj.deleted = ApiClient.convertToType(data['deleted'], 'Boolean');
       if (data.hasOwnProperty('spec'))
         obj.spec = V1SearchSpec.constructFromObject(data['spec']);
       if (data.hasOwnProperty('created_at'))
@@ -92,6 +100,26 @@
    * @member {String} name
    */
   exports.prototype.name = undefined;
+
+  /**
+   * @member {String} description
+   */
+  exports.prototype.description = undefined;
+
+  /**
+   * @member {Array.<String>} tags
+   */
+  exports.prototype.tags = undefined;
+
+  /**
+   * @member {Boolean} disabled
+   */
+  exports.prototype.disabled = undefined;
+
+  /**
+   * @member {Boolean} deleted
+   */
+  exports.prototype.deleted = undefined;
 
   /**
    * @member {module:model/V1SearchSpec} spec

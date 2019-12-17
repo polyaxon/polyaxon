@@ -135,15 +135,15 @@ Class | Method | HTTP request | Description
 *PolyaxonSdk.AgentsV1Api* | [**listAgents**](docs/AgentsV1Api.md#listAgents) | **GET** /api/v1/orgs/{owner}/agents | List archived runs for user
 *PolyaxonSdk.AgentsV1Api* | [**patchAgent**](docs/AgentsV1Api.md#patchAgent) | **PATCH** /api/v1/orgs/{owner}/agents/{agent.uuid} | Update run
 *PolyaxonSdk.AgentsV1Api* | [**updateAgent**](docs/AgentsV1Api.md#updateAgent) | **PUT** /api/v1/orgs/{owner}/agents/{agent.uuid} | Get run
-*PolyaxonSdk.ArtifactsStoresV1Api* | [**createArtifactsStore**](docs/ArtifactsStoresV1Api.md#createArtifactsStore) | **POST** /api/v1/orgs/{owner}/artifacts_stores | List runs
-*PolyaxonSdk.ArtifactsStoresV1Api* | [**deleteArtifactsStore**](docs/ArtifactsStoresV1Api.md#deleteArtifactsStore) | **DELETE** /api/v1/orgs/{owner}/artifacts_stores/{uuid} | Patch run
-*PolyaxonSdk.ArtifactsStoresV1Api* | [**getArtifactsStore**](docs/ArtifactsStoresV1Api.md#getArtifactsStore) | **GET** /api/v1/orgs/{owner}/artifacts_stores/{uuid} | Create new run
-*PolyaxonSdk.ArtifactsStoresV1Api* | [**listArtifactsStoreNames**](docs/ArtifactsStoresV1Api.md#listArtifactsStoreNames) | **GET** /api/v1/orgs/{owner}/artifacts_stores/names | List bookmarked runs for user
-*PolyaxonSdk.ArtifactsStoresV1Api* | [**listArtifactsStores**](docs/ArtifactsStoresV1Api.md#listArtifactsStores) | **GET** /api/v1/orgs/{owner}/artifacts_stores | List archived runs for user
-*PolyaxonSdk.ArtifactsStoresV1Api* | [**patchArtifactsStore**](docs/ArtifactsStoresV1Api.md#patchArtifactsStore) | **PATCH** /api/v1/orgs/{owner}/artifacts_stores/{artifact_store.uuid} | Update run
-*PolyaxonSdk.ArtifactsStoresV1Api* | [**updateArtifactsStore**](docs/ArtifactsStoresV1Api.md#updateArtifactsStore) | **PUT** /api/v1/orgs/{owner}/artifacts_stores/{artifact_store.uuid} | Get run
 *PolyaxonSdk.ArtifactsStoresV1Api* | [**uploadArtifact**](docs/ArtifactsStoresV1Api.md#uploadArtifact) | **POST** /api/v1/catalogs/{owner}/artifacts_stores/{uuid}/upload | Upload artifact to a store
 *PolyaxonSdk.AuthV1Api* | [**login**](docs/AuthV1Api.md#login) | **POST** /api/v1/users/token | List bookmarked runs for user
+*PolyaxonSdk.ConnectionsV1Api* | [**createConnection**](docs/ConnectionsV1Api.md#createConnection) | **POST** /api/v1/orgs/{owner}/connections | List runs
+*PolyaxonSdk.ConnectionsV1Api* | [**deleteConnection**](docs/ConnectionsV1Api.md#deleteConnection) | **DELETE** /api/v1/orgs/{owner}/connections/{uuid} | Patch run
+*PolyaxonSdk.ConnectionsV1Api* | [**getConnection**](docs/ConnectionsV1Api.md#getConnection) | **GET** /api/v1/orgs/{owner}/connections/{uuid} | Create new run
+*PolyaxonSdk.ConnectionsV1Api* | [**listConnectionNames**](docs/ConnectionsV1Api.md#listConnectionNames) | **GET** /api/v1/orgs/{owner}/connections/names | List bookmarked runs for user
+*PolyaxonSdk.ConnectionsV1Api* | [**listConnections**](docs/ConnectionsV1Api.md#listConnections) | **GET** /api/v1/orgs/{owner}/connections | List archived runs for user
+*PolyaxonSdk.ConnectionsV1Api* | [**patchConnection**](docs/ConnectionsV1Api.md#patchConnection) | **PATCH** /api/v1/orgs/{owner}/connections/{connection.uuid} | Update run
+*PolyaxonSdk.ConnectionsV1Api* | [**updateConnection**](docs/ConnectionsV1Api.md#updateConnection) | **PUT** /api/v1/orgs/{owner}/connections/{connection.uuid} | Get run
 *PolyaxonSdk.DashboardsV1Api* | [**createDashboard**](docs/DashboardsV1Api.md#createDashboard) | **POST** /api/v1/orgs/{owner}/dashboards | List runs
 *PolyaxonSdk.DashboardsV1Api* | [**deleteDashboard**](docs/DashboardsV1Api.md#deleteDashboard) | **DELETE** /api/v1/orgs/{owner}/dashboards/{uuid} | Patch run
 *PolyaxonSdk.DashboardsV1Api* | [**getDashboard**](docs/DashboardsV1Api.md#getDashboard) | **GET** /api/v1/orgs/{owner}/dashboards/{uuid} | Create new run
@@ -151,13 +151,6 @@ Class | Method | HTTP request | Description
 *PolyaxonSdk.DashboardsV1Api* | [**listDashboards**](docs/DashboardsV1Api.md#listDashboards) | **GET** /api/v1/orgs/{owner}/dashboards | List archived runs for user
 *PolyaxonSdk.DashboardsV1Api* | [**patchDashboard**](docs/DashboardsV1Api.md#patchDashboard) | **PATCH** /api/v1/orgs/{owner}/dashboards/{dashboard.uuid} | Update run
 *PolyaxonSdk.DashboardsV1Api* | [**updateDashboard**](docs/DashboardsV1Api.md#updateDashboard) | **PUT** /api/v1/orgs/{owner}/dashboards/{dashboard.uuid} | Get run
-*PolyaxonSdk.GitAccessesV1Api* | [**createGitAccess**](docs/GitAccessesV1Api.md#createGitAccess) | **POST** /api/v1/orgs/{owner}/git_accesses | List runs
-*PolyaxonSdk.GitAccessesV1Api* | [**deleteGitAccess**](docs/GitAccessesV1Api.md#deleteGitAccess) | **DELETE** /api/v1/orgs/{owner}/git_accesses/{uuid} | Patch run
-*PolyaxonSdk.GitAccessesV1Api* | [**getGitAccess**](docs/GitAccessesV1Api.md#getGitAccess) | **GET** /api/v1/orgs/{owner}/git_accesses/{uuid} | Create new run
-*PolyaxonSdk.GitAccessesV1Api* | [**listGitAccessNames**](docs/GitAccessesV1Api.md#listGitAccessNames) | **GET** /api/v1/orgs/{owner}/git_accesses/names | List bookmarked runs for user
-*PolyaxonSdk.GitAccessesV1Api* | [**listGitAccesses**](docs/GitAccessesV1Api.md#listGitAccesses) | **GET** /api/v1/orgs/{owner}/git_accesses | List archived runs for user
-*PolyaxonSdk.GitAccessesV1Api* | [**patchGitAccess**](docs/GitAccessesV1Api.md#patchGitAccess) | **PATCH** /api/v1/orgs/{owner}/git_accesses/{host_access.uuid} | Update run
-*PolyaxonSdk.GitAccessesV1Api* | [**updateGitAccess**](docs/GitAccessesV1Api.md#updateGitAccess) | **PUT** /api/v1/orgs/{owner}/git_accesses/{host_access.uuid} | Get run
 *PolyaxonSdk.K8sConfigMapsV1Api* | [**createK8sConfigMap**](docs/K8sConfigMapsV1Api.md#createK8sConfigMap) | **POST** /api/v1/orgs/{owner}/k8s_config_maps | List runs
 *PolyaxonSdk.K8sConfigMapsV1Api* | [**deleteK8sConfigMap**](docs/K8sConfigMapsV1Api.md#deleteK8sConfigMap) | **DELETE** /api/v1/orgs/{owner}/k8s_config_maps/{uuid} | Patch run
 *PolyaxonSdk.K8sConfigMapsV1Api* | [**getK8sConfigMap**](docs/K8sConfigMapsV1Api.md#getK8sConfigMap) | **GET** /api/v1/orgs/{owner}/k8s_config_maps/{uuid} | Create new run
@@ -232,13 +225,6 @@ Class | Method | HTTP request | Description
 *PolyaxonSdk.QueuesV1Api* | [**listQueues**](docs/QueuesV1Api.md#listQueues) | **GET** /api/v1/orgs/{owner}/agents/{agent}/queues | Create new run
 *PolyaxonSdk.QueuesV1Api* | [**patchQueue**](docs/QueuesV1Api.md#patchQueue) | **PATCH** /api/v1/orgs/{owner}/agents/{queue.agent}/queues/{queue.uuid} | Delete run
 *PolyaxonSdk.QueuesV1Api* | [**updateQueue**](docs/QueuesV1Api.md#updateQueue) | **PUT** /api/v1/orgs/{owner}/agents/{queue.agent}/queues/{queue.uuid} | Patch run
-*PolyaxonSdk.RegistryAccessesV1Api* | [**createRegistryAccess**](docs/RegistryAccessesV1Api.md#createRegistryAccess) | **POST** /api/v1/orgs/{owner}/registry_accesses | List runs
-*PolyaxonSdk.RegistryAccessesV1Api* | [**deleteRegistryAccess**](docs/RegistryAccessesV1Api.md#deleteRegistryAccess) | **DELETE** /api/v1/orgs/{owner}/registry_accesses/{uuid} | Patch run
-*PolyaxonSdk.RegistryAccessesV1Api* | [**getRegistryAccess**](docs/RegistryAccessesV1Api.md#getRegistryAccess) | **GET** /api/v1/orgs/{owner}/registry_accesses/{uuid} | Create new run
-*PolyaxonSdk.RegistryAccessesV1Api* | [**listRegistryAccessNames**](docs/RegistryAccessesV1Api.md#listRegistryAccessNames) | **GET** /api/v1/orgs/{owner}/registry_accesses/names | List bookmarked runs for user
-*PolyaxonSdk.RegistryAccessesV1Api* | [**listRegistryAccesses**](docs/RegistryAccessesV1Api.md#listRegistryAccesses) | **GET** /api/v1/orgs/{owner}/registry_accesses | List archived runs for user
-*PolyaxonSdk.RegistryAccessesV1Api* | [**patchRegistryAccess**](docs/RegistryAccessesV1Api.md#patchRegistryAccess) | **PATCH** /api/v1/orgs/{owner}/registry_accesses/{host_access.uuid} | Update run
-*PolyaxonSdk.RegistryAccessesV1Api* | [**updateRegistryAccess**](docs/RegistryAccessesV1Api.md#updateRegistryAccess) | **PUT** /api/v1/orgs/{owner}/registry_accesses/{host_access.uuid} | Get run
 *PolyaxonSdk.RunProfilesV1Api* | [**createRunProfile**](docs/RunProfilesV1Api.md#createRunProfile) | **POST** /api/v1/orgs/{owner}/run_profiles | List runs
 *PolyaxonSdk.RunProfilesV1Api* | [**deleteRunProfile**](docs/RunProfilesV1Api.md#deleteRunProfile) | **DELETE** /api/v1/orgs/{owner}/run_profiles/{uuid} | Patch run
 *PolyaxonSdk.RunProfilesV1Api* | [**getRunProfile**](docs/RunProfilesV1Api.md#getRunProfile) | **GET** /api/v1/orgs/{owner}/run_profiles/{uuid} | Create new run
@@ -308,16 +294,21 @@ Class | Method | HTTP request | Description
 
  - [PolyaxonSdk.ProtobufNullValue](docs/ProtobufNullValue.md)
  - [PolyaxonSdk.V1Agent](docs/V1Agent.md)
+ - [PolyaxonSdk.V1ArtifactFormat](docs/V1ArtifactFormat.md)
  - [PolyaxonSdk.V1ArtifactMount](docs/V1ArtifactMount.md)
  - [PolyaxonSdk.V1ArtifactTreeResponse](docs/V1ArtifactTreeResponse.md)
- - [PolyaxonSdk.V1ArtifactsStore](docs/V1ArtifactsStore.md)
  - [PolyaxonSdk.V1Auth](docs/V1Auth.md)
  - [PolyaxonSdk.V1AverageStoppingPolicy](docs/V1AverageStoppingPolicy.md)
  - [PolyaxonSdk.V1BO](docs/V1BO.md)
+ - [PolyaxonSdk.V1BlobConnection](docs/V1BlobConnection.md)
  - [PolyaxonSdk.V1BuildContext](docs/V1BuildContext.md)
+ - [PolyaxonSdk.V1ClaimConnection](docs/V1ClaimConnection.md)
  - [PolyaxonSdk.V1CodeRef](docs/V1CodeRef.md)
  - [PolyaxonSdk.V1Component](docs/V1Component.md)
  - [PolyaxonSdk.V1ComponentRef](docs/V1ComponentRef.md)
+ - [PolyaxonSdk.V1Connection](docs/V1Connection.md)
+ - [PolyaxonSdk.V1ConnectionKind](docs/V1ConnectionKind.md)
+ - [PolyaxonSdk.V1ConnectionScema](docs/V1ConnectionScema.md)
  - [PolyaxonSdk.V1Container](docs/V1Container.md)
  - [PolyaxonSdk.V1ContainerEnv](docs/V1ContainerEnv.md)
  - [PolyaxonSdk.V1CredsBodyRequest](docs/V1CredsBodyRequest.md)
@@ -332,7 +323,8 @@ Class | Method | HTTP request | Description
  - [PolyaxonSdk.V1FailureEarlyStopping](docs/V1FailureEarlyStopping.md)
  - [PolyaxonSdk.V1Flink](docs/V1Flink.md)
  - [PolyaxonSdk.V1GridSearch](docs/V1GridSearch.md)
- - [PolyaxonSdk.V1HostAccess](docs/V1HostAccess.md)
+ - [PolyaxonSdk.V1HostConnection](docs/V1HostConnection.md)
+ - [PolyaxonSdk.V1HostPathConnection](docs/V1HostPathConnection.md)
  - [PolyaxonSdk.V1Hyperband](docs/V1Hyperband.md)
  - [PolyaxonSdk.V1Hyperopt](docs/V1Hyperopt.md)
  - [PolyaxonSdk.V1HyperoptAlgorithms](docs/V1HyperoptAlgorithms.md)
@@ -343,9 +335,8 @@ Class | Method | HTTP request | Description
  - [PolyaxonSdk.V1K8sMount](docs/V1K8sMount.md)
  - [PolyaxonSdk.V1K8sResource](docs/V1K8sResource.md)
  - [PolyaxonSdk.V1ListAgentsResponse](docs/V1ListAgentsResponse.md)
- - [PolyaxonSdk.V1ListArtifactsStoresResponse](docs/V1ListArtifactsStoresResponse.md)
+ - [PolyaxonSdk.V1ListConnectionsResponse](docs/V1ListConnectionsResponse.md)
  - [PolyaxonSdk.V1ListDashboardsResponse](docs/V1ListDashboardsResponse.md)
- - [PolyaxonSdk.V1ListHostAccessesResponse](docs/V1ListHostAccessesResponse.md)
  - [PolyaxonSdk.V1ListK8sResourcesResponse](docs/V1ListK8sResourcesResponse.md)
  - [PolyaxonSdk.V1ListOrganizationMembersResponse](docs/V1ListOrganizationMembersResponse.md)
  - [PolyaxonSdk.V1ListOrganizationsResponse](docs/V1ListOrganizationsResponse.md)

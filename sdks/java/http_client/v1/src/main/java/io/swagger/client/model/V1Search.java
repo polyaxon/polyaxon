@@ -38,6 +38,8 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.client.model.V1SearchSpec;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import org.threeten.bp.OffsetDateTime;
 
 /**
@@ -50,6 +52,18 @@ public class V1Search {
 
   @SerializedName("name")
   private String name = null;
+
+  @SerializedName("description")
+  private String description = null;
+
+  @SerializedName("tags")
+  private List<String> tags = null;
+
+  @SerializedName("disabled")
+  private Boolean disabled = null;
+
+  @SerializedName("deleted")
+  private Boolean deleted = null;
 
   @SerializedName("spec")
   private V1SearchSpec spec = null;
@@ -94,6 +108,86 @@ public class V1Search {
 
   public void setName(String name) {
     this.name = name;
+  }
+
+  public V1Search description(String description) {
+    this.description = description;
+    return this;
+  }
+
+   /**
+   * Get description
+   * @return description
+  **/
+  @ApiModelProperty(value = "")
+  public String getDescription() {
+    return description;
+  }
+
+  public void setDescription(String description) {
+    this.description = description;
+  }
+
+  public V1Search tags(List<String> tags) {
+    this.tags = tags;
+    return this;
+  }
+
+  public V1Search addTagsItem(String tagsItem) {
+    if (this.tags == null) {
+      this.tags = new ArrayList<String>();
+    }
+    this.tags.add(tagsItem);
+    return this;
+  }
+
+   /**
+   * Get tags
+   * @return tags
+  **/
+  @ApiModelProperty(value = "")
+  public List<String> getTags() {
+    return tags;
+  }
+
+  public void setTags(List<String> tags) {
+    this.tags = tags;
+  }
+
+  public V1Search disabled(Boolean disabled) {
+    this.disabled = disabled;
+    return this;
+  }
+
+   /**
+   * Get disabled
+   * @return disabled
+  **/
+  @ApiModelProperty(value = "")
+  public Boolean isDisabled() {
+    return disabled;
+  }
+
+  public void setDisabled(Boolean disabled) {
+    this.disabled = disabled;
+  }
+
+  public V1Search deleted(Boolean deleted) {
+    this.deleted = deleted;
+    return this;
+  }
+
+   /**
+   * Get deleted
+   * @return deleted
+  **/
+  @ApiModelProperty(value = "")
+  public Boolean isDeleted() {
+    return deleted;
+  }
+
+  public void setDeleted(Boolean deleted) {
+    this.deleted = deleted;
   }
 
   public V1Search spec(V1SearchSpec spec) {
@@ -162,6 +256,10 @@ public class V1Search {
     V1Search v1Search = (V1Search) o;
     return Objects.equals(this.uuid, v1Search.uuid) &&
         Objects.equals(this.name, v1Search.name) &&
+        Objects.equals(this.description, v1Search.description) &&
+        Objects.equals(this.tags, v1Search.tags) &&
+        Objects.equals(this.disabled, v1Search.disabled) &&
+        Objects.equals(this.deleted, v1Search.deleted) &&
         Objects.equals(this.spec, v1Search.spec) &&
         Objects.equals(this.createdAt, v1Search.createdAt) &&
         Objects.equals(this.updatedAt, v1Search.updatedAt);
@@ -169,7 +267,7 @@ public class V1Search {
 
   @Override
   public int hashCode() {
-    return Objects.hash(uuid, name, spec, createdAt, updatedAt);
+    return Objects.hash(uuid, name, description, tags, disabled, deleted, spec, createdAt, updatedAt);
   }
 
 
@@ -180,6 +278,10 @@ public class V1Search {
     
     sb.append("    uuid: ").append(toIndentedString(uuid)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
+    sb.append("    description: ").append(toIndentedString(description)).append("\n");
+    sb.append("    tags: ").append(toIndentedString(tags)).append("\n");
+    sb.append("    disabled: ").append(toIndentedString(disabled)).append("\n");
+    sb.append("    deleted: ").append(toIndentedString(deleted)).append("\n");
     sb.append("    spec: ").append(toIndentedString(spec)).append("\n");
     sb.append("    createdAt: ").append(toIndentedString(createdAt)).append("\n");
     sb.append("    updatedAt: ").append(toIndentedString(updatedAt)).append("\n");

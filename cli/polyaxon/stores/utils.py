@@ -1,4 +1,20 @@
-# -*- coding: utf-8 -*-
+#!/usr/bin/python
+#
+# Copyright 2019 Polyaxon, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# coding: utf-8
 from __future__ import absolute_import, division, print_function
 
 import datetime
@@ -7,8 +23,8 @@ import os
 from contextlib import contextmanager
 from decimal import Decimal
 
-from polystores.exceptions import PolyaxonStoresException
-from polystores.logger import logger
+from polyaxon.exceptions import PolyaxonStoresException
+from polyaxon.logger import logger
 
 
 def get_from_env(keys):
@@ -26,13 +42,13 @@ def get_from_env(keys):
     for key in keys:
         value = os.environ.get(key)
         if value:
-            if value.lower() == 'true':
+            if value.lower() == "true":
                 return True
-            if value.lower() == 'false':
+            if value.lower() == "false":
                 return False
             return value
         # Prepend POLYAXON
-        key = 'POLYAXON_{}'.format(key)
+        key = "POLYAXON_{}".format(key)
         value = os.environ.get(key)
         if value:
             return value
@@ -44,11 +60,21 @@ def is_protected_type(obj):
     """
     A check for preserving a type as-is when passed to force_text(strings_only=True).
     """
-    return isinstance(obj, (
-        type(None), int, float, Decimal, datetime.datetime, datetime.date, datetime.time,))
+    return isinstance(
+        obj,
+        (
+            type(None),
+            int,
+            float,
+            Decimal,
+            datetime.datetime,
+            datetime.date,
+            datetime.time,
+        ),
+    )
 
 
-def force_bytes(value, encoding='utf-8', strings_only=False, errors='strict'):
+def force_bytes(value, encoding="utf-8", strings_only=False, errors="strict"):
     """
     Resolve any value to strings.
 
@@ -56,9 +82,9 @@ def force_bytes(value, encoding='utf-8', strings_only=False, errors='strict'):
     """
     # Handle the common case first for performance reasons.
     if isinstance(value, bytes):
-        if encoding == 'utf-8':
+        if encoding == "utf-8":
             return value
-        return value.decode('utf-8', errors).encode(encoding, errors)
+        return value.decode("utf-8", errors).encode(encoding, errors)
     if strings_only and is_protected_type(value):
         return value
     if isinstance(value, memoryview):
@@ -84,7 +110,9 @@ def check_dirname_exists(path, is_dir=False):
     if not is_dir:
         path = os.path.dirname(os.path.abspath(path))
     if not os.path.isdir(path):
-        raise PolyaxonStoresException('The parent path is not a directory {}'.format(path))
+        raise PolyaxonStoresException(
+            "The parent path is not a directory {}".format(path)
+        )
 
 
 @contextmanager
@@ -110,12 +138,12 @@ def get_files_in_current_directory(path):
 
 
 def create_polyaxon_tmp():
-    base_path = os.path.join('/tmp', '.polyaxon')
+    base_path = os.path.join("/tmp", ".polyaxon")
     if not os.path.exists(base_path):
         try:
             os.makedirs(base_path)
         except OSError:
             # Except permission denied and potential race conditions
             # in multi-threaded environments.
-            logger.warning('Could not create config directory `%s`', base_path)
+            logger.warning("Could not create config directory `%s`", base_path)
     return base_path

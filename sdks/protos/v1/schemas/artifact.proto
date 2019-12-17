@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package v1;
+
+// Artifact format
+enum ArtifactFormat {
+    // Comma
+    csv = 0;
+
+    // Tab
+    tsv = 1;
+
+    // Pipe
+    psv = 2;
+
+    // Space
+    ssv = 3;
+}

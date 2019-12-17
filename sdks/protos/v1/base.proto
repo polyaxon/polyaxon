@@ -227,6 +227,13 @@ message RunArtifactRequest {
     // Artifact logging step
     int32 step = 5;
 
-    // Artifact type
-    string type = 6;
+    // Artifact kind
+    string kind = 6;
+}
+
+// Artifact tree response
+message ArtifactTreeResponse {
+    map<string, int64> files = 1;
+    repeated string dirs = 2;
+    bool is_done = 3;
 }

@@ -27,9 +27,10 @@ from polyaxon.exceptions import PolyaxonSchemaError
 from polyaxon.schemas.polyflow import dags
 from polyaxon.schemas.polyflow import params as ops_params
 from polyaxon.schemas.polyflow.component_ref import ComponentRefConfig
-from polyaxon.schemas.polyflow.io import IOConfig, IOTypes
+from polyaxon.schemas.polyflow.io import IOConfig
 from polyaxon.schemas.polyflow.op import OpConfig
 from polyaxon.schemas.polyflow.run import DagConfig
+from polyaxon.types import types
 
 
 @pytest.mark.workflow_mark
@@ -134,12 +135,12 @@ class TestWorkflowDagConfigs(TestCase):
                         {
                             "name": "input1",
                             "description": "some text",
-                            "type": IOTypes.FLOAT,
+                            "type": types.FLOAT,
                         },
                         {
                             "name": "input2",
                             "description": "some text",
-                            "type": IOTypes.BOOL,
+                            "type": types.BOOL,
                             "is_optional": True,
                             "value": True,
                         },
@@ -148,7 +149,7 @@ class TestWorkflowDagConfigs(TestCase):
                         {
                             "name": "output1",
                             "description": "some text",
-                            "type": IOTypes.S3_PATH,
+                            "type": types.S3,
                         }
                     ],
                     "environment": {
@@ -186,12 +187,12 @@ class TestWorkflowDagConfigs(TestCase):
                             {
                                 "name": "input1",
                                 "description": "some text",
-                                "type": IOTypes.FLOAT,
+                                "type": types.FLOAT,
                             },
                             {
                                 "name": "input2",
                                 "description": "some text",
-                                "type": IOTypes.BOOL,
+                                "type": types.BOOL,
                                 "is_optional": True,
                                 "value": True,
                             },
@@ -200,7 +201,7 @@ class TestWorkflowDagConfigs(TestCase):
                             {
                                 "name": "output1",
                                 "description": "some text",
-                                "type": IOTypes.S3_PATH,
+                                "type": types.S3,
                             }
                         ],
                         "environment": {
@@ -221,7 +222,7 @@ class TestWorkflowDagConfigs(TestCase):
         config.process_dag()
         config.validate_dag()
         config.process_components(
-            inputs=[IOConfig.from_dict({"name": "input_pipe", "type": IOTypes.S3_PATH})]
+            inputs=[IOConfig.from_dict({"name": "input_pipe", "type": types.S3})]
         )
 
     def test_dag_structure(self):
@@ -1265,7 +1266,7 @@ class TestWorkflowDagConfigs(TestCase):
                             {
                                 "name": "input1",
                                 "description": "some text",
-                                "type": IOTypes.FLOAT,
+                                "type": types.FLOAT,
                             }
                         ],
                         "run": {"kind": "container", "image": "test"},
@@ -1290,7 +1291,7 @@ class TestWorkflowDagConfigs(TestCase):
                         {
                             "name": "input1",
                             "description": "some text",
-                            "type": IOTypes.FLOAT,
+                            "type": types.FLOAT,
                         }
                     ],
                     "run": {"kind": "container", "image": "test"},
@@ -1316,7 +1317,7 @@ class TestWorkflowDagConfigs(TestCase):
                             {
                                 "name": "input1",
                                 "description": "some text",
-                                "type": IOTypes.FLOAT,
+                                "type": types.FLOAT,
                                 "is_optional": True,
                                 "value": 12.2,
                             }
@@ -1342,7 +1343,7 @@ class TestWorkflowDagConfigs(TestCase):
                         {
                             "name": "input1",
                             "description": "some text",
-                            "type": IOTypes.FLOAT,
+                            "type": types.FLOAT,
                             "is_optional": True,
                             "value": 12.2,
                         }
@@ -1370,7 +1371,7 @@ class TestWorkflowDagConfigs(TestCase):
                             {
                                 "name": "input1",
                                 "description": "some text",
-                                "type": IOTypes.FLOAT,
+                                "type": types.FLOAT,
                                 "is_optional": True,
                                 "value": 12.2,
                             }
@@ -1405,7 +1406,7 @@ class TestWorkflowDagConfigs(TestCase):
                         {
                             "name": "input1",
                             "description": "some text",
-                            "type": IOTypes.FLOAT,
+                            "type": types.FLOAT,
                             "is_optional": True,
                             "value": 12.2,
                         }
@@ -1444,17 +1445,17 @@ class TestWorkflowDagConfigs(TestCase):
                         {
                             "name": "input1",
                             "description": "some text",
-                            "type": IOTypes.STR,
+                            "type": types.STR,
                         },
                         {
                             "name": "input2",
                             "description": "some text",
-                            "type": IOTypes.FLOAT,
+                            "type": types.FLOAT,
                         },
                         {
                             "name": "input3",
                             "description": "some text",
-                            "type": IOTypes.BOOL,
+                            "type": types.BOOL,
                             "is_optional": True,
                             "value": True,
                         },
@@ -1514,17 +1515,17 @@ class TestWorkflowDagConfigs(TestCase):
                         {
                             "name": "input1",
                             "description": "some text",
-                            "type": IOTypes.STR,
+                            "type": types.STR,
                         },
                         {
                             "name": "input2",
                             "description": "some text",
-                            "type": IOTypes.FLOAT,
+                            "type": types.FLOAT,
                         },
                         {
                             "name": "input3",
                             "description": "some text",
-                            "type": IOTypes.BOOL,
+                            "type": types.BOOL,
                             "is_optional": True,
                             "value": True,
                         },
@@ -1564,17 +1565,17 @@ class TestWorkflowDagConfigs(TestCase):
                         {
                             "name": "input1",
                             "description": "some text",
-                            "type": IOTypes.INT,
+                            "type": types.INT,
                         },
                         {
                             "name": "input2",
                             "description": "some text",
-                            "type": IOTypes.GCS_PATH,
+                            "type": types.GCS,
                         },
                         {
                             "name": "input3",
                             "description": "some text",
-                            "type": IOTypes.BOOL,
+                            "type": types.BOOL,
                             "is_optional": True,
                             "value": True,
                         },
@@ -1583,7 +1584,7 @@ class TestWorkflowDagConfigs(TestCase):
                         {
                             "name": "output1",
                             "description": "some text",
-                            "type": IOTypes.INT,
+                            "type": types.INT,
                             "is_optional": True,
                             "value": 123,
                         }
@@ -1627,17 +1628,17 @@ class TestWorkflowDagConfigs(TestCase):
                         {
                             "name": "input1",
                             "description": "some text",
-                            "type": IOTypes.INT,
+                            "type": types.INT,
                         },
                         {
                             "name": "input2",
                             "description": "some text",
-                            "type": IOTypes.GCS_PATH,
+                            "type": types.GCS,
                         },
                         {
                             "name": "input3",
                             "description": "some text",
-                            "type": IOTypes.BOOL,
+                            "type": types.BOOL,
                             "is_optional": True,
                             "value": True,
                         },
@@ -1646,7 +1647,7 @@ class TestWorkflowDagConfigs(TestCase):
                         {
                             "name": "output1",
                             "description": "some text",
-                            "type": IOTypes.INT,
+                            "type": types.INT,
                         }
                     ],
                     "run": {"kind": "container", "image": "test"},
@@ -1749,19 +1750,19 @@ class TestWorkflowDagConfigs(TestCase):
                         {
                             "name": "input1",
                             "description": "some text",
-                            "type": IOTypes.FLOAT,
+                            "type": types.FLOAT,
                         },
                         {
                             "name": "input2",
                             "description": "some text",
-                            "type": IOTypes.BOOL,
+                            "type": types.BOOL,
                             "is_optional": True,
                             "value": True,
                         },
                         {
                             "name": "input3",
                             "description": "some text",
-                            "type": IOTypes.INT,
+                            "type": types.INT,
                             "is_optional": True,
                             "value": True,
                         },
@@ -1770,12 +1771,12 @@ class TestWorkflowDagConfigs(TestCase):
                         {
                             "name": "output1",
                             "description": "some text",
-                            "type": IOTypes.S3_PATH,
+                            "type": types.S3,
                         },
                         {
                             "name": "output2",
                             "description": "some text",
-                            "type": IOTypes.BOOL,
+                            "type": types.BOOL,
                             "is_optional": True,
                             "value": True,
                         },
@@ -1797,12 +1798,12 @@ class TestWorkflowDagConfigs(TestCase):
                         {
                             "name": "input1",
                             "description": "some text",
-                            "type": IOTypes.S3_PATH,
+                            "type": types.S3,
                         },
                         {
                             "name": "input2",
                             "description": "some text",
-                            "type": IOTypes.BOOL,
+                            "type": types.BOOL,
                             "is_optional": True,
                             "value": True,
                         },
@@ -1811,7 +1812,7 @@ class TestWorkflowDagConfigs(TestCase):
                         {
                             "name": "output1",
                             "description": "some text",
-                            "type": IOTypes.S3_PATH,
+                            "type": types.S3,
                         }
                     ],
                     "environment": {
@@ -1850,7 +1851,7 @@ class TestWorkflowDagConfigs(TestCase):
                         {
                             "name": "input1",
                             "description": "some text",
-                            "type": IOTypes.S3_PATH,
+                            "type": types.S3,
                             "is_optional": True,
                             "value": "s3://foo",
                         }
@@ -1859,7 +1860,7 @@ class TestWorkflowDagConfigs(TestCase):
                         {
                             "name": "output1",
                             "description": "some text",
-                            "type": IOTypes.S3_PATH,
+                            "type": types.S3,
                         }
                     ],
                     "environment": {
@@ -2018,26 +2019,26 @@ class TestWorkflowDagConfigs(TestCase):
                 {
                     "name": "A",
                     "inputs": [
-                        {"name": "input1", "type": IOTypes.FLOAT},
+                        {"name": "input1", "type": types.FLOAT},
                         {
                             "name": "input2",
-                            "type": IOTypes.BOOL,
+                            "type": types.BOOL,
                             "is_optional": True,
                             "value": True,
                         },
                         {
                             "name": "input3",
-                            "type": IOTypes.INT,
+                            "type": types.INT,
                             "is_optional": True,
                             "value": True,
                         },
-                        {"name": "input4", "type": IOTypes.S3_PATH},
+                        {"name": "input4", "type": types.S3},
                     ],
                     "outputs": [
-                        {"name": "output1", "type": IOTypes.S3_PATH},
+                        {"name": "output1", "type": types.S3},
                         {
                             "name": "output2",
-                            "type": IOTypes.BOOL,
+                            "type": types.BOOL,
                             "is_optional": True,
                             "value": True,
                         },
@@ -2047,10 +2048,10 @@ class TestWorkflowDagConfigs(TestCase):
                 {
                     "name": "B",
                     "inputs": [
-                        {"name": "input1", "type": IOTypes.S3_PATH},
-                        {"name": "input2", "type": IOTypes.S3_PATH},
+                        {"name": "input1", "type": types.S3},
+                        {"name": "input2", "type": types.S3},
                     ],
-                    "outputs": [{"name": "output1", "type": IOTypes.S3_PATH}],
+                    "outputs": [{"name": "output1", "type": types.S3}],
                     "run": {"kind": "container", "image": "test"},
                 },
             ],
@@ -2061,7 +2062,7 @@ class TestWorkflowDagConfigs(TestCase):
         config.process_dag()
         config.validate_dag()
         config.process_components(
-            inputs=[IOConfig.from_dict({"name": "input_pipe", "type": IOTypes.S3_PATH})]
+            inputs=[IOConfig.from_dict({"name": "input_pipe", "type": types.S3})]
         )
         dag = config.dag
         assert len(dag) == 3

@@ -59,6 +59,10 @@
           var body = new PolyaxonSdk.V1Dashboard();
           body.uuid = "";
           body.name = "";
+          body.description = "";
+          body.tags = [""];
+          body.disabled = false;
+          body.deleted = false;
           body.widgets = [new PolyaxonSdk.V1WidgetSpec()];
           body.widgets[0].kind = "";
           body.widgets[0].search = new PolyaxonSdk.V1SearchSpec();
@@ -82,6 +86,22 @@
             expect(data.uuid).to.be("");
             expect(data.name).to.be.a('string');
             expect(data.name).to.be("");
+            expect(data.description).to.be.a('string');
+            expect(data.description).to.be("");
+            {
+              let dataCtr = data.tags;
+              expect(dataCtr).to.be.an(Array);
+              expect(dataCtr).to.not.be.empty();
+              for (let p in dataCtr) {
+                let data = dataCtr[p];
+                expect(data).to.be.a('string');
+                expect(data).to.be("");
+              }
+            }
+            expect(data.disabled).to.be.a('boolean');
+            expect(data.disabled).to.be(false);
+            expect(data.deleted).to.be.a('boolean');
+            expect(data.deleted).to.be(false);
             {
               let dataCtr = data.widgets;
               expect(dataCtr).to.be.an(Array);
@@ -158,6 +178,22 @@
             expect(data.uuid).to.be("");
             expect(data.name).to.be.a('string');
             expect(data.name).to.be("");
+            expect(data.description).to.be.a('string');
+            expect(data.description).to.be("");
+            {
+              let dataCtr = data.tags;
+              expect(dataCtr).to.be.an(Array);
+              expect(dataCtr).to.not.be.empty();
+              for (let p in dataCtr) {
+                let data = dataCtr[p];
+                expect(data).to.be.a('string');
+                expect(data).to.be("");
+              }
+            }
+            expect(data.disabled).to.be.a('boolean');
+            expect(data.disabled).to.be(false);
+            expect(data.deleted).to.be.a('boolean');
+            expect(data.deleted).to.be(false);
             {
               let dataCtr = data.widgets;
               expect(dataCtr).to.be.an(Array);
@@ -226,6 +262,22 @@
                 expect(data.uuid).to.be("");
                 expect(data.name).to.be.a('string');
                 expect(data.name).to.be("");
+                expect(data.description).to.be.a('string');
+                expect(data.description).to.be("");
+                {
+                  let dataCtr = data.tags;
+                  expect(dataCtr).to.be.an(Array);
+                  expect(dataCtr).to.not.be.empty();
+                  for (let p in dataCtr) {
+                    let data = dataCtr[p];
+                    expect(data).to.be.a('string');
+                    expect(data).to.be("");
+                  }
+                }
+                expect(data.disabled).to.be.a('boolean');
+                expect(data.disabled).to.be(false);
+                expect(data.deleted).to.be.a('boolean');
+                expect(data.deleted).to.be(false);
                 {
                   let dataCtr = data.widgets;
                   expect(dataCtr).to.be.an(Array);
@@ -300,6 +352,22 @@
                 expect(data.uuid).to.be("");
                 expect(data.name).to.be.a('string');
                 expect(data.name).to.be("");
+                expect(data.description).to.be.a('string');
+                expect(data.description).to.be("");
+                {
+                  let dataCtr = data.tags;
+                  expect(dataCtr).to.be.an(Array);
+                  expect(dataCtr).to.not.be.empty();
+                  for (let p in dataCtr) {
+                    let data = dataCtr[p];
+                    expect(data).to.be.a('string');
+                    expect(data).to.be("");
+                  }
+                }
+                expect(data.disabled).to.be.a('boolean');
+                expect(data.disabled).to.be(false);
+                expect(data.deleted).to.be.a('boolean');
+                expect(data.deleted).to.be(false);
                 {
                   let dataCtr = data.widgets;
                   expect(dataCtr).to.be.an(Array);
@@ -352,6 +420,10 @@
           var body = new PolyaxonSdk.V1Dashboard();
           body.uuid = "";
           body.name = "";
+          body.description = "";
+          body.tags = [""];
+          body.disabled = false;
+          body.deleted = false;
           body.widgets = [new PolyaxonSdk.V1WidgetSpec()];
           body.widgets[0].kind = "";
           body.widgets[0].search = new PolyaxonSdk.V1SearchSpec();
@@ -375,6 +447,22 @@
             expect(data.uuid).to.be("");
             expect(data.name).to.be.a('string');
             expect(data.name).to.be("");
+            expect(data.description).to.be.a('string');
+            expect(data.description).to.be("");
+            {
+              let dataCtr = data.tags;
+              expect(dataCtr).to.be.an(Array);
+              expect(dataCtr).to.not.be.empty();
+              for (let p in dataCtr) {
+                let data = dataCtr[p];
+                expect(data).to.be.a('string');
+                expect(data).to.be("");
+              }
+            }
+            expect(data.disabled).to.be.a('boolean');
+            expect(data.disabled).to.be(false);
+            expect(data.deleted).to.be.a('boolean');
+            expect(data.deleted).to.be(false);
             {
               let dataCtr = data.widgets;
               expect(dataCtr).to.be.an(Array);
@@ -430,6 +518,22 @@
             expect(data.uuid).to.be("");
             expect(data.name).to.be.a('string');
             expect(data.name).to.be("");
+            expect(data.description).to.be.a('string');
+            expect(data.description).to.be("");
+            {
+              let dataCtr = data.tags;
+              expect(dataCtr).to.be.an(Array);
+              expect(dataCtr).to.not.be.empty();
+              for (let p in dataCtr) {
+                let data = dataCtr[p];
+                expect(data).to.be.a('string');
+                expect(data).to.be("");
+              }
+            }
+            expect(data.disabled).to.be.a('boolean');
+            expect(data.disabled).to.be(false);
+            expect(data.deleted).to.be.a('boolean');
+            expect(data.deleted).to.be(false);
             {
               let dataCtr = data.widgets;
               expect(dataCtr).to.be.an(Array);
@@ -476,6 +580,10 @@
           var body = new PolyaxonSdk.V1Dashboard();
           body.uuid = "";
           body.name = "";
+          body.description = "";
+          body.tags = [""];
+          body.disabled = false;
+          body.deleted = false;
           body.widgets = [new PolyaxonSdk.V1WidgetSpec()];
           body.widgets[0].kind = "";
           body.widgets[0].search = new PolyaxonSdk.V1SearchSpec();
@@ -499,6 +607,22 @@
             expect(data.uuid).to.be("");
             expect(data.name).to.be.a('string');
             expect(data.name).to.be("");
+            expect(data.description).to.be.a('string');
+            expect(data.description).to.be("");
+            {
+              let dataCtr = data.tags;
+              expect(dataCtr).to.be.an(Array);
+              expect(dataCtr).to.not.be.empty();
+              for (let p in dataCtr) {
+                let data = dataCtr[p];
+                expect(data).to.be.a('string');
+                expect(data).to.be("");
+              }
+            }
+            expect(data.disabled).to.be.a('boolean');
+            expect(data.disabled).to.be(false);
+            expect(data.deleted).to.be.a('boolean');
+            expect(data.deleted).to.be(false);
             {
               let dataCtr = data.widgets;
               expect(dataCtr).to.be.an(Array);

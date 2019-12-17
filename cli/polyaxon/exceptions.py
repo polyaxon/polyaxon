@@ -50,6 +50,10 @@ class PolyaxonBuildException(PolyaxonException):
     pass
 
 
+class PolyaxonStoresException(PolyaxonException):
+    pass
+
+
 class PolyaxonSchemaError(PolyaxonException):
     """Exception class to raise if a schema has an issue."""
 

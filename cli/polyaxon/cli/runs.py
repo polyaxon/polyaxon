@@ -21,7 +21,6 @@ import sys
 import time
 
 import click
-import rhea
 
 from polyaxon_sdk import V1Run
 from polyaxon_sdk.rest import ApiException
@@ -33,6 +32,7 @@ from polyaxon.cli.getters.run import get_project_run_or_local
 from polyaxon.cli.upload import upload
 from polyaxon.client import PolyaxonClient
 from polyaxon.client.statuses import get_run_statuses
+from polyaxon.config_reader import reader
 from polyaxon.exceptions import PolyaxonClientException
 from polyaxon.logger import clean_outputs
 from polyaxon.managers.run import RunManager
@@ -445,7 +445,7 @@ def restart(ctx, copy, polyaxonfile, u):
     """
     content = None
     if polyaxonfile:
-        content = "{}".format(rhea.read(polyaxonfile))
+        content = "{}".format(reader.read(polyaxonfile))
 
     # Check if we need to upload
     if u:
@@ -500,7 +500,7 @@ def resume(ctx, polyaxonfile, u):
     """
     content = None
     if polyaxonfile:
-        content = "{}".format(rhea.read(polyaxonfile))
+        content = "{}".format(reader.read(polyaxonfile))
 
     # Check if we need to upload
     if u:

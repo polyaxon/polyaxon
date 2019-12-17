@@ -1243,7 +1243,7 @@ class RunsV1Api(object):
         :param str uuid: Unique integer identifier of the entity (required)
         :param str path: Artifact filepath.
         :param int step: Artifact logging step.
-        :param str type: Artifact type.
+        :param str kind: Artifact kind.
         :return: V1ArtifactTreeResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -1275,13 +1275,13 @@ class RunsV1Api(object):
         :param str uuid: Unique integer identifier of the entity (required)
         :param str path: Artifact filepath.
         :param int step: Artifact logging step.
-        :param str type: Artifact type.
+        :param str kind: Artifact kind.
         :return: V1ArtifactTreeResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = ["owner", "project", "uuid", "path", "step", "type"]  # noqa: E501
+        all_params = ["owner", "project", "uuid", "path", "step", "kind"]  # noqa: E501
         all_params.append("async_req")
         all_params.append("_return_http_data_only")
         all_params.append("_preload_content")
@@ -1327,8 +1327,8 @@ class RunsV1Api(object):
             query_params.append(("path", params["path"]))  # noqa: E501
         if "step" in params:
             query_params.append(("step", params["step"]))  # noqa: E501
-        if "type" in params:
-            query_params.append(("type", params["type"]))  # noqa: E501
+        if "kind" in params:
+            query_params.append(("kind", params["kind"]))  # noqa: E501
 
         header_params = {}
 
@@ -1523,7 +1523,7 @@ class RunsV1Api(object):
         :param str uuid: Unique integer identifier of the entity (required)
         :param str path: Artifact filepath.
         :param int step: Artifact logging step.
-        :param str type: Artifact type.
+        :param str kind: Artifact kind.
         :return: V1ArtifactTreeResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -1555,13 +1555,13 @@ class RunsV1Api(object):
         :param str uuid: Unique integer identifier of the entity (required)
         :param str path: Artifact filepath.
         :param int step: Artifact logging step.
-        :param str type: Artifact type.
+        :param str kind: Artifact kind.
         :return: V1ArtifactTreeResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = ["owner", "project", "uuid", "path", "step", "type"]  # noqa: E501
+        all_params = ["owner", "project", "uuid", "path", "step", "kind"]  # noqa: E501
         all_params.append("async_req")
         all_params.append("_return_http_data_only")
         all_params.append("_preload_content")
@@ -1607,8 +1607,8 @@ class RunsV1Api(object):
             query_params.append(("path", params["path"]))  # noqa: E501
         if "step" in params:
             query_params.append(("step", params["step"]))  # noqa: E501
-        if "type" in params:
-            query_params.append(("type", params["type"]))  # noqa: E501
+        if "kind" in params:
+            query_params.append(("kind", params["kind"]))  # noqa: E501
 
         header_params = {}
 

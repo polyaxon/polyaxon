@@ -1,4 +1,20 @@
-# -*- coding: utf-8 -*-
+#!/usr/bin/python
+#
+# Copyright 2019 Polyaxon, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# coding: utf-8
 from __future__ import absolute_import, division, print_function
 
 import json
@@ -9,18 +25,13 @@ from collections import Mapping
 from distutils.util import strtobool  # pylint:disable=import-error
 from six.moves import urllib  # pylint:disable=ungrouped-imports
 
-from rhea import types
-from rhea.constants import NO_VALUE_FOUND
-from rhea.exceptions import RheaError
-from rhea.specs import AuthSpec, GCSSpec, S3Spec, UriSpec, WasbsSpec
+from polyaxon.exceptions import PolyaxonSchemaError
+from polyaxon.types import types
+from polyaxon.types.constants import NO_VALUE_FOUND
+from polyaxon.types.specs import AuthSpec, GCSSpec, S3Spec, UriSpec, WasbsSpec
 
 
-def get_int(key,
-            value,
-            is_list=False,
-            is_optional=False,
-            default=None,
-            options=None):
+def get_int(key, value, is_list=False, is_optional=False, default=None, options=None):
     """
     Get a the value corresponding to the key and converts it to `int`/`list(int)`.
 
@@ -36,29 +47,28 @@ def get_int(key,
          `int`: value corresponding to the key.
     """
     if is_list:
-        return _get_typed_list_value(key=key,
-                                     value=value,
-                                     target_type=int,
-                                     type_convert=int,
-                                     is_optional=is_optional,
-                                     default=default,
-                                     options=options)
+        return _get_typed_list_value(
+            key=key,
+            value=value,
+            target_type=int,
+            type_convert=int,
+            is_optional=is_optional,
+            default=default,
+            options=options,
+        )
 
-    return _get_typed_value(key=key,
-                            value=value,
-                            target_type=int,
-                            type_convert=int,
-                            is_optional=is_optional,
-                            default=default,
-                            options=options)
+    return _get_typed_value(
+        key=key,
+        value=value,
+        target_type=int,
+        type_convert=int,
+        is_optional=is_optional,
+        default=default,
+        options=options,
+    )
 
 
-def get_float(key,
-              value,
-              is_list=False,
-              is_optional=False,
-              default=None,
-              options=None):
+def get_float(key, value, is_list=False, is_optional=False, default=None, options=None):
     """
     Get a the value corresponding to the key and converts it to `float`/`list(float)`.
 
@@ -74,29 +84,30 @@ def get_float(key,
          `float`: value corresponding to the key.
     """
     if is_list:
-        return _get_typed_list_value(key=key,
-                                     value=value,
-                                     target_type=float,
-                                     type_convert=float,
-                                     is_optional=is_optional,
-                                     default=default,
-                                     options=options)
+        return _get_typed_list_value(
+            key=key,
+            value=value,
+            target_type=float,
+            type_convert=float,
+            is_optional=is_optional,
+            default=default,
+            options=options,
+        )
 
-    return _get_typed_value(key=key,
-                            value=value,
-                            target_type=float,
-                            type_convert=float,
-                            is_optional=is_optional,
-                            default=default,
-                            options=options)
+    return _get_typed_value(
+        key=key,
+        value=value,
+        target_type=float,
+        type_convert=float,
+        is_optional=is_optional,
+        default=default,
+        options=options,
+    )
 
 
-def get_boolean(key,
-                value,
-                is_list=False,
-                is_optional=False,
-                default=None,
-                options=None):
+def get_boolean(
+    key, value, is_list=False, is_optional=False, default=None, options=None
+):
     """
     Get a the value corresponding to the key and converts it to `bool`/`list(str)`.
 
@@ -112,29 +123,30 @@ def get_boolean(key,
         `bool`: value corresponding to the key.
     """
     if is_list:
-        return _get_typed_list_value(key=key,
-                                     value=value,
-                                     target_type=bool,
-                                     type_convert=lambda x: bool(strtobool(x)),
-                                     is_optional=is_optional,
-                                     default=default,
-                                     options=options)
+        return _get_typed_list_value(
+            key=key,
+            value=value,
+            target_type=bool,
+            type_convert=lambda x: bool(strtobool(x)),
+            is_optional=is_optional,
+            default=default,
+            options=options,
+        )
 
-    return _get_typed_value(key=key,
-                            value=value,
-                            target_type=bool,
-                            type_convert=lambda x: bool(strtobool(x)),
-                            is_optional=is_optional,
-                            default=default,
-                            options=options)
+    return _get_typed_value(
+        key=key,
+        value=value,
+        target_type=bool,
+        type_convert=lambda x: bool(strtobool(x)),
+        is_optional=is_optional,
+        default=default,
+        options=options,
+    )
 
 
-def get_string(key,
-               value,
-               is_list=False,
-               is_optional=False,
-               default=None,
-               options=None):
+def get_string(
+    key, value, is_list=False, is_optional=False, default=None, options=None
+):
     """
     Get a the value corresponding to the key and converts it to `str`/`list(str)`.
 
@@ -150,29 +162,28 @@ def get_string(key,
         `str`: value corresponding to the key.
     """
     if is_list:
-        return _get_typed_list_value(key=key,
-                                     value=value,
-                                     target_type=str,
-                                     type_convert=str,
-                                     is_optional=is_optional,
-                                     default=default,
-                                     options=options)
+        return _get_typed_list_value(
+            key=key,
+            value=value,
+            target_type=str,
+            type_convert=str,
+            is_optional=is_optional,
+            default=default,
+            options=options,
+        )
 
-    return _get_typed_value(key=key,
-                            value=value,
-                            target_type=str,
-                            type_convert=str,
-                            is_optional=is_optional,
-                            default=default,
-                            options=options)
+    return _get_typed_value(
+        key=key,
+        value=value,
+        target_type=str,
+        type_convert=str,
+        is_optional=is_optional,
+        default=default,
+        options=options,
+    )
 
 
-def get_dict(key,
-             value,
-             is_list=False,
-             is_optional=False,
-             default=None,
-             options=None):
+def get_dict(key, value, is_list=False, is_optional=False, default=None, options=None):
     """
     Get a the value corresponding to the key and converts it to `dict`.
 
@@ -191,40 +202,44 @@ def get_dict(key,
     def convert_to_dict(x):
         x = json.loads(x)
         if not isinstance(x, Mapping):
-            raise RheaError("Cannot convert value `{}` (key: `{}`) to `dict`".format(x, key))
+            raise PolyaxonSchemaError(
+                "Cannot convert value `{}` (key: `{}`) to `dict`".format(x, key)
+            )
         return x
 
     if is_list:
-        return _get_typed_list_value(key=key,
-                                     value=value,
-                                     target_type=Mapping,
-                                     type_convert=convert_to_dict,
-                                     is_optional=is_optional,
-                                     default=default,
-                                     options=options)
-    value = _get_typed_value(key=key,
-                             value=value,
-                             target_type=Mapping,
-                             type_convert=convert_to_dict,
-                             is_optional=is_optional,
-                             default=default,
-                             options=options)
+        return _get_typed_list_value(
+            key=key,
+            value=value,
+            target_type=Mapping,
+            type_convert=convert_to_dict,
+            is_optional=is_optional,
+            default=default,
+            options=options,
+        )
+    value = _get_typed_value(
+        key=key,
+        value=value,
+        target_type=Mapping,
+        type_convert=convert_to_dict,
+        is_optional=is_optional,
+        default=default,
+        options=options,
+    )
 
     if not value:
         return default
 
     if not isinstance(value, Mapping):
-        raise RheaError("Cannot convert value `{}` (key: `{}`) "
-                        "to `dict`".format(value, key))
+        raise PolyaxonSchemaError(
+            "Cannot convert value `{}` (key: `{}`) " "to `dict`".format(value, key)
+        )
     return value
 
 
-def get_dict_of_dicts(key,
-                      value,
-                      is_list=None,  # noqa
-                      is_optional=False,
-                      default=None,
-                      options=None):
+def get_dict_of_dicts(
+    key, value, is_list=None, is_optional=False, default=None, options=None  # noqa
+):
     """
     Get a the value corresponding to the key and converts it to `dict`.
 
@@ -241,30 +256,22 @@ def get_dict_of_dicts(key,
         `dict or dict`: value corresponding to the key.
     """
     value = get_dict(
-        key=key,
-        value=value,
-        is_optional=is_optional,
-        default=default,
-        options=options,
+        key=key, value=value, is_optional=is_optional, default=default, options=options
     )
     if not value:
         return default
 
     for k in value:
         if not isinstance(value[k], Mapping):
-            raise RheaError(
+            raise PolyaxonSchemaError(
                 "`{}` must be an object. "
-                "Received a non valid configuration for key `{}`.".format(value[k], key))
+                "Received a non valid configuration for key `{}`.".format(value[k], key)
+            )
 
     return value
 
 
-def get_uri(key,
-            value,
-            is_list=False,
-            is_optional=False,
-            default=None,
-            options=None):
+def get_uri(key, value, is_list=False, is_optional=False, default=None, options=None):
     """
     Get a the value corresponding to the key and converts it to `UriSpec`.
 
@@ -280,29 +287,28 @@ def get_uri(key,
          `UriSpec`: value corresponding to the key.
     """
     if is_list:
-        return _get_typed_list_value(key=key,
-                                     value=value,
-                                     target_type=UriSpec,
-                                     type_convert=parse_uri_spec,
-                                     is_optional=is_optional,
-                                     default=default,
-                                     options=options)
+        return _get_typed_list_value(
+            key=key,
+            value=value,
+            target_type=UriSpec,
+            type_convert=parse_uri_spec,
+            is_optional=is_optional,
+            default=default,
+            options=options,
+        )
 
-    return _get_typed_value(key=key,
-                            value=value,
-                            target_type=UriSpec,
-                            type_convert=parse_uri_spec,
-                            is_optional=is_optional,
-                            default=default,
-                            options=options)
+    return _get_typed_value(
+        key=key,
+        value=value,
+        target_type=UriSpec,
+        type_convert=parse_uri_spec,
+        is_optional=is_optional,
+        default=default,
+        options=options,
+    )
 
 
-def get_auth(key,
-             value,
-             is_list=False,
-             is_optional=False,
-             default=None,
-             options=None):
+def get_auth(key, value, is_list=False, is_optional=False, default=None, options=None):
     """
     Get a the value corresponding to the key and converts it to `AuthSpec`.
 
@@ -318,29 +324,30 @@ def get_auth(key,
          `AuthSpec`: value corresponding to the key.
     """
     if is_list:
-        return _get_typed_list_value(key=key,
-                                     value=value,
-                                     target_type=AuthSpec,
-                                     type_convert=parse_auth_spec,
-                                     is_optional=is_optional,
-                                     default=default,
-                                     options=options)
+        return _get_typed_list_value(
+            key=key,
+            value=value,
+            target_type=AuthSpec,
+            type_convert=parse_auth_spec,
+            is_optional=is_optional,
+            default=default,
+            options=options,
+        )
 
-    return _get_typed_value(key=key,
-                            value=value,
-                            target_type=AuthSpec,
-                            type_convert=parse_auth_spec,
-                            is_optional=is_optional,
-                            default=default,
-                            options=options)
+    return _get_typed_value(
+        key=key,
+        value=value,
+        target_type=AuthSpec,
+        type_convert=parse_auth_spec,
+        is_optional=is_optional,
+        default=default,
+        options=options,
+    )
 
 
-def get_list(key,
-             value,
-             is_list=None,  # noqa
-             is_optional=False,
-             default=None,
-             options=None):
+def get_list(
+    key, value, is_list=None, is_optional=False, default=None, options=None  # noqa
+):
     """
     Get a the value corresponding to the key and converts comma separated values to a list.
 
@@ -356,7 +363,7 @@ def get_list(key,
     """
 
     def parse_list(v):
-        parts = v.split(',')
+        parts = v.split(",")
         results = []
         for part in parts:
             part = part.strip()
@@ -364,21 +371,20 @@ def get_list(key,
                 results.append(part)
         return results
 
-    return _get_typed_value(key=key,
-                            value=value,
-                            target_type=list,
-                            type_convert=parse_list,
-                            is_optional=is_optional,
-                            default=default,
-                            options=options)
+    return _get_typed_value(
+        key=key,
+        value=value,
+        target_type=list,
+        type_convert=parse_list,
+        is_optional=is_optional,
+        default=default,
+        options=options,
+    )
 
 
-def get_wasbs_path(key,
-                   value,
-                   is_list=False,
-                   is_optional=False,
-                   default=None,
-                   options=None):
+def get_wasbs_path(
+    key, value, is_list=False, is_optional=False, default=None, options=None
+):
     """
     Get a the value corresponding to the key and converts it to `WasbsSpec`.
 
@@ -394,29 +400,30 @@ def get_wasbs_path(key,
          `WasbsSpec`: value corresponding to the key.
     """
     if is_list:
-        return _get_typed_list_value(key=key,
-                                     value=value,
-                                     target_type=WasbsSpec,
-                                     type_convert=parse_wasbs_path,
-                                     is_optional=is_optional,
-                                     default=default,
-                                     options=options)
+        return _get_typed_list_value(
+            key=key,
+            value=value,
+            target_type=WasbsSpec,
+            type_convert=parse_wasbs_path,
+            is_optional=is_optional,
+            default=default,
+            options=options,
+        )
 
-    return _get_typed_value(key=key,
-                            value=value,
-                            target_type=WasbsSpec,
-                            type_convert=parse_wasbs_path,
-                            is_optional=is_optional,
-                            default=default,
-                            options=options)
+    return _get_typed_value(
+        key=key,
+        value=value,
+        target_type=WasbsSpec,
+        type_convert=parse_wasbs_path,
+        is_optional=is_optional,
+        default=default,
+        options=options,
+    )
 
 
-def get_gcs_path(key,
-                 value,
-                 is_list=False,
-                 is_optional=False,
-                 default=None,
-                 options=None):
+def get_gcs_path(
+    key, value, is_list=False, is_optional=False, default=None, options=None
+):
     """
     Get a the value corresponding to the key and converts it to `GCSSpec`.
 
@@ -432,29 +439,30 @@ def get_gcs_path(key,
          `GCSSpec`: value corresponding to the key.
     """
     if is_list:
-        return _get_typed_list_value(key=key,
-                                     value=value,
-                                     target_type=GCSSpec,
-                                     type_convert=parse_gcs_path,
-                                     is_optional=is_optional,
-                                     default=default,
-                                     options=options)
+        return _get_typed_list_value(
+            key=key,
+            value=value,
+            target_type=GCSSpec,
+            type_convert=parse_gcs_path,
+            is_optional=is_optional,
+            default=default,
+            options=options,
+        )
 
-    return _get_typed_value(key=key,
-                            value=value,
-                            target_type=GCSSpec,
-                            type_convert=parse_gcs_path,
-                            is_optional=is_optional,
-                            default=default,
-                            options=options)
+    return _get_typed_value(
+        key=key,
+        value=value,
+        target_type=GCSSpec,
+        type_convert=parse_gcs_path,
+        is_optional=is_optional,
+        default=default,
+        options=options,
+    )
 
 
-def get_s3_path(key,
-                value,
-                is_list=False,
-                is_optional=False,
-                default=None,
-                options=None):
+def get_s3_path(
+    key, value, is_list=False, is_optional=False, default=None, options=None
+):
     """
     Get a the value corresponding to the key and converts it to `S3Spec`.
 
@@ -470,37 +478,38 @@ def get_s3_path(key,
          `S3Spec`: value corresponding to the key.
     """
     if is_list:
-        return _get_typed_list_value(key=key,
-                                     value=value,
-                                     target_type=S3Spec,
-                                     type_convert=parse_s3_path,
-                                     is_optional=is_optional,
-                                     default=default,
-                                     options=options)
+        return _get_typed_list_value(
+            key=key,
+            value=value,
+            target_type=S3Spec,
+            type_convert=parse_s3_path,
+            is_optional=is_optional,
+            default=default,
+            options=options,
+        )
 
-    return _get_typed_value(key=key,
-                            value=value,
-                            target_type=S3Spec,
-                            type_convert=parse_s3_path,
-                            is_optional=is_optional,
-                            default=default,
-                            options=options)
+    return _get_typed_value(
+        key=key,
+        value=value,
+        target_type=S3Spec,
+        type_convert=parse_s3_path,
+        is_optional=is_optional,
+        default=default,
+        options=options,
+    )
 
 
 def _check_options(key, value, options):
     if options and value not in options:
-        raise RheaError(
-            'The value `{}` provided for key `{}` '
-            'is not one of the possible values.'.format(value, key))
+        raise PolyaxonSchemaError(
+            "The value `{}` provided for key `{}` "
+            "is not one of the possible values.".format(value, key)
+        )
 
 
-def _get_typed_value(key,
-                     value,
-                     target_type,
-                     type_convert,
-                     is_optional=False,
-                     default=None,
-                     options=None):
+def _get_typed_value(
+    key, value, target_type, type_convert, is_optional=False, default=None, options=None
+):
     """
     Return the value corresponding to the key converted to the given type.
 
@@ -517,8 +526,9 @@ def _get_typed_value(key,
     """
     if value is None or value == NO_VALUE_FOUND:
         if not is_optional:
-            raise RheaError(
-                'No value was provided for the non optional key `{}`.'.format(key))
+            raise PolyaxonSchemaError(
+                "No value was provided for the non optional key `{}`.".format(key)
+            )
         return default
 
     if isinstance(value, six.string_types):
@@ -527,24 +537,24 @@ def _get_typed_value(key,
             _check_options(key=key, value=value, options=options)
             return type_convert(value)
         except ValueError:
-            raise RheaError("Cannot convert value `{}` (key: `{}`) "
-                            "to `{}`".format(value, key, target_type))
+            raise PolyaxonSchemaError(
+                "Cannot convert value `{}` (key: `{}`) "
+                "to `{}`".format(value, key, target_type)
+            )
 
     if isinstance(value, target_type):
         # _add_key(key, is_secret=is_secret, is_local=is_local)
         _check_options(key=key, value=value, options=options)
         return value
-    raise RheaError("Cannot convert value `{}` (key: `{}`) "
-                    "to `{}`".format(value, key, target_type))
+    raise PolyaxonSchemaError(
+        "Cannot convert value `{}` (key: `{}`) "
+        "to `{}`".format(value, key, target_type)
+    )
 
 
-def _get_typed_list_value(key,
-                          value,
-                          target_type,
-                          type_convert,
-                          is_optional=False,
-                          default=None,
-                          options=None):
+def _get_typed_list_value(
+    key, value, target_type, type_convert, is_optional=False, default=None, options=None
+):
     """
     Return the value corresponding to the key converted first to list
     than each element to the given type.
@@ -558,22 +568,26 @@ def _get_typed_list_value(key,
         options: list/tuple if provided, the value must be one of these values.
     """
 
-    value = _get_typed_value(key=key,
-                             value=value,
-                             target_type=list,
-                             type_convert=json.loads,
-                             is_optional=is_optional,
-                             default=default,
-                             options=options)
+    value = _get_typed_value(
+        key=key,
+        value=value,
+        target_type=list,
+        type_convert=json.loads,
+        is_optional=is_optional,
+        default=default,
+        options=options,
+    )
 
     if not value:
         return default
 
-    raise_type = 'dict' if target_type == Mapping else target_type
+    raise_type = "dict" if target_type == Mapping else target_type
 
     if not isinstance(value, list):
-        raise RheaError("Cannot convert value `{}` (key: `{}`) "
-                        "to `{}`".format(value, key, raise_type))
+        raise PolyaxonSchemaError(
+            "Cannot convert value `{}` (key: `{}`) "
+            "to `{}`".format(value, key, raise_type)
+        )
     # If we are here the value must be a list
     result = []
     for v in value:
@@ -581,40 +595,47 @@ def _get_typed_list_value(key,
             try:
                 result.append(type_convert(v))
             except ValueError:
-                raise RheaError("Cannot convert value `{}` (found in list key: `{}`) "
-                                "to `{}`".format(v, key, raise_type))
+                raise PolyaxonSchemaError(
+                    "Cannot convert value `{}` (found in list key: `{}`) "
+                    "to `{}`".format(v, key, raise_type)
+                )
         elif isinstance(v, target_type):
             result.append(v)
 
         else:
-            raise RheaError("Cannot convert value `{}` (found in list key: `{}`) "
-                            "to `{}`".format(v, key, raise_type))
+            raise PolyaxonSchemaError(
+                "Cannot convert value `{}` (found in list key: `{}`) "
+                "to `{}`".format(v, key, raise_type)
+            )
     return result
 
 
 def parse_uri_spec(uri_spec):
-    parts = uri_spec.split('@')
+    parts = uri_spec.split("@")
     if len(parts) != 2:
-        raise RheaError(
-            'Received invalid uri_spec `{}`. '
-            'The uri must be in the format `user:pass@host`'.format(uri_spec))
+        raise PolyaxonSchemaError(
+            "Received invalid uri_spec `{}`. "
+            "The uri must be in the format `user:pass@host`".format(uri_spec)
+        )
 
     user_pass, host = parts
-    user_pass = user_pass.split(':')
+    user_pass = user_pass.split(":")
     if len(user_pass) != 2:
-        raise RheaError(
-            'Received invalid uri_spec `{}`. `user:host` is not conform.'
-            'The uri must be in the format `user:pass@host`'.format(uri_spec))
+        raise PolyaxonSchemaError(
+            "Received invalid uri_spec `{}`. `user:host` is not conform."
+            "The uri must be in the format `user:pass@host`".format(uri_spec)
+        )
 
     return UriSpec(user=user_pass[0], password=user_pass[1], host=host)
 
 
 def parse_auth_spec(auth_spec):
-    user_pass = auth_spec.split(':')
+    user_pass = auth_spec.split(":")
     if len(user_pass) != 2:
-        raise RheaError(
-            'Received invalid uri_spec `{}`. `user:host` is not conform.'
-            'The uri must be in the format `user:pass`'.format(auth_spec))
+        raise PolyaxonSchemaError(
+            "Received invalid uri_spec `{}`. `user:host` is not conform."
+            "The uri must be in the format `user:pass`".format(auth_spec)
+        )
 
     return AuthSpec(user=user_pass[0], password=user_pass[1])
 
@@ -622,16 +643,17 @@ def parse_auth_spec(auth_spec):
 def parse_wasbs_path(wasbs_path):
     parsed_url = urllib.parse.urlparse(wasbs_path)
     if parsed_url.scheme != "wasbs":
-        raise RheaError('Received an invalid url `{}`'.format(wasbs_path))
+        raise PolyaxonSchemaError("Received an invalid url `{}`".format(wasbs_path))
     match = re.match("([^@]+)@([^.]+)\\.blob\\.core\\.windows\\.net", parsed_url.netloc)
     if match is None:
-        raise RheaError(
-            'wasbs url must be of the form <container>@<account>.blob.core.windows.net')
+        raise PolyaxonSchemaError(
+            "wasbs url must be of the form <container>@<account>.blob.core.windows.net"
+        )
 
     container = match.group(1)
     storage_account = match.group(2)
     path = parsed_url.path
-    if path.startswith('/'):
+    if path.startswith("/"):
         path = path[1:]
     return WasbsSpec(container, storage_account, path)
 
@@ -645,10 +667,10 @@ def parse_gcs_path(gcs_path):
     """
     parsed_url = urllib.parse.urlparse(gcs_path)
     if not parsed_url.netloc:
-        raise RheaError('Received an invalid GCS url `{}`'.format(gcs_path))
-    if parsed_url.scheme != 'gs':
-        raise RheaError('Received an invalid url GCS `{}`'.format(gcs_path))
-    blob = parsed_url.path.lstrip('/')
+        raise PolyaxonSchemaError("Received an invalid GCS url `{}`".format(gcs_path))
+    if parsed_url.scheme != "gs":
+        raise PolyaxonSchemaError("Received an invalid url GCS `{}`".format(gcs_path))
+    blob = parsed_url.path.lstrip("/")
     return GCSSpec(parsed_url.netloc, blob)
 
 
@@ -661,10 +683,10 @@ def parse_s3_path(s3_path):
     """
     parsed_url = urllib.parse.urlparse(s3_path)
     if not parsed_url.netloc:
-        raise RheaError('Received an invalid S3 url `{}`'.format(s3_path))
+        raise PolyaxonSchemaError("Received an invalid S3 url `{}`".format(s3_path))
     else:
         bucket_name = parsed_url.netloc
-        key = parsed_url.path.strip('/')
+        key = parsed_url.path.strip("/")
         return S3Spec(bucket_name, key)
 
 
@@ -678,10 +700,10 @@ TYPE_MAPPING = {
     types.URI: get_uri,
     types.AUTH: get_auth,
     types.LIST: get_list,
-    types.GCS_PATH: get_gcs_path,
-    types.S3_PATH: get_s3_path,
-    types.AZURE_PATH: get_wasbs_path,
+    types.GCS: get_gcs_path,
+    types.S3: get_s3_path,
+    types.WASB: get_wasbs_path,
     types.PATH: get_string,
     types.METRIC: get_float,
-    types.METADATA: get_dict
+    types.METADATA: get_dict,
 }

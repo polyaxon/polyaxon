@@ -76,6 +76,22 @@
             expect(data.uuid).to.be("");
             expect(data.name).to.be.a('string');
             expect(data.name).to.be("");
+            expect(data.description).to.be.a('string');
+            expect(data.description).to.be("");
+            {
+              let dataCtr = data.tags;
+              expect(dataCtr).to.be.an(Array);
+              expect(dataCtr).to.not.be.empty();
+              for (let p in dataCtr) {
+                let data = dataCtr[p];
+                expect(data).to.be.a('string');
+                expect(data).to.be("");
+              }
+            }
+            expect(data.disabled).to.be.a('boolean');
+            expect(data.disabled).to.be(false);
+            expect(data.deleted).to.be.a('boolean');
+            expect(data.deleted).to.be(false);
             expect(data.namespace).to.be.a('string');
             expect(data.namespace).to.be("");
             expect(data.version_api).to.be.a(Object);

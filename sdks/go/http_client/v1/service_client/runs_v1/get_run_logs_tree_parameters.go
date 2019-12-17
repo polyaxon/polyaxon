@@ -76,6 +76,11 @@ for the get run logs tree operation typically these are written to a http.Reques
 */
 type GetRunLogsTreeParams struct {
 
+	/*Kind
+	  Artifact kind.
+
+	*/
+	Kind *string
 	/*Owner
 	  Owner of the namespace
 
@@ -96,11 +101,6 @@ type GetRunLogsTreeParams struct {
 
 	*/
 	Step *int32
-	/*Type
-	  Artifact type.
-
-	*/
-	Type *string
 	/*UUID
 	  Unique integer identifier of the entity
 
@@ -143,6 +143,17 @@ func (o *GetRunLogsTreeParams) WithHTTPClient(client *http.Client) *GetRunLogsTr
 // SetHTTPClient adds the HTTPClient to the get run logs tree params
 func (o *GetRunLogsTreeParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
+}
+
+// WithKind adds the kind to the get run logs tree params
+func (o *GetRunLogsTreeParams) WithKind(kind *string) *GetRunLogsTreeParams {
+	o.SetKind(kind)
+	return o
+}
+
+// SetKind adds the kind to the get run logs tree params
+func (o *GetRunLogsTreeParams) SetKind(kind *string) {
+	o.Kind = kind
 }
 
 // WithOwner adds the owner to the get run logs tree params
@@ -189,17 +200,6 @@ func (o *GetRunLogsTreeParams) SetStep(step *int32) {
 	o.Step = step
 }
 
-// WithType adds the typeVar to the get run logs tree params
-func (o *GetRunLogsTreeParams) WithType(typeVar *string) *GetRunLogsTreeParams {
-	o.SetType(typeVar)
-	return o
-}
-
-// SetType adds the type to the get run logs tree params
-func (o *GetRunLogsTreeParams) SetType(typeVar *string) {
-	o.Type = typeVar
-}
-
 // WithUUID adds the uuid to the get run logs tree params
 func (o *GetRunLogsTreeParams) WithUUID(uuid string) *GetRunLogsTreeParams {
 	o.SetUUID(uuid)
@@ -218,6 +218,22 @@ func (o *GetRunLogsTreeParams) WriteToRequest(r runtime.ClientRequest, reg strfm
 		return err
 	}
 	var res []error
+
+	if o.Kind != nil {
+
+		// query param kind
+		var qrKind string
+		if o.Kind != nil {
+			qrKind = *o.Kind
+		}
+		qKind := qrKind
+		if qKind != "" {
+			if err := r.SetQueryParam("kind", qKind); err != nil {
+				return err
+			}
+		}
+
+	}
 
 	// path param owner
 	if err := r.SetPathParam("owner", o.Owner); err != nil {
@@ -255,22 +271,6 @@ func (o *GetRunLogsTreeParams) WriteToRequest(r runtime.ClientRequest, reg strfm
 		qStep := swag.FormatInt32(qrStep)
 		if qStep != "" {
 			if err := r.SetQueryParam("step", qStep); err != nil {
-				return err
-			}
-		}
-
-	}
-
-	if o.Type != nil {
-
-		// query param type
-		var qrType string
-		if o.Type != nil {
-			qrType = *o.Type
-		}
-		qType := qrType
-		if qType != "" {
-			if err := r.SetQueryParam("type", qType); err != nil {
 				return err
 			}
 		}

@@ -20,15 +20,18 @@ from __future__ import absolute_import, division, print_function
 import sys
 
 import click
-import rhea
 
 from marshmallow import ValidationError
-from rhea import RheaError
 
 from polyaxon.builds.generator import DockerFileGenerator
 from polyaxon.cli.check import check_polyaxonfile
 from polyaxon.cli.errors import handle_cli_error
-from polyaxon.exceptions import PolyaxonBuildException, PolyaxonSchemaError
+from polyaxon.config_reader import reader
+from polyaxon.exceptions import (
+    PolyaxonBuildException,
+    PolyaxonException,
+    PolyaxonSchemaError,
+)
 from polyaxon.logger import clean_outputs
 from polyaxon.schemas.fields.docker_image import validate_image
 from polyaxon.schemas.polyflow.init.build_context import BuildContextConfig
@@ -75,8 +78,8 @@ def generate(polyaxonfile, build_context, destination, params):
 
     if build_context:
         try:
-            build_context = BuildContextConfig.from_dict(rhea.read(build_context))
-        except (RheaError, ValidationError) as e:
+            build_context = BuildContextConfig.from_dict(reader.read(build_context))
+        except (PolyaxonSchemaError, ValidationError) as e:
             Printer.print_error("received a non valid build context.")
             Printer.print_error("Error message: {}.".format(e))
             sys.exit(1)

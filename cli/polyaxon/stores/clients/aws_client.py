@@ -1,48 +1,64 @@
-# -*- coding: utf-8 -*-
+#!/usr/bin/python
+#
+# Copyright 2019 Polyaxon, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# coding: utf-8
 from __future__ import absolute_import, division, print_function
 
 import boto3
 
-from polystores.utils import get_from_env
+from polyaxon.stores.utils import get_from_env
 
 
 def get_aws_access_key_id(keys=None):
-    keys = keys or ['AWS_ACCESS_KEY_ID']
+    keys = keys or ["AWS_ACCESS_KEY_ID"]
     return get_from_env(keys)
 
 
 def get_aws_secret_access_key(keys=None):
-    keys = keys or ['AWS_SECRET_ACCESS_KEY']
+    keys = keys or ["AWS_SECRET_ACCESS_KEY"]
     return get_from_env(keys)
 
 
 def get_aws_security_token(keys=None):
-    keys = keys or ['AWS_SECURITY_TOKEN']
+    keys = keys or ["AWS_SECURITY_TOKEN"]
     return get_from_env(keys)
 
 
 def get_region(keys=None):
-    keys = keys or ['AWS_REGION']
+    keys = keys or ["AWS_REGION"]
     return get_from_env(keys)
 
 
 def get_endpoint_url(keys=None):
-    keys = keys or ['AWS_ENDPOINT_URL']
+    keys = keys or ["AWS_ENDPOINT_URL"]
     return get_from_env(keys)
 
 
 def get_aws_use_ssl(keys=None):
-    keys = keys or ['AWS_USE_SSL']
+    keys = keys or ["AWS_USE_SSL"]
     return get_from_env(keys)
 
 
 def get_aws_verify_ssl(keys=None):
-    keys = ['AWS_VERIFY_SSL'] if keys is None else keys
+    keys = ["AWS_VERIFY_SSL"] if keys is None else keys
     return get_from_env(keys)
 
 
 def get_aws_legacy_api(keys=None):
-    keys = keys or ['AWS_LEGACY_API']
+    keys = keys or ["AWS_LEGACY_API"]
     return get_from_env(keys)
 
 
@@ -51,10 +67,12 @@ def get_legacy_api(legacy_api=False):
     return legacy_api
 
 
-def get_aws_session(aws_access_key_id=None,
-                    aws_secret_access_key=None,
-                    aws_session_token=None,
-                    region_name=None):
+def get_aws_session(
+    aws_access_key_id=None,
+    aws_secret_access_key=None,
+    aws_session_token=None,
+    region_name=None,
+):
     aws_access_key_id = aws_access_key_id or get_aws_access_key_id()
     aws_secret_access_key = aws_secret_access_key or get_aws_secret_access_key()
     aws_session_token = aws_session_token or get_aws_security_token()
@@ -63,21 +81,26 @@ def get_aws_session(aws_access_key_id=None,
         aws_access_key_id=aws_access_key_id,
         aws_secret_access_key=aws_secret_access_key,
         aws_session_token=aws_session_token,
-        region_name=region_name)
+        region_name=region_name,
+    )
 
 
-def get_aws_client(client_type,
-                   endpoint_url=None,
-                   aws_access_key_id=None,
-                   aws_secret_access_key=None,
-                   aws_session_token=None,
-                   region_name=None,
-                   aws_use_ssl=True,
-                   aws_verify_ssl=None):
-    session = get_aws_session(aws_access_key_id=aws_access_key_id,
-                              aws_secret_access_key=aws_secret_access_key,
-                              aws_session_token=aws_session_token,
-                              region_name=region_name)
+def get_aws_client(
+    client_type,
+    endpoint_url=None,
+    aws_access_key_id=None,
+    aws_secret_access_key=None,
+    aws_session_token=None,
+    region_name=None,
+    aws_use_ssl=True,
+    aws_verify_ssl=None,
+):
+    session = get_aws_session(
+        aws_access_key_id=aws_access_key_id,
+        aws_secret_access_key=aws_secret_access_key,
+        aws_session_token=aws_session_token,
+        region_name=region_name,
+    )
     endpoint_url = endpoint_url or get_endpoint_url()
     aws_use_ssl = aws_use_ssl or get_aws_use_ssl()
     if aws_verify_ssl is None:
@@ -88,21 +111,26 @@ def get_aws_client(client_type,
         client_type,
         endpoint_url=endpoint_url,
         use_ssl=aws_use_ssl,
-        verify=aws_verify_ssl)
+        verify=aws_verify_ssl,
+    )
 
 
-def get_aws_resource(resource_type,
-                     endpoint_url=None,
-                     aws_access_key_id=None,
-                     aws_secret_access_key=None,
-                     aws_session_token=None,
-                     region_name=None,
-                     aws_use_ssl=True,
-                     aws_verify_ssl=None):
-    session = get_aws_session(aws_access_key_id=aws_access_key_id,
-                              aws_secret_access_key=aws_secret_access_key,
-                              aws_session_token=aws_session_token,
-                              region_name=region_name)
+def get_aws_resource(
+    resource_type,
+    endpoint_url=None,
+    aws_access_key_id=None,
+    aws_secret_access_key=None,
+    aws_session_token=None,
+    region_name=None,
+    aws_use_ssl=True,
+    aws_verify_ssl=None,
+):
+    session = get_aws_session(
+        aws_access_key_id=aws_access_key_id,
+        aws_secret_access_key=aws_secret_access_key,
+        aws_session_token=aws_session_token,
+        region_name=region_name,
+    )
     endpoint_url = endpoint_url or get_endpoint_url()
     aws_use_ssl = aws_use_ssl or get_aws_use_ssl()
     if aws_verify_ssl is None:
@@ -113,4 +141,5 @@ def get_aws_resource(resource_type,
         resource_type,
         endpoint_url=endpoint_url,
         use_ssl=aws_use_ssl,
-        verify=aws_verify_ssl)
+        verify=aws_verify_ssl,
+    )

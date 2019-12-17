@@ -29,9 +29,9 @@ from tests.utils import assert_equal_dict
 
 from polyaxon.exceptions import PolyaxonfileError, PolyaxonSchemaError
 from polyaxon.schemas.polyflow.environment import EnvironmentConfig
-from polyaxon.schemas.polyflow.io import IOTypes
 from polyaxon.schemas.utils import TaskType
 from polyaxon.specs import ComponentSpecification, OpSpecification, get_specification
+from polyaxon.types import types
 
 
 @pytest.mark.polyaxonfile_mark
@@ -83,8 +83,8 @@ class TestSpecifications(TestCase):
             "version": 1.0,
             "kind": "component",
             "inputs": [
-                {"name": "lr", "type": IOTypes.FLOAT},
-                {"name": "num_steps", "type": IOTypes.INT},
+                {"name": "lr", "type": types.FLOAT},
+                {"name": "num_steps", "type": types.INT},
             ],
             "run": {
                 "kind": "container",
@@ -112,8 +112,8 @@ class TestSpecifications(TestCase):
             "version": 1.0,
             "kind": "component",
             "inputs": [
-                {"name": "lr", "type": IOTypes.FLOAT},
-                {"name": "num_steps", "type": IOTypes.INT},
+                {"name": "lr", "type": types.FLOAT},
+                {"name": "num_steps", "type": types.INT},
             ],
             "run": {
                 "kind": "container",
@@ -141,15 +141,10 @@ class TestSpecifications(TestCase):
             "version": 1.0,
             "kind": "component",
             "inputs": [
-                {
-                    "name": "lr",
-                    "type": IOTypes.FLOAT,
-                    "is_optional": True,
-                    "value": 0.1,
-                },
+                {"name": "lr", "type": types.FLOAT, "is_optional": True, "value": 0.1},
                 {
                     "name": "num_steps",
-                    "type": IOTypes.INT,
+                    "type": types.INT,
                     "is_optional": True,
                     "value": 100,
                 },
@@ -178,15 +173,10 @@ class TestSpecifications(TestCase):
             "version": 1.0,
             "kind": "component",
             "inputs": [
-                {
-                    "name": "lr",
-                    "type": IOTypes.FLOAT,
-                    "value": 0.6,
-                    "is_optional": True,
-                },
+                {"name": "lr", "type": types.FLOAT, "value": 0.6, "is_optional": True},
                 {
                     "name": "num_steps",
-                    "type": IOTypes.INT,
+                    "type": types.INT,
                     "value": 16,
                     "is_optional": True,
                 },

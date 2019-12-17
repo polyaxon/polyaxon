@@ -1373,15 +1373,15 @@
         ]
       }
     },
-    "/api/v1/orgs/{owner}/artifacts_stores": {
+    "/api/v1/orgs/{owner}/connections": {
       "get": {
         "summary": "List archived runs for user",
-        "operationId": "ListArtifactsStores",
+        "operationId": "ListConnections",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1ListArtifactsStoresResponse"
+              "$ref": "#/definitions/v1ListConnectionsResponse"
             }
           },
           "204": {
@@ -1437,17 +1437,17 @@
           }
         ],
         "tags": [
-          "ArtifactsStoresV1"
+          "ConnectionsV1"
         ]
       },
       "post": {
         "summary": "List runs",
-        "operationId": "CreateArtifactsStore",
+        "operationId": "CreateConnection",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1ArtifactsStore"
+              "$ref": "#/definitions/v1Connection"
             }
           },
           "204": {
@@ -1473,28 +1473,28 @@
           },
           {
             "name": "body",
-            "description": "Artifact store body",
+            "description": "Connection body",
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/v1ArtifactsStore"
+              "$ref": "#/definitions/v1Connection"
             }
           }
         ],
         "tags": [
-          "ArtifactsStoresV1"
+          "ConnectionsV1"
         ]
       }
     },
-    "/api/v1/orgs/{owner}/artifacts_stores/names": {
+    "/api/v1/orgs/{owner}/connections/names": {
       "get": {
         "summary": "List bookmarked runs for user",
-        "operationId": "ListArtifactsStoreNames",
+        "operationId": "ListConnectionNames",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1ListArtifactsStoresResponse"
+              "$ref": "#/definitions/v1ListConnectionsResponse"
             }
           },
           "204": {
@@ -1550,19 +1550,19 @@
           }
         ],
         "tags": [
-          "ArtifactsStoresV1"
+          "ConnectionsV1"
         ]
       }
     },
-    "/api/v1/orgs/{owner}/artifacts_stores/{artifact_store.uuid}": {
+    "/api/v1/orgs/{owner}/connections/{connection.uuid}": {
       "put": {
         "summary": "Get run",
-        "operationId": "UpdateArtifactsStore",
+        "operationId": "UpdateConnection",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1ArtifactsStore"
+              "$ref": "#/definitions/v1Connection"
             }
           },
           "204": {
@@ -1587,7 +1587,7 @@
             "type": "string"
           },
           {
-            "name": "artifact_store.uuid",
+            "name": "connection.uuid",
             "description": "UUID",
             "in": "path",
             "required": true,
@@ -1595,26 +1595,26 @@
           },
           {
             "name": "body",
-            "description": "Artifact store body",
+            "description": "Connection body",
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/v1ArtifactsStore"
+              "$ref": "#/definitions/v1Connection"
             }
           }
         ],
         "tags": [
-          "ArtifactsStoresV1"
+          "ConnectionsV1"
         ]
       },
       "patch": {
         "summary": "Update run",
-        "operationId": "PatchArtifactsStore",
+        "operationId": "PatchConnection",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1ArtifactsStore"
+              "$ref": "#/definitions/v1Connection"
             }
           },
           "204": {
@@ -1639,7 +1639,7 @@
             "type": "string"
           },
           {
-            "name": "artifact_store.uuid",
+            "name": "connection.uuid",
             "description": "UUID",
             "in": "path",
             "required": true,
@@ -1647,28 +1647,28 @@
           },
           {
             "name": "body",
-            "description": "Artifact store body",
+            "description": "Connection body",
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/v1ArtifactsStore"
+              "$ref": "#/definitions/v1Connection"
             }
           }
         ],
         "tags": [
-          "ArtifactsStoresV1"
+          "ConnectionsV1"
         ]
       }
     },
-    "/api/v1/orgs/{owner}/artifacts_stores/{uuid}": {
+    "/api/v1/orgs/{owner}/connections/{uuid}": {
       "get": {
         "summary": "Create new run",
-        "operationId": "GetArtifactsStore",
+        "operationId": "GetConnection",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1ArtifactsStore"
+              "$ref": "#/definitions/v1Connection"
             }
           },
           "204": {
@@ -1701,12 +1701,12 @@
           }
         ],
         "tags": [
-          "ArtifactsStoresV1"
+          "ConnectionsV1"
         ]
       },
       "delete": {
         "summary": "Patch run",
-        "operationId": "DeleteArtifactsStore",
+        "operationId": "DeleteConnection",
         "responses": {
           "200": {
             "description": "A successful response."
@@ -1741,7 +1741,7 @@
           }
         ],
         "tags": [
-          "ArtifactsStoresV1"
+          "ConnectionsV1"
         ]
       }
     },
@@ -2114,378 +2114,6 @@
         ],
         "tags": [
           "DashboardsV1"
-        ]
-      }
-    },
-    "/api/v1/orgs/{owner}/git_accesses": {
-      "get": {
-        "summary": "List archived runs for user",
-        "operationId": "ListGitAccesses",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1ListHostAccessesResponse"
-            }
-          },
-          "204": {
-            "description": "No content.",
-            "schema": {}
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {}
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "offset",
-            "description": "Pagination offset.",
-            "in": "query",
-            "required": false,
-            "type": "integer",
-            "format": "int32"
-          },
-          {
-            "name": "limit",
-            "description": "Limit size.",
-            "in": "query",
-            "required": false,
-            "type": "integer",
-            "format": "int32"
-          },
-          {
-            "name": "sort",
-            "description": "Sort to order the search.",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "query",
-            "description": "Query filter the search search.",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "GitAccessesV1"
-        ]
-      },
-      "post": {
-        "summary": "List runs",
-        "operationId": "CreateGitAccess",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1HostAccess"
-            }
-          },
-          "204": {
-            "description": "No content.",
-            "schema": {}
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {}
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "description": "Artifact store body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/v1HostAccess"
-            }
-          }
-        ],
-        "tags": [
-          "GitAccessesV1"
-        ]
-      }
-    },
-    "/api/v1/orgs/{owner}/git_accesses/names": {
-      "get": {
-        "summary": "List bookmarked runs for user",
-        "operationId": "ListGitAccessNames",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1ListHostAccessesResponse"
-            }
-          },
-          "204": {
-            "description": "No content.",
-            "schema": {}
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {}
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "offset",
-            "description": "Pagination offset.",
-            "in": "query",
-            "required": false,
-            "type": "integer",
-            "format": "int32"
-          },
-          {
-            "name": "limit",
-            "description": "Limit size.",
-            "in": "query",
-            "required": false,
-            "type": "integer",
-            "format": "int32"
-          },
-          {
-            "name": "sort",
-            "description": "Sort to order the search.",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "query",
-            "description": "Query filter the search search.",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "GitAccessesV1"
-        ]
-      }
-    },
-    "/api/v1/orgs/{owner}/git_accesses/{host_access.uuid}": {
-      "put": {
-        "summary": "Get run",
-        "operationId": "UpdateGitAccess",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1HostAccess"
-            }
-          },
-          "204": {
-            "description": "No content.",
-            "schema": {}
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {}
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "host_access.uuid",
-            "description": "UUID",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "description": "Artifact store body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/v1HostAccess"
-            }
-          }
-        ],
-        "tags": [
-          "GitAccessesV1"
-        ]
-      },
-      "patch": {
-        "summary": "Update run",
-        "operationId": "PatchGitAccess",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1HostAccess"
-            }
-          },
-          "204": {
-            "description": "No content.",
-            "schema": {}
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {}
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "host_access.uuid",
-            "description": "UUID",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "description": "Artifact store body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/v1HostAccess"
-            }
-          }
-        ],
-        "tags": [
-          "GitAccessesV1"
-        ]
-      }
-    },
-    "/api/v1/orgs/{owner}/git_accesses/{uuid}": {
-      "get": {
-        "summary": "Create new run",
-        "operationId": "GetGitAccess",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1HostAccess"
-            }
-          },
-          "204": {
-            "description": "No content.",
-            "schema": {}
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {}
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "uuid",
-            "description": "Unique integer identifier of the entity",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "GitAccessesV1"
-        ]
-      },
-      "delete": {
-        "summary": "Patch run",
-        "operationId": "DeleteGitAccess",
-        "responses": {
-          "200": {
-            "description": "A successful response."
-          },
-          "204": {
-            "description": "No content.",
-            "schema": {}
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {}
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "uuid",
-            "description": "Unique integer identifier of the entity",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "GitAccessesV1"
         ]
       }
     },
@@ -3670,378 +3298,6 @@
         ],
         "tags": [
           "QueuesV1"
-        ]
-      }
-    },
-    "/api/v1/orgs/{owner}/registry_accesses": {
-      "get": {
-        "summary": "List archived runs for user",
-        "operationId": "ListRegistryAccesses",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1ListHostAccessesResponse"
-            }
-          },
-          "204": {
-            "description": "No content.",
-            "schema": {}
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {}
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "offset",
-            "description": "Pagination offset.",
-            "in": "query",
-            "required": false,
-            "type": "integer",
-            "format": "int32"
-          },
-          {
-            "name": "limit",
-            "description": "Limit size.",
-            "in": "query",
-            "required": false,
-            "type": "integer",
-            "format": "int32"
-          },
-          {
-            "name": "sort",
-            "description": "Sort to order the search.",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "query",
-            "description": "Query filter the search search.",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "RegistryAccessesV1"
-        ]
-      },
-      "post": {
-        "summary": "List runs",
-        "operationId": "CreateRegistryAccess",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1HostAccess"
-            }
-          },
-          "204": {
-            "description": "No content.",
-            "schema": {}
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {}
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "description": "Artifact store body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/v1HostAccess"
-            }
-          }
-        ],
-        "tags": [
-          "RegistryAccessesV1"
-        ]
-      }
-    },
-    "/api/v1/orgs/{owner}/registry_accesses/names": {
-      "get": {
-        "summary": "List bookmarked runs for user",
-        "operationId": "ListRegistryAccessNames",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1ListHostAccessesResponse"
-            }
-          },
-          "204": {
-            "description": "No content.",
-            "schema": {}
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {}
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "offset",
-            "description": "Pagination offset.",
-            "in": "query",
-            "required": false,
-            "type": "integer",
-            "format": "int32"
-          },
-          {
-            "name": "limit",
-            "description": "Limit size.",
-            "in": "query",
-            "required": false,
-            "type": "integer",
-            "format": "int32"
-          },
-          {
-            "name": "sort",
-            "description": "Sort to order the search.",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "query",
-            "description": "Query filter the search search.",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "RegistryAccessesV1"
-        ]
-      }
-    },
-    "/api/v1/orgs/{owner}/registry_accesses/{host_access.uuid}": {
-      "put": {
-        "summary": "Get run",
-        "operationId": "UpdateRegistryAccess",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1HostAccess"
-            }
-          },
-          "204": {
-            "description": "No content.",
-            "schema": {}
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {}
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "host_access.uuid",
-            "description": "UUID",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "description": "Artifact store body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/v1HostAccess"
-            }
-          }
-        ],
-        "tags": [
-          "RegistryAccessesV1"
-        ]
-      },
-      "patch": {
-        "summary": "Update run",
-        "operationId": "PatchRegistryAccess",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1HostAccess"
-            }
-          },
-          "204": {
-            "description": "No content.",
-            "schema": {}
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {}
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "host_access.uuid",
-            "description": "UUID",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "description": "Artifact store body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/v1HostAccess"
-            }
-          }
-        ],
-        "tags": [
-          "RegistryAccessesV1"
-        ]
-      }
-    },
-    "/api/v1/orgs/{owner}/registry_accesses/{uuid}": {
-      "get": {
-        "summary": "Create new run",
-        "operationId": "GetRegistryAccess",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1HostAccess"
-            }
-          },
-          "204": {
-            "description": "No content.",
-            "schema": {}
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {}
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "uuid",
-            "description": "Unique integer identifier of the entity",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "RegistryAccessesV1"
-        ]
-      },
-      "delete": {
-        "summary": "Patch run",
-        "operationId": "DeleteRegistryAccess",
-        "responses": {
-          "200": {
-            "description": "A successful response."
-          },
-          "204": {
-            "description": "No content.",
-            "schema": {}
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {}
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "uuid",
-            "description": "Unique integer identifier of the entity",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "RegistryAccessesV1"
         ]
       }
     },
@@ -7510,8 +6766,8 @@
             "format": "int32"
           },
           {
-            "name": "type",
-            "description": "Artifact type.",
+            "name": "kind",
+            "description": "Artifact kind.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -7742,8 +6998,8 @@
             "format": "int32"
           },
           {
-            "name": "type",
-            "description": "Artifact type.",
+            "name": "kind",
+            "description": "Artifact kind.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -9400,6 +8656,27 @@
           "type": "string",
           "title": "Name"
         },
+        "description": {
+          "type": "string",
+          "title": "Optional description"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "Optional Tags of this entity"
+        },
+        "disabled": {
+          "type": "boolean",
+          "format": "boolean",
+          "title": "Optional a flag to disable the store"
+        },
+        "deleted": {
+          "type": "boolean",
+          "format": "boolean",
+          "title": "Optional if the entity has been deleted"
+        },
         "namespace": {
           "type": "string",
           "title": "Namespace where the agen is deployed"
@@ -9420,6 +8697,18 @@
         }
       },
       "title": "Agent specification"
+    },
+    "v1ArtifactFormat": {
+      "type": "string",
+      "enum": [
+        "csv",
+        "tsv",
+        "psv",
+        "ssv"
+      ],
+      "default": "csv",
+      "description": "- csv: Comma\n - tsv: Tab\n - psv: Pipe\n - ssv: Space",
+      "title": "Artifact format"
     },
     "v1ArtifactMount": {
       "type": "object",
@@ -9460,85 +8749,6 @@
         }
       },
       "title": "Artifact tree response"
-    },
-    "v1ArtifactsStore": {
-      "type": "object",
-      "properties": {
-        "uuid": {
-          "type": "string",
-          "title": "UUID"
-        },
-        "name": {
-          "type": "string",
-          "title": "Name"
-        },
-        "description": {
-          "type": "string",
-          "title": "Optional description"
-        },
-        "tags": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "title": "Optional Tags of this entity"
-        },
-        "created_at": {
-          "type": "string",
-          "format": "date-time",
-          "title": "Optional time when the entityt was created"
-        },
-        "updated_at": {
-          "type": "string",
-          "format": "date-time",
-          "title": "Optional last time the entity was updated"
-        },
-        "frozen": {
-          "type": "boolean",
-          "format": "boolean",
-          "title": "Optional a flag to freeze the store"
-        },
-        "disabled": {
-          "type": "boolean",
-          "format": "boolean",
-          "title": "Optional a flag to disable the store"
-        },
-        "deleted": {
-          "type": "boolean",
-          "format": "boolean",
-          "title": "Optional if the entity has been deleted"
-        },
-        "k8s_secret": {
-          "type": "string",
-          "title": "Optional the k8s secret to use"
-        },
-        "type": {
-          "type": "string",
-          "title": "Optional type of the store"
-        },
-        "mount_path": {
-          "type": "string",
-          "title": "Optional mounth path"
-        },
-        "host_path": {
-          "type": "string",
-          "title": "Optional host path"
-        },
-        "volume_claim": {
-          "type": "string",
-          "title": "Optional volume claim"
-        },
-        "bucket": {
-          "type": "string",
-          "title": "Optional bucket"
-        },
-        "read_only": {
-          "type": "boolean",
-          "format": "boolean",
-          "title": "Optional flag to set this store to read only mode"
-        }
-      },
-      "title": "Artifacts store access specification"
     },
     "v1Auth": {
       "type": "object",
@@ -9614,6 +8824,16 @@
       },
       "title": "Parallelism based on Bayesian Optimization"
     },
+    "v1BlobConnection": {
+      "type": "object",
+      "properties": {
+        "blob": {
+          "type": "string",
+          "title": "Blob"
+        }
+      },
+      "title": "Blob connection specification"
+    },
     "v1BuildContext": {
       "type": "object",
       "properties": {
@@ -9681,6 +8901,25 @@
         }
       },
       "title": "Build context initializer specification"
+    },
+    "v1ClaimConnection": {
+      "type": "object",
+      "properties": {
+        "volume_claim": {
+          "type": "string",
+          "title": "Claim name"
+        },
+        "mount_path": {
+          "type": "string",
+          "title": "Mount path"
+        },
+        "read_only": {
+          "type": "boolean",
+          "format": "boolean",
+          "title": "Read Only"
+        }
+      },
+      "title": "Claim connection specification"
     },
     "v1CodeRef": {
       "type": "object",
@@ -9806,6 +9045,130 @@
         }
       },
       "title": "Component reference specification"
+    },
+    "v1Connection": {
+      "type": "object",
+      "properties": {
+        "uuid": {
+          "type": "string",
+          "title": "UUID"
+        },
+        "name": {
+          "type": "string",
+          "title": "Name"
+        },
+        "description": {
+          "type": "string",
+          "title": "Optional description"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "Optional Tags of this entity"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time",
+          "title": "Optional time when the entityt was created"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time",
+          "title": "Optional last time the entity was updated"
+        },
+        "frozen": {
+          "type": "boolean",
+          "format": "boolean",
+          "title": "Optional a flag to freeze the store"
+        },
+        "disabled": {
+          "type": "boolean",
+          "format": "boolean",
+          "title": "Optional a flag to disable the store"
+        },
+        "deleted": {
+          "type": "boolean",
+          "format": "boolean",
+          "title": "Optional if the entity has been deleted"
+        },
+        "k8s_secret": {
+          "type": "string",
+          "title": "Optional the k8s secret to use"
+        },
+        "kind": {
+          "$ref": "#/definitions/v1ConnectionKind",
+          "title": "Optional kind of the store"
+        },
+        "schema": {
+          "type": "object"
+        }
+      },
+      "title": "Conexion specification"
+    },
+    "v1ConnectionKind": {
+      "type": "string",
+      "enum": [
+        "host_path",
+        "volume_claim",
+        "ftp",
+        "gcp",
+        "gcs",
+        "gcpcloudsql",
+        "grpc",
+        "hdfs",
+        "http",
+        "pig_cli",
+        "hive_cli",
+        "hive_metastore",
+        "hive_server2",
+        "jdbc",
+        "jenkins",
+        "mysql",
+        "postgres",
+        "oracle",
+        "vertica",
+        "sqlite",
+        "mssql",
+        "redis",
+        "presto",
+        "mongo",
+        "cassandra",
+        "samba",
+        "aws",
+        "s3",
+        "emr",
+        "snowflake",
+        "ssh",
+        "cloudant",
+        "databricks",
+        "segment",
+        "azure_data_lake",
+        "azure_cosmos",
+        "wasb",
+        "registry",
+        "git"
+      ],
+      "default": "host_path",
+      "title": "Connection kinds"
+    },
+    "v1ConnectionScema": {
+      "type": "object",
+      "properties": {
+        "blob_connection": {
+          "$ref": "#/definitions/v1BlobConnection"
+        },
+        "host_path_connection": {
+          "$ref": "#/definitions/v1HostPathConnection"
+        },
+        "claim_connection": {
+          "$ref": "#/definitions/v1ClaimConnection"
+        },
+        "host_connection": {
+          "$ref": "#/definitions/v1HostConnection"
+        }
+      }
     },
     "v1Container": {
       "type": "object",
@@ -9952,6 +9315,27 @@
         "name": {
           "type": "string",
           "title": "Optional name"
+        },
+        "description": {
+          "type": "string",
+          "title": "Optional description"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "Optional Tags of this entity"
+        },
+        "disabled": {
+          "type": "boolean",
+          "format": "boolean",
+          "title": "Optional a flag to disable the store"
+        },
+        "deleted": {
+          "type": "boolean",
+          "format": "boolean",
+          "title": "Optional if the entity has been deleted"
         },
         "widgets": {
           "type": "array",
@@ -10222,68 +9606,39 @@
       },
       "title": "Parallelism based on grid/cartesian product generated search space"
     },
-    "v1HostAccess": {
+    "v1HostConnection": {
       "type": "object",
       "properties": {
-        "uuid": {
+        "url": {
           "type": "string",
-          "title": "UUID"
-        },
-        "name": {
-          "type": "string",
-          "title": "Name"
-        },
-        "description": {
-          "type": "string",
-          "title": "Optional description"
-        },
-        "tags": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "title": "Optional Tags of this entity"
-        },
-        "created_at": {
-          "type": "string",
-          "format": "date-time",
-          "title": "Optional time when the entityt was created"
-        },
-        "updated_at": {
-          "type": "string",
-          "format": "date-time",
-          "title": "Optional last time the entity was updated"
-        },
-        "frozen": {
-          "type": "boolean",
-          "format": "boolean",
-          "title": "Optional a flag to freeze an access"
-        },
-        "disabled": {
-          "type": "boolean",
-          "format": "boolean",
-          "title": "Optional a flag to disable an access"
+          "title": "Url"
         },
         "insecure": {
           "type": "boolean",
           "format": "boolean",
-          "title": "Optional a flag to mark the host as insecure"
-        },
-        "deleted": {
-          "type": "boolean",
-          "format": "boolean",
-          "title": "Optional if the entity has been deleted"
-        },
-        "k8s_secret": {
-          "type": "string",
-          "title": "Optional the k8s secret to use"
-        },
-        "url": {
-          "type": "string",
-          "title": "Optional the url value"
+          "title": "insecure"
         }
       },
-      "title": "Host access specification"
+      "title": "Host connection"
+    },
+    "v1HostPathConnection": {
+      "type": "object",
+      "properties": {
+        "host_path": {
+          "type": "string",
+          "title": "host path"
+        },
+        "mount_path": {
+          "type": "string",
+          "title": "Mount path"
+        },
+        "read_only": {
+          "type": "boolean",
+          "format": "boolean",
+          "title": "Read Only"
+        }
+      },
+      "title": "Host path connection specification"
     },
     "v1Hyperband": {
       "type": "object",
@@ -10637,7 +9992,7 @@
       },
       "title": "Contains list agents"
     },
-    "v1ListArtifactsStoresResponse": {
+    "v1ListConnectionsResponse": {
       "type": "object",
       "properties": {
         "count": {
@@ -10648,7 +10003,7 @@
         "results": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/v1ArtifactsStore"
+            "$ref": "#/definitions/v1Connection"
           },
           "title": "List of all entities"
         },
@@ -10661,7 +10016,7 @@
           "title": "Next page"
         }
       },
-      "title": "Contains list artifacts stores"
+      "title": "Contains list connections"
     },
     "v1ListDashboardsResponse": {
       "type": "object",
@@ -10688,32 +10043,6 @@
         }
       },
       "title": "Contains list dashboards"
-    },
-    "v1ListHostAccessesResponse": {
-      "type": "object",
-      "properties": {
-        "count": {
-          "type": "integer",
-          "format": "int32",
-          "title": "Count of the entities"
-        },
-        "results": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/v1HostAccess"
-          },
-          "title": "List of all entities"
-        },
-        "previous": {
-          "type": "string",
-          "title": "Previous page"
-        },
-        "next": {
-          "type": "string",
-          "title": "Next page"
-        }
-      },
-      "title": "Contains list host accesses"
     },
     "v1ListK8sResourcesResponse": {
       "type": "object",
@@ -12106,6 +11435,12 @@
         },
         "schedule": {
           "$ref": "#/definitions/v1Schedule"
+        },
+        "artifact_format": {
+          "$ref": "#/definitions/v1ArtifactFormat"
+        },
+        "connection_schema": {
+          "$ref": "#/definitions/v1ConnectionScema"
         }
       }
     },
@@ -12119,6 +11454,27 @@
         "name": {
           "type": "string",
           "title": "Optional name"
+        },
+        "description": {
+          "type": "string",
+          "title": "Optional description"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "Optional Tags of this entity"
+        },
+        "disabled": {
+          "type": "boolean",
+          "format": "boolean",
+          "title": "Optional a flag to disable the store"
+        },
+        "deleted": {
+          "type": "boolean",
+          "format": "boolean",
+          "title": "Optional if the entity has been deleted"
         },
         "spec": {
           "$ref": "#/definitions/v1SearchSpec",

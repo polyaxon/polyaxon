@@ -26,7 +26,7 @@ from marshmallow import ValidationError
 
 from polyaxon.schemas.polyflow import params as ops_params
 from polyaxon.schemas.polyflow.component import ComponentConfig
-from polyaxon.schemas.polyflow.io import IOTypes
+from polyaxon.types import types
 
 
 @pytest.mark.components_mark
@@ -52,16 +52,16 @@ class TestOperationsConfigs(TestCase):
     def test_param_validation_with_inputs(self):
         config_dict = {
             "inputs": [
-                {"name": "param1", "type": IOTypes.STR},
-                {"name": "param2", "type": IOTypes.INT},
-                {"name": "param3", "type": IOTypes.FLOAT},
-                {"name": "param4", "type": IOTypes.BOOL},
-                {"name": "param5", "type": IOTypes.DICT},
-                {"name": "param6", "type": IOTypes.LIST},
-                {"name": "param7", "type": IOTypes.GCS_PATH},
-                {"name": "param8", "type": IOTypes.S3_PATH},
-                {"name": "param9", "type": IOTypes.AZURE_PATH},
-                {"name": "param10", "type": IOTypes.PATH},
+                {"name": "param1", "type": types.STR},
+                {"name": "param2", "type": types.INT},
+                {"name": "param3", "type": types.FLOAT},
+                {"name": "param4", "type": types.BOOL},
+                {"name": "param5", "type": types.DICT},
+                {"name": "param6", "type": types.LIST},
+                {"name": "param7", "type": types.GCS},
+                {"name": "param8", "type": types.S3},
+                {"name": "param9", "type": types.WASB},
+                {"name": "param10", "type": types.PATH},
             ],
             "run": {"kind": "container", "image": "test"},
         }
@@ -95,20 +95,20 @@ class TestOperationsConfigs(TestCase):
     def test_param_validation_with_outputs(self):
         config_dict = {
             "outputs": [
-                {"name": "param1", "type": IOTypes.STR},
-                {"name": "param2", "type": IOTypes.INT},
-                {"name": "param3", "type": IOTypes.FLOAT},
-                {"name": "param4", "type": IOTypes.BOOL},
-                {"name": "param5", "type": IOTypes.DICT},
-                {"name": "param6", "type": IOTypes.LIST},
-                {"name": "param7", "type": IOTypes.GCS_PATH},
-                {"name": "param8", "type": IOTypes.S3_PATH},
-                {"name": "param9", "type": IOTypes.AZURE_PATH},
-                {"name": "param10", "type": IOTypes.PATH},
-                {"name": "param11", "type": IOTypes.METRIC},
-                {"name": "param12", "type": IOTypes.METADATA},
-                {"name": "param13", "type": IOTypes.METADATA},
-                {"name": "param14", "type": IOTypes.METADATA},
+                {"name": "param1", "type": types.STR},
+                {"name": "param2", "type": types.INT},
+                {"name": "param3", "type": types.FLOAT},
+                {"name": "param4", "type": types.BOOL},
+                {"name": "param5", "type": types.DICT},
+                {"name": "param6", "type": types.LIST},
+                {"name": "param7", "type": types.GCS},
+                {"name": "param8", "type": types.S3},
+                {"name": "param9", "type": types.WASB},
+                {"name": "param10", "type": types.PATH},
+                {"name": "param11", "type": types.METRIC},
+                {"name": "param12", "type": types.METADATA},
+                {"name": "param13", "type": types.METADATA},
+                {"name": "param14", "type": types.METADATA},
             ],
             "run": {"kind": "container", "image": "test"},
         }
@@ -148,8 +148,8 @@ class TestOperationsConfigs(TestCase):
         # Inputs
         config_dict = {
             "inputs": [
-                {"name": "param1", "type": IOTypes.STR},
-                {"name": "param10", "type": IOTypes.PATH},
+                {"name": "param1", "type": types.STR},
+                {"name": "param10", "type": types.PATH},
             ],
             "run": {"kind": "container", "image": "test"},
         }
@@ -165,8 +165,8 @@ class TestOperationsConfigs(TestCase):
         # Outputs
         config_dict = {
             "outputs": [
-                {"name": "param1", "type": IOTypes.STR},
-                {"name": "param10", "type": IOTypes.PATH},
+                {"name": "param1", "type": types.STR},
+                {"name": "param10", "type": types.PATH},
             ],
             "run": {"kind": "container", "image": "test"},
         }
@@ -181,8 +181,8 @@ class TestOperationsConfigs(TestCase):
 
         # IO
         config_dict = {
-            "inputs": [{"name": "param1", "type": IOTypes.STR}],
-            "outputs": [{"name": "param10", "type": IOTypes.PATH}],
+            "inputs": [{"name": "param1", "type": types.STR}],
+            "outputs": [{"name": "param10", "type": types.PATH}],
             "run": {"kind": "container", "image": "test"},
         }
         config = ComponentConfig.from_dict(config_dict)
@@ -196,8 +196,8 @@ class TestOperationsConfigs(TestCase):
     def test_incomplete_params(self):
         config_dict = {
             "inputs": [
-                {"name": "param1", "type": IOTypes.INT},
-                {"name": "param2", "type": IOTypes.INT},
+                {"name": "param1", "type": types.INT},
+                {"name": "param2", "type": types.INT},
             ],
             "run": {"kind": "container", "image": "test"},
         }
@@ -212,13 +212,8 @@ class TestOperationsConfigs(TestCase):
 
         config_dict = {
             "outputs": [
-                {
-                    "name": "param1",
-                    "type": IOTypes.INT,
-                    "value": 12,
-                    "is_optional": True,
-                },
-                {"name": "param2", "type": IOTypes.INT},
+                {"name": "param1", "type": types.INT, "value": 12, "is_optional": True},
+                {"name": "param2", "type": types.INT},
             ],
             "run": {"kind": "container", "image": "test"},
         }
@@ -233,7 +228,7 @@ class TestOperationsConfigs(TestCase):
     def test_extra_params(self):
         # inputs
         config_dict = {
-            "inputs": [{"name": "param1", "type": IOTypes.INT}],
+            "inputs": [{"name": "param1", "type": types.INT}],
             "run": {"kind": "container", "image": "test"},
         }
         config = ComponentConfig.from_dict(config_dict)
@@ -247,7 +242,7 @@ class TestOperationsConfigs(TestCase):
 
         # outputs
         config_dict = {
-            "outputs": [{"name": "param1", "type": IOTypes.INT}],
+            "outputs": [{"name": "param1", "type": types.INT}],
             "run": {"kind": "container", "image": "test"},
         }
         config = ComponentConfig.from_dict(config_dict)
@@ -261,7 +256,7 @@ class TestOperationsConfigs(TestCase):
 
     def test_param_validation_with_mismatched_inputs(self):
         config_dict = {
-            "inputs": [{"name": "param1", "type": IOTypes.INT}],
+            "inputs": [{"name": "param1", "type": types.INT}],
             "run": {"kind": "container", "image": "test"},
         }
         config = ComponentConfig.from_dict(config_dict)
@@ -306,7 +301,7 @@ class TestOperationsConfigs(TestCase):
             )
 
         config_dict = {
-            "inputs": [{"name": "param2", "type": IOTypes.STR}],
+            "inputs": [{"name": "param2", "type": types.STR}],
             "run": {"kind": "container", "image": "test"},
         }
         config = ComponentConfig.from_dict(config_dict)
@@ -351,7 +346,7 @@ class TestOperationsConfigs(TestCase):
             )
 
         config_dict = {
-            "inputs": [{"name": "param7", "type": IOTypes.AZURE_PATH}],
+            "inputs": [{"name": "param7", "type": types.WASB}],
             "run": {"kind": "container", "image": "test"},
         }
         config = ComponentConfig.from_dict(config_dict)
@@ -389,7 +384,7 @@ class TestOperationsConfigs(TestCase):
 
     def test_param_validation_with_mismatched_outputs(self):
         config_dict = {
-            "outputs": [{"name": "param1", "type": IOTypes.INT}],
+            "outputs": [{"name": "param1", "type": types.INT}],
             "run": {"kind": "container", "image": "test"},
         }
         config = ComponentConfig.from_dict(config_dict)
@@ -434,7 +429,7 @@ class TestOperationsConfigs(TestCase):
             )
 
         config_dict = {
-            "outputs": [{"name": "param2", "type": IOTypes.STR}],
+            "outputs": [{"name": "param2", "type": types.STR}],
             "run": {"kind": "container", "image": "test"},
         }
         config = ComponentConfig.from_dict(config_dict)
@@ -479,7 +474,7 @@ class TestOperationsConfigs(TestCase):
             )
 
         config_dict = {
-            "outputs": [{"name": "param7", "type": IOTypes.AZURE_PATH}],
+            "outputs": [{"name": "param7", "type": types.WASB}],
             "run": {"kind": "container", "image": "test"},
         }
         config = ComponentConfig.from_dict(config_dict)
@@ -518,10 +513,10 @@ class TestOperationsConfigs(TestCase):
     def test_experiment_and_job_refs_params(self):
         config_dict = {
             "inputs": [
-                {"name": "param1", "type": IOTypes.INT},
-                {"name": "param2", "type": IOTypes.FLOAT},
-                {"name": "param9", "type": IOTypes.AZURE_PATH},
-                {"name": "param11", "type": IOTypes.METRIC},
+                {"name": "param1", "type": types.INT},
+                {"name": "param2", "type": types.FLOAT},
+                {"name": "param9", "type": types.WASB},
+                {"name": "param11", "type": types.METRIC},
             ],
             "run": {"kind": "container", "image": "test"},
         }
@@ -545,8 +540,8 @@ class TestOperationsConfigs(TestCase):
     def test_job_refs_params(self):
         config_dict = {
             "inputs": [
-                {"name": "param1", "type": IOTypes.INT},
-                {"name": "param9", "type": IOTypes.FLOAT},
+                {"name": "param1", "type": types.INT},
+                {"name": "param9", "type": types.FLOAT},
             ],
             "run": {"kind": "container", "image": "test"},
         }

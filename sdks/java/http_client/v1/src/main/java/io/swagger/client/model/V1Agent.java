@@ -37,6 +37,8 @@ import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import org.threeten.bp.OffsetDateTime;
 
 /**
@@ -49,6 +51,18 @@ public class V1Agent {
 
   @SerializedName("name")
   private String name = null;
+
+  @SerializedName("description")
+  private String description = null;
+
+  @SerializedName("tags")
+  private List<String> tags = null;
+
+  @SerializedName("disabled")
+  private Boolean disabled = null;
+
+  @SerializedName("deleted")
+  private Boolean deleted = null;
 
   @SerializedName("namespace")
   private String namespace = null;
@@ -96,6 +110,86 @@ public class V1Agent {
 
   public void setName(String name) {
     this.name = name;
+  }
+
+  public V1Agent description(String description) {
+    this.description = description;
+    return this;
+  }
+
+   /**
+   * Get description
+   * @return description
+  **/
+  @ApiModelProperty(value = "")
+  public String getDescription() {
+    return description;
+  }
+
+  public void setDescription(String description) {
+    this.description = description;
+  }
+
+  public V1Agent tags(List<String> tags) {
+    this.tags = tags;
+    return this;
+  }
+
+  public V1Agent addTagsItem(String tagsItem) {
+    if (this.tags == null) {
+      this.tags = new ArrayList<String>();
+    }
+    this.tags.add(tagsItem);
+    return this;
+  }
+
+   /**
+   * Get tags
+   * @return tags
+  **/
+  @ApiModelProperty(value = "")
+  public List<String> getTags() {
+    return tags;
+  }
+
+  public void setTags(List<String> tags) {
+    this.tags = tags;
+  }
+
+  public V1Agent disabled(Boolean disabled) {
+    this.disabled = disabled;
+    return this;
+  }
+
+   /**
+   * Get disabled
+   * @return disabled
+  **/
+  @ApiModelProperty(value = "")
+  public Boolean isDisabled() {
+    return disabled;
+  }
+
+  public void setDisabled(Boolean disabled) {
+    this.disabled = disabled;
+  }
+
+  public V1Agent deleted(Boolean deleted) {
+    this.deleted = deleted;
+    return this;
+  }
+
+   /**
+   * Get deleted
+   * @return deleted
+  **/
+  @ApiModelProperty(value = "")
+  public Boolean isDeleted() {
+    return deleted;
+  }
+
+  public void setDeleted(Boolean deleted) {
+    this.deleted = deleted;
   }
 
   public V1Agent namespace(String namespace) {
@@ -182,6 +276,10 @@ public class V1Agent {
     V1Agent v1Agent = (V1Agent) o;
     return Objects.equals(this.uuid, v1Agent.uuid) &&
         Objects.equals(this.name, v1Agent.name) &&
+        Objects.equals(this.description, v1Agent.description) &&
+        Objects.equals(this.tags, v1Agent.tags) &&
+        Objects.equals(this.disabled, v1Agent.disabled) &&
+        Objects.equals(this.deleted, v1Agent.deleted) &&
         Objects.equals(this.namespace, v1Agent.namespace) &&
         Objects.equals(this.versionApi, v1Agent.versionApi) &&
         Objects.equals(this.createdAt, v1Agent.createdAt) &&
@@ -190,7 +288,7 @@ public class V1Agent {
 
   @Override
   public int hashCode() {
-    return Objects.hash(uuid, name, namespace, versionApi, createdAt, updatedAt);
+    return Objects.hash(uuid, name, description, tags, disabled, deleted, namespace, versionApi, createdAt, updatedAt);
   }
 
 
@@ -201,6 +299,10 @@ public class V1Agent {
     
     sb.append("    uuid: ").append(toIndentedString(uuid)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
+    sb.append("    description: ").append(toIndentedString(description)).append("\n");
+    sb.append("    tags: ").append(toIndentedString(tags)).append("\n");
+    sb.append("    disabled: ").append(toIndentedString(disabled)).append("\n");
+    sb.append("    deleted: ").append(toIndentedString(deleted)).append("\n");
     sb.append("    namespace: ").append(toIndentedString(namespace)).append("\n");
     sb.append("    versionApi: ").append(toIndentedString(versionApi)).append("\n");
     sb.append("    createdAt: ").append(toIndentedString(createdAt)).append("\n");

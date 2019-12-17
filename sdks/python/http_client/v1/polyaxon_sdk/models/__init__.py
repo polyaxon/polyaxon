@@ -33,16 +33,21 @@ from __future__ import absolute_import
 # import models into model package
 from polyaxon_sdk.models.protobuf_null_value import ProtobufNullValue
 from polyaxon_sdk.models.v1_agent import V1Agent
+from polyaxon_sdk.models.v1_artifact_format import V1ArtifactFormat
 from polyaxon_sdk.models.v1_artifact_mount import V1ArtifactMount
 from polyaxon_sdk.models.v1_artifact_tree_response import V1ArtifactTreeResponse
-from polyaxon_sdk.models.v1_artifacts_store import V1ArtifactsStore
 from polyaxon_sdk.models.v1_auth import V1Auth
 from polyaxon_sdk.models.v1_average_stopping_policy import V1AverageStoppingPolicy
 from polyaxon_sdk.models.v1_bo import V1BO
+from polyaxon_sdk.models.v1_blob_connection import V1BlobConnection
 from polyaxon_sdk.models.v1_build_context import V1BuildContext
+from polyaxon_sdk.models.v1_claim_connection import V1ClaimConnection
 from polyaxon_sdk.models.v1_code_ref import V1CodeRef
 from polyaxon_sdk.models.v1_component import V1Component
 from polyaxon_sdk.models.v1_component_ref import V1ComponentRef
+from polyaxon_sdk.models.v1_connection import V1Connection
+from polyaxon_sdk.models.v1_connection_kind import V1ConnectionKind
+from polyaxon_sdk.models.v1_connection_scema import V1ConnectionScema
 from polyaxon_sdk.models.v1_container import V1Container
 from polyaxon_sdk.models.v1_container_env import V1ContainerEnv
 from polyaxon_sdk.models.v1_creds_body_request import V1CredsBodyRequest
@@ -57,7 +62,8 @@ from polyaxon_sdk.models.v1_exact_time_schedule import V1ExactTimeSchedule
 from polyaxon_sdk.models.v1_failure_early_stopping import V1FailureEarlyStopping
 from polyaxon_sdk.models.v1_flink import V1Flink
 from polyaxon_sdk.models.v1_grid_search import V1GridSearch
-from polyaxon_sdk.models.v1_host_access import V1HostAccess
+from polyaxon_sdk.models.v1_host_connection import V1HostConnection
+from polyaxon_sdk.models.v1_host_path_connection import V1HostPathConnection
 from polyaxon_sdk.models.v1_hyperband import V1Hyperband
 from polyaxon_sdk.models.v1_hyperopt import V1Hyperopt
 from polyaxon_sdk.models.v1_hyperopt_algorithms import V1HyperoptAlgorithms
@@ -68,13 +74,8 @@ from polyaxon_sdk.models.v1_iterative import V1Iterative
 from polyaxon_sdk.models.v1_k8s_mount import V1K8sMount
 from polyaxon_sdk.models.v1_k8s_resource import V1K8sResource
 from polyaxon_sdk.models.v1_list_agents_response import V1ListAgentsResponse
-from polyaxon_sdk.models.v1_list_artifacts_stores_response import (
-    V1ListArtifactsStoresResponse,
-)
+from polyaxon_sdk.models.v1_list_connections_response import V1ListConnectionsResponse
 from polyaxon_sdk.models.v1_list_dashboards_response import V1ListDashboardsResponse
-from polyaxon_sdk.models.v1_list_host_accesses_response import (
-    V1ListHostAccessesResponse,
-)
 from polyaxon_sdk.models.v1_list_k8s_resources_response import (
     V1ListK8sResourcesResponse,
 )

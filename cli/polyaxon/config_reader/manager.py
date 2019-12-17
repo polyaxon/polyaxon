@@ -1,11 +1,29 @@
-# -*- coding: utf-8 -*-
+#!/usr/bin/python
+#
+# Copyright 2019 Polyaxon, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# coding: utf-8
+
 from __future__ import absolute_import, division, print_function
 
-from rhea import parser, reader
-from rhea.constants import NO_VALUE_FOUND
+from polyaxon.config_reader import reader
+from polyaxon.types import parser
+from polyaxon.types.constants import NO_VALUE_FOUND
 
 
-class Rhea(object):
+class ConfigManager(object):
     def __init__(self, **data):
         self._data = data
         self._requested_keys = set()
@@ -42,7 +60,9 @@ class Rhea(object):
     def local_keys(self):
         return self._local_keys
 
-    def get_requested_data(self, include_secrets=False, include_locals=False, to_str=False):
+    def get_requested_data(
+        self, include_secrets=False, include_locals=False, to_str=False
+    ):
         data = {}
         for key in self._requested_keys:
             if not include_secrets and key in self._secret_keys:
@@ -50,17 +70,19 @@ class Rhea(object):
             if not include_locals and key in self._local_keys:
                 continue
             value = self._data[key]
-            data[key] = '{}'.format(value) if to_str else value
+            data[key] = "{}".format(value) if to_str else value
         return data
 
-    def get_int(self,
-                key,
-                is_list=False,
-                is_optional=False,
-                is_secret=False,
-                is_local=False,
-                default=None,
-                options=None):
+    def get_int(
+        self,
+        key,
+        is_list=False,
+        is_optional=False,
+        is_secret=False,
+        is_local=False,
+        default=None,
+        options=None,
+    ):
         """
         Get a the value corresponding to the key and converts it to `int`/`list(int)`.
 
@@ -76,23 +98,27 @@ class Rhea(object):
         Returns:
              `int`: value corresponding to the key.
         """
-        return self._get(key=key,
-                         parser_fct=parser.get_int,
-                         is_list=is_list,
-                         is_optional=is_optional,
-                         is_secret=is_secret,
-                         is_local=is_local,
-                         default=default,
-                         options=options)
+        return self._get(
+            key=key,
+            parser_fct=parser.get_int,
+            is_list=is_list,
+            is_optional=is_optional,
+            is_secret=is_secret,
+            is_local=is_local,
+            default=default,
+            options=options,
+        )
 
-    def get_float(self,
-                  key,
-                  is_list=False,
-                  is_optional=False,
-                  is_secret=False,
-                  is_local=False,
-                  default=None,
-                  options=None):
+    def get_float(
+        self,
+        key,
+        is_list=False,
+        is_optional=False,
+        is_secret=False,
+        is_local=False,
+        default=None,
+        options=None,
+    ):
         """
         Get a the value corresponding to the key and converts it to `float`/`list(float)`.
 
@@ -108,23 +134,27 @@ class Rhea(object):
         Returns:
              `float`: value corresponding to the key.
         """
-        return self._get(key=key,
-                         parser_fct=parser.get_float,
-                         is_list=is_list,
-                         is_optional=is_optional,
-                         is_secret=is_secret,
-                         is_local=is_local,
-                         default=default,
-                         options=options)
+        return self._get(
+            key=key,
+            parser_fct=parser.get_float,
+            is_list=is_list,
+            is_optional=is_optional,
+            is_secret=is_secret,
+            is_local=is_local,
+            default=default,
+            options=options,
+        )
 
-    def get_boolean(self,
-                    key,
-                    is_list=False,
-                    is_optional=False,
-                    is_secret=False,
-                    is_local=False,
-                    default=None,
-                    options=None):
+    def get_boolean(
+        self,
+        key,
+        is_list=False,
+        is_optional=False,
+        is_secret=False,
+        is_local=False,
+        default=None,
+        options=None,
+    ):
         """
         Get a the value corresponding to the key and converts it to `bool`/`list(str)`.
 
@@ -140,23 +170,27 @@ class Rhea(object):
         Returns:
             `bool`: value corresponding to the key.
         """
-        return self._get(key=key,
-                         parser_fct=parser.get_boolean,
-                         is_list=is_list,
-                         is_optional=is_optional,
-                         is_secret=is_secret,
-                         is_local=is_local,
-                         default=default,
-                         options=options)
+        return self._get(
+            key=key,
+            parser_fct=parser.get_boolean,
+            is_list=is_list,
+            is_optional=is_optional,
+            is_secret=is_secret,
+            is_local=is_local,
+            default=default,
+            options=options,
+        )
 
-    def get_string(self,
-                   key,
-                   is_list=False,
-                   is_optional=False,
-                   is_secret=False,
-                   is_local=False,
-                   default=None,
-                   options=None):
+    def get_string(
+        self,
+        key,
+        is_list=False,
+        is_optional=False,
+        is_secret=False,
+        is_local=False,
+        default=None,
+        options=None,
+    ):
         """
         Get a the value corresponding to the key and converts it to `str`/`list(str)`.
 
@@ -172,23 +206,27 @@ class Rhea(object):
         Returns:
             `str`: value corresponding to the key.
         """
-        return self._get(key=key,
-                         parser_fct=parser.get_string,
-                         is_list=is_list,
-                         is_optional=is_optional,
-                         is_secret=is_secret,
-                         is_local=is_local,
-                         default=default,
-                         options=options)
+        return self._get(
+            key=key,
+            parser_fct=parser.get_string,
+            is_list=is_list,
+            is_optional=is_optional,
+            is_secret=is_secret,
+            is_local=is_local,
+            default=default,
+            options=options,
+        )
 
-    def get_dict(self,
-                 key,
-                 is_list=False,
-                 is_optional=False,
-                 is_secret=False,
-                 is_local=False,
-                 default=None,
-                 options=None):
+    def get_dict(
+        self,
+        key,
+        is_list=False,
+        is_optional=False,
+        is_secret=False,
+        is_local=False,
+        default=None,
+        options=None,
+    ):
         """
         Get a the value corresponding to the key and converts it to `dict`.
 
@@ -205,22 +243,26 @@ class Rhea(object):
             `str`: value corresponding to the key.
         """
 
-        return self._get(key=key,
-                         parser_fct=parser.get_dict,
-                         is_list=is_list,
-                         is_optional=is_optional,
-                         is_secret=is_secret,
-                         is_local=is_local,
-                         default=default,
-                         options=options)
+        return self._get(
+            key=key,
+            parser_fct=parser.get_dict,
+            is_list=is_list,
+            is_optional=is_optional,
+            is_secret=is_secret,
+            is_local=is_local,
+            default=default,
+            options=options,
+        )
 
-    def get_dict_of_dicts(self,
-                          key,
-                          is_optional=False,
-                          is_secret=False,
-                          is_local=False,
-                          default=None,
-                          options=None):
+    def get_dict_of_dicts(
+        self,
+        key,
+        is_optional=False,
+        is_secret=False,
+        is_local=False,
+        default=None,
+        options=None,
+    ):
         """
         Get a the value corresponding to the key and converts it to `dict`.
 
@@ -237,23 +279,27 @@ class Rhea(object):
         Returns:
             `str`: value corresponding to the key.
         """
-        return self._get(key=key,
-                         parser_fct=parser.get_dict_of_dicts,
-                         is_list=None,
-                         is_optional=is_optional,
-                         is_secret=is_secret,
-                         is_local=is_local,
-                         default=default,
-                         options=options)
+        return self._get(
+            key=key,
+            parser_fct=parser.get_dict_of_dicts,
+            is_list=None,
+            is_optional=is_optional,
+            is_secret=is_secret,
+            is_local=is_local,
+            default=default,
+            options=options,
+        )
 
-    def get_uri(self,
-                key,
-                is_list=False,
-                is_optional=False,
-                is_secret=False,
-                is_local=False,
-                default=None,
-                options=None):
+    def get_uri(
+        self,
+        key,
+        is_list=False,
+        is_optional=False,
+        is_secret=False,
+        is_local=False,
+        default=None,
+        options=None,
+    ):
         """
         Get a the value corresponding to the key and converts it to `UriSpec`.
 
@@ -269,23 +315,27 @@ class Rhea(object):
         Returns:
              `str`: value corresponding to the key.
         """
-        return self._get(key=key,
-                         parser_fct=parser.get_uri,
-                         is_list=is_list,
-                         is_optional=is_optional,
-                         is_secret=is_secret,
-                         is_local=is_local,
-                         default=default,
-                         options=options)
+        return self._get(
+            key=key,
+            parser_fct=parser.get_uri,
+            is_list=is_list,
+            is_optional=is_optional,
+            is_secret=is_secret,
+            is_local=is_local,
+            default=default,
+            options=options,
+        )
 
-    def get_auth(self,
-                 key,
-                 is_list=False,
-                 is_optional=False,
-                 is_secret=False,
-                 is_local=False,
-                 default=None,
-                 options=None):
+    def get_auth(
+        self,
+        key,
+        is_list=False,
+        is_optional=False,
+        is_secret=False,
+        is_local=False,
+        default=None,
+        options=None,
+    ):
         """
         Get a the value corresponding to the key and converts it to `AuthSpec`.
 
@@ -301,22 +351,26 @@ class Rhea(object):
         Returns:
              `str`: value corresponding to the key.
         """
-        return self._get(key=key,
-                         parser_fct=parser.get_auth,
-                         is_list=is_list,
-                         is_optional=is_optional,
-                         is_secret=is_secret,
-                         is_local=is_local,
-                         default=default,
-                         options=options)
+        return self._get(
+            key=key,
+            parser_fct=parser.get_auth,
+            is_list=is_list,
+            is_optional=is_optional,
+            is_secret=is_secret,
+            is_local=is_local,
+            default=default,
+            options=options,
+        )
 
-    def get_list(self,
-                 key,
-                 is_optional=False,
-                 is_secret=False,
-                 is_local=False,
-                 default=None,
-                 options=None):
+    def get_list(
+        self,
+        key,
+        is_optional=False,
+        is_secret=False,
+        is_local=False,
+        default=None,
+        options=None,
+    ):
         """
         Get a the value corresponding to the key and converts comma separated values to a list.
 
@@ -332,16 +386,28 @@ class Rhea(object):
              `str`: value corresponding to the key.
         """
 
-        return self._get(key=key,
-                         parser_fct=parser.get_list,
-                         is_list=None,
-                         is_optional=is_optional,
-                         is_secret=is_secret,
-                         is_local=is_local,
-                         default=default,
-                         options=options)
+        return self._get(
+            key=key,
+            parser_fct=parser.get_list,
+            is_list=None,
+            is_optional=is_optional,
+            is_secret=is_secret,
+            is_local=is_local,
+            default=default,
+            options=options,
+        )
 
-    def _get(self, key, parser_fct, is_list, is_optional, is_secret, is_local, default, options):
+    def _get(
+        self,
+        key,
+        parser_fct,
+        is_list,
+        is_optional,
+        is_secret,
+        is_local,
+        default,
+        options,
+    ):
         """
         Get key from the dictionary made out of the configs passed.
 
@@ -355,12 +421,14 @@ class Rhea(object):
             KeyError
         """
         value = self._data.get(key, NO_VALUE_FOUND)
-        parsed_value = parser_fct(key=key,
-                                  value=value,
-                                  is_list=is_list,
-                                  is_optional=is_optional,
-                                  default=default,
-                                  options=options)
+        parsed_value = parser_fct(
+            key=key,
+            value=value,
+            is_list=is_list,
+            is_optional=is_optional,
+            default=default,
+            options=options,
+        )
         self._add_key(key, is_secret=is_secret, is_local=is_local)
         return parsed_value
 

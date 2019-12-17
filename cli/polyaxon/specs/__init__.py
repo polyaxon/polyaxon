@@ -17,12 +17,11 @@
 # coding: utf-8
 from __future__ import absolute_import, division, print_function
 
-import rhea
-
 from polyaxon import kinds
 from polyaxon.specs.base import BaseSpecification
 from polyaxon.specs.op import OpSpecification
 from polyaxon.specs.component import ComponentSpecification
+from polyaxon.config_reader import reader
 
 SPECIFICATION_BY_KIND = {
     kinds.OP: OpSpecification,
@@ -31,6 +30,6 @@ SPECIFICATION_BY_KIND = {
 
 
 def get_specification(data):
-    data = rhea.read(data)
+    data = reader.read(data)
     kind = BaseSpecification.get_kind(data=data)
     return SPECIFICATION_BY_KIND[kind](data)

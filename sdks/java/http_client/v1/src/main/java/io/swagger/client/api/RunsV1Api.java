@@ -1377,13 +1377,13 @@ public class RunsV1Api {
      * @param uuid Unique integer identifier of the entity (required)
      * @param path Artifact filepath. (optional)
      * @param step Artifact logging step. (optional)
-     * @param type Artifact type. (optional)
+     * @param kind Artifact kind. (optional)
      * @param progressListener Progress listener
      * @param progressRequestListener Progress request listener
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call getRunArtifactsTreeCall(String owner, String project, String uuid, String path, Integer step, String type, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call getRunArtifactsTreeCall(String owner, String project, String uuid, String path, Integer step, String kind, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -1398,8 +1398,8 @@ public class RunsV1Api {
         localVarQueryParams.addAll(apiClient.parameterToPair("path", path));
         if (step != null)
         localVarQueryParams.addAll(apiClient.parameterToPair("step", step));
-        if (type != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("type", type));
+        if (kind != null)
+        localVarQueryParams.addAll(apiClient.parameterToPair("kind", kind));
 
         Map<String, String> localVarHeaderParams = new HashMap<String, String>();
 
@@ -1434,7 +1434,7 @@ public class RunsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call getRunArtifactsTreeValidateBeforeCall(String owner, String project, String uuid, String path, Integer step, String type, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call getRunArtifactsTreeValidateBeforeCall(String owner, String project, String uuid, String path, Integer step, String kind, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
@@ -1452,7 +1452,7 @@ public class RunsV1Api {
         }
         
 
-        com.squareup.okhttp.Call call = getRunArtifactsTreeCall(owner, project, uuid, path, step, type, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = getRunArtifactsTreeCall(owner, project, uuid, path, step, kind, progressListener, progressRequestListener);
         return call;
 
     }
@@ -1465,12 +1465,12 @@ public class RunsV1Api {
      * @param uuid Unique integer identifier of the entity (required)
      * @param path Artifact filepath. (optional)
      * @param step Artifact logging step. (optional)
-     * @param type Artifact type. (optional)
+     * @param kind Artifact kind. (optional)
      * @return V1ArtifactTreeResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1ArtifactTreeResponse getRunArtifactsTree(String owner, String project, String uuid, String path, Integer step, String type) throws ApiException {
-        ApiResponse<V1ArtifactTreeResponse> resp = getRunArtifactsTreeWithHttpInfo(owner, project, uuid, path, step, type);
+    public V1ArtifactTreeResponse getRunArtifactsTree(String owner, String project, String uuid, String path, Integer step, String kind) throws ApiException {
+        ApiResponse<V1ArtifactTreeResponse> resp = getRunArtifactsTreeWithHttpInfo(owner, project, uuid, path, step, kind);
         return resp.getData();
     }
 
@@ -1482,12 +1482,12 @@ public class RunsV1Api {
      * @param uuid Unique integer identifier of the entity (required)
      * @param path Artifact filepath. (optional)
      * @param step Artifact logging step. (optional)
-     * @param type Artifact type. (optional)
+     * @param kind Artifact kind. (optional)
      * @return ApiResponse&lt;V1ArtifactTreeResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1ArtifactTreeResponse> getRunArtifactsTreeWithHttpInfo(String owner, String project, String uuid, String path, Integer step, String type) throws ApiException {
-        com.squareup.okhttp.Call call = getRunArtifactsTreeValidateBeforeCall(owner, project, uuid, path, step, type, null, null);
+    public ApiResponse<V1ArtifactTreeResponse> getRunArtifactsTreeWithHttpInfo(String owner, String project, String uuid, String path, Integer step, String kind) throws ApiException {
+        com.squareup.okhttp.Call call = getRunArtifactsTreeValidateBeforeCall(owner, project, uuid, path, step, kind, null, null);
         Type localVarReturnType = new TypeToken<V1ArtifactTreeResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -1500,12 +1500,12 @@ public class RunsV1Api {
      * @param uuid Unique integer identifier of the entity (required)
      * @param path Artifact filepath. (optional)
      * @param step Artifact logging step. (optional)
-     * @param type Artifact type. (optional)
+     * @param kind Artifact kind. (optional)
      * @param callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call getRunArtifactsTreeAsync(String owner, String project, String uuid, String path, Integer step, String type, final ApiCallback<V1ArtifactTreeResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call getRunArtifactsTreeAsync(String owner, String project, String uuid, String path, Integer step, String kind, final ApiCallback<V1ArtifactTreeResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -1526,7 +1526,7 @@ public class RunsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = getRunArtifactsTreeValidateBeforeCall(owner, project, uuid, path, step, type, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = getRunArtifactsTreeValidateBeforeCall(owner, project, uuid, path, step, kind, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1ArtifactTreeResponse>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
@@ -1699,13 +1699,13 @@ public class RunsV1Api {
      * @param uuid Unique integer identifier of the entity (required)
      * @param path Artifact filepath. (optional)
      * @param step Artifact logging step. (optional)
-     * @param type Artifact type. (optional)
+     * @param kind Artifact kind. (optional)
      * @param progressListener Progress listener
      * @param progressRequestListener Progress request listener
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call getRunLogsTreeCall(String owner, String project, String uuid, String path, Integer step, String type, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call getRunLogsTreeCall(String owner, String project, String uuid, String path, Integer step, String kind, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -1720,8 +1720,8 @@ public class RunsV1Api {
         localVarQueryParams.addAll(apiClient.parameterToPair("path", path));
         if (step != null)
         localVarQueryParams.addAll(apiClient.parameterToPair("step", step));
-        if (type != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("type", type));
+        if (kind != null)
+        localVarQueryParams.addAll(apiClient.parameterToPair("kind", kind));
 
         Map<String, String> localVarHeaderParams = new HashMap<String, String>();
 
@@ -1756,7 +1756,7 @@ public class RunsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call getRunLogsTreeValidateBeforeCall(String owner, String project, String uuid, String path, Integer step, String type, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call getRunLogsTreeValidateBeforeCall(String owner, String project, String uuid, String path, Integer step, String kind, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
@@ -1774,7 +1774,7 @@ public class RunsV1Api {
         }
         
 
-        com.squareup.okhttp.Call call = getRunLogsTreeCall(owner, project, uuid, path, step, type, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = getRunLogsTreeCall(owner, project, uuid, path, step, kind, progressListener, progressRequestListener);
         return call;
 
     }
@@ -1787,12 +1787,12 @@ public class RunsV1Api {
      * @param uuid Unique integer identifier of the entity (required)
      * @param path Artifact filepath. (optional)
      * @param step Artifact logging step. (optional)
-     * @param type Artifact type. (optional)
+     * @param kind Artifact kind. (optional)
      * @return V1ArtifactTreeResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1ArtifactTreeResponse getRunLogsTree(String owner, String project, String uuid, String path, Integer step, String type) throws ApiException {
-        ApiResponse<V1ArtifactTreeResponse> resp = getRunLogsTreeWithHttpInfo(owner, project, uuid, path, step, type);
+    public V1ArtifactTreeResponse getRunLogsTree(String owner, String project, String uuid, String path, Integer step, String kind) throws ApiException {
+        ApiResponse<V1ArtifactTreeResponse> resp = getRunLogsTreeWithHttpInfo(owner, project, uuid, path, step, kind);
         return resp.getData();
     }
 
@@ -1804,12 +1804,12 @@ public class RunsV1Api {
      * @param uuid Unique integer identifier of the entity (required)
      * @param path Artifact filepath. (optional)
      * @param step Artifact logging step. (optional)
-     * @param type Artifact type. (optional)
+     * @param kind Artifact kind. (optional)
      * @return ApiResponse&lt;V1ArtifactTreeResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1ArtifactTreeResponse> getRunLogsTreeWithHttpInfo(String owner, String project, String uuid, String path, Integer step, String type) throws ApiException {
-        com.squareup.okhttp.Call call = getRunLogsTreeValidateBeforeCall(owner, project, uuid, path, step, type, null, null);
+    public ApiResponse<V1ArtifactTreeResponse> getRunLogsTreeWithHttpInfo(String owner, String project, String uuid, String path, Integer step, String kind) throws ApiException {
+        com.squareup.okhttp.Call call = getRunLogsTreeValidateBeforeCall(owner, project, uuid, path, step, kind, null, null);
         Type localVarReturnType = new TypeToken<V1ArtifactTreeResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -1822,12 +1822,12 @@ public class RunsV1Api {
      * @param uuid Unique integer identifier of the entity (required)
      * @param path Artifact filepath. (optional)
      * @param step Artifact logging step. (optional)
-     * @param type Artifact type. (optional)
+     * @param kind Artifact kind. (optional)
      * @param callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call getRunLogsTreeAsync(String owner, String project, String uuid, String path, Integer step, String type, final ApiCallback<V1ArtifactTreeResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call getRunLogsTreeAsync(String owner, String project, String uuid, String path, Integer step, String kind, final ApiCallback<V1ArtifactTreeResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -1848,7 +1848,7 @@ public class RunsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = getRunLogsTreeValidateBeforeCall(owner, project, uuid, path, step, type, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = getRunLogsTreeValidateBeforeCall(owner, project, uuid, path, step, kind, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1ArtifactTreeResponse>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;

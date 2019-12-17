@@ -13,17 +13,29 @@ message Agent {
     // Name
     string name = 2;
 
+    // Optional description
+    string description = 3;
+
+    // Optional Tags of this entity
+    repeated string tags = 4;
+
+    // Optional a flag to disable the store
+    bool disabled = 5;
+
+    // Optional if the entity has been deleted
+    bool deleted = 6;
+
     // Namespace where the agen is deployed
-    string namespace = 3;
+    string namespace = 7;
 
     // Optional version api
-    google.protobuf.Struct version_api = 4;
+    google.protobuf.Struct version_api = 9;
 
     // Optional time when the entityt was created
-    google.protobuf.Timestamp created_at = 5;
+    google.protobuf.Timestamp created_at = 10;
 
     // Optional last time the entity was updated
-    google.protobuf.Timestamp updated_at = 6;
+    google.protobuf.Timestamp updated_at = 11;
 
 }
 

@@ -49,6 +49,10 @@ class V1Search(object):
     swagger_types = {
         "uuid": "str",
         "name": "str",
+        "description": "str",
+        "tags": "list[str]",
+        "disabled": "bool",
+        "deleted": "bool",
         "spec": "V1SearchSpec",
         "created_at": "datetime",
         "updated_at": "datetime",
@@ -57,18 +61,35 @@ class V1Search(object):
     attribute_map = {
         "uuid": "uuid",
         "name": "name",
+        "description": "description",
+        "tags": "tags",
+        "disabled": "disabled",
+        "deleted": "deleted",
         "spec": "spec",
         "created_at": "created_at",
         "updated_at": "updated_at",
     }
 
     def __init__(
-        self, uuid=None, name=None, spec=None, created_at=None, updated_at=None
+        self,
+        uuid=None,
+        name=None,
+        description=None,
+        tags=None,
+        disabled=None,
+        deleted=None,
+        spec=None,
+        created_at=None,
+        updated_at=None,
     ):  # noqa: E501
         """V1Search - a model defined in Swagger"""  # noqa: E501
 
         self._uuid = None
         self._name = None
+        self._description = None
+        self._tags = None
+        self._disabled = None
+        self._deleted = None
         self._spec = None
         self._created_at = None
         self._updated_at = None
@@ -78,6 +99,14 @@ class V1Search(object):
             self.uuid = uuid
         if name is not None:
             self.name = name
+        if description is not None:
+            self.description = description
+        if tags is not None:
+            self.tags = tags
+        if disabled is not None:
+            self.disabled = disabled
+        if deleted is not None:
+            self.deleted = deleted
         if spec is not None:
             self.spec = spec
         if created_at is not None:
@@ -126,6 +155,90 @@ class V1Search(object):
         """
 
         self._name = name
+
+    @property
+    def description(self):
+        """Gets the description of this V1Search.  # noqa: E501
+
+
+        :return: The description of this V1Search.  # noqa: E501
+        :rtype: str
+        """
+        return self._description
+
+    @description.setter
+    def description(self, description):
+        """Sets the description of this V1Search.
+
+
+        :param description: The description of this V1Search.  # noqa: E501
+        :type: str
+        """
+
+        self._description = description
+
+    @property
+    def tags(self):
+        """Gets the tags of this V1Search.  # noqa: E501
+
+
+        :return: The tags of this V1Search.  # noqa: E501
+        :rtype: list[str]
+        """
+        return self._tags
+
+    @tags.setter
+    def tags(self, tags):
+        """Sets the tags of this V1Search.
+
+
+        :param tags: The tags of this V1Search.  # noqa: E501
+        :type: list[str]
+        """
+
+        self._tags = tags
+
+    @property
+    def disabled(self):
+        """Gets the disabled of this V1Search.  # noqa: E501
+
+
+        :return: The disabled of this V1Search.  # noqa: E501
+        :rtype: bool
+        """
+        return self._disabled
+
+    @disabled.setter
+    def disabled(self, disabled):
+        """Sets the disabled of this V1Search.
+
+
+        :param disabled: The disabled of this V1Search.  # noqa: E501
+        :type: bool
+        """
+
+        self._disabled = disabled
+
+    @property
+    def deleted(self):
+        """Gets the deleted of this V1Search.  # noqa: E501
+
+
+        :return: The deleted of this V1Search.  # noqa: E501
+        :rtype: bool
+        """
+        return self._deleted
+
+    @deleted.setter
+    def deleted(self, deleted):
+        """Sets the deleted of this V1Search.
+
+
+        :param deleted: The deleted of this V1Search.  # noqa: E501
+        :type: bool
+        """
+
+        self._deleted = deleted
 
     @property
     def spec(self):

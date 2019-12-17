@@ -19,11 +19,11 @@ from __future__ import absolute_import, division, print_function
 
 import os
 
-import rhea
-
 from hestia.user_path import polyaxon_user_path
 from marshmallow import EXCLUDE, RAISE
 
+from polyaxon.config_reader.manager import ConfigManager
+from polyaxon.config_reader.spec import ConfigSpec
 from polyaxon.containers.contexts import CONTEXT_MOUNT_AUTH
 from polyaxon.env_vars.keys import (
     POLYAXON_KEYS_HASH_LENGTH,
@@ -42,24 +42,20 @@ TMP_CLIENT_CONFIG_PATH = os.path.join(TMP_POLYAXON_PATH, ".polyaxonclient")
 USER_AUTH_PATH = os.path.join(USER_POLYAXON_PATH, ".polyaxonauth")
 USER_CLIENT_CONFIG_PATH = os.path.join(USER_POLYAXON_PATH, ".polyaxonclient")
 
-auth_config = rhea.Rhea.read_configs(
+auth_config = ConfigManager.read_configs(
     [
         os.environ,
-        rhea.ConfigSpec(TMP_AUTH_PATH, config_type=".json", check_if_exists=False),
-        rhea.ConfigSpec(USER_AUTH_PATH, config_type=".json", check_if_exists=False),
-        rhea.ConfigSpec(CONTEXT_MOUNT_AUTH, config_type=".json", check_if_exists=False),
+        ConfigSpec(TMP_AUTH_PATH, config_type=".json", check_if_exists=False),
+        ConfigSpec(USER_AUTH_PATH, config_type=".json", check_if_exists=False),
+        ConfigSpec(CONTEXT_MOUNT_AUTH, config_type=".json", check_if_exists=False),
         {"dummy": "dummy"},
     ]
 )
-config = rhea.Rhea.read_configs(
+config = ConfigManager.read_configs(
     [
         os.environ,
-        rhea.ConfigSpec(
-            TMP_CLIENT_CONFIG_PATH, config_type=".json", check_if_exists=False
-        ),
-        rhea.ConfigSpec(
-            USER_CLIENT_CONFIG_PATH, config_type=".json", check_if_exists=False
-        ),
+        ConfigSpec(TMP_CLIENT_CONFIG_PATH, config_type=".json", check_if_exists=False),
+        ConfigSpec(USER_CLIENT_CONFIG_PATH, config_type=".json", check_if_exists=False),
     ]
 )
 

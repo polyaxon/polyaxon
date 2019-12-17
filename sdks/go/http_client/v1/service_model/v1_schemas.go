@@ -30,6 +30,12 @@ import (
 // swagger:model v1Schemas
 type V1Schemas struct {
 
+	// artifact format
+	ArtifactFormat V1ArtifactFormat `json:"artifact_format,omitempty"`
+
+	// connection schema
+	ConnectionSchema *V1ConnectionScema `json:"connection_schema,omitempty"`
+
 	// early stopping
 	EarlyStopping *V1EarlyStopping `json:"early_stopping,omitempty"`
 
@@ -52,6 +58,14 @@ type V1Schemas struct {
 // Validate validates this v1 schemas
 func (m *V1Schemas) Validate(formats strfmt.Registry) error {
 	var res []error
+
+	if err := m.validateArtifactFormat(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateConnectionSchema(formats); err != nil {
+		res = append(res, err)
+	}
 
 	if err := m.validateEarlyStopping(formats); err != nil {
 		res = append(res, err)
@@ -80,6 +94,40 @@ func (m *V1Schemas) Validate(formats strfmt.Registry) error {
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+func (m *V1Schemas) validateArtifactFormat(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.ArtifactFormat) { // not required
+		return nil
+	}
+
+	if err := m.ArtifactFormat.Validate(formats); err != nil {
+		if ve, ok := err.(*errors.Validation); ok {
+			return ve.ValidateName("artifact_format")
+		}
+		return err
+	}
+
+	return nil
+}
+
+func (m *V1Schemas) validateConnectionSchema(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.ConnectionSchema) { // not required
+		return nil
+	}
+
+	if m.ConnectionSchema != nil {
+		if err := m.ConnectionSchema.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("connection_schema")
+			}
+			return err
+		}
+	}
+
 	return nil
 }
 

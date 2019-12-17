@@ -1,18 +1,37 @@
-# -*- coding: utf-8 -*-
+#!/usr/bin/python
+#
+# Copyright 2019 Polyaxon, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# coding: utf-8
 from __future__ import absolute_import, division, print_function
 
 import os
 
+from azure.common import AzureHttpError
+from azure.storage.blob.models import BlobPrefix
 from rhea import RheaError
 from rhea import parser as rhea_parser
 
-from azure.common import AzureHttpError
-from azure.storage.blob.models import BlobPrefix
-
-from polystores.clients.azure_client import get_blob_service_connection
-from polystores.exceptions import PolyaxonStoresException
-from polystores.stores.base_store import BaseStore
-from polystores.utils import append_basename, check_dirname_exists, get_files_in_current_directory
+from polyaxon.exceptions import PolyaxonStoresException
+from polyaxon.stores.clients.azure_client import get_blob_service_connection
+from polyaxon.stores.stores.base_store import BaseStore
+from polyaxon.stores.utils import (
+    append_basename,
+    check_dirname_exists,
+    get_files_in_current_directory,
+)
 
 # pylint:disable=arguments-differ
 
@@ -21,24 +40,32 @@ class AzureStore(BaseStore):
     """
     Azure store Service.
     """
+
     STORE_TYPE = BaseStore._AZURE_STORE  # pylint:disable=protected-access
 
     def __init__(self, connection=None, **kwargs):
         self._connection = connection
-        self._account_name = kwargs.get('account_name') or kwargs.get('AZURE_ACCOUNT_NAME')
-        self._account_key = kwargs.get('account_key') or kwargs.get('AZURE_ACCOUNT_KEY')
-        self._connection_string = (
-            kwargs.get('connection_string') or kwargs.get('AZURE_CONNECTION_STRING'))
+        self._account_name = kwargs.get("account_name") or kwargs.get(
+            "AZURE_ACCOUNT_NAME"
+        )
+        self._account_key = kwargs.get("account_key") or kwargs.get("AZURE_ACCOUNT_KEY")
+        self._connection_string = kwargs.get("connection_string") or kwargs.get(
+            "AZURE_CONNECTION_STRING"
+        )
 
     @property
     def connection(self):
         if self._connection is None:
-            self.set_connection(account_name=self._account_name,
-                                account_key=self._account_key,
-                                connection_string=self._connection_string)
+            self.set_connection(
+                account_name=self._account_name,
+                account_key=self._account_key,
+                connection_string=self._connection_string,
+            )
         return self._connection
 
-    def set_connection(self, account_name=None, account_key=None, connection_string=None):
+    def set_connection(
+        self, account_name=None, account_key=None, connection_string=None
+    ):
         """
         Sets a new Blob service connection.
 
@@ -51,17 +78,19 @@ class AzureStore(BaseStore):
         Returns:
             BlockBlobService instance
         """
-        self._connection = get_blob_service_connection(account_name=account_name,
-                                                       account_key=account_key,
-                                                       connection_string=connection_string)
+        self._connection = get_blob_service_connection(
+            account_name=account_name,
+            account_key=account_key,
+            connection_string=connection_string,
+        )
 
     def set_env_vars(self):
         if self._account_name:
-            os.environ['AZURE_ACCOUNT_NAME'] = self._account_name
+            os.environ["AZURE_ACCOUNT_NAME"] = self._account_name
         if self._account_key:
-            os.environ['AZURE_ACCOUNT_KEY'] = self._account_key
+            os.environ["AZURE_ACCOUNT_KEY"] = self._account_key
         if self._connection_string:
-            os.environ['AZURE_CONNECTION_STRING'] = self._connection_string
+            os.environ["AZURE_CONNECTION_STRING"] = self._connection_string
 
     @staticmethod
     def parse_wasbs_url(wasbs_url):
@@ -91,18 +120,15 @@ class AzureStore(BaseStore):
         if not container_name:
             container_name, _, blob = self.parse_wasbs_url(blob)
         try:
-            return self.connection.get_blob_properties(
-                container_name,
-                blob
-            )
+            return self.connection.get_blob_properties(container_name, blob)
         except AzureHttpError:
             return None
 
     def ls(self, path):
         results = self.list(key=path)
-        return {'files': results['blobs'], 'dirs': results['prefixes']}
+        return {"files": results["blobs"], "dirs": results["prefixes"]}
 
-    def list(self, key, container_name=None, path=None, delimiter='/', marker=None):
+    def list(self, key, container_name=None, path=None, delimiter="/", marker=None):
         """
         Checks if a blob exists.
 
@@ -116,38 +142,34 @@ class AzureStore(BaseStore):
         if not container_name:
             container_name, _, key = self.parse_wasbs_url(key)
 
-        if key and not key.endswith('/'):
-            key += '/'
+        if key and not key.endswith("/"):
+            key += "/"
 
         prefix = key
         if path:
             prefix = os.path.join(prefix, path)
 
-        if prefix and not prefix.endswith('/'):
-            prefix += '/'
+        if prefix and not prefix.endswith("/"):
+            prefix += "/"
 
         list_blobs = []
         list_prefixes = []
         while True:
-            results = self.connection.list_blobs(container_name,
-                                                 prefix=prefix,
-                                                 delimiter=delimiter,
-                                                 marker=marker)
+            results = self.connection.list_blobs(
+                container_name, prefix=prefix, delimiter=delimiter, marker=marker
+            )
             for r in results:
                 if isinstance(r, BlobPrefix):
-                    name = r.name[len(key):]
+                    name = r.name[len(key) :]
                     list_prefixes.append(name)
                 else:
-                    name = r.name[len(key):]
+                    name = r.name[len(key) :]
                     list_blobs.append((name, r.properties.content_length))
             if results.next_marker:
                 marker = results.next_marker
             else:
                 break
-        return {
-            'blobs': list_blobs,
-            'prefixes': list_prefixes
-        }
+        return {"blobs": list_blobs, "prefixes": list_prefixes}
 
     def upload_file(self, filename, blob, container_name=None, use_basename=True):
         """
@@ -188,10 +210,12 @@ class AzureStore(BaseStore):
         with get_files_in_current_directory(dirname) as files:
             for f in files:
                 file_blob = os.path.join(blob, os.path.relpath(f, dirname))
-                self.upload_file(filename=f,
-                                 blob=file_blob,
-                                 container_name=container_name,
-                                 use_basename=False)
+                self.upload_file(
+                    filename=f,
+                    blob=file_blob,
+                    container_name=container_name,
+                    use_basename=False,
+                )
 
     def download_file(self, blob, local_path, container_name=None, use_basename=True):
         """
@@ -241,45 +265,49 @@ class AzureStore(BaseStore):
         except PolyaxonStoresException:
             os.makedirs(local_path)
 
-        results = self.list(container_name=container_name, key=blob, delimiter='/')
+        results = self.list(container_name=container_name, key=blob, delimiter="/")
 
         # Create directories
-        for prefix in sorted(results['prefixes']):
+        for prefix in sorted(results["prefixes"]):
             direname = os.path.join(local_path, prefix)
             prefix = os.path.join(blob, prefix)
             # Download files under
-            self.download_dir(blob=prefix,
-                              local_path=direname,
-                              container_name=container_name,
-                              use_basename=False)
+            self.download_dir(
+                blob=prefix,
+                local_path=direname,
+                container_name=container_name,
+                use_basename=False,
+            )
 
         # Download files
-        for file_key in results['blobs']:
+        for file_key in results["blobs"]:
             file_key = file_key[0]
             filename = os.path.join(local_path, file_key)
             file_key = os.path.join(blob, file_key)
-            self.download_file(blob=file_key,
-                               local_path=filename,
-                               container_name=container_name,
-                               use_basename=False)
+            self.download_file(
+                blob=file_key,
+                local_path=filename,
+                container_name=container_name,
+                use_basename=False,
+            )
 
     def delete(self, blob, container_name=None):
         if not container_name:
             container_name, _, blob = self.parse_wasbs_url(blob)
 
-        results = self.list(container_name=container_name, key=blob, delimiter='/')
+        results = self.list(container_name=container_name, key=blob, delimiter="/")
 
-        if not any([results['prefixes'], results['blobs']]):
+        if not any([results["prefixes"], results["blobs"]]):
             self.delete_file(blob=blob, container_name=container_name)
 
         # Delete directories
-        for prefix in sorted(results['prefixes']):
+        for prefix in sorted(results["prefixes"]):
             prefix = os.path.join(blob, prefix)
             # Download files under
             self.delete(blob=prefix, container_name=container_name)
 
         # Delete files
-        for file_key in results['blobs']:
+        for file_key in results["blobs"]:
             file_key = file_key[0]
             file_key = os.path.join(blob, file_key)
             self.delete_file(blob=file_key, container_name=container_name)

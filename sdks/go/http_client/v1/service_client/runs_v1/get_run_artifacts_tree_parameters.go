@@ -76,6 +76,11 @@ for the get run artifacts tree operation typically these are written to a http.R
 */
 type GetRunArtifactsTreeParams struct {
 
+	/*Kind
+	  Artifact kind.
+
+	*/
+	Kind *string
 	/*Owner
 	  Owner of the namespace
 
@@ -96,11 +101,6 @@ type GetRunArtifactsTreeParams struct {
 
 	*/
 	Step *int32
-	/*Type
-	  Artifact type.
-
-	*/
-	Type *string
 	/*UUID
 	  Unique integer identifier of the entity
 
@@ -143,6 +143,17 @@ func (o *GetRunArtifactsTreeParams) WithHTTPClient(client *http.Client) *GetRunA
 // SetHTTPClient adds the HTTPClient to the get run artifacts tree params
 func (o *GetRunArtifactsTreeParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
+}
+
+// WithKind adds the kind to the get run artifacts tree params
+func (o *GetRunArtifactsTreeParams) WithKind(kind *string) *GetRunArtifactsTreeParams {
+	o.SetKind(kind)
+	return o
+}
+
+// SetKind adds the kind to the get run artifacts tree params
+func (o *GetRunArtifactsTreeParams) SetKind(kind *string) {
+	o.Kind = kind
 }
 
 // WithOwner adds the owner to the get run artifacts tree params
@@ -189,17 +200,6 @@ func (o *GetRunArtifactsTreeParams) SetStep(step *int32) {
 	o.Step = step
 }
 
-// WithType adds the typeVar to the get run artifacts tree params
-func (o *GetRunArtifactsTreeParams) WithType(typeVar *string) *GetRunArtifactsTreeParams {
-	o.SetType(typeVar)
-	return o
-}
-
-// SetType adds the type to the get run artifacts tree params
-func (o *GetRunArtifactsTreeParams) SetType(typeVar *string) {
-	o.Type = typeVar
-}
-
 // WithUUID adds the uuid to the get run artifacts tree params
 func (o *GetRunArtifactsTreeParams) WithUUID(uuid string) *GetRunArtifactsTreeParams {
 	o.SetUUID(uuid)
@@ -218,6 +218,22 @@ func (o *GetRunArtifactsTreeParams) WriteToRequest(r runtime.ClientRequest, reg 
 		return err
 	}
 	var res []error
+
+	if o.Kind != nil {
+
+		// query param kind
+		var qrKind string
+		if o.Kind != nil {
+			qrKind = *o.Kind
+		}
+		qKind := qrKind
+		if qKind != "" {
+			if err := r.SetQueryParam("kind", qKind); err != nil {
+				return err
+			}
+		}
+
+	}
 
 	// path param owner
 	if err := r.SetPathParam("owner", o.Owner); err != nil {
@@ -255,22 +271,6 @@ func (o *GetRunArtifactsTreeParams) WriteToRequest(r runtime.ClientRequest, reg 
 		qStep := swag.FormatInt32(qrStep)
 		if qStep != "" {
 			if err := r.SetQueryParam("step", qStep); err != nil {
-				return err
-			}
-		}
-
-	}
-
-	if o.Type != nil {
-
-		// query param type
-		var qrType string
-		if o.Type != nil {
-			qrType = *o.Type
-		}
-		qType := qrType
-		if qType != "" {
-			if err := r.SetQueryParam("type", qType); err != nil {
 				return err
 			}
 		}

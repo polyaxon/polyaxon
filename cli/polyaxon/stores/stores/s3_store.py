@@ -1,23 +1,39 @@
-# -*- coding: utf-8 -*-
+#!/usr/bin/python
+#
+# Copyright 2019 Polyaxon, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# coding: utf-8
 from __future__ import absolute_import, division, print_function
 
 import os
 
-from rhea import RheaError
-from rhea import parser as rhea_parser
 from six import BytesIO
 
 from botocore.exceptions import ClientError
+from rhea import RheaError
+from rhea import parser as rhea_parser
 
-from polystores.clients import aws_client
-from polystores.exceptions import PolyaxonStoresException
-from polystores.logger import logger
-from polystores.stores.base_store import BaseStore
-from polystores.utils import (
+from polyaxon.exceptions import PolyaxonStoresException
+from polyaxon.logger import logger
+from polyaxon.stores.clients import aws_client
+from polyaxon.stores.stores.base_store import BaseStore
+from polyaxon.stores.utils import (
     append_basename,
     check_dirname_exists,
     force_bytes,
-    get_files_in_current_directory
+    get_files_in_current_directory,
 )
 
 # pylint:disable=arguments-differ
@@ -27,86 +43,106 @@ class S3Store(BaseStore):
     """
     S3 store Service using Boto3.
     """
+
     STORE_TYPE = BaseStore._S3_STORE  # pylint:disable=protected-access
     ENCRYPTION = "AES256"
 
     def __init__(self, client=None, resource=None, **kwargs):
         self._client = client
         self._resource = resource
-        self._encoding = kwargs.get('encoding', 'utf-8')
-        self._endpoint_url = (kwargs.get('endpoint_url') or
-                              kwargs.get('aws_endpoint_url') or
-                              kwargs.get('AWS_ENDPOINT_URL'))
-        self._aws_access_key_id = (kwargs.get('access_key_id') or
-                                   kwargs.get('aws_access_key_id') or
-                                   kwargs.get('AWS_ACCESS_KEY_ID'))
-        self._aws_secret_access_key = (kwargs.get('secret_access_key') or
-                                       kwargs.get('aws_secret_access_key') or
-                                       kwargs.get('AWS_SECRET_ACCESS_KEY'))
-        self._aws_session_token = (kwargs.get('session_token') or
-                                   kwargs.get('aws_session_token') or
-                                   kwargs.get('AWS_SECURITY_TOKEN'))
-        self._region_name = (kwargs.get('region') or
-                             kwargs.get('aws_region') or
-                             kwargs.get('AWS_REGION'))
-        self._aws_verify_ssl = kwargs.get('verify_ssl',
-                                          kwargs.get('aws_verify_ssl',
-                                                     kwargs.get('AWS_VERIFY_SSL', None)))
-        self._aws_use_ssl = (kwargs.get('use_ssl') or
-                             kwargs.get('aws_use_ssl') or
-                             kwargs.get('AWS_USE_SSL'))
-        self._aws_legacy_api = (kwargs.get('legacy_api') or
-                                kwargs.get('aws_legacy_api') or
-                                kwargs.get('AWS_LEGACY_API'))
+        self._encoding = kwargs.get("encoding", "utf-8")
+        self._endpoint_url = (
+            kwargs.get("endpoint_url")
+            or kwargs.get("aws_endpoint_url")
+            or kwargs.get("AWS_ENDPOINT_URL")
+        )
+        self._aws_access_key_id = (
+            kwargs.get("access_key_id")
+            or kwargs.get("aws_access_key_id")
+            or kwargs.get("AWS_ACCESS_KEY_ID")
+        )
+        self._aws_secret_access_key = (
+            kwargs.get("secret_access_key")
+            or kwargs.get("aws_secret_access_key")
+            or kwargs.get("AWS_SECRET_ACCESS_KEY")
+        )
+        self._aws_session_token = (
+            kwargs.get("session_token")
+            or kwargs.get("aws_session_token")
+            or kwargs.get("AWS_SECURITY_TOKEN")
+        )
+        self._region_name = (
+            kwargs.get("region") or kwargs.get("aws_region") or kwargs.get("AWS_REGION")
+        )
+        self._aws_verify_ssl = kwargs.get(
+            "verify_ssl",
+            kwargs.get("aws_verify_ssl", kwargs.get("AWS_VERIFY_SSL", None)),
+        )
+        self._aws_use_ssl = (
+            kwargs.get("use_ssl")
+            or kwargs.get("aws_use_ssl")
+            or kwargs.get("AWS_USE_SSL")
+        )
+        self._aws_legacy_api = (
+            kwargs.get("legacy_api")
+            or kwargs.get("aws_legacy_api")
+            or kwargs.get("AWS_LEGACY_API")
+        )
 
     @property
     def client(self):
         if self._client is None:
-            self.set_client(endpoint_url=self._endpoint_url,
-                            aws_access_key_id=self._aws_access_key_id,
-                            aws_secret_access_key=self._aws_secret_access_key,
-                            aws_session_token=self._aws_session_token,
-                            region_name=self._region_name,
-                            aws_use_ssl=self._aws_use_ssl,
-                            aws_verify_ssl=self._aws_verify_ssl)
+            self.set_client(
+                endpoint_url=self._endpoint_url,
+                aws_access_key_id=self._aws_access_key_id,
+                aws_secret_access_key=self._aws_secret_access_key,
+                aws_session_token=self._aws_session_token,
+                region_name=self._region_name,
+                aws_use_ssl=self._aws_use_ssl,
+                aws_verify_ssl=self._aws_verify_ssl,
+            )
         return self._client
 
     def set_env_vars(self):
         if self._endpoint_url:
-            os.environ['AWS_ENDPOINT_URL'] = self._endpoint_url
+            os.environ["AWS_ENDPOINT_URL"] = self._endpoint_url
         if self._aws_access_key_id:
-            os.environ['AWS_ACCESS_KEY_ID'] = self._aws_access_key_id
+            os.environ["AWS_ACCESS_KEY_ID"] = self._aws_access_key_id
         if self._aws_secret_access_key:
-            os.environ['AWS_SECRET_ACCESS_KEY'] = self._aws_secret_access_key
+            os.environ["AWS_SECRET_ACCESS_KEY"] = self._aws_secret_access_key
         if self._aws_session_token:
-            os.environ['AWS_SECURITY_TOKEN'] = self._aws_session_token
+            os.environ["AWS_SECURITY_TOKEN"] = self._aws_session_token
         if self._region_name:
-            os.environ['AWS_REGION'] = self._region_name
+            os.environ["AWS_REGION"] = self._region_name
         if self._aws_use_ssl is not None:
-            os.environ['AWS_USE_SSL'] = self._aws_use_ssl
+            os.environ["AWS_USE_SSL"] = self._aws_use_ssl
         if self._aws_verify_ssl is not None:
-            os.environ['AWS_VERIFY_SSL'] = self._aws_verify_ssl
+            os.environ["AWS_VERIFY_SSL"] = self._aws_verify_ssl
         if self._aws_legacy_api:
-            os.environ['AWS_LEGACY_API'] = self._aws_legacy_api
+            os.environ["AWS_LEGACY_API"] = self._aws_legacy_api
 
     @property
     def resource(self):
         if self._resource is None:
-            self.set_resource(endpoint_url=self._endpoint_url,
-                              aws_access_key_id=self._aws_access_key_id,
-                              aws_secret_access_key=self._aws_secret_access_key,
-                              aws_session_token=self._aws_session_token,
-                              region_name=self._region_name)
+            self.set_resource(
+                endpoint_url=self._endpoint_url,
+                aws_access_key_id=self._aws_access_key_id,
+                aws_secret_access_key=self._aws_secret_access_key,
+                aws_session_token=self._aws_session_token,
+                region_name=self._region_name,
+            )
         return self._resource
 
-    def set_client(self,
-                   endpoint_url=None,
-                   aws_access_key_id=None,
-                   aws_secret_access_key=None,
-                   aws_session_token=None,
-                   region_name=None,
-                   aws_use_ssl=True,
-                   aws_verify_ssl=None):
+    def set_client(
+        self,
+        endpoint_url=None,
+        aws_access_key_id=None,
+        aws_secret_access_key=None,
+        aws_session_token=None,
+        region_name=None,
+        aws_use_ssl=True,
+        aws_verify_ssl=None,
+    ):
         """
         Sets a new s3 boto3 client.
 
@@ -122,21 +158,24 @@ class S3Store(BaseStore):
             Service client instance
         """
         self._client = aws_client.get_aws_client(
-            's3',
+            "s3",
             endpoint_url=endpoint_url,
             aws_access_key_id=aws_access_key_id,
             aws_secret_access_key=aws_secret_access_key,
             aws_session_token=aws_session_token,
             region_name=region_name,
             aws_use_ssl=aws_use_ssl,
-            aws_verify_ssl=aws_verify_ssl)
+            aws_verify_ssl=aws_verify_ssl,
+        )
 
-    def set_resource(self,
-                     endpoint_url=None,
-                     aws_access_key_id=None,
-                     aws_secret_access_key=None,
-                     aws_session_token=None,
-                     region_name=None):
+    def set_resource(
+        self,
+        endpoint_url=None,
+        aws_access_key_id=None,
+        aws_secret_access_key=None,
+        aws_session_token=None,
+        region_name=None,
+    ):
         """
         Sets a new s3 boto3 resource.
 
@@ -152,12 +191,13 @@ class S3Store(BaseStore):
              Service resource instance
         """
         self._resource = aws_client.get_aws_resource(
-            's3',
+            "s3",
             endpoint_url=endpoint_url,
             aws_access_key_id=aws_access_key_id,
             aws_secret_access_key=aws_secret_access_key,
             aws_session_token=aws_session_token,
-            region_name=region_name)
+            region_name=region_name,
+        )
 
     @staticmethod
     def parse_s3_url(s3_url):
@@ -205,16 +245,18 @@ class S3Store(BaseStore):
     def ls(self, path):
         (bucket_name, key) = self.parse_s3_url(path)
         results = self.list(bucket_name=bucket_name, prefix=key)
-        return {'files': results['keys'], 'dirs': results['prefixes']}
+        return {"files": results["keys"], "dirs": results["prefixes"]}
 
-    def list(self,
-             bucket_name,
-             prefix='',
-             delimiter='/',
-             page_size=None,
-             max_items=None,
-             keys=True,
-             prefixes=True):
+    def list(
+        self,
+        bucket_name,
+        prefix="",
+        delimiter="/",
+        page_size=None,
+        max_items=None,
+        keys=True,
+        prefixes=True,
+    ):
         """
         Lists prefixes and contents in a bucket under prefix.
 
@@ -227,50 +269,48 @@ class S3Store(BaseStore):
             keys: `bool`. if it should include keys
             prefixes: `boll`. if it should include prefixes
         """
-        config = {
-            'PageSize': page_size,
-            'MaxItems': max_items,
-        }
+        config = {"PageSize": page_size, "MaxItems": max_items}
 
         legacy_api = aws_client.get_legacy_api(legacy_api=self._aws_legacy_api)
 
         if legacy_api:
-            paginator = self.client.get_paginator('list_objects')
+            paginator = self.client.get_paginator("list_objects")
         else:
-            paginator = self.client.get_paginator('list_objects_v2')
+            paginator = self.client.get_paginator("list_objects_v2")
 
         prefix = self.check_prefix_format(prefix=prefix, delimiter=delimiter)
-        response = paginator.paginate(Bucket=bucket_name,
-                                      Prefix=prefix,
-                                      Delimiter=delimiter,
-                                      PaginationConfig=config)
+        response = paginator.paginate(
+            Bucket=bucket_name,
+            Prefix=prefix,
+            Delimiter=delimiter,
+            PaginationConfig=config,
+        )
 
         def get_keys(contents):
             list_keys = []
             for cont in contents:
-                list_keys.append((cont['Key'][len(prefix):], cont.get('Size')))
+                list_keys.append((cont["Key"][len(prefix) :], cont.get("Size")))
 
             return list_keys
 
         def get_prefixes(page_prefixes):
             list_prefixes = []
             for pref in page_prefixes:
-                list_prefixes.append(pref['Prefix'][len(prefix): -1])
+                list_prefixes.append(pref["Prefix"][len(prefix) : -1])
             return list_prefixes
 
-        results = {
-            'keys': [],
-            'prefixes': []
-        }
+        results = {"keys": [], "prefixes": []}
         for page in response:
             if prefixes:
-                results['prefixes'] += get_prefixes(page.get('CommonPrefixes', []))
+                results["prefixes"] += get_prefixes(page.get("CommonPrefixes", []))
             if keys:
-                results['keys'] += get_keys(page.get('Contents', []))
+                results["keys"] += get_keys(page.get("Contents", []))
 
         return results
 
-    def list_prefixes(self, bucket_name, prefix='', delimiter='', page_size=None, max_items=None):
+    def list_prefixes(
+        self, bucket_name, prefix="", delimiter="", page_size=None, max_items=None
+    ):
         """
         Lists prefixes in a bucket under prefix
 
@@ -281,16 +321,20 @@ class S3Store(BaseStore):
             page_size: `int`. pagination size
             max_items: `int`. maximum items to return
         """
-        results = self.list(bucket_name=bucket_name,
-                            prefix=prefix,
-                            delimiter=delimiter,
-                            page_size=page_size,
-                            max_items=max_items,
-                            keys=False,
-                            prefixes=True)
-        return results['prefixes']
+        results = self.list(
+            bucket_name=bucket_name,
+            prefix=prefix,
+            delimiter=delimiter,
+            page_size=page_size,
+            max_items=max_items,
+            keys=False,
+            prefixes=True,
+        )
+        return results["prefixes"]
 
-    def list_keys(self, bucket_name, prefix='', delimiter='', page_size=None, max_items=None):
+    def list_keys(
+        self, bucket_name, prefix="", delimiter="", page_size=None, max_items=None
+    ):
         """
         Lists keys in a bucket under prefix and not containing delimiter
 
@@ -301,14 +345,16 @@ class S3Store(BaseStore):
             page_size: `int`. pagination size
             max_items: `int`. maximum items to return
         """
-        results = self.list(bucket_name=bucket_name,
-                            prefix=prefix,
-                            delimiter=delimiter,
-                            page_size=page_size,
-                            max_items=max_items,
-                            keys=True,
-                            prefixes=False)
-        return results['keys']
+        results = self.list(
+            bucket_name=bucket_name,
+            prefix=prefix,
+            delimiter=delimiter,
+            page_size=page_size,
+            max_items=max_items,
+            keys=True,
+            prefixes=False,
+        )
+        return results["keys"]
 
     def check_key(self, key, bucket_name=None):
         """
@@ -356,15 +402,17 @@ class S3Store(BaseStore):
         """
 
         obj = self.get_key(key, bucket_name)
-        return obj.get()['Body'].read().decode('utf-8')
+        return obj.get()["Body"].read().decode("utf-8")
 
-    def upload_bytes(self,
-                     bytes_data,
-                     key,
-                     bucket_name=None,
-                     overwrite=False,
-                     encrypt=False,
-                     acl=None):
+    def upload_bytes(
+        self,
+        bytes_data,
+        key,
+        bucket_name=None,
+        overwrite=False,
+        encrypt=False,
+        acl=None,
+    ):
         """
         Uploads bytes to S3
 
@@ -389,22 +437,26 @@ class S3Store(BaseStore):
 
         extra_args = {}
         if encrypt:
-            extra_args['ServerSideEncryption'] = self.ENCRYPTION
+            extra_args["ServerSideEncryption"] = self.ENCRYPTION
         if acl:
-            extra_args['ACL'] = acl
+            extra_args["ACL"] = acl
 
         filelike_buffer = BytesIO(bytes_data)
 
-        self.client.upload_fileobj(filelike_buffer, bucket_name, key, ExtraArgs=extra_args)
+        self.client.upload_fileobj(
+            filelike_buffer, bucket_name, key, ExtraArgs=extra_args
+        )
 
-    def upload_string(self,
-                      string_data,
-                      key,
-                      bucket_name=None,
-                      overwrite=False,
-                      encrypt=False,
-                      acl=None,
-                      encoding='utf-8'):
+    def upload_string(
+        self,
+        string_data,
+        key,
+        bucket_name=None,
+        overwrite=False,
+        encrypt=False,
+        acl=None,
+        encoding="utf-8",
+    ):
         """
         Uploads a string to S3.
 
@@ -422,21 +474,25 @@ class S3Store(BaseStore):
             acl: `str`. ACL to use for uploading, e.g. "public-read".
             encoding: `str`. Encoding to use.
         """
-        self.upload_bytes(force_bytes(string_data, encoding=encoding),
-                          key=key,
-                          bucket_name=bucket_name,
-                          overwrite=overwrite,
-                          encrypt=encrypt,
-                          acl=acl)
+        self.upload_bytes(
+            force_bytes(string_data, encoding=encoding),
+            key=key,
+            bucket_name=bucket_name,
+            overwrite=overwrite,
+            encrypt=encrypt,
+            acl=acl,
+        )
 
-    def upload_file(self,
-                    filename,
-                    key,
-                    bucket_name=None,
-                    overwrite=False,
-                    encrypt=False,
-                    acl=None,
-                    use_basename=True):
+    def upload_file(
+        self,
+        filename,
+        key,
+        bucket_name=None,
+        overwrite=False,
+        encrypt=False,
+        acl=None,
+        use_basename=True,
+    ):
         """
         Uploads a local file to S3.
 
@@ -463,9 +519,9 @@ class S3Store(BaseStore):
 
         extra_args = {}
         if encrypt:
-            extra_args['ServerSideEncryption'] = self.ENCRYPTION
+            extra_args["ServerSideEncryption"] = self.ENCRYPTION
         if acl:
-            extra_args['ACL'] = acl
+            extra_args["ACL"] = acl
 
         self.client.upload_file(filename, bucket_name, key, ExtraArgs=extra_args)
 
@@ -494,14 +550,16 @@ class S3Store(BaseStore):
         except ClientError as e:
             raise PolyaxonStoresException(e)
 
-    def upload_dir(self,
-                   dirname,
-                   key,
-                   bucket_name=None,
-                   overwrite=False,
-                   encrypt=False,
-                   acl=None,
-                   use_basename=True):
+    def upload_dir(
+        self,
+        dirname,
+        key,
+        bucket_name=None,
+        overwrite=False,
+        encrypt=False,
+        acl=None,
+        use_basename=True,
+    ):
         """
         Uploads a local directory to S3.
 
@@ -528,13 +586,15 @@ class S3Store(BaseStore):
         with get_files_in_current_directory(dirname) as files:
             for f in files:
                 file_key = os.path.join(key, os.path.relpath(f, dirname))
-                self.upload_file(filename=f,
-                                 key=file_key,
-                                 bucket_name=bucket_name,
-                                 overwrite=overwrite,
-                                 encrypt=encrypt,
-                                 acl=acl,
-                                 use_basename=False)
+                self.upload_file(
+                    filename=f,
+                    key=file_key,
+                    bucket_name=bucket_name,
+                    overwrite=overwrite,
+                    encrypt=encrypt,
+                    acl=acl,
+                    use_basename=False,
+                )
 
     def download_dir(self, key, local_path, bucket_name=None, use_basename=True):
         """
@@ -559,45 +619,49 @@ class S3Store(BaseStore):
         except PolyaxonStoresException:
             os.makedirs(local_path)
 
-        results = self.list(bucket_name=bucket_name, prefix=key, delimiter='/')
+        results = self.list(bucket_name=bucket_name, prefix=key, delimiter="/")
 
         # Create directories
-        for prefix in sorted(results['prefixes']):
+        for prefix in sorted(results["prefixes"]):
             direname = os.path.join(local_path, prefix)
             prefix = os.path.join(key, prefix)
             # Download files under
-            self.download_dir(key=prefix,
-                              local_path=direname,
-                              bucket_name=bucket_name,
-                              use_basename=False)
+            self.download_dir(
+                key=prefix,
+                local_path=direname,
+                bucket_name=bucket_name,
+                use_basename=False,
+            )
 
         # Download files
-        for file_key in results['keys']:
+        for file_key in results["keys"]:
             file_key = file_key[0]
             filename = os.path.join(local_path, file_key)
             file_key = os.path.join(key, file_key)
-            self.download_file(key=file_key,
-                               local_path=filename,
-                               bucket_name=bucket_name,
-                               use_basename=False)
+            self.download_file(
+                key=file_key,
+                local_path=filename,
+                bucket_name=bucket_name,
+                use_basename=False,
+            )
 
     def delete(self, key, bucket_name=None):
         if not bucket_name:
             (bucket_name, key) = self.parse_s3_url(key)
 
-        results = self.list(bucket_name=bucket_name, prefix=key, delimiter='/')
+        results = self.list(bucket_name=bucket_name, prefix=key, delimiter="/")
 
-        if not any([results['prefixes'], results['keys']]):
+        if not any([results["prefixes"], results["keys"]]):
             self.delete_file(key=key, bucket_name=bucket_name)
 
         # Delete directories
-        for prefix in sorted(results['prefixes']):
+        for prefix in sorted(results["prefixes"]):
             prefix = os.path.join(key, prefix)
             # Download files under
             self.delete(key=prefix, bucket_name=bucket_name)
 
         # Delete files
-        for file_key in results['keys']:
+        for file_key in results["keys"]:
             file_key = file_key[0]
             file_key = os.path.join(key, file_key)
             self.delete_file(key=file_key, bucket_name=bucket_name)

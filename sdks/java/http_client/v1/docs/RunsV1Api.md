@@ -554,7 +554,7 @@ Name | Type | Description  | Notes
 
 <a name="getRunArtifactsTree"></a>
 # **getRunArtifactsTree**
-> V1ArtifactTreeResponse getRunArtifactsTree(owner, project, uuid, path, step, type)
+> V1ArtifactTreeResponse getRunArtifactsTree(owner, project, uuid, path, step, kind)
 
 Get run artifacts list
 
@@ -581,9 +581,9 @@ String project = "project_example"; // String | Project where the experiement wi
 String uuid = "uuid_example"; // String | Unique integer identifier of the entity
 String path = "path_example"; // String | Artifact filepath.
 Integer step = 56; // Integer | Artifact logging step.
-String type = "type_example"; // String | Artifact type.
+String kind = "kind_example"; // String | Artifact kind.
 try {
-    V1ArtifactTreeResponse result = apiInstance.getRunArtifactsTree(owner, project, uuid, path, step, type);
+    V1ArtifactTreeResponse result = apiInstance.getRunArtifactsTree(owner, project, uuid, path, step, kind);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling RunsV1Api#getRunArtifactsTree");
@@ -600,7 +600,7 @@ Name | Type | Description  | Notes
  **uuid** | **String**| Unique integer identifier of the entity |
  **path** | **String**| Artifact filepath. | [optional]
  **step** | **Integer**| Artifact logging step. | [optional]
- **type** | **String**| Artifact type. | [optional]
+ **kind** | **String**| Artifact kind. | [optional]
 
 ### Return type
 
@@ -680,7 +680,7 @@ Name | Type | Description  | Notes
 
 <a name="getRunLogsTree"></a>
 # **getRunLogsTree**
-> V1ArtifactTreeResponse getRunLogsTree(owner, project, uuid, path, step, type)
+> V1ArtifactTreeResponse getRunLogsTree(owner, project, uuid, path, step, kind)
 
 Get run logs list
 
@@ -707,9 +707,9 @@ String project = "project_example"; // String | Project where the experiement wi
 String uuid = "uuid_example"; // String | Unique integer identifier of the entity
 String path = "path_example"; // String | Artifact filepath.
 Integer step = 56; // Integer | Artifact logging step.
-String type = "type_example"; // String | Artifact type.
+String kind = "kind_example"; // String | Artifact kind.
 try {
-    V1ArtifactTreeResponse result = apiInstance.getRunLogsTree(owner, project, uuid, path, step, type);
+    V1ArtifactTreeResponse result = apiInstance.getRunLogsTree(owner, project, uuid, path, step, kind);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling RunsV1Api#getRunLogsTree");
@@ -726,7 +726,7 @@ Name | Type | Description  | Notes
  **uuid** | **String**| Unique integer identifier of the entity |
  **path** | **String**| Artifact filepath. | [optional]
  **step** | **Integer**| Artifact logging step. | [optional]
- **type** | **String**| Artifact type. | [optional]
+ **kind** | **String**| Artifact kind. | [optional]
 
 ### Return type
 

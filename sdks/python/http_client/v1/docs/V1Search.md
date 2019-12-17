@@ -5,6 +5,10 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **uuid** | **str** |  | [optional] 
 **name** | **str** |  | [optional] 
+**description** | **str** |  | [optional] 
+**tags** | **list[str]** |  | [optional] 
+**disabled** | **bool** |  | [optional] 
+**deleted** | **bool** |  | [optional] 
 **spec** | [**V1SearchSpec**](V1SearchSpec.md) |  | [optional] 
 **created_at** | **datetime** |  | [optional] 
 **updated_at** | **datetime** |  | [optional] 

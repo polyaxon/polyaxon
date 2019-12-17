@@ -1,11 +1,27 @@
-# -*- coding: utf-8 -*-
+#!/usr/bin/python
+#
+# Copyright 2019 Polyaxon, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# coding: utf-8
 from __future__ import absolute_import, division, print_function
 
 import os
 import shutil
 
-from polystores.logger import logger
-from polystores.stores.base_store import BaseStore
+from polyaxon.logger import logger
+from polyaxon.stores.stores.base_store import BaseStore
 
 
 class LocalStore(BaseStore):
@@ -14,6 +30,7 @@ class LocalStore(BaseStore):
 
     This store is noop store since all data is accessible through the filesystem.
     """
+
     # pylint:disable=arguments-differ
 
     STORE_TYPE = BaseStore._LOCAL_STORE  # pylint:disable=protected-access
@@ -40,7 +57,6 @@ class LocalStore(BaseStore):
         return self.list(path=path)
 
     def list(self, path, abs_path=False):
-
         def list_dirs():
             return self._list(path, os.path.isdir, abs_path)
 
@@ -50,10 +66,7 @@ class LocalStore(BaseStore):
                 return [(f, os.path.getsize(f)) for f in matches]
             return [(f, os.path.getsize(os.path.join(path, f))) for f in matches]
 
-        return {
-            'dirs': list_dirs(),
-            'files': list_files()
-        }
+        return {"dirs": list_dirs(), "files": list_files()}
 
     def download_file(self, *args, **kwargs):
         pass
@@ -76,4 +89,4 @@ class LocalStore(BaseStore):
             else:
                 shutil.rmtree(path)
         except OSError:
-            logger.warning('Could not delete path `%s`', path)
+            logger.warning("Could not delete path `%s`", path)

@@ -85,15 +85,15 @@ Class | Method | HTTP request | Description
 *AgentsV1Api* | [**list_agents**](docs/AgentsV1Api.md#list_agents) | **GET** /api/v1/orgs/{owner}/agents | List archived runs for user
 *AgentsV1Api* | [**patch_agent**](docs/AgentsV1Api.md#patch_agent) | **PATCH** /api/v1/orgs/{owner}/agents/{agent.uuid} | Update run
 *AgentsV1Api* | [**update_agent**](docs/AgentsV1Api.md#update_agent) | **PUT** /api/v1/orgs/{owner}/agents/{agent.uuid} | Get run
-*ArtifactsStoresV1Api* | [**create_artifacts_store**](docs/ArtifactsStoresV1Api.md#create_artifacts_store) | **POST** /api/v1/orgs/{owner}/artifacts_stores | List runs
-*ArtifactsStoresV1Api* | [**delete_artifacts_store**](docs/ArtifactsStoresV1Api.md#delete_artifacts_store) | **DELETE** /api/v1/orgs/{owner}/artifacts_stores/{uuid} | Patch run
-*ArtifactsStoresV1Api* | [**get_artifacts_store**](docs/ArtifactsStoresV1Api.md#get_artifacts_store) | **GET** /api/v1/orgs/{owner}/artifacts_stores/{uuid} | Create new run
-*ArtifactsStoresV1Api* | [**list_artifacts_store_names**](docs/ArtifactsStoresV1Api.md#list_artifacts_store_names) | **GET** /api/v1/orgs/{owner}/artifacts_stores/names | List bookmarked runs for user
-*ArtifactsStoresV1Api* | [**list_artifacts_stores**](docs/ArtifactsStoresV1Api.md#list_artifacts_stores) | **GET** /api/v1/orgs/{owner}/artifacts_stores | List archived runs for user
-*ArtifactsStoresV1Api* | [**patch_artifacts_store**](docs/ArtifactsStoresV1Api.md#patch_artifacts_store) | **PATCH** /api/v1/orgs/{owner}/artifacts_stores/{artifact_store.uuid} | Update run
-*ArtifactsStoresV1Api* | [**update_artifacts_store**](docs/ArtifactsStoresV1Api.md#update_artifacts_store) | **PUT** /api/v1/orgs/{owner}/artifacts_stores/{artifact_store.uuid} | Get run
 *ArtifactsStoresV1Api* | [**upload_artifact**](docs/ArtifactsStoresV1Api.md#upload_artifact) | **POST** /api/v1/catalogs/{owner}/artifacts_stores/{uuid}/upload | Upload artifact to a store
 *AuthV1Api* | [**login**](docs/AuthV1Api.md#login) | **POST** /api/v1/users/token | List bookmarked runs for user
+*ConnectionsV1Api* | [**create_connection**](docs/ConnectionsV1Api.md#create_connection) | **POST** /api/v1/orgs/{owner}/connections | List runs
+*ConnectionsV1Api* | [**delete_connection**](docs/ConnectionsV1Api.md#delete_connection) | **DELETE** /api/v1/orgs/{owner}/connections/{uuid} | Patch run
+*ConnectionsV1Api* | [**get_connection**](docs/ConnectionsV1Api.md#get_connection) | **GET** /api/v1/orgs/{owner}/connections/{uuid} | Create new run
+*ConnectionsV1Api* | [**list_connection_names**](docs/ConnectionsV1Api.md#list_connection_names) | **GET** /api/v1/orgs/{owner}/connections/names | List bookmarked runs for user
+*ConnectionsV1Api* | [**list_connections**](docs/ConnectionsV1Api.md#list_connections) | **GET** /api/v1/orgs/{owner}/connections | List archived runs for user
+*ConnectionsV1Api* | [**patch_connection**](docs/ConnectionsV1Api.md#patch_connection) | **PATCH** /api/v1/orgs/{owner}/connections/{connection.uuid} | Update run
+*ConnectionsV1Api* | [**update_connection**](docs/ConnectionsV1Api.md#update_connection) | **PUT** /api/v1/orgs/{owner}/connections/{connection.uuid} | Get run
 *DashboardsV1Api* | [**create_dashboard**](docs/DashboardsV1Api.md#create_dashboard) | **POST** /api/v1/orgs/{owner}/dashboards | List runs
 *DashboardsV1Api* | [**delete_dashboard**](docs/DashboardsV1Api.md#delete_dashboard) | **DELETE** /api/v1/orgs/{owner}/dashboards/{uuid} | Patch run
 *DashboardsV1Api* | [**get_dashboard**](docs/DashboardsV1Api.md#get_dashboard) | **GET** /api/v1/orgs/{owner}/dashboards/{uuid} | Create new run
@@ -101,13 +101,6 @@ Class | Method | HTTP request | Description
 *DashboardsV1Api* | [**list_dashboards**](docs/DashboardsV1Api.md#list_dashboards) | **GET** /api/v1/orgs/{owner}/dashboards | List archived runs for user
 *DashboardsV1Api* | [**patch_dashboard**](docs/DashboardsV1Api.md#patch_dashboard) | **PATCH** /api/v1/orgs/{owner}/dashboards/{dashboard.uuid} | Update run
 *DashboardsV1Api* | [**update_dashboard**](docs/DashboardsV1Api.md#update_dashboard) | **PUT** /api/v1/orgs/{owner}/dashboards/{dashboard.uuid} | Get run
-*GitAccessesV1Api* | [**create_git_access**](docs/GitAccessesV1Api.md#create_git_access) | **POST** /api/v1/orgs/{owner}/git_accesses | List runs
-*GitAccessesV1Api* | [**delete_git_access**](docs/GitAccessesV1Api.md#delete_git_access) | **DELETE** /api/v1/orgs/{owner}/git_accesses/{uuid} | Patch run
-*GitAccessesV1Api* | [**get_git_access**](docs/GitAccessesV1Api.md#get_git_access) | **GET** /api/v1/orgs/{owner}/git_accesses/{uuid} | Create new run
-*GitAccessesV1Api* | [**list_git_access_names**](docs/GitAccessesV1Api.md#list_git_access_names) | **GET** /api/v1/orgs/{owner}/git_accesses/names | List bookmarked runs for user
-*GitAccessesV1Api* | [**list_git_accesses**](docs/GitAccessesV1Api.md#list_git_accesses) | **GET** /api/v1/orgs/{owner}/git_accesses | List archived runs for user
-*GitAccessesV1Api* | [**patch_git_access**](docs/GitAccessesV1Api.md#patch_git_access) | **PATCH** /api/v1/orgs/{owner}/git_accesses/{host_access.uuid} | Update run
-*GitAccessesV1Api* | [**update_git_access**](docs/GitAccessesV1Api.md#update_git_access) | **PUT** /api/v1/orgs/{owner}/git_accesses/{host_access.uuid} | Get run
 *K8sConfigMapsV1Api* | [**create_k8s_config_map**](docs/K8sConfigMapsV1Api.md#create_k8s_config_map) | **POST** /api/v1/orgs/{owner}/k8s_config_maps | List runs
 *K8sConfigMapsV1Api* | [**delete_k8s_config_map**](docs/K8sConfigMapsV1Api.md#delete_k8s_config_map) | **DELETE** /api/v1/orgs/{owner}/k8s_config_maps/{uuid} | Patch run
 *K8sConfigMapsV1Api* | [**get_k8s_config_map**](docs/K8sConfigMapsV1Api.md#get_k8s_config_map) | **GET** /api/v1/orgs/{owner}/k8s_config_maps/{uuid} | Create new run
@@ -182,13 +175,6 @@ Class | Method | HTTP request | Description
 *QueuesV1Api* | [**list_queues**](docs/QueuesV1Api.md#list_queues) | **GET** /api/v1/orgs/{owner}/agents/{agent}/queues | Create new run
 *QueuesV1Api* | [**patch_queue**](docs/QueuesV1Api.md#patch_queue) | **PATCH** /api/v1/orgs/{owner}/agents/{queue.agent}/queues/{queue.uuid} | Delete run
 *QueuesV1Api* | [**update_queue**](docs/QueuesV1Api.md#update_queue) | **PUT** /api/v1/orgs/{owner}/agents/{queue.agent}/queues/{queue.uuid} | Patch run
-*RegistryAccessesV1Api* | [**create_registry_access**](docs/RegistryAccessesV1Api.md#create_registry_access) | **POST** /api/v1/orgs/{owner}/registry_accesses | List runs
-*RegistryAccessesV1Api* | [**delete_registry_access**](docs/RegistryAccessesV1Api.md#delete_registry_access) | **DELETE** /api/v1/orgs/{owner}/registry_accesses/{uuid} | Patch run
-*RegistryAccessesV1Api* | [**get_registry_access**](docs/RegistryAccessesV1Api.md#get_registry_access) | **GET** /api/v1/orgs/{owner}/registry_accesses/{uuid} | Create new run
-*RegistryAccessesV1Api* | [**list_registry_access_names**](docs/RegistryAccessesV1Api.md#list_registry_access_names) | **GET** /api/v1/orgs/{owner}/registry_accesses/names | List bookmarked runs for user
-*RegistryAccessesV1Api* | [**list_registry_accesses**](docs/RegistryAccessesV1Api.md#list_registry_accesses) | **GET** /api/v1/orgs/{owner}/registry_accesses | List archived runs for user
-*RegistryAccessesV1Api* | [**patch_registry_access**](docs/RegistryAccessesV1Api.md#patch_registry_access) | **PATCH** /api/v1/orgs/{owner}/registry_accesses/{host_access.uuid} | Update run
-*RegistryAccessesV1Api* | [**update_registry_access**](docs/RegistryAccessesV1Api.md#update_registry_access) | **PUT** /api/v1/orgs/{owner}/registry_accesses/{host_access.uuid} | Get run
 *RunProfilesV1Api* | [**create_run_profile**](docs/RunProfilesV1Api.md#create_run_profile) | **POST** /api/v1/orgs/{owner}/run_profiles | List runs
 *RunProfilesV1Api* | [**delete_run_profile**](docs/RunProfilesV1Api.md#delete_run_profile) | **DELETE** /api/v1/orgs/{owner}/run_profiles/{uuid} | Patch run
 *RunProfilesV1Api* | [**get_run_profile**](docs/RunProfilesV1Api.md#get_run_profile) | **GET** /api/v1/orgs/{owner}/run_profiles/{uuid} | Create new run
@@ -258,16 +244,21 @@ Class | Method | HTTP request | Description
 
  - [ProtobufNullValue](docs/ProtobufNullValue.md)
  - [V1Agent](docs/V1Agent.md)
+ - [V1ArtifactFormat](docs/V1ArtifactFormat.md)
  - [V1ArtifactMount](docs/V1ArtifactMount.md)
  - [V1ArtifactTreeResponse](docs/V1ArtifactTreeResponse.md)
- - [V1ArtifactsStore](docs/V1ArtifactsStore.md)
  - [V1Auth](docs/V1Auth.md)
  - [V1AverageStoppingPolicy](docs/V1AverageStoppingPolicy.md)
  - [V1BO](docs/V1BO.md)
+ - [V1BlobConnection](docs/V1BlobConnection.md)
  - [V1BuildContext](docs/V1BuildContext.md)
+ - [V1ClaimConnection](docs/V1ClaimConnection.md)
  - [V1CodeRef](docs/V1CodeRef.md)
  - [V1Component](docs/V1Component.md)
  - [V1ComponentRef](docs/V1ComponentRef.md)
+ - [V1Connection](docs/V1Connection.md)
+ - [V1ConnectionKind](docs/V1ConnectionKind.md)
+ - [V1ConnectionScema](docs/V1ConnectionScema.md)
  - [V1Container](docs/V1Container.md)
  - [V1ContainerEnv](docs/V1ContainerEnv.md)
  - [V1CredsBodyRequest](docs/V1CredsBodyRequest.md)
@@ -282,7 +273,8 @@ Class | Method | HTTP request | Description
  - [V1FailureEarlyStopping](docs/V1FailureEarlyStopping.md)
  - [V1Flink](docs/V1Flink.md)
  - [V1GridSearch](docs/V1GridSearch.md)
- - [V1HostAccess](docs/V1HostAccess.md)
+ - [V1HostConnection](docs/V1HostConnection.md)
+ - [V1HostPathConnection](docs/V1HostPathConnection.md)
  - [V1Hyperband](docs/V1Hyperband.md)
  - [V1Hyperopt](docs/V1Hyperopt.md)
  - [V1HyperoptAlgorithms](docs/V1HyperoptAlgorithms.md)
@@ -293,9 +285,8 @@ Class | Method | HTTP request | Description
  - [V1K8sMount](docs/V1K8sMount.md)
  - [V1K8sResource](docs/V1K8sResource.md)
  - [V1ListAgentsResponse](docs/V1ListAgentsResponse.md)
- - [V1ListArtifactsStoresResponse](docs/V1ListArtifactsStoresResponse.md)
+ - [V1ListConnectionsResponse](docs/V1ListConnectionsResponse.md)
  - [V1ListDashboardsResponse](docs/V1ListDashboardsResponse.md)
- - [V1ListHostAccessesResponse](docs/V1ListHostAccessesResponse.md)
  - [V1ListK8sResourcesResponse](docs/V1ListK8sResourcesResponse.md)
  - [V1ListOrganizationMembersResponse](docs/V1ListOrganizationMembersResponse.md)
  - [V1ListOrganizationsResponse](docs/V1ListOrganizationsResponse.md)

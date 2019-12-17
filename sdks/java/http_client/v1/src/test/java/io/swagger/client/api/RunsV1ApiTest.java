@@ -236,8 +236,8 @@ public class RunsV1ApiTest {
         String uuid = null;
         String path = null;
         Integer step = null;
-        String type = null;
-        V1ArtifactTreeResponse response = api.getRunArtifactsTree(owner, project, uuid, path, step, type);
+        String kind = null;
+        V1ArtifactTreeResponse response = api.getRunArtifactsTree(owner, project, uuid, path, step, kind);
 
         // TODO: test validations
     }
@@ -278,8 +278,8 @@ public class RunsV1ApiTest {
         String uuid = null;
         String path = null;
         Integer step = null;
-        String type = null;
-        V1ArtifactTreeResponse response = api.getRunLogsTree(owner, project, uuid, path, step, type);
+        String kind = null;
+        V1ArtifactTreeResponse response = api.getRunLogsTree(owner, project, uuid, path, step, kind);
 
         // TODO: test validations
     }

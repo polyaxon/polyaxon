@@ -9,5 +9,7 @@ Name | Type | Description | Notes
 **op** | [**V1Op**](V1Op.md) |  | [optional] 
 **run** | [**V1RunSchema**](V1RunSchema.md) |  | [optional] 
 **schedule** | [**V1Schedule**](V1Schedule.md) |  | [optional] 
+**artifact_format** | [**V1ArtifactFormat**](V1ArtifactFormat.md) |  | [optional] 
+**connection_schema** | [**V1ConnectionScema**](V1ConnectionScema.md) |  | [optional] 
 
 
