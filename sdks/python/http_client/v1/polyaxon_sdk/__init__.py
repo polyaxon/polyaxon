@@ -35,10 +35,9 @@ from __future__ import absolute_import
 from polyaxon_sdk.api.agents_v1_api import AgentsV1Api
 from polyaxon_sdk.api.artifacts_stores_v1_api import ArtifactsStoresV1Api
 from polyaxon_sdk.api.auth_v1_api import AuthV1Api
+from polyaxon_sdk.api.config_resources_v1_api import ConfigResourcesV1Api
 from polyaxon_sdk.api.connections_v1_api import ConnectionsV1Api
 from polyaxon_sdk.api.dashboards_v1_api import DashboardsV1Api
-from polyaxon_sdk.api.k8s_config_maps_v1_api import K8sConfigMapsV1Api
-from polyaxon_sdk.api.k8s_secrets_v1_api import K8sSecretsV1Api
 from polyaxon_sdk.api.organizations_v1_api import OrganizationsV1Api
 from polyaxon_sdk.api.project_dashboards_v1_api import ProjectDashboardsV1Api
 from polyaxon_sdk.api.project_searches_v1_api import ProjectSearchesV1Api
@@ -71,6 +70,7 @@ from polyaxon_sdk.models.v1_claim_connection import V1ClaimConnection
 from polyaxon_sdk.models.v1_code_ref import V1CodeRef
 from polyaxon_sdk.models.v1_component import V1Component
 from polyaxon_sdk.models.v1_component_ref import V1ComponentRef
+from polyaxon_sdk.models.v1_config_resource import V1ConfigResource
 from polyaxon_sdk.models.v1_connection import V1Connection
 from polyaxon_sdk.models.v1_connection_kind import V1ConnectionKind
 from polyaxon_sdk.models.v1_connection_scema import V1ConnectionScema
@@ -98,13 +98,12 @@ from polyaxon_sdk.models.v1_init import V1Init
 from polyaxon_sdk.models.v1_interval_schedule import V1IntervalSchedule
 from polyaxon_sdk.models.v1_iterative import V1Iterative
 from polyaxon_sdk.models.v1_k8s_mount import V1K8sMount
-from polyaxon_sdk.models.v1_k8s_resource import V1K8sResource
 from polyaxon_sdk.models.v1_list_agents_response import V1ListAgentsResponse
+from polyaxon_sdk.models.v1_list_config_resources_response import (
+    V1ListConfigResourcesResponse,
+)
 from polyaxon_sdk.models.v1_list_connections_response import V1ListConnectionsResponse
 from polyaxon_sdk.models.v1_list_dashboards_response import V1ListDashboardsResponse
-from polyaxon_sdk.models.v1_list_k8s_resources_response import (
-    V1ListK8sResourcesResponse,
-)
 from polyaxon_sdk.models.v1_list_organization_members_response import (
     V1ListOrganizationMembersResponse,
 )

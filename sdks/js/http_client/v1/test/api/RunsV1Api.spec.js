@@ -786,20 +786,7 @@
               expect(data.registry_access.name).to.be.a('string');
               expect(data.registry_access.name).to.be("");
             {
-              let dataCtr = data.k8s_secrets;
-              expect(dataCtr).to.be.an(Array);
-              expect(dataCtr).to.not.be.empty();
-              for (let p in dataCtr) {
-                let data = dataCtr[p];
-                expect(data).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
-                expect(data.uuid).to.be.a('string');
-                expect(data.uuid).to.be("");
-                expect(data.name).to.be.a('string');
-                expect(data.name).to.be("");
-              }
-            }
-            {
-              let dataCtr = data.k8s_config_maps;
+              let dataCtr = data.config_resources;
               expect(dataCtr).to.be.an(Array);
               expect(dataCtr).to.not.be.empty();
               for (let p in dataCtr) {

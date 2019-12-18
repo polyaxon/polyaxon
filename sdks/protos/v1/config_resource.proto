@@ -1,0 +1,72 @@
+syntax = "proto3";
+
+package v1;
+
+import "google/protobuf/timestamp.proto";
+
+// Config resource specification
+message ConfigResource {
+    // UUID
+    string uuid = 1;
+
+    // Name
+    string name = 2;
+
+    // Optional description
+    string description = 3;
+
+    // Optional Tags of this entity
+    repeated string tags = 4;
+
+    // Optional time when the entityt was created
+    google.protobuf.Timestamp created_at = 5;
+
+    // Optional last time the entity was updated
+    google.protobuf.Timestamp updated_at = 6;
+
+    // Optional the k8s ref
+    string k8s_ref = 7;
+
+    // Optional wether this config resource is a secret
+    bool is_secret = 8;
+
+    // Optional a flag to freeze the resource
+    bool frozen = 9;
+
+    // Optional a flag to disable the resource
+    bool disabled = 10;
+
+    // Optional if the entity has been deleted
+    bool deleted = 11;
+
+    //Optional a mount path to specifiy where to mount this resource
+    string mount_path = 12;
+
+    // Optional the k8s secret to use
+    repeated string items = 13;
+}
+
+ // Request data to create/update k8s resource
+ message ConfigResourceBodyRequest {
+    // Owner of the namespace
+    string owner = 1;
+
+    // Artifact store body
+    ConfigResource config_resource = 2;
+ }
+
+
+// Contains list config resources
+message ListConfigResourcesResponse {
+    // Count of the entities
+    int32 count = 1;
+
+    // List of all entities
+    repeated ConfigResource results = 2;
+
+    // Previous page
+    string previous = 3;
+
+    // Next page
+    string next = 4;
+}

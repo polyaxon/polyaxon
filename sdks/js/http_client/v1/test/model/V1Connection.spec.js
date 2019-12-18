@@ -109,10 +109,10 @@
         // expect(instance.deleted).to.be(expectedValueLiteral);
       });
 
-      it('should have the property k8s_secret (base name: "k8s_secret")', function() {
-        // TODO: update the code to test the property k8s_secret
-        expect(instance).to.have.property('k8s_secret');
-        // expect(instance.k8s_secret).to.be(expectedValueLiteral);
+      it('should have the property config_resource (base name: "config_resource")', function() {
+        // TODO: update the code to test the property config_resource
+        expect(instance).to.have.property('config_resource');
+        // expect(instance.config_resource).to.be(expectedValueLiteral);
       });
 
       it('should have the property kind (base name: "kind")', function() {

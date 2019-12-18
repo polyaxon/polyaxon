@@ -100,4 +100,4 @@ def validate_connection(kind, definition):
         HostPathConnectionConfig.from_dict(definition)
 
     if kind in {ConnectionKind.GIT, ConnectionKind.REGISTRY}:
-        HostPathConnectionConfig.from_dict(definition)
+        HostConnectionConfig.from_dict(definition)

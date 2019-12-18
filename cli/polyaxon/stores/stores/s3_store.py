@@ -22,10 +22,8 @@ import os
 from six import BytesIO
 
 from botocore.exceptions import ClientError
-from rhea import RheaError
-from rhea import parser as rhea_parser
 
-from polyaxon.exceptions import PolyaxonStoresException
+from polyaxon.exceptions import PolyaxonSchemaError, PolyaxonStoresException
 from polyaxon.logger import logger
 from polyaxon.stores.clients import aws_client
 from polyaxon.stores.stores.base_store import BaseStore
@@ -35,6 +33,7 @@ from polyaxon.stores.utils import (
     force_bytes,
     get_files_in_current_directory,
 )
+from polyaxon.types import parser
 
 # pylint:disable=arguments-differ
 
@@ -208,9 +207,9 @@ class S3Store(BaseStore):
              tuple(bucket_name, key).
         """
         try:
-            spec = rhea_parser.parse_s3_path(s3_url)
+            spec = parser.parse_s3_path(s3_url)
             return spec.bucket, spec.key
-        except RheaError as e:
+        except PolyaxonSchemaError as e:
             raise PolyaxonStoresException(e)
 
     @staticmethod

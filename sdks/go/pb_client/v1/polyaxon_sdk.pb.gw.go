@@ -5236,10 +5236,10 @@ func local_request_ConnectionsV1_DeleteConnection_0(ctx context.Context, marshal
 }
 
 var (
-	filter_K8SConfigMapsV1_ListK8SConfigMapNames_0 = &utilities.DoubleArray{Encoding: map[string]int{"owner": 0}, Base: []int{1, 1, 0}, Check: []int{0, 1, 2}}
+	filter_ConfigResourcesV1_ListConfigResourceNames_0 = &utilities.DoubleArray{Encoding: map[string]int{"owner": 0}, Base: []int{1, 1, 0}, Check: []int{0, 1, 2}}
 )
 
-func request_K8SConfigMapsV1_ListK8SConfigMapNames_0(ctx context.Context, marshaler runtime.Marshaler, client K8SConfigMapsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_ConfigResourcesV1_ListConfigResourceNames_0(ctx context.Context, marshaler runtime.Marshaler, client ConfigResourcesV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq OwnerResourceListRequest
 	var metadata runtime.ServerMetadata
 
@@ -5264,16 +5264,16 @@ func request_K8SConfigMapsV1_ListK8SConfigMapNames_0(ctx context.Context, marsha
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_K8SConfigMapsV1_ListK8SConfigMapNames_0); err != nil {
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_ConfigResourcesV1_ListConfigResourceNames_0); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
-	msg, err := client.ListK8SConfigMapNames(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	msg, err := client.ListConfigResourceNames(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
 }
 
-func local_request_K8SConfigMapsV1_ListK8SConfigMapNames_0(ctx context.Context, marshaler runtime.Marshaler, server K8SConfigMapsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_ConfigResourcesV1_ListConfigResourceNames_0(ctx context.Context, marshaler runtime.Marshaler, server ConfigResourcesV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq OwnerResourceListRequest
 	var metadata runtime.ServerMetadata
 
@@ -5295,20 +5295,20 @@ func local_request_K8SConfigMapsV1_ListK8SConfigMapNames_0(ctx context.Context, 
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
 	}
 
-	if err := runtime.PopulateQueryParameters(&protoReq, req.URL.Query(), filter_K8SConfigMapsV1_ListK8SConfigMapNames_0); err != nil {
+	if err := runtime.PopulateQueryParameters(&protoReq, req.URL.Query(), filter_ConfigResourcesV1_ListConfigResourceNames_0); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
-	msg, err := server.ListK8SConfigMapNames(ctx, &protoReq)
+	msg, err := server.ListConfigResourceNames(ctx, &protoReq)
 	return msg, metadata, err
 
 }
 
 var (
-	filter_K8SConfigMapsV1_ListK8SConfigMaps_0 = &utilities.DoubleArray{Encoding: map[string]int{"owner": 0}, Base: []int{1, 1, 0}, Check: []int{0, 1, 2}}
+	filter_ConfigResourcesV1_ListConfigResources_0 = &utilities.DoubleArray{Encoding: map[string]int{"owner": 0}, Base: []int{1, 1, 0}, Check: []int{0, 1, 2}}
 )
 
-func request_K8SConfigMapsV1_ListK8SConfigMaps_0(ctx context.Context, marshaler runtime.Marshaler, client K8SConfigMapsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_ConfigResourcesV1_ListConfigResources_0(ctx context.Context, marshaler runtime.Marshaler, client ConfigResourcesV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq OwnerResourceListRequest
 	var metadata runtime.ServerMetadata
 
@@ -5333,16 +5333,16 @@ func request_K8SConfigMapsV1_ListK8SConfigMaps_0(ctx context.Context, marshaler 
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_K8SConfigMapsV1_ListK8SConfigMaps_0); err != nil {
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_ConfigResourcesV1_ListConfigResources_0); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
-	msg, err := client.ListK8SConfigMaps(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	msg, err := client.ListConfigResources(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
 }
 
-func local_request_K8SConfigMapsV1_ListK8SConfigMaps_0(ctx context.Context, marshaler runtime.Marshaler, server K8SConfigMapsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_ConfigResourcesV1_ListConfigResources_0(ctx context.Context, marshaler runtime.Marshaler, server ConfigResourcesV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq OwnerResourceListRequest
 	var metadata runtime.ServerMetadata
 
@@ -5364,24 +5364,24 @@ func local_request_K8SConfigMapsV1_ListK8SConfigMaps_0(ctx context.Context, mars
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
 	}
 
-	if err := runtime.PopulateQueryParameters(&protoReq, req.URL.Query(), filter_K8SConfigMapsV1_ListK8SConfigMaps_0); err != nil {
+	if err := runtime.PopulateQueryParameters(&protoReq, req.URL.Query(), filter_ConfigResourcesV1_ListConfigResources_0); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
-	msg, err := server.ListK8SConfigMaps(ctx, &protoReq)
+	msg, err := server.ListConfigResources(ctx, &protoReq)
 	return msg, metadata, err
 
 }
 
-func request_K8SConfigMapsV1_CreateK8SConfigMap_0(ctx context.Context, marshaler runtime.Marshaler, client K8SConfigMapsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq K8SResourceBodyRequest
+func request_ConfigResourcesV1_CreateConfigResource_0(ctx context.Context, marshaler runtime.Marshaler, client ConfigResourcesV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq ConfigResourceBodyRequest
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
 	if berr != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
 	}
-	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq.K8SResource); err != nil && err != io.EOF {
+	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq.ConfigResource); err != nil && err != io.EOF {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
@@ -5403,20 +5403,20 @@ func request_K8SConfigMapsV1_CreateK8SConfigMap_0(ctx context.Context, marshaler
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
 	}
 
-	msg, err := client.CreateK8SConfigMap(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	msg, err := client.CreateConfigResource(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
 }
 
-func local_request_K8SConfigMapsV1_CreateK8SConfigMap_0(ctx context.Context, marshaler runtime.Marshaler, server K8SConfigMapsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq K8SResourceBodyRequest
+func local_request_ConfigResourcesV1_CreateConfigResource_0(ctx context.Context, marshaler runtime.Marshaler, server ConfigResourcesV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq ConfigResourceBodyRequest
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
 	if berr != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
 	}
-	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq.K8SResource); err != nil && err != io.EOF {
+	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq.ConfigResource); err != nil && err != io.EOF {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
@@ -5438,12 +5438,12 @@ func local_request_K8SConfigMapsV1_CreateK8SConfigMap_0(ctx context.Context, mar
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
 	}
 
-	msg, err := server.CreateK8SConfigMap(ctx, &protoReq)
+	msg, err := server.CreateConfigResource(ctx, &protoReq)
 	return msg, metadata, err
 
 }
 
-func request_K8SConfigMapsV1_GetK8SConfigMap_0(ctx context.Context, marshaler runtime.Marshaler, client K8SConfigMapsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_ConfigResourcesV1_GetConfigResource_0(ctx context.Context, marshaler runtime.Marshaler, client ConfigResourcesV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq OwnerEntityResourceRequest
 	var metadata runtime.ServerMetadata
 
@@ -5476,12 +5476,12 @@ func request_K8SConfigMapsV1_GetK8SConfigMap_0(ctx context.Context, marshaler ru
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "uuid", err)
 	}
 
-	msg, err := client.GetK8SConfigMap(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	msg, err := client.GetConfigResource(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
 }
 
-func local_request_K8SConfigMapsV1_GetK8SConfigMap_0(ctx context.Context, marshaler runtime.Marshaler, server K8SConfigMapsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_ConfigResourcesV1_GetConfigResource_0(ctx context.Context, marshaler runtime.Marshaler, server ConfigResourcesV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq OwnerEntityResourceRequest
 	var metadata runtime.ServerMetadata
 
@@ -5514,20 +5514,20 @@ func local_request_K8SConfigMapsV1_GetK8SConfigMap_0(ctx context.Context, marsha
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "uuid", err)
 	}
 
-	msg, err := server.GetK8SConfigMap(ctx, &protoReq)
+	msg, err := server.GetConfigResource(ctx, &protoReq)
 	return msg, metadata, err
 
 }
 
-func request_K8SConfigMapsV1_UpdateK8SConfigMap_0(ctx context.Context, marshaler runtime.Marshaler, client K8SConfigMapsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq K8SResourceBodyRequest
+func request_ConfigResourcesV1_UpdateConfigResource_0(ctx context.Context, marshaler runtime.Marshaler, client ConfigResourcesV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq ConfigResourceBodyRequest
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
 	if berr != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
 	}
-	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq.K8SResource); err != nil && err != io.EOF {
+	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq.ConfigResource); err != nil && err != io.EOF {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
@@ -5549,31 +5549,31 @@ func request_K8SConfigMapsV1_UpdateK8SConfigMap_0(ctx context.Context, marshaler
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
 	}
 
-	val, ok = pathParams["k8s_resource.uuid"]
+	val, ok = pathParams["config_resource.uuid"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "k8s_resource.uuid")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "config_resource.uuid")
 	}
 
-	err = runtime.PopulateFieldFromPath(&protoReq, "k8s_resource.uuid", val)
+	err = runtime.PopulateFieldFromPath(&protoReq, "config_resource.uuid", val)
 
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "k8s_resource.uuid", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "config_resource.uuid", err)
 	}
 
-	msg, err := client.UpdateK8SConfigMap(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	msg, err := client.UpdateConfigResource(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
 }
 
-func local_request_K8SConfigMapsV1_UpdateK8SConfigMap_0(ctx context.Context, marshaler runtime.Marshaler, server K8SConfigMapsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq K8SResourceBodyRequest
+func local_request_ConfigResourcesV1_UpdateConfigResource_0(ctx context.Context, marshaler runtime.Marshaler, server ConfigResourcesV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq ConfigResourceBodyRequest
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
 	if berr != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
 	}
-	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq.K8SResource); err != nil && err != io.EOF {
+	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq.ConfigResource); err != nil && err != io.EOF {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
@@ -5595,31 +5595,31 @@ func local_request_K8SConfigMapsV1_UpdateK8SConfigMap_0(ctx context.Context, mar
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
 	}
 
-	val, ok = pathParams["k8s_resource.uuid"]
+	val, ok = pathParams["config_resource.uuid"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "k8s_resource.uuid")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "config_resource.uuid")
 	}
 
-	err = runtime.PopulateFieldFromPath(&protoReq, "k8s_resource.uuid", val)
+	err = runtime.PopulateFieldFromPath(&protoReq, "config_resource.uuid", val)
 
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "k8s_resource.uuid", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "config_resource.uuid", err)
 	}
 
-	msg, err := server.UpdateK8SConfigMap(ctx, &protoReq)
+	msg, err := server.UpdateConfigResource(ctx, &protoReq)
 	return msg, metadata, err
 
 }
 
-func request_K8SConfigMapsV1_PatchK8SConfigMap_0(ctx context.Context, marshaler runtime.Marshaler, client K8SConfigMapsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq K8SResourceBodyRequest
+func request_ConfigResourcesV1_PatchConfigResource_0(ctx context.Context, marshaler runtime.Marshaler, client ConfigResourcesV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq ConfigResourceBodyRequest
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
 	if berr != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
 	}
-	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq.K8SResource); err != nil && err != io.EOF {
+	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq.ConfigResource); err != nil && err != io.EOF {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
@@ -5641,31 +5641,31 @@ func request_K8SConfigMapsV1_PatchK8SConfigMap_0(ctx context.Context, marshaler 
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
 	}
 
-	val, ok = pathParams["k8s_resource.uuid"]
+	val, ok = pathParams["config_resource.uuid"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "k8s_resource.uuid")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "config_resource.uuid")
 	}
 
-	err = runtime.PopulateFieldFromPath(&protoReq, "k8s_resource.uuid", val)
+	err = runtime.PopulateFieldFromPath(&protoReq, "config_resource.uuid", val)
 
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "k8s_resource.uuid", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "config_resource.uuid", err)
 	}
 
-	msg, err := client.PatchK8SConfigMap(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	msg, err := client.PatchConfigResource(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
 }
 
-func local_request_K8SConfigMapsV1_PatchK8SConfigMap_0(ctx context.Context, marshaler runtime.Marshaler, server K8SConfigMapsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq K8SResourceBodyRequest
+func local_request_ConfigResourcesV1_PatchConfigResource_0(ctx context.Context, marshaler runtime.Marshaler, server ConfigResourcesV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq ConfigResourceBodyRequest
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
 	if berr != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
 	}
-	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq.K8SResource); err != nil && err != io.EOF {
+	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq.ConfigResource); err != nil && err != io.EOF {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
@@ -5687,23 +5687,23 @@ func local_request_K8SConfigMapsV1_PatchK8SConfigMap_0(ctx context.Context, mars
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
 	}
 
-	val, ok = pathParams["k8s_resource.uuid"]
+	val, ok = pathParams["config_resource.uuid"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "k8s_resource.uuid")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "config_resource.uuid")
 	}
 
-	err = runtime.PopulateFieldFromPath(&protoReq, "k8s_resource.uuid", val)
+	err = runtime.PopulateFieldFromPath(&protoReq, "config_resource.uuid", val)
 
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "k8s_resource.uuid", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "config_resource.uuid", err)
 	}
 
-	msg, err := server.PatchK8SConfigMap(ctx, &protoReq)
+	msg, err := server.PatchConfigResource(ctx, &protoReq)
 	return msg, metadata, err
 
 }
 
-func request_K8SConfigMapsV1_DeleteK8SConfigMap_0(ctx context.Context, marshaler runtime.Marshaler, client K8SConfigMapsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_ConfigResourcesV1_DeleteConfigResource_0(ctx context.Context, marshaler runtime.Marshaler, client ConfigResourcesV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq OwnerEntityResourceRequest
 	var metadata runtime.ServerMetadata
 
@@ -5736,12 +5736,12 @@ func request_K8SConfigMapsV1_DeleteK8SConfigMap_0(ctx context.Context, marshaler
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "uuid", err)
 	}
 
-	msg, err := client.DeleteK8SConfigMap(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	msg, err := client.DeleteConfigResource(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
 }
 
-func local_request_K8SConfigMapsV1_DeleteK8SConfigMap_0(ctx context.Context, marshaler runtime.Marshaler, server K8SConfigMapsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_ConfigResourcesV1_DeleteConfigResource_0(ctx context.Context, marshaler runtime.Marshaler, server ConfigResourcesV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq OwnerEntityResourceRequest
 	var metadata runtime.ServerMetadata
 
@@ -5774,551 +5774,7 @@ func local_request_K8SConfigMapsV1_DeleteK8SConfigMap_0(ctx context.Context, mar
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "uuid", err)
 	}
 
-	msg, err := server.DeleteK8SConfigMap(ctx, &protoReq)
-	return msg, metadata, err
-
-}
-
-var (
-	filter_K8SSecretsV1_ListK8SSecretNames_0 = &utilities.DoubleArray{Encoding: map[string]int{"owner": 0}, Base: []int{1, 1, 0}, Check: []int{0, 1, 2}}
-)
-
-func request_K8SSecretsV1_ListK8SSecretNames_0(ctx context.Context, marshaler runtime.Marshaler, client K8SSecretsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OwnerResourceListRequest
-	var metadata runtime.ServerMetadata
-
-	var (
-		val string
-		ok  bool
-		err error
-		_   = err
-	)
-
-	val, ok = pathParams["owner"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "owner")
-	}
-
-	protoReq.Owner, err = runtime.String(val)
-
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
-	}
-
-	if err := req.ParseForm(); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
-	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_K8SSecretsV1_ListK8SSecretNames_0); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
-	}
-
-	msg, err := client.ListK8SSecretNames(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
-	return msg, metadata, err
-
-}
-
-func local_request_K8SSecretsV1_ListK8SSecretNames_0(ctx context.Context, marshaler runtime.Marshaler, server K8SSecretsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OwnerResourceListRequest
-	var metadata runtime.ServerMetadata
-
-	var (
-		val string
-		ok  bool
-		err error
-		_   = err
-	)
-
-	val, ok = pathParams["owner"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "owner")
-	}
-
-	protoReq.Owner, err = runtime.String(val)
-
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
-	}
-
-	if err := runtime.PopulateQueryParameters(&protoReq, req.URL.Query(), filter_K8SSecretsV1_ListK8SSecretNames_0); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
-	}
-
-	msg, err := server.ListK8SSecretNames(ctx, &protoReq)
-	return msg, metadata, err
-
-}
-
-var (
-	filter_K8SSecretsV1_ListK8SSecrets_0 = &utilities.DoubleArray{Encoding: map[string]int{"owner": 0}, Base: []int{1, 1, 0}, Check: []int{0, 1, 2}}
-)
-
-func request_K8SSecretsV1_ListK8SSecrets_0(ctx context.Context, marshaler runtime.Marshaler, client K8SSecretsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OwnerResourceListRequest
-	var metadata runtime.ServerMetadata
-
-	var (
-		val string
-		ok  bool
-		err error
-		_   = err
-	)
-
-	val, ok = pathParams["owner"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "owner")
-	}
-
-	protoReq.Owner, err = runtime.String(val)
-
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
-	}
-
-	if err := req.ParseForm(); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
-	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_K8SSecretsV1_ListK8SSecrets_0); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
-	}
-
-	msg, err := client.ListK8SSecrets(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
-	return msg, metadata, err
-
-}
-
-func local_request_K8SSecretsV1_ListK8SSecrets_0(ctx context.Context, marshaler runtime.Marshaler, server K8SSecretsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OwnerResourceListRequest
-	var metadata runtime.ServerMetadata
-
-	var (
-		val string
-		ok  bool
-		err error
-		_   = err
-	)
-
-	val, ok = pathParams["owner"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "owner")
-	}
-
-	protoReq.Owner, err = runtime.String(val)
-
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
-	}
-
-	if err := runtime.PopulateQueryParameters(&protoReq, req.URL.Query(), filter_K8SSecretsV1_ListK8SSecrets_0); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
-	}
-
-	msg, err := server.ListK8SSecrets(ctx, &protoReq)
-	return msg, metadata, err
-
-}
-
-func request_K8SSecretsV1_CreateK8SSecret_0(ctx context.Context, marshaler runtime.Marshaler, client K8SSecretsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq K8SResourceBodyRequest
-	var metadata runtime.ServerMetadata
-
-	newReader, berr := utilities.IOReaderFactory(req.Body)
-	if berr != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
-	}
-	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq.K8SResource); err != nil && err != io.EOF {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
-	}
-
-	var (
-		val string
-		ok  bool
-		err error
-		_   = err
-	)
-
-	val, ok = pathParams["owner"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "owner")
-	}
-
-	protoReq.Owner, err = runtime.String(val)
-
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
-	}
-
-	msg, err := client.CreateK8SSecret(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
-	return msg, metadata, err
-
-}
-
-func local_request_K8SSecretsV1_CreateK8SSecret_0(ctx context.Context, marshaler runtime.Marshaler, server K8SSecretsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq K8SResourceBodyRequest
-	var metadata runtime.ServerMetadata
-
-	newReader, berr := utilities.IOReaderFactory(req.Body)
-	if berr != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
-	}
-	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq.K8SResource); err != nil && err != io.EOF {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
-	}
-
-	var (
-		val string
-		ok  bool
-		err error
-		_   = err
-	)
-
-	val, ok = pathParams["owner"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "owner")
-	}
-
-	protoReq.Owner, err = runtime.String(val)
-
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
-	}
-
-	msg, err := server.CreateK8SSecret(ctx, &protoReq)
-	return msg, metadata, err
-
-}
-
-func request_K8SSecretsV1_GetK8SSecret_0(ctx context.Context, marshaler runtime.Marshaler, client K8SSecretsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OwnerEntityResourceRequest
-	var metadata runtime.ServerMetadata
-
-	var (
-		val string
-		ok  bool
-		err error
-		_   = err
-	)
-
-	val, ok = pathParams["owner"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "owner")
-	}
-
-	protoReq.Owner, err = runtime.String(val)
-
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
-	}
-
-	val, ok = pathParams["uuid"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "uuid")
-	}
-
-	protoReq.Uuid, err = runtime.String(val)
-
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "uuid", err)
-	}
-
-	msg, err := client.GetK8SSecret(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
-	return msg, metadata, err
-
-}
-
-func local_request_K8SSecretsV1_GetK8SSecret_0(ctx context.Context, marshaler runtime.Marshaler, server K8SSecretsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OwnerEntityResourceRequest
-	var metadata runtime.ServerMetadata
-
-	var (
-		val string
-		ok  bool
-		err error
-		_   = err
-	)
-
-	val, ok = pathParams["owner"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "owner")
-	}
-
-	protoReq.Owner, err = runtime.String(val)
-
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
-	}
-
-	val, ok = pathParams["uuid"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "uuid")
-	}
-
-	protoReq.Uuid, err = runtime.String(val)
-
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "uuid", err)
-	}
-
-	msg, err := server.GetK8SSecret(ctx, &protoReq)
-	return msg, metadata, err
-
-}
-
-func request_K8SSecretsV1_UpdateK8SSecret_0(ctx context.Context, marshaler runtime.Marshaler, client K8SSecretsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq K8SResourceBodyRequest
-	var metadata runtime.ServerMetadata
-
-	newReader, berr := utilities.IOReaderFactory(req.Body)
-	if berr != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
-	}
-	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq.K8SResource); err != nil && err != io.EOF {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
-	}
-
-	var (
-		val string
-		ok  bool
-		err error
-		_   = err
-	)
-
-	val, ok = pathParams["owner"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "owner")
-	}
-
-	protoReq.Owner, err = runtime.String(val)
-
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
-	}
-
-	val, ok = pathParams["k8s_resource.uuid"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "k8s_resource.uuid")
-	}
-
-	err = runtime.PopulateFieldFromPath(&protoReq, "k8s_resource.uuid", val)
-
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "k8s_resource.uuid", err)
-	}
-
-	msg, err := client.UpdateK8SSecret(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
-	return msg, metadata, err
-
-}
-
-func local_request_K8SSecretsV1_UpdateK8SSecret_0(ctx context.Context, marshaler runtime.Marshaler, server K8SSecretsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq K8SResourceBodyRequest
-	var metadata runtime.ServerMetadata
-
-	newReader, berr := utilities.IOReaderFactory(req.Body)
-	if berr != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
-	}
-	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq.K8SResource); err != nil && err != io.EOF {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
-	}
-
-	var (
-		val string
-		ok  bool
-		err error
-		_   = err
-	)
-
-	val, ok = pathParams["owner"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "owner")
-	}
-
-	protoReq.Owner, err = runtime.String(val)
-
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
-	}
-
-	val, ok = pathParams["k8s_resource.uuid"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "k8s_resource.uuid")
-	}
-
-	err = runtime.PopulateFieldFromPath(&protoReq, "k8s_resource.uuid", val)
-
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "k8s_resource.uuid", err)
-	}
-
-	msg, err := server.UpdateK8SSecret(ctx, &protoReq)
-	return msg, metadata, err
-
-}
-
-func request_K8SSecretsV1_PatchK8SSecret_0(ctx context.Context, marshaler runtime.Marshaler, client K8SSecretsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq K8SResourceBodyRequest
-	var metadata runtime.ServerMetadata
-
-	newReader, berr := utilities.IOReaderFactory(req.Body)
-	if berr != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
-	}
-	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq.K8SResource); err != nil && err != io.EOF {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
-	}
-
-	var (
-		val string
-		ok  bool
-		err error
-		_   = err
-	)
-
-	val, ok = pathParams["owner"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "owner")
-	}
-
-	protoReq.Owner, err = runtime.String(val)
-
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
-	}
-
-	val, ok = pathParams["k8s_resource.uuid"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "k8s_resource.uuid")
-	}
-
-	err = runtime.PopulateFieldFromPath(&protoReq, "k8s_resource.uuid", val)
-
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "k8s_resource.uuid", err)
-	}
-
-	msg, err := client.PatchK8SSecret(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
-	return msg, metadata, err
-
-}
-
-func local_request_K8SSecretsV1_PatchK8SSecret_0(ctx context.Context, marshaler runtime.Marshaler, server K8SSecretsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq K8SResourceBodyRequest
-	var metadata runtime.ServerMetadata
-
-	newReader, berr := utilities.IOReaderFactory(req.Body)
-	if berr != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
-	}
-	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq.K8SResource); err != nil && err != io.EOF {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
-	}
-
-	var (
-		val string
-		ok  bool
-		err error
-		_   = err
-	)
-
-	val, ok = pathParams["owner"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "owner")
-	}
-
-	protoReq.Owner, err = runtime.String(val)
-
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
-	}
-
-	val, ok = pathParams["k8s_resource.uuid"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "k8s_resource.uuid")
-	}
-
-	err = runtime.PopulateFieldFromPath(&protoReq, "k8s_resource.uuid", val)
-
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "k8s_resource.uuid", err)
-	}
-
-	msg, err := server.PatchK8SSecret(ctx, &protoReq)
-	return msg, metadata, err
-
-}
-
-func request_K8SSecretsV1_DeleteK8SSecret_0(ctx context.Context, marshaler runtime.Marshaler, client K8SSecretsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OwnerEntityResourceRequest
-	var metadata runtime.ServerMetadata
-
-	var (
-		val string
-		ok  bool
-		err error
-		_   = err
-	)
-
-	val, ok = pathParams["owner"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "owner")
-	}
-
-	protoReq.Owner, err = runtime.String(val)
-
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
-	}
-
-	val, ok = pathParams["uuid"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "uuid")
-	}
-
-	protoReq.Uuid, err = runtime.String(val)
-
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "uuid", err)
-	}
-
-	msg, err := client.DeleteK8SSecret(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
-	return msg, metadata, err
-
-}
-
-func local_request_K8SSecretsV1_DeleteK8SSecret_0(ctx context.Context, marshaler runtime.Marshaler, server K8SSecretsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OwnerEntityResourceRequest
-	var metadata runtime.ServerMetadata
-
-	var (
-		val string
-		ok  bool
-		err error
-		_   = err
-	)
-
-	val, ok = pathParams["owner"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "owner")
-	}
-
-	protoReq.Owner, err = runtime.String(val)
-
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
-	}
-
-	val, ok = pathParams["uuid"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "uuid")
-	}
-
-	protoReq.Uuid, err = runtime.String(val)
-
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "uuid", err)
-	}
-
-	msg, err := server.DeleteK8SSecret(ctx, &protoReq)
+	msg, err := server.DeleteConfigResource(ctx, &protoReq)
 	return msg, metadata, err
 
 }
@@ -14186,12 +13642,12 @@ func RegisterConnectionsV1HandlerServer(ctx context.Context, mux *runtime.ServeM
 	return nil
 }
 
-// RegisterK8SConfigMapsV1HandlerServer registers the http handlers for service K8SConfigMapsV1 to "mux".
-// UnaryRPC     :call K8SConfigMapsV1Server directly.
+// RegisterConfigResourcesV1HandlerServer registers the http handlers for service ConfigResourcesV1 to "mux".
+// UnaryRPC     :call ConfigResourcesV1Server directly.
 // StreamingRPC :currently unsupported pending https://github.com/grpc/grpc-go/issues/906.
-func RegisterK8SConfigMapsV1HandlerServer(ctx context.Context, mux *runtime.ServeMux, server K8SConfigMapsV1Server) error {
+func RegisterConfigResourcesV1HandlerServer(ctx context.Context, mux *runtime.ServeMux, server ConfigResourcesV1Server) error {
 
-	mux.Handle("GET", pattern_K8SConfigMapsV1_ListK8SConfigMapNames_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_ConfigResourcesV1_ListConfigResourceNames_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -14200,18 +13656,18 @@ func RegisterK8SConfigMapsV1HandlerServer(ctx context.Context, mux *runtime.Serv
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_K8SConfigMapsV1_ListK8SConfigMapNames_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_ConfigResourcesV1_ListConfigResourceNames_0(rctx, inboundMarshaler, server, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_K8SConfigMapsV1_ListK8SConfigMapNames_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_ConfigResourcesV1_ListConfigResourceNames_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("GET", pattern_K8SConfigMapsV1_ListK8SConfigMaps_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_ConfigResourcesV1_ListConfigResources_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -14220,18 +13676,18 @@ func RegisterK8SConfigMapsV1HandlerServer(ctx context.Context, mux *runtime.Serv
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_K8SConfigMapsV1_ListK8SConfigMaps_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_ConfigResourcesV1_ListConfigResources_0(rctx, inboundMarshaler, server, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_K8SConfigMapsV1_ListK8SConfigMaps_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_ConfigResourcesV1_ListConfigResources_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("POST", pattern_K8SConfigMapsV1_CreateK8SConfigMap_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_ConfigResourcesV1_CreateConfigResource_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -14240,18 +13696,18 @@ func RegisterK8SConfigMapsV1HandlerServer(ctx context.Context, mux *runtime.Serv
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_K8SConfigMapsV1_CreateK8SConfigMap_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_ConfigResourcesV1_CreateConfigResource_0(rctx, inboundMarshaler, server, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_K8SConfigMapsV1_CreateK8SConfigMap_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_ConfigResourcesV1_CreateConfigResource_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("GET", pattern_K8SConfigMapsV1_GetK8SConfigMap_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_ConfigResourcesV1_GetConfigResource_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -14260,18 +13716,18 @@ func RegisterK8SConfigMapsV1HandlerServer(ctx context.Context, mux *runtime.Serv
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_K8SConfigMapsV1_GetK8SConfigMap_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_ConfigResourcesV1_GetConfigResource_0(rctx, inboundMarshaler, server, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_K8SConfigMapsV1_GetK8SConfigMap_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_ConfigResourcesV1_GetConfigResource_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("PUT", pattern_K8SConfigMapsV1_UpdateK8SConfigMap_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("PUT", pattern_ConfigResourcesV1_UpdateConfigResource_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -14280,18 +13736,18 @@ func RegisterK8SConfigMapsV1HandlerServer(ctx context.Context, mux *runtime.Serv
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_K8SConfigMapsV1_UpdateK8SConfigMap_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_ConfigResourcesV1_UpdateConfigResource_0(rctx, inboundMarshaler, server, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_K8SConfigMapsV1_UpdateK8SConfigMap_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_ConfigResourcesV1_UpdateConfigResource_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("PATCH", pattern_K8SConfigMapsV1_PatchK8SConfigMap_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("PATCH", pattern_ConfigResourcesV1_PatchConfigResource_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -14300,18 +13756,18 @@ func RegisterK8SConfigMapsV1HandlerServer(ctx context.Context, mux *runtime.Serv
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_K8SConfigMapsV1_PatchK8SConfigMap_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_ConfigResourcesV1_PatchConfigResource_0(rctx, inboundMarshaler, server, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_K8SConfigMapsV1_PatchK8SConfigMap_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_ConfigResourcesV1_PatchConfigResource_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("DELETE", pattern_K8SConfigMapsV1_DeleteK8SConfigMap_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("DELETE", pattern_ConfigResourcesV1_DeleteConfigResource_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -14320,162 +13776,14 @@ func RegisterK8SConfigMapsV1HandlerServer(ctx context.Context, mux *runtime.Serv
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_K8SConfigMapsV1_DeleteK8SConfigMap_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_ConfigResourcesV1_DeleteConfigResource_0(rctx, inboundMarshaler, server, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_K8SConfigMapsV1_DeleteK8SConfigMap_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
-
-	})
-
-	return nil
-}
-
-// RegisterK8SSecretsV1HandlerServer registers the http handlers for service K8SSecretsV1 to "mux".
-// UnaryRPC     :call K8SSecretsV1Server directly.
-// StreamingRPC :currently unsupported pending https://github.com/grpc/grpc-go/issues/906.
-func RegisterK8SSecretsV1HandlerServer(ctx context.Context, mux *runtime.ServeMux, server K8SSecretsV1Server) error {
-
-	mux.Handle("GET", pattern_K8SSecretsV1_ListK8SSecretNames_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
-		ctx, cancel := context.WithCancel(req.Context())
-		defer cancel()
-		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req)
-		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
-			return
-		}
-		resp, md, err := local_request_K8SSecretsV1_ListK8SSecretNames_0(rctx, inboundMarshaler, server, req, pathParams)
-		ctx = runtime.NewServerMetadataContext(ctx, md)
-		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
-			return
-		}
-
-		forward_K8SSecretsV1_ListK8SSecretNames_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
-
-	})
-
-	mux.Handle("GET", pattern_K8SSecretsV1_ListK8SSecrets_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
-		ctx, cancel := context.WithCancel(req.Context())
-		defer cancel()
-		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req)
-		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
-			return
-		}
-		resp, md, err := local_request_K8SSecretsV1_ListK8SSecrets_0(rctx, inboundMarshaler, server, req, pathParams)
-		ctx = runtime.NewServerMetadataContext(ctx, md)
-		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
-			return
-		}
-
-		forward_K8SSecretsV1_ListK8SSecrets_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
-
-	})
-
-	mux.Handle("POST", pattern_K8SSecretsV1_CreateK8SSecret_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
-		ctx, cancel := context.WithCancel(req.Context())
-		defer cancel()
-		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req)
-		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
-			return
-		}
-		resp, md, err := local_request_K8SSecretsV1_CreateK8SSecret_0(rctx, inboundMarshaler, server, req, pathParams)
-		ctx = runtime.NewServerMetadataContext(ctx, md)
-		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
-			return
-		}
-
-		forward_K8SSecretsV1_CreateK8SSecret_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
-
-	})
-
-	mux.Handle("GET", pattern_K8SSecretsV1_GetK8SSecret_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
-		ctx, cancel := context.WithCancel(req.Context())
-		defer cancel()
-		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req)
-		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
-			return
-		}
-		resp, md, err := local_request_K8SSecretsV1_GetK8SSecret_0(rctx, inboundMarshaler, server, req, pathParams)
-		ctx = runtime.NewServerMetadataContext(ctx, md)
-		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
-			return
-		}
-
-		forward_K8SSecretsV1_GetK8SSecret_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
-
-	})
-
-	mux.Handle("PUT", pattern_K8SSecretsV1_UpdateK8SSecret_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
-		ctx, cancel := context.WithCancel(req.Context())
-		defer cancel()
-		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req)
-		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
-			return
-		}
-		resp, md, err := local_request_K8SSecretsV1_UpdateK8SSecret_0(rctx, inboundMarshaler, server, req, pathParams)
-		ctx = runtime.NewServerMetadataContext(ctx, md)
-		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
-			return
-		}
-
-		forward_K8SSecretsV1_UpdateK8SSecret_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
-
-	})
-
-	mux.Handle("PATCH", pattern_K8SSecretsV1_PatchK8SSecret_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
-		ctx, cancel := context.WithCancel(req.Context())
-		defer cancel()
-		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req)
-		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
-			return
-		}
-		resp, md, err := local_request_K8SSecretsV1_PatchK8SSecret_0(rctx, inboundMarshaler, server, req, pathParams)
-		ctx = runtime.NewServerMetadataContext(ctx, md)
-		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
-			return
-		}
-
-		forward_K8SSecretsV1_PatchK8SSecret_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
-
-	})
-
-	mux.Handle("DELETE", pattern_K8SSecretsV1_DeleteK8SSecret_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
-		ctx, cancel := context.WithCancel(req.Context())
-		defer cancel()
-		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req)
-		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
-			return
-		}
-		resp, md, err := local_request_K8SSecretsV1_DeleteK8SSecret_0(rctx, inboundMarshaler, server, req, pathParams)
-		ctx = runtime.NewServerMetadataContext(ctx, md)
-		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
-			return
-		}
-
-		forward_K8SSecretsV1_DeleteK8SSecret_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_ConfigResourcesV1_DeleteConfigResource_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -17769,9 +17077,9 @@ var (
 	forward_ConnectionsV1_DeleteConnection_0 = runtime.ForwardResponseMessage
 )
 
-// RegisterK8SConfigMapsV1HandlerFromEndpoint is same as RegisterK8SConfigMapsV1Handler but
+// RegisterConfigResourcesV1HandlerFromEndpoint is same as RegisterConfigResourcesV1Handler but
 // automatically dials to "endpoint" and closes the connection when "ctx" gets done.
-func RegisterK8SConfigMapsV1HandlerFromEndpoint(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) (err error) {
+func RegisterConfigResourcesV1HandlerFromEndpoint(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) (err error) {
 	conn, err := grpc.Dial(endpoint, opts...)
 	if err != nil {
 		return err
@@ -17791,23 +17099,23 @@ func RegisterK8SConfigMapsV1HandlerFromEndpoint(ctx context.Context, mux *runtim
 		}()
 	}()
 
-	return RegisterK8SConfigMapsV1Handler(ctx, mux, conn)
+	return RegisterConfigResourcesV1Handler(ctx, mux, conn)
 }
 
-// RegisterK8SConfigMapsV1Handler registers the http handlers for service K8SConfigMapsV1 to "mux".
+// RegisterConfigResourcesV1Handler registers the http handlers for service ConfigResourcesV1 to "mux".
 // The handlers forward requests to the grpc endpoint over "conn".
-func RegisterK8SConfigMapsV1Handler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
-	return RegisterK8SConfigMapsV1HandlerClient(ctx, mux, NewK8SConfigMapsV1Client(conn))
+func RegisterConfigResourcesV1Handler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
+	return RegisterConfigResourcesV1HandlerClient(ctx, mux, NewConfigResourcesV1Client(conn))
 }
 
-// RegisterK8SConfigMapsV1HandlerClient registers the http handlers for service K8SConfigMapsV1
-// to "mux". The handlers forward requests to the grpc endpoint over the given implementation of "K8SConfigMapsV1Client".
-// Note: the gRPC framework executes interceptors within the gRPC handler. If the passed in "K8SConfigMapsV1Client"
+// RegisterConfigResourcesV1HandlerClient registers the http handlers for service ConfigResourcesV1
+// to "mux". The handlers forward requests to the grpc endpoint over the given implementation of "ConfigResourcesV1Client".
+// Note: the gRPC framework executes interceptors within the gRPC handler. If the passed in "ConfigResourcesV1Client"
 // doesn't go through the normal gRPC flow (creating a gRPC client etc.) then it will be up to the passed in
-// "K8SConfigMapsV1Client" to call the correct interceptors.
-func RegisterK8SConfigMapsV1HandlerClient(ctx context.Context, mux *runtime.ServeMux, client K8SConfigMapsV1Client) error {
+// "ConfigResourcesV1Client" to call the correct interceptors.
+func RegisterConfigResourcesV1HandlerClient(ctx context.Context, mux *runtime.ServeMux, client ConfigResourcesV1Client) error {
 
-	mux.Handle("GET", pattern_K8SConfigMapsV1_ListK8SConfigMapNames_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_ConfigResourcesV1_ListConfigResourceNames_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -17816,18 +17124,18 @@ func RegisterK8SConfigMapsV1HandlerClient(ctx context.Context, mux *runtime.Serv
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_K8SConfigMapsV1_ListK8SConfigMapNames_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_ConfigResourcesV1_ListConfigResourceNames_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_K8SConfigMapsV1_ListK8SConfigMapNames_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_ConfigResourcesV1_ListConfigResourceNames_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("GET", pattern_K8SConfigMapsV1_ListK8SConfigMaps_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_ConfigResourcesV1_ListConfigResources_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -17836,18 +17144,18 @@ func RegisterK8SConfigMapsV1HandlerClient(ctx context.Context, mux *runtime.Serv
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_K8SConfigMapsV1_ListK8SConfigMaps_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_ConfigResourcesV1_ListConfigResources_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_K8SConfigMapsV1_ListK8SConfigMaps_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_ConfigResourcesV1_ListConfigResources_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("POST", pattern_K8SConfigMapsV1_CreateK8SConfigMap_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_ConfigResourcesV1_CreateConfigResource_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -17856,18 +17164,18 @@ func RegisterK8SConfigMapsV1HandlerClient(ctx context.Context, mux *runtime.Serv
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_K8SConfigMapsV1_CreateK8SConfigMap_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_ConfigResourcesV1_CreateConfigResource_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_K8SConfigMapsV1_CreateK8SConfigMap_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_ConfigResourcesV1_CreateConfigResource_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("GET", pattern_K8SConfigMapsV1_GetK8SConfigMap_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_ConfigResourcesV1_GetConfigResource_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -17876,18 +17184,18 @@ func RegisterK8SConfigMapsV1HandlerClient(ctx context.Context, mux *runtime.Serv
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_K8SConfigMapsV1_GetK8SConfigMap_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_ConfigResourcesV1_GetConfigResource_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_K8SConfigMapsV1_GetK8SConfigMap_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_ConfigResourcesV1_GetConfigResource_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("PUT", pattern_K8SConfigMapsV1_UpdateK8SConfigMap_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("PUT", pattern_ConfigResourcesV1_UpdateConfigResource_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -17896,18 +17204,18 @@ func RegisterK8SConfigMapsV1HandlerClient(ctx context.Context, mux *runtime.Serv
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_K8SConfigMapsV1_UpdateK8SConfigMap_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_ConfigResourcesV1_UpdateConfigResource_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_K8SConfigMapsV1_UpdateK8SConfigMap_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_ConfigResourcesV1_UpdateConfigResource_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("PATCH", pattern_K8SConfigMapsV1_PatchK8SConfigMap_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("PATCH", pattern_ConfigResourcesV1_PatchConfigResource_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -17916,18 +17224,18 @@ func RegisterK8SConfigMapsV1HandlerClient(ctx context.Context, mux *runtime.Serv
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_K8SConfigMapsV1_PatchK8SConfigMap_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_ConfigResourcesV1_PatchConfigResource_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_K8SConfigMapsV1_PatchK8SConfigMap_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_ConfigResourcesV1_PatchConfigResource_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("DELETE", pattern_K8SConfigMapsV1_DeleteK8SConfigMap_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("DELETE", pattern_ConfigResourcesV1_DeleteConfigResource_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -17936,14 +17244,14 @@ func RegisterK8SConfigMapsV1HandlerClient(ctx context.Context, mux *runtime.Serv
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_K8SConfigMapsV1_DeleteK8SConfigMap_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_ConfigResourcesV1_DeleteConfigResource_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_K8SConfigMapsV1_DeleteK8SConfigMap_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_ConfigResourcesV1_DeleteConfigResource_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -17951,248 +17259,35 @@ func RegisterK8SConfigMapsV1HandlerClient(ctx context.Context, mux *runtime.Serv
 }
 
 var (
-	pattern_K8SConfigMapsV1_ListK8SConfigMapNames_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 2, 5}, []string{"api", "v1", "orgs", "owner", "k8s_config_maps", "names"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ConfigResourcesV1_ListConfigResourceNames_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 2, 5}, []string{"api", "v1", "orgs", "owner", "config_resources", "names"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_K8SConfigMapsV1_ListK8SConfigMaps_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "orgs", "owner", "k8s_config_maps"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ConfigResourcesV1_ListConfigResources_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "orgs", "owner", "config_resources"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_K8SConfigMapsV1_CreateK8SConfigMap_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "orgs", "owner", "k8s_config_maps"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ConfigResourcesV1_CreateConfigResource_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "orgs", "owner", "config_resources"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_K8SConfigMapsV1_GetK8SConfigMap_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "orgs", "owner", "k8s_config_maps", "uuid"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ConfigResourcesV1_GetConfigResource_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "orgs", "owner", "config_resources", "uuid"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_K8SConfigMapsV1_UpdateK8SConfigMap_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "orgs", "owner", "k8s_config_maps", "k8s_resource.uuid"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ConfigResourcesV1_UpdateConfigResource_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "orgs", "owner", "config_resources", "config_resource.uuid"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_K8SConfigMapsV1_PatchK8SConfigMap_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "orgs", "owner", "k8s_config_maps", "k8s_resource.uuid"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ConfigResourcesV1_PatchConfigResource_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "orgs", "owner", "config_resources", "config_resource.uuid"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_K8SConfigMapsV1_DeleteK8SConfigMap_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "orgs", "owner", "k8s_config_maps", "uuid"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ConfigResourcesV1_DeleteConfigResource_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "orgs", "owner", "config_resources", "uuid"}, "", runtime.AssumeColonVerbOpt(true)))
 )
 
 var (
-	forward_K8SConfigMapsV1_ListK8SConfigMapNames_0 = runtime.ForwardResponseMessage
+	forward_ConfigResourcesV1_ListConfigResourceNames_0 = runtime.ForwardResponseMessage
 
-	forward_K8SConfigMapsV1_ListK8SConfigMaps_0 = runtime.ForwardResponseMessage
+	forward_ConfigResourcesV1_ListConfigResources_0 = runtime.ForwardResponseMessage
 
-	forward_K8SConfigMapsV1_CreateK8SConfigMap_0 = runtime.ForwardResponseMessage
+	forward_ConfigResourcesV1_CreateConfigResource_0 = runtime.ForwardResponseMessage
 
-	forward_K8SConfigMapsV1_GetK8SConfigMap_0 = runtime.ForwardResponseMessage
+	forward_ConfigResourcesV1_GetConfigResource_0 = runtime.ForwardResponseMessage
 
-	forward_K8SConfigMapsV1_UpdateK8SConfigMap_0 = runtime.ForwardResponseMessage
+	forward_ConfigResourcesV1_UpdateConfigResource_0 = runtime.ForwardResponseMessage
 
-	forward_K8SConfigMapsV1_PatchK8SConfigMap_0 = runtime.ForwardResponseMessage
+	forward_ConfigResourcesV1_PatchConfigResource_0 = runtime.ForwardResponseMessage
 
-	forward_K8SConfigMapsV1_DeleteK8SConfigMap_0 = runtime.ForwardResponseMessage
-)
-
-// RegisterK8SSecretsV1HandlerFromEndpoint is same as RegisterK8SSecretsV1Handler but
-// automatically dials to "endpoint" and closes the connection when "ctx" gets done.
-func RegisterK8SSecretsV1HandlerFromEndpoint(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) (err error) {
-	conn, err := grpc.Dial(endpoint, opts...)
-	if err != nil {
-		return err
-	}
-	defer func() {
-		if err != nil {
-			if cerr := conn.Close(); cerr != nil {
-				grpclog.Infof("Failed to close conn to %s: %v", endpoint, cerr)
-			}
-			return
-		}
-		go func() {
-			<-ctx.Done()
-			if cerr := conn.Close(); cerr != nil {
-				grpclog.Infof("Failed to close conn to %s: %v", endpoint, cerr)
-			}
-		}()
-	}()
-
-	return RegisterK8SSecretsV1Handler(ctx, mux, conn)
-}
-
-// RegisterK8SSecretsV1Handler registers the http handlers for service K8SSecretsV1 to "mux".
-// The handlers forward requests to the grpc endpoint over "conn".
-func RegisterK8SSecretsV1Handler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
-	return RegisterK8SSecretsV1HandlerClient(ctx, mux, NewK8SSecretsV1Client(conn))
-}
-
-// RegisterK8SSecretsV1HandlerClient registers the http handlers for service K8SSecretsV1
-// to "mux". The handlers forward requests to the grpc endpoint over the given implementation of "K8SSecretsV1Client".
-// Note: the gRPC framework executes interceptors within the gRPC handler. If the passed in "K8SSecretsV1Client"
-// doesn't go through the normal gRPC flow (creating a gRPC client etc.) then it will be up to the passed in
-// "K8SSecretsV1Client" to call the correct interceptors.
-func RegisterK8SSecretsV1HandlerClient(ctx context.Context, mux *runtime.ServeMux, client K8SSecretsV1Client) error {
-
-	mux.Handle("GET", pattern_K8SSecretsV1_ListK8SSecretNames_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
-		ctx, cancel := context.WithCancel(req.Context())
-		defer cancel()
-		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req)
-		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
-			return
-		}
-		resp, md, err := request_K8SSecretsV1_ListK8SSecretNames_0(rctx, inboundMarshaler, client, req, pathParams)
-		ctx = runtime.NewServerMetadataContext(ctx, md)
-		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
-			return
-		}
-
-		forward_K8SSecretsV1_ListK8SSecretNames_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
-
-	})
-
-	mux.Handle("GET", pattern_K8SSecretsV1_ListK8SSecrets_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
-		ctx, cancel := context.WithCancel(req.Context())
-		defer cancel()
-		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req)
-		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
-			return
-		}
-		resp, md, err := request_K8SSecretsV1_ListK8SSecrets_0(rctx, inboundMarshaler, client, req, pathParams)
-		ctx = runtime.NewServerMetadataContext(ctx, md)
-		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
-			return
-		}
-
-		forward_K8SSecretsV1_ListK8SSecrets_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
-
-	})
-
-	mux.Handle("POST", pattern_K8SSecretsV1_CreateK8SSecret_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
-		ctx, cancel := context.WithCancel(req.Context())
-		defer cancel()
-		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req)
-		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
-			return
-		}
-		resp, md, err := request_K8SSecretsV1_CreateK8SSecret_0(rctx, inboundMarshaler, client, req, pathParams)
-		ctx = runtime.NewServerMetadataContext(ctx, md)
-		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
-			return
-		}
-
-		forward_K8SSecretsV1_CreateK8SSecret_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
-
-	})
-
-	mux.Handle("GET", pattern_K8SSecretsV1_GetK8SSecret_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
-		ctx, cancel := context.WithCancel(req.Context())
-		defer cancel()
-		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req)
-		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
-			return
-		}
-		resp, md, err := request_K8SSecretsV1_GetK8SSecret_0(rctx, inboundMarshaler, client, req, pathParams)
-		ctx = runtime.NewServerMetadataContext(ctx, md)
-		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
-			return
-		}
-
-		forward_K8SSecretsV1_GetK8SSecret_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
-
-	})
-
-	mux.Handle("PUT", pattern_K8SSecretsV1_UpdateK8SSecret_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
-		ctx, cancel := context.WithCancel(req.Context())
-		defer cancel()
-		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req)
-		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
-			return
-		}
-		resp, md, err := request_K8SSecretsV1_UpdateK8SSecret_0(rctx, inboundMarshaler, client, req, pathParams)
-		ctx = runtime.NewServerMetadataContext(ctx, md)
-		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
-			return
-		}
-
-		forward_K8SSecretsV1_UpdateK8SSecret_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
-
-	})
-
-	mux.Handle("PATCH", pattern_K8SSecretsV1_PatchK8SSecret_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
-		ctx, cancel := context.WithCancel(req.Context())
-		defer cancel()
-		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req)
-		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
-			return
-		}
-		resp, md, err := request_K8SSecretsV1_PatchK8SSecret_0(rctx, inboundMarshaler, client, req, pathParams)
-		ctx = runtime.NewServerMetadataContext(ctx, md)
-		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
-			return
-		}
-
-		forward_K8SSecretsV1_PatchK8SSecret_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
-
-	})
-
-	mux.Handle("DELETE", pattern_K8SSecretsV1_DeleteK8SSecret_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
-		ctx, cancel := context.WithCancel(req.Context())
-		defer cancel()
-		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req)
-		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
-			return
-		}
-		resp, md, err := request_K8SSecretsV1_DeleteK8SSecret_0(rctx, inboundMarshaler, client, req, pathParams)
-		ctx = runtime.NewServerMetadataContext(ctx, md)
-		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
-			return
-		}
-
-		forward_K8SSecretsV1_DeleteK8SSecret_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
-
-	})
-
-	return nil
-}
-
-var (
-	pattern_K8SSecretsV1_ListK8SSecretNames_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 2, 5}, []string{"api", "v1", "orgs", "owner", "k8s_secrets", "names"}, "", runtime.AssumeColonVerbOpt(true)))
-
-	pattern_K8SSecretsV1_ListK8SSecrets_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "orgs", "owner", "k8s_secrets"}, "", runtime.AssumeColonVerbOpt(true)))
-
-	pattern_K8SSecretsV1_CreateK8SSecret_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "orgs", "owner", "k8s_secrets"}, "", runtime.AssumeColonVerbOpt(true)))
-
-	pattern_K8SSecretsV1_GetK8SSecret_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "orgs", "owner", "k8s_secrets", "uuid"}, "", runtime.AssumeColonVerbOpt(true)))
-
-	pattern_K8SSecretsV1_UpdateK8SSecret_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "orgs", "owner", "k8s_secrets", "k8s_resource.uuid"}, "", runtime.AssumeColonVerbOpt(true)))
-
-	pattern_K8SSecretsV1_PatchK8SSecret_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "orgs", "owner", "k8s_secrets", "k8s_resource.uuid"}, "", runtime.AssumeColonVerbOpt(true)))
-
-	pattern_K8SSecretsV1_DeleteK8SSecret_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "orgs", "owner", "k8s_secrets", "uuid"}, "", runtime.AssumeColonVerbOpt(true)))
-)
-
-var (
-	forward_K8SSecretsV1_ListK8SSecretNames_0 = runtime.ForwardResponseMessage
-
-	forward_K8SSecretsV1_ListK8SSecrets_0 = runtime.ForwardResponseMessage
-
-	forward_K8SSecretsV1_CreateK8SSecret_0 = runtime.ForwardResponseMessage
-
-	forward_K8SSecretsV1_GetK8SSecret_0 = runtime.ForwardResponseMessage
-
-	forward_K8SSecretsV1_UpdateK8SSecret_0 = runtime.ForwardResponseMessage
-
-	forward_K8SSecretsV1_PatchK8SSecret_0 = runtime.ForwardResponseMessage
-
-	forward_K8SSecretsV1_DeleteK8SSecret_0 = runtime.ForwardResponseMessage
+	forward_ConfigResourcesV1_DeleteConfigResource_0 = runtime.ForwardResponseMessage
 )
 
 // RegisterProjectSearchesV1HandlerFromEndpoint is same as RegisterProjectSearchesV1Handler but

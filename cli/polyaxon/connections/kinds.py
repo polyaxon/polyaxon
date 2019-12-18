@@ -57,6 +57,8 @@ class ConnectionKind(V1ConnectionKind):
         V1ConnectionKind.AZURE_DATA_LAKE,
         V1ConnectionKind.AZURE_COSMOS,
         V1ConnectionKind.WASB,
+        V1ConnectionKind.GIT,
+        V1ConnectionKind.REGISTRY,
     }
 
     MOUNT_VALUES = {V1ConnectionKind.HOST_PATH, V1ConnectionKind.VOLUME_CLAIM}

@@ -74,8 +74,8 @@ public class V1Connection {
   @SerializedName("deleted")
   private Boolean deleted = null;
 
-  @SerializedName("k8s_secret")
-  private String k8sSecret = null;
+  @SerializedName("config_resource")
+  private String configResource = null;
 
   @SerializedName("kind")
   private V1ConnectionKind kind = null;
@@ -253,22 +253,22 @@ public class V1Connection {
     this.deleted = deleted;
   }
 
-  public V1Connection k8sSecret(String k8sSecret) {
-    this.k8sSecret = k8sSecret;
+  public V1Connection configResource(String configResource) {
+    this.configResource = configResource;
     return this;
   }
 
    /**
-   * Get k8sSecret
-   * @return k8sSecret
+   * Get configResource
+   * @return configResource
   **/
   @ApiModelProperty(value = "")
-  public String getK8sSecret() {
-    return k8sSecret;
+  public String getConfigResource() {
+    return configResource;
   }
 
-  public void setK8sSecret(String k8sSecret) {
-    this.k8sSecret = k8sSecret;
+  public void setConfigResource(String configResource) {
+    this.configResource = configResource;
   }
 
   public V1Connection kind(V1ConnectionKind kind) {
@@ -326,14 +326,14 @@ public class V1Connection {
         Objects.equals(this.frozen, v1Connection.frozen) &&
         Objects.equals(this.disabled, v1Connection.disabled) &&
         Objects.equals(this.deleted, v1Connection.deleted) &&
-        Objects.equals(this.k8sSecret, v1Connection.k8sSecret) &&
+        Objects.equals(this.configResource, v1Connection.configResource) &&
         Objects.equals(this.kind, v1Connection.kind) &&
         Objects.equals(this.schema, v1Connection.schema);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(uuid, name, description, tags, createdAt, updatedAt, frozen, disabled, deleted, k8sSecret, kind, schema);
+    return Objects.hash(uuid, name, description, tags, createdAt, updatedAt, frozen, disabled, deleted, configResource, kind, schema);
   }
 
 
@@ -351,7 +351,7 @@ public class V1Connection {
     sb.append("    frozen: ").append(toIndentedString(frozen)).append("\n");
     sb.append("    disabled: ").append(toIndentedString(disabled)).append("\n");
     sb.append("    deleted: ").append(toIndentedString(deleted)).append("\n");
-    sb.append("    k8sSecret: ").append(toIndentedString(k8sSecret)).append("\n");
+    sb.append("    configResource: ").append(toIndentedString(configResource)).append("\n");
     sb.append("    kind: ").append(toIndentedString(kind)).append("\n");
     sb.append("    schema: ").append(toIndentedString(schema)).append("\n");
     sb.append("}");

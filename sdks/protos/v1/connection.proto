@@ -34,8 +34,8 @@ message Connection {
     // Optional if the entity has been deleted
     bool deleted = 9;
 
-    // Optional the k8s secret to use
-    string k8s_secret = 10;
+    // Optional the config resource to use
+    string config_resource = 10;
 
     // Optional kind of the store
     ConnectionKind kind = 11;

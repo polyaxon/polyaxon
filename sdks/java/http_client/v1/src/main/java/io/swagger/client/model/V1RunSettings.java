@@ -73,11 +73,8 @@ public class V1RunSettings {
   @SerializedName("registry_access")
   private V1RunSettingsCatalog registryAccess = null;
 
-  @SerializedName("k8s_secrets")
-  private List<V1RunSettingsCatalog> k8sSecrets = null;
-
-  @SerializedName("k8s_config_maps")
-  private List<V1RunSettingsCatalog> k8sConfigMaps = null;
+  @SerializedName("config_resources")
+  private List<V1RunSettingsCatalog> configResources = null;
 
   public V1RunSettings namespace(String namespace) {
     this.namespace = namespace;
@@ -265,56 +262,30 @@ public class V1RunSettings {
     this.registryAccess = registryAccess;
   }
 
-  public V1RunSettings k8sSecrets(List<V1RunSettingsCatalog> k8sSecrets) {
-    this.k8sSecrets = k8sSecrets;
+  public V1RunSettings configResources(List<V1RunSettingsCatalog> configResources) {
+    this.configResources = configResources;
     return this;
   }
 
-  public V1RunSettings addK8sSecretsItem(V1RunSettingsCatalog k8sSecretsItem) {
-    if (this.k8sSecrets == null) {
-      this.k8sSecrets = new ArrayList<V1RunSettingsCatalog>();
+  public V1RunSettings addConfigResourcesItem(V1RunSettingsCatalog configResourcesItem) {
+    if (this.configResources == null) {
+      this.configResources = new ArrayList<V1RunSettingsCatalog>();
     }
-    this.k8sSecrets.add(k8sSecretsItem);
+    this.configResources.add(configResourcesItem);
     return this;
   }
 
    /**
-   * Get k8sSecrets
-   * @return k8sSecrets
+   * Get configResources
+   * @return configResources
   **/
   @ApiModelProperty(value = "")
-  public List<V1RunSettingsCatalog> getK8sSecrets() {
-    return k8sSecrets;
+  public List<V1RunSettingsCatalog> getConfigResources() {
+    return configResources;
   }
 
-  public void setK8sSecrets(List<V1RunSettingsCatalog> k8sSecrets) {
-    this.k8sSecrets = k8sSecrets;
-  }
-
-  public V1RunSettings k8sConfigMaps(List<V1RunSettingsCatalog> k8sConfigMaps) {
-    this.k8sConfigMaps = k8sConfigMaps;
-    return this;
-  }
-
-  public V1RunSettings addK8sConfigMapsItem(V1RunSettingsCatalog k8sConfigMapsItem) {
-    if (this.k8sConfigMaps == null) {
-      this.k8sConfigMaps = new ArrayList<V1RunSettingsCatalog>();
-    }
-    this.k8sConfigMaps.add(k8sConfigMapsItem);
-    return this;
-  }
-
-   /**
-   * Get k8sConfigMaps
-   * @return k8sConfigMaps
-  **/
-  @ApiModelProperty(value = "")
-  public List<V1RunSettingsCatalog> getK8sConfigMaps() {
-    return k8sConfigMaps;
-  }
-
-  public void setK8sConfigMaps(List<V1RunSettingsCatalog> k8sConfigMaps) {
-    this.k8sConfigMaps = k8sConfigMaps;
+  public void setConfigResources(List<V1RunSettingsCatalog> configResources) {
+    this.configResources = configResources;
   }
 
 
@@ -336,13 +307,12 @@ public class V1RunSettings {
         Objects.equals(this.artifactsStores, v1RunSettings.artifactsStores) &&
         Objects.equals(this.gitAccesses, v1RunSettings.gitAccesses) &&
         Objects.equals(this.registryAccess, v1RunSettings.registryAccess) &&
-        Objects.equals(this.k8sSecrets, v1RunSettings.k8sSecrets) &&
-        Objects.equals(this.k8sConfigMaps, v1RunSettings.k8sConfigMaps);
+        Objects.equals(this.configResources, v1RunSettings.configResources);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(namespace, agent, queue, logsStore, outputsStore, initArtifactsStores, artifactsStores, gitAccesses, registryAccess, k8sSecrets, k8sConfigMaps);
+    return Objects.hash(namespace, agent, queue, logsStore, outputsStore, initArtifactsStores, artifactsStores, gitAccesses, registryAccess, configResources);
   }
 
 
@@ -360,8 +330,7 @@ public class V1RunSettings {
     sb.append("    artifactsStores: ").append(toIndentedString(artifactsStores)).append("\n");
     sb.append("    gitAccesses: ").append(toIndentedString(gitAccesses)).append("\n");
     sb.append("    registryAccess: ").append(toIndentedString(registryAccess)).append("\n");
-    sb.append("    k8sSecrets: ").append(toIndentedString(k8sSecrets)).append("\n");
-    sb.append("    k8sConfigMaps: ").append(toIndentedString(k8sConfigMaps)).append("\n");
+    sb.append("    configResources: ").append(toIndentedString(configResources)).append("\n");
     sb.append("}");
     return sb.toString();
   }

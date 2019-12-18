@@ -87,10 +87,8 @@
         obj.git_accesses = ApiClient.convertToType(data['git_accesses'], [V1RunSettingsCatalog]);
       if (data.hasOwnProperty('registry_access'))
         obj.registry_access = V1RunSettingsCatalog.constructFromObject(data['registry_access']);
-      if (data.hasOwnProperty('k8s_secrets'))
-        obj.k8s_secrets = ApiClient.convertToType(data['k8s_secrets'], [V1RunSettingsCatalog]);
-      if (data.hasOwnProperty('k8s_config_maps'))
-        obj.k8s_config_maps = ApiClient.convertToType(data['k8s_config_maps'], [V1RunSettingsCatalog]);
+      if (data.hasOwnProperty('config_resources'))
+        obj.config_resources = ApiClient.convertToType(data['config_resources'], [V1RunSettingsCatalog]);
     }
     return obj;
   }
@@ -141,14 +139,9 @@
   exports.prototype.registry_access = undefined;
 
   /**
-   * @member {Array.<module:model/V1RunSettingsCatalog>} k8s_secrets
+   * @member {Array.<module:model/V1RunSettingsCatalog>} config_resources
    */
-  exports.prototype.k8s_secrets = undefined;
-
-  /**
-   * @member {Array.<module:model/V1RunSettingsCatalog>} k8s_config_maps
-   */
-  exports.prototype.k8s_config_maps = undefined;
+  exports.prototype.config_resources = undefined;
 
   return exports;
 

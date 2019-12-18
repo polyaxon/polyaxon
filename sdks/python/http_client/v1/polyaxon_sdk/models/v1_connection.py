@@ -56,7 +56,7 @@ class V1Connection(object):
         "frozen": "bool",
         "disabled": "bool",
         "deleted": "bool",
-        "k8s_secret": "str",
+        "config_resource": "str",
         "kind": "V1ConnectionKind",
         "schema": "object",
     }
@@ -71,7 +71,7 @@ class V1Connection(object):
         "frozen": "frozen",
         "disabled": "disabled",
         "deleted": "deleted",
-        "k8s_secret": "k8s_secret",
+        "config_resource": "config_resource",
         "kind": "kind",
         "schema": "schema",
     }
@@ -87,7 +87,7 @@ class V1Connection(object):
         frozen=None,
         disabled=None,
         deleted=None,
-        k8s_secret=None,
+        config_resource=None,
         kind=None,
         schema=None,
     ):  # noqa: E501
@@ -102,7 +102,7 @@ class V1Connection(object):
         self._frozen = None
         self._disabled = None
         self._deleted = None
-        self._k8s_secret = None
+        self._config_resource = None
         self._kind = None
         self._schema = None
         self.discriminator = None
@@ -125,8 +125,8 @@ class V1Connection(object):
             self.disabled = disabled
         if deleted is not None:
             self.deleted = deleted
-        if k8s_secret is not None:
-            self.k8s_secret = k8s_secret
+        if config_resource is not None:
+            self.config_resource = config_resource
         if kind is not None:
             self.kind = kind
         if schema is not None:
@@ -322,25 +322,25 @@ class V1Connection(object):
         self._deleted = deleted
 
     @property
-    def k8s_secret(self):
-        """Gets the k8s_secret of this V1Connection.  # noqa: E501
+    def config_resource(self):
+        """Gets the config_resource of this V1Connection.  # noqa: E501
 
 
-        :return: The k8s_secret of this V1Connection.  # noqa: E501
+        :return: The config_resource of this V1Connection.  # noqa: E501
         :rtype: str
         """
-        return self._k8s_secret
+        return self._config_resource
 
-    @k8s_secret.setter
-    def k8s_secret(self, k8s_secret):
-        """Sets the k8s_secret of this V1Connection.
+    @config_resource.setter
+    def config_resource(self, config_resource):
+        """Sets the config_resource of this V1Connection.
 
 
-        :param k8s_secret: The k8s_secret of this V1Connection.  # noqa: E501
+        :param config_resource: The config_resource of this V1Connection.  # noqa: E501
         :type: str
         """
 
-        self._k8s_secret = k8s_secret
+        self._config_resource = config_resource
 
     @property
     def kind(self):

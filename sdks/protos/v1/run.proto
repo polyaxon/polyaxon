@@ -200,9 +200,6 @@ message RunSettings {
     // Registry Access
     RunSettingsCatalog registry_access = 9;
 
-    // K8S secrets
-    repeated RunSettingsCatalog k8s_secrets = 10;
-
     // K8S config maps
-    repeated RunSettingsCatalog k8s_config_maps = 11;
+    repeated RunSettingsCatalog config_resources = 10;
 }

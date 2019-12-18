@@ -32,14 +32,11 @@ type V1ProjectSettings struct {
 	// Artifacts Store
 	ArtifactsStores []string `json:"artifacts_stores"`
 
+	// Config resources
+	ConfigResouces []string `json:"config_resouces"`
+
 	// git Accesses
 	GitAccesses []string `json:"git_accesses"`
-
-	// K8S config maps
-	K8sConfigMaps []string `json:"k8s_config_maps"`
-
-	// K8S secrets
-	K8sSecrets []string `json:"k8s_secrets"`
 
 	// Logs Store
 	LogsStore string `json:"logs_store,omitempty"`

@@ -21,10 +21,8 @@ import os
 
 from azure.common import AzureHttpError
 from azure.storage.blob.models import BlobPrefix
-from rhea import RheaError
-from rhea import parser as rhea_parser
 
-from polyaxon.exceptions import PolyaxonStoresException
+from polyaxon.exceptions import PolyaxonSchemaError, PolyaxonStoresException
 from polyaxon.stores.clients.azure_client import get_blob_service_connection
 from polyaxon.stores.stores.base_store import BaseStore
 from polyaxon.stores.utils import (
@@ -32,6 +30,7 @@ from polyaxon.stores.utils import (
     check_dirname_exists,
     get_files_in_current_directory,
 )
+from polyaxon.types import parser
 
 # pylint:disable=arguments-differ
 
@@ -101,9 +100,9 @@ class AzureStore(BaseStore):
             tuple(container, storage_account, path).
         """
         try:
-            spec = rhea_parser.parse_wasbs_path(wasbs_url)
+            spec = parser.parse_wasbs_path(wasbs_url)
             return spec.container, spec.storage_account, spec.path
-        except RheaError as e:
+        except PolyaxonSchemaError as e:
             raise PolyaxonStoresException(e)
 
     def check_blob(self, blob, container_name=None):

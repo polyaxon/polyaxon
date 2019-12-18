@@ -21,10 +21,8 @@ import json
 import os
 
 from google.api_core.exceptions import GoogleAPIError, NotFound
-from rhea import RheaError
-from rhea import parser as rhea_parser
 
-from polyaxon.exceptions import PolyaxonStoresException
+from polyaxon.exceptions import PolyaxonSchemaError, PolyaxonStoresException
 from polyaxon.logger import logger
 from polyaxon.stores import settings
 from polyaxon.stores.clients import gc_client
@@ -35,6 +33,7 @@ from polyaxon.stores.utils import (
     create_polyaxon_tmp,
     get_files_in_current_directory,
 )
+from polyaxon.types import parser
 
 # pylint:disable=arguments-differ
 
@@ -116,9 +115,9 @@ class GCSStore(BaseStore):
             tuple(bucket_name, blob).
         """
         try:
-            spec = rhea_parser.parse_gcs_path(gcs_url)
+            spec = parser.parse_gcs_path(gcs_url)
             return spec.bucket, spec.blob
-        except RheaError as e:
+        except PolyaxonSchemaError as e:
             raise PolyaxonStoresException(e)
 
     def get_bucket(self, bucket_name):

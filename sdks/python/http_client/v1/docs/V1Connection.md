@@ -12,7 +12,7 @@ Name | Type | Description | Notes
 **frozen** | **bool** |  | [optional] 
 **disabled** | **bool** |  | [optional] 
 **deleted** | **bool** |  | [optional] 
-**k8s_secret** | **str** |  | [optional] 
+**config_resource** | **str** |  | [optional] 
 **kind** | [**V1ConnectionKind**](V1ConnectionKind.md) |  | [optional] 
 **schema** | **object** |  | [optional] 
 

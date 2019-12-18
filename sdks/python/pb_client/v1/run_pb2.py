@@ -42,7 +42,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='v1',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\x0cv1/run.proto\x12\x02v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a,protoc-gen-swagger/options/annotations.proto\x1a\rv1/base.proto\"\\\n\x0bRunMetaInfo\x12\x0f\n\x07service\x18\x01 \x01(\x08\x12\x13\n\x0b\x63oncurrency\x18\x02 \x01(\x05\x12\x15\n\rparallel_kind\x18\x03 \x01(\t\x12\x10\n\x08run_kind\x18\x04 \x01(\t\"\xf7\x05\n\x03Run\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x13\n\x0b\x64\x65scription\x18\x03 \x01(\t\x12\x0c\n\x04tags\x18\x04 \x03(\t\x12\x0f\n\x07\x64\x65leted\x18\x05 \x01(\x08\x12\x0c\n\x04user\x18\x06 \x01(\t\x12\r\n\x05owner\x18\x07 \x01(\t\x12\x0f\n\x07project\x18\x08 \x01(\t\x12.\n\ncreated_at\x18\t \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12.\n\nupdated_at\x18\n \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12.\n\nstarted_at\x18\x0b \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12/\n\x0b\x66inished_at\x18\x0c \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x12\n\nis_managed\x18\r \x01(\t\x12\x0f\n\x07\x63ontent\x18\x0e \x01(\t\x12\x0e\n\x06status\x18\x0f \x01(\t\x12\x0e\n\x06readme\x18\x10 \x01(\t\x12\x12\n\nbookmarked\x18\x11 \x01(\x08\x12\"\n\tmeta_info\x18\x12 \x01(\x0b\x32\x0f.v1.RunMetaInfo\x12\x19\n\x04kind\x18\x13 \x01(\x0e\x32\x0b.v1.RunKind\x12\x0b\n\x03hub\x18\x14 \x01(\t\x12\'\n\x06inputs\x18\x15 \x01(\x0b\x32\x17.google.protobuf.Struct\x12(\n\x07outputs\x18\x16 \x01(\x0b\x32\x17.google.protobuf.Struct\x12(\n\x07run_env\x18\x17 \x01(\x0b\x32\x17.google.protobuf.Struct\x12\x11\n\tis_resume\x18\x18 \x01(\x08\x12\x10\n\x08is_clone\x18\x19 \x01(\x08\x12\x18\n\x10\x63loning_strategy\x18\x1a \x01(\t\x12\x10\n\x08pipeline\x18\x1b \x01(\t\x12\x10\n\x08original\x18\x1c \x01(\t\x12\x15\n\rpipeline_name\x18\x1d \x01(\t\x12\x15\n\roriginal_name\x18\x1e \x01(\t\"F\n\x0eRunBodyRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0f\n\x07project\x18\x02 \x01(\t\x12\x14\n\x03run\x18\x03 \x01(\x0b\x32\x07.v1.Run\"^\n\x14\x45ntityRunBodyRequest\x12\x30\n\x06\x65ntity\x18\x01 \x01(\x0b\x32 .v1.ProjectEntityResourceRequest\x12\x14\n\x03run\x18\x02 \x01(\x0b\x32\x07.v1.Run\"[\n\x10ListRunsResponse\x12\r\n\x05\x63ount\x18\x01 \x01(\x05\x12\x18\n\x07results\x18\x02 \x03(\x0b\x32\x07.v1.Run\x12\x10\n\x08previous\x18\x03 \x01(\t\x12\x0c\n\x04next\x18\x04 \x01(\t\"0\n\x12RunSettingsCatalog\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\"\xef\x03\n\x0bRunSettings\x12\x11\n\tnamespace\x18\x01 \x01(\t\x12%\n\x05\x61gent\x18\x02 \x01(\x0b\x32\x16.v1.RunSettingsCatalog\x12%\n\x05queue\x18\x03 \x01(\x0b\x32\x16.v1.RunSettingsCatalog\x12*\n\nlogs_store\x18\x04 \x01(\x0b\x32\x16.v1.RunSettingsCatalog\x12-\n\routputs_store\x18\x05 \x01(\x0b\x32\x16.v1.RunSettingsCatalog\x12\x35\n\x15init_artifacts_stores\x18\x06 \x03(\x0b\x32\x16.v1.RunSettingsCatalog\x12\x30\n\x10\x61rtifacts_stores\x18\x07 \x03(\x0b\x32\x16.v1.RunSettingsCatalog\x12,\n\x0cgit_accesses\x18\x08 \x03(\x0b\x32\x16.v1.RunSettingsCatalog\x12/\n\x0fregistry_access\x18\t \x01(\x0b\x32\x16.v1.RunSettingsCatalog\x12+\n\x0bk8s_secrets\x18\n \x03(\x0b\x32\x16.v1.RunSettingsCatalog\x12/\n\x0fk8s_config_maps\x18\x0b \x03(\x0b\x32\x16.v1.RunSettingsCatalog*6\n\x07RunKind\x12\x07\n\x03job\x10\x00\x12\x0b\n\x07service\x10\x01\x12\x07\n\x03\x64\x61g\x10\x02\x12\x0c\n\x08parallel\x10\x03\x62\x06proto3')
+  serialized_pb=_b('\n\x0cv1/run.proto\x12\x02v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a,protoc-gen-swagger/options/annotations.proto\x1a\rv1/base.proto\"\\\n\x0bRunMetaInfo\x12\x0f\n\x07service\x18\x01 \x01(\x08\x12\x13\n\x0b\x63oncurrency\x18\x02 \x01(\x05\x12\x15\n\rparallel_kind\x18\x03 \x01(\t\x12\x10\n\x08run_kind\x18\x04 \x01(\t\"\xf7\x05\n\x03Run\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x13\n\x0b\x64\x65scription\x18\x03 \x01(\t\x12\x0c\n\x04tags\x18\x04 \x03(\t\x12\x0f\n\x07\x64\x65leted\x18\x05 \x01(\x08\x12\x0c\n\x04user\x18\x06 \x01(\t\x12\r\n\x05owner\x18\x07 \x01(\t\x12\x0f\n\x07project\x18\x08 \x01(\t\x12.\n\ncreated_at\x18\t \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12.\n\nupdated_at\x18\n \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12.\n\nstarted_at\x18\x0b \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12/\n\x0b\x66inished_at\x18\x0c \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x12\n\nis_managed\x18\r \x01(\t\x12\x0f\n\x07\x63ontent\x18\x0e \x01(\t\x12\x0e\n\x06status\x18\x0f \x01(\t\x12\x0e\n\x06readme\x18\x10 \x01(\t\x12\x12\n\nbookmarked\x18\x11 \x01(\x08\x12\"\n\tmeta_info\x18\x12 \x01(\x0b\x32\x0f.v1.RunMetaInfo\x12\x19\n\x04kind\x18\x13 \x01(\x0e\x32\x0b.v1.RunKind\x12\x0b\n\x03hub\x18\x14 \x01(\t\x12\'\n\x06inputs\x18\x15 \x01(\x0b\x32\x17.google.protobuf.Struct\x12(\n\x07outputs\x18\x16 \x01(\x0b\x32\x17.google.protobuf.Struct\x12(\n\x07run_env\x18\x17 \x01(\x0b\x32\x17.google.protobuf.Struct\x12\x11\n\tis_resume\x18\x18 \x01(\x08\x12\x10\n\x08is_clone\x18\x19 \x01(\x08\x12\x18\n\x10\x63loning_strategy\x18\x1a \x01(\t\x12\x10\n\x08pipeline\x18\x1b \x01(\t\x12\x10\n\x08original\x18\x1c \x01(\t\x12\x15\n\rpipeline_name\x18\x1d \x01(\t\x12\x15\n\roriginal_name\x18\x1e \x01(\t\"F\n\x0eRunBodyRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0f\n\x07project\x18\x02 \x01(\t\x12\x14\n\x03run\x18\x03 \x01(\x0b\x32\x07.v1.Run\"^\n\x14\x45ntityRunBodyRequest\x12\x30\n\x06\x65ntity\x18\x01 \x01(\x0b\x32 .v1.ProjectEntityResourceRequest\x12\x14\n\x03run\x18\x02 \x01(\x0b\x32\x07.v1.Run\"[\n\x10ListRunsResponse\x12\r\n\x05\x63ount\x18\x01 \x01(\x05\x12\x18\n\x07results\x18\x02 \x03(\x0b\x32\x07.v1.Run\x12\x10\n\x08previous\x18\x03 \x01(\t\x12\x0c\n\x04next\x18\x04 \x01(\t\"0\n\x12RunSettingsCatalog\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\"\xc3\x03\n\x0bRunSettings\x12\x11\n\tnamespace\x18\x01 \x01(\t\x12%\n\x05\x61gent\x18\x02 \x01(\x0b\x32\x16.v1.RunSettingsCatalog\x12%\n\x05queue\x18\x03 \x01(\x0b\x32\x16.v1.RunSettingsCatalog\x12*\n\nlogs_store\x18\x04 \x01(\x0b\x32\x16.v1.RunSettingsCatalog\x12-\n\routputs_store\x18\x05 \x01(\x0b\x32\x16.v1.RunSettingsCatalog\x12\x35\n\x15init_artifacts_stores\x18\x06 \x03(\x0b\x32\x16.v1.RunSettingsCatalog\x12\x30\n\x10\x61rtifacts_stores\x18\x07 \x03(\x0b\x32\x16.v1.RunSettingsCatalog\x12,\n\x0cgit_accesses\x18\x08 \x03(\x0b\x32\x16.v1.RunSettingsCatalog\x12/\n\x0fregistry_access\x18\t \x01(\x0b\x32\x16.v1.RunSettingsCatalog\x12\x30\n\x10\x63onfig_resources\x18\n \x03(\x0b\x32\x16.v1.RunSettingsCatalog*6\n\x07RunKind\x12\x07\n\x03job\x10\x00\x12\x0b\n\x07service\x10\x01\x12\x07\n\x03\x64\x61g\x10\x02\x12\x0c\n\x08parallel\x10\x03\x62\x06proto3')
   ,
   dependencies=[google_dot_api_dot_annotations__pb2.DESCRIPTOR,google_dot_protobuf_dot_struct__pb2.DESCRIPTOR,google_dot_protobuf_dot_timestamp__pb2.DESCRIPTOR,protoc__gen__swagger_dot_options_dot_annotations__pb2.DESCRIPTOR,v1_dot_base__pb2.DESCRIPTOR,])
 
@@ -71,8 +71,8 @@ _RUNKIND = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=1839,
-  serialized_end=1893,
+  serialized_start=1795,
+  serialized_end=1849,
 )
 _sym_db.RegisterEnumDescriptor(_RUNKIND)
 
@@ -614,15 +614,8 @@ _RUNSETTINGS = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='k8s_secrets', full_name='v1.RunSettings.k8s_secrets', index=9,
+      name='config_resources', full_name='v1.RunSettings.config_resources', index=9,
       number=10, type=11, cpp_type=10, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='k8s_config_maps', full_name='v1.RunSettings.k8s_config_maps', index=10,
-      number=11, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -640,7 +633,7 @@ _RUNSETTINGS = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=1342,
-  serialized_end=1837,
+  serialized_end=1793,
 )
 
 _RUN.fields_by_name['created_at'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
@@ -664,8 +657,7 @@ _RUNSETTINGS.fields_by_name['init_artifacts_stores'].message_type = _RUNSETTINGS
 _RUNSETTINGS.fields_by_name['artifacts_stores'].message_type = _RUNSETTINGSCATALOG
 _RUNSETTINGS.fields_by_name['git_accesses'].message_type = _RUNSETTINGSCATALOG
 _RUNSETTINGS.fields_by_name['registry_access'].message_type = _RUNSETTINGSCATALOG
-_RUNSETTINGS.fields_by_name['k8s_secrets'].message_type = _RUNSETTINGSCATALOG
-_RUNSETTINGS.fields_by_name['k8s_config_maps'].message_type = _RUNSETTINGSCATALOG
+_RUNSETTINGS.fields_by_name['config_resources'].message_type = _RUNSETTINGSCATALOG
 DESCRIPTOR.message_types_by_name['RunMetaInfo'] = _RUNMETAINFO
 DESCRIPTOR.message_types_by_name['Run'] = _RUN
 DESCRIPTOR.message_types_by_name['RunBodyRequest'] = _RUNBODYREQUEST

@@ -17,9 +17,9 @@
 # coding: utf-8
 import os
 
-import rhea
+from polyaxon.config_reader.manager import ConfigManager
 
-config = rhea.Rhea.read_configs([os.environ])
+config = ConfigManager.read_configs([os.environ])
 
 
 RUN_STORES_ACCESS_KEYS = config.get_dict(

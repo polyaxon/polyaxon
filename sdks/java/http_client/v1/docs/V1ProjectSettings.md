@@ -9,8 +9,7 @@ Name | Type | Description | Notes
 **artifactsStores** | **List&lt;String&gt;** |  |  [optional]
 **gitAccesses** | **List&lt;String&gt;** |  |  [optional]
 **registryAccesses** | **List&lt;String&gt;** |  |  [optional]
-**k8sSecrets** | **List&lt;String&gt;** |  |  [optional]
-**k8sConfigMaps** | **List&lt;String&gt;** |  |  [optional]
+**configResouces** | **List&lt;String&gt;** |  |  [optional]
 **runProfile** | **String** |  |  [optional]
 **runProfiles** | **List&lt;String&gt;** |  |  [optional]
 

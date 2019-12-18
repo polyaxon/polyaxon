@@ -65,7 +65,7 @@
           body.frozen = false;
           body.disabled = false;
           body.deleted = false;
-          body.k8s_secret = "";
+          body.config_resource = "";
           body.kind = new PolyaxonSdk.V1ConnectionKind();
           body.schema = ;
 
@@ -102,8 +102,8 @@
             expect(data.disabled).to.be(false);
             expect(data.deleted).to.be.a('boolean');
             expect(data.deleted).to.be(false);
-            expect(data.k8s_secret).to.be.a('string');
-            expect(data.k8s_secret).to.be("");
+            expect(data.config_resource).to.be.a('string');
+            expect(data.config_resource).to.be("");
             expect(data.kind).to.be.a(PolyaxonSdk.V1ConnectionKind);
                 expect(data.schema).to.be.a(Object);
             expect(data.schema).to.be();
@@ -175,8 +175,8 @@
             expect(data.disabled).to.be(false);
             expect(data.deleted).to.be.a('boolean');
             expect(data.deleted).to.be(false);
-            expect(data.k8s_secret).to.be.a('string');
-            expect(data.k8s_secret).to.be("");
+            expect(data.config_resource).to.be.a('string');
+            expect(data.config_resource).to.be("");
             expect(data.kind).to.be.a(PolyaxonSdk.V1ConnectionKind);
                 expect(data.schema).to.be.a(Object);
             expect(data.schema).to.be();
@@ -241,8 +241,8 @@
                 expect(data.disabled).to.be(false);
                 expect(data.deleted).to.be.a('boolean');
                 expect(data.deleted).to.be(false);
-                expect(data.k8s_secret).to.be.a('string');
-                expect(data.k8s_secret).to.be("");
+                expect(data.config_resource).to.be.a('string');
+                expect(data.config_resource).to.be("");
                 expect(data.kind).to.be.a(PolyaxonSdk.V1ConnectionKind);
                     expect(data.schema).to.be.a(Object);
                 expect(data.schema).to.be();
@@ -313,8 +313,8 @@
                 expect(data.disabled).to.be(false);
                 expect(data.deleted).to.be.a('boolean');
                 expect(data.deleted).to.be(false);
-                expect(data.k8s_secret).to.be.a('string');
-                expect(data.k8s_secret).to.be("");
+                expect(data.config_resource).to.be.a('string');
+                expect(data.config_resource).to.be("");
                 expect(data.kind).to.be.a(PolyaxonSdk.V1ConnectionKind);
                     expect(data.schema).to.be.a(Object);
                 expect(data.schema).to.be();
@@ -348,7 +348,7 @@
           body.frozen = false;
           body.disabled = false;
           body.deleted = false;
-          body.k8s_secret = "";
+          body.config_resource = "";
           body.kind = new PolyaxonSdk.V1ConnectionKind();
           body.schema = ;
 
@@ -385,8 +385,8 @@
             expect(data.disabled).to.be(false);
             expect(data.deleted).to.be.a('boolean');
             expect(data.deleted).to.be(false);
-            expect(data.k8s_secret).to.be.a('string');
-            expect(data.k8s_secret).to.be("");
+            expect(data.config_resource).to.be.a('string');
+            expect(data.config_resource).to.be("");
             expect(data.kind).to.be.a(PolyaxonSdk.V1ConnectionKind);
                 expect(data.schema).to.be.a(Object);
             expect(data.schema).to.be();
@@ -414,7 +414,7 @@
           body.frozen = false;
           body.disabled = false;
           body.deleted = false;
-          body.k8s_secret = "";
+          body.config_resource = "";
           body.kind = new PolyaxonSdk.V1ConnectionKind();
           body.schema = ;
 
@@ -451,8 +451,8 @@
             expect(data.disabled).to.be(false);
             expect(data.deleted).to.be.a('boolean');
             expect(data.deleted).to.be(false);
-            expect(data.k8s_secret).to.be.a('string');
-            expect(data.k8s_secret).to.be("");
+            expect(data.config_resource).to.be.a('string');
+            expect(data.config_resource).to.be("");
             expect(data.kind).to.be.a(PolyaxonSdk.V1ConnectionKind);
                 expect(data.schema).to.be.a(Object);
             expect(data.schema).to.be();

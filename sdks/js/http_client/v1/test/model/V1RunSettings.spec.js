@@ -109,16 +109,10 @@
         // expect(instance.registry_access).to.be(expectedValueLiteral);
       });
 
-      it('should have the property k8s_secrets (base name: "k8s_secrets")', function() {
-        // TODO: update the code to test the property k8s_secrets
-        expect(instance).to.have.property('k8s_secrets');
-        // expect(instance.k8s_secrets).to.be(expectedValueLiteral);
-      });
-
-      it('should have the property k8s_config_maps (base name: "k8s_config_maps")', function() {
-        // TODO: update the code to test the property k8s_config_maps
-        expect(instance).to.have.property('k8s_config_maps');
-        // expect(instance.k8s_config_maps).to.be(expectedValueLiteral);
+      it('should have the property config_resources (base name: "config_resources")', function() {
+        // TODO: update the code to test the property config_resources
+        expect(instance).to.have.property('config_resources');
+        // expect(instance.config_resources).to.be(expectedValueLiteral);
       });
 
     });

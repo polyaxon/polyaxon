@@ -324,17 +324,7 @@
               }
             }
             {
-              let dataCtr = data.k8s_secrets;
-              expect(dataCtr).to.be.an(Array);
-              expect(dataCtr).to.not.be.empty();
-              for (let p in dataCtr) {
-                let data = dataCtr[p];
-                expect(data).to.be.a('string');
-                expect(data).to.be("");
-              }
-            }
-            {
-              let dataCtr = data.k8s_config_maps;
+              let dataCtr = data.config_resouces;
               expect(dataCtr).to.be.an(Array);
               expect(dataCtr).to.not.be.empty();
               for (let p in dataCtr) {
@@ -777,8 +767,7 @@
           body.artifacts_stores = [""];
           body.git_accesses = [""];
           body.registry_accesses = [""];
-          body.k8s_secrets = [""];
-          body.k8s_config_maps = [""];
+          body.config_resouces = [""];
           body.run_profile = "";
           body.run_profiles = [""];
 
@@ -824,17 +813,7 @@
               }
             }
             {
-              let dataCtr = data.k8s_secrets;
-              expect(dataCtr).to.be.an(Array);
-              expect(dataCtr).to.not.be.empty();
-              for (let p in dataCtr) {
-                let data = dataCtr[p];
-                expect(data).to.be.a('string');
-                expect(data).to.be("");
-              }
-            }
-            {
-              let dataCtr = data.k8s_config_maps;
+              let dataCtr = data.config_resouces;
               expect(dataCtr).to.be.an(Array);
               expect(dataCtr).to.not.be.empty();
               for (let p in dataCtr) {
@@ -1019,8 +998,7 @@
           body.artifacts_stores = [""];
           body.git_accesses = [""];
           body.registry_accesses = [""];
-          body.k8s_secrets = [""];
-          body.k8s_config_maps = [""];
+          body.config_resouces = [""];
           body.run_profile = "";
           body.run_profiles = [""];
 
@@ -1066,17 +1044,7 @@
               }
             }
             {
-              let dataCtr = data.k8s_secrets;
-              expect(dataCtr).to.be.an(Array);
-              expect(dataCtr).to.not.be.empty();
-              for (let p in dataCtr) {
-                let data = dataCtr[p];
-                expect(data).to.be.a('string');
-                expect(data).to.be("");
-              }
-            }
-            {
-              let dataCtr = data.k8s_config_maps;
+              let dataCtr = data.config_resouces;
               expect(dataCtr).to.be.an(Array);
               expect(dataCtr).to.not.be.empty();
               for (let p in dataCtr) {

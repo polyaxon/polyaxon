@@ -87,8 +87,8 @@
         obj.disabled = ApiClient.convertToType(data['disabled'], 'Boolean');
       if (data.hasOwnProperty('deleted'))
         obj.deleted = ApiClient.convertToType(data['deleted'], 'Boolean');
-      if (data.hasOwnProperty('k8s_secret'))
-        obj.k8s_secret = ApiClient.convertToType(data['k8s_secret'], 'String');
+      if (data.hasOwnProperty('config_resource'))
+        obj.config_resource = ApiClient.convertToType(data['config_resource'], 'String');
       if (data.hasOwnProperty('kind'))
         obj.kind = V1ConnectionKind.constructFromObject(data['kind']);
       if (data.hasOwnProperty('schema'))
@@ -143,9 +143,9 @@
   exports.prototype.deleted = undefined;
 
   /**
-   * @member {String} k8s_secret
+   * @member {String} config_resource
    */
-  exports.prototype.k8s_secret = undefined;
+  exports.prototype.config_resource = undefined;
 
   /**
    * @member {module:model/V1ConnectionKind} kind

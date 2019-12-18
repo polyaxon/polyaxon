@@ -22,10 +22,9 @@ from __future__ import absolute_import
 from polyaxon_sdk.api.agents_v1_api import AgentsV1Api
 from polyaxon_sdk.api.artifacts_stores_v1_api import ArtifactsStoresV1Api
 from polyaxon_sdk.api.auth_v1_api import AuthV1Api
+from polyaxon_sdk.api.config_resources_v1_api import ConfigResourcesV1Api
 from polyaxon_sdk.api.connections_v1_api import ConnectionsV1Api
 from polyaxon_sdk.api.dashboards_v1_api import DashboardsV1Api
-from polyaxon_sdk.api.k8s_config_maps_v1_api import K8sConfigMapsV1Api
-from polyaxon_sdk.api.k8s_secrets_v1_api import K8sSecretsV1Api
 from polyaxon_sdk.api.organizations_v1_api import OrganizationsV1Api
 from polyaxon_sdk.api.project_dashboards_v1_api import ProjectDashboardsV1Api
 from polyaxon_sdk.api.project_searches_v1_api import ProjectSearchesV1Api

@@ -52,8 +52,7 @@ class V1ProjectSettings(object):
         "artifacts_stores": "list[str]",
         "git_accesses": "list[str]",
         "registry_accesses": "list[str]",
-        "k8s_secrets": "list[str]",
-        "k8s_config_maps": "list[str]",
+        "config_resouces": "list[str]",
         "run_profile": "str",
         "run_profiles": "list[str]",
     }
@@ -64,8 +63,7 @@ class V1ProjectSettings(object):
         "artifacts_stores": "artifacts_stores",
         "git_accesses": "git_accesses",
         "registry_accesses": "registry_accesses",
-        "k8s_secrets": "k8s_secrets",
-        "k8s_config_maps": "k8s_config_maps",
+        "config_resouces": "config_resouces",
         "run_profile": "run_profile",
         "run_profiles": "run_profiles",
     }
@@ -77,8 +75,7 @@ class V1ProjectSettings(object):
         artifacts_stores=None,
         git_accesses=None,
         registry_accesses=None,
-        k8s_secrets=None,
-        k8s_config_maps=None,
+        config_resouces=None,
         run_profile=None,
         run_profiles=None,
     ):  # noqa: E501
@@ -89,8 +86,7 @@ class V1ProjectSettings(object):
         self._artifacts_stores = None
         self._git_accesses = None
         self._registry_accesses = None
-        self._k8s_secrets = None
-        self._k8s_config_maps = None
+        self._config_resouces = None
         self._run_profile = None
         self._run_profiles = None
         self.discriminator = None
@@ -105,10 +101,8 @@ class V1ProjectSettings(object):
             self.git_accesses = git_accesses
         if registry_accesses is not None:
             self.registry_accesses = registry_accesses
-        if k8s_secrets is not None:
-            self.k8s_secrets = k8s_secrets
-        if k8s_config_maps is not None:
-            self.k8s_config_maps = k8s_config_maps
+        if config_resouces is not None:
+            self.config_resouces = config_resouces
         if run_profile is not None:
             self.run_profile = run_profile
         if run_profiles is not None:
@@ -220,46 +214,25 @@ class V1ProjectSettings(object):
         self._registry_accesses = registry_accesses
 
     @property
-    def k8s_secrets(self):
-        """Gets the k8s_secrets of this V1ProjectSettings.  # noqa: E501
+    def config_resouces(self):
+        """Gets the config_resouces of this V1ProjectSettings.  # noqa: E501
 
 
-        :return: The k8s_secrets of this V1ProjectSettings.  # noqa: E501
+        :return: The config_resouces of this V1ProjectSettings.  # noqa: E501
         :rtype: list[str]
         """
-        return self._k8s_secrets
+        return self._config_resouces
 
-    @k8s_secrets.setter
-    def k8s_secrets(self, k8s_secrets):
-        """Sets the k8s_secrets of this V1ProjectSettings.
+    @config_resouces.setter
+    def config_resouces(self, config_resouces):
+        """Sets the config_resouces of this V1ProjectSettings.
 
 
-        :param k8s_secrets: The k8s_secrets of this V1ProjectSettings.  # noqa: E501
+        :param config_resouces: The config_resouces of this V1ProjectSettings.  # noqa: E501
         :type: list[str]
         """
 
-        self._k8s_secrets = k8s_secrets
-
-    @property
-    def k8s_config_maps(self):
-        """Gets the k8s_config_maps of this V1ProjectSettings.  # noqa: E501
-
-
-        :return: The k8s_config_maps of this V1ProjectSettings.  # noqa: E501
-        :rtype: list[str]
-        """
-        return self._k8s_config_maps
-
-    @k8s_config_maps.setter
-    def k8s_config_maps(self, k8s_config_maps):
-        """Sets the k8s_config_maps of this V1ProjectSettings.
-
-
-        :param k8s_config_maps: The k8s_config_maps of this V1ProjectSettings.  # noqa: E501
-        :type: list[str]
-        """
-
-        self._k8s_config_maps = k8s_config_maps
+        self._config_resouces = config_resouces
 
     @property
     def run_profile(self):

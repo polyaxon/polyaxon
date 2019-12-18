@@ -8,8 +8,7 @@ Name | Type | Description | Notes
 **artifacts_stores** | **list[str]** |  | [optional] 
 **git_accesses** | **list[str]** |  | [optional] 
 **registry_accesses** | **list[str]** |  | [optional] 
-**k8s_secrets** | **list[str]** |  | [optional] 
-**k8s_config_maps** | **list[str]** |  | [optional] 
+**config_resouces** | **list[str]** |  | [optional] 
 **run_profile** | **str** |  | [optional] 
 **run_profiles** | **list[str]** |  | [optional] 
 

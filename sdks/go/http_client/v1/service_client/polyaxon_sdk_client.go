@@ -28,10 +28,9 @@ import (
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_client/agents_v1"
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_client/artifacts_stores_v1"
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_client/auth_v1"
+	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_client/config_resources_v1"
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_client/connections_v1"
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_client/dashboards_v1"
-	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_client/k8s_config_maps_v1"
-	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_client/k8s_secrets_v1"
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_client/organizations_v1"
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_client/project_dashboards_v1"
 	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_client/project_searches_v1"
@@ -95,13 +94,11 @@ func New(transport runtime.ClientTransport, formats strfmt.Registry) *PolyaxonSd
 
 	cli.AuthV1 = auth_v1.New(transport, formats)
 
+	cli.ConfigResourcesV1 = config_resources_v1.New(transport, formats)
+
 	cli.ConnectionsV1 = connections_v1.New(transport, formats)
 
 	cli.DashboardsV1 = dashboards_v1.New(transport, formats)
-
-	cli.K8sConfigMapsV1 = k8s_config_maps_v1.New(transport, formats)
-
-	cli.K8sSecretsV1 = k8s_secrets_v1.New(transport, formats)
 
 	cli.OrganizationsV1 = organizations_v1.New(transport, formats)
 
@@ -177,13 +174,11 @@ type PolyaxonSdk struct {
 
 	AuthV1 *auth_v1.Client
 
+	ConfigResourcesV1 *config_resources_v1.Client
+
 	ConnectionsV1 *connections_v1.Client
 
 	DashboardsV1 *dashboards_v1.Client
-
-	K8sConfigMapsV1 *k8s_config_maps_v1.Client
-
-	K8sSecretsV1 *k8s_secrets_v1.Client
 
 	OrganizationsV1 *organizations_v1.Client
 
@@ -222,13 +217,11 @@ func (c *PolyaxonSdk) SetTransport(transport runtime.ClientTransport) {
 
 	c.AuthV1.SetTransport(transport)
 
+	c.ConfigResourcesV1.SetTransport(transport)
+
 	c.ConnectionsV1.SetTransport(transport)
 
 	c.DashboardsV1.SetTransport(transport)
-
-	c.K8sConfigMapsV1.SetTransport(transport)
-
-	c.K8sSecretsV1.SetTransport(transport)
 
 	c.OrganizationsV1.SetTransport(transport)
 

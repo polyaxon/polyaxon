@@ -56,8 +56,7 @@ class V1RunSettings(object):
         "artifacts_stores": "list[V1RunSettingsCatalog]",
         "git_accesses": "list[V1RunSettingsCatalog]",
         "registry_access": "V1RunSettingsCatalog",
-        "k8s_secrets": "list[V1RunSettingsCatalog]",
-        "k8s_config_maps": "list[V1RunSettingsCatalog]",
+        "config_resources": "list[V1RunSettingsCatalog]",
     }
 
     attribute_map = {
@@ -70,8 +69,7 @@ class V1RunSettings(object):
         "artifacts_stores": "artifacts_stores",
         "git_accesses": "git_accesses",
         "registry_access": "registry_access",
-        "k8s_secrets": "k8s_secrets",
-        "k8s_config_maps": "k8s_config_maps",
+        "config_resources": "config_resources",
     }
 
     def __init__(
@@ -85,8 +83,7 @@ class V1RunSettings(object):
         artifacts_stores=None,
         git_accesses=None,
         registry_access=None,
-        k8s_secrets=None,
-        k8s_config_maps=None,
+        config_resources=None,
     ):  # noqa: E501
         """V1RunSettings - a model defined in Swagger"""  # noqa: E501
 
@@ -99,8 +96,7 @@ class V1RunSettings(object):
         self._artifacts_stores = None
         self._git_accesses = None
         self._registry_access = None
-        self._k8s_secrets = None
-        self._k8s_config_maps = None
+        self._config_resources = None
         self.discriminator = None
 
         if namespace is not None:
@@ -121,10 +117,8 @@ class V1RunSettings(object):
             self.git_accesses = git_accesses
         if registry_access is not None:
             self.registry_access = registry_access
-        if k8s_secrets is not None:
-            self.k8s_secrets = k8s_secrets
-        if k8s_config_maps is not None:
-            self.k8s_config_maps = k8s_config_maps
+        if config_resources is not None:
+            self.config_resources = config_resources
 
     @property
     def namespace(self):
@@ -316,46 +310,25 @@ class V1RunSettings(object):
         self._registry_access = registry_access
 
     @property
-    def k8s_secrets(self):
-        """Gets the k8s_secrets of this V1RunSettings.  # noqa: E501
+    def config_resources(self):
+        """Gets the config_resources of this V1RunSettings.  # noqa: E501
 
 
-        :return: The k8s_secrets of this V1RunSettings.  # noqa: E501
+        :return: The config_resources of this V1RunSettings.  # noqa: E501
         :rtype: list[V1RunSettingsCatalog]
         """
-        return self._k8s_secrets
+        return self._config_resources
 
-    @k8s_secrets.setter
-    def k8s_secrets(self, k8s_secrets):
-        """Sets the k8s_secrets of this V1RunSettings.
+    @config_resources.setter
+    def config_resources(self, config_resources):
+        """Sets the config_resources of this V1RunSettings.
 
 
-        :param k8s_secrets: The k8s_secrets of this V1RunSettings.  # noqa: E501
+        :param config_resources: The config_resources of this V1RunSettings.  # noqa: E501
         :type: list[V1RunSettingsCatalog]
         """
 
-        self._k8s_secrets = k8s_secrets
-
-    @property
-    def k8s_config_maps(self):
-        """Gets the k8s_config_maps of this V1RunSettings.  # noqa: E501
-
-
-        :return: The k8s_config_maps of this V1RunSettings.  # noqa: E501
-        :rtype: list[V1RunSettingsCatalog]
-        """
-        return self._k8s_config_maps
-
-    @k8s_config_maps.setter
-    def k8s_config_maps(self, k8s_config_maps):
-        """Sets the k8s_config_maps of this V1RunSettings.
-
-
-        :param k8s_config_maps: The k8s_config_maps of this V1RunSettings.  # noqa: E501
-        :type: list[V1RunSettingsCatalog]
-        """
-
-        self._k8s_config_maps = k8s_config_maps
+        self._config_resources = config_resources
 
     def to_dict(self):
         """Returns the model properties as a dict"""

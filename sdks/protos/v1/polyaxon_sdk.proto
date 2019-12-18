@@ -9,7 +9,7 @@ import "protoc-gen-swagger/options/annotations.proto";
 import "v1/agent.proto";
 import "v1/connection.proto";
 import "v1/dashboard.proto";
-import "v1/k8s_resource.proto";
+import "v1/config_resource.proto";
 import "v1/base.proto";
 import "v1/code_ref.proto";
 import "v1/run.proto";
@@ -506,114 +506,58 @@ service ConnectionsV1 {
     }
 }
 
-// Service to manage k8s config maps
-service K8sConfigMapsV1 {
+// Service to manage config resources
+service ConfigResourcesV1 {
 
-    // List k8s config map names
-    rpc ListK8sConfigMapNames(OwnerResourceListRequest) returns (ListK8sResourcesResponse) {
+    // List config resource names
+    rpc ListConfigResourceNames(OwnerResourceListRequest) returns (ListConfigResourcesResponse) {
         option (google.api.http) = {
-            get: "/api/v1/orgs/{owner}/k8s_config_maps/names"
+            get: "/api/v1/orgs/{owner}/config_resources/names"
         };
     }
 
-    // List k8s config maps
-    rpc ListK8sConfigMaps(OwnerResourceListRequest) returns (ListK8sResourcesResponse) {
+    // List config resources
+    rpc ListConfigResources(OwnerResourceListRequest) returns (ListConfigResourcesResponse) {
         option (google.api.http) = {
-            get: "/api/v1/orgs/{owner}/k8s_config_maps"
+            get: "/api/v1/orgs/{owner}/config_resources"
         };
     }
 
-    // Create k8s config map
-    rpc CreateK8sConfigMap(K8sResourceBodyRequest) returns (K8sResource) {
+    // Create config resource
+    rpc CreateConfigResource(ConfigResourceBodyRequest) returns (ConfigResource) {
         option (google.api.http) = {
-            post: "/api/v1/orgs/{owner}/k8s_config_maps"
-            body: "k8s_resource"
+            post: "/api/v1/orgs/{owner}/config_resources"
+            body: "config_resource"
         };
     }
 
-    // Get k8s config map
-    rpc GetK8sConfigMap(OwnerEntityResourceRequest) returns (K8sResource) {
+    // Get config resource
+    rpc GetConfigResource(OwnerEntityResourceRequest) returns (ConfigResource) {
         option (google.api.http) = {
-            get: "/api/v1/orgs/{owner}/k8s_config_maps/{uuid}"
+            get: "/api/v1/orgs/{owner}/config_resources/{uuid}"
         };
     }
 
-    // Update k8s config map
-    rpc UpdateK8sConfigMap(K8sResourceBodyRequest) returns (K8sResource) {
+    // Update config resource
+    rpc UpdateConfigResource(ConfigResourceBodyRequest) returns (ConfigResource) {
         option (google.api.http) = {
-            put: "/api/v1/orgs/{owner}/k8s_config_maps/{k8s_resource.uuid}"
-            body: "k8s_resource"
+            put: "/api/v1/orgs/{owner}/config_resources/{config_resource.uuid}"
+            body: "config_resource"
         };
     }
 
-    // Patch k8s config map
-    rpc PatchK8sConfigMap(K8sResourceBodyRequest) returns (K8sResource) {
+    // Patch config resource
+    rpc PatchConfigResource(ConfigResourceBodyRequest) returns (ConfigResource) {
         option (google.api.http) = {
-            patch: "/api/v1/orgs/{owner}/k8s_config_maps/{k8s_resource.uuid}"
-            body: "k8s_resource"
+            patch: "/api/v1/orgs/{owner}/config_resources/{config_resource.uuid}"
+            body: "config_resource"
         };
     }
 
-    // Delete k8s config map
-    rpc DeleteK8sConfigMap(OwnerEntityResourceRequest) returns (google.protobuf.Empty) {
+    // Delete config config map
+    rpc DeleteConfigResource(OwnerEntityResourceRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
-            delete: "/api/v1/orgs/{owner}/k8s_config_maps/{uuid}"
-        };
-    }
-}
-
-// Service to manage k8s secrets
-service K8sSecretsV1 {
-
-    // List k8s secret names
-    rpc ListK8sSecretNames(OwnerResourceListRequest) returns (ListK8sResourcesResponse) {
-        option (google.api.http) = {
-            get: "/api/v1/orgs/{owner}/k8s_secrets/names"
-        };
-    }
-
-    // List k8s secrets
-    rpc ListK8sSecrets(OwnerResourceListRequest) returns (ListK8sResourcesResponse) {
-        option (google.api.http) = {
-            get: "/api/v1/orgs/{owner}/k8s_secrets"
-        };
-    }
-
-    // Create k8s secret
-    rpc CreateK8sSecret(K8sResourceBodyRequest) returns (K8sResource) {
-        option (google.api.http) = {
-            post: "/api/v1/orgs/{owner}/k8s_secrets"
-            body: "k8s_resource"
-        };
-    }
-
-    // Get k8s secret
-    rpc GetK8sSecret(OwnerEntityResourceRequest) returns (K8sResource) {
-        option (google.api.http) = {
-            get: "/api/v1/orgs/{owner}/k8s_secrets/{uuid}"
-        };
-    }
-
-    // Update k8s secret
-    rpc UpdateK8sSecret(K8sResourceBodyRequest) returns (K8sResource) {
-        option (google.api.http) = {
-            put: "/api/v1/orgs/{owner}/k8s_secrets/{k8s_resource.uuid}"
-            body: "k8s_resource"
-        };
-    }
-
-    // Patch k8s secret
-    rpc PatchK8sSecret(K8sResourceBodyRequest) returns (K8sResource) {
-        option (google.api.http) = {
-            patch: "/api/v1/orgs/{owner}/k8s_secrets/{k8s_resource.uuid}"
-            body: "k8s_resource"
-        };
-    }
-
-    // Delete k8s config map
-    rpc DeleteK8sSecret(OwnerEntityResourceRequest) returns (google.protobuf.Empty) {
-        option (google.api.http) = {
-            delete: "/api/v1/orgs/{owner}/k8s_secrets/{uuid}"
+            delete: "/api/v1/orgs/{owner}/config_resources/{uuid}"
         };
     }
 }

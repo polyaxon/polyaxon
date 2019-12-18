@@ -87,6 +87,13 @@ Class | Method | HTTP request | Description
 *AgentsV1Api* | [**update_agent**](docs/AgentsV1Api.md#update_agent) | **PUT** /api/v1/orgs/{owner}/agents/{agent.uuid} | Get run
 *ArtifactsStoresV1Api* | [**upload_artifact**](docs/ArtifactsStoresV1Api.md#upload_artifact) | **POST** /api/v1/catalogs/{owner}/artifacts_stores/{uuid}/upload | Upload artifact to a store
 *AuthV1Api* | [**login**](docs/AuthV1Api.md#login) | **POST** /api/v1/users/token | List bookmarked runs for user
+*ConfigResourcesV1Api* | [**create_config_resource**](docs/ConfigResourcesV1Api.md#create_config_resource) | **POST** /api/v1/orgs/{owner}/config_resources | List runs
+*ConfigResourcesV1Api* | [**delete_config_resource**](docs/ConfigResourcesV1Api.md#delete_config_resource) | **DELETE** /api/v1/orgs/{owner}/config_resources/{uuid} | Patch run
+*ConfigResourcesV1Api* | [**get_config_resource**](docs/ConfigResourcesV1Api.md#get_config_resource) | **GET** /api/v1/orgs/{owner}/config_resources/{uuid} | Create new run
+*ConfigResourcesV1Api* | [**list_config_resource_names**](docs/ConfigResourcesV1Api.md#list_config_resource_names) | **GET** /api/v1/orgs/{owner}/config_resources/names | List bookmarked runs for user
+*ConfigResourcesV1Api* | [**list_config_resources**](docs/ConfigResourcesV1Api.md#list_config_resources) | **GET** /api/v1/orgs/{owner}/config_resources | List archived runs for user
+*ConfigResourcesV1Api* | [**patch_config_resource**](docs/ConfigResourcesV1Api.md#patch_config_resource) | **PATCH** /api/v1/orgs/{owner}/config_resources/{config_resource.uuid} | Update run
+*ConfigResourcesV1Api* | [**update_config_resource**](docs/ConfigResourcesV1Api.md#update_config_resource) | **PUT** /api/v1/orgs/{owner}/config_resources/{config_resource.uuid} | Get run
 *ConnectionsV1Api* | [**create_connection**](docs/ConnectionsV1Api.md#create_connection) | **POST** /api/v1/orgs/{owner}/connections | List runs
 *ConnectionsV1Api* | [**delete_connection**](docs/ConnectionsV1Api.md#delete_connection) | **DELETE** /api/v1/orgs/{owner}/connections/{uuid} | Patch run
 *ConnectionsV1Api* | [**get_connection**](docs/ConnectionsV1Api.md#get_connection) | **GET** /api/v1/orgs/{owner}/connections/{uuid} | Create new run
@@ -101,20 +108,6 @@ Class | Method | HTTP request | Description
 *DashboardsV1Api* | [**list_dashboards**](docs/DashboardsV1Api.md#list_dashboards) | **GET** /api/v1/orgs/{owner}/dashboards | List archived runs for user
 *DashboardsV1Api* | [**patch_dashboard**](docs/DashboardsV1Api.md#patch_dashboard) | **PATCH** /api/v1/orgs/{owner}/dashboards/{dashboard.uuid} | Update run
 *DashboardsV1Api* | [**update_dashboard**](docs/DashboardsV1Api.md#update_dashboard) | **PUT** /api/v1/orgs/{owner}/dashboards/{dashboard.uuid} | Get run
-*K8sConfigMapsV1Api* | [**create_k8s_config_map**](docs/K8sConfigMapsV1Api.md#create_k8s_config_map) | **POST** /api/v1/orgs/{owner}/k8s_config_maps | List runs
-*K8sConfigMapsV1Api* | [**delete_k8s_config_map**](docs/K8sConfigMapsV1Api.md#delete_k8s_config_map) | **DELETE** /api/v1/orgs/{owner}/k8s_config_maps/{uuid} | Patch run
-*K8sConfigMapsV1Api* | [**get_k8s_config_map**](docs/K8sConfigMapsV1Api.md#get_k8s_config_map) | **GET** /api/v1/orgs/{owner}/k8s_config_maps/{uuid} | Create new run
-*K8sConfigMapsV1Api* | [**list_k8s_config_map_names**](docs/K8sConfigMapsV1Api.md#list_k8s_config_map_names) | **GET** /api/v1/orgs/{owner}/k8s_config_maps/names | List bookmarked runs for user
-*K8sConfigMapsV1Api* | [**list_k8s_config_maps**](docs/K8sConfigMapsV1Api.md#list_k8s_config_maps) | **GET** /api/v1/orgs/{owner}/k8s_config_maps | List archived runs for user
-*K8sConfigMapsV1Api* | [**patch_k8s_config_map**](docs/K8sConfigMapsV1Api.md#patch_k8s_config_map) | **PATCH** /api/v1/orgs/{owner}/k8s_config_maps/{k8s_resource.uuid} | Update run
-*K8sConfigMapsV1Api* | [**update_k8s_config_map**](docs/K8sConfigMapsV1Api.md#update_k8s_config_map) | **PUT** /api/v1/orgs/{owner}/k8s_config_maps/{k8s_resource.uuid} | Get run
-*K8sSecretsV1Api* | [**create_k8s_secret**](docs/K8sSecretsV1Api.md#create_k8s_secret) | **POST** /api/v1/orgs/{owner}/k8s_secrets | List runs
-*K8sSecretsV1Api* | [**delete_k8s_secret**](docs/K8sSecretsV1Api.md#delete_k8s_secret) | **DELETE** /api/v1/orgs/{owner}/k8s_secrets/{uuid} | Patch run
-*K8sSecretsV1Api* | [**get_k8s_secret**](docs/K8sSecretsV1Api.md#get_k8s_secret) | **GET** /api/v1/orgs/{owner}/k8s_secrets/{uuid} | Create new run
-*K8sSecretsV1Api* | [**list_k8s_secret_names**](docs/K8sSecretsV1Api.md#list_k8s_secret_names) | **GET** /api/v1/orgs/{owner}/k8s_secrets/names | List bookmarked runs for user
-*K8sSecretsV1Api* | [**list_k8s_secrets**](docs/K8sSecretsV1Api.md#list_k8s_secrets) | **GET** /api/v1/orgs/{owner}/k8s_secrets | List archived runs for user
-*K8sSecretsV1Api* | [**patch_k8s_secret**](docs/K8sSecretsV1Api.md#patch_k8s_secret) | **PATCH** /api/v1/orgs/{owner}/k8s_secrets/{k8s_resource.uuid} | Update run
-*K8sSecretsV1Api* | [**update_k8s_secret**](docs/K8sSecretsV1Api.md#update_k8s_secret) | **PUT** /api/v1/orgs/{owner}/k8s_secrets/{k8s_resource.uuid} | Get run
 *OrganizationsV1Api* | [**create_organization**](docs/OrganizationsV1Api.md#create_organization) | **POST** /api/v1/orgs/create | List runs
 *OrganizationsV1Api* | [**create_organization_member**](docs/OrganizationsV1Api.md#create_organization_member) | **POST** /api/v1/orgs/{owner}/members | Delete runs
 *OrganizationsV1Api* | [**delete_organization**](docs/OrganizationsV1Api.md#delete_organization) | **DELETE** /api/v1/orgs/{owner} | Patch run
@@ -256,6 +249,7 @@ Class | Method | HTTP request | Description
  - [V1CodeRef](docs/V1CodeRef.md)
  - [V1Component](docs/V1Component.md)
  - [V1ComponentRef](docs/V1ComponentRef.md)
+ - [V1ConfigResource](docs/V1ConfigResource.md)
  - [V1Connection](docs/V1Connection.md)
  - [V1ConnectionKind](docs/V1ConnectionKind.md)
  - [V1ConnectionScema](docs/V1ConnectionScema.md)
@@ -283,11 +277,10 @@ Class | Method | HTTP request | Description
  - [V1IntervalSchedule](docs/V1IntervalSchedule.md)
  - [V1Iterative](docs/V1Iterative.md)
  - [V1K8sMount](docs/V1K8sMount.md)
- - [V1K8sResource](docs/V1K8sResource.md)
  - [V1ListAgentsResponse](docs/V1ListAgentsResponse.md)
+ - [V1ListConfigResourcesResponse](docs/V1ListConfigResourcesResponse.md)
  - [V1ListConnectionsResponse](docs/V1ListConnectionsResponse.md)
  - [V1ListDashboardsResponse](docs/V1ListDashboardsResponse.md)
- - [V1ListK8sResourcesResponse](docs/V1ListK8sResourcesResponse.md)
  - [V1ListOrganizationMembersResponse](docs/V1ListOrganizationMembersResponse.md)
  - [V1ListOrganizationsResponse](docs/V1ListOrganizationsResponse.md)
  - [V1ListProjectsResponse](docs/V1ListProjectsResponse.md)

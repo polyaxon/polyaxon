@@ -17,9 +17,7 @@
 # coding: utf-8
 from __future__ import absolute_import, division, print_function
 
-from rhea import RheaError
-
-from polyaxon.exceptions import PolyaxonStoresException
+from polyaxon.exceptions import PolyaxonSchemaError, PolyaxonStoresException
 from polyaxon.stores import settings
 from polyaxon.stores.utils import get_from_env
 
@@ -82,7 +80,7 @@ class BaseStore(object):
         store_type = store_access["store"]
         try:
             store_access = settings.config.get_dict(store_access["secret_key"])
-        except RheaError:
+        except PolyaxonSchemaError:
             raise PolyaxonStoresException(
                 "Could not create store for path `{}`,"
                 "received a store type `{}` without valid access key.".format(

@@ -31,6 +31,9 @@ import (
 // swagger:model v1Connection
 type V1Connection struct {
 
+	// Optional the config resource to use
+	ConfigResource string `json:"config_resource,omitempty"`
+
 	// Optional time when the entityt was created
 	// Format: date-time
 	CreatedAt strfmt.DateTime `json:"created_at,omitempty"`
@@ -46,9 +49,6 @@ type V1Connection struct {
 
 	// Optional a flag to freeze the store
 	Frozen bool `json:"frozen,omitempty"`
-
-	// Optional the k8s secret to use
-	K8sSecret string `json:"k8s_secret,omitempty"`
 
 	// Optional kind of the store
 	Kind V1ConnectionKind `json:"kind,omitempty"`

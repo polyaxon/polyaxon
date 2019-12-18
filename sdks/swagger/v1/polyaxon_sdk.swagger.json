@@ -1373,6 +1373,378 @@
         ]
       }
     },
+    "/api/v1/orgs/{owner}/config_resources": {
+      "get": {
+        "summary": "List archived runs for user",
+        "operationId": "ListConfigResources",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ListConfigResourcesResponse"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "offset",
+            "description": "Pagination offset.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "limit",
+            "description": "Limit size.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "sort",
+            "description": "Sort to order the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "query",
+            "description": "Query filter the search search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "ConfigResourcesV1"
+        ]
+      },
+      "post": {
+        "summary": "List runs",
+        "operationId": "CreateConfigResource",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ConfigResource"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "description": "Artifact store body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1ConfigResource"
+            }
+          }
+        ],
+        "tags": [
+          "ConfigResourcesV1"
+        ]
+      }
+    },
+    "/api/v1/orgs/{owner}/config_resources/names": {
+      "get": {
+        "summary": "List bookmarked runs for user",
+        "operationId": "ListConfigResourceNames",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ListConfigResourcesResponse"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "offset",
+            "description": "Pagination offset.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "limit",
+            "description": "Limit size.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "sort",
+            "description": "Sort to order the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "query",
+            "description": "Query filter the search search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "ConfigResourcesV1"
+        ]
+      }
+    },
+    "/api/v1/orgs/{owner}/config_resources/{config_resource.uuid}": {
+      "put": {
+        "summary": "Get run",
+        "operationId": "UpdateConfigResource",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ConfigResource"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "config_resource.uuid",
+            "description": "UUID",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "description": "Artifact store body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1ConfigResource"
+            }
+          }
+        ],
+        "tags": [
+          "ConfigResourcesV1"
+        ]
+      },
+      "patch": {
+        "summary": "Update run",
+        "operationId": "PatchConfigResource",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ConfigResource"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "config_resource.uuid",
+            "description": "UUID",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "description": "Artifact store body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1ConfigResource"
+            }
+          }
+        ],
+        "tags": [
+          "ConfigResourcesV1"
+        ]
+      }
+    },
+    "/api/v1/orgs/{owner}/config_resources/{uuid}": {
+      "get": {
+        "summary": "Create new run",
+        "operationId": "GetConfigResource",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ConfigResource"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "uuid",
+            "description": "Unique integer identifier of the entity",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "ConfigResourcesV1"
+        ]
+      },
+      "delete": {
+        "summary": "Patch run",
+        "operationId": "DeleteConfigResource",
+        "responses": {
+          "200": {
+            "description": "A successful response."
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "uuid",
+            "description": "Unique integer identifier of the entity",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "ConfigResourcesV1"
+        ]
+      }
+    },
     "/api/v1/orgs/{owner}/connections": {
       "get": {
         "summary": "List archived runs for user",
@@ -2114,750 +2486,6 @@
         ],
         "tags": [
           "DashboardsV1"
-        ]
-      }
-    },
-    "/api/v1/orgs/{owner}/k8s_config_maps": {
-      "get": {
-        "summary": "List archived runs for user",
-        "operationId": "ListK8sConfigMaps",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1ListK8sResourcesResponse"
-            }
-          },
-          "204": {
-            "description": "No content.",
-            "schema": {}
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {}
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "offset",
-            "description": "Pagination offset.",
-            "in": "query",
-            "required": false,
-            "type": "integer",
-            "format": "int32"
-          },
-          {
-            "name": "limit",
-            "description": "Limit size.",
-            "in": "query",
-            "required": false,
-            "type": "integer",
-            "format": "int32"
-          },
-          {
-            "name": "sort",
-            "description": "Sort to order the search.",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "query",
-            "description": "Query filter the search search.",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "K8sConfigMapsV1"
-        ]
-      },
-      "post": {
-        "summary": "List runs",
-        "operationId": "CreateK8sConfigMap",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1K8sResource"
-            }
-          },
-          "204": {
-            "description": "No content.",
-            "schema": {}
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {}
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "description": "Artifact store body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/v1K8sResource"
-            }
-          }
-        ],
-        "tags": [
-          "K8sConfigMapsV1"
-        ]
-      }
-    },
-    "/api/v1/orgs/{owner}/k8s_config_maps/names": {
-      "get": {
-        "summary": "List bookmarked runs for user",
-        "operationId": "ListK8sConfigMapNames",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1ListK8sResourcesResponse"
-            }
-          },
-          "204": {
-            "description": "No content.",
-            "schema": {}
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {}
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "offset",
-            "description": "Pagination offset.",
-            "in": "query",
-            "required": false,
-            "type": "integer",
-            "format": "int32"
-          },
-          {
-            "name": "limit",
-            "description": "Limit size.",
-            "in": "query",
-            "required": false,
-            "type": "integer",
-            "format": "int32"
-          },
-          {
-            "name": "sort",
-            "description": "Sort to order the search.",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "query",
-            "description": "Query filter the search search.",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "K8sConfigMapsV1"
-        ]
-      }
-    },
-    "/api/v1/orgs/{owner}/k8s_config_maps/{k8s_resource.uuid}": {
-      "put": {
-        "summary": "Get run",
-        "operationId": "UpdateK8sConfigMap",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1K8sResource"
-            }
-          },
-          "204": {
-            "description": "No content.",
-            "schema": {}
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {}
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "k8s_resource.uuid",
-            "description": "UUID",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "description": "Artifact store body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/v1K8sResource"
-            }
-          }
-        ],
-        "tags": [
-          "K8sConfigMapsV1"
-        ]
-      },
-      "patch": {
-        "summary": "Update run",
-        "operationId": "PatchK8sConfigMap",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1K8sResource"
-            }
-          },
-          "204": {
-            "description": "No content.",
-            "schema": {}
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {}
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "k8s_resource.uuid",
-            "description": "UUID",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "description": "Artifact store body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/v1K8sResource"
-            }
-          }
-        ],
-        "tags": [
-          "K8sConfigMapsV1"
-        ]
-      }
-    },
-    "/api/v1/orgs/{owner}/k8s_config_maps/{uuid}": {
-      "get": {
-        "summary": "Create new run",
-        "operationId": "GetK8sConfigMap",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1K8sResource"
-            }
-          },
-          "204": {
-            "description": "No content.",
-            "schema": {}
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {}
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "uuid",
-            "description": "Unique integer identifier of the entity",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "K8sConfigMapsV1"
-        ]
-      },
-      "delete": {
-        "summary": "Patch run",
-        "operationId": "DeleteK8sConfigMap",
-        "responses": {
-          "200": {
-            "description": "A successful response."
-          },
-          "204": {
-            "description": "No content.",
-            "schema": {}
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {}
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "uuid",
-            "description": "Unique integer identifier of the entity",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "K8sConfigMapsV1"
-        ]
-      }
-    },
-    "/api/v1/orgs/{owner}/k8s_secrets": {
-      "get": {
-        "summary": "List archived runs for user",
-        "operationId": "ListK8sSecrets",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1ListK8sResourcesResponse"
-            }
-          },
-          "204": {
-            "description": "No content.",
-            "schema": {}
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {}
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "offset",
-            "description": "Pagination offset.",
-            "in": "query",
-            "required": false,
-            "type": "integer",
-            "format": "int32"
-          },
-          {
-            "name": "limit",
-            "description": "Limit size.",
-            "in": "query",
-            "required": false,
-            "type": "integer",
-            "format": "int32"
-          },
-          {
-            "name": "sort",
-            "description": "Sort to order the search.",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "query",
-            "description": "Query filter the search search.",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "K8sSecretsV1"
-        ]
-      },
-      "post": {
-        "summary": "List runs",
-        "operationId": "CreateK8sSecret",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1K8sResource"
-            }
-          },
-          "204": {
-            "description": "No content.",
-            "schema": {}
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {}
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "description": "Artifact store body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/v1K8sResource"
-            }
-          }
-        ],
-        "tags": [
-          "K8sSecretsV1"
-        ]
-      }
-    },
-    "/api/v1/orgs/{owner}/k8s_secrets/names": {
-      "get": {
-        "summary": "List bookmarked runs for user",
-        "operationId": "ListK8sSecretNames",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1ListK8sResourcesResponse"
-            }
-          },
-          "204": {
-            "description": "No content.",
-            "schema": {}
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {}
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "offset",
-            "description": "Pagination offset.",
-            "in": "query",
-            "required": false,
-            "type": "integer",
-            "format": "int32"
-          },
-          {
-            "name": "limit",
-            "description": "Limit size.",
-            "in": "query",
-            "required": false,
-            "type": "integer",
-            "format": "int32"
-          },
-          {
-            "name": "sort",
-            "description": "Sort to order the search.",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "query",
-            "description": "Query filter the search search.",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "K8sSecretsV1"
-        ]
-      }
-    },
-    "/api/v1/orgs/{owner}/k8s_secrets/{k8s_resource.uuid}": {
-      "put": {
-        "summary": "Get run",
-        "operationId": "UpdateK8sSecret",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1K8sResource"
-            }
-          },
-          "204": {
-            "description": "No content.",
-            "schema": {}
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {}
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "k8s_resource.uuid",
-            "description": "UUID",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "description": "Artifact store body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/v1K8sResource"
-            }
-          }
-        ],
-        "tags": [
-          "K8sSecretsV1"
-        ]
-      },
-      "patch": {
-        "summary": "Update run",
-        "operationId": "PatchK8sSecret",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1K8sResource"
-            }
-          },
-          "204": {
-            "description": "No content.",
-            "schema": {}
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {}
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "k8s_resource.uuid",
-            "description": "UUID",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "description": "Artifact store body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/v1K8sResource"
-            }
-          }
-        ],
-        "tags": [
-          "K8sSecretsV1"
-        ]
-      }
-    },
-    "/api/v1/orgs/{owner}/k8s_secrets/{uuid}": {
-      "get": {
-        "summary": "Create new run",
-        "operationId": "GetK8sSecret",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1K8sResource"
-            }
-          },
-          "204": {
-            "description": "No content.",
-            "schema": {}
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {}
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "uuid",
-            "description": "Unique integer identifier of the entity",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "K8sSecretsV1"
-        ]
-      },
-      "delete": {
-        "summary": "Patch run",
-        "operationId": "DeleteK8sSecret",
-        "responses": {
-          "200": {
-            "description": "A successful response."
-          },
-          "204": {
-            "description": "No content.",
-            "schema": {}
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {}
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "uuid",
-            "description": "Unique integer identifier of the entity",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "K8sSecretsV1"
         ]
       }
     },
@@ -9046,6 +8674,76 @@
       },
       "title": "Component reference specification"
     },
+    "v1ConfigResource": {
+      "type": "object",
+      "properties": {
+        "uuid": {
+          "type": "string",
+          "title": "UUID"
+        },
+        "name": {
+          "type": "string",
+          "title": "Name"
+        },
+        "description": {
+          "type": "string",
+          "title": "Optional description"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "Optional Tags of this entity"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time",
+          "title": "Optional time when the entityt was created"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time",
+          "title": "Optional last time the entity was updated"
+        },
+        "k8s_ref": {
+          "type": "string",
+          "title": "Optional the k8s ref"
+        },
+        "is_secret": {
+          "type": "boolean",
+          "format": "boolean",
+          "title": "Optional wether this config resource is a secret"
+        },
+        "frozen": {
+          "type": "boolean",
+          "format": "boolean",
+          "title": "Optional a flag to freeze the resource"
+        },
+        "disabled": {
+          "type": "boolean",
+          "format": "boolean",
+          "title": "Optional a flag to disable the resource"
+        },
+        "deleted": {
+          "type": "boolean",
+          "format": "boolean",
+          "title": "Optional if the entity has been deleted"
+        },
+        "mount_path": {
+          "type": "string",
+          "title": "Optional a mount path to specifiy where to mount this resource"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "Optional the k8s secret to use"
+        }
+      },
+      "title": "Config resource specification"
+    },
     "v1Connection": {
       "type": "object",
       "properties": {
@@ -9093,9 +8791,9 @@
           "format": "boolean",
           "title": "Optional if the entity has been deleted"
         },
-        "k8s_secret": {
+        "config_resource": {
           "type": "string",
-          "title": "Optional the k8s secret to use"
+          "title": "Optional the config resource to use"
         },
         "kind": {
           "$ref": "#/definitions/v1ConnectionKind",
@@ -9901,71 +9599,6 @@
       },
       "title": "K8S mount (config/secret) specification"
     },
-    "v1K8sResource": {
-      "type": "object",
-      "properties": {
-        "uuid": {
-          "type": "string",
-          "title": "UUID"
-        },
-        "name": {
-          "type": "string",
-          "title": "Name"
-        },
-        "description": {
-          "type": "string",
-          "title": "Optional description"
-        },
-        "tags": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "title": "Optional Tags of this entity"
-        },
-        "created_at": {
-          "type": "string",
-          "format": "date-time",
-          "title": "Optional time when the entityt was created"
-        },
-        "updated_at": {
-          "type": "string",
-          "format": "date-time",
-          "title": "Optional last time the entity was updated"
-        },
-        "k8s_ref": {
-          "type": "string",
-          "title": "Optional the k8s ref"
-        },
-        "frozen": {
-          "type": "boolean",
-          "format": "boolean",
-          "title": "Optional a flag to freeze the resource"
-        },
-        "disabled": {
-          "type": "boolean",
-          "format": "boolean",
-          "title": "Optional a flag to disable the resource"
-        },
-        "deleted": {
-          "type": "boolean",
-          "format": "boolean",
-          "title": "Optional if the entity has been deleted"
-        },
-        "mount_path": {
-          "type": "string",
-          "title": "Optional a mount path to specifiy where to mount this resource"
-        },
-        "items": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "title": "Optional the k8s secret to use"
-        }
-      },
-      "title": "K8s resource specification"
-    },
     "v1ListAgentsResponse": {
       "type": "object",
       "properties": {
@@ -9991,6 +9624,32 @@
         }
       },
       "title": "Contains list agents"
+    },
+    "v1ListConfigResourcesResponse": {
+      "type": "object",
+      "properties": {
+        "count": {
+          "type": "integer",
+          "format": "int32",
+          "title": "Count of the entities"
+        },
+        "results": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1ConfigResource"
+          },
+          "title": "List of all entities"
+        },
+        "previous": {
+          "type": "string",
+          "title": "Previous page"
+        },
+        "next": {
+          "type": "string",
+          "title": "Next page"
+        }
+      },
+      "title": "Contains list config resources"
     },
     "v1ListConnectionsResponse": {
       "type": "object",
@@ -10043,32 +9702,6 @@
         }
       },
       "title": "Contains list dashboards"
-    },
-    "v1ListK8sResourcesResponse": {
-      "type": "object",
-      "properties": {
-        "count": {
-          "type": "integer",
-          "format": "int32",
-          "title": "Count of the entities"
-        },
-        "results": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/v1K8sResource"
-          },
-          "title": "List of all entities"
-        },
-        "previous": {
-          "type": "string",
-          "title": "Previous page"
-        },
-        "next": {
-          "type": "string",
-          "title": "Next page"
-        }
-      },
-      "title": "Contains list k8s resources"
     },
     "v1ListOrganizationMembersResponse": {
       "type": "object",
@@ -10835,19 +10468,12 @@
           },
           "title": "Registry Accesses"
         },
-        "k8s_secrets": {
+        "config_resouces": {
           "type": "array",
           "items": {
             "type": "string"
           },
-          "title": "K8S secrets"
-        },
-        "k8s_config_maps": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "title": "K8S config maps"
+          "title": "Config resources"
         },
         "run_profile": {
           "type": "string",
@@ -11367,14 +10993,7 @@
           "$ref": "#/definitions/v1RunSettingsCatalog",
           "title": "Registry Access"
         },
-        "k8s_secrets": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/v1RunSettingsCatalog"
-          },
-          "title": "K8S secrets"
-        },
-        "k8s_config_maps": {
+        "config_resources": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/v1RunSettingsCatalog"

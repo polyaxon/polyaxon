@@ -79,10 +79,8 @@
         obj.git_accesses = ApiClient.convertToType(data['git_accesses'], ['String']);
       if (data.hasOwnProperty('registry_accesses'))
         obj.registry_accesses = ApiClient.convertToType(data['registry_accesses'], ['String']);
-      if (data.hasOwnProperty('k8s_secrets'))
-        obj.k8s_secrets = ApiClient.convertToType(data['k8s_secrets'], ['String']);
-      if (data.hasOwnProperty('k8s_config_maps'))
-        obj.k8s_config_maps = ApiClient.convertToType(data['k8s_config_maps'], ['String']);
+      if (data.hasOwnProperty('config_resouces'))
+        obj.config_resouces = ApiClient.convertToType(data['config_resouces'], ['String']);
       if (data.hasOwnProperty('run_profile'))
         obj.run_profile = ApiClient.convertToType(data['run_profile'], 'String');
       if (data.hasOwnProperty('run_profiles'))
@@ -117,14 +115,9 @@
   exports.prototype.registry_accesses = undefined;
 
   /**
-   * @member {Array.<String>} k8s_secrets
+   * @member {Array.<String>} config_resouces
    */
-  exports.prototype.k8s_secrets = undefined;
-
-  /**
-   * @member {Array.<String>} k8s_config_maps
-   */
-  exports.prototype.k8s_config_maps = undefined;
+  exports.prototype.config_resouces = undefined;
 
   /**
    * @member {String} run_profile

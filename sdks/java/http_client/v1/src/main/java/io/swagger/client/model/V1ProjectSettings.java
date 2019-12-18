@@ -60,11 +60,8 @@ public class V1ProjectSettings {
   @SerializedName("registry_accesses")
   private List<String> registryAccesses = null;
 
-  @SerializedName("k8s_secrets")
-  private List<String> k8sSecrets = null;
-
-  @SerializedName("k8s_config_maps")
-  private List<String> k8sConfigMaps = null;
+  @SerializedName("config_resouces")
+  private List<String> configResouces = null;
 
   @SerializedName("run_profile")
   private String runProfile = null;
@@ -186,56 +183,30 @@ public class V1ProjectSettings {
     this.registryAccesses = registryAccesses;
   }
 
-  public V1ProjectSettings k8sSecrets(List<String> k8sSecrets) {
-    this.k8sSecrets = k8sSecrets;
+  public V1ProjectSettings configResouces(List<String> configResouces) {
+    this.configResouces = configResouces;
     return this;
   }
 
-  public V1ProjectSettings addK8sSecretsItem(String k8sSecretsItem) {
-    if (this.k8sSecrets == null) {
-      this.k8sSecrets = new ArrayList<String>();
+  public V1ProjectSettings addConfigResoucesItem(String configResoucesItem) {
+    if (this.configResouces == null) {
+      this.configResouces = new ArrayList<String>();
     }
-    this.k8sSecrets.add(k8sSecretsItem);
+    this.configResouces.add(configResoucesItem);
     return this;
   }
 
    /**
-   * Get k8sSecrets
-   * @return k8sSecrets
+   * Get configResouces
+   * @return configResouces
   **/
   @ApiModelProperty(value = "")
-  public List<String> getK8sSecrets() {
-    return k8sSecrets;
+  public List<String> getConfigResouces() {
+    return configResouces;
   }
 
-  public void setK8sSecrets(List<String> k8sSecrets) {
-    this.k8sSecrets = k8sSecrets;
-  }
-
-  public V1ProjectSettings k8sConfigMaps(List<String> k8sConfigMaps) {
-    this.k8sConfigMaps = k8sConfigMaps;
-    return this;
-  }
-
-  public V1ProjectSettings addK8sConfigMapsItem(String k8sConfigMapsItem) {
-    if (this.k8sConfigMaps == null) {
-      this.k8sConfigMaps = new ArrayList<String>();
-    }
-    this.k8sConfigMaps.add(k8sConfigMapsItem);
-    return this;
-  }
-
-   /**
-   * Get k8sConfigMaps
-   * @return k8sConfigMaps
-  **/
-  @ApiModelProperty(value = "")
-  public List<String> getK8sConfigMaps() {
-    return k8sConfigMaps;
-  }
-
-  public void setK8sConfigMaps(List<String> k8sConfigMaps) {
-    this.k8sConfigMaps = k8sConfigMaps;
+  public void setConfigResouces(List<String> configResouces) {
+    this.configResouces = configResouces;
   }
 
   public V1ProjectSettings runProfile(String runProfile) {
@@ -297,15 +268,14 @@ public class V1ProjectSettings {
         Objects.equals(this.artifactsStores, v1ProjectSettings.artifactsStores) &&
         Objects.equals(this.gitAccesses, v1ProjectSettings.gitAccesses) &&
         Objects.equals(this.registryAccesses, v1ProjectSettings.registryAccesses) &&
-        Objects.equals(this.k8sSecrets, v1ProjectSettings.k8sSecrets) &&
-        Objects.equals(this.k8sConfigMaps, v1ProjectSettings.k8sConfigMaps) &&
+        Objects.equals(this.configResouces, v1ProjectSettings.configResouces) &&
         Objects.equals(this.runProfile, v1ProjectSettings.runProfile) &&
         Objects.equals(this.runProfiles, v1ProjectSettings.runProfiles);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(logsStore, outputsStore, artifactsStores, gitAccesses, registryAccesses, k8sSecrets, k8sConfigMaps, runProfile, runProfiles);
+    return Objects.hash(logsStore, outputsStore, artifactsStores, gitAccesses, registryAccesses, configResouces, runProfile, runProfiles);
   }
 
 
@@ -319,8 +289,7 @@ public class V1ProjectSettings {
     sb.append("    artifactsStores: ").append(toIndentedString(artifactsStores)).append("\n");
     sb.append("    gitAccesses: ").append(toIndentedString(gitAccesses)).append("\n");
     sb.append("    registryAccesses: ").append(toIndentedString(registryAccesses)).append("\n");
-    sb.append("    k8sSecrets: ").append(toIndentedString(k8sSecrets)).append("\n");
-    sb.append("    k8sConfigMaps: ").append(toIndentedString(k8sConfigMaps)).append("\n");
+    sb.append("    configResouces: ").append(toIndentedString(configResouces)).append("\n");
     sb.append("    runProfile: ").append(toIndentedString(runProfile)).append("\n");
     sb.append("    runProfiles: ").append(toIndentedString(runProfiles)).append("\n");
     sb.append("}");

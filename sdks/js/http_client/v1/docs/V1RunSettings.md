@@ -12,7 +12,6 @@ Name | Type | Description | Notes
 **artifacts_stores** | [**[V1RunSettingsCatalog]**](V1RunSettingsCatalog.md) |  | [optional] 
 **git_accesses** | [**[V1RunSettingsCatalog]**](V1RunSettingsCatalog.md) |  | [optional] 
 **registry_access** | [**V1RunSettingsCatalog**](V1RunSettingsCatalog.md) |  | [optional] 
-**k8s_secrets** | [**[V1RunSettingsCatalog]**](V1RunSettingsCatalog.md) |  | [optional] 
-**k8s_config_maps** | [**[V1RunSettingsCatalog]**](V1RunSettingsCatalog.md) |  | [optional] 
+**config_resources** | [**[V1RunSettingsCatalog]**](V1RunSettingsCatalog.md) |  | [optional] 
 
 

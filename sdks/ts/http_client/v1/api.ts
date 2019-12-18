@@ -620,6 +620,92 @@ export interface V1ComponentRef {
 /**
  * 
  * @export
+ * @interface V1ConfigResource
+ */
+export interface V1ConfigResource {
+    /**
+     * 
+     * @type {string}
+     * @memberof V1ConfigResource
+     */
+    uuid?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1ConfigResource
+     */
+    name?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1ConfigResource
+     */
+    description?: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof V1ConfigResource
+     */
+    tags?: Array<string>;
+    /**
+     * 
+     * @type {Date}
+     * @memberof V1ConfigResource
+     */
+    created_at?: Date;
+    /**
+     * 
+     * @type {Date}
+     * @memberof V1ConfigResource
+     */
+    updated_at?: Date;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1ConfigResource
+     */
+    k8s_ref?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof V1ConfigResource
+     */
+    is_secret?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof V1ConfigResource
+     */
+    frozen?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof V1ConfigResource
+     */
+    disabled?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof V1ConfigResource
+     */
+    deleted?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1ConfigResource
+     */
+    mount_path?: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof V1ConfigResource
+     */
+    items?: Array<string>;
+}
+
+/**
+ * 
+ * @export
  * @interface V1Connection
  */
 export interface V1Connection {
@@ -682,7 +768,7 @@ export interface V1Connection {
      * @type {string}
      * @memberof V1Connection
      */
-    k8s_secret?: string;
+    config_resource?: string;
     /**
      * 
      * @type {V1ConnectionKind}
@@ -1706,86 +1792,6 @@ export interface V1K8sMount {
 /**
  * 
  * @export
- * @interface V1K8sResource
- */
-export interface V1K8sResource {
-    /**
-     * 
-     * @type {string}
-     * @memberof V1K8sResource
-     */
-    uuid?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1K8sResource
-     */
-    name?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1K8sResource
-     */
-    description?: string;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof V1K8sResource
-     */
-    tags?: Array<string>;
-    /**
-     * 
-     * @type {Date}
-     * @memberof V1K8sResource
-     */
-    created_at?: Date;
-    /**
-     * 
-     * @type {Date}
-     * @memberof V1K8sResource
-     */
-    updated_at?: Date;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1K8sResource
-     */
-    k8s_ref?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof V1K8sResource
-     */
-    frozen?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof V1K8sResource
-     */
-    disabled?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof V1K8sResource
-     */
-    deleted?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1K8sResource
-     */
-    mount_path?: string;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof V1K8sResource
-     */
-    items?: Array<string>;
-}
-
-/**
- * 
- * @export
  * @interface V1ListAgentsResponse
  */
 export interface V1ListAgentsResponse {
@@ -1811,6 +1817,38 @@ export interface V1ListAgentsResponse {
      * 
      * @type {string}
      * @memberof V1ListAgentsResponse
+     */
+    next?: string;
+}
+
+/**
+ * 
+ * @export
+ * @interface V1ListConfigResourcesResponse
+ */
+export interface V1ListConfigResourcesResponse {
+    /**
+     * 
+     * @type {number}
+     * @memberof V1ListConfigResourcesResponse
+     */
+    count?: number;
+    /**
+     * 
+     * @type {Array<V1ConfigResource>}
+     * @memberof V1ListConfigResourcesResponse
+     */
+    results?: Array<V1ConfigResource>;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1ListConfigResourcesResponse
+     */
+    previous?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1ListConfigResourcesResponse
      */
     next?: string;
 }
@@ -1875,38 +1913,6 @@ export interface V1ListDashboardsResponse {
      * 
      * @type {string}
      * @memberof V1ListDashboardsResponse
-     */
-    next?: string;
-}
-
-/**
- * 
- * @export
- * @interface V1ListK8sResourcesResponse
- */
-export interface V1ListK8sResourcesResponse {
-    /**
-     * 
-     * @type {number}
-     * @memberof V1ListK8sResourcesResponse
-     */
-    count?: number;
-    /**
-     * 
-     * @type {Array<V1K8sResource>}
-     * @memberof V1ListK8sResourcesResponse
-     */
-    results?: Array<V1K8sResource>;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1ListK8sResourcesResponse
-     */
-    previous?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1ListK8sResourcesResponse
      */
     next?: string;
 }
@@ -2926,13 +2932,7 @@ export interface V1ProjectSettings {
      * @type {Array<string>}
      * @memberof V1ProjectSettings
      */
-    k8s_secrets?: Array<string>;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof V1ProjectSettings
-     */
-    k8s_config_maps?: Array<string>;
+    config_resouces?: Array<string>;
     /**
      * 
      * @type {string}
@@ -3640,13 +3640,7 @@ export interface V1RunSettings {
      * @type {Array<V1RunSettingsCatalog>}
      * @memberof V1RunSettings
      */
-    k8s_secrets?: Array<V1RunSettingsCatalog>;
-    /**
-     * 
-     * @type {Array<V1RunSettingsCatalog>}
-     * @memberof V1RunSettings
-     */
-    k8s_config_maps?: Array<V1RunSettingsCatalog>;
+    config_resources?: Array<V1RunSettingsCatalog>;
 }
 
 /**
@@ -5269,6 +5263,724 @@ export class AuthV1Api extends BaseAPI {
 }
 
 /**
+ * ConfigResourcesV1Api - fetch parameter creator
+ * @export
+ */
+export const ConfigResourcesV1ApiFetchParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary List runs
+         * @param {string} owner Owner of the namespace
+         * @param {V1ConfigResource} body Artifact store body
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createConfigResource(owner: string, body: V1ConfigResource, options: any = {}): FetchArgs {
+            // verify required parameter 'owner' is not null or undefined
+            if (owner === null || owner === undefined) {
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling createConfigResource.');
+            }
+            // verify required parameter 'body' is not null or undefined
+            if (body === null || body === undefined) {
+                throw new RequiredError('body','Required parameter body was null or undefined when calling createConfigResource.');
+            }
+            const localVarPath = `/api/v1/orgs/{owner}/config_resources`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("Authorization")
+					: configuration.apiKey;
+                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"V1ConfigResource" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Patch run
+         * @param {string} owner Owner of the namespace
+         * @param {string} uuid Unique integer identifier of the entity
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteConfigResource(owner: string, uuid: string, options: any = {}): FetchArgs {
+            // verify required parameter 'owner' is not null or undefined
+            if (owner === null || owner === undefined) {
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling deleteConfigResource.');
+            }
+            // verify required parameter 'uuid' is not null or undefined
+            if (uuid === null || uuid === undefined) {
+                throw new RequiredError('uuid','Required parameter uuid was null or undefined when calling deleteConfigResource.');
+            }
+            const localVarPath = `/api/v1/orgs/{owner}/config_resources/{uuid}`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"uuid"}}`, encodeURIComponent(String(uuid)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'DELETE' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("Authorization")
+					: configuration.apiKey;
+                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Create new run
+         * @param {string} owner Owner of the namespace
+         * @param {string} uuid Unique integer identifier of the entity
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getConfigResource(owner: string, uuid: string, options: any = {}): FetchArgs {
+            // verify required parameter 'owner' is not null or undefined
+            if (owner === null || owner === undefined) {
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling getConfigResource.');
+            }
+            // verify required parameter 'uuid' is not null or undefined
+            if (uuid === null || uuid === undefined) {
+                throw new RequiredError('uuid','Required parameter uuid was null or undefined when calling getConfigResource.');
+            }
+            const localVarPath = `/api/v1/orgs/{owner}/config_resources/{uuid}`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"uuid"}}`, encodeURIComponent(String(uuid)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("Authorization")
+					: configuration.apiKey;
+                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary List bookmarked runs for user
+         * @param {string} owner Owner of the namespace
+         * @param {number} [offset] Pagination offset.
+         * @param {number} [limit] Limit size.
+         * @param {string} [sort] Sort to order the search.
+         * @param {string} [query] Query filter the search search.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listConfigResourceNames(owner: string, offset?: number, limit?: number, sort?: string, query?: string, options: any = {}): FetchArgs {
+            // verify required parameter 'owner' is not null or undefined
+            if (owner === null || owner === undefined) {
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling listConfigResourceNames.');
+            }
+            const localVarPath = `/api/v1/orgs/{owner}/config_resources/names`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("Authorization")
+					: configuration.apiKey;
+                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            if (offset !== undefined) {
+                localVarQueryParameter['offset'] = offset;
+            }
+
+            if (limit !== undefined) {
+                localVarQueryParameter['limit'] = limit;
+            }
+
+            if (sort !== undefined) {
+                localVarQueryParameter['sort'] = sort;
+            }
+
+            if (query !== undefined) {
+                localVarQueryParameter['query'] = query;
+            }
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary List archived runs for user
+         * @param {string} owner Owner of the namespace
+         * @param {number} [offset] Pagination offset.
+         * @param {number} [limit] Limit size.
+         * @param {string} [sort] Sort to order the search.
+         * @param {string} [query] Query filter the search search.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listConfigResources(owner: string, offset?: number, limit?: number, sort?: string, query?: string, options: any = {}): FetchArgs {
+            // verify required parameter 'owner' is not null or undefined
+            if (owner === null || owner === undefined) {
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling listConfigResources.');
+            }
+            const localVarPath = `/api/v1/orgs/{owner}/config_resources`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("Authorization")
+					: configuration.apiKey;
+                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            if (offset !== undefined) {
+                localVarQueryParameter['offset'] = offset;
+            }
+
+            if (limit !== undefined) {
+                localVarQueryParameter['limit'] = limit;
+            }
+
+            if (sort !== undefined) {
+                localVarQueryParameter['sort'] = sort;
+            }
+
+            if (query !== undefined) {
+                localVarQueryParameter['query'] = query;
+            }
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Update run
+         * @param {string} owner Owner of the namespace
+         * @param {string} config_resource_uuid UUID
+         * @param {V1ConfigResource} body Artifact store body
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchConfigResource(owner: string, config_resource_uuid: string, body: V1ConfigResource, options: any = {}): FetchArgs {
+            // verify required parameter 'owner' is not null or undefined
+            if (owner === null || owner === undefined) {
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling patchConfigResource.');
+            }
+            // verify required parameter 'config_resource_uuid' is not null or undefined
+            if (config_resource_uuid === null || config_resource_uuid === undefined) {
+                throw new RequiredError('config_resource_uuid','Required parameter config_resource_uuid was null or undefined when calling patchConfigResource.');
+            }
+            // verify required parameter 'body' is not null or undefined
+            if (body === null || body === undefined) {
+                throw new RequiredError('body','Required parameter body was null or undefined when calling patchConfigResource.');
+            }
+            const localVarPath = `/api/v1/orgs/{owner}/config_resources/{config_resource.uuid}`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"config_resource.uuid"}}`, encodeURIComponent(String(config_resource_uuid)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'PATCH' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("Authorization")
+					: configuration.apiKey;
+                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"V1ConfigResource" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get run
+         * @param {string} owner Owner of the namespace
+         * @param {string} config_resource_uuid UUID
+         * @param {V1ConfigResource} body Artifact store body
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateConfigResource(owner: string, config_resource_uuid: string, body: V1ConfigResource, options: any = {}): FetchArgs {
+            // verify required parameter 'owner' is not null or undefined
+            if (owner === null || owner === undefined) {
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling updateConfigResource.');
+            }
+            // verify required parameter 'config_resource_uuid' is not null or undefined
+            if (config_resource_uuid === null || config_resource_uuid === undefined) {
+                throw new RequiredError('config_resource_uuid','Required parameter config_resource_uuid was null or undefined when calling updateConfigResource.');
+            }
+            // verify required parameter 'body' is not null or undefined
+            if (body === null || body === undefined) {
+                throw new RequiredError('body','Required parameter body was null or undefined when calling updateConfigResource.');
+            }
+            const localVarPath = `/api/v1/orgs/{owner}/config_resources/{config_resource.uuid}`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"config_resource.uuid"}}`, encodeURIComponent(String(config_resource_uuid)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'PUT' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("Authorization")
+					: configuration.apiKey;
+                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"V1ConfigResource" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * ConfigResourcesV1Api - functional programming interface
+ * @export
+ */
+export const ConfigResourcesV1ApiFp = function(configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary List runs
+         * @param {string} owner Owner of the namespace
+         * @param {V1ConfigResource} body Artifact store body
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createConfigResource(owner: string, body: V1ConfigResource, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ConfigResource> {
+            const localVarFetchArgs = ConfigResourcesV1ApiFetchParamCreator(configuration).createConfigResource(owner, body, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary Patch run
+         * @param {string} owner Owner of the namespace
+         * @param {string} uuid Unique integer identifier of the entity
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteConfigResource(owner: string, uuid: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+            const localVarFetchArgs = ConfigResourcesV1ApiFetchParamCreator(configuration).deleteConfigResource(owner, uuid, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response;
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary Create new run
+         * @param {string} owner Owner of the namespace
+         * @param {string} uuid Unique integer identifier of the entity
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getConfigResource(owner: string, uuid: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ConfigResource> {
+            const localVarFetchArgs = ConfigResourcesV1ApiFetchParamCreator(configuration).getConfigResource(owner, uuid, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary List bookmarked runs for user
+         * @param {string} owner Owner of the namespace
+         * @param {number} [offset] Pagination offset.
+         * @param {number} [limit] Limit size.
+         * @param {string} [sort] Sort to order the search.
+         * @param {string} [query] Query filter the search search.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listConfigResourceNames(owner: string, offset?: number, limit?: number, sort?: string, query?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ListConfigResourcesResponse> {
+            const localVarFetchArgs = ConfigResourcesV1ApiFetchParamCreator(configuration).listConfigResourceNames(owner, offset, limit, sort, query, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary List archived runs for user
+         * @param {string} owner Owner of the namespace
+         * @param {number} [offset] Pagination offset.
+         * @param {number} [limit] Limit size.
+         * @param {string} [sort] Sort to order the search.
+         * @param {string} [query] Query filter the search search.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listConfigResources(owner: string, offset?: number, limit?: number, sort?: string, query?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ListConfigResourcesResponse> {
+            const localVarFetchArgs = ConfigResourcesV1ApiFetchParamCreator(configuration).listConfigResources(owner, offset, limit, sort, query, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary Update run
+         * @param {string} owner Owner of the namespace
+         * @param {string} config_resource_uuid UUID
+         * @param {V1ConfigResource} body Artifact store body
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchConfigResource(owner: string, config_resource_uuid: string, body: V1ConfigResource, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ConfigResource> {
+            const localVarFetchArgs = ConfigResourcesV1ApiFetchParamCreator(configuration).patchConfigResource(owner, config_resource_uuid, body, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary Get run
+         * @param {string} owner Owner of the namespace
+         * @param {string} config_resource_uuid UUID
+         * @param {V1ConfigResource} body Artifact store body
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateConfigResource(owner: string, config_resource_uuid: string, body: V1ConfigResource, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ConfigResource> {
+            const localVarFetchArgs = ConfigResourcesV1ApiFetchParamCreator(configuration).updateConfigResource(owner, config_resource_uuid, body, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+    }
+};
+
+/**
+ * ConfigResourcesV1Api - factory interface
+ * @export
+ */
+export const ConfigResourcesV1ApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
+    return {
+        /**
+         * 
+         * @summary List runs
+         * @param {string} owner Owner of the namespace
+         * @param {V1ConfigResource} body Artifact store body
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createConfigResource(owner: string, body: V1ConfigResource, options?: any) {
+            return ConfigResourcesV1ApiFp(configuration).createConfigResource(owner, body, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary Patch run
+         * @param {string} owner Owner of the namespace
+         * @param {string} uuid Unique integer identifier of the entity
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteConfigResource(owner: string, uuid: string, options?: any) {
+            return ConfigResourcesV1ApiFp(configuration).deleteConfigResource(owner, uuid, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary Create new run
+         * @param {string} owner Owner of the namespace
+         * @param {string} uuid Unique integer identifier of the entity
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getConfigResource(owner: string, uuid: string, options?: any) {
+            return ConfigResourcesV1ApiFp(configuration).getConfigResource(owner, uuid, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary List bookmarked runs for user
+         * @param {string} owner Owner of the namespace
+         * @param {number} [offset] Pagination offset.
+         * @param {number} [limit] Limit size.
+         * @param {string} [sort] Sort to order the search.
+         * @param {string} [query] Query filter the search search.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listConfigResourceNames(owner: string, offset?: number, limit?: number, sort?: string, query?: string, options?: any) {
+            return ConfigResourcesV1ApiFp(configuration).listConfigResourceNames(owner, offset, limit, sort, query, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary List archived runs for user
+         * @param {string} owner Owner of the namespace
+         * @param {number} [offset] Pagination offset.
+         * @param {number} [limit] Limit size.
+         * @param {string} [sort] Sort to order the search.
+         * @param {string} [query] Query filter the search search.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listConfigResources(owner: string, offset?: number, limit?: number, sort?: string, query?: string, options?: any) {
+            return ConfigResourcesV1ApiFp(configuration).listConfigResources(owner, offset, limit, sort, query, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary Update run
+         * @param {string} owner Owner of the namespace
+         * @param {string} config_resource_uuid UUID
+         * @param {V1ConfigResource} body Artifact store body
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchConfigResource(owner: string, config_resource_uuid: string, body: V1ConfigResource, options?: any) {
+            return ConfigResourcesV1ApiFp(configuration).patchConfigResource(owner, config_resource_uuid, body, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary Get run
+         * @param {string} owner Owner of the namespace
+         * @param {string} config_resource_uuid UUID
+         * @param {V1ConfigResource} body Artifact store body
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateConfigResource(owner: string, config_resource_uuid: string, body: V1ConfigResource, options?: any) {
+            return ConfigResourcesV1ApiFp(configuration).updateConfigResource(owner, config_resource_uuid, body, options)(fetch, basePath);
+        },
+    };
+};
+
+/**
+ * ConfigResourcesV1Api - object-oriented interface
+ * @export
+ * @class ConfigResourcesV1Api
+ * @extends {BaseAPI}
+ */
+export class ConfigResourcesV1Api extends BaseAPI {
+    /**
+     * 
+     * @summary List runs
+     * @param {string} owner Owner of the namespace
+     * @param {V1ConfigResource} body Artifact store body
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ConfigResourcesV1Api
+     */
+    public createConfigResource(owner: string, body: V1ConfigResource, options?: any) {
+        return ConfigResourcesV1ApiFp(this.configuration).createConfigResource(owner, body, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary Patch run
+     * @param {string} owner Owner of the namespace
+     * @param {string} uuid Unique integer identifier of the entity
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ConfigResourcesV1Api
+     */
+    public deleteConfigResource(owner: string, uuid: string, options?: any) {
+        return ConfigResourcesV1ApiFp(this.configuration).deleteConfigResource(owner, uuid, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary Create new run
+     * @param {string} owner Owner of the namespace
+     * @param {string} uuid Unique integer identifier of the entity
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ConfigResourcesV1Api
+     */
+    public getConfigResource(owner: string, uuid: string, options?: any) {
+        return ConfigResourcesV1ApiFp(this.configuration).getConfigResource(owner, uuid, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary List bookmarked runs for user
+     * @param {string} owner Owner of the namespace
+     * @param {number} [offset] Pagination offset.
+     * @param {number} [limit] Limit size.
+     * @param {string} [sort] Sort to order the search.
+     * @param {string} [query] Query filter the search search.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ConfigResourcesV1Api
+     */
+    public listConfigResourceNames(owner: string, offset?: number, limit?: number, sort?: string, query?: string, options?: any) {
+        return ConfigResourcesV1ApiFp(this.configuration).listConfigResourceNames(owner, offset, limit, sort, query, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary List archived runs for user
+     * @param {string} owner Owner of the namespace
+     * @param {number} [offset] Pagination offset.
+     * @param {number} [limit] Limit size.
+     * @param {string} [sort] Sort to order the search.
+     * @param {string} [query] Query filter the search search.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ConfigResourcesV1Api
+     */
+    public listConfigResources(owner: string, offset?: number, limit?: number, sort?: string, query?: string, options?: any) {
+        return ConfigResourcesV1ApiFp(this.configuration).listConfigResources(owner, offset, limit, sort, query, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary Update run
+     * @param {string} owner Owner of the namespace
+     * @param {string} config_resource_uuid UUID
+     * @param {V1ConfigResource} body Artifact store body
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ConfigResourcesV1Api
+     */
+    public patchConfigResource(owner: string, config_resource_uuid: string, body: V1ConfigResource, options?: any) {
+        return ConfigResourcesV1ApiFp(this.configuration).patchConfigResource(owner, config_resource_uuid, body, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary Get run
+     * @param {string} owner Owner of the namespace
+     * @param {string} config_resource_uuid UUID
+     * @param {V1ConfigResource} body Artifact store body
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ConfigResourcesV1Api
+     */
+    public updateConfigResource(owner: string, config_resource_uuid: string, body: V1ConfigResource, options?: any) {
+        return ConfigResourcesV1ApiFp(this.configuration).updateConfigResource(owner, config_resource_uuid, body, options)(this.fetch, this.basePath);
+    }
+
+}
+
+/**
  * ConnectionsV1Api - fetch parameter creator
  * @export
  */
@@ -6700,1442 +7412,6 @@ export class DashboardsV1Api extends BaseAPI {
      */
     public updateDashboard(owner: string, dashboard_uuid: string, body: V1Dashboard, options?: any) {
         return DashboardsV1ApiFp(this.configuration).updateDashboard(owner, dashboard_uuid, body, options)(this.fetch, this.basePath);
-    }
-
-}
-
-/**
- * K8sConfigMapsV1Api - fetch parameter creator
- * @export
- */
-export const K8sConfigMapsV1ApiFetchParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * 
-         * @summary List runs
-         * @param {string} owner Owner of the namespace
-         * @param {V1K8sResource} body Artifact store body
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createK8sConfigMap(owner: string, body: V1K8sResource, options: any = {}): FetchArgs {
-            // verify required parameter 'owner' is not null or undefined
-            if (owner === null || owner === undefined) {
-                throw new RequiredError('owner','Required parameter owner was null or undefined when calling createK8sConfigMap.');
-            }
-            // verify required parameter 'body' is not null or undefined
-            if (body === null || body === undefined) {
-                throw new RequiredError('body','Required parameter body was null or undefined when calling createK8sConfigMap.');
-            }
-            const localVarPath = `/api/v1/orgs/{owner}/k8s_config_maps`
-                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKey required
-            if (configuration && configuration.apiKey) {
-                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-					? configuration.apiKey("Authorization")
-					: configuration.apiKey;
-                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
-            }
-
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"V1K8sResource" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Patch run
-         * @param {string} owner Owner of the namespace
-         * @param {string} uuid Unique integer identifier of the entity
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteK8sConfigMap(owner: string, uuid: string, options: any = {}): FetchArgs {
-            // verify required parameter 'owner' is not null or undefined
-            if (owner === null || owner === undefined) {
-                throw new RequiredError('owner','Required parameter owner was null or undefined when calling deleteK8sConfigMap.');
-            }
-            // verify required parameter 'uuid' is not null or undefined
-            if (uuid === null || uuid === undefined) {
-                throw new RequiredError('uuid','Required parameter uuid was null or undefined when calling deleteK8sConfigMap.');
-            }
-            const localVarPath = `/api/v1/orgs/{owner}/k8s_config_maps/{uuid}`
-                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
-                .replace(`{${"uuid"}}`, encodeURIComponent(String(uuid)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'DELETE' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKey required
-            if (configuration && configuration.apiKey) {
-                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-					? configuration.apiKey("Authorization")
-					: configuration.apiKey;
-                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
-            }
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Create new run
-         * @param {string} owner Owner of the namespace
-         * @param {string} uuid Unique integer identifier of the entity
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getK8sConfigMap(owner: string, uuid: string, options: any = {}): FetchArgs {
-            // verify required parameter 'owner' is not null or undefined
-            if (owner === null || owner === undefined) {
-                throw new RequiredError('owner','Required parameter owner was null or undefined when calling getK8sConfigMap.');
-            }
-            // verify required parameter 'uuid' is not null or undefined
-            if (uuid === null || uuid === undefined) {
-                throw new RequiredError('uuid','Required parameter uuid was null or undefined when calling getK8sConfigMap.');
-            }
-            const localVarPath = `/api/v1/orgs/{owner}/k8s_config_maps/{uuid}`
-                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
-                .replace(`{${"uuid"}}`, encodeURIComponent(String(uuid)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKey required
-            if (configuration && configuration.apiKey) {
-                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-					? configuration.apiKey("Authorization")
-					: configuration.apiKey;
-                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
-            }
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary List bookmarked runs for user
-         * @param {string} owner Owner of the namespace
-         * @param {number} [offset] Pagination offset.
-         * @param {number} [limit] Limit size.
-         * @param {string} [sort] Sort to order the search.
-         * @param {string} [query] Query filter the search search.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listK8sConfigMapNames(owner: string, offset?: number, limit?: number, sort?: string, query?: string, options: any = {}): FetchArgs {
-            // verify required parameter 'owner' is not null or undefined
-            if (owner === null || owner === undefined) {
-                throw new RequiredError('owner','Required parameter owner was null or undefined when calling listK8sConfigMapNames.');
-            }
-            const localVarPath = `/api/v1/orgs/{owner}/k8s_config_maps/names`
-                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKey required
-            if (configuration && configuration.apiKey) {
-                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-					? configuration.apiKey("Authorization")
-					: configuration.apiKey;
-                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
-            }
-
-            if (offset !== undefined) {
-                localVarQueryParameter['offset'] = offset;
-            }
-
-            if (limit !== undefined) {
-                localVarQueryParameter['limit'] = limit;
-            }
-
-            if (sort !== undefined) {
-                localVarQueryParameter['sort'] = sort;
-            }
-
-            if (query !== undefined) {
-                localVarQueryParameter['query'] = query;
-            }
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary List archived runs for user
-         * @param {string} owner Owner of the namespace
-         * @param {number} [offset] Pagination offset.
-         * @param {number} [limit] Limit size.
-         * @param {string} [sort] Sort to order the search.
-         * @param {string} [query] Query filter the search search.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listK8sConfigMaps(owner: string, offset?: number, limit?: number, sort?: string, query?: string, options: any = {}): FetchArgs {
-            // verify required parameter 'owner' is not null or undefined
-            if (owner === null || owner === undefined) {
-                throw new RequiredError('owner','Required parameter owner was null or undefined when calling listK8sConfigMaps.');
-            }
-            const localVarPath = `/api/v1/orgs/{owner}/k8s_config_maps`
-                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKey required
-            if (configuration && configuration.apiKey) {
-                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-					? configuration.apiKey("Authorization")
-					: configuration.apiKey;
-                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
-            }
-
-            if (offset !== undefined) {
-                localVarQueryParameter['offset'] = offset;
-            }
-
-            if (limit !== undefined) {
-                localVarQueryParameter['limit'] = limit;
-            }
-
-            if (sort !== undefined) {
-                localVarQueryParameter['sort'] = sort;
-            }
-
-            if (query !== undefined) {
-                localVarQueryParameter['query'] = query;
-            }
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Update run
-         * @param {string} owner Owner of the namespace
-         * @param {string} k8s_resource_uuid UUID
-         * @param {V1K8sResource} body Artifact store body
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        patchK8sConfigMap(owner: string, k8s_resource_uuid: string, body: V1K8sResource, options: any = {}): FetchArgs {
-            // verify required parameter 'owner' is not null or undefined
-            if (owner === null || owner === undefined) {
-                throw new RequiredError('owner','Required parameter owner was null or undefined when calling patchK8sConfigMap.');
-            }
-            // verify required parameter 'k8s_resource_uuid' is not null or undefined
-            if (k8s_resource_uuid === null || k8s_resource_uuid === undefined) {
-                throw new RequiredError('k8s_resource_uuid','Required parameter k8s_resource_uuid was null or undefined when calling patchK8sConfigMap.');
-            }
-            // verify required parameter 'body' is not null or undefined
-            if (body === null || body === undefined) {
-                throw new RequiredError('body','Required parameter body was null or undefined when calling patchK8sConfigMap.');
-            }
-            const localVarPath = `/api/v1/orgs/{owner}/k8s_config_maps/{k8s_resource.uuid}`
-                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
-                .replace(`{${"k8s_resource.uuid"}}`, encodeURIComponent(String(k8s_resource_uuid)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'PATCH' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKey required
-            if (configuration && configuration.apiKey) {
-                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-					? configuration.apiKey("Authorization")
-					: configuration.apiKey;
-                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
-            }
-
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"V1K8sResource" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Get run
-         * @param {string} owner Owner of the namespace
-         * @param {string} k8s_resource_uuid UUID
-         * @param {V1K8sResource} body Artifact store body
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        updateK8sConfigMap(owner: string, k8s_resource_uuid: string, body: V1K8sResource, options: any = {}): FetchArgs {
-            // verify required parameter 'owner' is not null or undefined
-            if (owner === null || owner === undefined) {
-                throw new RequiredError('owner','Required parameter owner was null or undefined when calling updateK8sConfigMap.');
-            }
-            // verify required parameter 'k8s_resource_uuid' is not null or undefined
-            if (k8s_resource_uuid === null || k8s_resource_uuid === undefined) {
-                throw new RequiredError('k8s_resource_uuid','Required parameter k8s_resource_uuid was null or undefined when calling updateK8sConfigMap.');
-            }
-            // verify required parameter 'body' is not null or undefined
-            if (body === null || body === undefined) {
-                throw new RequiredError('body','Required parameter body was null or undefined when calling updateK8sConfigMap.');
-            }
-            const localVarPath = `/api/v1/orgs/{owner}/k8s_config_maps/{k8s_resource.uuid}`
-                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
-                .replace(`{${"k8s_resource.uuid"}}`, encodeURIComponent(String(k8s_resource_uuid)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'PUT' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKey required
-            if (configuration && configuration.apiKey) {
-                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-					? configuration.apiKey("Authorization")
-					: configuration.apiKey;
-                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
-            }
-
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"V1K8sResource" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    }
-};
-
-/**
- * K8sConfigMapsV1Api - functional programming interface
- * @export
- */
-export const K8sConfigMapsV1ApiFp = function(configuration?: Configuration) {
-    return {
-        /**
-         * 
-         * @summary List runs
-         * @param {string} owner Owner of the namespace
-         * @param {V1K8sResource} body Artifact store body
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createK8sConfigMap(owner: string, body: V1K8sResource, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1K8sResource> {
-            const localVarFetchArgs = K8sConfigMapsV1ApiFetchParamCreator(configuration).createK8sConfigMap(owner, body, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary Patch run
-         * @param {string} owner Owner of the namespace
-         * @param {string} uuid Unique integer identifier of the entity
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteK8sConfigMap(owner: string, uuid: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
-            const localVarFetchArgs = K8sConfigMapsV1ApiFetchParamCreator(configuration).deleteK8sConfigMap(owner, uuid, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response;
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary Create new run
-         * @param {string} owner Owner of the namespace
-         * @param {string} uuid Unique integer identifier of the entity
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getK8sConfigMap(owner: string, uuid: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1K8sResource> {
-            const localVarFetchArgs = K8sConfigMapsV1ApiFetchParamCreator(configuration).getK8sConfigMap(owner, uuid, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary List bookmarked runs for user
-         * @param {string} owner Owner of the namespace
-         * @param {number} [offset] Pagination offset.
-         * @param {number} [limit] Limit size.
-         * @param {string} [sort] Sort to order the search.
-         * @param {string} [query] Query filter the search search.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listK8sConfigMapNames(owner: string, offset?: number, limit?: number, sort?: string, query?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ListK8sResourcesResponse> {
-            const localVarFetchArgs = K8sConfigMapsV1ApiFetchParamCreator(configuration).listK8sConfigMapNames(owner, offset, limit, sort, query, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary List archived runs for user
-         * @param {string} owner Owner of the namespace
-         * @param {number} [offset] Pagination offset.
-         * @param {number} [limit] Limit size.
-         * @param {string} [sort] Sort to order the search.
-         * @param {string} [query] Query filter the search search.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listK8sConfigMaps(owner: string, offset?: number, limit?: number, sort?: string, query?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ListK8sResourcesResponse> {
-            const localVarFetchArgs = K8sConfigMapsV1ApiFetchParamCreator(configuration).listK8sConfigMaps(owner, offset, limit, sort, query, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary Update run
-         * @param {string} owner Owner of the namespace
-         * @param {string} k8s_resource_uuid UUID
-         * @param {V1K8sResource} body Artifact store body
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        patchK8sConfigMap(owner: string, k8s_resource_uuid: string, body: V1K8sResource, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1K8sResource> {
-            const localVarFetchArgs = K8sConfigMapsV1ApiFetchParamCreator(configuration).patchK8sConfigMap(owner, k8s_resource_uuid, body, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary Get run
-         * @param {string} owner Owner of the namespace
-         * @param {string} k8s_resource_uuid UUID
-         * @param {V1K8sResource} body Artifact store body
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        updateK8sConfigMap(owner: string, k8s_resource_uuid: string, body: V1K8sResource, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1K8sResource> {
-            const localVarFetchArgs = K8sConfigMapsV1ApiFetchParamCreator(configuration).updateK8sConfigMap(owner, k8s_resource_uuid, body, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-    }
-};
-
-/**
- * K8sConfigMapsV1Api - factory interface
- * @export
- */
-export const K8sConfigMapsV1ApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
-    return {
-        /**
-         * 
-         * @summary List runs
-         * @param {string} owner Owner of the namespace
-         * @param {V1K8sResource} body Artifact store body
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createK8sConfigMap(owner: string, body: V1K8sResource, options?: any) {
-            return K8sConfigMapsV1ApiFp(configuration).createK8sConfigMap(owner, body, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary Patch run
-         * @param {string} owner Owner of the namespace
-         * @param {string} uuid Unique integer identifier of the entity
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteK8sConfigMap(owner: string, uuid: string, options?: any) {
-            return K8sConfigMapsV1ApiFp(configuration).deleteK8sConfigMap(owner, uuid, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary Create new run
-         * @param {string} owner Owner of the namespace
-         * @param {string} uuid Unique integer identifier of the entity
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getK8sConfigMap(owner: string, uuid: string, options?: any) {
-            return K8sConfigMapsV1ApiFp(configuration).getK8sConfigMap(owner, uuid, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary List bookmarked runs for user
-         * @param {string} owner Owner of the namespace
-         * @param {number} [offset] Pagination offset.
-         * @param {number} [limit] Limit size.
-         * @param {string} [sort] Sort to order the search.
-         * @param {string} [query] Query filter the search search.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listK8sConfigMapNames(owner: string, offset?: number, limit?: number, sort?: string, query?: string, options?: any) {
-            return K8sConfigMapsV1ApiFp(configuration).listK8sConfigMapNames(owner, offset, limit, sort, query, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary List archived runs for user
-         * @param {string} owner Owner of the namespace
-         * @param {number} [offset] Pagination offset.
-         * @param {number} [limit] Limit size.
-         * @param {string} [sort] Sort to order the search.
-         * @param {string} [query] Query filter the search search.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listK8sConfigMaps(owner: string, offset?: number, limit?: number, sort?: string, query?: string, options?: any) {
-            return K8sConfigMapsV1ApiFp(configuration).listK8sConfigMaps(owner, offset, limit, sort, query, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary Update run
-         * @param {string} owner Owner of the namespace
-         * @param {string} k8s_resource_uuid UUID
-         * @param {V1K8sResource} body Artifact store body
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        patchK8sConfigMap(owner: string, k8s_resource_uuid: string, body: V1K8sResource, options?: any) {
-            return K8sConfigMapsV1ApiFp(configuration).patchK8sConfigMap(owner, k8s_resource_uuid, body, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary Get run
-         * @param {string} owner Owner of the namespace
-         * @param {string} k8s_resource_uuid UUID
-         * @param {V1K8sResource} body Artifact store body
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        updateK8sConfigMap(owner: string, k8s_resource_uuid: string, body: V1K8sResource, options?: any) {
-            return K8sConfigMapsV1ApiFp(configuration).updateK8sConfigMap(owner, k8s_resource_uuid, body, options)(fetch, basePath);
-        },
-    };
-};
-
-/**
- * K8sConfigMapsV1Api - object-oriented interface
- * @export
- * @class K8sConfigMapsV1Api
- * @extends {BaseAPI}
- */
-export class K8sConfigMapsV1Api extends BaseAPI {
-    /**
-     * 
-     * @summary List runs
-     * @param {string} owner Owner of the namespace
-     * @param {V1K8sResource} body Artifact store body
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof K8sConfigMapsV1Api
-     */
-    public createK8sConfigMap(owner: string, body: V1K8sResource, options?: any) {
-        return K8sConfigMapsV1ApiFp(this.configuration).createK8sConfigMap(owner, body, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary Patch run
-     * @param {string} owner Owner of the namespace
-     * @param {string} uuid Unique integer identifier of the entity
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof K8sConfigMapsV1Api
-     */
-    public deleteK8sConfigMap(owner: string, uuid: string, options?: any) {
-        return K8sConfigMapsV1ApiFp(this.configuration).deleteK8sConfigMap(owner, uuid, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary Create new run
-     * @param {string} owner Owner of the namespace
-     * @param {string} uuid Unique integer identifier of the entity
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof K8sConfigMapsV1Api
-     */
-    public getK8sConfigMap(owner: string, uuid: string, options?: any) {
-        return K8sConfigMapsV1ApiFp(this.configuration).getK8sConfigMap(owner, uuid, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary List bookmarked runs for user
-     * @param {string} owner Owner of the namespace
-     * @param {number} [offset] Pagination offset.
-     * @param {number} [limit] Limit size.
-     * @param {string} [sort] Sort to order the search.
-     * @param {string} [query] Query filter the search search.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof K8sConfigMapsV1Api
-     */
-    public listK8sConfigMapNames(owner: string, offset?: number, limit?: number, sort?: string, query?: string, options?: any) {
-        return K8sConfigMapsV1ApiFp(this.configuration).listK8sConfigMapNames(owner, offset, limit, sort, query, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary List archived runs for user
-     * @param {string} owner Owner of the namespace
-     * @param {number} [offset] Pagination offset.
-     * @param {number} [limit] Limit size.
-     * @param {string} [sort] Sort to order the search.
-     * @param {string} [query] Query filter the search search.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof K8sConfigMapsV1Api
-     */
-    public listK8sConfigMaps(owner: string, offset?: number, limit?: number, sort?: string, query?: string, options?: any) {
-        return K8sConfigMapsV1ApiFp(this.configuration).listK8sConfigMaps(owner, offset, limit, sort, query, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary Update run
-     * @param {string} owner Owner of the namespace
-     * @param {string} k8s_resource_uuid UUID
-     * @param {V1K8sResource} body Artifact store body
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof K8sConfigMapsV1Api
-     */
-    public patchK8sConfigMap(owner: string, k8s_resource_uuid: string, body: V1K8sResource, options?: any) {
-        return K8sConfigMapsV1ApiFp(this.configuration).patchK8sConfigMap(owner, k8s_resource_uuid, body, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary Get run
-     * @param {string} owner Owner of the namespace
-     * @param {string} k8s_resource_uuid UUID
-     * @param {V1K8sResource} body Artifact store body
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof K8sConfigMapsV1Api
-     */
-    public updateK8sConfigMap(owner: string, k8s_resource_uuid: string, body: V1K8sResource, options?: any) {
-        return K8sConfigMapsV1ApiFp(this.configuration).updateK8sConfigMap(owner, k8s_resource_uuid, body, options)(this.fetch, this.basePath);
-    }
-
-}
-
-/**
- * K8sSecretsV1Api - fetch parameter creator
- * @export
- */
-export const K8sSecretsV1ApiFetchParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * 
-         * @summary List runs
-         * @param {string} owner Owner of the namespace
-         * @param {V1K8sResource} body Artifact store body
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createK8sSecret(owner: string, body: V1K8sResource, options: any = {}): FetchArgs {
-            // verify required parameter 'owner' is not null or undefined
-            if (owner === null || owner === undefined) {
-                throw new RequiredError('owner','Required parameter owner was null or undefined when calling createK8sSecret.');
-            }
-            // verify required parameter 'body' is not null or undefined
-            if (body === null || body === undefined) {
-                throw new RequiredError('body','Required parameter body was null or undefined when calling createK8sSecret.');
-            }
-            const localVarPath = `/api/v1/orgs/{owner}/k8s_secrets`
-                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKey required
-            if (configuration && configuration.apiKey) {
-                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-					? configuration.apiKey("Authorization")
-					: configuration.apiKey;
-                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
-            }
-
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"V1K8sResource" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Patch run
-         * @param {string} owner Owner of the namespace
-         * @param {string} uuid Unique integer identifier of the entity
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteK8sSecret(owner: string, uuid: string, options: any = {}): FetchArgs {
-            // verify required parameter 'owner' is not null or undefined
-            if (owner === null || owner === undefined) {
-                throw new RequiredError('owner','Required parameter owner was null or undefined when calling deleteK8sSecret.');
-            }
-            // verify required parameter 'uuid' is not null or undefined
-            if (uuid === null || uuid === undefined) {
-                throw new RequiredError('uuid','Required parameter uuid was null or undefined when calling deleteK8sSecret.');
-            }
-            const localVarPath = `/api/v1/orgs/{owner}/k8s_secrets/{uuid}`
-                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
-                .replace(`{${"uuid"}}`, encodeURIComponent(String(uuid)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'DELETE' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKey required
-            if (configuration && configuration.apiKey) {
-                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-					? configuration.apiKey("Authorization")
-					: configuration.apiKey;
-                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
-            }
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Create new run
-         * @param {string} owner Owner of the namespace
-         * @param {string} uuid Unique integer identifier of the entity
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getK8sSecret(owner: string, uuid: string, options: any = {}): FetchArgs {
-            // verify required parameter 'owner' is not null or undefined
-            if (owner === null || owner === undefined) {
-                throw new RequiredError('owner','Required parameter owner was null or undefined when calling getK8sSecret.');
-            }
-            // verify required parameter 'uuid' is not null or undefined
-            if (uuid === null || uuid === undefined) {
-                throw new RequiredError('uuid','Required parameter uuid was null or undefined when calling getK8sSecret.');
-            }
-            const localVarPath = `/api/v1/orgs/{owner}/k8s_secrets/{uuid}`
-                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
-                .replace(`{${"uuid"}}`, encodeURIComponent(String(uuid)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKey required
-            if (configuration && configuration.apiKey) {
-                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-					? configuration.apiKey("Authorization")
-					: configuration.apiKey;
-                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
-            }
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary List bookmarked runs for user
-         * @param {string} owner Owner of the namespace
-         * @param {number} [offset] Pagination offset.
-         * @param {number} [limit] Limit size.
-         * @param {string} [sort] Sort to order the search.
-         * @param {string} [query] Query filter the search search.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listK8sSecretNames(owner: string, offset?: number, limit?: number, sort?: string, query?: string, options: any = {}): FetchArgs {
-            // verify required parameter 'owner' is not null or undefined
-            if (owner === null || owner === undefined) {
-                throw new RequiredError('owner','Required parameter owner was null or undefined when calling listK8sSecretNames.');
-            }
-            const localVarPath = `/api/v1/orgs/{owner}/k8s_secrets/names`
-                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKey required
-            if (configuration && configuration.apiKey) {
-                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-					? configuration.apiKey("Authorization")
-					: configuration.apiKey;
-                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
-            }
-
-            if (offset !== undefined) {
-                localVarQueryParameter['offset'] = offset;
-            }
-
-            if (limit !== undefined) {
-                localVarQueryParameter['limit'] = limit;
-            }
-
-            if (sort !== undefined) {
-                localVarQueryParameter['sort'] = sort;
-            }
-
-            if (query !== undefined) {
-                localVarQueryParameter['query'] = query;
-            }
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary List archived runs for user
-         * @param {string} owner Owner of the namespace
-         * @param {number} [offset] Pagination offset.
-         * @param {number} [limit] Limit size.
-         * @param {string} [sort] Sort to order the search.
-         * @param {string} [query] Query filter the search search.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listK8sSecrets(owner: string, offset?: number, limit?: number, sort?: string, query?: string, options: any = {}): FetchArgs {
-            // verify required parameter 'owner' is not null or undefined
-            if (owner === null || owner === undefined) {
-                throw new RequiredError('owner','Required parameter owner was null or undefined when calling listK8sSecrets.');
-            }
-            const localVarPath = `/api/v1/orgs/{owner}/k8s_secrets`
-                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKey required
-            if (configuration && configuration.apiKey) {
-                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-					? configuration.apiKey("Authorization")
-					: configuration.apiKey;
-                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
-            }
-
-            if (offset !== undefined) {
-                localVarQueryParameter['offset'] = offset;
-            }
-
-            if (limit !== undefined) {
-                localVarQueryParameter['limit'] = limit;
-            }
-
-            if (sort !== undefined) {
-                localVarQueryParameter['sort'] = sort;
-            }
-
-            if (query !== undefined) {
-                localVarQueryParameter['query'] = query;
-            }
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Update run
-         * @param {string} owner Owner of the namespace
-         * @param {string} k8s_resource_uuid UUID
-         * @param {V1K8sResource} body Artifact store body
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        patchK8sSecret(owner: string, k8s_resource_uuid: string, body: V1K8sResource, options: any = {}): FetchArgs {
-            // verify required parameter 'owner' is not null or undefined
-            if (owner === null || owner === undefined) {
-                throw new RequiredError('owner','Required parameter owner was null or undefined when calling patchK8sSecret.');
-            }
-            // verify required parameter 'k8s_resource_uuid' is not null or undefined
-            if (k8s_resource_uuid === null || k8s_resource_uuid === undefined) {
-                throw new RequiredError('k8s_resource_uuid','Required parameter k8s_resource_uuid was null or undefined when calling patchK8sSecret.');
-            }
-            // verify required parameter 'body' is not null or undefined
-            if (body === null || body === undefined) {
-                throw new RequiredError('body','Required parameter body was null or undefined when calling patchK8sSecret.');
-            }
-            const localVarPath = `/api/v1/orgs/{owner}/k8s_secrets/{k8s_resource.uuid}`
-                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
-                .replace(`{${"k8s_resource.uuid"}}`, encodeURIComponent(String(k8s_resource_uuid)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'PATCH' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKey required
-            if (configuration && configuration.apiKey) {
-                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-					? configuration.apiKey("Authorization")
-					: configuration.apiKey;
-                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
-            }
-
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"V1K8sResource" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Get run
-         * @param {string} owner Owner of the namespace
-         * @param {string} k8s_resource_uuid UUID
-         * @param {V1K8sResource} body Artifact store body
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        updateK8sSecret(owner: string, k8s_resource_uuid: string, body: V1K8sResource, options: any = {}): FetchArgs {
-            // verify required parameter 'owner' is not null or undefined
-            if (owner === null || owner === undefined) {
-                throw new RequiredError('owner','Required parameter owner was null or undefined when calling updateK8sSecret.');
-            }
-            // verify required parameter 'k8s_resource_uuid' is not null or undefined
-            if (k8s_resource_uuid === null || k8s_resource_uuid === undefined) {
-                throw new RequiredError('k8s_resource_uuid','Required parameter k8s_resource_uuid was null or undefined when calling updateK8sSecret.');
-            }
-            // verify required parameter 'body' is not null or undefined
-            if (body === null || body === undefined) {
-                throw new RequiredError('body','Required parameter body was null or undefined when calling updateK8sSecret.');
-            }
-            const localVarPath = `/api/v1/orgs/{owner}/k8s_secrets/{k8s_resource.uuid}`
-                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
-                .replace(`{${"k8s_resource.uuid"}}`, encodeURIComponent(String(k8s_resource_uuid)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'PUT' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKey required
-            if (configuration && configuration.apiKey) {
-                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-					? configuration.apiKey("Authorization")
-					: configuration.apiKey;
-                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
-            }
-
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"V1K8sResource" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    }
-};
-
-/**
- * K8sSecretsV1Api - functional programming interface
- * @export
- */
-export const K8sSecretsV1ApiFp = function(configuration?: Configuration) {
-    return {
-        /**
-         * 
-         * @summary List runs
-         * @param {string} owner Owner of the namespace
-         * @param {V1K8sResource} body Artifact store body
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createK8sSecret(owner: string, body: V1K8sResource, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1K8sResource> {
-            const localVarFetchArgs = K8sSecretsV1ApiFetchParamCreator(configuration).createK8sSecret(owner, body, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary Patch run
-         * @param {string} owner Owner of the namespace
-         * @param {string} uuid Unique integer identifier of the entity
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteK8sSecret(owner: string, uuid: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
-            const localVarFetchArgs = K8sSecretsV1ApiFetchParamCreator(configuration).deleteK8sSecret(owner, uuid, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response;
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary Create new run
-         * @param {string} owner Owner of the namespace
-         * @param {string} uuid Unique integer identifier of the entity
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getK8sSecret(owner: string, uuid: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1K8sResource> {
-            const localVarFetchArgs = K8sSecretsV1ApiFetchParamCreator(configuration).getK8sSecret(owner, uuid, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary List bookmarked runs for user
-         * @param {string} owner Owner of the namespace
-         * @param {number} [offset] Pagination offset.
-         * @param {number} [limit] Limit size.
-         * @param {string} [sort] Sort to order the search.
-         * @param {string} [query] Query filter the search search.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listK8sSecretNames(owner: string, offset?: number, limit?: number, sort?: string, query?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ListK8sResourcesResponse> {
-            const localVarFetchArgs = K8sSecretsV1ApiFetchParamCreator(configuration).listK8sSecretNames(owner, offset, limit, sort, query, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary List archived runs for user
-         * @param {string} owner Owner of the namespace
-         * @param {number} [offset] Pagination offset.
-         * @param {number} [limit] Limit size.
-         * @param {string} [sort] Sort to order the search.
-         * @param {string} [query] Query filter the search search.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listK8sSecrets(owner: string, offset?: number, limit?: number, sort?: string, query?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ListK8sResourcesResponse> {
-            const localVarFetchArgs = K8sSecretsV1ApiFetchParamCreator(configuration).listK8sSecrets(owner, offset, limit, sort, query, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary Update run
-         * @param {string} owner Owner of the namespace
-         * @param {string} k8s_resource_uuid UUID
-         * @param {V1K8sResource} body Artifact store body
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        patchK8sSecret(owner: string, k8s_resource_uuid: string, body: V1K8sResource, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1K8sResource> {
-            const localVarFetchArgs = K8sSecretsV1ApiFetchParamCreator(configuration).patchK8sSecret(owner, k8s_resource_uuid, body, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary Get run
-         * @param {string} owner Owner of the namespace
-         * @param {string} k8s_resource_uuid UUID
-         * @param {V1K8sResource} body Artifact store body
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        updateK8sSecret(owner: string, k8s_resource_uuid: string, body: V1K8sResource, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1K8sResource> {
-            const localVarFetchArgs = K8sSecretsV1ApiFetchParamCreator(configuration).updateK8sSecret(owner, k8s_resource_uuid, body, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-    }
-};
-
-/**
- * K8sSecretsV1Api - factory interface
- * @export
- */
-export const K8sSecretsV1ApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
-    return {
-        /**
-         * 
-         * @summary List runs
-         * @param {string} owner Owner of the namespace
-         * @param {V1K8sResource} body Artifact store body
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createK8sSecret(owner: string, body: V1K8sResource, options?: any) {
-            return K8sSecretsV1ApiFp(configuration).createK8sSecret(owner, body, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary Patch run
-         * @param {string} owner Owner of the namespace
-         * @param {string} uuid Unique integer identifier of the entity
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteK8sSecret(owner: string, uuid: string, options?: any) {
-            return K8sSecretsV1ApiFp(configuration).deleteK8sSecret(owner, uuid, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary Create new run
-         * @param {string} owner Owner of the namespace
-         * @param {string} uuid Unique integer identifier of the entity
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getK8sSecret(owner: string, uuid: string, options?: any) {
-            return K8sSecretsV1ApiFp(configuration).getK8sSecret(owner, uuid, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary List bookmarked runs for user
-         * @param {string} owner Owner of the namespace
-         * @param {number} [offset] Pagination offset.
-         * @param {number} [limit] Limit size.
-         * @param {string} [sort] Sort to order the search.
-         * @param {string} [query] Query filter the search search.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listK8sSecretNames(owner: string, offset?: number, limit?: number, sort?: string, query?: string, options?: any) {
-            return K8sSecretsV1ApiFp(configuration).listK8sSecretNames(owner, offset, limit, sort, query, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary List archived runs for user
-         * @param {string} owner Owner of the namespace
-         * @param {number} [offset] Pagination offset.
-         * @param {number} [limit] Limit size.
-         * @param {string} [sort] Sort to order the search.
-         * @param {string} [query] Query filter the search search.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listK8sSecrets(owner: string, offset?: number, limit?: number, sort?: string, query?: string, options?: any) {
-            return K8sSecretsV1ApiFp(configuration).listK8sSecrets(owner, offset, limit, sort, query, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary Update run
-         * @param {string} owner Owner of the namespace
-         * @param {string} k8s_resource_uuid UUID
-         * @param {V1K8sResource} body Artifact store body
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        patchK8sSecret(owner: string, k8s_resource_uuid: string, body: V1K8sResource, options?: any) {
-            return K8sSecretsV1ApiFp(configuration).patchK8sSecret(owner, k8s_resource_uuid, body, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary Get run
-         * @param {string} owner Owner of the namespace
-         * @param {string} k8s_resource_uuid UUID
-         * @param {V1K8sResource} body Artifact store body
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        updateK8sSecret(owner: string, k8s_resource_uuid: string, body: V1K8sResource, options?: any) {
-            return K8sSecretsV1ApiFp(configuration).updateK8sSecret(owner, k8s_resource_uuid, body, options)(fetch, basePath);
-        },
-    };
-};
-
-/**
- * K8sSecretsV1Api - object-oriented interface
- * @export
- * @class K8sSecretsV1Api
- * @extends {BaseAPI}
- */
-export class K8sSecretsV1Api extends BaseAPI {
-    /**
-     * 
-     * @summary List runs
-     * @param {string} owner Owner of the namespace
-     * @param {V1K8sResource} body Artifact store body
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof K8sSecretsV1Api
-     */
-    public createK8sSecret(owner: string, body: V1K8sResource, options?: any) {
-        return K8sSecretsV1ApiFp(this.configuration).createK8sSecret(owner, body, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary Patch run
-     * @param {string} owner Owner of the namespace
-     * @param {string} uuid Unique integer identifier of the entity
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof K8sSecretsV1Api
-     */
-    public deleteK8sSecret(owner: string, uuid: string, options?: any) {
-        return K8sSecretsV1ApiFp(this.configuration).deleteK8sSecret(owner, uuid, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary Create new run
-     * @param {string} owner Owner of the namespace
-     * @param {string} uuid Unique integer identifier of the entity
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof K8sSecretsV1Api
-     */
-    public getK8sSecret(owner: string, uuid: string, options?: any) {
-        return K8sSecretsV1ApiFp(this.configuration).getK8sSecret(owner, uuid, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary List bookmarked runs for user
-     * @param {string} owner Owner of the namespace
-     * @param {number} [offset] Pagination offset.
-     * @param {number} [limit] Limit size.
-     * @param {string} [sort] Sort to order the search.
-     * @param {string} [query] Query filter the search search.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof K8sSecretsV1Api
-     */
-    public listK8sSecretNames(owner: string, offset?: number, limit?: number, sort?: string, query?: string, options?: any) {
-        return K8sSecretsV1ApiFp(this.configuration).listK8sSecretNames(owner, offset, limit, sort, query, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary List archived runs for user
-     * @param {string} owner Owner of the namespace
-     * @param {number} [offset] Pagination offset.
-     * @param {number} [limit] Limit size.
-     * @param {string} [sort] Sort to order the search.
-     * @param {string} [query] Query filter the search search.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof K8sSecretsV1Api
-     */
-    public listK8sSecrets(owner: string, offset?: number, limit?: number, sort?: string, query?: string, options?: any) {
-        return K8sSecretsV1ApiFp(this.configuration).listK8sSecrets(owner, offset, limit, sort, query, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary Update run
-     * @param {string} owner Owner of the namespace
-     * @param {string} k8s_resource_uuid UUID
-     * @param {V1K8sResource} body Artifact store body
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof K8sSecretsV1Api
-     */
-    public patchK8sSecret(owner: string, k8s_resource_uuid: string, body: V1K8sResource, options?: any) {
-        return K8sSecretsV1ApiFp(this.configuration).patchK8sSecret(owner, k8s_resource_uuid, body, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary Get run
-     * @param {string} owner Owner of the namespace
-     * @param {string} k8s_resource_uuid UUID
-     * @param {V1K8sResource} body Artifact store body
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof K8sSecretsV1Api
-     */
-    public updateK8sSecret(owner: string, k8s_resource_uuid: string, body: V1K8sResource, options?: any) {
-        return K8sSecretsV1ApiFp(this.configuration).updateK8sSecret(owner, k8s_resource_uuid, body, options)(this.fetch, this.basePath);
     }
 
 }

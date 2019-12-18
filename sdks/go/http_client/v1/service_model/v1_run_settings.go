@@ -38,17 +38,14 @@ type V1RunSettings struct {
 	// Artifacts Store
 	ArtifactsStores []*V1RunSettingsCatalog `json:"artifacts_stores"`
 
+	// K8S config maps
+	ConfigResources []*V1RunSettingsCatalog `json:"config_resources"`
+
 	// git Accesses
 	GitAccesses []*V1RunSettingsCatalog `json:"git_accesses"`
 
 	// Init artifact Stores
 	InitArtifactsStores []*V1RunSettingsCatalog `json:"init_artifacts_stores"`
-
-	// K8S config maps
-	K8sConfigMaps []*V1RunSettingsCatalog `json:"k8s_config_maps"`
-
-	// K8S secrets
-	K8sSecrets []*V1RunSettingsCatalog `json:"k8s_secrets"`
 
 	// Logs Store
 	LogsStore *V1RunSettingsCatalog `json:"logs_store,omitempty"`
@@ -78,19 +75,15 @@ func (m *V1RunSettings) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
+	if err := m.validateConfigResources(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateGitAccesses(formats); err != nil {
 		res = append(res, err)
 	}
 
 	if err := m.validateInitArtifactsStores(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateK8sConfigMaps(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateK8sSecrets(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -159,6 +152,31 @@ func (m *V1RunSettings) validateArtifactsStores(formats strfmt.Registry) error {
 	return nil
 }
 
+func (m *V1RunSettings) validateConfigResources(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.ConfigResources) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(m.ConfigResources); i++ {
+		if swag.IsZero(m.ConfigResources[i]) { // not required
+			continue
+		}
+
+		if m.ConfigResources[i] != nil {
+			if err := m.ConfigResources[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("config_resources" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
 func (m *V1RunSettings) validateGitAccesses(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.GitAccesses) { // not required
@@ -199,56 +217,6 @@ func (m *V1RunSettings) validateInitArtifactsStores(formats strfmt.Registry) err
 			if err := m.InitArtifactsStores[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("init_artifacts_stores" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
-	return nil
-}
-
-func (m *V1RunSettings) validateK8sConfigMaps(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.K8sConfigMaps) { // not required
-		return nil
-	}
-
-	for i := 0; i < len(m.K8sConfigMaps); i++ {
-		if swag.IsZero(m.K8sConfigMaps[i]) { // not required
-			continue
-		}
-
-		if m.K8sConfigMaps[i] != nil {
-			if err := m.K8sConfigMaps[i].Validate(formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("k8s_config_maps" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
-	return nil
-}
-
-func (m *V1RunSettings) validateK8sSecrets(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.K8sSecrets) { // not required
-		return nil
-	}
-
-	for i := 0; i < len(m.K8sSecrets); i++ {
-		if swag.IsZero(m.K8sSecrets[i]) { // not required
-			continue
-		}
-
-		if m.K8sSecrets[i] != nil {
-			if err := m.K8sSecrets[i].Validate(formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("k8s_secrets" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
