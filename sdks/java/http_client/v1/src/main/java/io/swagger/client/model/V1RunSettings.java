@@ -61,11 +61,11 @@ public class V1RunSettings {
   @SerializedName("outputs_store")
   private V1RunSettingsCatalog outputsStore = null;
 
-  @SerializedName("init_artifacts_stores")
-  private List<V1RunSettingsCatalog> initArtifactsStores = null;
+  @SerializedName("init_connections")
+  private List<V1RunSettingsCatalog> initConnections = null;
 
-  @SerializedName("artifacts_stores")
-  private List<V1RunSettingsCatalog> artifactsStores = null;
+  @SerializedName("connections")
+  private List<V1RunSettingsCatalog> connections = null;
 
   @SerializedName("git_accesses")
   private List<V1RunSettingsCatalog> gitAccesses = null;
@@ -166,56 +166,56 @@ public class V1RunSettings {
     this.outputsStore = outputsStore;
   }
 
-  public V1RunSettings initArtifactsStores(List<V1RunSettingsCatalog> initArtifactsStores) {
-    this.initArtifactsStores = initArtifactsStores;
+  public V1RunSettings initConnections(List<V1RunSettingsCatalog> initConnections) {
+    this.initConnections = initConnections;
     return this;
   }
 
-  public V1RunSettings addInitArtifactsStoresItem(V1RunSettingsCatalog initArtifactsStoresItem) {
-    if (this.initArtifactsStores == null) {
-      this.initArtifactsStores = new ArrayList<V1RunSettingsCatalog>();
+  public V1RunSettings addInitConnectionsItem(V1RunSettingsCatalog initConnectionsItem) {
+    if (this.initConnections == null) {
+      this.initConnections = new ArrayList<V1RunSettingsCatalog>();
     }
-    this.initArtifactsStores.add(initArtifactsStoresItem);
+    this.initConnections.add(initConnectionsItem);
     return this;
   }
 
    /**
-   * Get initArtifactsStores
-   * @return initArtifactsStores
+   * Get initConnections
+   * @return initConnections
   **/
   @ApiModelProperty(value = "")
-  public List<V1RunSettingsCatalog> getInitArtifactsStores() {
-    return initArtifactsStores;
+  public List<V1RunSettingsCatalog> getInitConnections() {
+    return initConnections;
   }
 
-  public void setInitArtifactsStores(List<V1RunSettingsCatalog> initArtifactsStores) {
-    this.initArtifactsStores = initArtifactsStores;
+  public void setInitConnections(List<V1RunSettingsCatalog> initConnections) {
+    this.initConnections = initConnections;
   }
 
-  public V1RunSettings artifactsStores(List<V1RunSettingsCatalog> artifactsStores) {
-    this.artifactsStores = artifactsStores;
+  public V1RunSettings connections(List<V1RunSettingsCatalog> connections) {
+    this.connections = connections;
     return this;
   }
 
-  public V1RunSettings addArtifactsStoresItem(V1RunSettingsCatalog artifactsStoresItem) {
-    if (this.artifactsStores == null) {
-      this.artifactsStores = new ArrayList<V1RunSettingsCatalog>();
+  public V1RunSettings addConnectionsItem(V1RunSettingsCatalog connectionsItem) {
+    if (this.connections == null) {
+      this.connections = new ArrayList<V1RunSettingsCatalog>();
     }
-    this.artifactsStores.add(artifactsStoresItem);
+    this.connections.add(connectionsItem);
     return this;
   }
 
    /**
-   * Get artifactsStores
-   * @return artifactsStores
+   * Get connections
+   * @return connections
   **/
   @ApiModelProperty(value = "")
-  public List<V1RunSettingsCatalog> getArtifactsStores() {
-    return artifactsStores;
+  public List<V1RunSettingsCatalog> getConnections() {
+    return connections;
   }
 
-  public void setArtifactsStores(List<V1RunSettingsCatalog> artifactsStores) {
-    this.artifactsStores = artifactsStores;
+  public void setConnections(List<V1RunSettingsCatalog> connections) {
+    this.connections = connections;
   }
 
   public V1RunSettings gitAccesses(List<V1RunSettingsCatalog> gitAccesses) {
@@ -303,8 +303,8 @@ public class V1RunSettings {
         Objects.equals(this.queue, v1RunSettings.queue) &&
         Objects.equals(this.logsStore, v1RunSettings.logsStore) &&
         Objects.equals(this.outputsStore, v1RunSettings.outputsStore) &&
-        Objects.equals(this.initArtifactsStores, v1RunSettings.initArtifactsStores) &&
-        Objects.equals(this.artifactsStores, v1RunSettings.artifactsStores) &&
+        Objects.equals(this.initConnections, v1RunSettings.initConnections) &&
+        Objects.equals(this.connections, v1RunSettings.connections) &&
         Objects.equals(this.gitAccesses, v1RunSettings.gitAccesses) &&
         Objects.equals(this.registryAccess, v1RunSettings.registryAccess) &&
         Objects.equals(this.configResources, v1RunSettings.configResources);
@@ -312,7 +312,7 @@ public class V1RunSettings {
 
   @Override
   public int hashCode() {
-    return Objects.hash(namespace, agent, queue, logsStore, outputsStore, initArtifactsStores, artifactsStores, gitAccesses, registryAccess, configResources);
+    return Objects.hash(namespace, agent, queue, logsStore, outputsStore, initConnections, connections, gitAccesses, registryAccess, configResources);
   }
 
 
@@ -326,8 +326,8 @@ public class V1RunSettings {
     sb.append("    queue: ").append(toIndentedString(queue)).append("\n");
     sb.append("    logsStore: ").append(toIndentedString(logsStore)).append("\n");
     sb.append("    outputsStore: ").append(toIndentedString(outputsStore)).append("\n");
-    sb.append("    initArtifactsStores: ").append(toIndentedString(initArtifactsStores)).append("\n");
-    sb.append("    artifactsStores: ").append(toIndentedString(artifactsStores)).append("\n");
+    sb.append("    initConnections: ").append(toIndentedString(initConnections)).append("\n");
+    sb.append("    connections: ").append(toIndentedString(connections)).append("\n");
     sb.append("    gitAccesses: ").append(toIndentedString(gitAccesses)).append("\n");
     sb.append("    registryAccess: ").append(toIndentedString(registryAccess)).append("\n");
     sb.append("    configResources: ").append(toIndentedString(configResources)).append("\n");

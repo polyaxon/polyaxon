@@ -84,7 +84,7 @@ public class ArtifactsStoresV1Api {
         Object localVarPostBody = null;
 
         // create path and map variables
-        String localVarPath = "/api/v1/catalogs/{owner}/artifacts_stores/{uuid}/upload"
+        String localVarPath = "/api/v1/catalogs/{owner}/artifacts/{uuid}/upload"
             .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()))
             .replaceAll("\\{" + "uuid" + "\\}", apiClient.escapeString(uuid.toString()));
 

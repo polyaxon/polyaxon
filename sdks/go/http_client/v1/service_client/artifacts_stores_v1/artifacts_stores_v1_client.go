@@ -52,7 +52,7 @@ func (a *Client) UploadArtifact(params *UploadArtifactParams, authInfo runtime.C
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "UploadArtifact",
 		Method:             "POST",
-		PathPattern:        "/api/v1/catalogs/{owner}/artifacts_stores/{uuid}/upload",
+		PathPattern:        "/api/v1/catalogs/{owner}/artifacts/{uuid}/upload",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"multipart/form-data"},
 		Schemes:            []string{"http", "https"},

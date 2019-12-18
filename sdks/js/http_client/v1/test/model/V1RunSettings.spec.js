@@ -85,16 +85,16 @@
         // expect(instance.outputs_store).to.be(expectedValueLiteral);
       });
 
-      it('should have the property init_artifacts_stores (base name: "init_artifacts_stores")', function() {
-        // TODO: update the code to test the property init_artifacts_stores
-        expect(instance).to.have.property('init_artifacts_stores');
-        // expect(instance.init_artifacts_stores).to.be(expectedValueLiteral);
+      it('should have the property init_connections (base name: "init_connections")', function() {
+        // TODO: update the code to test the property init_connections
+        expect(instance).to.have.property('init_connections');
+        // expect(instance.init_connections).to.be(expectedValueLiteral);
       });
 
-      it('should have the property artifacts_stores (base name: "artifacts_stores")', function() {
-        // TODO: update the code to test the property artifacts_stores
-        expect(instance).to.have.property('artifacts_stores');
-        // expect(instance.artifacts_stores).to.be(expectedValueLiteral);
+      it('should have the property connections (base name: "connections")', function() {
+        // TODO: update the code to test the property connections
+        expect(instance).to.have.property('connections');
+        // expect(instance.connections).to.be(expectedValueLiteral);
       });
 
       it('should have the property git_accesses (base name: "git_accesses")', function() {

@@ -73,8 +73,8 @@
         obj.logs_store = ApiClient.convertToType(data['logs_store'], 'String');
       if (data.hasOwnProperty('outputs_store'))
         obj.outputs_store = ApiClient.convertToType(data['outputs_store'], 'String');
-      if (data.hasOwnProperty('artifacts_stores'))
-        obj.artifacts_stores = ApiClient.convertToType(data['artifacts_stores'], ['String']);
+      if (data.hasOwnProperty('connections'))
+        obj.connections = ApiClient.convertToType(data['connections'], ['String']);
       if (data.hasOwnProperty('git_accesses'))
         obj.git_accesses = ApiClient.convertToType(data['git_accesses'], ['String']);
       if (data.hasOwnProperty('registry_accesses'))
@@ -100,9 +100,9 @@
   exports.prototype.outputs_store = undefined;
 
   /**
-   * @member {Array.<String>} artifacts_stores
+   * @member {Array.<String>} connections
    */
-  exports.prototype.artifacts_stores = undefined;
+  exports.prototype.connections = undefined;
 
   /**
    * @member {Array.<String>} git_accesses

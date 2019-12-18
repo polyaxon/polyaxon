@@ -8,7 +8,7 @@
     "https"
   ],
   "paths": {
-    "/api/v1/{owner}/{project}/artifacts_stores/{uuid}/upload": {
+    "/api/v1/{owner}/{project}/artifacts/{uuid}/upload": {
       "post": {
         "summary": "Upload artifact to a store via project access",
         "operationId": "UploadProjectArtifact",

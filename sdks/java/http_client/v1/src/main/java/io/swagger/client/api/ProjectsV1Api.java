@@ -2963,7 +2963,7 @@ public class ProjectsV1Api {
         Object localVarPostBody = null;
 
         // create path and map variables
-        String localVarPath = "/api/v1/{owner}/{project}/artifacts_stores/{uuid}/upload"
+        String localVarPath = "/api/v1/{owner}/{project}/artifacts/{uuid}/upload"
             .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()))
             .replaceAll("\\{" + "project" + "\\}", apiClient.escapeString(project.toString()))
             .replaceAll("\\{" + "uuid" + "\\}", apiClient.escapeString(uuid.toString()));

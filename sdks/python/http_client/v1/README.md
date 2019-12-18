@@ -85,7 +85,7 @@ Class | Method | HTTP request | Description
 *AgentsV1Api* | [**list_agents**](docs/AgentsV1Api.md#list_agents) | **GET** /api/v1/orgs/{owner}/agents | List archived runs for user
 *AgentsV1Api* | [**patch_agent**](docs/AgentsV1Api.md#patch_agent) | **PATCH** /api/v1/orgs/{owner}/agents/{agent.uuid} | Update run
 *AgentsV1Api* | [**update_agent**](docs/AgentsV1Api.md#update_agent) | **PUT** /api/v1/orgs/{owner}/agents/{agent.uuid} | Get run
-*ArtifactsStoresV1Api* | [**upload_artifact**](docs/ArtifactsStoresV1Api.md#upload_artifact) | **POST** /api/v1/catalogs/{owner}/artifacts_stores/{uuid}/upload | Upload artifact to a store
+*ArtifactsStoresV1Api* | [**upload_artifact**](docs/ArtifactsStoresV1Api.md#upload_artifact) | **POST** /api/v1/catalogs/{owner}/artifacts/{uuid}/upload | Upload artifact to a store
 *AuthV1Api* | [**login**](docs/AuthV1Api.md#login) | **POST** /api/v1/users/token | List bookmarked runs for user
 *ConfigResourcesV1Api* | [**create_config_resource**](docs/ConfigResourcesV1Api.md#create_config_resource) | **POST** /api/v1/orgs/{owner}/config_resources | List runs
 *ConfigResourcesV1Api* | [**delete_config_resource**](docs/ConfigResourcesV1Api.md#delete_config_resource) | **DELETE** /api/v1/orgs/{owner}/config_resources/{uuid} | Patch run
@@ -158,7 +158,7 @@ Class | Method | HTTP request | Description
 *ProjectsV1Api* | [**update_project**](docs/ProjectsV1Api.md#update_project) | **PUT** /api/v1/{owner}/{project.name} | Patch run
 *ProjectsV1Api* | [**update_project_settings**](docs/ProjectsV1Api.md#update_project_settings) | **PUT** /api/v1/{owner}/{project}/settings | Archive run
 *ProjectsV1Api* | [**update_project_teams**](docs/ProjectsV1Api.md#update_project_teams) | **PUT** /api/v1/{owner}/{project}/teams | Unbookmark run
-*ProjectsV1Api* | [**upload_project_artifact**](docs/ProjectsV1Api.md#upload_project_artifact) | **POST** /api/v1/{owner}/{project}/artifacts_stores/{uuid}/upload | Upload artifact to a store via project access
+*ProjectsV1Api* | [**upload_project_artifact**](docs/ProjectsV1Api.md#upload_project_artifact) | **POST** /api/v1/{owner}/{project}/artifacts/{uuid}/upload | Upload artifact to a store via project access
 *QueuesV1Api* | [**create_queue**](docs/QueuesV1Api.md#create_queue) | **POST** /api/v1/orgs/{owner}/agents/{agent}/queues | Get run
 *QueuesV1Api* | [**delete_queue**](docs/QueuesV1Api.md#delete_queue) | **DELETE** /api/v1/orgs/{owner}/agents/{agent}/queues/{uuid} | Delete runs
 *QueuesV1Api* | [**get_queue**](docs/QueuesV1Api.md#get_queue) | **GET** /api/v1/orgs/{owner}/agents/{agent}/queues/{uuid} | Update run

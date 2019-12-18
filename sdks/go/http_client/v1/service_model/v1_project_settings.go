@@ -29,11 +29,11 @@ import (
 // swagger:model v1ProjectSettings
 type V1ProjectSettings struct {
 
-	// Artifacts Store
-	ArtifactsStores []string `json:"artifacts_stores"`
-
 	// Config resources
 	ConfigResouces []string `json:"config_resouces"`
+
+	// Connections
+	Connections []string `json:"connections"`
 
 	// git Accesses
 	GitAccesses []string `json:"git_accesses"`

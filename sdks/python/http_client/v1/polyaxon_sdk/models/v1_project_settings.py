@@ -49,7 +49,7 @@ class V1ProjectSettings(object):
     swagger_types = {
         "logs_store": "str",
         "outputs_store": "str",
-        "artifacts_stores": "list[str]",
+        "connections": "list[str]",
         "git_accesses": "list[str]",
         "registry_accesses": "list[str]",
         "config_resouces": "list[str]",
@@ -60,7 +60,7 @@ class V1ProjectSettings(object):
     attribute_map = {
         "logs_store": "logs_store",
         "outputs_store": "outputs_store",
-        "artifacts_stores": "artifacts_stores",
+        "connections": "connections",
         "git_accesses": "git_accesses",
         "registry_accesses": "registry_accesses",
         "config_resouces": "config_resouces",
@@ -72,7 +72,7 @@ class V1ProjectSettings(object):
         self,
         logs_store=None,
         outputs_store=None,
-        artifacts_stores=None,
+        connections=None,
         git_accesses=None,
         registry_accesses=None,
         config_resouces=None,
@@ -83,7 +83,7 @@ class V1ProjectSettings(object):
 
         self._logs_store = None
         self._outputs_store = None
-        self._artifacts_stores = None
+        self._connections = None
         self._git_accesses = None
         self._registry_accesses = None
         self._config_resouces = None
@@ -95,8 +95,8 @@ class V1ProjectSettings(object):
             self.logs_store = logs_store
         if outputs_store is not None:
             self.outputs_store = outputs_store
-        if artifacts_stores is not None:
-            self.artifacts_stores = artifacts_stores
+        if connections is not None:
+            self.connections = connections
         if git_accesses is not None:
             self.git_accesses = git_accesses
         if registry_accesses is not None:
@@ -151,25 +151,25 @@ class V1ProjectSettings(object):
         self._outputs_store = outputs_store
 
     @property
-    def artifacts_stores(self):
-        """Gets the artifacts_stores of this V1ProjectSettings.  # noqa: E501
+    def connections(self):
+        """Gets the connections of this V1ProjectSettings.  # noqa: E501
 
 
-        :return: The artifacts_stores of this V1ProjectSettings.  # noqa: E501
+        :return: The connections of this V1ProjectSettings.  # noqa: E501
         :rtype: list[str]
         """
-        return self._artifacts_stores
+        return self._connections
 
-    @artifacts_stores.setter
-    def artifacts_stores(self, artifacts_stores):
-        """Sets the artifacts_stores of this V1ProjectSettings.
+    @connections.setter
+    def connections(self, connections):
+        """Sets the connections of this V1ProjectSettings.
 
 
-        :param artifacts_stores: The artifacts_stores of this V1ProjectSettings.  # noqa: E501
+        :param connections: The connections of this V1ProjectSettings.  # noqa: E501
         :type: list[str]
         """
 
-        self._artifacts_stores = artifacts_stores
+        self._connections = connections
 
     @property
     def git_accesses(self):

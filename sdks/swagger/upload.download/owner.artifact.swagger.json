@@ -8,7 +8,7 @@
     "https"
   ],
   "paths": {
-    "/api/v1/catalogs/{owner}/artifacts_stores/{uuid}/upload": {
+    "/api/v1/catalogs/{owner}/artifacts/{uuid}/upload": {
       "post": {
         "summary": "Upload artifact to a store",
         "operationId": "UploadArtifact",

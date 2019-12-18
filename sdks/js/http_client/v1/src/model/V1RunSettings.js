@@ -79,10 +79,10 @@
         obj.logs_store = V1RunSettingsCatalog.constructFromObject(data['logs_store']);
       if (data.hasOwnProperty('outputs_store'))
         obj.outputs_store = V1RunSettingsCatalog.constructFromObject(data['outputs_store']);
-      if (data.hasOwnProperty('init_artifacts_stores'))
-        obj.init_artifacts_stores = ApiClient.convertToType(data['init_artifacts_stores'], [V1RunSettingsCatalog]);
-      if (data.hasOwnProperty('artifacts_stores'))
-        obj.artifacts_stores = ApiClient.convertToType(data['artifacts_stores'], [V1RunSettingsCatalog]);
+      if (data.hasOwnProperty('init_connections'))
+        obj.init_connections = ApiClient.convertToType(data['init_connections'], [V1RunSettingsCatalog]);
+      if (data.hasOwnProperty('connections'))
+        obj.connections = ApiClient.convertToType(data['connections'], [V1RunSettingsCatalog]);
       if (data.hasOwnProperty('git_accesses'))
         obj.git_accesses = ApiClient.convertToType(data['git_accesses'], [V1RunSettingsCatalog]);
       if (data.hasOwnProperty('registry_access'))
@@ -119,14 +119,14 @@
   exports.prototype.outputs_store = undefined;
 
   /**
-   * @member {Array.<module:model/V1RunSettingsCatalog>} init_artifacts_stores
+   * @member {Array.<module:model/V1RunSettingsCatalog>} init_connections
    */
-  exports.prototype.init_artifacts_stores = undefined;
+  exports.prototype.init_connections = undefined;
 
   /**
-   * @member {Array.<module:model/V1RunSettingsCatalog>} artifacts_stores
+   * @member {Array.<module:model/V1RunSettingsCatalog>} connections
    */
-  exports.prototype.artifacts_stores = undefined;
+  exports.prototype.connections = undefined;
 
   /**
    * @member {Array.<module:model/V1RunSettingsCatalog>} git_accesses

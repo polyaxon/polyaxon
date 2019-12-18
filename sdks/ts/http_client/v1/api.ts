@@ -2914,7 +2914,7 @@ export interface V1ProjectSettings {
      * @type {Array<string>}
      * @memberof V1ProjectSettings
      */
-    artifacts_stores?: Array<string>;
+    connections?: Array<string>;
     /**
      * 
      * @type {Array<string>}
@@ -3616,13 +3616,13 @@ export interface V1RunSettings {
      * @type {Array<V1RunSettingsCatalog>}
      * @memberof V1RunSettings
      */
-    init_artifacts_stores?: Array<V1RunSettingsCatalog>;
+    init_connections?: Array<V1RunSettingsCatalog>;
     /**
      * 
      * @type {Array<V1RunSettingsCatalog>}
      * @memberof V1RunSettings
      */
-    artifacts_stores?: Array<V1RunSettingsCatalog>;
+    connections?: Array<V1RunSettingsCatalog>;
     /**
      * 
      * @type {Array<V1RunSettingsCatalog>}
@@ -5020,7 +5020,7 @@ export const ArtifactsStoresV1ApiFetchParamCreator = function (configuration?: C
             if (uploadfile === null || uploadfile === undefined) {
                 throw new RequiredError('uploadfile','Required parameter uploadfile was null or undefined when calling uploadArtifact.');
             }
-            const localVarPath = `/api/v1/catalogs/{owner}/artifacts_stores/{uuid}/upload`
+            const localVarPath = `/api/v1/catalogs/{owner}/artifacts/{uuid}/upload`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"uuid"}}`, encodeURIComponent(String(uuid)));
             const localVarUrlObj = url.parse(localVarPath, true);
@@ -11384,7 +11384,7 @@ export const ProjectsV1ApiFetchParamCreator = function (configuration?: Configur
             if (uploadfile === null || uploadfile === undefined) {
                 throw new RequiredError('uploadfile','Required parameter uploadfile was null or undefined when calling uploadProjectArtifact.');
             }
-            const localVarPath = `/api/v1/{owner}/{project}/artifacts_stores/{uuid}/upload`
+            const localVarPath = `/api/v1/{owner}/{project}/artifacts/{uuid}/upload`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)))
                 .replace(`{${"uuid"}}`, encodeURIComponent(String(uuid)));

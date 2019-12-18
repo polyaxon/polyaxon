@@ -39,7 +39,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='v1',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\x10v1/project.proto\x12\x02v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a,protoc-gen-swagger/options/annotations.proto\"\xa1\x02\n\x07Project\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\x0c\n\x04user\x18\x02 \x01(\t\x12\x12\n\nuser_email\x18\x03 \x01(\t\x12\r\n\x05owner\x18\x04 \x01(\t\x12\x0c\n\x04name\x18\x05 \x01(\t\x12\x13\n\x0b\x64\x65scription\x18\x06 \x01(\t\x12\x0c\n\x04tags\x18\x07 \x03(\t\x12.\n\ncreated_at\x18\x08 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12.\n\nupdated_at\x18\t \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x11\n\tis_public\x18\n \x01(\t\x12\x0f\n\x07\x64\x65leted\x18\x0b \x01(\x08\x12\x12\n\nbookmarked\x18\x0c \x01(\x08\x12\x0e\n\x06readme\x18\r \x01(\t\"A\n\x12ProjectBodyRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x1c\n\x07project\x18\x02 \x01(\x0b\x32\x0b.v1.Project\"c\n\x14ListProjectsResponse\x12\r\n\x05\x63ount\x18\x01 \x01(\x05\x12\x1c\n\x07results\x18\x02 \x03(\x0b\x32\x0b.v1.Project\x12\x10\n\x08previous\x18\x03 \x01(\t\x12\x0c\n\x04next\x18\x04 \x01(\t\"\xcb\x01\n\x0fProjectSettings\x12\x12\n\nlogs_store\x18\x01 \x01(\t\x12\x15\n\routputs_store\x18\x02 \x01(\t\x12\x18\n\x10\x61rtifacts_stores\x18\x03 \x03(\t\x12\x14\n\x0cgit_accesses\x18\x04 \x03(\t\x12\x19\n\x11registry_accesses\x18\x05 \x03(\t\x12\x17\n\x0f\x63onfig_resouces\x18\x06 \x03(\t\x12\x13\n\x0brun_profile\x18\x07 \x01(\t\x12\x14\n\x0crun_profiles\x18\x08 \x03(\t\"c\n\x1aProjectSettingsBodyRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0f\n\x07project\x18\x02 \x01(\t\x12%\n\x08settings\x18\x03 \x01(\x0b\x32\x13.v1.ProjectSettings\"\x1d\n\x0cProjectTeams\x12\r\n\x05teams\x18\x01 \x03(\t\"Z\n\x17ProjectTeamsBodyRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0f\n\x07project\x18\x02 \x01(\t\x12\x1f\n\x05teams\x18\x03 \x01(\x0b\x32\x10.v1.ProjectTeamsb\x06proto3')
+  serialized_pb=_b('\n\x10v1/project.proto\x12\x02v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a,protoc-gen-swagger/options/annotations.proto\"\xa1\x02\n\x07Project\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\x0c\n\x04user\x18\x02 \x01(\t\x12\x12\n\nuser_email\x18\x03 \x01(\t\x12\r\n\x05owner\x18\x04 \x01(\t\x12\x0c\n\x04name\x18\x05 \x01(\t\x12\x13\n\x0b\x64\x65scription\x18\x06 \x01(\t\x12\x0c\n\x04tags\x18\x07 \x03(\t\x12.\n\ncreated_at\x18\x08 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12.\n\nupdated_at\x18\t \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x11\n\tis_public\x18\n \x01(\t\x12\x0f\n\x07\x64\x65leted\x18\x0b \x01(\x08\x12\x12\n\nbookmarked\x18\x0c \x01(\x08\x12\x0e\n\x06readme\x18\r \x01(\t\"A\n\x12ProjectBodyRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x1c\n\x07project\x18\x02 \x01(\x0b\x32\x0b.v1.Project\"c\n\x14ListProjectsResponse\x12\r\n\x05\x63ount\x18\x01 \x01(\x05\x12\x1c\n\x07results\x18\x02 \x03(\x0b\x32\x0b.v1.Project\x12\x10\n\x08previous\x18\x03 \x01(\t\x12\x0c\n\x04next\x18\x04 \x01(\t\"\xc6\x01\n\x0fProjectSettings\x12\x12\n\nlogs_store\x18\x01 \x01(\t\x12\x15\n\routputs_store\x18\x02 \x01(\t\x12\x13\n\x0b\x63onnections\x18\x03 \x03(\t\x12\x14\n\x0cgit_accesses\x18\x04 \x03(\t\x12\x19\n\x11registry_accesses\x18\x05 \x03(\t\x12\x17\n\x0f\x63onfig_resouces\x18\x06 \x03(\t\x12\x13\n\x0brun_profile\x18\x07 \x01(\t\x12\x14\n\x0crun_profiles\x18\x08 \x03(\t\"c\n\x1aProjectSettingsBodyRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0f\n\x07project\x18\x02 \x01(\t\x12%\n\x08settings\x18\x03 \x01(\x0b\x32\x13.v1.ProjectSettings\"\x1d\n\x0cProjectTeams\x12\r\n\x05teams\x18\x01 \x03(\t\"Z\n\x17ProjectTeamsBodyRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0f\n\x07project\x18\x02 \x01(\t\x12\x1f\n\x05teams\x18\x03 \x01(\x0b\x32\x10.v1.ProjectTeamsb\x06proto3')
   ,
   dependencies=[google_dot_api_dot_annotations__pb2.DESCRIPTOR,google_dot_protobuf_dot_timestamp__pb2.DESCRIPTOR,protoc__gen__swagger_dot_options_dot_annotations__pb2.DESCRIPTOR,])
 
@@ -273,7 +273,7 @@ _PROJECTSETTINGS = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='artifacts_stores', full_name='v1.ProjectSettings.artifacts_stores', index=2,
+      name='connections', full_name='v1.ProjectSettings.connections', index=2,
       number=3, type=9, cpp_type=9, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
@@ -327,7 +327,7 @@ _PROJECTSETTINGS = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=594,
-  serialized_end=797,
+  serialized_end=792,
 )
 
 
@@ -371,8 +371,8 @@ _PROJECTSETTINGSBODYREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=799,
-  serialized_end=898,
+  serialized_start=794,
+  serialized_end=893,
 )
 
 
@@ -402,8 +402,8 @@ _PROJECTTEAMS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=900,
-  serialized_end=929,
+  serialized_start=895,
+  serialized_end=924,
 )
 
 
@@ -447,8 +447,8 @@ _PROJECTTEAMSBODYREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=931,
-  serialized_end=1021,
+  serialized_start=926,
+  serialized_end=1016,
 )
 
 _PROJECT.fields_by_name['created_at'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP

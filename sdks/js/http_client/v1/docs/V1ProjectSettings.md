@@ -5,7 +5,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **logs_store** | **String** |  | [optional] 
 **outputs_store** | **String** |  | [optional] 
-**artifacts_stores** | **[String]** |  | [optional] 
+**connections** | **[String]** |  | [optional] 
 **git_accesses** | **[String]** |  | [optional] 
 **registry_accesses** | **[String]** |  | [optional] 
 **config_resouces** | **[String]** |  | [optional] 

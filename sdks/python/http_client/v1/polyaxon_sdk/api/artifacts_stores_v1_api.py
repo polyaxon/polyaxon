@@ -168,7 +168,7 @@ class ArtifactsStoresV1Api(object):
         auth_settings = ["ApiKey"]  # noqa: E501
 
         return self.api_client.call_api(
-            "/api/v1/catalogs/{owner}/artifacts_stores/{uuid}/upload",
+            "/api/v1/catalogs/{owner}/artifacts/{uuid}/upload",
             "POST",
             path_params,
             query_params,

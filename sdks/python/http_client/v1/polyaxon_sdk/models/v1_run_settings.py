@@ -52,8 +52,8 @@ class V1RunSettings(object):
         "queue": "V1RunSettingsCatalog",
         "logs_store": "V1RunSettingsCatalog",
         "outputs_store": "V1RunSettingsCatalog",
-        "init_artifacts_stores": "list[V1RunSettingsCatalog]",
-        "artifacts_stores": "list[V1RunSettingsCatalog]",
+        "init_connections": "list[V1RunSettingsCatalog]",
+        "connections": "list[V1RunSettingsCatalog]",
         "git_accesses": "list[V1RunSettingsCatalog]",
         "registry_access": "V1RunSettingsCatalog",
         "config_resources": "list[V1RunSettingsCatalog]",
@@ -65,8 +65,8 @@ class V1RunSettings(object):
         "queue": "queue",
         "logs_store": "logs_store",
         "outputs_store": "outputs_store",
-        "init_artifacts_stores": "init_artifacts_stores",
-        "artifacts_stores": "artifacts_stores",
+        "init_connections": "init_connections",
+        "connections": "connections",
         "git_accesses": "git_accesses",
         "registry_access": "registry_access",
         "config_resources": "config_resources",
@@ -79,8 +79,8 @@ class V1RunSettings(object):
         queue=None,
         logs_store=None,
         outputs_store=None,
-        init_artifacts_stores=None,
-        artifacts_stores=None,
+        init_connections=None,
+        connections=None,
         git_accesses=None,
         registry_access=None,
         config_resources=None,
@@ -92,8 +92,8 @@ class V1RunSettings(object):
         self._queue = None
         self._logs_store = None
         self._outputs_store = None
-        self._init_artifacts_stores = None
-        self._artifacts_stores = None
+        self._init_connections = None
+        self._connections = None
         self._git_accesses = None
         self._registry_access = None
         self._config_resources = None
@@ -109,10 +109,10 @@ class V1RunSettings(object):
             self.logs_store = logs_store
         if outputs_store is not None:
             self.outputs_store = outputs_store
-        if init_artifacts_stores is not None:
-            self.init_artifacts_stores = init_artifacts_stores
-        if artifacts_stores is not None:
-            self.artifacts_stores = artifacts_stores
+        if init_connections is not None:
+            self.init_connections = init_connections
+        if connections is not None:
+            self.connections = connections
         if git_accesses is not None:
             self.git_accesses = git_accesses
         if registry_access is not None:
@@ -226,46 +226,46 @@ class V1RunSettings(object):
         self._outputs_store = outputs_store
 
     @property
-    def init_artifacts_stores(self):
-        """Gets the init_artifacts_stores of this V1RunSettings.  # noqa: E501
+    def init_connections(self):
+        """Gets the init_connections of this V1RunSettings.  # noqa: E501
 
 
-        :return: The init_artifacts_stores of this V1RunSettings.  # noqa: E501
+        :return: The init_connections of this V1RunSettings.  # noqa: E501
         :rtype: list[V1RunSettingsCatalog]
         """
-        return self._init_artifacts_stores
+        return self._init_connections
 
-    @init_artifacts_stores.setter
-    def init_artifacts_stores(self, init_artifacts_stores):
-        """Sets the init_artifacts_stores of this V1RunSettings.
+    @init_connections.setter
+    def init_connections(self, init_connections):
+        """Sets the init_connections of this V1RunSettings.
 
 
-        :param init_artifacts_stores: The init_artifacts_stores of this V1RunSettings.  # noqa: E501
+        :param init_connections: The init_connections of this V1RunSettings.  # noqa: E501
         :type: list[V1RunSettingsCatalog]
         """
 
-        self._init_artifacts_stores = init_artifacts_stores
+        self._init_connections = init_connections
 
     @property
-    def artifacts_stores(self):
-        """Gets the artifacts_stores of this V1RunSettings.  # noqa: E501
+    def connections(self):
+        """Gets the connections of this V1RunSettings.  # noqa: E501
 
 
-        :return: The artifacts_stores of this V1RunSettings.  # noqa: E501
+        :return: The connections of this V1RunSettings.  # noqa: E501
         :rtype: list[V1RunSettingsCatalog]
         """
-        return self._artifacts_stores
+        return self._connections
 
-    @artifacts_stores.setter
-    def artifacts_stores(self, artifacts_stores):
-        """Sets the artifacts_stores of this V1RunSettings.
+    @connections.setter
+    def connections(self, connections):
+        """Sets the connections of this V1RunSettings.
 
 
-        :param artifacts_stores: The artifacts_stores of this V1RunSettings.  # noqa: E501
+        :param connections: The connections of this V1RunSettings.  # noqa: E501
         :type: list[V1RunSettingsCatalog]
         """
 
-        self._artifacts_stores = artifacts_stores
+        self._connections = connections
 
     @property
     def git_accesses(self):

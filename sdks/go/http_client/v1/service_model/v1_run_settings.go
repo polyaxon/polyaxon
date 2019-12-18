@@ -35,17 +35,17 @@ type V1RunSettings struct {
 	// Agent
 	Agent *V1RunSettingsCatalog `json:"agent,omitempty"`
 
-	// Artifacts Store
-	ArtifactsStores []*V1RunSettingsCatalog `json:"artifacts_stores"`
-
 	// K8S config maps
 	ConfigResources []*V1RunSettingsCatalog `json:"config_resources"`
 
-	// git Accesses
+	// Connections
+	Connections []*V1RunSettingsCatalog `json:"connections"`
+
+	// Git Accesses
 	GitAccesses []*V1RunSettingsCatalog `json:"git_accesses"`
 
-	// Init artifact Stores
-	InitArtifactsStores []*V1RunSettingsCatalog `json:"init_artifacts_stores"`
+	// Init connections
+	InitConnections []*V1RunSettingsCatalog `json:"init_connections"`
 
 	// Logs Store
 	LogsStore *V1RunSettingsCatalog `json:"logs_store,omitempty"`
@@ -71,11 +71,11 @@ func (m *V1RunSettings) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
-	if err := m.validateArtifactsStores(formats); err != nil {
+	if err := m.validateConfigResources(formats); err != nil {
 		res = append(res, err)
 	}
 
-	if err := m.validateConfigResources(formats); err != nil {
+	if err := m.validateConnections(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -83,7 +83,7 @@ func (m *V1RunSettings) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
-	if err := m.validateInitArtifactsStores(formats); err != nil {
+	if err := m.validateInitConnections(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -127,31 +127,6 @@ func (m *V1RunSettings) validateAgent(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *V1RunSettings) validateArtifactsStores(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.ArtifactsStores) { // not required
-		return nil
-	}
-
-	for i := 0; i < len(m.ArtifactsStores); i++ {
-		if swag.IsZero(m.ArtifactsStores[i]) { // not required
-			continue
-		}
-
-		if m.ArtifactsStores[i] != nil {
-			if err := m.ArtifactsStores[i].Validate(formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("artifacts_stores" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
-	return nil
-}
-
 func (m *V1RunSettings) validateConfigResources(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.ConfigResources) { // not required
@@ -167,6 +142,31 @@ func (m *V1RunSettings) validateConfigResources(formats strfmt.Registry) error {
 			if err := m.ConfigResources[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("config_resources" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (m *V1RunSettings) validateConnections(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Connections) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(m.Connections); i++ {
+		if swag.IsZero(m.Connections[i]) { // not required
+			continue
+		}
+
+		if m.Connections[i] != nil {
+			if err := m.Connections[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("connections" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -202,21 +202,21 @@ func (m *V1RunSettings) validateGitAccesses(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *V1RunSettings) validateInitArtifactsStores(formats strfmt.Registry) error {
+func (m *V1RunSettings) validateInitConnections(formats strfmt.Registry) error {
 
-	if swag.IsZero(m.InitArtifactsStores) { // not required
+	if swag.IsZero(m.InitConnections) { // not required
 		return nil
 	}
 
-	for i := 0; i < len(m.InitArtifactsStores); i++ {
-		if swag.IsZero(m.InitArtifactsStores[i]) { // not required
+	for i := 0; i < len(m.InitConnections); i++ {
+		if swag.IsZero(m.InitConnections[i]) { // not required
 			continue
 		}
 
-		if m.InitArtifactsStores[i] != nil {
-			if err := m.InitArtifactsStores[i].Validate(formats); err != nil {
+		if m.InitConnections[i] != nil {
+			if err := m.InitConnections[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("init_artifacts_stores" + "." + strconv.Itoa(i))
+					return ve.ValidateName("init_connections" + "." + strconv.Itoa(i))
 				}
 				return err
 			}

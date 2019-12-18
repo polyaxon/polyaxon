@@ -51,8 +51,8 @@ public class V1ProjectSettings {
   @SerializedName("outputs_store")
   private String outputsStore = null;
 
-  @SerializedName("artifacts_stores")
-  private List<String> artifactsStores = null;
+  @SerializedName("connections")
+  private List<String> connections = null;
 
   @SerializedName("git_accesses")
   private List<String> gitAccesses = null;
@@ -105,30 +105,30 @@ public class V1ProjectSettings {
     this.outputsStore = outputsStore;
   }
 
-  public V1ProjectSettings artifactsStores(List<String> artifactsStores) {
-    this.artifactsStores = artifactsStores;
+  public V1ProjectSettings connections(List<String> connections) {
+    this.connections = connections;
     return this;
   }
 
-  public V1ProjectSettings addArtifactsStoresItem(String artifactsStoresItem) {
-    if (this.artifactsStores == null) {
-      this.artifactsStores = new ArrayList<String>();
+  public V1ProjectSettings addConnectionsItem(String connectionsItem) {
+    if (this.connections == null) {
+      this.connections = new ArrayList<String>();
     }
-    this.artifactsStores.add(artifactsStoresItem);
+    this.connections.add(connectionsItem);
     return this;
   }
 
    /**
-   * Get artifactsStores
-   * @return artifactsStores
+   * Get connections
+   * @return connections
   **/
   @ApiModelProperty(value = "")
-  public List<String> getArtifactsStores() {
-    return artifactsStores;
+  public List<String> getConnections() {
+    return connections;
   }
 
-  public void setArtifactsStores(List<String> artifactsStores) {
-    this.artifactsStores = artifactsStores;
+  public void setConnections(List<String> connections) {
+    this.connections = connections;
   }
 
   public V1ProjectSettings gitAccesses(List<String> gitAccesses) {
@@ -265,7 +265,7 @@ public class V1ProjectSettings {
     V1ProjectSettings v1ProjectSettings = (V1ProjectSettings) o;
     return Objects.equals(this.logsStore, v1ProjectSettings.logsStore) &&
         Objects.equals(this.outputsStore, v1ProjectSettings.outputsStore) &&
-        Objects.equals(this.artifactsStores, v1ProjectSettings.artifactsStores) &&
+        Objects.equals(this.connections, v1ProjectSettings.connections) &&
         Objects.equals(this.gitAccesses, v1ProjectSettings.gitAccesses) &&
         Objects.equals(this.registryAccesses, v1ProjectSettings.registryAccesses) &&
         Objects.equals(this.configResouces, v1ProjectSettings.configResouces) &&
@@ -275,7 +275,7 @@ public class V1ProjectSettings {
 
   @Override
   public int hashCode() {
-    return Objects.hash(logsStore, outputsStore, artifactsStores, gitAccesses, registryAccesses, configResouces, runProfile, runProfiles);
+    return Objects.hash(logsStore, outputsStore, connections, gitAccesses, registryAccesses, configResouces, runProfile, runProfiles);
   }
 
 
@@ -286,7 +286,7 @@ public class V1ProjectSettings {
     
     sb.append("    logsStore: ").append(toIndentedString(logsStore)).append("\n");
     sb.append("    outputsStore: ").append(toIndentedString(outputsStore)).append("\n");
-    sb.append("    artifactsStores: ").append(toIndentedString(artifactsStores)).append("\n");
+    sb.append("    connections: ").append(toIndentedString(connections)).append("\n");
     sb.append("    gitAccesses: ").append(toIndentedString(gitAccesses)).append("\n");
     sb.append("    registryAccesses: ").append(toIndentedString(registryAccesses)).append("\n");
     sb.append("    configResouces: ").append(toIndentedString(configResouces)).append("\n");

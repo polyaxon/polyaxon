@@ -7892,7 +7892,7 @@
         ]
       }
     },
-    "/api/v1/catalogs/{owner}/artifacts_stores/{uuid}/upload": {
+    "/api/v1/catalogs/{owner}/artifacts/{uuid}/upload": {
       "post": {
         "summary": "Upload artifact to a store",
         "operationId": "UploadArtifact",
@@ -7961,7 +7961,7 @@
         ]
       }
     },
-    "/api/v1/{owner}/{project}/artifacts_stores/{uuid}/upload": {
+    "/api/v1/{owner}/{project}/artifacts/{uuid}/upload": {
       "post": {
         "summary": "Upload artifact to a store via project access",
         "operationId": "UploadProjectArtifact",
@@ -10447,12 +10447,12 @@
           "type": "string",
           "title": "Outputs Store"
         },
-        "artifacts_stores": {
+        "connections": {
           "type": "array",
           "items": {
             "type": "string"
           },
-          "title": "Artifacts Store"
+          "title": "Connections"
         },
         "git_accesses": {
           "type": "array",
@@ -10968,26 +10968,26 @@
           "$ref": "#/definitions/v1RunSettingsCatalog",
           "title": "Outputs Store"
         },
-        "init_artifacts_stores": {
+        "init_connections": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/v1RunSettingsCatalog"
           },
-          "title": "Init artifact Stores"
+          "title": "Init connections"
         },
-        "artifacts_stores": {
+        "connections": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/v1RunSettingsCatalog"
           },
-          "title": "Artifacts Store"
+          "title": "Connections"
         },
         "git_accesses": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/v1RunSettingsCatalog"
           },
-          "title": "git Accesses"
+          "title": "Git Accesses"
         },
         "registry_access": {
           "$ref": "#/definitions/v1RunSettingsCatalog",

@@ -188,13 +188,13 @@ message RunSettings {
     // Outputs Store
     RunSettingsCatalog outputs_store = 5;
 
-    // Init artifact Stores
-    repeated RunSettingsCatalog init_artifacts_stores = 6;
+    // Init connections
+    repeated RunSettingsCatalog init_connections = 6;
 
-    // Artifacts Store
-    repeated RunSettingsCatalog artifacts_stores = 7;
+    // Connections
+    repeated RunSettingsCatalog connections = 7;
 
-    // git Accesses
+    // Git Accesses
     repeated RunSettingsCatalog git_accesses = 8;
 
     // Registry Access

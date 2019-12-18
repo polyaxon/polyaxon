@@ -294,7 +294,7 @@
             expect(data.outputs_store).to.be.a('string');
             expect(data.outputs_store).to.be("");
             {
-              let dataCtr = data.artifacts_stores;
+              let dataCtr = data.connections;
               expect(dataCtr).to.be.an(Array);
               expect(dataCtr).to.not.be.empty();
               for (let p in dataCtr) {
@@ -764,7 +764,7 @@
           var body = new PolyaxonSdk.V1ProjectSettings();
           body.logs_store = "";
           body.outputs_store = "";
-          body.artifacts_stores = [""];
+          body.connections = [""];
           body.git_accesses = [""];
           body.registry_accesses = [""];
           body.config_resouces = [""];
@@ -783,7 +783,7 @@
             expect(data.outputs_store).to.be.a('string');
             expect(data.outputs_store).to.be("");
             {
-              let dataCtr = data.artifacts_stores;
+              let dataCtr = data.connections;
               expect(dataCtr).to.be.an(Array);
               expect(dataCtr).to.not.be.empty();
               for (let p in dataCtr) {
@@ -995,7 +995,7 @@
           var body = new PolyaxonSdk.V1ProjectSettings();
           body.logs_store = "";
           body.outputs_store = "";
-          body.artifacts_stores = [""];
+          body.connections = [""];
           body.git_accesses = [""];
           body.registry_accesses = [""];
           body.config_resouces = [""];
@@ -1014,7 +1014,7 @@
             expect(data.outputs_store).to.be.a('string');
             expect(data.outputs_store).to.be("");
             {
-              let dataCtr = data.artifacts_stores;
+              let dataCtr = data.connections;
               expect(dataCtr).to.be.an(Array);
               expect(dataCtr).to.not.be.empty();
               for (let p in dataCtr) {

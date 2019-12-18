@@ -80,8 +80,8 @@ message ProjectSettings {
     // Outputs Store
     string outputs_store = 2;
 
-    // Artifacts Store
-    repeated string artifacts_stores = 3;
+    // Connections
+    repeated string connections = 3;
 
     // git Accesses
     repeated string git_accesses = 4;

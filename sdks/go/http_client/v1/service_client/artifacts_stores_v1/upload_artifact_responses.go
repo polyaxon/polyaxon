@@ -79,7 +79,7 @@ type UploadArtifactOK struct {
 }
 
 func (o *UploadArtifactOK) Error() string {
-	return fmt.Sprintf("[POST /api/v1/catalogs/{owner}/artifacts_stores/{uuid}/upload][%d] uploadArtifactOK ", 200)
+	return fmt.Sprintf("[POST /api/v1/catalogs/{owner}/artifacts/{uuid}/upload][%d] uploadArtifactOK ", 200)
 }
 
 func (o *UploadArtifactOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -101,7 +101,7 @@ type UploadArtifactNoContent struct {
 }
 
 func (o *UploadArtifactNoContent) Error() string {
-	return fmt.Sprintf("[POST /api/v1/catalogs/{owner}/artifacts_stores/{uuid}/upload][%d] uploadArtifactNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/catalogs/{owner}/artifacts/{uuid}/upload][%d] uploadArtifactNoContent  %+v", 204, o.Payload)
 }
 
 func (o *UploadArtifactNoContent) GetPayload() interface{} {
@@ -132,7 +132,7 @@ type UploadArtifactForbidden struct {
 }
 
 func (o *UploadArtifactForbidden) Error() string {
-	return fmt.Sprintf("[POST /api/v1/catalogs/{owner}/artifacts_stores/{uuid}/upload][%d] uploadArtifactForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/catalogs/{owner}/artifacts/{uuid}/upload][%d] uploadArtifactForbidden  %+v", 403, o.Payload)
 }
 
 func (o *UploadArtifactForbidden) GetPayload() interface{} {
@@ -163,7 +163,7 @@ type UploadArtifactNotFound struct {
 }
 
 func (o *UploadArtifactNotFound) Error() string {
-	return fmt.Sprintf("[POST /api/v1/catalogs/{owner}/artifacts_stores/{uuid}/upload][%d] uploadArtifactNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/catalogs/{owner}/artifacts/{uuid}/upload][%d] uploadArtifactNotFound  %+v", 404, o.Payload)
 }
 
 func (o *UploadArtifactNotFound) GetPayload() interface{} {

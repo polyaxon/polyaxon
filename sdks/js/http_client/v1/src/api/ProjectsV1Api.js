@@ -1303,7 +1303,7 @@
       var returnType = null;
 
       return this.apiClient.callApi(
-        '/api/v1/{owner}/{project}/artifacts_stores/{uuid}/upload', 'POST',
+        '/api/v1/{owner}/{project}/artifacts/{uuid}/upload', 'POST',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );

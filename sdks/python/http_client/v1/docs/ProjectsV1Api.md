@@ -25,7 +25,7 @@ Method | HTTP request | Description
 [**update_project**](ProjectsV1Api.md#update_project) | **PUT** /api/v1/{owner}/{project.name} | Patch run
 [**update_project_settings**](ProjectsV1Api.md#update_project_settings) | **PUT** /api/v1/{owner}/{project}/settings | Archive run
 [**update_project_teams**](ProjectsV1Api.md#update_project_teams) | **PUT** /api/v1/{owner}/{project}/teams | Unbookmark run
-[**upload_project_artifact**](ProjectsV1Api.md#upload_project_artifact) | **POST** /api/v1/{owner}/{project}/artifacts_stores/{uuid}/upload | Upload artifact to a store via project access
+[**upload_project_artifact**](ProjectsV1Api.md#upload_project_artifact) | **POST** /api/v1/{owner}/{project}/artifacts/{uuid}/upload | Upload artifact to a store via project access
 
 
 # **archive_project**

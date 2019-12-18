@@ -742,7 +742,7 @@
               expect(data.outputs_store.name).to.be.a('string');
               expect(data.outputs_store.name).to.be("");
             {
-              let dataCtr = data.init_artifacts_stores;
+              let dataCtr = data.init_connections;
               expect(dataCtr).to.be.an(Array);
               expect(dataCtr).to.not.be.empty();
               for (let p in dataCtr) {
@@ -755,7 +755,7 @@
               }
             }
             {
-              let dataCtr = data.artifacts_stores;
+              let dataCtr = data.connections;
               expect(dataCtr).to.be.an(Array);
               expect(dataCtr).to.not.be.empty();
               for (let p in dataCtr) {

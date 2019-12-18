@@ -808,7 +808,7 @@ func (a *Client) UploadProjectArtifact(params *UploadProjectArtifactParams, auth
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "UploadProjectArtifact",
 		Method:             "POST",
-		PathPattern:        "/api/v1/{owner}/{project}/artifacts_stores/{uuid}/upload",
+		PathPattern:        "/api/v1/{owner}/{project}/artifacts/{uuid}/upload",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"multipart/form-data"},
 		Schemes:            []string{"http", "https"},
