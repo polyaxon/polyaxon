@@ -105,6 +105,9 @@ type V1Run struct {
 	// Optional run environment tracked
 	RunEnv interface{} `json:"run_env,omitempty"`
 
+	// Optional run settings
+	Settings *V1RunSettings `json:"settings,omitempty"`
+
 	// Optional last time the entity was started
 	// Format: date-time
 	StartedAt strfmt.DateTime `json:"started_at,omitempty"`
@@ -143,6 +146,10 @@ func (m *V1Run) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateMetaInfo(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateSettings(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -212,6 +219,24 @@ func (m *V1Run) validateMetaInfo(formats strfmt.Registry) error {
 		if err := m.MetaInfo.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("meta_info")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1Run) validateSettings(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Settings) { // not required
+		return nil
+	}
+
+	if m.Settings != nil {
+		if err := m.Settings.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("settings")
 			}
 			return err
 		}

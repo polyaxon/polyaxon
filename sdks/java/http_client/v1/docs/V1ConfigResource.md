@@ -10,13 +10,11 @@ Name | Type | Description | Notes
 **tags** | **List&lt;String&gt;** |  |  [optional]
 **createdAt** | [**OffsetDateTime**](OffsetDateTime.md) |  |  [optional]
 **updatedAt** | [**OffsetDateTime**](OffsetDateTime.md) |  |  [optional]
-**k8sRef** | **String** |  |  [optional]
-**isSecret** | **Boolean** |  |  [optional]
 **frozen** | **Boolean** |  |  [optional]
 **disabled** | **Boolean** |  |  [optional]
 **deleted** | **Boolean** |  |  [optional]
-**mountPath** | **String** |  |  [optional]
-**items** | **List&lt;String&gt;** |  |  [optional]
+**kind** | [**V1ConfigResourceKind**](V1ConfigResourceKind.md) |  |  [optional]
+**schema** | [**V1ConfigResourceSchema**](V1ConfigResourceSchema.md) |  |  [optional]
 
 
 

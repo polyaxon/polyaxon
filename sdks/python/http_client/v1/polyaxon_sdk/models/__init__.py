@@ -46,6 +46,8 @@ from polyaxon_sdk.models.v1_code_ref import V1CodeRef
 from polyaxon_sdk.models.v1_component import V1Component
 from polyaxon_sdk.models.v1_component_ref import V1ComponentRef
 from polyaxon_sdk.models.v1_config_resource import V1ConfigResource
+from polyaxon_sdk.models.v1_config_resource_kind import V1ConfigResourceKind
+from polyaxon_sdk.models.v1_config_resource_schema import V1ConfigResourceSchema
 from polyaxon_sdk.models.v1_connection import V1Connection
 from polyaxon_sdk.models.v1_connection_kind import V1ConnectionKind
 from polyaxon_sdk.models.v1_connection_scema import V1ConnectionScema

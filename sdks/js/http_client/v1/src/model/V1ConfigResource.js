@@ -31,18 +31,18 @@
 (function(root, factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
-    define(['ApiClient'], factory);
+    define(['ApiClient', 'model/V1ConfigResourceKind', 'model/V1ConfigResourceSchema'], factory);
   } else if (typeof module === 'object' && module.exports) {
     // CommonJS-like environments that support module.exports, like Node.
-    module.exports = factory(require('../ApiClient'));
+    module.exports = factory(require('../ApiClient'), require('./V1ConfigResourceKind'), require('./V1ConfigResourceSchema'));
   } else {
     // Browser globals (root is window)
     if (!root.PolyaxonSdk) {
       root.PolyaxonSdk = {};
     }
-    root.PolyaxonSdk.V1ConfigResource = factory(root.PolyaxonSdk.ApiClient);
+    root.PolyaxonSdk.V1ConfigResource = factory(root.PolyaxonSdk.ApiClient, root.PolyaxonSdk.V1ConfigResourceKind, root.PolyaxonSdk.V1ConfigResourceSchema);
   }
-}(this, function(ApiClient) {
+}(this, function(ApiClient, V1ConfigResourceKind, V1ConfigResourceSchema) {
   'use strict';
 
   /**
@@ -81,20 +81,16 @@
         obj.created_at = ApiClient.convertToType(data['created_at'], 'Date');
       if (data.hasOwnProperty('updated_at'))
         obj.updated_at = ApiClient.convertToType(data['updated_at'], 'Date');
-      if (data.hasOwnProperty('k8s_ref'))
-        obj.k8s_ref = ApiClient.convertToType(data['k8s_ref'], 'String');
-      if (data.hasOwnProperty('is_secret'))
-        obj.is_secret = ApiClient.convertToType(data['is_secret'], 'Boolean');
       if (data.hasOwnProperty('frozen'))
         obj.frozen = ApiClient.convertToType(data['frozen'], 'Boolean');
       if (data.hasOwnProperty('disabled'))
         obj.disabled = ApiClient.convertToType(data['disabled'], 'Boolean');
       if (data.hasOwnProperty('deleted'))
         obj.deleted = ApiClient.convertToType(data['deleted'], 'Boolean');
-      if (data.hasOwnProperty('mount_path'))
-        obj.mount_path = ApiClient.convertToType(data['mount_path'], 'String');
-      if (data.hasOwnProperty('items'))
-        obj.items = ApiClient.convertToType(data['items'], ['String']);
+      if (data.hasOwnProperty('kind'))
+        obj.kind = V1ConfigResourceKind.constructFromObject(data['kind']);
+      if (data.hasOwnProperty('schema'))
+        obj.schema = V1ConfigResourceSchema.constructFromObject(data['schema']);
     }
     return obj;
   }
@@ -130,16 +126,6 @@
   exports.prototype.updated_at = undefined;
 
   /**
-   * @member {String} k8s_ref
-   */
-  exports.prototype.k8s_ref = undefined;
-
-  /**
-   * @member {Boolean} is_secret
-   */
-  exports.prototype.is_secret = undefined;
-
-  /**
    * @member {Boolean} frozen
    */
   exports.prototype.frozen = undefined;
@@ -155,14 +141,14 @@
   exports.prototype.deleted = undefined;
 
   /**
-   * @member {String} mount_path
+   * @member {module:model/V1ConfigResourceKind} kind
    */
-  exports.prototype.mount_path = undefined;
+  exports.prototype.kind = undefined;
 
   /**
-   * @member {Array.<String>} items
+   * @member {module:model/V1ConfigResourceSchema} schema
    */
-  exports.prototype.items = undefined;
+  exports.prototype.schema = undefined;
 
   return exports;
 

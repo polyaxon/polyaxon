@@ -36,6 +36,8 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import io.swagger.client.model.V1ConfigResourceKind;
+import io.swagger.client.model.V1ConfigResourceSchema;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -64,12 +66,6 @@ public class V1ConfigResource {
   @SerializedName("updated_at")
   private OffsetDateTime updatedAt = null;
 
-  @SerializedName("k8s_ref")
-  private String k8sRef = null;
-
-  @SerializedName("is_secret")
-  private Boolean isSecret = null;
-
   @SerializedName("frozen")
   private Boolean frozen = null;
 
@@ -79,11 +75,11 @@ public class V1ConfigResource {
   @SerializedName("deleted")
   private Boolean deleted = null;
 
-  @SerializedName("mount_path")
-  private String mountPath = null;
+  @SerializedName("kind")
+  private V1ConfigResourceKind kind = null;
 
-  @SerializedName("items")
-  private List<String> items = null;
+  @SerializedName("schema")
+  private V1ConfigResourceSchema schema = null;
 
   public V1ConfigResource uuid(String uuid) {
     this.uuid = uuid;
@@ -201,42 +197,6 @@ public class V1ConfigResource {
     this.updatedAt = updatedAt;
   }
 
-  public V1ConfigResource k8sRef(String k8sRef) {
-    this.k8sRef = k8sRef;
-    return this;
-  }
-
-   /**
-   * Get k8sRef
-   * @return k8sRef
-  **/
-  @ApiModelProperty(value = "")
-  public String getK8sRef() {
-    return k8sRef;
-  }
-
-  public void setK8sRef(String k8sRef) {
-    this.k8sRef = k8sRef;
-  }
-
-  public V1ConfigResource isSecret(Boolean isSecret) {
-    this.isSecret = isSecret;
-    return this;
-  }
-
-   /**
-   * Get isSecret
-   * @return isSecret
-  **/
-  @ApiModelProperty(value = "")
-  public Boolean isIsSecret() {
-    return isSecret;
-  }
-
-  public void setIsSecret(Boolean isSecret) {
-    this.isSecret = isSecret;
-  }
-
   public V1ConfigResource frozen(Boolean frozen) {
     this.frozen = frozen;
     return this;
@@ -291,48 +251,40 @@ public class V1ConfigResource {
     this.deleted = deleted;
   }
 
-  public V1ConfigResource mountPath(String mountPath) {
-    this.mountPath = mountPath;
+  public V1ConfigResource kind(V1ConfigResourceKind kind) {
+    this.kind = kind;
     return this;
   }
 
    /**
-   * Get mountPath
-   * @return mountPath
+   * Get kind
+   * @return kind
   **/
   @ApiModelProperty(value = "")
-  public String getMountPath() {
-    return mountPath;
+  public V1ConfigResourceKind getKind() {
+    return kind;
   }
 
-  public void setMountPath(String mountPath) {
-    this.mountPath = mountPath;
+  public void setKind(V1ConfigResourceKind kind) {
+    this.kind = kind;
   }
 
-  public V1ConfigResource items(List<String> items) {
-    this.items = items;
-    return this;
-  }
-
-  public V1ConfigResource addItemsItem(String itemsItem) {
-    if (this.items == null) {
-      this.items = new ArrayList<String>();
-    }
-    this.items.add(itemsItem);
+  public V1ConfigResource schema(V1ConfigResourceSchema schema) {
+    this.schema = schema;
     return this;
   }
 
    /**
-   * Get items
-   * @return items
+   * Get schema
+   * @return schema
   **/
   @ApiModelProperty(value = "")
-  public List<String> getItems() {
-    return items;
+  public V1ConfigResourceSchema getSchema() {
+    return schema;
   }
 
-  public void setItems(List<String> items) {
-    this.items = items;
+  public void setSchema(V1ConfigResourceSchema schema) {
+    this.schema = schema;
   }
 
 
@@ -351,18 +303,16 @@ public class V1ConfigResource {
         Objects.equals(this.tags, v1ConfigResource.tags) &&
         Objects.equals(this.createdAt, v1ConfigResource.createdAt) &&
         Objects.equals(this.updatedAt, v1ConfigResource.updatedAt) &&
-        Objects.equals(this.k8sRef, v1ConfigResource.k8sRef) &&
-        Objects.equals(this.isSecret, v1ConfigResource.isSecret) &&
         Objects.equals(this.frozen, v1ConfigResource.frozen) &&
         Objects.equals(this.disabled, v1ConfigResource.disabled) &&
         Objects.equals(this.deleted, v1ConfigResource.deleted) &&
-        Objects.equals(this.mountPath, v1ConfigResource.mountPath) &&
-        Objects.equals(this.items, v1ConfigResource.items);
+        Objects.equals(this.kind, v1ConfigResource.kind) &&
+        Objects.equals(this.schema, v1ConfigResource.schema);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(uuid, name, description, tags, createdAt, updatedAt, k8sRef, isSecret, frozen, disabled, deleted, mountPath, items);
+    return Objects.hash(uuid, name, description, tags, createdAt, updatedAt, frozen, disabled, deleted, kind, schema);
   }
 
 
@@ -377,13 +327,11 @@ public class V1ConfigResource {
     sb.append("    tags: ").append(toIndentedString(tags)).append("\n");
     sb.append("    createdAt: ").append(toIndentedString(createdAt)).append("\n");
     sb.append("    updatedAt: ").append(toIndentedString(updatedAt)).append("\n");
-    sb.append("    k8sRef: ").append(toIndentedString(k8sRef)).append("\n");
-    sb.append("    isSecret: ").append(toIndentedString(isSecret)).append("\n");
     sb.append("    frozen: ").append(toIndentedString(frozen)).append("\n");
     sb.append("    disabled: ").append(toIndentedString(disabled)).append("\n");
     sb.append("    deleted: ").append(toIndentedString(deleted)).append("\n");
-    sb.append("    mountPath: ").append(toIndentedString(mountPath)).append("\n");
-    sb.append("    items: ").append(toIndentedString(items)).append("\n");
+    sb.append("    kind: ").append(toIndentedString(kind)).append("\n");
+    sb.append("    schema: ").append(toIndentedString(schema)).append("\n");
     sb.append("}");
     return sb.toString();
   }

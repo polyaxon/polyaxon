@@ -4431,7 +4431,7 @@ func local_request_ProjectsV1_PatchProjectSettings_0(ctx context.Context, marsha
 
 }
 
-func request_ProjectsV1_GetProjectTeams_0(ctx context.Context, marshaler runtime.Marshaler, client ProjectsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_ProjectsV1_FetchProjectTeams_0(ctx context.Context, marshaler runtime.Marshaler, client ProjectsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq ProjectResourceRequest
 	var metadata runtime.ServerMetadata
 
@@ -4464,12 +4464,12 @@ func request_ProjectsV1_GetProjectTeams_0(ctx context.Context, marshaler runtime
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "project", err)
 	}
 
-	msg, err := client.GetProjectTeams(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	msg, err := client.FetchProjectTeams(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
 }
 
-func local_request_ProjectsV1_GetProjectTeams_0(ctx context.Context, marshaler runtime.Marshaler, server ProjectsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_ProjectsV1_FetchProjectTeams_0(ctx context.Context, marshaler runtime.Marshaler, server ProjectsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq ProjectResourceRequest
 	var metadata runtime.ServerMetadata
 
@@ -4502,7 +4502,7 @@ func local_request_ProjectsV1_GetProjectTeams_0(ctx context.Context, marshaler r
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "project", err)
 	}
 
-	msg, err := server.GetProjectTeams(ctx, &protoReq)
+	msg, err := server.FetchProjectTeams(ctx, &protoReq)
 	return msg, metadata, err
 
 }
@@ -13431,7 +13431,7 @@ func RegisterProjectsV1HandlerServer(ctx context.Context, mux *runtime.ServeMux,
 
 	})
 
-	mux.Handle("GET", pattern_ProjectsV1_GetProjectTeams_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_ProjectsV1_FetchProjectTeams_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -13440,14 +13440,14 @@ func RegisterProjectsV1HandlerServer(ctx context.Context, mux *runtime.ServeMux,
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_ProjectsV1_GetProjectTeams_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_ProjectsV1_FetchProjectTeams_0(rctx, inboundMarshaler, server, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_ProjectsV1_GetProjectTeams_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_ProjectsV1_FetchProjectTeams_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -16713,7 +16713,7 @@ func RegisterProjectsV1HandlerClient(ctx context.Context, mux *runtime.ServeMux,
 
 	})
 
-	mux.Handle("GET", pattern_ProjectsV1_GetProjectTeams_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_ProjectsV1_FetchProjectTeams_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -16722,14 +16722,14 @@ func RegisterProjectsV1HandlerClient(ctx context.Context, mux *runtime.ServeMux,
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_ProjectsV1_GetProjectTeams_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_ProjectsV1_FetchProjectTeams_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_ProjectsV1_GetProjectTeams_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_ProjectsV1_FetchProjectTeams_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -16813,7 +16813,7 @@ var (
 
 	pattern_ProjectsV1_PatchProjectSettings_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "owner", "project", "settings"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_ProjectsV1_GetProjectTeams_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "owner", "project", "teams"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ProjectsV1_FetchProjectTeams_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "owner", "project", "teams"}, "", runtime.AssumeColonVerbOpt(true)))
 
 	pattern_ProjectsV1_UpdateProjectTeams_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "owner", "project", "teams"}, "", runtime.AssumeColonVerbOpt(true)))
 
@@ -16857,7 +16857,7 @@ var (
 
 	forward_ProjectsV1_PatchProjectSettings_0 = runtime.ForwardResponseMessage
 
-	forward_ProjectsV1_GetProjectTeams_0 = runtime.ForwardResponseMessage
+	forward_ProjectsV1_FetchProjectTeams_0 = runtime.ForwardResponseMessage
 
 	forward_ProjectsV1_UpdateProjectTeams_0 = runtime.ForwardResponseMessage
 

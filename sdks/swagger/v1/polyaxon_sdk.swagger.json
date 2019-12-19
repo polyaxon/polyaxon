@@ -7675,7 +7675,7 @@
     "/api/v1/{owner}/{project}/teams": {
       "get": {
         "summary": "Bookmark run",
-        "operationId": "GetProjectTeams",
+        "operationId": "FetchProjectTeams",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -8706,15 +8706,6 @@
           "format": "date-time",
           "title": "Optional last time the entity was updated"
         },
-        "k8s_ref": {
-          "type": "string",
-          "title": "Optional the k8s ref"
-        },
-        "is_secret": {
-          "type": "boolean",
-          "format": "boolean",
-          "title": "Optional wether this config resource is a secret"
-        },
         "frozen": {
           "type": "boolean",
           "format": "boolean",
@@ -8730,19 +8721,45 @@
           "format": "boolean",
           "title": "Optional if the entity has been deleted"
         },
+        "kind": {
+          "$ref": "#/definitions/v1ConfigResourceKind",
+          "title": "Config resource kind"
+        },
+        "schema": {
+          "$ref": "#/definitions/v1ConfigResourceSchema",
+          "title": "Config resource schema"
+        }
+      },
+      "title": "Config resource specification"
+    },
+    "v1ConfigResourceKind": {
+      "type": "string",
+      "enum": [
+        "config_map",
+        "secret",
+        "service_account",
+        "image_pull_secret"
+      ],
+      "default": "config_map",
+      "title": "config resource kinds"
+    },
+    "v1ConfigResourceSchema": {
+      "type": "object",
+      "properties": {
+        "ref": {
+          "type": "string"
+        },
         "mount_path": {
-          "type": "string",
-          "title": "Optional a mount path to specifiy where to mount this resource"
+          "type": "string"
         },
         "items": {
           "type": "array",
           "items": {
             "type": "string"
-          },
-          "title": "Optional the k8s secret to use"
+          }
         }
       },
-      "title": "Config resource specification"
+      "title": "Config resource schema"
     },
     "v1Connection": {
       "type": "object",
@@ -10414,6 +10431,17 @@
         "readme": {
           "type": "string",
           "title": "Optional a readme text describing this entity"
+        },
+        "settings": {
+          "$ref": "#/definitions/v1ProjectSettings",
+          "title": "Optional project settings"
+        },
+        "teams": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "Optional teams assigned to a project"
         }
       },
       "title": "Project specification"
@@ -10816,6 +10844,10 @@
         "original_name": {
           "type": "string",
           "title": "Optional name of the original run"
+        },
+        "settings": {
+          "$ref": "#/definitions/v1RunSettings",
+          "title": "Optional run settings"
         }
       },
       "title": "Run specification"

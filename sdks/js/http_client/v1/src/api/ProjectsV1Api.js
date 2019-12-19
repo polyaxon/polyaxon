@@ -381,6 +381,60 @@
     }
 
     /**
+     * Callback function to receive the result of the fetchProjectTeams operation.
+     * @callback module:api/ProjectsV1Api~fetchProjectTeamsCallback
+     * @param {String} error Error message, if any.
+     * @param {module:model/V1ProjectTeams} data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * Bookmark run
+     * @param {String} owner Owner of the namespace
+     * @param {String} project Project under namesapce
+     * @param {module:api/ProjectsV1Api~fetchProjectTeamsCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link module:model/V1ProjectTeams}
+     */
+    this.fetchProjectTeams = function(owner, project, callback) {
+      var postBody = null;
+
+      // verify the required parameter 'owner' is set
+      if (owner === undefined || owner === null) {
+        throw new Error("Missing the required parameter 'owner' when calling fetchProjectTeams");
+      }
+
+      // verify the required parameter 'project' is set
+      if (project === undefined || project === null) {
+        throw new Error("Missing the required parameter 'project' when calling fetchProjectTeams");
+      }
+
+
+      var pathParams = {
+        'owner': owner,
+        'project': project
+      };
+      var queryParams = {
+      };
+      var collectionQueryParams = {
+      };
+      var headerParams = {
+      };
+      var formParams = {
+      };
+
+      var authNames = ['ApiKey'];
+      var contentTypes = ['application/json'];
+      var accepts = ['application/json'];
+      var returnType = V1ProjectTeams;
+
+      return this.apiClient.callApi(
+        '/api/v1/{owner}/{project}/teams', 'GET',
+        pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
+
+    /**
      * Callback function to receive the result of the getProject operation.
      * @callback module:api/ProjectsV1Api~getProjectCallback
      * @param {String} error Error message, if any.
@@ -483,60 +537,6 @@
 
       return this.apiClient.callApi(
         '/api/v1/{owner}/{project}/settings', 'GET',
-        pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
-        authNames, contentTypes, accepts, returnType, callback
-      );
-    }
-
-    /**
-     * Callback function to receive the result of the getProjectTeams operation.
-     * @callback module:api/ProjectsV1Api~getProjectTeamsCallback
-     * @param {String} error Error message, if any.
-     * @param {module:model/V1ProjectTeams} data The data returned by the service call.
-     * @param {String} response The complete HTTP response.
-     */
-
-    /**
-     * Bookmark run
-     * @param {String} owner Owner of the namespace
-     * @param {String} project Project under namesapce
-     * @param {module:api/ProjectsV1Api~getProjectTeamsCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link module:model/V1ProjectTeams}
-     */
-    this.getProjectTeams = function(owner, project, callback) {
-      var postBody = null;
-
-      // verify the required parameter 'owner' is set
-      if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling getProjectTeams");
-      }
-
-      // verify the required parameter 'project' is set
-      if (project === undefined || project === null) {
-        throw new Error("Missing the required parameter 'project' when calling getProjectTeams");
-      }
-
-
-      var pathParams = {
-        'owner': owner,
-        'project': project
-      };
-      var queryParams = {
-      };
-      var collectionQueryParams = {
-      };
-      var headerParams = {
-      };
-      var formParams = {
-      };
-
-      var authNames = ['ApiKey'];
-      var contentTypes = ['application/json'];
-      var accepts = ['application/json'];
-      var returnType = V1ProjectTeams;
-
-      return this.apiClient.callApi(
-        '/api/v1/{owner}/{project}/teams', 'GET',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );

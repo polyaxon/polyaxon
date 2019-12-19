@@ -91,18 +91,6 @@
         // expect(instance.updated_at).to.be(expectedValueLiteral);
       });
 
-      it('should have the property k8s_ref (base name: "k8s_ref")', function() {
-        // TODO: update the code to test the property k8s_ref
-        expect(instance).to.have.property('k8s_ref');
-        // expect(instance.k8s_ref).to.be(expectedValueLiteral);
-      });
-
-      it('should have the property is_secret (base name: "is_secret")', function() {
-        // TODO: update the code to test the property is_secret
-        expect(instance).to.have.property('is_secret');
-        // expect(instance.is_secret).to.be(expectedValueLiteral);
-      });
-
       it('should have the property frozen (base name: "frozen")', function() {
         // TODO: update the code to test the property frozen
         expect(instance).to.have.property('frozen');
@@ -121,16 +109,16 @@
         // expect(instance.deleted).to.be(expectedValueLiteral);
       });
 
-      it('should have the property mount_path (base name: "mount_path")', function() {
-        // TODO: update the code to test the property mount_path
-        expect(instance).to.have.property('mount_path');
-        // expect(instance.mount_path).to.be(expectedValueLiteral);
+      it('should have the property kind (base name: "kind")', function() {
+        // TODO: update the code to test the property kind
+        expect(instance).to.have.property('kind');
+        // expect(instance.kind).to.be(expectedValueLiteral);
       });
 
-      it('should have the property items (base name: "items")', function() {
-        // TODO: update the code to test the property items
-        expect(instance).to.have.property('items');
-        // expect(instance.items).to.be(expectedValueLiteral);
+      it('should have the property schema (base name: "schema")', function() {
+        // TODO: update the code to test the property schema
+        expect(instance).to.have.property('schema');
+        // expect(instance.schema).to.be(expectedValueLiteral);
       });
 
     });

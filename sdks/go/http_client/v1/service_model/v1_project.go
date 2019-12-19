@@ -56,8 +56,14 @@ type V1Project struct {
 	// Optional a readme text describing this entity
 	Readme string `json:"readme,omitempty"`
 
+	// Optional project settings
+	Settings *V1ProjectSettings `json:"settings,omitempty"`
+
 	// Optional Tags of this entity
 	Tags []string `json:"tags"`
+
+	// Optional teams assigned to a project
+	Teams []string `json:"teams"`
 
 	// Optional last time the entity was updated
 	// Format: date-time
@@ -81,6 +87,10 @@ func (m *V1Project) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
+	if err := m.validateSettings(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateUpdatedAt(formats); err != nil {
 		res = append(res, err)
 	}
@@ -99,6 +109,24 @@ func (m *V1Project) validateCreatedAt(formats strfmt.Registry) error {
 
 	if err := validate.FormatOf("created_at", "body", "date-time", m.CreatedAt.String(), formats); err != nil {
 		return err
+	}
+
+	return nil
+}
+
+func (m *V1Project) validateSettings(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Settings) { // not required
+		return nil
+	}
+
+	if m.Settings != nil {
+		if err := m.Settings.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("settings")
+			}
+			return err
+		}
 	}
 
 	return nil

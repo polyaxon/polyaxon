@@ -153,6 +153,23 @@ public class ProjectsV1ApiTest {
     }
     
     /**
+     * Bookmark run
+     *
+     * 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void fetchProjectTeamsTest() throws ApiException {
+        String owner = null;
+        String project = null;
+        V1ProjectTeams response = api.fetchProjectTeams(owner, project);
+
+        // TODO: test validations
+    }
+    
+    /**
      * Update run
      *
      * 
@@ -182,23 +199,6 @@ public class ProjectsV1ApiTest {
         String owner = null;
         String project = null;
         V1ProjectSettings response = api.getProjectSettings(owner, project);
-
-        // TODO: test validations
-    }
-    
-    /**
-     * Bookmark run
-     *
-     * 
-     *
-     * @throws ApiException
-     *          if the Api call fails
-     */
-    @Test
-    public void getProjectTeamsTest() throws ApiException {
-        String owner = null;
-        String project = null;
-        V1ProjectTeams response = api.getProjectTeams(owner, project);
 
         // TODO: test validations
     }

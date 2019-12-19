@@ -656,8 +656,8 @@ class ProjectsV1Stub(object):
         request_serializer=v1_dot_project__pb2.ProjectSettingsBodyRequest.SerializeToString,
         response_deserializer=v1_dot_project__pb2.ProjectSettings.FromString,
         )
-    self.GetProjectTeams = channel.unary_unary(
-        '/v1.ProjectsV1/GetProjectTeams',
+    self.FetchProjectTeams = channel.unary_unary(
+        '/v1.ProjectsV1/FetchProjectTeams',
         request_serializer=v1_dot_base__pb2.ProjectResourceRequest.SerializeToString,
         response_deserializer=v1_dot_project__pb2.ProjectTeams.FromString,
         )
@@ -803,7 +803,7 @@ class ProjectsV1Servicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
-  def GetProjectTeams(self, request, context):
+  def FetchProjectTeams(self, request, context):
     """Get project teams
     """
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -917,8 +917,8 @@ def add_ProjectsV1Servicer_to_server(servicer, server):
           request_deserializer=v1_dot_project__pb2.ProjectSettingsBodyRequest.FromString,
           response_serializer=v1_dot_project__pb2.ProjectSettings.SerializeToString,
       ),
-      'GetProjectTeams': grpc.unary_unary_rpc_method_handler(
-          servicer.GetProjectTeams,
+      'FetchProjectTeams': grpc.unary_unary_rpc_method_handler(
+          servicer.FetchProjectTeams,
           request_deserializer=v1_dot_base__pb2.ProjectResourceRequest.FromString,
           response_serializer=v1_dot_project__pb2.ProjectTeams.SerializeToString,
       ),

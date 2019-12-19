@@ -10,9 +10,9 @@ Method | HTTP request | Description
 [**deleteProject**](ProjectsV1Api.md#deleteProject) | **DELETE** /api/v1/{owner}/{project} | Delete runs
 [**disableProjectCI**](ProjectsV1Api.md#disableProjectCI) | **DELETE** /api/v1/{owner}/{project}/ci | Restart run
 [**enableProjectCI**](ProjectsV1Api.md#enableProjectCI) | **POST** /api/v1/{owner}/{project}/ci | Restart run with copy
+[**fetchProjectTeams**](ProjectsV1Api.md#fetchProjectTeams) | **GET** /api/v1/{owner}/{project}/teams | Bookmark run
 [**getProject**](ProjectsV1Api.md#getProject) | **GET** /api/v1/{owner}/{project} | Update run
 [**getProjectSettings**](ProjectsV1Api.md#getProjectSettings) | **GET** /api/v1/{owner}/{project}/settings | Resume run
-[**getProjectTeams**](ProjectsV1Api.md#getProjectTeams) | **GET** /api/v1/{owner}/{project}/teams | Bookmark run
 [**listArchivedProjects**](ProjectsV1Api.md#listArchivedProjects) | **GET** /api/v1/archives/{user}/projects | Get run
 [**listBookmarkedProjects**](ProjectsV1Api.md#listBookmarkedProjects) | **GET** /api/v1/bookmarks/{user}/projects | Create new run
 [**listProjectNames**](ProjectsV1Api.md#listProjectNames) | **GET** /api/v1/{owner}/projects/names | List runs
@@ -353,6 +353,61 @@ null (empty response body)
  - **Content-Type**: application/json
  - **Accept**: application/json
 
+<a name="fetchProjectTeams"></a>
+# **fetchProjectTeams**
+> V1ProjectTeams fetchProjectTeams(owner, project)
+
+Bookmark run
+
+### Example
+```java
+// Import classes:
+//import io.swagger.client.ApiClient;
+//import io.swagger.client.ApiException;
+//import io.swagger.client.Configuration;
+//import io.swagger.client.auth.*;
+//import io.swagger.client.api.ProjectsV1Api;
+
+ApiClient defaultClient = Configuration.getDefaultApiClient();
+
+// Configure API key authorization: ApiKey
+ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+ApiKey.setApiKey("YOUR API KEY");
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.setApiKeyPrefix("Token");
+
+ProjectsV1Api apiInstance = new ProjectsV1Api();
+String owner = "owner_example"; // String | Owner of the namespace
+String project = "project_example"; // String | Project under namesapce
+try {
+    V1ProjectTeams result = apiInstance.fetchProjectTeams(owner, project);
+    System.out.println(result);
+} catch (ApiException e) {
+    System.err.println("Exception when calling ProjectsV1Api#fetchProjectTeams");
+    e.printStackTrace();
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **String**| Owner of the namespace |
+ **project** | **String**| Project under namesapce |
+
+### Return type
+
+[**V1ProjectTeams**](V1ProjectTeams.md)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
 <a name="getProject"></a>
 # **getProject**
 > V1Project getProject(owner, project)
@@ -453,61 +508,6 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**V1ProjectSettings**](V1ProjectSettings.md)
-
-### Authorization
-
-[ApiKey](../README.md#ApiKey)
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: application/json
-
-<a name="getProjectTeams"></a>
-# **getProjectTeams**
-> V1ProjectTeams getProjectTeams(owner, project)
-
-Bookmark run
-
-### Example
-```java
-// Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.ProjectsV1Api;
-
-ApiClient defaultClient = Configuration.getDefaultApiClient();
-
-// Configure API key authorization: ApiKey
-ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
-ApiKey.setApiKey("YOUR API KEY");
-// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-//ApiKey.setApiKeyPrefix("Token");
-
-ProjectsV1Api apiInstance = new ProjectsV1Api();
-String owner = "owner_example"; // String | Owner of the namespace
-String project = "project_example"; // String | Project under namesapce
-try {
-    V1ProjectTeams result = apiInstance.getProjectTeams(owner, project);
-    System.out.println(result);
-} catch (ApiException e) {
-    System.err.println("Exception when calling ProjectsV1Api#getProjectTeams");
-    e.printStackTrace();
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **owner** | **String**| Owner of the namespace |
- **project** | **String**| Project under namesapce |
-
-### Return type
-
-[**V1ProjectTeams**](V1ProjectTeams.md)
 
 ### Authorization
 

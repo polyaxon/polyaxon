@@ -235,6 +235,12 @@
         // expect(instance.original_name).to.be(expectedValueLiteral);
       });
 
+      it('should have the property settings (base name: "settings")', function() {
+        // TODO: update the code to test the property settings
+        expect(instance).to.have.property('settings');
+        // expect(instance.settings).to.be(expectedValueLiteral);
+      });
+
     });
   });
 

@@ -133,6 +133,18 @@
         // expect(instance.readme).to.be(expectedValueLiteral);
       });
 
+      it('should have the property settings (base name: "settings")', function() {
+        // TODO: update the code to test the property settings
+        expect(instance).to.have.property('settings');
+        // expect(instance.settings).to.be(expectedValueLiteral);
+      });
+
+      it('should have the property teams (base name: "teams")', function() {
+        // TODO: update the code to test the property teams
+        expect(instance).to.have.property('teams');
+        // expect(instance.teams).to.be(expectedValueLiteral);
+      });
+
     });
   });
 

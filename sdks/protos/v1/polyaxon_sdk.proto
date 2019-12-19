@@ -427,7 +427,7 @@ service ProjectsV1 {
     }
 
     // Get project teams
-    rpc GetProjectTeams(ProjectResourceRequest) returns (ProjectTeams) {
+    rpc FetchProjectTeams(ProjectResourceRequest) returns (ProjectTeams) {
         option (google.api.http) = {
             get: "/api/v1/{owner}/{project}/teams"
         };

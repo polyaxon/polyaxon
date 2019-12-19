@@ -661,18 +661,6 @@ export interface V1ConfigResource {
     updated_at?: Date;
     /**
      * 
-     * @type {string}
-     * @memberof V1ConfigResource
-     */
-    k8s_ref?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof V1ConfigResource
-     */
-    is_secret?: boolean;
-    /**
-     * 
      * @type {boolean}
      * @memberof V1ConfigResource
      */
@@ -691,14 +679,52 @@ export interface V1ConfigResource {
     deleted?: boolean;
     /**
      * 
-     * @type {string}
+     * @type {V1ConfigResourceKind}
      * @memberof V1ConfigResource
+     */
+    kind?: V1ConfigResourceKind;
+    /**
+     * 
+     * @type {V1ConfigResourceSchema}
+     * @memberof V1ConfigResource
+     */
+    schema?: V1ConfigResourceSchema;
+}
+
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+export enum V1ConfigResourceKind {
+    ConfigMap = <any> 'config_map',
+    Secret = <any> 'secret',
+    ServiceAccount = <any> 'service_account',
+    ImagePullSecret = <any> 'image_pull_secret'
+}
+
+/**
+ * 
+ * @export
+ * @interface V1ConfigResourceSchema
+ */
+export interface V1ConfigResourceSchema {
+    /**
+     * 
+     * @type {string}
+     * @memberof V1ConfigResourceSchema
+     */
+    ref?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1ConfigResourceSchema
      */
     mount_path?: string;
     /**
      * 
      * @type {Array<string>}
-     * @memberof V1ConfigResource
+     * @memberof V1ConfigResourceSchema
      */
     items?: Array<string>;
 }
@@ -2863,6 +2889,18 @@ export interface V1Project {
      * @memberof V1Project
      */
     readme?: string;
+    /**
+     * 
+     * @type {V1ProjectSettings}
+     * @memberof V1Project
+     */
+    settings?: V1ProjectSettings;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof V1Project
+     */
+    teams?: Array<string>;
 }
 
 /**
@@ -3393,6 +3431,12 @@ export interface V1Run {
      * @memberof V1Run
      */
     original_name?: string;
+    /**
+     * 
+     * @type {V1RunSettings}
+     * @memberof V1Run
+     */
+    settings?: V1RunSettings;
 }
 
 /**
@@ -10602,6 +10646,49 @@ export const ProjectsV1ApiFetchParamCreator = function (configuration?: Configur
         },
         /**
          * 
+         * @summary Bookmark run
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project under namesapce
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        fetchProjectTeams(owner: string, project: string, options: any = {}): FetchArgs {
+            // verify required parameter 'owner' is not null or undefined
+            if (owner === null || owner === undefined) {
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling fetchProjectTeams.');
+            }
+            // verify required parameter 'project' is not null or undefined
+            if (project === null || project === undefined) {
+                throw new RequiredError('project','Required parameter project was null or undefined when calling fetchProjectTeams.');
+            }
+            const localVarPath = `/api/v1/{owner}/{project}/teams`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"project"}}`, encodeURIComponent(String(project)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("Authorization")
+					: configuration.apiKey;
+                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Update run
          * @param {string} owner Owner of the namespace
          * @param {string} project Project under namesapce
@@ -10661,49 +10748,6 @@ export const ProjectsV1ApiFetchParamCreator = function (configuration?: Configur
                 throw new RequiredError('project','Required parameter project was null or undefined when calling getProjectSettings.');
             }
             const localVarPath = `/api/v1/{owner}/{project}/settings`
-                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
-                .replace(`{${"project"}}`, encodeURIComponent(String(project)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKey required
-            if (configuration && configuration.apiKey) {
-                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-					? configuration.apiKey("Authorization")
-					: configuration.apiKey;
-                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
-            }
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Bookmark run
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project under namesapce
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getProjectTeams(owner: string, project: string, options: any = {}): FetchArgs {
-            // verify required parameter 'owner' is not null or undefined
-            if (owner === null || owner === undefined) {
-                throw new RequiredError('owner','Required parameter owner was null or undefined when calling getProjectTeams.');
-            }
-            // verify required parameter 'project' is not null or undefined
-            if (project === null || project === undefined) {
-                throw new RequiredError('project','Required parameter project was null or undefined when calling getProjectTeams.');
-            }
-            const localVarPath = `/api/v1/{owner}/{project}/teams`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)));
             const localVarUrlObj = url.parse(localVarPath, true);
@@ -11558,6 +11602,26 @@ export const ProjectsV1ApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Bookmark run
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project under namesapce
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        fetchProjectTeams(owner: string, project: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ProjectTeams> {
+            const localVarFetchArgs = ProjectsV1ApiFetchParamCreator(configuration).fetchProjectTeams(owner, project, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
          * @summary Update run
          * @param {string} owner Owner of the namespace
          * @param {string} project Project under namesapce
@@ -11586,26 +11650,6 @@ export const ProjectsV1ApiFp = function(configuration?: Configuration) {
          */
         getProjectSettings(owner: string, project: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ProjectSettings> {
             const localVarFetchArgs = ProjectsV1ApiFetchParamCreator(configuration).getProjectSettings(owner, project, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary Bookmark run
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project under namesapce
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getProjectTeams(owner: string, project: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ProjectTeams> {
-            const localVarFetchArgs = ProjectsV1ApiFetchParamCreator(configuration).getProjectTeams(owner, project, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -11975,6 +12019,17 @@ export const ProjectsV1ApiFactory = function (configuration?: Configuration, fet
         },
         /**
          * 
+         * @summary Bookmark run
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project under namesapce
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        fetchProjectTeams(owner: string, project: string, options?: any) {
+            return ProjectsV1ApiFp(configuration).fetchProjectTeams(owner, project, options)(fetch, basePath);
+        },
+        /**
+         * 
          * @summary Update run
          * @param {string} owner Owner of the namespace
          * @param {string} project Project under namesapce
@@ -11994,17 +12049,6 @@ export const ProjectsV1ApiFactory = function (configuration?: Configuration, fet
          */
         getProjectSettings(owner: string, project: string, options?: any) {
             return ProjectsV1ApiFp(configuration).getProjectSettings(owner, project, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary Bookmark run
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project under namesapce
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getProjectTeams(owner: string, project: string, options?: any) {
-            return ProjectsV1ApiFp(configuration).getProjectTeams(owner, project, options)(fetch, basePath);
         },
         /**
          * 
@@ -12261,6 +12305,19 @@ export class ProjectsV1Api extends BaseAPI {
 
     /**
      * 
+     * @summary Bookmark run
+     * @param {string} owner Owner of the namespace
+     * @param {string} project Project under namesapce
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ProjectsV1Api
+     */
+    public fetchProjectTeams(owner: string, project: string, options?: any) {
+        return ProjectsV1ApiFp(this.configuration).fetchProjectTeams(owner, project, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
      * @summary Update run
      * @param {string} owner Owner of the namespace
      * @param {string} project Project under namesapce
@@ -12283,19 +12340,6 @@ export class ProjectsV1Api extends BaseAPI {
      */
     public getProjectSettings(owner: string, project: string, options?: any) {
         return ProjectsV1ApiFp(this.configuration).getProjectSettings(owner, project, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary Bookmark run
-     * @param {string} owner Owner of the namespace
-     * @param {string} project Project under namesapce
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ProjectsV1Api
-     */
-    public getProjectTeams(owner: string, project: string, options?: any) {
-        return ProjectsV1ApiFp(this.configuration).getProjectTeams(owner, project, options)(this.fetch, this.basePath);
     }
 
     /**

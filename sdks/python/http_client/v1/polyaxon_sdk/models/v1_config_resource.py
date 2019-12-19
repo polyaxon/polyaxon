@@ -53,13 +53,11 @@ class V1ConfigResource(object):
         "tags": "list[str]",
         "created_at": "datetime",
         "updated_at": "datetime",
-        "k8s_ref": "str",
-        "is_secret": "bool",
         "frozen": "bool",
         "disabled": "bool",
         "deleted": "bool",
-        "mount_path": "str",
-        "items": "list[str]",
+        "kind": "V1ConfigResourceKind",
+        "schema": "V1ConfigResourceSchema",
     }
 
     attribute_map = {
@@ -69,13 +67,11 @@ class V1ConfigResource(object):
         "tags": "tags",
         "created_at": "created_at",
         "updated_at": "updated_at",
-        "k8s_ref": "k8s_ref",
-        "is_secret": "is_secret",
         "frozen": "frozen",
         "disabled": "disabled",
         "deleted": "deleted",
-        "mount_path": "mount_path",
-        "items": "items",
+        "kind": "kind",
+        "schema": "schema",
     }
 
     def __init__(
@@ -86,13 +82,11 @@ class V1ConfigResource(object):
         tags=None,
         created_at=None,
         updated_at=None,
-        k8s_ref=None,
-        is_secret=None,
         frozen=None,
         disabled=None,
         deleted=None,
-        mount_path=None,
-        items=None,
+        kind=None,
+        schema=None,
     ):  # noqa: E501
         """V1ConfigResource - a model defined in Swagger"""  # noqa: E501
 
@@ -102,13 +96,11 @@ class V1ConfigResource(object):
         self._tags = None
         self._created_at = None
         self._updated_at = None
-        self._k8s_ref = None
-        self._is_secret = None
         self._frozen = None
         self._disabled = None
         self._deleted = None
-        self._mount_path = None
-        self._items = None
+        self._kind = None
+        self._schema = None
         self.discriminator = None
 
         if uuid is not None:
@@ -123,20 +115,16 @@ class V1ConfigResource(object):
             self.created_at = created_at
         if updated_at is not None:
             self.updated_at = updated_at
-        if k8s_ref is not None:
-            self.k8s_ref = k8s_ref
-        if is_secret is not None:
-            self.is_secret = is_secret
         if frozen is not None:
             self.frozen = frozen
         if disabled is not None:
             self.disabled = disabled
         if deleted is not None:
             self.deleted = deleted
-        if mount_path is not None:
-            self.mount_path = mount_path
-        if items is not None:
-            self.items = items
+        if kind is not None:
+            self.kind = kind
+        if schema is not None:
+            self.schema = schema
 
     @property
     def uuid(self):
@@ -265,48 +253,6 @@ class V1ConfigResource(object):
         self._updated_at = updated_at
 
     @property
-    def k8s_ref(self):
-        """Gets the k8s_ref of this V1ConfigResource.  # noqa: E501
-
-
-        :return: The k8s_ref of this V1ConfigResource.  # noqa: E501
-        :rtype: str
-        """
-        return self._k8s_ref
-
-    @k8s_ref.setter
-    def k8s_ref(self, k8s_ref):
-        """Sets the k8s_ref of this V1ConfigResource.
-
-
-        :param k8s_ref: The k8s_ref of this V1ConfigResource.  # noqa: E501
-        :type: str
-        """
-
-        self._k8s_ref = k8s_ref
-
-    @property
-    def is_secret(self):
-        """Gets the is_secret of this V1ConfigResource.  # noqa: E501
-
-
-        :return: The is_secret of this V1ConfigResource.  # noqa: E501
-        :rtype: bool
-        """
-        return self._is_secret
-
-    @is_secret.setter
-    def is_secret(self, is_secret):
-        """Sets the is_secret of this V1ConfigResource.
-
-
-        :param is_secret: The is_secret of this V1ConfigResource.  # noqa: E501
-        :type: bool
-        """
-
-        self._is_secret = is_secret
-
-    @property
     def frozen(self):
         """Gets the frozen of this V1ConfigResource.  # noqa: E501
 
@@ -370,46 +316,46 @@ class V1ConfigResource(object):
         self._deleted = deleted
 
     @property
-    def mount_path(self):
-        """Gets the mount_path of this V1ConfigResource.  # noqa: E501
+    def kind(self):
+        """Gets the kind of this V1ConfigResource.  # noqa: E501
 
 
-        :return: The mount_path of this V1ConfigResource.  # noqa: E501
-        :rtype: str
+        :return: The kind of this V1ConfigResource.  # noqa: E501
+        :rtype: V1ConfigResourceKind
         """
-        return self._mount_path
+        return self._kind
 
-    @mount_path.setter
-    def mount_path(self, mount_path):
-        """Sets the mount_path of this V1ConfigResource.
+    @kind.setter
+    def kind(self, kind):
+        """Sets the kind of this V1ConfigResource.
 
 
-        :param mount_path: The mount_path of this V1ConfigResource.  # noqa: E501
-        :type: str
+        :param kind: The kind of this V1ConfigResource.  # noqa: E501
+        :type: V1ConfigResourceKind
         """
 
-        self._mount_path = mount_path
+        self._kind = kind
 
     @property
-    def items(self):
-        """Gets the items of this V1ConfigResource.  # noqa: E501
+    def schema(self):
+        """Gets the schema of this V1ConfigResource.  # noqa: E501
 
 
-        :return: The items of this V1ConfigResource.  # noqa: E501
-        :rtype: list[str]
+        :return: The schema of this V1ConfigResource.  # noqa: E501
+        :rtype: V1ConfigResourceSchema
         """
-        return self._items
+        return self._schema
 
-    @items.setter
-    def items(self, items):
-        """Sets the items of this V1ConfigResource.
+    @schema.setter
+    def schema(self, schema):
+        """Sets the schema of this V1ConfigResource.
 
 
-        :param items: The items of this V1ConfigResource.  # noqa: E501
-        :type: list[str]
+        :param schema: The schema of this V1ConfigResource.  # noqa: E501
+        :type: V1ConfigResourceSchema
         """
 
-        self._items = items
+        self._schema = schema
 
     def to_dict(self):
         """Returns the model properties as a dict"""

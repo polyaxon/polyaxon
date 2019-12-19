@@ -46,6 +46,12 @@ message Project {
 
     // Optional a readme text describing this entity
     string readme = 13;
+
+    // Optional project settings
+    ProjectSettings settings = 14;
+
+    // Optional teams assigned to a project
+    repeated string teams = 15;
 }
 
  // Request data to create/update project

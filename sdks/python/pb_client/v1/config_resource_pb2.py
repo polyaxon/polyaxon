@@ -20,6 +20,7 @@
 
 import sys
 _b=sys.version_info[0]<3 and (lambda x:x) or (lambda x:x.encode('latin1'))
+from google.protobuf.internal import enum_type_wrapper
 from google.protobuf import descriptor as _descriptor
 from google.protobuf import message as _message
 from google.protobuf import reflection as _reflection
@@ -37,10 +38,45 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='v1',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\x18v1/config_resource.proto\x12\x02v1\x1a\x1fgoogle/protobuf/timestamp.proto\"\xa9\x02\n\x0e\x43onfigResource\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x13\n\x0b\x64\x65scription\x18\x03 \x01(\t\x12\x0c\n\x04tags\x18\x04 \x03(\t\x12.\n\ncreated_at\x18\x05 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12.\n\nupdated_at\x18\x06 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x0f\n\x07k8s_ref\x18\x07 \x01(\t\x12\x11\n\tis_secret\x18\x08 \x01(\x08\x12\x0e\n\x06\x66rozen\x18\t \x01(\x08\x12\x10\n\x08\x64isabled\x18\n \x01(\x08\x12\x0f\n\x07\x64\x65leted\x18\x0b \x01(\x08\x12\x12\n\nmount_path\x18\x0c \x01(\t\x12\r\n\x05items\x18\r \x03(\t\"W\n\x19\x43onfigResourceBodyRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12+\n\x0f\x63onfig_resource\x18\x02 \x01(\x0b\x32\x12.v1.ConfigResource\"q\n\x1bListConfigResourcesResponse\x12\r\n\x05\x63ount\x18\x01 \x01(\x05\x12#\n\x07results\x18\x02 \x03(\x0b\x32\x12.v1.ConfigResource\x12\x10\n\x08previous\x18\x03 \x01(\t\x12\x0c\n\x04next\x18\x04 \x01(\tb\x06proto3')
+  serialized_pb=_b('\n\x18v1/config_resource.proto\x12\x02v1\x1a\x1fgoogle/protobuf/timestamp.proto\"\xb2\x02\n\x0e\x43onfigResource\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x13\n\x0b\x64\x65scription\x18\x03 \x01(\t\x12\x0c\n\x04tags\x18\x04 \x03(\t\x12.\n\ncreated_at\x18\x05 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12.\n\nupdated_at\x18\x06 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x0e\n\x06\x66rozen\x18\x07 \x01(\x08\x12\x10\n\x08\x64isabled\x18\x08 \x01(\x08\x12\x0f\n\x07\x64\x65leted\x18\t \x01(\x08\x12$\n\x04kind\x18\n \x01(\x0e\x32\x16.v1.ConfigResourceKind\x12(\n\x06schema\x18\x0b \x01(\x0b\x32\x18.v1.ConfigResourceSchema\"W\n\x19\x43onfigResourceBodyRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12+\n\x0f\x63onfig_resource\x18\x02 \x01(\x0b\x32\x12.v1.ConfigResource\"q\n\x1bListConfigResourcesResponse\x12\r\n\x05\x63ount\x18\x01 \x01(\x05\x12#\n\x07results\x18\x02 \x03(\x0b\x32\x12.v1.ConfigResource\x12\x10\n\x08previous\x18\x03 \x01(\t\x12\x0c\n\x04next\x18\x04 \x01(\t\"F\n\x14\x43onfigResourceSchema\x12\x0b\n\x03ref\x18\x01 \x01(\t\x12\x12\n\nmount_path\x18\x02 \x01(\t\x12\r\n\x05items\x18\x03 \x03(\t*\\\n\x12\x43onfigResourceKind\x12\x0e\n\nconfig_map\x10\x00\x12\n\n\x06secret\x10\x01\x12\x13\n\x0fservice_account\x10\x02\x12\x15\n\x11image_pull_secret\x10\x03\x62\x06proto3')
   ,
   dependencies=[google_dot_protobuf_dot_timestamp__pb2.DESCRIPTOR,])
 
+_CONFIGRESOURCEKIND = _descriptor.EnumDescriptor(
+  name='ConfigResourceKind',
+  full_name='v1.ConfigResourceKind',
+  filename=None,
+  file=DESCRIPTOR,
+  values=[
+    _descriptor.EnumValueDescriptor(
+      name='config_map', index=0, number=0,
+      serialized_options=None,
+      type=None),
+    _descriptor.EnumValueDescriptor(
+      name='secret', index=1, number=1,
+      serialized_options=None,
+      type=None),
+    _descriptor.EnumValueDescriptor(
+      name='service_account', index=2, number=2,
+      serialized_options=None,
+      type=None),
+    _descriptor.EnumValueDescriptor(
+      name='image_pull_secret', index=3, number=3,
+      serialized_options=None,
+      type=None),
+  ],
+  containing_type=None,
+  serialized_options=None,
+  serialized_start=650,
+  serialized_end=742,
+)
+_sym_db.RegisterEnumDescriptor(_CONFIGRESOURCEKIND)
+
+ConfigResourceKind = enum_type_wrapper.EnumTypeWrapper(_CONFIGRESOURCEKIND)
+config_map = 0
+secret = 1
+service_account = 2
+image_pull_secret = 3
 
 
 
@@ -94,51 +130,37 @@ _CONFIGRESOURCE = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='k8s_ref', full_name='v1.ConfigResource.k8s_ref', index=6,
-      number=7, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b("").decode('utf-8'),
+      name='frozen', full_name='v1.ConfigResource.frozen', index=6,
+      number=7, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='is_secret', full_name='v1.ConfigResource.is_secret', index=7,
+      name='disabled', full_name='v1.ConfigResource.disabled', index=7,
       number=8, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='frozen', full_name='v1.ConfigResource.frozen', index=8,
+      name='deleted', full_name='v1.ConfigResource.deleted', index=8,
       number=9, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='disabled', full_name='v1.ConfigResource.disabled', index=9,
-      number=10, type=8, cpp_type=7, label=1,
-      has_default_value=False, default_value=False,
+      name='kind', full_name='v1.ConfigResource.kind', index=9,
+      number=10, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='deleted', full_name='v1.ConfigResource.deleted', index=10,
-      number=11, type=8, cpp_type=7, label=1,
-      has_default_value=False, default_value=False,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='mount_path', full_name='v1.ConfigResource.mount_path', index=11,
-      number=12, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b("").decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='items', full_name='v1.ConfigResource.items', index=12,
-      number=13, type=9, cpp_type=9, label=3,
-      has_default_value=False, default_value=[],
+      name='schema', full_name='v1.ConfigResource.schema', index=10,
+      number=11, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
@@ -155,7 +177,7 @@ _CONFIGRESOURCE = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=66,
-  serialized_end=363,
+  serialized_end=372,
 )
 
 
@@ -192,8 +214,8 @@ _CONFIGRESOURCEBODYREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=365,
-  serialized_end=452,
+  serialized_start=374,
+  serialized_end=461,
 )
 
 
@@ -244,17 +266,66 @@ _LISTCONFIGRESOURCESRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=454,
-  serialized_end=567,
+  serialized_start=463,
+  serialized_end=576,
+)
+
+
+_CONFIGRESOURCESCHEMA = _descriptor.Descriptor(
+  name='ConfigResourceSchema',
+  full_name='v1.ConfigResourceSchema',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='ref', full_name='v1.ConfigResourceSchema.ref', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='mount_path', full_name='v1.ConfigResourceSchema.mount_path', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='items', full_name='v1.ConfigResourceSchema.items', index=2,
+      number=3, type=9, cpp_type=9, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=578,
+  serialized_end=648,
 )
 
 _CONFIGRESOURCE.fields_by_name['created_at'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
 _CONFIGRESOURCE.fields_by_name['updated_at'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
+_CONFIGRESOURCE.fields_by_name['kind'].enum_type = _CONFIGRESOURCEKIND
+_CONFIGRESOURCE.fields_by_name['schema'].message_type = _CONFIGRESOURCESCHEMA
 _CONFIGRESOURCEBODYREQUEST.fields_by_name['config_resource'].message_type = _CONFIGRESOURCE
 _LISTCONFIGRESOURCESRESPONSE.fields_by_name['results'].message_type = _CONFIGRESOURCE
 DESCRIPTOR.message_types_by_name['ConfigResource'] = _CONFIGRESOURCE
 DESCRIPTOR.message_types_by_name['ConfigResourceBodyRequest'] = _CONFIGRESOURCEBODYREQUEST
 DESCRIPTOR.message_types_by_name['ListConfigResourcesResponse'] = _LISTCONFIGRESOURCESRESPONSE
+DESCRIPTOR.message_types_by_name['ConfigResourceSchema'] = _CONFIGRESOURCESCHEMA
+DESCRIPTOR.enum_types_by_name['ConfigResourceKind'] = _CONFIGRESOURCEKIND
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 ConfigResource = _reflection.GeneratedProtocolMessageType('ConfigResource', (_message.Message,), {
@@ -277,6 +348,13 @@ ListConfigResourcesResponse = _reflection.GeneratedProtocolMessageType('ListConf
   # @@protoc_insertion_point(class_scope:v1.ListConfigResourcesResponse)
   })
 _sym_db.RegisterMessage(ListConfigResourcesResponse)
+
+ConfigResourceSchema = _reflection.GeneratedProtocolMessageType('ConfigResourceSchema', (_message.Message,), {
+  'DESCRIPTOR' : _CONFIGRESOURCESCHEMA,
+  '__module__' : 'v1.config_resource_pb2'
+  # @@protoc_insertion_point(class_scope:v1.ConfigResourceSchema)
+  })
+_sym_db.RegisterMessage(ConfigResourceSchema)
 
 
 # @@protoc_insertion_point(module_scope)

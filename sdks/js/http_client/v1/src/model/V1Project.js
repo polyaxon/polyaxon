@@ -31,18 +31,18 @@
 (function(root, factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
-    define(['ApiClient'], factory);
+    define(['ApiClient', 'model/V1ProjectSettings'], factory);
   } else if (typeof module === 'object' && module.exports) {
     // CommonJS-like environments that support module.exports, like Node.
-    module.exports = factory(require('../ApiClient'));
+    module.exports = factory(require('../ApiClient'), require('./V1ProjectSettings'));
   } else {
     // Browser globals (root is window)
     if (!root.PolyaxonSdk) {
       root.PolyaxonSdk = {};
     }
-    root.PolyaxonSdk.V1Project = factory(root.PolyaxonSdk.ApiClient);
+    root.PolyaxonSdk.V1Project = factory(root.PolyaxonSdk.ApiClient, root.PolyaxonSdk.V1ProjectSettings);
   }
-}(this, function(ApiClient) {
+}(this, function(ApiClient, V1ProjectSettings) {
   'use strict';
 
   /**
@@ -95,6 +95,10 @@
         obj.bookmarked = ApiClient.convertToType(data['bookmarked'], 'Boolean');
       if (data.hasOwnProperty('readme'))
         obj.readme = ApiClient.convertToType(data['readme'], 'String');
+      if (data.hasOwnProperty('settings'))
+        obj.settings = V1ProjectSettings.constructFromObject(data['settings']);
+      if (data.hasOwnProperty('teams'))
+        obj.teams = ApiClient.convertToType(data['teams'], ['String']);
     }
     return obj;
   }
@@ -163,6 +167,16 @@
    * @member {String} readme
    */
   exports.prototype.readme = undefined;
+
+  /**
+   * @member {module:model/V1ProjectSettings} settings
+   */
+  exports.prototype.settings = undefined;
+
+  /**
+   * @member {Array.<String>} teams
+   */
+  exports.prototype.teams = undefined;
 
   return exports;
 

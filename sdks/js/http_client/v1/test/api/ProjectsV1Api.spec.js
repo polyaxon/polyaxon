@@ -109,6 +109,16 @@
           body.deleted = false;
           body.bookmarked = false;
           body.readme = "";
+          body.settings = new PolyaxonSdk.V1ProjectSettings();
+          body.settings.logs_store = "";
+          body.settings.outputs_store = "";
+          body.settings.connections = [""];
+          body.settings.git_accesses = [""];
+          body.settings.registry_accesses = [""];
+          body.settings.config_resouces = [""];
+          body.settings.run_profile = "";
+          body.settings.run_profiles = [""];
+          body.teams = [""];
 
           instance.createProject(owner, body, function(error, data, response) {
             if (error) {
@@ -151,6 +161,73 @@
             expect(data.bookmarked).to.be(false);
             expect(data.readme).to.be.a('string');
             expect(data.readme).to.be("");
+            expect(data.settings).to.be.a(PolyaxonSdk.V1ProjectSettings);
+                  expect(data.settings.logs_store).to.be.a('string');
+              expect(data.settings.logs_store).to.be("");
+              expect(data.settings.outputs_store).to.be.a('string');
+              expect(data.settings.outputs_store).to.be("");
+              {
+                let dataCtr = data.settings.connections;
+                expect(dataCtr).to.be.an(Array);
+                expect(dataCtr).to.not.be.empty();
+                for (let p in dataCtr) {
+                  let data = dataCtr[p];
+                  expect(data).to.be.a('string');
+                  expect(data).to.be("");
+                }
+              }
+              {
+                let dataCtr = data.settings.git_accesses;
+                expect(dataCtr).to.be.an(Array);
+                expect(dataCtr).to.not.be.empty();
+                for (let p in dataCtr) {
+                  let data = dataCtr[p];
+                  expect(data).to.be.a('string');
+                  expect(data).to.be("");
+                }
+              }
+              {
+                let dataCtr = data.settings.registry_accesses;
+                expect(dataCtr).to.be.an(Array);
+                expect(dataCtr).to.not.be.empty();
+                for (let p in dataCtr) {
+                  let data = dataCtr[p];
+                  expect(data).to.be.a('string');
+                  expect(data).to.be("");
+                }
+              }
+              {
+                let dataCtr = data.settings.config_resouces;
+                expect(dataCtr).to.be.an(Array);
+                expect(dataCtr).to.not.be.empty();
+                for (let p in dataCtr) {
+                  let data = dataCtr[p];
+                  expect(data).to.be.a('string');
+                  expect(data).to.be("");
+                }
+              }
+              expect(data.settings.run_profile).to.be.a('string');
+              expect(data.settings.run_profile).to.be("");
+              {
+                let dataCtr = data.settings.run_profiles;
+                expect(dataCtr).to.be.an(Array);
+                expect(dataCtr).to.not.be.empty();
+                for (let p in dataCtr) {
+                  let data = dataCtr[p];
+                  expect(data).to.be.a('string');
+                  expect(data).to.be("");
+                }
+              }
+            {
+              let dataCtr = data.teams;
+              expect(dataCtr).to.be.an(Array);
+              expect(dataCtr).to.not.be.empty();
+              for (let p in dataCtr) {
+                let data = dataCtr[p];
+                expect(data).to.be.a('string');
+                expect(data).to.be("");
+              }
+            }
 
             done();
           });
@@ -219,6 +296,38 @@
           done();
         });
       });
+      describe('fetchProjectTeams', function() {
+        it('should call fetchProjectTeams successfully', function(done) {
+          // TODO: uncomment, update parameter values for fetchProjectTeams call and complete the assertions
+          /*
+          var owner = "owner_example";
+          var project = "project_example";
+
+          instance.fetchProjectTeams(owner, project, function(error, data, response) {
+            if (error) {
+              done(error);
+              return;
+            }
+            // TODO: update response assertions
+            expect(data).to.be.a(PolyaxonSdk.V1ProjectTeams);
+            {
+              let dataCtr = data.teams;
+              expect(dataCtr).to.be.an(Array);
+              expect(dataCtr).to.not.be.empty();
+              for (let p in dataCtr) {
+                let data = dataCtr[p];
+                expect(data).to.be.a('string');
+                expect(data).to.be("");
+              }
+            }
+
+            done();
+          });
+          */
+          // TODO: uncomment and complete method invocation above, then delete this line and the next:
+          done();
+        });
+      });
       describe('getProject', function() {
         it('should call getProject successfully', function(done) {
           // TODO: uncomment, update parameter values for getProject call and complete the assertions
@@ -267,6 +376,73 @@
             expect(data.bookmarked).to.be(false);
             expect(data.readme).to.be.a('string');
             expect(data.readme).to.be("");
+            expect(data.settings).to.be.a(PolyaxonSdk.V1ProjectSettings);
+                  expect(data.settings.logs_store).to.be.a('string');
+              expect(data.settings.logs_store).to.be("");
+              expect(data.settings.outputs_store).to.be.a('string');
+              expect(data.settings.outputs_store).to.be("");
+              {
+                let dataCtr = data.settings.connections;
+                expect(dataCtr).to.be.an(Array);
+                expect(dataCtr).to.not.be.empty();
+                for (let p in dataCtr) {
+                  let data = dataCtr[p];
+                  expect(data).to.be.a('string');
+                  expect(data).to.be("");
+                }
+              }
+              {
+                let dataCtr = data.settings.git_accesses;
+                expect(dataCtr).to.be.an(Array);
+                expect(dataCtr).to.not.be.empty();
+                for (let p in dataCtr) {
+                  let data = dataCtr[p];
+                  expect(data).to.be.a('string');
+                  expect(data).to.be("");
+                }
+              }
+              {
+                let dataCtr = data.settings.registry_accesses;
+                expect(dataCtr).to.be.an(Array);
+                expect(dataCtr).to.not.be.empty();
+                for (let p in dataCtr) {
+                  let data = dataCtr[p];
+                  expect(data).to.be.a('string');
+                  expect(data).to.be("");
+                }
+              }
+              {
+                let dataCtr = data.settings.config_resouces;
+                expect(dataCtr).to.be.an(Array);
+                expect(dataCtr).to.not.be.empty();
+                for (let p in dataCtr) {
+                  let data = dataCtr[p];
+                  expect(data).to.be.a('string');
+                  expect(data).to.be("");
+                }
+              }
+              expect(data.settings.run_profile).to.be.a('string');
+              expect(data.settings.run_profile).to.be("");
+              {
+                let dataCtr = data.settings.run_profiles;
+                expect(dataCtr).to.be.an(Array);
+                expect(dataCtr).to.not.be.empty();
+                for (let p in dataCtr) {
+                  let data = dataCtr[p];
+                  expect(data).to.be.a('string');
+                  expect(data).to.be("");
+                }
+              }
+            {
+              let dataCtr = data.teams;
+              expect(dataCtr).to.be.an(Array);
+              expect(dataCtr).to.not.be.empty();
+              for (let p in dataCtr) {
+                let data = dataCtr[p];
+                expect(data).to.be.a('string');
+                expect(data).to.be("");
+              }
+            }
 
             done();
           });
@@ -353,38 +529,6 @@
           done();
         });
       });
-      describe('getProjectTeams', function() {
-        it('should call getProjectTeams successfully', function(done) {
-          // TODO: uncomment, update parameter values for getProjectTeams call and complete the assertions
-          /*
-          var owner = "owner_example";
-          var project = "project_example";
-
-          instance.getProjectTeams(owner, project, function(error, data, response) {
-            if (error) {
-              done(error);
-              return;
-            }
-            // TODO: update response assertions
-            expect(data).to.be.a(PolyaxonSdk.V1ProjectTeams);
-            {
-              let dataCtr = data.teams;
-              expect(dataCtr).to.be.an(Array);
-              expect(dataCtr).to.not.be.empty();
-              for (let p in dataCtr) {
-                let data = dataCtr[p];
-                expect(data).to.be.a('string');
-                expect(data).to.be("");
-              }
-            }
-
-            done();
-          });
-          */
-          // TODO: uncomment and complete method invocation above, then delete this line and the next:
-          done();
-        });
-      });
       describe('listArchivedProjects', function() {
         it('should call listArchivedProjects successfully', function(done) {
           // TODO: uncomment, update parameter values for listArchivedProjects call and complete the assertions
@@ -446,6 +590,73 @@
                 expect(data.bookmarked).to.be(false);
                 expect(data.readme).to.be.a('string');
                 expect(data.readme).to.be("");
+                expect(data.settings).to.be.a(PolyaxonSdk.V1ProjectSettings);
+                      expect(data.settings.logs_store).to.be.a('string');
+                  expect(data.settings.logs_store).to.be("");
+                  expect(data.settings.outputs_store).to.be.a('string');
+                  expect(data.settings.outputs_store).to.be("");
+                  {
+                    let dataCtr = data.settings.connections;
+                    expect(dataCtr).to.be.an(Array);
+                    expect(dataCtr).to.not.be.empty();
+                    for (let p in dataCtr) {
+                      let data = dataCtr[p];
+                      expect(data).to.be.a('string');
+                      expect(data).to.be("");
+                    }
+                  }
+                  {
+                    let dataCtr = data.settings.git_accesses;
+                    expect(dataCtr).to.be.an(Array);
+                    expect(dataCtr).to.not.be.empty();
+                    for (let p in dataCtr) {
+                      let data = dataCtr[p];
+                      expect(data).to.be.a('string');
+                      expect(data).to.be("");
+                    }
+                  }
+                  {
+                    let dataCtr = data.settings.registry_accesses;
+                    expect(dataCtr).to.be.an(Array);
+                    expect(dataCtr).to.not.be.empty();
+                    for (let p in dataCtr) {
+                      let data = dataCtr[p];
+                      expect(data).to.be.a('string');
+                      expect(data).to.be("");
+                    }
+                  }
+                  {
+                    let dataCtr = data.settings.config_resouces;
+                    expect(dataCtr).to.be.an(Array);
+                    expect(dataCtr).to.not.be.empty();
+                    for (let p in dataCtr) {
+                      let data = dataCtr[p];
+                      expect(data).to.be.a('string');
+                      expect(data).to.be("");
+                    }
+                  }
+                  expect(data.settings.run_profile).to.be.a('string');
+                  expect(data.settings.run_profile).to.be("");
+                  {
+                    let dataCtr = data.settings.run_profiles;
+                    expect(dataCtr).to.be.an(Array);
+                    expect(dataCtr).to.not.be.empty();
+                    for (let p in dataCtr) {
+                      let data = dataCtr[p];
+                      expect(data).to.be.a('string');
+                      expect(data).to.be("");
+                    }
+                  }
+                {
+                  let dataCtr = data.teams;
+                  expect(dataCtr).to.be.an(Array);
+                  expect(dataCtr).to.not.be.empty();
+                  for (let p in dataCtr) {
+                    let data = dataCtr[p];
+                    expect(data).to.be.a('string');
+                    expect(data).to.be("");
+                  }
+                }
               }
             }
             expect(data.previous).to.be.a('string');
@@ -521,6 +732,73 @@
                 expect(data.bookmarked).to.be(false);
                 expect(data.readme).to.be.a('string');
                 expect(data.readme).to.be("");
+                expect(data.settings).to.be.a(PolyaxonSdk.V1ProjectSettings);
+                      expect(data.settings.logs_store).to.be.a('string');
+                  expect(data.settings.logs_store).to.be("");
+                  expect(data.settings.outputs_store).to.be.a('string');
+                  expect(data.settings.outputs_store).to.be("");
+                  {
+                    let dataCtr = data.settings.connections;
+                    expect(dataCtr).to.be.an(Array);
+                    expect(dataCtr).to.not.be.empty();
+                    for (let p in dataCtr) {
+                      let data = dataCtr[p];
+                      expect(data).to.be.a('string');
+                      expect(data).to.be("");
+                    }
+                  }
+                  {
+                    let dataCtr = data.settings.git_accesses;
+                    expect(dataCtr).to.be.an(Array);
+                    expect(dataCtr).to.not.be.empty();
+                    for (let p in dataCtr) {
+                      let data = dataCtr[p];
+                      expect(data).to.be.a('string');
+                      expect(data).to.be("");
+                    }
+                  }
+                  {
+                    let dataCtr = data.settings.registry_accesses;
+                    expect(dataCtr).to.be.an(Array);
+                    expect(dataCtr).to.not.be.empty();
+                    for (let p in dataCtr) {
+                      let data = dataCtr[p];
+                      expect(data).to.be.a('string');
+                      expect(data).to.be("");
+                    }
+                  }
+                  {
+                    let dataCtr = data.settings.config_resouces;
+                    expect(dataCtr).to.be.an(Array);
+                    expect(dataCtr).to.not.be.empty();
+                    for (let p in dataCtr) {
+                      let data = dataCtr[p];
+                      expect(data).to.be.a('string');
+                      expect(data).to.be("");
+                    }
+                  }
+                  expect(data.settings.run_profile).to.be.a('string');
+                  expect(data.settings.run_profile).to.be("");
+                  {
+                    let dataCtr = data.settings.run_profiles;
+                    expect(dataCtr).to.be.an(Array);
+                    expect(dataCtr).to.not.be.empty();
+                    for (let p in dataCtr) {
+                      let data = dataCtr[p];
+                      expect(data).to.be.a('string');
+                      expect(data).to.be("");
+                    }
+                  }
+                {
+                  let dataCtr = data.teams;
+                  expect(dataCtr).to.be.an(Array);
+                  expect(dataCtr).to.not.be.empty();
+                  for (let p in dataCtr) {
+                    let data = dataCtr[p];
+                    expect(data).to.be.a('string');
+                    expect(data).to.be("");
+                  }
+                }
               }
             }
             expect(data.previous).to.be.a('string');
@@ -596,6 +874,73 @@
                 expect(data.bookmarked).to.be(false);
                 expect(data.readme).to.be.a('string');
                 expect(data.readme).to.be("");
+                expect(data.settings).to.be.a(PolyaxonSdk.V1ProjectSettings);
+                      expect(data.settings.logs_store).to.be.a('string');
+                  expect(data.settings.logs_store).to.be("");
+                  expect(data.settings.outputs_store).to.be.a('string');
+                  expect(data.settings.outputs_store).to.be("");
+                  {
+                    let dataCtr = data.settings.connections;
+                    expect(dataCtr).to.be.an(Array);
+                    expect(dataCtr).to.not.be.empty();
+                    for (let p in dataCtr) {
+                      let data = dataCtr[p];
+                      expect(data).to.be.a('string');
+                      expect(data).to.be("");
+                    }
+                  }
+                  {
+                    let dataCtr = data.settings.git_accesses;
+                    expect(dataCtr).to.be.an(Array);
+                    expect(dataCtr).to.not.be.empty();
+                    for (let p in dataCtr) {
+                      let data = dataCtr[p];
+                      expect(data).to.be.a('string');
+                      expect(data).to.be("");
+                    }
+                  }
+                  {
+                    let dataCtr = data.settings.registry_accesses;
+                    expect(dataCtr).to.be.an(Array);
+                    expect(dataCtr).to.not.be.empty();
+                    for (let p in dataCtr) {
+                      let data = dataCtr[p];
+                      expect(data).to.be.a('string');
+                      expect(data).to.be("");
+                    }
+                  }
+                  {
+                    let dataCtr = data.settings.config_resouces;
+                    expect(dataCtr).to.be.an(Array);
+                    expect(dataCtr).to.not.be.empty();
+                    for (let p in dataCtr) {
+                      let data = dataCtr[p];
+                      expect(data).to.be.a('string');
+                      expect(data).to.be("");
+                    }
+                  }
+                  expect(data.settings.run_profile).to.be.a('string');
+                  expect(data.settings.run_profile).to.be("");
+                  {
+                    let dataCtr = data.settings.run_profiles;
+                    expect(dataCtr).to.be.an(Array);
+                    expect(dataCtr).to.not.be.empty();
+                    for (let p in dataCtr) {
+                      let data = dataCtr[p];
+                      expect(data).to.be.a('string');
+                      expect(data).to.be("");
+                    }
+                  }
+                {
+                  let dataCtr = data.teams;
+                  expect(dataCtr).to.be.an(Array);
+                  expect(dataCtr).to.not.be.empty();
+                  for (let p in dataCtr) {
+                    let data = dataCtr[p];
+                    expect(data).to.be.a('string');
+                    expect(data).to.be("");
+                  }
+                }
               }
             }
             expect(data.previous).to.be.a('string');
@@ -671,6 +1016,73 @@
                 expect(data.bookmarked).to.be(false);
                 expect(data.readme).to.be.a('string');
                 expect(data.readme).to.be("");
+                expect(data.settings).to.be.a(PolyaxonSdk.V1ProjectSettings);
+                      expect(data.settings.logs_store).to.be.a('string');
+                  expect(data.settings.logs_store).to.be("");
+                  expect(data.settings.outputs_store).to.be.a('string');
+                  expect(data.settings.outputs_store).to.be("");
+                  {
+                    let dataCtr = data.settings.connections;
+                    expect(dataCtr).to.be.an(Array);
+                    expect(dataCtr).to.not.be.empty();
+                    for (let p in dataCtr) {
+                      let data = dataCtr[p];
+                      expect(data).to.be.a('string');
+                      expect(data).to.be("");
+                    }
+                  }
+                  {
+                    let dataCtr = data.settings.git_accesses;
+                    expect(dataCtr).to.be.an(Array);
+                    expect(dataCtr).to.not.be.empty();
+                    for (let p in dataCtr) {
+                      let data = dataCtr[p];
+                      expect(data).to.be.a('string');
+                      expect(data).to.be("");
+                    }
+                  }
+                  {
+                    let dataCtr = data.settings.registry_accesses;
+                    expect(dataCtr).to.be.an(Array);
+                    expect(dataCtr).to.not.be.empty();
+                    for (let p in dataCtr) {
+                      let data = dataCtr[p];
+                      expect(data).to.be.a('string');
+                      expect(data).to.be("");
+                    }
+                  }
+                  {
+                    let dataCtr = data.settings.config_resouces;
+                    expect(dataCtr).to.be.an(Array);
+                    expect(dataCtr).to.not.be.empty();
+                    for (let p in dataCtr) {
+                      let data = dataCtr[p];
+                      expect(data).to.be.a('string');
+                      expect(data).to.be("");
+                    }
+                  }
+                  expect(data.settings.run_profile).to.be.a('string');
+                  expect(data.settings.run_profile).to.be("");
+                  {
+                    let dataCtr = data.settings.run_profiles;
+                    expect(dataCtr).to.be.an(Array);
+                    expect(dataCtr).to.not.be.empty();
+                    for (let p in dataCtr) {
+                      let data = dataCtr[p];
+                      expect(data).to.be.a('string');
+                      expect(data).to.be("");
+                    }
+                  }
+                {
+                  let dataCtr = data.teams;
+                  expect(dataCtr).to.be.an(Array);
+                  expect(dataCtr).to.not.be.empty();
+                  for (let p in dataCtr) {
+                    let data = dataCtr[p];
+                    expect(data).to.be.a('string');
+                    expect(data).to.be("");
+                  }
+                }
               }
             }
             expect(data.previous).to.be.a('string');
@@ -705,6 +1117,16 @@
           body.deleted = false;
           body.bookmarked = false;
           body.readme = "";
+          body.settings = new PolyaxonSdk.V1ProjectSettings();
+          body.settings.logs_store = "";
+          body.settings.outputs_store = "";
+          body.settings.connections = [""];
+          body.settings.git_accesses = [""];
+          body.settings.registry_accesses = [""];
+          body.settings.config_resouces = [""];
+          body.settings.run_profile = "";
+          body.settings.run_profiles = [""];
+          body.teams = [""];
 
           instance.patchProject(owner, project_name, body, function(error, data, response) {
             if (error) {
@@ -747,6 +1169,73 @@
             expect(data.bookmarked).to.be(false);
             expect(data.readme).to.be.a('string');
             expect(data.readme).to.be("");
+            expect(data.settings).to.be.a(PolyaxonSdk.V1ProjectSettings);
+                  expect(data.settings.logs_store).to.be.a('string');
+              expect(data.settings.logs_store).to.be("");
+              expect(data.settings.outputs_store).to.be.a('string');
+              expect(data.settings.outputs_store).to.be("");
+              {
+                let dataCtr = data.settings.connections;
+                expect(dataCtr).to.be.an(Array);
+                expect(dataCtr).to.not.be.empty();
+                for (let p in dataCtr) {
+                  let data = dataCtr[p];
+                  expect(data).to.be.a('string');
+                  expect(data).to.be("");
+                }
+              }
+              {
+                let dataCtr = data.settings.git_accesses;
+                expect(dataCtr).to.be.an(Array);
+                expect(dataCtr).to.not.be.empty();
+                for (let p in dataCtr) {
+                  let data = dataCtr[p];
+                  expect(data).to.be.a('string');
+                  expect(data).to.be("");
+                }
+              }
+              {
+                let dataCtr = data.settings.registry_accesses;
+                expect(dataCtr).to.be.an(Array);
+                expect(dataCtr).to.not.be.empty();
+                for (let p in dataCtr) {
+                  let data = dataCtr[p];
+                  expect(data).to.be.a('string');
+                  expect(data).to.be("");
+                }
+              }
+              {
+                let dataCtr = data.settings.config_resouces;
+                expect(dataCtr).to.be.an(Array);
+                expect(dataCtr).to.not.be.empty();
+                for (let p in dataCtr) {
+                  let data = dataCtr[p];
+                  expect(data).to.be.a('string');
+                  expect(data).to.be("");
+                }
+              }
+              expect(data.settings.run_profile).to.be.a('string');
+              expect(data.settings.run_profile).to.be("");
+              {
+                let dataCtr = data.settings.run_profiles;
+                expect(dataCtr).to.be.an(Array);
+                expect(dataCtr).to.not.be.empty();
+                for (let p in dataCtr) {
+                  let data = dataCtr[p];
+                  expect(data).to.be.a('string');
+                  expect(data).to.be("");
+                }
+              }
+            {
+              let dataCtr = data.teams;
+              expect(dataCtr).to.be.an(Array);
+              expect(dataCtr).to.not.be.empty();
+              for (let p in dataCtr) {
+                let data = dataCtr[p];
+                expect(data).to.be.a('string');
+                expect(data).to.be("");
+              }
+            }
 
             done();
           });
@@ -936,6 +1425,16 @@
           body.deleted = false;
           body.bookmarked = false;
           body.readme = "";
+          body.settings = new PolyaxonSdk.V1ProjectSettings();
+          body.settings.logs_store = "";
+          body.settings.outputs_store = "";
+          body.settings.connections = [""];
+          body.settings.git_accesses = [""];
+          body.settings.registry_accesses = [""];
+          body.settings.config_resouces = [""];
+          body.settings.run_profile = "";
+          body.settings.run_profiles = [""];
+          body.teams = [""];
 
           instance.updateProject(owner, project_name, body, function(error, data, response) {
             if (error) {
@@ -978,6 +1477,73 @@
             expect(data.bookmarked).to.be(false);
             expect(data.readme).to.be.a('string');
             expect(data.readme).to.be("");
+            expect(data.settings).to.be.a(PolyaxonSdk.V1ProjectSettings);
+                  expect(data.settings.logs_store).to.be.a('string');
+              expect(data.settings.logs_store).to.be("");
+              expect(data.settings.outputs_store).to.be.a('string');
+              expect(data.settings.outputs_store).to.be("");
+              {
+                let dataCtr = data.settings.connections;
+                expect(dataCtr).to.be.an(Array);
+                expect(dataCtr).to.not.be.empty();
+                for (let p in dataCtr) {
+                  let data = dataCtr[p];
+                  expect(data).to.be.a('string');
+                  expect(data).to.be("");
+                }
+              }
+              {
+                let dataCtr = data.settings.git_accesses;
+                expect(dataCtr).to.be.an(Array);
+                expect(dataCtr).to.not.be.empty();
+                for (let p in dataCtr) {
+                  let data = dataCtr[p];
+                  expect(data).to.be.a('string');
+                  expect(data).to.be("");
+                }
+              }
+              {
+                let dataCtr = data.settings.registry_accesses;
+                expect(dataCtr).to.be.an(Array);
+                expect(dataCtr).to.not.be.empty();
+                for (let p in dataCtr) {
+                  let data = dataCtr[p];
+                  expect(data).to.be.a('string');
+                  expect(data).to.be("");
+                }
+              }
+              {
+                let dataCtr = data.settings.config_resouces;
+                expect(dataCtr).to.be.an(Array);
+                expect(dataCtr).to.not.be.empty();
+                for (let p in dataCtr) {
+                  let data = dataCtr[p];
+                  expect(data).to.be.a('string');
+                  expect(data).to.be("");
+                }
+              }
+              expect(data.settings.run_profile).to.be.a('string');
+              expect(data.settings.run_profile).to.be("");
+              {
+                let dataCtr = data.settings.run_profiles;
+                expect(dataCtr).to.be.an(Array);
+                expect(dataCtr).to.not.be.empty();
+                for (let p in dataCtr) {
+                  let data = dataCtr[p];
+                  expect(data).to.be.a('string');
+                  expect(data).to.be("");
+                }
+              }
+            {
+              let dataCtr = data.teams;
+              expect(dataCtr).to.be.an(Array);
+              expect(dataCtr).to.not.be.empty();
+              for (let p in dataCtr) {
+                let data = dataCtr[p];
+                expect(data).to.be.a('string');
+                expect(data).to.be("");
+              }
+            }
 
             done();
           });

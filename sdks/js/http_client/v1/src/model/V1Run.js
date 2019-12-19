@@ -31,18 +31,18 @@
 (function(root, factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
-    define(['ApiClient', 'model/V1RunKind', 'model/V1RunMetaInfo'], factory);
+    define(['ApiClient', 'model/V1RunKind', 'model/V1RunMetaInfo', 'model/V1RunSettings'], factory);
   } else if (typeof module === 'object' && module.exports) {
     // CommonJS-like environments that support module.exports, like Node.
-    module.exports = factory(require('../ApiClient'), require('./V1RunKind'), require('./V1RunMetaInfo'));
+    module.exports = factory(require('../ApiClient'), require('./V1RunKind'), require('./V1RunMetaInfo'), require('./V1RunSettings'));
   } else {
     // Browser globals (root is window)
     if (!root.PolyaxonSdk) {
       root.PolyaxonSdk = {};
     }
-    root.PolyaxonSdk.V1Run = factory(root.PolyaxonSdk.ApiClient, root.PolyaxonSdk.V1RunKind, root.PolyaxonSdk.V1RunMetaInfo);
+    root.PolyaxonSdk.V1Run = factory(root.PolyaxonSdk.ApiClient, root.PolyaxonSdk.V1RunKind, root.PolyaxonSdk.V1RunMetaInfo, root.PolyaxonSdk.V1RunSettings);
   }
-}(this, function(ApiClient, V1RunKind, V1RunMetaInfo) {
+}(this, function(ApiClient, V1RunKind, V1RunMetaInfo, V1RunSettings) {
   'use strict';
 
   /**
@@ -129,6 +129,8 @@
         obj.pipeline_name = ApiClient.convertToType(data['pipeline_name'], 'String');
       if (data.hasOwnProperty('original_name'))
         obj.original_name = ApiClient.convertToType(data['original_name'], 'String');
+      if (data.hasOwnProperty('settings'))
+        obj.settings = V1RunSettings.constructFromObject(data['settings']);
     }
     return obj;
   }
@@ -282,6 +284,11 @@
    * @member {String} original_name
    */
   exports.prototype.original_name = undefined;
+
+  /**
+   * @member {module:model/V1RunSettings} settings
+   */
+  exports.prototype.settings = undefined;
 
   return exports;
 

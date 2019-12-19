@@ -38,6 +38,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.client.model.V1RunKind;
 import io.swagger.client.model.V1RunMetaInfo;
+import io.swagger.client.model.V1RunSettings;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -137,6 +138,9 @@ public class V1Run {
 
   @SerializedName("original_name")
   private String originalName = null;
+
+  @SerializedName("settings")
+  private V1RunSettings settings = null;
 
   public V1Run uuid(String uuid) {
     this.uuid = uuid;
@@ -686,6 +690,24 @@ public class V1Run {
     this.originalName = originalName;
   }
 
+  public V1Run settings(V1RunSettings settings) {
+    this.settings = settings;
+    return this;
+  }
+
+   /**
+   * Get settings
+   * @return settings
+  **/
+  @ApiModelProperty(value = "")
+  public V1RunSettings getSettings() {
+    return settings;
+  }
+
+  public void setSettings(V1RunSettings settings) {
+    this.settings = settings;
+  }
+
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -725,12 +747,13 @@ public class V1Run {
         Objects.equals(this.pipeline, v1Run.pipeline) &&
         Objects.equals(this.original, v1Run.original) &&
         Objects.equals(this.pipelineName, v1Run.pipelineName) &&
-        Objects.equals(this.originalName, v1Run.originalName);
+        Objects.equals(this.originalName, v1Run.originalName) &&
+        Objects.equals(this.settings, v1Run.settings);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(uuid, name, description, tags, deleted, user, owner, project, createdAt, updatedAt, startedAt, finishedAt, isManaged, content, status, readme, bookmarked, metaInfo, kind, hub, inputs, outputs, runEnv, isResume, isClone, cloningStrategy, pipeline, original, pipelineName, originalName);
+    return Objects.hash(uuid, name, description, tags, deleted, user, owner, project, createdAt, updatedAt, startedAt, finishedAt, isManaged, content, status, readme, bookmarked, metaInfo, kind, hub, inputs, outputs, runEnv, isResume, isClone, cloningStrategy, pipeline, original, pipelineName, originalName, settings);
   }
 
 
@@ -769,6 +792,7 @@ public class V1Run {
     sb.append("    original: ").append(toIndentedString(original)).append("\n");
     sb.append("    pipelineName: ").append(toIndentedString(pipelineName)).append("\n");
     sb.append("    originalName: ").append(toIndentedString(originalName)).append("\n");
+    sb.append("    settings: ").append(toIndentedString(settings)).append("\n");
     sb.append("}");
     return sb.toString();
   }

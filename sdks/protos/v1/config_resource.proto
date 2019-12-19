@@ -24,26 +24,20 @@ message ConfigResource {
     // Optional last time the entity was updated
     google.protobuf.Timestamp updated_at = 6;
 
-    // Optional the k8s ref
-    string k8s_ref = 7;
-
-    // Optional wether this config resource is a secret
-    bool is_secret = 8;
-
     // Optional a flag to freeze the resource
-    bool frozen = 9;
+    bool frozen = 7;
 
     // Optional a flag to disable the resource
-    bool disabled = 10;
+    bool disabled = 8;
 
     // Optional if the entity has been deleted
-    bool deleted = 11;
+    bool deleted = 9;
 
-    //Optional a mount path to specifiy where to mount this resource
-    string mount_path = 12;
+    // Config resource kind
+    ConfigResourceKind kind = 10;
 
-    // Optional the k8s secret to use
-    repeated string items = 13;
+    // Config resource schema
+    ConfigResourceSchema schema = 11;
 }
 
  // Request data to create/update k8s resource
@@ -69,4 +63,19 @@ message ListConfigResourcesResponse {
 
     // Next page
     string next = 4;
+}
+
+// config resource kinds
+enum ConfigResourceKind {
+    config_map = 0;
+    secret = 1;
+    service_account = 2;
+    image_pull_secret = 3;
+}
+
+// Config resource schema
+message ConfigResourceSchema {
+    string ref = 1;
+    string mount_path = 2;
+    repeated string items = 3;
 }

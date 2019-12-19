@@ -34,6 +34,7 @@ Name | Type | Description | Notes
 **original** | **String** |  |  [optional]
 **pipelineName** | **String** |  |  [optional]
 **originalName** | **String** |  |  [optional]
+**settings** | [**V1RunSettings**](V1RunSettings.md) |  |  [optional]
 
 
 

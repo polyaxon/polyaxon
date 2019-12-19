@@ -134,6 +134,35 @@
           body.original = "";
           body.pipeline_name = "";
           body.original_name = "";
+          body.settings = new PolyaxonSdk.V1RunSettings();
+          body.settings.namespace = "";
+          body.settings.agent = new PolyaxonSdk.V1RunSettingsCatalog();
+          body.settings.agent.uuid = "";
+          body.settings.agent.name = "";
+          body.settings.queue = new PolyaxonSdk.V1RunSettingsCatalog();
+          body.settings.queue.uuid = "";
+          body.settings.queue.name = "";
+          body.settings.logs_store = new PolyaxonSdk.V1RunSettingsCatalog();
+          body.settings.logs_store.uuid = "";
+          body.settings.logs_store.name = "";
+          body.settings.outputs_store = new PolyaxonSdk.V1RunSettingsCatalog();
+          body.settings.outputs_store.uuid = "";
+          body.settings.outputs_store.name = "";
+          body.settings.init_connections = [new PolyaxonSdk.V1RunSettingsCatalog()];
+          body.settings.init_connections[0].uuid = "";
+          body.settings.init_connections[0].name = "";
+          body.settings.connections = [new PolyaxonSdk.V1RunSettingsCatalog()];
+          body.settings.connections[0].uuid = "";
+          body.settings.connections[0].name = "";
+          body.settings.git_accesses = [new PolyaxonSdk.V1RunSettingsCatalog()];
+          body.settings.git_accesses[0].uuid = "";
+          body.settings.git_accesses[0].name = "";
+          body.settings.registry_access = new PolyaxonSdk.V1RunSettingsCatalog();
+          body.settings.registry_access.uuid = "";
+          body.settings.registry_access.name = "";
+          body.settings.config_resources = [new PolyaxonSdk.V1RunSettingsCatalog()];
+          body.settings.config_resources[0].uuid = "";
+          body.settings.config_resources[0].name = "";
 
           instance.copyRun(entity_owner, entity_project, entity_uuid, body, function(error, data, response) {
             if (error) {
@@ -216,6 +245,86 @@
             expect(data.pipeline_name).to.be("");
             expect(data.original_name).to.be.a('string');
             expect(data.original_name).to.be("");
+            expect(data.settings).to.be.a(PolyaxonSdk.V1RunSettings);
+                  expect(data.settings.namespace).to.be.a('string');
+              expect(data.settings.namespace).to.be("");
+              expect(data.settings.agent).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                    expect(data.settings.agent.uuid).to.be.a('string');
+                expect(data.settings.agent.uuid).to.be("");
+                expect(data.settings.agent.name).to.be.a('string');
+                expect(data.settings.agent.name).to.be("");
+              expect(data.settings.queue).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                    expect(data.settings.queue.uuid).to.be.a('string');
+                expect(data.settings.queue.uuid).to.be("");
+                expect(data.settings.queue.name).to.be.a('string');
+                expect(data.settings.queue.name).to.be("");
+              expect(data.settings.logs_store).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                    expect(data.settings.logs_store.uuid).to.be.a('string');
+                expect(data.settings.logs_store.uuid).to.be("");
+                expect(data.settings.logs_store.name).to.be.a('string');
+                expect(data.settings.logs_store.name).to.be("");
+              expect(data.settings.outputs_store).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                    expect(data.settings.outputs_store.uuid).to.be.a('string');
+                expect(data.settings.outputs_store.uuid).to.be("");
+                expect(data.settings.outputs_store.name).to.be.a('string');
+                expect(data.settings.outputs_store.name).to.be("");
+              {
+                let dataCtr = data.settings.init_connections;
+                expect(dataCtr).to.be.an(Array);
+                expect(dataCtr).to.not.be.empty();
+                for (let p in dataCtr) {
+                  let data = dataCtr[p];
+                  expect(data).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                  expect(data.uuid).to.be.a('string');
+                  expect(data.uuid).to.be("");
+                  expect(data.name).to.be.a('string');
+                  expect(data.name).to.be("");
+                }
+              }
+              {
+                let dataCtr = data.settings.connections;
+                expect(dataCtr).to.be.an(Array);
+                expect(dataCtr).to.not.be.empty();
+                for (let p in dataCtr) {
+                  let data = dataCtr[p];
+                  expect(data).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                  expect(data.uuid).to.be.a('string');
+                  expect(data.uuid).to.be("");
+                  expect(data.name).to.be.a('string');
+                  expect(data.name).to.be("");
+                }
+              }
+              {
+                let dataCtr = data.settings.git_accesses;
+                expect(dataCtr).to.be.an(Array);
+                expect(dataCtr).to.not.be.empty();
+                for (let p in dataCtr) {
+                  let data = dataCtr[p];
+                  expect(data).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                  expect(data.uuid).to.be.a('string');
+                  expect(data.uuid).to.be("");
+                  expect(data.name).to.be.a('string');
+                  expect(data.name).to.be("");
+                }
+              }
+              expect(data.settings.registry_access).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                    expect(data.settings.registry_access.uuid).to.be.a('string');
+                expect(data.settings.registry_access.uuid).to.be("");
+                expect(data.settings.registry_access.name).to.be.a('string');
+                expect(data.settings.registry_access.name).to.be("");
+              {
+                let dataCtr = data.settings.config_resources;
+                expect(dataCtr).to.be.an(Array);
+                expect(dataCtr).to.not.be.empty();
+                for (let p in dataCtr) {
+                  let data = dataCtr[p];
+                  expect(data).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                  expect(data.uuid).to.be.a('string');
+                  expect(data.uuid).to.be("");
+                  expect(data.name).to.be.a('string');
+                  expect(data.name).to.be("");
+                }
+              }
 
             done();
           });
@@ -265,6 +374,35 @@
           body.original = "";
           body.pipeline_name = "";
           body.original_name = "";
+          body.settings = new PolyaxonSdk.V1RunSettings();
+          body.settings.namespace = "";
+          body.settings.agent = new PolyaxonSdk.V1RunSettingsCatalog();
+          body.settings.agent.uuid = "";
+          body.settings.agent.name = "";
+          body.settings.queue = new PolyaxonSdk.V1RunSettingsCatalog();
+          body.settings.queue.uuid = "";
+          body.settings.queue.name = "";
+          body.settings.logs_store = new PolyaxonSdk.V1RunSettingsCatalog();
+          body.settings.logs_store.uuid = "";
+          body.settings.logs_store.name = "";
+          body.settings.outputs_store = new PolyaxonSdk.V1RunSettingsCatalog();
+          body.settings.outputs_store.uuid = "";
+          body.settings.outputs_store.name = "";
+          body.settings.init_connections = [new PolyaxonSdk.V1RunSettingsCatalog()];
+          body.settings.init_connections[0].uuid = "";
+          body.settings.init_connections[0].name = "";
+          body.settings.connections = [new PolyaxonSdk.V1RunSettingsCatalog()];
+          body.settings.connections[0].uuid = "";
+          body.settings.connections[0].name = "";
+          body.settings.git_accesses = [new PolyaxonSdk.V1RunSettingsCatalog()];
+          body.settings.git_accesses[0].uuid = "";
+          body.settings.git_accesses[0].name = "";
+          body.settings.registry_access = new PolyaxonSdk.V1RunSettingsCatalog();
+          body.settings.registry_access.uuid = "";
+          body.settings.registry_access.name = "";
+          body.settings.config_resources = [new PolyaxonSdk.V1RunSettingsCatalog()];
+          body.settings.config_resources[0].uuid = "";
+          body.settings.config_resources[0].name = "";
 
           instance.createRun(owner, project, body, function(error, data, response) {
             if (error) {
@@ -347,6 +485,86 @@
             expect(data.pipeline_name).to.be("");
             expect(data.original_name).to.be.a('string');
             expect(data.original_name).to.be("");
+            expect(data.settings).to.be.a(PolyaxonSdk.V1RunSettings);
+                  expect(data.settings.namespace).to.be.a('string');
+              expect(data.settings.namespace).to.be("");
+              expect(data.settings.agent).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                    expect(data.settings.agent.uuid).to.be.a('string');
+                expect(data.settings.agent.uuid).to.be("");
+                expect(data.settings.agent.name).to.be.a('string');
+                expect(data.settings.agent.name).to.be("");
+              expect(data.settings.queue).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                    expect(data.settings.queue.uuid).to.be.a('string');
+                expect(data.settings.queue.uuid).to.be("");
+                expect(data.settings.queue.name).to.be.a('string');
+                expect(data.settings.queue.name).to.be("");
+              expect(data.settings.logs_store).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                    expect(data.settings.logs_store.uuid).to.be.a('string');
+                expect(data.settings.logs_store.uuid).to.be("");
+                expect(data.settings.logs_store.name).to.be.a('string');
+                expect(data.settings.logs_store.name).to.be("");
+              expect(data.settings.outputs_store).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                    expect(data.settings.outputs_store.uuid).to.be.a('string');
+                expect(data.settings.outputs_store.uuid).to.be("");
+                expect(data.settings.outputs_store.name).to.be.a('string');
+                expect(data.settings.outputs_store.name).to.be("");
+              {
+                let dataCtr = data.settings.init_connections;
+                expect(dataCtr).to.be.an(Array);
+                expect(dataCtr).to.not.be.empty();
+                for (let p in dataCtr) {
+                  let data = dataCtr[p];
+                  expect(data).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                  expect(data.uuid).to.be.a('string');
+                  expect(data.uuid).to.be("");
+                  expect(data.name).to.be.a('string');
+                  expect(data.name).to.be("");
+                }
+              }
+              {
+                let dataCtr = data.settings.connections;
+                expect(dataCtr).to.be.an(Array);
+                expect(dataCtr).to.not.be.empty();
+                for (let p in dataCtr) {
+                  let data = dataCtr[p];
+                  expect(data).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                  expect(data.uuid).to.be.a('string');
+                  expect(data.uuid).to.be("");
+                  expect(data.name).to.be.a('string');
+                  expect(data.name).to.be("");
+                }
+              }
+              {
+                let dataCtr = data.settings.git_accesses;
+                expect(dataCtr).to.be.an(Array);
+                expect(dataCtr).to.not.be.empty();
+                for (let p in dataCtr) {
+                  let data = dataCtr[p];
+                  expect(data).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                  expect(data.uuid).to.be.a('string');
+                  expect(data.uuid).to.be("");
+                  expect(data.name).to.be.a('string');
+                  expect(data.name).to.be("");
+                }
+              }
+              expect(data.settings.registry_access).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                    expect(data.settings.registry_access.uuid).to.be.a('string');
+                expect(data.settings.registry_access.uuid).to.be("");
+                expect(data.settings.registry_access.name).to.be.a('string');
+                expect(data.settings.registry_access.name).to.be("");
+              {
+                let dataCtr = data.settings.config_resources;
+                expect(dataCtr).to.be.an(Array);
+                expect(dataCtr).to.not.be.empty();
+                for (let p in dataCtr) {
+                  let data = dataCtr[p];
+                  expect(data).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                  expect(data.uuid).to.be.a('string');
+                  expect(data.uuid).to.be("");
+                  expect(data.name).to.be.a('string');
+                  expect(data.name).to.be("");
+                }
+              }
 
             done();
           });
@@ -570,6 +788,86 @@
             expect(data.pipeline_name).to.be("");
             expect(data.original_name).to.be.a('string');
             expect(data.original_name).to.be("");
+            expect(data.settings).to.be.a(PolyaxonSdk.V1RunSettings);
+                  expect(data.settings.namespace).to.be.a('string');
+              expect(data.settings.namespace).to.be("");
+              expect(data.settings.agent).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                    expect(data.settings.agent.uuid).to.be.a('string');
+                expect(data.settings.agent.uuid).to.be("");
+                expect(data.settings.agent.name).to.be.a('string');
+                expect(data.settings.agent.name).to.be("");
+              expect(data.settings.queue).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                    expect(data.settings.queue.uuid).to.be.a('string');
+                expect(data.settings.queue.uuid).to.be("");
+                expect(data.settings.queue.name).to.be.a('string');
+                expect(data.settings.queue.name).to.be("");
+              expect(data.settings.logs_store).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                    expect(data.settings.logs_store.uuid).to.be.a('string');
+                expect(data.settings.logs_store.uuid).to.be("");
+                expect(data.settings.logs_store.name).to.be.a('string');
+                expect(data.settings.logs_store.name).to.be("");
+              expect(data.settings.outputs_store).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                    expect(data.settings.outputs_store.uuid).to.be.a('string');
+                expect(data.settings.outputs_store.uuid).to.be("");
+                expect(data.settings.outputs_store.name).to.be.a('string');
+                expect(data.settings.outputs_store.name).to.be("");
+              {
+                let dataCtr = data.settings.init_connections;
+                expect(dataCtr).to.be.an(Array);
+                expect(dataCtr).to.not.be.empty();
+                for (let p in dataCtr) {
+                  let data = dataCtr[p];
+                  expect(data).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                  expect(data.uuid).to.be.a('string');
+                  expect(data.uuid).to.be("");
+                  expect(data.name).to.be.a('string');
+                  expect(data.name).to.be("");
+                }
+              }
+              {
+                let dataCtr = data.settings.connections;
+                expect(dataCtr).to.be.an(Array);
+                expect(dataCtr).to.not.be.empty();
+                for (let p in dataCtr) {
+                  let data = dataCtr[p];
+                  expect(data).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                  expect(data.uuid).to.be.a('string');
+                  expect(data.uuid).to.be("");
+                  expect(data.name).to.be.a('string');
+                  expect(data.name).to.be("");
+                }
+              }
+              {
+                let dataCtr = data.settings.git_accesses;
+                expect(dataCtr).to.be.an(Array);
+                expect(dataCtr).to.not.be.empty();
+                for (let p in dataCtr) {
+                  let data = dataCtr[p];
+                  expect(data).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                  expect(data.uuid).to.be.a('string');
+                  expect(data.uuid).to.be("");
+                  expect(data.name).to.be.a('string');
+                  expect(data.name).to.be("");
+                }
+              }
+              expect(data.settings.registry_access).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                    expect(data.settings.registry_access.uuid).to.be.a('string');
+                expect(data.settings.registry_access.uuid).to.be("");
+                expect(data.settings.registry_access.name).to.be.a('string');
+                expect(data.settings.registry_access.name).to.be("");
+              {
+                let dataCtr = data.settings.config_resources;
+                expect(dataCtr).to.be.an(Array);
+                expect(dataCtr).to.not.be.empty();
+                for (let p in dataCtr) {
+                  let data = dataCtr[p];
+                  expect(data).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                  expect(data.uuid).to.be.a('string');
+                  expect(data.uuid).to.be("");
+                  expect(data.name).to.be.a('string');
+                  expect(data.name).to.be("");
+                }
+              }
 
             done();
           });
@@ -1027,6 +1325,86 @@
                 expect(data.pipeline_name).to.be("");
                 expect(data.original_name).to.be.a('string');
                 expect(data.original_name).to.be("");
+                expect(data.settings).to.be.a(PolyaxonSdk.V1RunSettings);
+                      expect(data.settings.namespace).to.be.a('string');
+                  expect(data.settings.namespace).to.be("");
+                  expect(data.settings.agent).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                        expect(data.settings.agent.uuid).to.be.a('string');
+                    expect(data.settings.agent.uuid).to.be("");
+                    expect(data.settings.agent.name).to.be.a('string');
+                    expect(data.settings.agent.name).to.be("");
+                  expect(data.settings.queue).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                        expect(data.settings.queue.uuid).to.be.a('string');
+                    expect(data.settings.queue.uuid).to.be("");
+                    expect(data.settings.queue.name).to.be.a('string');
+                    expect(data.settings.queue.name).to.be("");
+                  expect(data.settings.logs_store).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                        expect(data.settings.logs_store.uuid).to.be.a('string');
+                    expect(data.settings.logs_store.uuid).to.be("");
+                    expect(data.settings.logs_store.name).to.be.a('string');
+                    expect(data.settings.logs_store.name).to.be("");
+                  expect(data.settings.outputs_store).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                        expect(data.settings.outputs_store.uuid).to.be.a('string');
+                    expect(data.settings.outputs_store.uuid).to.be("");
+                    expect(data.settings.outputs_store.name).to.be.a('string');
+                    expect(data.settings.outputs_store.name).to.be("");
+                  {
+                    let dataCtr = data.settings.init_connections;
+                    expect(dataCtr).to.be.an(Array);
+                    expect(dataCtr).to.not.be.empty();
+                    for (let p in dataCtr) {
+                      let data = dataCtr[p];
+                      expect(data).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                      expect(data.uuid).to.be.a('string');
+                      expect(data.uuid).to.be("");
+                      expect(data.name).to.be.a('string');
+                      expect(data.name).to.be("");
+                    }
+                  }
+                  {
+                    let dataCtr = data.settings.connections;
+                    expect(dataCtr).to.be.an(Array);
+                    expect(dataCtr).to.not.be.empty();
+                    for (let p in dataCtr) {
+                      let data = dataCtr[p];
+                      expect(data).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                      expect(data.uuid).to.be.a('string');
+                      expect(data.uuid).to.be("");
+                      expect(data.name).to.be.a('string');
+                      expect(data.name).to.be("");
+                    }
+                  }
+                  {
+                    let dataCtr = data.settings.git_accesses;
+                    expect(dataCtr).to.be.an(Array);
+                    expect(dataCtr).to.not.be.empty();
+                    for (let p in dataCtr) {
+                      let data = dataCtr[p];
+                      expect(data).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                      expect(data.uuid).to.be.a('string');
+                      expect(data.uuid).to.be("");
+                      expect(data.name).to.be.a('string');
+                      expect(data.name).to.be("");
+                    }
+                  }
+                  expect(data.settings.registry_access).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                        expect(data.settings.registry_access.uuid).to.be.a('string');
+                    expect(data.settings.registry_access.uuid).to.be("");
+                    expect(data.settings.registry_access.name).to.be.a('string');
+                    expect(data.settings.registry_access.name).to.be("");
+                  {
+                    let dataCtr = data.settings.config_resources;
+                    expect(dataCtr).to.be.an(Array);
+                    expect(dataCtr).to.not.be.empty();
+                    for (let p in dataCtr) {
+                      let data = dataCtr[p];
+                      expect(data).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                      expect(data.uuid).to.be.a('string');
+                      expect(data.uuid).to.be("");
+                      expect(data.name).to.be.a('string');
+                      expect(data.name).to.be("");
+                    }
+                  }
               }
             }
             expect(data.previous).to.be.a('string');
@@ -1142,6 +1520,86 @@
                 expect(data.pipeline_name).to.be("");
                 expect(data.original_name).to.be.a('string');
                 expect(data.original_name).to.be("");
+                expect(data.settings).to.be.a(PolyaxonSdk.V1RunSettings);
+                      expect(data.settings.namespace).to.be.a('string');
+                  expect(data.settings.namespace).to.be("");
+                  expect(data.settings.agent).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                        expect(data.settings.agent.uuid).to.be.a('string');
+                    expect(data.settings.agent.uuid).to.be("");
+                    expect(data.settings.agent.name).to.be.a('string');
+                    expect(data.settings.agent.name).to.be("");
+                  expect(data.settings.queue).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                        expect(data.settings.queue.uuid).to.be.a('string');
+                    expect(data.settings.queue.uuid).to.be("");
+                    expect(data.settings.queue.name).to.be.a('string');
+                    expect(data.settings.queue.name).to.be("");
+                  expect(data.settings.logs_store).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                        expect(data.settings.logs_store.uuid).to.be.a('string');
+                    expect(data.settings.logs_store.uuid).to.be("");
+                    expect(data.settings.logs_store.name).to.be.a('string');
+                    expect(data.settings.logs_store.name).to.be("");
+                  expect(data.settings.outputs_store).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                        expect(data.settings.outputs_store.uuid).to.be.a('string');
+                    expect(data.settings.outputs_store.uuid).to.be("");
+                    expect(data.settings.outputs_store.name).to.be.a('string');
+                    expect(data.settings.outputs_store.name).to.be("");
+                  {
+                    let dataCtr = data.settings.init_connections;
+                    expect(dataCtr).to.be.an(Array);
+                    expect(dataCtr).to.not.be.empty();
+                    for (let p in dataCtr) {
+                      let data = dataCtr[p];
+                      expect(data).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                      expect(data.uuid).to.be.a('string');
+                      expect(data.uuid).to.be("");
+                      expect(data.name).to.be.a('string');
+                      expect(data.name).to.be("");
+                    }
+                  }
+                  {
+                    let dataCtr = data.settings.connections;
+                    expect(dataCtr).to.be.an(Array);
+                    expect(dataCtr).to.not.be.empty();
+                    for (let p in dataCtr) {
+                      let data = dataCtr[p];
+                      expect(data).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                      expect(data.uuid).to.be.a('string');
+                      expect(data.uuid).to.be("");
+                      expect(data.name).to.be.a('string');
+                      expect(data.name).to.be("");
+                    }
+                  }
+                  {
+                    let dataCtr = data.settings.git_accesses;
+                    expect(dataCtr).to.be.an(Array);
+                    expect(dataCtr).to.not.be.empty();
+                    for (let p in dataCtr) {
+                      let data = dataCtr[p];
+                      expect(data).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                      expect(data.uuid).to.be.a('string');
+                      expect(data.uuid).to.be("");
+                      expect(data.name).to.be.a('string');
+                      expect(data.name).to.be("");
+                    }
+                  }
+                  expect(data.settings.registry_access).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                        expect(data.settings.registry_access.uuid).to.be.a('string');
+                    expect(data.settings.registry_access.uuid).to.be("");
+                    expect(data.settings.registry_access.name).to.be.a('string');
+                    expect(data.settings.registry_access.name).to.be("");
+                  {
+                    let dataCtr = data.settings.config_resources;
+                    expect(dataCtr).to.be.an(Array);
+                    expect(dataCtr).to.not.be.empty();
+                    for (let p in dataCtr) {
+                      let data = dataCtr[p];
+                      expect(data).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                      expect(data.uuid).to.be.a('string');
+                      expect(data.uuid).to.be("");
+                      expect(data.name).to.be.a('string');
+                      expect(data.name).to.be("");
+                    }
+                  }
               }
             }
             expect(data.previous).to.be.a('string');
@@ -1258,6 +1716,86 @@
                 expect(data.pipeline_name).to.be("");
                 expect(data.original_name).to.be.a('string');
                 expect(data.original_name).to.be("");
+                expect(data.settings).to.be.a(PolyaxonSdk.V1RunSettings);
+                      expect(data.settings.namespace).to.be.a('string');
+                  expect(data.settings.namespace).to.be("");
+                  expect(data.settings.agent).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                        expect(data.settings.agent.uuid).to.be.a('string');
+                    expect(data.settings.agent.uuid).to.be("");
+                    expect(data.settings.agent.name).to.be.a('string');
+                    expect(data.settings.agent.name).to.be("");
+                  expect(data.settings.queue).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                        expect(data.settings.queue.uuid).to.be.a('string');
+                    expect(data.settings.queue.uuid).to.be("");
+                    expect(data.settings.queue.name).to.be.a('string');
+                    expect(data.settings.queue.name).to.be("");
+                  expect(data.settings.logs_store).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                        expect(data.settings.logs_store.uuid).to.be.a('string');
+                    expect(data.settings.logs_store.uuid).to.be("");
+                    expect(data.settings.logs_store.name).to.be.a('string');
+                    expect(data.settings.logs_store.name).to.be("");
+                  expect(data.settings.outputs_store).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                        expect(data.settings.outputs_store.uuid).to.be.a('string');
+                    expect(data.settings.outputs_store.uuid).to.be("");
+                    expect(data.settings.outputs_store.name).to.be.a('string');
+                    expect(data.settings.outputs_store.name).to.be("");
+                  {
+                    let dataCtr = data.settings.init_connections;
+                    expect(dataCtr).to.be.an(Array);
+                    expect(dataCtr).to.not.be.empty();
+                    for (let p in dataCtr) {
+                      let data = dataCtr[p];
+                      expect(data).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                      expect(data.uuid).to.be.a('string');
+                      expect(data.uuid).to.be("");
+                      expect(data.name).to.be.a('string');
+                      expect(data.name).to.be("");
+                    }
+                  }
+                  {
+                    let dataCtr = data.settings.connections;
+                    expect(dataCtr).to.be.an(Array);
+                    expect(dataCtr).to.not.be.empty();
+                    for (let p in dataCtr) {
+                      let data = dataCtr[p];
+                      expect(data).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                      expect(data.uuid).to.be.a('string');
+                      expect(data.uuid).to.be("");
+                      expect(data.name).to.be.a('string');
+                      expect(data.name).to.be("");
+                    }
+                  }
+                  {
+                    let dataCtr = data.settings.git_accesses;
+                    expect(dataCtr).to.be.an(Array);
+                    expect(dataCtr).to.not.be.empty();
+                    for (let p in dataCtr) {
+                      let data = dataCtr[p];
+                      expect(data).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                      expect(data.uuid).to.be.a('string');
+                      expect(data.uuid).to.be("");
+                      expect(data.name).to.be.a('string');
+                      expect(data.name).to.be("");
+                    }
+                  }
+                  expect(data.settings.registry_access).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                        expect(data.settings.registry_access.uuid).to.be.a('string');
+                    expect(data.settings.registry_access.uuid).to.be("");
+                    expect(data.settings.registry_access.name).to.be.a('string');
+                    expect(data.settings.registry_access.name).to.be("");
+                  {
+                    let dataCtr = data.settings.config_resources;
+                    expect(dataCtr).to.be.an(Array);
+                    expect(dataCtr).to.not.be.empty();
+                    for (let p in dataCtr) {
+                      let data = dataCtr[p];
+                      expect(data).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                      expect(data.uuid).to.be.a('string');
+                      expect(data.uuid).to.be("");
+                      expect(data.name).to.be.a('string');
+                      expect(data.name).to.be("");
+                    }
+                  }
               }
             }
             expect(data.previous).to.be.a('string');
@@ -1314,6 +1852,35 @@
           body.original = "";
           body.pipeline_name = "";
           body.original_name = "";
+          body.settings = new PolyaxonSdk.V1RunSettings();
+          body.settings.namespace = "";
+          body.settings.agent = new PolyaxonSdk.V1RunSettingsCatalog();
+          body.settings.agent.uuid = "";
+          body.settings.agent.name = "";
+          body.settings.queue = new PolyaxonSdk.V1RunSettingsCatalog();
+          body.settings.queue.uuid = "";
+          body.settings.queue.name = "";
+          body.settings.logs_store = new PolyaxonSdk.V1RunSettingsCatalog();
+          body.settings.logs_store.uuid = "";
+          body.settings.logs_store.name = "";
+          body.settings.outputs_store = new PolyaxonSdk.V1RunSettingsCatalog();
+          body.settings.outputs_store.uuid = "";
+          body.settings.outputs_store.name = "";
+          body.settings.init_connections = [new PolyaxonSdk.V1RunSettingsCatalog()];
+          body.settings.init_connections[0].uuid = "";
+          body.settings.init_connections[0].name = "";
+          body.settings.connections = [new PolyaxonSdk.V1RunSettingsCatalog()];
+          body.settings.connections[0].uuid = "";
+          body.settings.connections[0].name = "";
+          body.settings.git_accesses = [new PolyaxonSdk.V1RunSettingsCatalog()];
+          body.settings.git_accesses[0].uuid = "";
+          body.settings.git_accesses[0].name = "";
+          body.settings.registry_access = new PolyaxonSdk.V1RunSettingsCatalog();
+          body.settings.registry_access.uuid = "";
+          body.settings.registry_access.name = "";
+          body.settings.config_resources = [new PolyaxonSdk.V1RunSettingsCatalog()];
+          body.settings.config_resources[0].uuid = "";
+          body.settings.config_resources[0].name = "";
 
           instance.patchRun(owner, project, run_uuid, body, function(error, data, response) {
             if (error) {
@@ -1396,6 +1963,86 @@
             expect(data.pipeline_name).to.be("");
             expect(data.original_name).to.be.a('string');
             expect(data.original_name).to.be("");
+            expect(data.settings).to.be.a(PolyaxonSdk.V1RunSettings);
+                  expect(data.settings.namespace).to.be.a('string');
+              expect(data.settings.namespace).to.be("");
+              expect(data.settings.agent).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                    expect(data.settings.agent.uuid).to.be.a('string');
+                expect(data.settings.agent.uuid).to.be("");
+                expect(data.settings.agent.name).to.be.a('string');
+                expect(data.settings.agent.name).to.be("");
+              expect(data.settings.queue).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                    expect(data.settings.queue.uuid).to.be.a('string');
+                expect(data.settings.queue.uuid).to.be("");
+                expect(data.settings.queue.name).to.be.a('string');
+                expect(data.settings.queue.name).to.be("");
+              expect(data.settings.logs_store).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                    expect(data.settings.logs_store.uuid).to.be.a('string');
+                expect(data.settings.logs_store.uuid).to.be("");
+                expect(data.settings.logs_store.name).to.be.a('string');
+                expect(data.settings.logs_store.name).to.be("");
+              expect(data.settings.outputs_store).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                    expect(data.settings.outputs_store.uuid).to.be.a('string');
+                expect(data.settings.outputs_store.uuid).to.be("");
+                expect(data.settings.outputs_store.name).to.be.a('string');
+                expect(data.settings.outputs_store.name).to.be("");
+              {
+                let dataCtr = data.settings.init_connections;
+                expect(dataCtr).to.be.an(Array);
+                expect(dataCtr).to.not.be.empty();
+                for (let p in dataCtr) {
+                  let data = dataCtr[p];
+                  expect(data).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                  expect(data.uuid).to.be.a('string');
+                  expect(data.uuid).to.be("");
+                  expect(data.name).to.be.a('string');
+                  expect(data.name).to.be("");
+                }
+              }
+              {
+                let dataCtr = data.settings.connections;
+                expect(dataCtr).to.be.an(Array);
+                expect(dataCtr).to.not.be.empty();
+                for (let p in dataCtr) {
+                  let data = dataCtr[p];
+                  expect(data).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                  expect(data.uuid).to.be.a('string');
+                  expect(data.uuid).to.be("");
+                  expect(data.name).to.be.a('string');
+                  expect(data.name).to.be("");
+                }
+              }
+              {
+                let dataCtr = data.settings.git_accesses;
+                expect(dataCtr).to.be.an(Array);
+                expect(dataCtr).to.not.be.empty();
+                for (let p in dataCtr) {
+                  let data = dataCtr[p];
+                  expect(data).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                  expect(data.uuid).to.be.a('string');
+                  expect(data.uuid).to.be("");
+                  expect(data.name).to.be.a('string');
+                  expect(data.name).to.be("");
+                }
+              }
+              expect(data.settings.registry_access).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                    expect(data.settings.registry_access.uuid).to.be.a('string');
+                expect(data.settings.registry_access.uuid).to.be("");
+                expect(data.settings.registry_access.name).to.be.a('string');
+                expect(data.settings.registry_access.name).to.be("");
+              {
+                let dataCtr = data.settings.config_resources;
+                expect(dataCtr).to.be.an(Array);
+                expect(dataCtr).to.not.be.empty();
+                for (let p in dataCtr) {
+                  let data = dataCtr[p];
+                  expect(data).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                  expect(data.uuid).to.be.a('string');
+                  expect(data.uuid).to.be("");
+                  expect(data.name).to.be.a('string');
+                  expect(data.name).to.be("");
+                }
+              }
 
             done();
           });
@@ -1446,6 +2093,35 @@
           body.original = "";
           body.pipeline_name = "";
           body.original_name = "";
+          body.settings = new PolyaxonSdk.V1RunSettings();
+          body.settings.namespace = "";
+          body.settings.agent = new PolyaxonSdk.V1RunSettingsCatalog();
+          body.settings.agent.uuid = "";
+          body.settings.agent.name = "";
+          body.settings.queue = new PolyaxonSdk.V1RunSettingsCatalog();
+          body.settings.queue.uuid = "";
+          body.settings.queue.name = "";
+          body.settings.logs_store = new PolyaxonSdk.V1RunSettingsCatalog();
+          body.settings.logs_store.uuid = "";
+          body.settings.logs_store.name = "";
+          body.settings.outputs_store = new PolyaxonSdk.V1RunSettingsCatalog();
+          body.settings.outputs_store.uuid = "";
+          body.settings.outputs_store.name = "";
+          body.settings.init_connections = [new PolyaxonSdk.V1RunSettingsCatalog()];
+          body.settings.init_connections[0].uuid = "";
+          body.settings.init_connections[0].name = "";
+          body.settings.connections = [new PolyaxonSdk.V1RunSettingsCatalog()];
+          body.settings.connections[0].uuid = "";
+          body.settings.connections[0].name = "";
+          body.settings.git_accesses = [new PolyaxonSdk.V1RunSettingsCatalog()];
+          body.settings.git_accesses[0].uuid = "";
+          body.settings.git_accesses[0].name = "";
+          body.settings.registry_access = new PolyaxonSdk.V1RunSettingsCatalog();
+          body.settings.registry_access.uuid = "";
+          body.settings.registry_access.name = "";
+          body.settings.config_resources = [new PolyaxonSdk.V1RunSettingsCatalog()];
+          body.settings.config_resources[0].uuid = "";
+          body.settings.config_resources[0].name = "";
 
           instance.restartRun(entity_owner, entity_project, entity_uuid, body, function(error, data, response) {
             if (error) {
@@ -1528,6 +2204,86 @@
             expect(data.pipeline_name).to.be("");
             expect(data.original_name).to.be.a('string');
             expect(data.original_name).to.be("");
+            expect(data.settings).to.be.a(PolyaxonSdk.V1RunSettings);
+                  expect(data.settings.namespace).to.be.a('string');
+              expect(data.settings.namespace).to.be("");
+              expect(data.settings.agent).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                    expect(data.settings.agent.uuid).to.be.a('string');
+                expect(data.settings.agent.uuid).to.be("");
+                expect(data.settings.agent.name).to.be.a('string');
+                expect(data.settings.agent.name).to.be("");
+              expect(data.settings.queue).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                    expect(data.settings.queue.uuid).to.be.a('string');
+                expect(data.settings.queue.uuid).to.be("");
+                expect(data.settings.queue.name).to.be.a('string');
+                expect(data.settings.queue.name).to.be("");
+              expect(data.settings.logs_store).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                    expect(data.settings.logs_store.uuid).to.be.a('string');
+                expect(data.settings.logs_store.uuid).to.be("");
+                expect(data.settings.logs_store.name).to.be.a('string');
+                expect(data.settings.logs_store.name).to.be("");
+              expect(data.settings.outputs_store).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                    expect(data.settings.outputs_store.uuid).to.be.a('string');
+                expect(data.settings.outputs_store.uuid).to.be("");
+                expect(data.settings.outputs_store.name).to.be.a('string');
+                expect(data.settings.outputs_store.name).to.be("");
+              {
+                let dataCtr = data.settings.init_connections;
+                expect(dataCtr).to.be.an(Array);
+                expect(dataCtr).to.not.be.empty();
+                for (let p in dataCtr) {
+                  let data = dataCtr[p];
+                  expect(data).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                  expect(data.uuid).to.be.a('string');
+                  expect(data.uuid).to.be("");
+                  expect(data.name).to.be.a('string');
+                  expect(data.name).to.be("");
+                }
+              }
+              {
+                let dataCtr = data.settings.connections;
+                expect(dataCtr).to.be.an(Array);
+                expect(dataCtr).to.not.be.empty();
+                for (let p in dataCtr) {
+                  let data = dataCtr[p];
+                  expect(data).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                  expect(data.uuid).to.be.a('string');
+                  expect(data.uuid).to.be("");
+                  expect(data.name).to.be.a('string');
+                  expect(data.name).to.be("");
+                }
+              }
+              {
+                let dataCtr = data.settings.git_accesses;
+                expect(dataCtr).to.be.an(Array);
+                expect(dataCtr).to.not.be.empty();
+                for (let p in dataCtr) {
+                  let data = dataCtr[p];
+                  expect(data).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                  expect(data.uuid).to.be.a('string');
+                  expect(data.uuid).to.be("");
+                  expect(data.name).to.be.a('string');
+                  expect(data.name).to.be("");
+                }
+              }
+              expect(data.settings.registry_access).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                    expect(data.settings.registry_access.uuid).to.be.a('string');
+                expect(data.settings.registry_access.uuid).to.be("");
+                expect(data.settings.registry_access.name).to.be.a('string');
+                expect(data.settings.registry_access.name).to.be("");
+              {
+                let dataCtr = data.settings.config_resources;
+                expect(dataCtr).to.be.an(Array);
+                expect(dataCtr).to.not.be.empty();
+                for (let p in dataCtr) {
+                  let data = dataCtr[p];
+                  expect(data).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                  expect(data.uuid).to.be.a('string');
+                  expect(data.uuid).to.be("");
+                  expect(data.name).to.be.a('string');
+                  expect(data.name).to.be("");
+                }
+              }
 
             done();
           });
@@ -1599,6 +2355,35 @@
           body.original = "";
           body.pipeline_name = "";
           body.original_name = "";
+          body.settings = new PolyaxonSdk.V1RunSettings();
+          body.settings.namespace = "";
+          body.settings.agent = new PolyaxonSdk.V1RunSettingsCatalog();
+          body.settings.agent.uuid = "";
+          body.settings.agent.name = "";
+          body.settings.queue = new PolyaxonSdk.V1RunSettingsCatalog();
+          body.settings.queue.uuid = "";
+          body.settings.queue.name = "";
+          body.settings.logs_store = new PolyaxonSdk.V1RunSettingsCatalog();
+          body.settings.logs_store.uuid = "";
+          body.settings.logs_store.name = "";
+          body.settings.outputs_store = new PolyaxonSdk.V1RunSettingsCatalog();
+          body.settings.outputs_store.uuid = "";
+          body.settings.outputs_store.name = "";
+          body.settings.init_connections = [new PolyaxonSdk.V1RunSettingsCatalog()];
+          body.settings.init_connections[0].uuid = "";
+          body.settings.init_connections[0].name = "";
+          body.settings.connections = [new PolyaxonSdk.V1RunSettingsCatalog()];
+          body.settings.connections[0].uuid = "";
+          body.settings.connections[0].name = "";
+          body.settings.git_accesses = [new PolyaxonSdk.V1RunSettingsCatalog()];
+          body.settings.git_accesses[0].uuid = "";
+          body.settings.git_accesses[0].name = "";
+          body.settings.registry_access = new PolyaxonSdk.V1RunSettingsCatalog();
+          body.settings.registry_access.uuid = "";
+          body.settings.registry_access.name = "";
+          body.settings.config_resources = [new PolyaxonSdk.V1RunSettingsCatalog()];
+          body.settings.config_resources[0].uuid = "";
+          body.settings.config_resources[0].name = "";
 
           instance.resumeRun(entity_owner, entity_project, entity_uuid, body, function(error, data, response) {
             if (error) {
@@ -1681,6 +2466,86 @@
             expect(data.pipeline_name).to.be("");
             expect(data.original_name).to.be.a('string');
             expect(data.original_name).to.be("");
+            expect(data.settings).to.be.a(PolyaxonSdk.V1RunSettings);
+                  expect(data.settings.namespace).to.be.a('string');
+              expect(data.settings.namespace).to.be("");
+              expect(data.settings.agent).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                    expect(data.settings.agent.uuid).to.be.a('string');
+                expect(data.settings.agent.uuid).to.be("");
+                expect(data.settings.agent.name).to.be.a('string');
+                expect(data.settings.agent.name).to.be("");
+              expect(data.settings.queue).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                    expect(data.settings.queue.uuid).to.be.a('string');
+                expect(data.settings.queue.uuid).to.be("");
+                expect(data.settings.queue.name).to.be.a('string');
+                expect(data.settings.queue.name).to.be("");
+              expect(data.settings.logs_store).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                    expect(data.settings.logs_store.uuid).to.be.a('string');
+                expect(data.settings.logs_store.uuid).to.be("");
+                expect(data.settings.logs_store.name).to.be.a('string');
+                expect(data.settings.logs_store.name).to.be("");
+              expect(data.settings.outputs_store).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                    expect(data.settings.outputs_store.uuid).to.be.a('string');
+                expect(data.settings.outputs_store.uuid).to.be("");
+                expect(data.settings.outputs_store.name).to.be.a('string');
+                expect(data.settings.outputs_store.name).to.be("");
+              {
+                let dataCtr = data.settings.init_connections;
+                expect(dataCtr).to.be.an(Array);
+                expect(dataCtr).to.not.be.empty();
+                for (let p in dataCtr) {
+                  let data = dataCtr[p];
+                  expect(data).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                  expect(data.uuid).to.be.a('string');
+                  expect(data.uuid).to.be("");
+                  expect(data.name).to.be.a('string');
+                  expect(data.name).to.be("");
+                }
+              }
+              {
+                let dataCtr = data.settings.connections;
+                expect(dataCtr).to.be.an(Array);
+                expect(dataCtr).to.not.be.empty();
+                for (let p in dataCtr) {
+                  let data = dataCtr[p];
+                  expect(data).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                  expect(data.uuid).to.be.a('string');
+                  expect(data.uuid).to.be("");
+                  expect(data.name).to.be.a('string');
+                  expect(data.name).to.be("");
+                }
+              }
+              {
+                let dataCtr = data.settings.git_accesses;
+                expect(dataCtr).to.be.an(Array);
+                expect(dataCtr).to.not.be.empty();
+                for (let p in dataCtr) {
+                  let data = dataCtr[p];
+                  expect(data).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                  expect(data.uuid).to.be.a('string');
+                  expect(data.uuid).to.be("");
+                  expect(data.name).to.be.a('string');
+                  expect(data.name).to.be("");
+                }
+              }
+              expect(data.settings.registry_access).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                    expect(data.settings.registry_access.uuid).to.be.a('string');
+                expect(data.settings.registry_access.uuid).to.be("");
+                expect(data.settings.registry_access.name).to.be.a('string');
+                expect(data.settings.registry_access.name).to.be("");
+              {
+                let dataCtr = data.settings.config_resources;
+                expect(dataCtr).to.be.an(Array);
+                expect(dataCtr).to.not.be.empty();
+                for (let p in dataCtr) {
+                  let data = dataCtr[p];
+                  expect(data).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                  expect(data.uuid).to.be.a('string');
+                  expect(data.uuid).to.be("");
+                  expect(data.name).to.be.a('string');
+                  expect(data.name).to.be("");
+                }
+              }
 
             done();
           });
@@ -1841,6 +2706,35 @@
           body.original = "";
           body.pipeline_name = "";
           body.original_name = "";
+          body.settings = new PolyaxonSdk.V1RunSettings();
+          body.settings.namespace = "";
+          body.settings.agent = new PolyaxonSdk.V1RunSettingsCatalog();
+          body.settings.agent.uuid = "";
+          body.settings.agent.name = "";
+          body.settings.queue = new PolyaxonSdk.V1RunSettingsCatalog();
+          body.settings.queue.uuid = "";
+          body.settings.queue.name = "";
+          body.settings.logs_store = new PolyaxonSdk.V1RunSettingsCatalog();
+          body.settings.logs_store.uuid = "";
+          body.settings.logs_store.name = "";
+          body.settings.outputs_store = new PolyaxonSdk.V1RunSettingsCatalog();
+          body.settings.outputs_store.uuid = "";
+          body.settings.outputs_store.name = "";
+          body.settings.init_connections = [new PolyaxonSdk.V1RunSettingsCatalog()];
+          body.settings.init_connections[0].uuid = "";
+          body.settings.init_connections[0].name = "";
+          body.settings.connections = [new PolyaxonSdk.V1RunSettingsCatalog()];
+          body.settings.connections[0].uuid = "";
+          body.settings.connections[0].name = "";
+          body.settings.git_accesses = [new PolyaxonSdk.V1RunSettingsCatalog()];
+          body.settings.git_accesses[0].uuid = "";
+          body.settings.git_accesses[0].name = "";
+          body.settings.registry_access = new PolyaxonSdk.V1RunSettingsCatalog();
+          body.settings.registry_access.uuid = "";
+          body.settings.registry_access.name = "";
+          body.settings.config_resources = [new PolyaxonSdk.V1RunSettingsCatalog()];
+          body.settings.config_resources[0].uuid = "";
+          body.settings.config_resources[0].name = "";
 
           instance.updateRun(owner, project, run_uuid, body, function(error, data, response) {
             if (error) {
@@ -1923,6 +2817,86 @@
             expect(data.pipeline_name).to.be("");
             expect(data.original_name).to.be.a('string');
             expect(data.original_name).to.be("");
+            expect(data.settings).to.be.a(PolyaxonSdk.V1RunSettings);
+                  expect(data.settings.namespace).to.be.a('string');
+              expect(data.settings.namespace).to.be("");
+              expect(data.settings.agent).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                    expect(data.settings.agent.uuid).to.be.a('string');
+                expect(data.settings.agent.uuid).to.be("");
+                expect(data.settings.agent.name).to.be.a('string');
+                expect(data.settings.agent.name).to.be("");
+              expect(data.settings.queue).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                    expect(data.settings.queue.uuid).to.be.a('string');
+                expect(data.settings.queue.uuid).to.be("");
+                expect(data.settings.queue.name).to.be.a('string');
+                expect(data.settings.queue.name).to.be("");
+              expect(data.settings.logs_store).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                    expect(data.settings.logs_store.uuid).to.be.a('string');
+                expect(data.settings.logs_store.uuid).to.be("");
+                expect(data.settings.logs_store.name).to.be.a('string');
+                expect(data.settings.logs_store.name).to.be("");
+              expect(data.settings.outputs_store).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                    expect(data.settings.outputs_store.uuid).to.be.a('string');
+                expect(data.settings.outputs_store.uuid).to.be("");
+                expect(data.settings.outputs_store.name).to.be.a('string');
+                expect(data.settings.outputs_store.name).to.be("");
+              {
+                let dataCtr = data.settings.init_connections;
+                expect(dataCtr).to.be.an(Array);
+                expect(dataCtr).to.not.be.empty();
+                for (let p in dataCtr) {
+                  let data = dataCtr[p];
+                  expect(data).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                  expect(data.uuid).to.be.a('string');
+                  expect(data.uuid).to.be("");
+                  expect(data.name).to.be.a('string');
+                  expect(data.name).to.be("");
+                }
+              }
+              {
+                let dataCtr = data.settings.connections;
+                expect(dataCtr).to.be.an(Array);
+                expect(dataCtr).to.not.be.empty();
+                for (let p in dataCtr) {
+                  let data = dataCtr[p];
+                  expect(data).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                  expect(data.uuid).to.be.a('string');
+                  expect(data.uuid).to.be("");
+                  expect(data.name).to.be.a('string');
+                  expect(data.name).to.be("");
+                }
+              }
+              {
+                let dataCtr = data.settings.git_accesses;
+                expect(dataCtr).to.be.an(Array);
+                expect(dataCtr).to.not.be.empty();
+                for (let p in dataCtr) {
+                  let data = dataCtr[p];
+                  expect(data).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                  expect(data.uuid).to.be.a('string');
+                  expect(data.uuid).to.be("");
+                  expect(data.name).to.be.a('string');
+                  expect(data.name).to.be("");
+                }
+              }
+              expect(data.settings.registry_access).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                    expect(data.settings.registry_access.uuid).to.be.a('string');
+                expect(data.settings.registry_access.uuid).to.be("");
+                expect(data.settings.registry_access.name).to.be.a('string');
+                expect(data.settings.registry_access.name).to.be("");
+              {
+                let dataCtr = data.settings.config_resources;
+                expect(dataCtr).to.be.an(Array);
+                expect(dataCtr).to.not.be.empty();
+                for (let p in dataCtr) {
+                  let data = dataCtr[p];
+                  expect(data).to.be.a(PolyaxonSdk.V1RunSettingsCatalog);
+                  expect(data.uuid).to.be.a('string');
+                  expect(data.uuid).to.be("");
+                  expect(data.name).to.be.a('string');
+                  expect(data.name).to.be("");
+                }
+              }
 
             done();
           });

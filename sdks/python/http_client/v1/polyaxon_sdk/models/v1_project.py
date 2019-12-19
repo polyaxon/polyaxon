@@ -60,6 +60,8 @@ class V1Project(object):
         "deleted": "bool",
         "bookmarked": "bool",
         "readme": "str",
+        "settings": "V1ProjectSettings",
+        "teams": "list[str]",
     }
 
     attribute_map = {
@@ -76,6 +78,8 @@ class V1Project(object):
         "deleted": "deleted",
         "bookmarked": "bookmarked",
         "readme": "readme",
+        "settings": "settings",
+        "teams": "teams",
     }
 
     def __init__(
@@ -93,6 +97,8 @@ class V1Project(object):
         deleted=None,
         bookmarked=None,
         readme=None,
+        settings=None,
+        teams=None,
     ):  # noqa: E501
         """V1Project - a model defined in Swagger"""  # noqa: E501
 
@@ -109,6 +115,8 @@ class V1Project(object):
         self._deleted = None
         self._bookmarked = None
         self._readme = None
+        self._settings = None
+        self._teams = None
         self.discriminator = None
 
         if uuid is not None:
@@ -137,6 +145,10 @@ class V1Project(object):
             self.bookmarked = bookmarked
         if readme is not None:
             self.readme = readme
+        if settings is not None:
+            self.settings = settings
+        if teams is not None:
+            self.teams = teams
 
     @property
     def uuid(self):
@@ -410,6 +422,48 @@ class V1Project(object):
         """
 
         self._readme = readme
+
+    @property
+    def settings(self):
+        """Gets the settings of this V1Project.  # noqa: E501
+
+
+        :return: The settings of this V1Project.  # noqa: E501
+        :rtype: V1ProjectSettings
+        """
+        return self._settings
+
+    @settings.setter
+    def settings(self, settings):
+        """Sets the settings of this V1Project.
+
+
+        :param settings: The settings of this V1Project.  # noqa: E501
+        :type: V1ProjectSettings
+        """
+
+        self._settings = settings
+
+    @property
+    def teams(self):
+        """Gets the teams of this V1Project.  # noqa: E501
+
+
+        :return: The teams of this V1Project.  # noqa: E501
+        :rtype: list[str]
+        """
+        return self._teams
+
+    @teams.setter
+    def teams(self, teams):
+        """Sets the teams of this V1Project.
+
+
+        :param teams: The teams of this V1Project.  # noqa: E501
+        :type: list[str]
+        """
+
+        self._teams = teams
 
     def to_dict(self):
         """Returns the model properties as a dict"""

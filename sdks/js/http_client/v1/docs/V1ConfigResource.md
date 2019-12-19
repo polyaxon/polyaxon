@@ -9,12 +9,10 @@ Name | Type | Description | Notes
 **tags** | **[String]** |  | [optional] 
 **created_at** | **Date** |  | [optional] 
 **updated_at** | **Date** |  | [optional] 
-**k8s_ref** | **String** |  | [optional] 
-**is_secret** | **Boolean** |  | [optional] 
 **frozen** | **Boolean** |  | [optional] 
 **disabled** | **Boolean** |  | [optional] 
 **deleted** | **Boolean** |  | [optional] 
-**mount_path** | **String** |  | [optional] 
-**items** | **[String]** |  | [optional] 
+**kind** | [**V1ConfigResourceKind**](V1ConfigResourceKind.md) |  | [optional] 
+**schema** | [**V1ConfigResourceSchema**](V1ConfigResourceSchema.md) |  | [optional] 
 
 

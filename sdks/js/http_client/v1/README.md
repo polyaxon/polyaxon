@@ -193,9 +193,9 @@ Class | Method | HTTP request | Description
 *PolyaxonSdk.ProjectsV1Api* | [**deleteProject**](docs/ProjectsV1Api.md#deleteProject) | **DELETE** /api/v1/{owner}/{project} | Delete runs
 *PolyaxonSdk.ProjectsV1Api* | [**disableProjectCI**](docs/ProjectsV1Api.md#disableProjectCI) | **DELETE** /api/v1/{owner}/{project}/ci | Restart run
 *PolyaxonSdk.ProjectsV1Api* | [**enableProjectCI**](docs/ProjectsV1Api.md#enableProjectCI) | **POST** /api/v1/{owner}/{project}/ci | Restart run with copy
+*PolyaxonSdk.ProjectsV1Api* | [**fetchProjectTeams**](docs/ProjectsV1Api.md#fetchProjectTeams) | **GET** /api/v1/{owner}/{project}/teams | Bookmark run
 *PolyaxonSdk.ProjectsV1Api* | [**getProject**](docs/ProjectsV1Api.md#getProject) | **GET** /api/v1/{owner}/{project} | Update run
 *PolyaxonSdk.ProjectsV1Api* | [**getProjectSettings**](docs/ProjectsV1Api.md#getProjectSettings) | **GET** /api/v1/{owner}/{project}/settings | Resume run
-*PolyaxonSdk.ProjectsV1Api* | [**getProjectTeams**](docs/ProjectsV1Api.md#getProjectTeams) | **GET** /api/v1/{owner}/{project}/teams | Bookmark run
 *PolyaxonSdk.ProjectsV1Api* | [**listArchivedProjects**](docs/ProjectsV1Api.md#listArchivedProjects) | **GET** /api/v1/archives/{user}/projects | Get run
 *PolyaxonSdk.ProjectsV1Api* | [**listBookmarkedProjects**](docs/ProjectsV1Api.md#listBookmarkedProjects) | **GET** /api/v1/bookmarks/{user}/projects | Create new run
 *PolyaxonSdk.ProjectsV1Api* | [**listProjectNames**](docs/ProjectsV1Api.md#listProjectNames) | **GET** /api/v1/{owner}/projects/names | List runs
@@ -300,6 +300,8 @@ Class | Method | HTTP request | Description
  - [PolyaxonSdk.V1Component](docs/V1Component.md)
  - [PolyaxonSdk.V1ComponentRef](docs/V1ComponentRef.md)
  - [PolyaxonSdk.V1ConfigResource](docs/V1ConfigResource.md)
+ - [PolyaxonSdk.V1ConfigResourceKind](docs/V1ConfigResourceKind.md)
+ - [PolyaxonSdk.V1ConfigResourceSchema](docs/V1ConfigResourceSchema.md)
  - [PolyaxonSdk.V1Connection](docs/V1Connection.md)
  - [PolyaxonSdk.V1ConnectionKind](docs/V1ConnectionKind.md)
  - [PolyaxonSdk.V1ConnectionScema](docs/V1ConnectionScema.md)

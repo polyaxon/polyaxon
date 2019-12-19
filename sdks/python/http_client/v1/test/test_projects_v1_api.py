@@ -87,6 +87,13 @@ class TestProjectsV1Api(unittest.TestCase):
         """
         pass
 
+    def test_fetch_project_teams(self):
+        """Test case for fetch_project_teams
+
+        Bookmark run  # noqa: E501
+        """
+        pass
+
     def test_get_project(self):
         """Test case for get_project
 
@@ -98,13 +105,6 @@ class TestProjectsV1Api(unittest.TestCase):
         """Test case for get_project_settings
 
         Resume run  # noqa: E501
-        """
-        pass
-
-    def test_get_project_teams(self):
-        """Test case for get_project_teams
-
-        Bookmark run  # noqa: E501
         """
         pass
 

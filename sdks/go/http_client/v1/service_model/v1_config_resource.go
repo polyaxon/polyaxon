@@ -47,20 +47,14 @@ type V1ConfigResource struct {
 	// Optional a flag to freeze the resource
 	Frozen bool `json:"frozen,omitempty"`
 
-	// Optional wether this config resource is a secret
-	IsSecret bool `json:"is_secret,omitempty"`
-
-	// Optional the k8s secret to use
-	Items []string `json:"items"`
-
-	// Optional the k8s ref
-	K8sRef string `json:"k8s_ref,omitempty"`
-
-	// Optional a mount path to specifiy where to mount this resource
-	MountPath string `json:"mount_path,omitempty"`
+	// Config resource kind
+	Kind V1ConfigResourceKind `json:"kind,omitempty"`
 
 	// Name
 	Name string `json:"name,omitempty"`
+
+	// Config resource schema
+	Schema *V1ConfigResourceSchema `json:"schema,omitempty"`
 
 	// Optional Tags of this entity
 	Tags []string `json:"tags"`
@@ -78,6 +72,14 @@ func (m *V1ConfigResource) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateCreatedAt(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateKind(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateSchema(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -99,6 +101,40 @@ func (m *V1ConfigResource) validateCreatedAt(formats strfmt.Registry) error {
 
 	if err := validate.FormatOf("created_at", "body", "date-time", m.CreatedAt.String(), formats); err != nil {
 		return err
+	}
+
+	return nil
+}
+
+func (m *V1ConfigResource) validateKind(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Kind) { // not required
+		return nil
+	}
+
+	if err := m.Kind.Validate(formats); err != nil {
+		if ve, ok := err.(*errors.Validation); ok {
+			return ve.ValidateName("kind")
+		}
+		return err
+	}
+
+	return nil
+}
+
+func (m *V1ConfigResource) validateSchema(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Schema) { // not required
+		return nil
+	}
+
+	if m.Schema != nil {
+		if err := m.Schema.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("schema")
+			}
+			return err
+		}
 	}
 
 	return nil

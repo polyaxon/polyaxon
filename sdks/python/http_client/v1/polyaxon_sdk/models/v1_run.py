@@ -77,6 +77,7 @@ class V1Run(object):
         "original": "str",
         "pipeline_name": "str",
         "original_name": "str",
+        "settings": "V1RunSettings",
     }
 
     attribute_map = {
@@ -110,6 +111,7 @@ class V1Run(object):
         "original": "original",
         "pipeline_name": "pipeline_name",
         "original_name": "original_name",
+        "settings": "settings",
     }
 
     def __init__(
@@ -144,6 +146,7 @@ class V1Run(object):
         original=None,
         pipeline_name=None,
         original_name=None,
+        settings=None,
     ):  # noqa: E501
         """V1Run - a model defined in Swagger"""  # noqa: E501
 
@@ -177,6 +180,7 @@ class V1Run(object):
         self._original = None
         self._pipeline_name = None
         self._original_name = None
+        self._settings = None
         self.discriminator = None
 
         if uuid is not None:
@@ -239,6 +243,8 @@ class V1Run(object):
             self.pipeline_name = pipeline_name
         if original_name is not None:
             self.original_name = original_name
+        if settings is not None:
+            self.settings = settings
 
     @property
     def uuid(self):
@@ -869,6 +875,27 @@ class V1Run(object):
         """
 
         self._original_name = original_name
+
+    @property
+    def settings(self):
+        """Gets the settings of this V1Run.  # noqa: E501
+
+
+        :return: The settings of this V1Run.  # noqa: E501
+        :rtype: V1RunSettings
+        """
+        return self._settings
+
+    @settings.setter
+    def settings(self, settings):
+        """Sets the settings of this V1Run.
+
+
+        :param settings: The settings of this V1Run.  # noqa: E501
+        :type: V1RunSettings
+        """
+
+        self._settings = settings
 
     def to_dict(self):
         """Returns the model properties as a dict"""

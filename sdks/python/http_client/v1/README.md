@@ -143,9 +143,9 @@ Class | Method | HTTP request | Description
 *ProjectsV1Api* | [**delete_project**](docs/ProjectsV1Api.md#delete_project) | **DELETE** /api/v1/{owner}/{project} | Delete runs
 *ProjectsV1Api* | [**disable_project_ci**](docs/ProjectsV1Api.md#disable_project_ci) | **DELETE** /api/v1/{owner}/{project}/ci | Restart run
 *ProjectsV1Api* | [**enable_project_ci**](docs/ProjectsV1Api.md#enable_project_ci) | **POST** /api/v1/{owner}/{project}/ci | Restart run with copy
+*ProjectsV1Api* | [**fetch_project_teams**](docs/ProjectsV1Api.md#fetch_project_teams) | **GET** /api/v1/{owner}/{project}/teams | Bookmark run
 *ProjectsV1Api* | [**get_project**](docs/ProjectsV1Api.md#get_project) | **GET** /api/v1/{owner}/{project} | Update run
 *ProjectsV1Api* | [**get_project_settings**](docs/ProjectsV1Api.md#get_project_settings) | **GET** /api/v1/{owner}/{project}/settings | Resume run
-*ProjectsV1Api* | [**get_project_teams**](docs/ProjectsV1Api.md#get_project_teams) | **GET** /api/v1/{owner}/{project}/teams | Bookmark run
 *ProjectsV1Api* | [**list_archived_projects**](docs/ProjectsV1Api.md#list_archived_projects) | **GET** /api/v1/archives/{user}/projects | Get run
 *ProjectsV1Api* | [**list_bookmarked_projects**](docs/ProjectsV1Api.md#list_bookmarked_projects) | **GET** /api/v1/bookmarks/{user}/projects | Create new run
 *ProjectsV1Api* | [**list_project_names**](docs/ProjectsV1Api.md#list_project_names) | **GET** /api/v1/{owner}/projects/names | List runs
@@ -250,6 +250,8 @@ Class | Method | HTTP request | Description
  - [V1Component](docs/V1Component.md)
  - [V1ComponentRef](docs/V1ComponentRef.md)
  - [V1ConfigResource](docs/V1ConfigResource.md)
+ - [V1ConfigResourceKind](docs/V1ConfigResourceKind.md)
+ - [V1ConfigResourceSchema](docs/V1ConfigResourceSchema.md)
  - [V1Connection](docs/V1Connection.md)
  - [V1ConnectionKind](docs/V1ConnectionKind.md)
  - [V1ConnectionScema](docs/V1ConnectionScema.md)

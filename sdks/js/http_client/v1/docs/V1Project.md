@@ -16,5 +16,7 @@ Name | Type | Description | Notes
 **deleted** | **Boolean** |  | [optional] 
 **bookmarked** | **Boolean** |  | [optional] 
 **readme** | **String** |  | [optional] 
+**settings** | [**V1ProjectSettings**](V1ProjectSettings.md) |  | [optional] 
+**teams** | **[String]** |  | [optional] 
 
 

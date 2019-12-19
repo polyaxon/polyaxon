@@ -62,13 +62,14 @@
           body.tags = [""];
           body.created_at = new Date();
           body.updated_at = new Date();
-          body.k8s_ref = "";
-          body.is_secret = false;
           body.frozen = false;
           body.disabled = false;
           body.deleted = false;
-          body.mount_path = "";
-          body.items = [""];
+          body.kind = new PolyaxonSdk.V1ConfigResourceKind();
+          body.schema = new PolyaxonSdk.V1ConfigResourceSchema();
+          body.schema.ref = "";
+          body.schema.mount_path = "";
+          body.schema.items = [""];
 
           instance.createConfigResource(owner, body, function(error, data, response) {
             if (error) {
@@ -97,28 +98,28 @@
             expect(data.created_at).to.be(new Date());
             expect(data.updated_at).to.be.a(Date);
             expect(data.updated_at).to.be(new Date());
-            expect(data.k8s_ref).to.be.a('string');
-            expect(data.k8s_ref).to.be("");
-            expect(data.is_secret).to.be.a('boolean');
-            expect(data.is_secret).to.be(false);
             expect(data.frozen).to.be.a('boolean');
             expect(data.frozen).to.be(false);
             expect(data.disabled).to.be.a('boolean');
             expect(data.disabled).to.be(false);
             expect(data.deleted).to.be.a('boolean');
             expect(data.deleted).to.be(false);
-            expect(data.mount_path).to.be.a('string');
-            expect(data.mount_path).to.be("");
-            {
-              let dataCtr = data.items;
-              expect(dataCtr).to.be.an(Array);
-              expect(dataCtr).to.not.be.empty();
-              for (let p in dataCtr) {
-                let data = dataCtr[p];
-                expect(data).to.be.a('string');
-                expect(data).to.be("");
+            expect(data.kind).to.be.a(PolyaxonSdk.V1ConfigResourceKind);
+                expect(data.schema).to.be.a(PolyaxonSdk.V1ConfigResourceSchema);
+                  expect(data.schema.ref).to.be.a('string');
+              expect(data.schema.ref).to.be("");
+              expect(data.schema.mount_path).to.be.a('string');
+              expect(data.schema.mount_path).to.be("");
+              {
+                let dataCtr = data.schema.items;
+                expect(dataCtr).to.be.an(Array);
+                expect(dataCtr).to.not.be.empty();
+                for (let p in dataCtr) {
+                  let data = dataCtr[p];
+                  expect(data).to.be.a('string');
+                  expect(data).to.be("");
+                }
               }
-            }
 
             done();
           });
@@ -181,28 +182,28 @@
             expect(data.created_at).to.be(new Date());
             expect(data.updated_at).to.be.a(Date);
             expect(data.updated_at).to.be(new Date());
-            expect(data.k8s_ref).to.be.a('string');
-            expect(data.k8s_ref).to.be("");
-            expect(data.is_secret).to.be.a('boolean');
-            expect(data.is_secret).to.be(false);
             expect(data.frozen).to.be.a('boolean');
             expect(data.frozen).to.be(false);
             expect(data.disabled).to.be.a('boolean');
             expect(data.disabled).to.be(false);
             expect(data.deleted).to.be.a('boolean');
             expect(data.deleted).to.be(false);
-            expect(data.mount_path).to.be.a('string');
-            expect(data.mount_path).to.be("");
-            {
-              let dataCtr = data.items;
-              expect(dataCtr).to.be.an(Array);
-              expect(dataCtr).to.not.be.empty();
-              for (let p in dataCtr) {
-                let data = dataCtr[p];
-                expect(data).to.be.a('string');
-                expect(data).to.be("");
+            expect(data.kind).to.be.a(PolyaxonSdk.V1ConfigResourceKind);
+                expect(data.schema).to.be.a(PolyaxonSdk.V1ConfigResourceSchema);
+                  expect(data.schema.ref).to.be.a('string');
+              expect(data.schema.ref).to.be("");
+              expect(data.schema.mount_path).to.be.a('string');
+              expect(data.schema.mount_path).to.be("");
+              {
+                let dataCtr = data.schema.items;
+                expect(dataCtr).to.be.an(Array);
+                expect(dataCtr).to.not.be.empty();
+                for (let p in dataCtr) {
+                  let data = dataCtr[p];
+                  expect(data).to.be.a('string');
+                  expect(data).to.be("");
+                }
               }
-            }
 
             done();
           });
@@ -258,28 +259,28 @@
                 expect(data.created_at).to.be(new Date());
                 expect(data.updated_at).to.be.a(Date);
                 expect(data.updated_at).to.be(new Date());
-                expect(data.k8s_ref).to.be.a('string');
-                expect(data.k8s_ref).to.be("");
-                expect(data.is_secret).to.be.a('boolean');
-                expect(data.is_secret).to.be(false);
                 expect(data.frozen).to.be.a('boolean');
                 expect(data.frozen).to.be(false);
                 expect(data.disabled).to.be.a('boolean');
                 expect(data.disabled).to.be(false);
                 expect(data.deleted).to.be.a('boolean');
                 expect(data.deleted).to.be(false);
-                expect(data.mount_path).to.be.a('string');
-                expect(data.mount_path).to.be("");
-                {
-                  let dataCtr = data.items;
-                  expect(dataCtr).to.be.an(Array);
-                  expect(dataCtr).to.not.be.empty();
-                  for (let p in dataCtr) {
-                    let data = dataCtr[p];
-                    expect(data).to.be.a('string');
-                    expect(data).to.be("");
+                expect(data.kind).to.be.a(PolyaxonSdk.V1ConfigResourceKind);
+                    expect(data.schema).to.be.a(PolyaxonSdk.V1ConfigResourceSchema);
+                      expect(data.schema.ref).to.be.a('string');
+                  expect(data.schema.ref).to.be("");
+                  expect(data.schema.mount_path).to.be.a('string');
+                  expect(data.schema.mount_path).to.be("");
+                  {
+                    let dataCtr = data.schema.items;
+                    expect(dataCtr).to.be.an(Array);
+                    expect(dataCtr).to.not.be.empty();
+                    for (let p in dataCtr) {
+                      let data = dataCtr[p];
+                      expect(data).to.be.a('string');
+                      expect(data).to.be("");
+                    }
                   }
-                }
               }
             }
             expect(data.previous).to.be.a('string');
@@ -341,28 +342,28 @@
                 expect(data.created_at).to.be(new Date());
                 expect(data.updated_at).to.be.a(Date);
                 expect(data.updated_at).to.be(new Date());
-                expect(data.k8s_ref).to.be.a('string');
-                expect(data.k8s_ref).to.be("");
-                expect(data.is_secret).to.be.a('boolean');
-                expect(data.is_secret).to.be(false);
                 expect(data.frozen).to.be.a('boolean');
                 expect(data.frozen).to.be(false);
                 expect(data.disabled).to.be.a('boolean');
                 expect(data.disabled).to.be(false);
                 expect(data.deleted).to.be.a('boolean');
                 expect(data.deleted).to.be(false);
-                expect(data.mount_path).to.be.a('string');
-                expect(data.mount_path).to.be("");
-                {
-                  let dataCtr = data.items;
-                  expect(dataCtr).to.be.an(Array);
-                  expect(dataCtr).to.not.be.empty();
-                  for (let p in dataCtr) {
-                    let data = dataCtr[p];
-                    expect(data).to.be.a('string');
-                    expect(data).to.be("");
+                expect(data.kind).to.be.a(PolyaxonSdk.V1ConfigResourceKind);
+                    expect(data.schema).to.be.a(PolyaxonSdk.V1ConfigResourceSchema);
+                      expect(data.schema.ref).to.be.a('string');
+                  expect(data.schema.ref).to.be("");
+                  expect(data.schema.mount_path).to.be.a('string');
+                  expect(data.schema.mount_path).to.be("");
+                  {
+                    let dataCtr = data.schema.items;
+                    expect(dataCtr).to.be.an(Array);
+                    expect(dataCtr).to.not.be.empty();
+                    for (let p in dataCtr) {
+                      let data = dataCtr[p];
+                      expect(data).to.be.a('string');
+                      expect(data).to.be("");
+                    }
                   }
-                }
               }
             }
             expect(data.previous).to.be.a('string');
@@ -390,13 +391,14 @@
           body.tags = [""];
           body.created_at = new Date();
           body.updated_at = new Date();
-          body.k8s_ref = "";
-          body.is_secret = false;
           body.frozen = false;
           body.disabled = false;
           body.deleted = false;
-          body.mount_path = "";
-          body.items = [""];
+          body.kind = new PolyaxonSdk.V1ConfigResourceKind();
+          body.schema = new PolyaxonSdk.V1ConfigResourceSchema();
+          body.schema.ref = "";
+          body.schema.mount_path = "";
+          body.schema.items = [""];
 
           instance.patchConfigResource(owner, config_resource_uuid, body, function(error, data, response) {
             if (error) {
@@ -425,28 +427,28 @@
             expect(data.created_at).to.be(new Date());
             expect(data.updated_at).to.be.a(Date);
             expect(data.updated_at).to.be(new Date());
-            expect(data.k8s_ref).to.be.a('string');
-            expect(data.k8s_ref).to.be("");
-            expect(data.is_secret).to.be.a('boolean');
-            expect(data.is_secret).to.be(false);
             expect(data.frozen).to.be.a('boolean');
             expect(data.frozen).to.be(false);
             expect(data.disabled).to.be.a('boolean');
             expect(data.disabled).to.be(false);
             expect(data.deleted).to.be.a('boolean');
             expect(data.deleted).to.be(false);
-            expect(data.mount_path).to.be.a('string');
-            expect(data.mount_path).to.be("");
-            {
-              let dataCtr = data.items;
-              expect(dataCtr).to.be.an(Array);
-              expect(dataCtr).to.not.be.empty();
-              for (let p in dataCtr) {
-                let data = dataCtr[p];
-                expect(data).to.be.a('string');
-                expect(data).to.be("");
+            expect(data.kind).to.be.a(PolyaxonSdk.V1ConfigResourceKind);
+                expect(data.schema).to.be.a(PolyaxonSdk.V1ConfigResourceSchema);
+                  expect(data.schema.ref).to.be.a('string');
+              expect(data.schema.ref).to.be("");
+              expect(data.schema.mount_path).to.be.a('string');
+              expect(data.schema.mount_path).to.be("");
+              {
+                let dataCtr = data.schema.items;
+                expect(dataCtr).to.be.an(Array);
+                expect(dataCtr).to.not.be.empty();
+                for (let p in dataCtr) {
+                  let data = dataCtr[p];
+                  expect(data).to.be.a('string');
+                  expect(data).to.be("");
+                }
               }
-            }
 
             done();
           });
@@ -468,13 +470,14 @@
           body.tags = [""];
           body.created_at = new Date();
           body.updated_at = new Date();
-          body.k8s_ref = "";
-          body.is_secret = false;
           body.frozen = false;
           body.disabled = false;
           body.deleted = false;
-          body.mount_path = "";
-          body.items = [""];
+          body.kind = new PolyaxonSdk.V1ConfigResourceKind();
+          body.schema = new PolyaxonSdk.V1ConfigResourceSchema();
+          body.schema.ref = "";
+          body.schema.mount_path = "";
+          body.schema.items = [""];
 
           instance.updateConfigResource(owner, config_resource_uuid, body, function(error, data, response) {
             if (error) {
@@ -503,28 +506,28 @@
             expect(data.created_at).to.be(new Date());
             expect(data.updated_at).to.be.a(Date);
             expect(data.updated_at).to.be(new Date());
-            expect(data.k8s_ref).to.be.a('string');
-            expect(data.k8s_ref).to.be("");
-            expect(data.is_secret).to.be.a('boolean');
-            expect(data.is_secret).to.be(false);
             expect(data.frozen).to.be.a('boolean');
             expect(data.frozen).to.be(false);
             expect(data.disabled).to.be.a('boolean');
             expect(data.disabled).to.be(false);
             expect(data.deleted).to.be.a('boolean');
             expect(data.deleted).to.be(false);
-            expect(data.mount_path).to.be.a('string');
-            expect(data.mount_path).to.be("");
-            {
-              let dataCtr = data.items;
-              expect(dataCtr).to.be.an(Array);
-              expect(dataCtr).to.not.be.empty();
-              for (let p in dataCtr) {
-                let data = dataCtr[p];
-                expect(data).to.be.a('string');
-                expect(data).to.be("");
+            expect(data.kind).to.be.a(PolyaxonSdk.V1ConfigResourceKind);
+                expect(data.schema).to.be.a(PolyaxonSdk.V1ConfigResourceSchema);
+                  expect(data.schema.ref).to.be.a('string');
+              expect(data.schema.ref).to.be("");
+              expect(data.schema.mount_path).to.be.a('string');
+              expect(data.schema.mount_path).to.be("");
+              {
+                let dataCtr = data.schema.items;
+                expect(dataCtr).to.be.an(Array);
+                expect(dataCtr).to.not.be.empty();
+                for (let p in dataCtr) {
+                  let data = dataCtr[p];
+                  expect(data).to.be.a('string');
+                  expect(data).to.be("");
+                }
               }
-            }
 
             done();
           });

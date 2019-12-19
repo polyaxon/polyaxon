@@ -123,6 +123,9 @@ message Run {
 
     // Optional name of the original run
     string original_name = 30;
+
+    // Optional run settings
+    RunSettings settings = 31;
 }
 
 

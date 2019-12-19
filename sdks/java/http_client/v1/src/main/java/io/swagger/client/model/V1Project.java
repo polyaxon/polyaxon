@@ -36,6 +36,7 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import io.swagger.client.model.V1ProjectSettings;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -84,6 +85,12 @@ public class V1Project {
 
   @SerializedName("readme")
   private String readme = null;
+
+  @SerializedName("settings")
+  private V1ProjectSettings settings = null;
+
+  @SerializedName("teams")
+  private List<String> teams = null;
 
   public V1Project uuid(String uuid) {
     this.uuid = uuid;
@@ -327,6 +334,50 @@ public class V1Project {
     this.readme = readme;
   }
 
+  public V1Project settings(V1ProjectSettings settings) {
+    this.settings = settings;
+    return this;
+  }
+
+   /**
+   * Get settings
+   * @return settings
+  **/
+  @ApiModelProperty(value = "")
+  public V1ProjectSettings getSettings() {
+    return settings;
+  }
+
+  public void setSettings(V1ProjectSettings settings) {
+    this.settings = settings;
+  }
+
+  public V1Project teams(List<String> teams) {
+    this.teams = teams;
+    return this;
+  }
+
+  public V1Project addTeamsItem(String teamsItem) {
+    if (this.teams == null) {
+      this.teams = new ArrayList<String>();
+    }
+    this.teams.add(teamsItem);
+    return this;
+  }
+
+   /**
+   * Get teams
+   * @return teams
+  **/
+  @ApiModelProperty(value = "")
+  public List<String> getTeams() {
+    return teams;
+  }
+
+  public void setTeams(List<String> teams) {
+    this.teams = teams;
+  }
+
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -349,12 +400,14 @@ public class V1Project {
         Objects.equals(this.isPublic, v1Project.isPublic) &&
         Objects.equals(this.deleted, v1Project.deleted) &&
         Objects.equals(this.bookmarked, v1Project.bookmarked) &&
-        Objects.equals(this.readme, v1Project.readme);
+        Objects.equals(this.readme, v1Project.readme) &&
+        Objects.equals(this.settings, v1Project.settings) &&
+        Objects.equals(this.teams, v1Project.teams);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(uuid, user, userEmail, owner, name, description, tags, createdAt, updatedAt, isPublic, deleted, bookmarked, readme);
+    return Objects.hash(uuid, user, userEmail, owner, name, description, tags, createdAt, updatedAt, isPublic, deleted, bookmarked, readme, settings, teams);
   }
 
 
@@ -376,6 +429,8 @@ public class V1Project {
     sb.append("    deleted: ").append(toIndentedString(deleted)).append("\n");
     sb.append("    bookmarked: ").append(toIndentedString(bookmarked)).append("\n");
     sb.append("    readme: ").append(toIndentedString(readme)).append("\n");
+    sb.append("    settings: ").append(toIndentedString(settings)).append("\n");
+    sb.append("    teams: ").append(toIndentedString(teams)).append("\n");
     sb.append("}");
     return sb.toString();
   }
