@@ -29,7 +29,7 @@ $ cd polyaxon-quick-start
 $ ls
 
 LICENSE                       polyaxonfile.yaml                  polyaxonfile_hyperparams_early_stopping.yaml
-README.md                     polyaxonfile_declarations.yaml     polyaxonfile_hyperparams_grid.yaml
+README.md                     polyaxonfile_params.yaml     polyaxonfile_hyperparams_grid.yaml
 model.py                      polyaxonfile_hyperparams.yaml      polyaxonfile_hyperparams_hyperband.yaml
 download_data.py              polyaxonfile_hyperparams_bo.yaml   polyaxonfile_job.yaml
 ....
@@ -145,7 +145,7 @@ INFO:tensorflow:loss = 0.0842577, step = 201 (67.969 sec)
 Let's Start another experiment
 
 ```bash
-$ polyaxon run -f polyaxonfile_declarations.yaml
+$ polyaxon run -f polyaxonfile_params.yaml
 ```
 
 ### Start an experiment group
@@ -256,7 +256,7 @@ count  20
 Experiments:
 
  id  unique_name                loss          precision    accuracy
----  --__---------------------  ------------  -----------  ----------
+---  -------------------------  ------------  -----------  ----------
   4   root.quick-start.1.4      0.0514547     0.999445      0.9829
   5   root.quick-start.1.5      0.0554655     0.999334      0.9833
   6   root.quick-start.1.6      0.0607866     0.999002      0.9797
