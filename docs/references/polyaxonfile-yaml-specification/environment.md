@@ -355,14 +355,15 @@ environment:
             - key: "key"
               operator: "Exists"
 
-      ps_resources:
+      ps:
         - index: 0
-          cpu:
-            requests: 1
-            limits: 1
-          memory:
-            requests: 256
-            limits: 1024
+          resources:
+            cpu:
+              requests: 1
+              limits: 1
+            memory:
+              requests: 256
+              limits: 1024
 ```
 
 ## framework: mxnet

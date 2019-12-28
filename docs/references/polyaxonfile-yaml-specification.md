@@ -63,7 +63,7 @@ The Polyaxon specification is based on a list of sections, in this guide, we des
 ## Tensorboard sections
 
  * [version](/references/polyaxonfile-yaml-specification/version/) `required`: defines the version of the file to be parsed and validated.
- * [kind](/references/polyaxonfile-yaml-specification/kind/) `required`: defines the kind of operation to run: plugin.
+ * [kind](/references/polyaxonfile-yaml-specification/kind/) `required`: defines the kind of operation to run: tensorboard.
  * [environment](/references/polyaxonfile-yaml-specification/environment/): defines the run environment, resources, persistence, and node selectors.
  * [build](/references/polyaxonfile-yaml-specification/build/) `required`: defines the how the user can set a docker image.
 

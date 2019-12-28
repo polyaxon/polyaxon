@@ -39,19 +39,6 @@ build:
   env_vars:
     - [KEY1, VALUE1]
     - [KEY2, VALUE2]
-```
-
-## Example using commit
-
-```yaml
-build:
-  image: my_image
-  build_steps:
-    - pip install PILLOW
-    - pip install scikit-learn
-  env_vars:
-    - [KEY1, VALUE1]
-    - [KEY2, VALUE2]
   commit: 14e9d652151eb058afa0b51ba110671f2ca10cbf
 ```
 
