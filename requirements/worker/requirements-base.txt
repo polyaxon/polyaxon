@@ -1,8 +1,8 @@
 -r ../requirements-base.txt
 
 GitPython==2.1.11
-polystores==0.2.4
-polyaxon-k8s==0.4.7
+polystores==0.2.5
+polyaxon-k8s==0.4.9
 
 azure-storage==0.36.0
 boto3==1.7.73

@@ -1,3 +1,3 @@
-polyaxon-k8s==0.4.7
-ocular==0.1.6
+polyaxon-k8s==0.4.9
+ocular==0.1.7
 Unipath==1.1

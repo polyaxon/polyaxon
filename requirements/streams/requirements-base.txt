@@ -1,5 +1,5 @@
 -r ../requirements-base.txt
 
 kubernetes-asyncio==8.0.3
-polyaxon-k8s==0.4.7
+polyaxon-k8s==0.4.9
 sanic==19.6.2
