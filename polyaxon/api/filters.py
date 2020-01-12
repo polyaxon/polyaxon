@@ -1,3 +1,4 @@
+from django.db.models import F
 from hestia.string_utils import strip_spaces
 from rest_framework.exceptions import ValidationError
 from rest_framework.filters import BaseFilterBackend
@@ -61,12 +62,18 @@ class OrderingFilter(BaseOrderingFilter):
             negation = '-' if field[0] == '-' else ''
             field = field.lstrip('-')
             if field in valid_fields:
-                result_fields.append('{}{}'.format(negation, field))
+                if negation:
+                    result_fields.append(F(field).desc(nulls_last=True))
+                else:
+                    result_fields.append(field)
                 continue
 
             field, suffix = query.parse_field(field)
             if field in proxy_fields:
-                result_fields.append('{}{}'.format(negation, suffix))
+                if negation:
+                    result_fields.append(F(suffix).desc(nulls_last=True))
+                else:
+                    result_fields.append(suffix)
                 annotation[suffix] = KeyTransform(suffix, proxy_fields[field])
 
         return result_fields, annotation
