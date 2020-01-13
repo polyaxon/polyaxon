@@ -33,36 +33,6 @@ polyaxon version --platform
 polyaxon whoami
 ```
 
-### Check the cluster discovery
-
-Check that polyaxon is reporting your cluster correctly
-
-```bash
-$ polyaxon cluster
-
-Cluster info:
-
---------------  ----------------------------------------
-build_date      2017-11-20T05:17:43Z
-major           1
-go_version      go1.8.3
-git_version     v1.8.4
-platform        linux/amd64
-git_commit      9befc2b8928a9426501d3bf62f72849d5cbcd5a3
-git_tree_state  clean
-minor           8
-compiler        gc
---------------  ----------------------------------------
-
-Cluster Nodes:
-
-  id  name                       hostname                   role    memory      n_cpus    n_gpus
-----  -------------------------  -------------------------  ------  --------  --------  --------
-   1  k8s-agentpool1-13475325-0  k8s-agentpool1-13475325-0  agent   6.7 Gb           2         0
-   2  k8s-agentpool2-13475325-0  k8s-agentpool2-13475325-0  agent   54.93 Gb         6         1
-   3  k8s-master-13475325-0      k8s-master-13475325-0      master  6.7 Gb           2         0
-```
-
 ### Create a project 
 
 Now we can create a project, you can do that with `Polyaxon Dashboard` or with `polyaxon CLI`
