@@ -103,7 +103,7 @@ You can use Polyaxon CLI to manage the deployment
 polyaxon admin deploy -f config.yml
 ```
 
-Or you can use Helm to do the same:
+Or you can use Helm to do the same, in Helm 2
 
 ```bash
 helm install polyaxon/polyaxon \
@@ -112,7 +112,15 @@ helm install polyaxon/polyaxon \
     -f config.yml
 ```
 
-`--name` is an identifier used by helm to refer to this deployment.
+in Helm 3
+
+```bash
+helm install <RELEASE_NAME> polyaxon/polyaxon \
+    --namespace=<NAMESPACE> \
+    -f config.yml
+```
+
+`--name` or `name` is an identifier used by helm to refer to this deployment.
 You need it when you are changing the configuration of this install or deleting it.
 We recommend using `RELEASE_NAME = polyaxon` or `RELEASE_NAME = plx`.
 

@@ -6,7 +6,7 @@ GitPython==2.1.11
 sanic==19.6.2
 kubernetes-asyncio==8.0.3
 ocular==0.1.7
-polyaxon-dockerizer==0.0.9
+polyaxon-dockerizer==0.1.0
 polyaxon-k8s==0.4.9
 polyaxon-gpustat==0.3.4
 polyaxon-nginx==0.5.3

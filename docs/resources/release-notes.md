@@ -9,6 +9,19 @@ tags:
     - reference
 ---
 
+## 0.6.0
+
+ * Update chart to be compatible with k8s 1.16.
+    * N.B. postgres depenedency was not updated in this release to provide compatible upgrade with deployment running the built-in database 
+ * Fix issue with scheduling parallel distributed runs.
+ * Fix issue with sort by a metric containing null values, add null last to queries.
+ * Fix warning issues in CLI.
+ * Fix some security issues.
+ * Add docs for helm 3 deploy command.
+ * Add keras tracking contrib module.
+ * Disable telemetry by default.
+ * Fix some package dependency issues.
+
 ## 0.5.6
 
  * Allow code download based on commit in CLI: `polyaxon project download --commit=...`
