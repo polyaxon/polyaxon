@@ -105,13 +105,24 @@ polyaxon admin deploy -f config.yml
 
 Or you can use Helm to do the same:
 
+in Helm 2
+
+```bash
+helm install polyaxon/polyaxon \
+    --name=<RELEASE_NAME> \
+    --namespace=<NAMESPACE> \
+    -f config.yml
+```
+
+in Helm 3
+
 ```bash
 helm install <RELEASE_NAME> polyaxon/polyaxon \
     --namespace=<NAMESPACE> \
     -f config.yml
 ```
 
-`--name` is an identifier used by helm to refer to this deployment.
+`--name` or `name` is an identifier used by helm to refer to this deployment.
 You need it when you are changing the configuration of this install or deleting it.
 We recommend using `RELEASE_NAME = polyaxon` or `RELEASE_NAME = plx`.
 
@@ -182,7 +193,7 @@ To upgrade Polyaxon to a newer version, you can simply run the following command
 
 ```bash
 helm update
-polyaxon admin upgrade -f config.yml
+polyaxon admin deploy -f config.yml --upgrade
 ```
 
 Or using Helm
@@ -198,7 +209,7 @@ The general method to modify your Kubernetes deployment is to:
 
  1. Make a change to the config.yml
  2. [Optional] run `polyaxon admin deploy -f config.yml --check`
- 2. Run a `polyaxon admin upgrade -f config.yml` or `helm upgrade`:
+ 2. Run a `polyaxon admin deploy -f config.yml --upgrade` or `helm upgrade`:
 
     ```bash
     $ helm upgrade <RELEASE_NAME> polyaxon/polyaxon -f config.yml
