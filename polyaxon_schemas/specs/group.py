@@ -6,6 +6,7 @@ import six
 from hestia.cached_property import cached_property
 
 from polyaxon_schemas.exceptions import PolyaxonConfigurationError
+from polyaxon_schemas.ops.experiment.environment import ExperimentEnvironmentConfig
 from polyaxon_schemas.ops.group import GroupConfig
 from polyaxon_schemas.ops.group.hptuning import SearchAlgorithms
 from polyaxon_schemas.specs import kinds
@@ -49,6 +50,7 @@ class GroupSpecification(BaseRunSpecification):
     POSSIBLE_SECTIONS = ExperimentSpecification.POSSIBLE_SECTIONS + (
         BaseRunSpecification.HP_TUNING,
     )
+    ENVIRONMENT_CONFIG = ExperimentEnvironmentConfig
     CONFIG = GroupConfig
 
     def _extra_validation(self):

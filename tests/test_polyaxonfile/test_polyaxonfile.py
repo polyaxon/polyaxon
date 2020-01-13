@@ -466,6 +466,14 @@ class TestPolyaxonfile(TestCase):
         assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
         assert spec.run.cmd == 'train --loss="{}"'.format(spec.params['loss'])
 
+    @flaky(max_runs=3)
+    def test_one_matrix_file_passes(self):
+        plxfile = PolyaxonFile(
+            os.path.abspath('tests/fixtures/typing/test_parallel_distributed.yaml')
+        )
+        spec = plxfile.specification
+        spec.apply_context()
+
     def test_run_simple_file_passes_sdf(self):
         plxfile = PolyaxonFile(os.path.abspath(
             'tests/fixtures/plain/run_cmd_simple_file.yml'))
