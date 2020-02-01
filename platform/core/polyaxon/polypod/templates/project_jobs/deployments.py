@@ -119,7 +119,7 @@ def get_deployment(namespace,
                                replicas=replicas,
                                service_account_name=service_account_name)
     return client.AppsV1beta1Deployment(
-        api_version=k8s_constants.K8S_API_VERSION_EXTENSIONS_V1_BETA1,
+        api_version=k8s_constants.K8S_API_VERSION_APPS_V1,
         kind=k8s_constants.K8S_DEPLOYMENT_KIND,
         metadata=metadata,
         spec=spec)

@@ -604,7 +604,7 @@ class BaseResourceManager(object):
                                                            template=template_spec)
         metadata = client.V1ObjectMeta(name=resource_name, labels=labels, namespace=self.namespace)
         return client.AppsV1beta1Deployment(
-            api_version=k8s_constants.K8S_API_VERSION_EXTENSIONS_V1_BETA1,
+            api_version=k8s_constants.K8S_API_VERSION_APPS_V1,
             kind=k8s_constants.K8S_DEPLOYMENT_KIND,
             metadata=metadata,
             spec=deployment_spec)
