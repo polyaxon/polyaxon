@@ -24,7 +24,7 @@ class PyTest(TestCommand):
 
 
 setup(name='polyaxon-schemas',
-      version='0.7.0',
+      version='0.6.1',
       description='Schema definitions and validation for Polyaxon.',
       long_description=read_readme(),
       long_description_content_type="text/markdown",
@@ -49,7 +49,7 @@ setup(name='polyaxon-schemas',
           'kubernetes',
       ],
       install_requires=[
-          'hestia==0.7.0',
+          'hestia==0.6.0',
           'Jinja2~=2.10.1',
           'marshmallow==3.0.0rc5',
           'numpy>=1.15.2',
