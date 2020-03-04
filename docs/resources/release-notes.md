@@ -9,6 +9,18 @@ tags:
     - reference
 ---
 
+
+## 0.6.1
+
+ **IMPORTANT**: If you are using the built-in data-base you cannot upgrade automatically.
+ 
+ * Update chart requirement for postgres database.
+ * Update chart to be compatible with k8s 1.17.
+ * Update K8S manager to use v1 and stable APIs.
+ * Update deployment (notebooks and tensorboards) to be compatible with K8S 1.17.
+ * Update admin CLI commands to target Helm 3 by default.
+ * Fix issue with tensorboard v2, add `--host` flag.
+
 ## 0.6.0
 
  * Update chart to be compatible with k8s 1.16.

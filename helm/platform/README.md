@@ -1,7 +1,7 @@
 # Polyaxon-chart
 
 [![Build Status](https://travis-ci.org/polyaxon/polyaxon-chart.svg?branch=master)](https://travis-ci.org/polyaxon/polyaxon-chart)
-[![Release](https://img.shields.io/badge/release-0.6.0-green.svg?longCache=true)](https://github.com/polyaxon/polyaxon/releases/tag/0.6.0)
+[![Release](https://img.shields.io/badge/release-0.6.1-green.svg?longCache=true)](https://github.com/polyaxon/polyaxon/releases/tag/0.6.1)
 [![Slack](https://img.shields.io/badge/chat-on%20slack-aadada.svg?logo=slack&longCache=true)](https://join.slack.com/t/polyaxon/shared_invite/henQtMzQ0ODc2MDg1ODc0LTViMjMwY2VlNjQzYzU2NTUzODVlNzBjNDc2NDMyY2M0MDljMDliOWViNDljMDNmZmViZTg1YzFlOWY0YTQwMTM)
 
 Polyaxon chart is a Helm chart for creating reproducible and maintainable deployments of Polyaxon with Kubernetes.
