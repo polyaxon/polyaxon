@@ -1,6 +1,6 @@
 -r ../requirements-base.txt
 
-GitPython==2.1.11
+GitPython==3.1.0
 polystores==0.2.5
 polyaxon-k8s==0.5.0
 

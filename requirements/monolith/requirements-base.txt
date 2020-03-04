@@ -2,7 +2,7 @@
 
 django-auth-ldap==1.7.0
 django-debug-toolbar
-GitPython==2.1.11
+GitPython==3.1.0
 sanic==19.6.2
 kubernetes-asyncio==8.0.3
 ocular==0.1.7
