@@ -1,7 +1,7 @@
 analytics-python==1.2.9
 celery==4.3.0
 cryptography==2.7
-Django==2.2.9
+Django==2.2.11
 django-cors-headers==2.4.0
 django-picklefield==2.0
 djangorestframework==3.10.1
