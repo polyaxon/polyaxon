@@ -56,7 +56,11 @@ def get_deployment_spec(namespace,
                                     env_from=env_from,
                                     service_account_name=service_account_name)
     template_spec = client.V1PodTemplateSpec(metadata=metadata, spec=pod_spec)
-    return client.V1DeploymentSpec(replicas=replicas, template=template_spec)
+    return client.V1DeploymentSpec(
+        replicas=replicas,
+        template=template_spec,
+        selector=client.V1LabelSelector(match_labels=labels),
+    )
 
 
 def get_deployment(namespace,

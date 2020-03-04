@@ -600,7 +600,11 @@ class BaseResourceManager(object):
             init_context_mounts=init_context_mounts,
             sidecar_context_mounts=sidecar_context_mounts,
         )
-        deployment_spec = client.V1DeploymentSpec(replicas=replicas, template=template_spec)
+        deployment_spec = client.V1DeploymentSpec(
+            replicas=replicas,
+            template=template_spec,
+            selector=client.V1LabelSelector(match_labels=labels),
+        )
         metadata = client.V1ObjectMeta(name=resource_name, labels=labels, namespace=self.namespace)
         return client.V1Deployment(
             api_version=k8s_constants.K8S_API_VERSION_APPS_V1,
