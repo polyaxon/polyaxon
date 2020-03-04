@@ -12,5 +12,5 @@ def versions(request):
         'platform_version': PlatformVersion.load(),
         'lib_version': LibVersion.load(),
         'chart_version': ChartVersion.load(),
-        'assets_version': '0.6.0'
+        'assets_version': '0.6.1'
     }
