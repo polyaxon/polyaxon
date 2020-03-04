@@ -56,7 +56,7 @@ def get_deployment_spec(namespace,
                                     env_from=env_from,
                                     service_account_name=service_account_name)
     template_spec = client.V1PodTemplateSpec(metadata=metadata, spec=pod_spec)
-    return client.AppsV1beta1DeploymentSpec(replicas=replicas, template=template_spec)
+    return client.V1DeploymentSpec(replicas=replicas, template=template_spec)
 
 
 def get_deployment(namespace,
@@ -118,8 +118,8 @@ def get_deployment(namespace,
                                type=type,
                                replicas=replicas,
                                service_account_name=service_account_name)
-    return client.AppsV1beta1Deployment(
-        api_version=k8s_constants.K8S_API_VERSION_EXTENSIONS_V1_BETA1,
+    return client.V1Deployment(
+        api_version=k8s_constants.K8S_API_VERSION_APPS_V1,
         kind=k8s_constants.K8S_DEPLOYMENT_KIND,
         metadata=metadata,
         spec=spec)
