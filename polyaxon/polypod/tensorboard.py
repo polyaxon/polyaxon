@@ -199,6 +199,7 @@ class TensorboardSpawner(ProjectJobSpawner):
             "tensorboard "
             "--logdir={log_dir} "
             "--port={port} "
+            "--host=0.0.0.0 "
             "--path_prefix={path_prefix}".format(
                 log_dir=outputs_path,
                 port=self.port,
