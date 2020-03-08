@@ -1,4 +1,4 @@
-// Copyright 2019 Polyaxon, Inc.
+// Copyright 2018-2020 Polyaxon, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,18 +20,18 @@ package service_model
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // V1Parallel All Schemas message
+//
 // swagger:model v1Parallel
 type V1Parallel struct {
 
-	// bo
-	Bo *V1BO `json:"bo,omitempty"`
+	// bayes
+	Bayes *V1Bayes `json:"bayes,omitempty"`
 
 	// grid
 	Grid *V1GridSearch `json:"grid,omitempty"`
@@ -56,7 +56,7 @@ type V1Parallel struct {
 func (m *V1Parallel) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	if err := m.validateBo(formats); err != nil {
+	if err := m.validateBayes(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -90,16 +90,16 @@ func (m *V1Parallel) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *V1Parallel) validateBo(formats strfmt.Registry) error {
+func (m *V1Parallel) validateBayes(formats strfmt.Registry) error {
 
-	if swag.IsZero(m.Bo) { // not required
+	if swag.IsZero(m.Bayes) { // not required
 		return nil
 	}
 
-	if m.Bo != nil {
-		if err := m.Bo.Validate(formats); err != nil {
+	if m.Bayes != nil {
+		if err := m.Bayes.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("bo")
+				return ve.ValidateName("bayes")
 			}
 			return err
 		}

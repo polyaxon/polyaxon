@@ -1,2 +1,2 @@
 image: gcr.io/kubeflow-images-public/pytorch-operator
-imageTag: v0.5.1-5-ge775742
+imageTag: v1.0.0-g047cf0f

@@ -1,4 +1,4 @@
-// Copyright 2019 Polyaxon, Inc.
+// Copyright 2018-2020 Polyaxon, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -24,8 +24,9 @@ import (
 	"io"
 
 	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/strfmt"
 
-	strfmt "github.com/go-openapi/strfmt"
+	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_model"
 )
 
 // PromoteProjectSearchReader is a Reader for the PromoteProjectSearch structure.
@@ -60,9 +61,15 @@ func (o *PromoteProjectSearchReader) ReadResponse(response runtime.ClientRespons
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		result := NewPromoteProjectSearchDefault(response.Code())
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		if response.Code()/100 == 2 {
+			return result, nil
+		}
+		return nil, result
 	}
 }
 
@@ -174,6 +181,48 @@ func (o *PromoteProjectSearchNotFound) readResponse(response runtime.ClientRespo
 
 	// response payload
 	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
+// NewPromoteProjectSearchDefault creates a PromoteProjectSearchDefault with default headers values
+func NewPromoteProjectSearchDefault(code int) *PromoteProjectSearchDefault {
+	return &PromoteProjectSearchDefault{
+		_statusCode: code,
+	}
+}
+
+/*PromoteProjectSearchDefault handles this case with default header values.
+
+An unexpected error response
+*/
+type PromoteProjectSearchDefault struct {
+	_statusCode int
+
+	Payload *service_model.RuntimeError
+}
+
+// Code gets the status code for the promote project search default response
+func (o *PromoteProjectSearchDefault) Code() int {
+	return o._statusCode
+}
+
+func (o *PromoteProjectSearchDefault) Error() string {
+	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/searches/{uuid}/promote][%d] PromoteProjectSearch default  %+v", o._statusCode, o.Payload)
+}
+
+func (o *PromoteProjectSearchDefault) GetPayload() *service_model.RuntimeError {
+	return o.Payload
+}
+
+func (o *PromoteProjectSearchDefault) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(service_model.RuntimeError)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 

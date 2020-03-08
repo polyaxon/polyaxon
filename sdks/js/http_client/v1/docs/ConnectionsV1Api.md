@@ -4,20 +4,20 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**createConnection**](ConnectionsV1Api.md#createConnection) | **POST** /api/v1/orgs/{owner}/connections | List runs
-[**deleteConnection**](ConnectionsV1Api.md#deleteConnection) | **DELETE** /api/v1/orgs/{owner}/connections/{uuid} | Patch run
-[**getConnection**](ConnectionsV1Api.md#getConnection) | **GET** /api/v1/orgs/{owner}/connections/{uuid} | Create new run
-[**listConnectionNames**](ConnectionsV1Api.md#listConnectionNames) | **GET** /api/v1/orgs/{owner}/connections/names | List bookmarked runs for user
-[**listConnections**](ConnectionsV1Api.md#listConnections) | **GET** /api/v1/orgs/{owner}/connections | List archived runs for user
-[**patchConnection**](ConnectionsV1Api.md#patchConnection) | **PATCH** /api/v1/orgs/{owner}/connections/{connection.uuid} | Update run
-[**updateConnection**](ConnectionsV1Api.md#updateConnection) | **PUT** /api/v1/orgs/{owner}/connections/{connection.uuid} | Get run
+[**createConnection**](ConnectionsV1Api.md#createConnection) | **POST** /api/v1/orgs/{owner}/connections | Create connection
+[**deleteConnection**](ConnectionsV1Api.md#deleteConnection) | **DELETE** /api/v1/orgs/{owner}/connections/{uuid} | Delete connection
+[**getConnection**](ConnectionsV1Api.md#getConnection) | **GET** /api/v1/orgs/{owner}/connections/{uuid} | Get connection
+[**listConnectionNames**](ConnectionsV1Api.md#listConnectionNames) | **GET** /api/v1/orgs/{owner}/connections/names | List connections names
+[**listConnections**](ConnectionsV1Api.md#listConnections) | **GET** /api/v1/orgs/{owner}/connections | List connections
+[**patchConnection**](ConnectionsV1Api.md#patchConnection) | **PATCH** /api/v1/orgs/{owner}/connections/{connection.uuid} | Patch connection
+[**updateConnection**](ConnectionsV1Api.md#updateConnection) | **PUT** /api/v1/orgs/{owner}/connections/{connection.uuid} | Update connection
 
 
 <a name="createConnection"></a>
 # **createConnection**
-> V1Connection createConnection(owner, body)
+> V1ConnectionResponse createConnection(owner, body)
 
-List runs
+Create connection
 
 ### Example
 ```javascript
@@ -34,7 +34,7 @@ var apiInstance = new PolyaxonSdk.ConnectionsV1Api();
 
 var owner = "owner_example"; // String | Owner of the namespace
 
-var body = new PolyaxonSdk.V1Connection(); // V1Connection | Connection body
+var body = new PolyaxonSdk.V1ConnectionResponse(); // V1ConnectionResponse | Connection body
 
 
 var callback = function(error, data, response) {
@@ -52,11 +52,11 @@ apiInstance.createConnection(owner, body, callback);
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace | 
- **body** | [**V1Connection**](V1Connection.md)| Connection body | 
+ **body** | [**V1ConnectionResponse**](V1ConnectionResponse.md)| Connection body | 
 
 ### Return type
 
-[**V1Connection**](V1Connection.md)
+[**V1ConnectionResponse**](V1ConnectionResponse.md)
 
 ### Authorization
 
@@ -71,7 +71,7 @@ Name | Type | Description  | Notes
 # **deleteConnection**
 > deleteConnection(owner, uuid)
 
-Patch run
+Delete connection
 
 ### Example
 ```javascript
@@ -88,7 +88,7 @@ var apiInstance = new PolyaxonSdk.ConnectionsV1Api();
 
 var owner = "owner_example"; // String | Owner of the namespace
 
-var uuid = "uuid_example"; // String | Unique integer identifier of the entity
+var uuid = "uuid_example"; // String | Uuid identifier of the entity
 
 
 var callback = function(error, data, response) {
@@ -106,7 +106,7 @@ apiInstance.deleteConnection(owner, uuid, callback);
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace | 
- **uuid** | **String**| Unique integer identifier of the entity | 
+ **uuid** | **String**| Uuid identifier of the entity | 
 
 ### Return type
 
@@ -123,9 +123,9 @@ null (empty response body)
 
 <a name="getConnection"></a>
 # **getConnection**
-> V1Connection getConnection(owner, uuid)
+> V1ConnectionResponse getConnection(owner, uuid)
 
-Create new run
+Get connection
 
 ### Example
 ```javascript
@@ -142,7 +142,7 @@ var apiInstance = new PolyaxonSdk.ConnectionsV1Api();
 
 var owner = "owner_example"; // String | Owner of the namespace
 
-var uuid = "uuid_example"; // String | Unique integer identifier of the entity
+var uuid = "uuid_example"; // String | Uuid identifier of the entity
 
 
 var callback = function(error, data, response) {
@@ -160,11 +160,11 @@ apiInstance.getConnection(owner, uuid, callback);
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace | 
- **uuid** | **String**| Unique integer identifier of the entity | 
+ **uuid** | **String**| Uuid identifier of the entity | 
 
 ### Return type
 
-[**V1Connection**](V1Connection.md)
+[**V1ConnectionResponse**](V1ConnectionResponse.md)
 
 ### Authorization
 
@@ -179,7 +179,7 @@ Name | Type | Description  | Notes
 # **listConnectionNames**
 > V1ListConnectionsResponse listConnectionNames(owner, opts)
 
-List bookmarked runs for user
+List connections names
 
 ### Example
 ```javascript
@@ -240,7 +240,7 @@ Name | Type | Description  | Notes
 # **listConnections**
 > V1ListConnectionsResponse listConnections(owner, opts)
 
-List archived runs for user
+List connections
 
 ### Example
 ```javascript
@@ -299,9 +299,9 @@ Name | Type | Description  | Notes
 
 <a name="patchConnection"></a>
 # **patchConnection**
-> V1Connection patchConnection(owner, connection_uuid, body)
+> V1ConnectionResponse patchConnection(owner, connection_uuid, body)
 
-Update run
+Patch connection
 
 ### Example
 ```javascript
@@ -320,7 +320,7 @@ var owner = "owner_example"; // String | Owner of the namespace
 
 var connection_uuid = "connection_uuid_example"; // String | UUID
 
-var body = new PolyaxonSdk.V1Connection(); // V1Connection | Connection body
+var body = new PolyaxonSdk.V1ConnectionResponse(); // V1ConnectionResponse | Connection body
 
 
 var callback = function(error, data, response) {
@@ -339,11 +339,11 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace | 
  **connection_uuid** | **String**| UUID | 
- **body** | [**V1Connection**](V1Connection.md)| Connection body | 
+ **body** | [**V1ConnectionResponse**](V1ConnectionResponse.md)| Connection body | 
 
 ### Return type
 
-[**V1Connection**](V1Connection.md)
+[**V1ConnectionResponse**](V1ConnectionResponse.md)
 
 ### Authorization
 
@@ -356,9 +356,9 @@ Name | Type | Description  | Notes
 
 <a name="updateConnection"></a>
 # **updateConnection**
-> V1Connection updateConnection(owner, connection_uuid, body)
+> V1ConnectionResponse updateConnection(owner, connection_uuid, body)
 
-Get run
+Update connection
 
 ### Example
 ```javascript
@@ -377,7 +377,7 @@ var owner = "owner_example"; // String | Owner of the namespace
 
 var connection_uuid = "connection_uuid_example"; // String | UUID
 
-var body = new PolyaxonSdk.V1Connection(); // V1Connection | Connection body
+var body = new PolyaxonSdk.V1ConnectionResponse(); // V1ConnectionResponse | Connection body
 
 
 var callback = function(error, data, response) {
@@ -396,11 +396,11 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace | 
  **connection_uuid** | **String**| UUID | 
- **body** | [**V1Connection**](V1Connection.md)| Connection body | 
+ **body** | [**V1ConnectionResponse**](V1ConnectionResponse.md)| Connection body | 
 
 ### Return type
 
-[**V1Connection**](V1Connection.md)
+[**V1ConnectionResponse**](V1ConnectionResponse.md)
 
 ### Authorization
 

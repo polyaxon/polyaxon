@@ -1,4 +1,4 @@
-// Copyright 2019 Polyaxon, Inc.
+// Copyright 2018-2020 Polyaxon, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -24,8 +24,9 @@ import (
 	"io"
 
 	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/strfmt"
 
-	strfmt "github.com/go-openapi/strfmt"
+	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_model"
 )
 
 // DeleteSearchReader is a Reader for the DeleteSearch structure.
@@ -60,9 +61,15 @@ func (o *DeleteSearchReader) ReadResponse(response runtime.ClientResponse, consu
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		result := NewDeleteSearchDefault(response.Code())
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		if response.Code()/100 == 2 {
+			return result, nil
+		}
+		return nil, result
 	}
 }
 
@@ -174,6 +181,48 @@ func (o *DeleteSearchNotFound) readResponse(response runtime.ClientResponse, con
 
 	// response payload
 	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
+// NewDeleteSearchDefault creates a DeleteSearchDefault with default headers values
+func NewDeleteSearchDefault(code int) *DeleteSearchDefault {
+	return &DeleteSearchDefault{
+		_statusCode: code,
+	}
+}
+
+/*DeleteSearchDefault handles this case with default header values.
+
+An unexpected error response
+*/
+type DeleteSearchDefault struct {
+	_statusCode int
+
+	Payload *service_model.RuntimeError
+}
+
+// Code gets the status code for the delete search default response
+func (o *DeleteSearchDefault) Code() int {
+	return o._statusCode
+}
+
+func (o *DeleteSearchDefault) Error() string {
+	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}/searches/{uuid}][%d] DeleteSearch default  %+v", o._statusCode, o.Payload)
+}
+
+func (o *DeleteSearchDefault) GetPayload() *service_model.RuntimeError {
+	return o.Payload
+}
+
+func (o *DeleteSearchDefault) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(service_model.RuntimeError)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 

@@ -4,13 +4,13 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**no_op**](SchemasV1Api.md#no_op) | **GET** /schemas | List bookmarked runs for user
+[**no_op**](SchemasV1Api.md#no_op) | **GET** /schemas | Get random
 
 
 # **no_op**
 > V1Schemas no_op()
 
-List bookmarked runs for user
+Get random
 
 ### Example
 ```python
@@ -30,7 +30,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 api_instance = polyaxon_sdk.SchemasV1Api(polyaxon_sdk.ApiClient(configuration))
 
 try:
-    # List bookmarked runs for user
+    # Get random
     api_response = api_instance.no_op()
     pprint(api_response)
 except ApiException as e:

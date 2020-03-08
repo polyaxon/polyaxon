@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "polyaxon.fullname" . }}-streams
+  labels:
+    app: {{ template "polyaxon.fullname" . }}-streams
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+    type: {{ .Values.types.core }}
+    role: {{ .Values.roles.api }}
+    app.kubernetes.io/name: {{ template "polyaxon.fullname" . }}-streams
+    app.kubernetes.io/instance: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    app.kubernetes.io/version: "{{ .Chart.Version }}"
+    app.kubernetes.io/part-of: {{ .Values.types.core }}
+    app.kubernetes.io/component: {{ .Values.roles.api }}
+    app.kubernetes.io/managed-by: "helm"
+  {{- with .Values.streams.service.annotations }}
+  annotations:
+  {{ toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  type: {{ .Values.streams.service.type }}
+  selector:
+    app: {{ template "polyaxon.fullname" . }}-streams
+  ports:
+  - port: {{ .Values.streams.service.port }}
+    targetPort: {{ .Values.streams.service.targetPort }}
+    {{ if eq .Values.streams.service.type "NodePort" -}}
+    nodePort: {{ .Values.streams.service.nodePort }}
+    {{- end }}
+    name: {{ .Values.streams.service.name }}

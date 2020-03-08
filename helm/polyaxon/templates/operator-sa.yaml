@@ -1,0 +1,151 @@
+{{- if .Values.operator.enabled }}
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: polyaxon-operator-sa
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: {{ template "polyaxon.fullname" . }}-operator-sa
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+    type: {{ .Values.types.agent }}
+    role: {{ .Values.roles.config }}
+    app.kubernetes.io/name: polyaxon-operator-sa
+    app.kubernetes.io/instance: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    app.kubernetes.io/version: "{{ .Chart.Version }}"
+    app.kubernetes.io/part-of: {{ .Values.types.agent }}
+    app.kubernetes.io/component: {{ .Values.roles.config }}
+    app.kubernetes.io/managed-by: "helm"
+
+{{- if .Values.rbac.enabled }}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: polyaxon-operator-role
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: polyaxon-operator-role
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+    type: {{ .Values.types.agent }}
+    role: {{ .Values.roles.config }}
+    app.kubernetes.io/name: polyaxon-operator-role
+    app.kubernetes.io/instance: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    app.kubernetes.io/version: "{{ .Chart.Version }}"
+    app.kubernetes.io/part-of: {{ .Values.types.agent }}
+    app.kubernetes.io/component: {{ .Values.roles.config }}
+    app.kubernetes.io/managed-by: "helm"
+rules:
+- apiGroups:
+  - apps
+  resources:
+  - deployments
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - apps
+  resources:
+  - deployments/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - batch
+  resources:
+  - jobs
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - batch
+  resources:
+  - jobs/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - ""
+  resources:
+  - services
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - services/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - core.polyaxon.com
+  resources:
+  - operations
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - core.polyaxon.com
+  resources:
+  - operations/status
+  verbs:
+  - get
+  - patch
+  - update
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: polyaxon-operator-role-binding
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: polyaxon-operator-role-binding
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+    type: {{ .Values.types.agent }}
+    role: {{ .Values.roles.config }}
+    app.kubernetes.io/name: polyaxon-operator-role-binding
+    app.kubernetes.io/instance: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    app.kubernetes.io/version: "{{ .Chart.Version }}"
+    app.kubernetes.io/part-of: {{ .Values.types.agent }}
+    app.kubernetes.io/component: {{ .Values.roles.config }}
+    app.kubernetes.io/managed-by: "helm"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: polyaxon-operator-role
+subjects:
+  - kind: ServiceAccount
+    name: polyaxon-operator-sa
+    namespace: {{ .Values.namespace }}
+{{- end }}
+{{- end }}

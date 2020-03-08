@@ -1,4 +1,4 @@
-// Copyright 2019 Polyaxon, Inc.
+// Copyright 2018-2020 Polyaxon, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -27,10 +27,9 @@ import (
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
 	cr "github.com/go-openapi/runtime/client"
+	"github.com/go-openapi/strfmt"
 
-	strfmt "github.com/go-openapi/strfmt"
-
-	service_model "github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_model"
+	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_model"
 )
 
 // NewCreateRunParams creates a new CreateRunParams object
@@ -78,17 +77,17 @@ for the create run operation typically these are written to a http.Request
 type CreateRunParams struct {
 
 	/*Body
-	  Run object
+	  operation object
 
 	*/
-	Body *service_model.V1Run
+	Body *service_model.V1OperationBody
 	/*Owner
 	  Owner of the namespace
 
 	*/
 	Owner string
 	/*Project
-	  Project where the experiement will be assigned
+	  Project where the run will be assigned
 
 	*/
 	Project string
@@ -132,13 +131,13 @@ func (o *CreateRunParams) SetHTTPClient(client *http.Client) {
 }
 
 // WithBody adds the body to the create run params
-func (o *CreateRunParams) WithBody(body *service_model.V1Run) *CreateRunParams {
+func (o *CreateRunParams) WithBody(body *service_model.V1OperationBody) *CreateRunParams {
 	o.SetBody(body)
 	return o
 }
 
 // SetBody adds the body to the create run params
-func (o *CreateRunParams) SetBody(body *service_model.V1Run) {
+func (o *CreateRunParams) SetBody(body *service_model.V1OperationBody) {
 	o.Body = body
 }
 

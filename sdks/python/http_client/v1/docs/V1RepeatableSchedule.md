@@ -3,7 +3,7 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**kind** | **str** |  | [optional] 
+**kind** | **str** |  | [optional] [default to 'repeatable']
 **limit** | **int** |  | [optional] 
 **depends_on_past** | **bool** |  | [optional] 
 

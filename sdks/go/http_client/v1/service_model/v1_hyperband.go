@@ -1,4 +1,4 @@
-// Copyright 2019 Polyaxon, Inc.
+// Copyright 2018-2020 Polyaxon, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,13 +20,13 @@ package service_model
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // V1Hyperband Parallelism based on hyperband
+//
 // swagger:model v1Hyperband
 type V1Hyperband struct {
 
@@ -40,16 +40,16 @@ type V1Hyperband struct {
 	Eta int32 `json:"eta,omitempty"`
 
 	// Kind of parallel, should be equal to "hyperband"
-	Kind string `json:"kind,omitempty"`
-
-	// Matrix/Space definition of params to traverse
-	Matrix string `json:"matrix,omitempty"`
+	Kind *string `json:"kind,omitempty"`
 
 	// Max iteration
-	MaxIter int32 `json:"max_iter,omitempty"`
+	MaxIterations int32 `json:"max_iterations,omitempty"`
 
 	// Metric to optimize during the iterations
 	Metric *V1OptimizationMetric `json:"metric,omitempty"`
+
+	// Matrix/Space definition of params to traverse
+	Params map[string]interface{} `json:"params,omitempty"`
 
 	// Resource to optimize (should be an integer or a float)
 	Resource *V1OptimizationResource `json:"resource,omitempty"`

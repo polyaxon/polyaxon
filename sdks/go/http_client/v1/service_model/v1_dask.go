@@ -1,4 +1,4 @@
-// Copyright 2019 Polyaxon, Inc.
+// Copyright 2018-2020 Polyaxon, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,24 +20,110 @@ package service_model
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
+	"strconv"
 
+	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // V1Dask Dask specification
+//
 // swagger:model v1Dask
 type V1Dask struct {
 
-	// Kind of runtime, should be equal to "dask"
-	Kind string `json:"kind,omitempty"`
+	// Adaptive config interval
+	AdaptInterval string `json:"adapt_interval,omitempty"`
 
-	// Dask specification
-	Spec interface{} `json:"spec,omitempty"`
+	// Adaptive config max workers
+	AdaptMax int32 `json:"adapt_max,omitempty"`
+
+	// Adaptive config min workers
+	AdaptMin int32 `json:"adapt_min,omitempty"`
+
+	// Optional connections section
+	Connections []string `json:"connections"`
+
+	// Optional container to run
+	Container V1Container `json:"container,omitempty"`
+
+	// Optional environment section
+	Environment *V1Environment `json:"environment,omitempty"`
+
+	// Optional init connections/containers section
+	Init []*V1Init `json:"init"`
+
+	// Optional component kind, should be equal to "Dask"
+	Kind *string `json:"kind,omitempty"`
+
+	// Number of workers
+	Scale int32 `json:"scale,omitempty"`
+
+	// Optional sidecars section
+	Sidecars []V1Container `json:"sidecars"`
+
+	// Volumes is a list of volumes that can be mounted.
+	Volumes []V1Volume `json:"volumes"`
 }
 
 // Validate validates this v1 dask
 func (m *V1Dask) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.validateEnvironment(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateInit(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *V1Dask) validateEnvironment(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Environment) { // not required
+		return nil
+	}
+
+	if m.Environment != nil {
+		if err := m.Environment.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("environment")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1Dask) validateInit(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Init) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(m.Init); i++ {
+		if swag.IsZero(m.Init[i]) { // not required
+			continue
+		}
+
+		if m.Init[i] != nil {
+			if err := m.Init[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("init" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
 	return nil
 }
 

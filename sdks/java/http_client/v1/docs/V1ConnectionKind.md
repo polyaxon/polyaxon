@@ -8,31 +8,21 @@
 
 * `VOLUME_CLAIM` (value: `"volume_claim"`)
 
-* `FTP` (value: `"ftp"`)
+* `GCS` (value: `"gcs"`)
+
+* `S3` (value: `"s3"`)
+
+* `WASB` (value: `"wasb"`)
+
+* `REGISTRY` (value: `"registry"`)
+
+* `GIT` (value: `"git"`)
+
+* `AWS` (value: `"aws"`)
 
 * `GCP` (value: `"gcp"`)
 
-* `GCS` (value: `"gcs"`)
-
-* `GCPCLOUDSQL` (value: `"gcpcloudsql"`)
-
-* `GRPC` (value: `"grpc"`)
-
-* `HDFS` (value: `"hdfs"`)
-
-* `HTTP` (value: `"http"`)
-
-* `PIG_CLI` (value: `"pig_cli"`)
-
-* `HIVE_CLI` (value: `"hive_cli"`)
-
-* `HIVE_METASTORE` (value: `"hive_metastore"`)
-
-* `HIVE_SERVER2` (value: `"hive_server2"`)
-
-* `JDBC` (value: `"jdbc"`)
-
-* `JENKINS` (value: `"jenkins"`)
+* `AZURE` (value: `"azure"`)
 
 * `MYSQL` (value: `"mysql"`)
 
@@ -54,13 +44,27 @@
 
 * `CASSANDRA` (value: `"cassandra"`)
 
+* `FTP` (value: `"ftp"`)
+
+* `GRPC` (value: `"grpc"`)
+
+* `HDFS` (value: `"hdfs"`)
+
+* `HTTP` (value: `"http"`)
+
+* `PIG_CLI` (value: `"pig_cli"`)
+
+* `HIVE_CLI` (value: `"hive_cli"`)
+
+* `HIVE_METASTORE` (value: `"hive_metastore"`)
+
+* `HIVE_SERVER2` (value: `"hive_server2"`)
+
+* `JDBC` (value: `"jdbc"`)
+
+* `JENKINS` (value: `"jenkins"`)
+
 * `SAMBA` (value: `"samba"`)
-
-* `AWS` (value: `"aws"`)
-
-* `S3` (value: `"s3"`)
-
-* `EMR` (value: `"emr"`)
 
 * `SNOWFLAKE` (value: `"snowflake"`)
 
@@ -72,15 +76,19 @@
 
 * `SEGMENT` (value: `"segment"`)
 
-* `AZURE_DATA_LAKE` (value: `"azure_data_lake"`)
+* `SLACK` (value: `"slack"`)
 
-* `AZURE_COSMOS` (value: `"azure_cosmos"`)
+* `DISCORD` (value: `"discord"`)
 
-* `WASB` (value: `"wasb"`)
+* `MATTERMOST` (value: `"mattermost"`)
 
-* `REGISTRY` (value: `"registry"`)
+* `PAGER_DUTY` (value: `"pager_duty"`)
 
-* `GIT` (value: `"git"`)
+* `HIPCHAT` (value: `"hipchat"`)
+
+* `WEBHOOK` (value: `"webhook"`)
+
+* `CUSTOM` (value: `"custom"`)
 
 
 

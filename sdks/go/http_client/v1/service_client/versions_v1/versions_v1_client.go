@@ -1,4 +1,4 @@
-// Copyright 2019 Polyaxon, Inc.
+// Copyright 2018-2020 Polyaxon, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,15 +20,12 @@ package versions_v1
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	"fmt"
-
 	"github.com/go-openapi/runtime"
-
-	strfmt "github.com/go-openapi/strfmt"
+	"github.com/go-openapi/strfmt"
 )
 
 // New creates a new versions v1 API client.
-func New(transport runtime.ClientTransport, formats strfmt.Registry) *Client {
+func New(transport runtime.ClientTransport, formats strfmt.Registry) ClientService {
 	return &Client{transport: transport, formats: formats}
 }
 
@@ -40,8 +37,17 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
+// ClientService is the interface for Client methods
+type ClientService interface {
+	GetLogHandler(params *GetLogHandlerParams, authInfo runtime.ClientAuthInfoWriter) (*GetLogHandlerOK, *GetLogHandlerNoContent, error)
+
+	GetVersions(params *GetVersionsParams, authInfo runtime.ClientAuthInfoWriter) (*GetVersionsOK, *GetVersionsNoContent, error)
+
+	SetTransport(transport runtime.ClientTransport)
+}
+
 /*
-GetLogHandler lists archived runs for user
+  GetLogHandler gets log handler
 */
 func (a *Client) GetLogHandler(params *GetLogHandlerParams, authInfo runtime.ClientAuthInfoWriter) (*GetLogHandlerOK, *GetLogHandlerNoContent, error) {
 	// TODO: Validate the params before sending
@@ -71,13 +77,13 @@ func (a *Client) GetLogHandler(params *GetLogHandlerParams, authInfo runtime.Cli
 	case *GetLogHandlerNoContent:
 		return nil, value, nil
 	}
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for versions_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
+	// unexpected success response
+	unexpectedSuccess := result.(*GetLogHandlerDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-GetVersions lists bookmarked runs for user
+  GetVersions gets versions
 */
 func (a *Client) GetVersions(params *GetVersionsParams, authInfo runtime.ClientAuthInfoWriter) (*GetVersionsOK, *GetVersionsNoContent, error) {
 	// TODO: Validate the params before sending
@@ -107,9 +113,9 @@ func (a *Client) GetVersions(params *GetVersionsParams, authInfo runtime.ClientA
 	case *GetVersionsNoContent:
 		return nil, value, nil
 	}
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for versions_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
+	// unexpected success response
+	unexpectedSuccess := result.(*GetVersionsDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 // SetTransport changes the transport on the client

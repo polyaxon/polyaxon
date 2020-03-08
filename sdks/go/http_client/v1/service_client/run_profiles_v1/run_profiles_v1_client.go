@@ -1,4 +1,4 @@
-// Copyright 2019 Polyaxon, Inc.
+// Copyright 2018-2020 Polyaxon, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,15 +20,12 @@ package run_profiles_v1
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	"fmt"
-
 	"github.com/go-openapi/runtime"
-
-	strfmt "github.com/go-openapi/strfmt"
+	"github.com/go-openapi/strfmt"
 )
 
 // New creates a new run profiles v1 API client.
-func New(transport runtime.ClientTransport, formats strfmt.Registry) *Client {
+func New(transport runtime.ClientTransport, formats strfmt.Registry) ClientService {
 	return &Client{transport: transport, formats: formats}
 }
 
@@ -40,8 +37,27 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
+// ClientService is the interface for Client methods
+type ClientService interface {
+	CreateRunProfile(params *CreateRunProfileParams, authInfo runtime.ClientAuthInfoWriter) (*CreateRunProfileOK, *CreateRunProfileNoContent, error)
+
+	DeleteRunProfile(params *DeleteRunProfileParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteRunProfileOK, *DeleteRunProfileNoContent, error)
+
+	GetRunProfile(params *GetRunProfileParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunProfileOK, *GetRunProfileNoContent, error)
+
+	ListRunProfileNames(params *ListRunProfileNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListRunProfileNamesOK, *ListRunProfileNamesNoContent, error)
+
+	ListRunProfiles(params *ListRunProfilesParams, authInfo runtime.ClientAuthInfoWriter) (*ListRunProfilesOK, *ListRunProfilesNoContent, error)
+
+	PatchRunProfile(params *PatchRunProfileParams, authInfo runtime.ClientAuthInfoWriter) (*PatchRunProfileOK, *PatchRunProfileNoContent, error)
+
+	UpdateRunProfile(params *UpdateRunProfileParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateRunProfileOK, *UpdateRunProfileNoContent, error)
+
+	SetTransport(transport runtime.ClientTransport)
+}
+
 /*
-CreateRunProfile lists runs
+  CreateRunProfile creates run profile
 */
 func (a *Client) CreateRunProfile(params *CreateRunProfileParams, authInfo runtime.ClientAuthInfoWriter) (*CreateRunProfileOK, *CreateRunProfileNoContent, error) {
 	// TODO: Validate the params before sending
@@ -71,13 +87,13 @@ func (a *Client) CreateRunProfile(params *CreateRunProfileParams, authInfo runti
 	case *CreateRunProfileNoContent:
 		return nil, value, nil
 	}
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for run_profiles_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
+	// unexpected success response
+	unexpectedSuccess := result.(*CreateRunProfileDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-DeleteRunProfile patches run
+  DeleteRunProfile deletes run profile
 */
 func (a *Client) DeleteRunProfile(params *DeleteRunProfileParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteRunProfileOK, *DeleteRunProfileNoContent, error) {
 	// TODO: Validate the params before sending
@@ -107,13 +123,13 @@ func (a *Client) DeleteRunProfile(params *DeleteRunProfileParams, authInfo runti
 	case *DeleteRunProfileNoContent:
 		return nil, value, nil
 	}
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for run_profiles_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
+	// unexpected success response
+	unexpectedSuccess := result.(*DeleteRunProfileDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-GetRunProfile creates new run
+  GetRunProfile gets run profile
 */
 func (a *Client) GetRunProfile(params *GetRunProfileParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunProfileOK, *GetRunProfileNoContent, error) {
 	// TODO: Validate the params before sending
@@ -143,13 +159,13 @@ func (a *Client) GetRunProfile(params *GetRunProfileParams, authInfo runtime.Cli
 	case *GetRunProfileNoContent:
 		return nil, value, nil
 	}
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for run_profiles_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
+	// unexpected success response
+	unexpectedSuccess := result.(*GetRunProfileDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-ListRunProfileNames lists bookmarked runs for user
+  ListRunProfileNames lists run profiles names
 */
 func (a *Client) ListRunProfileNames(params *ListRunProfileNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListRunProfileNamesOK, *ListRunProfileNamesNoContent, error) {
 	// TODO: Validate the params before sending
@@ -179,13 +195,13 @@ func (a *Client) ListRunProfileNames(params *ListRunProfileNamesParams, authInfo
 	case *ListRunProfileNamesNoContent:
 		return nil, value, nil
 	}
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for run_profiles_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
+	// unexpected success response
+	unexpectedSuccess := result.(*ListRunProfileNamesDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-ListRunProfiles lists archived runs for user
+  ListRunProfiles lists run profiles
 */
 func (a *Client) ListRunProfiles(params *ListRunProfilesParams, authInfo runtime.ClientAuthInfoWriter) (*ListRunProfilesOK, *ListRunProfilesNoContent, error) {
 	// TODO: Validate the params before sending
@@ -215,13 +231,13 @@ func (a *Client) ListRunProfiles(params *ListRunProfilesParams, authInfo runtime
 	case *ListRunProfilesNoContent:
 		return nil, value, nil
 	}
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for run_profiles_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
+	// unexpected success response
+	unexpectedSuccess := result.(*ListRunProfilesDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-PatchRunProfile updates run
+  PatchRunProfile patches run profile
 */
 func (a *Client) PatchRunProfile(params *PatchRunProfileParams, authInfo runtime.ClientAuthInfoWriter) (*PatchRunProfileOK, *PatchRunProfileNoContent, error) {
 	// TODO: Validate the params before sending
@@ -251,13 +267,13 @@ func (a *Client) PatchRunProfile(params *PatchRunProfileParams, authInfo runtime
 	case *PatchRunProfileNoContent:
 		return nil, value, nil
 	}
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for run_profiles_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
+	// unexpected success response
+	unexpectedSuccess := result.(*PatchRunProfileDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-UpdateRunProfile gets run
+  UpdateRunProfile updates run profile
 */
 func (a *Client) UpdateRunProfile(params *UpdateRunProfileParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateRunProfileOK, *UpdateRunProfileNoContent, error) {
 	// TODO: Validate the params before sending
@@ -287,9 +303,9 @@ func (a *Client) UpdateRunProfile(params *UpdateRunProfileParams, authInfo runti
 	case *UpdateRunProfileNoContent:
 		return nil, value, nil
 	}
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for run_profiles_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
+	// unexpected success response
+	unexpectedSuccess := result.(*UpdateRunProfileDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 // SetTransport changes the transport on the client

@@ -38,5 +38,10 @@ spec:
         args: [
           "-alsologtostderr",
           "--kubectl-delivery-image",
-          "mpioperator/kubectl-delivery:latest"
+          "{{ .Values.kubectlDelivery.image }}:{{ .Values.kubectlDelivery.imageTag }}",
+          "--namespace",
+          "{{ .Release.Namespace }}"
         ]
+        env:
+        - name: KUBEFLOW_NAMESPACE
+          value: {{ .Release.Namespace }}

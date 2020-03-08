@@ -6,5 +6,6 @@ Name | Type | Description | Notes
 **volume_claim** | **String** |  | [optional] 
 **mount_path** | **String** |  | [optional] 
 **read_only** | **Boolean** |  | [optional] 
+**kind** | **Object** |  | [optional] 
 
 

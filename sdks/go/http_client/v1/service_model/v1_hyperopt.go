@@ -1,4 +1,4 @@
-// Copyright 2019 Polyaxon, Inc.
+// Copyright 2018-2020 Polyaxon, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,13 +20,13 @@ package service_model
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // V1Hyperopt Parallelism based on hyperopt
+//
 // swagger:model v1Hyperopt
 type V1Hyperopt struct {
 
@@ -40,13 +40,13 @@ type V1Hyperopt struct {
 	EarlyStopping []interface{} `json:"early_stopping"`
 
 	// Kind of parallel, should be equal to "hyperopt"
-	Kind string `json:"kind,omitempty"`
-
-	// Matrix/Space definition of params to traverse
-	Matrix string `json:"matrix,omitempty"`
+	Kind *string `json:"kind,omitempty"`
 
 	// Number of runs to generate and search
-	NRuns int32 `json:"n_runs,omitempty"`
+	NumRuns int32 `json:"num_runs,omitempty"`
+
+	// Matrix/Space definition of params to traverse
+	Params map[string]interface{} `json:"params,omitempty"`
 
 	// Seed for the random generator
 	Seed int32 `json:"seed,omitempty"`

@@ -1,4 +1,4 @@
-// Copyright 2019 Polyaxon, Inc.
+// Copyright 2018-2020 Polyaxon, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,16 +20,22 @@ package service_model
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
 
 // V1Agent Agent specification
+//
 // swagger:model v1Agent
 type V1Agent struct {
+
+	// The agent max concurrency
+	Concurrency int32 `json:"concurrency,omitempty"`
+
+	// Content of the agent config
+	Content string `json:"content,omitempty"`
 
 	// Optional time when the entityt was created
 	// Format: date-time
@@ -41,16 +47,19 @@ type V1Agent struct {
 	// Optional description
 	Description string `json:"description,omitempty"`
 
-	// Optional a flag to disable the store
+	// Optional a flag to disable the agent
 	Disabled bool `json:"disabled,omitempty"`
 
 	// Name
 	Name string `json:"name,omitempty"`
 
-	// Namespace where the agen is deployed
+	// Namespace where the agent is deployed
 	Namespace string `json:"namespace,omitempty"`
 
-	// Optional Tags of this entity
+	// Optional latest status of this entity
+	Status V1Statuses `json:"status,omitempty"`
+
+	// Optional tags of this entity
 	Tags []string `json:"tags"`
 
 	// Optional last time the entity was updated
@@ -72,6 +81,10 @@ func (m *V1Agent) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
+	if err := m.validateStatus(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateUpdatedAt(formats); err != nil {
 		res = append(res, err)
 	}
@@ -89,6 +102,22 @@ func (m *V1Agent) validateCreatedAt(formats strfmt.Registry) error {
 	}
 
 	if err := validate.FormatOf("created_at", "body", "date-time", m.CreatedAt.String(), formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *V1Agent) validateStatus(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Status) { // not required
+		return nil
+	}
+
+	if err := m.Status.Validate(formats); err != nil {
+		if ve, ok := err.(*errors.Validation); ok {
+			return ve.ValidateName("status")
+		}
 		return err
 	}
 

@@ -1,4 +1,4 @@
-// Copyright 2019 Polyaxon, Inc.
+// Copyright 2018-2020 Polyaxon, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -27,16 +27,17 @@ import (
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
 	cr "github.com/go-openapi/runtime/client"
-	"github.com/go-openapi/swag"
-
-	strfmt "github.com/go-openapi/strfmt"
+	"github.com/go-openapi/strfmt"
 )
 
 // NewGetRunArtifactsTreeParams creates a new GetRunArtifactsTreeParams object
 // with the default values initialized.
 func NewGetRunArtifactsTreeParams() *GetRunArtifactsTreeParams {
-	var ()
+	var (
+		kindDefault = string("model")
+	)
 	return &GetRunArtifactsTreeParams{
+		Kind: &kindDefault,
 
 		timeout: cr.DefaultTimeout,
 	}
@@ -45,8 +46,11 @@ func NewGetRunArtifactsTreeParams() *GetRunArtifactsTreeParams {
 // NewGetRunArtifactsTreeParamsWithTimeout creates a new GetRunArtifactsTreeParams object
 // with the default values initialized, and the ability to set a timeout on a request
 func NewGetRunArtifactsTreeParamsWithTimeout(timeout time.Duration) *GetRunArtifactsTreeParams {
-	var ()
+	var (
+		kindDefault = string("model")
+	)
 	return &GetRunArtifactsTreeParams{
+		Kind: &kindDefault,
 
 		timeout: timeout,
 	}
@@ -55,8 +59,11 @@ func NewGetRunArtifactsTreeParamsWithTimeout(timeout time.Duration) *GetRunArtif
 // NewGetRunArtifactsTreeParamsWithContext creates a new GetRunArtifactsTreeParams object
 // with the default values initialized, and the ability to set a context for a request
 func NewGetRunArtifactsTreeParamsWithContext(ctx context.Context) *GetRunArtifactsTreeParams {
-	var ()
+	var (
+		kindDefault = string("model")
+	)
 	return &GetRunArtifactsTreeParams{
+		Kind: &kindDefault,
 
 		Context: ctx,
 	}
@@ -65,8 +72,11 @@ func NewGetRunArtifactsTreeParamsWithContext(ctx context.Context) *GetRunArtifac
 // NewGetRunArtifactsTreeParamsWithHTTPClient creates a new GetRunArtifactsTreeParams object
 // with the default values initialized, and the ability to set a custom HTTPClient for a request
 func NewGetRunArtifactsTreeParamsWithHTTPClient(client *http.Client) *GetRunArtifactsTreeParams {
-	var ()
+	var (
+		kindDefault = string("model")
+	)
 	return &GetRunArtifactsTreeParams{
+		Kind:       &kindDefault,
 		HTTPClient: client,
 	}
 }
@@ -77,32 +87,76 @@ for the get run artifacts tree operation typically these are written to a http.R
 type GetRunArtifactsTreeParams struct {
 
 	/*Kind
-	  Artifact kind.
+	 The artifact kind.
+
+	- model: model
+	- audio: audio
+	- video: vidio
+	- histogram: histogram
+	- image: image
+	- tensor: tensor
+	- dataframe: dataframe
+	- chart: plotly/bokeh chart
+	- csv: Comma
+	- tsv: Tab
+	- psv: Pipe
+	- ssv: Space
+	- metric: Metric
+	- env: Env
+	- html: HTML
+	- text: Text
+	- file: File
+	- dir: Dir
+	- dockerfile: Dockerfile
+	- docker_image: docker image
+	- data: data
+	- coderef: coderef
+	- table: table
 
 	*/
 	Kind *string
+	/*Name
+	  Artifact name.
+
+	*/
+	Name *string
+	/*Names
+	  Names query param.
+
+	*/
+	Names *string
+	/*Namespace
+	  namespace
+
+	*/
+	Namespace string
+	/*Orient
+	  Orient query param.
+
+	*/
+	Orient *string
 	/*Owner
 	  Owner of the namespace
 
 	*/
 	Owner string
 	/*Path
-	  Artifact filepath.
+	  Path query param.
 
 	*/
 	Path *string
 	/*Project
-	  Project where the experiement will be assigned
+	  Project where the run will be assigned
 
 	*/
 	Project string
-	/*Step
-	  Artifact logging step.
+	/*Runs
+	  Runs query param.
 
 	*/
-	Step *int32
+	Runs *string
 	/*UUID
-	  Unique integer identifier of the entity
+	  Uuid identifier of the entity
 
 	*/
 	UUID string
@@ -156,6 +210,50 @@ func (o *GetRunArtifactsTreeParams) SetKind(kind *string) {
 	o.Kind = kind
 }
 
+// WithName adds the name to the get run artifacts tree params
+func (o *GetRunArtifactsTreeParams) WithName(name *string) *GetRunArtifactsTreeParams {
+	o.SetName(name)
+	return o
+}
+
+// SetName adds the name to the get run artifacts tree params
+func (o *GetRunArtifactsTreeParams) SetName(name *string) {
+	o.Name = name
+}
+
+// WithNames adds the names to the get run artifacts tree params
+func (o *GetRunArtifactsTreeParams) WithNames(names *string) *GetRunArtifactsTreeParams {
+	o.SetNames(names)
+	return o
+}
+
+// SetNames adds the names to the get run artifacts tree params
+func (o *GetRunArtifactsTreeParams) SetNames(names *string) {
+	o.Names = names
+}
+
+// WithNamespace adds the namespace to the get run artifacts tree params
+func (o *GetRunArtifactsTreeParams) WithNamespace(namespace string) *GetRunArtifactsTreeParams {
+	o.SetNamespace(namespace)
+	return o
+}
+
+// SetNamespace adds the namespace to the get run artifacts tree params
+func (o *GetRunArtifactsTreeParams) SetNamespace(namespace string) {
+	o.Namespace = namespace
+}
+
+// WithOrient adds the orient to the get run artifacts tree params
+func (o *GetRunArtifactsTreeParams) WithOrient(orient *string) *GetRunArtifactsTreeParams {
+	o.SetOrient(orient)
+	return o
+}
+
+// SetOrient adds the orient to the get run artifacts tree params
+func (o *GetRunArtifactsTreeParams) SetOrient(orient *string) {
+	o.Orient = orient
+}
+
 // WithOwner adds the owner to the get run artifacts tree params
 func (o *GetRunArtifactsTreeParams) WithOwner(owner string) *GetRunArtifactsTreeParams {
 	o.SetOwner(owner)
@@ -189,15 +287,15 @@ func (o *GetRunArtifactsTreeParams) SetProject(project string) {
 	o.Project = project
 }
 
-// WithStep adds the step to the get run artifacts tree params
-func (o *GetRunArtifactsTreeParams) WithStep(step *int32) *GetRunArtifactsTreeParams {
-	o.SetStep(step)
+// WithRuns adds the runs to the get run artifacts tree params
+func (o *GetRunArtifactsTreeParams) WithRuns(runs *string) *GetRunArtifactsTreeParams {
+	o.SetRuns(runs)
 	return o
 }
 
-// SetStep adds the step to the get run artifacts tree params
-func (o *GetRunArtifactsTreeParams) SetStep(step *int32) {
-	o.Step = step
+// SetRuns adds the runs to the get run artifacts tree params
+func (o *GetRunArtifactsTreeParams) SetRuns(runs *string) {
+	o.Runs = runs
 }
 
 // WithUUID adds the uuid to the get run artifacts tree params
@@ -235,6 +333,59 @@ func (o *GetRunArtifactsTreeParams) WriteToRequest(r runtime.ClientRequest, reg 
 
 	}
 
+	if o.Name != nil {
+
+		// query param name
+		var qrName string
+		if o.Name != nil {
+			qrName = *o.Name
+		}
+		qName := qrName
+		if qName != "" {
+			if err := r.SetQueryParam("name", qName); err != nil {
+				return err
+			}
+		}
+
+	}
+
+	if o.Names != nil {
+
+		// query param names
+		var qrNames string
+		if o.Names != nil {
+			qrNames = *o.Names
+		}
+		qNames := qrNames
+		if qNames != "" {
+			if err := r.SetQueryParam("names", qNames); err != nil {
+				return err
+			}
+		}
+
+	}
+
+	// path param namespace
+	if err := r.SetPathParam("namespace", o.Namespace); err != nil {
+		return err
+	}
+
+	if o.Orient != nil {
+
+		// query param orient
+		var qrOrient string
+		if o.Orient != nil {
+			qrOrient = *o.Orient
+		}
+		qOrient := qrOrient
+		if qOrient != "" {
+			if err := r.SetQueryParam("orient", qOrient); err != nil {
+				return err
+			}
+		}
+
+	}
+
 	// path param owner
 	if err := r.SetPathParam("owner", o.Owner); err != nil {
 		return err
@@ -261,16 +412,16 @@ func (o *GetRunArtifactsTreeParams) WriteToRequest(r runtime.ClientRequest, reg 
 		return err
 	}
 
-	if o.Step != nil {
+	if o.Runs != nil {
 
-		// query param step
-		var qrStep int32
-		if o.Step != nil {
-			qrStep = *o.Step
+		// query param runs
+		var qrRuns string
+		if o.Runs != nil {
+			qrRuns = *o.Runs
 		}
-		qStep := swag.FormatInt32(qrStep)
-		if qStep != "" {
-			if err := r.SetQueryParam("step", qStep); err != nil {
+		qRuns := qrRuns
+		if qRuns != "" {
+			if err := r.SetQueryParam("runs", qRuns); err != nil {
 				return err
 			}
 		}

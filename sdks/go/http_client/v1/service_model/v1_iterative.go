@@ -1,4 +1,4 @@
-// Copyright 2019 Polyaxon, Inc.
+// Copyright 2018-2020 Polyaxon, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,13 +20,12 @@ package service_model
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
-	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // V1Iterative Parallelism based on a custom iterative algorithm (suggestions -> mapping -> reduce -> repeat)
+//
 // swagger:model v1Iterative
 type V1Iterative struct {
 
@@ -34,19 +33,19 @@ type V1Iterative struct {
 	Concurrency int32 `json:"concurrency,omitempty"`
 
 	// Container specification for crating new observations based on data from previous iterations
-	Container *V1Container `json:"container,omitempty"`
+	Container V1Container `json:"container,omitempty"`
 
 	// A list of Early stopping objects, accpets both metric and failure early stopping mechanisms
 	EarlyStopping []interface{} `json:"early_stopping"`
 
 	// Kind of parallel, should be equal to "iterative"
-	Kind string `json:"kind,omitempty"`
-
-	// Matrix/Space definition of params to traverse
-	Matrix string `json:"matrix,omitempty"`
+	Kind *string `json:"kind,omitempty"`
 
 	// Number of iterations to run
-	NIterations int32 `json:"n_iterations,omitempty"`
+	NumIterations int32 `json:"num_iterations,omitempty"`
+
+	// Matrix/Space definition of params to traverse
+	Params map[string]interface{} `json:"params,omitempty"`
 
 	// Seed for the random generator
 	Seed int32 `json:"seed,omitempty"`
@@ -54,33 +53,6 @@ type V1Iterative struct {
 
 // Validate validates this v1 iterative
 func (m *V1Iterative) Validate(formats strfmt.Registry) error {
-	var res []error
-
-	if err := m.validateContainer(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
-	return nil
-}
-
-func (m *V1Iterative) validateContainer(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.Container) { // not required
-		return nil
-	}
-
-	if m.Container != nil {
-		if err := m.Container.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("container")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 

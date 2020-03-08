@@ -1,4 +1,4 @@
-// Copyright 2019 Polyaxon, Inc.
+// Copyright 2018-2020 Polyaxon, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -24,8 +24,9 @@ import (
 	"io"
 
 	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/strfmt"
 
-	strfmt "github.com/go-openapi/strfmt"
+	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_model"
 )
 
 // ArchiveRunReader is a Reader for the ArchiveRun structure.
@@ -60,9 +61,15 @@ func (o *ArchiveRunReader) ReadResponse(response runtime.ClientResponse, consume
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		result := NewArchiveRunDefault(response.Code())
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		if response.Code()/100 == 2 {
+			return result, nil
+		}
+		return nil, result
 	}
 }
 
@@ -174,6 +181,48 @@ func (o *ArchiveRunNotFound) readResponse(response runtime.ClientResponse, consu
 
 	// response payload
 	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
+// NewArchiveRunDefault creates a ArchiveRunDefault with default headers values
+func NewArchiveRunDefault(code int) *ArchiveRunDefault {
+	return &ArchiveRunDefault{
+		_statusCode: code,
+	}
+}
+
+/*ArchiveRunDefault handles this case with default header values.
+
+An unexpected error response
+*/
+type ArchiveRunDefault struct {
+	_statusCode int
+
+	Payload *service_model.RuntimeError
+}
+
+// Code gets the status code for the archive run default response
+func (o *ArchiveRunDefault) Code() int {
+	return o._statusCode
+}
+
+func (o *ArchiveRunDefault) Error() string {
+	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/archive][%d] ArchiveRun default  %+v", o._statusCode, o.Payload)
+}
+
+func (o *ArchiveRunDefault) GetPayload() *service_model.RuntimeError {
+	return o.Payload
+}
+
+func (o *ArchiveRunDefault) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(service_model.RuntimeError)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 

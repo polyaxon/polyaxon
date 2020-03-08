@@ -4,19 +4,19 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**create_dashboard**](DashboardsV1Api.md#create_dashboard) | **POST** /api/v1/orgs/{owner}/dashboards | List runs
-[**delete_dashboard**](DashboardsV1Api.md#delete_dashboard) | **DELETE** /api/v1/orgs/{owner}/dashboards/{uuid} | Patch run
-[**get_dashboard**](DashboardsV1Api.md#get_dashboard) | **GET** /api/v1/orgs/{owner}/dashboards/{uuid} | Create new run
-[**list_dashboard_names**](DashboardsV1Api.md#list_dashboard_names) | **GET** /api/v1/orgs/{owner}/dashboards/names | List bookmarked runs for user
-[**list_dashboards**](DashboardsV1Api.md#list_dashboards) | **GET** /api/v1/orgs/{owner}/dashboards | List archived runs for user
-[**patch_dashboard**](DashboardsV1Api.md#patch_dashboard) | **PATCH** /api/v1/orgs/{owner}/dashboards/{dashboard.uuid} | Update run
-[**update_dashboard**](DashboardsV1Api.md#update_dashboard) | **PUT** /api/v1/orgs/{owner}/dashboards/{dashboard.uuid} | Get run
+[**create_dashboard**](DashboardsV1Api.md#create_dashboard) | **POST** /api/v1/orgs/{owner}/dashboards | Create dashboard
+[**delete_dashboard**](DashboardsV1Api.md#delete_dashboard) | **DELETE** /api/v1/orgs/{owner}/dashboards/{uuid} | Delete dashboard
+[**get_dashboard**](DashboardsV1Api.md#get_dashboard) | **GET** /api/v1/orgs/{owner}/dashboards/{uuid} | Get dashboard
+[**list_dashboard_names**](DashboardsV1Api.md#list_dashboard_names) | **GET** /api/v1/orgs/{owner}/dashboards/names | List dashboard names
+[**list_dashboards**](DashboardsV1Api.md#list_dashboards) | **GET** /api/v1/orgs/{owner}/dashboards | List dashboards
+[**patch_dashboard**](DashboardsV1Api.md#patch_dashboard) | **PATCH** /api/v1/orgs/{owner}/dashboards/{dashboard.uuid} | Patch dashboard
+[**update_dashboard**](DashboardsV1Api.md#update_dashboard) | **PUT** /api/v1/orgs/{owner}/dashboards/{dashboard.uuid} | Update dashboard
 
 
 # **create_dashboard**
 > V1Dashboard create_dashboard(owner, body)
 
-List runs
+Create dashboard
 
 ### Example
 ```python
@@ -38,7 +38,7 @@ owner = 'owner_example' # str | Owner of the namespace
 body = polyaxon_sdk.V1Dashboard() # V1Dashboard | Dashboard body
 
 try:
-    # List runs
+    # Create dashboard
     api_response = api_instance.create_dashboard(owner, body)
     pprint(api_response)
 except ApiException as e:
@@ -70,7 +70,7 @@ Name | Type | Description  | Notes
 # **delete_dashboard**
 > delete_dashboard(owner, uuid)
 
-Patch run
+Delete dashboard
 
 ### Example
 ```python
@@ -89,10 +89,10 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = polyaxon_sdk.DashboardsV1Api(polyaxon_sdk.ApiClient(configuration))
 owner = 'owner_example' # str | Owner of the namespace
-uuid = 'uuid_example' # str | Unique integer identifier of the entity
+uuid = 'uuid_example' # str | Uuid identifier of the entity
 
 try:
-    # Patch run
+    # Delete dashboard
     api_instance.delete_dashboard(owner, uuid)
 except ApiException as e:
     print("Exception when calling DashboardsV1Api->delete_dashboard: %s\n" % e)
@@ -103,7 +103,7 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **str**| Owner of the namespace | 
- **uuid** | **str**| Unique integer identifier of the entity | 
+ **uuid** | **str**| Uuid identifier of the entity | 
 
 ### Return type
 
@@ -123,7 +123,7 @@ void (empty response body)
 # **get_dashboard**
 > V1Dashboard get_dashboard(owner, uuid)
 
-Create new run
+Get dashboard
 
 ### Example
 ```python
@@ -142,10 +142,10 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = polyaxon_sdk.DashboardsV1Api(polyaxon_sdk.ApiClient(configuration))
 owner = 'owner_example' # str | Owner of the namespace
-uuid = 'uuid_example' # str | Unique integer identifier of the entity
+uuid = 'uuid_example' # str | Uuid identifier of the entity
 
 try:
-    # Create new run
+    # Get dashboard
     api_response = api_instance.get_dashboard(owner, uuid)
     pprint(api_response)
 except ApiException as e:
@@ -157,7 +157,7 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **str**| Owner of the namespace | 
- **uuid** | **str**| Unique integer identifier of the entity | 
+ **uuid** | **str**| Uuid identifier of the entity | 
 
 ### Return type
 
@@ -177,7 +177,7 @@ Name | Type | Description  | Notes
 # **list_dashboard_names**
 > V1ListDashboardsResponse list_dashboard_names(owner, offset=offset, limit=limit, sort=sort, query=query)
 
-List bookmarked runs for user
+List dashboard names
 
 ### Example
 ```python
@@ -202,7 +202,7 @@ sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search search. (optional)
 
 try:
-    # List bookmarked runs for user
+    # List dashboard names
     api_response = api_instance.list_dashboard_names(owner, offset=offset, limit=limit, sort=sort, query=query)
     pprint(api_response)
 except ApiException as e:
@@ -237,7 +237,7 @@ Name | Type | Description  | Notes
 # **list_dashboards**
 > V1ListDashboardsResponse list_dashboards(owner, offset=offset, limit=limit, sort=sort, query=query)
 
-List archived runs for user
+List dashboards
 
 ### Example
 ```python
@@ -262,7 +262,7 @@ sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search search. (optional)
 
 try:
-    # List archived runs for user
+    # List dashboards
     api_response = api_instance.list_dashboards(owner, offset=offset, limit=limit, sort=sort, query=query)
     pprint(api_response)
 except ApiException as e:
@@ -297,7 +297,7 @@ Name | Type | Description  | Notes
 # **patch_dashboard**
 > V1Dashboard patch_dashboard(owner, dashboard_uuid, body)
 
-Update run
+Patch dashboard
 
 ### Example
 ```python
@@ -320,7 +320,7 @@ dashboard_uuid = 'dashboard_uuid_example' # str | UUID
 body = polyaxon_sdk.V1Dashboard() # V1Dashboard | Dashboard body
 
 try:
-    # Update run
+    # Patch dashboard
     api_response = api_instance.patch_dashboard(owner, dashboard_uuid, body)
     pprint(api_response)
 except ApiException as e:
@@ -353,7 +353,7 @@ Name | Type | Description  | Notes
 # **update_dashboard**
 > V1Dashboard update_dashboard(owner, dashboard_uuid, body)
 
-Get run
+Update dashboard
 
 ### Example
 ```python
@@ -376,7 +376,7 @@ dashboard_uuid = 'dashboard_uuid_example' # str | UUID
 body = polyaxon_sdk.V1Dashboard() # V1Dashboard | Dashboard body
 
 try:
-    # Get run
+    # Update dashboard
     api_response = api_instance.update_dashboard(owner, dashboard_uuid, body)
     pprint(api_response)
 except ApiException as e:

@@ -1,4 +1,4 @@
-// Copyright 2019 Polyaxon, Inc.
+// Copyright 2018-2020 Polyaxon, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,15 +20,12 @@ package organizations_v1
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	"fmt"
-
 	"github.com/go-openapi/runtime"
-
-	strfmt "github.com/go-openapi/strfmt"
+	"github.com/go-openapi/strfmt"
 )
 
 // New creates a new organizations v1 API client.
-func New(transport runtime.ClientTransport, formats strfmt.Registry) *Client {
+func New(transport runtime.ClientTransport, formats strfmt.Registry) ClientService {
 	return &Client{transport: transport, formats: formats}
 }
 
@@ -40,8 +37,39 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
+// ClientService is the interface for Client methods
+type ClientService interface {
+	CreateOrganization(params *CreateOrganizationParams, authInfo runtime.ClientAuthInfoWriter) (*CreateOrganizationOK, *CreateOrganizationNoContent, error)
+
+	CreateOrganizationMember(params *CreateOrganizationMemberParams, authInfo runtime.ClientAuthInfoWriter) (*CreateOrganizationMemberOK, *CreateOrganizationMemberNoContent, error)
+
+	DeleteOrganization(params *DeleteOrganizationParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteOrganizationOK, *DeleteOrganizationNoContent, error)
+
+	DeleteOrganizationMember(params *DeleteOrganizationMemberParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteOrganizationMemberOK, *DeleteOrganizationMemberNoContent, error)
+
+	GetOrganization(params *GetOrganizationParams, authInfo runtime.ClientAuthInfoWriter) (*GetOrganizationOK, *GetOrganizationNoContent, error)
+
+	GetOrganizationMember(params *GetOrganizationMemberParams, authInfo runtime.ClientAuthInfoWriter) (*GetOrganizationMemberOK, *GetOrganizationMemberNoContent, error)
+
+	ListOrganizationMembers(params *ListOrganizationMembersParams, authInfo runtime.ClientAuthInfoWriter) (*ListOrganizationMembersOK, *ListOrganizationMembersNoContent, error)
+
+	ListOrganizationNames(params *ListOrganizationNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListOrganizationNamesOK, *ListOrganizationNamesNoContent, error)
+
+	ListOrganizations(params *ListOrganizationsParams, authInfo runtime.ClientAuthInfoWriter) (*ListOrganizationsOK, *ListOrganizationsNoContent, error)
+
+	PatchOrganization(params *PatchOrganizationParams, authInfo runtime.ClientAuthInfoWriter) (*PatchOrganizationOK, *PatchOrganizationNoContent, error)
+
+	PatchOrganizationMember(params *PatchOrganizationMemberParams, authInfo runtime.ClientAuthInfoWriter) (*PatchOrganizationMemberOK, *PatchOrganizationMemberNoContent, error)
+
+	UpdateOrganization(params *UpdateOrganizationParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateOrganizationOK, *UpdateOrganizationNoContent, error)
+
+	UpdateOrganizationMember(params *UpdateOrganizationMemberParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateOrganizationMemberOK, *UpdateOrganizationMemberNoContent, error)
+
+	SetTransport(transport runtime.ClientTransport)
+}
+
 /*
-CreateOrganization lists runs
+  CreateOrganization creates organization
 */
 func (a *Client) CreateOrganization(params *CreateOrganizationParams, authInfo runtime.ClientAuthInfoWriter) (*CreateOrganizationOK, *CreateOrganizationNoContent, error) {
 	// TODO: Validate the params before sending
@@ -71,13 +99,13 @@ func (a *Client) CreateOrganization(params *CreateOrganizationParams, authInfo r
 	case *CreateOrganizationNoContent:
 		return nil, value, nil
 	}
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for organizations_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
+	// unexpected success response
+	unexpectedSuccess := result.(*CreateOrganizationDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-CreateOrganizationMember deletes runs
+  CreateOrganizationMember creates organization member
 */
 func (a *Client) CreateOrganizationMember(params *CreateOrganizationMemberParams, authInfo runtime.ClientAuthInfoWriter) (*CreateOrganizationMemberOK, *CreateOrganizationMemberNoContent, error) {
 	// TODO: Validate the params before sending
@@ -107,13 +135,13 @@ func (a *Client) CreateOrganizationMember(params *CreateOrganizationMemberParams
 	case *CreateOrganizationMemberNoContent:
 		return nil, value, nil
 	}
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for organizations_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
+	// unexpected success response
+	unexpectedSuccess := result.(*CreateOrganizationMemberDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-DeleteOrganization patches run
+  DeleteOrganization deletes organization
 */
 func (a *Client) DeleteOrganization(params *DeleteOrganizationParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteOrganizationOK, *DeleteOrganizationNoContent, error) {
 	// TODO: Validate the params before sending
@@ -143,13 +171,13 @@ func (a *Client) DeleteOrganization(params *DeleteOrganizationParams, authInfo r
 	case *DeleteOrganizationNoContent:
 		return nil, value, nil
 	}
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for organizations_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
+	// unexpected success response
+	unexpectedSuccess := result.(*DeleteOrganizationDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-DeleteOrganizationMember invalidates runs
+  DeleteOrganizationMember deletes organization member details
 */
 func (a *Client) DeleteOrganizationMember(params *DeleteOrganizationMemberParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteOrganizationMemberOK, *DeleteOrganizationMemberNoContent, error) {
 	// TODO: Validate the params before sending
@@ -179,13 +207,13 @@ func (a *Client) DeleteOrganizationMember(params *DeleteOrganizationMemberParams
 	case *DeleteOrganizationMemberNoContent:
 		return nil, value, nil
 	}
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for organizations_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
+	// unexpected success response
+	unexpectedSuccess := result.(*DeleteOrganizationMemberDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-GetOrganization creates new run
+  GetOrganization gets organization
 */
 func (a *Client) GetOrganization(params *GetOrganizationParams, authInfo runtime.ClientAuthInfoWriter) (*GetOrganizationOK, *GetOrganizationNoContent, error) {
 	// TODO: Validate the params before sending
@@ -215,13 +243,13 @@ func (a *Client) GetOrganization(params *GetOrganizationParams, authInfo runtime
 	case *GetOrganizationNoContent:
 		return nil, value, nil
 	}
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for organizations_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
+	// unexpected success response
+	unexpectedSuccess := result.(*GetOrganizationDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-GetOrganizationMember stops run
+  GetOrganizationMember gets organization member details
 */
 func (a *Client) GetOrganizationMember(params *GetOrganizationMemberParams, authInfo runtime.ClientAuthInfoWriter) (*GetOrganizationMemberOK, *GetOrganizationMemberNoContent, error) {
 	// TODO: Validate the params before sending
@@ -251,13 +279,13 @@ func (a *Client) GetOrganizationMember(params *GetOrganizationMemberParams, auth
 	case *GetOrganizationMemberNoContent:
 		return nil, value, nil
 	}
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for organizations_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
+	// unexpected success response
+	unexpectedSuccess := result.(*GetOrganizationMemberDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-ListOrganizationMembers deletes run
+  ListOrganizationMembers gets organization members
 */
 func (a *Client) ListOrganizationMembers(params *ListOrganizationMembersParams, authInfo runtime.ClientAuthInfoWriter) (*ListOrganizationMembersOK, *ListOrganizationMembersNoContent, error) {
 	// TODO: Validate the params before sending
@@ -287,13 +315,13 @@ func (a *Client) ListOrganizationMembers(params *ListOrganizationMembersParams, 
 	case *ListOrganizationMembersNoContent:
 		return nil, value, nil
 	}
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for organizations_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
+	// unexpected success response
+	unexpectedSuccess := result.(*ListOrganizationMembersDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-ListOrganizationNames lists bookmarked runs for user
+  ListOrganizationNames lists organizations names
 */
 func (a *Client) ListOrganizationNames(params *ListOrganizationNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListOrganizationNamesOK, *ListOrganizationNamesNoContent, error) {
 	// TODO: Validate the params before sending
@@ -323,13 +351,13 @@ func (a *Client) ListOrganizationNames(params *ListOrganizationNamesParams, auth
 	case *ListOrganizationNamesNoContent:
 		return nil, value, nil
 	}
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for organizations_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
+	// unexpected success response
+	unexpectedSuccess := result.(*ListOrganizationNamesDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-ListOrganizations lists archived runs for user
+  ListOrganizations lists organizations
 */
 func (a *Client) ListOrganizations(params *ListOrganizationsParams, authInfo runtime.ClientAuthInfoWriter) (*ListOrganizationsOK, *ListOrganizationsNoContent, error) {
 	// TODO: Validate the params before sending
@@ -359,13 +387,13 @@ func (a *Client) ListOrganizations(params *ListOrganizationsParams, authInfo run
 	case *ListOrganizationsNoContent:
 		return nil, value, nil
 	}
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for organizations_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
+	// unexpected success response
+	unexpectedSuccess := result.(*ListOrganizationsDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-PatchOrganization updates run
+  PatchOrganization patches organization
 */
 func (a *Client) PatchOrganization(params *PatchOrganizationParams, authInfo runtime.ClientAuthInfoWriter) (*PatchOrganizationOK, *PatchOrganizationNoContent, error) {
 	// TODO: Validate the params before sending
@@ -395,13 +423,13 @@ func (a *Client) PatchOrganization(params *PatchOrganizationParams, authInfo run
 	case *PatchOrganizationNoContent:
 		return nil, value, nil
 	}
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for organizations_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
+	// unexpected success response
+	unexpectedSuccess := result.(*PatchOrganizationDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-PatchOrganizationMember invalidates run
+  PatchOrganizationMember patches organization member
 */
 func (a *Client) PatchOrganizationMember(params *PatchOrganizationMemberParams, authInfo runtime.ClientAuthInfoWriter) (*PatchOrganizationMemberOK, *PatchOrganizationMemberNoContent, error) {
 	// TODO: Validate the params before sending
@@ -431,13 +459,13 @@ func (a *Client) PatchOrganizationMember(params *PatchOrganizationMemberParams, 
 	case *PatchOrganizationMemberNoContent:
 		return nil, value, nil
 	}
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for organizations_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
+	// unexpected success response
+	unexpectedSuccess := result.(*PatchOrganizationMemberDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-UpdateOrganization gets run
+  UpdateOrganization updates organization
 */
 func (a *Client) UpdateOrganization(params *UpdateOrganizationParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateOrganizationOK, *UpdateOrganizationNoContent, error) {
 	// TODO: Validate the params before sending
@@ -467,13 +495,13 @@ func (a *Client) UpdateOrganization(params *UpdateOrganizationParams, authInfo r
 	case *UpdateOrganizationNoContent:
 		return nil, value, nil
 	}
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for organizations_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
+	// unexpected success response
+	unexpectedSuccess := result.(*UpdateOrganizationDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-UpdateOrganizationMember stops runs
+  UpdateOrganizationMember updates organization member
 */
 func (a *Client) UpdateOrganizationMember(params *UpdateOrganizationMemberParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateOrganizationMemberOK, *UpdateOrganizationMemberNoContent, error) {
 	// TODO: Validate the params before sending
@@ -503,9 +531,9 @@ func (a *Client) UpdateOrganizationMember(params *UpdateOrganizationMemberParams
 	case *UpdateOrganizationMemberNoContent:
 		return nil, value, nil
 	}
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for organizations_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
+	// unexpected success response
+	unexpectedSuccess := result.(*UpdateOrganizationMemberDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 // SetTransport changes the transport on the client

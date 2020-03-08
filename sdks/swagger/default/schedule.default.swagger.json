@@ -1,0 +1,32 @@
+{
+  "definitions": {
+    "v1IntervalSchedule": {
+      "properties": {
+        "kind": {
+          "default": "interval"
+        }
+      }
+    },
+    "v1CronSchedule": {
+      "properties": {
+        "kind": {
+          "default": "cron"
+        }
+      }
+    },
+    "v1ExactTimeSchedule": {
+      "properties": {
+        "kind": {
+          "default": "exact_time"
+        }
+      }
+    },
+    "v1RepeatableSchedule": {
+      "properties": {
+        "kind": {
+          "default": "repeatable"
+        }
+      }
+    }
+  }
+}

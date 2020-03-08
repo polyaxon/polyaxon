@@ -4,19 +4,19 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**create_connection**](ConnectionsV1Api.md#create_connection) | **POST** /api/v1/orgs/{owner}/connections | List runs
-[**delete_connection**](ConnectionsV1Api.md#delete_connection) | **DELETE** /api/v1/orgs/{owner}/connections/{uuid} | Patch run
-[**get_connection**](ConnectionsV1Api.md#get_connection) | **GET** /api/v1/orgs/{owner}/connections/{uuid} | Create new run
-[**list_connection_names**](ConnectionsV1Api.md#list_connection_names) | **GET** /api/v1/orgs/{owner}/connections/names | List bookmarked runs for user
-[**list_connections**](ConnectionsV1Api.md#list_connections) | **GET** /api/v1/orgs/{owner}/connections | List archived runs for user
-[**patch_connection**](ConnectionsV1Api.md#patch_connection) | **PATCH** /api/v1/orgs/{owner}/connections/{connection.uuid} | Update run
-[**update_connection**](ConnectionsV1Api.md#update_connection) | **PUT** /api/v1/orgs/{owner}/connections/{connection.uuid} | Get run
+[**create_connection**](ConnectionsV1Api.md#create_connection) | **POST** /api/v1/orgs/{owner}/connections | Create connection
+[**delete_connection**](ConnectionsV1Api.md#delete_connection) | **DELETE** /api/v1/orgs/{owner}/connections/{uuid} | Delete connection
+[**get_connection**](ConnectionsV1Api.md#get_connection) | **GET** /api/v1/orgs/{owner}/connections/{uuid} | Get connection
+[**list_connection_names**](ConnectionsV1Api.md#list_connection_names) | **GET** /api/v1/orgs/{owner}/connections/names | List connections names
+[**list_connections**](ConnectionsV1Api.md#list_connections) | **GET** /api/v1/orgs/{owner}/connections | List connections
+[**patch_connection**](ConnectionsV1Api.md#patch_connection) | **PATCH** /api/v1/orgs/{owner}/connections/{connection.uuid} | Patch connection
+[**update_connection**](ConnectionsV1Api.md#update_connection) | **PUT** /api/v1/orgs/{owner}/connections/{connection.uuid} | Update connection
 
 
 # **create_connection**
-> V1Connection create_connection(owner, body)
+> V1ConnectionResponse create_connection(owner, body)
 
-List runs
+Create connection
 
 ### Example
 ```python
@@ -35,10 +35,10 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = polyaxon_sdk.ConnectionsV1Api(polyaxon_sdk.ApiClient(configuration))
 owner = 'owner_example' # str | Owner of the namespace
-body = polyaxon_sdk.V1Connection() # V1Connection | Connection body
+body = polyaxon_sdk.V1ConnectionResponse() # V1ConnectionResponse | Connection body
 
 try:
-    # List runs
+    # Create connection
     api_response = api_instance.create_connection(owner, body)
     pprint(api_response)
 except ApiException as e:
@@ -50,11 +50,11 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **str**| Owner of the namespace | 
- **body** | [**V1Connection**](V1Connection.md)| Connection body | 
+ **body** | [**V1ConnectionResponse**](V1ConnectionResponse.md)| Connection body | 
 
 ### Return type
 
-[**V1Connection**](V1Connection.md)
+[**V1ConnectionResponse**](V1ConnectionResponse.md)
 
 ### Authorization
 
@@ -70,7 +70,7 @@ Name | Type | Description  | Notes
 # **delete_connection**
 > delete_connection(owner, uuid)
 
-Patch run
+Delete connection
 
 ### Example
 ```python
@@ -89,10 +89,10 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = polyaxon_sdk.ConnectionsV1Api(polyaxon_sdk.ApiClient(configuration))
 owner = 'owner_example' # str | Owner of the namespace
-uuid = 'uuid_example' # str | Unique integer identifier of the entity
+uuid = 'uuid_example' # str | Uuid identifier of the entity
 
 try:
-    # Patch run
+    # Delete connection
     api_instance.delete_connection(owner, uuid)
 except ApiException as e:
     print("Exception when calling ConnectionsV1Api->delete_connection: %s\n" % e)
@@ -103,7 +103,7 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **str**| Owner of the namespace | 
- **uuid** | **str**| Unique integer identifier of the entity | 
+ **uuid** | **str**| Uuid identifier of the entity | 
 
 ### Return type
 
@@ -121,9 +121,9 @@ void (empty response body)
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_connection**
-> V1Connection get_connection(owner, uuid)
+> V1ConnectionResponse get_connection(owner, uuid)
 
-Create new run
+Get connection
 
 ### Example
 ```python
@@ -142,10 +142,10 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = polyaxon_sdk.ConnectionsV1Api(polyaxon_sdk.ApiClient(configuration))
 owner = 'owner_example' # str | Owner of the namespace
-uuid = 'uuid_example' # str | Unique integer identifier of the entity
+uuid = 'uuid_example' # str | Uuid identifier of the entity
 
 try:
-    # Create new run
+    # Get connection
     api_response = api_instance.get_connection(owner, uuid)
     pprint(api_response)
 except ApiException as e:
@@ -157,11 +157,11 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **str**| Owner of the namespace | 
- **uuid** | **str**| Unique integer identifier of the entity | 
+ **uuid** | **str**| Uuid identifier of the entity | 
 
 ### Return type
 
-[**V1Connection**](V1Connection.md)
+[**V1ConnectionResponse**](V1ConnectionResponse.md)
 
 ### Authorization
 
@@ -177,7 +177,7 @@ Name | Type | Description  | Notes
 # **list_connection_names**
 > V1ListConnectionsResponse list_connection_names(owner, offset=offset, limit=limit, sort=sort, query=query)
 
-List bookmarked runs for user
+List connections names
 
 ### Example
 ```python
@@ -202,7 +202,7 @@ sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search search. (optional)
 
 try:
-    # List bookmarked runs for user
+    # List connections names
     api_response = api_instance.list_connection_names(owner, offset=offset, limit=limit, sort=sort, query=query)
     pprint(api_response)
 except ApiException as e:
@@ -237,7 +237,7 @@ Name | Type | Description  | Notes
 # **list_connections**
 > V1ListConnectionsResponse list_connections(owner, offset=offset, limit=limit, sort=sort, query=query)
 
-List archived runs for user
+List connections
 
 ### Example
 ```python
@@ -262,7 +262,7 @@ sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search search. (optional)
 
 try:
-    # List archived runs for user
+    # List connections
     api_response = api_instance.list_connections(owner, offset=offset, limit=limit, sort=sort, query=query)
     pprint(api_response)
 except ApiException as e:
@@ -295,9 +295,9 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patch_connection**
-> V1Connection patch_connection(owner, connection_uuid, body)
+> V1ConnectionResponse patch_connection(owner, connection_uuid, body)
 
-Update run
+Patch connection
 
 ### Example
 ```python
@@ -317,10 +317,10 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 api_instance = polyaxon_sdk.ConnectionsV1Api(polyaxon_sdk.ApiClient(configuration))
 owner = 'owner_example' # str | Owner of the namespace
 connection_uuid = 'connection_uuid_example' # str | UUID
-body = polyaxon_sdk.V1Connection() # V1Connection | Connection body
+body = polyaxon_sdk.V1ConnectionResponse() # V1ConnectionResponse | Connection body
 
 try:
-    # Update run
+    # Patch connection
     api_response = api_instance.patch_connection(owner, connection_uuid, body)
     pprint(api_response)
 except ApiException as e:
@@ -333,11 +333,11 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **str**| Owner of the namespace | 
  **connection_uuid** | **str**| UUID | 
- **body** | [**V1Connection**](V1Connection.md)| Connection body | 
+ **body** | [**V1ConnectionResponse**](V1ConnectionResponse.md)| Connection body | 
 
 ### Return type
 
-[**V1Connection**](V1Connection.md)
+[**V1ConnectionResponse**](V1ConnectionResponse.md)
 
 ### Authorization
 
@@ -351,9 +351,9 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **update_connection**
-> V1Connection update_connection(owner, connection_uuid, body)
+> V1ConnectionResponse update_connection(owner, connection_uuid, body)
 
-Get run
+Update connection
 
 ### Example
 ```python
@@ -373,10 +373,10 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 api_instance = polyaxon_sdk.ConnectionsV1Api(polyaxon_sdk.ApiClient(configuration))
 owner = 'owner_example' # str | Owner of the namespace
 connection_uuid = 'connection_uuid_example' # str | UUID
-body = polyaxon_sdk.V1Connection() # V1Connection | Connection body
+body = polyaxon_sdk.V1ConnectionResponse() # V1ConnectionResponse | Connection body
 
 try:
-    # Get run
+    # Update connection
     api_response = api_instance.update_connection(owner, connection_uuid, body)
     pprint(api_response)
 except ApiException as e:
@@ -389,11 +389,11 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **str**| Owner of the namespace | 
  **connection_uuid** | **str**| UUID | 
- **body** | [**V1Connection**](V1Connection.md)| Connection body | 
+ **body** | [**V1ConnectionResponse**](V1ConnectionResponse.md)| Connection body | 
 
 ### Return type
 
-[**V1Connection**](V1Connection.md)
+[**V1ConnectionResponse**](V1ConnectionResponse.md)
 
 ### Authorization
 

@@ -1,4 +1,4 @@
-// Copyright 2019 Polyaxon, Inc.
+// Copyright 2018-2020 Polyaxon, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,14 +20,14 @@ package service_model
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // V1MedianStoppingPolicy Early stopping with median stopping, this policy computes running medians across
 // all runs and stops those whose best performance is worse than the median
 // of the running runs.
+//
 // swagger:model v1MedianStoppingPolicy
 type V1MedianStoppingPolicy struct {
 
@@ -35,7 +35,13 @@ type V1MedianStoppingPolicy struct {
 	EvaluationInterval int32 `json:"evaluation_interval,omitempty"`
 
 	// Kind of this stopping policy, should be equal to "median"
-	Kind string `json:"kind,omitempty"`
+	Kind *string `json:"kind,omitempty"`
+
+	// Min interval (e.g steps) before starting the process
+	MinInterval int32 `json:"min_interval,omitempty"`
+
+	// Min samples runs succeded before starting the process
+	MinSamples int32 `json:"min_samples,omitempty"`
 }
 
 // Validate validates this v1 median stopping policy

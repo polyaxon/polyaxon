@@ -1,4 +1,4 @@
-// Copyright 2019 Polyaxon, Inc.
+// Copyright 2018-2020 Polyaxon, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,15 +20,12 @@ package agents_v1
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	"fmt"
-
 	"github.com/go-openapi/runtime"
-
-	strfmt "github.com/go-openapi/strfmt"
+	"github.com/go-openapi/strfmt"
 )
 
 // New creates a new agents v1 API client.
-func New(transport runtime.ClientTransport, formats strfmt.Registry) *Client {
+func New(transport runtime.ClientTransport, formats strfmt.Registry) ClientService {
 	return &Client{transport: transport, formats: formats}
 }
 
@@ -40,8 +37,35 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
+// ClientService is the interface for Client methods
+type ClientService interface {
+	CreateAgent(params *CreateAgentParams, authInfo runtime.ClientAuthInfoWriter) (*CreateAgentOK, *CreateAgentNoContent, error)
+
+	CreateAgentStatus(params *CreateAgentStatusParams, authInfo runtime.ClientAuthInfoWriter) (*CreateAgentStatusOK, *CreateAgentStatusNoContent, error)
+
+	DeleteAgent(params *DeleteAgentParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteAgentOK, *DeleteAgentNoContent, error)
+
+	GetAgent(params *GetAgentParams, authInfo runtime.ClientAuthInfoWriter) (*GetAgentOK, *GetAgentNoContent, error)
+
+	GetAgentState(params *GetAgentStateParams, authInfo runtime.ClientAuthInfoWriter) (*GetAgentStateOK, *GetAgentStateNoContent, error)
+
+	GetAgentStatuses(params *GetAgentStatusesParams, authInfo runtime.ClientAuthInfoWriter) (*GetAgentStatusesOK, *GetAgentStatusesNoContent, error)
+
+	ListAgentNames(params *ListAgentNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListAgentNamesOK, *ListAgentNamesNoContent, error)
+
+	ListAgents(params *ListAgentsParams, authInfo runtime.ClientAuthInfoWriter) (*ListAgentsOK, *ListAgentsNoContent, error)
+
+	PatchAgent(params *PatchAgentParams, authInfo runtime.ClientAuthInfoWriter) (*PatchAgentOK, *PatchAgentNoContent, error)
+
+	SyncAgent(params *SyncAgentParams, authInfo runtime.ClientAuthInfoWriter) (*SyncAgentOK, *SyncAgentNoContent, error)
+
+	UpdateAgent(params *UpdateAgentParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateAgentOK, *UpdateAgentNoContent, error)
+
+	SetTransport(transport runtime.ClientTransport)
+}
+
 /*
-CreateAgent lists runs
+  CreateAgent creates agent
 */
 func (a *Client) CreateAgent(params *CreateAgentParams, authInfo runtime.ClientAuthInfoWriter) (*CreateAgentOK, *CreateAgentNoContent, error) {
 	// TODO: Validate the params before sending
@@ -71,13 +95,49 @@ func (a *Client) CreateAgent(params *CreateAgentParams, authInfo runtime.ClientA
 	case *CreateAgentNoContent:
 		return nil, value, nil
 	}
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for agents_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
+	// unexpected success response
+	unexpectedSuccess := result.(*CreateAgentDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-DeleteAgent patches run
+  CreateAgentStatus creates new run status
+*/
+func (a *Client) CreateAgentStatus(params *CreateAgentStatusParams, authInfo runtime.ClientAuthInfoWriter) (*CreateAgentStatusOK, *CreateAgentStatusNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewCreateAgentStatusParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "CreateAgentStatus",
+		Method:             "POST",
+		PathPattern:        "/api/v1/orgs/{owner}/agents/{uuid}/statuses",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &CreateAgentStatusReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *CreateAgentStatusOK:
+		return value, nil, nil
+	case *CreateAgentStatusNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*CreateAgentStatusDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+  DeleteAgent deletes agent
 */
 func (a *Client) DeleteAgent(params *DeleteAgentParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteAgentOK, *DeleteAgentNoContent, error) {
 	// TODO: Validate the params before sending
@@ -107,13 +167,13 @@ func (a *Client) DeleteAgent(params *DeleteAgentParams, authInfo runtime.ClientA
 	case *DeleteAgentNoContent:
 		return nil, value, nil
 	}
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for agents_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
+	// unexpected success response
+	unexpectedSuccess := result.(*DeleteAgentDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-GetAgent creates new run
+  GetAgent gets agent
 */
 func (a *Client) GetAgent(params *GetAgentParams, authInfo runtime.ClientAuthInfoWriter) (*GetAgentOK, *GetAgentNoContent, error) {
 	// TODO: Validate the params before sending
@@ -143,13 +203,85 @@ func (a *Client) GetAgent(params *GetAgentParams, authInfo runtime.ClientAuthInf
 	case *GetAgentNoContent:
 		return nil, value, nil
 	}
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for agents_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
+	// unexpected success response
+	unexpectedSuccess := result.(*GetAgentDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-ListAgentNames lists bookmarked runs for user
+  GetAgentState gets state queues runs
+*/
+func (a *Client) GetAgentState(params *GetAgentStateParams, authInfo runtime.ClientAuthInfoWriter) (*GetAgentStateOK, *GetAgentStateNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetAgentStateParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "GetAgentState",
+		Method:             "GET",
+		PathPattern:        "/api/v1/orgs/{owner}/agents/{uuid}/state",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &GetAgentStateReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *GetAgentStateOK:
+		return value, nil, nil
+	case *GetAgentStateNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*GetAgentStateDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+  GetAgentStatuses gets agent status
+*/
+func (a *Client) GetAgentStatuses(params *GetAgentStatusesParams, authInfo runtime.ClientAuthInfoWriter) (*GetAgentStatusesOK, *GetAgentStatusesNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetAgentStatusesParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "GetAgentStatuses",
+		Method:             "GET",
+		PathPattern:        "/api/v1/orgs/{owner}/agents/{uuid}/statuses",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &GetAgentStatusesReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *GetAgentStatusesOK:
+		return value, nil, nil
+	case *GetAgentStatusesNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*GetAgentStatusesDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+  ListAgentNames lists agents names
 */
 func (a *Client) ListAgentNames(params *ListAgentNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListAgentNamesOK, *ListAgentNamesNoContent, error) {
 	// TODO: Validate the params before sending
@@ -179,13 +311,13 @@ func (a *Client) ListAgentNames(params *ListAgentNamesParams, authInfo runtime.C
 	case *ListAgentNamesNoContent:
 		return nil, value, nil
 	}
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for agents_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
+	// unexpected success response
+	unexpectedSuccess := result.(*ListAgentNamesDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-ListAgents lists archived runs for user
+  ListAgents lists agents
 */
 func (a *Client) ListAgents(params *ListAgentsParams, authInfo runtime.ClientAuthInfoWriter) (*ListAgentsOK, *ListAgentsNoContent, error) {
 	// TODO: Validate the params before sending
@@ -215,13 +347,13 @@ func (a *Client) ListAgents(params *ListAgentsParams, authInfo runtime.ClientAut
 	case *ListAgentsNoContent:
 		return nil, value, nil
 	}
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for agents_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
+	// unexpected success response
+	unexpectedSuccess := result.(*ListAgentsDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-PatchAgent updates run
+  PatchAgent patches agent
 */
 func (a *Client) PatchAgent(params *PatchAgentParams, authInfo runtime.ClientAuthInfoWriter) (*PatchAgentOK, *PatchAgentNoContent, error) {
 	// TODO: Validate the params before sending
@@ -251,13 +383,49 @@ func (a *Client) PatchAgent(params *PatchAgentParams, authInfo runtime.ClientAut
 	case *PatchAgentNoContent:
 		return nil, value, nil
 	}
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for agents_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
+	// unexpected success response
+	unexpectedSuccess := result.(*PatchAgentDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-UpdateAgent gets run
+  SyncAgent syncs agent
+*/
+func (a *Client) SyncAgent(params *SyncAgentParams, authInfo runtime.ClientAuthInfoWriter) (*SyncAgentOK, *SyncAgentNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewSyncAgentParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "SyncAgent",
+		Method:             "PATCH",
+		PathPattern:        "/api/v1/orgs/{owner}/agents/{agent.uuid}/sync",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &SyncAgentReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *SyncAgentOK:
+		return value, nil, nil
+	case *SyncAgentNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*SyncAgentDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+  UpdateAgent updates agent
 */
 func (a *Client) UpdateAgent(params *UpdateAgentParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateAgentOK, *UpdateAgentNoContent, error) {
 	// TODO: Validate the params before sending
@@ -287,9 +455,9 @@ func (a *Client) UpdateAgent(params *UpdateAgentParams, authInfo runtime.ClientA
 	case *UpdateAgentNoContent:
 		return nil, value, nil
 	}
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for agents_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
+	// unexpected success response
+	unexpectedSuccess := result.(*UpdateAgentDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 // SetTransport changes the transport on the client

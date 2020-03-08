@@ -4,7 +4,7 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**type** | **String** |  |  [optional]
+**type** | [**V1Statuses**](V1Statuses.md) |  |  [optional]
 **status** | **String** |  |  [optional]
 **reason** | **String** |  |  [optional]
 **message** | **String** |  |  [optional]

@@ -1,4 +1,4 @@
-// Copyright 2019 Polyaxon, Inc.
+// Copyright 2018-2020 Polyaxon, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,14 +20,14 @@ package service_model
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
 
 // V1StatusCondition Status condition specification
+//
 // swagger:model v1StatusCondition
 type V1StatusCondition struct {
 
@@ -49,7 +49,7 @@ type V1StatusCondition struct {
 	Status string `json:"status,omitempty"`
 
 	// Status type
-	Type string `json:"type,omitempty"`
+	Type V1Statuses `json:"type,omitempty"`
 }
 
 // Validate validates this v1 status condition
@@ -61,6 +61,10 @@ func (m *V1StatusCondition) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateLastUpdateTime(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateType(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -90,6 +94,22 @@ func (m *V1StatusCondition) validateLastUpdateTime(formats strfmt.Registry) erro
 	}
 
 	if err := validate.FormatOf("last_update_time", "body", "date-time", m.LastUpdateTime.String(), formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *V1StatusCondition) validateType(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Type) { // not required
+		return nil
+	}
+
+	if err := m.Type.Validate(formats); err != nil {
+		if ve, ok := err.(*errors.Validation); ok {
+			return ve.ValidateName("type")
+		}
 		return err
 	}
 

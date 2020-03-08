@@ -1,4 +1,4 @@
-// Copyright 2019 Polyaxon, Inc.
+// Copyright 2018-2020 Polyaxon, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -24,10 +24,9 @@ import (
 	"io"
 
 	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/strfmt"
 
-	strfmt "github.com/go-openapi/strfmt"
-
-	service_model "github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_model"
+	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_model"
 )
 
 // GetRunArtifactsTreeReader is a Reader for the GetRunArtifactsTree structure.
@@ -62,9 +61,15 @@ func (o *GetRunArtifactsTreeReader) ReadResponse(response runtime.ClientResponse
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		result := NewGetRunArtifactsTreeDefault(response.Code())
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		if response.Code()/100 == 2 {
+			return result, nil
+		}
+		return nil, result
 	}
 }
 
@@ -82,7 +87,7 @@ type GetRunArtifactsTreeOK struct {
 }
 
 func (o *GetRunArtifactsTreeOK) Error() string {
-	return fmt.Sprintf("[GET /api/v1/{owner}/{project}/runs/{uuid}/artifacts/tree][%d] getRunArtifactsTreeOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[GET /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifacts/tree][%d] getRunArtifactsTreeOK  %+v", 200, o.Payload)
 }
 
 func (o *GetRunArtifactsTreeOK) GetPayload() *service_model.V1ArtifactTreeResponse {
@@ -115,7 +120,7 @@ type GetRunArtifactsTreeNoContent struct {
 }
 
 func (o *GetRunArtifactsTreeNoContent) Error() string {
-	return fmt.Sprintf("[GET /api/v1/{owner}/{project}/runs/{uuid}/artifacts/tree][%d] getRunArtifactsTreeNoContent  %+v", 204, o.Payload)
+	return fmt.Sprintf("[GET /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifacts/tree][%d] getRunArtifactsTreeNoContent  %+v", 204, o.Payload)
 }
 
 func (o *GetRunArtifactsTreeNoContent) GetPayload() interface{} {
@@ -146,7 +151,7 @@ type GetRunArtifactsTreeForbidden struct {
 }
 
 func (o *GetRunArtifactsTreeForbidden) Error() string {
-	return fmt.Sprintf("[GET /api/v1/{owner}/{project}/runs/{uuid}/artifacts/tree][%d] getRunArtifactsTreeForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[GET /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifacts/tree][%d] getRunArtifactsTreeForbidden  %+v", 403, o.Payload)
 }
 
 func (o *GetRunArtifactsTreeForbidden) GetPayload() interface{} {
@@ -177,7 +182,7 @@ type GetRunArtifactsTreeNotFound struct {
 }
 
 func (o *GetRunArtifactsTreeNotFound) Error() string {
-	return fmt.Sprintf("[GET /api/v1/{owner}/{project}/runs/{uuid}/artifacts/tree][%d] getRunArtifactsTreeNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[GET /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifacts/tree][%d] getRunArtifactsTreeNotFound  %+v", 404, o.Payload)
 }
 
 func (o *GetRunArtifactsTreeNotFound) GetPayload() interface{} {
@@ -188,6 +193,48 @@ func (o *GetRunArtifactsTreeNotFound) readResponse(response runtime.ClientRespon
 
 	// response payload
 	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
+// NewGetRunArtifactsTreeDefault creates a GetRunArtifactsTreeDefault with default headers values
+func NewGetRunArtifactsTreeDefault(code int) *GetRunArtifactsTreeDefault {
+	return &GetRunArtifactsTreeDefault{
+		_statusCode: code,
+	}
+}
+
+/*GetRunArtifactsTreeDefault handles this case with default header values.
+
+An unexpected error response
+*/
+type GetRunArtifactsTreeDefault struct {
+	_statusCode int
+
+	Payload *service_model.RuntimeError
+}
+
+// Code gets the status code for the get run artifacts tree default response
+func (o *GetRunArtifactsTreeDefault) Code() int {
+	return o._statusCode
+}
+
+func (o *GetRunArtifactsTreeDefault) Error() string {
+	return fmt.Sprintf("[GET /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifacts/tree][%d] GetRunArtifactsTree default  %+v", o._statusCode, o.Payload)
+}
+
+func (o *GetRunArtifactsTreeDefault) GetPayload() *service_model.RuntimeError {
+	return o.Payload
+}
+
+func (o *GetRunArtifactsTreeDefault) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(service_model.RuntimeError)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 

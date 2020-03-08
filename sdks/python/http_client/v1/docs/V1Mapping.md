@@ -3,7 +3,7 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**kind** | **str** |  | [optional] 
+**kind** | **str** |  | [optional] [default to 'mapping']
 **values** | **str** |  | [optional] 
 **concurrency** | **int** |  | [optional] 
 **early_stopping** | **list[object]** |  | [optional] 

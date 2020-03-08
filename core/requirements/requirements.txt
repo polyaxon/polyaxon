@@ -1,0 +1,3 @@
+-r ../../requirements/base.txt
+
+polyaxon-sdk==1.0.5

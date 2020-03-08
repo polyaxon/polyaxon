@@ -1,0 +1,51 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: "{{ .Release.Name }}-sync-db"
+  labels:
+    app: {{ template "polyaxon.fullname" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+    type: {{ .Values.types.core }}
+    role: {{ .Values.roles.hooks }}
+    app.kubernetes.io/name: {{ template "polyaxon.fullname" . }}-sync-db
+    app.kubernetes.io/instance: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    app.kubernetes.io/version: "{{ .Chart.Version }}"
+    app.kubernetes.io/part-of: {{ .Values.types.core }}
+    app.kubernetes.io/component: {{ .Values.roles.hooks }}
+    app.kubernetes.io/managed-by: "helm"
+  annotations:
+    # This is what defines this resource as a hook. Without this line, the
+    # job is considered part of the release.
+    "helm.sh/hook": post-install,post-upgrade
+    "helm.sh/hook-weight": "-5"
+    "helm.sh/hook-delete-policy": "hook-succeeded,before-hook-creation"
+spec:
+  template:
+    metadata:
+      name: "{{ .Release.Name }}-sync-db"
+      labels:
+        app: {{ template "polyaxon.fullname" . }}
+        release: "{{ .Release.Name }}"
+    spec:
+{{ include "securityContext" . | indent 6 }}
+{{ include "config.scheduling" . | indent 6 }}
+{{ include "config.sa" . | indent 6 }}
+{{ include "config.imagePullSecrets" . | indent 6}}
+      restartPolicy: Never
+      activeDeadlineSeconds: 360
+      containers:
+      - name: sync-db-job
+        image: "{{ .Values.hooks.image }}:{{ .Values.hooks.imageTag }}"
+        imagePullPolicy: {{ .Values.hooks.imagePullPolicy }}
+        args: ["migrate"]
+        envFrom:
+{{ include "config.envFrom.common" . | indent 8 }}
+{{ include "config.envFrom.secret" . | indent 8 }}
+{{ include "config.envFrom.platform" . | indent 8 }}
+        env:
+        - name: POLYAXON_DB_NO_CHECK
+          value: "true"
+{{ include "config.envs" . | indent 8 }}
+{{ include "config.manageEnvs" . | indent 8 }}

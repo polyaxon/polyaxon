@@ -3,7 +3,7 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**kind** | **str** |  | [optional] 
+**kind** | **str** |  | [optional] [default to 'failure_early_stopping']
 **percent** | **int** | The percentage failed runs, at each evaluation interval. e.g. 1 - 99. | [optional] 
 **evaluation_interval** | **str** | Interval/Frequency for applying the policy. | [optional] 
 

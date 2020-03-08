@@ -1,0 +1,92 @@
+#!/usr/bin/python
+#
+# Copyright 2018-2020 Polyaxon, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+import os
+
+from datetime import datetime
+
+import aiofiles
+
+from polyaxon import settings
+from polyaxon.stores import manager
+from polyaxon.utils.path_utils import check_or_create_path, get_path
+
+
+async def upload_data(subpath: str, data):
+    path_to = get_path(settings.AGENT_CONFIG.artifacts_store.store_path, subpath)
+    path_from = os.path.join(settings.AGENT_CONFIG.artifacts_root, subpath)
+    check_or_create_path(path_from, is_dir=False)
+    async with aiofiles.open(path_from, "w") as filepath_upload:
+        await filepath_upload.write(data)
+    manager.upload_file_or_dir(
+        connection_type=settings.AGENT_CONFIG.artifacts_store,
+        path_from=path_from,
+        path_to=path_to,
+        is_file=True,
+    )
+
+
+async def upload_dir(
+    subpath: str, path_from: str, workers: int = 0, last_time: datetime = None
+):
+    path_to = get_path(settings.AGENT_CONFIG.artifacts_store.store_path, subpath)
+    manager.upload_file_or_dir(
+        connection_type=settings.AGENT_CONFIG.artifacts_store,
+        path_from=path_from,
+        path_to=path_to,
+        is_file=False,
+        workers=workers,
+        last_time=last_time,
+    )
+
+
+async def download_file(subpath: str, check_cache=True) -> str:
+    path_from = get_path(settings.AGENT_CONFIG.artifacts_store.store_path, subpath)
+    path_to = os.path.join(settings.CLIENT_CONFIG.archive_root, subpath)
+
+    if check_cache and os.path.exists(path_to):
+        # file already exists
+        return path_to
+
+    check_or_create_path(path_to, is_dir=False)
+    return manager.download_file_or_dir(
+        connection_type=settings.AGENT_CONFIG.artifacts_store,
+        path_from=path_from,
+        path_to=path_to,
+        is_file=True,
+    )
+
+
+async def download_dir(subpath: str, to_tar: bool = False) -> str:
+    path_from = get_path(settings.AGENT_CONFIG.artifacts_store.store_path, subpath)
+    path_to = os.path.join(settings.CLIENT_CONFIG.archive_root, subpath)
+    check_or_create_path(path_to, is_dir=True)
+    return manager.download_file_or_dir(
+        connection_type=settings.AGENT_CONFIG.artifacts_store,
+        path_from=path_from,
+        path_to=path_to,
+        is_file=False,
+        workers=5,
+        to_tar=to_tar,
+    )
+
+
+async def list_files(subpath: str, filepath) -> str:
+    return manager.list_files(
+        connection_type=settings.AGENT_CONFIG.artifacts_store,
+        subpath=subpath,
+        filepath=filepath,
+    )

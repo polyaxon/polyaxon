@@ -1,4 +1,4 @@
-// Copyright 2019 Polyaxon, Inc.
+// Copyright 2018-2020 Polyaxon, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -22,18 +22,18 @@ package service_model
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // V1Status Status specification
+//
 // swagger:model v1Status
 type V1Status struct {
 
 	// The current status
-	Status string `json:"status,omitempty"`
+	Status V1Statuses `json:"status,omitempty"`
 
 	// The status conditions timeline
 	StatusConditions []*V1StatusCondition `json:"status_conditions"`
@@ -46,6 +46,10 @@ type V1Status struct {
 func (m *V1Status) Validate(formats strfmt.Registry) error {
 	var res []error
 
+	if err := m.validateStatus(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateStatusConditions(formats); err != nil {
 		res = append(res, err)
 	}
@@ -53,6 +57,22 @@ func (m *V1Status) Validate(formats strfmt.Registry) error {
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+func (m *V1Status) validateStatus(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Status) { // not required
+		return nil
+	}
+
+	if err := m.Status.Validate(formats); err != nil {
+		if ve, ok := err.(*errors.Validation); ok {
+			return ve.ValidateName("status")
+		}
+		return err
+	}
+
 	return nil
 }
 

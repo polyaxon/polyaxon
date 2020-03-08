@@ -11,6 +11,7 @@ Name | Type | Description | Notes
 **updated_at** | **datetime** |  | [optional] 
 **frozen** | **bool** |  | [optional] 
 **disabled** | **bool** |  | [optional] 
+**agent** | **str** |  | [optional] 
 **queue** | **str** |  | [optional] 
 **namespace** | **str** |  | [optional] 
 **termination** | **object** |  | [optional] 

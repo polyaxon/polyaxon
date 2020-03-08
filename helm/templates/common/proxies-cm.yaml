@@ -1,0 +1,49 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "polyaxon.fullname" . }}-proxies-config
+  labels:
+    app: {{ template "polyaxon.fullname" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+    type: {{ .Values.types.core }}
+    role: {{ .Values.roles.config }}
+    app.kubernetes.io/name: {{ template "polyaxon.fullname" . }}-proxies-config
+    app.kubernetes.io/instance: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    app.kubernetes.io/version: "{{ .Chart.Version }}"
+    app.kubernetes.io/part-of: {{ .Values.types.core }}
+    app.kubernetes.io/component: {{ .Values.types.config }}
+    app.kubernetes.io/managed-by: "helm"
+data:
+  # Cluster
+  POLYAXON_PROXY_STREAMS_PORT: "{{ template "streams.port" . }}"
+  POLYAXON_PROXY_STREAMS_HOST: {{ template "streams.host" . }}
+  POLYAXON_PROXY_API_PORT: "{{ template "api.port" . }}"
+  POLYAXON_PROXY_API_HOST: {{ template "api.host" . }}
+  POLYAXON_PROXY_AUTH_ENABLED: {{ .Values.auth.enabled | quote }}
+  {{- if .Values.auth.external }}
+  POLYAXON_PROXY_AUTH_EXTERNAL: {{ .Values.auth.external | quote }}
+  {{- end }}
+  POLYAXON_PROXY_AUTH_USE_RESOLVER: {{ .Values.auth.useResolver | quote }}
+  # DNS
+  POLYAXON_DNS_USE_RESOLVER: "true"
+  {{- if .Values.dns.backend }}
+  POLYAXON_DNS_BACKEND: {{ .Values.dns.backend | quote }}
+  {{- end }}
+  {{- if .Values.dns.customCluster }}
+  POLYAXON_DNS_CUSTOM_CLUSTER: {{ .Values.dns.customCluster | quote }}
+  {{- end }}
+  {{- if .Values.dns.POLYAXON_DNS_PREFIX }}
+  POLYAXON_DNS_PREFIX: {{ .Values.dns.prefix | quote }}
+  {{- end }}
+  # SSL
+  {{- if and .Values.ssl.enabled .Values.ssl.secretName }}
+  POLYAXON_SSL_ENABLED: "true"
+  {{- if .Values.ssl.path }}
+  POLYAXON_SSL_PATH:  {{ .Values.ssl.path | quote }}
+  {{- end }}
+  {{- end }}
+  # Services
+  POLYAXON_PROXY_SERVICES_PORT: {{ .Values.services.port | quote }}
+  POLYAXON_K8S_IN_CLUSTER: "true"

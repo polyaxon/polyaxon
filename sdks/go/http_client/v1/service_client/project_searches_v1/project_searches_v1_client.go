@@ -1,4 +1,4 @@
-// Copyright 2019 Polyaxon, Inc.
+// Copyright 2018-2020 Polyaxon, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,15 +20,12 @@ package project_searches_v1
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	"fmt"
-
 	"github.com/go-openapi/runtime"
-
-	strfmt "github.com/go-openapi/strfmt"
+	"github.com/go-openapi/strfmt"
 )
 
 // New creates a new project searches v1 API client.
-func New(transport runtime.ClientTransport, formats strfmt.Registry) *Client {
+func New(transport runtime.ClientTransport, formats strfmt.Registry) ClientService {
 	return &Client{transport: transport, formats: formats}
 }
 
@@ -40,8 +37,29 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
+// ClientService is the interface for Client methods
+type ClientService interface {
+	CreateProjectSearch(params *CreateProjectSearchParams, authInfo runtime.ClientAuthInfoWriter) (*CreateProjectSearchOK, *CreateProjectSearchNoContent, error)
+
+	DeleteProjectSearch(params *DeleteProjectSearchParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteProjectSearchOK, *DeleteProjectSearchNoContent, error)
+
+	GetProjectSearch(params *GetProjectSearchParams, authInfo runtime.ClientAuthInfoWriter) (*GetProjectSearchOK, *GetProjectSearchNoContent, error)
+
+	ListProjectSearchNames(params *ListProjectSearchNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListProjectSearchNamesOK, *ListProjectSearchNamesNoContent, error)
+
+	ListProjectSearches(params *ListProjectSearchesParams, authInfo runtime.ClientAuthInfoWriter) (*ListProjectSearchesOK, *ListProjectSearchesNoContent, error)
+
+	PatchProjectSearch(params *PatchProjectSearchParams, authInfo runtime.ClientAuthInfoWriter) (*PatchProjectSearchOK, *PatchProjectSearchNoContent, error)
+
+	PromoteProjectSearch(params *PromoteProjectSearchParams, authInfo runtime.ClientAuthInfoWriter) (*PromoteProjectSearchOK, *PromoteProjectSearchNoContent, error)
+
+	UpdateProjectSearch(params *UpdateProjectSearchParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateProjectSearchOK, *UpdateProjectSearchNoContent, error)
+
+	SetTransport(transport runtime.ClientTransport)
+}
+
 /*
-CreateProjectSearch lists runs
+  CreateProjectSearch creates project search
 */
 func (a *Client) CreateProjectSearch(params *CreateProjectSearchParams, authInfo runtime.ClientAuthInfoWriter) (*CreateProjectSearchOK, *CreateProjectSearchNoContent, error) {
 	// TODO: Validate the params before sending
@@ -71,13 +89,13 @@ func (a *Client) CreateProjectSearch(params *CreateProjectSearchParams, authInfo
 	case *CreateProjectSearchNoContent:
 		return nil, value, nil
 	}
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for project_searches_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
+	// unexpected success response
+	unexpectedSuccess := result.(*CreateProjectSearchDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-DeleteProjectSearch patches run
+  DeleteProjectSearch deletes project search
 */
 func (a *Client) DeleteProjectSearch(params *DeleteProjectSearchParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteProjectSearchOK, *DeleteProjectSearchNoContent, error) {
 	// TODO: Validate the params before sending
@@ -107,13 +125,13 @@ func (a *Client) DeleteProjectSearch(params *DeleteProjectSearchParams, authInfo
 	case *DeleteProjectSearchNoContent:
 		return nil, value, nil
 	}
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for project_searches_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
+	// unexpected success response
+	unexpectedSuccess := result.(*DeleteProjectSearchDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-GetProjectSearch creates new run
+  GetProjectSearch gets project search
 */
 func (a *Client) GetProjectSearch(params *GetProjectSearchParams, authInfo runtime.ClientAuthInfoWriter) (*GetProjectSearchOK, *GetProjectSearchNoContent, error) {
 	// TODO: Validate the params before sending
@@ -143,13 +161,13 @@ func (a *Client) GetProjectSearch(params *GetProjectSearchParams, authInfo runti
 	case *GetProjectSearchNoContent:
 		return nil, value, nil
 	}
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for project_searches_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
+	// unexpected success response
+	unexpectedSuccess := result.(*GetProjectSearchDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-ListProjectSearchNames lists bookmarked runs for user
+  ListProjectSearchNames lists project search names
 */
 func (a *Client) ListProjectSearchNames(params *ListProjectSearchNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListProjectSearchNamesOK, *ListProjectSearchNamesNoContent, error) {
 	// TODO: Validate the params before sending
@@ -179,13 +197,13 @@ func (a *Client) ListProjectSearchNames(params *ListProjectSearchNamesParams, au
 	case *ListProjectSearchNamesNoContent:
 		return nil, value, nil
 	}
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for project_searches_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
+	// unexpected success response
+	unexpectedSuccess := result.(*ListProjectSearchNamesDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-ListProjectSearches lists archived runs for user
+  ListProjectSearches lists project searches
 */
 func (a *Client) ListProjectSearches(params *ListProjectSearchesParams, authInfo runtime.ClientAuthInfoWriter) (*ListProjectSearchesOK, *ListProjectSearchesNoContent, error) {
 	// TODO: Validate the params before sending
@@ -215,13 +233,13 @@ func (a *Client) ListProjectSearches(params *ListProjectSearchesParams, authInfo
 	case *ListProjectSearchesNoContent:
 		return nil, value, nil
 	}
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for project_searches_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
+	// unexpected success response
+	unexpectedSuccess := result.(*ListProjectSearchesDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-PatchProjectSearch updates run
+  PatchProjectSearch patches project search
 */
 func (a *Client) PatchProjectSearch(params *PatchProjectSearchParams, authInfo runtime.ClientAuthInfoWriter) (*PatchProjectSearchOK, *PatchProjectSearchNoContent, error) {
 	// TODO: Validate the params before sending
@@ -251,13 +269,13 @@ func (a *Client) PatchProjectSearch(params *PatchProjectSearchParams, authInfo r
 	case *PatchProjectSearchNoContent:
 		return nil, value, nil
 	}
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for project_searches_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
+	// unexpected success response
+	unexpectedSuccess := result.(*PatchProjectSearchDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-PromoteProjectSearch deletes run
+  PromoteProjectSearch promotes project search
 */
 func (a *Client) PromoteProjectSearch(params *PromoteProjectSearchParams, authInfo runtime.ClientAuthInfoWriter) (*PromoteProjectSearchOK, *PromoteProjectSearchNoContent, error) {
 	// TODO: Validate the params before sending
@@ -287,13 +305,13 @@ func (a *Client) PromoteProjectSearch(params *PromoteProjectSearchParams, authIn
 	case *PromoteProjectSearchNoContent:
 		return nil, value, nil
 	}
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for project_searches_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
+	// unexpected success response
+	unexpectedSuccess := result.(*PromoteProjectSearchDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-UpdateProjectSearch gets run
+  UpdateProjectSearch updates project search
 */
 func (a *Client) UpdateProjectSearch(params *UpdateProjectSearchParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateProjectSearchOK, *UpdateProjectSearchNoContent, error) {
 	// TODO: Validate the params before sending
@@ -323,9 +341,9 @@ func (a *Client) UpdateProjectSearch(params *UpdateProjectSearchParams, authInfo
 	case *UpdateProjectSearchNoContent:
 		return nil, value, nil
 	}
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for project_searches_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
+	// unexpected success response
+	unexpectedSuccess := result.(*UpdateProjectSearchDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 // SetTransport changes the transport on the client

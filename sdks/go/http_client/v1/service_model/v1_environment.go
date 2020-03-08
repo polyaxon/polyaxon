@@ -1,4 +1,4 @@
-// Copyright 2019 Polyaxon, Inc.
+// Copyright 2018-2020 Polyaxon, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,147 +20,97 @@ package service_model
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
-	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // V1Environment Environment specification
+//
 // swagger:model v1Environment
 type V1Environment struct {
 
-	// Optional affinity to pass to the k8s
-	Affinity []interface{} `json:"affinity"`
+	// Optional Affinity sets the scheduling constraints.
+	Affinity V1Affinity `json:"affinity,omitempty"`
 
-	// Optional labels to pass to the k8s
+	// Optional Metadata annotations to pass to the k8s
 	Annotations map[string]string `json:"annotations,omitempty"`
 
-	// Optional flag to tell Polyaxon if it should set an auth context for the run, default true
-	Auth bool `json:"auth,omitempty"`
+	// PodDNSConfig defines the DNS parameters of a pod in addition to
+	// those generated from DNSPolicy.
+	DNSConfig V1PodDNSConfig `json:"dns_config,omitempty"`
 
-	// Optional flag to tell Polyaxon if it should set a docker socket context for the run, default false
-	Docker bool `json:"docker,omitempty"`
+	// Set DNS policy for the pod.
+	// Defaults to "ClusterFirst".
+	// Valid values are 'ClusterFirstWithHostNet', 'ClusterFirst', 'Default' or 'None'.
+	// DNS parameters given in DNSConfig will be merged with the policy selected with DNSPolicy.
+	// To have DNS options set along with hostNetwork, you have to specify DNS policy
+	// explicitly to 'ClusterFirstWithHostNet'.
+	DNSPolicy string `json:"dns_policy,omitempty"`
 
-	// Optional list of tuples(key, value) for defining env vars
-	EnvVars []interface{} `json:"env_vars"`
+	// Optional HostAliases is an optional list of hosts and IPs that will be injected into the pod spec.
+	HostAliases []V1HostAlias `json:"host_aliases"`
+
+	// Host networking requested for this workflow pod. Default to false.
+	HostNetwork bool `json:"host_network,omitempty"`
 
 	// Optional image pull secrets to use for this run
+	// ImagePullSecrets is a list of references to secrets in the same namespace to use for pulling any images
+	// in pods that reference this ServiceAccount. ImagePullSecrets are distinct from Secrets because Secrets
+	// can be mounted in the pod, but ImagePullSecrets are only accessed by the kubelet.
+	// More info: https://kubernetes.io/docs/concepts/containers/images/#specifying-imagepullsecrets-on-a-pod
 	ImagePullSecrets []string `json:"image_pull_secrets"`
 
-	// Optional specification fot the init container
-	InitContainer *V1ContainerEnv `json:"init_container,omitempty"`
-
-	// Optional labels to pass to the k8s
+	// Optional Metadata labels to pass to the k8s
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// Optional log level
-	LogLevel string `json:"log_level,omitempty"`
+	// Optional NodeName is a request to schedule this pod onto a specific node. If it is non-empty,
+	// the scheduler simply schedules this pod onto that node, assuming that it fits resource
+	// requirements.
+	NodeName string `json:"node_name,omitempty"`
 
-	// Optional flag to tell Polyaxon if it set/handle a logs context
-	Logs bool `json:"logs,omitempty"`
-
-	// Optional node seletors to pass to the k8s
+	// Optional NodeSelector is a selector which must be true for the pod to fit on a node.
+	// Selector which must match a node's labels for the pod to be scheduled on that node.
+	// More info: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
 	NodeSelector map[string]string `json:"node_selector,omitempty"`
 
-	// Optional flag to tell Polyaxon if it set/handle an outputs context
-	Outputs bool `json:"outputs,omitempty"`
+	// The priority value. Various system components use this field to find the
+	// priority of the pod. When Priority Admission Controller is enabled, it
+	// prevents users from setting this field. The admission controller populates
+	// this field from PriorityClassName.
+	// The higher the value, the higher the priority.
+	Priority int32 `json:"priority,omitempty"`
 
-	// Optional registy name to use for this run
-	Registry string `json:"registry,omitempty"`
+	// If specified, indicates the pod's priority. "system-node-critical" and
+	// "system-cluster-critical" are two special keywords which indicate the
+	// highest priorities with the former being the highest priority. Any other
+	// name must be defined by creating a PriorityClass object with that name.
+	// If not specified, the pod priority will be default or zero if there is no
+	// default.
+	PriorityClassName string `json:"priority_class_name,omitempty"`
 
-	// Optional resource requirements
-	Resources *V1ResourceRequirements `json:"resources,omitempty"`
+	// A valid restart policy
+	RestartPolicy string `json:"restart_policy,omitempty"`
 
-	// Optional security context to use for this run
-	SecurityContext interface{} `json:"security_context,omitempty"`
+	// If specified, the pod will be dispatched by specified scheduler.
+	// Or it will be dispatched by workflow scope scheduler if specified.
+	// If neither specified, the pod will be dispatched by default scheduler.
+	// +optional
+	SchedulerName string `json:"scheduler_name,omitempty"`
 
-	// Optional service account to use for this run
-	ServiceAccount string `json:"service_account,omitempty"`
+	// PodSecurityContext holds pod-level security attributes and common container settings.
+	// Some fields are also present in container.securityContext.  Field values of
+	// container.securityContext take precedence over field values of PodSecurityContext.
+	SecurityContext V1PodSecurityContext `json:"security_context,omitempty"`
 
-	// Optional flag to tell Polyaxon if it should set a shm context for the run, default false
-	Shm bool `json:"shm,omitempty"`
+	// Optional service account name to use for this run
+	ServiceAccountName string `json:"service_account_name,omitempty"`
 
-	// Optional specification fot the sidecar container
-	SidecarContainer *V1ContainerEnv `json:"sidecar_container,omitempty"`
-
-	// Optional tolerations to pass to the k8s
-	Tolerations []interface{} `json:"tolerations"`
+	// Optional Tolerations to apply.
+	Tolerations []V1Toleration `json:"tolerations"`
 }
 
 // Validate validates this v1 environment
 func (m *V1Environment) Validate(formats strfmt.Registry) error {
-	var res []error
-
-	if err := m.validateInitContainer(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateResources(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateSidecarContainer(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
-	return nil
-}
-
-func (m *V1Environment) validateInitContainer(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.InitContainer) { // not required
-		return nil
-	}
-
-	if m.InitContainer != nil {
-		if err := m.InitContainer.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("init_container")
-			}
-			return err
-		}
-	}
-
-	return nil
-}
-
-func (m *V1Environment) validateResources(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.Resources) { // not required
-		return nil
-	}
-
-	if m.Resources != nil {
-		if err := m.Resources.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("resources")
-			}
-			return err
-		}
-	}
-
-	return nil
-}
-
-func (m *V1Environment) validateSidecarContainer(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.SidecarContainer) { // not required
-		return nil
-	}
-
-	if m.SidecarContainer != nil {
-		if err := m.SidecarContainer.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("sidecar_container")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 

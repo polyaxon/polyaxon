@@ -10,6 +10,7 @@ Name | Type | Description | Notes
 **is_optional** | **Boolean** |  | [optional] 
 **is_list** | **Boolean** |  | [optional] 
 **is_flag** | **Boolean** |  | [optional] 
+**delay_validation** | **Boolean** |  | [optional] 
 **options** | **[Object]** |  | [optional] 
 
 

@@ -32,7 +32,12 @@ INCLUDE_FLAGS := -I/usr/local/include -I. -I/gopath/src -I/gopath/src/github.com
 PROTO_PATH := --proto_path=protos/
 
 # Proto files
-PROTO_FILES := protos/$(VERSION)/*.proto
+PROTO_SDK := protos/$(VERSION)/*.proto
+PROTO_API := protos/$(VERSION)/api/*.proto
+PROTO_POLYFLOW := protos/$(VERSION)/polyflow/*.proto
+PROTO_POLYBOARD := protos/$(VERSION)/polyboard/*.proto
+PROTO_SCHEMAS := protos/$(VERSION)/schemas/*.proto
+PROTO_TYPES := protos/$(VERSION)/types/*.proto
 
 default: all
 
@@ -44,49 +49,70 @@ docker-build:
 
 compile-go:
 	# Compile the *.proto files into *.pb.go (grpc client).
-	$(PROTOC) $(PROTO_PATH) $(INCLUDE_FLAGS) --plugin=protoc-gen-go=/gopath/bin/protoc-gen-go --go_out=plugins=grpc:go/$(PB_CLIENT) $(PROTO_FILES)
+	$(PROTOC) $(PROTO_PATH) $(INCLUDE_FLAGS) --plugin=protoc-gen-go=/gopath/bin/protoc-gen-go --go_out=plugins=grpc:go/$(PB_CLIENT) $(PROTO_SDK)
+	$(PROTOC) $(PROTO_PATH) $(INCLUDE_FLAGS) --plugin=protoc-gen-go=/gopath/bin/protoc-gen-go --go_out=plugins=grpc:go/$(PB_CLIENT) $(PROTO_API)
+	$(PROTOC) $(PROTO_PATH) $(INCLUDE_FLAGS) --plugin=protoc-gen-go=/gopath/bin/protoc-gen-go --go_out=plugins=grpc:go/$(PB_CLIENT) $(PROTO_POLYFLOW)
+	$(PROTOC) $(PROTO_PATH) $(INCLUDE_FLAGS) --plugin=protoc-gen-go=/gopath/bin/protoc-gen-go --go_out=plugins=grpc:go/$(PB_CLIENT) $(PROTO_POLYBOARD)
+	$(PROTOC) $(PROTO_PATH) $(INCLUDE_FLAGS) --plugin=protoc-gen-go=/gopath/bin/protoc-gen-go --go_out=plugins=grpc:go/$(PB_CLIENT) $(PROTO_SCHEMAS)
+	$(PROTOC) $(PROTO_PATH) $(INCLUDE_FLAGS) --plugin=protoc-gen-go=/gopath/bin/protoc-gen-go --go_out=plugins=grpc:go/$(PB_CLIENT) $(PROTO_TYPES)
 	# Compile the *.proto files into *.pb.gw.go (grpc client).
-	$(PROTOC) $(PROTO_PATH) $(INCLUDE_FLAGS) --plugin=protoc-gen-grpc-gateway=/gopath/bin/protoc-gen-grpc-gateway --grpc-gateway_out=logtostderr=true,allow_delete_body=true:go/$(PB_CLIENT) $(PROTO_FILES)
+	$(PROTOC) $(PROTO_PATH) $(INCLUDE_FLAGS) --plugin=protoc-gen-grpc-gateway=/gopath/bin/protoc-gen-grpc-gateway --grpc-gateway_out=logtostderr=true,allow_delete_body=true:go/$(PB_CLIENT) $(PROTO_SDK)
+	$(PROTOC) $(PROTO_PATH) $(INCLUDE_FLAGS) --plugin=protoc-gen-grpc-gateway=/gopath/bin/protoc-gen-grpc-gateway --grpc-gateway_out=logtostderr=true,allow_delete_body=true:go/$(PB_CLIENT) $(PROTO_API)
+	$(PROTOC) $(PROTO_PATH) $(INCLUDE_FLAGS) --plugin=protoc-gen-grpc-gateway=/gopath/bin/protoc-gen-grpc-gateway --grpc-gateway_out=logtostderr=true,allow_delete_body=true:go/$(PB_CLIENT) $(PROTO_POLYFLOW)
+	$(PROTOC) $(PROTO_PATH) $(INCLUDE_FLAGS) --plugin=protoc-gen-grpc-gateway=/gopath/bin/protoc-gen-grpc-gateway --grpc-gateway_out=logtostderr=true,allow_delete_body=true:go/$(PB_CLIENT) $(PROTO_POLYBOARD)
+	$(PROTOC) $(PROTO_PATH) $(INCLUDE_FLAGS) --plugin=protoc-gen-grpc-gateway=/gopath/bin/protoc-gen-grpc-gateway --grpc-gateway_out=logtostderr=true,allow_delete_body=true:go/$(PB_CLIENT) $(PROTO_SCHEMAS)
+	$(PROTOC) $(PROTO_PATH) $(INCLUDE_FLAGS) --plugin=protoc-gen-grpc-gateway=/gopath/bin/protoc-gen-grpc-gateway --grpc-gateway_out=logtostderr=true,allow_delete_body=true:go/$(PB_CLIENT) $(PROTO_TYPES)
 
 compile-swagger:
 	# Compile the *.proto files into *.swagger.json (swagger specification).
-	$(PROTOC) $(PROTO_PATH) $(INCLUDE_FLAGS) --plugin=protoc-gen-swagger=/gopath/bin/protoc-gen-swagger --swagger_out=logtostderr=true,allow_delete_body=true:swagger $(PROTO_FILES)
-
-concat-swagger:
+	$(PROTOC) $(PROTO_PATH) $(INCLUDE_FLAGS) --plugin=protoc-gen-swagger=/gopath/bin/protoc-gen-swagger --swagger_out=logtostderr=true,allow_delete_body=true:swagger $(PROTO_SDK)
+	$(PROTOC) $(PROTO_PATH) $(INCLUDE_FLAGS) --plugin=protoc-gen-swagger=/gopath/bin/protoc-gen-swagger --swagger_out=logtostderr=true,allow_delete_body=true:swagger $(PROTO_API)
+	$(PROTOC) $(PROTO_PATH) $(INCLUDE_FLAGS) --plugin=protoc-gen-swagger=/gopath/bin/protoc-gen-swagger --swagger_out=logtostderr=true,allow_delete_body=true:swagger $(PROTO_POLYFLOW)
+	$(PROTOC) $(PROTO_PATH) $(INCLUDE_FLAGS) --plugin=protoc-gen-swagger=/gopath/bin/protoc-gen-swagger --swagger_out=logtostderr=true,allow_delete_body=true:swagger $(PROTO_POLYBOARD)
+	$(PROTOC) $(PROTO_PATH) $(INCLUDE_FLAGS) --plugin=protoc-gen-swagger=/gopath/bin/protoc-gen-swagger --swagger_out=logtostderr=true,allow_delete_body=true:swagger $(PROTO_SCHEMAS)
+	$(PROTOC) $(PROTO_PATH) $(INCLUDE_FLAGS) --plugin=protoc-gen-swagger=/gopath/bin/protoc-gen-swagger --swagger_out=logtostderr=true,allow_delete_body=true:swagger $(PROTO_TYPES)
 
 
 compile-js:
-	$(PROTOC) $(PROTO_PATH) $(INCLUDE_FLAGS) --plugin=protoc-gen-grpc=/usr/local/bin/grpc_tools_node_protoc_plugin --js_out=import_style=commonjs,binary:js/$(PB_CLIENT) --grpc_out=minimum_node_version=6:js/$(PB_CLIENT) $(PROTO_FILES)
+	$(PROTOC) $(PROTO_PATH) $(INCLUDE_FLAGS) --plugin=protoc-gen-grpc=/usr/local/bin/grpc_tools_node_protoc_plugin --js_out=import_style=commonjs,binary:js/$(PB_CLIENT) --grpc_out=minimum_node_version=6:js/$(PB_CLIENT) $(PROTO_SDK)
+	$(PROTOC) $(PROTO_PATH) $(INCLUDE_FLAGS) --plugin=protoc-gen-grpc=/usr/local/bin/grpc_tools_node_protoc_plugin --js_out=import_style=commonjs,binary:js/$(PB_CLIENT) --grpc_out=minimum_node_version=6:js/$(PB_CLIENT) $(PROTO_API)
+	$(PROTOC) $(PROTO_PATH) $(INCLUDE_FLAGS) --plugin=protoc-gen-grpc=/usr/local/bin/grpc_tools_node_protoc_plugin --js_out=import_style=commonjs,binary:js/$(PB_CLIENT) --grpc_out=minimum_node_version=6:js/$(PB_CLIENT) $(PROTO_POLYFLOW)
+	$(PROTOC) $(PROTO_PATH) $(INCLUDE_FLAGS) --plugin=protoc-gen-grpc=/usr/local/bin/grpc_tools_node_protoc_plugin --js_out=import_style=commonjs,binary:js/$(PB_CLIENT) --grpc_out=minimum_node_version=6:js/$(PB_CLIENT) $(PROTO_POLYBOARD)
+	$(PROTOC) $(PROTO_PATH) $(INCLUDE_FLAGS) --plugin=protoc-gen-grpc=/usr/local/bin/grpc_tools_node_protoc_plugin --js_out=import_style=commonjs,binary:js/$(PB_CLIENT) --grpc_out=minimum_node_version=6:js/$(PB_CLIENT) $(PROTO_SCHEMAS)
+	$(PROTOC) $(PROTO_PATH) $(INCLUDE_FLAGS) --plugin=protoc-gen-grpc=/usr/local/bin/grpc_tools_node_protoc_plugin --js_out=import_style=commonjs,binary:js/$(PB_CLIENT) --grpc_out=minimum_node_version=6:js/$(PB_CLIENT) $(PROTO_TYPES)
+
 
 compile-python:
 	# Compile the *.proto files into *pb2.py *pb2_grpc.py (grpc client).
-	$(PYTHON) -m grpc_tools.protoc $(PROTO_PATH) $(INCLUDE_FLAGS) --grpc_python_out=python/$(PB_CLIENT) --python_out=python/$(PB_CLIENT) $(PROTO_FILES)
+	$(PYTHON) -m grpc_tools.protoc $(PROTO_PATH) $(INCLUDE_FLAGS) --grpc_python_out=python/$(PB_CLIENT) --python_out=python/$(PB_CLIENT) $(PROTO_SDK)
+	$(PYTHON) -m grpc_tools.protoc $(PROTO_PATH) $(INCLUDE_FLAGS) --grpc_python_out=python/$(PB_CLIENT) --python_out=python/$(PB_CLIENT) $(PROTO_API)
+	$(PYTHON) -m grpc_tools.protoc $(PROTO_PATH) $(INCLUDE_FLAGS) --grpc_python_out=python/$(PB_CLIENT) --python_out=python/$(PB_CLIENT) $(PROTO_POLYFLOW)
+	$(PYTHON) -m grpc_tools.protoc $(PROTO_PATH) $(INCLUDE_FLAGS) --grpc_python_out=python/$(PB_CLIENT) --python_out=python/$(PB_CLIENT) $(PROTO_POLYBOARD)
+	$(PYTHON) -m grpc_tools.protoc $(PROTO_PATH) $(INCLUDE_FLAGS) --grpc_python_out=python/$(PB_CLIENT) --python_out=python/$(PB_CLIENT) $(PROTO_SCHEMAS)
+	$(PYTHON) -m grpc_tools.protoc $(PROTO_PATH) $(INCLUDE_FLAGS) --grpc_python_out=python/$(PB_CLIENT) --python_out=python/$(PB_CLIENT) $(PROTO_TYPES)
 
 generate-go-swagger:
 	# Compile the *.swagger.json into go REST clients, see https://github.com/go-swagger/go-swagger
 	$(SWAGGER) generate client -f swagger/$(VERSION)/polyaxon_sdk.swagger.json -A polyaxon-sdk --principal models.Principal -c service_client -m service_model -t go/$(HTTP_CLIENT)/$(VERSION)
 	# Executes the //go:generate directives in the generated code.
 	$(GO) generate ./...
+	$(DOCKER_RUN) find ./ -name "*.go" -exec $(DOCKER_PATH_AUTOGEN) -i --no-tlc --no-code -y 2018-2020 -c $(LICENSE_OWNER) -l apache {} \;
 
 generate-js-swagger:
-	java -jar $(PATH_SWAGGER_CLI) generate -i swagger/$(VERSION)/polyaxon_sdk.swagger.json -l javascript -o js/$(HTTP_CLIENT)/$(VERSION) -c swagger/config.json
+	java -jar $(PATH_SWAGGER_CLI) generate -i swagger/$(VERSION)/polyaxon_sdk.swagger.json -l javascript -o js/$(HTTP_CLIENT)/$(VERSION) -c swagger/config/config-base.json
+	$(DOCKER_RUN) find ./ -name "*.js" -exec $(DOCKER_PATH_AUTOGEN) -i --no-tlc --no-code -y 2018-2020 -c $(LICENSE_OWNER) -l apache {} \;
 
 generate-ts-swagger:
-	java -jar $(PATH_SWAGGER_CLI) generate -i swagger/$(VERSION)/polyaxon_sdk.swagger.json -l typescript-fetch -o ts/$(HTTP_CLIENT)/$(VERSION) -c swagger/config.json
+	java -jar $(PATH_SWAGGER_CLI) generate -i swagger/$(VERSION)/polyaxon_sdk.swagger.json -l typescript-fetch -o ts/$(HTTP_CLIENT)/$(VERSION) -c swagger/config/config-base.json
+	$(DOCKER_RUN) find ./ -name "*.ts" -exec $(DOCKER_PATH_AUTOGEN) -i --no-tlc --no-code -y 2018-2020 -c $(LICENSE_OWNER) -l apache {} \;
 
 generate-java-swagger:
-	java -jar $(PATH_SWAGGER_CLI) generate -i swagger/$(VERSION)/polyaxon_sdk.swagger.json -l java -o java/$(HTTP_CLIENT)/$(VERSION) -c swagger/config.json -D hideGenerationTimestamp=true
+	java -jar $(PATH_SWAGGER_CLI) generate -i swagger/$(VERSION)/polyaxon_sdk.swagger.json -l java -o java/$(HTTP_CLIENT)/$(VERSION) -c swagger/config/config-java.json -D hideGenerationTimestamp=true
+	$(DOCKER_RUN) find ./ -name "*.java" -exec $(DOCKER_PATH_AUTOGEN) -i --no-tlc --no-code -y 2018-2020 -c $(LICENSE_OWNER) -l apache {} \;
 
 generate-py-swagger:
-	java -jar $(PATH_SWAGGER_CLI) generate -i swagger/$(VERSION)/polyaxon_sdk.swagger.json -l python -o python/$(HTTP_CLIENT)/$(VERSION) -c swagger/config.json
-
-auto-license:
-	# Add licenses to the generated files.
-	$(DOCKER_RUN) find ./ -name "*.go" -exec $(DOCKER_PATH_AUTOGEN) -i --no-tlc --no-code -c $(LICENSE_OWNER) -l apache {} \;
-	$(DOCKER_RUN) find ./ -name "*.py" -exec $(DOCKER_PATH_AUTOGEN) -i --no-tlc --no-code -c $(LICENSE_OWNER) -l apache {} \;
-	$(DOCKER_RUN) find ./ -name "*.ts" -exec $(DOCKER_PATH_AUTOGEN) -i --no-tlc --no-code -c $(LICENSE_OWNER) -l apache {} \;
-	$(DOCKER_RUN) find ./ -name "*.js" -exec $(DOCKER_PATH_AUTOGEN) -i --no-tlc --no-code -c $(LICENSE_OWNER) -l apache {} \;
-	$(DOCKER_RUN) find ./ -name "*.java" -exec $(DOCKER_PATH_AUTOGEN) -i --no-tlc --no-code -c $(LICENSE_OWNER) -l apache {} \;
+	java -jar $(PATH_SWAGGER_CLI) generate -i swagger/$(VERSION)/polyaxon_sdk.swagger.json -l python -o python/$(HTTP_CLIENT)/$(VERSION) -c swagger/config/config-py.json
+	$(DOCKER_RUN) find ./ -name "*.py" -exec $(DOCKER_PATH_AUTOGEN) -i --no-tlc --no-code -y 2018-2020 -c $(LICENSE_OWNER) -l apache {} \;
 
 clean:
 	# Clean current generated code.
@@ -103,18 +129,18 @@ clean:
 	rm -rf swagger/$(VERSION)/*
 
 swagger-generate: generate-go-swagger \
-	 generate-js-swagger \
-	 generate-ts-swagger \
-	 generate-java-swagger \
-	 generate-py-swagger \
-	 auto-license
+	generate-js-swagger \
+	generate-ts-swagger \
+	generate-java-swagger \
+	generate-py-swagger
 
 swagger-concat:
 	./concat.sh
 
 all: clean \
-	 docker-build \
-	 compile-go \
-	 compile-python \
-	 compile-swagger \
-	 swagger-concat
+	docker-build \
+	compile-swagger \
+	swagger-concat
+
+compile-pb: compile-go \
+	compile-python \

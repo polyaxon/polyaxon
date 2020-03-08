@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2019 Polyaxon, Inc.
+# Copyright 2018-2020 Polyaxon, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,12 +19,14 @@ from __future__ import absolute_import
 # flake8: noqa
 
 # import apis into api package
+from polyaxon_sdk.api.access_resources_v1_api import AccessResourcesV1Api
 from polyaxon_sdk.api.agents_v1_api import AgentsV1Api
 from polyaxon_sdk.api.artifacts_stores_v1_api import ArtifactsStoresV1Api
 from polyaxon_sdk.api.auth_v1_api import AuthV1Api
-from polyaxon_sdk.api.config_resources_v1_api import ConfigResourcesV1Api
 from polyaxon_sdk.api.connections_v1_api import ConnectionsV1Api
 from polyaxon_sdk.api.dashboards_v1_api import DashboardsV1Api
+from polyaxon_sdk.api.hub_components_v1_api import HubComponentsV1Api
+from polyaxon_sdk.api.hub_models_v1_api import HubModelsV1Api
 from polyaxon_sdk.api.organizations_v1_api import OrganizationsV1Api
 from polyaxon_sdk.api.project_dashboards_v1_api import ProjectDashboardsV1Api
 from polyaxon_sdk.api.project_searches_v1_api import ProjectSearchesV1Api

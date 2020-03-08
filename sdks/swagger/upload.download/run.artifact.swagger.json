@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "pipeline upload"
+    "title": "run artifacts download-upload"
   },
   "schemes": [
     "http",
@@ -160,10 +160,10 @@
         ]
       }
     },
-    "/api/v1/{owner}/{project}/runs/{uuid}/logs/file": {
+    "/streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifacts": {
       "get": {
-        "summary": "Get run logs get file",
-        "operationId": "GetRunLogsFile",
+        "summary": "Get run artifacts",
+        "operationId": "GetRunArtifacts",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -185,6 +185,79 @@
           }
         },
         "parameters": [
+          {
+            "name": "namespace",
+            "description": "namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "project",
+            "description": "Project where the experiement will be assigned",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "uuid",
+            "description": "Unique integer identifier of the entity",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "path",
+            "description": "Artifact filepath.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "RunsV1"
+        ]
+      }
+    },
+    "/streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifact": {
+      "get": {
+        "summary": "Get run artifact",
+        "operationId": "GetRunArtifact",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "namespace",
+            "description": "namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
           {
             "name": "owner",
             "description": "Owner of the namespace",
@@ -214,19 +287,11 @@
             "type": "string"
           },
           {
-            "name": "step",
-            "description": "Artifact logging step.",
+            "name": "stream",
+            "description": "Whether to stream the file.",
             "in": "query",
             "required": false,
-            "type": "integer",
-            "format": "int32"
-          },
-          {
-            "name": "type",
-            "description": "Artifact type.",
-            "in": "query",
-            "required": false,
-            "type": "string"
+            "type": "boolean"
           }
         ],
         "tags": [

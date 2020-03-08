@@ -5,10 +5,11 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **kind** | **String** |  |  [optional]
-**chief** | [**V1Replica**](V1Replica.md) |  |  [optional]
-**ps** | [**V1Replica**](V1Replica.md) |  |  [optional]
-**worker** | [**V1Replica**](V1Replica.md) |  |  [optional]
-**evaluator** | [**V1Replica**](V1Replica.md) |  |  [optional]
+**cleanPodPolicy** | [**V1CleanPodPolicy**](V1CleanPodPolicy.md) |  |  [optional]
+**chief** | [**V1KFReplica**](V1KFReplica.md) |  |  [optional]
+**ps** | [**V1KFReplica**](V1KFReplica.md) |  |  [optional]
+**worker** | [**V1KFReplica**](V1KFReplica.md) |  |  [optional]
+**evaluator** | [**V1KFReplica**](V1KFReplica.md) |  |  [optional]
 
 
 

@@ -3,10 +3,10 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**kind** | **str** |  | [optional] 
+**kind** | **str** |  | [optional] [default to 'hyperopt']
 **algorithm** | [**V1HyperoptAlgorithms**](V1HyperoptAlgorithms.md) |  | [optional] 
-**matrix** | **str** |  | [optional] 
-**n_runs** | **int** |  | [optional] 
+**params** | **dict(str, object)** |  | [optional] 
+**num_runs** | **int** |  | [optional] 
 **seed** | **int** |  | [optional] 
 **concurrency** | **int** |  | [optional] 
 **early_stopping** | **list[object]** |  | [optional] 

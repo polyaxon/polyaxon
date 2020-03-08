@@ -69,7 +69,7 @@ rules:
 - apiGroups:
   - core.polyaxon.com
   resources:
-  - polyaxonjobs
+  - operations
   verbs:
   - create
   - delete
@@ -81,67 +81,7 @@ rules:
 - apiGroups:
   - core.polyaxon.com
   resources:
-  - polyaxonjobs/status
-  verbs:
-  - get
-  - patch
-  - update
-- apiGroups:
-  - core.polyaxon.com
-  resources:
-  - polyaxonkfs
-  verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
-- apiGroups:
-  - core.polyaxon.com
-  resources:
-  - polyaxonkfs/status
-  verbs:
-  - get
-  - patch
-  - update
-- apiGroups:
-  - core.polyaxon.com
-  resources:
-  - polyaxonnotebooks
-  verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
-- apiGroups:
-  - core.polyaxon.com
-  resources:
-  - polyaxonnotebooks/status
-  verbs:
-  - get
-  - patch
-  - update
-- apiGroups:
-  - core.polyaxon.com
-  resources:
-  - polyaxontensorboards
-  verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
-- apiGroups:
-  - core.polyaxon.com
-  resources:
-  - polyaxontensorboards/status
+  - operations/status
   verbs:
   - get
   - patch

@@ -1,0 +1,62 @@
+#!/usr/bin/python
+#
+# Copyright 2018-2020 Polyaxon, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+from polyaxon.schemas.base import BaseOneOfSchema
+from polyaxon.polyflow.schedule.cron import V1CronSchedule, CronScheduleSchema
+from polyaxon.polyflow.schedule.execute import (
+    V1ExactTimeSchedule,
+    ExactTimeScheduleSchema,
+)
+from polyaxon.polyflow.schedule.interval import (
+    V1IntervalSchedule,
+    IntervalScheduleSchema,
+)
+from polyaxon.polyflow.schedule.repeatable import (
+    V1RepeatableSchedule,
+    RepeatableScheduleSchema,
+)
+
+
+class ScheduleSchema(BaseOneOfSchema):
+    TYPE_FIELD = "kind"
+    TYPE_FIELD_REMOVE = False
+    SCHEMAS = {
+        V1IntervalSchedule.IDENTIFIER: IntervalScheduleSchema,
+        V1CronSchedule.IDENTIFIER: CronScheduleSchema,
+        V1ExactTimeSchedule.IDENTIFIER: ExactTimeScheduleSchema,
+        V1RepeatableSchedule.IDENTIFIER: RepeatableScheduleSchema,
+    }
+
+
+class ScheduleMixin(object):
+    def get_schedule_kind(self):
+        raise NotImplementedError()
+
+    @property
+    def has_interval_schedule(self):
+        return self.get_schedule_kind() == V1IntervalSchedule.IDENTIFIER
+
+    @property
+    def has_cron_schedule(self):
+        return self.get_schedule_kind() == V1CronSchedule.IDENTIFIER
+
+    @property
+    def has_exact_time_schedule(self):
+        return self.get_schedule_kind() == V1ExactTimeSchedule.IDENTIFIER
+
+    @property
+    def has_repeatable_schedule(self):
+        return self.get_schedule_kind() == V1RepeatableSchedule.IDENTIFIER

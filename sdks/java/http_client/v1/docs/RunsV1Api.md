@@ -6,16 +6,25 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**archiveRun**](RunsV1Api.md#archiveRun) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/archive | Archive run
 [**bookmarkRun**](RunsV1Api.md#bookmarkRun) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/bookmark | Bookmark run
+[**collectRunLogs**](RunsV1Api.md#collectRunLogs) | **POST** /streams/v1/{namespace}/_internal/{owner}/{project}/runs/{uuid}/logs | Collect run logs
 [**copyRun**](RunsV1Api.md#copyRun) | **POST** /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/copy | Restart run with copy
 [**createRun**](RunsV1Api.md#createRun) | **POST** /api/v1/{owner}/{project}/runs | Create new run
-[**createRunCodeRef**](RunsV1Api.md#createRunCodeRef) | **POST** /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/coderefs | Get run code ref
+[**createRunArtifactsLineage**](RunsV1Api.md#createRunArtifactsLineage) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage | Create bulk run run artifacts lineage
 [**createRunStatus**](RunsV1Api.md#createRunStatus) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/statuses | Create new run status
 [**deleteRun**](RunsV1Api.md#deleteRun) | **DELETE** /api/v1/{owner}/{project}/runs/{uuid} | Delete run
+[**deleteRunArtifactLineage**](RunsV1Api.md#deleteRunArtifactLineage) | **DELETE** /api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage/{name} | Delete run artifact lineage
 [**deleteRuns**](RunsV1Api.md#deleteRuns) | **DELETE** /api/v1/{owner}/{project}/runs/delete | Delete runs
+[**getMultiRunEvents**](RunsV1Api.md#getMultiRunEvents) | **GET** /streams/v1/{namespace}/{owner}/{project}/runs/multi/events/{kind} | Get multi runs events
 [**getRun**](RunsV1Api.md#getRun) | **GET** /api/v1/{owner}/{project}/runs/{uuid} | Get run
-[**getRunArtifactsTree**](RunsV1Api.md#getRunArtifactsTree) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/artifacts/tree | Get run artifacts list
-[**getRunLogsFile**](RunsV1Api.md#getRunLogsFile) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/logs/file | Get run logs get file
-[**getRunLogsTree**](RunsV1Api.md#getRunLogsTree) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/logs/tree | Get run logs list
+[**getRunArtifact**](RunsV1Api.md#getRunArtifact) | **GET** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifact | Get run artifact
+[**getRunArtifactLineage**](RunsV1Api.md#getRunArtifactLineage) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage/{name} | Get run artifacts lineage
+[**getRunArtifacts**](RunsV1Api.md#getRunArtifacts) | **GET** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifacts | Get run artifacts
+[**getRunArtifactsLineage**](RunsV1Api.md#getRunArtifactsLineage) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage | Get run artifacts lineage
+[**getRunArtifactsLineageNames**](RunsV1Api.md#getRunArtifactsLineageNames) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage/names | Get run artifacts lineage names
+[**getRunArtifactsTree**](RunsV1Api.md#getRunArtifactsTree) | **GET** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifacts/tree | Get run artifacts tree
+[**getRunEvents**](RunsV1Api.md#getRunEvents) | **GET** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/events/{kind} | Get run events
+[**getRunLogs**](RunsV1Api.md#getRunLogs) | **GET** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/logs | Get run logs
+[**getRunNamespace**](RunsV1Api.md#getRunNamespace) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/namespace | Get Run namespace
 [**getRunSettings**](RunsV1Api.md#getRunSettings) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/settings | Get Run settings
 [**getRunStatuses**](RunsV1Api.md#getRunStatuses) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/statuses | Get run status
 [**impersonateToken**](RunsV1Api.md#impersonateToken) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/impersonate | Impersonate run token
@@ -24,6 +33,8 @@ Method | HTTP request | Description
 [**listArchivedRuns**](RunsV1Api.md#listArchivedRuns) | **GET** /api/v1/archives/{user}/runs | List archived runs for user
 [**listBookmarkedRuns**](RunsV1Api.md#listBookmarkedRuns) | **GET** /api/v1/bookmarks/{user}/runs | List bookmarked runs for user
 [**listRuns**](RunsV1Api.md#listRuns) | **GET** /api/v1/{owner}/{project}/runs | List runs
+[**listRunsIo**](RunsV1Api.md#listRunsIo) | **GET** /api/v1/{owner}/{project}/runs/io | List runs
+[**notifyRunStatus**](RunsV1Api.md#notifyRunStatus) | **POST** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/notify | Notify run status
 [**patchRun**](RunsV1Api.md#patchRun) | **PATCH** /api/v1/{owner}/{project}/runs/{run.uuid} | Patch run
 [**restartRun**](RunsV1Api.md#restartRun) | **POST** /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/restart | Restart run
 [**restoreRun**](RunsV1Api.md#restoreRun) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/restore | Restore run
@@ -63,8 +74,8 @@ ApiKey.setApiKey("YOUR API KEY");
 
 RunsV1Api apiInstance = new RunsV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
-String project = "project_example"; // String | Project where the experiement will be assigned
-String uuid = "uuid_example"; // String | Unique integer identifier of the entity
+String project = "project_example"; // String | Project where the notification will be assigned
+String uuid = "uuid_example"; // String | Uuid identifier of the entity
 try {
     apiInstance.archiveRun(owner, project, uuid);
 } catch (ApiException e) {
@@ -78,8 +89,8 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
- **project** | **String**| Project where the experiement will be assigned |
- **uuid** | **String**| Unique integer identifier of the entity |
+ **project** | **String**| Project where the notification will be assigned |
+ **uuid** | **String**| Uuid identifier of the entity |
 
 ### Return type
 
@@ -119,8 +130,8 @@ ApiKey.setApiKey("YOUR API KEY");
 
 RunsV1Api apiInstance = new RunsV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
-String project = "project_example"; // String | Project where the experiement will be assigned
-String uuid = "uuid_example"; // String | Unique integer identifier of the entity
+String project = "project_example"; // String | Project where the notification will be assigned
+String uuid = "uuid_example"; // String | Uuid identifier of the entity
 try {
     apiInstance.bookmarkRun(owner, project, uuid);
 } catch (ApiException e) {
@@ -134,8 +145,66 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
- **project** | **String**| Project where the experiement will be assigned |
- **uuid** | **String**| Unique integer identifier of the entity |
+ **project** | **String**| Project where the notification will be assigned |
+ **uuid** | **String**| Uuid identifier of the entity |
+
+### Return type
+
+null (empty response body)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+<a name="collectRunLogs"></a>
+# **collectRunLogs**
+> collectRunLogs(namespace, owner, project, uuid)
+
+Collect run logs
+
+### Example
+```java
+// Import classes:
+//import io.swagger.client.ApiClient;
+//import io.swagger.client.ApiException;
+//import io.swagger.client.Configuration;
+//import io.swagger.client.auth.*;
+//import io.swagger.client.api.RunsV1Api;
+
+ApiClient defaultClient = Configuration.getDefaultApiClient();
+
+// Configure API key authorization: ApiKey
+ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+ApiKey.setApiKey("YOUR API KEY");
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.setApiKeyPrefix("Token");
+
+RunsV1Api apiInstance = new RunsV1Api();
+String namespace = "namespace_example"; // String | 
+String owner = "owner_example"; // String | Owner of the namespace
+String project = "project_example"; // String | Project where the run will be assigned
+String uuid = "uuid_example"; // String | Uuid identifier of the entity
+try {
+    apiInstance.collectRunLogs(namespace, owner, project, uuid);
+} catch (ApiException e) {
+    System.err.println("Exception when calling RunsV1Api#collectRunLogs");
+    e.printStackTrace();
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **namespace** | **String**|  |
+ **owner** | **String**| Owner of the namespace |
+ **project** | **String**| Project where the run will be assigned |
+ **uuid** | **String**| Uuid identifier of the entity |
 
 ### Return type
 
@@ -175,8 +244,8 @@ ApiKey.setApiKey("YOUR API KEY");
 
 RunsV1Api apiInstance = new RunsV1Api();
 String entityOwner = "entityOwner_example"; // String | Owner of the namespace
-String entityProject = "entityProject_example"; // String | Project where the experiement will be assigned
-String entityUuid = "entityUuid_example"; // String | Unique integer identifier of the entity
+String entityProject = "entityProject_example"; // String | Project where the notification will be assigned
+String entityUuid = "entityUuid_example"; // String | Uuid identifier of the entity
 V1Run body = new V1Run(); // V1Run | Run object
 try {
     V1Run result = apiInstance.copyRun(entityOwner, entityProject, entityUuid, body);
@@ -192,8 +261,8 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **entityOwner** | **String**| Owner of the namespace |
- **entityProject** | **String**| Project where the experiement will be assigned |
- **entityUuid** | **String**| Unique integer identifier of the entity |
+ **entityProject** | **String**| Project where the notification will be assigned |
+ **entityUuid** | **String**| Uuid identifier of the entity |
  **body** | [**V1Run**](V1Run.md)| Run object |
 
 ### Return type
@@ -234,8 +303,8 @@ ApiKey.setApiKey("YOUR API KEY");
 
 RunsV1Api apiInstance = new RunsV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
-String project = "project_example"; // String | Project where the experiement will be assigned
-V1Run body = new V1Run(); // V1Run | Run object
+String project = "project_example"; // String | Project where the run will be assigned
+V1OperationBody body = new V1OperationBody(); // V1OperationBody | operation object
 try {
     V1Run result = apiInstance.createRun(owner, project, body);
     System.out.println(result);
@@ -250,8 +319,8 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
- **project** | **String**| Project where the experiement will be assigned |
- **body** | [**V1Run**](V1Run.md)| Run object |
+ **project** | **String**| Project where the run will be assigned |
+ **body** | [**V1OperationBody**](V1OperationBody.md)| operation object |
 
 ### Return type
 
@@ -266,11 +335,11 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="createRunCodeRef"></a>
-# **createRunCodeRef**
-> createRunCodeRef(entityOwner, entityProject, entityUuid, body)
+<a name="createRunArtifactsLineage"></a>
+# **createRunArtifactsLineage**
+> createRunArtifactsLineage(owner, project, uuid, body)
 
-Get run code ref
+Create bulk run run artifacts lineage
 
 ### Example
 ```java
@@ -290,14 +359,14 @@ ApiKey.setApiKey("YOUR API KEY");
 //ApiKey.setApiKeyPrefix("Token");
 
 RunsV1Api apiInstance = new RunsV1Api();
-String entityOwner = "entityOwner_example"; // String | Owner of the namespace
-String entityProject = "entityProject_example"; // String | Project where the experiement will be assigned
-String entityUuid = "entityUuid_example"; // String | Unique integer identifier of the entity
-V1CodeRef body = new V1CodeRef(); // V1CodeRef | Code ref object
+String owner = "owner_example"; // String | Owner of the namespace
+String project = "project_example"; // String | Project where the run will be assigned
+String uuid = "uuid_example"; // String | Uuid identifier of the entity
+V1RunArtifacts body = new V1RunArtifacts(); // V1RunArtifacts | Run Artifacts
 try {
-    apiInstance.createRunCodeRef(entityOwner, entityProject, entityUuid, body);
+    apiInstance.createRunArtifactsLineage(owner, project, uuid, body);
 } catch (ApiException e) {
-    System.err.println("Exception when calling RunsV1Api#createRunCodeRef");
+    System.err.println("Exception when calling RunsV1Api#createRunArtifactsLineage");
     e.printStackTrace();
 }
 ```
@@ -306,10 +375,10 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **entityOwner** | **String**| Owner of the namespace |
- **entityProject** | **String**| Project where the experiement will be assigned |
- **entityUuid** | **String**| Unique integer identifier of the entity |
- **body** | [**V1CodeRef**](V1CodeRef.md)| Code ref object |
+ **owner** | **String**| Owner of the namespace |
+ **project** | **String**| Project where the run will be assigned |
+ **uuid** | **String**| Uuid identifier of the entity |
+ **body** | [**V1RunArtifacts**](V1RunArtifacts.md)| Run Artifacts |
 
 ### Return type
 
@@ -349,8 +418,8 @@ ApiKey.setApiKey("YOUR API KEY");
 
 RunsV1Api apiInstance = new RunsV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
-String project = "project_example"; // String | Project where the experiement will be assigned
-String uuid = "uuid_example"; // String | Unique integer identifier of the entity
+String project = "project_example"; // String | Project where the run will be assigned
+String uuid = "uuid_example"; // String | Uuid identifier of the entity
 V1EntityStatusBodyRequest body = new V1EntityStatusBodyRequest(); // V1EntityStatusBodyRequest | 
 try {
     V1Status result = apiInstance.createRunStatus(owner, project, uuid, body);
@@ -366,8 +435,8 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
- **project** | **String**| Project where the experiement will be assigned |
- **uuid** | **String**| Unique integer identifier of the entity |
+ **project** | **String**| Project where the run will be assigned |
+ **uuid** | **String**| Uuid identifier of the entity |
  **body** | [**V1EntityStatusBodyRequest**](V1EntityStatusBodyRequest.md)|  |
 
 ### Return type
@@ -408,8 +477,8 @@ ApiKey.setApiKey("YOUR API KEY");
 
 RunsV1Api apiInstance = new RunsV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
-String project = "project_example"; // String | Project where the experiement will be assigned
-String uuid = "uuid_example"; // String | Unique integer identifier of the entity
+String project = "project_example"; // String | Project where the notification will be assigned
+String uuid = "uuid_example"; // String | Uuid identifier of the entity
 try {
     apiInstance.deleteRun(owner, project, uuid);
 } catch (ApiException e) {
@@ -423,8 +492,78 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
- **project** | **String**| Project where the experiement will be assigned |
- **uuid** | **String**| Unique integer identifier of the entity |
+ **project** | **String**| Project where the notification will be assigned |
+ **uuid** | **String**| Uuid identifier of the entity |
+
+### Return type
+
+null (empty response body)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+<a name="deleteRunArtifactLineage"></a>
+# **deleteRunArtifactLineage**
+> deleteRunArtifactLineage(owner, project, uuid, name, namespace, kind, names, runs, orient, path)
+
+Delete run artifact lineage
+
+### Example
+```java
+// Import classes:
+//import io.swagger.client.ApiClient;
+//import io.swagger.client.ApiException;
+//import io.swagger.client.Configuration;
+//import io.swagger.client.auth.*;
+//import io.swagger.client.api.RunsV1Api;
+
+ApiClient defaultClient = Configuration.getDefaultApiClient();
+
+// Configure API key authorization: ApiKey
+ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+ApiKey.setApiKey("YOUR API KEY");
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.setApiKeyPrefix("Token");
+
+RunsV1Api apiInstance = new RunsV1Api();
+String owner = "owner_example"; // String | Owner of the namespace
+String project = "project_example"; // String | Project where the run will be assigned
+String uuid = "uuid_example"; // String | Uuid identifier of the entity
+String name = "name_example"; // String | Artifact name
+String namespace = "namespace_example"; // String | namespace.
+String kind = "model"; // String | The artifact kind.   - model: model  - audio: audio  - video: vidio  - histogram: histogram  - image: image  - tensor: tensor  - dataframe: dataframe  - chart: plotly/bokeh chart  - csv: Comma  - tsv: Tab  - psv: Pipe  - ssv: Space  - metric: Metric  - env: Env  - html: HTML  - text: Text  - file: File  - dir: Dir  - dockerfile: Dockerfile  - docker_image: docker image  - data: data  - coderef: coderef  - table: table
+String names = "names_example"; // String | Names query param.
+String runs = "runs_example"; // String | Runs query param.
+String orient = "orient_example"; // String | Orient query param.
+String path = "path_example"; // String | Path query param.
+try {
+    apiInstance.deleteRunArtifactLineage(owner, project, uuid, name, namespace, kind, names, runs, orient, path);
+} catch (ApiException e) {
+    System.err.println("Exception when calling RunsV1Api#deleteRunArtifactLineage");
+    e.printStackTrace();
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **String**| Owner of the namespace |
+ **project** | **String**| Project where the run will be assigned |
+ **uuid** | **String**| Uuid identifier of the entity |
+ **name** | **String**| Artifact name |
+ **namespace** | **String**| namespace. | [optional]
+ **kind** | **String**| The artifact kind.   - model: model  - audio: audio  - video: vidio  - histogram: histogram  - image: image  - tensor: tensor  - dataframe: dataframe  - chart: plotly/bokeh chart  - csv: Comma  - tsv: Tab  - psv: Pipe  - ssv: Space  - metric: Metric  - env: Env  - html: HTML  - text: Text  - file: File  - dir: Dir  - dockerfile: Dockerfile  - docker_image: docker image  - data: data  - coderef: coderef  - table: table | [optional] [default to model] [enum: model, audio, video, histogram, image, tensor, dataframe, chart, csv, tsv, psv, ssv, metric, env, html, text, file, dir, dockerfile, docker_image, data, coderef, table]
+ **names** | **String**| Names query param. | [optional]
+ **runs** | **String**| Runs query param. | [optional]
+ **orient** | **String**| Orient query param. | [optional]
+ **path** | **String**| Path query param. | [optional]
 
 ### Return type
 
@@ -495,6 +634,77 @@ null (empty response body)
  - **Content-Type**: application/json
  - **Accept**: application/json
 
+<a name="getMultiRunEvents"></a>
+# **getMultiRunEvents**
+> V1EventsResponse getMultiRunEvents(namespace, owner, project, kind, uuid, name, names, runs, orient, path)
+
+Get multi runs events
+
+### Example
+```java
+// Import classes:
+//import io.swagger.client.ApiClient;
+//import io.swagger.client.ApiException;
+//import io.swagger.client.Configuration;
+//import io.swagger.client.auth.*;
+//import io.swagger.client.api.RunsV1Api;
+
+ApiClient defaultClient = Configuration.getDefaultApiClient();
+
+// Configure API key authorization: ApiKey
+ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+ApiKey.setApiKey("YOUR API KEY");
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.setApiKeyPrefix("Token");
+
+RunsV1Api apiInstance = new RunsV1Api();
+String namespace = "namespace_example"; // String | namespace
+String owner = "owner_example"; // String | Owner of the namespace
+String project = "project_example"; // String | Project where the run will be assigned
+String kind = "kind_example"; // String | The artifact kind
+String uuid = "uuid_example"; // String | Uuid identifier of the entity.
+String name = "name_example"; // String | Artifact name.
+String names = "names_example"; // String | Names query param.
+String runs = "runs_example"; // String | Runs query param.
+String orient = "orient_example"; // String | Orient query param.
+String path = "path_example"; // String | Path query param.
+try {
+    V1EventsResponse result = apiInstance.getMultiRunEvents(namespace, owner, project, kind, uuid, name, names, runs, orient, path);
+    System.out.println(result);
+} catch (ApiException e) {
+    System.err.println("Exception when calling RunsV1Api#getMultiRunEvents");
+    e.printStackTrace();
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **namespace** | **String**| namespace |
+ **owner** | **String**| Owner of the namespace |
+ **project** | **String**| Project where the run will be assigned |
+ **kind** | **String**| The artifact kind | [enum: model, audio, video, histogram, image, tensor, dataframe, chart, csv, tsv, psv, ssv, metric, env, html, text, file, dir, dockerfile, docker_image, data, coderef, table]
+ **uuid** | **String**| Uuid identifier of the entity. | [optional]
+ **name** | **String**| Artifact name. | [optional]
+ **names** | **String**| Names query param. | [optional]
+ **runs** | **String**| Runs query param. | [optional]
+ **orient** | **String**| Orient query param. | [optional]
+ **path** | **String**| Path query param. | [optional]
+
+### Return type
+
+[**V1EventsResponse**](V1EventsResponse.md)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
 <a name="getRun"></a>
 # **getRun**
 > V1Run getRun(owner, project, uuid)
@@ -520,8 +730,8 @@ ApiKey.setApiKey("YOUR API KEY");
 
 RunsV1Api apiInstance = new RunsV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
-String project = "project_example"; // String | Project where the experiement will be assigned
-String uuid = "uuid_example"; // String | Unique integer identifier of the entity
+String project = "project_example"; // String | Project where the notification will be assigned
+String uuid = "uuid_example"; // String | Uuid identifier of the entity
 try {
     V1Run result = apiInstance.getRun(owner, project, uuid);
     System.out.println(result);
@@ -536,8 +746,8 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
- **project** | **String**| Project where the experiement will be assigned |
- **uuid** | **String**| Unique integer identifier of the entity |
+ **project** | **String**| Project where the notification will be assigned |
+ **uuid** | **String**| Uuid identifier of the entity |
 
 ### Return type
 
@@ -552,74 +762,11 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="getRunArtifactsTree"></a>
-# **getRunArtifactsTree**
-> V1ArtifactTreeResponse getRunArtifactsTree(owner, project, uuid, path, step, kind)
+<a name="getRunArtifact"></a>
+# **getRunArtifact**
+> String getRunArtifact(namespace, owner, project, uuid, path, stream)
 
-Get run artifacts list
-
-### Example
-```java
-// Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.RunsV1Api;
-
-ApiClient defaultClient = Configuration.getDefaultApiClient();
-
-// Configure API key authorization: ApiKey
-ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
-ApiKey.setApiKey("YOUR API KEY");
-// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-//ApiKey.setApiKeyPrefix("Token");
-
-RunsV1Api apiInstance = new RunsV1Api();
-String owner = "owner_example"; // String | Owner of the namespace
-String project = "project_example"; // String | Project where the experiement will be assigned
-String uuid = "uuid_example"; // String | Unique integer identifier of the entity
-String path = "path_example"; // String | Artifact filepath.
-Integer step = 56; // Integer | Artifact logging step.
-String kind = "kind_example"; // String | Artifact kind.
-try {
-    V1ArtifactTreeResponse result = apiInstance.getRunArtifactsTree(owner, project, uuid, path, step, kind);
-    System.out.println(result);
-} catch (ApiException e) {
-    System.err.println("Exception when calling RunsV1Api#getRunArtifactsTree");
-    e.printStackTrace();
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **owner** | **String**| Owner of the namespace |
- **project** | **String**| Project where the experiement will be assigned |
- **uuid** | **String**| Unique integer identifier of the entity |
- **path** | **String**| Artifact filepath. | [optional]
- **step** | **Integer**| Artifact logging step. | [optional]
- **kind** | **String**| Artifact kind. | [optional]
-
-### Return type
-
-[**V1ArtifactTreeResponse**](V1ArtifactTreeResponse.md)
-
-### Authorization
-
-[ApiKey](../README.md#ApiKey)
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: application/json
-
-<a name="getRunLogsFile"></a>
-# **getRunLogsFile**
-> String getRunLogsFile(owner, project, uuid, path, step, type)
-
-Get run logs get file
+Get run artifact
 
 ### Example
 ```java
@@ -639,17 +786,17 @@ ApiKey.setApiKey("YOUR API KEY");
 //ApiKey.setApiKeyPrefix("Token");
 
 RunsV1Api apiInstance = new RunsV1Api();
+String namespace = "namespace_example"; // String | namespace
 String owner = "owner_example"; // String | Owner of the namespace
 String project = "project_example"; // String | Project where the experiement will be assigned
 String uuid = "uuid_example"; // String | Unique integer identifier of the entity
 String path = "path_example"; // String | Artifact filepath.
-Integer step = 56; // Integer | Artifact logging step.
-String type = "type_example"; // String | Artifact type.
+Boolean stream = true; // Boolean | Whether to stream the file.
 try {
-    String result = apiInstance.getRunLogsFile(owner, project, uuid, path, step, type);
+    String result = apiInstance.getRunArtifact(namespace, owner, project, uuid, path, stream);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling RunsV1Api#getRunLogsFile");
+    System.err.println("Exception when calling RunsV1Api#getRunArtifact");
     e.printStackTrace();
 }
 ```
@@ -658,12 +805,12 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **namespace** | **String**| namespace |
  **owner** | **String**| Owner of the namespace |
  **project** | **String**| Project where the experiement will be assigned |
  **uuid** | **String**| Unique integer identifier of the entity |
  **path** | **String**| Artifact filepath. | [optional]
- **step** | **Integer**| Artifact logging step. | [optional]
- **type** | **String**| Artifact type. | [optional]
+ **stream** | **Boolean**| Whether to stream the file. | [optional]
 
 ### Return type
 
@@ -678,11 +825,11 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="getRunLogsTree"></a>
-# **getRunLogsTree**
-> V1ArtifactTreeResponse getRunLogsTree(owner, project, uuid, path, step, kind)
+<a name="getRunArtifactLineage"></a>
+# **getRunArtifactLineage**
+> V1RunArtifact getRunArtifactLineage(owner, project, uuid, name, namespace, kind, names, runs, orient, path)
 
-Get run logs list
+Get run artifacts lineage
 
 ### Example
 ```java
@@ -703,16 +850,20 @@ ApiKey.setApiKey("YOUR API KEY");
 
 RunsV1Api apiInstance = new RunsV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
-String project = "project_example"; // String | Project where the experiement will be assigned
-String uuid = "uuid_example"; // String | Unique integer identifier of the entity
-String path = "path_example"; // String | Artifact filepath.
-Integer step = 56; // Integer | Artifact logging step.
-String kind = "kind_example"; // String | Artifact kind.
+String project = "project_example"; // String | Project where the run will be assigned
+String uuid = "uuid_example"; // String | Uuid identifier of the entity
+String name = "name_example"; // String | Artifact name
+String namespace = "namespace_example"; // String | namespace.
+String kind = "model"; // String | The artifact kind.   - model: model  - audio: audio  - video: vidio  - histogram: histogram  - image: image  - tensor: tensor  - dataframe: dataframe  - chart: plotly/bokeh chart  - csv: Comma  - tsv: Tab  - psv: Pipe  - ssv: Space  - metric: Metric  - env: Env  - html: HTML  - text: Text  - file: File  - dir: Dir  - dockerfile: Dockerfile  - docker_image: docker image  - data: data  - coderef: coderef  - table: table
+String names = "names_example"; // String | Names query param.
+String runs = "runs_example"; // String | Runs query param.
+String orient = "orient_example"; // String | Orient query param.
+String path = "path_example"; // String | Path query param.
 try {
-    V1ArtifactTreeResponse result = apiInstance.getRunLogsTree(owner, project, uuid, path, step, kind);
+    V1RunArtifact result = apiInstance.getRunArtifactLineage(owner, project, uuid, name, namespace, kind, names, runs, orient, path);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling RunsV1Api#getRunLogsTree");
+    System.err.println("Exception when calling RunsV1Api#getRunArtifactLineage");
     e.printStackTrace();
 }
 ```
@@ -722,15 +873,468 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
+ **project** | **String**| Project where the run will be assigned |
+ **uuid** | **String**| Uuid identifier of the entity |
+ **name** | **String**| Artifact name |
+ **namespace** | **String**| namespace. | [optional]
+ **kind** | **String**| The artifact kind.   - model: model  - audio: audio  - video: vidio  - histogram: histogram  - image: image  - tensor: tensor  - dataframe: dataframe  - chart: plotly/bokeh chart  - csv: Comma  - tsv: Tab  - psv: Pipe  - ssv: Space  - metric: Metric  - env: Env  - html: HTML  - text: Text  - file: File  - dir: Dir  - dockerfile: Dockerfile  - docker_image: docker image  - data: data  - coderef: coderef  - table: table | [optional] [default to model] [enum: model, audio, video, histogram, image, tensor, dataframe, chart, csv, tsv, psv, ssv, metric, env, html, text, file, dir, dockerfile, docker_image, data, coderef, table]
+ **names** | **String**| Names query param. | [optional]
+ **runs** | **String**| Runs query param. | [optional]
+ **orient** | **String**| Orient query param. | [optional]
+ **path** | **String**| Path query param. | [optional]
+
+### Return type
+
+[**V1RunArtifact**](V1RunArtifact.md)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+<a name="getRunArtifacts"></a>
+# **getRunArtifacts**
+> String getRunArtifacts(namespace, owner, project, uuid, path)
+
+Get run artifacts
+
+### Example
+```java
+// Import classes:
+//import io.swagger.client.ApiClient;
+//import io.swagger.client.ApiException;
+//import io.swagger.client.Configuration;
+//import io.swagger.client.auth.*;
+//import io.swagger.client.api.RunsV1Api;
+
+ApiClient defaultClient = Configuration.getDefaultApiClient();
+
+// Configure API key authorization: ApiKey
+ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+ApiKey.setApiKey("YOUR API KEY");
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.setApiKeyPrefix("Token");
+
+RunsV1Api apiInstance = new RunsV1Api();
+String namespace = "namespace_example"; // String | namespace
+String owner = "owner_example"; // String | Owner of the namespace
+String project = "project_example"; // String | Project where the experiement will be assigned
+String uuid = "uuid_example"; // String | Unique integer identifier of the entity
+String path = "path_example"; // String | Artifact filepath.
+try {
+    String result = apiInstance.getRunArtifacts(namespace, owner, project, uuid, path);
+    System.out.println(result);
+} catch (ApiException e) {
+    System.err.println("Exception when calling RunsV1Api#getRunArtifacts");
+    e.printStackTrace();
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **namespace** | **String**| namespace |
+ **owner** | **String**| Owner of the namespace |
  **project** | **String**| Project where the experiement will be assigned |
  **uuid** | **String**| Unique integer identifier of the entity |
  **path** | **String**| Artifact filepath. | [optional]
- **step** | **Integer**| Artifact logging step. | [optional]
- **kind** | **String**| Artifact kind. | [optional]
+
+### Return type
+
+**String**
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+<a name="getRunArtifactsLineage"></a>
+# **getRunArtifactsLineage**
+> V1ListRunArtifactsResponse getRunArtifactsLineage(owner, project, uuid, limit, sort, query)
+
+Get run artifacts lineage
+
+### Example
+```java
+// Import classes:
+//import io.swagger.client.ApiClient;
+//import io.swagger.client.ApiException;
+//import io.swagger.client.Configuration;
+//import io.swagger.client.auth.*;
+//import io.swagger.client.api.RunsV1Api;
+
+ApiClient defaultClient = Configuration.getDefaultApiClient();
+
+// Configure API key authorization: ApiKey
+ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+ApiKey.setApiKey("YOUR API KEY");
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.setApiKeyPrefix("Token");
+
+RunsV1Api apiInstance = new RunsV1Api();
+String owner = "owner_example"; // String | Owner of the namespace
+String project = "project_example"; // String | Project where the run will be assigned
+String uuid = "uuid_example"; // String | Uuid identifier of the entity
+Integer limit = 56; // Integer | Limit size.
+String sort = "sort_example"; // String | Sort to order the search.
+String query = "query_example"; // String | Query filter the search search.
+try {
+    V1ListRunArtifactsResponse result = apiInstance.getRunArtifactsLineage(owner, project, uuid, limit, sort, query);
+    System.out.println(result);
+} catch (ApiException e) {
+    System.err.println("Exception when calling RunsV1Api#getRunArtifactsLineage");
+    e.printStackTrace();
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **String**| Owner of the namespace |
+ **project** | **String**| Project where the run will be assigned |
+ **uuid** | **String**| Uuid identifier of the entity |
+ **limit** | **Integer**| Limit size. | [optional]
+ **sort** | **String**| Sort to order the search. | [optional]
+ **query** | **String**| Query filter the search search. | [optional]
+
+### Return type
+
+[**V1ListRunArtifactsResponse**](V1ListRunArtifactsResponse.md)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+<a name="getRunArtifactsLineageNames"></a>
+# **getRunArtifactsLineageNames**
+> V1ListRunArtifactsResponse getRunArtifactsLineageNames(owner, project, uuid, limit, sort, query)
+
+Get run artifacts lineage names
+
+### Example
+```java
+// Import classes:
+//import io.swagger.client.ApiClient;
+//import io.swagger.client.ApiException;
+//import io.swagger.client.Configuration;
+//import io.swagger.client.auth.*;
+//import io.swagger.client.api.RunsV1Api;
+
+ApiClient defaultClient = Configuration.getDefaultApiClient();
+
+// Configure API key authorization: ApiKey
+ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+ApiKey.setApiKey("YOUR API KEY");
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.setApiKeyPrefix("Token");
+
+RunsV1Api apiInstance = new RunsV1Api();
+String owner = "owner_example"; // String | Owner of the namespace
+String project = "project_example"; // String | Project where the run will be assigned
+String uuid = "uuid_example"; // String | Uuid identifier of the entity
+Integer limit = 56; // Integer | Limit size.
+String sort = "sort_example"; // String | Sort to order the search.
+String query = "query_example"; // String | Query filter the search search.
+try {
+    V1ListRunArtifactsResponse result = apiInstance.getRunArtifactsLineageNames(owner, project, uuid, limit, sort, query);
+    System.out.println(result);
+} catch (ApiException e) {
+    System.err.println("Exception when calling RunsV1Api#getRunArtifactsLineageNames");
+    e.printStackTrace();
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **String**| Owner of the namespace |
+ **project** | **String**| Project where the run will be assigned |
+ **uuid** | **String**| Uuid identifier of the entity |
+ **limit** | **Integer**| Limit size. | [optional]
+ **sort** | **String**| Sort to order the search. | [optional]
+ **query** | **String**| Query filter the search search. | [optional]
+
+### Return type
+
+[**V1ListRunArtifactsResponse**](V1ListRunArtifactsResponse.md)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+<a name="getRunArtifactsTree"></a>
+# **getRunArtifactsTree**
+> V1ArtifactTreeResponse getRunArtifactsTree(namespace, owner, project, uuid, name, kind, names, runs, orient, path)
+
+Get run artifacts tree
+
+### Example
+```java
+// Import classes:
+//import io.swagger.client.ApiClient;
+//import io.swagger.client.ApiException;
+//import io.swagger.client.Configuration;
+//import io.swagger.client.auth.*;
+//import io.swagger.client.api.RunsV1Api;
+
+ApiClient defaultClient = Configuration.getDefaultApiClient();
+
+// Configure API key authorization: ApiKey
+ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+ApiKey.setApiKey("YOUR API KEY");
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.setApiKeyPrefix("Token");
+
+RunsV1Api apiInstance = new RunsV1Api();
+String namespace = "namespace_example"; // String | namespace
+String owner = "owner_example"; // String | Owner of the namespace
+String project = "project_example"; // String | Project where the run will be assigned
+String uuid = "uuid_example"; // String | Uuid identifier of the entity
+String name = "name_example"; // String | Artifact name.
+String kind = "model"; // String | The artifact kind.   - model: model  - audio: audio  - video: vidio  - histogram: histogram  - image: image  - tensor: tensor  - dataframe: dataframe  - chart: plotly/bokeh chart  - csv: Comma  - tsv: Tab  - psv: Pipe  - ssv: Space  - metric: Metric  - env: Env  - html: HTML  - text: Text  - file: File  - dir: Dir  - dockerfile: Dockerfile  - docker_image: docker image  - data: data  - coderef: coderef  - table: table
+String names = "names_example"; // String | Names query param.
+String runs = "runs_example"; // String | Runs query param.
+String orient = "orient_example"; // String | Orient query param.
+String path = "path_example"; // String | Path query param.
+try {
+    V1ArtifactTreeResponse result = apiInstance.getRunArtifactsTree(namespace, owner, project, uuid, name, kind, names, runs, orient, path);
+    System.out.println(result);
+} catch (ApiException e) {
+    System.err.println("Exception when calling RunsV1Api#getRunArtifactsTree");
+    e.printStackTrace();
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **namespace** | **String**| namespace |
+ **owner** | **String**| Owner of the namespace |
+ **project** | **String**| Project where the run will be assigned |
+ **uuid** | **String**| Uuid identifier of the entity |
+ **name** | **String**| Artifact name. | [optional]
+ **kind** | **String**| The artifact kind.   - model: model  - audio: audio  - video: vidio  - histogram: histogram  - image: image  - tensor: tensor  - dataframe: dataframe  - chart: plotly/bokeh chart  - csv: Comma  - tsv: Tab  - psv: Pipe  - ssv: Space  - metric: Metric  - env: Env  - html: HTML  - text: Text  - file: File  - dir: Dir  - dockerfile: Dockerfile  - docker_image: docker image  - data: data  - coderef: coderef  - table: table | [optional] [default to model] [enum: model, audio, video, histogram, image, tensor, dataframe, chart, csv, tsv, psv, ssv, metric, env, html, text, file, dir, dockerfile, docker_image, data, coderef, table]
+ **names** | **String**| Names query param. | [optional]
+ **runs** | **String**| Runs query param. | [optional]
+ **orient** | **String**| Orient query param. | [optional]
+ **path** | **String**| Path query param. | [optional]
 
 ### Return type
 
 [**V1ArtifactTreeResponse**](V1ArtifactTreeResponse.md)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+<a name="getRunEvents"></a>
+# **getRunEvents**
+> V1EventsResponse getRunEvents(namespace, owner, project, uuid, kind, name, names, runs, orient, path)
+
+Get run events
+
+### Example
+```java
+// Import classes:
+//import io.swagger.client.ApiClient;
+//import io.swagger.client.ApiException;
+//import io.swagger.client.Configuration;
+//import io.swagger.client.auth.*;
+//import io.swagger.client.api.RunsV1Api;
+
+ApiClient defaultClient = Configuration.getDefaultApiClient();
+
+// Configure API key authorization: ApiKey
+ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+ApiKey.setApiKey("YOUR API KEY");
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.setApiKeyPrefix("Token");
+
+RunsV1Api apiInstance = new RunsV1Api();
+String namespace = "namespace_example"; // String | namespace
+String owner = "owner_example"; // String | Owner of the namespace
+String project = "project_example"; // String | Project where the run will be assigned
+String uuid = "uuid_example"; // String | Uuid identifier of the entity
+String kind = "kind_example"; // String | The artifact kind
+String name = "name_example"; // String | Artifact name.
+String names = "names_example"; // String | Names query param.
+String runs = "runs_example"; // String | Runs query param.
+String orient = "orient_example"; // String | Orient query param.
+String path = "path_example"; // String | Path query param.
+try {
+    V1EventsResponse result = apiInstance.getRunEvents(namespace, owner, project, uuid, kind, name, names, runs, orient, path);
+    System.out.println(result);
+} catch (ApiException e) {
+    System.err.println("Exception when calling RunsV1Api#getRunEvents");
+    e.printStackTrace();
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **namespace** | **String**| namespace |
+ **owner** | **String**| Owner of the namespace |
+ **project** | **String**| Project where the run will be assigned |
+ **uuid** | **String**| Uuid identifier of the entity |
+ **kind** | **String**| The artifact kind | [enum: model, audio, video, histogram, image, tensor, dataframe, chart, csv, tsv, psv, ssv, metric, env, html, text, file, dir, dockerfile, docker_image, data, coderef, table]
+ **name** | **String**| Artifact name. | [optional]
+ **names** | **String**| Names query param. | [optional]
+ **runs** | **String**| Runs query param. | [optional]
+ **orient** | **String**| Orient query param. | [optional]
+ **path** | **String**| Path query param. | [optional]
+
+### Return type
+
+[**V1EventsResponse**](V1EventsResponse.md)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+<a name="getRunLogs"></a>
+# **getRunLogs**
+> V1Logs getRunLogs(namespace, owner, project, uuid, lastTime, lastFile)
+
+Get run logs
+
+### Example
+```java
+// Import classes:
+//import io.swagger.client.ApiClient;
+//import io.swagger.client.ApiException;
+//import io.swagger.client.Configuration;
+//import io.swagger.client.auth.*;
+//import io.swagger.client.api.RunsV1Api;
+
+ApiClient defaultClient = Configuration.getDefaultApiClient();
+
+// Configure API key authorization: ApiKey
+ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+ApiKey.setApiKey("YOUR API KEY");
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.setApiKeyPrefix("Token");
+
+RunsV1Api apiInstance = new RunsV1Api();
+String namespace = "namespace_example"; // String | 
+String owner = "owner_example"; // String | Owner of the namespace
+String project = "project_example"; // String | Project where the run will be assigned
+String uuid = "uuid_example"; // String | Uuid identifier of the entity
+OffsetDateTime lastTime = OffsetDateTime.now(); // OffsetDateTime | last time.
+String lastFile = "lastFile_example"; // String | last file.
+try {
+    V1Logs result = apiInstance.getRunLogs(namespace, owner, project, uuid, lastTime, lastFile);
+    System.out.println(result);
+} catch (ApiException e) {
+    System.err.println("Exception when calling RunsV1Api#getRunLogs");
+    e.printStackTrace();
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **namespace** | **String**|  |
+ **owner** | **String**| Owner of the namespace |
+ **project** | **String**| Project where the run will be assigned |
+ **uuid** | **String**| Uuid identifier of the entity |
+ **lastTime** | **OffsetDateTime**| last time. | [optional]
+ **lastFile** | **String**| last file. | [optional]
+
+### Return type
+
+[**V1Logs**](V1Logs.md)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+<a name="getRunNamespace"></a>
+# **getRunNamespace**
+> V1RunSettings getRunNamespace(owner, project, uuid)
+
+Get Run namespace
+
+### Example
+```java
+// Import classes:
+//import io.swagger.client.ApiClient;
+//import io.swagger.client.ApiException;
+//import io.swagger.client.Configuration;
+//import io.swagger.client.auth.*;
+//import io.swagger.client.api.RunsV1Api;
+
+ApiClient defaultClient = Configuration.getDefaultApiClient();
+
+// Configure API key authorization: ApiKey
+ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+ApiKey.setApiKey("YOUR API KEY");
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.setApiKeyPrefix("Token");
+
+RunsV1Api apiInstance = new RunsV1Api();
+String owner = "owner_example"; // String | Owner of the namespace
+String project = "project_example"; // String | Project where the notification will be assigned
+String uuid = "uuid_example"; // String | Uuid identifier of the entity
+try {
+    V1RunSettings result = apiInstance.getRunNamespace(owner, project, uuid);
+    System.out.println(result);
+} catch (ApiException e) {
+    System.err.println("Exception when calling RunsV1Api#getRunNamespace");
+    e.printStackTrace();
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **String**| Owner of the namespace |
+ **project** | **String**| Project where the notification will be assigned |
+ **uuid** | **String**| Uuid identifier of the entity |
+
+### Return type
+
+[**V1RunSettings**](V1RunSettings.md)
 
 ### Authorization
 
@@ -766,8 +1370,8 @@ ApiKey.setApiKey("YOUR API KEY");
 
 RunsV1Api apiInstance = new RunsV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
-String project = "project_example"; // String | Project where the experiement will be assigned
-String uuid = "uuid_example"; // String | Unique integer identifier of the entity
+String project = "project_example"; // String | Project where the notification will be assigned
+String uuid = "uuid_example"; // String | Uuid identifier of the entity
 try {
     V1RunSettings result = apiInstance.getRunSettings(owner, project, uuid);
     System.out.println(result);
@@ -782,8 +1386,8 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
- **project** | **String**| Project where the experiement will be assigned |
- **uuid** | **String**| Unique integer identifier of the entity |
+ **project** | **String**| Project where the notification will be assigned |
+ **uuid** | **String**| Uuid identifier of the entity |
 
 ### Return type
 
@@ -823,8 +1427,8 @@ ApiKey.setApiKey("YOUR API KEY");
 
 RunsV1Api apiInstance = new RunsV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
-String project = "project_example"; // String | Project where the experiement will be assigned
-String uuid = "uuid_example"; // String | Unique integer identifier of the entity
+String project = "project_example"; // String | Project where the notification will be assigned
+String uuid = "uuid_example"; // String | Uuid identifier of the entity
 try {
     V1Status result = apiInstance.getRunStatuses(owner, project, uuid);
     System.out.println(result);
@@ -839,8 +1443,8 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
- **project** | **String**| Project where the experiement will be assigned |
- **uuid** | **String**| Unique integer identifier of the entity |
+ **project** | **String**| Project where the notification will be assigned |
+ **uuid** | **String**| Uuid identifier of the entity |
 
 ### Return type
 
@@ -880,8 +1484,8 @@ ApiKey.setApiKey("YOUR API KEY");
 
 RunsV1Api apiInstance = new RunsV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
-String project = "project_example"; // String | Project where the experiement will be assigned
-String uuid = "uuid_example"; // String | Unique integer identifier of the entity
+String project = "project_example"; // String | Project where the notification will be assigned
+String uuid = "uuid_example"; // String | Uuid identifier of the entity
 try {
     V1Auth result = apiInstance.impersonateToken(owner, project, uuid);
     System.out.println(result);
@@ -896,8 +1500,8 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
- **project** | **String**| Project where the experiement will be assigned |
- **uuid** | **String**| Unique integer identifier of the entity |
+ **project** | **String**| Project where the notification will be assigned |
+ **uuid** | **String**| Uuid identifier of the entity |
 
 ### Return type
 
@@ -937,8 +1541,8 @@ ApiKey.setApiKey("YOUR API KEY");
 
 RunsV1Api apiInstance = new RunsV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
-String project = "project_example"; // String | Project where the experiement will be assigned
-String uuid = "uuid_example"; // String | Unique integer identifier of the entity
+String project = "project_example"; // String | Project where the notification will be assigned
+String uuid = "uuid_example"; // String | Uuid identifier of the entity
 V1ProjectEntityResourceRequest body = new V1ProjectEntityResourceRequest(); // V1ProjectEntityResourceRequest | 
 try {
     apiInstance.invalidateRun(owner, project, uuid, body);
@@ -953,8 +1557,8 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
- **project** | **String**| Project where the experiement will be assigned |
- **uuid** | **String**| Unique integer identifier of the entity |
+ **project** | **String**| Project where the notification will be assigned |
+ **uuid** | **String**| Uuid identifier of the entity |
  **body** | [**V1ProjectEntityResourceRequest**](V1ProjectEntityResourceRequest.md)|  |
 
 ### Return type
@@ -1211,6 +1815,129 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
+<a name="listRunsIo"></a>
+# **listRunsIo**
+> V1ListRunsResponse listRunsIo(owner, project, offset, limit, sort, query)
+
+List runs
+
+### Example
+```java
+// Import classes:
+//import io.swagger.client.ApiClient;
+//import io.swagger.client.ApiException;
+//import io.swagger.client.Configuration;
+//import io.swagger.client.auth.*;
+//import io.swagger.client.api.RunsV1Api;
+
+ApiClient defaultClient = Configuration.getDefaultApiClient();
+
+// Configure API key authorization: ApiKey
+ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+ApiKey.setApiKey("YOUR API KEY");
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.setApiKeyPrefix("Token");
+
+RunsV1Api apiInstance = new RunsV1Api();
+String owner = "owner_example"; // String | Owner of the namespace
+String project = "project_example"; // String | Project under namesapce
+Integer offset = 56; // Integer | Pagination offset.
+Integer limit = 56; // Integer | Limit size.
+String sort = "sort_example"; // String | Sort to order the search.
+String query = "query_example"; // String | Query filter the search search.
+try {
+    V1ListRunsResponse result = apiInstance.listRunsIo(owner, project, offset, limit, sort, query);
+    System.out.println(result);
+} catch (ApiException e) {
+    System.err.println("Exception when calling RunsV1Api#listRunsIo");
+    e.printStackTrace();
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **String**| Owner of the namespace |
+ **project** | **String**| Project under namesapce |
+ **offset** | **Integer**| Pagination offset. | [optional]
+ **limit** | **Integer**| Limit size. | [optional]
+ **sort** | **String**| Sort to order the search. | [optional]
+ **query** | **String**| Query filter the search search. | [optional]
+
+### Return type
+
+[**V1ListRunsResponse**](V1ListRunsResponse.md)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+<a name="notifyRunStatus"></a>
+# **notifyRunStatus**
+> notifyRunStatus(namespace, owner, project, uuid, body)
+
+Notify run status
+
+### Example
+```java
+// Import classes:
+//import io.swagger.client.ApiClient;
+//import io.swagger.client.ApiException;
+//import io.swagger.client.Configuration;
+//import io.swagger.client.auth.*;
+//import io.swagger.client.api.RunsV1Api;
+
+ApiClient defaultClient = Configuration.getDefaultApiClient();
+
+// Configure API key authorization: ApiKey
+ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+ApiKey.setApiKey("YOUR API KEY");
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.setApiKeyPrefix("Token");
+
+RunsV1Api apiInstance = new RunsV1Api();
+String namespace = "namespace_example"; // String | Na,espace
+String owner = "owner_example"; // String | Owner of the namespace
+String project = "project_example"; // String | Project where the run will be assigned
+String uuid = "uuid_example"; // String | Uuid identifier of the entity
+V1EntityNotificationBody body = new V1EntityNotificationBody(); // V1EntityNotificationBody | 
+try {
+    apiInstance.notifyRunStatus(namespace, owner, project, uuid, body);
+} catch (ApiException e) {
+    System.err.println("Exception when calling RunsV1Api#notifyRunStatus");
+    e.printStackTrace();
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **namespace** | **String**| Na,espace |
+ **owner** | **String**| Owner of the namespace |
+ **project** | **String**| Project where the run will be assigned |
+ **uuid** | **String**| Uuid identifier of the entity |
+ **body** | [**V1EntityNotificationBody**](V1EntityNotificationBody.md)|  |
+
+### Return type
+
+null (empty response body)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
 <a name="patchRun"></a>
 # **patchRun**
 > V1Run patchRun(owner, project, runUuid, body)
@@ -1236,7 +1963,7 @@ ApiKey.setApiKey("YOUR API KEY");
 
 RunsV1Api apiInstance = new RunsV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
-String project = "project_example"; // String | Project where the experiement will be assigned
+String project = "project_example"; // String | Project where the run will be assigned
 String runUuid = "runUuid_example"; // String | UUID
 V1Run body = new V1Run(); // V1Run | Run object
 try {
@@ -1253,7 +1980,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
- **project** | **String**| Project where the experiement will be assigned |
+ **project** | **String**| Project where the run will be assigned |
  **runUuid** | **String**| UUID |
  **body** | [**V1Run**](V1Run.md)| Run object |
 
@@ -1295,8 +2022,8 @@ ApiKey.setApiKey("YOUR API KEY");
 
 RunsV1Api apiInstance = new RunsV1Api();
 String entityOwner = "entityOwner_example"; // String | Owner of the namespace
-String entityProject = "entityProject_example"; // String | Project where the experiement will be assigned
-String entityUuid = "entityUuid_example"; // String | Unique integer identifier of the entity
+String entityProject = "entityProject_example"; // String | Project where the notification will be assigned
+String entityUuid = "entityUuid_example"; // String | Uuid identifier of the entity
 V1Run body = new V1Run(); // V1Run | Run object
 try {
     V1Run result = apiInstance.restartRun(entityOwner, entityProject, entityUuid, body);
@@ -1312,8 +2039,8 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **entityOwner** | **String**| Owner of the namespace |
- **entityProject** | **String**| Project where the experiement will be assigned |
- **entityUuid** | **String**| Unique integer identifier of the entity |
+ **entityProject** | **String**| Project where the notification will be assigned |
+ **entityUuid** | **String**| Uuid identifier of the entity |
  **body** | [**V1Run**](V1Run.md)| Run object |
 
 ### Return type
@@ -1354,8 +2081,8 @@ ApiKey.setApiKey("YOUR API KEY");
 
 RunsV1Api apiInstance = new RunsV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
-String project = "project_example"; // String | Project where the experiement will be assigned
-String uuid = "uuid_example"; // String | Unique integer identifier of the entity
+String project = "project_example"; // String | Project where the notification will be assigned
+String uuid = "uuid_example"; // String | Uuid identifier of the entity
 try {
     apiInstance.restoreRun(owner, project, uuid);
 } catch (ApiException e) {
@@ -1369,8 +2096,8 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
- **project** | **String**| Project where the experiement will be assigned |
- **uuid** | **String**| Unique integer identifier of the entity |
+ **project** | **String**| Project where the notification will be assigned |
+ **uuid** | **String**| Uuid identifier of the entity |
 
 ### Return type
 
@@ -1410,8 +2137,8 @@ ApiKey.setApiKey("YOUR API KEY");
 
 RunsV1Api apiInstance = new RunsV1Api();
 String entityOwner = "entityOwner_example"; // String | Owner of the namespace
-String entityProject = "entityProject_example"; // String | Project where the experiement will be assigned
-String entityUuid = "entityUuid_example"; // String | Unique integer identifier of the entity
+String entityProject = "entityProject_example"; // String | Project where the notification will be assigned
+String entityUuid = "entityUuid_example"; // String | Uuid identifier of the entity
 V1Run body = new V1Run(); // V1Run | Run object
 try {
     V1Run result = apiInstance.resumeRun(entityOwner, entityProject, entityUuid, body);
@@ -1427,8 +2154,8 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **entityOwner** | **String**| Owner of the namespace |
- **entityProject** | **String**| Project where the experiement will be assigned |
- **entityUuid** | **String**| Unique integer identifier of the entity |
+ **entityProject** | **String**| Project where the notification will be assigned |
+ **entityUuid** | **String**| Uuid identifier of the entity |
  **body** | [**V1Run**](V1Run.md)| Run object |
 
 ### Return type
@@ -1469,8 +2196,8 @@ ApiKey.setApiKey("YOUR API KEY");
 
 RunsV1Api apiInstance = new RunsV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
-String project = "project_example"; // String | Project where the experiement will be assigned
-String uuid = "uuid_example"; // String | Unique integer identifier of the entity
+String project = "project_example"; // String | Project where the notification will be assigned
+String uuid = "uuid_example"; // String | Uuid identifier of the entity
 V1ProjectEntityResourceRequest body = new V1ProjectEntityResourceRequest(); // V1ProjectEntityResourceRequest | 
 try {
     apiInstance.startRunTensorboard(owner, project, uuid, body);
@@ -1485,8 +2212,8 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
- **project** | **String**| Project where the experiement will be assigned |
- **uuid** | **String**| Unique integer identifier of the entity |
+ **project** | **String**| Project where the notification will be assigned |
+ **uuid** | **String**| Uuid identifier of the entity |
  **body** | [**V1ProjectEntityResourceRequest**](V1ProjectEntityResourceRequest.md)|  |
 
 ### Return type
@@ -1527,8 +2254,8 @@ ApiKey.setApiKey("YOUR API KEY");
 
 RunsV1Api apiInstance = new RunsV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
-String project = "project_example"; // String | Project where the experiement will be assigned
-String uuid = "uuid_example"; // String | Unique integer identifier of the entity
+String project = "project_example"; // String | Project where the notification will be assigned
+String uuid = "uuid_example"; // String | Uuid identifier of the entity
 try {
     apiInstance.stopRun(owner, project, uuid);
 } catch (ApiException e) {
@@ -1542,8 +2269,8 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
- **project** | **String**| Project where the experiement will be assigned |
- **uuid** | **String**| Unique integer identifier of the entity |
+ **project** | **String**| Project where the notification will be assigned |
+ **uuid** | **String**| Uuid identifier of the entity |
 
 ### Return type
 
@@ -1583,8 +2310,8 @@ ApiKey.setApiKey("YOUR API KEY");
 
 RunsV1Api apiInstance = new RunsV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
-String project = "project_example"; // String | Project where the experiement will be assigned
-String uuid = "uuid_example"; // String | Unique integer identifier of the entity
+String project = "project_example"; // String | Project where the notification will be assigned
+String uuid = "uuid_example"; // String | Uuid identifier of the entity
 try {
     apiInstance.stopRunTensorboard(owner, project, uuid);
 } catch (ApiException e) {
@@ -1598,8 +2325,8 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
- **project** | **String**| Project where the experiement will be assigned |
- **uuid** | **String**| Unique integer identifier of the entity |
+ **project** | **String**| Project where the notification will be assigned |
+ **uuid** | **String**| Uuid identifier of the entity |
 
 ### Return type
 
@@ -1695,8 +2422,8 @@ ApiKey.setApiKey("YOUR API KEY");
 
 RunsV1Api apiInstance = new RunsV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
-String project = "project_example"; // String | Project where the experiement will be assigned
-String uuid = "uuid_example"; // String | Unique integer identifier of the entity
+String project = "project_example"; // String | Project where the notification will be assigned
+String uuid = "uuid_example"; // String | Uuid identifier of the entity
 try {
     apiInstance.unbookmarkRun(owner, project, uuid);
 } catch (ApiException e) {
@@ -1710,8 +2437,8 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
- **project** | **String**| Project where the experiement will be assigned |
- **uuid** | **String**| Unique integer identifier of the entity |
+ **project** | **String**| Project where the notification will be assigned |
+ **uuid** | **String**| Uuid identifier of the entity |
 
 ### Return type
 
@@ -1751,7 +2478,7 @@ ApiKey.setApiKey("YOUR API KEY");
 
 RunsV1Api apiInstance = new RunsV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
-String project = "project_example"; // String | Project where the experiement will be assigned
+String project = "project_example"; // String | Project where the run will be assigned
 String runUuid = "runUuid_example"; // String | UUID
 V1Run body = new V1Run(); // V1Run | Run object
 try {
@@ -1768,7 +2495,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
- **project** | **String**| Project where the experiement will be assigned |
+ **project** | **String**| Project where the run will be assigned |
  **runUuid** | **String**| UUID |
  **body** | [**V1Run**](V1Run.md)| Run object |
 

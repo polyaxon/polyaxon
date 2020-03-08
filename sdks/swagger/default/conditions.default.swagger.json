@@ -1,0 +1,18 @@
+{
+  "definitions": {
+    "v1StatusCond": {
+      "properties": {
+        "kind": {
+          "default": "status"
+        }
+      }
+    },
+    "v1IoCond": {
+      "properties": {
+        "kind": {
+          "default": "io"
+        }
+      }
+    }
+  }
+}

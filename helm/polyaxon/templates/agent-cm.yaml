@@ -1,0 +1,34 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "polyaxon.fullname" . }}-agent-config
+  labels:
+    app: {{ template "polyaxon.fullname" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+    type: {{ .Values.types.core }}
+    role: {{ .Values.roles.config }}
+    app.kubernetes.io/name: {{ template "polyaxon.fullname" . }}-agent-config
+    app.kubernetes.io/instance: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    app.kubernetes.io/version: "{{ .Chart.Version }}"
+    app.kubernetes.io/part-of: {{ .Values.types.core }}
+    app.kubernetes.io/component: {{ .Values.types.config }}
+    app.kubernetes.io/managed-by: "helm"
+data:
+  POLYAXON_K8S_NAMESPACE: {{ .Values.namespace | quote }}
+  POLYAXON_K8S_IN_CLUSTER: "true"
+  POLYAXON_SET_AGENT: "true"
+  {{- if .Values.agent.instance }}
+  POLYAXON_AGENT_INSTANCE: {{ .Values.agent.instance | quote }}
+  {{- end }}
+  POLYAXON_AGENT_ARTIFACTS_STORE: {{ toJson .Values.artifactsStore | quote }}
+  {{- if .Values.connections }}
+  POLYAXON_AGENT_CONNECTIONS: {{ toJson .Values.connections | quote }}
+  {{- end }}
+  {{- if .Values.notificationConnections }}
+  POLYAXON_AGENT_NOTIFICATION_CONNECTIONS: {{ toJson .Values.notificationConnections | quote }}
+  {{- end }}
+  POLYAXON_AGENT_SIDECAR: {{ toJson .Values.sidecar | quote }}
+  POLYAXON_AGENT_INIT: {{ toJson .Values.init | quote }}
+  POLYAXON_AGENT_SECRET_NAME: {{ template "polyaxon.fullname" . }}-agent-secret

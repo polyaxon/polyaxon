@@ -4,19 +4,19 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**create_search**](SearchesV1Api.md#create_search) | **POST** /api/v1/orgs/{owner}/searches | List runs
-[**delete_search**](SearchesV1Api.md#delete_search) | **DELETE** /api/v1/orgs/{owner}/searches/{uuid} | Patch run
-[**get_search**](SearchesV1Api.md#get_search) | **GET** /api/v1/orgs/{owner}/searches/{uuid} | Create new run
-[**list_search_names**](SearchesV1Api.md#list_search_names) | **GET** /api/v1/orgs/{owner}/searches/names | List bookmarked runs for user
-[**list_searches**](SearchesV1Api.md#list_searches) | **GET** /api/v1/orgs/{owner}/searches | List archived runs for user
-[**patch_search**](SearchesV1Api.md#patch_search) | **PATCH** /api/v1/orgs/{owner}/searches/{search.uuid} | Update run
-[**update_search**](SearchesV1Api.md#update_search) | **PUT** /api/v1/orgs/{owner}/searches/{search.uuid} | Get run
+[**create_search**](SearchesV1Api.md#create_search) | **POST** /api/v1/orgs/{owner}/searches | Create search
+[**delete_search**](SearchesV1Api.md#delete_search) | **DELETE** /api/v1/orgs/{owner}/searches/{uuid} | Delete search
+[**get_search**](SearchesV1Api.md#get_search) | **GET** /api/v1/orgs/{owner}/searches/{uuid} | Get search
+[**list_search_names**](SearchesV1Api.md#list_search_names) | **GET** /api/v1/orgs/{owner}/searches/names | List search names
+[**list_searches**](SearchesV1Api.md#list_searches) | **GET** /api/v1/orgs/{owner}/searches | List searches
+[**patch_search**](SearchesV1Api.md#patch_search) | **PATCH** /api/v1/orgs/{owner}/searches/{search.uuid} | Patch search
+[**update_search**](SearchesV1Api.md#update_search) | **PUT** /api/v1/orgs/{owner}/searches/{search.uuid} | Update search
 
 
 # **create_search**
 > V1Search create_search(owner, body)
 
-List runs
+Create search
 
 ### Example
 ```python
@@ -38,7 +38,7 @@ owner = 'owner_example' # str | Owner of the namespace
 body = polyaxon_sdk.V1Search() # V1Search | Search body
 
 try:
-    # List runs
+    # Create search
     api_response = api_instance.create_search(owner, body)
     pprint(api_response)
 except ApiException as e:
@@ -70,7 +70,7 @@ Name | Type | Description  | Notes
 # **delete_search**
 > delete_search(owner, uuid)
 
-Patch run
+Delete search
 
 ### Example
 ```python
@@ -89,10 +89,10 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = polyaxon_sdk.SearchesV1Api(polyaxon_sdk.ApiClient(configuration))
 owner = 'owner_example' # str | Owner of the namespace
-uuid = 'uuid_example' # str | Unique integer identifier of the entity
+uuid = 'uuid_example' # str | Uuid identifier of the entity
 
 try:
-    # Patch run
+    # Delete search
     api_instance.delete_search(owner, uuid)
 except ApiException as e:
     print("Exception when calling SearchesV1Api->delete_search: %s\n" % e)
@@ -103,7 +103,7 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **str**| Owner of the namespace | 
- **uuid** | **str**| Unique integer identifier of the entity | 
+ **uuid** | **str**| Uuid identifier of the entity | 
 
 ### Return type
 
@@ -123,7 +123,7 @@ void (empty response body)
 # **get_search**
 > V1Search get_search(owner, uuid)
 
-Create new run
+Get search
 
 ### Example
 ```python
@@ -142,10 +142,10 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = polyaxon_sdk.SearchesV1Api(polyaxon_sdk.ApiClient(configuration))
 owner = 'owner_example' # str | Owner of the namespace
-uuid = 'uuid_example' # str | Unique integer identifier of the entity
+uuid = 'uuid_example' # str | Uuid identifier of the entity
 
 try:
-    # Create new run
+    # Get search
     api_response = api_instance.get_search(owner, uuid)
     pprint(api_response)
 except ApiException as e:
@@ -157,7 +157,7 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **str**| Owner of the namespace | 
- **uuid** | **str**| Unique integer identifier of the entity | 
+ **uuid** | **str**| Uuid identifier of the entity | 
 
 ### Return type
 
@@ -177,7 +177,7 @@ Name | Type | Description  | Notes
 # **list_search_names**
 > V1ListSearchesResponse list_search_names(owner, offset=offset, limit=limit, sort=sort, query=query)
 
-List bookmarked runs for user
+List search names
 
 ### Example
 ```python
@@ -202,7 +202,7 @@ sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search search. (optional)
 
 try:
-    # List bookmarked runs for user
+    # List search names
     api_response = api_instance.list_search_names(owner, offset=offset, limit=limit, sort=sort, query=query)
     pprint(api_response)
 except ApiException as e:
@@ -237,7 +237,7 @@ Name | Type | Description  | Notes
 # **list_searches**
 > V1ListSearchesResponse list_searches(owner, offset=offset, limit=limit, sort=sort, query=query)
 
-List archived runs for user
+List searches
 
 ### Example
 ```python
@@ -262,7 +262,7 @@ sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search search. (optional)
 
 try:
-    # List archived runs for user
+    # List searches
     api_response = api_instance.list_searches(owner, offset=offset, limit=limit, sort=sort, query=query)
     pprint(api_response)
 except ApiException as e:
@@ -297,7 +297,7 @@ Name | Type | Description  | Notes
 # **patch_search**
 > V1Search patch_search(owner, search_uuid, body)
 
-Update run
+Patch search
 
 ### Example
 ```python
@@ -320,7 +320,7 @@ search_uuid = 'search_uuid_example' # str | UUID
 body = polyaxon_sdk.V1Search() # V1Search | Search body
 
 try:
-    # Update run
+    # Patch search
     api_response = api_instance.patch_search(owner, search_uuid, body)
     pprint(api_response)
 except ApiException as e:
@@ -353,7 +353,7 @@ Name | Type | Description  | Notes
 # **update_search**
 > V1Search update_search(owner, search_uuid, body)
 
-Get run
+Update search
 
 ### Example
 ```python
@@ -376,7 +376,7 @@ search_uuid = 'search_uuid_example' # str | UUID
 body = polyaxon_sdk.V1Search() # V1Search | Search body
 
 try:
-    # Get run
+    # Update search
     api_response = api_instance.update_search(owner, search_uuid, body)
     pprint(api_response)
 except ApiException as e:

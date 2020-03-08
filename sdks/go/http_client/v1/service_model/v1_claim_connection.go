@@ -1,4 +1,4 @@
-// Copyright 2019 Polyaxon, Inc.
+// Copyright 2018-2020 Polyaxon, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,14 +20,17 @@ package service_model
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
-// V1ClaimConnection Claim connection specification
+// V1ClaimConnection Claim connection schema validation specification
+//
 // swagger:model v1ClaimConnection
 type V1ClaimConnection struct {
+
+	// kind
+	Kind interface{} `json:"kind,omitempty"`
 
 	// Mount path
 	MountPath string `json:"mount_path,omitempty"`

@@ -1,0 +1,224 @@
+/**
+ * Copyright 2018-2020 Polyaxon, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+*/
+
+syntax = "proto3";
+
+package v1;
+
+import "google/protobuf/struct.proto";
+
+// Artifact kind
+enum ArtifactKind {
+    // model
+    model = 0;
+
+    // audio
+    audio = 1;
+
+    // vidio
+    video = 2;
+
+    // histogram
+    histogram = 3;
+
+    // image
+    image = 4;
+
+    // tensor
+    tensor = 5;
+
+    // dataframe
+    dataframe = 6;
+
+    // plotly/bokeh chart
+    chart = 7;
+
+    // Comma
+    csv = 8;
+
+    // Tab
+    tsv = 9;
+
+    // Pipe
+    psv = 10;
+
+    // Space
+    ssv = 11;
+
+    // Metric
+    metric = 12;
+
+    // Env
+    env = 13;
+
+    // HTML
+    html = 14;
+
+    // Text
+    text = 15;
+
+    // File
+    file = 16;
+
+    // Dir
+    dir = 17;
+
+    // Dockerfile
+    dockerfile = 18;
+
+    // docker image
+    docker_image = 19;
+
+    // data
+    data = 20;
+
+    // coderef
+    coderef = 21;
+
+    // table
+    table = 22;
+}
+
+// Run Artifact spec definition
+message RunArtifact {
+    // Artifact name
+    string name = 1;
+
+    // State
+    string state = 2;
+
+    // Artifact type
+    ArtifactKind kind = 3;
+
+    // Artifact path
+    string path = 4;
+
+    // Connection
+    string connection = 5;
+
+    // Artifact schema
+    google.protobuf.Struct summary = 6;
+
+    // Optional flag to check the use of the artifact in a context
+    bool is_input = 7;
+}
+
+// Run Artifacts spec definition
+message RunArtifacts {
+    // Run Artifacts
+    repeated RunArtifact artifacts = 1;
+}
+
+// Contains list run artifacts
+message ListRunArtifactsResponse {
+    // Count of the entities
+    int32 count = 1;
+
+    // List of all entities
+    repeated RunArtifact results = 2;
+
+    // Previous page
+    string previous = 3;
+
+    // Next page
+    string next = 4;
+}
+
+
+// Request data to create ryb artifacts
+message RunArtifactsRequest {
+    // Owner of the namespace
+    string owner = 1;
+
+    // Project where the run will be assigned
+    string project = 2;
+
+    // Uuid identifier of the entity
+    string uuid = 3;
+
+    // Run Artifacts
+    RunArtifacts artifacts = 4;
+}
+
+
+// Request data to create/update run artifact
+message RunArtifactBodyRequest {
+    // Owner of the namespace
+    string owner = 1;
+
+    // Project where the run will be assigned
+    string project = 2;
+
+    // Uuid identifier of the entity
+    string uuid = 3;
+
+    // Run Artifact
+    RunArtifact artifact = 4;
+}
+
+// Request data to search run artifact entity
+message RunArtifactSearchRequest {
+    // Owner of the namespace
+    string owner = 1;
+
+    // Project where the run will be assigned
+    string project = 2;
+
+    // Uuid identifier of the entity
+    string uuid = 3;
+
+     // Limit size
+     int32 limit = 4;
+
+     // Sort to order the search
+    string sort = 5;
+
+     // Query filter the search search
+    string query = 6;
+}
+
+// Request data to get/delete run artifact
+message RunArtifactRequest {
+    // namespace
+    string namespace = 1;
+
+    // Owner of the namespace
+    string owner = 2;
+
+    // Project where the run will be assigned
+    string project = 3;
+
+    // Uuid identifier of the entity
+    string uuid = 4;
+
+    // Artifact name
+    string name = 5;
+
+    // The artifact kind
+    ArtifactKind kind = 6;
+
+    // Names query param
+    string names = 7;
+
+    // Runs query param
+    string runs = 8;
+
+    // Orient query param
+    string orient = 9;
+
+    // Path query param
+    string path = 10;
+}

@@ -4,25 +4,25 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**create_organization**](OrganizationsV1Api.md#create_organization) | **POST** /api/v1/orgs/create | List runs
-[**create_organization_member**](OrganizationsV1Api.md#create_organization_member) | **POST** /api/v1/orgs/{owner}/members | Delete runs
-[**delete_organization**](OrganizationsV1Api.md#delete_organization) | **DELETE** /api/v1/orgs/{owner} | Patch run
-[**delete_organization_member**](OrganizationsV1Api.md#delete_organization_member) | **DELETE** /api/v1/orgs/{owner}/members/{user} | Invalidate runs
-[**get_organization**](OrganizationsV1Api.md#get_organization) | **GET** /api/v1/orgs/{owner} | Create new run
-[**get_organization_member**](OrganizationsV1Api.md#get_organization_member) | **GET** /api/v1/orgs/{owner}/members/{user} | Stop run
-[**list_organization_members**](OrganizationsV1Api.md#list_organization_members) | **GET** /api/v1/orgs/{owner}/members | Delete run
-[**list_organization_names**](OrganizationsV1Api.md#list_organization_names) | **GET** /api/v1/orgs/names | List bookmarked runs for user
-[**list_organizations**](OrganizationsV1Api.md#list_organizations) | **GET** /api/v1/orgs/list | List archived runs for user
-[**patch_organization**](OrganizationsV1Api.md#patch_organization) | **PATCH** /api/v1/orgs/{owner} | Update run
-[**patch_organization_member**](OrganizationsV1Api.md#patch_organization_member) | **PATCH** /api/v1/orgs/{owner}/members/{member.user} | Invalidate run
-[**update_organization**](OrganizationsV1Api.md#update_organization) | **PUT** /api/v1/orgs/{owner} | Get run
-[**update_organization_member**](OrganizationsV1Api.md#update_organization_member) | **PUT** /api/v1/orgs/{owner}/members/{member.user} | Stop runs
+[**create_organization**](OrganizationsV1Api.md#create_organization) | **POST** /api/v1/orgs/create | Create organization
+[**create_organization_member**](OrganizationsV1Api.md#create_organization_member) | **POST** /api/v1/orgs/{owner}/members | Create organization member
+[**delete_organization**](OrganizationsV1Api.md#delete_organization) | **DELETE** /api/v1/orgs/{owner} | Delete organization
+[**delete_organization_member**](OrganizationsV1Api.md#delete_organization_member) | **DELETE** /api/v1/orgs/{owner}/members/{user} | Delete organization member details
+[**get_organization**](OrganizationsV1Api.md#get_organization) | **GET** /api/v1/orgs/{owner} | Get organization
+[**get_organization_member**](OrganizationsV1Api.md#get_organization_member) | **GET** /api/v1/orgs/{owner}/members/{user} | Get organization member details
+[**list_organization_members**](OrganizationsV1Api.md#list_organization_members) | **GET** /api/v1/orgs/{owner}/members | Get organization members
+[**list_organization_names**](OrganizationsV1Api.md#list_organization_names) | **GET** /api/v1/orgs/names | List organizations names
+[**list_organizations**](OrganizationsV1Api.md#list_organizations) | **GET** /api/v1/orgs/list | List organizations
+[**patch_organization**](OrganizationsV1Api.md#patch_organization) | **PATCH** /api/v1/orgs/{owner} | Patch organization
+[**patch_organization_member**](OrganizationsV1Api.md#patch_organization_member) | **PATCH** /api/v1/orgs/{owner}/members/{member.user} | Patch organization member
+[**update_organization**](OrganizationsV1Api.md#update_organization) | **PUT** /api/v1/orgs/{owner} | Update organization
+[**update_organization_member**](OrganizationsV1Api.md#update_organization_member) | **PUT** /api/v1/orgs/{owner}/members/{member.user} | Update organization member
 
 
 # **create_organization**
 > V1Organization create_organization(body)
 
-List runs
+Create organization
 
 ### Example
 ```python
@@ -43,7 +43,7 @@ api_instance = polyaxon_sdk.OrganizationsV1Api(polyaxon_sdk.ApiClient(configurat
 body = polyaxon_sdk.V1Organization() # V1Organization | 
 
 try:
-    # List runs
+    # Create organization
     api_response = api_instance.create_organization(body)
     pprint(api_response)
 except ApiException as e:
@@ -74,7 +74,7 @@ Name | Type | Description  | Notes
 # **create_organization_member**
 > V1OrganizationMember create_organization_member(owner, body)
 
-Delete runs
+Create organization member
 
 ### Example
 ```python
@@ -96,7 +96,7 @@ owner = 'owner_example' # str | Owner of the namespace
 body = polyaxon_sdk.V1OrganizationMember() # V1OrganizationMember | Organization body
 
 try:
-    # Delete runs
+    # Create organization member
     api_response = api_instance.create_organization_member(owner, body)
     pprint(api_response)
 except ApiException as e:
@@ -128,7 +128,7 @@ Name | Type | Description  | Notes
 # **delete_organization**
 > delete_organization(owner)
 
-Patch run
+Delete organization
 
 ### Example
 ```python
@@ -149,7 +149,7 @@ api_instance = polyaxon_sdk.OrganizationsV1Api(polyaxon_sdk.ApiClient(configurat
 owner = 'owner_example' # str | Owner of the namespace
 
 try:
-    # Patch run
+    # Delete organization
     api_instance.delete_organization(owner)
 except ApiException as e:
     print("Exception when calling OrganizationsV1Api->delete_organization: %s\n" % e)
@@ -179,7 +179,7 @@ void (empty response body)
 # **delete_organization_member**
 > delete_organization_member(owner, user)
 
-Invalidate runs
+Delete organization member details
 
 ### Example
 ```python
@@ -201,7 +201,7 @@ owner = 'owner_example' # str | Owner of the namespace
 user = 'user_example' # str | Memeber under namesapce
 
 try:
-    # Invalidate runs
+    # Delete organization member details
     api_instance.delete_organization_member(owner, user)
 except ApiException as e:
     print("Exception when calling OrganizationsV1Api->delete_organization_member: %s\n" % e)
@@ -232,7 +232,7 @@ void (empty response body)
 # **get_organization**
 > V1Organization get_organization(owner)
 
-Create new run
+Get organization
 
 ### Example
 ```python
@@ -253,7 +253,7 @@ api_instance = polyaxon_sdk.OrganizationsV1Api(polyaxon_sdk.ApiClient(configurat
 owner = 'owner_example' # str | Owner of the namespace
 
 try:
-    # Create new run
+    # Get organization
     api_response = api_instance.get_organization(owner)
     pprint(api_response)
 except ApiException as e:
@@ -284,7 +284,7 @@ Name | Type | Description  | Notes
 # **get_organization_member**
 > V1OrganizationMember get_organization_member(owner, user)
 
-Stop run
+Get organization member details
 
 ### Example
 ```python
@@ -306,7 +306,7 @@ owner = 'owner_example' # str | Owner of the namespace
 user = 'user_example' # str | Memeber under namesapce
 
 try:
-    # Stop run
+    # Get organization member details
     api_response = api_instance.get_organization_member(owner, user)
     pprint(api_response)
 except ApiException as e:
@@ -338,7 +338,7 @@ Name | Type | Description  | Notes
 # **list_organization_members**
 > V1ListOrganizationMembersResponse list_organization_members(owner, offset=offset, limit=limit, sort=sort, query=query)
 
-Delete run
+Get organization members
 
 ### Example
 ```python
@@ -363,7 +363,7 @@ sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search search. (optional)
 
 try:
-    # Delete run
+    # Get organization members
     api_response = api_instance.list_organization_members(owner, offset=offset, limit=limit, sort=sort, query=query)
     pprint(api_response)
 except ApiException as e:
@@ -398,7 +398,7 @@ Name | Type | Description  | Notes
 # **list_organization_names**
 > V1ListOrganizationsResponse list_organization_names()
 
-List bookmarked runs for user
+List organizations names
 
 ### Example
 ```python
@@ -418,7 +418,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 api_instance = polyaxon_sdk.OrganizationsV1Api(polyaxon_sdk.ApiClient(configuration))
 
 try:
-    # List bookmarked runs for user
+    # List organizations names
     api_response = api_instance.list_organization_names()
     pprint(api_response)
 except ApiException as e:
@@ -446,7 +446,7 @@ This endpoint does not need any parameter.
 # **list_organizations**
 > V1ListOrganizationsResponse list_organizations()
 
-List archived runs for user
+List organizations
 
 ### Example
 ```python
@@ -466,7 +466,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 api_instance = polyaxon_sdk.OrganizationsV1Api(polyaxon_sdk.ApiClient(configuration))
 
 try:
-    # List archived runs for user
+    # List organizations
     api_response = api_instance.list_organizations()
     pprint(api_response)
 except ApiException as e:
@@ -494,7 +494,7 @@ This endpoint does not need any parameter.
 # **patch_organization**
 > V1Organization patch_organization(owner, body)
 
-Update run
+Patch organization
 
 ### Example
 ```python
@@ -516,7 +516,7 @@ owner = 'owner_example' # str | Owner of the namespace
 body = polyaxon_sdk.V1Organization() # V1Organization | Organization body
 
 try:
-    # Update run
+    # Patch organization
     api_response = api_instance.patch_organization(owner, body)
     pprint(api_response)
 except ApiException as e:
@@ -548,7 +548,7 @@ Name | Type | Description  | Notes
 # **patch_organization_member**
 > V1OrganizationMember patch_organization_member(owner, member_user, body)
 
-Invalidate run
+Patch organization member
 
 ### Example
 ```python
@@ -571,7 +571,7 @@ member_user = 'member_user_example' # str | User
 body = polyaxon_sdk.V1OrganizationMember() # V1OrganizationMember | Organization body
 
 try:
-    # Invalidate run
+    # Patch organization member
     api_response = api_instance.patch_organization_member(owner, member_user, body)
     pprint(api_response)
 except ApiException as e:
@@ -604,7 +604,7 @@ Name | Type | Description  | Notes
 # **update_organization**
 > V1Organization update_organization(owner, body)
 
-Get run
+Update organization
 
 ### Example
 ```python
@@ -626,7 +626,7 @@ owner = 'owner_example' # str | Owner of the namespace
 body = polyaxon_sdk.V1Organization() # V1Organization | Organization body
 
 try:
-    # Get run
+    # Update organization
     api_response = api_instance.update_organization(owner, body)
     pprint(api_response)
 except ApiException as e:
@@ -658,7 +658,7 @@ Name | Type | Description  | Notes
 # **update_organization_member**
 > V1OrganizationMember update_organization_member(owner, member_user, body)
 
-Stop runs
+Update organization member
 
 ### Example
 ```python
@@ -681,7 +681,7 @@ member_user = 'member_user_example' # str | User
 body = polyaxon_sdk.V1OrganizationMember() # V1OrganizationMember | Organization body
 
 try:
-    # Stop runs
+    # Update organization member
     api_response = api_instance.update_organization_member(owner, member_user, body)
     pprint(api_response)
 except ApiException as e:

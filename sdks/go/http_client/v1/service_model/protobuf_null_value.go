@@ -1,4 +1,4 @@
-// Copyright 2019 Polyaxon, Inc.
+// Copyright 2018-2020 Polyaxon, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -22,9 +22,8 @@ package service_model
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/validate"
 )
 
@@ -34,6 +33,7 @@ import (
 //  The JSON representation for `NullValue` is JSON `null`.
 //
 //  - NULL_VALUE: Null value.
+//
 // swagger:model protobufNullValue
 type ProtobufNullValue string
 

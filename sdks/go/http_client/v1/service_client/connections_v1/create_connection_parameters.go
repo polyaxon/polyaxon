@@ -1,4 +1,4 @@
-// Copyright 2019 Polyaxon, Inc.
+// Copyright 2018-2020 Polyaxon, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -27,10 +27,9 @@ import (
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
 	cr "github.com/go-openapi/runtime/client"
+	"github.com/go-openapi/strfmt"
 
-	strfmt "github.com/go-openapi/strfmt"
-
-	service_model "github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_model"
+	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_model"
 )
 
 // NewCreateConnectionParams creates a new CreateConnectionParams object
@@ -81,7 +80,7 @@ type CreateConnectionParams struct {
 	  Connection body
 
 	*/
-	Body *service_model.V1Connection
+	Body *service_model.V1ConnectionResponse
 	/*Owner
 	  Owner of the namespace
 
@@ -127,13 +126,13 @@ func (o *CreateConnectionParams) SetHTTPClient(client *http.Client) {
 }
 
 // WithBody adds the body to the create connection params
-func (o *CreateConnectionParams) WithBody(body *service_model.V1Connection) *CreateConnectionParams {
+func (o *CreateConnectionParams) WithBody(body *service_model.V1ConnectionResponse) *CreateConnectionParams {
 	o.SetBody(body)
 	return o
 }
 
 // SetBody adds the body to the create connection params
-func (o *CreateConnectionParams) SetBody(body *service_model.V1Connection) {
+func (o *CreateConnectionParams) SetBody(body *service_model.V1ConnectionResponse) {
 	o.Body = body
 }
 

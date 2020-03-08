@@ -1,0 +1,117 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "polyaxon.fullname" . }}-platform-config
+  labels:
+    app: {{ template "polyaxon.fullname" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+    type: {{ .Values.types.core }}
+    role: {{ .Values.roles.config }}
+    app.kubernetes.io/name: {{ template "polyaxon.fullname" . }}-platform-config
+    app.kubernetes.io/instance: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    app.kubernetes.io/version: "{{ .Chart.Version }}"
+    app.kubernetes.io/part-of: {{ .Values.types.core }}
+    app.kubernetes.io/component: {{ .Values.types.config }}
+    app.kubernetes.io/managed-by: "helm"
+data:
+  POLYAXON_K8S_IN_CLUSTER: "false"
+  # Cluster
+  {{- if .Values.allowedHosts }}
+  POLYAXON_ALLOWED_HOSTS: {{ toJson .Values.allowedHosts | quote }}
+  {{- end }}
+  {{- if .Values.postgresql.enabled }}
+  POLYAXON_K8S_DB_SECRET_NAME: {{ template "pgsql.fullname" . }}
+  {{- else }}
+  POLYAXON_K8S_DB_SECRET_NAME: {{ template "pgsql.fullname" . }}-postgresql-secret
+  {{- end}}
+  # Admin
+  POLYAXON_ADMIN_NAME: {{ .Values.user.username | quote }}
+  POLYAXON_ADMIN_MAIL: {{ .Values.user.email | quote }}
+  POLYAXON_PASSWORD_LENGTH: {{ default "6" .Values.passwordLength | quote }}
+  POLYAXON_ADMIN_VIEW_ENABLED: {{ default "false" .Values.adminViewEnabled | quote }}
+  {{- if .Values.adminModels }}
+  POLYAXON_ADMIN_MODELS: {{ toJson .Values.adminModels | quote }}
+  {{- end }}
+  # Email
+  {{- if .Values.email.from }}
+  POLYAXON_EMAIL_FROM: {{ .Values.email.from | quote }}
+  {{- end }}
+  {{- if .Values.email.subjectPrefix }}
+  POLYAXON_EMAIL_SUBJECT_PREFIX: {{ .Values.email.subjectPrefix | quote }}
+  {{- end }}
+  POLYAXON_EMAIL_HOST: {{ .Values.email.host | quote }}
+  POLYAXON_EMAIL_PORT: {{ .Values.email.port | quote }}
+  POLYAXON_EMAIL_USE_TLS: {{ .Values.email.useTls | quote }}
+  {{- if .Values.email.hostUser }}
+  POLYAXON_EMAIL_HOST_USER: {{ .Values.email.hostUser | quote }}
+  {{- end }}
+  {{- if .Values.email.backend }}
+  POLYAXON_EMAIL_BACKEND: {{ .Values.email.backend | quote }}
+  {{- end }}
+  # Queues
+  POLYAXON_INTERVALS_RUNS_SCHEDULER: {{ .Values.intervals.runsScheduler | quote }}
+  POLYAXON_INTERVALS_OPERATIONS_DEFAULT_RETRY_DELAY: {{ .Values.intervals.operationsDefaultRetryDelay | quote }}
+  POLYAXON_INTERVALS_OPERATIONS_MAX_RETRY_DELAY: {{ .Values.intervals.operationsMaxRetryDelay | quote }}
+  # DB
+  POLYAXON_DB_USER: {{ template "pgsql.user" . }}
+  POLYAXON_DB_NAME: {{ template "pgsql.database" . }}
+  POLYAXON_DB_PORT: "{{ template "pgsql.port" . }}"
+  POLYAXON_DB_CONN_MAX_AGE: "{{ template "pgsql.connMaxAge" . }}"
+  POLYAXON_DB_HOST: "{{ template "pgsql.host" . }}"
+  # Broker
+  {{ if ( .Values.broker ) and eq .Values.broker "redis" -}}
+  POLYAXON_BROKER_BACKEND: {{ .Values.broker }}
+  POLYAXON_REDIS_CELERY_BROKER_URL: {{ template "redis.host" . }}:{{ template "redis.port" . }}/0
+  {{- else }}
+  POLYAXON_AMQP_URL: {{ template "rabbitmq.host" . }}:{{ template "rabbitmq.port" . }}
+  POLYAXON_RABBITMQ_USER: {{ template "rabbitmq.user" . }}
+  {{- end }}
+  # REDIS
+  POLYAXON_REDIS_CELERY_RESULT_BACKEND_URL: {{ template "redis.host" . }}:{{ template "redis.port" . }}/1
+  POLYAXON_REDIS_SESSIONS_URL: {{ template "redis.host" . }}:{{ template "redis.port" . }}/5
+  POLYAXON_REDIS_HEARTBEAT_URL: {{ template "redis.host" . }}:{{ template "redis.port" . }}/8
+  POLYAXON_REDIS_HOST: "{{ template "redis.host" . }}"
+  POLYAXON_REDIS_PORT: "{{ template "redis.port" . }}"
+  # Security Context
+  {{- if and .Values.securityContext.enabled }}
+  POLYAXON_SECURITY_CONTEXT_USER: {{ .Values.securityContext.user | quote }}
+  POLYAXON_SECURITY_CONTEXT_GROUP: {{ .Values.securityContext.group | quote }}
+  {{- end }}
+  # Spawner
+  POLYAXON_PUBLIC_PLUGIN_JOBS: {{ default false .Values.publicJobs | quote }}
+  POLYAXON_TRACKER_BACKEND: {{ default "noop" .Values.trackerBackend | quote }}
+  # Auth
+  {{- if .Values.ldap.enabled }}
+  POLYAXON_AUTH_LDAP: "true"
+  POLYAXON_AUTH_LDAP_SERVER_URI: {{ .Values.ldap.serverUri | quote }}
+  POLYAXON_AUTH_LDAP_GLOBAL_OPTIONS: {{ toJson .Values.ldap.globalOptions | quote }}
+  POLYAXON_AUTH_LDAP_CONNECTION_OPTIONS: {{ toJson .Values.ldap.connectionOptions | quote }}
+  POLYAXON_AUTH_LDAP_BIND_DN: {{ .Values.ldap.bindDN | quote }}
+  POLYAXON_AUTH_LDAP_USER_SEARCH_BASE_DN: {{ .Values.ldap.userSearchBaseDN | quote }}
+  POLYAXON_AUTH_LDAP_USER_SEARCH_FILTERSTR: {{ .Values.ldap.userSearchFilterStr | quote }}
+  POLYAXON_AUTH_LDAP_USER_DN_TEMPLATE: {{ .Values.ldap.userDNTemplate | quote }}
+  POLYAXON_AUTH_LDAP_START_TLS: {{ .Values.ldap.startTLS | quote }}
+  POLYAXON_AUTH_LDAP_USER_ATTR_MAP: {{ toJson .Values.ldap.userAttrMap | quote }}
+  POLYAXON_AUTH_LDAP_GROUP_SEARCH_BASE_DN: {{ .Values.ldap.groupSearchBaseDN | quote }}
+  POLYAXON_AUTH_LDAP_GROUP_SEARCH_GROUP_TYPE: {{ .Values.ldap.groupSearchGroupType | quote }}
+  {{- if .Values.ldap.requireGroup }}
+  POLYAXON_AUTH_LDAP_REQUIRE_GROUP: {{ .Values.ldap.requireGroup | quote }}
+  {{- end }}
+  {{- if .Values.ldap.denyGroup }}
+  POLYAXON_AUTH_LDAP_DENY_GROUP: {{ .Values.ldap.denyGroup | quote }}
+  {{- end }}
+  {{- end }}
+  {{ if and .Values.scheduler.enabled }}
+  {{- if (index .Values "rabbitmq-ha").enabled }}
+  POLYAXON_K8S_RABBITMQ_SECRET_NAME: {{ template "rabbitmq.fullname" . }}
+  {{- else }}
+  POLYAXON_K8S_RABBITMQ_SECRET_NAME: {{ template "polyaxon.fullname" . }}-rabbitmq-secret
+  {{- end}}
+  {{- if .Values.redis.enabled }}
+  POLYAXON_K8S_REDIS_SECRET_NAME: {{ template "redis.fullname" . }}
+  {{- else }}
+  POLYAXON_K8S_REDIS_SECRET_NAME: {{ template "polyaxon.fullname" . }}-redis-secret
+  {{- end}}
+  {{- end }}

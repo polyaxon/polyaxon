@@ -1,4 +1,4 @@
-// Copyright 2019 Polyaxon, Inc.
+// Copyright 2018-2020 Polyaxon, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,18 +20,18 @@ package service_model
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // V1EarlyStopping All Schemas message
+//
 // swagger:model v1EarlyStopping
 type V1EarlyStopping struct {
 
-	// average
-	Average *V1AverageStoppingPolicy `json:"average,omitempty"`
+	// diff
+	Diff *V1DiffStoppingPolicy `json:"diff,omitempty"`
 
 	// failure
 	Failure *V1FailureEarlyStopping `json:"failure,omitempty"`
@@ -50,7 +50,7 @@ type V1EarlyStopping struct {
 func (m *V1EarlyStopping) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	if err := m.validateAverage(formats); err != nil {
+	if err := m.validateDiff(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -76,16 +76,16 @@ func (m *V1EarlyStopping) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *V1EarlyStopping) validateAverage(formats strfmt.Registry) error {
+func (m *V1EarlyStopping) validateDiff(formats strfmt.Registry) error {
 
-	if swag.IsZero(m.Average) { // not required
+	if swag.IsZero(m.Diff) { // not required
 		return nil
 	}
 
-	if m.Average != nil {
-		if err := m.Average.Validate(formats); err != nil {
+	if m.Diff != nil {
+		if err := m.Diff.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("average")
+				return ve.ValidateName("diff")
 			}
 			return err
 		}

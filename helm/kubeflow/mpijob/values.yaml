@@ -1,2 +1,5 @@
 image: mpioperator/mpi-operator
-imageTag: 0.2.1
+imageTag: latest
+kubectlDelivery:
+  image: mpioperator/kubectl-delivery
+  imageTag: latest

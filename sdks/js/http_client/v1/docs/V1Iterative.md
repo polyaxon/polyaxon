@@ -3,9 +3,9 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**kind** | **String** |  | [optional] 
-**matrix** | **String** |  | [optional] 
-**n_iterations** | **Number** |  | [optional] 
+**kind** | **String** |  | [optional] [default to 'iterative']
+**params** | **{String: Object}** |  | [optional] 
+**num_iterations** | **Number** |  | [optional] 
 **container** | [**V1Container**](V1Container.md) |  | [optional] 
 **seed** | **Number** |  | [optional] 
 **concurrency** | **Number** |  | [optional] 

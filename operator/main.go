@@ -1,5 +1,5 @@
 /*
-Copyright 2019 Polyaxon, Inc.
+Copyright 2018-2020 Polyaxon, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -20,9 +20,6 @@ import (
 	"flag"
 	"os"
 
-	corev1alpha1 "github.com/polyaxon/polyaxon/operator/api/v1alpha1"
-	"github.com/polyaxon/polyaxon/operator/controllers"
-	"github.com/polyaxon/polyaxon/operator/controllers/config"
 	appsv1 "k8s.io/api/apps/v1"
 	batchv1 "k8s.io/api/batch/v1"
 	corev1 "k8s.io/api/core/v1"
@@ -32,26 +29,15 @@ import (
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
 
-	mpijobv1 "github.com/kubeflow/mpi-operator/pkg/apis/kubeflow/v1alpha2"
-	pytorchjobv1 "github.com/kubeflow/pytorch-operator/pkg/apis/pytorch/v1"
-	tfjobv1 "github.com/kubeflow/tf-operator/pkg/apis/tensorflow/v1"
+	// mpijobv1 "github.com/kubeflow/mpi-operator/pkg/apis/kubeflow/v1alpha2"
+	// pytorchjobv1 "github.com/kubeflow/pytorch-operator/pkg/apis/pytorch/v1"
+	// tfjobv1 "github.com/kubeflow/tf-operator/pkg/apis/tensorflow/v1"
 
-	// mxnetjobv1 "github.com/kubeflow/mxnet-operator/pkg/apis/mxnet/v1"
-
-	httpRuntime "github.com/go-openapi/runtime"
-	httptransport "github.com/go-openapi/runtime/client"
-	"github.com/go-openapi/strfmt"
-	polyaxonSDK "github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_client"
+	operationv1 "github.com/polyaxon/polyaxon/operator/api/v1"
+	"github.com/polyaxon/polyaxon/operator/controllers"
+	"github.com/polyaxon/polyaxon/operator/controllers/config"
 	// +kubebuilder:scaffold:imports
 )
-
-// PolyaxonAuth provides a custom auth info writer
-// TODO: Move to sdk
-func PolyaxonAuth(name, value string) httpRuntime.ClientAuthInfoWriter {
-	return httpRuntime.ClientAuthInfoWriterFunc(func(r httpRuntime.ClientRequest, _ strfmt.Registry) error {
-		return r.SetHeaderParam("Authorization", name+" "+value)
-	})
-}
 
 var (
 	scheme   = runtime.NewScheme()
@@ -60,106 +46,54 @@ var (
 
 func init() {
 	_ = clientgoscheme.AddToScheme(scheme)
-
 	_ = corev1.AddToScheme(scheme)
 	_ = appsv1.AddToScheme(scheme)
 	_ = batchv1.AddToScheme(scheme)
-	_ = corev1alpha1.AddToScheme(scheme)
 
-	if config.GetBoolEnv(config.TFfJobEnabled, false) {
-		tfjobv1.AddToScheme(scheme)
-	}
-	if config.GetBoolEnv(config.PytorchJobEnabled, false) {
-		pytorchjobv1.AddToScheme(scheme)
-	}
-	if config.GetBoolEnv(config.MpiJobEnabled, false) {
-		mpijobv1.AddToScheme(scheme)
-	}
+	_ = operationv1.AddToScheme(scheme)
 	// +kubebuilder:scaffold:scheme
 }
 
 func main() {
 	var metricsAddr string
 	var enableLeaderElection bool
-	var host string
-	var token string
+	var namespace string
 
 	// Allow to pass by env and override by flag
-	if config.GetStrEnv(config.AgentToken, "") != "" {
-		token = config.GetStrEnv(config.AgentToken, "")
-	}
-
-	if config.GetStrEnv(config.AgentAPIHost, "") != "" {
-		host = config.GetStrEnv(config.AgentAPIHost, "")
+	if config.GetStrEnv(config.Namespace, "") != "" {
+		namespace = config.GetStrEnv(config.Namespace, "")
 	}
 
 	flag.StringVar(&metricsAddr, "metrics-addr", ":8080", "The address the metric endpoint binds to.")
 	flag.BoolVar(&enableLeaderElection, "enable-leader-election", false,
 		"Enable leader election for controller manager. Enabling this will ensure there is only one active controller manager.")
-	flag.StringVar(&host, "host", host,
-		"Polyaxon host.")
-	flag.StringVar(&token, "token", token,
-		"Polyaxon token.")
+	flag.StringVar(&namespace, "namespace", "polyaxon", "The namespace to restrict the operator.")
 	flag.Parse()
 
-	ctrl.SetLogger(zap.Logger(true))
+	ctrl.SetLogger(zap.New(func(o *zap.Options) {
+		o.Development = true
+	}))
 
 	mgr, err := ctrl.NewManager(ctrl.GetConfigOrDie(), ctrl.Options{
 		Scheme:             scheme,
 		MetricsBindAddress: metricsAddr,
 		LeaderElection:     enableLeaderElection,
+		Port:               9443,
+		Namespace:          namespace,
 	})
 	if err != nil {
 		setupLog.Error(err, "unable to start manager")
 		os.Exit(1)
 	}
 
-	plxClient := polyaxonSDK.New(httptransport.New(host, "", []string{"http"}), strfmt.Default)
-	plxToken := PolyaxonAuth("Token", token)
-
-	if err = (&controllers.PolyaxonNotebookReconciler{
+	if err = (&controllers.OperationReconciler{
 		Client:    mgr.GetClient(),
-		Log:       ctrl.Log.WithName("controllers").WithName("PolyaxonNotebook"),
+		Log:       ctrl.Log.WithName("controllers").WithName("Operation"),
 		Scheme:    mgr.GetScheme(),
-		PlxClient: plxClient,
-		PlxToken:  plxToken,
+		Namespace: namespace,
 	}).SetupWithManager(mgr); err != nil {
-		setupLog.Error(err, "unable to create controller", "controller", "PolyaxonNotebook")
+		setupLog.Error(err, "unable to create controller", "controller", "Operation")
 		os.Exit(1)
-	}
-	if err = (&controllers.PolyaxonTensorboardReconciler{
-		Client:    mgr.GetClient(),
-		Log:       ctrl.Log.WithName("controllers").WithName("PolyaxonTensorboard"),
-		Scheme:    mgr.GetScheme(),
-		PlxClient: plxClient,
-		PlxToken:  plxToken,
-	}).SetupWithManager(mgr); err != nil {
-		setupLog.Error(err, "unable to create controller", "controller", "PolyaxonTensorboard")
-		os.Exit(1)
-	}
-	if err = (&controllers.PolyaxonJobReconciler{
-		Client:    mgr.GetClient(),
-		Log:       ctrl.Log.WithName("controllers").WithName("PolyaxonJob"),
-		Scheme:    mgr.GetScheme(),
-		PlxClient: plxClient,
-		PlxToken:  plxToken,
-	}).SetupWithManager(mgr); err != nil {
-		setupLog.Error(err, "unable to create controller", "controller", "PolyaxonJob")
-		os.Exit(1)
-	}
-
-	if config.KFEnabled() {
-
-		if err = (&controllers.PolyaxonKFReconciler{
-			Client:    mgr.GetClient(),
-			Log:       ctrl.Log.WithName("controllers").WithName("PolyaxonKF"),
-			Scheme:    mgr.GetScheme(),
-			PlxClient: plxClient,
-			PlxToken:  plxToken,
-		}).SetupWithManager(mgr); err != nil {
-			setupLog.Error(err, "unable to create controller", "controller", "PolyaxonKF")
-			os.Exit(1)
-		}
 	}
 	// +kubebuilder:scaffold:builder
 

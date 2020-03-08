@@ -1,0 +1,11 @@
+---
+version: 0.4
+
+kind: component
+
+run:
+  kind: job
+  container:
+    image: test:latest
+    command: [docker, build, /plx-context/build/Dockerfile]
+...

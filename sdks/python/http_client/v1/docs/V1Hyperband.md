@@ -3,9 +3,9 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**kind** | **str** |  | [optional] 
-**matrix** | **str** |  | [optional] 
-**max_iter** | **int** |  | [optional] 
+**kind** | **str** |  | [optional] [default to 'hyperband']
+**params** | **dict(str, object)** |  | [optional] 
+**max_iterations** | **int** |  | [optional] 
 **eta** | **int** |  | [optional] 
 **resource** | [**V1OptimizationResource**](V1OptimizationResource.md) |  | [optional] 
 **metric** | [**V1OptimizationMetric**](V1OptimizationMetric.md) |  | [optional] 

@@ -1,0 +1,75 @@
+Polyaxon is currently running:
+
+
+1. Get the application URL by running these commands:
+
+{{- if .Values.ingress.enabled -}}
+
+    {{- if contains "minikube" .Values.deploymentType }}
+    export POLYAXON_IP=$(minikube ip)
+    {{- else }}
+    export POLYAXON_IP={{ .Values.ingress.hostName }}
+    {{- end }}
+    {{- if (not (empty .Values.ingress.tls)) }}
+    export POLYAXON_PORT=443
+    {{- else }}
+    export POLYAXON_PORT=80
+    {{- end }}
+
+    echo http://$POLYAXON_IP:$POLYAXON_PORT
+
+{{- else if contains "minikube" .Values.deploymentType }}
+
+    export POLYAXON_IP=$(minikube ip)
+
+    export POLYAXON_PORT=$(kubectl get --namespace {{ .Release.Namespace }} -o jsonpath="{.spec.ports[0].nodePort}" services {{ template "polyaxon.fullname" . }}-gateway)
+
+    echo http://$POLYAXON_IP:$POLYAXON_PORT
+
+{{- else }}
+
+{{- if contains "NodePort" .Values.gateway.service.type }}
+
+  export POLYAXON_PORT=$(kubectl get --namespace {{ .Release.Namespace }} -o jsonpath="{.spec.ports[0].nodePort}" services {{ template "polyaxon.fullname" . }}-gateway)
+
+  export POLYAXON_IP=$(kubectl get nodes --namespace {{ .Release.Namespace }} -o jsonpath="{.items[0].status.addresses[1].address}")
+
+  echo http://$POLYAXON_IP:$POLYAXON_PORT
+
+{{- else if contains "LoadBalancer" .Values.gateway.service.type }}
+
+     NOTE: It may take a few minutes for the LoadBalancer IP to be available.
+           You can watch the status by running:
+           'kubectl get --namespace {{ .Release.Namespace }} svc -w {{ template "polyaxon.fullname" . }}-gateway'
+
+
+  export POLYAXON_IP=$(kubectl get svc --namespace {{ .Release.Namespace }} {{ template "polyaxon.fullname" . }}-gateway -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+
+  export POLYAXON_PORT={{ .Values.gateway.service.port }}
+
+  echo http://$POLYAXON_IP:$POLYAXON_PORT
+
+{{- else if contains "ClusterIP" .Values.gateway.service.type }}
+
+  export POLYAXON_IP=<YOUR HOSTNAME/IP>
+  export POLYAXON_PORT={{ .Values.gateway.service.port }}
+
+  echo http://$POLYAXON_IP:$POLYAXON_PORT
+
+{{- end }}
+{{- end }}
+
+2. Setup your cli by running theses commands:
+
+  {{- if (not (empty .Values.ingress.tls)) }}
+  polyaxon config set --host=$POLYAXON_IP --port=$POLYAXON_PORT --use_https=true
+  {{- else }}
+  polyaxon config set --host=$POLYAXON_IP --port=$POLYAXON_PORT
+  {{- end }}
+
+3. Log in with superuser
+
+  USER: {{ .Values.user.username }}
+  PASSWORD: Get login password with
+
+    kubectl get secret --namespace {{ .Release.Namespace }} {{ template "polyaxon.fullname" . }}-secret -o jsonpath="{.data.POLYAXON_ADMIN_PASSWORD}" | base64 --decode

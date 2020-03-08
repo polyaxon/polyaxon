@@ -1,4 +1,4 @@
-// Copyright 2019 Polyaxon, Inc.
+// Copyright 2018-2020 Polyaxon, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,8 +20,7 @@ package service_model
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -29,6 +28,7 @@ import (
 // Early stopping based on failure config.
 // this policy stops based on a percentage of
 // failed runs at every evaluation.
+//
 // swagger:model v1FailureEarlyStopping
 type V1FailureEarlyStopping struct {
 
@@ -36,7 +36,7 @@ type V1FailureEarlyStopping struct {
 	EvaluationInterval string `json:"evaluation_interval,omitempty"`
 
 	// Kind of this metric early stopping policy, should be equal to "failure_early_stopping"
-	Kind string `json:"kind,omitempty"`
+	Kind *string `json:"kind,omitempty"`
 
 	// The percentage failed runs, at each evaluation interval.
 	// e.g. 1 - 99.

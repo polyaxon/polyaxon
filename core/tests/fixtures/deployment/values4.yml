@@ -1,0 +1,102 @@
+rbac:
+  enabled: true
+
+environment: staging
+
+ingress:
+  enabled: true
+
+serviceType: ClusterIP
+
+user:
+  password: test
+
+artifactsStore:
+  name: test
+  kind: volume_claim
+  schema: {"volumeClaim": "test", "mountPath": "/tmp"}
+
+connections:
+  - name: gcs
+    kind: gcs
+    schema: {"bucket": "gs://test-logs"}
+    secret:
+      name: gcs-secret
+  - name: azure
+    kind: wasb
+    schema: {"bucket": "wasbs://logs@test.blob.core.windows.net/"}
+    secret:
+      name: az-secret
+
+nodeSelector:
+  polyaxon: core
+
+api:
+  replicas: 1
+  imageTag: latest
+  imagePullPolicy: Always
+
+scheduler:
+  concurrency: 10
+  replicas: 1
+  imageTag: latest
+  imagePullPolicy: Always
+
+worker:
+  replicas: 1
+  imageTag: latest
+  imagePullPolicy: Always
+
+beat:
+  imageTag: latest
+  imagePullPolicy: Always
+
+hooks:
+  loadFixtures: true
+  imageTag: latest
+  imagePullPolicy: Always
+
+tablesHook:
+  imageTag: latest
+
+timezone: 'Europe/Berlin'
+
+reposAccessToken: sdfdsfdsfsdfsdfsdfsdf
+hostName: 19.3.50.12
+allowedHosts:
+  - 127.0.0.1
+  - 123.123.12.3
+logLevel: INFO
+adminModels: ['build_jobs', 'experiments']
+
+ldap:
+  serverUri: https://foo.bar
+  globalOptions: {"foo": "bar"}
+  connectionOptions: {"foo": "bar"}
+  bindDN: foo
+  bindPassword: foo
+  userSearchBaseDN: foo
+  userSearchFilterStr: foo
+  userDNTemplate: foo
+  startTLS: false
+  userAttrMap: {}
+  groupSearchBaseDN:
+  groupSearchGroupType:
+  requireGroup:
+  denyGroup:
+
+ssl:
+  enabled: true
+  secretName: 'polyaxon-cert'
+  path: /etc/tls
+
+dns:
+  backend: "coredns"
+  customCluster: "custom.cluster.name"
+
+securityContext:
+  enabled: true
+  user: 2222
+  group: 2222
+
+passwordLength: 4

@@ -1,4 +1,4 @@
-// Copyright 2019 Polyaxon, Inc.
+// Copyright 2018-2020 Polyaxon, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,24 +20,105 @@ package service_model
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
+	"strconv"
 
+	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // V1Service Service specification
+//
 // swagger:model v1Service
 type V1Service struct {
 
-	// enabled
-	Enabled bool `json:"enabled,omitempty"`
+	// Optional connections section
+	Connections []string `json:"connections"`
 
-	// ports
+	// Optional container to notification
+	Container V1Container `json:"container,omitempty"`
+
+	// Optional environment section
+	Environment *V1Environment `json:"environment,omitempty"`
+
+	// Optional init connections/containers section
+	Init []*V1Init `json:"init"`
+
+	// Optional component kind, should be equal to "service"
+	Kind *string `json:"kind,omitempty"`
+
+	// Optional service section
 	Ports []int32 `json:"ports"`
+
+	// Rewrite path to remove polyaxon base url(i.e. /v1/services/namespace/owner/project/).
+	// Default is false, the service shoud handle a base url.
+	RewritePath bool `json:"rewritePath,omitempty"`
+
+	// Optional sidecars section
+	Sidecars []V1Container `json:"sidecars"`
+
+	// Volumes is a list of volumes that can be mounted.
+	Volumes []V1Volume `json:"volumes"`
 }
 
 // Validate validates this v1 service
 func (m *V1Service) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.validateEnvironment(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateInit(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *V1Service) validateEnvironment(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Environment) { // not required
+		return nil
+	}
+
+	if m.Environment != nil {
+		if err := m.Environment.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("environment")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1Service) validateInit(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Init) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(m.Init); i++ {
+		if swag.IsZero(m.Init[i]) { // not required
+			continue
+		}
+
+		if m.Init[i] != nil {
+			if err := m.Init[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("init" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
 	return nil
 }
 

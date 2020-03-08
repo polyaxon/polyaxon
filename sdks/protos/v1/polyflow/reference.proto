@@ -1,0 +1,65 @@
+/**
+ * Copyright 2018-2020 Polyaxon, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+*/
+
+syntax = "proto3";
+
+package v1;
+
+// Hub reference specification
+message HubReference {
+    // Kind of reference, should be equal to "hub_ref"
+    string kind = 1;
+
+    // Value
+    string name = 2;
+}
+
+// Dag reference specification
+message DagReference {
+    // Kind of reference, should be equal to "dag_ref"
+    string kind = 1;
+
+    // Value
+    string name = 2;
+}
+
+// Url reference specification
+message UrlReference {
+    // Kind of reference, should be equal to "url_ref"
+    string kind = 1;
+
+    // Value
+    string url = 2;
+}
+
+// Path reference specification
+message PathReference {
+    // Kind of reference, should be equal to "path_ref"
+    string kind = 1;
+
+    // Value
+    string path = 2;
+}
+
+// Reference specification
+message Reference {
+    oneof reference {
+        HubReference hub_reference = 1;
+        DagReference dag_reference = 2;
+        UrlReference url_reference = 3;
+        PathReference path_reference = 4;
+    }
+}

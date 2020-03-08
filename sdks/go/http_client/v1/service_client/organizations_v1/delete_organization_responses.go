@@ -1,4 +1,4 @@
-// Copyright 2019 Polyaxon, Inc.
+// Copyright 2018-2020 Polyaxon, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -24,8 +24,9 @@ import (
 	"io"
 
 	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/strfmt"
 
-	strfmt "github.com/go-openapi/strfmt"
+	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_model"
 )
 
 // DeleteOrganizationReader is a Reader for the DeleteOrganization structure.
@@ -60,9 +61,15 @@ func (o *DeleteOrganizationReader) ReadResponse(response runtime.ClientResponse,
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		result := NewDeleteOrganizationDefault(response.Code())
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		if response.Code()/100 == 2 {
+			return result, nil
+		}
+		return nil, result
 	}
 }
 
@@ -174,6 +181,48 @@ func (o *DeleteOrganizationNotFound) readResponse(response runtime.ClientRespons
 
 	// response payload
 	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
+// NewDeleteOrganizationDefault creates a DeleteOrganizationDefault with default headers values
+func NewDeleteOrganizationDefault(code int) *DeleteOrganizationDefault {
+	return &DeleteOrganizationDefault{
+		_statusCode: code,
+	}
+}
+
+/*DeleteOrganizationDefault handles this case with default header values.
+
+An unexpected error response
+*/
+type DeleteOrganizationDefault struct {
+	_statusCode int
+
+	Payload *service_model.RuntimeError
+}
+
+// Code gets the status code for the delete organization default response
+func (o *DeleteOrganizationDefault) Code() int {
+	return o._statusCode
+}
+
+func (o *DeleteOrganizationDefault) Error() string {
+	return fmt.Sprintf("[DELETE /api/v1/orgs/{owner}][%d] DeleteOrganization default  %+v", o._statusCode, o.Payload)
+}
+
+func (o *DeleteOrganizationDefault) GetPayload() *service_model.RuntimeError {
+	return o.Payload
+}
+
+func (o *DeleteOrganizationDefault) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(service_model.RuntimeError)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 

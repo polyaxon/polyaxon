@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 **metric** | **String** | Metric name to use for early stopping. |  [optional]
 **value** | **String** | Metric value to use for the condition. |  [optional]
 **optimization** | [**V1Optimization**](V1Optimization.md) | Optimization to do: maximize or minimize. |  [optional]
-**policy** | **List&lt;Object&gt;** |  |  [optional]
+**policy** | **Object** |  |  [optional]
 
 
 

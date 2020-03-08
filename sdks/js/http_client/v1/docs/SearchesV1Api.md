@@ -4,20 +4,20 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**createSearch**](SearchesV1Api.md#createSearch) | **POST** /api/v1/orgs/{owner}/searches | List runs
-[**deleteSearch**](SearchesV1Api.md#deleteSearch) | **DELETE** /api/v1/orgs/{owner}/searches/{uuid} | Patch run
-[**getSearch**](SearchesV1Api.md#getSearch) | **GET** /api/v1/orgs/{owner}/searches/{uuid} | Create new run
-[**listSearchNames**](SearchesV1Api.md#listSearchNames) | **GET** /api/v1/orgs/{owner}/searches/names | List bookmarked runs for user
-[**listSearches**](SearchesV1Api.md#listSearches) | **GET** /api/v1/orgs/{owner}/searches | List archived runs for user
-[**patchSearch**](SearchesV1Api.md#patchSearch) | **PATCH** /api/v1/orgs/{owner}/searches/{search.uuid} | Update run
-[**updateSearch**](SearchesV1Api.md#updateSearch) | **PUT** /api/v1/orgs/{owner}/searches/{search.uuid} | Get run
+[**createSearch**](SearchesV1Api.md#createSearch) | **POST** /api/v1/orgs/{owner}/searches | Create search
+[**deleteSearch**](SearchesV1Api.md#deleteSearch) | **DELETE** /api/v1/orgs/{owner}/searches/{uuid} | Delete search
+[**getSearch**](SearchesV1Api.md#getSearch) | **GET** /api/v1/orgs/{owner}/searches/{uuid} | Get search
+[**listSearchNames**](SearchesV1Api.md#listSearchNames) | **GET** /api/v1/orgs/{owner}/searches/names | List search names
+[**listSearches**](SearchesV1Api.md#listSearches) | **GET** /api/v1/orgs/{owner}/searches | List searches
+[**patchSearch**](SearchesV1Api.md#patchSearch) | **PATCH** /api/v1/orgs/{owner}/searches/{search.uuid} | Patch search
+[**updateSearch**](SearchesV1Api.md#updateSearch) | **PUT** /api/v1/orgs/{owner}/searches/{search.uuid} | Update search
 
 
 <a name="createSearch"></a>
 # **createSearch**
 > V1Search createSearch(owner, body)
 
-List runs
+Create search
 
 ### Example
 ```javascript
@@ -71,7 +71,7 @@ Name | Type | Description  | Notes
 # **deleteSearch**
 > deleteSearch(owner, uuid)
 
-Patch run
+Delete search
 
 ### Example
 ```javascript
@@ -88,7 +88,7 @@ var apiInstance = new PolyaxonSdk.SearchesV1Api();
 
 var owner = "owner_example"; // String | Owner of the namespace
 
-var uuid = "uuid_example"; // String | Unique integer identifier of the entity
+var uuid = "uuid_example"; // String | Uuid identifier of the entity
 
 
 var callback = function(error, data, response) {
@@ -106,7 +106,7 @@ apiInstance.deleteSearch(owner, uuid, callback);
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace | 
- **uuid** | **String**| Unique integer identifier of the entity | 
+ **uuid** | **String**| Uuid identifier of the entity | 
 
 ### Return type
 
@@ -125,7 +125,7 @@ null (empty response body)
 # **getSearch**
 > V1Search getSearch(owner, uuid)
 
-Create new run
+Get search
 
 ### Example
 ```javascript
@@ -142,7 +142,7 @@ var apiInstance = new PolyaxonSdk.SearchesV1Api();
 
 var owner = "owner_example"; // String | Owner of the namespace
 
-var uuid = "uuid_example"; // String | Unique integer identifier of the entity
+var uuid = "uuid_example"; // String | Uuid identifier of the entity
 
 
 var callback = function(error, data, response) {
@@ -160,7 +160,7 @@ apiInstance.getSearch(owner, uuid, callback);
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace | 
- **uuid** | **String**| Unique integer identifier of the entity | 
+ **uuid** | **String**| Uuid identifier of the entity | 
 
 ### Return type
 
@@ -179,7 +179,7 @@ Name | Type | Description  | Notes
 # **listSearchNames**
 > V1ListSearchesResponse listSearchNames(owner, opts)
 
-List bookmarked runs for user
+List search names
 
 ### Example
 ```javascript
@@ -240,7 +240,7 @@ Name | Type | Description  | Notes
 # **listSearches**
 > V1ListSearchesResponse listSearches(owner, opts)
 
-List archived runs for user
+List searches
 
 ### Example
 ```javascript
@@ -301,7 +301,7 @@ Name | Type | Description  | Notes
 # **patchSearch**
 > V1Search patchSearch(owner, search_uuid, body)
 
-Update run
+Patch search
 
 ### Example
 ```javascript
@@ -358,7 +358,7 @@ Name | Type | Description  | Notes
 # **updateSearch**
 > V1Search updateSearch(owner, search_uuid, body)
 
-Get run
+Update search
 
 ### Example
 ```javascript

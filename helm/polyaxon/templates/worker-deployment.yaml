@@ -1,0 +1,68 @@
+{{- if .Values.worker.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "polyaxon.fullname" . }}-worker
+  annotations:
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    checksum/common-config: {{ include (print $.Template.BasePath "/common-cm.yaml") . | sha256sum }}
+    checksum/platform-config: {{ include (print $.Template.BasePath "/platform-cm.yaml") . | sha256sum }}
+    checksum/platform-secrets: {{ include (print $.Template.BasePath "/platform-secrets.yaml") . | sha256sum }}
+  labels:
+    app: {{ template "polyaxon.fullname" . }}-worker
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+    type: {{ .Values.types.core }}
+    role: {{ .Values.roles.worker }}
+    app.kubernetes.io/name: {{ template "polyaxon.fullname" . }}-worker
+    app.kubernetes.io/instance: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    app.kubernetes.io/version: "{{ .Chart.Version }}"
+    app.kubernetes.io/part-of: {{ .Values.types.core }}
+    app.kubernetes.io/component: {{ .Values.roles.worker }}
+    app.kubernetes.io/managed-by: "helm"
+spec:
+  replicas: {{ .Values.worker.replicas }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ template "polyaxon.fullname" . }}-worker
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      annotations:
+        chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+        checksum/common-config: {{ include (print $.Template.BasePath "/common-cm.yaml") . | sha256sum }}
+        checksum/platform-config: {{ include (print $.Template.BasePath "/platform-cm.yaml") . | sha256sum }}
+        checksum/platform-secrets: {{ include (print $.Template.BasePath "/platform-secrets.yaml") . | sha256sum }}
+      labels:
+        app: {{ template "polyaxon.fullname" . }}-worker
+        release: "{{ .Release.Name }}"
+        type: {{ .Values.types.core }}
+        role: {{ .Values.roles.worker }}
+        app.kubernetes.io/name: {{ template "polyaxon.fullname" . }}-worker
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+{{ include "securityContext" . | indent 6 }}
+{{ include "config.scheduling" . | indent 6 }}
+{{ include "config.sa" . | indent 6 }}
+{{ include "config.imagePullSecrets" . | indent 6}}
+      containers:
+      - name: {{ .Chart.Name }}-worker
+        image: "{{ .Values.worker.image }}:{{ .Values.worker.imageTag }}"
+        imagePullPolicy: {{ .Values.worker.imagePullPolicy }}
+        args: ["--concurrency={{ .Values.worker.concurrency }}"]
+        envFrom:
+{{ include "config.envFrom.common" . | indent 8 }}
+{{ include "config.envFrom.secret" . | indent 8 }}
+{{ include "config.envFrom.platform" . | indent 8 }}
+        env:
+{{ include "config.envs" . | indent 8 }}
+{{ include "config.celery.worker" . | indent 8 }}
+        resources:
+          requests:
+{{ toYaml .Values.worker.resources.requests | indent 12 }}
+          {{- if .Values.limitResources }}
+          limits:
+{{ toYaml .Values.worker.resources.limits | indent 12 }}
+          {{- end }}
+{{- end }}

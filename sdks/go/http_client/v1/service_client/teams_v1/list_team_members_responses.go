@@ -1,4 +1,4 @@
-// Copyright 2019 Polyaxon, Inc.
+// Copyright 2018-2020 Polyaxon, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -24,10 +24,9 @@ import (
 	"io"
 
 	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/strfmt"
 
-	strfmt "github.com/go-openapi/strfmt"
-
-	service_model "github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_model"
+	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_model"
 )
 
 // ListTeamMembersReader is a Reader for the ListTeamMembers structure.
@@ -62,9 +61,15 @@ func (o *ListTeamMembersReader) ReadResponse(response runtime.ClientResponse, co
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		result := NewListTeamMembersDefault(response.Code())
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		if response.Code()/100 == 2 {
+			return result, nil
+		}
+		return nil, result
 	}
 }
 
@@ -188,6 +193,48 @@ func (o *ListTeamMembersNotFound) readResponse(response runtime.ClientResponse, 
 
 	// response payload
 	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
+// NewListTeamMembersDefault creates a ListTeamMembersDefault with default headers values
+func NewListTeamMembersDefault(code int) *ListTeamMembersDefault {
+	return &ListTeamMembersDefault{
+		_statusCode: code,
+	}
+}
+
+/*ListTeamMembersDefault handles this case with default header values.
+
+An unexpected error response
+*/
+type ListTeamMembersDefault struct {
+	_statusCode int
+
+	Payload *service_model.RuntimeError
+}
+
+// Code gets the status code for the list team members default response
+func (o *ListTeamMembersDefault) Code() int {
+	return o._statusCode
+}
+
+func (o *ListTeamMembersDefault) Error() string {
+	return fmt.Sprintf("[GET /api/v1/orgs/{owner}/teams/{team}/members][%d] ListTeamMembers default  %+v", o._statusCode, o.Payload)
+}
+
+func (o *ListTeamMembersDefault) GetPayload() *service_model.RuntimeError {
+	return o.Payload
+}
+
+func (o *ListTeamMembersDefault) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(service_model.RuntimeError)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 
