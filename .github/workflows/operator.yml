@@ -1,0 +1,26 @@
+name: Polyaxon Operator
+
+on: [push]
+
+jobs:
+  operator:
+#    if: github.event.comment.body == 'test worker'
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - uses: engineerd/setup-kind@v0.3.0
+      with:
+        version: "v0.7.0"
+    - name: test
+      env:
+        KUBEBUILDER_CONTROLPLANE_START_TIMEOUT: 600s
+      run: |
+        os=$(go env GOOS)
+        arch=$(go env GOARCH)
+        # download kubebuilder and extract it to tmp
+        curl -L https://go.kubebuilder.io/dl/2.3.0/${os}/${arch} | tar -xz -C /tmp/
+        sudo mv /tmp/kubebuilder_2.3.0_${os}_${arch} /usr/local/kubebuilder
+        export PATH=$PATH:/usr/local/kubebuilder/bin
+        cd operator
+        go install
+        make github-action
