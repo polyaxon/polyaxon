@@ -117,14 +117,14 @@ def _run(ctx, name, owner, project_name, description, tags, specification, log):
 
     # Create Build
     project = "{}.{}".format(owner, project_name)
-    build_job = Run(project=project, track_logs=False)
+    build_job = Run(project=project)
 
     specification = CompiledOperationSpecification.apply_context(specification)
     content = specification.to_dict(dump=True)
     build_job.create(name=name, description=description, tags=tags, content=content)
     image = _create_docker_build(build_job, specification, project)
 
-    experiment = Run(project=project, track_logs=False)
+    experiment = Run(project=project)
     experiment.create(name=name, tags=tags, description=description, content=content)
 
     cmd_args = ["run", "--rm"]
@@ -141,7 +141,7 @@ def _run(ctx, name, owner, project_name, description, tags, specification, log):
     cmd_args += [image]
 
     # Add cmd.run
-    command, args = specification.container.get_container_command_args()
+    _, args = specification.container.get_container_command_args()
     for arg in args:
         cmd_args += arg
     try:
