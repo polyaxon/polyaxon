@@ -15,6 +15,6 @@
 # limitations under the License.
 
 
-class RefMixin(object):
+class RefMixin:
     def get_kind_value(self):
         raise NotImplementedError

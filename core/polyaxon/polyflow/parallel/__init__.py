@@ -48,7 +48,7 @@ class ParallelSchema(BaseOneOfSchema):
 
 class ParallelMixin(object):
     def get_parallel_kind(self):
-        raise NotImplementedError()
+        raise NotImplementedError
 
     @property
     def has_mapping_parallel(self):

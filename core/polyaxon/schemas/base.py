@@ -49,7 +49,7 @@ class BaseSchema(Schema):
 
     @staticmethod
     def schema_config():
-        raise NotImplementedError()
+        raise NotImplementedError
 
 
 class BaseCamelSchema(BaseSchema):

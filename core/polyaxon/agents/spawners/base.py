@@ -48,4 +48,4 @@ class BaseSpawner:
 
     @property
     def k8s_manager(self):
-        raise NotImplemented
+        raise NotImplementedError

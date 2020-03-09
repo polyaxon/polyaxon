@@ -432,7 +432,7 @@ class BaseConverter(ConverterAbstract):
         )
 
     def get_resource(self, **kwargs) -> Dict:
-        raise NotImplementedError()
+        raise NotImplementedError
 
 
 class PlatformConverterMixin(ConverterAbstract):

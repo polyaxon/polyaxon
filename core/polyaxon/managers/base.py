@@ -116,7 +116,7 @@ class BaseConfigManager(object):
 
     @classmethod
     def get_config_from_env(cls, **kwargs):
-        raise NotImplementedError()
+        raise NotImplementedError
 
     @classmethod
     def get_value(cls, key):

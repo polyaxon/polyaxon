@@ -43,7 +43,7 @@ class ScheduleSchema(BaseOneOfSchema):
 
 class ScheduleMixin(object):
     def get_schedule_kind(self):
-        raise NotImplementedError()
+        raise NotImplementedError
 
     @property
     def has_interval_schedule(self):

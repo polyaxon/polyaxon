@@ -57,7 +57,7 @@ class RunSchema(BaseOneOfSchema):
 
 class RunMixin(object):
     def get_run_kind(self):
-        raise NotImplementedError()
+        raise NotImplementedError
 
     @property
     def is_job_run(self):

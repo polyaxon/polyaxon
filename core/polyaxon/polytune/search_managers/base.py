@@ -29,4 +29,4 @@ class BaseManager:
         self.config = config
 
     def get_suggestions(self, **kwargs):
-        raise NotImplementedError  # noqa
+        raise NotImplementedError
