@@ -1,4 +1,4 @@
-// Copyright 2019 Polyaxon, Inc.
+// Copyright 2018-2020 Polyaxon, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -24,10 +24,9 @@ import (
 	"io"
 
 	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/strfmt"
 
-	strfmt "github.com/go-openapi/strfmt"
-
-	service_model "github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_model"
+	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_model"
 )
 
 // PatchConnectionReader is a Reader for the PatchConnection structure.
@@ -62,9 +61,15 @@ func (o *PatchConnectionReader) ReadResponse(response runtime.ClientResponse, co
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		result := NewPatchConnectionDefault(response.Code())
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		if response.Code()/100 == 2 {
+			return result, nil
+		}
+		return nil, result
 	}
 }
 
@@ -78,20 +83,20 @@ func NewPatchConnectionOK() *PatchConnectionOK {
 A successful response.
 */
 type PatchConnectionOK struct {
-	Payload *service_model.V1Connection
+	Payload *service_model.V1ConnectionResponse
 }
 
 func (o *PatchConnectionOK) Error() string {
 	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/connections/{connection.uuid}][%d] patchConnectionOK  %+v", 200, o.Payload)
 }
 
-func (o *PatchConnectionOK) GetPayload() *service_model.V1Connection {
+func (o *PatchConnectionOK) GetPayload() *service_model.V1ConnectionResponse {
 	return o.Payload
 }
 
 func (o *PatchConnectionOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
-	o.Payload = new(service_model.V1Connection)
+	o.Payload = new(service_model.V1ConnectionResponse)
 
 	// response payload
 	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
@@ -188,6 +193,48 @@ func (o *PatchConnectionNotFound) readResponse(response runtime.ClientResponse, 
 
 	// response payload
 	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
+// NewPatchConnectionDefault creates a PatchConnectionDefault with default headers values
+func NewPatchConnectionDefault(code int) *PatchConnectionDefault {
+	return &PatchConnectionDefault{
+		_statusCode: code,
+	}
+}
+
+/*PatchConnectionDefault handles this case with default header values.
+
+An unexpected error response
+*/
+type PatchConnectionDefault struct {
+	_statusCode int
+
+	Payload *service_model.RuntimeError
+}
+
+// Code gets the status code for the patch connection default response
+func (o *PatchConnectionDefault) Code() int {
+	return o._statusCode
+}
+
+func (o *PatchConnectionDefault) Error() string {
+	return fmt.Sprintf("[PATCH /api/v1/orgs/{owner}/connections/{connection.uuid}][%d] PatchConnection default  %+v", o._statusCode, o.Payload)
+}
+
+func (o *PatchConnectionDefault) GetPayload() *service_model.RuntimeError {
+	return o.Payload
+}
+
+func (o *PatchConnectionDefault) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(service_model.RuntimeError)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 

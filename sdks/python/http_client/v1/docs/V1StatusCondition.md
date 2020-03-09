@@ -3,7 +3,7 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**type** | **str** |  | [optional] 
+**type** | [**V1Statuses**](V1Statuses.md) |  | [optional] 
 **status** | **str** |  | [optional] 
 **reason** | **str** |  | [optional] 
 **message** | **str** |  | [optional] 

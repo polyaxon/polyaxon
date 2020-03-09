@@ -1,4 +1,4 @@
-// Copyright 2019 Polyaxon, Inc.
+// Copyright 2018-2020 Polyaxon, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -27,8 +27,7 @@ import (
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
 	cr "github.com/go-openapi/runtime/client"
-
-	strfmt "github.com/go-openapi/strfmt"
+	"github.com/go-openapi/strfmt"
 )
 
 // NewDeleteRunParams creates a new DeleteRunParams object
@@ -81,12 +80,12 @@ type DeleteRunParams struct {
 	*/
 	Owner string
 	/*Project
-	  Project where the experiement will be assigned
+	  Project where the notification will be assigned
 
 	*/
 	Project string
 	/*UUID
-	  Unique integer identifier of the entity
+	  Uuid identifier of the entity
 
 	*/
 	UUID string

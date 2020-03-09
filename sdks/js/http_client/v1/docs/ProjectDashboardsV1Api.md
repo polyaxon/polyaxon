@@ -4,21 +4,21 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**createProjectDashboard**](ProjectDashboardsV1Api.md#createProjectDashboard) | **POST** /api/v1/{owner}/{project}/dashboards | List runs
-[**deleteProjectDashboard**](ProjectDashboardsV1Api.md#deleteProjectDashboard) | **DELETE** /api/v1/{owner}/{project}/dashboards/{uuid} | Patch run
-[**getProjectDashboard**](ProjectDashboardsV1Api.md#getProjectDashboard) | **GET** /api/v1/{owner}/{project}/dashboards/{uuid} | Create new run
-[**listProjectDashboardNames**](ProjectDashboardsV1Api.md#listProjectDashboardNames) | **GET** /api/v1/{owner}/{project}/dashboards/names | List bookmarked runs for user
-[**listProjectDashboards**](ProjectDashboardsV1Api.md#listProjectDashboards) | **GET** /api/v1/{owner}/{project}/dashboards | List archived runs for user
-[**patchProjectDashboard**](ProjectDashboardsV1Api.md#patchProjectDashboard) | **PATCH** /api/v1/{owner}/{project}/dashboards/{dashboard.uuid} | Update run
-[**promoteProjectDashboard**](ProjectDashboardsV1Api.md#promoteProjectDashboard) | **POST** /api/v1/{owner}/{project}/dashboards/{dashboard.uuid}/promote | Delete run
-[**updateProjectDashboard**](ProjectDashboardsV1Api.md#updateProjectDashboard) | **PUT** /api/v1/{owner}/{project}/dashboards/{dashboard.uuid} | Get run
+[**createProjectDashboard**](ProjectDashboardsV1Api.md#createProjectDashboard) | **POST** /api/v1/{owner}/{project}/dashboards | Create project dashboard
+[**deleteProjectDashboard**](ProjectDashboardsV1Api.md#deleteProjectDashboard) | **DELETE** /api/v1/{owner}/{project}/dashboards/{uuid} | Delete project dashboard
+[**getProjectDashboard**](ProjectDashboardsV1Api.md#getProjectDashboard) | **GET** /api/v1/{owner}/{project}/dashboards/{uuid} | Get project dashboard
+[**listProjectDashboardNames**](ProjectDashboardsV1Api.md#listProjectDashboardNames) | **GET** /api/v1/{owner}/{project}/dashboards/names | List project dashboard
+[**listProjectDashboards**](ProjectDashboardsV1Api.md#listProjectDashboards) | **GET** /api/v1/{owner}/{project}/dashboards | List project dashboards
+[**patchProjectDashboard**](ProjectDashboardsV1Api.md#patchProjectDashboard) | **PATCH** /api/v1/{owner}/{project}/dashboards/{dashboard.uuid} | Patch project dashboard
+[**promoteProjectDashboard**](ProjectDashboardsV1Api.md#promoteProjectDashboard) | **POST** /api/v1/{owner}/{project}/dashboards/{dashboard.uuid}/promote | Promote project dashboard
+[**updateProjectDashboard**](ProjectDashboardsV1Api.md#updateProjectDashboard) | **PUT** /api/v1/{owner}/{project}/dashboards/{dashboard.uuid} | Update project dashboard
 
 
 <a name="createProjectDashboard"></a>
 # **createProjectDashboard**
 > V1Dashboard createProjectDashboard(owner, project, body)
 
-List runs
+Create project dashboard
 
 ### Example
 ```javascript
@@ -75,7 +75,7 @@ Name | Type | Description  | Notes
 # **deleteProjectDashboard**
 > deleteProjectDashboard(owner, project, uuid)
 
-Patch run
+Delete project dashboard
 
 ### Example
 ```javascript
@@ -92,9 +92,9 @@ var apiInstance = new PolyaxonSdk.ProjectDashboardsV1Api();
 
 var owner = "owner_example"; // String | Owner of the namespace
 
-var project = "project_example"; // String | Project where the experiement will be assigned
+var project = "project_example"; // String | Project where the notification will be assigned
 
-var uuid = "uuid_example"; // String | Unique integer identifier of the entity
+var uuid = "uuid_example"; // String | Uuid identifier of the entity
 
 
 var callback = function(error, data, response) {
@@ -112,8 +112,8 @@ apiInstance.deleteProjectDashboard(owner, project, uuid, callback);
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace | 
- **project** | **String**| Project where the experiement will be assigned | 
- **uuid** | **String**| Unique integer identifier of the entity | 
+ **project** | **String**| Project where the notification will be assigned | 
+ **uuid** | **String**| Uuid identifier of the entity | 
 
 ### Return type
 
@@ -132,7 +132,7 @@ null (empty response body)
 # **getProjectDashboard**
 > V1Dashboard getProjectDashboard(owner, project, uuid)
 
-Create new run
+Get project dashboard
 
 ### Example
 ```javascript
@@ -149,9 +149,9 @@ var apiInstance = new PolyaxonSdk.ProjectDashboardsV1Api();
 
 var owner = "owner_example"; // String | Owner of the namespace
 
-var project = "project_example"; // String | Project where the experiement will be assigned
+var project = "project_example"; // String | Project where the notification will be assigned
 
-var uuid = "uuid_example"; // String | Unique integer identifier of the entity
+var uuid = "uuid_example"; // String | Uuid identifier of the entity
 
 
 var callback = function(error, data, response) {
@@ -169,8 +169,8 @@ apiInstance.getProjectDashboard(owner, project, uuid, callback);
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace | 
- **project** | **String**| Project where the experiement will be assigned | 
- **uuid** | **String**| Unique integer identifier of the entity | 
+ **project** | **String**| Project where the notification will be assigned | 
+ **uuid** | **String**| Uuid identifier of the entity | 
 
 ### Return type
 
@@ -189,7 +189,7 @@ Name | Type | Description  | Notes
 # **listProjectDashboardNames**
 > V1ListDashboardsResponse listProjectDashboardNames(owner, project, opts)
 
-List bookmarked runs for user
+List project dashboard
 
 ### Example
 ```javascript
@@ -253,7 +253,7 @@ Name | Type | Description  | Notes
 # **listProjectDashboards**
 > V1ListDashboardsResponse listProjectDashboards(owner, project, opts)
 
-List archived runs for user
+List project dashboards
 
 ### Example
 ```javascript
@@ -317,7 +317,7 @@ Name | Type | Description  | Notes
 # **patchProjectDashboard**
 > V1Dashboard patchProjectDashboard(owner, project, dashboard_uuid, body)
 
-Update run
+Patch project dashboard
 
 ### Example
 ```javascript
@@ -377,7 +377,7 @@ Name | Type | Description  | Notes
 # **promoteProjectDashboard**
 > V1Dashboard promoteProjectDashboard(owner, project, dashboard_uuid)
 
-Delete run
+Promote project dashboard
 
 ### Example
 ```javascript
@@ -434,7 +434,7 @@ Name | Type | Description  | Notes
 # **updateProjectDashboard**
 > V1Dashboard updateProjectDashboard(owner, project, dashboard_uuid, body)
 
-Get run
+Update project dashboard
 
 ### Example
 ```javascript

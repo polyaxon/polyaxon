@@ -1,4 +1,4 @@
-// Copyright 2019 Polyaxon, Inc.
+// Copyright 2018-2020 Polyaxon, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -24,10 +24,9 @@ import (
 	"io"
 
 	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/strfmt"
 
-	strfmt "github.com/go-openapi/strfmt"
-
-	service_model "github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_model"
+	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_model"
 )
 
 // CreateProjectDashboardReader is a Reader for the CreateProjectDashboard structure.
@@ -62,9 +61,15 @@ func (o *CreateProjectDashboardReader) ReadResponse(response runtime.ClientRespo
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		result := NewCreateProjectDashboardDefault(response.Code())
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		if response.Code()/100 == 2 {
+			return result, nil
+		}
+		return nil, result
 	}
 }
 
@@ -188,6 +193,48 @@ func (o *CreateProjectDashboardNotFound) readResponse(response runtime.ClientRes
 
 	// response payload
 	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
+// NewCreateProjectDashboardDefault creates a CreateProjectDashboardDefault with default headers values
+func NewCreateProjectDashboardDefault(code int) *CreateProjectDashboardDefault {
+	return &CreateProjectDashboardDefault{
+		_statusCode: code,
+	}
+}
+
+/*CreateProjectDashboardDefault handles this case with default header values.
+
+An unexpected error response
+*/
+type CreateProjectDashboardDefault struct {
+	_statusCode int
+
+	Payload *service_model.RuntimeError
+}
+
+// Code gets the status code for the create project dashboard default response
+func (o *CreateProjectDashboardDefault) Code() int {
+	return o._statusCode
+}
+
+func (o *CreateProjectDashboardDefault) Error() string {
+	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/dashboards][%d] CreateProjectDashboard default  %+v", o._statusCode, o.Payload)
+}
+
+func (o *CreateProjectDashboardDefault) GetPayload() *service_model.RuntimeError {
+	return o.Payload
+}
+
+func (o *CreateProjectDashboardDefault) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(service_model.RuntimeError)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 

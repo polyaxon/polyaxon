@@ -1,0 +1,2 @@
+UNKNOWN = "unknown"
+DEFAULT = "default"

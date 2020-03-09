@@ -1,0 +1,17 @@
+---
+version: 1.05
+
+kind: component
+
+termination:
+  ttl: 400
+  timeout: 500
+  maxRetries: 5
+run:
+  kind: job
+  environment:
+    restartPolicy: never
+  container:
+    image: my_image
+    command: echo
+...

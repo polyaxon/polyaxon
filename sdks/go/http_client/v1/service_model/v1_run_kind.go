@@ -1,4 +1,4 @@
-// Copyright 2019 Polyaxon, Inc.
+// Copyright 2018-2020 Polyaxon, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -22,13 +22,16 @@ package service_model
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/validate"
 )
 
 // V1RunKind Run kind enum
+// Kinds: job, service, dag, spark, dask, flink, ray, mpijob, tfjob, pytorchjob
+// Meta kinds: job, service, dag, parallel, schedule
+// helper kinds: tuner, watchdog, notifier
+//
 // swagger:model v1RunKind
 type V1RunKind string
 
@@ -43,8 +46,41 @@ const (
 	// V1RunKindDag captures enum value "dag"
 	V1RunKindDag V1RunKind = "dag"
 
+	// V1RunKindSpark captures enum value "spark"
+	V1RunKindSpark V1RunKind = "spark"
+
+	// V1RunKindDask captures enum value "dask"
+	V1RunKindDask V1RunKind = "dask"
+
+	// V1RunKindFlink captures enum value "flink"
+	V1RunKindFlink V1RunKind = "flink"
+
+	// V1RunKindRay captures enum value "ray"
+	V1RunKindRay V1RunKind = "ray"
+
+	// V1RunKindMpijob captures enum value "mpijob"
+	V1RunKindMpijob V1RunKind = "mpijob"
+
+	// V1RunKindTfjob captures enum value "tfjob"
+	V1RunKindTfjob V1RunKind = "tfjob"
+
+	// V1RunKindPytorchjob captures enum value "pytorchjob"
+	V1RunKindPytorchjob V1RunKind = "pytorchjob"
+
 	// V1RunKindParallel captures enum value "parallel"
 	V1RunKindParallel V1RunKind = "parallel"
+
+	// V1RunKindScheduler captures enum value "scheduler"
+	V1RunKindScheduler V1RunKind = "scheduler"
+
+	// V1RunKindTuner captures enum value "tuner"
+	V1RunKindTuner V1RunKind = "tuner"
+
+	// V1RunKindWatchdog captures enum value "watchdog"
+	V1RunKindWatchdog V1RunKind = "watchdog"
+
+	// V1RunKindNotifier captures enum value "notifier"
+	V1RunKindNotifier V1RunKind = "notifier"
 )
 
 // for schema
@@ -52,7 +88,7 @@ var v1RunKindEnum []interface{}
 
 func init() {
 	var res []V1RunKind
-	if err := json.Unmarshal([]byte(`["job","service","dag","parallel"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["job","service","dag","spark","dask","flink","ray","mpijob","tfjob","pytorchjob","parallel","scheduler","tuner","watchdog","notifier"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {

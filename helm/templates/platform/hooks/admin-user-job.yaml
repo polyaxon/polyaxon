@@ -1,0 +1,49 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: "{{ .Release.Name }}-admin-user"
+  labels:
+    app: {{ template "polyaxon.fullname" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+    type: {{ .Values.types.core }}
+    role: {{ .Values.roles.hooks }}
+    app.kubernetes.io/name: {{ template "polyaxon.fullname" . }}-admin-user
+    app.kubernetes.io/instance: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    app.kubernetes.io/version: "{{ .Chart.Version }}"
+    app.kubernetes.io/part-of: {{ .Values.types.core }}
+    app.kubernetes.io/component: {{ .Values.roles.hooks }}
+    app.kubernetes.io/managed-by: "helm"
+  annotations:
+    # This is what defines this resource as a hook. Without this line, the
+    # job is considered part of the release.
+    "helm.sh/hook": post-install
+    "helm.sh/hook-weight": "10"
+    "helm.sh/hook-delete-policy": "hook-succeeded,before-hook-creation"
+spec:
+  template:
+    metadata:
+      name: "{{ .Release.Name }}-admin-user"
+      labels:
+        app: {{ template "polyaxon.fullname" . }}
+        release: "{{ .Release.Name }}"
+    spec:
+{{ include "securityContext" . | indent 6 }}
+{{ include "config.scheduling" . | indent 6 }}
+{{ include "config.sa" . | indent 6 }}
+{{ include "config.imagePullSecrets" . | indent 6}}
+      restartPolicy: Never
+      activeDeadlineSeconds: 360
+      containers:
+      - name: admin-user-job
+        image: "{{ .Values.hooks.image }}:{{ .Values.hooks.imageTag }}"
+        imagePullPolicy: {{ .Values.hooks.imagePullPolicy }}
+        args: ["createuser", "--username={{ .Values.user.username }}", "--email={{ .Values.user.email }}", "--password=$(POLYAXON_ADMIN_PASSWORD)", "--superuser", "--force"]
+        envFrom:
+{{ include "config.envFrom.common" . | indent 8 }}
+{{ include "config.envFrom.platform" . | indent 8 }}
+{{ include "config.envFrom.secret" . | indent 8 }}
+        env:
+{{ include "config.envs" . | indent 8 }}
+{{ include "config.manageEnvs" . | indent 8 }}

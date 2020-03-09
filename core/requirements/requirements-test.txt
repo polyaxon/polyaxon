@@ -1,0 +1,4 @@
+-r requirements-dev.txt
+
+fake-factory==0.7.2
+polyaxon-pip-tests[black]==0.0.9

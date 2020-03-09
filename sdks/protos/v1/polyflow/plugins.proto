@@ -1,0 +1,66 @@
+/**
+ * Copyright 2018-2020 Polyaxon, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+*/
+
+syntax = "proto3";
+
+package v1;
+
+// Notification message
+message Notification {
+    // Connection to use for notification
+    string connection = 1;
+
+    // NotificationTrigger enum
+    enum Trigger {
+        succeeded = 0;
+        failed = 1;
+        stopped = 2;
+        done = 3;
+    }
+
+    // Optional trigger policy, default done
+    Trigger trigger = 2;
+}
+
+// Plugins specification
+message Plugins {
+    // Optional flag to tell Polyaxon if it should set an auth context for the run, default true
+    bool auth = 1;
+
+    // Optional flag to tell Polyaxon if it should set a docker socket context for the run, default false
+    bool docker = 2;
+
+    // Optional flag to tell Polyaxon if it should set a shm context for the run, default false
+    bool shm = 3;
+
+    // Optional flag to tell Polyaxon to collect articats and outputs
+    bool collect_artifacts = 4;
+
+    // Optional flag to tell Polyaxon to collect logs
+    bool collect_logs = 5;
+
+    // Optional flag to tell Polyaxon to collect container resouces (cpu/memory/gpu)
+    string collect_resources = 6;
+
+    // Optional flag to tell Polyaxon to sync statuses
+    bool sync_statuses = 7;
+
+    // Optional log level
+    string log_level = 8;
+
+    // Option Notifications
+    repeated Notification notifications = 9;
+}

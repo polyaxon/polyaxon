@@ -4,14 +4,14 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**noOp**](SchemasV1Api.md#noOp) | **GET** /schemas | List bookmarked runs for user
+[**noOp**](SchemasV1Api.md#noOp) | **GET** /schemas | Get random
 
 
 <a name="noOp"></a>
 # **noOp**
 > V1Schemas noOp()
 
-List bookmarked runs for user
+Get random
 
 ### Example
 ```javascript

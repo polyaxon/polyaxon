@@ -1,0 +1,67 @@
+/**
+ * Copyright 2018-2020 Polyaxon, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+*/
+
+syntax = "proto3";
+
+package v1;
+
+// Artifacts type specification
+message ArtifactsType {
+    // Optional connection, if not provided the default artifacts store is used
+    string connection = 1;
+
+    // Optional files to initialize
+    repeated string files = 2;
+
+    // Optional dirs to initialize
+    repeated string dirs = 3;
+
+    // Optional bool to initialize this param
+    bool init = 4;
+
+    // Optional number of concurrent threads to use
+    int32 workers = 5;
+}
+
+// Wasb type specification
+message WasbType {
+    // Optional container
+    string container = 1;
+
+    // Optional storage_account
+    string storage_account = 2;
+
+    // Optional path
+    bool path = 3;
+}
+
+// Wasb type specification
+message GcsType {
+    // Optional container
+    string bucket = 1;
+
+    // Optional storage_account
+    string blob = 2;
+}
+
+// Wasb type specification
+message S3Type {
+    // Optional container
+    string bucket = 1;
+
+    // Optional storage_account
+    string key = 2;
+}

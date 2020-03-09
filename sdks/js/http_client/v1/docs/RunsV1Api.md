@@ -6,16 +6,25 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**archiveRun**](RunsV1Api.md#archiveRun) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/archive | Archive run
 [**bookmarkRun**](RunsV1Api.md#bookmarkRun) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/bookmark | Bookmark run
+[**collectRunLogs**](RunsV1Api.md#collectRunLogs) | **POST** /streams/v1/{namespace}/_internal/{owner}/{project}/runs/{uuid}/logs | Collect run logs
 [**copyRun**](RunsV1Api.md#copyRun) | **POST** /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/copy | Restart run with copy
 [**createRun**](RunsV1Api.md#createRun) | **POST** /api/v1/{owner}/{project}/runs | Create new run
-[**createRunCodeRef**](RunsV1Api.md#createRunCodeRef) | **POST** /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/coderefs | Get run code ref
+[**createRunArtifactsLineage**](RunsV1Api.md#createRunArtifactsLineage) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage | Create bulk run run artifacts lineage
 [**createRunStatus**](RunsV1Api.md#createRunStatus) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/statuses | Create new run status
 [**deleteRun**](RunsV1Api.md#deleteRun) | **DELETE** /api/v1/{owner}/{project}/runs/{uuid} | Delete run
+[**deleteRunArtifactLineage**](RunsV1Api.md#deleteRunArtifactLineage) | **DELETE** /api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage/{name} | Delete run artifact lineage
 [**deleteRuns**](RunsV1Api.md#deleteRuns) | **DELETE** /api/v1/{owner}/{project}/runs/delete | Delete runs
+[**getMultiRunEvents**](RunsV1Api.md#getMultiRunEvents) | **GET** /streams/v1/{namespace}/{owner}/{project}/runs/multi/events/{kind} | Get multi runs events
 [**getRun**](RunsV1Api.md#getRun) | **GET** /api/v1/{owner}/{project}/runs/{uuid} | Get run
-[**getRunArtifactsTree**](RunsV1Api.md#getRunArtifactsTree) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/artifacts/tree | Get run artifacts list
-[**getRunLogsFile**](RunsV1Api.md#getRunLogsFile) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/logs/file | Get run logs get file
-[**getRunLogsTree**](RunsV1Api.md#getRunLogsTree) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/logs/tree | Get run logs list
+[**getRunArtifact**](RunsV1Api.md#getRunArtifact) | **GET** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifact | Get run artifact
+[**getRunArtifactLineage**](RunsV1Api.md#getRunArtifactLineage) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage/{name} | Get run artifacts lineage
+[**getRunArtifacts**](RunsV1Api.md#getRunArtifacts) | **GET** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifacts | Get run artifacts
+[**getRunArtifactsLineage**](RunsV1Api.md#getRunArtifactsLineage) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage | Get run artifacts lineage
+[**getRunArtifactsLineageNames**](RunsV1Api.md#getRunArtifactsLineageNames) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage/names | Get run artifacts lineage names
+[**getRunArtifactsTree**](RunsV1Api.md#getRunArtifactsTree) | **GET** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifacts/tree | Get run artifacts tree
+[**getRunEvents**](RunsV1Api.md#getRunEvents) | **GET** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/events/{kind} | Get run events
+[**getRunLogs**](RunsV1Api.md#getRunLogs) | **GET** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/logs | Get run logs
+[**getRunNamespace**](RunsV1Api.md#getRunNamespace) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/namespace | Get Run namespace
 [**getRunSettings**](RunsV1Api.md#getRunSettings) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/settings | Get Run settings
 [**getRunStatuses**](RunsV1Api.md#getRunStatuses) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/statuses | Get run status
 [**impersonateToken**](RunsV1Api.md#impersonateToken) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/impersonate | Impersonate run token
@@ -24,6 +33,8 @@ Method | HTTP request | Description
 [**listArchivedRuns**](RunsV1Api.md#listArchivedRuns) | **GET** /api/v1/archives/{user}/runs | List archived runs for user
 [**listBookmarkedRuns**](RunsV1Api.md#listBookmarkedRuns) | **GET** /api/v1/bookmarks/{user}/runs | List bookmarked runs for user
 [**listRuns**](RunsV1Api.md#listRuns) | **GET** /api/v1/{owner}/{project}/runs | List runs
+[**listRunsIo**](RunsV1Api.md#listRunsIo) | **GET** /api/v1/{owner}/{project}/runs/io | List runs
+[**notifyRunStatus**](RunsV1Api.md#notifyRunStatus) | **POST** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/notify | Notify run status
 [**patchRun**](RunsV1Api.md#patchRun) | **PATCH** /api/v1/{owner}/{project}/runs/{run.uuid} | Patch run
 [**restartRun**](RunsV1Api.md#restartRun) | **POST** /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/restart | Restart run
 [**restoreRun**](RunsV1Api.md#restoreRun) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/restore | Restore run
@@ -59,9 +70,9 @@ var apiInstance = new PolyaxonSdk.RunsV1Api();
 
 var owner = "owner_example"; // String | Owner of the namespace
 
-var project = "project_example"; // String | Project where the experiement will be assigned
+var project = "project_example"; // String | Project where the notification will be assigned
 
-var uuid = "uuid_example"; // String | Unique integer identifier of the entity
+var uuid = "uuid_example"; // String | Uuid identifier of the entity
 
 
 var callback = function(error, data, response) {
@@ -79,8 +90,8 @@ apiInstance.archiveRun(owner, project, uuid, callback);
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace | 
- **project** | **String**| Project where the experiement will be assigned | 
- **uuid** | **String**| Unique integer identifier of the entity | 
+ **project** | **String**| Project where the notification will be assigned | 
+ **uuid** | **String**| Uuid identifier of the entity | 
 
 ### Return type
 
@@ -116,9 +127,9 @@ var apiInstance = new PolyaxonSdk.RunsV1Api();
 
 var owner = "owner_example"; // String | Owner of the namespace
 
-var project = "project_example"; // String | Project where the experiement will be assigned
+var project = "project_example"; // String | Project where the notification will be assigned
 
-var uuid = "uuid_example"; // String | Unique integer identifier of the entity
+var uuid = "uuid_example"; // String | Uuid identifier of the entity
 
 
 var callback = function(error, data, response) {
@@ -136,8 +147,68 @@ apiInstance.bookmarkRun(owner, project, uuid, callback);
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace | 
- **project** | **String**| Project where the experiement will be assigned | 
- **uuid** | **String**| Unique integer identifier of the entity | 
+ **project** | **String**| Project where the notification will be assigned | 
+ **uuid** | **String**| Uuid identifier of the entity | 
+
+### Return type
+
+null (empty response body)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+<a name="collectRunLogs"></a>
+# **collectRunLogs**
+> collectRunLogs(namespace, owner, project, uuid)
+
+Collect run logs
+
+### Example
+```javascript
+var PolyaxonSdk = require('polyaxon-sdk');
+var defaultClient = PolyaxonSdk.ApiClient.instance;
+
+// Configure API key authorization: ApiKey
+var ApiKey = defaultClient.authentications['ApiKey'];
+ApiKey.apiKey = 'YOUR API KEY';
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.apiKeyPrefix = 'Token';
+
+var apiInstance = new PolyaxonSdk.RunsV1Api();
+
+var namespace = "namespace_example"; // String | 
+
+var owner = "owner_example"; // String | Owner of the namespace
+
+var project = "project_example"; // String | Project where the run will be assigned
+
+var uuid = "uuid_example"; // String | Uuid identifier of the entity
+
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully.');
+  }
+};
+apiInstance.collectRunLogs(namespace, owner, project, uuid, callback);
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **namespace** | **String**|  | 
+ **owner** | **String**| Owner of the namespace | 
+ **project** | **String**| Project where the run will be assigned | 
+ **uuid** | **String**| Uuid identifier of the entity | 
 
 ### Return type
 
@@ -173,9 +244,9 @@ var apiInstance = new PolyaxonSdk.RunsV1Api();
 
 var entity_owner = "entity_owner_example"; // String | Owner of the namespace
 
-var entity_project = "entity_project_example"; // String | Project where the experiement will be assigned
+var entity_project = "entity_project_example"; // String | Project where the notification will be assigned
 
-var entity_uuid = "entity_uuid_example"; // String | Unique integer identifier of the entity
+var entity_uuid = "entity_uuid_example"; // String | Uuid identifier of the entity
 
 var body = new PolyaxonSdk.V1Run(); // V1Run | Run object
 
@@ -195,8 +266,8 @@ apiInstance.copyRun(entity_owner, entity_project, entity_uuid, body, callback);
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **entity_owner** | **String**| Owner of the namespace | 
- **entity_project** | **String**| Project where the experiement will be assigned | 
- **entity_uuid** | **String**| Unique integer identifier of the entity | 
+ **entity_project** | **String**| Project where the notification will be assigned | 
+ **entity_uuid** | **String**| Uuid identifier of the entity | 
  **body** | [**V1Run**](V1Run.md)| Run object | 
 
 ### Return type
@@ -233,9 +304,9 @@ var apiInstance = new PolyaxonSdk.RunsV1Api();
 
 var owner = "owner_example"; // String | Owner of the namespace
 
-var project = "project_example"; // String | Project where the experiement will be assigned
+var project = "project_example"; // String | Project where the run will be assigned
 
-var body = new PolyaxonSdk.V1Run(); // V1Run | Run object
+var body = new PolyaxonSdk.V1OperationBody(); // V1OperationBody | operation object
 
 
 var callback = function(error, data, response) {
@@ -253,8 +324,8 @@ apiInstance.createRun(owner, project, body, callback);
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace | 
- **project** | **String**| Project where the experiement will be assigned | 
- **body** | [**V1Run**](V1Run.md)| Run object | 
+ **project** | **String**| Project where the run will be assigned | 
+ **body** | [**V1OperationBody**](V1OperationBody.md)| operation object | 
 
 ### Return type
 
@@ -269,11 +340,11 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="createRunCodeRef"></a>
-# **createRunCodeRef**
-> createRunCodeRef(entity_owner, entity_project, entity_uuid, body)
+<a name="createRunArtifactsLineage"></a>
+# **createRunArtifactsLineage**
+> createRunArtifactsLineage(owner, project, uuid, body)
 
-Get run code ref
+Create bulk run run artifacts lineage
 
 ### Example
 ```javascript
@@ -288,13 +359,13 @@ ApiKey.apiKey = 'YOUR API KEY';
 
 var apiInstance = new PolyaxonSdk.RunsV1Api();
 
-var entity_owner = "entity_owner_example"; // String | Owner of the namespace
+var owner = "owner_example"; // String | Owner of the namespace
 
-var entity_project = "entity_project_example"; // String | Project where the experiement will be assigned
+var project = "project_example"; // String | Project where the run will be assigned
 
-var entity_uuid = "entity_uuid_example"; // String | Unique integer identifier of the entity
+var uuid = "uuid_example"; // String | Uuid identifier of the entity
 
-var body = new PolyaxonSdk.V1CodeRef(); // V1CodeRef | Code ref object
+var body = new PolyaxonSdk.V1RunArtifacts(); // V1RunArtifacts | Run Artifacts
 
 
 var callback = function(error, data, response) {
@@ -304,17 +375,17 @@ var callback = function(error, data, response) {
     console.log('API called successfully.');
   }
 };
-apiInstance.createRunCodeRef(entity_owner, entity_project, entity_uuid, body, callback);
+apiInstance.createRunArtifactsLineage(owner, project, uuid, body, callback);
 ```
 
 ### Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **entity_owner** | **String**| Owner of the namespace | 
- **entity_project** | **String**| Project where the experiement will be assigned | 
- **entity_uuid** | **String**| Unique integer identifier of the entity | 
- **body** | [**V1CodeRef**](V1CodeRef.md)| Code ref object | 
+ **owner** | **String**| Owner of the namespace | 
+ **project** | **String**| Project where the run will be assigned | 
+ **uuid** | **String**| Uuid identifier of the entity | 
+ **body** | [**V1RunArtifacts**](V1RunArtifacts.md)| Run Artifacts | 
 
 ### Return type
 
@@ -350,9 +421,9 @@ var apiInstance = new PolyaxonSdk.RunsV1Api();
 
 var owner = "owner_example"; // String | Owner of the namespace
 
-var project = "project_example"; // String | Project where the experiement will be assigned
+var project = "project_example"; // String | Project where the run will be assigned
 
-var uuid = "uuid_example"; // String | Unique integer identifier of the entity
+var uuid = "uuid_example"; // String | Uuid identifier of the entity
 
 var body = new PolyaxonSdk.V1EntityStatusBodyRequest(); // V1EntityStatusBodyRequest | 
 
@@ -372,8 +443,8 @@ apiInstance.createRunStatus(owner, project, uuid, body, callback);
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace | 
- **project** | **String**| Project where the experiement will be assigned | 
- **uuid** | **String**| Unique integer identifier of the entity | 
+ **project** | **String**| Project where the run will be assigned | 
+ **uuid** | **String**| Uuid identifier of the entity | 
  **body** | [**V1EntityStatusBodyRequest**](V1EntityStatusBodyRequest.md)|  | 
 
 ### Return type
@@ -410,9 +481,9 @@ var apiInstance = new PolyaxonSdk.RunsV1Api();
 
 var owner = "owner_example"; // String | Owner of the namespace
 
-var project = "project_example"; // String | Project where the experiement will be assigned
+var project = "project_example"; // String | Project where the notification will be assigned
 
-var uuid = "uuid_example"; // String | Unique integer identifier of the entity
+var uuid = "uuid_example"; // String | Uuid identifier of the entity
 
 
 var callback = function(error, data, response) {
@@ -430,8 +501,82 @@ apiInstance.deleteRun(owner, project, uuid, callback);
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace | 
- **project** | **String**| Project where the experiement will be assigned | 
- **uuid** | **String**| Unique integer identifier of the entity | 
+ **project** | **String**| Project where the notification will be assigned | 
+ **uuid** | **String**| Uuid identifier of the entity | 
+
+### Return type
+
+null (empty response body)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+<a name="deleteRunArtifactLineage"></a>
+# **deleteRunArtifactLineage**
+> deleteRunArtifactLineage(owner, project, uuid, name, opts)
+
+Delete run artifact lineage
+
+### Example
+```javascript
+var PolyaxonSdk = require('polyaxon-sdk');
+var defaultClient = PolyaxonSdk.ApiClient.instance;
+
+// Configure API key authorization: ApiKey
+var ApiKey = defaultClient.authentications['ApiKey'];
+ApiKey.apiKey = 'YOUR API KEY';
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.apiKeyPrefix = 'Token';
+
+var apiInstance = new PolyaxonSdk.RunsV1Api();
+
+var owner = "owner_example"; // String | Owner of the namespace
+
+var project = "project_example"; // String | Project where the run will be assigned
+
+var uuid = "uuid_example"; // String | Uuid identifier of the entity
+
+var name = "name_example"; // String | Artifact name
+
+var opts = { 
+  'namespace': "namespace_example", // String | namespace.
+  'kind': "model", // String | The artifact kind.   - model: model  - audio: audio  - video: vidio  - histogram: histogram  - image: image  - tensor: tensor  - dataframe: dataframe  - chart: plotly/bokeh chart  - csv: Comma  - tsv: Tab  - psv: Pipe  - ssv: Space  - metric: Metric  - env: Env  - html: HTML  - text: Text  - file: File  - dir: Dir  - dockerfile: Dockerfile  - docker_image: docker image  - data: data  - coderef: coderef  - table: table
+  'names': "names_example", // String | Names query param.
+  'runs': "runs_example", // String | Runs query param.
+  'orient': "orient_example", // String | Orient query param.
+  'path': "path_example" // String | Path query param.
+};
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully.');
+  }
+};
+apiInstance.deleteRunArtifactLineage(owner, project, uuid, name, opts, callback);
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **String**| Owner of the namespace | 
+ **project** | **String**| Project where the run will be assigned | 
+ **uuid** | **String**| Uuid identifier of the entity | 
+ **name** | **String**| Artifact name | 
+ **namespace** | **String**| namespace. | [optional] 
+ **kind** | **String**| The artifact kind.   - model: model  - audio: audio  - video: vidio  - histogram: histogram  - image: image  - tensor: tensor  - dataframe: dataframe  - chart: plotly/bokeh chart  - csv: Comma  - tsv: Tab  - psv: Pipe  - ssv: Space  - metric: Metric  - env: Env  - html: HTML  - text: Text  - file: File  - dir: Dir  - dockerfile: Dockerfile  - docker_image: docker image  - data: data  - coderef: coderef  - table: table | [optional] [default to model]
+ **names** | **String**| Names query param. | [optional] 
+ **runs** | **String**| Runs query param. | [optional] 
+ **orient** | **String**| Orient query param. | [optional] 
+ **path** | **String**| Path query param. | [optional] 
 
 ### Return type
 
@@ -503,6 +648,80 @@ null (empty response body)
  - **Content-Type**: application/json
  - **Accept**: application/json
 
+<a name="getMultiRunEvents"></a>
+# **getMultiRunEvents**
+> V1EventsResponse getMultiRunEvents(namespace, owner, project, kind, opts)
+
+Get multi runs events
+
+### Example
+```javascript
+var PolyaxonSdk = require('polyaxon-sdk');
+var defaultClient = PolyaxonSdk.ApiClient.instance;
+
+// Configure API key authorization: ApiKey
+var ApiKey = defaultClient.authentications['ApiKey'];
+ApiKey.apiKey = 'YOUR API KEY';
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.apiKeyPrefix = 'Token';
+
+var apiInstance = new PolyaxonSdk.RunsV1Api();
+
+var namespace = "namespace_example"; // String | namespace
+
+var owner = "owner_example"; // String | Owner of the namespace
+
+var project = "project_example"; // String | Project where the run will be assigned
+
+var kind = "kind_example"; // String | The artifact kind
+
+var opts = { 
+  'uuid': "uuid_example", // String | Uuid identifier of the entity.
+  'name': "name_example", // String | Artifact name.
+  'names': "names_example", // String | Names query param.
+  'runs': "runs_example", // String | Runs query param.
+  'orient': "orient_example", // String | Orient query param.
+  'path': "path_example" // String | Path query param.
+};
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+apiInstance.getMultiRunEvents(namespace, owner, project, kind, opts, callback);
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **namespace** | **String**| namespace | 
+ **owner** | **String**| Owner of the namespace | 
+ **project** | **String**| Project where the run will be assigned | 
+ **kind** | **String**| The artifact kind | 
+ **uuid** | **String**| Uuid identifier of the entity. | [optional] 
+ **name** | **String**| Artifact name. | [optional] 
+ **names** | **String**| Names query param. | [optional] 
+ **runs** | **String**| Runs query param. | [optional] 
+ **orient** | **String**| Orient query param. | [optional] 
+ **path** | **String**| Path query param. | [optional] 
+
+### Return type
+
+[**V1EventsResponse**](V1EventsResponse.md)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
 <a name="getRun"></a>
 # **getRun**
 > V1Run getRun(owner, project, uuid)
@@ -524,9 +743,9 @@ var apiInstance = new PolyaxonSdk.RunsV1Api();
 
 var owner = "owner_example"; // String | Owner of the namespace
 
-var project = "project_example"; // String | Project where the experiement will be assigned
+var project = "project_example"; // String | Project where the notification will be assigned
 
-var uuid = "uuid_example"; // String | Unique integer identifier of the entity
+var uuid = "uuid_example"; // String | Uuid identifier of the entity
 
 
 var callback = function(error, data, response) {
@@ -544,8 +763,8 @@ apiInstance.getRun(owner, project, uuid, callback);
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace | 
- **project** | **String**| Project where the experiement will be assigned | 
- **uuid** | **String**| Unique integer identifier of the entity | 
+ **project** | **String**| Project where the notification will be assigned | 
+ **uuid** | **String**| Uuid identifier of the entity | 
 
 ### Return type
 
@@ -560,76 +779,11 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="getRunArtifactsTree"></a>
-# **getRunArtifactsTree**
-> V1ArtifactTreeResponse getRunArtifactsTree(owner, project, uuid, opts)
+<a name="getRunArtifact"></a>
+# **getRunArtifact**
+> 'String' getRunArtifact(namespace, owner, project, uuid, opts)
 
-Get run artifacts list
-
-### Example
-```javascript
-var PolyaxonSdk = require('polyaxon-sdk');
-var defaultClient = PolyaxonSdk.ApiClient.instance;
-
-// Configure API key authorization: ApiKey
-var ApiKey = defaultClient.authentications['ApiKey'];
-ApiKey.apiKey = 'YOUR API KEY';
-// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-//ApiKey.apiKeyPrefix = 'Token';
-
-var apiInstance = new PolyaxonSdk.RunsV1Api();
-
-var owner = "owner_example"; // String | Owner of the namespace
-
-var project = "project_example"; // String | Project where the experiement will be assigned
-
-var uuid = "uuid_example"; // String | Unique integer identifier of the entity
-
-var opts = { 
-  'path': "path_example", // String | Artifact filepath.
-  'step': 56, // Number | Artifact logging step.
-  'kind': "kind_example" // String | Artifact kind.
-};
-
-var callback = function(error, data, response) {
-  if (error) {
-    console.error(error);
-  } else {
-    console.log('API called successfully. Returned data: ' + data);
-  }
-};
-apiInstance.getRunArtifactsTree(owner, project, uuid, opts, callback);
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **owner** | **String**| Owner of the namespace | 
- **project** | **String**| Project where the experiement will be assigned | 
- **uuid** | **String**| Unique integer identifier of the entity | 
- **path** | **String**| Artifact filepath. | [optional] 
- **step** | **Number**| Artifact logging step. | [optional] 
- **kind** | **String**| Artifact kind. | [optional] 
-
-### Return type
-
-[**V1ArtifactTreeResponse**](V1ArtifactTreeResponse.md)
-
-### Authorization
-
-[ApiKey](../README.md#ApiKey)
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: application/json
-
-<a name="getRunLogsFile"></a>
-# **getRunLogsFile**
-> 'String' getRunLogsFile(owner, project, uuid, opts)
-
-Get run logs get file
+Get run artifact
 
 ### Example
 ```javascript
@@ -644,6 +798,8 @@ ApiKey.apiKey = 'YOUR API KEY';
 
 var apiInstance = new PolyaxonSdk.RunsV1Api();
 
+var namespace = "namespace_example"; // String | namespace
+
 var owner = "owner_example"; // String | Owner of the namespace
 
 var project = "project_example"; // String | Project where the experiement will be assigned
@@ -652,8 +808,7 @@ var uuid = "uuid_example"; // String | Unique integer identifier of the entity
 
 var opts = { 
   'path': "path_example", // String | Artifact filepath.
-  'step': 56, // Number | Artifact logging step.
-  'type': "type_example" // String | Artifact type.
+  'stream': true // Boolean | Whether to stream the file.
 };
 
 var callback = function(error, data, response) {
@@ -663,19 +818,19 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.getRunLogsFile(owner, project, uuid, opts, callback);
+apiInstance.getRunArtifact(namespace, owner, project, uuid, opts, callback);
 ```
 
 ### Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **namespace** | **String**| namespace | 
  **owner** | **String**| Owner of the namespace | 
  **project** | **String**| Project where the experiement will be assigned | 
  **uuid** | **String**| Unique integer identifier of the entity | 
  **path** | **String**| Artifact filepath. | [optional] 
- **step** | **Number**| Artifact logging step. | [optional] 
- **type** | **String**| Artifact type. | [optional] 
+ **stream** | **Boolean**| Whether to stream the file. | [optional] 
 
 ### Return type
 
@@ -690,11 +845,11 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="getRunLogsTree"></a>
-# **getRunLogsTree**
-> V1ArtifactTreeResponse getRunLogsTree(owner, project, uuid, opts)
+<a name="getRunArtifactLineage"></a>
+# **getRunArtifactLineage**
+> V1RunArtifact getRunArtifactLineage(owner, project, uuid, name, opts)
 
-Get run logs list
+Get run artifacts lineage
 
 ### Example
 ```javascript
@@ -711,14 +866,19 @@ var apiInstance = new PolyaxonSdk.RunsV1Api();
 
 var owner = "owner_example"; // String | Owner of the namespace
 
-var project = "project_example"; // String | Project where the experiement will be assigned
+var project = "project_example"; // String | Project where the run will be assigned
 
-var uuid = "uuid_example"; // String | Unique integer identifier of the entity
+var uuid = "uuid_example"; // String | Uuid identifier of the entity
+
+var name = "name_example"; // String | Artifact name
 
 var opts = { 
-  'path': "path_example", // String | Artifact filepath.
-  'step': 56, // Number | Artifact logging step.
-  'kind': "kind_example" // String | Artifact kind.
+  'namespace': "namespace_example", // String | namespace.
+  'kind': "model", // String | The artifact kind.   - model: model  - audio: audio  - video: vidio  - histogram: histogram  - image: image  - tensor: tensor  - dataframe: dataframe  - chart: plotly/bokeh chart  - csv: Comma  - tsv: Tab  - psv: Pipe  - ssv: Space  - metric: Metric  - env: Env  - html: HTML  - text: Text  - file: File  - dir: Dir  - dockerfile: Dockerfile  - docker_image: docker image  - data: data  - coderef: coderef  - table: table
+  'names': "names_example", // String | Names query param.
+  'runs': "runs_example", // String | Runs query param.
+  'orient': "orient_example", // String | Orient query param.
+  'path': "path_example" // String | Path query param.
 };
 
 var callback = function(error, data, response) {
@@ -728,7 +888,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.getRunLogsTree(owner, project, uuid, opts, callback);
+apiInstance.getRunArtifactLineage(owner, project, uuid, name, opts, callback);
 ```
 
 ### Parameters
@@ -736,15 +896,485 @@ apiInstance.getRunLogsTree(owner, project, uuid, opts, callback);
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace | 
+ **project** | **String**| Project where the run will be assigned | 
+ **uuid** | **String**| Uuid identifier of the entity | 
+ **name** | **String**| Artifact name | 
+ **namespace** | **String**| namespace. | [optional] 
+ **kind** | **String**| The artifact kind.   - model: model  - audio: audio  - video: vidio  - histogram: histogram  - image: image  - tensor: tensor  - dataframe: dataframe  - chart: plotly/bokeh chart  - csv: Comma  - tsv: Tab  - psv: Pipe  - ssv: Space  - metric: Metric  - env: Env  - html: HTML  - text: Text  - file: File  - dir: Dir  - dockerfile: Dockerfile  - docker_image: docker image  - data: data  - coderef: coderef  - table: table | [optional] [default to model]
+ **names** | **String**| Names query param. | [optional] 
+ **runs** | **String**| Runs query param. | [optional] 
+ **orient** | **String**| Orient query param. | [optional] 
+ **path** | **String**| Path query param. | [optional] 
+
+### Return type
+
+[**V1RunArtifact**](V1RunArtifact.md)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+<a name="getRunArtifacts"></a>
+# **getRunArtifacts**
+> 'String' getRunArtifacts(namespace, owner, project, uuid, opts)
+
+Get run artifacts
+
+### Example
+```javascript
+var PolyaxonSdk = require('polyaxon-sdk');
+var defaultClient = PolyaxonSdk.ApiClient.instance;
+
+// Configure API key authorization: ApiKey
+var ApiKey = defaultClient.authentications['ApiKey'];
+ApiKey.apiKey = 'YOUR API KEY';
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.apiKeyPrefix = 'Token';
+
+var apiInstance = new PolyaxonSdk.RunsV1Api();
+
+var namespace = "namespace_example"; // String | namespace
+
+var owner = "owner_example"; // String | Owner of the namespace
+
+var project = "project_example"; // String | Project where the experiement will be assigned
+
+var uuid = "uuid_example"; // String | Unique integer identifier of the entity
+
+var opts = { 
+  'path': "path_example" // String | Artifact filepath.
+};
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+apiInstance.getRunArtifacts(namespace, owner, project, uuid, opts, callback);
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **namespace** | **String**| namespace | 
+ **owner** | **String**| Owner of the namespace | 
  **project** | **String**| Project where the experiement will be assigned | 
  **uuid** | **String**| Unique integer identifier of the entity | 
  **path** | **String**| Artifact filepath. | [optional] 
- **step** | **Number**| Artifact logging step. | [optional] 
- **kind** | **String**| Artifact kind. | [optional] 
+
+### Return type
+
+**'String'**
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+<a name="getRunArtifactsLineage"></a>
+# **getRunArtifactsLineage**
+> V1ListRunArtifactsResponse getRunArtifactsLineage(owner, project, uuid, opts)
+
+Get run artifacts lineage
+
+### Example
+```javascript
+var PolyaxonSdk = require('polyaxon-sdk');
+var defaultClient = PolyaxonSdk.ApiClient.instance;
+
+// Configure API key authorization: ApiKey
+var ApiKey = defaultClient.authentications['ApiKey'];
+ApiKey.apiKey = 'YOUR API KEY';
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.apiKeyPrefix = 'Token';
+
+var apiInstance = new PolyaxonSdk.RunsV1Api();
+
+var owner = "owner_example"; // String | Owner of the namespace
+
+var project = "project_example"; // String | Project where the run will be assigned
+
+var uuid = "uuid_example"; // String | Uuid identifier of the entity
+
+var opts = { 
+  'limit': 56, // Number | Limit size.
+  'sort': "sort_example", // String | Sort to order the search.
+  'query': "query_example" // String | Query filter the search search.
+};
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+apiInstance.getRunArtifactsLineage(owner, project, uuid, opts, callback);
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **String**| Owner of the namespace | 
+ **project** | **String**| Project where the run will be assigned | 
+ **uuid** | **String**| Uuid identifier of the entity | 
+ **limit** | **Number**| Limit size. | [optional] 
+ **sort** | **String**| Sort to order the search. | [optional] 
+ **query** | **String**| Query filter the search search. | [optional] 
+
+### Return type
+
+[**V1ListRunArtifactsResponse**](V1ListRunArtifactsResponse.md)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+<a name="getRunArtifactsLineageNames"></a>
+# **getRunArtifactsLineageNames**
+> V1ListRunArtifactsResponse getRunArtifactsLineageNames(owner, project, uuid, opts)
+
+Get run artifacts lineage names
+
+### Example
+```javascript
+var PolyaxonSdk = require('polyaxon-sdk');
+var defaultClient = PolyaxonSdk.ApiClient.instance;
+
+// Configure API key authorization: ApiKey
+var ApiKey = defaultClient.authentications['ApiKey'];
+ApiKey.apiKey = 'YOUR API KEY';
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.apiKeyPrefix = 'Token';
+
+var apiInstance = new PolyaxonSdk.RunsV1Api();
+
+var owner = "owner_example"; // String | Owner of the namespace
+
+var project = "project_example"; // String | Project where the run will be assigned
+
+var uuid = "uuid_example"; // String | Uuid identifier of the entity
+
+var opts = { 
+  'limit': 56, // Number | Limit size.
+  'sort': "sort_example", // String | Sort to order the search.
+  'query': "query_example" // String | Query filter the search search.
+};
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+apiInstance.getRunArtifactsLineageNames(owner, project, uuid, opts, callback);
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **String**| Owner of the namespace | 
+ **project** | **String**| Project where the run will be assigned | 
+ **uuid** | **String**| Uuid identifier of the entity | 
+ **limit** | **Number**| Limit size. | [optional] 
+ **sort** | **String**| Sort to order the search. | [optional] 
+ **query** | **String**| Query filter the search search. | [optional] 
+
+### Return type
+
+[**V1ListRunArtifactsResponse**](V1ListRunArtifactsResponse.md)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+<a name="getRunArtifactsTree"></a>
+# **getRunArtifactsTree**
+> V1ArtifactTreeResponse getRunArtifactsTree(namespace, owner, project, uuid, opts)
+
+Get run artifacts tree
+
+### Example
+```javascript
+var PolyaxonSdk = require('polyaxon-sdk');
+var defaultClient = PolyaxonSdk.ApiClient.instance;
+
+// Configure API key authorization: ApiKey
+var ApiKey = defaultClient.authentications['ApiKey'];
+ApiKey.apiKey = 'YOUR API KEY';
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.apiKeyPrefix = 'Token';
+
+var apiInstance = new PolyaxonSdk.RunsV1Api();
+
+var namespace = "namespace_example"; // String | namespace
+
+var owner = "owner_example"; // String | Owner of the namespace
+
+var project = "project_example"; // String | Project where the run will be assigned
+
+var uuid = "uuid_example"; // String | Uuid identifier of the entity
+
+var opts = { 
+  'name': "name_example", // String | Artifact name.
+  'kind': "model", // String | The artifact kind.   - model: model  - audio: audio  - video: vidio  - histogram: histogram  - image: image  - tensor: tensor  - dataframe: dataframe  - chart: plotly/bokeh chart  - csv: Comma  - tsv: Tab  - psv: Pipe  - ssv: Space  - metric: Metric  - env: Env  - html: HTML  - text: Text  - file: File  - dir: Dir  - dockerfile: Dockerfile  - docker_image: docker image  - data: data  - coderef: coderef  - table: table
+  'names': "names_example", // String | Names query param.
+  'runs': "runs_example", // String | Runs query param.
+  'orient': "orient_example", // String | Orient query param.
+  'path': "path_example" // String | Path query param.
+};
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+apiInstance.getRunArtifactsTree(namespace, owner, project, uuid, opts, callback);
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **namespace** | **String**| namespace | 
+ **owner** | **String**| Owner of the namespace | 
+ **project** | **String**| Project where the run will be assigned | 
+ **uuid** | **String**| Uuid identifier of the entity | 
+ **name** | **String**| Artifact name. | [optional] 
+ **kind** | **String**| The artifact kind.   - model: model  - audio: audio  - video: vidio  - histogram: histogram  - image: image  - tensor: tensor  - dataframe: dataframe  - chart: plotly/bokeh chart  - csv: Comma  - tsv: Tab  - psv: Pipe  - ssv: Space  - metric: Metric  - env: Env  - html: HTML  - text: Text  - file: File  - dir: Dir  - dockerfile: Dockerfile  - docker_image: docker image  - data: data  - coderef: coderef  - table: table | [optional] [default to model]
+ **names** | **String**| Names query param. | [optional] 
+ **runs** | **String**| Runs query param. | [optional] 
+ **orient** | **String**| Orient query param. | [optional] 
+ **path** | **String**| Path query param. | [optional] 
 
 ### Return type
 
 [**V1ArtifactTreeResponse**](V1ArtifactTreeResponse.md)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+<a name="getRunEvents"></a>
+# **getRunEvents**
+> V1EventsResponse getRunEvents(namespace, owner, project, uuid, kind, opts)
+
+Get run events
+
+### Example
+```javascript
+var PolyaxonSdk = require('polyaxon-sdk');
+var defaultClient = PolyaxonSdk.ApiClient.instance;
+
+// Configure API key authorization: ApiKey
+var ApiKey = defaultClient.authentications['ApiKey'];
+ApiKey.apiKey = 'YOUR API KEY';
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.apiKeyPrefix = 'Token';
+
+var apiInstance = new PolyaxonSdk.RunsV1Api();
+
+var namespace = "namespace_example"; // String | namespace
+
+var owner = "owner_example"; // String | Owner of the namespace
+
+var project = "project_example"; // String | Project where the run will be assigned
+
+var uuid = "uuid_example"; // String | Uuid identifier of the entity
+
+var kind = "kind_example"; // String | The artifact kind
+
+var opts = { 
+  'name': "name_example", // String | Artifact name.
+  'names': "names_example", // String | Names query param.
+  'runs': "runs_example", // String | Runs query param.
+  'orient': "orient_example", // String | Orient query param.
+  'path': "path_example" // String | Path query param.
+};
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+apiInstance.getRunEvents(namespace, owner, project, uuid, kind, opts, callback);
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **namespace** | **String**| namespace | 
+ **owner** | **String**| Owner of the namespace | 
+ **project** | **String**| Project where the run will be assigned | 
+ **uuid** | **String**| Uuid identifier of the entity | 
+ **kind** | **String**| The artifact kind | 
+ **name** | **String**| Artifact name. | [optional] 
+ **names** | **String**| Names query param. | [optional] 
+ **runs** | **String**| Runs query param. | [optional] 
+ **orient** | **String**| Orient query param. | [optional] 
+ **path** | **String**| Path query param. | [optional] 
+
+### Return type
+
+[**V1EventsResponse**](V1EventsResponse.md)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+<a name="getRunLogs"></a>
+# **getRunLogs**
+> V1Logs getRunLogs(namespace, owner, project, uuid, opts)
+
+Get run logs
+
+### Example
+```javascript
+var PolyaxonSdk = require('polyaxon-sdk');
+var defaultClient = PolyaxonSdk.ApiClient.instance;
+
+// Configure API key authorization: ApiKey
+var ApiKey = defaultClient.authentications['ApiKey'];
+ApiKey.apiKey = 'YOUR API KEY';
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.apiKeyPrefix = 'Token';
+
+var apiInstance = new PolyaxonSdk.RunsV1Api();
+
+var namespace = "namespace_example"; // String | 
+
+var owner = "owner_example"; // String | Owner of the namespace
+
+var project = "project_example"; // String | Project where the run will be assigned
+
+var uuid = "uuid_example"; // String | Uuid identifier of the entity
+
+var opts = { 
+  'last_time': new Date("2013-10-20T19:20:30+01:00"), // Date | last time.
+  'last_file': "last_file_example" // String | last file.
+};
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+apiInstance.getRunLogs(namespace, owner, project, uuid, opts, callback);
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **namespace** | **String**|  | 
+ **owner** | **String**| Owner of the namespace | 
+ **project** | **String**| Project where the run will be assigned | 
+ **uuid** | **String**| Uuid identifier of the entity | 
+ **last_time** | **Date**| last time. | [optional] 
+ **last_file** | **String**| last file. | [optional] 
+
+### Return type
+
+[**V1Logs**](V1Logs.md)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+<a name="getRunNamespace"></a>
+# **getRunNamespace**
+> V1RunSettings getRunNamespace(owner, project, uuid)
+
+Get Run namespace
+
+### Example
+```javascript
+var PolyaxonSdk = require('polyaxon-sdk');
+var defaultClient = PolyaxonSdk.ApiClient.instance;
+
+// Configure API key authorization: ApiKey
+var ApiKey = defaultClient.authentications['ApiKey'];
+ApiKey.apiKey = 'YOUR API KEY';
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.apiKeyPrefix = 'Token';
+
+var apiInstance = new PolyaxonSdk.RunsV1Api();
+
+var owner = "owner_example"; // String | Owner of the namespace
+
+var project = "project_example"; // String | Project where the notification will be assigned
+
+var uuid = "uuid_example"; // String | Uuid identifier of the entity
+
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+apiInstance.getRunNamespace(owner, project, uuid, callback);
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **String**| Owner of the namespace | 
+ **project** | **String**| Project where the notification will be assigned | 
+ **uuid** | **String**| Uuid identifier of the entity | 
+
+### Return type
+
+[**V1RunSettings**](V1RunSettings.md)
 
 ### Authorization
 
@@ -776,9 +1406,9 @@ var apiInstance = new PolyaxonSdk.RunsV1Api();
 
 var owner = "owner_example"; // String | Owner of the namespace
 
-var project = "project_example"; // String | Project where the experiement will be assigned
+var project = "project_example"; // String | Project where the notification will be assigned
 
-var uuid = "uuid_example"; // String | Unique integer identifier of the entity
+var uuid = "uuid_example"; // String | Uuid identifier of the entity
 
 
 var callback = function(error, data, response) {
@@ -796,8 +1426,8 @@ apiInstance.getRunSettings(owner, project, uuid, callback);
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace | 
- **project** | **String**| Project where the experiement will be assigned | 
- **uuid** | **String**| Unique integer identifier of the entity | 
+ **project** | **String**| Project where the notification will be assigned | 
+ **uuid** | **String**| Uuid identifier of the entity | 
 
 ### Return type
 
@@ -833,9 +1463,9 @@ var apiInstance = new PolyaxonSdk.RunsV1Api();
 
 var owner = "owner_example"; // String | Owner of the namespace
 
-var project = "project_example"; // String | Project where the experiement will be assigned
+var project = "project_example"; // String | Project where the notification will be assigned
 
-var uuid = "uuid_example"; // String | Unique integer identifier of the entity
+var uuid = "uuid_example"; // String | Uuid identifier of the entity
 
 
 var callback = function(error, data, response) {
@@ -853,8 +1483,8 @@ apiInstance.getRunStatuses(owner, project, uuid, callback);
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace | 
- **project** | **String**| Project where the experiement will be assigned | 
- **uuid** | **String**| Unique integer identifier of the entity | 
+ **project** | **String**| Project where the notification will be assigned | 
+ **uuid** | **String**| Uuid identifier of the entity | 
 
 ### Return type
 
@@ -890,9 +1520,9 @@ var apiInstance = new PolyaxonSdk.RunsV1Api();
 
 var owner = "owner_example"; // String | Owner of the namespace
 
-var project = "project_example"; // String | Project where the experiement will be assigned
+var project = "project_example"; // String | Project where the notification will be assigned
 
-var uuid = "uuid_example"; // String | Unique integer identifier of the entity
+var uuid = "uuid_example"; // String | Uuid identifier of the entity
 
 
 var callback = function(error, data, response) {
@@ -910,8 +1540,8 @@ apiInstance.impersonateToken(owner, project, uuid, callback);
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace | 
- **project** | **String**| Project where the experiement will be assigned | 
- **uuid** | **String**| Unique integer identifier of the entity | 
+ **project** | **String**| Project where the notification will be assigned | 
+ **uuid** | **String**| Uuid identifier of the entity | 
 
 ### Return type
 
@@ -947,9 +1577,9 @@ var apiInstance = new PolyaxonSdk.RunsV1Api();
 
 var owner = "owner_example"; // String | Owner of the namespace
 
-var project = "project_example"; // String | Project where the experiement will be assigned
+var project = "project_example"; // String | Project where the notification will be assigned
 
-var uuid = "uuid_example"; // String | Unique integer identifier of the entity
+var uuid = "uuid_example"; // String | Uuid identifier of the entity
 
 var body = new PolyaxonSdk.V1ProjectEntityResourceRequest(); // V1ProjectEntityResourceRequest | 
 
@@ -969,8 +1599,8 @@ apiInstance.invalidateRun(owner, project, uuid, body, callback);
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace | 
- **project** | **String**| Project where the experiement will be assigned | 
- **uuid** | **String**| Unique integer identifier of the entity | 
+ **project** | **String**| Project where the notification will be assigned | 
+ **uuid** | **String**| Uuid identifier of the entity | 
  **body** | [**V1ProjectEntityResourceRequest**](V1ProjectEntityResourceRequest.md)|  | 
 
 ### Return type
@@ -1229,6 +1859,133 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
+<a name="listRunsIo"></a>
+# **listRunsIo**
+> V1ListRunsResponse listRunsIo(owner, project, opts)
+
+List runs
+
+### Example
+```javascript
+var PolyaxonSdk = require('polyaxon-sdk');
+var defaultClient = PolyaxonSdk.ApiClient.instance;
+
+// Configure API key authorization: ApiKey
+var ApiKey = defaultClient.authentications['ApiKey'];
+ApiKey.apiKey = 'YOUR API KEY';
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.apiKeyPrefix = 'Token';
+
+var apiInstance = new PolyaxonSdk.RunsV1Api();
+
+var owner = "owner_example"; // String | Owner of the namespace
+
+var project = "project_example"; // String | Project under namesapce
+
+var opts = { 
+  'offset': 56, // Number | Pagination offset.
+  'limit': 56, // Number | Limit size.
+  'sort': "sort_example", // String | Sort to order the search.
+  'query': "query_example" // String | Query filter the search search.
+};
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+apiInstance.listRunsIo(owner, project, opts, callback);
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **String**| Owner of the namespace | 
+ **project** | **String**| Project under namesapce | 
+ **offset** | **Number**| Pagination offset. | [optional] 
+ **limit** | **Number**| Limit size. | [optional] 
+ **sort** | **String**| Sort to order the search. | [optional] 
+ **query** | **String**| Query filter the search search. | [optional] 
+
+### Return type
+
+[**V1ListRunsResponse**](V1ListRunsResponse.md)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+<a name="notifyRunStatus"></a>
+# **notifyRunStatus**
+> notifyRunStatus(namespace, owner, project, uuid, body)
+
+Notify run status
+
+### Example
+```javascript
+var PolyaxonSdk = require('polyaxon-sdk');
+var defaultClient = PolyaxonSdk.ApiClient.instance;
+
+// Configure API key authorization: ApiKey
+var ApiKey = defaultClient.authentications['ApiKey'];
+ApiKey.apiKey = 'YOUR API KEY';
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.apiKeyPrefix = 'Token';
+
+var apiInstance = new PolyaxonSdk.RunsV1Api();
+
+var namespace = "namespace_example"; // String | Na,espace
+
+var owner = "owner_example"; // String | Owner of the namespace
+
+var project = "project_example"; // String | Project where the run will be assigned
+
+var uuid = "uuid_example"; // String | Uuid identifier of the entity
+
+var body = new PolyaxonSdk.V1EntityNotificationBody(); // V1EntityNotificationBody | 
+
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully.');
+  }
+};
+apiInstance.notifyRunStatus(namespace, owner, project, uuid, body, callback);
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **namespace** | **String**| Na,espace | 
+ **owner** | **String**| Owner of the namespace | 
+ **project** | **String**| Project where the run will be assigned | 
+ **uuid** | **String**| Uuid identifier of the entity | 
+ **body** | [**V1EntityNotificationBody**](V1EntityNotificationBody.md)|  | 
+
+### Return type
+
+null (empty response body)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
 <a name="patchRun"></a>
 # **patchRun**
 > V1Run patchRun(owner, project, run_uuid, body)
@@ -1250,7 +2007,7 @@ var apiInstance = new PolyaxonSdk.RunsV1Api();
 
 var owner = "owner_example"; // String | Owner of the namespace
 
-var project = "project_example"; // String | Project where the experiement will be assigned
+var project = "project_example"; // String | Project where the run will be assigned
 
 var run_uuid = "run_uuid_example"; // String | UUID
 
@@ -1272,7 +2029,7 @@ apiInstance.patchRun(owner, project, run_uuid, body, callback);
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace | 
- **project** | **String**| Project where the experiement will be assigned | 
+ **project** | **String**| Project where the run will be assigned | 
  **run_uuid** | **String**| UUID | 
  **body** | [**V1Run**](V1Run.md)| Run object | 
 
@@ -1310,9 +2067,9 @@ var apiInstance = new PolyaxonSdk.RunsV1Api();
 
 var entity_owner = "entity_owner_example"; // String | Owner of the namespace
 
-var entity_project = "entity_project_example"; // String | Project where the experiement will be assigned
+var entity_project = "entity_project_example"; // String | Project where the notification will be assigned
 
-var entity_uuid = "entity_uuid_example"; // String | Unique integer identifier of the entity
+var entity_uuid = "entity_uuid_example"; // String | Uuid identifier of the entity
 
 var body = new PolyaxonSdk.V1Run(); // V1Run | Run object
 
@@ -1332,8 +2089,8 @@ apiInstance.restartRun(entity_owner, entity_project, entity_uuid, body, callback
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **entity_owner** | **String**| Owner of the namespace | 
- **entity_project** | **String**| Project where the experiement will be assigned | 
- **entity_uuid** | **String**| Unique integer identifier of the entity | 
+ **entity_project** | **String**| Project where the notification will be assigned | 
+ **entity_uuid** | **String**| Uuid identifier of the entity | 
  **body** | [**V1Run**](V1Run.md)| Run object | 
 
 ### Return type
@@ -1370,9 +2127,9 @@ var apiInstance = new PolyaxonSdk.RunsV1Api();
 
 var owner = "owner_example"; // String | Owner of the namespace
 
-var project = "project_example"; // String | Project where the experiement will be assigned
+var project = "project_example"; // String | Project where the notification will be assigned
 
-var uuid = "uuid_example"; // String | Unique integer identifier of the entity
+var uuid = "uuid_example"; // String | Uuid identifier of the entity
 
 
 var callback = function(error, data, response) {
@@ -1390,8 +2147,8 @@ apiInstance.restoreRun(owner, project, uuid, callback);
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace | 
- **project** | **String**| Project where the experiement will be assigned | 
- **uuid** | **String**| Unique integer identifier of the entity | 
+ **project** | **String**| Project where the notification will be assigned | 
+ **uuid** | **String**| Uuid identifier of the entity | 
 
 ### Return type
 
@@ -1427,9 +2184,9 @@ var apiInstance = new PolyaxonSdk.RunsV1Api();
 
 var entity_owner = "entity_owner_example"; // String | Owner of the namespace
 
-var entity_project = "entity_project_example"; // String | Project where the experiement will be assigned
+var entity_project = "entity_project_example"; // String | Project where the notification will be assigned
 
-var entity_uuid = "entity_uuid_example"; // String | Unique integer identifier of the entity
+var entity_uuid = "entity_uuid_example"; // String | Uuid identifier of the entity
 
 var body = new PolyaxonSdk.V1Run(); // V1Run | Run object
 
@@ -1449,8 +2206,8 @@ apiInstance.resumeRun(entity_owner, entity_project, entity_uuid, body, callback)
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **entity_owner** | **String**| Owner of the namespace | 
- **entity_project** | **String**| Project where the experiement will be assigned | 
- **entity_uuid** | **String**| Unique integer identifier of the entity | 
+ **entity_project** | **String**| Project where the notification will be assigned | 
+ **entity_uuid** | **String**| Uuid identifier of the entity | 
  **body** | [**V1Run**](V1Run.md)| Run object | 
 
 ### Return type
@@ -1487,9 +2244,9 @@ var apiInstance = new PolyaxonSdk.RunsV1Api();
 
 var owner = "owner_example"; // String | Owner of the namespace
 
-var project = "project_example"; // String | Project where the experiement will be assigned
+var project = "project_example"; // String | Project where the notification will be assigned
 
-var uuid = "uuid_example"; // String | Unique integer identifier of the entity
+var uuid = "uuid_example"; // String | Uuid identifier of the entity
 
 var body = new PolyaxonSdk.V1ProjectEntityResourceRequest(); // V1ProjectEntityResourceRequest | 
 
@@ -1509,8 +2266,8 @@ apiInstance.startRunTensorboard(owner, project, uuid, body, callback);
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace | 
- **project** | **String**| Project where the experiement will be assigned | 
- **uuid** | **String**| Unique integer identifier of the entity | 
+ **project** | **String**| Project where the notification will be assigned | 
+ **uuid** | **String**| Uuid identifier of the entity | 
  **body** | [**V1ProjectEntityResourceRequest**](V1ProjectEntityResourceRequest.md)|  | 
 
 ### Return type
@@ -1547,9 +2304,9 @@ var apiInstance = new PolyaxonSdk.RunsV1Api();
 
 var owner = "owner_example"; // String | Owner of the namespace
 
-var project = "project_example"; // String | Project where the experiement will be assigned
+var project = "project_example"; // String | Project where the notification will be assigned
 
-var uuid = "uuid_example"; // String | Unique integer identifier of the entity
+var uuid = "uuid_example"; // String | Uuid identifier of the entity
 
 
 var callback = function(error, data, response) {
@@ -1567,8 +2324,8 @@ apiInstance.stopRun(owner, project, uuid, callback);
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace | 
- **project** | **String**| Project where the experiement will be assigned | 
- **uuid** | **String**| Unique integer identifier of the entity | 
+ **project** | **String**| Project where the notification will be assigned | 
+ **uuid** | **String**| Uuid identifier of the entity | 
 
 ### Return type
 
@@ -1604,9 +2361,9 @@ var apiInstance = new PolyaxonSdk.RunsV1Api();
 
 var owner = "owner_example"; // String | Owner of the namespace
 
-var project = "project_example"; // String | Project where the experiement will be assigned
+var project = "project_example"; // String | Project where the notification will be assigned
 
-var uuid = "uuid_example"; // String | Unique integer identifier of the entity
+var uuid = "uuid_example"; // String | Uuid identifier of the entity
 
 
 var callback = function(error, data, response) {
@@ -1624,8 +2381,8 @@ apiInstance.stopRunTensorboard(owner, project, uuid, callback);
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace | 
- **project** | **String**| Project where the experiement will be assigned | 
- **uuid** | **String**| Unique integer identifier of the entity | 
+ **project** | **String**| Project where the notification will be assigned | 
+ **uuid** | **String**| Uuid identifier of the entity | 
 
 ### Return type
 
@@ -1718,9 +2475,9 @@ var apiInstance = new PolyaxonSdk.RunsV1Api();
 
 var owner = "owner_example"; // String | Owner of the namespace
 
-var project = "project_example"; // String | Project where the experiement will be assigned
+var project = "project_example"; // String | Project where the notification will be assigned
 
-var uuid = "uuid_example"; // String | Unique integer identifier of the entity
+var uuid = "uuid_example"; // String | Uuid identifier of the entity
 
 
 var callback = function(error, data, response) {
@@ -1738,8 +2495,8 @@ apiInstance.unbookmarkRun(owner, project, uuid, callback);
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace | 
- **project** | **String**| Project where the experiement will be assigned | 
- **uuid** | **String**| Unique integer identifier of the entity | 
+ **project** | **String**| Project where the notification will be assigned | 
+ **uuid** | **String**| Uuid identifier of the entity | 
 
 ### Return type
 
@@ -1775,7 +2532,7 @@ var apiInstance = new PolyaxonSdk.RunsV1Api();
 
 var owner = "owner_example"; // String | Owner of the namespace
 
-var project = "project_example"; // String | Project where the experiement will be assigned
+var project = "project_example"; // String | Project where the run will be assigned
 
 var run_uuid = "run_uuid_example"; // String | UUID
 
@@ -1797,7 +2554,7 @@ apiInstance.updateRun(owner, project, run_uuid, body, callback);
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace | 
- **project** | **String**| Project where the experiement will be assigned | 
+ **project** | **String**| Project where the run will be assigned | 
  **run_uuid** | **String**| UUID | 
  **body** | [**V1Run**](V1Run.md)| Run object | 
 

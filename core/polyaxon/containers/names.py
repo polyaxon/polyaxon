@@ -1,0 +1,7 @@
+MAIN_JOB_CONTAINER = "polyaxon-main"
+INIT_AUTH_CONTAINER = "polyaxon-init-auth"
+INIT_DOCKERFILE_CONTAINER = "polyaxon-init-dockerfile-{}"
+INIT_GIT_CONTAINER = "polyaxon-init-git-{}"
+INIT_ARTIFACTS_CONTAINER = "polyaxon-init-artifacts-{}"
+INIT_CONTAINER = "polyaxon-init-{}"
+SIDECAR_CONTAINER = "polyaxon-sidecar"

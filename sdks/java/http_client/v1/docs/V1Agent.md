@@ -12,8 +12,11 @@ Name | Type | Description | Notes
 **deleted** | **Boolean** |  |  [optional]
 **namespace** | **String** |  |  [optional]
 **versionApi** | **Object** |  |  [optional]
+**content** | **String** |  |  [optional]
+**concurrency** | **Integer** |  |  [optional]
 **createdAt** | [**OffsetDateTime**](OffsetDateTime.md) |  |  [optional]
 **updatedAt** | [**OffsetDateTime**](OffsetDateTime.md) |  |  [optional]
+**status** | [**V1Statuses**](V1Statuses.md) |  |  [optional]
 
 
 

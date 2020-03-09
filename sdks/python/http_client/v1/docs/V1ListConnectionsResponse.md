@@ -4,7 +4,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **count** | **int** |  | [optional] 
-**results** | [**list[V1Connection]**](V1Connection.md) |  | [optional] 
+**results** | [**list[V1ConnectionResponse]**](V1ConnectionResponse.md) |  | [optional] 
 **previous** | **str** |  | [optional] 
 **next** | **str** |  | [optional] 
 

@@ -1,7 +1,4 @@
 namespace: polyaxon
-api:
-  host: https://api.polyaxon.com
-  token: token-default-value
 
 rbac:
   enabled: true
@@ -13,9 +10,97 @@ roles:
   config: "polyaxon-config"
   agent: "polyaxon-agent"
 
+api:
+  host: https://*.polyaxon.com
+  token: token-default-value
+
+gateway:
+  image: polyaxon/polyaxon-gateway
+  imageTag: 1.0.5
+  imagePullPolicy: Always
+  replicas: 1
+  resources:
+    limits:
+      cpu: 1000m
+      memory: 2000Mi
+    requests:
+      cpu: 128m
+      memory: 300Mi
+
+  service:
+    name: gateway
+    type: LoadBalancer
+    port: 80
+    targetPort: 80
+    nodePort: 31833
+    annotations: {}
+
+streams:
+  image: polyaxon/polyaxon-streams
+  imageTag: 1.0.5
+  imagePullPolicy: Always
+  replicas: 1
+  resources:
+    limits:
+      cpu: 1000m
+      memory: 2000Mi
+    requests:
+      cpu: 128m
+      memory: 300Mi
+
+  service:
+    name: streams
+    type: ClusterIP
+    port: 80
+    targetPort: 80
+    nodePort: 31822
+    annotations: {}
+
+init:
+  image: polyaxon/polyaxon-init
+  imageTag: 1.0.5
+  imagePullPolicy: Always
+  resources:
+    limits:
+      cpu: 1000m
+      memory: 2000Mi
+    requests:
+      cpu: 128m
+      memory: 300Mi
+
+sidecar:
+  image: polyaxon/polyaxon-sidecar
+  imageTag: 1.0.5
+  imagePullPolicy: Always
+  sleepInterval: 10
+  syncInterval: 10
+  resources:
+    limits:
+      cpu: 1000m
+      memory: 2000Mi
+    requests:
+      cpu: 128m
+      memory: 300Mi
+
 agent:
+  token:
+  instance:
+  enabled: false
   image: polyaxon/polyaxon-agent
-  imageTag: latest
+  imageTag: 1.0.5
+  imagePullPolicy: Always
+  resources:
+    limits:
+      cpu: 1000m
+      memory: 2000Mi
+    requests:
+      cpu: 128m
+      memory: 300Mi
+
+operator:
+  enabled: false
+  image: polyaxon/polyaxon-agent
+  imageTag: 1.0.5
   imagePullPolicy: Always
   resources:
     limits:
@@ -29,6 +114,5 @@ securityContext:
   enabled: false
   user: 2222
   group: 2222
-
 
 imagePullSecrets: []

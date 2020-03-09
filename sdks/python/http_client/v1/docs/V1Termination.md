@@ -4,7 +4,6 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **max_retries** | **int** |  | [optional] 
-**restart_policy** | **str** |  | [optional] 
 **ttl** | **int** |  | [optional] 
 **timeout** | **int** |  | [optional] 
 

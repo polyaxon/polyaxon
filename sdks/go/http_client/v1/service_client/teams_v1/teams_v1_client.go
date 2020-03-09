@@ -1,4 +1,4 @@
-// Copyright 2019 Polyaxon, Inc.
+// Copyright 2018-2020 Polyaxon, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,15 +20,12 @@ package teams_v1
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	"fmt"
-
 	"github.com/go-openapi/runtime"
-
-	strfmt "github.com/go-openapi/strfmt"
+	"github.com/go-openapi/strfmt"
 )
 
 // New creates a new teams v1 API client.
-func New(transport runtime.ClientTransport, formats strfmt.Registry) *Client {
+func New(transport runtime.ClientTransport, formats strfmt.Registry) ClientService {
 	return &Client{transport: transport, formats: formats}
 }
 
@@ -40,8 +37,39 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
+// ClientService is the interface for Client methods
+type ClientService interface {
+	CreateTeam(params *CreateTeamParams, authInfo runtime.ClientAuthInfoWriter) (*CreateTeamOK, *CreateTeamNoContent, error)
+
+	CreateTeamMember(params *CreateTeamMemberParams, authInfo runtime.ClientAuthInfoWriter) (*CreateTeamMemberOK, *CreateTeamMemberNoContent, error)
+
+	DeleteTeam(params *DeleteTeamParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteTeamOK, *DeleteTeamNoContent, error)
+
+	DeleteTeamMember(params *DeleteTeamMemberParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteTeamMemberOK, *DeleteTeamMemberNoContent, error)
+
+	GetTeam(params *GetTeamParams, authInfo runtime.ClientAuthInfoWriter) (*GetTeamOK, *GetTeamNoContent, error)
+
+	GetTeamMember(params *GetTeamMemberParams, authInfo runtime.ClientAuthInfoWriter) (*GetTeamMemberOK, *GetTeamMemberNoContent, error)
+
+	ListTeamMembers(params *ListTeamMembersParams, authInfo runtime.ClientAuthInfoWriter) (*ListTeamMembersOK, *ListTeamMembersNoContent, error)
+
+	ListTeamNames(params *ListTeamNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListTeamNamesOK, *ListTeamNamesNoContent, error)
+
+	ListTeams(params *ListTeamsParams, authInfo runtime.ClientAuthInfoWriter) (*ListTeamsOK, *ListTeamsNoContent, error)
+
+	PatchTeam(params *PatchTeamParams, authInfo runtime.ClientAuthInfoWriter) (*PatchTeamOK, *PatchTeamNoContent, error)
+
+	PatchTeamMember(params *PatchTeamMemberParams, authInfo runtime.ClientAuthInfoWriter) (*PatchTeamMemberOK, *PatchTeamMemberNoContent, error)
+
+	UpdateTeam(params *UpdateTeamParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateTeamOK, *UpdateTeamNoContent, error)
+
+	UpdateTeamMember(params *UpdateTeamMemberParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateTeamMemberOK, *UpdateTeamMemberNoContent, error)
+
+	SetTransport(transport runtime.ClientTransport)
+}
+
 /*
-CreateTeam lists runs
+  CreateTeam creates team
 */
 func (a *Client) CreateTeam(params *CreateTeamParams, authInfo runtime.ClientAuthInfoWriter) (*CreateTeamOK, *CreateTeamNoContent, error) {
 	// TODO: Validate the params before sending
@@ -71,13 +99,13 @@ func (a *Client) CreateTeam(params *CreateTeamParams, authInfo runtime.ClientAut
 	case *CreateTeamNoContent:
 		return nil, value, nil
 	}
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for teams_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
+	// unexpected success response
+	unexpectedSuccess := result.(*CreateTeamDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-CreateTeamMember deletes runs
+  CreateTeamMember creates team member
 */
 func (a *Client) CreateTeamMember(params *CreateTeamMemberParams, authInfo runtime.ClientAuthInfoWriter) (*CreateTeamMemberOK, *CreateTeamMemberNoContent, error) {
 	// TODO: Validate the params before sending
@@ -107,13 +135,13 @@ func (a *Client) CreateTeamMember(params *CreateTeamMemberParams, authInfo runti
 	case *CreateTeamMemberNoContent:
 		return nil, value, nil
 	}
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for teams_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
+	// unexpected success response
+	unexpectedSuccess := result.(*CreateTeamMemberDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-DeleteTeam patches run
+  DeleteTeam deletes team
 */
 func (a *Client) DeleteTeam(params *DeleteTeamParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteTeamOK, *DeleteTeamNoContent, error) {
 	// TODO: Validate the params before sending
@@ -143,13 +171,13 @@ func (a *Client) DeleteTeam(params *DeleteTeamParams, authInfo runtime.ClientAut
 	case *DeleteTeamNoContent:
 		return nil, value, nil
 	}
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for teams_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
+	// unexpected success response
+	unexpectedSuccess := result.(*DeleteTeamDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-DeleteTeamMember invalidates runs
+  DeleteTeamMember deletes team member details
 */
 func (a *Client) DeleteTeamMember(params *DeleteTeamMemberParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteTeamMemberOK, *DeleteTeamMemberNoContent, error) {
 	// TODO: Validate the params before sending
@@ -179,13 +207,13 @@ func (a *Client) DeleteTeamMember(params *DeleteTeamMemberParams, authInfo runti
 	case *DeleteTeamMemberNoContent:
 		return nil, value, nil
 	}
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for teams_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
+	// unexpected success response
+	unexpectedSuccess := result.(*DeleteTeamMemberDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-GetTeam creates new run
+  GetTeam gets team
 */
 func (a *Client) GetTeam(params *GetTeamParams, authInfo runtime.ClientAuthInfoWriter) (*GetTeamOK, *GetTeamNoContent, error) {
 	// TODO: Validate the params before sending
@@ -215,13 +243,13 @@ func (a *Client) GetTeam(params *GetTeamParams, authInfo runtime.ClientAuthInfoW
 	case *GetTeamNoContent:
 		return nil, value, nil
 	}
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for teams_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
+	// unexpected success response
+	unexpectedSuccess := result.(*GetTeamDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-GetTeamMember stops run
+  GetTeamMember gets team member details
 */
 func (a *Client) GetTeamMember(params *GetTeamMemberParams, authInfo runtime.ClientAuthInfoWriter) (*GetTeamMemberOK, *GetTeamMemberNoContent, error) {
 	// TODO: Validate the params before sending
@@ -251,13 +279,13 @@ func (a *Client) GetTeamMember(params *GetTeamMemberParams, authInfo runtime.Cli
 	case *GetTeamMemberNoContent:
 		return nil, value, nil
 	}
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for teams_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
+	// unexpected success response
+	unexpectedSuccess := result.(*GetTeamMemberDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-ListTeamMembers deletes run
+  ListTeamMembers gets team members
 */
 func (a *Client) ListTeamMembers(params *ListTeamMembersParams, authInfo runtime.ClientAuthInfoWriter) (*ListTeamMembersOK, *ListTeamMembersNoContent, error) {
 	// TODO: Validate the params before sending
@@ -287,13 +315,13 @@ func (a *Client) ListTeamMembers(params *ListTeamMembersParams, authInfo runtime
 	case *ListTeamMembersNoContent:
 		return nil, value, nil
 	}
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for teams_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
+	// unexpected success response
+	unexpectedSuccess := result.(*ListTeamMembersDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-ListTeamNames lists bookmarked runs for user
+  ListTeamNames lists teams names
 */
 func (a *Client) ListTeamNames(params *ListTeamNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListTeamNamesOK, *ListTeamNamesNoContent, error) {
 	// TODO: Validate the params before sending
@@ -323,13 +351,13 @@ func (a *Client) ListTeamNames(params *ListTeamNamesParams, authInfo runtime.Cli
 	case *ListTeamNamesNoContent:
 		return nil, value, nil
 	}
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for teams_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
+	// unexpected success response
+	unexpectedSuccess := result.(*ListTeamNamesDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-ListTeams lists archived runs for user
+  ListTeams lists teams
 */
 func (a *Client) ListTeams(params *ListTeamsParams, authInfo runtime.ClientAuthInfoWriter) (*ListTeamsOK, *ListTeamsNoContent, error) {
 	// TODO: Validate the params before sending
@@ -359,13 +387,13 @@ func (a *Client) ListTeams(params *ListTeamsParams, authInfo runtime.ClientAuthI
 	case *ListTeamsNoContent:
 		return nil, value, nil
 	}
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for teams_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
+	// unexpected success response
+	unexpectedSuccess := result.(*ListTeamsDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-PatchTeam updates run
+  PatchTeam patches team
 */
 func (a *Client) PatchTeam(params *PatchTeamParams, authInfo runtime.ClientAuthInfoWriter) (*PatchTeamOK, *PatchTeamNoContent, error) {
 	// TODO: Validate the params before sending
@@ -395,13 +423,13 @@ func (a *Client) PatchTeam(params *PatchTeamParams, authInfo runtime.ClientAuthI
 	case *PatchTeamNoContent:
 		return nil, value, nil
 	}
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for teams_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
+	// unexpected success response
+	unexpectedSuccess := result.(*PatchTeamDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-PatchTeamMember invalidates run
+  PatchTeamMember patches tram member
 */
 func (a *Client) PatchTeamMember(params *PatchTeamMemberParams, authInfo runtime.ClientAuthInfoWriter) (*PatchTeamMemberOK, *PatchTeamMemberNoContent, error) {
 	// TODO: Validate the params before sending
@@ -431,13 +459,13 @@ func (a *Client) PatchTeamMember(params *PatchTeamMemberParams, authInfo runtime
 	case *PatchTeamMemberNoContent:
 		return nil, value, nil
 	}
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for teams_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
+	// unexpected success response
+	unexpectedSuccess := result.(*PatchTeamMemberDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-UpdateTeam gets run
+  UpdateTeam updates team
 */
 func (a *Client) UpdateTeam(params *UpdateTeamParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateTeamOK, *UpdateTeamNoContent, error) {
 	// TODO: Validate the params before sending
@@ -467,13 +495,13 @@ func (a *Client) UpdateTeam(params *UpdateTeamParams, authInfo runtime.ClientAut
 	case *UpdateTeamNoContent:
 		return nil, value, nil
 	}
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for teams_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
+	// unexpected success response
+	unexpectedSuccess := result.(*UpdateTeamDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-UpdateTeamMember stops runs
+  UpdateTeamMember updates team member
 */
 func (a *Client) UpdateTeamMember(params *UpdateTeamMemberParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateTeamMemberOK, *UpdateTeamMemberNoContent, error) {
 	// TODO: Validate the params before sending
@@ -503,9 +531,9 @@ func (a *Client) UpdateTeamMember(params *UpdateTeamMemberParams, authInfo runti
 	case *UpdateTeamMemberNoContent:
 		return nil, value, nil
 	}
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for teams_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
+	// unexpected success response
+	unexpectedSuccess := result.(*UpdateTeamMemberDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 // SetTransport changes the transport on the client

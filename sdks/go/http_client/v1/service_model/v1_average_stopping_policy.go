@@ -1,4 +1,4 @@
-// Copyright 2019 Polyaxon, Inc.
+// Copyright 2018-2020 Polyaxon, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,22 +20,17 @@ package service_model
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
-// V1AverageStoppingPolicy Early stopping with average stopping, this policy computes running averages across
-// all runs and stops those whose best performance is worse than the median
-// of the running runs.
+// V1AverageStoppingPolicy v1 average stopping policy
+//
 // swagger:model v1AverageStoppingPolicy
 type V1AverageStoppingPolicy struct {
 
-	// Interval/Frequency for applying the policy.
-	EvaluationInterval int32 `json:"evaluation_interval,omitempty"`
-
-	// Kind of this stopping policy, should be equal to "average"
-	Kind string `json:"kind,omitempty"`
+	// kind
+	Kind interface{} `json:"kind,omitempty"`
 }
 
 // Validate validates this v1 average stopping policy

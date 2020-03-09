@@ -1,0 +1,102 @@
+{
+  "definitions": {
+    "v1MatrixChoice": {
+      "properties": {
+        "kind": {
+          "default": "choice"
+        }
+      }
+    },
+    "v1MatrixPChoice": {
+      "properties": {
+        "kind": {
+          "default": "pchoice"
+        }
+      }
+    },
+    "v1MatrixRange": {
+      "properties": {
+        "kind": {
+          "default": "range"
+        }
+      }
+    },
+    "v1MatrixLinSpace": {
+      "properties": {
+        "kind": {
+          "default": "linspace"
+        }
+      }
+    },
+    "v1MatrixLogSpace": {
+      "properties": {
+        "kind": {
+          "default": "logspace"
+        }
+      }
+    },
+    "v1MatrixGeomSpace": {
+      "properties": {
+        "kind": {
+          "default": "geomspace"
+        }
+      }
+    },
+    "v1MatrixUniform": {
+      "properties": {
+        "kind": {
+          "default": "uniform"
+        }
+      }
+    },
+    "v1MatrixQUniform": {
+      "properties": {
+        "kind": {
+          "default": "quniform"
+        }
+      }
+    },
+    "v1MatrixLogUniform": {
+      "properties": {
+        "kind": {
+          "default": "loguniform"
+        }
+      }
+    },
+    "v1MatrixQLogUniform": {
+      "properties": {
+        "kind": {
+          "default": "qloguniform"
+        }
+      }
+    },
+    "v1MatrixNormal": {
+      "properties": {
+        "kind": {
+          "default": "normal"
+        }
+      }
+    },
+    "v1MatrixQNormal": {
+      "properties": {
+        "kind": {
+          "default": "qnormal"
+        }
+      }
+    },
+    "v1MatrixLogNormal": {
+      "properties": {
+        "kind": {
+          "default": "lognormal"
+        }
+      }
+    },
+    "v1MatrixQLogNormal": {
+      "properties": {
+        "kind": {
+          "default": "qlognormal"
+        }
+      }
+    }
+  }
+}

@@ -101,6 +101,15 @@ rules:
   - kubeflow.org
   resources:
   - mpijobs
+  - mpijobs/finalizers
   - mpijobs/status
+  verbs:
+  - "*"
+- apiGroups:
+  - scheduling.incubator.k8s.io
+  - scheduling.sigs.dev
+  resources:
+  - queues
+  - podgroups
   verbs:
   - "*"

@@ -1,4 +1,4 @@
-// Copyright 2019 Polyaxon, Inc.
+// Copyright 2018-2020 Polyaxon, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -23,12 +23,11 @@ import (
 	"fmt"
 
 	"github.com/go-openapi/runtime"
-
-	strfmt "github.com/go-openapi/strfmt"
+	"github.com/go-openapi/strfmt"
 )
 
 // New creates a new projects v1 API client.
-func New(transport runtime.ClientTransport, formats strfmt.Registry) *Client {
+func New(transport runtime.ClientTransport, formats strfmt.Registry) ClientService {
 	return &Client{transport: transport, formats: formats}
 }
 
@@ -40,8 +39,57 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
+// ClientService is the interface for Client methods
+type ClientService interface {
+	ArchiveProject(params *ArchiveProjectParams, authInfo runtime.ClientAuthInfoWriter) (*ArchiveProjectOK, *ArchiveProjectNoContent, error)
+
+	BookmarkProject(params *BookmarkProjectParams, authInfo runtime.ClientAuthInfoWriter) (*BookmarkProjectOK, *BookmarkProjectNoContent, error)
+
+	CreateProject(params *CreateProjectParams, authInfo runtime.ClientAuthInfoWriter) (*CreateProjectOK, *CreateProjectNoContent, error)
+
+	DeleteProject(params *DeleteProjectParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteProjectOK, *DeleteProjectNoContent, error)
+
+	DisableProjectCI(params *DisableProjectCIParams, authInfo runtime.ClientAuthInfoWriter) (*DisableProjectCIOK, *DisableProjectCINoContent, error)
+
+	EnableProjectCI(params *EnableProjectCIParams, authInfo runtime.ClientAuthInfoWriter) (*EnableProjectCIOK, *EnableProjectCINoContent, error)
+
+	FetchProjectTeams(params *FetchProjectTeamsParams, authInfo runtime.ClientAuthInfoWriter) (*FetchProjectTeamsOK, *FetchProjectTeamsNoContent, error)
+
+	GetProject(params *GetProjectParams, authInfo runtime.ClientAuthInfoWriter) (*GetProjectOK, *GetProjectNoContent, error)
+
+	GetProjectSettings(params *GetProjectSettingsParams, authInfo runtime.ClientAuthInfoWriter) (*GetProjectSettingsOK, *GetProjectSettingsNoContent, error)
+
+	ListArchivedProjects(params *ListArchivedProjectsParams, authInfo runtime.ClientAuthInfoWriter) (*ListArchivedProjectsOK, *ListArchivedProjectsNoContent, error)
+
+	ListBookmarkedProjects(params *ListBookmarkedProjectsParams, authInfo runtime.ClientAuthInfoWriter) (*ListBookmarkedProjectsOK, *ListBookmarkedProjectsNoContent, error)
+
+	ListProjectNames(params *ListProjectNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListProjectNamesOK, *ListProjectNamesNoContent, error)
+
+	ListProjects(params *ListProjectsParams, authInfo runtime.ClientAuthInfoWriter) (*ListProjectsOK, *ListProjectsNoContent, error)
+
+	PatchProject(params *PatchProjectParams, authInfo runtime.ClientAuthInfoWriter) (*PatchProjectOK, *PatchProjectNoContent, error)
+
+	PatchProjectSettings(params *PatchProjectSettingsParams, authInfo runtime.ClientAuthInfoWriter) (*PatchProjectSettingsOK, *PatchProjectSettingsNoContent, error)
+
+	PatchProjectTeams(params *PatchProjectTeamsParams, authInfo runtime.ClientAuthInfoWriter) (*PatchProjectTeamsOK, *PatchProjectTeamsNoContent, error)
+
+	RestoreProject(params *RestoreProjectParams, authInfo runtime.ClientAuthInfoWriter) (*RestoreProjectOK, *RestoreProjectNoContent, error)
+
+	UnbookmarkProject(params *UnbookmarkProjectParams, authInfo runtime.ClientAuthInfoWriter) (*UnbookmarkProjectOK, *UnbookmarkProjectNoContent, error)
+
+	UpdateProject(params *UpdateProjectParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateProjectOK, *UpdateProjectNoContent, error)
+
+	UpdateProjectSettings(params *UpdateProjectSettingsParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateProjectSettingsOK, *UpdateProjectSettingsNoContent, error)
+
+	UpdateProjectTeams(params *UpdateProjectTeamsParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateProjectTeamsOK, *UpdateProjectTeamsNoContent, error)
+
+	UploadProjectArtifact(params *UploadProjectArtifactParams, authInfo runtime.ClientAuthInfoWriter) (*UploadProjectArtifactOK, *UploadProjectArtifactNoContent, error)
+
+	SetTransport(transport runtime.ClientTransport)
+}
+
 /*
-ArchiveProject stops run
+  ArchiveProject archives project
 */
 func (a *Client) ArchiveProject(params *ArchiveProjectParams, authInfo runtime.ClientAuthInfoWriter) (*ArchiveProjectOK, *ArchiveProjectNoContent, error) {
 	// TODO: Validate the params before sending
@@ -71,13 +119,13 @@ func (a *Client) ArchiveProject(params *ArchiveProjectParams, authInfo runtime.C
 	case *ArchiveProjectNoContent:
 		return nil, value, nil
 	}
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for projects_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
+	// unexpected success response
+	unexpectedSuccess := result.(*ArchiveProjectDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-BookmarkProject invalidates run
+  BookmarkProject bookmarks project
 */
 func (a *Client) BookmarkProject(params *BookmarkProjectParams, authInfo runtime.ClientAuthInfoWriter) (*BookmarkProjectOK, *BookmarkProjectNoContent, error) {
 	// TODO: Validate the params before sending
@@ -107,13 +155,13 @@ func (a *Client) BookmarkProject(params *BookmarkProjectParams, authInfo runtime
 	case *BookmarkProjectNoContent:
 		return nil, value, nil
 	}
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for projects_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
+	// unexpected success response
+	unexpectedSuccess := result.(*BookmarkProjectDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-CreateProject lists archived runs for user
+  CreateProject creates new project
 */
 func (a *Client) CreateProject(params *CreateProjectParams, authInfo runtime.ClientAuthInfoWriter) (*CreateProjectOK, *CreateProjectNoContent, error) {
 	// TODO: Validate the params before sending
@@ -143,13 +191,13 @@ func (a *Client) CreateProject(params *CreateProjectParams, authInfo runtime.Cli
 	case *CreateProjectNoContent:
 		return nil, value, nil
 	}
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for projects_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
+	// unexpected success response
+	unexpectedSuccess := result.(*CreateProjectDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-DeleteProject deletes runs
+  DeleteProject deletes project
 */
 func (a *Client) DeleteProject(params *DeleteProjectParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteProjectOK, *DeleteProjectNoContent, error) {
 	// TODO: Validate the params before sending
@@ -179,13 +227,13 @@ func (a *Client) DeleteProject(params *DeleteProjectParams, authInfo runtime.Cli
 	case *DeleteProjectNoContent:
 		return nil, value, nil
 	}
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for projects_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
+	// unexpected success response
+	unexpectedSuccess := result.(*DeleteProjectDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-DisableProjectCI restarts run
+  DisableProjectCI disbales project c i
 */
 func (a *Client) DisableProjectCI(params *DisableProjectCIParams, authInfo runtime.ClientAuthInfoWriter) (*DisableProjectCIOK, *DisableProjectCINoContent, error) {
 	// TODO: Validate the params before sending
@@ -215,13 +263,13 @@ func (a *Client) DisableProjectCI(params *DisableProjectCIParams, authInfo runti
 	case *DisableProjectCINoContent:
 		return nil, value, nil
 	}
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for projects_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
+	// unexpected success response
+	unexpectedSuccess := result.(*DisableProjectCIDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-EnableProjectCI restarts run with copy
+  EnableProjectCI enables project c i
 */
 func (a *Client) EnableProjectCI(params *EnableProjectCIParams, authInfo runtime.ClientAuthInfoWriter) (*EnableProjectCIOK, *EnableProjectCINoContent, error) {
 	// TODO: Validate the params before sending
@@ -251,13 +299,13 @@ func (a *Client) EnableProjectCI(params *EnableProjectCIParams, authInfo runtime
 	case *EnableProjectCINoContent:
 		return nil, value, nil
 	}
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for projects_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
+	// unexpected success response
+	unexpectedSuccess := result.(*EnableProjectCIDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-FetchProjectTeams bookmarks run
+  FetchProjectTeams gets project teams
 */
 func (a *Client) FetchProjectTeams(params *FetchProjectTeamsParams, authInfo runtime.ClientAuthInfoWriter) (*FetchProjectTeamsOK, *FetchProjectTeamsNoContent, error) {
 	// TODO: Validate the params before sending
@@ -287,13 +335,13 @@ func (a *Client) FetchProjectTeams(params *FetchProjectTeamsParams, authInfo run
 	case *FetchProjectTeamsNoContent:
 		return nil, value, nil
 	}
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for projects_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
+	// unexpected success response
+	unexpectedSuccess := result.(*FetchProjectTeamsDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-GetProject updates run
+  GetProject gets project
 */
 func (a *Client) GetProject(params *GetProjectParams, authInfo runtime.ClientAuthInfoWriter) (*GetProjectOK, *GetProjectNoContent, error) {
 	// TODO: Validate the params before sending
@@ -323,13 +371,13 @@ func (a *Client) GetProject(params *GetProjectParams, authInfo runtime.ClientAut
 	case *GetProjectNoContent:
 		return nil, value, nil
 	}
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for projects_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
+	// unexpected success response
+	unexpectedSuccess := result.(*GetProjectDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-GetProjectSettings resumes run
+  GetProjectSettings gets project settings
 */
 func (a *Client) GetProjectSettings(params *GetProjectSettingsParams, authInfo runtime.ClientAuthInfoWriter) (*GetProjectSettingsOK, *GetProjectSettingsNoContent, error) {
 	// TODO: Validate the params before sending
@@ -359,13 +407,13 @@ func (a *Client) GetProjectSettings(params *GetProjectSettingsParams, authInfo r
 	case *GetProjectSettingsNoContent:
 		return nil, value, nil
 	}
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for projects_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
+	// unexpected success response
+	unexpectedSuccess := result.(*GetProjectSettingsDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-ListArchivedProjects gets run
+  ListArchivedProjects lists archived projects for user
 */
 func (a *Client) ListArchivedProjects(params *ListArchivedProjectsParams, authInfo runtime.ClientAuthInfoWriter) (*ListArchivedProjectsOK, *ListArchivedProjectsNoContent, error) {
 	// TODO: Validate the params before sending
@@ -395,13 +443,13 @@ func (a *Client) ListArchivedProjects(params *ListArchivedProjectsParams, authIn
 	case *ListArchivedProjectsNoContent:
 		return nil, value, nil
 	}
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for projects_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
+	// unexpected success response
+	unexpectedSuccess := result.(*ListArchivedProjectsDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-ListBookmarkedProjects creates new run
+  ListBookmarkedProjects lists bookmarked projects for user
 */
 func (a *Client) ListBookmarkedProjects(params *ListBookmarkedProjectsParams, authInfo runtime.ClientAuthInfoWriter) (*ListBookmarkedProjectsOK, *ListBookmarkedProjectsNoContent, error) {
 	// TODO: Validate the params before sending
@@ -431,13 +479,13 @@ func (a *Client) ListBookmarkedProjects(params *ListBookmarkedProjectsParams, au
 	case *ListBookmarkedProjectsNoContent:
 		return nil, value, nil
 	}
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for projects_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
+	// unexpected success response
+	unexpectedSuccess := result.(*ListBookmarkedProjectsDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-ListProjectNames lists runs
+  ListProjectNames lists project names
 */
 func (a *Client) ListProjectNames(params *ListProjectNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListProjectNamesOK, *ListProjectNamesNoContent, error) {
 	// TODO: Validate the params before sending
@@ -467,13 +515,13 @@ func (a *Client) ListProjectNames(params *ListProjectNamesParams, authInfo runti
 	case *ListProjectNamesNoContent:
 		return nil, value, nil
 	}
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for projects_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
+	// unexpected success response
+	unexpectedSuccess := result.(*ListProjectNamesDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-ListProjects lists bookmarked runs for user
+  ListProjects lists projects
 */
 func (a *Client) ListProjects(params *ListProjectsParams, authInfo runtime.ClientAuthInfoWriter) (*ListProjectsOK, *ListProjectsNoContent, error) {
 	// TODO: Validate the params before sending
@@ -503,13 +551,13 @@ func (a *Client) ListProjects(params *ListProjectsParams, authInfo runtime.Clien
 	case *ListProjectsNoContent:
 		return nil, value, nil
 	}
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for projects_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
+	// unexpected success response
+	unexpectedSuccess := result.(*ListProjectsDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-PatchProject deletes run
+  PatchProject patches project
 */
 func (a *Client) PatchProject(params *PatchProjectParams, authInfo runtime.ClientAuthInfoWriter) (*PatchProjectOK, *PatchProjectNoContent, error) {
 	// TODO: Validate the params before sending
@@ -539,13 +587,13 @@ func (a *Client) PatchProject(params *PatchProjectParams, authInfo runtime.Clien
 	case *PatchProjectNoContent:
 		return nil, value, nil
 	}
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for projects_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
+	// unexpected success response
+	unexpectedSuccess := result.(*PatchProjectDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-PatchProjectSettings restores run
+  PatchProjectSettings patches project settings
 */
 func (a *Client) PatchProjectSettings(params *PatchProjectSettingsParams, authInfo runtime.ClientAuthInfoWriter) (*PatchProjectSettingsOK, *PatchProjectSettingsNoContent, error) {
 	// TODO: Validate the params before sending
@@ -575,13 +623,13 @@ func (a *Client) PatchProjectSettings(params *PatchProjectSettingsParams, authIn
 	case *PatchProjectSettingsNoContent:
 		return nil, value, nil
 	}
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for projects_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
+	// unexpected success response
+	unexpectedSuccess := result.(*PatchProjectSettingsDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-PatchProjectTeams starts run tensorboard
+  PatchProjectTeams patches project teams
 */
 func (a *Client) PatchProjectTeams(params *PatchProjectTeamsParams, authInfo runtime.ClientAuthInfoWriter) (*PatchProjectTeamsOK, *PatchProjectTeamsNoContent, error) {
 	// TODO: Validate the params before sending
@@ -611,13 +659,13 @@ func (a *Client) PatchProjectTeams(params *PatchProjectTeamsParams, authInfo run
 	case *PatchProjectTeamsNoContent:
 		return nil, value, nil
 	}
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for projects_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
+	// unexpected success response
+	unexpectedSuccess := result.(*PatchProjectTeamsDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-RestoreProject stops runs
+  RestoreProject restores project
 */
 func (a *Client) RestoreProject(params *RestoreProjectParams, authInfo runtime.ClientAuthInfoWriter) (*RestoreProjectOK, *RestoreProjectNoContent, error) {
 	// TODO: Validate the params before sending
@@ -647,13 +695,13 @@ func (a *Client) RestoreProject(params *RestoreProjectParams, authInfo runtime.C
 	case *RestoreProjectNoContent:
 		return nil, value, nil
 	}
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for projects_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
+	// unexpected success response
+	unexpectedSuccess := result.(*RestoreProjectDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-UnbookmarkProject invalidates runs
+  UnbookmarkProject unbookmarks project
 */
 func (a *Client) UnbookmarkProject(params *UnbookmarkProjectParams, authInfo runtime.ClientAuthInfoWriter) (*UnbookmarkProjectOK, *UnbookmarkProjectNoContent, error) {
 	// TODO: Validate the params before sending
@@ -683,13 +731,13 @@ func (a *Client) UnbookmarkProject(params *UnbookmarkProjectParams, authInfo run
 	case *UnbookmarkProjectNoContent:
 		return nil, value, nil
 	}
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for projects_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
+	// unexpected success response
+	unexpectedSuccess := result.(*UnbookmarkProjectDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-UpdateProject patches run
+  UpdateProject updates project
 */
 func (a *Client) UpdateProject(params *UpdateProjectParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateProjectOK, *UpdateProjectNoContent, error) {
 	// TODO: Validate the params before sending
@@ -719,13 +767,13 @@ func (a *Client) UpdateProject(params *UpdateProjectParams, authInfo runtime.Cli
 	case *UpdateProjectNoContent:
 		return nil, value, nil
 	}
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for projects_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
+	// unexpected success response
+	unexpectedSuccess := result.(*UpdateProjectDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-UpdateProjectSettings archives run
+  UpdateProjectSettings updates project settings
 */
 func (a *Client) UpdateProjectSettings(params *UpdateProjectSettingsParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateProjectSettingsOK, *UpdateProjectSettingsNoContent, error) {
 	// TODO: Validate the params before sending
@@ -755,13 +803,13 @@ func (a *Client) UpdateProjectSettings(params *UpdateProjectSettingsParams, auth
 	case *UpdateProjectSettingsNoContent:
 		return nil, value, nil
 	}
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for projects_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
+	// unexpected success response
+	unexpectedSuccess := result.(*UpdateProjectSettingsDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-UpdateProjectTeams unbookmarks run
+  UpdateProjectTeams updates project teams
 */
 func (a *Client) UpdateProjectTeams(params *UpdateProjectTeamsParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateProjectTeamsOK, *UpdateProjectTeamsNoContent, error) {
 	// TODO: Validate the params before sending
@@ -791,13 +839,13 @@ func (a *Client) UpdateProjectTeams(params *UpdateProjectTeamsParams, authInfo r
 	case *UpdateProjectTeamsNoContent:
 		return nil, value, nil
 	}
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for projects_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
+	// unexpected success response
+	unexpectedSuccess := result.(*UpdateProjectTeamsDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-UploadProjectArtifact uploads artifact to a store via project access
+  UploadProjectArtifact uploads artifact to a store via project access
 */
 func (a *Client) UploadProjectArtifact(params *UploadProjectArtifactParams, authInfo runtime.ClientAuthInfoWriter) (*UploadProjectArtifactOK, *UploadProjectArtifactNoContent, error) {
 	// TODO: Validate the params before sending

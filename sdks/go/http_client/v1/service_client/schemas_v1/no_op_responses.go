@@ -1,4 +1,4 @@
-// Copyright 2019 Polyaxon, Inc.
+// Copyright 2018-2020 Polyaxon, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -24,10 +24,9 @@ import (
 	"io"
 
 	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/strfmt"
 
-	strfmt "github.com/go-openapi/strfmt"
-
-	service_model "github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_model"
+	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_model"
 )
 
 // NoOpReader is a Reader for the NoOp structure.
@@ -62,9 +61,15 @@ func (o *NoOpReader) ReadResponse(response runtime.ClientResponse, consumer runt
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		result := NewNoOpDefault(response.Code())
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		if response.Code()/100 == 2 {
+			return result, nil
+		}
+		return nil, result
 	}
 }
 
@@ -188,6 +193,48 @@ func (o *NoOpNotFound) readResponse(response runtime.ClientResponse, consumer ru
 
 	// response payload
 	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
+// NewNoOpDefault creates a NoOpDefault with default headers values
+func NewNoOpDefault(code int) *NoOpDefault {
+	return &NoOpDefault{
+		_statusCode: code,
+	}
+}
+
+/*NoOpDefault handles this case with default header values.
+
+An unexpected error response
+*/
+type NoOpDefault struct {
+	_statusCode int
+
+	Payload *service_model.RuntimeError
+}
+
+// Code gets the status code for the no op default response
+func (o *NoOpDefault) Code() int {
+	return o._statusCode
+}
+
+func (o *NoOpDefault) Error() string {
+	return fmt.Sprintf("[GET /schemas][%d] NoOp default  %+v", o._statusCode, o.Payload)
+}
+
+func (o *NoOpDefault) GetPayload() *service_model.RuntimeError {
+	return o.Payload
+}
+
+func (o *NoOpDefault) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(service_model.RuntimeError)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 

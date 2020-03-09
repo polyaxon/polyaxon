@@ -4,27 +4,27 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**archiveProject**](ProjectsV1Api.md#archiveProject) | **POST** /api/v1/{owner}/{project}/archive | Stop run
-[**bookmarkProject**](ProjectsV1Api.md#bookmarkProject) | **POST** /api/v1/{owner}/{project}/bookmark | Invalidate run
-[**createProject**](ProjectsV1Api.md#createProject) | **POST** /api/v1/{owner}/projects/create | List archived runs for user
-[**deleteProject**](ProjectsV1Api.md#deleteProject) | **DELETE** /api/v1/{owner}/{project} | Delete runs
-[**disableProjectCI**](ProjectsV1Api.md#disableProjectCI) | **DELETE** /api/v1/{owner}/{project}/ci | Restart run
-[**enableProjectCI**](ProjectsV1Api.md#enableProjectCI) | **POST** /api/v1/{owner}/{project}/ci | Restart run with copy
-[**fetchProjectTeams**](ProjectsV1Api.md#fetchProjectTeams) | **GET** /api/v1/{owner}/{project}/teams | Bookmark run
-[**getProject**](ProjectsV1Api.md#getProject) | **GET** /api/v1/{owner}/{project} | Update run
-[**getProjectSettings**](ProjectsV1Api.md#getProjectSettings) | **GET** /api/v1/{owner}/{project}/settings | Resume run
-[**listArchivedProjects**](ProjectsV1Api.md#listArchivedProjects) | **GET** /api/v1/archives/{user}/projects | Get run
-[**listBookmarkedProjects**](ProjectsV1Api.md#listBookmarkedProjects) | **GET** /api/v1/bookmarks/{user}/projects | Create new run
-[**listProjectNames**](ProjectsV1Api.md#listProjectNames) | **GET** /api/v1/{owner}/projects/names | List runs
-[**listProjects**](ProjectsV1Api.md#listProjects) | **GET** /api/v1/{owner}/projects/list | List bookmarked runs for user
-[**patchProject**](ProjectsV1Api.md#patchProject) | **PATCH** /api/v1/{owner}/{project.name} | Delete run
-[**patchProjectSettings**](ProjectsV1Api.md#patchProjectSettings) | **PATCH** /api/v1/{owner}/{project}/settings | Restore run
-[**patchProjectTeams**](ProjectsV1Api.md#patchProjectTeams) | **PATCH** /api/v1/{owner}/{project}/teams | Start run tensorboard
-[**restoreProject**](ProjectsV1Api.md#restoreProject) | **POST** /api/v1/{owner}/{project}/restore | Stop runs
-[**unbookmarkProject**](ProjectsV1Api.md#unbookmarkProject) | **DELETE** /api/v1/{owner}/{project}/unbookmark | Invalidate runs
-[**updateProject**](ProjectsV1Api.md#updateProject) | **PUT** /api/v1/{owner}/{project.name} | Patch run
-[**updateProjectSettings**](ProjectsV1Api.md#updateProjectSettings) | **PUT** /api/v1/{owner}/{project}/settings | Archive run
-[**updateProjectTeams**](ProjectsV1Api.md#updateProjectTeams) | **PUT** /api/v1/{owner}/{project}/teams | Unbookmark run
+[**archiveProject**](ProjectsV1Api.md#archiveProject) | **POST** /api/v1/{owner}/{project}/archive | Archive project
+[**bookmarkProject**](ProjectsV1Api.md#bookmarkProject) | **POST** /api/v1/{owner}/{project}/bookmark | Bookmark project
+[**createProject**](ProjectsV1Api.md#createProject) | **POST** /api/v1/{owner}/projects/create | Create new project
+[**deleteProject**](ProjectsV1Api.md#deleteProject) | **DELETE** /api/v1/{owner}/{project} | Delete project
+[**disableProjectCI**](ProjectsV1Api.md#disableProjectCI) | **DELETE** /api/v1/{owner}/{project}/ci | Disbale project CI
+[**enableProjectCI**](ProjectsV1Api.md#enableProjectCI) | **POST** /api/v1/{owner}/{project}/ci | Enable project CI
+[**fetchProjectTeams**](ProjectsV1Api.md#fetchProjectTeams) | **GET** /api/v1/{owner}/{project}/teams | Get project teams
+[**getProject**](ProjectsV1Api.md#getProject) | **GET** /api/v1/{owner}/{project} | Get project
+[**getProjectSettings**](ProjectsV1Api.md#getProjectSettings) | **GET** /api/v1/{owner}/{project}/settings | Get Project settings
+[**listArchivedProjects**](ProjectsV1Api.md#listArchivedProjects) | **GET** /api/v1/archives/{user}/projects | List archived projects for user
+[**listBookmarkedProjects**](ProjectsV1Api.md#listBookmarkedProjects) | **GET** /api/v1/bookmarks/{user}/projects | List bookmarked projects for user
+[**listProjectNames**](ProjectsV1Api.md#listProjectNames) | **GET** /api/v1/{owner}/projects/names | List project names
+[**listProjects**](ProjectsV1Api.md#listProjects) | **GET** /api/v1/{owner}/projects/list | List projects
+[**patchProject**](ProjectsV1Api.md#patchProject) | **PATCH** /api/v1/{owner}/{project.name} | Patch project
+[**patchProjectSettings**](ProjectsV1Api.md#patchProjectSettings) | **PATCH** /api/v1/{owner}/{project}/settings | Patch project settings
+[**patchProjectTeams**](ProjectsV1Api.md#patchProjectTeams) | **PATCH** /api/v1/{owner}/{project}/teams | Patch project teams
+[**restoreProject**](ProjectsV1Api.md#restoreProject) | **POST** /api/v1/{owner}/{project}/restore | Restore project
+[**unbookmarkProject**](ProjectsV1Api.md#unbookmarkProject) | **DELETE** /api/v1/{owner}/{project}/unbookmark | Unbookmark project
+[**updateProject**](ProjectsV1Api.md#updateProject) | **PUT** /api/v1/{owner}/{project.name} | Update project
+[**updateProjectSettings**](ProjectsV1Api.md#updateProjectSettings) | **PUT** /api/v1/{owner}/{project}/settings | Update project settings
+[**updateProjectTeams**](ProjectsV1Api.md#updateProjectTeams) | **PUT** /api/v1/{owner}/{project}/teams | Update project teams
 [**uploadProjectArtifact**](ProjectsV1Api.md#uploadProjectArtifact) | **POST** /api/v1/{owner}/{project}/artifacts/{uuid}/upload | Upload artifact to a store via project access
 
 
@@ -32,7 +32,7 @@ Method | HTTP request | Description
 # **archiveProject**
 > archiveProject(owner, project)
 
-Stop run
+Archive project
 
 ### Example
 ```java
@@ -86,7 +86,7 @@ null (empty response body)
 # **bookmarkProject**
 > bookmarkProject(owner, project)
 
-Invalidate run
+Bookmark project
 
 ### Example
 ```java
@@ -140,7 +140,7 @@ null (empty response body)
 # **createProject**
 > V1Project createProject(owner, body)
 
-List archived runs for user
+Create new project
 
 ### Example
 ```java
@@ -195,7 +195,7 @@ Name | Type | Description  | Notes
 # **deleteProject**
 > deleteProject(owner, project)
 
-Delete runs
+Delete project
 
 ### Example
 ```java
@@ -249,7 +249,7 @@ null (empty response body)
 # **disableProjectCI**
 > disableProjectCI(owner, project)
 
-Restart run
+Disbale project CI
 
 ### Example
 ```java
@@ -303,7 +303,7 @@ null (empty response body)
 # **enableProjectCI**
 > enableProjectCI(owner, project)
 
-Restart run with copy
+Enable project CI
 
 ### Example
 ```java
@@ -357,7 +357,7 @@ null (empty response body)
 # **fetchProjectTeams**
 > V1ProjectTeams fetchProjectTeams(owner, project)
 
-Bookmark run
+Get project teams
 
 ### Example
 ```java
@@ -412,7 +412,7 @@ Name | Type | Description  | Notes
 # **getProject**
 > V1Project getProject(owner, project)
 
-Update run
+Get project
 
 ### Example
 ```java
@@ -467,7 +467,7 @@ Name | Type | Description  | Notes
 # **getProjectSettings**
 > V1ProjectSettings getProjectSettings(owner, project)
 
-Resume run
+Get Project settings
 
 ### Example
 ```java
@@ -522,7 +522,7 @@ Name | Type | Description  | Notes
 # **listArchivedProjects**
 > V1ListProjectsResponse listArchivedProjects(user, offset, limit, sort, query)
 
-Get run
+List archived projects for user
 
 ### Example
 ```java
@@ -583,7 +583,7 @@ Name | Type | Description  | Notes
 # **listBookmarkedProjects**
 > V1ListProjectsResponse listBookmarkedProjects(user, offset, limit, sort, query)
 
-Create new run
+List bookmarked projects for user
 
 ### Example
 ```java
@@ -644,7 +644,7 @@ Name | Type | Description  | Notes
 # **listProjectNames**
 > V1ListProjectsResponse listProjectNames(owner, offset, limit, sort, query)
 
-List runs
+List project names
 
 ### Example
 ```java
@@ -705,7 +705,7 @@ Name | Type | Description  | Notes
 # **listProjects**
 > V1ListProjectsResponse listProjects(owner, offset, limit, sort, query)
 
-List bookmarked runs for user
+List projects
 
 ### Example
 ```java
@@ -766,7 +766,7 @@ Name | Type | Description  | Notes
 # **patchProject**
 > V1Project patchProject(owner, projectName, body)
 
-Delete run
+Patch project
 
 ### Example
 ```java
@@ -823,7 +823,7 @@ Name | Type | Description  | Notes
 # **patchProjectSettings**
 > V1ProjectSettings patchProjectSettings(owner, project, body)
 
-Restore run
+Patch project settings
 
 ### Example
 ```java
@@ -880,7 +880,7 @@ Name | Type | Description  | Notes
 # **patchProjectTeams**
 > V1ProjectTeams patchProjectTeams(owner, project, body)
 
-Start run tensorboard
+Patch project teams
 
 ### Example
 ```java
@@ -937,7 +937,7 @@ Name | Type | Description  | Notes
 # **restoreProject**
 > restoreProject(owner, project)
 
-Stop runs
+Restore project
 
 ### Example
 ```java
@@ -991,7 +991,7 @@ null (empty response body)
 # **unbookmarkProject**
 > unbookmarkProject(owner, project)
 
-Invalidate runs
+Unbookmark project
 
 ### Example
 ```java
@@ -1045,7 +1045,7 @@ null (empty response body)
 # **updateProject**
 > V1Project updateProject(owner, projectName, body)
 
-Patch run
+Update project
 
 ### Example
 ```java
@@ -1102,7 +1102,7 @@ Name | Type | Description  | Notes
 # **updateProjectSettings**
 > V1ProjectSettings updateProjectSettings(owner, project, body)
 
-Archive run
+Update project settings
 
 ### Example
 ```java
@@ -1159,7 +1159,7 @@ Name | Type | Description  | Notes
 # **updateProjectTeams**
 > V1ProjectTeams updateProjectTeams(owner, project, body)
 
-Unbookmark run
+Update project teams
 
 ### Example
 ```java

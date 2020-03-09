@@ -1,4 +1,4 @@
-// Copyright 2019 Polyaxon, Inc.
+// Copyright 2018-2020 Polyaxon, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -24,10 +24,9 @@ import (
 	"io"
 
 	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/strfmt"
 
-	strfmt "github.com/go-openapi/strfmt"
-
-	service_model "github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_model"
+	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_model"
 )
 
 // ListProjectSearchNamesReader is a Reader for the ListProjectSearchNames structure.
@@ -62,9 +61,15 @@ func (o *ListProjectSearchNamesReader) ReadResponse(response runtime.ClientRespo
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		result := NewListProjectSearchNamesDefault(response.Code())
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		if response.Code()/100 == 2 {
+			return result, nil
+		}
+		return nil, result
 	}
 }
 
@@ -188,6 +193,48 @@ func (o *ListProjectSearchNamesNotFound) readResponse(response runtime.ClientRes
 
 	// response payload
 	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
+// NewListProjectSearchNamesDefault creates a ListProjectSearchNamesDefault with default headers values
+func NewListProjectSearchNamesDefault(code int) *ListProjectSearchNamesDefault {
+	return &ListProjectSearchNamesDefault{
+		_statusCode: code,
+	}
+}
+
+/*ListProjectSearchNamesDefault handles this case with default header values.
+
+An unexpected error response
+*/
+type ListProjectSearchNamesDefault struct {
+	_statusCode int
+
+	Payload *service_model.RuntimeError
+}
+
+// Code gets the status code for the list project search names default response
+func (o *ListProjectSearchNamesDefault) Code() int {
+	return o._statusCode
+}
+
+func (o *ListProjectSearchNamesDefault) Error() string {
+	return fmt.Sprintf("[GET /api/v1/{owner}/{project}/searches/names][%d] ListProjectSearchNames default  %+v", o._statusCode, o.Payload)
+}
+
+func (o *ListProjectSearchNamesDefault) GetPayload() *service_model.RuntimeError {
+	return o.Payload
+}
+
+func (o *ListProjectSearchNamesDefault) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(service_model.RuntimeError)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 

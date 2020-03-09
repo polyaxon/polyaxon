@@ -1,4 +1,4 @@
-// Copyright 2019 Polyaxon, Inc.
+// Copyright 2018-2020 Polyaxon, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,30 +20,33 @@ package service_model
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // V1TFJob TF Job specification
+//
 // swagger:model v1TFJob
 type V1TFJob struct {
 
 	// Optional chief replica definition
-	Chief *V1Replica `json:"chief,omitempty"`
+	Chief *V1KFReplica `json:"chief,omitempty"`
+
+	// optional clean pod policy section
+	CleanPodPolicy V1CleanPodPolicy `json:"cleanPodPolicy,omitempty"`
 
 	// Optional evaluator replica definition
-	Evaluator *V1Replica `json:"evaluator,omitempty"`
+	Evaluator *V1KFReplica `json:"evaluator,omitempty"`
 
 	// Optional component kind, should be equal to "pytorch_job"
-	Kind string `json:"kind,omitempty"`
+	Kind *string `json:"kind,omitempty"`
 
 	// Optional ps replica definition
-	Ps *V1Replica `json:"ps,omitempty"`
+	Ps *V1KFReplica `json:"ps,omitempty"`
 
 	// Optional worker replica definition
-	Worker *V1Replica `json:"worker,omitempty"`
+	Worker *V1KFReplica `json:"worker,omitempty"`
 }
 
 // Validate validates this v1 t f job
@@ -51,6 +54,10 @@ func (m *V1TFJob) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateChief(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateCleanPodPolicy(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -85,6 +92,22 @@ func (m *V1TFJob) validateChief(formats strfmt.Registry) error {
 			}
 			return err
 		}
+	}
+
+	return nil
+}
+
+func (m *V1TFJob) validateCleanPodPolicy(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.CleanPodPolicy) { // not required
+		return nil
+	}
+
+	if err := m.CleanPodPolicy.Validate(formats); err != nil {
+		if ve, ok := err.(*errors.Validation); ok {
+			return ve.ValidateName("cleanPodPolicy")
+		}
+		return err
 	}
 
 	return nil

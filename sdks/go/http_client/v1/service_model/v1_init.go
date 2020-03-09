@@ -1,4 +1,4 @@
-// Copyright 2019 Polyaxon, Inc.
+// Copyright 2018-2020 Polyaxon, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,26 +20,33 @@ package service_model
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	"strconv"
-
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
-// V1Init Init specificication
+// V1Init Artifacts initializer specification
+//
 // swagger:model v1Init
 type V1Init struct {
 
-	// artifacts
-	Artifacts []*V1ArtifactMount `json:"artifacts"`
+	// Override Schema for artifacts/mounts connections
+	Artifacts *V1ArtifactsType `json:"artifacts,omitempty"`
 
-	// build
-	Build *V1BuildContext `json:"build,omitempty"`
+	// Optional, revision to pull
+	Connection string `json:"connection,omitempty"`
 
-	// repos
-	Repos []*V1RepoInit `json:"repos"`
+	// Container to use
+	Container V1Container `json:"container,omitempty"`
+
+	// Schema of the dockerfile to init
+	Dockerfile *V1DockerfileType `json:"dockerfile,omitempty"`
+
+	// Override for git connections
+	Git *V1GitType `json:"git,omitempty"`
+
+	// Optional context path, the path to mount to main the container
+	Path string `json:"path,omitempty"`
 }
 
 // Validate validates this v1 init
@@ -50,11 +57,11 @@ func (m *V1Init) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
-	if err := m.validateBuild(formats); err != nil {
+	if err := m.validateDockerfile(formats); err != nil {
 		res = append(res, err)
 	}
 
-	if err := m.validateRepos(formats); err != nil {
+	if err := m.validateGit(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -70,35 +77,10 @@ func (m *V1Init) validateArtifacts(formats strfmt.Registry) error {
 		return nil
 	}
 
-	for i := 0; i < len(m.Artifacts); i++ {
-		if swag.IsZero(m.Artifacts[i]) { // not required
-			continue
-		}
-
-		if m.Artifacts[i] != nil {
-			if err := m.Artifacts[i].Validate(formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("artifacts" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
-	return nil
-}
-
-func (m *V1Init) validateBuild(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.Build) { // not required
-		return nil
-	}
-
-	if m.Build != nil {
-		if err := m.Build.Validate(formats); err != nil {
+	if m.Artifacts != nil {
+		if err := m.Artifacts.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("build")
+				return ve.ValidateName("artifacts")
 			}
 			return err
 		}
@@ -107,26 +89,37 @@ func (m *V1Init) validateBuild(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *V1Init) validateRepos(formats strfmt.Registry) error {
+func (m *V1Init) validateDockerfile(formats strfmt.Registry) error {
 
-	if swag.IsZero(m.Repos) { // not required
+	if swag.IsZero(m.Dockerfile) { // not required
 		return nil
 	}
 
-	for i := 0; i < len(m.Repos); i++ {
-		if swag.IsZero(m.Repos[i]) { // not required
-			continue
-		}
-
-		if m.Repos[i] != nil {
-			if err := m.Repos[i].Validate(formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("repos" + "." + strconv.Itoa(i))
-				}
-				return err
+	if m.Dockerfile != nil {
+		if err := m.Dockerfile.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("dockerfile")
 			}
+			return err
 		}
+	}
 
+	return nil
+}
+
+func (m *V1Init) validateGit(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Git) { // not required
+		return nil
+	}
+
+	if m.Git != nil {
+		if err := m.Git.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("git")
+			}
+			return err
+		}
 	}
 
 	return nil

@@ -5,8 +5,9 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **kind** | **String** |  |  [optional]
-**master** | [**V1Replica**](V1Replica.md) |  |  [optional]
-**worker** | [**V1Replica**](V1Replica.md) |  |  [optional]
+**cleanPodPolicy** | [**V1CleanPodPolicy**](V1CleanPodPolicy.md) |  |  [optional]
+**master** | [**V1KFReplica**](V1KFReplica.md) |  |  [optional]
+**worker** | [**V1KFReplica**](V1KFReplica.md) |  |  [optional]
 
 
 

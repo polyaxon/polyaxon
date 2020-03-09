@@ -4,21 +4,21 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**createProjectSearch**](ProjectSearchesV1Api.md#createProjectSearch) | **POST** /api/v1/{owner}/{project}/searches | List runs
-[**deleteProjectSearch**](ProjectSearchesV1Api.md#deleteProjectSearch) | **DELETE** /api/v1/{owner}/{project}/searches/{uuid} | Patch run
-[**getProjectSearch**](ProjectSearchesV1Api.md#getProjectSearch) | **GET** /api/v1/{owner}/{project}/searches/{uuid} | Create new run
-[**listProjectSearchNames**](ProjectSearchesV1Api.md#listProjectSearchNames) | **GET** /api/v1/{owner}/{project}/searches/names | List bookmarked runs for user
-[**listProjectSearches**](ProjectSearchesV1Api.md#listProjectSearches) | **GET** /api/v1/{owner}/{project}/searches | List archived runs for user
-[**patchProjectSearch**](ProjectSearchesV1Api.md#patchProjectSearch) | **PATCH** /api/v1/{owner}/{project}/searches/{search.uuid} | Update run
-[**promoteProjectSearch**](ProjectSearchesV1Api.md#promoteProjectSearch) | **POST** /api/v1/{owner}/{project}/searches/{uuid}/promote | Delete run
-[**updateProjectSearch**](ProjectSearchesV1Api.md#updateProjectSearch) | **PUT** /api/v1/{owner}/{project}/searches/{search.uuid} | Get run
+[**createProjectSearch**](ProjectSearchesV1Api.md#createProjectSearch) | **POST** /api/v1/{owner}/{project}/searches | Create project search
+[**deleteProjectSearch**](ProjectSearchesV1Api.md#deleteProjectSearch) | **DELETE** /api/v1/{owner}/{project}/searches/{uuid} | Delete project search
+[**getProjectSearch**](ProjectSearchesV1Api.md#getProjectSearch) | **GET** /api/v1/{owner}/{project}/searches/{uuid} | Get project search
+[**listProjectSearchNames**](ProjectSearchesV1Api.md#listProjectSearchNames) | **GET** /api/v1/{owner}/{project}/searches/names | List project search names
+[**listProjectSearches**](ProjectSearchesV1Api.md#listProjectSearches) | **GET** /api/v1/{owner}/{project}/searches | List project searches
+[**patchProjectSearch**](ProjectSearchesV1Api.md#patchProjectSearch) | **PATCH** /api/v1/{owner}/{project}/searches/{search.uuid} | Patch project search
+[**promoteProjectSearch**](ProjectSearchesV1Api.md#promoteProjectSearch) | **POST** /api/v1/{owner}/{project}/searches/{uuid}/promote | Promote project search
+[**updateProjectSearch**](ProjectSearchesV1Api.md#updateProjectSearch) | **PUT** /api/v1/{owner}/{project}/searches/{search.uuid} | Update project search
 
 
 <a name="createProjectSearch"></a>
 # **createProjectSearch**
 > V1Search createProjectSearch(owner, project, body)
 
-List runs
+Create project search
 
 ### Example
 ```javascript
@@ -75,7 +75,7 @@ Name | Type | Description  | Notes
 # **deleteProjectSearch**
 > deleteProjectSearch(owner, project, uuid)
 
-Patch run
+Delete project search
 
 ### Example
 ```javascript
@@ -92,9 +92,9 @@ var apiInstance = new PolyaxonSdk.ProjectSearchesV1Api();
 
 var owner = "owner_example"; // String | Owner of the namespace
 
-var project = "project_example"; // String | Project where the experiement will be assigned
+var project = "project_example"; // String | Project where the notification will be assigned
 
-var uuid = "uuid_example"; // String | Unique integer identifier of the entity
+var uuid = "uuid_example"; // String | Uuid identifier of the entity
 
 
 var callback = function(error, data, response) {
@@ -112,8 +112,8 @@ apiInstance.deleteProjectSearch(owner, project, uuid, callback);
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace | 
- **project** | **String**| Project where the experiement will be assigned | 
- **uuid** | **String**| Unique integer identifier of the entity | 
+ **project** | **String**| Project where the notification will be assigned | 
+ **uuid** | **String**| Uuid identifier of the entity | 
 
 ### Return type
 
@@ -132,7 +132,7 @@ null (empty response body)
 # **getProjectSearch**
 > V1Search getProjectSearch(owner, project, uuid)
 
-Create new run
+Get project search
 
 ### Example
 ```javascript
@@ -149,9 +149,9 @@ var apiInstance = new PolyaxonSdk.ProjectSearchesV1Api();
 
 var owner = "owner_example"; // String | Owner of the namespace
 
-var project = "project_example"; // String | Project where the experiement will be assigned
+var project = "project_example"; // String | Project where the notification will be assigned
 
-var uuid = "uuid_example"; // String | Unique integer identifier of the entity
+var uuid = "uuid_example"; // String | Uuid identifier of the entity
 
 
 var callback = function(error, data, response) {
@@ -169,8 +169,8 @@ apiInstance.getProjectSearch(owner, project, uuid, callback);
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace | 
- **project** | **String**| Project where the experiement will be assigned | 
- **uuid** | **String**| Unique integer identifier of the entity | 
+ **project** | **String**| Project where the notification will be assigned | 
+ **uuid** | **String**| Uuid identifier of the entity | 
 
 ### Return type
 
@@ -189,7 +189,7 @@ Name | Type | Description  | Notes
 # **listProjectSearchNames**
 > V1ListSearchesResponse listProjectSearchNames(owner, project, opts)
 
-List bookmarked runs for user
+List project search names
 
 ### Example
 ```javascript
@@ -253,7 +253,7 @@ Name | Type | Description  | Notes
 # **listProjectSearches**
 > V1ListSearchesResponse listProjectSearches(owner, project, opts)
 
-List archived runs for user
+List project searches
 
 ### Example
 ```javascript
@@ -317,7 +317,7 @@ Name | Type | Description  | Notes
 # **patchProjectSearch**
 > V1Search patchProjectSearch(owner, project, search_uuid, body)
 
-Update run
+Patch project search
 
 ### Example
 ```javascript
@@ -377,7 +377,7 @@ Name | Type | Description  | Notes
 # **promoteProjectSearch**
 > promoteProjectSearch(owner, project, uuid)
 
-Delete run
+Promote project search
 
 ### Example
 ```javascript
@@ -394,9 +394,9 @@ var apiInstance = new PolyaxonSdk.ProjectSearchesV1Api();
 
 var owner = "owner_example"; // String | Owner of the namespace
 
-var project = "project_example"; // String | Project where the experiement will be assigned
+var project = "project_example"; // String | Project where the notification will be assigned
 
-var uuid = "uuid_example"; // String | Unique integer identifier of the entity
+var uuid = "uuid_example"; // String | Uuid identifier of the entity
 
 
 var callback = function(error, data, response) {
@@ -414,8 +414,8 @@ apiInstance.promoteProjectSearch(owner, project, uuid, callback);
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace | 
- **project** | **String**| Project where the experiement will be assigned | 
- **uuid** | **String**| Unique integer identifier of the entity | 
+ **project** | **String**| Project where the notification will be assigned | 
+ **uuid** | **String**| Uuid identifier of the entity | 
 
 ### Return type
 
@@ -434,7 +434,7 @@ null (empty response body)
 # **updateProjectSearch**
 > V1Search updateProjectSearch(owner, project, search_uuid, body)
 
-Get run
+Update project search
 
 ### Example
 ```javascript

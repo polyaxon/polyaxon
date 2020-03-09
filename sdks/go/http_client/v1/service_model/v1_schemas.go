@@ -1,4 +1,4 @@
-// Copyright 2019 Polyaxon, Inc.
+// Copyright 2018-2020 Polyaxon, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,46 +20,113 @@ package service_model
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // V1Schemas v1 schemas
+//
 // swagger:model v1Schemas
 type V1Schemas struct {
 
-	// artifact format
-	ArtifactFormat V1ArtifactFormat `json:"artifact_format,omitempty"`
+	// artifacs
+	Artifacs *V1ArtifactsType `json:"artifacs,omitempty"`
+
+	// artifacts mount
+	ArtifactsMount *V1ArtifactsMount `json:"artifacts_mount,omitempty"`
+
+	// autg
+	Autg *V1AuthType `json:"autg,omitempty"`
+
+	// compiled operation
+	CompiledOperation *V1CompiledOperation `json:"compiled_operation,omitempty"`
+
+	// connection
+	Connection *V1ConnectionType `json:"connection,omitempty"`
 
 	// connection schema
-	ConnectionSchema *V1ConnectionScema `json:"connection_schema,omitempty"`
+	ConnectionSchema *V1ConnectionSchema `json:"connection_schema,omitempty"`
+
+	// dockerfile
+	Dockerfile *V1DockerfileType `json:"dockerfile,omitempty"`
 
 	// early stopping
 	EarlyStopping *V1EarlyStopping `json:"early_stopping,omitempty"`
 
-	// op
-	Op *V1Op `json:"op,omitempty"`
+	// event
+	Event *V1Event `json:"event,omitempty"`
 
-	// op condition
-	OpCondition *V1OpCondition `json:"op_condition,omitempty"`
+	// event type
+	EventType *V1EventType `json:"event_type,omitempty"`
+
+	// gcs
+	Gcs *V1GcsType `json:"gcs,omitempty"`
+
+	// git
+	Git *V1GitType `json:"git,omitempty"`
+
+	// image
+	Image *V1ImageType `json:"image,omitempty"`
+
+	// k8s resource
+	K8sResource *V1K8sResourceType `json:"k8s_resource,omitempty"`
+
+	// matrix
+	Matrix *V1Matrix `json:"matrix,omitempty"`
+
+	// operation cond
+	OperationCond *V1OperationCond `json:"operation_cond,omitempty"`
 
 	// parallel
 	Parallel *V1Parallel `json:"parallel,omitempty"`
 
+	// polyaxon init container
+	PolyaxonInitContainer *V1PolyaxonInitContainer `json:"polyaxon_init_container,omitempty"`
+
+	// polyaxon sidecar container
+	PolyaxonSidecarContainer *V1PolyaxonSidecarContainer `json:"polyaxon_sidecar_container,omitempty"`
+
+	// refrence
+	Refrence *V1Reference `json:"refrence,omitempty"`
+
 	// run
 	Run *V1RunSchema `json:"run,omitempty"`
 
+	// s3
+	S3 *V1S3Type `json:"s3,omitempty"`
+
 	// schedule
 	Schedule *V1Schedule `json:"schedule,omitempty"`
+
+	// uri
+	URI *V1URIType `json:"uri,omitempty"`
+
+	// wasb
+	Wasb *V1WasbType `json:"wasb,omitempty"`
 }
 
 // Validate validates this v1 schemas
 func (m *V1Schemas) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	if err := m.validateArtifactFormat(formats); err != nil {
+	if err := m.validateArtifacs(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateArtifactsMount(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateAutg(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateCompiledOperation(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateConnection(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -67,15 +134,43 @@ func (m *V1Schemas) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
+	if err := m.validateDockerfile(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateEarlyStopping(formats); err != nil {
 		res = append(res, err)
 	}
 
-	if err := m.validateOp(formats); err != nil {
+	if err := m.validateEvent(formats); err != nil {
 		res = append(res, err)
 	}
 
-	if err := m.validateOpCondition(formats); err != nil {
+	if err := m.validateEventType(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateGcs(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateGit(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateImage(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateK8sResource(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateMatrix(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateOperationCond(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -83,11 +178,35 @@ func (m *V1Schemas) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
+	if err := m.validatePolyaxonInitContainer(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validatePolyaxonSidecarContainer(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateRefrence(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateRun(formats); err != nil {
 		res = append(res, err)
 	}
 
+	if err := m.validateS3(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateSchedule(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateURI(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateWasb(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -97,17 +216,91 @@ func (m *V1Schemas) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *V1Schemas) validateArtifactFormat(formats strfmt.Registry) error {
+func (m *V1Schemas) validateArtifacs(formats strfmt.Registry) error {
 
-	if swag.IsZero(m.ArtifactFormat) { // not required
+	if swag.IsZero(m.Artifacs) { // not required
 		return nil
 	}
 
-	if err := m.ArtifactFormat.Validate(formats); err != nil {
-		if ve, ok := err.(*errors.Validation); ok {
-			return ve.ValidateName("artifact_format")
+	if m.Artifacs != nil {
+		if err := m.Artifacs.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("artifacs")
+			}
+			return err
 		}
-		return err
+	}
+
+	return nil
+}
+
+func (m *V1Schemas) validateArtifactsMount(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.ArtifactsMount) { // not required
+		return nil
+	}
+
+	if m.ArtifactsMount != nil {
+		if err := m.ArtifactsMount.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("artifacts_mount")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1Schemas) validateAutg(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Autg) { // not required
+		return nil
+	}
+
+	if m.Autg != nil {
+		if err := m.Autg.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("autg")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1Schemas) validateCompiledOperation(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.CompiledOperation) { // not required
+		return nil
+	}
+
+	if m.CompiledOperation != nil {
+		if err := m.CompiledOperation.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("compiled_operation")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1Schemas) validateConnection(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Connection) { // not required
+		return nil
+	}
+
+	if m.Connection != nil {
+		if err := m.Connection.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("connection")
+			}
+			return err
+		}
 	}
 
 	return nil
@@ -123,6 +316,24 @@ func (m *V1Schemas) validateConnectionSchema(formats strfmt.Registry) error {
 		if err := m.ConnectionSchema.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("connection_schema")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1Schemas) validateDockerfile(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Dockerfile) { // not required
+		return nil
+	}
+
+	if m.Dockerfile != nil {
+		if err := m.Dockerfile.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("dockerfile")
 			}
 			return err
 		}
@@ -149,16 +360,16 @@ func (m *V1Schemas) validateEarlyStopping(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *V1Schemas) validateOp(formats strfmt.Registry) error {
+func (m *V1Schemas) validateEvent(formats strfmt.Registry) error {
 
-	if swag.IsZero(m.Op) { // not required
+	if swag.IsZero(m.Event) { // not required
 		return nil
 	}
 
-	if m.Op != nil {
-		if err := m.Op.Validate(formats); err != nil {
+	if m.Event != nil {
+		if err := m.Event.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("op")
+				return ve.ValidateName("event")
 			}
 			return err
 		}
@@ -167,16 +378,124 @@ func (m *V1Schemas) validateOp(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *V1Schemas) validateOpCondition(formats strfmt.Registry) error {
+func (m *V1Schemas) validateEventType(formats strfmt.Registry) error {
 
-	if swag.IsZero(m.OpCondition) { // not required
+	if swag.IsZero(m.EventType) { // not required
 		return nil
 	}
 
-	if m.OpCondition != nil {
-		if err := m.OpCondition.Validate(formats); err != nil {
+	if m.EventType != nil {
+		if err := m.EventType.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("op_condition")
+				return ve.ValidateName("event_type")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1Schemas) validateGcs(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Gcs) { // not required
+		return nil
+	}
+
+	if m.Gcs != nil {
+		if err := m.Gcs.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("gcs")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1Schemas) validateGit(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Git) { // not required
+		return nil
+	}
+
+	if m.Git != nil {
+		if err := m.Git.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("git")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1Schemas) validateImage(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Image) { // not required
+		return nil
+	}
+
+	if m.Image != nil {
+		if err := m.Image.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("image")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1Schemas) validateK8sResource(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.K8sResource) { // not required
+		return nil
+	}
+
+	if m.K8sResource != nil {
+		if err := m.K8sResource.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("k8s_resource")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1Schemas) validateMatrix(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Matrix) { // not required
+		return nil
+	}
+
+	if m.Matrix != nil {
+		if err := m.Matrix.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("matrix")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1Schemas) validateOperationCond(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.OperationCond) { // not required
+		return nil
+	}
+
+	if m.OperationCond != nil {
+		if err := m.OperationCond.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("operation_cond")
 			}
 			return err
 		}
@@ -203,6 +522,60 @@ func (m *V1Schemas) validateParallel(formats strfmt.Registry) error {
 	return nil
 }
 
+func (m *V1Schemas) validatePolyaxonInitContainer(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.PolyaxonInitContainer) { // not required
+		return nil
+	}
+
+	if m.PolyaxonInitContainer != nil {
+		if err := m.PolyaxonInitContainer.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("polyaxon_init_container")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1Schemas) validatePolyaxonSidecarContainer(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.PolyaxonSidecarContainer) { // not required
+		return nil
+	}
+
+	if m.PolyaxonSidecarContainer != nil {
+		if err := m.PolyaxonSidecarContainer.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("polyaxon_sidecar_container")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1Schemas) validateRefrence(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Refrence) { // not required
+		return nil
+	}
+
+	if m.Refrence != nil {
+		if err := m.Refrence.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("refrence")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
 func (m *V1Schemas) validateRun(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.Run) { // not required
@@ -221,6 +594,24 @@ func (m *V1Schemas) validateRun(formats strfmt.Registry) error {
 	return nil
 }
 
+func (m *V1Schemas) validateS3(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.S3) { // not required
+		return nil
+	}
+
+	if m.S3 != nil {
+		if err := m.S3.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("s3")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
 func (m *V1Schemas) validateSchedule(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.Schedule) { // not required
@@ -231,6 +622,42 @@ func (m *V1Schemas) validateSchedule(formats strfmt.Registry) error {
 		if err := m.Schedule.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("schedule")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1Schemas) validateURI(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.URI) { // not required
+		return nil
+	}
+
+	if m.URI != nil {
+		if err := m.URI.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("uri")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1Schemas) validateWasb(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Wasb) { // not required
+		return nil
+	}
+
+	if m.Wasb != nil {
+		if err := m.Wasb.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("wasb")
 			}
 			return err
 		}

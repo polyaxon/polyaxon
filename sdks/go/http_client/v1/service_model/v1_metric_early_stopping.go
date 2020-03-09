@@ -1,4 +1,4 @@
-// Copyright 2019 Polyaxon, Inc.
+// Copyright 2018-2020 Polyaxon, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,19 +20,19 @@ package service_model
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // V1MetricEarlyStopping MetricEarlyStoppingSchema specification
 // Early stopping based on metric config.
+//
 // swagger:model v1MetricEarlyStopping
 type V1MetricEarlyStopping struct {
 
 	// Kind of this metric early stopping policy, should be equal to "metric_early_stopping"
-	Kind string `json:"kind,omitempty"`
+	Kind *string `json:"kind,omitempty"`
 
 	// Metric name to use for early stopping.
 	Metric string `json:"metric,omitempty"`
@@ -40,9 +40,9 @@ type V1MetricEarlyStopping struct {
 	// Optimization to do: maximize or minimize.
 	Optimization V1Optimization `json:"optimization,omitempty"`
 
-	// Termination policy to use, should be one of the stopping policies:
+	// Policy to use, should be one of the stopping policies:
 	// MedianStoppingPolicy, AverageStoppingPolicy, TruncationStoppingPolicy
-	Policy []interface{} `json:"policy"`
+	Policy interface{} `json:"policy,omitempty"`
 
 	// Metric value to use for the condition.
 	Value string `json:"value,omitempty"`

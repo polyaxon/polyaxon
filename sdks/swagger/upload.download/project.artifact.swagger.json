@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "pipeline upload"
+    "title": "project artifacts download-upload"
   },
   "schemes": [
     "http",

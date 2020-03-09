@@ -1,0 +1,24 @@
+---
+version: 1.05
+
+kind: component
+
+inputs:
+  - name: input1
+    type: str
+    value: [MeanSquaredError, AbsoluteDifference]
+    isOptional: true
+
+parallel:
+  kind: random
+  params:
+    loss:
+      values: "{{ input1 }}"
+
+run:
+  kind: job
+  container:
+    image: my_image
+    command: ["/bin/sh", "-c"]
+    args: [train --loss="{{ loss }}"]
+...

@@ -1,8 +1,5 @@
 # Build the manager binary
-FROM golang:1.13.3 as builder
-
-# This dockerfile is intended for dev only purposes
-LABEL maintainer="Polyaxon, Inc. <contact@polyaxon.com>"
+FROM golang:1.13 as builder
 
 WORKDIR /workspace
 # Copy the Go Modules manifests

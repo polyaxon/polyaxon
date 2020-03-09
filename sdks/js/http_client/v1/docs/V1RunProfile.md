@@ -11,6 +11,7 @@ Name | Type | Description | Notes
 **updated_at** | **Date** |  | [optional] 
 **frozen** | **Boolean** |  | [optional] 
 **disabled** | **Boolean** |  | [optional] 
+**agent** | **String** |  | [optional] 
 **queue** | **String** |  | [optional] 
 **namespace** | **String** |  | [optional] 
 **termination** | **Object** |  | [optional] 

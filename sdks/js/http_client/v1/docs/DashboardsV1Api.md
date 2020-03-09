@@ -4,20 +4,20 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**createDashboard**](DashboardsV1Api.md#createDashboard) | **POST** /api/v1/orgs/{owner}/dashboards | List runs
-[**deleteDashboard**](DashboardsV1Api.md#deleteDashboard) | **DELETE** /api/v1/orgs/{owner}/dashboards/{uuid} | Patch run
-[**getDashboard**](DashboardsV1Api.md#getDashboard) | **GET** /api/v1/orgs/{owner}/dashboards/{uuid} | Create new run
-[**listDashboardNames**](DashboardsV1Api.md#listDashboardNames) | **GET** /api/v1/orgs/{owner}/dashboards/names | List bookmarked runs for user
-[**listDashboards**](DashboardsV1Api.md#listDashboards) | **GET** /api/v1/orgs/{owner}/dashboards | List archived runs for user
-[**patchDashboard**](DashboardsV1Api.md#patchDashboard) | **PATCH** /api/v1/orgs/{owner}/dashboards/{dashboard.uuid} | Update run
-[**updateDashboard**](DashboardsV1Api.md#updateDashboard) | **PUT** /api/v1/orgs/{owner}/dashboards/{dashboard.uuid} | Get run
+[**createDashboard**](DashboardsV1Api.md#createDashboard) | **POST** /api/v1/orgs/{owner}/dashboards | Create dashboard
+[**deleteDashboard**](DashboardsV1Api.md#deleteDashboard) | **DELETE** /api/v1/orgs/{owner}/dashboards/{uuid} | Delete dashboard
+[**getDashboard**](DashboardsV1Api.md#getDashboard) | **GET** /api/v1/orgs/{owner}/dashboards/{uuid} | Get dashboard
+[**listDashboardNames**](DashboardsV1Api.md#listDashboardNames) | **GET** /api/v1/orgs/{owner}/dashboards/names | List dashboard names
+[**listDashboards**](DashboardsV1Api.md#listDashboards) | **GET** /api/v1/orgs/{owner}/dashboards | List dashboards
+[**patchDashboard**](DashboardsV1Api.md#patchDashboard) | **PATCH** /api/v1/orgs/{owner}/dashboards/{dashboard.uuid} | Patch dashboard
+[**updateDashboard**](DashboardsV1Api.md#updateDashboard) | **PUT** /api/v1/orgs/{owner}/dashboards/{dashboard.uuid} | Update dashboard
 
 
 <a name="createDashboard"></a>
 # **createDashboard**
 > V1Dashboard createDashboard(owner, body)
 
-List runs
+Create dashboard
 
 ### Example
 ```javascript
@@ -71,7 +71,7 @@ Name | Type | Description  | Notes
 # **deleteDashboard**
 > deleteDashboard(owner, uuid)
 
-Patch run
+Delete dashboard
 
 ### Example
 ```javascript
@@ -88,7 +88,7 @@ var apiInstance = new PolyaxonSdk.DashboardsV1Api();
 
 var owner = "owner_example"; // String | Owner of the namespace
 
-var uuid = "uuid_example"; // String | Unique integer identifier of the entity
+var uuid = "uuid_example"; // String | Uuid identifier of the entity
 
 
 var callback = function(error, data, response) {
@@ -106,7 +106,7 @@ apiInstance.deleteDashboard(owner, uuid, callback);
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace | 
- **uuid** | **String**| Unique integer identifier of the entity | 
+ **uuid** | **String**| Uuid identifier of the entity | 
 
 ### Return type
 
@@ -125,7 +125,7 @@ null (empty response body)
 # **getDashboard**
 > V1Dashboard getDashboard(owner, uuid)
 
-Create new run
+Get dashboard
 
 ### Example
 ```javascript
@@ -142,7 +142,7 @@ var apiInstance = new PolyaxonSdk.DashboardsV1Api();
 
 var owner = "owner_example"; // String | Owner of the namespace
 
-var uuid = "uuid_example"; // String | Unique integer identifier of the entity
+var uuid = "uuid_example"; // String | Uuid identifier of the entity
 
 
 var callback = function(error, data, response) {
@@ -160,7 +160,7 @@ apiInstance.getDashboard(owner, uuid, callback);
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace | 
- **uuid** | **String**| Unique integer identifier of the entity | 
+ **uuid** | **String**| Uuid identifier of the entity | 
 
 ### Return type
 
@@ -179,7 +179,7 @@ Name | Type | Description  | Notes
 # **listDashboardNames**
 > V1ListDashboardsResponse listDashboardNames(owner, opts)
 
-List bookmarked runs for user
+List dashboard names
 
 ### Example
 ```javascript
@@ -240,7 +240,7 @@ Name | Type | Description  | Notes
 # **listDashboards**
 > V1ListDashboardsResponse listDashboards(owner, opts)
 
-List archived runs for user
+List dashboards
 
 ### Example
 ```javascript
@@ -301,7 +301,7 @@ Name | Type | Description  | Notes
 # **patchDashboard**
 > V1Dashboard patchDashboard(owner, dashboard_uuid, body)
 
-Update run
+Patch dashboard
 
 ### Example
 ```javascript
@@ -358,7 +358,7 @@ Name | Type | Description  | Notes
 # **updateDashboard**
 > V1Dashboard updateDashboard(owner, dashboard_uuid, body)
 
-Get run
+Update dashboard
 
 ### Example
 ```javascript

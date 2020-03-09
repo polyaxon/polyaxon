@@ -4,20 +4,20 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**create_project_search**](ProjectSearchesV1Api.md#create_project_search) | **POST** /api/v1/{owner}/{project}/searches | List runs
-[**delete_project_search**](ProjectSearchesV1Api.md#delete_project_search) | **DELETE** /api/v1/{owner}/{project}/searches/{uuid} | Patch run
-[**get_project_search**](ProjectSearchesV1Api.md#get_project_search) | **GET** /api/v1/{owner}/{project}/searches/{uuid} | Create new run
-[**list_project_search_names**](ProjectSearchesV1Api.md#list_project_search_names) | **GET** /api/v1/{owner}/{project}/searches/names | List bookmarked runs for user
-[**list_project_searches**](ProjectSearchesV1Api.md#list_project_searches) | **GET** /api/v1/{owner}/{project}/searches | List archived runs for user
-[**patch_project_search**](ProjectSearchesV1Api.md#patch_project_search) | **PATCH** /api/v1/{owner}/{project}/searches/{search.uuid} | Update run
-[**promote_project_search**](ProjectSearchesV1Api.md#promote_project_search) | **POST** /api/v1/{owner}/{project}/searches/{uuid}/promote | Delete run
-[**update_project_search**](ProjectSearchesV1Api.md#update_project_search) | **PUT** /api/v1/{owner}/{project}/searches/{search.uuid} | Get run
+[**create_project_search**](ProjectSearchesV1Api.md#create_project_search) | **POST** /api/v1/{owner}/{project}/searches | Create project search
+[**delete_project_search**](ProjectSearchesV1Api.md#delete_project_search) | **DELETE** /api/v1/{owner}/{project}/searches/{uuid} | Delete project search
+[**get_project_search**](ProjectSearchesV1Api.md#get_project_search) | **GET** /api/v1/{owner}/{project}/searches/{uuid} | Get project search
+[**list_project_search_names**](ProjectSearchesV1Api.md#list_project_search_names) | **GET** /api/v1/{owner}/{project}/searches/names | List project search names
+[**list_project_searches**](ProjectSearchesV1Api.md#list_project_searches) | **GET** /api/v1/{owner}/{project}/searches | List project searches
+[**patch_project_search**](ProjectSearchesV1Api.md#patch_project_search) | **PATCH** /api/v1/{owner}/{project}/searches/{search.uuid} | Patch project search
+[**promote_project_search**](ProjectSearchesV1Api.md#promote_project_search) | **POST** /api/v1/{owner}/{project}/searches/{uuid}/promote | Promote project search
+[**update_project_search**](ProjectSearchesV1Api.md#update_project_search) | **PUT** /api/v1/{owner}/{project}/searches/{search.uuid} | Update project search
 
 
 # **create_project_search**
 > V1Search create_project_search(owner, project, body)
 
-List runs
+Create project search
 
 ### Example
 ```python
@@ -40,7 +40,7 @@ project = 'project_example' # str | Project under namesapce
 body = polyaxon_sdk.V1Search() # V1Search | Search body
 
 try:
-    # List runs
+    # Create project search
     api_response = api_instance.create_project_search(owner, project, body)
     pprint(api_response)
 except ApiException as e:
@@ -73,7 +73,7 @@ Name | Type | Description  | Notes
 # **delete_project_search**
 > delete_project_search(owner, project, uuid)
 
-Patch run
+Delete project search
 
 ### Example
 ```python
@@ -92,11 +92,11 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = polyaxon_sdk.ProjectSearchesV1Api(polyaxon_sdk.ApiClient(configuration))
 owner = 'owner_example' # str | Owner of the namespace
-project = 'project_example' # str | Project where the experiement will be assigned
-uuid = 'uuid_example' # str | Unique integer identifier of the entity
+project = 'project_example' # str | Project where the notification will be assigned
+uuid = 'uuid_example' # str | Uuid identifier of the entity
 
 try:
-    # Patch run
+    # Delete project search
     api_instance.delete_project_search(owner, project, uuid)
 except ApiException as e:
     print("Exception when calling ProjectSearchesV1Api->delete_project_search: %s\n" % e)
@@ -107,8 +107,8 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **str**| Owner of the namespace | 
- **project** | **str**| Project where the experiement will be assigned | 
- **uuid** | **str**| Unique integer identifier of the entity | 
+ **project** | **str**| Project where the notification will be assigned | 
+ **uuid** | **str**| Uuid identifier of the entity | 
 
 ### Return type
 
@@ -128,7 +128,7 @@ void (empty response body)
 # **get_project_search**
 > V1Search get_project_search(owner, project, uuid)
 
-Create new run
+Get project search
 
 ### Example
 ```python
@@ -147,11 +147,11 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = polyaxon_sdk.ProjectSearchesV1Api(polyaxon_sdk.ApiClient(configuration))
 owner = 'owner_example' # str | Owner of the namespace
-project = 'project_example' # str | Project where the experiement will be assigned
-uuid = 'uuid_example' # str | Unique integer identifier of the entity
+project = 'project_example' # str | Project where the notification will be assigned
+uuid = 'uuid_example' # str | Uuid identifier of the entity
 
 try:
-    # Create new run
+    # Get project search
     api_response = api_instance.get_project_search(owner, project, uuid)
     pprint(api_response)
 except ApiException as e:
@@ -163,8 +163,8 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **str**| Owner of the namespace | 
- **project** | **str**| Project where the experiement will be assigned | 
- **uuid** | **str**| Unique integer identifier of the entity | 
+ **project** | **str**| Project where the notification will be assigned | 
+ **uuid** | **str**| Uuid identifier of the entity | 
 
 ### Return type
 
@@ -184,7 +184,7 @@ Name | Type | Description  | Notes
 # **list_project_search_names**
 > V1ListSearchesResponse list_project_search_names(owner, project, offset=offset, limit=limit, sort=sort, query=query)
 
-List bookmarked runs for user
+List project search names
 
 ### Example
 ```python
@@ -210,7 +210,7 @@ sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search search. (optional)
 
 try:
-    # List bookmarked runs for user
+    # List project search names
     api_response = api_instance.list_project_search_names(owner, project, offset=offset, limit=limit, sort=sort, query=query)
     pprint(api_response)
 except ApiException as e:
@@ -246,7 +246,7 @@ Name | Type | Description  | Notes
 # **list_project_searches**
 > V1ListSearchesResponse list_project_searches(owner, project, offset=offset, limit=limit, sort=sort, query=query)
 
-List archived runs for user
+List project searches
 
 ### Example
 ```python
@@ -272,7 +272,7 @@ sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search search. (optional)
 
 try:
-    # List archived runs for user
+    # List project searches
     api_response = api_instance.list_project_searches(owner, project, offset=offset, limit=limit, sort=sort, query=query)
     pprint(api_response)
 except ApiException as e:
@@ -308,7 +308,7 @@ Name | Type | Description  | Notes
 # **patch_project_search**
 > V1Search patch_project_search(owner, project, search_uuid, body)
 
-Update run
+Patch project search
 
 ### Example
 ```python
@@ -332,7 +332,7 @@ search_uuid = 'search_uuid_example' # str | UUID
 body = polyaxon_sdk.V1Search() # V1Search | Search body
 
 try:
-    # Update run
+    # Patch project search
     api_response = api_instance.patch_project_search(owner, project, search_uuid, body)
     pprint(api_response)
 except ApiException as e:
@@ -366,7 +366,7 @@ Name | Type | Description  | Notes
 # **promote_project_search**
 > promote_project_search(owner, project, uuid)
 
-Delete run
+Promote project search
 
 ### Example
 ```python
@@ -385,11 +385,11 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = polyaxon_sdk.ProjectSearchesV1Api(polyaxon_sdk.ApiClient(configuration))
 owner = 'owner_example' # str | Owner of the namespace
-project = 'project_example' # str | Project where the experiement will be assigned
-uuid = 'uuid_example' # str | Unique integer identifier of the entity
+project = 'project_example' # str | Project where the notification will be assigned
+uuid = 'uuid_example' # str | Uuid identifier of the entity
 
 try:
-    # Delete run
+    # Promote project search
     api_instance.promote_project_search(owner, project, uuid)
 except ApiException as e:
     print("Exception when calling ProjectSearchesV1Api->promote_project_search: %s\n" % e)
@@ -400,8 +400,8 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **str**| Owner of the namespace | 
- **project** | **str**| Project where the experiement will be assigned | 
- **uuid** | **str**| Unique integer identifier of the entity | 
+ **project** | **str**| Project where the notification will be assigned | 
+ **uuid** | **str**| Uuid identifier of the entity | 
 
 ### Return type
 
@@ -421,7 +421,7 @@ void (empty response body)
 # **update_project_search**
 > V1Search update_project_search(owner, project, search_uuid, body)
 
-Get run
+Update project search
 
 ### Example
 ```python
@@ -445,7 +445,7 @@ search_uuid = 'search_uuid_example' # str | UUID
 body = polyaxon_sdk.V1Search() # V1Search | Search body
 
 try:
-    # Get run
+    # Update project search
     api_response = api_instance.update_project_search(owner, project, search_uuid, body)
     pprint(api_response)
 except ApiException as e:

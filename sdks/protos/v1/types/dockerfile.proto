@@ -1,0 +1,58 @@
+/**
+ * Copyright 2018-2020 Polyaxon, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+*/
+
+syntax = "proto3";
+
+package v1;
+
+// Dockerfile type specification
+message DockerfileType {
+    // Docker image to use as a base
+    string image = 1;
+
+    // An optional list of tuples(key, value) for defining env vars, translate to an ENV statements
+    map<string, string> env = 2;
+
+    // An optional list of tuples for exporting paths, translate to a PATH statements
+    map<string, string> path = 3;
+
+    // An optional list of tuples for copying paths, translate to a COPY statements
+    map<string, string> copy = 4;
+
+    // An optional list of strubg for executing Run commands, translate to a RUN statements
+    repeated string run = 5;
+
+    // An optional string defining a language, e.g. en_US.UTF-8
+    string lang_env = 6;
+
+    // A uid to use when creating the docker image
+    int32 uid = 7;
+
+    // A gid to use when creating the docker image
+    int32 gid = 8;
+
+    // A filename to give to the generated dockerfile
+    string filename = 9;
+
+    // A work dir to copy code to, default to /code
+    string workdir = 10;
+
+    // An optional workdir path
+    string workdir_path = 11;
+
+    // An optional shell type, defaults to "/bin/bash"
+    string shell = 12;
+}

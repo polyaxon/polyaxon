@@ -3,8 +3,11 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**repos** | [**[V1RepoInit]**](V1RepoInit.md) |  | [optional] 
-**artifacts** | [**[V1ArtifactMount]**](V1ArtifactMount.md) |  | [optional] 
-**build** | [**V1BuildContext**](V1BuildContext.md) |  | [optional] 
+**artifacts** | [**V1ArtifactsType**](V1ArtifactsType.md) |  | [optional] 
+**git** | [**V1GitType**](V1GitType.md) |  | [optional] 
+**dockerfile** | [**V1DockerfileType**](V1DockerfileType.md) |  | [optional] 
+**connection** | **String** |  | [optional] 
+**path** | **String** |  | [optional] 
+**container** | [**V1Container**](V1Container.md) |  | [optional] 
 
 

@@ -1,0 +1,91 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "polyaxon.fullname" . }}-gateway
+  annotations:
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    checksum/common-config: {{ include (print $.Template.BasePath "/common-cm.yaml") . | sha256sum }}
+    checksum/proxies-config: {{ include (print $.Template.BasePath "/proxies-cm.yaml") . | sha256sum }}
+  labels:
+    app: {{ template "polyaxon.fullname" . }}-gateway
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+    type: {{ .Values.types.core }}
+    role: {{ .Values.roles.api }}
+    app.kubernetes.io/name: {{ template "polyaxon.fullname" . }}-gateway
+    app.kubernetes.io/instance: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    app.kubernetes.io/version: "{{ .Chart.Version }}"
+    app.kubernetes.io/part-of: {{ .Values.types.core }}
+    app.kubernetes.io/component: {{ .Values.roles.api }}
+    app.kubernetes.io/managed-by: "helm"
+spec:
+  replicas: {{ .Values.gateway.replicas }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ template "polyaxon.fullname" . }}-gateway
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      annotations:
+        chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+        checksum/common-config: {{ include (print $.Template.BasePath "/common-cm.yaml") . | sha256sum }}
+        checksum/proxies-config: {{ include (print $.Template.BasePath "/proxies-cm.yaml") . | sha256sum }}
+      labels:
+        app: {{ template "polyaxon.fullname" . }}-gateway
+        release: "{{ .Release.Name }}"
+        type: {{ .Values.types.core }}
+        role: {{ .Values.roles.api }}
+        app.kubernetes.io/name: {{ template "polyaxon.fullname" . }}-gateway
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+{{ include "securityContext" . | indent 6 }}
+{{ include "config.scheduling" . | indent 6 }}
+{{ include "config.sa" . | indent 6 }}
+      containers:
+      - name: {{ .Chart.Name }}-gateway
+        image: "{{ .Values.gateway.image }}:{{ .Values.gateway.imageTag }}"
+        imagePullPolicy: {{ .Values.gateway.imagePullPolicy }}
+        ports:
+        - containerPort: {{ .Values.gateway.service.targetPort }}
+        envFrom:
+{{ include "config.envFrom.common" . | indent 8 }}
+{{ include "config.envFrom.proxies" . | indent 8 }}
+        env:
+{{ include "config.debugMode" . | indent 8 }}
+        volumeMounts:
+{{ include "ssl.mount" . | indent 8}}
+#        livenessProbe:
+#          failureThreshold: 10
+#          httpGet:
+#            path: /healthz/
+#            port: {{ .Values.gateway.service.targetPort }}
+#            scheme: {{ .Values.gateway.service.scheme | default "HTTP" }}
+#          initialDelaySeconds: 150
+#          periodSeconds: 30
+#          successThreshold: 1
+#          timeoutSeconds: 2
+#        readinessProbe:
+#          failureThreshold: 30
+#          httpGet:
+#            path: /healthz/
+#            port: {{ .Values.gateway.service.targetPort }}
+#            scheme: {{ .Values.gateway.service.scheme | default "HTTP" }}
+#            {{- if .Values.allowedHosts }}
+#            httpHeaders:
+#              - name: Host
+#                value: {{ template "polyaxon.fullname" . }}-gateway
+#            {{- end }}
+#          initialDelaySeconds: 150
+#          periodSeconds: 30
+#          successThreshold: 1
+#          timeoutSeconds: 2
+        resources:
+          requests:
+{{ toYaml .Values.gateway.resources.requests | indent 12 }}
+          {{- if .Values.limitResources }}
+          limits:
+{{ toYaml .Values.gateway.resources.limits | indent 12 }}
+          {{- end }}
+      volumes:
+{{ include "ssl.volume" . | indent 6}}

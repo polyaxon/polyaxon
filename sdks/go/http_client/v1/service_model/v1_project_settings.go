@@ -1,4 +1,4 @@
-// Copyright 2019 Polyaxon, Inc.
+// Copyright 2018-2020 Polyaxon, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,32 +20,20 @@ package service_model
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // V1ProjectSettings Project Settings specification
+//
 // swagger:model v1ProjectSettings
 type V1ProjectSettings struct {
 
-	// Config resources
-	ConfigResouces []string `json:"config_resouces"`
+	// Artifacts Store
+	ArtifactsStore string `json:"artifacts_store,omitempty"`
 
 	// Connections
 	Connections []string `json:"connections"`
-
-	// git Accesses
-	GitAccesses []string `json:"git_accesses"`
-
-	// Logs Store
-	LogsStore string `json:"logs_store,omitempty"`
-
-	// Outputs Store
-	OutputsStore string `json:"outputs_store,omitempty"`
-
-	// Registry Accesses
-	RegistryAccesses []string `json:"registry_accesses"`
 
 	// Run profile
 	RunProfile string `json:"run_profile,omitempty"`

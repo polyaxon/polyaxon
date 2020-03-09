@@ -4,20 +4,20 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**createRunProfile**](RunProfilesV1Api.md#createRunProfile) | **POST** /api/v1/orgs/{owner}/run_profiles | List runs
-[**deleteRunProfile**](RunProfilesV1Api.md#deleteRunProfile) | **DELETE** /api/v1/orgs/{owner}/run_profiles/{uuid} | Patch run
-[**getRunProfile**](RunProfilesV1Api.md#getRunProfile) | **GET** /api/v1/orgs/{owner}/run_profiles/{uuid} | Create new run
-[**listRunProfileNames**](RunProfilesV1Api.md#listRunProfileNames) | **GET** /api/v1/orgs/{owner}/run_profiles/names | List bookmarked runs for user
-[**listRunProfiles**](RunProfilesV1Api.md#listRunProfiles) | **GET** /api/v1/orgs/{owner}/run_profiles | List archived runs for user
-[**patchRunProfile**](RunProfilesV1Api.md#patchRunProfile) | **PATCH** /api/v1/orgs/{owner}/run_profiles/{run_profile.uuid} | Update run
-[**updateRunProfile**](RunProfilesV1Api.md#updateRunProfile) | **PUT** /api/v1/orgs/{owner}/run_profiles/{run_profile.uuid} | Get run
+[**createRunProfile**](RunProfilesV1Api.md#createRunProfile) | **POST** /api/v1/orgs/{owner}/run_profiles | Create run profile
+[**deleteRunProfile**](RunProfilesV1Api.md#deleteRunProfile) | **DELETE** /api/v1/orgs/{owner}/run_profiles/{uuid} | Delete run profile
+[**getRunProfile**](RunProfilesV1Api.md#getRunProfile) | **GET** /api/v1/orgs/{owner}/run_profiles/{uuid} | Get run profile
+[**listRunProfileNames**](RunProfilesV1Api.md#listRunProfileNames) | **GET** /api/v1/orgs/{owner}/run_profiles/names | List run profiles names
+[**listRunProfiles**](RunProfilesV1Api.md#listRunProfiles) | **GET** /api/v1/orgs/{owner}/run_profiles | List run profiles
+[**patchRunProfile**](RunProfilesV1Api.md#patchRunProfile) | **PATCH** /api/v1/orgs/{owner}/run_profiles/{run_profile.uuid} | Patch run profile
+[**updateRunProfile**](RunProfilesV1Api.md#updateRunProfile) | **PUT** /api/v1/orgs/{owner}/run_profiles/{run_profile.uuid} | Update run profile
 
 
 <a name="createRunProfile"></a>
 # **createRunProfile**
 > V1RunProfile createRunProfile(owner, body)
 
-List runs
+Create run profile
 
 ### Example
 ```javascript
@@ -71,7 +71,7 @@ Name | Type | Description  | Notes
 # **deleteRunProfile**
 > deleteRunProfile(owner, uuid)
 
-Patch run
+Delete run profile
 
 ### Example
 ```javascript
@@ -88,7 +88,7 @@ var apiInstance = new PolyaxonSdk.RunProfilesV1Api();
 
 var owner = "owner_example"; // String | Owner of the namespace
 
-var uuid = "uuid_example"; // String | Unique integer identifier of the entity
+var uuid = "uuid_example"; // String | Uuid identifier of the entity
 
 
 var callback = function(error, data, response) {
@@ -106,7 +106,7 @@ apiInstance.deleteRunProfile(owner, uuid, callback);
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace | 
- **uuid** | **String**| Unique integer identifier of the entity | 
+ **uuid** | **String**| Uuid identifier of the entity | 
 
 ### Return type
 
@@ -125,7 +125,7 @@ null (empty response body)
 # **getRunProfile**
 > V1RunProfile getRunProfile(owner, uuid)
 
-Create new run
+Get run profile
 
 ### Example
 ```javascript
@@ -142,7 +142,7 @@ var apiInstance = new PolyaxonSdk.RunProfilesV1Api();
 
 var owner = "owner_example"; // String | Owner of the namespace
 
-var uuid = "uuid_example"; // String | Unique integer identifier of the entity
+var uuid = "uuid_example"; // String | Uuid identifier of the entity
 
 
 var callback = function(error, data, response) {
@@ -160,7 +160,7 @@ apiInstance.getRunProfile(owner, uuid, callback);
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace | 
- **uuid** | **String**| Unique integer identifier of the entity | 
+ **uuid** | **String**| Uuid identifier of the entity | 
 
 ### Return type
 
@@ -179,7 +179,7 @@ Name | Type | Description  | Notes
 # **listRunProfileNames**
 > V1ListRunProfilesResponse listRunProfileNames(owner, opts)
 
-List bookmarked runs for user
+List run profiles names
 
 ### Example
 ```javascript
@@ -240,7 +240,7 @@ Name | Type | Description  | Notes
 # **listRunProfiles**
 > V1ListRunProfilesResponse listRunProfiles(owner, opts)
 
-List archived runs for user
+List run profiles
 
 ### Example
 ```javascript
@@ -301,7 +301,7 @@ Name | Type | Description  | Notes
 # **patchRunProfile**
 > V1RunProfile patchRunProfile(owner, run_profile_uuid, body)
 
-Update run
+Patch run profile
 
 ### Example
 ```javascript
@@ -358,7 +358,7 @@ Name | Type | Description  | Notes
 # **updateRunProfile**
 > V1RunProfile updateRunProfile(owner, run_profile_uuid, body)
 
-Get run
+Update run profile
 
 ### Example
 ```javascript

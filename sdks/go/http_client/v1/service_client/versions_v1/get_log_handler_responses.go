@@ -1,4 +1,4 @@
-// Copyright 2019 Polyaxon, Inc.
+// Copyright 2018-2020 Polyaxon, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -24,10 +24,9 @@ import (
 	"io"
 
 	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/strfmt"
 
-	strfmt "github.com/go-openapi/strfmt"
-
-	service_model "github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_model"
+	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_model"
 )
 
 // GetLogHandlerReader is a Reader for the GetLogHandler structure.
@@ -62,9 +61,15 @@ func (o *GetLogHandlerReader) ReadResponse(response runtime.ClientResponse, cons
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		result := NewGetLogHandlerDefault(response.Code())
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		if response.Code()/100 == 2 {
+			return result, nil
+		}
+		return nil, result
 	}
 }
 
@@ -188,6 +193,48 @@ func (o *GetLogHandlerNotFound) readResponse(response runtime.ClientResponse, co
 
 	// response payload
 	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
+// NewGetLogHandlerDefault creates a GetLogHandlerDefault with default headers values
+func NewGetLogHandlerDefault(code int) *GetLogHandlerDefault {
+	return &GetLogHandlerDefault{
+		_statusCode: code,
+	}
+}
+
+/*GetLogHandlerDefault handles this case with default header values.
+
+An unexpected error response
+*/
+type GetLogHandlerDefault struct {
+	_statusCode int
+
+	Payload *service_model.RuntimeError
+}
+
+// Code gets the status code for the get log handler default response
+func (o *GetLogHandlerDefault) Code() int {
+	return o._statusCode
+}
+
+func (o *GetLogHandlerDefault) Error() string {
+	return fmt.Sprintf("[GET /api/v1/log_handler][%d] GetLogHandler default  %+v", o._statusCode, o.Payload)
+}
+
+func (o *GetLogHandlerDefault) GetPayload() *service_model.RuntimeError {
+	return o.Payload
+}
+
+func (o *GetLogHandlerDefault) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(service_model.RuntimeError)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 

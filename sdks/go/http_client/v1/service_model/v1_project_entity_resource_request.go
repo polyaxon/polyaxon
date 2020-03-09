@@ -1,4 +1,4 @@
-// Copyright 2019 Polyaxon, Inc.
+// Copyright 2018-2020 Polyaxon, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,22 +20,22 @@ package service_model
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
-// V1ProjectEntityResourceRequest Request data to get/delete entity
+// V1ProjectEntityResourceRequest Request data to get/delete project resource entity
+//
 // swagger:model v1ProjectEntityResourceRequest
 type V1ProjectEntityResourceRequest struct {
 
 	// Owner of the namespace
 	Owner string `json:"owner,omitempty"`
 
-	// Project where the experiement will be assigned
+	// Project where the notification will be assigned
 	Project string `json:"project,omitempty"`
 
-	// Unique integer identifier of the entity
+	// Uuid identifier of the entity
 	UUID string `json:"uuid,omitempty"`
 }
 

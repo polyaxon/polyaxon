@@ -4,20 +4,20 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**create_project_dashboard**](ProjectDashboardsV1Api.md#create_project_dashboard) | **POST** /api/v1/{owner}/{project}/dashboards | List runs
-[**delete_project_dashboard**](ProjectDashboardsV1Api.md#delete_project_dashboard) | **DELETE** /api/v1/{owner}/{project}/dashboards/{uuid} | Patch run
-[**get_project_dashboard**](ProjectDashboardsV1Api.md#get_project_dashboard) | **GET** /api/v1/{owner}/{project}/dashboards/{uuid} | Create new run
-[**list_project_dashboard_names**](ProjectDashboardsV1Api.md#list_project_dashboard_names) | **GET** /api/v1/{owner}/{project}/dashboards/names | List bookmarked runs for user
-[**list_project_dashboards**](ProjectDashboardsV1Api.md#list_project_dashboards) | **GET** /api/v1/{owner}/{project}/dashboards | List archived runs for user
-[**patch_project_dashboard**](ProjectDashboardsV1Api.md#patch_project_dashboard) | **PATCH** /api/v1/{owner}/{project}/dashboards/{dashboard.uuid} | Update run
-[**promote_project_dashboard**](ProjectDashboardsV1Api.md#promote_project_dashboard) | **POST** /api/v1/{owner}/{project}/dashboards/{dashboard.uuid}/promote | Delete run
-[**update_project_dashboard**](ProjectDashboardsV1Api.md#update_project_dashboard) | **PUT** /api/v1/{owner}/{project}/dashboards/{dashboard.uuid} | Get run
+[**create_project_dashboard**](ProjectDashboardsV1Api.md#create_project_dashboard) | **POST** /api/v1/{owner}/{project}/dashboards | Create project dashboard
+[**delete_project_dashboard**](ProjectDashboardsV1Api.md#delete_project_dashboard) | **DELETE** /api/v1/{owner}/{project}/dashboards/{uuid} | Delete project dashboard
+[**get_project_dashboard**](ProjectDashboardsV1Api.md#get_project_dashboard) | **GET** /api/v1/{owner}/{project}/dashboards/{uuid} | Get project dashboard
+[**list_project_dashboard_names**](ProjectDashboardsV1Api.md#list_project_dashboard_names) | **GET** /api/v1/{owner}/{project}/dashboards/names | List project dashboard
+[**list_project_dashboards**](ProjectDashboardsV1Api.md#list_project_dashboards) | **GET** /api/v1/{owner}/{project}/dashboards | List project dashboards
+[**patch_project_dashboard**](ProjectDashboardsV1Api.md#patch_project_dashboard) | **PATCH** /api/v1/{owner}/{project}/dashboards/{dashboard.uuid} | Patch project dashboard
+[**promote_project_dashboard**](ProjectDashboardsV1Api.md#promote_project_dashboard) | **POST** /api/v1/{owner}/{project}/dashboards/{dashboard.uuid}/promote | Promote project dashboard
+[**update_project_dashboard**](ProjectDashboardsV1Api.md#update_project_dashboard) | **PUT** /api/v1/{owner}/{project}/dashboards/{dashboard.uuid} | Update project dashboard
 
 
 # **create_project_dashboard**
 > V1Dashboard create_project_dashboard(owner, project, body)
 
-List runs
+Create project dashboard
 
 ### Example
 ```python
@@ -40,7 +40,7 @@ project = 'project_example' # str | Project under namesapce
 body = polyaxon_sdk.V1Dashboard() # V1Dashboard | Dashboard body
 
 try:
-    # List runs
+    # Create project dashboard
     api_response = api_instance.create_project_dashboard(owner, project, body)
     pprint(api_response)
 except ApiException as e:
@@ -73,7 +73,7 @@ Name | Type | Description  | Notes
 # **delete_project_dashboard**
 > delete_project_dashboard(owner, project, uuid)
 
-Patch run
+Delete project dashboard
 
 ### Example
 ```python
@@ -92,11 +92,11 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = polyaxon_sdk.ProjectDashboardsV1Api(polyaxon_sdk.ApiClient(configuration))
 owner = 'owner_example' # str | Owner of the namespace
-project = 'project_example' # str | Project where the experiement will be assigned
-uuid = 'uuid_example' # str | Unique integer identifier of the entity
+project = 'project_example' # str | Project where the notification will be assigned
+uuid = 'uuid_example' # str | Uuid identifier of the entity
 
 try:
-    # Patch run
+    # Delete project dashboard
     api_instance.delete_project_dashboard(owner, project, uuid)
 except ApiException as e:
     print("Exception when calling ProjectDashboardsV1Api->delete_project_dashboard: %s\n" % e)
@@ -107,8 +107,8 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **str**| Owner of the namespace | 
- **project** | **str**| Project where the experiement will be assigned | 
- **uuid** | **str**| Unique integer identifier of the entity | 
+ **project** | **str**| Project where the notification will be assigned | 
+ **uuid** | **str**| Uuid identifier of the entity | 
 
 ### Return type
 
@@ -128,7 +128,7 @@ void (empty response body)
 # **get_project_dashboard**
 > V1Dashboard get_project_dashboard(owner, project, uuid)
 
-Create new run
+Get project dashboard
 
 ### Example
 ```python
@@ -147,11 +147,11 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = polyaxon_sdk.ProjectDashboardsV1Api(polyaxon_sdk.ApiClient(configuration))
 owner = 'owner_example' # str | Owner of the namespace
-project = 'project_example' # str | Project where the experiement will be assigned
-uuid = 'uuid_example' # str | Unique integer identifier of the entity
+project = 'project_example' # str | Project where the notification will be assigned
+uuid = 'uuid_example' # str | Uuid identifier of the entity
 
 try:
-    # Create new run
+    # Get project dashboard
     api_response = api_instance.get_project_dashboard(owner, project, uuid)
     pprint(api_response)
 except ApiException as e:
@@ -163,8 +163,8 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **str**| Owner of the namespace | 
- **project** | **str**| Project where the experiement will be assigned | 
- **uuid** | **str**| Unique integer identifier of the entity | 
+ **project** | **str**| Project where the notification will be assigned | 
+ **uuid** | **str**| Uuid identifier of the entity | 
 
 ### Return type
 
@@ -184,7 +184,7 @@ Name | Type | Description  | Notes
 # **list_project_dashboard_names**
 > V1ListDashboardsResponse list_project_dashboard_names(owner, project, offset=offset, limit=limit, sort=sort, query=query)
 
-List bookmarked runs for user
+List project dashboard
 
 ### Example
 ```python
@@ -210,7 +210,7 @@ sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search search. (optional)
 
 try:
-    # List bookmarked runs for user
+    # List project dashboard
     api_response = api_instance.list_project_dashboard_names(owner, project, offset=offset, limit=limit, sort=sort, query=query)
     pprint(api_response)
 except ApiException as e:
@@ -246,7 +246,7 @@ Name | Type | Description  | Notes
 # **list_project_dashboards**
 > V1ListDashboardsResponse list_project_dashboards(owner, project, offset=offset, limit=limit, sort=sort, query=query)
 
-List archived runs for user
+List project dashboards
 
 ### Example
 ```python
@@ -272,7 +272,7 @@ sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search search. (optional)
 
 try:
-    # List archived runs for user
+    # List project dashboards
     api_response = api_instance.list_project_dashboards(owner, project, offset=offset, limit=limit, sort=sort, query=query)
     pprint(api_response)
 except ApiException as e:
@@ -308,7 +308,7 @@ Name | Type | Description  | Notes
 # **patch_project_dashboard**
 > V1Dashboard patch_project_dashboard(owner, project, dashboard_uuid, body)
 
-Update run
+Patch project dashboard
 
 ### Example
 ```python
@@ -332,7 +332,7 @@ dashboard_uuid = 'dashboard_uuid_example' # str | UUID
 body = polyaxon_sdk.V1Dashboard() # V1Dashboard | Dashboard body
 
 try:
-    # Update run
+    # Patch project dashboard
     api_response = api_instance.patch_project_dashboard(owner, project, dashboard_uuid, body)
     pprint(api_response)
 except ApiException as e:
@@ -366,7 +366,7 @@ Name | Type | Description  | Notes
 # **promote_project_dashboard**
 > V1Dashboard promote_project_dashboard(owner, project, dashboard_uuid)
 
-Delete run
+Promote project dashboard
 
 ### Example
 ```python
@@ -389,7 +389,7 @@ project = 'project_example' # str | Project under namesapce
 dashboard_uuid = 'dashboard_uuid_example' # str | UUID
 
 try:
-    # Delete run
+    # Promote project dashboard
     api_response = api_instance.promote_project_dashboard(owner, project, dashboard_uuid)
     pprint(api_response)
 except ApiException as e:
@@ -422,7 +422,7 @@ Name | Type | Description  | Notes
 # **update_project_dashboard**
 > V1Dashboard update_project_dashboard(owner, project, dashboard_uuid, body)
 
-Get run
+Update project dashboard
 
 ### Example
 ```python
@@ -446,7 +446,7 @@ dashboard_uuid = 'dashboard_uuid_example' # str | UUID
 body = polyaxon_sdk.V1Dashboard() # V1Dashboard | Dashboard body
 
 try:
-    # Get run
+    # Update project dashboard
     api_response = api_instance.update_project_dashboard(owner, project, dashboard_uuid, body)
     pprint(api_response)
 except ApiException as e:

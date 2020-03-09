@@ -1,0 +1,12 @@
+version: 1.05
+
+kind: component
+
+run:
+  kind: job
+  container:
+    image: continuumio/miniconda3
+    command:
+      - python
+    args:
+      - -c "print('Tweet tweet')"

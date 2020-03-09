@@ -1,4 +1,4 @@
-// Copyright 2019 Polyaxon, Inc.
+// Copyright 2018-2020 Polyaxon, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -27,10 +27,9 @@ import (
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
 	cr "github.com/go-openapi/runtime/client"
+	"github.com/go-openapi/strfmt"
 
-	strfmt "github.com/go-openapi/strfmt"
-
-	service_model "github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_model"
+	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_model"
 )
 
 // NewCopyRunParams creates a new CopyRunParams object
@@ -88,12 +87,12 @@ type CopyRunParams struct {
 	*/
 	EntityOwner string
 	/*EntityProject
-	  Project where the experiement will be assigned
+	  Project where the notification will be assigned
 
 	*/
 	EntityProject string
 	/*EntityUUID
-	  Unique integer identifier of the entity
+	  Uuid identifier of the entity
 
 	*/
 	EntityUUID string

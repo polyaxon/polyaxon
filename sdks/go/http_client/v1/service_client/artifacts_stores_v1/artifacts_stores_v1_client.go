@@ -1,4 +1,4 @@
-// Copyright 2019 Polyaxon, Inc.
+// Copyright 2018-2020 Polyaxon, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -23,12 +23,11 @@ import (
 	"fmt"
 
 	"github.com/go-openapi/runtime"
-
-	strfmt "github.com/go-openapi/strfmt"
+	"github.com/go-openapi/strfmt"
 )
 
 // New creates a new artifacts stores v1 API client.
-func New(transport runtime.ClientTransport, formats strfmt.Registry) *Client {
+func New(transport runtime.ClientTransport, formats strfmt.Registry) ClientService {
 	return &Client{transport: transport, formats: formats}
 }
 
@@ -40,8 +39,15 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
+// ClientService is the interface for Client methods
+type ClientService interface {
+	UploadArtifact(params *UploadArtifactParams, authInfo runtime.ClientAuthInfoWriter) (*UploadArtifactOK, *UploadArtifactNoContent, error)
+
+	SetTransport(transport runtime.ClientTransport)
+}
+
 /*
-UploadArtifact uploads artifact to a store
+  UploadArtifact uploads artifact to a store
 */
 func (a *Client) UploadArtifact(params *UploadArtifactParams, authInfo runtime.ClientAuthInfoWriter) (*UploadArtifactOK, *UploadArtifactNoContent, error) {
 	// TODO: Validate the params before sending

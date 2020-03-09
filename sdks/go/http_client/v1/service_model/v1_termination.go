@@ -1,4 +1,4 @@
-// Copyright 2019 Polyaxon, Inc.
+// Copyright 2018-2020 Polyaxon, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,21 +20,17 @@ package service_model
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
-// V1Termination Termination specification
-// Termination defines how to handle failures, job runtime, and cleanup policy.
+// V1Termination Termination specification, it defines how to handle failures, job runtime, and cleanup policy.
+//
 // swagger:model v1Termination
 type V1Termination struct {
 
 	// Max retries for a specific run
 	MaxRetries int32 `json:"max_retries,omitempty"`
-
-	// A valid restart policy
-	RestartPolicy string `json:"restart_policy,omitempty"`
 
 	// A timeout in seconds
 	Timeout int32 `json:"timeout,omitempty"`

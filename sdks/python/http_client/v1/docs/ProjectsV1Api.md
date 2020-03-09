@@ -4,34 +4,34 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**archive_project**](ProjectsV1Api.md#archive_project) | **POST** /api/v1/{owner}/{project}/archive | Stop run
-[**bookmark_project**](ProjectsV1Api.md#bookmark_project) | **POST** /api/v1/{owner}/{project}/bookmark | Invalidate run
-[**create_project**](ProjectsV1Api.md#create_project) | **POST** /api/v1/{owner}/projects/create | List archived runs for user
-[**delete_project**](ProjectsV1Api.md#delete_project) | **DELETE** /api/v1/{owner}/{project} | Delete runs
-[**disable_project_ci**](ProjectsV1Api.md#disable_project_ci) | **DELETE** /api/v1/{owner}/{project}/ci | Restart run
-[**enable_project_ci**](ProjectsV1Api.md#enable_project_ci) | **POST** /api/v1/{owner}/{project}/ci | Restart run with copy
-[**fetch_project_teams**](ProjectsV1Api.md#fetch_project_teams) | **GET** /api/v1/{owner}/{project}/teams | Bookmark run
-[**get_project**](ProjectsV1Api.md#get_project) | **GET** /api/v1/{owner}/{project} | Update run
-[**get_project_settings**](ProjectsV1Api.md#get_project_settings) | **GET** /api/v1/{owner}/{project}/settings | Resume run
-[**list_archived_projects**](ProjectsV1Api.md#list_archived_projects) | **GET** /api/v1/archives/{user}/projects | Get run
-[**list_bookmarked_projects**](ProjectsV1Api.md#list_bookmarked_projects) | **GET** /api/v1/bookmarks/{user}/projects | Create new run
-[**list_project_names**](ProjectsV1Api.md#list_project_names) | **GET** /api/v1/{owner}/projects/names | List runs
-[**list_projects**](ProjectsV1Api.md#list_projects) | **GET** /api/v1/{owner}/projects/list | List bookmarked runs for user
-[**patch_project**](ProjectsV1Api.md#patch_project) | **PATCH** /api/v1/{owner}/{project.name} | Delete run
-[**patch_project_settings**](ProjectsV1Api.md#patch_project_settings) | **PATCH** /api/v1/{owner}/{project}/settings | Restore run
-[**patch_project_teams**](ProjectsV1Api.md#patch_project_teams) | **PATCH** /api/v1/{owner}/{project}/teams | Start run tensorboard
-[**restore_project**](ProjectsV1Api.md#restore_project) | **POST** /api/v1/{owner}/{project}/restore | Stop runs
-[**unbookmark_project**](ProjectsV1Api.md#unbookmark_project) | **DELETE** /api/v1/{owner}/{project}/unbookmark | Invalidate runs
-[**update_project**](ProjectsV1Api.md#update_project) | **PUT** /api/v1/{owner}/{project.name} | Patch run
-[**update_project_settings**](ProjectsV1Api.md#update_project_settings) | **PUT** /api/v1/{owner}/{project}/settings | Archive run
-[**update_project_teams**](ProjectsV1Api.md#update_project_teams) | **PUT** /api/v1/{owner}/{project}/teams | Unbookmark run
+[**archive_project**](ProjectsV1Api.md#archive_project) | **POST** /api/v1/{owner}/{project}/archive | Archive project
+[**bookmark_project**](ProjectsV1Api.md#bookmark_project) | **POST** /api/v1/{owner}/{project}/bookmark | Bookmark project
+[**create_project**](ProjectsV1Api.md#create_project) | **POST** /api/v1/{owner}/projects/create | Create new project
+[**delete_project**](ProjectsV1Api.md#delete_project) | **DELETE** /api/v1/{owner}/{project} | Delete project
+[**disable_project_ci**](ProjectsV1Api.md#disable_project_ci) | **DELETE** /api/v1/{owner}/{project}/ci | Disbale project CI
+[**enable_project_ci**](ProjectsV1Api.md#enable_project_ci) | **POST** /api/v1/{owner}/{project}/ci | Enable project CI
+[**fetch_project_teams**](ProjectsV1Api.md#fetch_project_teams) | **GET** /api/v1/{owner}/{project}/teams | Get project teams
+[**get_project**](ProjectsV1Api.md#get_project) | **GET** /api/v1/{owner}/{project} | Get project
+[**get_project_settings**](ProjectsV1Api.md#get_project_settings) | **GET** /api/v1/{owner}/{project}/settings | Get Project settings
+[**list_archived_projects**](ProjectsV1Api.md#list_archived_projects) | **GET** /api/v1/archives/{user}/projects | List archived projects for user
+[**list_bookmarked_projects**](ProjectsV1Api.md#list_bookmarked_projects) | **GET** /api/v1/bookmarks/{user}/projects | List bookmarked projects for user
+[**list_project_names**](ProjectsV1Api.md#list_project_names) | **GET** /api/v1/{owner}/projects/names | List project names
+[**list_projects**](ProjectsV1Api.md#list_projects) | **GET** /api/v1/{owner}/projects/list | List projects
+[**patch_project**](ProjectsV1Api.md#patch_project) | **PATCH** /api/v1/{owner}/{project.name} | Patch project
+[**patch_project_settings**](ProjectsV1Api.md#patch_project_settings) | **PATCH** /api/v1/{owner}/{project}/settings | Patch project settings
+[**patch_project_teams**](ProjectsV1Api.md#patch_project_teams) | **PATCH** /api/v1/{owner}/{project}/teams | Patch project teams
+[**restore_project**](ProjectsV1Api.md#restore_project) | **POST** /api/v1/{owner}/{project}/restore | Restore project
+[**unbookmark_project**](ProjectsV1Api.md#unbookmark_project) | **DELETE** /api/v1/{owner}/{project}/unbookmark | Unbookmark project
+[**update_project**](ProjectsV1Api.md#update_project) | **PUT** /api/v1/{owner}/{project.name} | Update project
+[**update_project_settings**](ProjectsV1Api.md#update_project_settings) | **PUT** /api/v1/{owner}/{project}/settings | Update project settings
+[**update_project_teams**](ProjectsV1Api.md#update_project_teams) | **PUT** /api/v1/{owner}/{project}/teams | Update project teams
 [**upload_project_artifact**](ProjectsV1Api.md#upload_project_artifact) | **POST** /api/v1/{owner}/{project}/artifacts/{uuid}/upload | Upload artifact to a store via project access
 
 
 # **archive_project**
 > archive_project(owner, project)
 
-Stop run
+Archive project
 
 ### Example
 ```python
@@ -53,7 +53,7 @@ owner = 'owner_example' # str | Owner of the namespace
 project = 'project_example' # str | Project under namesapce
 
 try:
-    # Stop run
+    # Archive project
     api_instance.archive_project(owner, project)
 except ApiException as e:
     print("Exception when calling ProjectsV1Api->archive_project: %s\n" % e)
@@ -84,7 +84,7 @@ void (empty response body)
 # **bookmark_project**
 > bookmark_project(owner, project)
 
-Invalidate run
+Bookmark project
 
 ### Example
 ```python
@@ -106,7 +106,7 @@ owner = 'owner_example' # str | Owner of the namespace
 project = 'project_example' # str | Project under namesapce
 
 try:
-    # Invalidate run
+    # Bookmark project
     api_instance.bookmark_project(owner, project)
 except ApiException as e:
     print("Exception when calling ProjectsV1Api->bookmark_project: %s\n" % e)
@@ -137,7 +137,7 @@ void (empty response body)
 # **create_project**
 > V1Project create_project(owner, body)
 
-List archived runs for user
+Create new project
 
 ### Example
 ```python
@@ -159,7 +159,7 @@ owner = 'owner_example' # str | Owner of the namespace
 body = polyaxon_sdk.V1Project() # V1Project | Project body
 
 try:
-    # List archived runs for user
+    # Create new project
     api_response = api_instance.create_project(owner, body)
     pprint(api_response)
 except ApiException as e:
@@ -191,7 +191,7 @@ Name | Type | Description  | Notes
 # **delete_project**
 > delete_project(owner, project)
 
-Delete runs
+Delete project
 
 ### Example
 ```python
@@ -213,7 +213,7 @@ owner = 'owner_example' # str | Owner of the namespace
 project = 'project_example' # str | Project under namesapce
 
 try:
-    # Delete runs
+    # Delete project
     api_instance.delete_project(owner, project)
 except ApiException as e:
     print("Exception when calling ProjectsV1Api->delete_project: %s\n" % e)
@@ -244,7 +244,7 @@ void (empty response body)
 # **disable_project_ci**
 > disable_project_ci(owner, project)
 
-Restart run
+Disbale project CI
 
 ### Example
 ```python
@@ -266,7 +266,7 @@ owner = 'owner_example' # str | Owner of the namespace
 project = 'project_example' # str | Project under namesapce
 
 try:
-    # Restart run
+    # Disbale project CI
     api_instance.disable_project_ci(owner, project)
 except ApiException as e:
     print("Exception when calling ProjectsV1Api->disable_project_ci: %s\n" % e)
@@ -297,7 +297,7 @@ void (empty response body)
 # **enable_project_ci**
 > enable_project_ci(owner, project)
 
-Restart run with copy
+Enable project CI
 
 ### Example
 ```python
@@ -319,7 +319,7 @@ owner = 'owner_example' # str | Owner of the namespace
 project = 'project_example' # str | Project under namesapce
 
 try:
-    # Restart run with copy
+    # Enable project CI
     api_instance.enable_project_ci(owner, project)
 except ApiException as e:
     print("Exception when calling ProjectsV1Api->enable_project_ci: %s\n" % e)
@@ -350,7 +350,7 @@ void (empty response body)
 # **fetch_project_teams**
 > V1ProjectTeams fetch_project_teams(owner, project)
 
-Bookmark run
+Get project teams
 
 ### Example
 ```python
@@ -372,7 +372,7 @@ owner = 'owner_example' # str | Owner of the namespace
 project = 'project_example' # str | Project under namesapce
 
 try:
-    # Bookmark run
+    # Get project teams
     api_response = api_instance.fetch_project_teams(owner, project)
     pprint(api_response)
 except ApiException as e:
@@ -404,7 +404,7 @@ Name | Type | Description  | Notes
 # **get_project**
 > V1Project get_project(owner, project)
 
-Update run
+Get project
 
 ### Example
 ```python
@@ -426,7 +426,7 @@ owner = 'owner_example' # str | Owner of the namespace
 project = 'project_example' # str | Project under namesapce
 
 try:
-    # Update run
+    # Get project
     api_response = api_instance.get_project(owner, project)
     pprint(api_response)
 except ApiException as e:
@@ -458,7 +458,7 @@ Name | Type | Description  | Notes
 # **get_project_settings**
 > V1ProjectSettings get_project_settings(owner, project)
 
-Resume run
+Get Project settings
 
 ### Example
 ```python
@@ -480,7 +480,7 @@ owner = 'owner_example' # str | Owner of the namespace
 project = 'project_example' # str | Project under namesapce
 
 try:
-    # Resume run
+    # Get Project settings
     api_response = api_instance.get_project_settings(owner, project)
     pprint(api_response)
 except ApiException as e:
@@ -512,7 +512,7 @@ Name | Type | Description  | Notes
 # **list_archived_projects**
 > V1ListProjectsResponse list_archived_projects(user, offset=offset, limit=limit, sort=sort, query=query)
 
-Get run
+List archived projects for user
 
 ### Example
 ```python
@@ -537,7 +537,7 @@ sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search search. (optional)
 
 try:
-    # Get run
+    # List archived projects for user
     api_response = api_instance.list_archived_projects(user, offset=offset, limit=limit, sort=sort, query=query)
     pprint(api_response)
 except ApiException as e:
@@ -572,7 +572,7 @@ Name | Type | Description  | Notes
 # **list_bookmarked_projects**
 > V1ListProjectsResponse list_bookmarked_projects(user, offset=offset, limit=limit, sort=sort, query=query)
 
-Create new run
+List bookmarked projects for user
 
 ### Example
 ```python
@@ -597,7 +597,7 @@ sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search search. (optional)
 
 try:
-    # Create new run
+    # List bookmarked projects for user
     api_response = api_instance.list_bookmarked_projects(user, offset=offset, limit=limit, sort=sort, query=query)
     pprint(api_response)
 except ApiException as e:
@@ -632,7 +632,7 @@ Name | Type | Description  | Notes
 # **list_project_names**
 > V1ListProjectsResponse list_project_names(owner, offset=offset, limit=limit, sort=sort, query=query)
 
-List runs
+List project names
 
 ### Example
 ```python
@@ -657,7 +657,7 @@ sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search search. (optional)
 
 try:
-    # List runs
+    # List project names
     api_response = api_instance.list_project_names(owner, offset=offset, limit=limit, sort=sort, query=query)
     pprint(api_response)
 except ApiException as e:
@@ -692,7 +692,7 @@ Name | Type | Description  | Notes
 # **list_projects**
 > V1ListProjectsResponse list_projects(owner, offset=offset, limit=limit, sort=sort, query=query)
 
-List bookmarked runs for user
+List projects
 
 ### Example
 ```python
@@ -717,7 +717,7 @@ sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search search. (optional)
 
 try:
-    # List bookmarked runs for user
+    # List projects
     api_response = api_instance.list_projects(owner, offset=offset, limit=limit, sort=sort, query=query)
     pprint(api_response)
 except ApiException as e:
@@ -752,7 +752,7 @@ Name | Type | Description  | Notes
 # **patch_project**
 > V1Project patch_project(owner, project_name, body)
 
-Delete run
+Patch project
 
 ### Example
 ```python
@@ -775,7 +775,7 @@ project_name = 'project_name_example' # str | Required name
 body = polyaxon_sdk.V1Project() # V1Project | Project body
 
 try:
-    # Delete run
+    # Patch project
     api_response = api_instance.patch_project(owner, project_name, body)
     pprint(api_response)
 except ApiException as e:
@@ -808,7 +808,7 @@ Name | Type | Description  | Notes
 # **patch_project_settings**
 > V1ProjectSettings patch_project_settings(owner, project, body)
 
-Restore run
+Patch project settings
 
 ### Example
 ```python
@@ -831,7 +831,7 @@ project = 'project_example' # str | Project name
 body = polyaxon_sdk.V1ProjectSettings() # V1ProjectSettings | Project settings body
 
 try:
-    # Restore run
+    # Patch project settings
     api_response = api_instance.patch_project_settings(owner, project, body)
     pprint(api_response)
 except ApiException as e:
@@ -864,7 +864,7 @@ Name | Type | Description  | Notes
 # **patch_project_teams**
 > V1ProjectTeams patch_project_teams(owner, project, body)
 
-Start run tensorboard
+Patch project teams
 
 ### Example
 ```python
@@ -887,7 +887,7 @@ project = 'project_example' # str | Project name
 body = polyaxon_sdk.V1ProjectTeams() # V1ProjectTeams | Project settings body
 
 try:
-    # Start run tensorboard
+    # Patch project teams
     api_response = api_instance.patch_project_teams(owner, project, body)
     pprint(api_response)
 except ApiException as e:
@@ -920,7 +920,7 @@ Name | Type | Description  | Notes
 # **restore_project**
 > restore_project(owner, project)
 
-Stop runs
+Restore project
 
 ### Example
 ```python
@@ -942,7 +942,7 @@ owner = 'owner_example' # str | Owner of the namespace
 project = 'project_example' # str | Project under namesapce
 
 try:
-    # Stop runs
+    # Restore project
     api_instance.restore_project(owner, project)
 except ApiException as e:
     print("Exception when calling ProjectsV1Api->restore_project: %s\n" % e)
@@ -973,7 +973,7 @@ void (empty response body)
 # **unbookmark_project**
 > unbookmark_project(owner, project)
 
-Invalidate runs
+Unbookmark project
 
 ### Example
 ```python
@@ -995,7 +995,7 @@ owner = 'owner_example' # str | Owner of the namespace
 project = 'project_example' # str | Project under namesapce
 
 try:
-    # Invalidate runs
+    # Unbookmark project
     api_instance.unbookmark_project(owner, project)
 except ApiException as e:
     print("Exception when calling ProjectsV1Api->unbookmark_project: %s\n" % e)
@@ -1026,7 +1026,7 @@ void (empty response body)
 # **update_project**
 > V1Project update_project(owner, project_name, body)
 
-Patch run
+Update project
 
 ### Example
 ```python
@@ -1049,7 +1049,7 @@ project_name = 'project_name_example' # str | Required name
 body = polyaxon_sdk.V1Project() # V1Project | Project body
 
 try:
-    # Patch run
+    # Update project
     api_response = api_instance.update_project(owner, project_name, body)
     pprint(api_response)
 except ApiException as e:
@@ -1082,7 +1082,7 @@ Name | Type | Description  | Notes
 # **update_project_settings**
 > V1ProjectSettings update_project_settings(owner, project, body)
 
-Archive run
+Update project settings
 
 ### Example
 ```python
@@ -1105,7 +1105,7 @@ project = 'project_example' # str | Project name
 body = polyaxon_sdk.V1ProjectSettings() # V1ProjectSettings | Project settings body
 
 try:
-    # Archive run
+    # Update project settings
     api_response = api_instance.update_project_settings(owner, project, body)
     pprint(api_response)
 except ApiException as e:
@@ -1138,7 +1138,7 @@ Name | Type | Description  | Notes
 # **update_project_teams**
 > V1ProjectTeams update_project_teams(owner, project, body)
 
-Unbookmark run
+Update project teams
 
 ### Example
 ```python
@@ -1161,7 +1161,7 @@ project = 'project_example' # str | Project name
 body = polyaxon_sdk.V1ProjectTeams() # V1ProjectTeams | Project settings body
 
 try:
-    # Unbookmark run
+    # Update project teams
     api_response = api_instance.update_project_teams(owner, project, body)
     pprint(api_response)
 except ApiException as e:

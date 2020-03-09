@@ -1,4 +1,4 @@
-// Copyright 2019 Polyaxon, Inc.
+// Copyright 2018-2020 Polyaxon, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,15 +20,12 @@ package project_dashboards_v1
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	"fmt"
-
 	"github.com/go-openapi/runtime"
-
-	strfmt "github.com/go-openapi/strfmt"
+	"github.com/go-openapi/strfmt"
 )
 
 // New creates a new project dashboards v1 API client.
-func New(transport runtime.ClientTransport, formats strfmt.Registry) *Client {
+func New(transport runtime.ClientTransport, formats strfmt.Registry) ClientService {
 	return &Client{transport: transport, formats: formats}
 }
 
@@ -40,8 +37,29 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
+// ClientService is the interface for Client methods
+type ClientService interface {
+	CreateProjectDashboard(params *CreateProjectDashboardParams, authInfo runtime.ClientAuthInfoWriter) (*CreateProjectDashboardOK, *CreateProjectDashboardNoContent, error)
+
+	DeleteProjectDashboard(params *DeleteProjectDashboardParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteProjectDashboardOK, *DeleteProjectDashboardNoContent, error)
+
+	GetProjectDashboard(params *GetProjectDashboardParams, authInfo runtime.ClientAuthInfoWriter) (*GetProjectDashboardOK, *GetProjectDashboardNoContent, error)
+
+	ListProjectDashboardNames(params *ListProjectDashboardNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListProjectDashboardNamesOK, *ListProjectDashboardNamesNoContent, error)
+
+	ListProjectDashboards(params *ListProjectDashboardsParams, authInfo runtime.ClientAuthInfoWriter) (*ListProjectDashboardsOK, *ListProjectDashboardsNoContent, error)
+
+	PatchProjectDashboard(params *PatchProjectDashboardParams, authInfo runtime.ClientAuthInfoWriter) (*PatchProjectDashboardOK, *PatchProjectDashboardNoContent, error)
+
+	PromoteProjectDashboard(params *PromoteProjectDashboardParams, authInfo runtime.ClientAuthInfoWriter) (*PromoteProjectDashboardOK, *PromoteProjectDashboardNoContent, error)
+
+	UpdateProjectDashboard(params *UpdateProjectDashboardParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateProjectDashboardOK, *UpdateProjectDashboardNoContent, error)
+
+	SetTransport(transport runtime.ClientTransport)
+}
+
 /*
-CreateProjectDashboard lists runs
+  CreateProjectDashboard creates project dashboard
 */
 func (a *Client) CreateProjectDashboard(params *CreateProjectDashboardParams, authInfo runtime.ClientAuthInfoWriter) (*CreateProjectDashboardOK, *CreateProjectDashboardNoContent, error) {
 	// TODO: Validate the params before sending
@@ -71,13 +89,13 @@ func (a *Client) CreateProjectDashboard(params *CreateProjectDashboardParams, au
 	case *CreateProjectDashboardNoContent:
 		return nil, value, nil
 	}
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for project_dashboards_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
+	// unexpected success response
+	unexpectedSuccess := result.(*CreateProjectDashboardDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-DeleteProjectDashboard patches run
+  DeleteProjectDashboard deletes project dashboard
 */
 func (a *Client) DeleteProjectDashboard(params *DeleteProjectDashboardParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteProjectDashboardOK, *DeleteProjectDashboardNoContent, error) {
 	// TODO: Validate the params before sending
@@ -107,13 +125,13 @@ func (a *Client) DeleteProjectDashboard(params *DeleteProjectDashboardParams, au
 	case *DeleteProjectDashboardNoContent:
 		return nil, value, nil
 	}
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for project_dashboards_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
+	// unexpected success response
+	unexpectedSuccess := result.(*DeleteProjectDashboardDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-GetProjectDashboard creates new run
+  GetProjectDashboard gets project dashboard
 */
 func (a *Client) GetProjectDashboard(params *GetProjectDashboardParams, authInfo runtime.ClientAuthInfoWriter) (*GetProjectDashboardOK, *GetProjectDashboardNoContent, error) {
 	// TODO: Validate the params before sending
@@ -143,13 +161,13 @@ func (a *Client) GetProjectDashboard(params *GetProjectDashboardParams, authInfo
 	case *GetProjectDashboardNoContent:
 		return nil, value, nil
 	}
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for project_dashboards_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
+	// unexpected success response
+	unexpectedSuccess := result.(*GetProjectDashboardDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-ListProjectDashboardNames lists bookmarked runs for user
+  ListProjectDashboardNames lists project dashboard
 */
 func (a *Client) ListProjectDashboardNames(params *ListProjectDashboardNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListProjectDashboardNamesOK, *ListProjectDashboardNamesNoContent, error) {
 	// TODO: Validate the params before sending
@@ -179,13 +197,13 @@ func (a *Client) ListProjectDashboardNames(params *ListProjectDashboardNamesPara
 	case *ListProjectDashboardNamesNoContent:
 		return nil, value, nil
 	}
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for project_dashboards_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
+	// unexpected success response
+	unexpectedSuccess := result.(*ListProjectDashboardNamesDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-ListProjectDashboards lists archived runs for user
+  ListProjectDashboards lists project dashboards
 */
 func (a *Client) ListProjectDashboards(params *ListProjectDashboardsParams, authInfo runtime.ClientAuthInfoWriter) (*ListProjectDashboardsOK, *ListProjectDashboardsNoContent, error) {
 	// TODO: Validate the params before sending
@@ -215,13 +233,13 @@ func (a *Client) ListProjectDashboards(params *ListProjectDashboardsParams, auth
 	case *ListProjectDashboardsNoContent:
 		return nil, value, nil
 	}
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for project_dashboards_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
+	// unexpected success response
+	unexpectedSuccess := result.(*ListProjectDashboardsDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-PatchProjectDashboard updates run
+  PatchProjectDashboard patches project dashboard
 */
 func (a *Client) PatchProjectDashboard(params *PatchProjectDashboardParams, authInfo runtime.ClientAuthInfoWriter) (*PatchProjectDashboardOK, *PatchProjectDashboardNoContent, error) {
 	// TODO: Validate the params before sending
@@ -251,13 +269,13 @@ func (a *Client) PatchProjectDashboard(params *PatchProjectDashboardParams, auth
 	case *PatchProjectDashboardNoContent:
 		return nil, value, nil
 	}
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for project_dashboards_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
+	// unexpected success response
+	unexpectedSuccess := result.(*PatchProjectDashboardDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-PromoteProjectDashboard deletes run
+  PromoteProjectDashboard promotes project dashboard
 */
 func (a *Client) PromoteProjectDashboard(params *PromoteProjectDashboardParams, authInfo runtime.ClientAuthInfoWriter) (*PromoteProjectDashboardOK, *PromoteProjectDashboardNoContent, error) {
 	// TODO: Validate the params before sending
@@ -287,13 +305,13 @@ func (a *Client) PromoteProjectDashboard(params *PromoteProjectDashboardParams, 
 	case *PromoteProjectDashboardNoContent:
 		return nil, value, nil
 	}
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for project_dashboards_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
+	// unexpected success response
+	unexpectedSuccess := result.(*PromoteProjectDashboardDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-UpdateProjectDashboard gets run
+  UpdateProjectDashboard updates project dashboard
 */
 func (a *Client) UpdateProjectDashboard(params *UpdateProjectDashboardParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateProjectDashboardOK, *UpdateProjectDashboardNoContent, error) {
 	// TODO: Validate the params before sending
@@ -323,9 +341,9 @@ func (a *Client) UpdateProjectDashboard(params *UpdateProjectDashboardParams, au
 	case *UpdateProjectDashboardNoContent:
 		return nil, value, nil
 	}
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for project_dashboards_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
+	// unexpected success response
+	unexpectedSuccess := result.(*UpdateProjectDashboardDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 // SetTransport changes the transport on the client

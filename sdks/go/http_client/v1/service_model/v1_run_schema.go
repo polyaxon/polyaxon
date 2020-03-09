@@ -1,4 +1,4 @@
-// Copyright 2019 Polyaxon, Inc.
+// Copyright 2018-2020 Polyaxon, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,18 +20,15 @@ package service_model
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // V1RunSchema v1 run schema
+//
 // swagger:model v1RunSchema
 type V1RunSchema struct {
-
-	// container
-	Container *V1Container `json:"container,omitempty"`
 
 	// dag
 	Dag *V1Dag `json:"dag,omitempty"`
@@ -42,11 +39,20 @@ type V1RunSchema struct {
 	// flink
 	Flink *V1Flink `json:"flink,omitempty"`
 
+	// job
+	Job *V1Job `json:"job,omitempty"`
+
 	// mpi job
-	MpiJob *V1MpiJob `json:"mpi_job,omitempty"`
+	MpiJob *V1MPIJob `json:"mpi_job,omitempty"`
 
 	// pytorch job
 	PytorchJob *V1PytorchJob `json:"pytorch_job,omitempty"`
+
+	// ruy
+	Ruy *V1Ray `json:"ruy,omitempty"`
+
+	// service
+	Service *V1Service `json:"service,omitempty"`
 
 	// spark
 	Spark *V1Spark `json:"spark,omitempty"`
@@ -58,10 +64,6 @@ type V1RunSchema struct {
 // Validate validates this v1 run schema
 func (m *V1RunSchema) Validate(formats strfmt.Registry) error {
 	var res []error
-
-	if err := m.validateContainer(formats); err != nil {
-		res = append(res, err)
-	}
 
 	if err := m.validateDag(formats); err != nil {
 		res = append(res, err)
@@ -75,11 +77,23 @@ func (m *V1RunSchema) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
+	if err := m.validateJob(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateMpiJob(formats); err != nil {
 		res = append(res, err)
 	}
 
 	if err := m.validatePytorchJob(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateRuy(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateService(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -94,24 +108,6 @@ func (m *V1RunSchema) Validate(formats strfmt.Registry) error {
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
-	return nil
-}
-
-func (m *V1RunSchema) validateContainer(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.Container) { // not required
-		return nil
-	}
-
-	if m.Container != nil {
-		if err := m.Container.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("container")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 
@@ -169,6 +165,24 @@ func (m *V1RunSchema) validateFlink(formats strfmt.Registry) error {
 	return nil
 }
 
+func (m *V1RunSchema) validateJob(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Job) { // not required
+		return nil
+	}
+
+	if m.Job != nil {
+		if err := m.Job.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("job")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
 func (m *V1RunSchema) validateMpiJob(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.MpiJob) { // not required
@@ -197,6 +211,42 @@ func (m *V1RunSchema) validatePytorchJob(formats strfmt.Registry) error {
 		if err := m.PytorchJob.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("pytorch_job")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1RunSchema) validateRuy(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Ruy) { // not required
+		return nil
+	}
+
+	if m.Ruy != nil {
+		if err := m.Ruy.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("ruy")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1RunSchema) validateService(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Service) { // not required
+		return nil
+	}
+
+	if m.Service != nil {
+		if err := m.Service.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("service")
 			}
 			return err
 		}

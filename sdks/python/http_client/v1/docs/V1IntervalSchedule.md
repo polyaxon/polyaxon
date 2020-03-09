@@ -3,7 +3,7 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**kind** | **str** |  | [optional] 
+**kind** | **str** |  | [optional] [default to 'interval']
 **start_at** | **datetime** |  | [optional] 
 **end_at** | **datetime** |  | [optional] 
 **frequency** | **int** |  | [optional] 

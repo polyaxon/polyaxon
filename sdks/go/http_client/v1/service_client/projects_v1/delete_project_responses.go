@@ -1,4 +1,4 @@
-// Copyright 2019 Polyaxon, Inc.
+// Copyright 2018-2020 Polyaxon, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -24,8 +24,9 @@ import (
 	"io"
 
 	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/strfmt"
 
-	strfmt "github.com/go-openapi/strfmt"
+	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_model"
 )
 
 // DeleteProjectReader is a Reader for the DeleteProject structure.
@@ -60,9 +61,15 @@ func (o *DeleteProjectReader) ReadResponse(response runtime.ClientResponse, cons
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		result := NewDeleteProjectDefault(response.Code())
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		if response.Code()/100 == 2 {
+			return result, nil
+		}
+		return nil, result
 	}
 }
 
@@ -174,6 +181,48 @@ func (o *DeleteProjectNotFound) readResponse(response runtime.ClientResponse, co
 
 	// response payload
 	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
+// NewDeleteProjectDefault creates a DeleteProjectDefault with default headers values
+func NewDeleteProjectDefault(code int) *DeleteProjectDefault {
+	return &DeleteProjectDefault{
+		_statusCode: code,
+	}
+}
+
+/*DeleteProjectDefault handles this case with default header values.
+
+An unexpected error response
+*/
+type DeleteProjectDefault struct {
+	_statusCode int
+
+	Payload *service_model.RuntimeError
+}
+
+// Code gets the status code for the delete project default response
+func (o *DeleteProjectDefault) Code() int {
+	return o._statusCode
+}
+
+func (o *DeleteProjectDefault) Error() string {
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}][%d] DeleteProject default  %+v", o._statusCode, o.Payload)
+}
+
+func (o *DeleteProjectDefault) GetPayload() *service_model.RuntimeError {
+	return o.Payload
+}
+
+func (o *DeleteProjectDefault) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(service_model.RuntimeError)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 

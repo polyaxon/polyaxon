@@ -1,4 +1,4 @@
-// Copyright 2019 Polyaxon, Inc.
+// Copyright 2018-2020 Polyaxon, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -22,9 +22,8 @@ package service_model
 import (
 	"encoding/json"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/validate"
 )
 
@@ -33,6 +32,7 @@ import (
 // - tpe: tpe algorithm
 //  - rand: random algorithm
 //  - anneal: anneal algorithm
+//
 // swagger:model v1HyperoptAlgorithms
 type V1HyperoptAlgorithms string
 

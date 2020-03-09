@@ -1,4 +1,4 @@
-// Copyright 2019 Polyaxon, Inc.
+// Copyright 2018-2020 Polyaxon, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,14 +20,14 @@ package service_model
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
 
 // V1IntervalSchedule Interval schedule specification
+//
 // swagger:model v1IntervalSchedule
 type V1IntervalSchedule struct {
 
@@ -42,9 +42,9 @@ type V1IntervalSchedule struct {
 	Frequency int32 `json:"frequency,omitempty"`
 
 	// Kind of parallel, should be equal to "interval"
-	Kind string `json:"kind,omitempty"`
+	Kind *string `json:"kind,omitempty"`
 
-	// Whan to start this interval schedule
+	// When to start this interval schedule
 	// Format: date-time
 	StartAt strfmt.DateTime `json:"start_at,omitempty"`
 }

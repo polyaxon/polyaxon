@@ -1,4 +1,4 @@
-// Copyright 2019 Polyaxon, Inc.
+// Copyright 2018-2020 Polyaxon, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -22,45 +22,36 @@ package service_model
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // V1Component Component specification
+//
 // swagger:model v1Component
 type V1Component struct {
+
+	// Optional flag to disable cache validation and force run this component
+	Cache *V1Cache `json:"cache,omitempty"`
 
 	// Optional component description
 	Description string `json:"description,omitempty"`
 
-	// Optional environment section
-	Environment *V1Environment `json:"environment,omitempty"`
-
-	// Optional init section
-	Init *V1Init `json:"init,omitempty"`
-
 	// Optional inputs definition
 	Inputs []*V1IO `json:"inputs"`
 
-	// Optional component kind, should be equal to "op"
+	// Optional component kind, should be equal to "operation"
 	Kind string `json:"kind,omitempty"`
-
-	// Optioanl mount section
-	Mounts *V1Mounts `json:"mounts,omitempty"`
 
 	// Optional component name, should a valid slug
 	Name string `json:"name,omitempty"`
 
-	// Optional flag to disable cache validation and force run this component
-	Nocache bool `json:"nocache,omitempty"`
-
 	// Optional outputs definition
 	Outputs []*V1IO `json:"outputs"`
 
-	// Optional parallel section, must be a valid Parallel option (Random/Grid/BO/Hyperband/Hyperopt/Mapping/Iterative)
-	Parallel interface{} `json:"parallel,omitempty"`
+	// Optional plugins to enable
+	Plugins *V1Plugins `json:"plugins,omitempty"`
 
 	// Optional profile to use for running this component
 	Profile string `json:"profile,omitempty"`
@@ -68,14 +59,8 @@ type V1Component struct {
 	// Optional queue to use for running this component
 	Queue string `json:"queue,omitempty"`
 
-	// Run definiton, should be one of run composition: Container/Spark/Flink/Kubeflow/Dask/Dag
+	// Run definition, should be one of: Job/Service/Spark/Flink/Kubeflow/Dask/Dag
 	Run interface{} `json:"run,omitempty"`
-
-	// Optional schedule section, must be a valid Schedule option (Cron/Interval/Repeatable/ExactTime)
-	Schedule interface{} `json:"schedule,omitempty"`
-
-	// Optional service section
-	Service *V1Service `json:"service,omitempty"`
 
 	// Optional component tag version
 	Tag string `json:"tag,omitempty"`
@@ -94,11 +79,7 @@ type V1Component struct {
 func (m *V1Component) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	if err := m.validateEnvironment(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateInit(formats); err != nil {
+	if err := m.validateCache(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -106,15 +87,11 @@ func (m *V1Component) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
-	if err := m.validateMounts(formats); err != nil {
-		res = append(res, err)
-	}
-
 	if err := m.validateOutputs(formats); err != nil {
 		res = append(res, err)
 	}
 
-	if err := m.validateService(formats); err != nil {
+	if err := m.validatePlugins(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -128,34 +105,16 @@ func (m *V1Component) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *V1Component) validateEnvironment(formats strfmt.Registry) error {
+func (m *V1Component) validateCache(formats strfmt.Registry) error {
 
-	if swag.IsZero(m.Environment) { // not required
+	if swag.IsZero(m.Cache) { // not required
 		return nil
 	}
 
-	if m.Environment != nil {
-		if err := m.Environment.Validate(formats); err != nil {
+	if m.Cache != nil {
+		if err := m.Cache.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("environment")
-			}
-			return err
-		}
-	}
-
-	return nil
-}
-
-func (m *V1Component) validateInit(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.Init) { // not required
-		return nil
-	}
-
-	if m.Init != nil {
-		if err := m.Init.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("init")
+				return ve.ValidateName("cache")
 			}
 			return err
 		}
@@ -189,24 +148,6 @@ func (m *V1Component) validateInputs(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *V1Component) validateMounts(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.Mounts) { // not required
-		return nil
-	}
-
-	if m.Mounts != nil {
-		if err := m.Mounts.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("mounts")
-			}
-			return err
-		}
-	}
-
-	return nil
-}
-
 func (m *V1Component) validateOutputs(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.Outputs) { // not required
@@ -232,16 +173,16 @@ func (m *V1Component) validateOutputs(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *V1Component) validateService(formats strfmt.Registry) error {
+func (m *V1Component) validatePlugins(formats strfmt.Registry) error {
 
-	if swag.IsZero(m.Service) { // not required
+	if swag.IsZero(m.Plugins) { // not required
 		return nil
 	}
 
-	if m.Service != nil {
-		if err := m.Service.Validate(formats); err != nil {
+	if m.Plugins != nil {
+		if err := m.Plugins.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("service")
+				return ve.ValidateName("plugins")
 			}
 			return err
 		}

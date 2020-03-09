@@ -1,4 +1,4 @@
-// Copyright 2019 Polyaxon, Inc.
+// Copyright 2018-2020 Polyaxon, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -24,8 +24,9 @@ import (
 	"io"
 
 	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/strfmt"
 
-	strfmt "github.com/go-openapi/strfmt"
+	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_model"
 )
 
 // DisableProjectCIReader is a Reader for the DisableProjectCI structure.
@@ -60,9 +61,15 @@ func (o *DisableProjectCIReader) ReadResponse(response runtime.ClientResponse, c
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		result := NewDisableProjectCIDefault(response.Code())
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		if response.Code()/100 == 2 {
+			return result, nil
+		}
+		return nil, result
 	}
 }
 
@@ -174,6 +181,48 @@ func (o *DisableProjectCINotFound) readResponse(response runtime.ClientResponse,
 
 	// response payload
 	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
+// NewDisableProjectCIDefault creates a DisableProjectCIDefault with default headers values
+func NewDisableProjectCIDefault(code int) *DisableProjectCIDefault {
+	return &DisableProjectCIDefault{
+		_statusCode: code,
+	}
+}
+
+/*DisableProjectCIDefault handles this case with default header values.
+
+An unexpected error response
+*/
+type DisableProjectCIDefault struct {
+	_statusCode int
+
+	Payload *service_model.RuntimeError
+}
+
+// Code gets the status code for the disable project c i default response
+func (o *DisableProjectCIDefault) Code() int {
+	return o._statusCode
+}
+
+func (o *DisableProjectCIDefault) Error() string {
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/ci][%d] DisableProjectCI default  %+v", o._statusCode, o.Payload)
+}
+
+func (o *DisableProjectCIDefault) GetPayload() *service_model.RuntimeError {
+	return o.Payload
+}
+
+func (o *DisableProjectCIDefault) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(service_model.RuntimeError)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 

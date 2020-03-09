@@ -4,26 +4,26 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**createOrganization**](OrganizationsV1Api.md#createOrganization) | **POST** /api/v1/orgs/create | List runs
-[**createOrganizationMember**](OrganizationsV1Api.md#createOrganizationMember) | **POST** /api/v1/orgs/{owner}/members | Delete runs
-[**deleteOrganization**](OrganizationsV1Api.md#deleteOrganization) | **DELETE** /api/v1/orgs/{owner} | Patch run
-[**deleteOrganizationMember**](OrganizationsV1Api.md#deleteOrganizationMember) | **DELETE** /api/v1/orgs/{owner}/members/{user} | Invalidate runs
-[**getOrganization**](OrganizationsV1Api.md#getOrganization) | **GET** /api/v1/orgs/{owner} | Create new run
-[**getOrganizationMember**](OrganizationsV1Api.md#getOrganizationMember) | **GET** /api/v1/orgs/{owner}/members/{user} | Stop run
-[**listOrganizationMembers**](OrganizationsV1Api.md#listOrganizationMembers) | **GET** /api/v1/orgs/{owner}/members | Delete run
-[**listOrganizationNames**](OrganizationsV1Api.md#listOrganizationNames) | **GET** /api/v1/orgs/names | List bookmarked runs for user
-[**listOrganizations**](OrganizationsV1Api.md#listOrganizations) | **GET** /api/v1/orgs/list | List archived runs for user
-[**patchOrganization**](OrganizationsV1Api.md#patchOrganization) | **PATCH** /api/v1/orgs/{owner} | Update run
-[**patchOrganizationMember**](OrganizationsV1Api.md#patchOrganizationMember) | **PATCH** /api/v1/orgs/{owner}/members/{member.user} | Invalidate run
-[**updateOrganization**](OrganizationsV1Api.md#updateOrganization) | **PUT** /api/v1/orgs/{owner} | Get run
-[**updateOrganizationMember**](OrganizationsV1Api.md#updateOrganizationMember) | **PUT** /api/v1/orgs/{owner}/members/{member.user} | Stop runs
+[**createOrganization**](OrganizationsV1Api.md#createOrganization) | **POST** /api/v1/orgs/create | Create organization
+[**createOrganizationMember**](OrganizationsV1Api.md#createOrganizationMember) | **POST** /api/v1/orgs/{owner}/members | Create organization member
+[**deleteOrganization**](OrganizationsV1Api.md#deleteOrganization) | **DELETE** /api/v1/orgs/{owner} | Delete organization
+[**deleteOrganizationMember**](OrganizationsV1Api.md#deleteOrganizationMember) | **DELETE** /api/v1/orgs/{owner}/members/{user} | Delete organization member details
+[**getOrganization**](OrganizationsV1Api.md#getOrganization) | **GET** /api/v1/orgs/{owner} | Get organization
+[**getOrganizationMember**](OrganizationsV1Api.md#getOrganizationMember) | **GET** /api/v1/orgs/{owner}/members/{user} | Get organization member details
+[**listOrganizationMembers**](OrganizationsV1Api.md#listOrganizationMembers) | **GET** /api/v1/orgs/{owner}/members | Get organization members
+[**listOrganizationNames**](OrganizationsV1Api.md#listOrganizationNames) | **GET** /api/v1/orgs/names | List organizations names
+[**listOrganizations**](OrganizationsV1Api.md#listOrganizations) | **GET** /api/v1/orgs/list | List organizations
+[**patchOrganization**](OrganizationsV1Api.md#patchOrganization) | **PATCH** /api/v1/orgs/{owner} | Patch organization
+[**patchOrganizationMember**](OrganizationsV1Api.md#patchOrganizationMember) | **PATCH** /api/v1/orgs/{owner}/members/{member.user} | Patch organization member
+[**updateOrganization**](OrganizationsV1Api.md#updateOrganization) | **PUT** /api/v1/orgs/{owner} | Update organization
+[**updateOrganizationMember**](OrganizationsV1Api.md#updateOrganizationMember) | **PUT** /api/v1/orgs/{owner}/members/{member.user} | Update organization member
 
 
 <a name="createOrganization"></a>
 # **createOrganization**
 > V1Organization createOrganization(body)
 
-List runs
+Create organization
 
 ### Example
 ```javascript
@@ -74,7 +74,7 @@ Name | Type | Description  | Notes
 # **createOrganizationMember**
 > V1OrganizationMember createOrganizationMember(owner, body)
 
-Delete runs
+Create organization member
 
 ### Example
 ```javascript
@@ -128,7 +128,7 @@ Name | Type | Description  | Notes
 # **deleteOrganization**
 > deleteOrganization(owner)
 
-Patch run
+Delete organization
 
 ### Example
 ```javascript
@@ -179,7 +179,7 @@ null (empty response body)
 # **deleteOrganizationMember**
 > deleteOrganizationMember(owner, user)
 
-Invalidate runs
+Delete organization member details
 
 ### Example
 ```javascript
@@ -233,7 +233,7 @@ null (empty response body)
 # **getOrganization**
 > V1Organization getOrganization(owner)
 
-Create new run
+Get organization
 
 ### Example
 ```javascript
@@ -284,7 +284,7 @@ Name | Type | Description  | Notes
 # **getOrganizationMember**
 > V1OrganizationMember getOrganizationMember(owner, user)
 
-Stop run
+Get organization member details
 
 ### Example
 ```javascript
@@ -338,7 +338,7 @@ Name | Type | Description  | Notes
 # **listOrganizationMembers**
 > V1ListOrganizationMembersResponse listOrganizationMembers(owner, opts)
 
-Delete run
+Get organization members
 
 ### Example
 ```javascript
@@ -399,7 +399,7 @@ Name | Type | Description  | Notes
 # **listOrganizationNames**
 > V1ListOrganizationsResponse listOrganizationNames()
 
-List bookmarked runs for user
+List organizations names
 
 ### Example
 ```javascript
@@ -444,7 +444,7 @@ This endpoint does not need any parameter.
 # **listOrganizations**
 > V1ListOrganizationsResponse listOrganizations()
 
-List archived runs for user
+List organizations
 
 ### Example
 ```javascript
@@ -489,7 +489,7 @@ This endpoint does not need any parameter.
 # **patchOrganization**
 > V1Organization patchOrganization(owner, body)
 
-Update run
+Patch organization
 
 ### Example
 ```javascript
@@ -543,7 +543,7 @@ Name | Type | Description  | Notes
 # **patchOrganizationMember**
 > V1OrganizationMember patchOrganizationMember(owner, member_user, body)
 
-Invalidate run
+Patch organization member
 
 ### Example
 ```javascript
@@ -600,7 +600,7 @@ Name | Type | Description  | Notes
 # **updateOrganization**
 > V1Organization updateOrganization(owner, body)
 
-Get run
+Update organization
 
 ### Example
 ```javascript
@@ -654,7 +654,7 @@ Name | Type | Description  | Notes
 # **updateOrganizationMember**
 > V1OrganizationMember updateOrganizationMember(owner, member_user, body)
 
-Stop runs
+Update organization member
 
 ### Example
 ```javascript

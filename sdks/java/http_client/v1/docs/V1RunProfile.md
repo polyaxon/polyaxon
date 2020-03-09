@@ -12,6 +12,7 @@ Name | Type | Description | Notes
 **updatedAt** | [**OffsetDateTime**](OffsetDateTime.md) |  |  [optional]
 **frozen** | **Boolean** |  |  [optional]
 **disabled** | **Boolean** |  |  [optional]
+**agent** | **String** |  |  [optional]
 **queue** | **String** |  |  [optional]
 **namespace** | **String** |  |  [optional]
 **termination** | **Object** |  |  [optional]

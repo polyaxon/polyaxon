@@ -20,6 +20,7 @@ rules:
   - kubeflow.org
   resources:
   - pytorchjobs
+  - pytorchjobs/status
   verbs:
   - "*"
 - apiGroups:
@@ -29,38 +30,11 @@ rules:
   verbs:
   - "*"
 - apiGroups:
-  - storage.k8s.io
-  resources:
-  - storageclasses
-  verbs:
-  - "*"
-- apiGroups:
-  - batch
-  resources:
-  - jobs
-  verbs:
-  - "*"
-- apiGroups:
   - ""
   resources:
-  - configmaps
   - pods
   - services
   - endpoints
-  - persistentvolumeclaims
   - events
-  verbs:
-  - "*"
-- apiGroups:
-  - apps
-  - extensions
-  resources:
-  - deployments
-  verbs:
-  - "*"
-- apiGroups:
-  - policy
-  resources:
-  - poddisruptionbudgets
   verbs:
   - "*"

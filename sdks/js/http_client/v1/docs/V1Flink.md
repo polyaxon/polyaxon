@@ -3,7 +3,7 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**kind** | **String** |  | [optional] 
+**kind** | **String** |  | [optional] [default to 'flink']
 **spec** | **Object** |  | [optional] 
 
 

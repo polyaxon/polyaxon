@@ -11,6 +11,7 @@ Name | Type | Description | Notes
 **isOptional** | **Boolean** |  |  [optional]
 **isList** | **Boolean** |  |  [optional]
 **isFlag** | **Boolean** |  |  [optional]
+**delayValidation** | **Boolean** |  |  [optional]
 **options** | **List&lt;Object&gt;** |  |  [optional]
 
 

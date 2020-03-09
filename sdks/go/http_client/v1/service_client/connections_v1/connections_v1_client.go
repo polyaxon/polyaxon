@@ -1,4 +1,4 @@
-// Copyright 2019 Polyaxon, Inc.
+// Copyright 2018-2020 Polyaxon, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,15 +20,12 @@ package connections_v1
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	"fmt"
-
 	"github.com/go-openapi/runtime"
-
-	strfmt "github.com/go-openapi/strfmt"
+	"github.com/go-openapi/strfmt"
 )
 
 // New creates a new connections v1 API client.
-func New(transport runtime.ClientTransport, formats strfmt.Registry) *Client {
+func New(transport runtime.ClientTransport, formats strfmt.Registry) ClientService {
 	return &Client{transport: transport, formats: formats}
 }
 
@@ -40,8 +37,27 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
+// ClientService is the interface for Client methods
+type ClientService interface {
+	CreateConnection(params *CreateConnectionParams, authInfo runtime.ClientAuthInfoWriter) (*CreateConnectionOK, *CreateConnectionNoContent, error)
+
+	DeleteConnection(params *DeleteConnectionParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteConnectionOK, *DeleteConnectionNoContent, error)
+
+	GetConnection(params *GetConnectionParams, authInfo runtime.ClientAuthInfoWriter) (*GetConnectionOK, *GetConnectionNoContent, error)
+
+	ListConnectionNames(params *ListConnectionNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListConnectionNamesOK, *ListConnectionNamesNoContent, error)
+
+	ListConnections(params *ListConnectionsParams, authInfo runtime.ClientAuthInfoWriter) (*ListConnectionsOK, *ListConnectionsNoContent, error)
+
+	PatchConnection(params *PatchConnectionParams, authInfo runtime.ClientAuthInfoWriter) (*PatchConnectionOK, *PatchConnectionNoContent, error)
+
+	UpdateConnection(params *UpdateConnectionParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateConnectionOK, *UpdateConnectionNoContent, error)
+
+	SetTransport(transport runtime.ClientTransport)
+}
+
 /*
-CreateConnection lists runs
+  CreateConnection creates connection
 */
 func (a *Client) CreateConnection(params *CreateConnectionParams, authInfo runtime.ClientAuthInfoWriter) (*CreateConnectionOK, *CreateConnectionNoContent, error) {
 	// TODO: Validate the params before sending
@@ -71,13 +87,13 @@ func (a *Client) CreateConnection(params *CreateConnectionParams, authInfo runti
 	case *CreateConnectionNoContent:
 		return nil, value, nil
 	}
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for connections_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
+	// unexpected success response
+	unexpectedSuccess := result.(*CreateConnectionDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-DeleteConnection patches run
+  DeleteConnection deletes connection
 */
 func (a *Client) DeleteConnection(params *DeleteConnectionParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteConnectionOK, *DeleteConnectionNoContent, error) {
 	// TODO: Validate the params before sending
@@ -107,13 +123,13 @@ func (a *Client) DeleteConnection(params *DeleteConnectionParams, authInfo runti
 	case *DeleteConnectionNoContent:
 		return nil, value, nil
 	}
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for connections_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
+	// unexpected success response
+	unexpectedSuccess := result.(*DeleteConnectionDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-GetConnection creates new run
+  GetConnection gets connection
 */
 func (a *Client) GetConnection(params *GetConnectionParams, authInfo runtime.ClientAuthInfoWriter) (*GetConnectionOK, *GetConnectionNoContent, error) {
 	// TODO: Validate the params before sending
@@ -143,13 +159,13 @@ func (a *Client) GetConnection(params *GetConnectionParams, authInfo runtime.Cli
 	case *GetConnectionNoContent:
 		return nil, value, nil
 	}
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for connections_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
+	// unexpected success response
+	unexpectedSuccess := result.(*GetConnectionDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-ListConnectionNames lists bookmarked runs for user
+  ListConnectionNames lists connections names
 */
 func (a *Client) ListConnectionNames(params *ListConnectionNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListConnectionNamesOK, *ListConnectionNamesNoContent, error) {
 	// TODO: Validate the params before sending
@@ -179,13 +195,13 @@ func (a *Client) ListConnectionNames(params *ListConnectionNamesParams, authInfo
 	case *ListConnectionNamesNoContent:
 		return nil, value, nil
 	}
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for connections_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
+	// unexpected success response
+	unexpectedSuccess := result.(*ListConnectionNamesDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-ListConnections lists archived runs for user
+  ListConnections lists connections
 */
 func (a *Client) ListConnections(params *ListConnectionsParams, authInfo runtime.ClientAuthInfoWriter) (*ListConnectionsOK, *ListConnectionsNoContent, error) {
 	// TODO: Validate the params before sending
@@ -215,13 +231,13 @@ func (a *Client) ListConnections(params *ListConnectionsParams, authInfo runtime
 	case *ListConnectionsNoContent:
 		return nil, value, nil
 	}
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for connections_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
+	// unexpected success response
+	unexpectedSuccess := result.(*ListConnectionsDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-PatchConnection updates run
+  PatchConnection patches connection
 */
 func (a *Client) PatchConnection(params *PatchConnectionParams, authInfo runtime.ClientAuthInfoWriter) (*PatchConnectionOK, *PatchConnectionNoContent, error) {
 	// TODO: Validate the params before sending
@@ -251,13 +267,13 @@ func (a *Client) PatchConnection(params *PatchConnectionParams, authInfo runtime
 	case *PatchConnectionNoContent:
 		return nil, value, nil
 	}
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for connections_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
+	// unexpected success response
+	unexpectedSuccess := result.(*PatchConnectionDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-UpdateConnection gets run
+  UpdateConnection updates connection
 */
 func (a *Client) UpdateConnection(params *UpdateConnectionParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateConnectionOK, *UpdateConnectionNoContent, error) {
 	// TODO: Validate the params before sending
@@ -287,9 +303,9 @@ func (a *Client) UpdateConnection(params *UpdateConnectionParams, authInfo runti
 	case *UpdateConnectionNoContent:
 		return nil, value, nil
 	}
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for connections_v1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
+	// unexpected success response
+	unexpectedSuccess := result.(*UpdateConnectionDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 // SetTransport changes the transport on the client

@@ -5,8 +5,8 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **kind** | **String** |  |  [optional]
-**matrix** | **String** |  |  [optional]
-**nIterations** | **Integer** |  |  [optional]
+**params** | **Map&lt;String, Object&gt;** |  |  [optional]
+**numIterations** | **Integer** |  |  [optional]
 **container** | [**V1Container**](V1Container.md) |  |  [optional]
 **seed** | **Integer** |  |  [optional]
 **concurrency** | **Integer** |  |  [optional]

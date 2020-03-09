@@ -1,4 +1,4 @@
-// Copyright 2019 Polyaxon, Inc.
+// Copyright 2018-2020 Polyaxon, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -22,13 +22,13 @@ package service_model
 import (
 	"strconv"
 
-	strfmt "github.com/go-openapi/strfmt"
-
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
 // V1Dag Dag specificaiton
+//
 // swagger:model v1Dag
 type V1Dag struct {
 
@@ -38,14 +38,23 @@ type V1Dag struct {
 	// Optional component description
 	Concurrency int32 `json:"concurrency,omitempty"`
 
+	// Optional connections section
+	Connections []string `json:"connections"`
+
 	// Optional component tags
 	EarlyStopping []interface{} `json:"early_stopping"`
 
+	// Optional environment section
+	Environment *V1Environment `json:"environment,omitempty"`
+
 	// Optional component kind, should be equal to "dag"
-	Kind string `json:"kind,omitempty"`
+	Kind *string `json:"kind,omitempty"`
 
 	// Ops used in the graph
-	Ops []*V1Op `json:"ops"`
+	Operations []*V1Operation `json:"operations"`
+
+	// Volumes is a list of volumes that can be mounted.
+	Volumes []V1Volume `json:"volumes"`
 }
 
 // Validate validates this v1 dag
@@ -56,7 +65,11 @@ func (m *V1Dag) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
-	if err := m.validateOps(formats); err != nil {
+	if err := m.validateEnvironment(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateOperations(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -91,21 +104,39 @@ func (m *V1Dag) validateComponents(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *V1Dag) validateOps(formats strfmt.Registry) error {
+func (m *V1Dag) validateEnvironment(formats strfmt.Registry) error {
 
-	if swag.IsZero(m.Ops) { // not required
+	if swag.IsZero(m.Environment) { // not required
 		return nil
 	}
 
-	for i := 0; i < len(m.Ops); i++ {
-		if swag.IsZero(m.Ops[i]) { // not required
+	if m.Environment != nil {
+		if err := m.Environment.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("environment")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1Dag) validateOperations(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Operations) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(m.Operations); i++ {
+		if swag.IsZero(m.Operations[i]) { // not required
 			continue
 		}
 
-		if m.Ops[i] != nil {
-			if err := m.Ops[i].Validate(formats); err != nil {
+		if m.Operations[i] != nil {
+			if err := m.Operations[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("ops" + "." + strconv.Itoa(i))
+					return ve.ValidateName("operations" + "." + strconv.Itoa(i))
 				}
 				return err
 			}

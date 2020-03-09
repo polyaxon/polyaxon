@@ -1,0 +1,34 @@
+rbac:
+  enabled: true
+
+ingress:
+  enabled: true
+  path: /*
+  tls:
+    - secretName: polyaxon.cluster.local-tls
+      hosts:
+      - polyaxon.cluster.local
+
+serviceType: ClusterIP
+
+environment: staging
+
+user:
+  password: root
+
+postgresql:
+  enabled: false
+  postgresUser: polyaxon
+  postgresPassword: polyaxon
+  postgresDatabase: postgres
+
+externalServices:
+  postgresql:
+    host: https://foo.com
+
+artifactsStore:
+  name: azure
+  kind: wasb
+  schema: {"bucket": "wasbs://bucket@owner.blob.core.windows.net/"}
+  secret:
+    name: "az-secret"

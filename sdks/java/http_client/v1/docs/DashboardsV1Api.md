@@ -4,20 +4,20 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**createDashboard**](DashboardsV1Api.md#createDashboard) | **POST** /api/v1/orgs/{owner}/dashboards | List runs
-[**deleteDashboard**](DashboardsV1Api.md#deleteDashboard) | **DELETE** /api/v1/orgs/{owner}/dashboards/{uuid} | Patch run
-[**getDashboard**](DashboardsV1Api.md#getDashboard) | **GET** /api/v1/orgs/{owner}/dashboards/{uuid} | Create new run
-[**listDashboardNames**](DashboardsV1Api.md#listDashboardNames) | **GET** /api/v1/orgs/{owner}/dashboards/names | List bookmarked runs for user
-[**listDashboards**](DashboardsV1Api.md#listDashboards) | **GET** /api/v1/orgs/{owner}/dashboards | List archived runs for user
-[**patchDashboard**](DashboardsV1Api.md#patchDashboard) | **PATCH** /api/v1/orgs/{owner}/dashboards/{dashboard.uuid} | Update run
-[**updateDashboard**](DashboardsV1Api.md#updateDashboard) | **PUT** /api/v1/orgs/{owner}/dashboards/{dashboard.uuid} | Get run
+[**createDashboard**](DashboardsV1Api.md#createDashboard) | **POST** /api/v1/orgs/{owner}/dashboards | Create dashboard
+[**deleteDashboard**](DashboardsV1Api.md#deleteDashboard) | **DELETE** /api/v1/orgs/{owner}/dashboards/{uuid} | Delete dashboard
+[**getDashboard**](DashboardsV1Api.md#getDashboard) | **GET** /api/v1/orgs/{owner}/dashboards/{uuid} | Get dashboard
+[**listDashboardNames**](DashboardsV1Api.md#listDashboardNames) | **GET** /api/v1/orgs/{owner}/dashboards/names | List dashboard names
+[**listDashboards**](DashboardsV1Api.md#listDashboards) | **GET** /api/v1/orgs/{owner}/dashboards | List dashboards
+[**patchDashboard**](DashboardsV1Api.md#patchDashboard) | **PATCH** /api/v1/orgs/{owner}/dashboards/{dashboard.uuid} | Patch dashboard
+[**updateDashboard**](DashboardsV1Api.md#updateDashboard) | **PUT** /api/v1/orgs/{owner}/dashboards/{dashboard.uuid} | Update dashboard
 
 
 <a name="createDashboard"></a>
 # **createDashboard**
 > V1Dashboard createDashboard(owner, body)
 
-List runs
+Create dashboard
 
 ### Example
 ```java
@@ -72,7 +72,7 @@ Name | Type | Description  | Notes
 # **deleteDashboard**
 > deleteDashboard(owner, uuid)
 
-Patch run
+Delete dashboard
 
 ### Example
 ```java
@@ -93,7 +93,7 @@ ApiKey.setApiKey("YOUR API KEY");
 
 DashboardsV1Api apiInstance = new DashboardsV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
-String uuid = "uuid_example"; // String | Unique integer identifier of the entity
+String uuid = "uuid_example"; // String | Uuid identifier of the entity
 try {
     apiInstance.deleteDashboard(owner, uuid);
 } catch (ApiException e) {
@@ -107,7 +107,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
- **uuid** | **String**| Unique integer identifier of the entity |
+ **uuid** | **String**| Uuid identifier of the entity |
 
 ### Return type
 
@@ -126,7 +126,7 @@ null (empty response body)
 # **getDashboard**
 > V1Dashboard getDashboard(owner, uuid)
 
-Create new run
+Get dashboard
 
 ### Example
 ```java
@@ -147,7 +147,7 @@ ApiKey.setApiKey("YOUR API KEY");
 
 DashboardsV1Api apiInstance = new DashboardsV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
-String uuid = "uuid_example"; // String | Unique integer identifier of the entity
+String uuid = "uuid_example"; // String | Uuid identifier of the entity
 try {
     V1Dashboard result = apiInstance.getDashboard(owner, uuid);
     System.out.println(result);
@@ -162,7 +162,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
- **uuid** | **String**| Unique integer identifier of the entity |
+ **uuid** | **String**| Uuid identifier of the entity |
 
 ### Return type
 
@@ -181,7 +181,7 @@ Name | Type | Description  | Notes
 # **listDashboardNames**
 > V1ListDashboardsResponse listDashboardNames(owner, offset, limit, sort, query)
 
-List bookmarked runs for user
+List dashboard names
 
 ### Example
 ```java
@@ -242,7 +242,7 @@ Name | Type | Description  | Notes
 # **listDashboards**
 > V1ListDashboardsResponse listDashboards(owner, offset, limit, sort, query)
 
-List archived runs for user
+List dashboards
 
 ### Example
 ```java
@@ -303,7 +303,7 @@ Name | Type | Description  | Notes
 # **patchDashboard**
 > V1Dashboard patchDashboard(owner, dashboardUuid, body)
 
-Update run
+Patch dashboard
 
 ### Example
 ```java
@@ -360,7 +360,7 @@ Name | Type | Description  | Notes
 # **updateDashboard**
 > V1Dashboard updateDashboard(owner, dashboardUuid, body)
 
-Get run
+Update dashboard
 
 ### Example
 ```java

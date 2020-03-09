@@ -1,0 +1,38 @@
+{{- if .Values.ingress.enabled -}}
+{{- $fullName := include "polyaxon.fullname" . -}}
+{{- $secretName := printf "%s-%s" .Release.Name "tls" -}}
+
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: {{ template "polyaxon.fullname" . }}-ingress
+  namespace: {{ .Values.namespace }}
+  labels:
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+    type: {{ .Values.types.core }}
+    role: {{ .Values.roles.api }}
+    app.kubernetes.io/name: {{ template "polyaxon.fullname" . }}-ingress
+    app.kubernetes.io/instance: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    app.kubernetes.io/version: "{{ .Chart.Version }}"
+    app.kubernetes.io/part-of: {{ .Values.types.core }}
+    app.kubernetes.io/component: {{ .Values.roles.api }}
+    app.kubernetes.io/managed-by: "helm"
+  annotations:
+{{ toYaml .Values.ingress.annotations | indent 4 }}
+spec:
+  rules:
+  - host: {{ .Values.ingress.hostName | quote }}
+    http:
+      paths:
+      - path: {{ default "/" .Values.ingress.path | quote }}
+        backend:
+          serviceName: {{ $fullName }}-gateway
+          servicePort: {{ $.Values.gateway.service.port }}
+  {{- if (not (empty .Values.ingress.tls)) }}
+  tls:
+    {{ toYaml .Values.ingress.tls | nindent 4 }}
+  {{- end -}}
+{{- end }}

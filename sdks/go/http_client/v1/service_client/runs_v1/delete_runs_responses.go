@@ -1,4 +1,4 @@
-// Copyright 2019 Polyaxon, Inc.
+// Copyright 2018-2020 Polyaxon, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -24,8 +24,9 @@ import (
 	"io"
 
 	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/strfmt"
 
-	strfmt "github.com/go-openapi/strfmt"
+	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_model"
 )
 
 // DeleteRunsReader is a Reader for the DeleteRuns structure.
@@ -60,9 +61,15 @@ func (o *DeleteRunsReader) ReadResponse(response runtime.ClientResponse, consume
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		result := NewDeleteRunsDefault(response.Code())
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		if response.Code()/100 == 2 {
+			return result, nil
+		}
+		return nil, result
 	}
 }
 
@@ -174,6 +181,48 @@ func (o *DeleteRunsNotFound) readResponse(response runtime.ClientResponse, consu
 
 	// response payload
 	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
+// NewDeleteRunsDefault creates a DeleteRunsDefault with default headers values
+func NewDeleteRunsDefault(code int) *DeleteRunsDefault {
+	return &DeleteRunsDefault{
+		_statusCode: code,
+	}
+}
+
+/*DeleteRunsDefault handles this case with default header values.
+
+An unexpected error response
+*/
+type DeleteRunsDefault struct {
+	_statusCode int
+
+	Payload *service_model.RuntimeError
+}
+
+// Code gets the status code for the delete runs default response
+func (o *DeleteRunsDefault) Code() int {
+	return o._statusCode
+}
+
+func (o *DeleteRunsDefault) Error() string {
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/runs/delete][%d] DeleteRuns default  %+v", o._statusCode, o.Payload)
+}
+
+func (o *DeleteRunsDefault) GetPayload() *service_model.RuntimeError {
+	return o.Payload
+}
+
+func (o *DeleteRunsDefault) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(service_model.RuntimeError)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 

@@ -1,0 +1,13 @@
+apiVersion: core.polyaxon.com/v1
+kind: Operation
+metadata:
+  name: operation-sample
+batchJobSpec:
+  termination:
+    ttlSecondsAfterFinished: 5
+  template:
+    spec:
+      containers:
+        - name: op-sample
+          image: python:3
+          command: ["echo foo"]

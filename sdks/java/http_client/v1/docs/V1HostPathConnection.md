@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 **hostPath** | **String** |  |  [optional]
 **mountPath** | **String** |  |  [optional]
 **readOnly** | **Boolean** |  |  [optional]
+**kind** | **Object** |  |  [optional]
 
 
 
