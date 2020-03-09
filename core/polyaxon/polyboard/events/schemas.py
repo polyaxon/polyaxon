@@ -13,6 +13,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+import json
 import os
 
 from collections import namedtuple
@@ -144,6 +145,15 @@ class V1EventChart(BaseConfig, polyaxon_sdk.V1EventChart):
     IDENTIFIER = "chart"
     SCHEMA = EventChartSchema
     REDUCED_ATTRIBUTES = ["kind", "figure"]
+
+    def to_dict(self, humanize_values=False, unknown=None, dump=False):
+        if self.kind == V1EventChartKind.PLOTLY:
+            import plotly.tools
+
+            obj = self.obj_to_dict(self, humanize_values=humanize_values, unknown=unknown)
+            return json.dumps(obj, cls=plotly.utils.PlotlyJSONEncoder)
+        # Resume normal serialization
+        return super().to_dict(humanize_values, unknown, dump)
 
 
 class EventArtifactSchema(BaseSchema):
