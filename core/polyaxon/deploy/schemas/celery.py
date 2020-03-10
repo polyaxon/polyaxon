@@ -20,6 +20,7 @@ from polyaxon.schemas.base import BaseCamelSchema, BaseConfig
 
 
 class CelerySchema(BaseCamelSchema):
+    enabled = fields.Bool(allow_none=True)
     task_track_started = fields.Bool(allow_none=True)
     broker_pool_limit = fields.Int(allow_none=True)
     confirm_publish = fields.Bool(allow_none=True)
@@ -36,6 +37,7 @@ class CelerySchema(BaseCamelSchema):
 class CeleryConfig(BaseConfig):
     SCHEMA = CelerySchema
     REDUCED_ATTRIBUTES = [
+        "enabled",
         "taskTrackStarted",
         "brokerPoolLimit",
         "confirmPublish",
@@ -47,6 +49,7 @@ class CeleryConfig(BaseConfig):
 
     def __init__(
         self,
+        enabled=None,
         task_track_started=None,
         broker_pool_limit=None,
         confirm_publish=None,
@@ -55,6 +58,7 @@ class CeleryConfig(BaseConfig):
         worker_max_memory_per_child=None,
         task_always_eager=None,
     ):
+        self.enabled = enabled
         self.task_track_started = task_track_started
         self.broker_pool_limit = broker_pool_limit
         self.confirm_publish = confirm_publish

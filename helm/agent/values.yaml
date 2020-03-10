@@ -99,7 +99,7 @@ agent:
 
 operator:
   enabled: false
-  image: polyaxon/polyaxon-agent
+  image: polyaxon/polyaxon-operator
   imageTag: 1.0.5
   imagePullPolicy: Always
   resources:

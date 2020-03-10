@@ -2,30 +2,30 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "polyaxon.fullname" . }}-agent
+  name: {{ template "polyaxon.fullname" . }}-operator
   annotations:
     chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
     checksum/common-config: {{ include (print $.Template.BasePath "/common-cm.yaml") . | sha256sum }}
     checksum/agent-config: {{ include (print $.Template.BasePath "/agent-cm.yaml") . | sha256sum }}
     checksum/agent-secrets: {{ include (print $.Template.BasePath "/agent-secrets.yaml") . | sha256sum }}
   labels:
-    app: {{ template "polyaxon.fullname" . }}-agent
+    app: {{ template "polyaxon.fullname" . }}-operator
     chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
-    type: {{ .Values.types.agent }}
+    type: {{ .Values.types.core }}
     role: {{ .Values.roles.agent }}
-    app.kubernetes.io/name: {{ template "polyaxon.fullname" . }}-agent
+    app.kubernetes.io/name: {{ template "polyaxon.fullname" . }}-operator
     app.kubernetes.io/instance: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
     app.kubernetes.io/version: "{{ .Chart.Version }}"
-    app.kubernetes.io/part-of: {{ .Values.types.agent }}
+    app.kubernetes.io/part-of: {{ .Values.types.core }}
     app.kubernetes.io/component: {{ .Values.roles.agent }}
     app.kubernetes.io/managed-by: "helm"
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app.kubernetes.io/name: {{ template "polyaxon.fullname" . }}-agent
+      app.kubernetes.io/name: {{ template "polyaxon.fullname" . }}-operator
       app.kubernetes.io/instance: {{ .Release.Name }}
   template:
     metadata:
@@ -35,11 +35,11 @@ spec:
         checksum/agent-config: {{ include (print $.Template.BasePath "/agent-cm.yaml") . | sha256sum }}
         checksum/agent-secrets: {{ include (print $.Template.BasePath "/agent-secrets.yaml") . | sha256sum }}
       labels:
-        app: {{ template "polyaxon.fullname" . }}-agent
+        app: {{ template "polyaxon.fullname" . }}-operator
         release: "{{ .Release.Name }}"
-        type: {{ .Values.types.agent }}
+        type: {{ .Values.types.core }}
         role: {{ .Values.roles.agent }}
-        app.kubernetes.io/name: {{ template "polyaxon.fullname" . }}-agent
+        app.kubernetes.io/name: {{ template "polyaxon.fullname" . }}-operator
         app.kubernetes.io/instance: {{ .Release.Name }}
     spec:
 {{ include "securityContext" . | indent 6 }}
@@ -48,9 +48,9 @@ spec:
 {{ include "config.imagePullSecrets" . | indent 6}}
       terminationGracePeriodSeconds: 10
       containers:
-      - name: {{ .Chart.Name }}-agent
-        image: "{{ .Values.agent.image }}:{{ .Values.agent.imageTag }}"
-        imagePullPolicy: {{ .Values.agent.imagePullPolicy }}
+      - name: {{ .Chart.Name }}-operator
+        image: "{{ .Values.operator.image }}:{{ .Values.operator.imageTag }}"
+        imagePullPolicy: {{ .Values.operator.imagePullPolicy }}
         command:
         - /manager
         args:
@@ -60,9 +60,9 @@ spec:
 {{ include "config.envFrom.agent" . | indent 8 }}
         resources:
           requests:
-{{ toYaml .Values.agent.resources.requests | indent 12 }}
+{{ toYaml .Values.operator.resources.requests | indent 12 }}
           {{- if .Values.limitResources }}
           limits:
-{{ toYaml .Values.agent.resources.limits | indent 12 }}
+{{ toYaml .Values.operator.resources.limits | indent 12 }}
           {{- end }}
 {{- end }}

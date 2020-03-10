@@ -84,6 +84,7 @@ class WorkerConfig(V1Service):
 
     def __init__(
         self,
+        enabled=None,
         image=None,
         image_tag=None,
         image_pull_policy=None,
@@ -93,6 +94,7 @@ class WorkerConfig(V1Service):
         celery=None,
     ):
         super().__init__(
+            enabled=enabled,
             image=image,
             image_tag=image_tag,
             image_pull_policy=image_pull_policy,
@@ -121,6 +123,7 @@ class HelperConfig(V1Service):
 
     def __init__(
         self,
+        enabled=None,
         image=None,
         image_tag=None,
         image_pull_policy=None,
@@ -131,6 +134,7 @@ class HelperConfig(V1Service):
         sync_interval=None,
     ):
         super().__init__(
+            enabled=enabled,
             image=image,
             image_tag=image_tag,
             image_pull_policy=image_pull_policy,
@@ -157,6 +161,7 @@ class AgentConfig(V1Service):
 
     def __init__(
         self,
+        enabled=None,
         image=None,
         image_tag=None,
         image_pull_policy=None,
@@ -167,6 +172,7 @@ class AgentConfig(V1Service):
         token=None,
     ):
         super().__init__(
+            enabled=enabled,
             image=image,
             image_tag=image_tag,
             image_pull_policy=image_pull_policy,
@@ -191,6 +197,7 @@ class ApiConfig(V1Service):
 
     def __init__(
         self,
+        enabled=None,
         image=None,
         image_tag=None,
         image_pull_policy=None,
@@ -200,6 +207,7 @@ class ApiConfig(V1Service):
         service=None,
     ):
         super().__init__(
+            enabled=enabled,
             image=image,
             image_tag=image_tag,
             image_pull_policy=image_pull_policy,
@@ -224,6 +232,7 @@ class HooksConfig(V1Service):
 
     def __init__(
         self,
+        enabled=None,
         image=None,
         image_tag=None,
         image_pull_policy=None,
@@ -233,6 +242,7 @@ class HooksConfig(V1Service):
         load_fixtures=None,
     ):
         super().__init__(
+            enabled=enabled,
             image=image,
             image_tag=image_tag,
             image_pull_policy=image_pull_policy,

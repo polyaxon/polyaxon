@@ -41,7 +41,7 @@ roleRef:
   name: leader-election-role
 subjects:
 - kind: ServiceAccount
-  name: polyaxon-agent-sa
+  name: polyaxon-operator-sa
   namespace: {{ .Values.namespace }}
 ---
 {{- end }}

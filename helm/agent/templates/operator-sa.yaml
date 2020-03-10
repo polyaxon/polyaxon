@@ -10,12 +10,12 @@ metadata:
     chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
-    type: {{ .Values.types.agent }}
+    type: {{ .Values.types.core }}
     role: {{ .Values.roles.config }}
     app.kubernetes.io/name: polyaxon-operator-sa
     app.kubernetes.io/instance: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
     app.kubernetes.io/version: "{{ .Chart.Version }}"
-    app.kubernetes.io/part-of: {{ .Values.types.agent }}
+    app.kubernetes.io/part-of: {{ .Values.types.core }}
     app.kubernetes.io/component: {{ .Values.roles.config }}
     app.kubernetes.io/managed-by: "helm"
 
@@ -31,12 +31,12 @@ metadata:
     chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
-    type: {{ .Values.types.agent }}
+    type: {{ .Values.types.core }}
     role: {{ .Values.roles.config }}
     app.kubernetes.io/name: polyaxon-operator-role
     app.kubernetes.io/instance: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
     app.kubernetes.io/version: "{{ .Chart.Version }}"
-    app.kubernetes.io/part-of: {{ .Values.types.agent }}
+    app.kubernetes.io/part-of: {{ .Values.types.core }}
     app.kubernetes.io/component: {{ .Values.roles.config }}
     app.kubernetes.io/managed-by: "helm"
 rules:
@@ -131,12 +131,12 @@ metadata:
     chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
-    type: {{ .Values.types.agent }}
+    type: {{ .Values.types.core }}
     role: {{ .Values.roles.config }}
     app.kubernetes.io/name: polyaxon-operator-role-binding
     app.kubernetes.io/instance: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
     app.kubernetes.io/version: "{{ .Chart.Version }}"
-    app.kubernetes.io/part-of: {{ .Values.types.agent }}
+    app.kubernetes.io/part-of: {{ .Values.types.core }}
     app.kubernetes.io/component: {{ .Values.roles.config }}
     app.kubernetes.io/managed-by: "helm"
 roleRef:

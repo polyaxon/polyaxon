@@ -118,6 +118,7 @@ class DeploymentSchema(BaseCamelSchema):
     worker = fields.Nested(WorkerSchema, allow_none=True)
     beat = fields.Nested(ServiceSchema, allow_none=True)
     agent = fields.Nested(AgentSchema, allow_none=True)
+    operator = fields.Nested(ServiceSchema, allow_none=True)
     init = fields.Nested(HelperSchema, allow_none=True)
     sidecar = fields.Nested(HelperSchema, allow_none=True)
     tables_hook = fields.Nested(ServiceSchema, allow_none=True)
@@ -198,6 +199,7 @@ class DeploymentConfig(BaseConfig):
         worker=None,
         beat=None,
         agent=None,
+        operator=None,
         init=None,
         sidecar=None,
         tables_hook=None,
@@ -258,6 +260,7 @@ class DeploymentConfig(BaseConfig):
         self.worker = worker
         self.beat = beat
         self.agent = agent
+        self.operator = operator
         self.init = init
         self.sidecar = sidecar
         self.tables_hook = tables_hook
