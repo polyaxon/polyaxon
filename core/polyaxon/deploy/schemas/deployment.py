@@ -24,17 +24,17 @@ from polyaxon.deploy.schemas.rbac import RBACSchema
 from polyaxon.deploy.schemas.root_user import RootUserSchema
 from polyaxon.deploy.schemas.security_context import SecurityContextSchema
 from polyaxon.deploy.schemas.service import (
-    AgentSchema,
-    ApiSchema,
+    AgentServiceSchema,
+    ApiServiceSchema,
     DockerRegistrySchema,
     ExternalServicesSchema,
-    HelperSchema,
+    HelperServiceSchema,
     HooksSchema,
     PostgresqlSchema,
     RabbitmqSchema,
     RedisSchema,
     ServiceSchema,
-    WorkerSchema,
+    WorkerServiceSchema,
 )
 from polyaxon.deploy.schemas.service_types import ServiceTypes
 from polyaxon.deploy.schemas.ssl import SSLSchema
@@ -111,16 +111,16 @@ class DeploymentSchema(BaseCamelSchema):
     limit_resources = fields.Bool(allow_none=True)
     global_replicas = fields.Int(allow_none=True)
     global_concurrency = fields.Int(allow_none=True)
-    gateway = fields.Nested(ApiSchema, allow_none=True)
-    api = fields.Nested(ApiSchema, allow_none=True)
-    streams = fields.Nested(ApiSchema, allow_none=True)
-    scheduler = fields.Nested(WorkerSchema, allow_none=True)
-    worker = fields.Nested(WorkerSchema, allow_none=True)
+    gateway = fields.Nested(ApiServiceSchema, allow_none=True)
+    api = fields.Nested(ApiServiceSchema, allow_none=True)
+    streams = fields.Nested(ApiServiceSchema, allow_none=True)
+    scheduler = fields.Nested(WorkerServiceSchema, allow_none=True)
+    worker = fields.Nested(WorkerServiceSchema, allow_none=True)
     beat = fields.Nested(ServiceSchema, allow_none=True)
-    agent = fields.Nested(AgentSchema, allow_none=True)
+    agent = fields.Nested(AgentServiceSchema, allow_none=True)
     operator = fields.Nested(ServiceSchema, allow_none=True)
-    init = fields.Nested(HelperSchema, allow_none=True)
-    sidecar = fields.Nested(HelperSchema, allow_none=True)
+    init = fields.Nested(HelperServiceSchema, allow_none=True)
+    sidecar = fields.Nested(HelperServiceSchema, allow_none=True)
     tables_hook = fields.Nested(ServiceSchema, allow_none=True)
     hooks = fields.Nested(HooksSchema, allow_none=True)
     postgresql = fields.Nested(PostgresqlSchema, allow_none=True)

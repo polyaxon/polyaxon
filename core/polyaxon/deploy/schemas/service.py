@@ -70,16 +70,16 @@ class V1Service(BaseConfig):
         self.resources = resources
 
 
-class WorkerSchema(ServiceSchema):
+class WorkerServiceSchema(ServiceSchema):
     celery = fields.Nested(CelerySchema, allow_none=True)
 
     @staticmethod
     def schema_config():
-        return WorkerConfig
+        return WorkerServiceConfig
 
 
-class WorkerConfig(V1Service):
-    SCHEMA = WorkerSchema
+class WorkerServiceConfig(V1Service):
+    SCHEMA = WorkerServiceSchema
     REDUCED_ATTRIBUTES = V1Service.REDUCED_ATTRIBUTES + ["celery"]
 
     def __init__(
@@ -105,17 +105,17 @@ class WorkerConfig(V1Service):
         self.celery = celery
 
 
-class HelperSchema(ServiceSchema):
+class HelperServiceSchema(ServiceSchema):
     sleepInterval = fields.Int(allow_none=True)
     syncInterval = fields.Int(allow_none=True)
 
     @staticmethod
     def schema_config():
-        return HelperConfig
+        return HelperServiceConfig
 
 
-class HelperConfig(V1Service):
-    SCHEMA = HelperSchema
+class HelperServiceConfig(V1Service):
+    SCHEMA = HelperServiceSchema
     REDUCED_ATTRIBUTES = V1Service.REDUCED_ATTRIBUTES + [
         "sleepInterval",
         "syncInterval",
@@ -146,17 +146,17 @@ class HelperConfig(V1Service):
         self.sync_interval = sync_interval
 
 
-class AgentSchema(ServiceSchema):
+class AgentServiceSchema(ServiceSchema):
     instance = fields.String(allow_none=True)
     token = fields.String(allow_none=True)
 
     @staticmethod
     def schema_config():
-        return AgentConfig
+        return AgentServiceConfig
 
 
-class AgentConfig(V1Service):
-    SCHEMA = AgentSchema
+class AgentServiceConfig(V1Service):
+    SCHEMA = AgentServiceSchema
     REDUCED_ATTRIBUTES = V1Service.REDUCED_ATTRIBUTES + ["instance", "token"]
 
     def __init__(
@@ -184,16 +184,16 @@ class AgentConfig(V1Service):
         self.token = token
 
 
-class ApiSchema(ServiceSchema):
+class ApiServiceSchema(ServiceSchema):
     service = fields.Dict(allow_none=True)
 
     @staticmethod
     def schema_config():
-        return ApiConfig
+        return ApiServiceConfig
 
 
-class ApiConfig(V1Service):
-    SCHEMA = ApiSchema
+class ApiServiceConfig(V1Service):
+    SCHEMA = ApiServiceSchema
 
     def __init__(
         self,

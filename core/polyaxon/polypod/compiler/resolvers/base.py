@@ -58,6 +58,7 @@ class BaseResolver:
         self.polyaxon_sidecar = None
         self.polyaxon_init = None
         self.iteration = None
+        self.agent_config = None
         self.contexts = {}
 
     def resolve_edges(self):
@@ -67,6 +68,12 @@ class BaseResolver:
         raise NotImplementedError
 
     def resolve_profile(self):
+        pass
+
+    def resolve_agent(self):
+        pass
+
+    def patch(self):
         pass
 
     def apply_content(self):
@@ -85,10 +92,10 @@ class BaseResolver:
     def resolve_access(self):
         pass
 
-    def _resolve_connections(self, agent_config: AgentConfig = None):
+    def resolve_connections(self):
         polypod_config = PolypodConfig()
         polypod_config.resolve(
-            compiled_operation=self.compiled_operation, agent_config=agent_config
+            compiled_operation=self.compiled_operation, agent_config=self.agent_config
         )
         self.polyaxon_sidecar = polypod_config.polyaxon_sidecar
         self.polyaxon_init = polypod_config.polyaxon_init
@@ -97,9 +104,6 @@ class BaseResolver:
         self.config_maps = polypod_config.config_maps
         self.connection_by_names = polypod_config.connection_by_names
         self.artifacts_store = polypod_config.artifacts_store
-
-    def resolve_connections(self):
-        self._resolve_connections()
 
     def resolve_contexts(self):
         self.contexts = resolve_contexts(
@@ -128,6 +132,8 @@ class BaseResolver:
         self.resolve_edges()
         self.resolve_params()
         self.resolve_profile()
+        self.resolve_agent()
+        self.patch()
         self.apply_content()
         self.resolve_io()
         self.resolve_access()

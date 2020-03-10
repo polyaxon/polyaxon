@@ -32,3 +32,4 @@ data:
   POLYAXON_AGENT_SIDECAR: {{ toJson .Values.sidecar | quote }}
   POLYAXON_AGENT_INIT: {{ toJson .Values.init | quote }}
   POLYAXON_AGENT_SECRET_NAME: {{ template "polyaxon.fullname" . }}-agent-secret
+  POLYAXON_AGENT_RUNS_SA: {{ template "config.runs.sa" . }}

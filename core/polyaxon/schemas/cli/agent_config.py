@@ -27,6 +27,7 @@ from polyaxon.env_vars.keys import (
     POLYAXON_KEYS_AGENT_CONNECTIONS,
     POLYAXON_KEYS_AGENT_INIT,
     POLYAXON_KEYS_AGENT_NOTIFICATION_CONNECTIONS,
+    POLYAXON_KEYS_AGENT_RUNS_SA,
     POLYAXON_KEYS_AGENT_SECRET_NAME,
     POLYAXON_KEYS_AGENT_SIDECAR,
     POLYAXON_KEYS_K8S_APP_SECRET_NAME,
@@ -89,6 +90,7 @@ class AgentSchema(BaseSchema):
     agent_secret_name = fields.Str(
         allow_none=True, data_key=POLYAXON_KEYS_AGENT_SECRET_NAME,
     )
+    runs_sa = fields.Str(allow_none=True, data_key=POLYAXON_KEYS_AGENT_RUNS_SA,)
 
     @staticmethod
     def schema_config():
@@ -181,6 +183,7 @@ class AgentConfig(BaseConfig):
         POLYAXON_KEYS_AGENT_NOTIFICATION_CONNECTIONS,
         POLYAXON_KEYS_K8S_APP_SECRET_NAME,
         POLYAXON_KEYS_AGENT_SECRET_NAME,
+        POLYAXON_KEYS_AGENT_RUNS_SA,
     ]
 
     def __init__(
@@ -193,6 +196,7 @@ class AgentConfig(BaseConfig):
         notification_connections=None,
         app_secret_name=None,
         agent_secret_name=None,
+        runs_sa=None,
         **kwargs
     ):
         self.namespace = namespace
@@ -203,6 +207,7 @@ class AgentConfig(BaseConfig):
         self.notification_connections = notification_connections or []
         self.app_secret_name = app_secret_name
         self.agent_secret_name = agent_secret_name
+        self.runs_sa = runs_sa
         self._all_connections = self.connections[:]
         if artifacts_store:
             self._all_connections.append(artifacts_store)

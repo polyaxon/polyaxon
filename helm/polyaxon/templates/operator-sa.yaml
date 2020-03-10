@@ -3,7 +3,7 @@
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: polyaxon-operator-sa
+  name: {{ template "polyaxon.fullname" . }}-operator-sa
   namespace: {{ .Values.namespace }}
   labels:
     app: {{ template "polyaxon.fullname" . }}-operator-sa
@@ -12,7 +12,7 @@ metadata:
     heritage: "{{ .Release.Service }}"
     type: {{ .Values.types.core }}
     role: {{ .Values.roles.config }}
-    app.kubernetes.io/name: polyaxon-operator-sa
+    app.kubernetes.io/name: {{ template "polyaxon.fullname" . }}-operator-sa
     app.kubernetes.io/instance: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
     app.kubernetes.io/version: "{{ .Chart.Version }}"
     app.kubernetes.io/part-of: {{ .Values.types.core }}
@@ -24,16 +24,16 @@ metadata:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: polyaxon-operator-role
+  name: {{ template "polyaxon.fullname" . }}-operator-role
   namespace: {{ .Values.namespace }}
   labels:
-    app: polyaxon-operator-role
+    app: {{ template "polyaxon.fullname" . }}-operator-role
     chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
     type: {{ .Values.types.core }}
     role: {{ .Values.roles.config }}
-    app.kubernetes.io/name: polyaxon-operator-role
+    app.kubernetes.io/name: {{ template "polyaxon.fullname" . }}-operator-role
     app.kubernetes.io/instance: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
     app.kubernetes.io/version: "{{ .Chart.Version }}"
     app.kubernetes.io/part-of: {{ .Values.types.core }}
@@ -124,16 +124,16 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: polyaxon-operator-role-binding
+  name: {{ template "polyaxon.fullname" . }}-operator-role-binding
   namespace: {{ .Values.namespace }}
   labels:
-    app: polyaxon-operator-role-binding
+    app: {{ template "polyaxon.fullname" . }}-operator-role-binding
     chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
     type: {{ .Values.types.core }}
     role: {{ .Values.roles.config }}
-    app.kubernetes.io/name: polyaxon-operator-role-binding
+    app.kubernetes.io/name: {{ template "polyaxon.fullname" . }}-operator-role-binding
     app.kubernetes.io/instance: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
     app.kubernetes.io/version: "{{ .Chart.Version }}"
     app.kubernetes.io/part-of: {{ .Values.types.core }}
@@ -142,10 +142,10 @@ metadata:
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: polyaxon-operator-role
+  name: {{ template "polyaxon.fullname" . }}-operator-role
 subjects:
   - kind: ServiceAccount
-    name: polyaxon-operator-sa
+    name: {{ template "polyaxon.fullname" . }}-operator-sa
     namespace: {{ .Values.namespace }}
 {{- end }}
 {{- end }}

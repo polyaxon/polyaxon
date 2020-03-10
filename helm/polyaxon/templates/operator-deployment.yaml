@@ -44,7 +44,7 @@ spec:
     spec:
 {{ include "securityContext" . | indent 6 }}
 {{ include "config.scheduling" . | indent 6 }}
-{{ include "config.sa" . | indent 6 }}
+{{ include "config.operator.sa" . | indent 6 }}
 {{ include "config.imagePullSecrets" . | indent 6}}
       terminationGracePeriodSeconds: 10
       containers:
