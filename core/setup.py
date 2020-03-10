@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-
+import os
 import sys
 
 from setuptools import find_packages, setup
@@ -7,6 +7,8 @@ from setuptools.command.test import test as TestCommand
 
 
 def read_readme():
+    if not os.path.exists("../README.md"):
+        return ""
     with open("../README.md") as f:
         return f.read()
 

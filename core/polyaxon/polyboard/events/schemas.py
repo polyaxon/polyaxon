@@ -150,7 +150,9 @@ class V1EventChart(BaseConfig, polyaxon_sdk.V1EventChart):
         if self.kind == V1EventChartKind.PLOTLY:
             import plotly.tools
 
-            obj = self.obj_to_dict(self, humanize_values=humanize_values, unknown=unknown)
+            obj = self.obj_to_dict(
+                self, humanize_values=humanize_values, unknown=unknown
+            )
             return json.dumps(obj, cls=plotly.utils.PlotlyJSONEncoder)
         # Resume normal serialization
         return super().to_dict(humanize_values, unknown, dump)

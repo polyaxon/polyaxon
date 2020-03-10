@@ -28,7 +28,7 @@ message SearchSpec {
     // Search sort
     string sort = 2;
 
-    // Search group bys
+    // Limit size
     int32 limit = 3;
 
     // Search group bys
