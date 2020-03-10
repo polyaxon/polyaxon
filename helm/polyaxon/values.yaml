@@ -329,38 +329,9 @@ rabbitmq-ha:
                 - "polyaxon-core"
             topologyKey: "kubernetes.io/hostname"
 
-docker-registry:
-  # Whether to deploy a docker registry server in-cluster.
-  # To use an external docker registry instance:
-  #  * set enabled to False, to disable the in-cluster deployment
-  #  * use the web UI to configure the external host
-  enabled: true
-  service:
-    type: NodePort
-    nodePort: 31813
-  resources:
-    requests:
-      cpu: 300m
-      memory: 312Mi
-  persistence:
-    enabled: false
-  affinity:
-    podAffinity:
-      preferredDuringSchedulingIgnoredDuringExecution:
-        - weight: 100
-          podAffinityTerm:
-            labelSelector:
-              matchExpressions:
-              - key: type
-                operator: In
-                values:
-                - "polyaxon-core"
-            topologyKey: "kubernetes.io/hostname"
-
-
-artifactsStore:
-connections:
-notificationConnections:
+artifactsStore: {}
+connections: []
+notificationConnections: []
 
 imagePullSecrets: []
 

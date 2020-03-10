@@ -116,3 +116,7 @@ securityContext:
   group: 2222
 
 imagePullSecrets: []
+
+artifactsStore: {}
+connections: []
+notificationConnections: []
