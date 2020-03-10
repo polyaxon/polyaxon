@@ -1,5 +1,6 @@
 [![License: Apache 2](https://img.shields.io/badge/License-apache2-green.svg)](LICENSE)
-[![Build Status](https://travis-ci.org/polyaxon/polyaxon.svg?branch=master)](https://travis-ci.org/polyaxon/polyaxon)
+[![Polyaxon Operator](https://github.com/polyaxon/polyaxon/workflows/Polyaxon%20Operator/badge.svg)](https://github.com/polyaxon/polyaxon/actions?query=workflow%3A%22Polyaxon+Operator%22)
+[![Polyaxon Core](https://github.com/polyaxon/polyaxon/workflows/Polyaxon%20Core/badge.svg)](https://github.com/polyaxon/polyaxon/actions?query=workflow%3A%22Polyaxon+Core%22)
 [![Docs](https://img.shields.io/badge/docs-0.6.1-brightgreen.svg?style=flat)](https://docs.polyaxon.com)
 [![Release](https://img.shields.io/badge/release-0.6.1-brightgreen.svg?longCache=true)](https://github.com/polyaxon/polyaxon/releases/tag/0.6.1)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/90c05b6b112548c1a88b950beceacb69)](https://www.codacy.com/app/polyaxon/polyaxon?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=polyaxon/polyaxon&amp;utm_campaign=Badge_Grade)
