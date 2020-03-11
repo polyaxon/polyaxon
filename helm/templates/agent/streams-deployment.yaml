@@ -55,43 +55,42 @@ spec:
         - containerPort: {{ .Values.streams.service.targetPort }}
         envFrom:
 {{ include "config.envFrom.common" . | indent 8 }}
-{{ include "config.envFrom.proxies" . | indent 8 }}
 {{ include "config.envFrom.agent" . | indent 8 }}
 {{ include "config.artifactsStore.envFrom" . | indent 8 }}
         env:
 {{ include "config.debugMode" . | indent 8 }}
         volumeMounts:
 {{ include "config.artifactsStore.mount" . | indent 8}}
-#        livenessProbe:
-#          failureThreshold: 10
-#          httpGet:
-#            path: /healthz/
-#            port: {{ .Values.streams.service.targetPort }}
-#            scheme: {{ .Values.streams.service.scheme | default "HTTP" }}
-#            {{- if .Values.allowedHosts }}
-#            httpHeaders:
-#              - name: Host
-#                value: {{ template "polyaxon.fullname" . }}-streams
-#            {{- end }}
-#          initialDelaySeconds: 150
-#          periodSeconds: 30
-#          successThreshold: 1
-#          timeoutSeconds: 2
-#        readinessProbe:
-#          failureThreshold: 30
-#          httpGet:
-#            path: /healthz/
-#            port: {{ .Values.streams.service.targetPort }}
-#            scheme: {{ .Values.streams.service.scheme | default "HTTP" }}
-#            {{- if .Values.allowedHosts }}
-#            httpHeaders:
-#              - name: Host
-#                value: {{ template "polyaxon.fullname" . }}-streams
-#            {{- end }}
-#          initialDelaySeconds: 150
-#          periodSeconds: 30
-#          successThreshold: 1
-#          timeoutSeconds: 2
+        livenessProbe:
+          failureThreshold: 10
+          httpGet:
+            path: /healthz/
+            port: {{ .Values.streams.service.targetPort }}
+            scheme: {{ .Values.streams.service.scheme | default "HTTP" }}
+            {{- if .Values.allowedHosts }}
+            httpHeaders:
+              - name: Host
+                value: {{ template "polyaxon.fullname" . }}-streams
+            {{- end }}
+          initialDelaySeconds: 150
+          periodSeconds: 30
+          successThreshold: 1
+          timeoutSeconds: 2
+        readinessProbe:
+          failureThreshold: 30
+          httpGet:
+            path: /healthz/
+            port: {{ .Values.streams.service.targetPort }}
+            scheme: {{ .Values.streams.service.scheme | default "HTTP" }}
+            {{- if .Values.allowedHosts }}
+            httpHeaders:
+              - name: Host
+                value: {{ template "polyaxon.fullname" . }}-streams
+            {{- end }}
+          initialDelaySeconds: 150
+          periodSeconds: 30
+          successThreshold: 1
+          timeoutSeconds: 2
         resources:
           requests:
 {{ toYaml .Values.streams.resources.requests | indent 12 }}

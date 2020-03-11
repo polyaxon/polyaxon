@@ -21,11 +21,6 @@ data:
   {{- if .Values.allowedHosts }}
   POLYAXON_ALLOWED_HOSTS: {{ toJson .Values.allowedHosts | quote }}
   {{- end }}
-  {{- if .Values.postgresql.enabled }}
-  POLYAXON_K8S_DB_SECRET_NAME: {{ template "pgsql.fullname" . }}
-  {{- else }}
-  POLYAXON_K8S_DB_SECRET_NAME: {{ template "pgsql.fullname" . }}-postgresql-secret
-  {{- end}}
   # Admin
   POLYAXON_ADMIN_NAME: {{ .Values.user.username | quote }}
   POLYAXON_ADMIN_MAIL: {{ .Values.user.email | quote }}
@@ -79,8 +74,6 @@ data:
   POLYAXON_SECURITY_CONTEXT_USER: {{ .Values.securityContext.user | quote }}
   POLYAXON_SECURITY_CONTEXT_GROUP: {{ .Values.securityContext.group | quote }}
   {{- end }}
-  # Spawner
-  POLYAXON_PUBLIC_PLUGIN_JOBS: {{ default false .Values.publicJobs | quote }}
   POLYAXON_TRACKER_BACKEND: {{ default "noop" .Values.trackerBackend | quote }}
   # Auth
   {{- if .Values.ldap.enabled }}
@@ -102,16 +95,4 @@ data:
   {{- if .Values.ldap.denyGroup }}
   POLYAXON_AUTH_LDAP_DENY_GROUP: {{ .Values.ldap.denyGroup | quote }}
   {{- end }}
-  {{- end }}
-  {{ if and .Values.scheduler.enabled }}
-  {{- if (index .Values "rabbitmq-ha").enabled }}
-  POLYAXON_K8S_RABBITMQ_SECRET_NAME: {{ template "rabbitmq.fullname" . }}
-  {{- else }}
-  POLYAXON_K8S_RABBITMQ_SECRET_NAME: {{ template "polyaxon.fullname" . }}-rabbitmq-secret
-  {{- end}}
-  {{- if .Values.redis.enabled }}
-  POLYAXON_K8S_REDIS_SECRET_NAME: {{ template "redis.fullname" . }}
-  {{- else }}
-  POLYAXON_K8S_REDIS_SECRET_NAME: {{ template "polyaxon.fullname" . }}-redis-secret
-  {{- end}}
   {{- end }}

@@ -220,17 +220,6 @@ class ComposeOperator(CmdOperator):
             env.append(
                 template.format("POLYAXON_TRACKER_BACKEND", config.tracker_backend)
             )
-        if config.security_context:
-            env.append(
-                template.format(
-                    "POLYAXON_SECURITY_CONTEXT_USER", config.security_context.user
-                )
-            )
-            env.append(
-                template.format(
-                    "POLYAXON_SECURITY_CONTEXT_GROUP", config.security_context.group
-                )
-            )
         env += cls._generate_postgres(config)
 
         return "\n".join(env)

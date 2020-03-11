@@ -17,6 +17,7 @@ limitations under the License.
 package plugins
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/go-logr/logr"
@@ -41,7 +42,16 @@ const (
 	PolyaxonAuthToken = "POLYAXON_AUTH_TOKEN"
 
 	// PolyaxonAPIHost polyaxon api host
-	PolyaxonAPIHost = "POLYAXON_API_HOST"
+	PolyaxonAPIHost = "POLYAXON_PROXY_API_HOST"
+
+	// PolyaxonAPIPort polyaxon api port
+	PolyaxonAPIPort = "POLYAXON_PROXY_API_PORT"
+
+	// PolyaxonStreamsHost polyaxon streams host
+	PolyaxonStreamsHost = "POLYAXON_PROXY_STREAMS_HOST"
+
+	// PolyaxonStreamsPort polyaxon api port
+	PolyaxonStreamsPort = "POLYAXON_PROXY_STREAMS_PORT"
 )
 
 func polyaxonAuth(name, value string) httpRuntime.ClientAuthInfoWriter {
@@ -50,10 +60,14 @@ func polyaxonAuth(name, value string) httpRuntime.ClientAuthInfoWriter {
 	})
 }
 
+func polyaxonHost(host string, port int) string {
+	return fmt.Sprintf("%s:%d", host, port)
+}
+
 // NotifyPolyaxonRunStatus creates polyaxon run status
 func NotifyPolyaxonRunStatus(namespace, name, owner, project, uuid string, statusCond operationv1.OperationCondition, connections []string, log logr.Logger) error {
 	token := config.GetStrEnv(PolyaxonAuthToken, "")
-	host := config.GetStrEnv(PolyaxonAPIHost, "localhost:8000")
+	host := polyaxonHost(config.GetStrEnv(PolyaxonStreamsHost, "localhost"), config.GetIntEnv(PolyaxonStreamsPort, 8000))
 
 	plxClient := polyaxonSDK.New(httptransport.New(host, "", []string{"http"}), strfmt.Default)
 	plxToken := polyaxonAuth("Token", token)
@@ -87,7 +101,7 @@ func NotifyPolyaxonRunStatus(namespace, name, owner, project, uuid string, statu
 // LogPolyaxonRunStatus creates polyaxon run status
 func LogPolyaxonRunStatus(owner, project, uuid string, statusCond operationv1.OperationCondition, log logr.Logger) error {
 	token := config.GetStrEnv(PolyaxonAuthToken, "")
-	host := config.GetStrEnv(PolyaxonAPIHost, "localhost:8000")
+	host := polyaxonHost(config.GetStrEnv(PolyaxonAPIHost, "localhost"), config.GetIntEnv(PolyaxonAPIPort, 8000))
 
 	plxClient := polyaxonSDK.New(httptransport.New(host, "", []string{"http"}), strfmt.Default)
 	plxToken := polyaxonAuth("Token", token)
@@ -118,7 +132,7 @@ func LogPolyaxonRunStatus(owner, project, uuid string, statusCond operationv1.Op
 // CollectPolyaxonRunLogs archives logs before removing the operation
 func CollectPolyaxonRunLogs(namespace, owner, project, uuid string, log logr.Logger) error {
 	token := config.GetStrEnv(PolyaxonAuthToken, "")
-	host := config.GetStrEnv(PolyaxonAPIHost, "localhost:8000")
+	host := polyaxonHost(config.GetStrEnv(PolyaxonStreamsHost, "localhost"), config.GetIntEnv(PolyaxonStreamsPort, 8000))
 
 	plxClient := polyaxonSDK.New(httptransport.New(host, "", []string{"http"}), strfmt.Default)
 	plxToken := polyaxonAuth("Token", token)

@@ -41,7 +41,7 @@ func (r *OperationReconciler) syncStatus(instance *operationv1.Operation, status
 
 	log := r.Log
 
-	log.Info("Operation sync status", "Syncing", instance.GetName())
+	log.Info("Operation sync status", "Syncing", instance.GetName(), "Status", statusCond.Type)
 
 	instanceName, ok := instance.ObjectMeta.Labels["app.kubernetes.io/instance"]
 	if !ok || instanceName == "" {
@@ -97,7 +97,7 @@ func (r *OperationReconciler) notify(instance *operationv1.Operation) error {
 	}
 
 	if len(connections) == 0 {
-		log.Info("Operation cannot be notified", "Instance", instance.Name, "No connections", instance.Notifications)
+		log.Info("Operation no notification", "Instance", instance.Name, "No connections for status", lastCond.Type)
 		return nil
 	}
 
