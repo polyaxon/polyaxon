@@ -127,6 +127,12 @@
         // expect(instance.finished_at).to.be(expectedValueLiteral);
       });
 
+      it('should have the property run_time (base name: "run_time")', function() {
+        // TODO: update the code to test the property run_time
+        expect(instance).to.have.property('run_time');
+        // expect(instance.run_time).to.be(expectedValueLiteral);
+      });
+
       it('should have the property is_managed (base name: "is_managed")', function() {
         // TODO: update the code to test the property is_managed
         expect(instance).to.have.property('is_managed');

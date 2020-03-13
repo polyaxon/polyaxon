@@ -16,6 +16,7 @@ Name | Type | Description | Notes
 **updatedAt** | [**OffsetDateTime**](OffsetDateTime.md) |  |  [optional]
 **startedAt** | [**OffsetDateTime**](OffsetDateTime.md) |  |  [optional]
 **finishedAt** | [**OffsetDateTime**](OffsetDateTime.md) |  |  [optional]
+**runTime** | **Integer** |  |  [optional]
 **isManaged** | **String** |  |  [optional]
 **content** | **String** |  |  [optional]
 **status** | [**V1Statuses**](V1Statuses.md) |  |  [optional]

@@ -59,6 +59,7 @@ class V1Run(object):
         "updated_at": "datetime",
         "started_at": "datetime",
         "finished_at": "datetime",
+        "run_time": "int",
         "is_managed": "str",
         "content": "str",
         "status": "V1Statuses",
@@ -93,6 +94,7 @@ class V1Run(object):
         "updated_at": "updated_at",
         "started_at": "started_at",
         "finished_at": "finished_at",
+        "run_time": "run_time",
         "is_managed": "is_managed",
         "content": "content",
         "status": "status",
@@ -128,6 +130,7 @@ class V1Run(object):
         updated_at=None,
         started_at=None,
         finished_at=None,
+        run_time=None,
         is_managed=None,
         content=None,
         status=None,
@@ -162,6 +165,7 @@ class V1Run(object):
         self._updated_at = None
         self._started_at = None
         self._finished_at = None
+        self._run_time = None
         self._is_managed = None
         self._content = None
         self._status = None
@@ -207,6 +211,8 @@ class V1Run(object):
             self.started_at = started_at
         if finished_at is not None:
             self.finished_at = finished_at
+        if run_time is not None:
+            self.run_time = run_time
         if is_managed is not None:
             self.is_managed = is_managed
         if content is not None:
@@ -497,6 +503,27 @@ class V1Run(object):
         """
 
         self._finished_at = finished_at
+
+    @property
+    def run_time(self):
+        """Gets the run_time of this V1Run.  # noqa: E501
+
+
+        :return: The run_time of this V1Run.  # noqa: E501
+        :rtype: int
+        """
+        return self._run_time
+
+    @run_time.setter
+    def run_time(self, run_time):
+        """Sets the run_time of this V1Run.
+
+
+        :param run_time: The run_time of this V1Run.  # noqa: E501
+        :type: int
+        """
+
+        self._run_time = run_time
 
     @property
     def is_managed(self):

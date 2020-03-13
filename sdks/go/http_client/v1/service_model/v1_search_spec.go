@@ -35,7 +35,7 @@ type V1SearchSpec struct {
 	// Search group bys
 	Groupby string `json:"groupby,omitempty"`
 
-	// Search group bys
+	// Limit size
 	Limit int32 `json:"limit,omitempty"`
 
 	// Search query

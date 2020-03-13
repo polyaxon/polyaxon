@@ -94,62 +94,65 @@ message Run {
     // Optional last time the entity was started
     google.protobuf.Timestamp finished_at = 12;
 
+    // Optional run time of the entity
+    int32 run_time = 13;
+
     // Optional flag to tell if this entity is managed by the platform
-    string is_managed = 13;
+    string is_managed = 14;
 
     // Optional content of the entity's spec
-    string content = 14;
+    string content = 15;
 
     // Optional latest status of this entity
-    Statuses status = 15;
+    Statuses status = 16;
 
     // Optional if this entity was bookmarked
-    bool bookmarked = 16;
+    bool bookmarked = 17;
 
     // Optional run meta info
-    google.protobuf.Struct meta_info = 17;
+    google.protobuf.Struct meta_info = 18;
 
     // Optional is helper run
-    bool is_helper = 18;
+    bool is_helper = 19;
 
     // Optional kind to tell the kind of this run
-    RunKind kind = 19;
+    RunKind kind = 20;
 
     // Optional meta kind to tell the nature of this run
-    RunKind meta_kind = 20;
+    RunKind meta_kind = 21;
 
     // Optional hub reference versioned component
-    string hub = 21;
+    string hub = 22;
 
     // Optional inputs of this entity
-    google.protobuf.Struct inputs = 22;
+    google.protobuf.Struct inputs = 23;
 
     // Optional outputs of this entity
-    google.protobuf.Struct outputs = 23;
+    google.protobuf.Struct outputs = 24;
 
     // Is resume
-    bool is_resume = 24;
+    bool is_resume = 25;
 
     // Is clone
-    bool is_clone = 25;
+    bool is_clone = 26;
 
     // Optional if this run was restarted/copied/resumed/cached
-    CloningStrategy cloning_strategy = 26;
+    CloningStrategy cloning_strategy = 27;
 
     // Optional uuid of the pipeline
-    string pipeline = 27;
+    string pipeline = 29;
 
     // Optional uuid of the original run
-    string original = 28;
+    string original = 30;
 
     // Optional name of the pipeline
-    string pipeline_name = 29;
+    string pipeline_name = 31;
 
     // Optional name of the original run
-    string original_name = 30;
+    string original_name = 32;
 
     // The status conditions timeline
-    repeated StatusCondition status_conditions = 31;
+    repeated StatusCondition status_conditions = 33;
 }
 
 // Operation creation

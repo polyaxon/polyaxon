@@ -15242,6 +15242,11 @@
           "format": "date-time",
           "title": "Optional last time the entity was started"
         },
+        "run_time": {
+          "type": "integer",
+          "format": "int32",
+          "title": "Optional run time of the entity"
+        },
         "is_managed": {
           "type": "string",
           "title": "Optional flag to tell if this entity is managed by the platform"
@@ -15716,7 +15721,7 @@
         "limit": {
           "type": "integer",
           "format": "int32",
-          "title": "Search group bys"
+          "title": "Limit size"
         },
         "groupby": {
           "type": "string",

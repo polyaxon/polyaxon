@@ -93,6 +93,8 @@
         obj.started_at = ApiClient.convertToType(data['started_at'], 'Date');
       if (data.hasOwnProperty('finished_at'))
         obj.finished_at = ApiClient.convertToType(data['finished_at'], 'Date');
+      if (data.hasOwnProperty('run_time'))
+        obj.run_time = ApiClient.convertToType(data['run_time'], 'Number');
       if (data.hasOwnProperty('is_managed'))
         obj.is_managed = ApiClient.convertToType(data['is_managed'], 'String');
       if (data.hasOwnProperty('content'))
@@ -194,6 +196,11 @@
    * @member {Date} finished_at
    */
   exports.prototype.finished_at = undefined;
+
+  /**
+   * @member {Number} run_time
+   */
+  exports.prototype.run_time = undefined;
 
   /**
    * @member {String} is_managed

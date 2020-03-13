@@ -239,6 +239,7 @@ github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZb
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/polyaxon/polyaxon v0.0.0-20200310191559-e0141da57787 h1:F4d0qs7ueAoid/N2ZXDyR6NRyFTm5YRFSlhhJli8lMg=
 github.com/polyaxon/polyaxon v0.0.0-20200311001131-2480e0f66b65 h1:rWxadL1++KEJZTnPyVnBqgH9cN7nW7NkphQaeWUTlaE=
+github.com/polyaxon/polyaxon v0.0.0-20200311084707-21016823ecd7 h1:NHBERtCBv8OtKnVcBU6mxxfAfAzbaEaOtj03kYPjJaQ=
 github.com/polyaxon/polyaxon/sdks v0.0.0-20200309162736-9727751c5e5a h1:GgI6fLiE8moxyqvbFL7fHF5/MF/Fuy9PPe/rVQiHNY0=
 github.com/polyaxon/polyaxon/sdks v0.0.0-20200309162736-9727751c5e5a/go.mod h1:L/1OX6bhxdy6a6sX9/XX0b1VMTQyyNDVJjFkmB5wkB4=
 github.com/pquerna/cachecontrol v0.0.0-20171018203845-0dec1b30a021/go.mod h1:prYjPmNq4d1NPVmpShWobRqXY3q7Vp+80DqgxxUrUIA=

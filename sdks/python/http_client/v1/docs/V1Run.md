@@ -15,6 +15,7 @@ Name | Type | Description | Notes
 **updated_at** | **datetime** |  | [optional] 
 **started_at** | **datetime** |  | [optional] 
 **finished_at** | **datetime** |  | [optional] 
+**run_time** | **int** |  | [optional] 
 **is_managed** | **str** |  | [optional] 
 **content** | **str** |  | [optional] 
 **status** | [**V1Statuses**](V1Statuses.md) |  | [optional] 

@@ -5488,6 +5488,12 @@ export interface V1Run {
     finished_at?: Date;
     /**
      * 
+     * @type {number}
+     * @memberof V1Run
+     */
+    run_time?: number;
+    /**
+     * 
      * @type {string}
      * @memberof V1Run
      */

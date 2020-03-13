@@ -86,6 +86,9 @@ public class V1Run {
   @SerializedName("finished_at")
   private OffsetDateTime finishedAt = null;
 
+  @SerializedName("run_time")
+  private Integer runTime = null;
+
   @SerializedName("is_managed")
   private String isManaged = null;
 
@@ -365,6 +368,24 @@ public class V1Run {
 
   public void setFinishedAt(OffsetDateTime finishedAt) {
     this.finishedAt = finishedAt;
+  }
+
+  public V1Run runTime(Integer runTime) {
+    this.runTime = runTime;
+    return this;
+  }
+
+   /**
+   * Get runTime
+   * @return runTime
+  **/
+  @ApiModelProperty(value = "")
+  public Integer getRunTime() {
+    return runTime;
+  }
+
+  public void setRunTime(Integer runTime) {
+    this.runTime = runTime;
   }
 
   public V1Run isManaged(String isManaged) {
@@ -739,6 +760,7 @@ public class V1Run {
         Objects.equals(this.updatedAt, v1Run.updatedAt) &&
         Objects.equals(this.startedAt, v1Run.startedAt) &&
         Objects.equals(this.finishedAt, v1Run.finishedAt) &&
+        Objects.equals(this.runTime, v1Run.runTime) &&
         Objects.equals(this.isManaged, v1Run.isManaged) &&
         Objects.equals(this.content, v1Run.content) &&
         Objects.equals(this.status, v1Run.status) &&
@@ -762,7 +784,7 @@ public class V1Run {
 
   @Override
   public int hashCode() {
-    return Objects.hash(uuid, name, description, tags, deleted, user, owner, project, createdAt, updatedAt, startedAt, finishedAt, isManaged, content, status, bookmarked, metaInfo, isHelper, kind, metaKind, hub, inputs, outputs, isResume, isClone, cloningStrategy, pipeline, original, pipelineName, originalName, statusConditions);
+    return Objects.hash(uuid, name, description, tags, deleted, user, owner, project, createdAt, updatedAt, startedAt, finishedAt, runTime, isManaged, content, status, bookmarked, metaInfo, isHelper, kind, metaKind, hub, inputs, outputs, isResume, isClone, cloningStrategy, pipeline, original, pipelineName, originalName, statusConditions);
   }
 
 
@@ -783,6 +805,7 @@ public class V1Run {
     sb.append("    updatedAt: ").append(toIndentedString(updatedAt)).append("\n");
     sb.append("    startedAt: ").append(toIndentedString(startedAt)).append("\n");
     sb.append("    finishedAt: ").append(toIndentedString(finishedAt)).append("\n");
+    sb.append("    runTime: ").append(toIndentedString(runTime)).append("\n");
     sb.append("    isManaged: ").append(toIndentedString(isManaged)).append("\n");
     sb.append("    content: ").append(toIndentedString(content)).append("\n");
     sb.append("    status: ").append(toIndentedString(status)).append("\n");

@@ -107,6 +107,9 @@ type V1Run struct {
 	// Required project name
 	Project string `json:"project,omitempty"`
 
+	// Optional run time of the entity
+	RunTime int32 `json:"run_time,omitempty"`
+
 	// Optional last time the entity was started
 	// Format: date-time
 	StartedAt strfmt.DateTime `json:"started_at,omitempty"`

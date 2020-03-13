@@ -134,6 +134,7 @@
           body.updated_at = new Date();
           body.started_at = new Date();
           body.finished_at = new Date();
+          body.run_time = 0;
           body.is_managed = "";
           body.content = "";
           body.status = new PolyaxonSdk.V1Statuses();
@@ -199,6 +200,8 @@
             expect(data.started_at).to.be(new Date());
             expect(data.finished_at).to.be.a(Date);
             expect(data.finished_at).to.be(new Date());
+            expect(data.run_time).to.be.a('number');
+            expect(data.run_time).to.be(0);
             expect(data.is_managed).to.be.a('string');
             expect(data.is_managed).to.be("");
             expect(data.content).to.be.a('string');
@@ -407,6 +410,8 @@
             expect(data.started_at).to.be(new Date());
             expect(data.finished_at).to.be.a(Date);
             expect(data.finished_at).to.be(new Date());
+            expect(data.run_time).to.be.a('number');
+            expect(data.run_time).to.be(0);
             expect(data.is_managed).to.be.a('string');
             expect(data.is_managed).to.be("");
             expect(data.content).to.be.a('string');
@@ -714,6 +719,8 @@
             expect(data.started_at).to.be(new Date());
             expect(data.finished_at).to.be.a(Date);
             expect(data.finished_at).to.be(new Date());
+            expect(data.run_time).to.be.a('number');
+            expect(data.run_time).to.be(0);
             expect(data.is_managed).to.be.a('string');
             expect(data.is_managed).to.be("");
             expect(data.content).to.be.a('string');
@@ -1410,6 +1417,8 @@
                 expect(data.started_at).to.be(new Date());
                 expect(data.finished_at).to.be.a(Date);
                 expect(data.finished_at).to.be(new Date());
+                expect(data.run_time).to.be.a('number');
+                expect(data.run_time).to.be(0);
                 expect(data.is_managed).to.be.a('string');
                 expect(data.is_managed).to.be("");
                 expect(data.content).to.be.a('string');
@@ -1535,6 +1544,8 @@
                 expect(data.started_at).to.be(new Date());
                 expect(data.finished_at).to.be.a(Date);
                 expect(data.finished_at).to.be(new Date());
+                expect(data.run_time).to.be.a('number');
+                expect(data.run_time).to.be(0);
                 expect(data.is_managed).to.be.a('string');
                 expect(data.is_managed).to.be("");
                 expect(data.content).to.be.a('string');
@@ -1661,6 +1672,8 @@
                 expect(data.started_at).to.be(new Date());
                 expect(data.finished_at).to.be.a(Date);
                 expect(data.finished_at).to.be(new Date());
+                expect(data.run_time).to.be.a('number');
+                expect(data.run_time).to.be(0);
                 expect(data.is_managed).to.be.a('string');
                 expect(data.is_managed).to.be("");
                 expect(data.content).to.be.a('string');
@@ -1787,6 +1800,8 @@
                 expect(data.started_at).to.be(new Date());
                 expect(data.finished_at).to.be.a(Date);
                 expect(data.finished_at).to.be(new Date());
+                expect(data.run_time).to.be.a('number');
+                expect(data.run_time).to.be(0);
                 expect(data.is_managed).to.be.a('string');
                 expect(data.is_managed).to.be("");
                 expect(data.content).to.be.a('string');
@@ -1909,6 +1924,7 @@
           body.updated_at = new Date();
           body.started_at = new Date();
           body.finished_at = new Date();
+          body.run_time = 0;
           body.is_managed = "";
           body.content = "";
           body.status = new PolyaxonSdk.V1Statuses();
@@ -1974,6 +1990,8 @@
             expect(data.started_at).to.be(new Date());
             expect(data.finished_at).to.be.a(Date);
             expect(data.finished_at).to.be(new Date());
+            expect(data.run_time).to.be.a('number');
+            expect(data.run_time).to.be(0);
             expect(data.is_managed).to.be.a('string');
             expect(data.is_managed).to.be("");
             expect(data.content).to.be.a('string');
@@ -2054,6 +2072,7 @@
           body.updated_at = new Date();
           body.started_at = new Date();
           body.finished_at = new Date();
+          body.run_time = 0;
           body.is_managed = "";
           body.content = "";
           body.status = new PolyaxonSdk.V1Statuses();
@@ -2119,6 +2138,8 @@
             expect(data.started_at).to.be(new Date());
             expect(data.finished_at).to.be.a(Date);
             expect(data.finished_at).to.be(new Date());
+            expect(data.run_time).to.be.a('number');
+            expect(data.run_time).to.be(0);
             expect(data.is_managed).to.be.a('string');
             expect(data.is_managed).to.be("");
             expect(data.content).to.be.a('string');
@@ -2220,6 +2241,7 @@
           body.updated_at = new Date();
           body.started_at = new Date();
           body.finished_at = new Date();
+          body.run_time = 0;
           body.is_managed = "";
           body.content = "";
           body.status = new PolyaxonSdk.V1Statuses();
@@ -2285,6 +2307,8 @@
             expect(data.started_at).to.be(new Date());
             expect(data.finished_at).to.be.a(Date);
             expect(data.finished_at).to.be(new Date());
+            expect(data.run_time).to.be.a('number');
+            expect(data.run_time).to.be(0);
             expect(data.is_managed).to.be.a('string');
             expect(data.is_managed).to.be("");
             expect(data.content).to.be.a('string');
@@ -2475,6 +2499,7 @@
           body.updated_at = new Date();
           body.started_at = new Date();
           body.finished_at = new Date();
+          body.run_time = 0;
           body.is_managed = "";
           body.content = "";
           body.status = new PolyaxonSdk.V1Statuses();
@@ -2540,6 +2565,8 @@
             expect(data.started_at).to.be(new Date());
             expect(data.finished_at).to.be.a(Date);
             expect(data.finished_at).to.be(new Date());
+            expect(data.run_time).to.be.a('number');
+            expect(data.run_time).to.be(0);
             expect(data.is_managed).to.be.a('string');
             expect(data.is_managed).to.be("");
             expect(data.content).to.be.a('string');
