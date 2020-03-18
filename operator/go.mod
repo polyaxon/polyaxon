@@ -1,6 +1,6 @@
 module github.com/polyaxon/polyaxon/operator
 
-go 1.13
+go 1.13.3
 
 require (
 	github.com/go-logr/logr v0.1.0
@@ -12,7 +12,7 @@ require (
 	github.com/imdario/mergo v0.3.7 // indirect
 	github.com/onsi/ginkgo v1.10.2
 	github.com/onsi/gomega v1.7.0
-	github.com/polyaxon/polyaxon/sdks v0.0.0-20200309162736-9727751c5e5a
+	github.com/polyaxon/polyaxon/sdks v0.0.0-20200318204535-a0bee9484990
 	github.com/prometheus/client_golang v0.9.3
 	golang.org/x/net v0.0.0-20191004110552-13f9640d40b9
 	golang.org/x/sys v0.0.0-20191010194322-b09406accb47 // indirect
