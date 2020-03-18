@@ -31,7 +31,7 @@ message Team {
     // Name
     repeated string projects = 3;
 
-    // Optional time when the entityt was created
+    // Optional time when the entity was created
     google.protobuf.Timestamp created_at = 4;
 
     // Optional last time the entity was updated
@@ -78,7 +78,7 @@ message TeamMember {
     // Organization Role
     string org_role = 4;
 
-    // Optional time when the entityt was created
+    // Optional time when the entity was created
     google.protobuf.Timestamp created_at = 5;
 
     // Optional last time the entity was updated

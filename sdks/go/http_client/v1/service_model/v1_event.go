@@ -64,7 +64,7 @@ type V1Event struct {
 	// text
 	Text string `json:"text,omitempty"`
 
-	// Optional time when the entityt was created
+	// Optional time when the entity was created
 	// Format: date-time
 	Timestamp strfmt.DateTime `json:"timestamp,omitempty"`
 

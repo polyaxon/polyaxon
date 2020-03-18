@@ -40,7 +40,7 @@ type V1Log struct {
 	// Pod name
 	Pod string `json:"pod,omitempty"`
 
-	// Optional time when the entityt was created
+	// Optional time when the entity was created
 	// Format: date-time
 	Timestamp strfmt.DateTime `json:"timestamp,omitempty"`
 

@@ -34,7 +34,7 @@ message AccessResource {
     // Optional tags of this entity
     repeated string tags = 4;
 
-    // Optional time when the entityt was created
+    // Optional time when the entity was created
     google.protobuf.Timestamp created_at = 5;
 
     // Optional last time the entity was updated

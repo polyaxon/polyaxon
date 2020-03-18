@@ -31,7 +31,7 @@ import (
 // swagger:model v1Team
 type V1Team struct {
 
-	// Optional time when the entityt was created
+	// Optional time when the entity was created
 	// Format: date-time
 	CreatedAt strfmt.DateTime `json:"created_at,omitempty"`
 

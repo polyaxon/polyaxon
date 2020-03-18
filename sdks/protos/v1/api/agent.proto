@@ -55,7 +55,7 @@ message Agent {
     // The agent max concurrency
     int32 concurrency = 11;
 
-    // Optional time when the entityt was created
+    // Optional time when the entity was created
     google.protobuf.Timestamp created_at = 12;
 
     // Optional last time the entity was updated
@@ -108,7 +108,7 @@ message Queue {
     // The queue concurrency
     int32 concurrency = 5;
 
-    // Optional time when the entityt was created
+    // Optional time when the entity was created
     google.protobuf.Timestamp created_at = 6;
 
     // Optional last time the entity was updated

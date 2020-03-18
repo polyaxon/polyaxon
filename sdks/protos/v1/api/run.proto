@@ -109,7 +109,7 @@ message Run {
     // Required project name
     string project = 8;
 
-    // Optional time when the entityt was created
+    // Optional time when the entity was created
     google.protobuf.Timestamp created_at = 9;
 
     // Optional last time the entity was updated

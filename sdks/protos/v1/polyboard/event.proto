@@ -154,7 +154,7 @@ message EventDataframe {
 
 // Event spec definition
 message Event {
-    // Optional time when the entityt was created
+    // Optional time when the entity was created
     google.protobuf.Timestamp timestamp = 1;
 
     // Global step of the event.

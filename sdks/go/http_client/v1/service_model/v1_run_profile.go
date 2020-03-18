@@ -34,7 +34,7 @@ type V1RunProfile struct {
 	// Optional agent to use for this run profile
 	Agent string `json:"agent,omitempty"`
 
-	// Optional time when the entityt was created
+	// Optional time when the entity was created
 	// Format: date-time
 	CreatedAt strfmt.DateTime `json:"created_at,omitempty"`
 

@@ -61,7 +61,7 @@ message Search {
     // Search spec
     SearchSpec spec = 7;
 
-    // Optional time when the entityt was created
+    // Optional time when the entity was created
     google.protobuf.Timestamp created_at = 8;
 
     // Optional last time the entity was updated

@@ -34,7 +34,7 @@ type V1Project struct {
 	// Optional if this entity was bookmarked
 	Bookmarked bool `json:"bookmarked,omitempty"`
 
-	// Optional time when the entityt was created
+	// Optional time when the entity was created
 	// Format: date-time
 	CreatedAt strfmt.DateTime `json:"created_at,omitempty"`
 
