@@ -7,6 +7,10 @@ jobs:
 #    if: github.event.comment.body == 'test worker'
     runs-on: ubuntu-latest
     steps:
+    - name: Set up Go 1.13
+      uses: actions/setup-go@v1
+      with:
+        go-version: 1.13
     - uses: actions/checkout@v1
     - uses: engineerd/setup-kind@v0.3.0
       with:
@@ -22,5 +26,6 @@ jobs:
         sudo mv /tmp/kubebuilder_2.3.0_${os}_${arch} /usr/local/kubebuilder
         export PATH=$PATH:/usr/local/kubebuilder/bin
         cd operator
+        go version
         go install
         make github-action
