@@ -35,6 +35,10 @@ RUN go install github.com/golang/protobuf/protoc-gen-go
 RUN go install github.com/grpc-ecosystem/grpc-gateway/protoc-gen-grpc-gateway
 RUN go install github.com/grpc-ecosystem/grpc-gateway/protoc-gen-swagger
 RUN go install github.com/go-swagger/go-swagger/cmd/swagger
+# HTML openapi
+RUN npm install -g bootprint
+RUN npm install -g bootprint-openapi
+RUN npm -g install html-inline
 
 # Install Python gRPC tools.
 RUN python -m pip install grpcio grpcio-tools

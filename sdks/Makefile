@@ -114,6 +114,9 @@ generate-py-swagger:
 	java -jar $(PATH_SWAGGER_CLI) generate -i swagger/$(VERSION)/polyaxon_sdk.swagger.json -l python -o python/$(HTTP_CLIENT)/$(VERSION) -c swagger/config/config-py.json
 	$(DOCKER_RUN) find ./ -name "*.py" -exec $(DOCKER_PATH_AUTOGEN) -i --no-tlc --no-code -y 2018-2020 -c $(LICENSE_OWNER) -l apache {} \;
 
+generate-html-openapi:
+	$(DOCKER_RUN) bootprint openapi swagger/$(VERSION)/polyaxon_sdk.swagger.json openapi-html/$(VERSION)
+
 clean:
 	# Clean current generated code.
 	rm -rf go/$(HTTP_CLIENT)/$(VERSION)/*
@@ -127,12 +130,14 @@ clean:
 	rm -rf java/$(HTTP_CLIENT)/$(VERSION)/*
 	rm -rf java/$(PB_CLIENT)/$(VERSION)/*
 	rm -rf swagger/$(VERSION)/*
+	rm -rf openapi-html/$(VERSION)/*
 
 swagger-generate: generate-go-swagger \
 	generate-js-swagger \
 	generate-ts-swagger \
 	generate-java-swagger \
-	generate-py-swagger
+	generate-py-swagger \
+	generate-html-openapi
 
 swagger-concat:
 	./concat.sh
