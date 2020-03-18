@@ -25,20 +25,23 @@ import (
 	"github.com/go-openapi/swag"
 )
 
-// V1EventChart Chart spec definition
+// V1Pipeline v1 pipeline
 //
-// swagger:model v1EventChart
-type V1EventChart struct {
+// swagger:model v1Pipeline
+type V1Pipeline struct {
 
-	// Figure json object
-	Figure interface{} `json:"figure,omitempty"`
+	// Optional if the pipeline kind dag/parallel
+	Kind V1PipelineKind `json:"kind,omitempty"`
 
-	// Chart kind
-	Kind V1EventChartKind `json:"kind,omitempty"`
+	// Optional name of the pipeline run
+	Name string `json:"name,omitempty"`
+
+	// Optional uuid of the pipeline run
+	UUID string `json:"uuid,omitempty"`
 }
 
-// Validate validates this v1 event chart
-func (m *V1EventChart) Validate(formats strfmt.Registry) error {
+// Validate validates this v1 pipeline
+func (m *V1Pipeline) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateKind(formats); err != nil {
@@ -51,7 +54,7 @@ func (m *V1EventChart) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *V1EventChart) validateKind(formats strfmt.Registry) error {
+func (m *V1Pipeline) validateKind(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.Kind) { // not required
 		return nil
@@ -68,7 +71,7 @@ func (m *V1EventChart) validateKind(formats strfmt.Registry) error {
 }
 
 // MarshalBinary interface implementation
-func (m *V1EventChart) MarshalBinary() ([]byte, error) {
+func (m *V1Pipeline) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -76,8 +79,8 @@ func (m *V1EventChart) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (m *V1EventChart) UnmarshalBinary(b []byte) error {
-	var res V1EventChart
+func (m *V1Pipeline) UnmarshalBinary(b []byte) error {
+	var res V1Pipeline
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

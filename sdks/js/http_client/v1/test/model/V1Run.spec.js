@@ -199,46 +199,16 @@
         // expect(instance.outputs).to.be(expectedValueLiteral);
       });
 
-      it('should have the property is_resume (base name: "is_resume")', function() {
-        // TODO: update the code to test the property is_resume
-        expect(instance).to.have.property('is_resume');
-        // expect(instance.is_resume).to.be(expectedValueLiteral);
-      });
-
-      it('should have the property is_clone (base name: "is_clone")', function() {
-        // TODO: update the code to test the property is_clone
-        expect(instance).to.have.property('is_clone');
-        // expect(instance.is_clone).to.be(expectedValueLiteral);
-      });
-
-      it('should have the property cloning_strategy (base name: "cloning_strategy")', function() {
-        // TODO: update the code to test the property cloning_strategy
-        expect(instance).to.have.property('cloning_strategy');
-        // expect(instance.cloning_strategy).to.be(expectedValueLiteral);
-      });
-
-      it('should have the property pipeline (base name: "pipeline")', function() {
-        // TODO: update the code to test the property pipeline
-        expect(instance).to.have.property('pipeline');
-        // expect(instance.pipeline).to.be(expectedValueLiteral);
-      });
-
       it('should have the property original (base name: "original")', function() {
         // TODO: update the code to test the property original
         expect(instance).to.have.property('original');
         // expect(instance.original).to.be(expectedValueLiteral);
       });
 
-      it('should have the property pipeline_name (base name: "pipeline_name")', function() {
-        // TODO: update the code to test the property pipeline_name
-        expect(instance).to.have.property('pipeline_name');
-        // expect(instance.pipeline_name).to.be(expectedValueLiteral);
-      });
-
-      it('should have the property original_name (base name: "original_name")', function() {
-        // TODO: update the code to test the property original_name
-        expect(instance).to.have.property('original_name');
-        // expect(instance.original_name).to.be(expectedValueLiteral);
+      it('should have the property pipeline (base name: "pipeline")', function() {
+        // TODO: update the code to test the property pipeline
+        expect(instance).to.have.property('pipeline');
+        // expect(instance.pipeline).to.be(expectedValueLiteral);
       });
 
       it('should have the property status_conditions (base name: "status_conditions")', function() {

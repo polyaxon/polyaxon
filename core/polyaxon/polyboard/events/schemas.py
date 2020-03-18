@@ -121,14 +121,14 @@ class V1EventAudio(BaseConfig, polyaxon_sdk.V1EventAudio):
     ]
 
 
-class V1EventChartKind(polyaxon_sdk.EventChartKind):
+class V1EventChartKind(polyaxon_sdk.V1EventChartKind):
     VALUES = {
-        polyaxon_sdk.EventChartKind.PLOTLY,
-        polyaxon_sdk.EventChartKind.BOKEH,
-        polyaxon_sdk.EventChartKind.VEGA,
-        polyaxon_sdk.EventChartKind.ROC,
-        polyaxon_sdk.EventChartKind.AUC,
-        polyaxon_sdk.EventChartKind.CONFUSION,
+        polyaxon_sdk.V1EventChartKind.PLOTLY,
+        polyaxon_sdk.V1EventChartKind.BOKEH,
+        polyaxon_sdk.V1EventChartKind.VEGA,
+        polyaxon_sdk.V1EventChartKind.ROC,
+        polyaxon_sdk.V1EventChartKind.AUC,
+        polyaxon_sdk.V1EventChartKind.CONFUSION,
     }
 
 

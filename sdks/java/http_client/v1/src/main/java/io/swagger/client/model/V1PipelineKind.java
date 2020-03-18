@@ -29,7 +29,6 @@ package io.swagger.client.model;
 
 import java.util.Objects;
 import java.util.Arrays;
-import io.swagger.annotations.ApiModel;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.IOException;
@@ -39,26 +38,18 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 
 /**
- * - plotly: Plotly chart  - bokeh: Bokeh chart  - vega: Vega chart  - roc: ROC chart  - auc: AUC chart  - confusion: Confusion chart
+ * Gets or Sets v1PipelineKind
  */
-@JsonAdapter(EventChartKind.Adapter.class)
-public enum EventChartKind {
+@JsonAdapter(V1PipelineKind.Adapter.class)
+public enum V1PipelineKind {
   
-  PLOTLY("plotly"),
+  DAG("dag"),
   
-  BOKEH("bokeh"),
-  
-  VEGA("vega"),
-  
-  ROC("roc"),
-  
-  AUC("auc"),
-  
-  CONFUSION("confusion");
+  PARALLEL("parallel");
 
   private String value;
 
-  EventChartKind(String value) {
+  V1PipelineKind(String value) {
     this.value = value;
   }
 
@@ -71,8 +62,8 @@ public enum EventChartKind {
     return String.valueOf(value);
   }
 
-  public static EventChartKind fromValue(String text) {
-    for (EventChartKind b : EventChartKind.values()) {
+  public static V1PipelineKind fromValue(String text) {
+    for (V1PipelineKind b : V1PipelineKind.values()) {
       if (String.valueOf(b.value).equals(text)) {
         return b;
       }
@@ -80,16 +71,16 @@ public enum EventChartKind {
     return null;
   }
 
-  public static class Adapter extends TypeAdapter<EventChartKind> {
+  public static class Adapter extends TypeAdapter<V1PipelineKind> {
     @Override
-    public void write(final JsonWriter jsonWriter, final EventChartKind enumeration) throws IOException {
+    public void write(final JsonWriter jsonWriter, final V1PipelineKind enumeration) throws IOException {
       jsonWriter.value(enumeration.getValue());
     }
 
     @Override
-    public EventChartKind read(final JsonReader jsonReader) throws IOException {
+    public V1PipelineKind read(final JsonReader jsonReader) throws IOException {
       String value = jsonReader.nextString();
-      return EventChartKind.fromValue(String.valueOf(value));
+      return V1PipelineKind.fromValue(String.valueOf(value));
     }
   }
 }

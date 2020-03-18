@@ -1,4 +1,4 @@
-# PolyaxonSdk.V1CloningStrategy
+# PolyaxonSdk.V1CloningKind
 
 ## Enum
 

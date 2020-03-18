@@ -1,5 +1,5 @@
 
-# EventChartKind
+# V1EventChartKind
 
 ## Enum
 

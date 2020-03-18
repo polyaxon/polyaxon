@@ -160,6 +160,8 @@ from polyaxon.polyflow.run import (
     RunSchema,
     RunMixin,
     V1RunKind,
+    V1CloningKind,
+    V1PipelineKind,
 )
 from polyaxon.polyflow.schedule import (
     V1CronSchedule,
@@ -176,4 +178,3 @@ from polyaxon.polyflow.schedule import (
 from polyaxon.polyflow.termination import TerminationSchema, V1Termination
 from polyaxon.polyflow.operators import ForConfig, IfConfig
 from polyaxon.polyflow.trigger_policies import V1TriggerPolicy
-from polyaxon.polyflow.cloning_strategy import V1CloningStrategy

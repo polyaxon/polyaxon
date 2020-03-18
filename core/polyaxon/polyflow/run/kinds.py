@@ -52,3 +52,29 @@ class V1RunKind(polyaxon_sdk.V1RunKind):
         polyaxon_sdk.V1RunKind.WATCHDOG,
         polyaxon_sdk.V1RunKind.NOTIFIER,
     }
+
+
+class V1CloningKind(polyaxon_sdk.V1CloningKind):
+    CHOICES = (
+        (polyaxon_sdk.V1CloningKind.COPY, polyaxon_sdk.V1CloningKind.COPY),
+        (polyaxon_sdk.V1CloningKind.RESTART, polyaxon_sdk.V1CloningKind.RESTART,),
+        (polyaxon_sdk.V1CloningKind.CACHE, polyaxon_sdk.V1CloningKind.CACHE,),
+        (polyaxon_sdk.V1CloningKind.SCHEDULE, polyaxon_sdk.V1CloningKind.SCHEDULE,),
+    )
+    VALUES = {
+        polyaxon_sdk.V1CloningKind.COPY,
+        polyaxon_sdk.V1CloningKind.RESTART,
+        polyaxon_sdk.V1CloningKind.CACHE,
+        polyaxon_sdk.V1CloningKind.SCHEDULE,
+    }
+
+
+class V1PipelineKind(polyaxon_sdk.V1PipelineKind):
+    CHOICES = (
+        (polyaxon_sdk.V1PipelineKind.DAG, polyaxon_sdk.V1PipelineKind.DAG),
+        (polyaxon_sdk.V1PipelineKind.PARALLEL, polyaxon_sdk.V1PipelineKind.PARALLEL,),
+    )
+    VALUES = {
+        polyaxon_sdk.V1PipelineKind.DAG,
+        polyaxon_sdk.V1PipelineKind.PARALLEL,
+    }

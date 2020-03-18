@@ -34,7 +34,6 @@ from __future__ import absolute_import
 from polyaxon_sdk.models.agent_state_response_agent_state import (
     AgentStateResponseAgentState,
 )
-from polyaxon_sdk.models.event_chart_kind import EventChartKind
 from polyaxon_sdk.models.notification_trigger import NotificationTrigger
 from polyaxon_sdk.models.protobuf_any import ProtobufAny
 from polyaxon_sdk.models.protobuf_null_value import ProtobufNullValue
@@ -56,7 +55,8 @@ from polyaxon_sdk.models.v1_bucket_connection import V1BucketConnection
 from polyaxon_sdk.models.v1_cache import V1Cache
 from polyaxon_sdk.models.v1_claim_connection import V1ClaimConnection
 from polyaxon_sdk.models.v1_clean_pod_policy import V1CleanPodPolicy
-from polyaxon_sdk.models.v1_cloning_strategy import V1CloningStrategy
+from polyaxon_sdk.models.v1_cloning import V1Cloning
+from polyaxon_sdk.models.v1_cloning_kind import V1CloningKind
 from polyaxon_sdk.models.v1_compiled_operation import V1CompiledOperation
 from polyaxon_sdk.models.v1_component import V1Component
 from polyaxon_sdk.models.v1_connection_kind import V1ConnectionKind
@@ -79,6 +79,7 @@ from polyaxon_sdk.models.v1_event import V1Event
 from polyaxon_sdk.models.v1_event_artifact import V1EventArtifact
 from polyaxon_sdk.models.v1_event_audio import V1EventAudio
 from polyaxon_sdk.models.v1_event_chart import V1EventChart
+from polyaxon_sdk.models.v1_event_chart_kind import V1EventChartKind
 from polyaxon_sdk.models.v1_event_dataframe import V1EventDataframe
 from polyaxon_sdk.models.v1_event_histogram import V1EventHistogram
 from polyaxon_sdk.models.v1_event_image import V1EventImage
@@ -186,6 +187,8 @@ from polyaxon_sdk.models.v1_parallel import V1Parallel
 from polyaxon_sdk.models.v1_param import V1Param
 from polyaxon_sdk.models.v1_param_search import V1ParamSearch
 from polyaxon_sdk.models.v1_path_reference import V1PathReference
+from polyaxon_sdk.models.v1_pipeline import V1Pipeline
+from polyaxon_sdk.models.v1_pipeline_kind import V1PipelineKind
 from polyaxon_sdk.models.v1_plugins import V1Plugins
 from polyaxon_sdk.models.v1_polyaxon_init_container import V1PolyaxonInitContainer
 from polyaxon_sdk.models.v1_polyaxon_sidecar_container import V1PolyaxonSidecarContainer

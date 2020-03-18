@@ -45,13 +45,13 @@
   var instance;
 
   describe('(package)', function() {
-    describe('EventChartKind', function() {
+    describe('V1EventChartKind', function() {
       beforeEach(function() {
-        instance = PolyaxonSdk.EventChartKind;
+        instance = PolyaxonSdk.V1EventChartKind;
       });
 
-      it('should create an instance of EventChartKind', function() {
-        // TODO: update the code to test EventChartKind
+      it('should create an instance of V1EventChartKind', function() {
+        // TODO: update the code to test V1EventChartKind
         expect(instance).to.be.a('object');
       });
 

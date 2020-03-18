@@ -45,34 +45,32 @@
   var instance;
 
   describe('(package)', function() {
-    describe('V1CloningStrategy', function() {
+    describe('V1Pipeline', function() {
       beforeEach(function() {
-        instance = PolyaxonSdk.V1CloningStrategy;
+        instance = new PolyaxonSdk.V1Pipeline();
       });
 
-      it('should create an instance of V1CloningStrategy', function() {
-        // TODO: update the code to test V1CloningStrategy
-        expect(instance).to.be.a('object');
+      it('should create an instance of V1Pipeline', function() {
+        // TODO: update the code to test V1Pipeline
+        expect(instance).to.be.a(PolyaxonSdk.V1Pipeline);
       });
 
-      it('should have the property copy', function() {
-        expect(instance).to.have.property('copy');
-        expect(instance.copy).to.be("copy");
+      it('should have the property uuid (base name: "uuid")', function() {
+        // TODO: update the code to test the property uuid
+        expect(instance).to.have.property('uuid');
+        // expect(instance.uuid).to.be(expectedValueLiteral);
       });
 
-      it('should have the property restart', function() {
-        expect(instance).to.have.property('restart');
-        expect(instance.restart).to.be("restart");
+      it('should have the property name (base name: "name")', function() {
+        // TODO: update the code to test the property name
+        expect(instance).to.have.property('name');
+        // expect(instance.name).to.be(expectedValueLiteral);
       });
 
-      it('should have the property cache', function() {
-        expect(instance).to.have.property('cache');
-        expect(instance.cache).to.be("cache");
-      });
-
-      it('should have the property schedule', function() {
-        expect(instance).to.have.property('schedule');
-        expect(instance.schedule).to.be("schedule");
+      it('should have the property kind (base name: "kind")', function() {
+        // TODO: update the code to test the property kind
+        expect(instance).to.have.property('kind');
+        // expect(instance.kind).to.be(expectedValueLiteral);
       });
 
     });

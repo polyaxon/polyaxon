@@ -31,18 +31,18 @@
 (function(root, factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
-    define(['ApiClient', 'model/V1CloningStrategy', 'model/V1RunKind', 'model/V1StatusCondition', 'model/V1Statuses'], factory);
+    define(['ApiClient', 'model/V1Cloning', 'model/V1Pipeline', 'model/V1RunKind', 'model/V1StatusCondition', 'model/V1Statuses'], factory);
   } else if (typeof module === 'object' && module.exports) {
     // CommonJS-like environments that support module.exports, like Node.
-    module.exports = factory(require('../ApiClient'), require('./V1CloningStrategy'), require('./V1RunKind'), require('./V1StatusCondition'), require('./V1Statuses'));
+    module.exports = factory(require('../ApiClient'), require('./V1Cloning'), require('./V1Pipeline'), require('./V1RunKind'), require('./V1StatusCondition'), require('./V1Statuses'));
   } else {
     // Browser globals (root is window)
     if (!root.PolyaxonSdk) {
       root.PolyaxonSdk = {};
     }
-    root.PolyaxonSdk.V1Run = factory(root.PolyaxonSdk.ApiClient, root.PolyaxonSdk.V1CloningStrategy, root.PolyaxonSdk.V1RunKind, root.PolyaxonSdk.V1StatusCondition, root.PolyaxonSdk.V1Statuses);
+    root.PolyaxonSdk.V1Run = factory(root.PolyaxonSdk.ApiClient, root.PolyaxonSdk.V1Cloning, root.PolyaxonSdk.V1Pipeline, root.PolyaxonSdk.V1RunKind, root.PolyaxonSdk.V1StatusCondition, root.PolyaxonSdk.V1Statuses);
   }
-}(this, function(ApiClient, V1CloningStrategy, V1RunKind, V1StatusCondition, V1Statuses) {
+}(this, function(ApiClient, V1Cloning, V1Pipeline, V1RunKind, V1StatusCondition, V1Statuses) {
   'use strict';
 
   /**
@@ -117,20 +117,10 @@
         obj.inputs = ApiClient.convertToType(data['inputs'], Object);
       if (data.hasOwnProperty('outputs'))
         obj.outputs = ApiClient.convertToType(data['outputs'], Object);
-      if (data.hasOwnProperty('is_resume'))
-        obj.is_resume = ApiClient.convertToType(data['is_resume'], 'Boolean');
-      if (data.hasOwnProperty('is_clone'))
-        obj.is_clone = ApiClient.convertToType(data['is_clone'], 'Boolean');
-      if (data.hasOwnProperty('cloning_strategy'))
-        obj.cloning_strategy = V1CloningStrategy.constructFromObject(data['cloning_strategy']);
-      if (data.hasOwnProperty('pipeline'))
-        obj.pipeline = ApiClient.convertToType(data['pipeline'], 'String');
       if (data.hasOwnProperty('original'))
-        obj.original = ApiClient.convertToType(data['original'], 'String');
-      if (data.hasOwnProperty('pipeline_name'))
-        obj.pipeline_name = ApiClient.convertToType(data['pipeline_name'], 'String');
-      if (data.hasOwnProperty('original_name'))
-        obj.original_name = ApiClient.convertToType(data['original_name'], 'String');
+        obj.original = V1Cloning.constructFromObject(data['original']);
+      if (data.hasOwnProperty('pipeline'))
+        obj.pipeline = V1Pipeline.constructFromObject(data['pipeline']);
       if (data.hasOwnProperty('status_conditions'))
         obj.status_conditions = ApiClient.convertToType(data['status_conditions'], [V1StatusCondition]);
     }
@@ -258,39 +248,14 @@
   exports.prototype.outputs = undefined;
 
   /**
-   * @member {Boolean} is_resume
-   */
-  exports.prototype.is_resume = undefined;
-
-  /**
-   * @member {Boolean} is_clone
-   */
-  exports.prototype.is_clone = undefined;
-
-  /**
-   * @member {module:model/V1CloningStrategy} cloning_strategy
-   */
-  exports.prototype.cloning_strategy = undefined;
-
-  /**
-   * @member {String} pipeline
-   */
-  exports.prototype.pipeline = undefined;
-
-  /**
-   * @member {String} original
+   * @member {module:model/V1Cloning} original
    */
   exports.prototype.original = undefined;
 
   /**
-   * @member {String} pipeline_name
+   * @member {module:model/V1Pipeline} pipeline
    */
-  exports.prototype.pipeline_name = undefined;
-
-  /**
-   * @member {String} original_name
-   */
-  exports.prototype.original_name = undefined;
+  exports.prototype.pipeline = undefined;
 
   /**
    * @member {Array.<module:model/V1StatusCondition>} status_conditions

@@ -31,61 +31,68 @@
 (function(root, factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
-    define(['ApiClient', 'model/V1EventChartKind'], factory);
+    define(['ApiClient', 'model/V1PipelineKind'], factory);
   } else if (typeof module === 'object' && module.exports) {
     // CommonJS-like environments that support module.exports, like Node.
-    module.exports = factory(require('../ApiClient'), require('./V1EventChartKind'));
+    module.exports = factory(require('../ApiClient'), require('./V1PipelineKind'));
   } else {
     // Browser globals (root is window)
     if (!root.PolyaxonSdk) {
       root.PolyaxonSdk = {};
     }
-    root.PolyaxonSdk.V1EventChart = factory(root.PolyaxonSdk.ApiClient, root.PolyaxonSdk.V1EventChartKind);
+    root.PolyaxonSdk.V1Pipeline = factory(root.PolyaxonSdk.ApiClient, root.PolyaxonSdk.V1PipelineKind);
   }
-}(this, function(ApiClient, V1EventChartKind) {
+}(this, function(ApiClient, V1PipelineKind) {
   'use strict';
 
   /**
-   * The V1EventChart model module.
-   * @module model/V1EventChart
+   * The V1Pipeline model module.
+   * @module model/V1Pipeline
    * @version 1.0.5
    */
 
   /**
-   * Constructs a new <code>V1EventChart</code>.
-   * @alias module:model/V1EventChart
+   * Constructs a new <code>V1Pipeline</code>.
+   * @alias module:model/V1Pipeline
    * @class
    */
   var exports = function() {
   };
 
   /**
-   * Constructs a <code>V1EventChart</code> from a plain JavaScript object, optionally creating a new instance.
+   * Constructs a <code>V1Pipeline</code> from a plain JavaScript object, optionally creating a new instance.
    * Copies all relevant properties from <code>data</code> to <code>obj</code> if supplied or a new instance if not.
    * @param {Object} data The plain JavaScript object bearing properties of interest.
-   * @param {module:model/V1EventChart} obj Optional instance to populate.
-   * @return {module:model/V1EventChart} The populated <code>V1EventChart</code> instance.
+   * @param {module:model/V1Pipeline} obj Optional instance to populate.
+   * @return {module:model/V1Pipeline} The populated <code>V1Pipeline</code> instance.
    */
   exports.constructFromObject = function(data, obj) {
     if (data) {
       obj = obj || new exports();
+      if (data.hasOwnProperty('uuid'))
+        obj.uuid = ApiClient.convertToType(data['uuid'], 'String');
+      if (data.hasOwnProperty('name'))
+        obj.name = ApiClient.convertToType(data['name'], 'String');
       if (data.hasOwnProperty('kind'))
-        obj.kind = V1EventChartKind.constructFromObject(data['kind']);
-      if (data.hasOwnProperty('figure'))
-        obj.figure = ApiClient.convertToType(data['figure'], Object);
+        obj.kind = V1PipelineKind.constructFromObject(data['kind']);
     }
     return obj;
   }
 
   /**
-   * @member {module:model/V1EventChartKind} kind
+   * @member {String} uuid
    */
-  exports.prototype.kind = undefined;
+  exports.prototype.uuid = undefined;
 
   /**
-   * @member {Object} figure
+   * @member {String} name
    */
-  exports.prototype.figure = undefined;
+  exports.prototype.name = undefined;
+
+  /**
+   * @member {module:model/V1PipelineKind} kind
+   */
+  exports.prototype.kind = undefined;
 
   return exports;
 

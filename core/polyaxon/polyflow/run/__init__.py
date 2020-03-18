@@ -34,7 +34,7 @@ from polyaxon.polyflow.run.spark.spark import (
     V1SparkType,
     V1SparkDeploy,
 )
-from polyaxon.polyflow.run.kinds import V1RunKind
+from polyaxon.polyflow.run.kinds import V1RunKind, V1CloningKind, V1PipelineKind
 
 
 class RunSchema(BaseOneOfSchema):

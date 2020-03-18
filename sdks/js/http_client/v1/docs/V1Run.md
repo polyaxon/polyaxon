@@ -27,13 +27,8 @@ Name | Type | Description | Notes
 **hub** | **String** |  | [optional] 
 **inputs** | **Object** |  | [optional] 
 **outputs** | **Object** |  | [optional] 
-**is_resume** | **Boolean** |  | [optional] 
-**is_clone** | **Boolean** |  | [optional] 
-**cloning_strategy** | [**V1CloningStrategy**](V1CloningStrategy.md) |  | [optional] 
-**pipeline** | **String** |  | [optional] 
-**original** | **String** |  | [optional] 
-**pipeline_name** | **String** |  | [optional] 
-**original_name** | **String** |  | [optional] 
+**original** | [**V1Cloning**](V1Cloning.md) |  | [optional] 
+**pipeline** | [**V1Pipeline**](V1Pipeline.md) |  | [optional] 
 **status_conditions** | [**[V1StatusCondition]**](V1StatusCondition.md) |  | [optional] 
 
 

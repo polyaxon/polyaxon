@@ -1,4 +1,4 @@
-# V1CloningStrategy
+# V1PipelineKind
 
 ## Properties
 Name | Type | Description | Notes

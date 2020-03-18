@@ -27,7 +27,7 @@ import (
 	"github.com/go-openapi/validate"
 )
 
-// EventChartKind Chart kind
+// V1EventChartKind Chart kind
 //
 // - plotly: Plotly chart
 //  - bokeh: Bokeh chart
@@ -36,56 +36,56 @@ import (
 //  - auc: AUC chart
 //  - confusion: Confusion chart
 //
-// swagger:model EventChartKind
-type EventChartKind string
+// swagger:model v1EventChartKind
+type V1EventChartKind string
 
 const (
 
-	// EventChartKindPlotly captures enum value "plotly"
-	EventChartKindPlotly EventChartKind = "plotly"
+	// V1EventChartKindPlotly captures enum value "plotly"
+	V1EventChartKindPlotly V1EventChartKind = "plotly"
 
-	// EventChartKindBokeh captures enum value "bokeh"
-	EventChartKindBokeh EventChartKind = "bokeh"
+	// V1EventChartKindBokeh captures enum value "bokeh"
+	V1EventChartKindBokeh V1EventChartKind = "bokeh"
 
-	// EventChartKindVega captures enum value "vega"
-	EventChartKindVega EventChartKind = "vega"
+	// V1EventChartKindVega captures enum value "vega"
+	V1EventChartKindVega V1EventChartKind = "vega"
 
-	// EventChartKindRoc captures enum value "roc"
-	EventChartKindRoc EventChartKind = "roc"
+	// V1EventChartKindRoc captures enum value "roc"
+	V1EventChartKindRoc V1EventChartKind = "roc"
 
-	// EventChartKindAuc captures enum value "auc"
-	EventChartKindAuc EventChartKind = "auc"
+	// V1EventChartKindAuc captures enum value "auc"
+	V1EventChartKindAuc V1EventChartKind = "auc"
 
-	// EventChartKindConfusion captures enum value "confusion"
-	EventChartKindConfusion EventChartKind = "confusion"
+	// V1EventChartKindConfusion captures enum value "confusion"
+	V1EventChartKindConfusion V1EventChartKind = "confusion"
 )
 
 // for schema
-var eventChartKindEnum []interface{}
+var v1EventChartKindEnum []interface{}
 
 func init() {
-	var res []EventChartKind
+	var res []V1EventChartKind
 	if err := json.Unmarshal([]byte(`["plotly","bokeh","vega","roc","auc","confusion"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
-		eventChartKindEnum = append(eventChartKindEnum, v)
+		v1EventChartKindEnum = append(v1EventChartKindEnum, v)
 	}
 }
 
-func (m EventChartKind) validateEventChartKindEnum(path, location string, value EventChartKind) error {
-	if err := validate.Enum(path, location, value, eventChartKindEnum); err != nil {
+func (m V1EventChartKind) validateV1EventChartKindEnum(path, location string, value V1EventChartKind) error {
+	if err := validate.Enum(path, location, value, v1EventChartKindEnum); err != nil {
 		return err
 	}
 	return nil
 }
 
-// Validate validates this event chart kind
-func (m EventChartKind) Validate(formats strfmt.Registry) error {
+// Validate validates this v1 event chart kind
+func (m V1EventChartKind) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	// value enum
-	if err := m.validateEventChartKindEnum("", "body", m); err != nil {
+	if err := m.validateV1EventChartKindEnum("", "body", m); err != nil {
 		return err
 	}
 

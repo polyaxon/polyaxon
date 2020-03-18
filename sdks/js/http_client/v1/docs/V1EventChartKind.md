@@ -1,4 +1,4 @@
-# PolyaxonSdk.EventChartKind
+# PolyaxonSdk.V1EventChartKind
 
 ## Enum
 

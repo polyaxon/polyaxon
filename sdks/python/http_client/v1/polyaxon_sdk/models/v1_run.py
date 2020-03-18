@@ -71,13 +71,8 @@ class V1Run(object):
         "hub": "str",
         "inputs": "object",
         "outputs": "object",
-        "is_resume": "bool",
-        "is_clone": "bool",
-        "cloning_strategy": "V1CloningStrategy",
-        "pipeline": "str",
-        "original": "str",
-        "pipeline_name": "str",
-        "original_name": "str",
+        "original": "V1Cloning",
+        "pipeline": "V1Pipeline",
         "status_conditions": "list[V1StatusCondition]",
     }
 
@@ -106,13 +101,8 @@ class V1Run(object):
         "hub": "hub",
         "inputs": "inputs",
         "outputs": "outputs",
-        "is_resume": "is_resume",
-        "is_clone": "is_clone",
-        "cloning_strategy": "cloning_strategy",
-        "pipeline": "pipeline",
         "original": "original",
-        "pipeline_name": "pipeline_name",
-        "original_name": "original_name",
+        "pipeline": "pipeline",
         "status_conditions": "status_conditions",
     }
 
@@ -142,13 +132,8 @@ class V1Run(object):
         hub=None,
         inputs=None,
         outputs=None,
-        is_resume=None,
-        is_clone=None,
-        cloning_strategy=None,
-        pipeline=None,
         original=None,
-        pipeline_name=None,
-        original_name=None,
+        pipeline=None,
         status_conditions=None,
     ):  # noqa: E501
         """V1Run - a model defined in Swagger"""  # noqa: E501
@@ -177,13 +162,8 @@ class V1Run(object):
         self._hub = None
         self._inputs = None
         self._outputs = None
-        self._is_resume = None
-        self._is_clone = None
-        self._cloning_strategy = None
-        self._pipeline = None
         self._original = None
-        self._pipeline_name = None
-        self._original_name = None
+        self._pipeline = None
         self._status_conditions = None
         self.discriminator = None
 
@@ -235,20 +215,10 @@ class V1Run(object):
             self.inputs = inputs
         if outputs is not None:
             self.outputs = outputs
-        if is_resume is not None:
-            self.is_resume = is_resume
-        if is_clone is not None:
-            self.is_clone = is_clone
-        if cloning_strategy is not None:
-            self.cloning_strategy = cloning_strategy
-        if pipeline is not None:
-            self.pipeline = pipeline
         if original is not None:
             self.original = original
-        if pipeline_name is not None:
-            self.pipeline_name = pipeline_name
-        if original_name is not None:
-            self.original_name = original_name
+        if pipeline is not None:
+            self.pipeline = pipeline
         if status_conditions is not None:
             self.status_conditions = status_conditions
 
@@ -757,96 +727,12 @@ class V1Run(object):
         self._outputs = outputs
 
     @property
-    def is_resume(self):
-        """Gets the is_resume of this V1Run.  # noqa: E501
-
-
-        :return: The is_resume of this V1Run.  # noqa: E501
-        :rtype: bool
-        """
-        return self._is_resume
-
-    @is_resume.setter
-    def is_resume(self, is_resume):
-        """Sets the is_resume of this V1Run.
-
-
-        :param is_resume: The is_resume of this V1Run.  # noqa: E501
-        :type: bool
-        """
-
-        self._is_resume = is_resume
-
-    @property
-    def is_clone(self):
-        """Gets the is_clone of this V1Run.  # noqa: E501
-
-
-        :return: The is_clone of this V1Run.  # noqa: E501
-        :rtype: bool
-        """
-        return self._is_clone
-
-    @is_clone.setter
-    def is_clone(self, is_clone):
-        """Sets the is_clone of this V1Run.
-
-
-        :param is_clone: The is_clone of this V1Run.  # noqa: E501
-        :type: bool
-        """
-
-        self._is_clone = is_clone
-
-    @property
-    def cloning_strategy(self):
-        """Gets the cloning_strategy of this V1Run.  # noqa: E501
-
-
-        :return: The cloning_strategy of this V1Run.  # noqa: E501
-        :rtype: V1CloningStrategy
-        """
-        return self._cloning_strategy
-
-    @cloning_strategy.setter
-    def cloning_strategy(self, cloning_strategy):
-        """Sets the cloning_strategy of this V1Run.
-
-
-        :param cloning_strategy: The cloning_strategy of this V1Run.  # noqa: E501
-        :type: V1CloningStrategy
-        """
-
-        self._cloning_strategy = cloning_strategy
-
-    @property
-    def pipeline(self):
-        """Gets the pipeline of this V1Run.  # noqa: E501
-
-
-        :return: The pipeline of this V1Run.  # noqa: E501
-        :rtype: str
-        """
-        return self._pipeline
-
-    @pipeline.setter
-    def pipeline(self, pipeline):
-        """Sets the pipeline of this V1Run.
-
-
-        :param pipeline: The pipeline of this V1Run.  # noqa: E501
-        :type: str
-        """
-
-        self._pipeline = pipeline
-
-    @property
     def original(self):
         """Gets the original of this V1Run.  # noqa: E501
 
 
         :return: The original of this V1Run.  # noqa: E501
-        :rtype: str
+        :rtype: V1Cloning
         """
         return self._original
 
@@ -856,52 +742,31 @@ class V1Run(object):
 
 
         :param original: The original of this V1Run.  # noqa: E501
-        :type: str
+        :type: V1Cloning
         """
 
         self._original = original
 
     @property
-    def pipeline_name(self):
-        """Gets the pipeline_name of this V1Run.  # noqa: E501
+    def pipeline(self):
+        """Gets the pipeline of this V1Run.  # noqa: E501
 
 
-        :return: The pipeline_name of this V1Run.  # noqa: E501
-        :rtype: str
+        :return: The pipeline of this V1Run.  # noqa: E501
+        :rtype: V1Pipeline
         """
-        return self._pipeline_name
+        return self._pipeline
 
-    @pipeline_name.setter
-    def pipeline_name(self, pipeline_name):
-        """Sets the pipeline_name of this V1Run.
-
-
-        :param pipeline_name: The pipeline_name of this V1Run.  # noqa: E501
-        :type: str
-        """
-
-        self._pipeline_name = pipeline_name
-
-    @property
-    def original_name(self):
-        """Gets the original_name of this V1Run.  # noqa: E501
+    @pipeline.setter
+    def pipeline(self, pipeline):
+        """Sets the pipeline of this V1Run.
 
 
-        :return: The original_name of this V1Run.  # noqa: E501
-        :rtype: str
-        """
-        return self._original_name
-
-    @original_name.setter
-    def original_name(self, original_name):
-        """Sets the original_name of this V1Run.
-
-
-        :param original_name: The original_name of this V1Run.  # noqa: E501
-        :type: str
+        :param pipeline: The pipeline of this V1Run.  # noqa: E501
+        :type: V1Pipeline
         """
 
-        self._original_name = original_name
+        self._pipeline = pipeline
 
     @property
     def status_conditions(self):

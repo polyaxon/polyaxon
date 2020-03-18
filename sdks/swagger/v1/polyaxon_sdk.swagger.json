@@ -11305,20 +11305,6 @@
         }
       }
     },
-    "EventChartKind": {
-      "type": "string",
-      "enum": [
-        "plotly",
-        "bokeh",
-        "vega",
-        "roc",
-        "auc",
-        "confusion"
-      ],
-      "default": "plotly",
-      "description": "- plotly: Plotly chart\n - bokeh: Bokeh chart\n - vega: Vega chart\n - roc: ROC chart\n - auc: AUC chart\n - confusion: Confusion chart",
-      "title": "Chart kind"
-    },
     "NotificationTrigger": {
       "type": "string",
       "enum": [
@@ -11784,7 +11770,24 @@
       "default": "All",
       "title": "CleanPodPolicy"
     },
-    "v1CloningStrategy": {
+    "v1Cloning": {
+      "type": "object",
+      "properties": {
+        "uuid": {
+          "type": "string",
+          "title": "Optional uuid of the original run"
+        },
+        "name": {
+          "type": "string",
+          "title": "Optional name of the original run"
+        },
+        "kind": {
+          "$ref": "#/definitions/v1CloningKind",
+          "title": "Optional if this run was restarted/copied/resumed/cached"
+        }
+      }
+    },
+    "v1CloningKind": {
       "type": "string",
       "enum": [
         "copy",
@@ -12723,7 +12726,7 @@
       "type": "object",
       "properties": {
         "kind": {
-          "$ref": "#/definitions/EventChartKind",
+          "$ref": "#/definitions/v1EventChartKind",
           "title": "Chart kind"
         },
         "figure": {
@@ -12732,6 +12735,20 @@
         }
       },
       "title": "Chart spec definition"
+    },
+    "v1EventChartKind": {
+      "type": "string",
+      "enum": [
+        "plotly",
+        "bokeh",
+        "vega",
+        "roc",
+        "auc",
+        "confusion"
+      ],
+      "default": "plotly",
+      "description": "- plotly: Plotly chart\n - bokeh: Bokeh chart\n - vega: Vega chart\n - roc: ROC chart\n - auc: AUC chart\n - confusion: Confusion chart",
+      "title": "Chart kind"
     },
     "v1EventDataframe": {
       "type": "object",
@@ -14777,6 +14794,31 @@
       },
       "title": "Path reference specification"
     },
+    "v1Pipeline": {
+      "type": "object",
+      "properties": {
+        "uuid": {
+          "type": "string",
+          "title": "Optional uuid of the pipeline run"
+        },
+        "name": {
+          "type": "string",
+          "title": "Optional name of the pipeline run"
+        },
+        "kind": {
+          "$ref": "#/definitions/v1PipelineKind",
+          "title": "Optional if the pipeline kind dag/parallel"
+        }
+      }
+    },
+    "v1PipelineKind": {
+      "type": "string",
+      "enum": [
+        "dag",
+        "parallel"
+      ],
+      "default": "dag"
+    },
     "v1Plugins": {
       "type": "object",
       "properties": {
@@ -15293,35 +15335,13 @@
           "type": "object",
           "title": "Optional outputs of this entity"
         },
-        "is_resume": {
-          "type": "boolean",
-          "format": "boolean",
-          "title": "Is resume"
-        },
-        "is_clone": {
-          "type": "boolean",
-          "format": "boolean",
-          "title": "Is clone"
-        },
-        "cloning_strategy": {
-          "$ref": "#/definitions/v1CloningStrategy",
-          "title": "Optional if this run was restarted/copied/resumed/cached"
+        "original": {
+          "$ref": "#/definitions/v1Cloning",
+          "title": "Optional original run meta information"
         },
         "pipeline": {
-          "type": "string",
-          "title": "Optional uuid of the pipeline"
-        },
-        "original": {
-          "type": "string",
-          "title": "Optional uuid of the original run"
-        },
-        "pipeline_name": {
-          "type": "string",
-          "title": "Optional name of the pipeline"
-        },
-        "original_name": {
-          "type": "string",
-          "title": "Optional name of the original run"
+          "$ref": "#/definitions/v1Pipeline",
+          "title": "Optional pipeline run meta information"
         },
         "status_conditions": {
           "type": "array",

@@ -4446,7 +4446,7 @@
               expect(data.event.text).to.be.a('string');
               expect(data.event.text).to.be("");
               expect(data.event.chart).to.be.a(PolyaxonSdk.V1EventChart);
-                    expect(data.event.chart.kind).to.be.a(PolyaxonSdk.EventChartKind);
+                    expect(data.event.chart.kind).to.be.a(PolyaxonSdk.V1EventChartKind);
                     expect(data.event.chart.figure).to.be.a(Object);
                 expect(data.event.chart.figure).to.be();
               expect(data.event.model).to.be.a(PolyaxonSdk.V1EventModel);

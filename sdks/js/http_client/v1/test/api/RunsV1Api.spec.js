@@ -146,13 +146,14 @@
           body.hub = "";
           body.inputs = ;
           body.outputs = ;
-          body.is_resume = false;
-          body.is_clone = false;
-          body.cloning_strategy = new PolyaxonSdk.V1CloningStrategy();
-          body.pipeline = "";
-          body.original = "";
-          body.pipeline_name = "";
-          body.original_name = "";
+          body.original = new PolyaxonSdk.V1Cloning();
+          body.original.uuid = "";
+          body.original.name = "";
+          body.original.kind = new PolyaxonSdk.V1CloningKind();
+          body.pipeline = new PolyaxonSdk.V1Pipeline();
+          body.pipeline.uuid = "";
+          body.pipeline.name = "";
+          body.pipeline.kind = new PolyaxonSdk.V1PipelineKind();
           body.status_conditions = [new PolyaxonSdk.V1StatusCondition()];
           body.status_conditions[0].type = new PolyaxonSdk.V1Statuses();
           body.status_conditions[0].status = "";
@@ -221,19 +222,20 @@
             expect(data.inputs).to.be();
             expect(data.outputs).to.be.a(Object);
             expect(data.outputs).to.be();
-            expect(data.is_resume).to.be.a('boolean');
-            expect(data.is_resume).to.be(false);
-            expect(data.is_clone).to.be.a('boolean');
-            expect(data.is_clone).to.be(false);
-            expect(data.cloning_strategy).to.be.a(PolyaxonSdk.V1CloningStrategy);
-                expect(data.pipeline).to.be.a('string');
-            expect(data.pipeline).to.be("");
-            expect(data.original).to.be.a('string');
-            expect(data.original).to.be("");
-            expect(data.pipeline_name).to.be.a('string');
-            expect(data.pipeline_name).to.be("");
-            expect(data.original_name).to.be.a('string');
-            expect(data.original_name).to.be("");
+            expect(data.original).to.be.a(PolyaxonSdk.V1Cloning);
+                  expect(data.original.uuid).to.be.a('string');
+              expect(data.original.uuid).to.be("");
+              expect(data.original.name).to.be.a('string');
+              expect(data.original.name).to.be("");
+              expect(data.original.kind).to.be.a(PolyaxonSdk.V1CloningKind);
+      
+            expect(data.pipeline).to.be.a(PolyaxonSdk.V1Pipeline);
+                  expect(data.pipeline.uuid).to.be.a('string');
+              expect(data.pipeline.uuid).to.be("");
+              expect(data.pipeline.name).to.be.a('string');
+              expect(data.pipeline.name).to.be("");
+              expect(data.pipeline.kind).to.be.a(PolyaxonSdk.V1PipelineKind);
+      
             {
               let dataCtr = data.status_conditions;
               expect(dataCtr).to.be.an(Array);
@@ -431,19 +433,20 @@
             expect(data.inputs).to.be();
             expect(data.outputs).to.be.a(Object);
             expect(data.outputs).to.be();
-            expect(data.is_resume).to.be.a('boolean');
-            expect(data.is_resume).to.be(false);
-            expect(data.is_clone).to.be.a('boolean');
-            expect(data.is_clone).to.be(false);
-            expect(data.cloning_strategy).to.be.a(PolyaxonSdk.V1CloningStrategy);
-                expect(data.pipeline).to.be.a('string');
-            expect(data.pipeline).to.be("");
-            expect(data.original).to.be.a('string');
-            expect(data.original).to.be("");
-            expect(data.pipeline_name).to.be.a('string');
-            expect(data.pipeline_name).to.be("");
-            expect(data.original_name).to.be.a('string');
-            expect(data.original_name).to.be("");
+            expect(data.original).to.be.a(PolyaxonSdk.V1Cloning);
+                  expect(data.original.uuid).to.be.a('string');
+              expect(data.original.uuid).to.be("");
+              expect(data.original.name).to.be.a('string');
+              expect(data.original.name).to.be("");
+              expect(data.original.kind).to.be.a(PolyaxonSdk.V1CloningKind);
+      
+            expect(data.pipeline).to.be.a(PolyaxonSdk.V1Pipeline);
+                  expect(data.pipeline.uuid).to.be.a('string');
+              expect(data.pipeline.uuid).to.be("");
+              expect(data.pipeline.name).to.be.a('string');
+              expect(data.pipeline.name).to.be("");
+              expect(data.pipeline.kind).to.be.a(PolyaxonSdk.V1PipelineKind);
+      
             {
               let dataCtr = data.status_conditions;
               expect(dataCtr).to.be.an(Array);
@@ -740,19 +743,20 @@
             expect(data.inputs).to.be();
             expect(data.outputs).to.be.a(Object);
             expect(data.outputs).to.be();
-            expect(data.is_resume).to.be.a('boolean');
-            expect(data.is_resume).to.be(false);
-            expect(data.is_clone).to.be.a('boolean');
-            expect(data.is_clone).to.be(false);
-            expect(data.cloning_strategy).to.be.a(PolyaxonSdk.V1CloningStrategy);
-                expect(data.pipeline).to.be.a('string');
-            expect(data.pipeline).to.be("");
-            expect(data.original).to.be.a('string');
-            expect(data.original).to.be("");
-            expect(data.pipeline_name).to.be.a('string');
-            expect(data.pipeline_name).to.be("");
-            expect(data.original_name).to.be.a('string');
-            expect(data.original_name).to.be("");
+            expect(data.original).to.be.a(PolyaxonSdk.V1Cloning);
+                  expect(data.original.uuid).to.be.a('string');
+              expect(data.original.uuid).to.be("");
+              expect(data.original.name).to.be.a('string');
+              expect(data.original.name).to.be("");
+              expect(data.original.kind).to.be.a(PolyaxonSdk.V1CloningKind);
+      
+            expect(data.pipeline).to.be.a(PolyaxonSdk.V1Pipeline);
+                  expect(data.pipeline.uuid).to.be.a('string');
+              expect(data.pipeline.uuid).to.be("");
+              expect(data.pipeline.name).to.be.a('string');
+              expect(data.pipeline.name).to.be("");
+              expect(data.pipeline.kind).to.be.a(PolyaxonSdk.V1PipelineKind);
+      
             {
               let dataCtr = data.status_conditions;
               expect(dataCtr).to.be.an(Array);
@@ -1438,19 +1442,20 @@
                 expect(data.inputs).to.be();
                 expect(data.outputs).to.be.a(Object);
                 expect(data.outputs).to.be();
-                expect(data.is_resume).to.be.a('boolean');
-                expect(data.is_resume).to.be(false);
-                expect(data.is_clone).to.be.a('boolean');
-                expect(data.is_clone).to.be(false);
-                expect(data.cloning_strategy).to.be.a(PolyaxonSdk.V1CloningStrategy);
-                    expect(data.pipeline).to.be.a('string');
-                expect(data.pipeline).to.be("");
-                expect(data.original).to.be.a('string');
-                expect(data.original).to.be("");
-                expect(data.pipeline_name).to.be.a('string');
-                expect(data.pipeline_name).to.be("");
-                expect(data.original_name).to.be.a('string');
-                expect(data.original_name).to.be("");
+                expect(data.original).to.be.a(PolyaxonSdk.V1Cloning);
+                      expect(data.original.uuid).to.be.a('string');
+                  expect(data.original.uuid).to.be("");
+                  expect(data.original.name).to.be.a('string');
+                  expect(data.original.name).to.be("");
+                  expect(data.original.kind).to.be.a(PolyaxonSdk.V1CloningKind);
+          
+                expect(data.pipeline).to.be.a(PolyaxonSdk.V1Pipeline);
+                      expect(data.pipeline.uuid).to.be.a('string');
+                  expect(data.pipeline.uuid).to.be("");
+                  expect(data.pipeline.name).to.be.a('string');
+                  expect(data.pipeline.name).to.be("");
+                  expect(data.pipeline.kind).to.be.a(PolyaxonSdk.V1PipelineKind);
+          
                 {
                   let dataCtr = data.status_conditions;
                   expect(dataCtr).to.be.an(Array);
@@ -1565,19 +1570,20 @@
                 expect(data.inputs).to.be();
                 expect(data.outputs).to.be.a(Object);
                 expect(data.outputs).to.be();
-                expect(data.is_resume).to.be.a('boolean');
-                expect(data.is_resume).to.be(false);
-                expect(data.is_clone).to.be.a('boolean');
-                expect(data.is_clone).to.be(false);
-                expect(data.cloning_strategy).to.be.a(PolyaxonSdk.V1CloningStrategy);
-                    expect(data.pipeline).to.be.a('string');
-                expect(data.pipeline).to.be("");
-                expect(data.original).to.be.a('string');
-                expect(data.original).to.be("");
-                expect(data.pipeline_name).to.be.a('string');
-                expect(data.pipeline_name).to.be("");
-                expect(data.original_name).to.be.a('string');
-                expect(data.original_name).to.be("");
+                expect(data.original).to.be.a(PolyaxonSdk.V1Cloning);
+                      expect(data.original.uuid).to.be.a('string');
+                  expect(data.original.uuid).to.be("");
+                  expect(data.original.name).to.be.a('string');
+                  expect(data.original.name).to.be("");
+                  expect(data.original.kind).to.be.a(PolyaxonSdk.V1CloningKind);
+          
+                expect(data.pipeline).to.be.a(PolyaxonSdk.V1Pipeline);
+                      expect(data.pipeline.uuid).to.be.a('string');
+                  expect(data.pipeline.uuid).to.be("");
+                  expect(data.pipeline.name).to.be.a('string');
+                  expect(data.pipeline.name).to.be("");
+                  expect(data.pipeline.kind).to.be.a(PolyaxonSdk.V1PipelineKind);
+          
                 {
                   let dataCtr = data.status_conditions;
                   expect(dataCtr).to.be.an(Array);
@@ -1693,19 +1699,20 @@
                 expect(data.inputs).to.be();
                 expect(data.outputs).to.be.a(Object);
                 expect(data.outputs).to.be();
-                expect(data.is_resume).to.be.a('boolean');
-                expect(data.is_resume).to.be(false);
-                expect(data.is_clone).to.be.a('boolean');
-                expect(data.is_clone).to.be(false);
-                expect(data.cloning_strategy).to.be.a(PolyaxonSdk.V1CloningStrategy);
-                    expect(data.pipeline).to.be.a('string');
-                expect(data.pipeline).to.be("");
-                expect(data.original).to.be.a('string');
-                expect(data.original).to.be("");
-                expect(data.pipeline_name).to.be.a('string');
-                expect(data.pipeline_name).to.be("");
-                expect(data.original_name).to.be.a('string');
-                expect(data.original_name).to.be("");
+                expect(data.original).to.be.a(PolyaxonSdk.V1Cloning);
+                      expect(data.original.uuid).to.be.a('string');
+                  expect(data.original.uuid).to.be("");
+                  expect(data.original.name).to.be.a('string');
+                  expect(data.original.name).to.be("");
+                  expect(data.original.kind).to.be.a(PolyaxonSdk.V1CloningKind);
+          
+                expect(data.pipeline).to.be.a(PolyaxonSdk.V1Pipeline);
+                      expect(data.pipeline.uuid).to.be.a('string');
+                  expect(data.pipeline.uuid).to.be("");
+                  expect(data.pipeline.name).to.be.a('string');
+                  expect(data.pipeline.name).to.be("");
+                  expect(data.pipeline.kind).to.be.a(PolyaxonSdk.V1PipelineKind);
+          
                 {
                   let dataCtr = data.status_conditions;
                   expect(dataCtr).to.be.an(Array);
@@ -1821,19 +1828,20 @@
                 expect(data.inputs).to.be();
                 expect(data.outputs).to.be.a(Object);
                 expect(data.outputs).to.be();
-                expect(data.is_resume).to.be.a('boolean');
-                expect(data.is_resume).to.be(false);
-                expect(data.is_clone).to.be.a('boolean');
-                expect(data.is_clone).to.be(false);
-                expect(data.cloning_strategy).to.be.a(PolyaxonSdk.V1CloningStrategy);
-                    expect(data.pipeline).to.be.a('string');
-                expect(data.pipeline).to.be("");
-                expect(data.original).to.be.a('string');
-                expect(data.original).to.be("");
-                expect(data.pipeline_name).to.be.a('string');
-                expect(data.pipeline_name).to.be("");
-                expect(data.original_name).to.be.a('string');
-                expect(data.original_name).to.be("");
+                expect(data.original).to.be.a(PolyaxonSdk.V1Cloning);
+                      expect(data.original.uuid).to.be.a('string');
+                  expect(data.original.uuid).to.be("");
+                  expect(data.original.name).to.be.a('string');
+                  expect(data.original.name).to.be("");
+                  expect(data.original.kind).to.be.a(PolyaxonSdk.V1CloningKind);
+          
+                expect(data.pipeline).to.be.a(PolyaxonSdk.V1Pipeline);
+                      expect(data.pipeline.uuid).to.be.a('string');
+                  expect(data.pipeline.uuid).to.be("");
+                  expect(data.pipeline.name).to.be.a('string');
+                  expect(data.pipeline.name).to.be("");
+                  expect(data.pipeline.kind).to.be.a(PolyaxonSdk.V1PipelineKind);
+          
                 {
                   let dataCtr = data.status_conditions;
                   expect(dataCtr).to.be.an(Array);
@@ -1936,13 +1944,14 @@
           body.hub = "";
           body.inputs = ;
           body.outputs = ;
-          body.is_resume = false;
-          body.is_clone = false;
-          body.cloning_strategy = new PolyaxonSdk.V1CloningStrategy();
-          body.pipeline = "";
-          body.original = "";
-          body.pipeline_name = "";
-          body.original_name = "";
+          body.original = new PolyaxonSdk.V1Cloning();
+          body.original.uuid = "";
+          body.original.name = "";
+          body.original.kind = new PolyaxonSdk.V1CloningKind();
+          body.pipeline = new PolyaxonSdk.V1Pipeline();
+          body.pipeline.uuid = "";
+          body.pipeline.name = "";
+          body.pipeline.kind = new PolyaxonSdk.V1PipelineKind();
           body.status_conditions = [new PolyaxonSdk.V1StatusCondition()];
           body.status_conditions[0].type = new PolyaxonSdk.V1Statuses();
           body.status_conditions[0].status = "";
@@ -2011,19 +2020,20 @@
             expect(data.inputs).to.be();
             expect(data.outputs).to.be.a(Object);
             expect(data.outputs).to.be();
-            expect(data.is_resume).to.be.a('boolean');
-            expect(data.is_resume).to.be(false);
-            expect(data.is_clone).to.be.a('boolean');
-            expect(data.is_clone).to.be(false);
-            expect(data.cloning_strategy).to.be.a(PolyaxonSdk.V1CloningStrategy);
-                expect(data.pipeline).to.be.a('string');
-            expect(data.pipeline).to.be("");
-            expect(data.original).to.be.a('string');
-            expect(data.original).to.be("");
-            expect(data.pipeline_name).to.be.a('string');
-            expect(data.pipeline_name).to.be("");
-            expect(data.original_name).to.be.a('string');
-            expect(data.original_name).to.be("");
+            expect(data.original).to.be.a(PolyaxonSdk.V1Cloning);
+                  expect(data.original.uuid).to.be.a('string');
+              expect(data.original.uuid).to.be("");
+              expect(data.original.name).to.be.a('string');
+              expect(data.original.name).to.be("");
+              expect(data.original.kind).to.be.a(PolyaxonSdk.V1CloningKind);
+      
+            expect(data.pipeline).to.be.a(PolyaxonSdk.V1Pipeline);
+                  expect(data.pipeline.uuid).to.be.a('string');
+              expect(data.pipeline.uuid).to.be("");
+              expect(data.pipeline.name).to.be.a('string');
+              expect(data.pipeline.name).to.be("");
+              expect(data.pipeline.kind).to.be.a(PolyaxonSdk.V1PipelineKind);
+      
             {
               let dataCtr = data.status_conditions;
               expect(dataCtr).to.be.an(Array);
@@ -2084,13 +2094,14 @@
           body.hub = "";
           body.inputs = ;
           body.outputs = ;
-          body.is_resume = false;
-          body.is_clone = false;
-          body.cloning_strategy = new PolyaxonSdk.V1CloningStrategy();
-          body.pipeline = "";
-          body.original = "";
-          body.pipeline_name = "";
-          body.original_name = "";
+          body.original = new PolyaxonSdk.V1Cloning();
+          body.original.uuid = "";
+          body.original.name = "";
+          body.original.kind = new PolyaxonSdk.V1CloningKind();
+          body.pipeline = new PolyaxonSdk.V1Pipeline();
+          body.pipeline.uuid = "";
+          body.pipeline.name = "";
+          body.pipeline.kind = new PolyaxonSdk.V1PipelineKind();
           body.status_conditions = [new PolyaxonSdk.V1StatusCondition()];
           body.status_conditions[0].type = new PolyaxonSdk.V1Statuses();
           body.status_conditions[0].status = "";
@@ -2159,19 +2170,20 @@
             expect(data.inputs).to.be();
             expect(data.outputs).to.be.a(Object);
             expect(data.outputs).to.be();
-            expect(data.is_resume).to.be.a('boolean');
-            expect(data.is_resume).to.be(false);
-            expect(data.is_clone).to.be.a('boolean');
-            expect(data.is_clone).to.be(false);
-            expect(data.cloning_strategy).to.be.a(PolyaxonSdk.V1CloningStrategy);
-                expect(data.pipeline).to.be.a('string');
-            expect(data.pipeline).to.be("");
-            expect(data.original).to.be.a('string');
-            expect(data.original).to.be("");
-            expect(data.pipeline_name).to.be.a('string');
-            expect(data.pipeline_name).to.be("");
-            expect(data.original_name).to.be.a('string');
-            expect(data.original_name).to.be("");
+            expect(data.original).to.be.a(PolyaxonSdk.V1Cloning);
+                  expect(data.original.uuid).to.be.a('string');
+              expect(data.original.uuid).to.be("");
+              expect(data.original.name).to.be.a('string');
+              expect(data.original.name).to.be("");
+              expect(data.original.kind).to.be.a(PolyaxonSdk.V1CloningKind);
+      
+            expect(data.pipeline).to.be.a(PolyaxonSdk.V1Pipeline);
+                  expect(data.pipeline.uuid).to.be.a('string');
+              expect(data.pipeline.uuid).to.be("");
+              expect(data.pipeline.name).to.be.a('string');
+              expect(data.pipeline.name).to.be("");
+              expect(data.pipeline.kind).to.be.a(PolyaxonSdk.V1PipelineKind);
+      
             {
               let dataCtr = data.status_conditions;
               expect(dataCtr).to.be.an(Array);
@@ -2253,13 +2265,14 @@
           body.hub = "";
           body.inputs = ;
           body.outputs = ;
-          body.is_resume = false;
-          body.is_clone = false;
-          body.cloning_strategy = new PolyaxonSdk.V1CloningStrategy();
-          body.pipeline = "";
-          body.original = "";
-          body.pipeline_name = "";
-          body.original_name = "";
+          body.original = new PolyaxonSdk.V1Cloning();
+          body.original.uuid = "";
+          body.original.name = "";
+          body.original.kind = new PolyaxonSdk.V1CloningKind();
+          body.pipeline = new PolyaxonSdk.V1Pipeline();
+          body.pipeline.uuid = "";
+          body.pipeline.name = "";
+          body.pipeline.kind = new PolyaxonSdk.V1PipelineKind();
           body.status_conditions = [new PolyaxonSdk.V1StatusCondition()];
           body.status_conditions[0].type = new PolyaxonSdk.V1Statuses();
           body.status_conditions[0].status = "";
@@ -2328,19 +2341,20 @@
             expect(data.inputs).to.be();
             expect(data.outputs).to.be.a(Object);
             expect(data.outputs).to.be();
-            expect(data.is_resume).to.be.a('boolean');
-            expect(data.is_resume).to.be(false);
-            expect(data.is_clone).to.be.a('boolean');
-            expect(data.is_clone).to.be(false);
-            expect(data.cloning_strategy).to.be.a(PolyaxonSdk.V1CloningStrategy);
-                expect(data.pipeline).to.be.a('string');
-            expect(data.pipeline).to.be("");
-            expect(data.original).to.be.a('string');
-            expect(data.original).to.be("");
-            expect(data.pipeline_name).to.be.a('string');
-            expect(data.pipeline_name).to.be("");
-            expect(data.original_name).to.be.a('string');
-            expect(data.original_name).to.be("");
+            expect(data.original).to.be.a(PolyaxonSdk.V1Cloning);
+                  expect(data.original.uuid).to.be.a('string');
+              expect(data.original.uuid).to.be("");
+              expect(data.original.name).to.be.a('string');
+              expect(data.original.name).to.be("");
+              expect(data.original.kind).to.be.a(PolyaxonSdk.V1CloningKind);
+      
+            expect(data.pipeline).to.be.a(PolyaxonSdk.V1Pipeline);
+                  expect(data.pipeline.uuid).to.be.a('string');
+              expect(data.pipeline.uuid).to.be("");
+              expect(data.pipeline.name).to.be.a('string');
+              expect(data.pipeline.name).to.be("");
+              expect(data.pipeline.kind).to.be.a(PolyaxonSdk.V1PipelineKind);
+      
             {
               let dataCtr = data.status_conditions;
               expect(dataCtr).to.be.an(Array);
@@ -2511,13 +2525,14 @@
           body.hub = "";
           body.inputs = ;
           body.outputs = ;
-          body.is_resume = false;
-          body.is_clone = false;
-          body.cloning_strategy = new PolyaxonSdk.V1CloningStrategy();
-          body.pipeline = "";
-          body.original = "";
-          body.pipeline_name = "";
-          body.original_name = "";
+          body.original = new PolyaxonSdk.V1Cloning();
+          body.original.uuid = "";
+          body.original.name = "";
+          body.original.kind = new PolyaxonSdk.V1CloningKind();
+          body.pipeline = new PolyaxonSdk.V1Pipeline();
+          body.pipeline.uuid = "";
+          body.pipeline.name = "";
+          body.pipeline.kind = new PolyaxonSdk.V1PipelineKind();
           body.status_conditions = [new PolyaxonSdk.V1StatusCondition()];
           body.status_conditions[0].type = new PolyaxonSdk.V1Statuses();
           body.status_conditions[0].status = "";
@@ -2586,19 +2601,20 @@
             expect(data.inputs).to.be();
             expect(data.outputs).to.be.a(Object);
             expect(data.outputs).to.be();
-            expect(data.is_resume).to.be.a('boolean');
-            expect(data.is_resume).to.be(false);
-            expect(data.is_clone).to.be.a('boolean');
-            expect(data.is_clone).to.be(false);
-            expect(data.cloning_strategy).to.be.a(PolyaxonSdk.V1CloningStrategy);
-                expect(data.pipeline).to.be.a('string');
-            expect(data.pipeline).to.be("");
-            expect(data.original).to.be.a('string');
-            expect(data.original).to.be("");
-            expect(data.pipeline_name).to.be.a('string');
-            expect(data.pipeline_name).to.be("");
-            expect(data.original_name).to.be.a('string');
-            expect(data.original_name).to.be("");
+            expect(data.original).to.be.a(PolyaxonSdk.V1Cloning);
+                  expect(data.original.uuid).to.be.a('string');
+              expect(data.original.uuid).to.be("");
+              expect(data.original.name).to.be.a('string');
+              expect(data.original.name).to.be("");
+              expect(data.original.kind).to.be.a(PolyaxonSdk.V1CloningKind);
+      
+            expect(data.pipeline).to.be.a(PolyaxonSdk.V1Pipeline);
+                  expect(data.pipeline.uuid).to.be.a('string');
+              expect(data.pipeline.uuid).to.be("");
+              expect(data.pipeline.name).to.be.a('string');
+              expect(data.pipeline.name).to.be("");
+              expect(data.pipeline.kind).to.be.a(PolyaxonSdk.V1PipelineKind);
+      
             {
               let dataCtr = data.status_conditions;
               expect(dataCtr).to.be.an(Array);

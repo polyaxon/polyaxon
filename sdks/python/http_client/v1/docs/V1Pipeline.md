@@ -1,10 +1,11 @@
-# V1EventChart
+# V1Pipeline
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**kind** | [**V1EventChartKind**](V1EventChartKind.md) |  | [optional] 
-**figure** | **object** |  | [optional] 
+**uuid** | **str** |  | [optional] 
+**name** | **str** |  | [optional] 
+**kind** | [**V1PipelineKind**](V1PipelineKind.md) |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

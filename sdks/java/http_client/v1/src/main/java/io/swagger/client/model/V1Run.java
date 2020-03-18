@@ -36,7 +36,8 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import io.swagger.client.model.V1CloningStrategy;
+import io.swagger.client.model.V1Cloning;
+import io.swagger.client.model.V1Pipeline;
 import io.swagger.client.model.V1RunKind;
 import io.swagger.client.model.V1StatusCondition;
 import io.swagger.client.model.V1Statuses;
@@ -122,26 +123,11 @@ public class V1Run {
   @SerializedName("outputs")
   private Object outputs = null;
 
-  @SerializedName("is_resume")
-  private Boolean isResume = null;
-
-  @SerializedName("is_clone")
-  private Boolean isClone = null;
-
-  @SerializedName("cloning_strategy")
-  private V1CloningStrategy cloningStrategy = null;
+  @SerializedName("original")
+  private V1Cloning original = null;
 
   @SerializedName("pipeline")
-  private String pipeline = null;
-
-  @SerializedName("original")
-  private String original = null;
-
-  @SerializedName("pipeline_name")
-  private String pipelineName = null;
-
-  @SerializedName("original_name")
-  private String originalName = null;
+  private V1Pipeline pipeline = null;
 
   @SerializedName("status_conditions")
   private List<V1StatusCondition> statusConditions = null;
@@ -586,79 +572,7 @@ public class V1Run {
     this.outputs = outputs;
   }
 
-  public V1Run isResume(Boolean isResume) {
-    this.isResume = isResume;
-    return this;
-  }
-
-   /**
-   * Get isResume
-   * @return isResume
-  **/
-  @ApiModelProperty(value = "")
-  public Boolean isIsResume() {
-    return isResume;
-  }
-
-  public void setIsResume(Boolean isResume) {
-    this.isResume = isResume;
-  }
-
-  public V1Run isClone(Boolean isClone) {
-    this.isClone = isClone;
-    return this;
-  }
-
-   /**
-   * Get isClone
-   * @return isClone
-  **/
-  @ApiModelProperty(value = "")
-  public Boolean isIsClone() {
-    return isClone;
-  }
-
-  public void setIsClone(Boolean isClone) {
-    this.isClone = isClone;
-  }
-
-  public V1Run cloningStrategy(V1CloningStrategy cloningStrategy) {
-    this.cloningStrategy = cloningStrategy;
-    return this;
-  }
-
-   /**
-   * Get cloningStrategy
-   * @return cloningStrategy
-  **/
-  @ApiModelProperty(value = "")
-  public V1CloningStrategy getCloningStrategy() {
-    return cloningStrategy;
-  }
-
-  public void setCloningStrategy(V1CloningStrategy cloningStrategy) {
-    this.cloningStrategy = cloningStrategy;
-  }
-
-  public V1Run pipeline(String pipeline) {
-    this.pipeline = pipeline;
-    return this;
-  }
-
-   /**
-   * Get pipeline
-   * @return pipeline
-  **/
-  @ApiModelProperty(value = "")
-  public String getPipeline() {
-    return pipeline;
-  }
-
-  public void setPipeline(String pipeline) {
-    this.pipeline = pipeline;
-  }
-
-  public V1Run original(String original) {
+  public V1Run original(V1Cloning original) {
     this.original = original;
     return this;
   }
@@ -668,48 +582,30 @@ public class V1Run {
    * @return original
   **/
   @ApiModelProperty(value = "")
-  public String getOriginal() {
+  public V1Cloning getOriginal() {
     return original;
   }
 
-  public void setOriginal(String original) {
+  public void setOriginal(V1Cloning original) {
     this.original = original;
   }
 
-  public V1Run pipelineName(String pipelineName) {
-    this.pipelineName = pipelineName;
+  public V1Run pipeline(V1Pipeline pipeline) {
+    this.pipeline = pipeline;
     return this;
   }
 
    /**
-   * Get pipelineName
-   * @return pipelineName
+   * Get pipeline
+   * @return pipeline
   **/
   @ApiModelProperty(value = "")
-  public String getPipelineName() {
-    return pipelineName;
+  public V1Pipeline getPipeline() {
+    return pipeline;
   }
 
-  public void setPipelineName(String pipelineName) {
-    this.pipelineName = pipelineName;
-  }
-
-  public V1Run originalName(String originalName) {
-    this.originalName = originalName;
-    return this;
-  }
-
-   /**
-   * Get originalName
-   * @return originalName
-  **/
-  @ApiModelProperty(value = "")
-  public String getOriginalName() {
-    return originalName;
-  }
-
-  public void setOriginalName(String originalName) {
-    this.originalName = originalName;
+  public void setPipeline(V1Pipeline pipeline) {
+    this.pipeline = pipeline;
   }
 
   public V1Run statusConditions(List<V1StatusCondition> statusConditions) {
@@ -772,19 +668,14 @@ public class V1Run {
         Objects.equals(this.hub, v1Run.hub) &&
         Objects.equals(this.inputs, v1Run.inputs) &&
         Objects.equals(this.outputs, v1Run.outputs) &&
-        Objects.equals(this.isResume, v1Run.isResume) &&
-        Objects.equals(this.isClone, v1Run.isClone) &&
-        Objects.equals(this.cloningStrategy, v1Run.cloningStrategy) &&
-        Objects.equals(this.pipeline, v1Run.pipeline) &&
         Objects.equals(this.original, v1Run.original) &&
-        Objects.equals(this.pipelineName, v1Run.pipelineName) &&
-        Objects.equals(this.originalName, v1Run.originalName) &&
+        Objects.equals(this.pipeline, v1Run.pipeline) &&
         Objects.equals(this.statusConditions, v1Run.statusConditions);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(uuid, name, description, tags, deleted, user, owner, project, createdAt, updatedAt, startedAt, finishedAt, runTime, isManaged, content, status, bookmarked, metaInfo, isHelper, kind, metaKind, hub, inputs, outputs, isResume, isClone, cloningStrategy, pipeline, original, pipelineName, originalName, statusConditions);
+    return Objects.hash(uuid, name, description, tags, deleted, user, owner, project, createdAt, updatedAt, startedAt, finishedAt, runTime, isManaged, content, status, bookmarked, metaInfo, isHelper, kind, metaKind, hub, inputs, outputs, original, pipeline, statusConditions);
   }
 
 
@@ -817,13 +708,8 @@ public class V1Run {
     sb.append("    hub: ").append(toIndentedString(hub)).append("\n");
     sb.append("    inputs: ").append(toIndentedString(inputs)).append("\n");
     sb.append("    outputs: ").append(toIndentedString(outputs)).append("\n");
-    sb.append("    isResume: ").append(toIndentedString(isResume)).append("\n");
-    sb.append("    isClone: ").append(toIndentedString(isClone)).append("\n");
-    sb.append("    cloningStrategy: ").append(toIndentedString(cloningStrategy)).append("\n");
-    sb.append("    pipeline: ").append(toIndentedString(pipeline)).append("\n");
     sb.append("    original: ").append(toIndentedString(original)).append("\n");
-    sb.append("    pipelineName: ").append(toIndentedString(pipelineName)).append("\n");
-    sb.append("    originalName: ").append(toIndentedString(originalName)).append("\n");
+    sb.append("    pipeline: ").append(toIndentedString(pipeline)).append("\n");
     sb.append("    statusConditions: ").append(toIndentedString(statusConditions)).append("\n");
     sb.append("}");
     return sb.toString();

@@ -36,9 +36,6 @@ type V1Run struct {
 	// Optional if this entity was bookmarked
 	Bookmarked bool `json:"bookmarked,omitempty"`
 
-	// Optional if this run was restarted/copied/resumed/cached
-	CloningStrategy V1CloningStrategy `json:"cloning_strategy,omitempty"`
-
 	// Optional content of the entity's spec
 	Content string `json:"content,omitempty"`
 
@@ -62,17 +59,11 @@ type V1Run struct {
 	// Optional inputs of this entity
 	Inputs interface{} `json:"inputs,omitempty"`
 
-	// Is clone
-	IsClone bool `json:"is_clone,omitempty"`
-
 	// Optional is helper run
 	IsHelper bool `json:"is_helper,omitempty"`
 
 	// Optional flag to tell if this entity is managed by the platform
 	IsManaged string `json:"is_managed,omitempty"`
-
-	// Is resume
-	IsResume bool `json:"is_resume,omitempty"`
 
 	// Optional kind to tell the kind of this run
 	Kind V1RunKind `json:"kind,omitempty"`
@@ -86,11 +77,8 @@ type V1Run struct {
 	// Optional name
 	Name string `json:"name,omitempty"`
 
-	// Optional uuid of the original run
-	Original string `json:"original,omitempty"`
-
-	// Optional name of the original run
-	OriginalName string `json:"original_name,omitempty"`
+	// Optional original run meta information
+	Original *V1Cloning `json:"original,omitempty"`
 
 	// Optional outputs of this entity
 	Outputs interface{} `json:"outputs,omitempty"`
@@ -98,11 +86,8 @@ type V1Run struct {
 	// Required name of owner of this entity
 	Owner string `json:"owner,omitempty"`
 
-	// Optional uuid of the pipeline
-	Pipeline string `json:"pipeline,omitempty"`
-
-	// Optional name of the pipeline
-	PipelineName string `json:"pipeline_name,omitempty"`
+	// Optional pipeline run meta information
+	Pipeline *V1Pipeline `json:"pipeline,omitempty"`
 
 	// Required project name
 	Project string `json:"project,omitempty"`
@@ -138,10 +123,6 @@ type V1Run struct {
 func (m *V1Run) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	if err := m.validateCloningStrategy(formats); err != nil {
-		res = append(res, err)
-	}
-
 	if err := m.validateCreatedAt(formats); err != nil {
 		res = append(res, err)
 	}
@@ -155,6 +136,14 @@ func (m *V1Run) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateMetaKind(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateOriginal(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validatePipeline(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -177,22 +166,6 @@ func (m *V1Run) Validate(formats strfmt.Registry) error {
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
-	return nil
-}
-
-func (m *V1Run) validateCloningStrategy(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.CloningStrategy) { // not required
-		return nil
-	}
-
-	if err := m.CloningStrategy.Validate(formats); err != nil {
-		if ve, ok := err.(*errors.Validation); ok {
-			return ve.ValidateName("cloning_strategy")
-		}
-		return err
-	}
-
 	return nil
 }
 
@@ -249,6 +222,42 @@ func (m *V1Run) validateMetaKind(formats strfmt.Registry) error {
 			return ve.ValidateName("meta_kind")
 		}
 		return err
+	}
+
+	return nil
+}
+
+func (m *V1Run) validateOriginal(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Original) { // not required
+		return nil
+	}
+
+	if m.Original != nil {
+		if err := m.Original.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("original")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *V1Run) validatePipeline(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Pipeline) { // not required
+		return nil
+	}
+
+	if m.Pipeline != nil {
+		if err := m.Pipeline.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("pipeline")
+			}
+			return err
+		}
 	}
 
 	return nil

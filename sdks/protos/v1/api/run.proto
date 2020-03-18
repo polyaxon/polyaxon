@@ -49,11 +49,38 @@ enum RunKind {
     notifier = 14;
 }
 
-enum CloningStrategy{
-    copy = 0;
-    restart = 1;
-    cache = 2;
-    schedule = 3;
+message Cloning {
+    enum Kind {
+        copy = 0;
+        restart = 1;
+        cache = 2;
+        schedule = 3;
+    }
+
+    // Optional uuid of the original run
+    string uuid = 1;
+
+    // Optional name of the original run
+    string name = 2;
+
+    // Optional if this run was restarted/copied/resumed/cached
+    Kind kind = 3;
+}
+
+message Pipeline {
+    enum Kind {
+        dag = 0;
+        parallel = 1;
+    }
+
+    // Optional uuid of the pipeline run
+    string uuid = 1;
+
+    // Optional name of the pipeline run
+    string name = 2;
+
+    // Optional if the pipeline kind dag/parallel
+    Kind kind = 3;
 }
 
 // Run specification
@@ -130,29 +157,14 @@ message Run {
     // Optional outputs of this entity
     google.protobuf.Struct outputs = 24;
 
-    // Is resume
-    bool is_resume = 25;
+    // Optional original run meta information
+    Cloning original = 25;
 
-    // Is clone
-    bool is_clone = 26;
-
-    // Optional if this run was restarted/copied/resumed/cached
-    CloningStrategy cloning_strategy = 27;
-
-    // Optional uuid of the pipeline
-    string pipeline = 29;
-
-    // Optional uuid of the original run
-    string original = 30;
-
-    // Optional name of the pipeline
-    string pipeline_name = 31;
-
-    // Optional name of the original run
-    string original_name = 32;
+    // Optional pipeline run meta information
+    Pipeline pipeline = 26;
 
     // The status conditions timeline
-    repeated StatusCondition status_conditions = 33;
+    repeated StatusCondition status_conditions = 27;
 }
 
 // Operation creation

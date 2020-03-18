@@ -32,12 +32,12 @@ from __future__ import absolute_import
 import unittest
 
 import polyaxon_sdk
-from polyaxon_sdk.models.v1_cloning_strategy import V1CloningStrategy  # noqa: E501
+from polyaxon_sdk.models.v1_cloning_kind import V1CloningKind  # noqa: E501
 from polyaxon_sdk.rest import ApiException
 
 
-class TestV1CloningStrategy(unittest.TestCase):
-    """V1CloningStrategy unit test stubs"""
+class TestV1CloningKind(unittest.TestCase):
+    """V1CloningKind unit test stubs"""
 
     def setUp(self):
         pass
@@ -45,10 +45,10 @@ class TestV1CloningStrategy(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def testV1CloningStrategy(self):
-        """Test V1CloningStrategy"""
+    def testV1CloningKind(self):
+        """Test V1CloningKind"""
         # FIXME: construct object with mandatory attributes with example values
-        # model = polyaxon_sdk.models.v1_cloning_strategy.V1CloningStrategy()  # noqa: E501
+        # model = polyaxon_sdk.models.v1_cloning_kind.V1CloningKind()  # noqa: E501
         pass
 
 

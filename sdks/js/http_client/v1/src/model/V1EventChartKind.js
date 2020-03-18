@@ -40,46 +40,58 @@
     if (!root.PolyaxonSdk) {
       root.PolyaxonSdk = {};
     }
-    root.PolyaxonSdk.V1CloningStrategy = factory(root.PolyaxonSdk.ApiClient);
+    root.PolyaxonSdk.V1EventChartKind = factory(root.PolyaxonSdk.ApiClient);
   }
 }(this, function(ApiClient) {
   'use strict';
 
   /**
-   * Enum class V1CloningStrategy.
+   * Enum class V1EventChartKind.
    * @enum {String}
    * @readonly
    */
   var exports = {
     /**
-     * value: "copy"
+     * value: "plotly"
      * @const
      */
-    copy: "copy",
+    plotly: "plotly",
 
     /**
-     * value: "restart"
+     * value: "bokeh"
      * @const
      */
-    restart: "restart",
+    bokeh: "bokeh",
 
     /**
-     * value: "cache"
+     * value: "vega"
      * @const
      */
-    cache: "cache",
+    vega: "vega",
 
     /**
-     * value: "schedule"
+     * value: "roc"
      * @const
      */
-    schedule: "schedule"
+    roc: "roc",
+
+    /**
+     * value: "auc"
+     * @const
+     */
+    auc: "auc",
+
+    /**
+     * value: "confusion"
+     * @const
+     */
+    confusion: "confusion"
   };
 
   /**
-   * Returns a <code>V1CloningStrategy</code> enum value from a JavaScript object name.
+   * Returns a <code>V1EventChartKind</code> enum value from a JavaScript object name.
    * @param {Object} data The plain JavaScript object containing the name of the enum value.
-   * @return {module:model/V1CloningStrategy} The enum <code>V1CloningStrategy</code> value.
+   * @return {module:model/V1EventChartKind} The enum <code>V1EventChartKind</code> value.
    */
   exports.constructFromObject = function(object) {
     return object;

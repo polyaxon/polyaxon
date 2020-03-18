@@ -25,20 +25,23 @@ import (
 	"github.com/go-openapi/swag"
 )
 
-// V1EventChart Chart spec definition
+// V1Cloning v1 cloning
 //
-// swagger:model v1EventChart
-type V1EventChart struct {
+// swagger:model v1Cloning
+type V1Cloning struct {
 
-	// Figure json object
-	Figure interface{} `json:"figure,omitempty"`
+	// Optional if this run was restarted/copied/resumed/cached
+	Kind V1CloningKind `json:"kind,omitempty"`
 
-	// Chart kind
-	Kind V1EventChartKind `json:"kind,omitempty"`
+	// Optional name of the original run
+	Name string `json:"name,omitempty"`
+
+	// Optional uuid of the original run
+	UUID string `json:"uuid,omitempty"`
 }
 
-// Validate validates this v1 event chart
-func (m *V1EventChart) Validate(formats strfmt.Registry) error {
+// Validate validates this v1 cloning
+func (m *V1Cloning) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateKind(formats); err != nil {
@@ -51,7 +54,7 @@ func (m *V1EventChart) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *V1EventChart) validateKind(formats strfmt.Registry) error {
+func (m *V1Cloning) validateKind(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.Kind) { // not required
 		return nil
@@ -68,7 +71,7 @@ func (m *V1EventChart) validateKind(formats strfmt.Registry) error {
 }
 
 // MarshalBinary interface implementation
-func (m *V1EventChart) MarshalBinary() ([]byte, error) {
+func (m *V1Cloning) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -76,8 +79,8 @@ func (m *V1EventChart) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (m *V1EventChart) UnmarshalBinary(b []byte) error {
-	var res V1EventChart
+func (m *V1Cloning) UnmarshalBinary(b []byte) error {
+	var res V1Cloning
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

@@ -149,20 +149,6 @@ export interface AgentStateResponseAgentState {
 }
 
 /**
- * - plotly: Plotly chart  - bokeh: Bokeh chart  - vega: Vega chart  - roc: ROC chart  - auc: AUC chart  - confusion: Confusion chart
- * @export
- * @enum {string}
- */
-export enum EventChartKind {
-    Plotly = <any> 'plotly',
-    Bokeh = <any> 'bokeh',
-    Vega = <any> 'vega',
-    Roc = <any> 'roc',
-    Auc = <any> 'auc',
-    Confusion = <any> 'confusion'
-}
-
-/**
  * 
  * @export
  * @enum {string}
@@ -765,9 +751,35 @@ export enum V1CleanPodPolicy {
 /**
  * 
  * @export
+ * @interface V1Cloning
+ */
+export interface V1Cloning {
+    /**
+     * 
+     * @type {string}
+     * @memberof V1Cloning
+     */
+    uuid?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1Cloning
+     */
+    name?: string;
+    /**
+     * 
+     * @type {V1CloningKind}
+     * @memberof V1Cloning
+     */
+    kind?: V1CloningKind;
+}
+
+/**
+ * 
+ * @export
  * @enum {string}
  */
-export enum V1CloningStrategy {
+export enum V1CloningKind {
     Copy = <any> 'copy',
     Restart = <any> 'restart',
     Cache = <any> 'cache',
@@ -1967,16 +1979,30 @@ export interface V1EventAudio {
 export interface V1EventChart {
     /**
      * 
-     * @type {EventChartKind}
+     * @type {V1EventChartKind}
      * @memberof V1EventChart
      */
-    kind?: EventChartKind;
+    kind?: V1EventChartKind;
     /**
      * 
      * @type {any}
      * @memberof V1EventChart
      */
     figure?: any;
+}
+
+/**
+ * - plotly: Plotly chart  - bokeh: Bokeh chart  - vega: Vega chart  - roc: ROC chart  - auc: AUC chart  - confusion: Confusion chart
+ * @export
+ * @enum {string}
+ */
+export enum V1EventChartKind {
+    Plotly = <any> 'plotly',
+    Bokeh = <any> 'bokeh',
+    Vega = <any> 'vega',
+    Roc = <any> 'roc',
+    Auc = <any> 'auc',
+    Confusion = <any> 'confusion'
 }
 
 /**
@@ -4865,6 +4891,42 @@ export interface V1PathReference {
 /**
  * 
  * @export
+ * @interface V1Pipeline
+ */
+export interface V1Pipeline {
+    /**
+     * 
+     * @type {string}
+     * @memberof V1Pipeline
+     */
+    uuid?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1Pipeline
+     */
+    name?: string;
+    /**
+     * 
+     * @type {V1PipelineKind}
+     * @memberof V1Pipeline
+     */
+    kind?: V1PipelineKind;
+}
+
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+export enum V1PipelineKind {
+    Dag = <any> 'dag',
+    Parallel = <any> 'parallel'
+}
+
+/**
+ * 
+ * @export
  * @interface V1Plugins
  */
 export interface V1Plugins {
@@ -5560,46 +5622,16 @@ export interface V1Run {
     outputs?: any;
     /**
      * 
-     * @type {boolean}
+     * @type {V1Cloning}
      * @memberof V1Run
      */
-    is_resume?: boolean;
+    original?: V1Cloning;
     /**
      * 
-     * @type {boolean}
+     * @type {V1Pipeline}
      * @memberof V1Run
      */
-    is_clone?: boolean;
-    /**
-     * 
-     * @type {V1CloningStrategy}
-     * @memberof V1Run
-     */
-    cloning_strategy?: V1CloningStrategy;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1Run
-     */
-    pipeline?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1Run
-     */
-    original?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1Run
-     */
-    pipeline_name?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1Run
-     */
-    original_name?: string;
+    pipeline?: V1Pipeline;
     /**
      * 
      * @type {Array<V1StatusCondition>}

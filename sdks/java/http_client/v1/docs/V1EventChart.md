@@ -4,7 +4,7 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**kind** | [**EventChartKind**](EventChartKind.md) |  |  [optional]
+**kind** | [**V1EventChartKind**](V1EventChartKind.md) |  |  [optional]
 **figure** | **Object** |  |  [optional]
 
 

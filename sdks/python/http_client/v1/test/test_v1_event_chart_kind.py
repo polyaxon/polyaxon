@@ -32,12 +32,12 @@ from __future__ import absolute_import
 import unittest
 
 import polyaxon_sdk
-from polyaxon_sdk.models.event_chart_kind import EventChartKind  # noqa: E501
+from polyaxon_sdk.models.v1_event_chart_kind import V1EventChartKind  # noqa: E501
 from polyaxon_sdk.rest import ApiException
 
 
-class TestEventChartKind(unittest.TestCase):
-    """EventChartKind unit test stubs"""
+class TestV1EventChartKind(unittest.TestCase):
+    """V1EventChartKind unit test stubs"""
 
     def setUp(self):
         pass
@@ -45,10 +45,10 @@ class TestEventChartKind(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def testEventChartKind(self):
-        """Test EventChartKind"""
+    def testV1EventChartKind(self):
+        """Test V1EventChartKind"""
         # FIXME: construct object with mandatory attributes with example values
-        # model = polyaxon_sdk.models.event_chart_kind.EventChartKind()  # noqa: E501
+        # model = polyaxon_sdk.models.v1_event_chart_kind.V1EventChartKind()  # noqa: E501
         pass
 
 

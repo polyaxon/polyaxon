@@ -36,21 +36,60 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import io.swagger.client.model.V1EventChartKind;
+import io.swagger.client.model.V1PipelineKind;
 import java.io.IOException;
 
 /**
- * V1EventChart
+ * V1Pipeline
  */
 
-public class V1EventChart {
+public class V1Pipeline {
+  @SerializedName("uuid")
+  private String uuid = null;
+
+  @SerializedName("name")
+  private String name = null;
+
   @SerializedName("kind")
-  private V1EventChartKind kind = null;
+  private V1PipelineKind kind = null;
 
-  @SerializedName("figure")
-  private Object figure = null;
+  public V1Pipeline uuid(String uuid) {
+    this.uuid = uuid;
+    return this;
+  }
 
-  public V1EventChart kind(V1EventChartKind kind) {
+   /**
+   * Get uuid
+   * @return uuid
+  **/
+  @ApiModelProperty(value = "")
+  public String getUuid() {
+    return uuid;
+  }
+
+  public void setUuid(String uuid) {
+    this.uuid = uuid;
+  }
+
+  public V1Pipeline name(String name) {
+    this.name = name;
+    return this;
+  }
+
+   /**
+   * Get name
+   * @return name
+  **/
+  @ApiModelProperty(value = "")
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public V1Pipeline kind(V1PipelineKind kind) {
     this.kind = kind;
     return this;
   }
@@ -60,30 +99,12 @@ public class V1EventChart {
    * @return kind
   **/
   @ApiModelProperty(value = "")
-  public V1EventChartKind getKind() {
+  public V1PipelineKind getKind() {
     return kind;
   }
 
-  public void setKind(V1EventChartKind kind) {
+  public void setKind(V1PipelineKind kind) {
     this.kind = kind;
-  }
-
-  public V1EventChart figure(Object figure) {
-    this.figure = figure;
-    return this;
-  }
-
-   /**
-   * Get figure
-   * @return figure
-  **/
-  @ApiModelProperty(value = "")
-  public Object getFigure() {
-    return figure;
-  }
-
-  public void setFigure(Object figure) {
-    this.figure = figure;
   }
 
 
@@ -95,24 +116,26 @@ public class V1EventChart {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    V1EventChart v1EventChart = (V1EventChart) o;
-    return Objects.equals(this.kind, v1EventChart.kind) &&
-        Objects.equals(this.figure, v1EventChart.figure);
+    V1Pipeline v1Pipeline = (V1Pipeline) o;
+    return Objects.equals(this.uuid, v1Pipeline.uuid) &&
+        Objects.equals(this.name, v1Pipeline.name) &&
+        Objects.equals(this.kind, v1Pipeline.kind);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(kind, figure);
+    return Objects.hash(uuid, name, kind);
   }
 
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class V1EventChart {\n");
+    sb.append("class V1Pipeline {\n");
     
+    sb.append("    uuid: ").append(toIndentedString(uuid)).append("\n");
+    sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    kind: ").append(toIndentedString(kind)).append("\n");
-    sb.append("    figure: ").append(toIndentedString(figure)).append("\n");
     sb.append("}");
     return sb.toString();
   }

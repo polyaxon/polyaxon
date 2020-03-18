@@ -38,10 +38,10 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 
 /**
- * Gets or Sets v1CloningStrategy
+ * Gets or Sets v1CloningKind
  */
-@JsonAdapter(V1CloningStrategy.Adapter.class)
-public enum V1CloningStrategy {
+@JsonAdapter(V1CloningKind.Adapter.class)
+public enum V1CloningKind {
   
   COPY("copy"),
   
@@ -53,7 +53,7 @@ public enum V1CloningStrategy {
 
   private String value;
 
-  V1CloningStrategy(String value) {
+  V1CloningKind(String value) {
     this.value = value;
   }
 
@@ -66,8 +66,8 @@ public enum V1CloningStrategy {
     return String.valueOf(value);
   }
 
-  public static V1CloningStrategy fromValue(String text) {
-    for (V1CloningStrategy b : V1CloningStrategy.values()) {
+  public static V1CloningKind fromValue(String text) {
+    for (V1CloningKind b : V1CloningKind.values()) {
       if (String.valueOf(b.value).equals(text)) {
         return b;
       }
@@ -75,16 +75,16 @@ public enum V1CloningStrategy {
     return null;
   }
 
-  public static class Adapter extends TypeAdapter<V1CloningStrategy> {
+  public static class Adapter extends TypeAdapter<V1CloningKind> {
     @Override
-    public void write(final JsonWriter jsonWriter, final V1CloningStrategy enumeration) throws IOException {
+    public void write(final JsonWriter jsonWriter, final V1CloningKind enumeration) throws IOException {
       jsonWriter.value(enumeration.getValue());
     }
 
     @Override
-    public V1CloningStrategy read(final JsonReader jsonReader) throws IOException {
+    public V1CloningKind read(final JsonReader jsonReader) throws IOException {
       String value = jsonReader.nextString();
-      return V1CloningStrategy.fromValue(String.valueOf(value));
+      return V1CloningKind.fromValue(String.valueOf(value));
     }
   }
 }

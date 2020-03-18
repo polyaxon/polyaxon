@@ -1,5 +1,5 @@
 
-# V1CloningStrategy
+# V1CloningKind
 
 ## Enum
 

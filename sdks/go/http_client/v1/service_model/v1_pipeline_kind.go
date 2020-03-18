@@ -27,52 +27,46 @@ import (
 	"github.com/go-openapi/validate"
 )
 
-// V1CloningStrategy v1 cloning strategy
+// V1PipelineKind v1 pipeline kind
 //
-// swagger:model v1CloningStrategy
-type V1CloningStrategy string
+// swagger:model v1PipelineKind
+type V1PipelineKind string
 
 const (
 
-	// V1CloningStrategyCopy captures enum value "copy"
-	V1CloningStrategyCopy V1CloningStrategy = "copy"
+	// V1PipelineKindDag captures enum value "dag"
+	V1PipelineKindDag V1PipelineKind = "dag"
 
-	// V1CloningStrategyRestart captures enum value "restart"
-	V1CloningStrategyRestart V1CloningStrategy = "restart"
-
-	// V1CloningStrategyCache captures enum value "cache"
-	V1CloningStrategyCache V1CloningStrategy = "cache"
-
-	// V1CloningStrategySchedule captures enum value "schedule"
-	V1CloningStrategySchedule V1CloningStrategy = "schedule"
+	// V1PipelineKindParallel captures enum value "parallel"
+	V1PipelineKindParallel V1PipelineKind = "parallel"
 )
 
 // for schema
-var v1CloningStrategyEnum []interface{}
+var v1PipelineKindEnum []interface{}
 
 func init() {
-	var res []V1CloningStrategy
-	if err := json.Unmarshal([]byte(`["copy","restart","cache","schedule"]`), &res); err != nil {
+	var res []V1PipelineKind
+	if err := json.Unmarshal([]byte(`["dag","parallel"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
-		v1CloningStrategyEnum = append(v1CloningStrategyEnum, v)
+		v1PipelineKindEnum = append(v1PipelineKindEnum, v)
 	}
 }
 
-func (m V1CloningStrategy) validateV1CloningStrategyEnum(path, location string, value V1CloningStrategy) error {
-	if err := validate.Enum(path, location, value, v1CloningStrategyEnum); err != nil {
+func (m V1PipelineKind) validateV1PipelineKindEnum(path, location string, value V1PipelineKind) error {
+	if err := validate.Enum(path, location, value, v1PipelineKindEnum); err != nil {
 		return err
 	}
 	return nil
 }
 
-// Validate validates this v1 cloning strategy
-func (m V1CloningStrategy) Validate(formats strfmt.Registry) error {
+// Validate validates this v1 pipeline kind
+func (m V1PipelineKind) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	// value enum
-	if err := m.validateV1CloningStrategyEnum("", "body", m); err != nil {
+	if err := m.validateV1PipelineKindEnum("", "body", m); err != nil {
 		return err
 	}
 
