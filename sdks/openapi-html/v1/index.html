@@ -214,7 +214,7 @@
                     </tr>
                     <tr>
                         <td><a href="#operation--api-v1--owner---project--runs-io-get">GET /api/v1/{owner}/{project}/runs/io</a></td>
-                        <td><p>List runs</p>
+                        <td><p>List runs io</p>
         </td>
                     </tr>
                     <tr>
@@ -360,6 +360,11 @@
                     <tr>
                         <td><a href="#operation--streams-v1--namespace---owner---project--runs--uuid--notify-post">POST /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/notify</a></td>
                         <td><p>Notify run status</p>
+        </td>
+                    </tr>
+                    <tr>
+                        <td><a href="#operation--streams-v1--namespace---owner---project--runs--uuid--resources-get">GET /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/resources</a></td>
+                        <td><p>Get run resources events</p>
         </td>
                     </tr>
                     <tr>
@@ -26837,7 +26842,7 @@
         <span id="path--api-v1--owner---project--runs-io"></span>
             <div id="operation--api-v1--owner---project--runs-io-get" class="swagger--panel-operation-get panel">
                 <div class="panel-heading">
-                    <div class="operation-summary">List runs</div>
+                    <div class="operation-summary">List runs io</div>
                     <h3 class="panel-title"><span class="operation-name">GET</span> <strong>/api/v1/{owner}/{project}/runs/io</strong></h3>
                         Tags:
                             <a href="#tag-RunsV1">RunsV1</a>
@@ -29266,155 +29271,6 @@
                                             <td>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td>
-                                                kind
-                                            </td>
-                                            <td><p>The artifact kind.</p>
-                                        <ul>
-                                        <li>model: model</li>
-                                        <li>audio: audio</li>
-                                        <li>video: vidio</li>
-                                        <li>histogram: histogram</li>
-                                        <li>image: image</li>
-                                        <li>tensor: tensor</li>
-                                        <li>dataframe: dataframe</li>
-                                        <li>chart: plotly/bokeh chart</li>
-                                        <li>csv: Comma</li>
-                                        <li>tsv: Tab</li>
-                                        <li>psv: Pipe</li>
-                                        <li>ssv: Space</li>
-                                        <li>metric: Metric</li>
-                                        <li>env: Env</li>
-                                        <li>html: HTML</li>
-                                        <li>text: Text</li>
-                                        <li>file: File</li>
-                                        <li>dir: Dir</li>
-                                        <li>dockerfile: Dockerfile</li>
-                                        <li>docker_image: docker image</li>
-                                        <li>data: data</li>
-                                        <li>coderef: coderef</li>
-                                        <li>table: table</li>
-                                        </ul>
-                                        </td>
-                                            <td>query</td>
-                                            <td>
-                                        <span class="json-property-type">string</span>    <span class="json-property-enum" title="Possible values">, x &isin; {
-                                                        <span class="json-property-enum-item">model</span>
-                                                        (default)
-                                                    ,
-                                                        <span class="json-property-enum-item">audio</span>
-                                                    ,
-                                                        <span class="json-property-enum-item">video</span>
-                                                    ,
-                                                        <span class="json-property-enum-item">histogram</span>
-                                                    ,
-                                                        <span class="json-property-enum-item">image</span>
-                                                    ,
-                                                        <span class="json-property-enum-item">tensor</span>
-                                                    ,
-                                                        <span class="json-property-enum-item">dataframe</span>
-                                                    ,
-                                                        <span class="json-property-enum-item">chart</span>
-                                                    ,
-                                                        <span class="json-property-enum-item">csv</span>
-                                                    ,
-                                                        <span class="json-property-enum-item">tsv</span>
-                                                    ,
-                                                        <span class="json-property-enum-item">psv</span>
-                                                    ,
-                                                        <span class="json-property-enum-item">ssv</span>
-                                                    ,
-                                                        <span class="json-property-enum-item">metric</span>
-                                                    ,
-                                                        <span class="json-property-enum-item">env</span>
-                                                    ,
-                                                        <span class="json-property-enum-item">html</span>
-                                                    ,
-                                                        <span class="json-property-enum-item">text</span>
-                                                    ,
-                                                        <span class="json-property-enum-item">file</span>
-                                                    ,
-                                                        <span class="json-property-enum-item">dir</span>
-                                                    ,
-                                                        <span class="json-property-enum-item">dockerfile</span>
-                                                    ,
-                                                        <span class="json-property-enum-item">docker_image</span>
-                                                    ,
-                                                        <span class="json-property-enum-item">data</span>
-                                                    ,
-                                                        <span class="json-property-enum-item">coderef</span>
-                                                    ,
-                                                        <span class="json-property-enum-item">table</span>
-                                                    
-                                                }
-                                                </span>
-                                        <span class="json-property-range" title="Value limits"></span>
-                                        
-                                            </td>
-                                            <td>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                names
-                                            </td>
-                                            <td><p>Names query param.</p>
-                                        </td>
-                                            <td>query</td>
-                                            <td>
-                                        <span class="json-property-type">string</span>
-                                        <span class="json-property-range" title="Value limits"></span>
-                                        
-                                            </td>
-                                            <td>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                runs
-                                            </td>
-                                            <td><p>Runs query param.</p>
-                                        </td>
-                                            <td>query</td>
-                                            <td>
-                                        <span class="json-property-type">string</span>
-                                        <span class="json-property-range" title="Value limits"></span>
-                                        
-                                            </td>
-                                            <td>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                orient
-                                            </td>
-                                            <td><p>Orient query param.</p>
-                                        </td>
-                                            <td>query</td>
-                                            <td>
-                                        <span class="json-property-type">string</span>
-                                        <span class="json-property-range" title="Value limits"></span>
-                                        
-                                            </td>
-                                            <td>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                path
-                                            </td>
-                                            <td><p>Path query param.</p>
-                                        </td>
-                                            <td>query</td>
-                                            <td>
-                                        <span class="json-property-type">string</span>
-                                        <span class="json-property-range" title="Value limits"></span>
-                                        
-                                            </td>
-                                            <td>
-                                            </td>
-                                        </tr>
                                 </tbody>
                             </table>
                         </section>
@@ -29624,155 +29480,6 @@
                                                 namespace
                                             </td>
                                             <td><p>namespace.</p>
-                                        </td>
-                                            <td>query</td>
-                                            <td>
-                                        <span class="json-property-type">string</span>
-                                        <span class="json-property-range" title="Value limits"></span>
-                                        
-                                            </td>
-                                            <td>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                kind
-                                            </td>
-                                            <td><p>The artifact kind.</p>
-                                        <ul>
-                                        <li>model: model</li>
-                                        <li>audio: audio</li>
-                                        <li>video: vidio</li>
-                                        <li>histogram: histogram</li>
-                                        <li>image: image</li>
-                                        <li>tensor: tensor</li>
-                                        <li>dataframe: dataframe</li>
-                                        <li>chart: plotly/bokeh chart</li>
-                                        <li>csv: Comma</li>
-                                        <li>tsv: Tab</li>
-                                        <li>psv: Pipe</li>
-                                        <li>ssv: Space</li>
-                                        <li>metric: Metric</li>
-                                        <li>env: Env</li>
-                                        <li>html: HTML</li>
-                                        <li>text: Text</li>
-                                        <li>file: File</li>
-                                        <li>dir: Dir</li>
-                                        <li>dockerfile: Dockerfile</li>
-                                        <li>docker_image: docker image</li>
-                                        <li>data: data</li>
-                                        <li>coderef: coderef</li>
-                                        <li>table: table</li>
-                                        </ul>
-                                        </td>
-                                            <td>query</td>
-                                            <td>
-                                        <span class="json-property-type">string</span>    <span class="json-property-enum" title="Possible values">, x &isin; {
-                                                        <span class="json-property-enum-item">model</span>
-                                                        (default)
-                                                    ,
-                                                        <span class="json-property-enum-item">audio</span>
-                                                    ,
-                                                        <span class="json-property-enum-item">video</span>
-                                                    ,
-                                                        <span class="json-property-enum-item">histogram</span>
-                                                    ,
-                                                        <span class="json-property-enum-item">image</span>
-                                                    ,
-                                                        <span class="json-property-enum-item">tensor</span>
-                                                    ,
-                                                        <span class="json-property-enum-item">dataframe</span>
-                                                    ,
-                                                        <span class="json-property-enum-item">chart</span>
-                                                    ,
-                                                        <span class="json-property-enum-item">csv</span>
-                                                    ,
-                                                        <span class="json-property-enum-item">tsv</span>
-                                                    ,
-                                                        <span class="json-property-enum-item">psv</span>
-                                                    ,
-                                                        <span class="json-property-enum-item">ssv</span>
-                                                    ,
-                                                        <span class="json-property-enum-item">metric</span>
-                                                    ,
-                                                        <span class="json-property-enum-item">env</span>
-                                                    ,
-                                                        <span class="json-property-enum-item">html</span>
-                                                    ,
-                                                        <span class="json-property-enum-item">text</span>
-                                                    ,
-                                                        <span class="json-property-enum-item">file</span>
-                                                    ,
-                                                        <span class="json-property-enum-item">dir</span>
-                                                    ,
-                                                        <span class="json-property-enum-item">dockerfile</span>
-                                                    ,
-                                                        <span class="json-property-enum-item">docker_image</span>
-                                                    ,
-                                                        <span class="json-property-enum-item">data</span>
-                                                    ,
-                                                        <span class="json-property-enum-item">coderef</span>
-                                                    ,
-                                                        <span class="json-property-enum-item">table</span>
-                                                    
-                                                }
-                                                </span>
-                                        <span class="json-property-range" title="Value limits"></span>
-                                        
-                                            </td>
-                                            <td>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                names
-                                            </td>
-                                            <td><p>Names query param.</p>
-                                        </td>
-                                            <td>query</td>
-                                            <td>
-                                        <span class="json-property-type">string</span>
-                                        <span class="json-property-range" title="Value limits"></span>
-                                        
-                                            </td>
-                                            <td>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                runs
-                                            </td>
-                                            <td><p>Runs query param.</p>
-                                        </td>
-                                            <td>query</td>
-                                            <td>
-                                        <span class="json-property-type">string</span>
-                                        <span class="json-property-range" title="Value limits"></span>
-                                        
-                                            </td>
-                                            <td>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                orient
-                                            </td>
-                                            <td><p>Orient query param.</p>
-                                        </td>
-                                            <td>query</td>
-                                            <td>
-                                        <span class="json-property-type">string</span>
-                                        <span class="json-property-range" title="Value limits"></span>
-                                        
-                                            </td>
-                                            <td>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                path
-                                            </td>
-                                            <td><p>Path query param.</p>
                                         </td>
                                             <td>query</td>
                                             <td>
@@ -35917,36 +35624,6 @@
                                         </tr>
                                         <tr>
                                             <td>
-                                                uuid
-                                            </td>
-                                            <td><p>Uuid identifier of the entity.</p>
-                                        </td>
-                                            <td>query</td>
-                                            <td>
-                                        <span class="json-property-type">string</span>
-                                        <span class="json-property-range" title="Value limits"></span>
-                                        
-                                            </td>
-                                            <td>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                name
-                                            </td>
-                                            <td><p>Artifact name.</p>
-                                        </td>
-                                            <td>query</td>
-                                            <td>
-                                        <span class="json-property-type">string</span>
-                                        <span class="json-property-range" title="Value limits"></span>
-                                        
-                                            </td>
-                                            <td>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
                                                 names
                                             </td>
                                             <td><p>Names query param.</p>
@@ -35980,21 +35657,6 @@
                                                 orient
                                             </td>
                                             <td><p>Orient query param.</p>
-                                        </td>
-                                            <td>query</td>
-                                            <td>
-                                        <span class="json-property-type">string</span>
-                                        <span class="json-property-range" title="Value limits"></span>
-                                        
-                                            </td>
-                                            <td>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                path
-                                            </td>
-                                            <td><p>Path query param.</p>
                                         </td>
                                             <td>query</td>
                                             <td>
@@ -36640,155 +36302,6 @@
                                         </tr>
                                         <tr>
                                             <td>
-                                                name
-                                            </td>
-                                            <td><p>Artifact name.</p>
-                                        </td>
-                                            <td>query</td>
-                                            <td>
-                                        <span class="json-property-type">string</span>
-                                        <span class="json-property-range" title="Value limits"></span>
-                                        
-                                            </td>
-                                            <td>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                kind
-                                            </td>
-                                            <td><p>The artifact kind.</p>
-                                        <ul>
-                                        <li>model: model</li>
-                                        <li>audio: audio</li>
-                                        <li>video: vidio</li>
-                                        <li>histogram: histogram</li>
-                                        <li>image: image</li>
-                                        <li>tensor: tensor</li>
-                                        <li>dataframe: dataframe</li>
-                                        <li>chart: plotly/bokeh chart</li>
-                                        <li>csv: Comma</li>
-                                        <li>tsv: Tab</li>
-                                        <li>psv: Pipe</li>
-                                        <li>ssv: Space</li>
-                                        <li>metric: Metric</li>
-                                        <li>env: Env</li>
-                                        <li>html: HTML</li>
-                                        <li>text: Text</li>
-                                        <li>file: File</li>
-                                        <li>dir: Dir</li>
-                                        <li>dockerfile: Dockerfile</li>
-                                        <li>docker_image: docker image</li>
-                                        <li>data: data</li>
-                                        <li>coderef: coderef</li>
-                                        <li>table: table</li>
-                                        </ul>
-                                        </td>
-                                            <td>query</td>
-                                            <td>
-                                        <span class="json-property-type">string</span>    <span class="json-property-enum" title="Possible values">, x &isin; {
-                                                        <span class="json-property-enum-item">model</span>
-                                                        (default)
-                                                    ,
-                                                        <span class="json-property-enum-item">audio</span>
-                                                    ,
-                                                        <span class="json-property-enum-item">video</span>
-                                                    ,
-                                                        <span class="json-property-enum-item">histogram</span>
-                                                    ,
-                                                        <span class="json-property-enum-item">image</span>
-                                                    ,
-                                                        <span class="json-property-enum-item">tensor</span>
-                                                    ,
-                                                        <span class="json-property-enum-item">dataframe</span>
-                                                    ,
-                                                        <span class="json-property-enum-item">chart</span>
-                                                    ,
-                                                        <span class="json-property-enum-item">csv</span>
-                                                    ,
-                                                        <span class="json-property-enum-item">tsv</span>
-                                                    ,
-                                                        <span class="json-property-enum-item">psv</span>
-                                                    ,
-                                                        <span class="json-property-enum-item">ssv</span>
-                                                    ,
-                                                        <span class="json-property-enum-item">metric</span>
-                                                    ,
-                                                        <span class="json-property-enum-item">env</span>
-                                                    ,
-                                                        <span class="json-property-enum-item">html</span>
-                                                    ,
-                                                        <span class="json-property-enum-item">text</span>
-                                                    ,
-                                                        <span class="json-property-enum-item">file</span>
-                                                    ,
-                                                        <span class="json-property-enum-item">dir</span>
-                                                    ,
-                                                        <span class="json-property-enum-item">dockerfile</span>
-                                                    ,
-                                                        <span class="json-property-enum-item">docker_image</span>
-                                                    ,
-                                                        <span class="json-property-enum-item">data</span>
-                                                    ,
-                                                        <span class="json-property-enum-item">coderef</span>
-                                                    ,
-                                                        <span class="json-property-enum-item">table</span>
-                                                    
-                                                }
-                                                </span>
-                                        <span class="json-property-range" title="Value limits"></span>
-                                        
-                                            </td>
-                                            <td>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                names
-                                            </td>
-                                            <td><p>Names query param.</p>
-                                        </td>
-                                            <td>query</td>
-                                            <td>
-                                        <span class="json-property-type">string</span>
-                                        <span class="json-property-range" title="Value limits"></span>
-                                        
-                                            </td>
-                                            <td>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                runs
-                                            </td>
-                                            <td><p>Runs query param.</p>
-                                        </td>
-                                            <td>query</td>
-                                            <td>
-                                        <span class="json-property-type">string</span>
-                                        <span class="json-property-range" title="Value limits"></span>
-                                        
-                                            </td>
-                                            <td>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                orient
-                                            </td>
-                                            <td><p>Orient query param.</p>
-                                        </td>
-                                            <td>query</td>
-                                            <td>
-                                        <span class="json-property-type">string</span>
-                                        <span class="json-property-range" title="Value limits"></span>
-                                        
-                                            </td>
-                                            <td>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
                                                 path
                                             </td>
                                             <td><p>Path query param.</p>
@@ -37078,21 +36591,6 @@
                                         </tr>
                                         <tr>
                                             <td>
-                                                name
-                                            </td>
-                                            <td><p>Artifact name.</p>
-                                        </td>
-                                            <td>query</td>
-                                            <td>
-                                        <span class="json-property-type">string</span>
-                                        <span class="json-property-range" title="Value limits"></span>
-                                        
-                                            </td>
-                                            <td>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
                                                 names
                                             </td>
                                             <td><p>Names query param.</p>
@@ -37108,39 +36606,9 @@
                                         </tr>
                                         <tr>
                                             <td>
-                                                runs
-                                            </td>
-                                            <td><p>Runs query param.</p>
-                                        </td>
-                                            <td>query</td>
-                                            <td>
-                                        <span class="json-property-type">string</span>
-                                        <span class="json-property-range" title="Value limits"></span>
-                                        
-                                            </td>
-                                            <td>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
                                                 orient
                                             </td>
                                             <td><p>Orient query param.</p>
-                                        </td>
-                                            <td>query</td>
-                                            <td>
-                                        <span class="json-property-type">string</span>
-                                        <span class="json-property-range" title="Value limits"></span>
-                                        
-                                            </td>
-                                            <td>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                path
-                                            </td>
-                                            <td><p>Path query param.</p>
                                         </td>
                                             <td>query</td>
                                             <td>
@@ -37642,6 +37110,246 @@
                                                 
                                                 <div class="col-md-6 sw-response-model">
                                             </div>
+                                            
+                                            </div>                </dd>
+                                    <dt class="sw-response-204">
+                                        204 No Content
+                                    
+                                    </dt>
+                                    <dd class="sw-response-204">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p>No content.</p>
+                                            
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                
+                                                <div class="col-md-6 sw-response-model">
+                                                <div  class="panel panel-definition">
+                                                    <div class="panel-body">
+                                                            
+                                                    </div>
+                                                </div></div>
+                                            
+                                            </div>                </dd>
+                                    <dt class="sw-response-403">
+                                        403 Forbidden
+                                    
+                                    </dt>
+                                    <dd class="sw-response-403">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p>You don&#39;t have permission to access the resource.</p>
+                                            
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                
+                                                <div class="col-md-6 sw-response-model">
+                                                <div  class="panel panel-definition">
+                                                    <div class="panel-body">
+                                                            
+                                                    </div>
+                                                </div></div>
+                                            
+                                            </div>                </dd>
+                                    <dt class="sw-response-404">
+                                        404 Not Found
+                                    
+                                    </dt>
+                                    <dd class="sw-response-404">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p>Resource does not exist.</p>
+                                            
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                
+                                                <div class="col-md-6 sw-response-model">
+                                                <div  class="panel panel-definition">
+                                                    <div class="panel-body">
+                                                            
+                                                    </div>
+                                                </div></div>
+                                            
+                                            </div>                </dd>
+                                    <dt class="sw-response-default">
+                                        default 
+                                    
+                                    </dt>
+                                    <dd class="sw-response-default">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p>An unexpected error response</p>
+                                            
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                
+                                                <div class="col-md-6 sw-response-model">
+                                                <div  class="panel panel-definition">
+                                                    <div class="panel-body">
+                                                                <a class="json-schema-ref" href="#/definitions/runtimeError">runtimeError</a>
+                                                    </div>
+                                                </div></div>
+                                            
+                                            </div>                </dd>
+                            </dl>
+                        </section>
+                </div>
+            </div>
+        
+        <span id="path--streams-v1--namespace---owner---project--runs--uuid--resources"></span>
+            <div id="operation--streams-v1--namespace---owner---project--runs--uuid--resources-get" class="swagger--panel-operation-get panel">
+                <div class="panel-heading">
+                    <div class="operation-summary">Get run resources events</div>
+                    <h3 class="panel-title"><span class="operation-name">GET</span> <strong>/streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/resources</strong></h3>
+                        Tags:
+                            <a href="#tag-RunsV1">RunsV1</a>
+                </div>
+                <div class="panel-body">
+                    <section class="sw-operation-description">
+                        
+                    </section>
+            
+                    
+                        <section class="sw-request-params">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th class="sw-param-name"></th>
+                                    <th class="sw-param-description"></th>
+                                    <th class="sw-param-type"></th>
+                                    <th class="sw-param-data-type"></th>
+                                    <th class="sw-param-annotation"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                        <tr>
+                                            <td>
+                                                namespace
+                                            </td>
+                                            <td><p>namespace</p>
+                                        </td>
+                                            <td>path</td>
+                                            <td>
+                                        <span class="json-property-type">string</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                            </td>
+                                            <td>
+                                                    <span class="json-property-required"></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                owner
+                                            </td>
+                                            <td><p>Owner of the namespace</p>
+                                        </td>
+                                            <td>path</td>
+                                            <td>
+                                        <span class="json-property-type">string</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                            </td>
+                                            <td>
+                                                    <span class="json-property-required"></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                project
+                                            </td>
+                                            <td><p>Project where the run will be assigned</p>
+                                        </td>
+                                            <td>path</td>
+                                            <td>
+                                        <span class="json-property-type">string</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                            </td>
+                                            <td>
+                                                    <span class="json-property-required"></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                uuid
+                                            </td>
+                                            <td><p>Uuid identifier of the entity</p>
+                                        </td>
+                                            <td>path</td>
+                                            <td>
+                                        <span class="json-property-type">string</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                            </td>
+                                            <td>
+                                                    <span class="json-property-required"></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                names
+                                            </td>
+                                            <td><p>Names query param.</p>
+                                        </td>
+                                            <td>query</td>
+                                            <td>
+                                        <span class="json-property-type">string</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                            </td>
+                                            <td>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                tail
+                                            </td>
+                                            <td><p>Query param flag to tail the values.</p>
+                                        </td>
+                                            <td>query</td>
+                                            <td>
+                                        <span class="json-property-type">boolean</span>    <span class="json-property-format">(boolean)</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                            </td>
+                                            <td>
+                                            </td>
+                                        </tr>
+                                </tbody>
+                            </table>
+                        </section>
+                    
+                        <section class="sw-responses">
+                                <p><a href="#sw-default-produces">Uses default content-types: </a>
+                                    <span class="label label-default">application/json</span> 
+                                </p>
+                            
+                            <dl>
+                                    <dt class="sw-response-200">
+                                        200 OK
+                                    
+                                    </dt>
+                                    <dd class="sw-response-200">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p>A successful response.</p>
+                                            
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                
+                                                <div class="col-md-6 sw-response-model">
+                                                <div  class="panel panel-definition">
+                                                    <div class="panel-body">
+                                                                <a class="json-schema-ref" href="#/definitions/v1EventsResponse">v1EventsResponse</a>
+                                                    </div>
+                                                </div></div>
                                             
                                             </div>                </dd>
                                     <dt class="sw-response-204">

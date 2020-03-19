@@ -192,6 +192,13 @@ class TestRunsV1Api(unittest.TestCase):
         """
         pass
 
+    def test_get_run_resources(self):
+        """Test case for get_run_resources
+
+        Get run resources events  # noqa: E501
+        """
+        pass
+
     def test_get_run_settings(self):
         """Test case for get_run_settings
 
@@ -251,7 +258,7 @@ class TestRunsV1Api(unittest.TestCase):
     def test_list_runs_io(self):
         """Test case for list_runs_io
 
-        List runs  # noqa: E501
+        List runs io  # noqa: E501
         """
         pass
 

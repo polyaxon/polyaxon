@@ -227,12 +227,7 @@ public class RunsV1ApiTest {
         String uuid = null;
         String name = null;
         String namespace = null;
-        String kind = null;
-        String names = null;
-        String runs = null;
-        String orient = null;
-        String path = null;
-        api.deleteRunArtifactLineage(owner, project, uuid, name, namespace, kind, names, runs, orient, path);
+        api.deleteRunArtifactLineage(owner, project, uuid, name, namespace);
 
         // TODO: test validations
     }
@@ -269,13 +264,10 @@ public class RunsV1ApiTest {
         String owner = null;
         String project = null;
         String kind = null;
-        String uuid = null;
-        String name = null;
         String names = null;
         String runs = null;
         String orient = null;
-        String path = null;
-        V1EventsResponse response = api.getMultiRunEvents(namespace, owner, project, kind, uuid, name, names, runs, orient, path);
+        V1EventsResponse response = api.getMultiRunEvents(namespace, owner, project, kind, names, runs, orient);
 
         // TODO: test validations
     }
@@ -334,12 +326,7 @@ public class RunsV1ApiTest {
         String uuid = null;
         String name = null;
         String namespace = null;
-        String kind = null;
-        String names = null;
-        String runs = null;
-        String orient = null;
-        String path = null;
-        V1RunArtifact response = api.getRunArtifactLineage(owner, project, uuid, name, namespace, kind, names, runs, orient, path);
+        V1RunArtifact response = api.getRunArtifactLineage(owner, project, uuid, name, namespace);
 
         // TODO: test validations
     }
@@ -420,13 +407,8 @@ public class RunsV1ApiTest {
         String owner = null;
         String project = null;
         String uuid = null;
-        String name = null;
-        String kind = null;
-        String names = null;
-        String runs = null;
-        String orient = null;
         String path = null;
-        V1ArtifactTreeResponse response = api.getRunArtifactsTree(namespace, owner, project, uuid, name, kind, names, runs, orient, path);
+        V1ArtifactTreeResponse response = api.getRunArtifactsTree(namespace, owner, project, uuid, path);
 
         // TODO: test validations
     }
@@ -446,12 +428,9 @@ public class RunsV1ApiTest {
         String project = null;
         String uuid = null;
         String kind = null;
-        String name = null;
         String names = null;
-        String runs = null;
         String orient = null;
-        String path = null;
-        V1EventsResponse response = api.getRunEvents(namespace, owner, project, uuid, kind, name, names, runs, orient, path);
+        V1EventsResponse response = api.getRunEvents(namespace, owner, project, uuid, kind, names, orient);
 
         // TODO: test validations
     }
@@ -491,6 +470,27 @@ public class RunsV1ApiTest {
         String project = null;
         String uuid = null;
         V1RunSettings response = api.getRunNamespace(owner, project, uuid);
+
+        // TODO: test validations
+    }
+    
+    /**
+     * Get run resources events
+     *
+     * 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void getRunResourcesTest() throws ApiException {
+        String namespace = null;
+        String owner = null;
+        String project = null;
+        String uuid = null;
+        String names = null;
+        Boolean tail = null;
+        V1EventsResponse response = api.getRunResources(namespace, owner, project, uuid, names, tail);
 
         // TODO: test validations
     }
@@ -648,7 +648,7 @@ public class RunsV1ApiTest {
     }
     
     /**
-     * List runs
+     * List runs io
      *
      * 
      *

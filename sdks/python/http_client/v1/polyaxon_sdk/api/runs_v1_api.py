@@ -1126,11 +1126,6 @@ class RunsV1Api(object):
         :param str uuid: Uuid identifier of the entity (required)
         :param str name: Artifact name (required)
         :param str namespace: namespace.
-        :param str kind: The artifact kind.   - model: model  - audio: audio  - video: vidio  - histogram: histogram  - image: image  - tensor: tensor  - dataframe: dataframe  - chart: plotly/bokeh chart  - csv: Comma  - tsv: Tab  - psv: Pipe  - ssv: Space  - metric: Metric  - env: Env  - html: HTML  - text: Text  - file: File  - dir: Dir  - dockerfile: Dockerfile  - docker_image: docker image  - data: data  - coderef: coderef  - table: table
-        :param str names: Names query param.
-        :param str runs: Runs query param.
-        :param str orient: Orient query param.
-        :param str path: Path query param.
         :return: None
                  If the method is called asynchronously,
                  returns the request thread.
@@ -1162,28 +1157,12 @@ class RunsV1Api(object):
         :param str uuid: Uuid identifier of the entity (required)
         :param str name: Artifact name (required)
         :param str namespace: namespace.
-        :param str kind: The artifact kind.   - model: model  - audio: audio  - video: vidio  - histogram: histogram  - image: image  - tensor: tensor  - dataframe: dataframe  - chart: plotly/bokeh chart  - csv: Comma  - tsv: Tab  - psv: Pipe  - ssv: Space  - metric: Metric  - env: Env  - html: HTML  - text: Text  - file: File  - dir: Dir  - dockerfile: Dockerfile  - docker_image: docker image  - data: data  - coderef: coderef  - table: table
-        :param str names: Names query param.
-        :param str runs: Runs query param.
-        :param str orient: Orient query param.
-        :param str path: Path query param.
         :return: None
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = [
-            "owner",
-            "project",
-            "uuid",
-            "name",
-            "namespace",
-            "kind",
-            "names",
-            "runs",
-            "orient",
-            "path",
-        ]  # noqa: E501
+        all_params = ["owner", "project", "uuid", "name", "namespace"]  # noqa: E501
         all_params.append("async_req")
         all_params.append("_return_http_data_only")
         all_params.append("_preload_content")
@@ -1234,16 +1213,6 @@ class RunsV1Api(object):
         query_params = []
         if "namespace" in params:
             query_params.append(("namespace", params["namespace"]))  # noqa: E501
-        if "kind" in params:
-            query_params.append(("kind", params["kind"]))  # noqa: E501
-        if "names" in params:
-            query_params.append(("names", params["names"]))  # noqa: E501
-        if "runs" in params:
-            query_params.append(("runs", params["runs"]))  # noqa: E501
-        if "orient" in params:
-            query_params.append(("orient", params["orient"]))  # noqa: E501
-        if "path" in params:
-            query_params.append(("path", params["path"]))  # noqa: E501
 
         header_params = {}
 
@@ -1425,12 +1394,9 @@ class RunsV1Api(object):
         :param str owner: Owner of the namespace (required)
         :param str project: Project where the run will be assigned (required)
         :param str kind: The artifact kind (required)
-        :param str uuid: Uuid identifier of the entity.
-        :param str name: Artifact name.
         :param str names: Names query param.
         :param str runs: Runs query param.
         :param str orient: Orient query param.
-        :param str path: Path query param.
         :return: V1EventsResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -1461,12 +1427,9 @@ class RunsV1Api(object):
         :param str owner: Owner of the namespace (required)
         :param str project: Project where the run will be assigned (required)
         :param str kind: The artifact kind (required)
-        :param str uuid: Uuid identifier of the entity.
-        :param str name: Artifact name.
         :param str names: Names query param.
         :param str runs: Runs query param.
         :param str orient: Orient query param.
-        :param str path: Path query param.
         :return: V1EventsResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -1477,12 +1440,9 @@ class RunsV1Api(object):
             "owner",
             "project",
             "kind",
-            "uuid",
-            "name",
             "names",
             "runs",
             "orient",
-            "path",
         ]  # noqa: E501
         all_params.append("async_req")
         all_params.append("_return_http_data_only")
@@ -1532,18 +1492,12 @@ class RunsV1Api(object):
             path_params["kind"] = params["kind"]  # noqa: E501
 
         query_params = []
-        if "uuid" in params:
-            query_params.append(("uuid", params["uuid"]))  # noqa: E501
-        if "name" in params:
-            query_params.append(("name", params["name"]))  # noqa: E501
         if "names" in params:
             query_params.append(("names", params["names"]))  # noqa: E501
         if "runs" in params:
             query_params.append(("runs", params["runs"]))  # noqa: E501
         if "orient" in params:
             query_params.append(("orient", params["orient"]))  # noqa: E501
-        if "path" in params:
-            query_params.append(("path", params["path"]))  # noqa: E501
 
         header_params = {}
 
@@ -1877,11 +1831,6 @@ class RunsV1Api(object):
         :param str uuid: Uuid identifier of the entity (required)
         :param str name: Artifact name (required)
         :param str namespace: namespace.
-        :param str kind: The artifact kind.   - model: model  - audio: audio  - video: vidio  - histogram: histogram  - image: image  - tensor: tensor  - dataframe: dataframe  - chart: plotly/bokeh chart  - csv: Comma  - tsv: Tab  - psv: Pipe  - ssv: Space  - metric: Metric  - env: Env  - html: HTML  - text: Text  - file: File  - dir: Dir  - dockerfile: Dockerfile  - docker_image: docker image  - data: data  - coderef: coderef  - table: table
-        :param str names: Names query param.
-        :param str runs: Runs query param.
-        :param str orient: Orient query param.
-        :param str path: Path query param.
         :return: V1RunArtifact
                  If the method is called asynchronously,
                  returns the request thread.
@@ -1913,28 +1862,12 @@ class RunsV1Api(object):
         :param str uuid: Uuid identifier of the entity (required)
         :param str name: Artifact name (required)
         :param str namespace: namespace.
-        :param str kind: The artifact kind.   - model: model  - audio: audio  - video: vidio  - histogram: histogram  - image: image  - tensor: tensor  - dataframe: dataframe  - chart: plotly/bokeh chart  - csv: Comma  - tsv: Tab  - psv: Pipe  - ssv: Space  - metric: Metric  - env: Env  - html: HTML  - text: Text  - file: File  - dir: Dir  - dockerfile: Dockerfile  - docker_image: docker image  - data: data  - coderef: coderef  - table: table
-        :param str names: Names query param.
-        :param str runs: Runs query param.
-        :param str orient: Orient query param.
-        :param str path: Path query param.
         :return: V1RunArtifact
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = [
-            "owner",
-            "project",
-            "uuid",
-            "name",
-            "namespace",
-            "kind",
-            "names",
-            "runs",
-            "orient",
-            "path",
-        ]  # noqa: E501
+        all_params = ["owner", "project", "uuid", "name", "namespace"]  # noqa: E501
         all_params.append("async_req")
         all_params.append("_return_http_data_only")
         all_params.append("_preload_content")
@@ -1985,16 +1918,6 @@ class RunsV1Api(object):
         query_params = []
         if "namespace" in params:
             query_params.append(("namespace", params["namespace"]))  # noqa: E501
-        if "kind" in params:
-            query_params.append(("kind", params["kind"]))  # noqa: E501
-        if "names" in params:
-            query_params.append(("names", params["names"]))  # noqa: E501
-        if "runs" in params:
-            query_params.append(("runs", params["runs"]))  # noqa: E501
-        if "orient" in params:
-            query_params.append(("orient", params["orient"]))  # noqa: E501
-        if "path" in params:
-            query_params.append(("path", params["path"]))  # noqa: E501
 
         header_params = {}
 
@@ -2489,11 +2412,6 @@ class RunsV1Api(object):
         :param str owner: Owner of the namespace (required)
         :param str project: Project where the run will be assigned (required)
         :param str uuid: Uuid identifier of the entity (required)
-        :param str name: Artifact name.
-        :param str kind: The artifact kind.   - model: model  - audio: audio  - video: vidio  - histogram: histogram  - image: image  - tensor: tensor  - dataframe: dataframe  - chart: plotly/bokeh chart  - csv: Comma  - tsv: Tab  - psv: Pipe  - ssv: Space  - metric: Metric  - env: Env  - html: HTML  - text: Text  - file: File  - dir: Dir  - dockerfile: Dockerfile  - docker_image: docker image  - data: data  - coderef: coderef  - table: table
-        :param str names: Names query param.
-        :param str runs: Runs query param.
-        :param str orient: Orient query param.
         :param str path: Path query param.
         :return: V1ArtifactTreeResponse
                  If the method is called asynchronously,
@@ -2525,29 +2443,13 @@ class RunsV1Api(object):
         :param str owner: Owner of the namespace (required)
         :param str project: Project where the run will be assigned (required)
         :param str uuid: Uuid identifier of the entity (required)
-        :param str name: Artifact name.
-        :param str kind: The artifact kind.   - model: model  - audio: audio  - video: vidio  - histogram: histogram  - image: image  - tensor: tensor  - dataframe: dataframe  - chart: plotly/bokeh chart  - csv: Comma  - tsv: Tab  - psv: Pipe  - ssv: Space  - metric: Metric  - env: Env  - html: HTML  - text: Text  - file: File  - dir: Dir  - dockerfile: Dockerfile  - docker_image: docker image  - data: data  - coderef: coderef  - table: table
-        :param str names: Names query param.
-        :param str runs: Runs query param.
-        :param str orient: Orient query param.
         :param str path: Path query param.
         :return: V1ArtifactTreeResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = [
-            "namespace",
-            "owner",
-            "project",
-            "uuid",
-            "name",
-            "kind",
-            "names",
-            "runs",
-            "orient",
-            "path",
-        ]  # noqa: E501
+        all_params = ["namespace", "owner", "project", "uuid", "path"]  # noqa: E501
         all_params.append("async_req")
         all_params.append("_return_http_data_only")
         all_params.append("_preload_content")
@@ -2596,16 +2498,6 @@ class RunsV1Api(object):
             path_params["uuid"] = params["uuid"]  # noqa: E501
 
         query_params = []
-        if "name" in params:
-            query_params.append(("name", params["name"]))  # noqa: E501
-        if "kind" in params:
-            query_params.append(("kind", params["kind"]))  # noqa: E501
-        if "names" in params:
-            query_params.append(("names", params["names"]))  # noqa: E501
-        if "runs" in params:
-            query_params.append(("runs", params["runs"]))  # noqa: E501
-        if "orient" in params:
-            query_params.append(("orient", params["orient"]))  # noqa: E501
         if "path" in params:
             query_params.append(("path", params["path"]))  # noqa: E501
 
@@ -2664,11 +2556,8 @@ class RunsV1Api(object):
         :param str project: Project where the run will be assigned (required)
         :param str uuid: Uuid identifier of the entity (required)
         :param str kind: The artifact kind (required)
-        :param str name: Artifact name.
         :param str names: Names query param.
-        :param str runs: Runs query param.
         :param str orient: Orient query param.
-        :param str path: Path query param.
         :return: V1EventsResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -2700,11 +2589,8 @@ class RunsV1Api(object):
         :param str project: Project where the run will be assigned (required)
         :param str uuid: Uuid identifier of the entity (required)
         :param str kind: The artifact kind (required)
-        :param str name: Artifact name.
         :param str names: Names query param.
-        :param str runs: Runs query param.
         :param str orient: Orient query param.
-        :param str path: Path query param.
         :return: V1EventsResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -2716,11 +2602,8 @@ class RunsV1Api(object):
             "project",
             "uuid",
             "kind",
-            "name",
             "names",
-            "runs",
             "orient",
-            "path",
         ]  # noqa: E501
         all_params.append("async_req")
         all_params.append("_return_http_data_only")
@@ -2777,16 +2660,10 @@ class RunsV1Api(object):
             path_params["kind"] = params["kind"]  # noqa: E501
 
         query_params = []
-        if "name" in params:
-            query_params.append(("name", params["name"]))  # noqa: E501
         if "names" in params:
             query_params.append(("names", params["names"]))  # noqa: E501
-        if "runs" in params:
-            query_params.append(("runs", params["runs"]))  # noqa: E501
         if "orient" in params:
             query_params.append(("orient", params["orient"]))  # noqa: E501
-        if "path" in params:
-            query_params.append(("path", params["path"]))  # noqa: E501
 
         header_params = {}
 
@@ -3099,6 +2976,160 @@ class RunsV1Api(object):
             post_params=form_params,
             files=local_var_files,
             response_type="V1RunSettings",  # noqa: E501
+            auth_settings=auth_settings,
+            async_req=params.get("async_req"),
+            _return_http_data_only=params.get("_return_http_data_only"),
+            _preload_content=params.get("_preload_content", True),
+            _request_timeout=params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
+
+    def get_run_resources(
+        self, namespace, owner, project, uuid, **kwargs
+    ):  # noqa: E501
+        """Get run resources events  # noqa: E501
+
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.get_run_resources(namespace, owner, project, uuid, async_req=True)
+        >>> result = thread.get()
+
+        :param async_req bool
+        :param str namespace: namespace (required)
+        :param str owner: Owner of the namespace (required)
+        :param str project: Project where the run will be assigned (required)
+        :param str uuid: Uuid identifier of the entity (required)
+        :param str names: Names query param.
+        :param bool tail: Query param flag to tail the values.
+        :return: V1EventsResponse
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+        kwargs["_return_http_data_only"] = True
+        if kwargs.get("async_req"):
+            return self.get_run_resources_with_http_info(
+                namespace, owner, project, uuid, **kwargs
+            )  # noqa: E501
+        else:
+            (data) = self.get_run_resources_with_http_info(
+                namespace, owner, project, uuid, **kwargs
+            )  # noqa: E501
+            return data
+
+    def get_run_resources_with_http_info(
+        self, namespace, owner, project, uuid, **kwargs
+    ):  # noqa: E501
+        """Get run resources events  # noqa: E501
+
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.get_run_resources_with_http_info(namespace, owner, project, uuid, async_req=True)
+        >>> result = thread.get()
+
+        :param async_req bool
+        :param str namespace: namespace (required)
+        :param str owner: Owner of the namespace (required)
+        :param str project: Project where the run will be assigned (required)
+        :param str uuid: Uuid identifier of the entity (required)
+        :param str names: Names query param.
+        :param bool tail: Query param flag to tail the values.
+        :return: V1EventsResponse
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+
+        all_params = [
+            "namespace",
+            "owner",
+            "project",
+            "uuid",
+            "names",
+            "tail",
+        ]  # noqa: E501
+        all_params.append("async_req")
+        all_params.append("_return_http_data_only")
+        all_params.append("_preload_content")
+        all_params.append("_request_timeout")
+
+        params = locals()
+        for key, val in six.iteritems(params["kwargs"]):
+            if key not in all_params:
+                raise TypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method get_run_resources" % key
+                )
+            params[key] = val
+        del params["kwargs"]
+        # verify the required parameter 'namespace' is set
+        if "namespace" not in params or params["namespace"] is None:
+            raise ValueError(
+                "Missing the required parameter `namespace` when calling `get_run_resources`"
+            )  # noqa: E501
+        # verify the required parameter 'owner' is set
+        if "owner" not in params or params["owner"] is None:
+            raise ValueError(
+                "Missing the required parameter `owner` when calling `get_run_resources`"
+            )  # noqa: E501
+        # verify the required parameter 'project' is set
+        if "project" not in params or params["project"] is None:
+            raise ValueError(
+                "Missing the required parameter `project` when calling `get_run_resources`"
+            )  # noqa: E501
+        # verify the required parameter 'uuid' is set
+        if "uuid" not in params or params["uuid"] is None:
+            raise ValueError(
+                "Missing the required parameter `uuid` when calling `get_run_resources`"
+            )  # noqa: E501
+
+        collection_formats = {}
+
+        path_params = {}
+        if "namespace" in params:
+            path_params["namespace"] = params["namespace"]  # noqa: E501
+        if "owner" in params:
+            path_params["owner"] = params["owner"]  # noqa: E501
+        if "project" in params:
+            path_params["project"] = params["project"]  # noqa: E501
+        if "uuid" in params:
+            path_params["uuid"] = params["uuid"]  # noqa: E501
+
+        query_params = []
+        if "names" in params:
+            query_params.append(("names", params["names"]))  # noqa: E501
+        if "tail" in params:
+            query_params.append(("tail", params["tail"]))  # noqa: E501
+
+        header_params = {}
+
+        form_params = []
+        local_var_files = {}
+
+        body_params = None
+        # HTTP header `Accept`
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
+
+        # HTTP header `Content-Type`
+        header_params[
+            "Content-Type"
+        ] = self.api_client.select_header_content_type(  # noqa: E501
+            ["application/json"]
+        )  # noqa: E501
+
+        # Authentication setting
+        auth_settings = ["ApiKey"]  # noqa: E501
+
+        return self.api_client.call_api(
+            "/streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/resources",
+            "GET",
+            path_params,
+            query_params,
+            header_params,
+            body=body_params,
+            post_params=form_params,
+            files=local_var_files,
+            response_type="V1EventsResponse",  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get("async_req"),
             _return_http_data_only=params.get("_return_http_data_only"),
@@ -4141,7 +4172,7 @@ class RunsV1Api(object):
         )
 
     def list_runs_io(self, owner, project, **kwargs):  # noqa: E501
-        """List runs  # noqa: E501
+        """List runs io  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -4171,7 +4202,7 @@ class RunsV1Api(object):
             return data
 
     def list_runs_io_with_http_info(self, owner, project, **kwargs):  # noqa: E501
-        """List runs  # noqa: E501
+        """List runs io  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True

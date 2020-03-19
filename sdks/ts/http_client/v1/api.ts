@@ -19190,15 +19190,10 @@ export const RunsV1ApiFetchParamCreator = function (configuration?: Configuratio
          * @param {string} uuid Uuid identifier of the entity
          * @param {string} name Artifact name
          * @param {string} [namespace] namespace.
-         * @param {'model' | 'audio' | 'video' | 'histogram' | 'image' | 'tensor' | 'dataframe' | 'chart' | 'csv' | 'tsv' | 'psv' | 'ssv' | 'metric' | 'env' | 'html' | 'text' | 'file' | 'dir' | 'dockerfile' | 'docker_image' | 'data' | 'coderef' | 'table'} [kind] The artifact kind.   - model: model  - audio: audio  - video: vidio  - histogram: histogram  - image: image  - tensor: tensor  - dataframe: dataframe  - chart: plotly/bokeh chart  - csv: Comma  - tsv: Tab  - psv: Pipe  - ssv: Space  - metric: Metric  - env: Env  - html: HTML  - text: Text  - file: File  - dir: Dir  - dockerfile: Dockerfile  - docker_image: docker image  - data: data  - coderef: coderef  - table: table
-         * @param {string} [names] Names query param.
-         * @param {string} [runs] Runs query param.
-         * @param {string} [orient] Orient query param.
-         * @param {string} [path] Path query param.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteRunArtifactLineage(owner: string, project: string, uuid: string, name: string, namespace?: string, kind?: 'model' | 'audio' | 'video' | 'histogram' | 'image' | 'tensor' | 'dataframe' | 'chart' | 'csv' | 'tsv' | 'psv' | 'ssv' | 'metric' | 'env' | 'html' | 'text' | 'file' | 'dir' | 'dockerfile' | 'docker_image' | 'data' | 'coderef' | 'table', names?: string, runs?: string, orient?: string, path?: string, options: any = {}): FetchArgs {
+        deleteRunArtifactLineage(owner: string, project: string, uuid: string, name: string, namespace?: string, options: any = {}): FetchArgs {
             // verify required parameter 'owner' is not null or undefined
             if (owner === null || owner === undefined) {
                 throw new RequiredError('owner','Required parameter owner was null or undefined when calling deleteRunArtifactLineage.');
@@ -19235,26 +19230,6 @@ export const RunsV1ApiFetchParamCreator = function (configuration?: Configuratio
 
             if (namespace !== undefined) {
                 localVarQueryParameter['namespace'] = namespace;
-            }
-
-            if (kind !== undefined) {
-                localVarQueryParameter['kind'] = kind;
-            }
-
-            if (names !== undefined) {
-                localVarQueryParameter['names'] = names;
-            }
-
-            if (runs !== undefined) {
-                localVarQueryParameter['runs'] = runs;
-            }
-
-            if (orient !== undefined) {
-                localVarQueryParameter['orient'] = orient;
-            }
-
-            if (path !== undefined) {
-                localVarQueryParameter['path'] = path;
             }
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
@@ -19326,16 +19301,13 @@ export const RunsV1ApiFetchParamCreator = function (configuration?: Configuratio
          * @param {string} owner Owner of the namespace
          * @param {string} project Project where the run will be assigned
          * @param {'model' | 'audio' | 'video' | 'histogram' | 'image' | 'tensor' | 'dataframe' | 'chart' | 'csv' | 'tsv' | 'psv' | 'ssv' | 'metric' | 'env' | 'html' | 'text' | 'file' | 'dir' | 'dockerfile' | 'docker_image' | 'data' | 'coderef' | 'table'} kind The artifact kind
-         * @param {string} [uuid] Uuid identifier of the entity.
-         * @param {string} [name] Artifact name.
          * @param {string} [names] Names query param.
          * @param {string} [runs] Runs query param.
          * @param {string} [orient] Orient query param.
-         * @param {string} [path] Path query param.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getMultiRunEvents(namespace: string, owner: string, project: string, kind: 'model' | 'audio' | 'video' | 'histogram' | 'image' | 'tensor' | 'dataframe' | 'chart' | 'csv' | 'tsv' | 'psv' | 'ssv' | 'metric' | 'env' | 'html' | 'text' | 'file' | 'dir' | 'dockerfile' | 'docker_image' | 'data' | 'coderef' | 'table', uuid?: string, name?: string, names?: string, runs?: string, orient?: string, path?: string, options: any = {}): FetchArgs {
+        getMultiRunEvents(namespace: string, owner: string, project: string, kind: 'model' | 'audio' | 'video' | 'histogram' | 'image' | 'tensor' | 'dataframe' | 'chart' | 'csv' | 'tsv' | 'psv' | 'ssv' | 'metric' | 'env' | 'html' | 'text' | 'file' | 'dir' | 'dockerfile' | 'docker_image' | 'data' | 'coderef' | 'table', names?: string, runs?: string, orient?: string, options: any = {}): FetchArgs {
             // verify required parameter 'namespace' is not null or undefined
             if (namespace === null || namespace === undefined) {
                 throw new RequiredError('namespace','Required parameter namespace was null or undefined when calling getMultiRunEvents.');
@@ -19370,14 +19342,6 @@ export const RunsV1ApiFetchParamCreator = function (configuration?: Configuratio
                 localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
             }
 
-            if (uuid !== undefined) {
-                localVarQueryParameter['uuid'] = uuid;
-            }
-
-            if (name !== undefined) {
-                localVarQueryParameter['name'] = name;
-            }
-
             if (names !== undefined) {
                 localVarQueryParameter['names'] = names;
             }
@@ -19388,10 +19352,6 @@ export const RunsV1ApiFetchParamCreator = function (configuration?: Configuratio
 
             if (orient !== undefined) {
                 localVarQueryParameter['orient'] = orient;
-            }
-
-            if (path !== undefined) {
-                localVarQueryParameter['path'] = path;
             }
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
@@ -19526,15 +19486,10 @@ export const RunsV1ApiFetchParamCreator = function (configuration?: Configuratio
          * @param {string} uuid Uuid identifier of the entity
          * @param {string} name Artifact name
          * @param {string} [namespace] namespace.
-         * @param {'model' | 'audio' | 'video' | 'histogram' | 'image' | 'tensor' | 'dataframe' | 'chart' | 'csv' | 'tsv' | 'psv' | 'ssv' | 'metric' | 'env' | 'html' | 'text' | 'file' | 'dir' | 'dockerfile' | 'docker_image' | 'data' | 'coderef' | 'table'} [kind] The artifact kind.   - model: model  - audio: audio  - video: vidio  - histogram: histogram  - image: image  - tensor: tensor  - dataframe: dataframe  - chart: plotly/bokeh chart  - csv: Comma  - tsv: Tab  - psv: Pipe  - ssv: Space  - metric: Metric  - env: Env  - html: HTML  - text: Text  - file: File  - dir: Dir  - dockerfile: Dockerfile  - docker_image: docker image  - data: data  - coderef: coderef  - table: table
-         * @param {string} [names] Names query param.
-         * @param {string} [runs] Runs query param.
-         * @param {string} [orient] Orient query param.
-         * @param {string} [path] Path query param.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getRunArtifactLineage(owner: string, project: string, uuid: string, name: string, namespace?: string, kind?: 'model' | 'audio' | 'video' | 'histogram' | 'image' | 'tensor' | 'dataframe' | 'chart' | 'csv' | 'tsv' | 'psv' | 'ssv' | 'metric' | 'env' | 'html' | 'text' | 'file' | 'dir' | 'dockerfile' | 'docker_image' | 'data' | 'coderef' | 'table', names?: string, runs?: string, orient?: string, path?: string, options: any = {}): FetchArgs {
+        getRunArtifactLineage(owner: string, project: string, uuid: string, name: string, namespace?: string, options: any = {}): FetchArgs {
             // verify required parameter 'owner' is not null or undefined
             if (owner === null || owner === undefined) {
                 throw new RequiredError('owner','Required parameter owner was null or undefined when calling getRunArtifactLineage.');
@@ -19571,26 +19526,6 @@ export const RunsV1ApiFetchParamCreator = function (configuration?: Configuratio
 
             if (namespace !== undefined) {
                 localVarQueryParameter['namespace'] = namespace;
-            }
-
-            if (kind !== undefined) {
-                localVarQueryParameter['kind'] = kind;
-            }
-
-            if (names !== undefined) {
-                localVarQueryParameter['names'] = names;
-            }
-
-            if (runs !== undefined) {
-                localVarQueryParameter['runs'] = runs;
-            }
-
-            if (orient !== undefined) {
-                localVarQueryParameter['orient'] = orient;
-            }
-
-            if (path !== undefined) {
-                localVarQueryParameter['path'] = path;
             }
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
@@ -19798,16 +19733,11 @@ export const RunsV1ApiFetchParamCreator = function (configuration?: Configuratio
          * @param {string} owner Owner of the namespace
          * @param {string} project Project where the run will be assigned
          * @param {string} uuid Uuid identifier of the entity
-         * @param {string} [name] Artifact name.
-         * @param {'model' | 'audio' | 'video' | 'histogram' | 'image' | 'tensor' | 'dataframe' | 'chart' | 'csv' | 'tsv' | 'psv' | 'ssv' | 'metric' | 'env' | 'html' | 'text' | 'file' | 'dir' | 'dockerfile' | 'docker_image' | 'data' | 'coderef' | 'table'} [kind] The artifact kind.   - model: model  - audio: audio  - video: vidio  - histogram: histogram  - image: image  - tensor: tensor  - dataframe: dataframe  - chart: plotly/bokeh chart  - csv: Comma  - tsv: Tab  - psv: Pipe  - ssv: Space  - metric: Metric  - env: Env  - html: HTML  - text: Text  - file: File  - dir: Dir  - dockerfile: Dockerfile  - docker_image: docker image  - data: data  - coderef: coderef  - table: table
-         * @param {string} [names] Names query param.
-         * @param {string} [runs] Runs query param.
-         * @param {string} [orient] Orient query param.
          * @param {string} [path] Path query param.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getRunArtifactsTree(namespace: string, owner: string, project: string, uuid: string, name?: string, kind?: 'model' | 'audio' | 'video' | 'histogram' | 'image' | 'tensor' | 'dataframe' | 'chart' | 'csv' | 'tsv' | 'psv' | 'ssv' | 'metric' | 'env' | 'html' | 'text' | 'file' | 'dir' | 'dockerfile' | 'docker_image' | 'data' | 'coderef' | 'table', names?: string, runs?: string, orient?: string, path?: string, options: any = {}): FetchArgs {
+        getRunArtifactsTree(namespace: string, owner: string, project: string, uuid: string, path?: string, options: any = {}): FetchArgs {
             // verify required parameter 'namespace' is not null or undefined
             if (namespace === null || namespace === undefined) {
                 throw new RequiredError('namespace','Required parameter namespace was null or undefined when calling getRunArtifactsTree.');
@@ -19842,26 +19772,6 @@ export const RunsV1ApiFetchParamCreator = function (configuration?: Configuratio
                 localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
             }
 
-            if (name !== undefined) {
-                localVarQueryParameter['name'] = name;
-            }
-
-            if (kind !== undefined) {
-                localVarQueryParameter['kind'] = kind;
-            }
-
-            if (names !== undefined) {
-                localVarQueryParameter['names'] = names;
-            }
-
-            if (runs !== undefined) {
-                localVarQueryParameter['runs'] = runs;
-            }
-
-            if (orient !== undefined) {
-                localVarQueryParameter['orient'] = orient;
-            }
-
             if (path !== undefined) {
                 localVarQueryParameter['path'] = path;
             }
@@ -19884,15 +19794,12 @@ export const RunsV1ApiFetchParamCreator = function (configuration?: Configuratio
          * @param {string} project Project where the run will be assigned
          * @param {string} uuid Uuid identifier of the entity
          * @param {'model' | 'audio' | 'video' | 'histogram' | 'image' | 'tensor' | 'dataframe' | 'chart' | 'csv' | 'tsv' | 'psv' | 'ssv' | 'metric' | 'env' | 'html' | 'text' | 'file' | 'dir' | 'dockerfile' | 'docker_image' | 'data' | 'coderef' | 'table'} kind The artifact kind
-         * @param {string} [name] Artifact name.
          * @param {string} [names] Names query param.
-         * @param {string} [runs] Runs query param.
          * @param {string} [orient] Orient query param.
-         * @param {string} [path] Path query param.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getRunEvents(namespace: string, owner: string, project: string, uuid: string, kind: 'model' | 'audio' | 'video' | 'histogram' | 'image' | 'tensor' | 'dataframe' | 'chart' | 'csv' | 'tsv' | 'psv' | 'ssv' | 'metric' | 'env' | 'html' | 'text' | 'file' | 'dir' | 'dockerfile' | 'docker_image' | 'data' | 'coderef' | 'table', name?: string, names?: string, runs?: string, orient?: string, path?: string, options: any = {}): FetchArgs {
+        getRunEvents(namespace: string, owner: string, project: string, uuid: string, kind: 'model' | 'audio' | 'video' | 'histogram' | 'image' | 'tensor' | 'dataframe' | 'chart' | 'csv' | 'tsv' | 'psv' | 'ssv' | 'metric' | 'env' | 'html' | 'text' | 'file' | 'dir' | 'dockerfile' | 'docker_image' | 'data' | 'coderef' | 'table', names?: string, orient?: string, options: any = {}): FetchArgs {
             // verify required parameter 'namespace' is not null or undefined
             if (namespace === null || namespace === undefined) {
                 throw new RequiredError('namespace','Required parameter namespace was null or undefined when calling getRunEvents.');
@@ -19932,24 +19839,12 @@ export const RunsV1ApiFetchParamCreator = function (configuration?: Configuratio
                 localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
             }
 
-            if (name !== undefined) {
-                localVarQueryParameter['name'] = name;
-            }
-
             if (names !== undefined) {
                 localVarQueryParameter['names'] = names;
             }
 
-            if (runs !== undefined) {
-                localVarQueryParameter['runs'] = runs;
-            }
-
             if (orient !== undefined) {
                 localVarQueryParameter['orient'] = orient;
-            }
-
-            if (path !== undefined) {
-                localVarQueryParameter['path'] = path;
             }
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
@@ -20064,6 +19959,71 @@ export const RunsV1ApiFetchParamCreator = function (configuration?: Configuratio
 					? configuration.apiKey("Authorization")
 					: configuration.apiKey;
                 localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get run resources events
+         * @param {string} namespace namespace
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project where the run will be assigned
+         * @param {string} uuid Uuid identifier of the entity
+         * @param {string} [names] Names query param.
+         * @param {boolean} [tail] Query param flag to tail the values.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getRunResources(namespace: string, owner: string, project: string, uuid: string, names?: string, tail?: boolean, options: any = {}): FetchArgs {
+            // verify required parameter 'namespace' is not null or undefined
+            if (namespace === null || namespace === undefined) {
+                throw new RequiredError('namespace','Required parameter namespace was null or undefined when calling getRunResources.');
+            }
+            // verify required parameter 'owner' is not null or undefined
+            if (owner === null || owner === undefined) {
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling getRunResources.');
+            }
+            // verify required parameter 'project' is not null or undefined
+            if (project === null || project === undefined) {
+                throw new RequiredError('project','Required parameter project was null or undefined when calling getRunResources.');
+            }
+            // verify required parameter 'uuid' is not null or undefined
+            if (uuid === null || uuid === undefined) {
+                throw new RequiredError('uuid','Required parameter uuid was null or undefined when calling getRunResources.');
+            }
+            const localVarPath = `/streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/resources`
+                .replace(`{${"namespace"}}`, encodeURIComponent(String(namespace)))
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"project"}}`, encodeURIComponent(String(project)))
+                .replace(`{${"uuid"}}`, encodeURIComponent(String(uuid)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("Authorization")
+					: configuration.apiKey;
+                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            if (names !== undefined) {
+                localVarQueryParameter['names'] = names;
+            }
+
+            if (tail !== undefined) {
+                localVarQueryParameter['tail'] = tail;
             }
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
@@ -20512,7 +20472,7 @@ export const RunsV1ApiFetchParamCreator = function (configuration?: Configuratio
         },
         /**
          * 
-         * @summary List runs
+         * @summary List runs io
          * @param {string} owner Owner of the namespace
          * @param {string} project Project under namesapce
          * @param {number} [offset] Pagination offset.
@@ -21508,16 +21468,11 @@ export const RunsV1ApiFp = function(configuration?: Configuration) {
          * @param {string} uuid Uuid identifier of the entity
          * @param {string} name Artifact name
          * @param {string} [namespace] namespace.
-         * @param {'model' | 'audio' | 'video' | 'histogram' | 'image' | 'tensor' | 'dataframe' | 'chart' | 'csv' | 'tsv' | 'psv' | 'ssv' | 'metric' | 'env' | 'html' | 'text' | 'file' | 'dir' | 'dockerfile' | 'docker_image' | 'data' | 'coderef' | 'table'} [kind] The artifact kind.   - model: model  - audio: audio  - video: vidio  - histogram: histogram  - image: image  - tensor: tensor  - dataframe: dataframe  - chart: plotly/bokeh chart  - csv: Comma  - tsv: Tab  - psv: Pipe  - ssv: Space  - metric: Metric  - env: Env  - html: HTML  - text: Text  - file: File  - dir: Dir  - dockerfile: Dockerfile  - docker_image: docker image  - data: data  - coderef: coderef  - table: table
-         * @param {string} [names] Names query param.
-         * @param {string} [runs] Runs query param.
-         * @param {string} [orient] Orient query param.
-         * @param {string} [path] Path query param.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteRunArtifactLineage(owner: string, project: string, uuid: string, name: string, namespace?: string, kind?: 'model' | 'audio' | 'video' | 'histogram' | 'image' | 'tensor' | 'dataframe' | 'chart' | 'csv' | 'tsv' | 'psv' | 'ssv' | 'metric' | 'env' | 'html' | 'text' | 'file' | 'dir' | 'dockerfile' | 'docker_image' | 'data' | 'coderef' | 'table', names?: string, runs?: string, orient?: string, path?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
-            const localVarFetchArgs = RunsV1ApiFetchParamCreator(configuration).deleteRunArtifactLineage(owner, project, uuid, name, namespace, kind, names, runs, orient, path, options);
+        deleteRunArtifactLineage(owner: string, project: string, uuid: string, name: string, namespace?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+            const localVarFetchArgs = RunsV1ApiFetchParamCreator(configuration).deleteRunArtifactLineage(owner, project, uuid, name, namespace, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -21556,17 +21511,14 @@ export const RunsV1ApiFp = function(configuration?: Configuration) {
          * @param {string} owner Owner of the namespace
          * @param {string} project Project where the run will be assigned
          * @param {'model' | 'audio' | 'video' | 'histogram' | 'image' | 'tensor' | 'dataframe' | 'chart' | 'csv' | 'tsv' | 'psv' | 'ssv' | 'metric' | 'env' | 'html' | 'text' | 'file' | 'dir' | 'dockerfile' | 'docker_image' | 'data' | 'coderef' | 'table'} kind The artifact kind
-         * @param {string} [uuid] Uuid identifier of the entity.
-         * @param {string} [name] Artifact name.
          * @param {string} [names] Names query param.
          * @param {string} [runs] Runs query param.
          * @param {string} [orient] Orient query param.
-         * @param {string} [path] Path query param.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getMultiRunEvents(namespace: string, owner: string, project: string, kind: 'model' | 'audio' | 'video' | 'histogram' | 'image' | 'tensor' | 'dataframe' | 'chart' | 'csv' | 'tsv' | 'psv' | 'ssv' | 'metric' | 'env' | 'html' | 'text' | 'file' | 'dir' | 'dockerfile' | 'docker_image' | 'data' | 'coderef' | 'table', uuid?: string, name?: string, names?: string, runs?: string, orient?: string, path?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1EventsResponse> {
-            const localVarFetchArgs = RunsV1ApiFetchParamCreator(configuration).getMultiRunEvents(namespace, owner, project, kind, uuid, name, names, runs, orient, path, options);
+        getMultiRunEvents(namespace: string, owner: string, project: string, kind: 'model' | 'audio' | 'video' | 'histogram' | 'image' | 'tensor' | 'dataframe' | 'chart' | 'csv' | 'tsv' | 'psv' | 'ssv' | 'metric' | 'env' | 'html' | 'text' | 'file' | 'dir' | 'dockerfile' | 'docker_image' | 'data' | 'coderef' | 'table', names?: string, runs?: string, orient?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1EventsResponse> {
+            const localVarFetchArgs = RunsV1ApiFetchParamCreator(configuration).getMultiRunEvents(namespace, owner, project, kind, names, runs, orient, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -21630,16 +21582,11 @@ export const RunsV1ApiFp = function(configuration?: Configuration) {
          * @param {string} uuid Uuid identifier of the entity
          * @param {string} name Artifact name
          * @param {string} [namespace] namespace.
-         * @param {'model' | 'audio' | 'video' | 'histogram' | 'image' | 'tensor' | 'dataframe' | 'chart' | 'csv' | 'tsv' | 'psv' | 'ssv' | 'metric' | 'env' | 'html' | 'text' | 'file' | 'dir' | 'dockerfile' | 'docker_image' | 'data' | 'coderef' | 'table'} [kind] The artifact kind.   - model: model  - audio: audio  - video: vidio  - histogram: histogram  - image: image  - tensor: tensor  - dataframe: dataframe  - chart: plotly/bokeh chart  - csv: Comma  - tsv: Tab  - psv: Pipe  - ssv: Space  - metric: Metric  - env: Env  - html: HTML  - text: Text  - file: File  - dir: Dir  - dockerfile: Dockerfile  - docker_image: docker image  - data: data  - coderef: coderef  - table: table
-         * @param {string} [names] Names query param.
-         * @param {string} [runs] Runs query param.
-         * @param {string} [orient] Orient query param.
-         * @param {string} [path] Path query param.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getRunArtifactLineage(owner: string, project: string, uuid: string, name: string, namespace?: string, kind?: 'model' | 'audio' | 'video' | 'histogram' | 'image' | 'tensor' | 'dataframe' | 'chart' | 'csv' | 'tsv' | 'psv' | 'ssv' | 'metric' | 'env' | 'html' | 'text' | 'file' | 'dir' | 'dockerfile' | 'docker_image' | 'data' | 'coderef' | 'table', names?: string, runs?: string, orient?: string, path?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1RunArtifact> {
-            const localVarFetchArgs = RunsV1ApiFetchParamCreator(configuration).getRunArtifactLineage(owner, project, uuid, name, namespace, kind, names, runs, orient, path, options);
+        getRunArtifactLineage(owner: string, project: string, uuid: string, name: string, namespace?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1RunArtifact> {
+            const localVarFetchArgs = RunsV1ApiFetchParamCreator(configuration).getRunArtifactLineage(owner, project, uuid, name, namespace, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -21728,17 +21675,12 @@ export const RunsV1ApiFp = function(configuration?: Configuration) {
          * @param {string} owner Owner of the namespace
          * @param {string} project Project where the run will be assigned
          * @param {string} uuid Uuid identifier of the entity
-         * @param {string} [name] Artifact name.
-         * @param {'model' | 'audio' | 'video' | 'histogram' | 'image' | 'tensor' | 'dataframe' | 'chart' | 'csv' | 'tsv' | 'psv' | 'ssv' | 'metric' | 'env' | 'html' | 'text' | 'file' | 'dir' | 'dockerfile' | 'docker_image' | 'data' | 'coderef' | 'table'} [kind] The artifact kind.   - model: model  - audio: audio  - video: vidio  - histogram: histogram  - image: image  - tensor: tensor  - dataframe: dataframe  - chart: plotly/bokeh chart  - csv: Comma  - tsv: Tab  - psv: Pipe  - ssv: Space  - metric: Metric  - env: Env  - html: HTML  - text: Text  - file: File  - dir: Dir  - dockerfile: Dockerfile  - docker_image: docker image  - data: data  - coderef: coderef  - table: table
-         * @param {string} [names] Names query param.
-         * @param {string} [runs] Runs query param.
-         * @param {string} [orient] Orient query param.
          * @param {string} [path] Path query param.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getRunArtifactsTree(namespace: string, owner: string, project: string, uuid: string, name?: string, kind?: 'model' | 'audio' | 'video' | 'histogram' | 'image' | 'tensor' | 'dataframe' | 'chart' | 'csv' | 'tsv' | 'psv' | 'ssv' | 'metric' | 'env' | 'html' | 'text' | 'file' | 'dir' | 'dockerfile' | 'docker_image' | 'data' | 'coderef' | 'table', names?: string, runs?: string, orient?: string, path?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ArtifactTreeResponse> {
-            const localVarFetchArgs = RunsV1ApiFetchParamCreator(configuration).getRunArtifactsTree(namespace, owner, project, uuid, name, kind, names, runs, orient, path, options);
+        getRunArtifactsTree(namespace: string, owner: string, project: string, uuid: string, path?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ArtifactTreeResponse> {
+            const localVarFetchArgs = RunsV1ApiFetchParamCreator(configuration).getRunArtifactsTree(namespace, owner, project, uuid, path, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -21757,16 +21699,13 @@ export const RunsV1ApiFp = function(configuration?: Configuration) {
          * @param {string} project Project where the run will be assigned
          * @param {string} uuid Uuid identifier of the entity
          * @param {'model' | 'audio' | 'video' | 'histogram' | 'image' | 'tensor' | 'dataframe' | 'chart' | 'csv' | 'tsv' | 'psv' | 'ssv' | 'metric' | 'env' | 'html' | 'text' | 'file' | 'dir' | 'dockerfile' | 'docker_image' | 'data' | 'coderef' | 'table'} kind The artifact kind
-         * @param {string} [name] Artifact name.
          * @param {string} [names] Names query param.
-         * @param {string} [runs] Runs query param.
          * @param {string} [orient] Orient query param.
-         * @param {string} [path] Path query param.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getRunEvents(namespace: string, owner: string, project: string, uuid: string, kind: 'model' | 'audio' | 'video' | 'histogram' | 'image' | 'tensor' | 'dataframe' | 'chart' | 'csv' | 'tsv' | 'psv' | 'ssv' | 'metric' | 'env' | 'html' | 'text' | 'file' | 'dir' | 'dockerfile' | 'docker_image' | 'data' | 'coderef' | 'table', name?: string, names?: string, runs?: string, orient?: string, path?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1EventsResponse> {
-            const localVarFetchArgs = RunsV1ApiFetchParamCreator(configuration).getRunEvents(namespace, owner, project, uuid, kind, name, names, runs, orient, path, options);
+        getRunEvents(namespace: string, owner: string, project: string, uuid: string, kind: 'model' | 'audio' | 'video' | 'histogram' | 'image' | 'tensor' | 'dataframe' | 'chart' | 'csv' | 'tsv' | 'psv' | 'ssv' | 'metric' | 'env' | 'html' | 'text' | 'file' | 'dir' | 'dockerfile' | 'docker_image' | 'data' | 'coderef' | 'table', names?: string, orient?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1EventsResponse> {
+            const localVarFetchArgs = RunsV1ApiFetchParamCreator(configuration).getRunEvents(namespace, owner, project, uuid, kind, names, orient, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -21812,6 +21751,30 @@ export const RunsV1ApiFp = function(configuration?: Configuration) {
          */
         getRunNamespace(owner: string, project: string, uuid: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1RunSettings> {
             const localVarFetchArgs = RunsV1ApiFetchParamCreator(configuration).getRunNamespace(owner, project, uuid, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary Get run resources events
+         * @param {string} namespace namespace
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project where the run will be assigned
+         * @param {string} uuid Uuid identifier of the entity
+         * @param {string} [names] Names query param.
+         * @param {boolean} [tail] Query param flag to tail the values.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getRunResources(namespace: string, owner: string, project: string, uuid: string, names?: string, tail?: boolean, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1EventsResponse> {
+            const localVarFetchArgs = RunsV1ApiFetchParamCreator(configuration).getRunResources(namespace, owner, project, uuid, names, tail, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -22000,7 +21963,7 @@ export const RunsV1ApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary List runs
+         * @summary List runs io
          * @param {string} owner Owner of the namespace
          * @param {string} project Project under namesapce
          * @param {number} [offset] Pagination offset.
@@ -22425,16 +22388,11 @@ export const RunsV1ApiFactory = function (configuration?: Configuration, fetch?:
          * @param {string} uuid Uuid identifier of the entity
          * @param {string} name Artifact name
          * @param {string} [namespace] namespace.
-         * @param {'model' | 'audio' | 'video' | 'histogram' | 'image' | 'tensor' | 'dataframe' | 'chart' | 'csv' | 'tsv' | 'psv' | 'ssv' | 'metric' | 'env' | 'html' | 'text' | 'file' | 'dir' | 'dockerfile' | 'docker_image' | 'data' | 'coderef' | 'table'} [kind] The artifact kind.   - model: model  - audio: audio  - video: vidio  - histogram: histogram  - image: image  - tensor: tensor  - dataframe: dataframe  - chart: plotly/bokeh chart  - csv: Comma  - tsv: Tab  - psv: Pipe  - ssv: Space  - metric: Metric  - env: Env  - html: HTML  - text: Text  - file: File  - dir: Dir  - dockerfile: Dockerfile  - docker_image: docker image  - data: data  - coderef: coderef  - table: table
-         * @param {string} [names] Names query param.
-         * @param {string} [runs] Runs query param.
-         * @param {string} [orient] Orient query param.
-         * @param {string} [path] Path query param.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteRunArtifactLineage(owner: string, project: string, uuid: string, name: string, namespace?: string, kind?: 'model' | 'audio' | 'video' | 'histogram' | 'image' | 'tensor' | 'dataframe' | 'chart' | 'csv' | 'tsv' | 'psv' | 'ssv' | 'metric' | 'env' | 'html' | 'text' | 'file' | 'dir' | 'dockerfile' | 'docker_image' | 'data' | 'coderef' | 'table', names?: string, runs?: string, orient?: string, path?: string, options?: any) {
-            return RunsV1ApiFp(configuration).deleteRunArtifactLineage(owner, project, uuid, name, namespace, kind, names, runs, orient, path, options)(fetch, basePath);
+        deleteRunArtifactLineage(owner: string, project: string, uuid: string, name: string, namespace?: string, options?: any) {
+            return RunsV1ApiFp(configuration).deleteRunArtifactLineage(owner, project, uuid, name, namespace, options)(fetch, basePath);
         },
         /**
          * 
@@ -22455,17 +22413,14 @@ export const RunsV1ApiFactory = function (configuration?: Configuration, fetch?:
          * @param {string} owner Owner of the namespace
          * @param {string} project Project where the run will be assigned
          * @param {'model' | 'audio' | 'video' | 'histogram' | 'image' | 'tensor' | 'dataframe' | 'chart' | 'csv' | 'tsv' | 'psv' | 'ssv' | 'metric' | 'env' | 'html' | 'text' | 'file' | 'dir' | 'dockerfile' | 'docker_image' | 'data' | 'coderef' | 'table'} kind The artifact kind
-         * @param {string} [uuid] Uuid identifier of the entity.
-         * @param {string} [name] Artifact name.
          * @param {string} [names] Names query param.
          * @param {string} [runs] Runs query param.
          * @param {string} [orient] Orient query param.
-         * @param {string} [path] Path query param.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getMultiRunEvents(namespace: string, owner: string, project: string, kind: 'model' | 'audio' | 'video' | 'histogram' | 'image' | 'tensor' | 'dataframe' | 'chart' | 'csv' | 'tsv' | 'psv' | 'ssv' | 'metric' | 'env' | 'html' | 'text' | 'file' | 'dir' | 'dockerfile' | 'docker_image' | 'data' | 'coderef' | 'table', uuid?: string, name?: string, names?: string, runs?: string, orient?: string, path?: string, options?: any) {
-            return RunsV1ApiFp(configuration).getMultiRunEvents(namespace, owner, project, kind, uuid, name, names, runs, orient, path, options)(fetch, basePath);
+        getMultiRunEvents(namespace: string, owner: string, project: string, kind: 'model' | 'audio' | 'video' | 'histogram' | 'image' | 'tensor' | 'dataframe' | 'chart' | 'csv' | 'tsv' | 'psv' | 'ssv' | 'metric' | 'env' | 'html' | 'text' | 'file' | 'dir' | 'dockerfile' | 'docker_image' | 'data' | 'coderef' | 'table', names?: string, runs?: string, orient?: string, options?: any) {
+            return RunsV1ApiFp(configuration).getMultiRunEvents(namespace, owner, project, kind, names, runs, orient, options)(fetch, basePath);
         },
         /**
          * 
@@ -22502,16 +22457,11 @@ export const RunsV1ApiFactory = function (configuration?: Configuration, fetch?:
          * @param {string} uuid Uuid identifier of the entity
          * @param {string} name Artifact name
          * @param {string} [namespace] namespace.
-         * @param {'model' | 'audio' | 'video' | 'histogram' | 'image' | 'tensor' | 'dataframe' | 'chart' | 'csv' | 'tsv' | 'psv' | 'ssv' | 'metric' | 'env' | 'html' | 'text' | 'file' | 'dir' | 'dockerfile' | 'docker_image' | 'data' | 'coderef' | 'table'} [kind] The artifact kind.   - model: model  - audio: audio  - video: vidio  - histogram: histogram  - image: image  - tensor: tensor  - dataframe: dataframe  - chart: plotly/bokeh chart  - csv: Comma  - tsv: Tab  - psv: Pipe  - ssv: Space  - metric: Metric  - env: Env  - html: HTML  - text: Text  - file: File  - dir: Dir  - dockerfile: Dockerfile  - docker_image: docker image  - data: data  - coderef: coderef  - table: table
-         * @param {string} [names] Names query param.
-         * @param {string} [runs] Runs query param.
-         * @param {string} [orient] Orient query param.
-         * @param {string} [path] Path query param.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getRunArtifactLineage(owner: string, project: string, uuid: string, name: string, namespace?: string, kind?: 'model' | 'audio' | 'video' | 'histogram' | 'image' | 'tensor' | 'dataframe' | 'chart' | 'csv' | 'tsv' | 'psv' | 'ssv' | 'metric' | 'env' | 'html' | 'text' | 'file' | 'dir' | 'dockerfile' | 'docker_image' | 'data' | 'coderef' | 'table', names?: string, runs?: string, orient?: string, path?: string, options?: any) {
-            return RunsV1ApiFp(configuration).getRunArtifactLineage(owner, project, uuid, name, namespace, kind, names, runs, orient, path, options)(fetch, basePath);
+        getRunArtifactLineage(owner: string, project: string, uuid: string, name: string, namespace?: string, options?: any) {
+            return RunsV1ApiFp(configuration).getRunArtifactLineage(owner, project, uuid, name, namespace, options)(fetch, basePath);
         },
         /**
          * 
@@ -22564,17 +22514,12 @@ export const RunsV1ApiFactory = function (configuration?: Configuration, fetch?:
          * @param {string} owner Owner of the namespace
          * @param {string} project Project where the run will be assigned
          * @param {string} uuid Uuid identifier of the entity
-         * @param {string} [name] Artifact name.
-         * @param {'model' | 'audio' | 'video' | 'histogram' | 'image' | 'tensor' | 'dataframe' | 'chart' | 'csv' | 'tsv' | 'psv' | 'ssv' | 'metric' | 'env' | 'html' | 'text' | 'file' | 'dir' | 'dockerfile' | 'docker_image' | 'data' | 'coderef' | 'table'} [kind] The artifact kind.   - model: model  - audio: audio  - video: vidio  - histogram: histogram  - image: image  - tensor: tensor  - dataframe: dataframe  - chart: plotly/bokeh chart  - csv: Comma  - tsv: Tab  - psv: Pipe  - ssv: Space  - metric: Metric  - env: Env  - html: HTML  - text: Text  - file: File  - dir: Dir  - dockerfile: Dockerfile  - docker_image: docker image  - data: data  - coderef: coderef  - table: table
-         * @param {string} [names] Names query param.
-         * @param {string} [runs] Runs query param.
-         * @param {string} [orient] Orient query param.
          * @param {string} [path] Path query param.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getRunArtifactsTree(namespace: string, owner: string, project: string, uuid: string, name?: string, kind?: 'model' | 'audio' | 'video' | 'histogram' | 'image' | 'tensor' | 'dataframe' | 'chart' | 'csv' | 'tsv' | 'psv' | 'ssv' | 'metric' | 'env' | 'html' | 'text' | 'file' | 'dir' | 'dockerfile' | 'docker_image' | 'data' | 'coderef' | 'table', names?: string, runs?: string, orient?: string, path?: string, options?: any) {
-            return RunsV1ApiFp(configuration).getRunArtifactsTree(namespace, owner, project, uuid, name, kind, names, runs, orient, path, options)(fetch, basePath);
+        getRunArtifactsTree(namespace: string, owner: string, project: string, uuid: string, path?: string, options?: any) {
+            return RunsV1ApiFp(configuration).getRunArtifactsTree(namespace, owner, project, uuid, path, options)(fetch, basePath);
         },
         /**
          * 
@@ -22584,16 +22529,13 @@ export const RunsV1ApiFactory = function (configuration?: Configuration, fetch?:
          * @param {string} project Project where the run will be assigned
          * @param {string} uuid Uuid identifier of the entity
          * @param {'model' | 'audio' | 'video' | 'histogram' | 'image' | 'tensor' | 'dataframe' | 'chart' | 'csv' | 'tsv' | 'psv' | 'ssv' | 'metric' | 'env' | 'html' | 'text' | 'file' | 'dir' | 'dockerfile' | 'docker_image' | 'data' | 'coderef' | 'table'} kind The artifact kind
-         * @param {string} [name] Artifact name.
          * @param {string} [names] Names query param.
-         * @param {string} [runs] Runs query param.
          * @param {string} [orient] Orient query param.
-         * @param {string} [path] Path query param.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getRunEvents(namespace: string, owner: string, project: string, uuid: string, kind: 'model' | 'audio' | 'video' | 'histogram' | 'image' | 'tensor' | 'dataframe' | 'chart' | 'csv' | 'tsv' | 'psv' | 'ssv' | 'metric' | 'env' | 'html' | 'text' | 'file' | 'dir' | 'dockerfile' | 'docker_image' | 'data' | 'coderef' | 'table', name?: string, names?: string, runs?: string, orient?: string, path?: string, options?: any) {
-            return RunsV1ApiFp(configuration).getRunEvents(namespace, owner, project, uuid, kind, name, names, runs, orient, path, options)(fetch, basePath);
+        getRunEvents(namespace: string, owner: string, project: string, uuid: string, kind: 'model' | 'audio' | 'video' | 'histogram' | 'image' | 'tensor' | 'dataframe' | 'chart' | 'csv' | 'tsv' | 'psv' | 'ssv' | 'metric' | 'env' | 'html' | 'text' | 'file' | 'dir' | 'dockerfile' | 'docker_image' | 'data' | 'coderef' | 'table', names?: string, orient?: string, options?: any) {
+            return RunsV1ApiFp(configuration).getRunEvents(namespace, owner, project, uuid, kind, names, orient, options)(fetch, basePath);
         },
         /**
          * 
@@ -22621,6 +22563,21 @@ export const RunsV1ApiFactory = function (configuration?: Configuration, fetch?:
          */
         getRunNamespace(owner: string, project: string, uuid: string, options?: any) {
             return RunsV1ApiFp(configuration).getRunNamespace(owner, project, uuid, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary Get run resources events
+         * @param {string} namespace namespace
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project where the run will be assigned
+         * @param {string} uuid Uuid identifier of the entity
+         * @param {string} [names] Names query param.
+         * @param {boolean} [tail] Query param flag to tail the values.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getRunResources(namespace: string, owner: string, project: string, uuid: string, names?: string, tail?: boolean, options?: any) {
+            return RunsV1ApiFp(configuration).getRunResources(namespace, owner, project, uuid, names, tail, options)(fetch, basePath);
         },
         /**
          * 
@@ -22728,7 +22685,7 @@ export const RunsV1ApiFactory = function (configuration?: Configuration, fetch?:
         },
         /**
          * 
-         * @summary List runs
+         * @summary List runs io
          * @param {string} owner Owner of the namespace
          * @param {string} project Project under namesapce
          * @param {number} [offset] Pagination offset.
@@ -23044,17 +23001,12 @@ export class RunsV1Api extends BaseAPI {
      * @param {string} uuid Uuid identifier of the entity
      * @param {string} name Artifact name
      * @param {string} [namespace] namespace.
-     * @param {'model' | 'audio' | 'video' | 'histogram' | 'image' | 'tensor' | 'dataframe' | 'chart' | 'csv' | 'tsv' | 'psv' | 'ssv' | 'metric' | 'env' | 'html' | 'text' | 'file' | 'dir' | 'dockerfile' | 'docker_image' | 'data' | 'coderef' | 'table'} [kind] The artifact kind.   - model: model  - audio: audio  - video: vidio  - histogram: histogram  - image: image  - tensor: tensor  - dataframe: dataframe  - chart: plotly/bokeh chart  - csv: Comma  - tsv: Tab  - psv: Pipe  - ssv: Space  - metric: Metric  - env: Env  - html: HTML  - text: Text  - file: File  - dir: Dir  - dockerfile: Dockerfile  - docker_image: docker image  - data: data  - coderef: coderef  - table: table
-     * @param {string} [names] Names query param.
-     * @param {string} [runs] Runs query param.
-     * @param {string} [orient] Orient query param.
-     * @param {string} [path] Path query param.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof RunsV1Api
      */
-    public deleteRunArtifactLineage(owner: string, project: string, uuid: string, name: string, namespace?: string, kind?: 'model' | 'audio' | 'video' | 'histogram' | 'image' | 'tensor' | 'dataframe' | 'chart' | 'csv' | 'tsv' | 'psv' | 'ssv' | 'metric' | 'env' | 'html' | 'text' | 'file' | 'dir' | 'dockerfile' | 'docker_image' | 'data' | 'coderef' | 'table', names?: string, runs?: string, orient?: string, path?: string, options?: any) {
-        return RunsV1ApiFp(this.configuration).deleteRunArtifactLineage(owner, project, uuid, name, namespace, kind, names, runs, orient, path, options)(this.fetch, this.basePath);
+    public deleteRunArtifactLineage(owner: string, project: string, uuid: string, name: string, namespace?: string, options?: any) {
+        return RunsV1ApiFp(this.configuration).deleteRunArtifactLineage(owner, project, uuid, name, namespace, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -23078,18 +23030,15 @@ export class RunsV1Api extends BaseAPI {
      * @param {string} owner Owner of the namespace
      * @param {string} project Project where the run will be assigned
      * @param {'model' | 'audio' | 'video' | 'histogram' | 'image' | 'tensor' | 'dataframe' | 'chart' | 'csv' | 'tsv' | 'psv' | 'ssv' | 'metric' | 'env' | 'html' | 'text' | 'file' | 'dir' | 'dockerfile' | 'docker_image' | 'data' | 'coderef' | 'table'} kind The artifact kind
-     * @param {string} [uuid] Uuid identifier of the entity.
-     * @param {string} [name] Artifact name.
      * @param {string} [names] Names query param.
      * @param {string} [runs] Runs query param.
      * @param {string} [orient] Orient query param.
-     * @param {string} [path] Path query param.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof RunsV1Api
      */
-    public getMultiRunEvents(namespace: string, owner: string, project: string, kind: 'model' | 'audio' | 'video' | 'histogram' | 'image' | 'tensor' | 'dataframe' | 'chart' | 'csv' | 'tsv' | 'psv' | 'ssv' | 'metric' | 'env' | 'html' | 'text' | 'file' | 'dir' | 'dockerfile' | 'docker_image' | 'data' | 'coderef' | 'table', uuid?: string, name?: string, names?: string, runs?: string, orient?: string, path?: string, options?: any) {
-        return RunsV1ApiFp(this.configuration).getMultiRunEvents(namespace, owner, project, kind, uuid, name, names, runs, orient, path, options)(this.fetch, this.basePath);
+    public getMultiRunEvents(namespace: string, owner: string, project: string, kind: 'model' | 'audio' | 'video' | 'histogram' | 'image' | 'tensor' | 'dataframe' | 'chart' | 'csv' | 'tsv' | 'psv' | 'ssv' | 'metric' | 'env' | 'html' | 'text' | 'file' | 'dir' | 'dockerfile' | 'docker_image' | 'data' | 'coderef' | 'table', names?: string, runs?: string, orient?: string, options?: any) {
+        return RunsV1ApiFp(this.configuration).getMultiRunEvents(namespace, owner, project, kind, names, runs, orient, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -23131,17 +23080,12 @@ export class RunsV1Api extends BaseAPI {
      * @param {string} uuid Uuid identifier of the entity
      * @param {string} name Artifact name
      * @param {string} [namespace] namespace.
-     * @param {'model' | 'audio' | 'video' | 'histogram' | 'image' | 'tensor' | 'dataframe' | 'chart' | 'csv' | 'tsv' | 'psv' | 'ssv' | 'metric' | 'env' | 'html' | 'text' | 'file' | 'dir' | 'dockerfile' | 'docker_image' | 'data' | 'coderef' | 'table'} [kind] The artifact kind.   - model: model  - audio: audio  - video: vidio  - histogram: histogram  - image: image  - tensor: tensor  - dataframe: dataframe  - chart: plotly/bokeh chart  - csv: Comma  - tsv: Tab  - psv: Pipe  - ssv: Space  - metric: Metric  - env: Env  - html: HTML  - text: Text  - file: File  - dir: Dir  - dockerfile: Dockerfile  - docker_image: docker image  - data: data  - coderef: coderef  - table: table
-     * @param {string} [names] Names query param.
-     * @param {string} [runs] Runs query param.
-     * @param {string} [orient] Orient query param.
-     * @param {string} [path] Path query param.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof RunsV1Api
      */
-    public getRunArtifactLineage(owner: string, project: string, uuid: string, name: string, namespace?: string, kind?: 'model' | 'audio' | 'video' | 'histogram' | 'image' | 'tensor' | 'dataframe' | 'chart' | 'csv' | 'tsv' | 'psv' | 'ssv' | 'metric' | 'env' | 'html' | 'text' | 'file' | 'dir' | 'dockerfile' | 'docker_image' | 'data' | 'coderef' | 'table', names?: string, runs?: string, orient?: string, path?: string, options?: any) {
-        return RunsV1ApiFp(this.configuration).getRunArtifactLineage(owner, project, uuid, name, namespace, kind, names, runs, orient, path, options)(this.fetch, this.basePath);
+    public getRunArtifactLineage(owner: string, project: string, uuid: string, name: string, namespace?: string, options?: any) {
+        return RunsV1ApiFp(this.configuration).getRunArtifactLineage(owner, project, uuid, name, namespace, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -23201,18 +23145,13 @@ export class RunsV1Api extends BaseAPI {
      * @param {string} owner Owner of the namespace
      * @param {string} project Project where the run will be assigned
      * @param {string} uuid Uuid identifier of the entity
-     * @param {string} [name] Artifact name.
-     * @param {'model' | 'audio' | 'video' | 'histogram' | 'image' | 'tensor' | 'dataframe' | 'chart' | 'csv' | 'tsv' | 'psv' | 'ssv' | 'metric' | 'env' | 'html' | 'text' | 'file' | 'dir' | 'dockerfile' | 'docker_image' | 'data' | 'coderef' | 'table'} [kind] The artifact kind.   - model: model  - audio: audio  - video: vidio  - histogram: histogram  - image: image  - tensor: tensor  - dataframe: dataframe  - chart: plotly/bokeh chart  - csv: Comma  - tsv: Tab  - psv: Pipe  - ssv: Space  - metric: Metric  - env: Env  - html: HTML  - text: Text  - file: File  - dir: Dir  - dockerfile: Dockerfile  - docker_image: docker image  - data: data  - coderef: coderef  - table: table
-     * @param {string} [names] Names query param.
-     * @param {string} [runs] Runs query param.
-     * @param {string} [orient] Orient query param.
      * @param {string} [path] Path query param.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof RunsV1Api
      */
-    public getRunArtifactsTree(namespace: string, owner: string, project: string, uuid: string, name?: string, kind?: 'model' | 'audio' | 'video' | 'histogram' | 'image' | 'tensor' | 'dataframe' | 'chart' | 'csv' | 'tsv' | 'psv' | 'ssv' | 'metric' | 'env' | 'html' | 'text' | 'file' | 'dir' | 'dockerfile' | 'docker_image' | 'data' | 'coderef' | 'table', names?: string, runs?: string, orient?: string, path?: string, options?: any) {
-        return RunsV1ApiFp(this.configuration).getRunArtifactsTree(namespace, owner, project, uuid, name, kind, names, runs, orient, path, options)(this.fetch, this.basePath);
+    public getRunArtifactsTree(namespace: string, owner: string, project: string, uuid: string, path?: string, options?: any) {
+        return RunsV1ApiFp(this.configuration).getRunArtifactsTree(namespace, owner, project, uuid, path, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -23223,17 +23162,14 @@ export class RunsV1Api extends BaseAPI {
      * @param {string} project Project where the run will be assigned
      * @param {string} uuid Uuid identifier of the entity
      * @param {'model' | 'audio' | 'video' | 'histogram' | 'image' | 'tensor' | 'dataframe' | 'chart' | 'csv' | 'tsv' | 'psv' | 'ssv' | 'metric' | 'env' | 'html' | 'text' | 'file' | 'dir' | 'dockerfile' | 'docker_image' | 'data' | 'coderef' | 'table'} kind The artifact kind
-     * @param {string} [name] Artifact name.
      * @param {string} [names] Names query param.
-     * @param {string} [runs] Runs query param.
      * @param {string} [orient] Orient query param.
-     * @param {string} [path] Path query param.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof RunsV1Api
      */
-    public getRunEvents(namespace: string, owner: string, project: string, uuid: string, kind: 'model' | 'audio' | 'video' | 'histogram' | 'image' | 'tensor' | 'dataframe' | 'chart' | 'csv' | 'tsv' | 'psv' | 'ssv' | 'metric' | 'env' | 'html' | 'text' | 'file' | 'dir' | 'dockerfile' | 'docker_image' | 'data' | 'coderef' | 'table', name?: string, names?: string, runs?: string, orient?: string, path?: string, options?: any) {
-        return RunsV1ApiFp(this.configuration).getRunEvents(namespace, owner, project, uuid, kind, name, names, runs, orient, path, options)(this.fetch, this.basePath);
+    public getRunEvents(namespace: string, owner: string, project: string, uuid: string, kind: 'model' | 'audio' | 'video' | 'histogram' | 'image' | 'tensor' | 'dataframe' | 'chart' | 'csv' | 'tsv' | 'psv' | 'ssv' | 'metric' | 'env' | 'html' | 'text' | 'file' | 'dir' | 'dockerfile' | 'docker_image' | 'data' | 'coderef' | 'table', names?: string, orient?: string, options?: any) {
+        return RunsV1ApiFp(this.configuration).getRunEvents(namespace, owner, project, uuid, kind, names, orient, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -23265,6 +23201,23 @@ export class RunsV1Api extends BaseAPI {
      */
     public getRunNamespace(owner: string, project: string, uuid: string, options?: any) {
         return RunsV1ApiFp(this.configuration).getRunNamespace(owner, project, uuid, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary Get run resources events
+     * @param {string} namespace namespace
+     * @param {string} owner Owner of the namespace
+     * @param {string} project Project where the run will be assigned
+     * @param {string} uuid Uuid identifier of the entity
+     * @param {string} [names] Names query param.
+     * @param {boolean} [tail] Query param flag to tail the values.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RunsV1Api
+     */
+    public getRunResources(namespace: string, owner: string, project: string, uuid: string, names?: string, tail?: boolean, options?: any) {
+        return RunsV1ApiFp(this.configuration).getRunResources(namespace, owner, project, uuid, names, tail, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -23389,7 +23342,7 @@ export class RunsV1Api extends BaseAPI {
 
     /**
      * 
-     * @summary List runs
+     * @summary List runs io
      * @param {string} owner Owner of the namespace
      * @param {string} project Project under namesapce
      * @param {number} [offset] Pagination offset.

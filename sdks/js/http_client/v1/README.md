@@ -264,6 +264,7 @@ Class | Method | HTTP request | Description
 *PolyaxonSdk.RunsV1Api* | [**getRunEvents**](docs/RunsV1Api.md#getRunEvents) | **GET** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/events/{kind} | Get run events
 *PolyaxonSdk.RunsV1Api* | [**getRunLogs**](docs/RunsV1Api.md#getRunLogs) | **GET** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/logs | Get run logs
 *PolyaxonSdk.RunsV1Api* | [**getRunNamespace**](docs/RunsV1Api.md#getRunNamespace) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/namespace | Get Run namespace
+*PolyaxonSdk.RunsV1Api* | [**getRunResources**](docs/RunsV1Api.md#getRunResources) | **GET** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/resources | Get run resources events
 *PolyaxonSdk.RunsV1Api* | [**getRunSettings**](docs/RunsV1Api.md#getRunSettings) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/settings | Get Run settings
 *PolyaxonSdk.RunsV1Api* | [**getRunStatuses**](docs/RunsV1Api.md#getRunStatuses) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/statuses | Get run status
 *PolyaxonSdk.RunsV1Api* | [**impersonateToken**](docs/RunsV1Api.md#impersonateToken) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/impersonate | Impersonate run token
@@ -272,7 +273,7 @@ Class | Method | HTTP request | Description
 *PolyaxonSdk.RunsV1Api* | [**listArchivedRuns**](docs/RunsV1Api.md#listArchivedRuns) | **GET** /api/v1/archives/{user}/runs | List archived runs for user
 *PolyaxonSdk.RunsV1Api* | [**listBookmarkedRuns**](docs/RunsV1Api.md#listBookmarkedRuns) | **GET** /api/v1/bookmarks/{user}/runs | List bookmarked runs for user
 *PolyaxonSdk.RunsV1Api* | [**listRuns**](docs/RunsV1Api.md#listRuns) | **GET** /api/v1/{owner}/{project}/runs | List runs
-*PolyaxonSdk.RunsV1Api* | [**listRunsIo**](docs/RunsV1Api.md#listRunsIo) | **GET** /api/v1/{owner}/{project}/runs/io | List runs
+*PolyaxonSdk.RunsV1Api* | [**listRunsIo**](docs/RunsV1Api.md#listRunsIo) | **GET** /api/v1/{owner}/{project}/runs/io | List runs io
 *PolyaxonSdk.RunsV1Api* | [**notifyRunStatus**](docs/RunsV1Api.md#notifyRunStatus) | **POST** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/notify | Notify run status
 *PolyaxonSdk.RunsV1Api* | [**patchRun**](docs/RunsV1Api.md#patchRun) | **PATCH** /api/v1/{owner}/{project}/runs/{run.uuid} | Patch run
 *PolyaxonSdk.RunsV1Api* | [**restartRun**](docs/RunsV1Api.md#restartRun) | **POST** /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/restart | Restart run

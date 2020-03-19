@@ -593,11 +593,6 @@
           var name = "name_example";
           var opts = {};
           opts.namespace = "namespace_example";
-          opts.kind = "model";
-          opts.names = "names_example";
-          opts.runs = "runs_example";
-          opts.orient = "orient_example";
-          opts.path = "path_example";
 
           instance.deleteRunArtifactLineage(owner, project, uuid, name, opts, function(error, data, response) {
             if (error) {
@@ -643,12 +638,9 @@
           var project = "project_example";
           var kind = "kind_example";
           var opts = {};
-          opts.uuid = "uuid_example";
-          opts.name = "name_example";
           opts.names = "names_example";
           opts.runs = "runs_example";
           opts.orient = "orient_example";
-          opts.path = "path_example";
 
           instance.getMultiRunEvents(namespace, owner, project, kind, opts, function(error, data, response) {
             if (error) {
@@ -823,11 +815,6 @@
           var name = "name_example";
           var opts = {};
           opts.namespace = "namespace_example";
-          opts.kind = "model";
-          opts.names = "names_example";
-          opts.runs = "runs_example";
-          opts.orient = "orient_example";
-          opts.path = "path_example";
 
           instance.getRunArtifactLineage(owner, project, uuid, name, opts, function(error, data, response) {
             if (error) {
@@ -1003,11 +990,6 @@
           var project = "project_example";
           var uuid = "uuid_example";
           var opts = {};
-          opts.name = "name_example";
-          opts.kind = "model";
-          opts.names = "names_example";
-          opts.runs = "runs_example";
-          opts.orient = "orient_example";
           opts.path = "path_example";
 
           instance.getRunArtifactsTree(namespace, owner, project, uuid, opts, function(error, data, response) {
@@ -1057,11 +1039,8 @@
           var uuid = "uuid_example";
           var kind = "kind_example";
           var opts = {};
-          opts.name = "name_example";
           opts.names = "names_example";
-          opts.runs = "runs_example";
           opts.orient = "orient_example";
-          opts.path = "path_example";
 
           instance.getRunEvents(namespace, owner, project, uuid, kind, opts, function(error, data, response) {
             if (error) {
@@ -1181,6 +1160,43 @@
                 expect(data.uuid).to.be("");
                 expect(data.name).to.be.a('string');
                 expect(data.name).to.be("");
+              }
+            }
+
+            done();
+          });
+          */
+          // TODO: uncomment and complete method invocation above, then delete this line and the next:
+          done();
+        });
+      });
+      describe('getRunResources', function() {
+        it('should call getRunResources successfully', function(done) {
+          // TODO: uncomment, update parameter values for getRunResources call and complete the assertions
+          /*
+          var namespace = "namespace_example";
+          var owner = "owner_example";
+          var project = "project_example";
+          var uuid = "uuid_example";
+          var opts = {};
+          opts.names = "names_example";
+          opts.tail = true;
+
+          instance.getRunResources(namespace, owner, project, uuid, opts, function(error, data, response) {
+            if (error) {
+              done(error);
+              return;
+            }
+            // TODO: update response assertions
+            expect(data).to.be.a(PolyaxonSdk.V1EventsResponse);
+            {
+              let dataCtr = data.data;
+              expect(dataCtr).to.be.an(Array);
+              expect(dataCtr).to.not.be.empty();
+              for (let p in dataCtr) {
+                let data = dataCtr[p];
+                expect(data).to.be.a(Object);
+                expect(data).to.be();
               }
             }
 

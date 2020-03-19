@@ -214,6 +214,7 @@ Class | Method | HTTP request | Description
 *RunsV1Api* | [**get_run_events**](docs/RunsV1Api.md#get_run_events) | **GET** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/events/{kind} | Get run events
 *RunsV1Api* | [**get_run_logs**](docs/RunsV1Api.md#get_run_logs) | **GET** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/logs | Get run logs
 *RunsV1Api* | [**get_run_namespace**](docs/RunsV1Api.md#get_run_namespace) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/namespace | Get Run namespace
+*RunsV1Api* | [**get_run_resources**](docs/RunsV1Api.md#get_run_resources) | **GET** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/resources | Get run resources events
 *RunsV1Api* | [**get_run_settings**](docs/RunsV1Api.md#get_run_settings) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/settings | Get Run settings
 *RunsV1Api* | [**get_run_statuses**](docs/RunsV1Api.md#get_run_statuses) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/statuses | Get run status
 *RunsV1Api* | [**impersonate_token**](docs/RunsV1Api.md#impersonate_token) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/impersonate | Impersonate run token
@@ -222,7 +223,7 @@ Class | Method | HTTP request | Description
 *RunsV1Api* | [**list_archived_runs**](docs/RunsV1Api.md#list_archived_runs) | **GET** /api/v1/archives/{user}/runs | List archived runs for user
 *RunsV1Api* | [**list_bookmarked_runs**](docs/RunsV1Api.md#list_bookmarked_runs) | **GET** /api/v1/bookmarks/{user}/runs | List bookmarked runs for user
 *RunsV1Api* | [**list_runs**](docs/RunsV1Api.md#list_runs) | **GET** /api/v1/{owner}/{project}/runs | List runs
-*RunsV1Api* | [**list_runs_io**](docs/RunsV1Api.md#list_runs_io) | **GET** /api/v1/{owner}/{project}/runs/io | List runs
+*RunsV1Api* | [**list_runs_io**](docs/RunsV1Api.md#list_runs_io) | **GET** /api/v1/{owner}/{project}/runs/io | List runs io
 *RunsV1Api* | [**notify_run_status**](docs/RunsV1Api.md#notify_run_status) | **POST** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/notify | Notify run status
 *RunsV1Api* | [**patch_run**](docs/RunsV1Api.md#patch_run) | **PATCH** /api/v1/{owner}/{project}/runs/{run.uuid} | Patch run
 *RunsV1Api* | [**restart_run**](docs/RunsV1Api.md#restart_run) | **POST** /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/restart | Restart run

@@ -190,8 +190,8 @@ message RunArtifactSearchRequest {
     string query = 6;
 }
 
-// Request data to get/delete run artifact
-message RunArtifactRequest {
+// Request data to post/pach/get/delete run artifact lineage
+message RunArtifactLineageRequest {
     // namespace
     string namespace = 1;
 
@@ -206,19 +206,92 @@ message RunArtifactRequest {
 
     // Artifact name
     string name = 5;
+}
 
-    // The artifact kind
-    ArtifactKind kind = 6;
 
-    // Names query param
-    string names = 7;
+// Request data to get run artifacts tree
+message RunArtifactsTreeRequest {
+    // namespace
+    string namespace = 1;
 
-    // Runs query param
-    string runs = 8;
+    // Owner of the namespace
+    string owner = 2;
 
-    // Orient query param
-    string orient = 9;
+    // Project where the run will be assigned
+    string project = 3;
+
+    // Uuid identifier of the entity
+    string uuid = 4;
 
     // Path query param
-    string path = 10;
+    string path = 5;
+}
+
+// Request data to get/delete run event
+message RunEventRequest {
+    // namespace
+    string namespace = 1;
+
+    // Owner of the namespace
+    string owner = 2;
+
+    // Project where the run will be assigned
+    string project = 3;
+
+    // Uuid identifier of the entity
+    string uuid = 4;
+
+    // The artifact kind
+    ArtifactKind kind = 5;
+
+    // Names query param
+    string names = 6;
+
+    // Orient query param
+    string orient = 7;
+}
+
+// Request data to get/delete runs' events
+message RunEventsRequest {
+    // namespace
+    string namespace = 1;
+
+    // Owner of the namespace
+    string owner = 2;
+
+    // Project where the run will be assigned
+    string project = 3;
+
+    // The artifact kind
+    ArtifactKind kind = 4;
+
+    // Names query param
+    string names = 5;
+
+    // Runs query param
+    string runs = 6;
+
+    // Orient query param
+    string orient = 7;
+}
+
+// Request data to get/delete run resources
+message RunResourcesRequest {
+    // namespace
+    string namespace = 1;
+
+    // Owner of the namespace
+    string owner = 2;
+
+    // Project where the run will be assigned
+    string project = 3;
+
+    // Uuid identifier of the entity
+    string uuid = 4;
+
+    // Names query param
+    string names = 5;
+
+    // Query param flag to tail the values
+    bool tail = 6;
 }

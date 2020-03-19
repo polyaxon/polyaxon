@@ -33,11 +33,8 @@ import (
 // NewDeleteRunArtifactLineageParams creates a new DeleteRunArtifactLineageParams object
 // with the default values initialized.
 func NewDeleteRunArtifactLineageParams() *DeleteRunArtifactLineageParams {
-	var (
-		kindDefault = string("model")
-	)
+	var ()
 	return &DeleteRunArtifactLineageParams{
-		Kind: &kindDefault,
 
 		timeout: cr.DefaultTimeout,
 	}
@@ -46,11 +43,8 @@ func NewDeleteRunArtifactLineageParams() *DeleteRunArtifactLineageParams {
 // NewDeleteRunArtifactLineageParamsWithTimeout creates a new DeleteRunArtifactLineageParams object
 // with the default values initialized, and the ability to set a timeout on a request
 func NewDeleteRunArtifactLineageParamsWithTimeout(timeout time.Duration) *DeleteRunArtifactLineageParams {
-	var (
-		kindDefault = string("model")
-	)
+	var ()
 	return &DeleteRunArtifactLineageParams{
-		Kind: &kindDefault,
 
 		timeout: timeout,
 	}
@@ -59,11 +53,8 @@ func NewDeleteRunArtifactLineageParamsWithTimeout(timeout time.Duration) *Delete
 // NewDeleteRunArtifactLineageParamsWithContext creates a new DeleteRunArtifactLineageParams object
 // with the default values initialized, and the ability to set a context for a request
 func NewDeleteRunArtifactLineageParamsWithContext(ctx context.Context) *DeleteRunArtifactLineageParams {
-	var (
-		kindDefault = string("model")
-	)
+	var ()
 	return &DeleteRunArtifactLineageParams{
-		Kind: &kindDefault,
 
 		Context: ctx,
 	}
@@ -72,11 +63,8 @@ func NewDeleteRunArtifactLineageParamsWithContext(ctx context.Context) *DeleteRu
 // NewDeleteRunArtifactLineageParamsWithHTTPClient creates a new DeleteRunArtifactLineageParams object
 // with the default values initialized, and the ability to set a custom HTTPClient for a request
 func NewDeleteRunArtifactLineageParamsWithHTTPClient(client *http.Client) *DeleteRunArtifactLineageParams {
-	var (
-		kindDefault = string("model")
-	)
+	var ()
 	return &DeleteRunArtifactLineageParams{
-		Kind:       &kindDefault,
 		HTTPClient: client,
 	}
 }
@@ -86,75 +74,26 @@ for the delete run artifact lineage operation typically these are written to a h
 */
 type DeleteRunArtifactLineageParams struct {
 
-	/*Kind
-	 The artifact kind.
-
-	- model: model
-	- audio: audio
-	- video: vidio
-	- histogram: histogram
-	- image: image
-	- tensor: tensor
-	- dataframe: dataframe
-	- chart: plotly/bokeh chart
-	- csv: Comma
-	- tsv: Tab
-	- psv: Pipe
-	- ssv: Space
-	- metric: Metric
-	- env: Env
-	- html: HTML
-	- text: Text
-	- file: File
-	- dir: Dir
-	- dockerfile: Dockerfile
-	- docker_image: docker image
-	- data: data
-	- coderef: coderef
-	- table: table
-
-	*/
-	Kind *string
 	/*Name
 	  Artifact name
 
 	*/
 	Name string
-	/*Names
-	  Names query param.
-
-	*/
-	Names *string
 	/*Namespace
 	  namespace.
 
 	*/
 	Namespace *string
-	/*Orient
-	  Orient query param.
-
-	*/
-	Orient *string
 	/*Owner
 	  Owner of the namespace
 
 	*/
 	Owner string
-	/*Path
-	  Path query param.
-
-	*/
-	Path *string
 	/*Project
 	  Project where the run will be assigned
 
 	*/
 	Project string
-	/*Runs
-	  Runs query param.
-
-	*/
-	Runs *string
 	/*UUID
 	  Uuid identifier of the entity
 
@@ -199,17 +138,6 @@ func (o *DeleteRunArtifactLineageParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
 }
 
-// WithKind adds the kind to the delete run artifact lineage params
-func (o *DeleteRunArtifactLineageParams) WithKind(kind *string) *DeleteRunArtifactLineageParams {
-	o.SetKind(kind)
-	return o
-}
-
-// SetKind adds the kind to the delete run artifact lineage params
-func (o *DeleteRunArtifactLineageParams) SetKind(kind *string) {
-	o.Kind = kind
-}
-
 // WithName adds the name to the delete run artifact lineage params
 func (o *DeleteRunArtifactLineageParams) WithName(name string) *DeleteRunArtifactLineageParams {
 	o.SetName(name)
@@ -219,17 +147,6 @@ func (o *DeleteRunArtifactLineageParams) WithName(name string) *DeleteRunArtifac
 // SetName adds the name to the delete run artifact lineage params
 func (o *DeleteRunArtifactLineageParams) SetName(name string) {
 	o.Name = name
-}
-
-// WithNames adds the names to the delete run artifact lineage params
-func (o *DeleteRunArtifactLineageParams) WithNames(names *string) *DeleteRunArtifactLineageParams {
-	o.SetNames(names)
-	return o
-}
-
-// SetNames adds the names to the delete run artifact lineage params
-func (o *DeleteRunArtifactLineageParams) SetNames(names *string) {
-	o.Names = names
 }
 
 // WithNamespace adds the namespace to the delete run artifact lineage params
@@ -243,17 +160,6 @@ func (o *DeleteRunArtifactLineageParams) SetNamespace(namespace *string) {
 	o.Namespace = namespace
 }
 
-// WithOrient adds the orient to the delete run artifact lineage params
-func (o *DeleteRunArtifactLineageParams) WithOrient(orient *string) *DeleteRunArtifactLineageParams {
-	o.SetOrient(orient)
-	return o
-}
-
-// SetOrient adds the orient to the delete run artifact lineage params
-func (o *DeleteRunArtifactLineageParams) SetOrient(orient *string) {
-	o.Orient = orient
-}
-
 // WithOwner adds the owner to the delete run artifact lineage params
 func (o *DeleteRunArtifactLineageParams) WithOwner(owner string) *DeleteRunArtifactLineageParams {
 	o.SetOwner(owner)
@@ -265,17 +171,6 @@ func (o *DeleteRunArtifactLineageParams) SetOwner(owner string) {
 	o.Owner = owner
 }
 
-// WithPath adds the path to the delete run artifact lineage params
-func (o *DeleteRunArtifactLineageParams) WithPath(path *string) *DeleteRunArtifactLineageParams {
-	o.SetPath(path)
-	return o
-}
-
-// SetPath adds the path to the delete run artifact lineage params
-func (o *DeleteRunArtifactLineageParams) SetPath(path *string) {
-	o.Path = path
-}
-
 // WithProject adds the project to the delete run artifact lineage params
 func (o *DeleteRunArtifactLineageParams) WithProject(project string) *DeleteRunArtifactLineageParams {
 	o.SetProject(project)
@@ -285,17 +180,6 @@ func (o *DeleteRunArtifactLineageParams) WithProject(project string) *DeleteRunA
 // SetProject adds the project to the delete run artifact lineage params
 func (o *DeleteRunArtifactLineageParams) SetProject(project string) {
 	o.Project = project
-}
-
-// WithRuns adds the runs to the delete run artifact lineage params
-func (o *DeleteRunArtifactLineageParams) WithRuns(runs *string) *DeleteRunArtifactLineageParams {
-	o.SetRuns(runs)
-	return o
-}
-
-// SetRuns adds the runs to the delete run artifact lineage params
-func (o *DeleteRunArtifactLineageParams) SetRuns(runs *string) {
-	o.Runs = runs
 }
 
 // WithUUID adds the uuid to the delete run artifact lineage params
@@ -317,41 +201,9 @@ func (o *DeleteRunArtifactLineageParams) WriteToRequest(r runtime.ClientRequest,
 	}
 	var res []error
 
-	if o.Kind != nil {
-
-		// query param kind
-		var qrKind string
-		if o.Kind != nil {
-			qrKind = *o.Kind
-		}
-		qKind := qrKind
-		if qKind != "" {
-			if err := r.SetQueryParam("kind", qKind); err != nil {
-				return err
-			}
-		}
-
-	}
-
 	// path param name
 	if err := r.SetPathParam("name", o.Name); err != nil {
 		return err
-	}
-
-	if o.Names != nil {
-
-		// query param names
-		var qrNames string
-		if o.Names != nil {
-			qrNames = *o.Names
-		}
-		qNames := qrNames
-		if qNames != "" {
-			if err := r.SetQueryParam("names", qNames); err != nil {
-				return err
-			}
-		}
-
 	}
 
 	if o.Namespace != nil {
@@ -370,62 +222,14 @@ func (o *DeleteRunArtifactLineageParams) WriteToRequest(r runtime.ClientRequest,
 
 	}
 
-	if o.Orient != nil {
-
-		// query param orient
-		var qrOrient string
-		if o.Orient != nil {
-			qrOrient = *o.Orient
-		}
-		qOrient := qrOrient
-		if qOrient != "" {
-			if err := r.SetQueryParam("orient", qOrient); err != nil {
-				return err
-			}
-		}
-
-	}
-
 	// path param owner
 	if err := r.SetPathParam("owner", o.Owner); err != nil {
 		return err
 	}
 
-	if o.Path != nil {
-
-		// query param path
-		var qrPath string
-		if o.Path != nil {
-			qrPath = *o.Path
-		}
-		qPath := qrPath
-		if qPath != "" {
-			if err := r.SetQueryParam("path", qPath); err != nil {
-				return err
-			}
-		}
-
-	}
-
 	// path param project
 	if err := r.SetPathParam("project", o.Project); err != nil {
 		return err
-	}
-
-	if o.Runs != nil {
-
-		// query param runs
-		var qrRuns string
-		if o.Runs != nil {
-			qrRuns = *o.Runs
-		}
-		qRuns := qrRuns
-		if qRuns != "" {
-			if err := r.SetQueryParam("runs", qRuns); err != nil {
-				return err
-			}
-		}
-
 	}
 
 	// path param uuid

@@ -83,6 +83,8 @@ type ClientService interface {
 
 	GetRunNamespace(params *GetRunNamespaceParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunNamespaceOK, *GetRunNamespaceNoContent, error)
 
+	GetRunResources(params *GetRunResourcesParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunResourcesOK, *GetRunResourcesNoContent, error)
+
 	GetRunSettings(params *GetRunSettingsParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunSettingsOK, *GetRunSettingsNoContent, error)
 
 	GetRunStatuses(params *GetRunStatusesParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunStatusesOK, *GetRunStatusesNoContent, error)
@@ -887,6 +889,42 @@ func (a *Client) GetRunNamespace(params *GetRunNamespaceParams, authInfo runtime
 }
 
 /*
+  GetRunResources gets run resources events
+*/
+func (a *Client) GetRunResources(params *GetRunResourcesParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunResourcesOK, *GetRunResourcesNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetRunResourcesParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "GetRunResources",
+		Method:             "GET",
+		PathPattern:        "/streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/resources",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &GetRunResourcesReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *GetRunResourcesOK:
+		return value, nil, nil
+	case *GetRunResourcesNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*GetRunResourcesDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
   GetRunSettings gets run settings
 */
 func (a *Client) GetRunSettings(params *GetRunSettingsParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunSettingsOK, *GetRunSettingsNoContent, error) {
@@ -1175,7 +1213,7 @@ func (a *Client) ListRuns(params *ListRunsParams, authInfo runtime.ClientAuthInf
 }
 
 /*
-  ListRunsIo lists runs
+  ListRunsIo lists runs io
 */
 func (a *Client) ListRunsIo(params *ListRunsIoParams, authInfo runtime.ClientAuthInfoWriter) (*ListRunsIoOK, *ListRunsIoNoContent, error) {
 	// TODO: Validate the params before sending

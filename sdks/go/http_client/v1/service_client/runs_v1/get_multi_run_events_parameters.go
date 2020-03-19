@@ -79,11 +79,6 @@ type GetMultiRunEventsParams struct {
 
 	*/
 	Kind string
-	/*Name
-	  Artifact name.
-
-	*/
-	Name *string
 	/*Names
 	  Names query param.
 
@@ -104,11 +99,6 @@ type GetMultiRunEventsParams struct {
 
 	*/
 	Owner string
-	/*Path
-	  Path query param.
-
-	*/
-	Path *string
 	/*Project
 	  Project where the run will be assigned
 
@@ -119,11 +109,6 @@ type GetMultiRunEventsParams struct {
 
 	*/
 	Runs *string
-	/*UUID
-	  Uuid identifier of the entity.
-
-	*/
-	UUID *string
 
 	timeout    time.Duration
 	Context    context.Context
@@ -174,17 +159,6 @@ func (o *GetMultiRunEventsParams) SetKind(kind string) {
 	o.Kind = kind
 }
 
-// WithName adds the name to the get multi run events params
-func (o *GetMultiRunEventsParams) WithName(name *string) *GetMultiRunEventsParams {
-	o.SetName(name)
-	return o
-}
-
-// SetName adds the name to the get multi run events params
-func (o *GetMultiRunEventsParams) SetName(name *string) {
-	o.Name = name
-}
-
 // WithNames adds the names to the get multi run events params
 func (o *GetMultiRunEventsParams) WithNames(names *string) *GetMultiRunEventsParams {
 	o.SetNames(names)
@@ -229,17 +203,6 @@ func (o *GetMultiRunEventsParams) SetOwner(owner string) {
 	o.Owner = owner
 }
 
-// WithPath adds the path to the get multi run events params
-func (o *GetMultiRunEventsParams) WithPath(path *string) *GetMultiRunEventsParams {
-	o.SetPath(path)
-	return o
-}
-
-// SetPath adds the path to the get multi run events params
-func (o *GetMultiRunEventsParams) SetPath(path *string) {
-	o.Path = path
-}
-
 // WithProject adds the project to the get multi run events params
 func (o *GetMultiRunEventsParams) WithProject(project string) *GetMultiRunEventsParams {
 	o.SetProject(project)
@@ -262,17 +225,6 @@ func (o *GetMultiRunEventsParams) SetRuns(runs *string) {
 	o.Runs = runs
 }
 
-// WithUUID adds the uuid to the get multi run events params
-func (o *GetMultiRunEventsParams) WithUUID(uuid *string) *GetMultiRunEventsParams {
-	o.SetUUID(uuid)
-	return o
-}
-
-// SetUUID adds the uuid to the get multi run events params
-func (o *GetMultiRunEventsParams) SetUUID(uuid *string) {
-	o.UUID = uuid
-}
-
 // WriteToRequest writes these params to a swagger request
 func (o *GetMultiRunEventsParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
 
@@ -284,22 +236,6 @@ func (o *GetMultiRunEventsParams) WriteToRequest(r runtime.ClientRequest, reg st
 	// path param kind
 	if err := r.SetPathParam("kind", o.Kind); err != nil {
 		return err
-	}
-
-	if o.Name != nil {
-
-		// query param name
-		var qrName string
-		if o.Name != nil {
-			qrName = *o.Name
-		}
-		qName := qrName
-		if qName != "" {
-			if err := r.SetQueryParam("name", qName); err != nil {
-				return err
-			}
-		}
-
 	}
 
 	if o.Names != nil {
@@ -344,22 +280,6 @@ func (o *GetMultiRunEventsParams) WriteToRequest(r runtime.ClientRequest, reg st
 		return err
 	}
 
-	if o.Path != nil {
-
-		// query param path
-		var qrPath string
-		if o.Path != nil {
-			qrPath = *o.Path
-		}
-		qPath := qrPath
-		if qPath != "" {
-			if err := r.SetQueryParam("path", qPath); err != nil {
-				return err
-			}
-		}
-
-	}
-
 	// path param project
 	if err := r.SetPathParam("project", o.Project); err != nil {
 		return err
@@ -375,22 +295,6 @@ func (o *GetMultiRunEventsParams) WriteToRequest(r runtime.ClientRequest, reg st
 		qRuns := qrRuns
 		if qRuns != "" {
 			if err := r.SetQueryParam("runs", qRuns); err != nil {
-				return err
-			}
-		}
-
-	}
-
-	if o.UUID != nil {
-
-		// query param uuid
-		var qrUUID string
-		if o.UUID != nil {
-			qrUUID = *o.UUID
-		}
-		qUUID := qrUUID
-		if qUUID != "" {
-			if err := r.SetQueryParam("uuid", qUUID); err != nil {
 				return err
 			}
 		}

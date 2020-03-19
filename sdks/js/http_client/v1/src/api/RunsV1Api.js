@@ -585,11 +585,6 @@
      * @param {String} name Artifact name
      * @param {Object} opts Optional parameters
      * @param {String} opts.namespace namespace.
-     * @param {module:model/String} opts.kind The artifact kind.   - model: model  - audio: audio  - video: vidio  - histogram: histogram  - image: image  - tensor: tensor  - dataframe: dataframe  - chart: plotly/bokeh chart  - csv: Comma  - tsv: Tab  - psv: Pipe  - ssv: Space  - metric: Metric  - env: Env  - html: HTML  - text: Text  - file: File  - dir: Dir  - dockerfile: Dockerfile  - docker_image: docker image  - data: data  - coderef: coderef  - table: table (default to model)
-     * @param {String} opts.names Names query param.
-     * @param {String} opts.runs Runs query param.
-     * @param {String} opts.orient Orient query param.
-     * @param {String} opts.path Path query param.
      * @param {module:api/RunsV1Api~deleteRunArtifactLineageCallback} callback The callback function, accepting three arguments: error, data, response
      */
     this.deleteRunArtifactLineage = function(owner, project, uuid, name, opts, callback) {
@@ -625,11 +620,6 @@
       };
       var queryParams = {
         'namespace': opts['namespace'],
-        'kind': opts['kind'],
-        'names': opts['names'],
-        'runs': opts['runs'],
-        'orient': opts['orient'],
-        'path': opts['path'],
       };
       var collectionQueryParams = {
       };
@@ -724,12 +714,9 @@
      * @param {String} project Project where the run will be assigned
      * @param {module:model/String} kind The artifact kind
      * @param {Object} opts Optional parameters
-     * @param {String} opts.uuid Uuid identifier of the entity.
-     * @param {String} opts.name Artifact name.
      * @param {String} opts.names Names query param.
      * @param {String} opts.runs Runs query param.
      * @param {String} opts.orient Orient query param.
-     * @param {String} opts.path Path query param.
      * @param {module:api/RunsV1Api~getMultiRunEventsCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1EventsResponse}
      */
@@ -765,12 +752,9 @@
         'kind': kind
       };
       var queryParams = {
-        'uuid': opts['uuid'],
-        'name': opts['name'],
         'names': opts['names'],
         'runs': opts['runs'],
         'orient': opts['orient'],
-        'path': opts['path'],
       };
       var collectionQueryParams = {
       };
@@ -942,11 +926,6 @@
      * @param {String} name Artifact name
      * @param {Object} opts Optional parameters
      * @param {String} opts.namespace namespace.
-     * @param {module:model/String} opts.kind The artifact kind.   - model: model  - audio: audio  - video: vidio  - histogram: histogram  - image: image  - tensor: tensor  - dataframe: dataframe  - chart: plotly/bokeh chart  - csv: Comma  - tsv: Tab  - psv: Pipe  - ssv: Space  - metric: Metric  - env: Env  - html: HTML  - text: Text  - file: File  - dir: Dir  - dockerfile: Dockerfile  - docker_image: docker image  - data: data  - coderef: coderef  - table: table (default to model)
-     * @param {String} opts.names Names query param.
-     * @param {String} opts.runs Runs query param.
-     * @param {String} opts.orient Orient query param.
-     * @param {String} opts.path Path query param.
      * @param {module:api/RunsV1Api~getRunArtifactLineageCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1RunArtifact}
      */
@@ -983,11 +962,6 @@
       };
       var queryParams = {
         'namespace': opts['namespace'],
-        'kind': opts['kind'],
-        'names': opts['names'],
-        'runs': opts['runs'],
-        'orient': opts['orient'],
-        'path': opts['path'],
       };
       var collectionQueryParams = {
       };
@@ -1233,11 +1207,6 @@
      * @param {String} project Project where the run will be assigned
      * @param {String} uuid Uuid identifier of the entity
      * @param {Object} opts Optional parameters
-     * @param {String} opts.name Artifact name.
-     * @param {module:model/String} opts.kind The artifact kind.   - model: model  - audio: audio  - video: vidio  - histogram: histogram  - image: image  - tensor: tensor  - dataframe: dataframe  - chart: plotly/bokeh chart  - csv: Comma  - tsv: Tab  - psv: Pipe  - ssv: Space  - metric: Metric  - env: Env  - html: HTML  - text: Text  - file: File  - dir: Dir  - dockerfile: Dockerfile  - docker_image: docker image  - data: data  - coderef: coderef  - table: table (default to model)
-     * @param {String} opts.names Names query param.
-     * @param {String} opts.runs Runs query param.
-     * @param {String} opts.orient Orient query param.
      * @param {String} opts.path Path query param.
      * @param {module:api/RunsV1Api~getRunArtifactsTreeCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1ArtifactTreeResponse}
@@ -1274,11 +1243,6 @@
         'uuid': uuid
       };
       var queryParams = {
-        'name': opts['name'],
-        'kind': opts['kind'],
-        'names': opts['names'],
-        'runs': opts['runs'],
-        'orient': opts['orient'],
         'path': opts['path'],
       };
       var collectionQueryParams = {
@@ -1316,11 +1280,8 @@
      * @param {String} uuid Uuid identifier of the entity
      * @param {module:model/String} kind The artifact kind
      * @param {Object} opts Optional parameters
-     * @param {String} opts.name Artifact name.
      * @param {String} opts.names Names query param.
-     * @param {String} opts.runs Runs query param.
      * @param {String} opts.orient Orient query param.
-     * @param {String} opts.path Path query param.
      * @param {module:api/RunsV1Api~getRunEventsCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1EventsResponse}
      */
@@ -1362,11 +1323,8 @@
         'kind': kind
       };
       var queryParams = {
-        'name': opts['name'],
         'names': opts['names'],
-        'runs': opts['runs'],
         'orient': opts['orient'],
-        'path': opts['path'],
       };
       var collectionQueryParams = {
       };
@@ -1517,6 +1475,80 @@
 
       return this.apiClient.callApi(
         '/api/v1/{owner}/{project}/runs/{uuid}/namespace', 'GET',
+        pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
+
+    /**
+     * Callback function to receive the result of the getRunResources operation.
+     * @callback module:api/RunsV1Api~getRunResourcesCallback
+     * @param {String} error Error message, if any.
+     * @param {module:model/V1EventsResponse} data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * Get run resources events
+     * @param {String} namespace namespace
+     * @param {String} owner Owner of the namespace
+     * @param {String} project Project where the run will be assigned
+     * @param {String} uuid Uuid identifier of the entity
+     * @param {Object} opts Optional parameters
+     * @param {String} opts.names Names query param.
+     * @param {Boolean} opts.tail Query param flag to tail the values.
+     * @param {module:api/RunsV1Api~getRunResourcesCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link module:model/V1EventsResponse}
+     */
+    this.getRunResources = function(namespace, owner, project, uuid, opts, callback) {
+      opts = opts || {};
+      var postBody = null;
+
+      // verify the required parameter 'namespace' is set
+      if (namespace === undefined || namespace === null) {
+        throw new Error("Missing the required parameter 'namespace' when calling getRunResources");
+      }
+
+      // verify the required parameter 'owner' is set
+      if (owner === undefined || owner === null) {
+        throw new Error("Missing the required parameter 'owner' when calling getRunResources");
+      }
+
+      // verify the required parameter 'project' is set
+      if (project === undefined || project === null) {
+        throw new Error("Missing the required parameter 'project' when calling getRunResources");
+      }
+
+      // verify the required parameter 'uuid' is set
+      if (uuid === undefined || uuid === null) {
+        throw new Error("Missing the required parameter 'uuid' when calling getRunResources");
+      }
+
+
+      var pathParams = {
+        'namespace': namespace,
+        'owner': owner,
+        'project': project,
+        'uuid': uuid
+      };
+      var queryParams = {
+        'names': opts['names'],
+        'tail': opts['tail'],
+      };
+      var collectionQueryParams = {
+      };
+      var headerParams = {
+      };
+      var formParams = {
+      };
+
+      var authNames = ['ApiKey'];
+      var contentTypes = ['application/json'];
+      var accepts = ['application/json'];
+      var returnType = V1EventsResponse;
+
+      return this.apiClient.callApi(
+        '/streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/resources', 'GET',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -2017,7 +2049,7 @@
      */
 
     /**
-     * List runs
+     * List runs io
      * @param {String} owner Owner of the namespace
      * @param {String} project Project under namesapce
      * @param {Object} opts Optional parameters

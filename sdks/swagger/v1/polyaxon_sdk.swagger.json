@@ -7673,7 +7673,7 @@
     },
     "/api/v1/{owner}/{project}/runs/io": {
       "get": {
-        "summary": "List runs",
+        "summary": "List runs io",
         "operationId": "ListRunsIo",
         "responses": {
           "200": {
@@ -8394,67 +8394,6 @@
             "in": "query",
             "required": false,
             "type": "string"
-          },
-          {
-            "name": "kind",
-            "description": "The artifact kind.\n\n - model: model\n - audio: audio\n - video: vidio\n - histogram: histogram\n - image: image\n - tensor: tensor\n - dataframe: dataframe\n - chart: plotly/bokeh chart\n - csv: Comma\n - tsv: Tab\n - psv: Pipe\n - ssv: Space\n - metric: Metric\n - env: Env\n - html: HTML\n - text: Text\n - file: File\n - dir: Dir\n - dockerfile: Dockerfile\n - docker_image: docker image\n - data: data\n - coderef: coderef\n - table: table",
-            "in": "query",
-            "required": false,
-            "type": "string",
-            "enum": [
-              "model",
-              "audio",
-              "video",
-              "histogram",
-              "image",
-              "tensor",
-              "dataframe",
-              "chart",
-              "csv",
-              "tsv",
-              "psv",
-              "ssv",
-              "metric",
-              "env",
-              "html",
-              "text",
-              "file",
-              "dir",
-              "dockerfile",
-              "docker_image",
-              "data",
-              "coderef",
-              "table"
-            ],
-            "default": "model"
-          },
-          {
-            "name": "names",
-            "description": "Names query param.",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "runs",
-            "description": "Runs query param.",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "orient",
-            "description": "Orient query param.",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "path",
-            "description": "Path query param.",
-            "in": "query",
-            "required": false,
-            "type": "string"
           }
         ],
         "tags": [
@@ -8519,67 +8458,6 @@
           {
             "name": "namespace",
             "description": "namespace.",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "kind",
-            "description": "The artifact kind.\n\n - model: model\n - audio: audio\n - video: vidio\n - histogram: histogram\n - image: image\n - tensor: tensor\n - dataframe: dataframe\n - chart: plotly/bokeh chart\n - csv: Comma\n - tsv: Tab\n - psv: Pipe\n - ssv: Space\n - metric: Metric\n - env: Env\n - html: HTML\n - text: Text\n - file: File\n - dir: Dir\n - dockerfile: Dockerfile\n - docker_image: docker image\n - data: data\n - coderef: coderef\n - table: table",
-            "in": "query",
-            "required": false,
-            "type": "string",
-            "enum": [
-              "model",
-              "audio",
-              "video",
-              "histogram",
-              "image",
-              "tensor",
-              "dataframe",
-              "chart",
-              "csv",
-              "tsv",
-              "psv",
-              "ssv",
-              "metric",
-              "env",
-              "html",
-              "text",
-              "file",
-              "dir",
-              "dockerfile",
-              "docker_image",
-              "data",
-              "coderef",
-              "table"
-            ],
-            "default": "model"
-          },
-          {
-            "name": "names",
-            "description": "Names query param.",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "runs",
-            "description": "Runs query param.",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "orient",
-            "description": "Orient query param.",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "path",
-            "description": "Path query param.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -10368,20 +10246,6 @@
             ]
           },
           {
-            "name": "uuid",
-            "description": "Uuid identifier of the entity.",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "name",
-            "description": "Artifact name.",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
             "name": "names",
             "description": "Names query param.",
             "in": "query",
@@ -10398,13 +10262,6 @@
           {
             "name": "orient",
             "description": "Orient query param.",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "path",
-            "description": "Path query param.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -10472,67 +10329,6 @@
             "description": "Uuid identifier of the entity",
             "in": "path",
             "required": true,
-            "type": "string"
-          },
-          {
-            "name": "name",
-            "description": "Artifact name.",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "kind",
-            "description": "The artifact kind.\n\n - model: model\n - audio: audio\n - video: vidio\n - histogram: histogram\n - image: image\n - tensor: tensor\n - dataframe: dataframe\n - chart: plotly/bokeh chart\n - csv: Comma\n - tsv: Tab\n - psv: Pipe\n - ssv: Space\n - metric: Metric\n - env: Env\n - html: HTML\n - text: Text\n - file: File\n - dir: Dir\n - dockerfile: Dockerfile\n - docker_image: docker image\n - data: data\n - coderef: coderef\n - table: table",
-            "in": "query",
-            "required": false,
-            "type": "string",
-            "enum": [
-              "model",
-              "audio",
-              "video",
-              "histogram",
-              "image",
-              "tensor",
-              "dataframe",
-              "chart",
-              "csv",
-              "tsv",
-              "psv",
-              "ssv",
-              "metric",
-              "env",
-              "html",
-              "text",
-              "file",
-              "dir",
-              "dockerfile",
-              "docker_image",
-              "data",
-              "coderef",
-              "table"
-            ],
-            "default": "model"
-          },
-          {
-            "name": "names",
-            "description": "Names query param.",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "runs",
-            "description": "Runs query param.",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "orient",
-            "description": "Orient query param.",
-            "in": "query",
-            "required": false,
             "type": "string"
           },
           {
@@ -10640,13 +10436,6 @@
             ]
           },
           {
-            "name": "name",
-            "description": "Artifact name.",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
             "name": "names",
             "description": "Names query param.",
             "in": "query",
@@ -10654,22 +10443,8 @@
             "type": "string"
           },
           {
-            "name": "runs",
-            "description": "Runs query param.",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
             "name": "orient",
             "description": "Orient query param.",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "path",
-            "description": "Path query param.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -10822,6 +10597,86 @@
             "schema": {
               "$ref": "#/definitions/v1EntityNotificationBody"
             }
+          }
+        ],
+        "tags": [
+          "RunsV1"
+        ]
+      }
+    },
+    "/streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/resources": {
+      "get": {
+        "summary": "Get run resources events",
+        "operationId": "GetRunResources",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1EventsResponse"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "namespace",
+            "description": "namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "project",
+            "description": "Project where the run will be assigned",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "uuid",
+            "description": "Uuid identifier of the entity",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "names",
+            "description": "Names query param.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "tail",
+            "description": "Query param flag to tail the values.",
+            "in": "query",
+            "required": false,
+            "type": "boolean",
+            "format": "boolean"
           }
         ],
         "tags": [

@@ -25,6 +25,7 @@ Method | HTTP request | Description
 [**get_run_events**](RunsV1Api.md#get_run_events) | **GET** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/events/{kind} | Get run events
 [**get_run_logs**](RunsV1Api.md#get_run_logs) | **GET** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/logs | Get run logs
 [**get_run_namespace**](RunsV1Api.md#get_run_namespace) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/namespace | Get Run namespace
+[**get_run_resources**](RunsV1Api.md#get_run_resources) | **GET** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/resources | Get run resources events
 [**get_run_settings**](RunsV1Api.md#get_run_settings) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/settings | Get Run settings
 [**get_run_statuses**](RunsV1Api.md#get_run_statuses) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/statuses | Get run status
 [**impersonate_token**](RunsV1Api.md#impersonate_token) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/impersonate | Impersonate run token
@@ -33,7 +34,7 @@ Method | HTTP request | Description
 [**list_archived_runs**](RunsV1Api.md#list_archived_runs) | **GET** /api/v1/archives/{user}/runs | List archived runs for user
 [**list_bookmarked_runs**](RunsV1Api.md#list_bookmarked_runs) | **GET** /api/v1/bookmarks/{user}/runs | List bookmarked runs for user
 [**list_runs**](RunsV1Api.md#list_runs) | **GET** /api/v1/{owner}/{project}/runs | List runs
-[**list_runs_io**](RunsV1Api.md#list_runs_io) | **GET** /api/v1/{owner}/{project}/runs/io | List runs
+[**list_runs_io**](RunsV1Api.md#list_runs_io) | **GET** /api/v1/{owner}/{project}/runs/io | List runs io
 [**notify_run_status**](RunsV1Api.md#notify_run_status) | **POST** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/notify | Notify run status
 [**patch_run**](RunsV1Api.md#patch_run) | **PATCH** /api/v1/{owner}/{project}/runs/{run.uuid} | Patch run
 [**restart_run**](RunsV1Api.md#restart_run) | **POST** /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/restart | Restart run
@@ -501,7 +502,7 @@ void (empty response body)
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **delete_run_artifact_lineage**
-> delete_run_artifact_lineage(owner, project, uuid, name, namespace=namespace, kind=kind, names=names, runs=runs, orient=orient, path=path)
+> delete_run_artifact_lineage(owner, project, uuid, name, namespace=namespace)
 
 Delete run artifact lineage
 
@@ -526,15 +527,10 @@ project = 'project_example' # str | Project where the run will be assigned
 uuid = 'uuid_example' # str | Uuid identifier of the entity
 name = 'name_example' # str | Artifact name
 namespace = 'namespace_example' # str | namespace. (optional)
-kind = 'model' # str | The artifact kind.   - model: model  - audio: audio  - video: vidio  - histogram: histogram  - image: image  - tensor: tensor  - dataframe: dataframe  - chart: plotly/bokeh chart  - csv: Comma  - tsv: Tab  - psv: Pipe  - ssv: Space  - metric: Metric  - env: Env  - html: HTML  - text: Text  - file: File  - dir: Dir  - dockerfile: Dockerfile  - docker_image: docker image  - data: data  - coderef: coderef  - table: table (optional) (default to model)
-names = 'names_example' # str | Names query param. (optional)
-runs = 'runs_example' # str | Runs query param. (optional)
-orient = 'orient_example' # str | Orient query param. (optional)
-path = 'path_example' # str | Path query param. (optional)
 
 try:
     # Delete run artifact lineage
-    api_instance.delete_run_artifact_lineage(owner, project, uuid, name, namespace=namespace, kind=kind, names=names, runs=runs, orient=orient, path=path)
+    api_instance.delete_run_artifact_lineage(owner, project, uuid, name, namespace=namespace)
 except ApiException as e:
     print("Exception when calling RunsV1Api->delete_run_artifact_lineage: %s\n" % e)
 ```
@@ -548,11 +544,6 @@ Name | Type | Description  | Notes
  **uuid** | **str**| Uuid identifier of the entity | 
  **name** | **str**| Artifact name | 
  **namespace** | **str**| namespace. | [optional] 
- **kind** | **str**| The artifact kind.   - model: model  - audio: audio  - video: vidio  - histogram: histogram  - image: image  - tensor: tensor  - dataframe: dataframe  - chart: plotly/bokeh chart  - csv: Comma  - tsv: Tab  - psv: Pipe  - ssv: Space  - metric: Metric  - env: Env  - html: HTML  - text: Text  - file: File  - dir: Dir  - dockerfile: Dockerfile  - docker_image: docker image  - data: data  - coderef: coderef  - table: table | [optional] [default to model]
- **names** | **str**| Names query param. | [optional] 
- **runs** | **str**| Runs query param. | [optional] 
- **orient** | **str**| Orient query param. | [optional] 
- **path** | **str**| Path query param. | [optional] 
 
 ### Return type
 
@@ -625,7 +616,7 @@ void (empty response body)
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_multi_run_events**
-> V1EventsResponse get_multi_run_events(namespace, owner, project, kind, uuid=uuid, name=name, names=names, runs=runs, orient=orient, path=path)
+> V1EventsResponse get_multi_run_events(namespace, owner, project, kind, names=names, runs=runs, orient=orient)
 
 Get multi runs events
 
@@ -649,16 +640,13 @@ namespace = 'namespace_example' # str | namespace
 owner = 'owner_example' # str | Owner of the namespace
 project = 'project_example' # str | Project where the run will be assigned
 kind = 'kind_example' # str | The artifact kind
-uuid = 'uuid_example' # str | Uuid identifier of the entity. (optional)
-name = 'name_example' # str | Artifact name. (optional)
 names = 'names_example' # str | Names query param. (optional)
 runs = 'runs_example' # str | Runs query param. (optional)
 orient = 'orient_example' # str | Orient query param. (optional)
-path = 'path_example' # str | Path query param. (optional)
 
 try:
     # Get multi runs events
-    api_response = api_instance.get_multi_run_events(namespace, owner, project, kind, uuid=uuid, name=name, names=names, runs=runs, orient=orient, path=path)
+    api_response = api_instance.get_multi_run_events(namespace, owner, project, kind, names=names, runs=runs, orient=orient)
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling RunsV1Api->get_multi_run_events: %s\n" % e)
@@ -672,12 +660,9 @@ Name | Type | Description  | Notes
  **owner** | **str**| Owner of the namespace | 
  **project** | **str**| Project where the run will be assigned | 
  **kind** | **str**| The artifact kind | 
- **uuid** | **str**| Uuid identifier of the entity. | [optional] 
- **name** | **str**| Artifact name. | [optional] 
  **names** | **str**| Names query param. | [optional] 
  **runs** | **str**| Runs query param. | [optional] 
  **orient** | **str**| Orient query param. | [optional] 
- **path** | **str**| Path query param. | [optional] 
 
 ### Return type
 
@@ -813,7 +798,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_run_artifact_lineage**
-> V1RunArtifact get_run_artifact_lineage(owner, project, uuid, name, namespace=namespace, kind=kind, names=names, runs=runs, orient=orient, path=path)
+> V1RunArtifact get_run_artifact_lineage(owner, project, uuid, name, namespace=namespace)
 
 Get run artifacts lineage
 
@@ -838,15 +823,10 @@ project = 'project_example' # str | Project where the run will be assigned
 uuid = 'uuid_example' # str | Uuid identifier of the entity
 name = 'name_example' # str | Artifact name
 namespace = 'namespace_example' # str | namespace. (optional)
-kind = 'model' # str | The artifact kind.   - model: model  - audio: audio  - video: vidio  - histogram: histogram  - image: image  - tensor: tensor  - dataframe: dataframe  - chart: plotly/bokeh chart  - csv: Comma  - tsv: Tab  - psv: Pipe  - ssv: Space  - metric: Metric  - env: Env  - html: HTML  - text: Text  - file: File  - dir: Dir  - dockerfile: Dockerfile  - docker_image: docker image  - data: data  - coderef: coderef  - table: table (optional) (default to model)
-names = 'names_example' # str | Names query param. (optional)
-runs = 'runs_example' # str | Runs query param. (optional)
-orient = 'orient_example' # str | Orient query param. (optional)
-path = 'path_example' # str | Path query param. (optional)
 
 try:
     # Get run artifacts lineage
-    api_response = api_instance.get_run_artifact_lineage(owner, project, uuid, name, namespace=namespace, kind=kind, names=names, runs=runs, orient=orient, path=path)
+    api_response = api_instance.get_run_artifact_lineage(owner, project, uuid, name, namespace=namespace)
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling RunsV1Api->get_run_artifact_lineage: %s\n" % e)
@@ -861,11 +841,6 @@ Name | Type | Description  | Notes
  **uuid** | **str**| Uuid identifier of the entity | 
  **name** | **str**| Artifact name | 
  **namespace** | **str**| namespace. | [optional] 
- **kind** | **str**| The artifact kind.   - model: model  - audio: audio  - video: vidio  - histogram: histogram  - image: image  - tensor: tensor  - dataframe: dataframe  - chart: plotly/bokeh chart  - csv: Comma  - tsv: Tab  - psv: Pipe  - ssv: Space  - metric: Metric  - env: Env  - html: HTML  - text: Text  - file: File  - dir: Dir  - dockerfile: Dockerfile  - docker_image: docker image  - data: data  - coderef: coderef  - table: table | [optional] [default to model]
- **names** | **str**| Names query param. | [optional] 
- **runs** | **str**| Runs query param. | [optional] 
- **orient** | **str**| Orient query param. | [optional] 
- **path** | **str**| Path query param. | [optional] 
 
 ### Return type
 
@@ -1067,7 +1042,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_run_artifacts_tree**
-> V1ArtifactTreeResponse get_run_artifacts_tree(namespace, owner, project, uuid, name=name, kind=kind, names=names, runs=runs, orient=orient, path=path)
+> V1ArtifactTreeResponse get_run_artifacts_tree(namespace, owner, project, uuid, path=path)
 
 Get run artifacts tree
 
@@ -1091,16 +1066,11 @@ namespace = 'namespace_example' # str | namespace
 owner = 'owner_example' # str | Owner of the namespace
 project = 'project_example' # str | Project where the run will be assigned
 uuid = 'uuid_example' # str | Uuid identifier of the entity
-name = 'name_example' # str | Artifact name. (optional)
-kind = 'model' # str | The artifact kind.   - model: model  - audio: audio  - video: vidio  - histogram: histogram  - image: image  - tensor: tensor  - dataframe: dataframe  - chart: plotly/bokeh chart  - csv: Comma  - tsv: Tab  - psv: Pipe  - ssv: Space  - metric: Metric  - env: Env  - html: HTML  - text: Text  - file: File  - dir: Dir  - dockerfile: Dockerfile  - docker_image: docker image  - data: data  - coderef: coderef  - table: table (optional) (default to model)
-names = 'names_example' # str | Names query param. (optional)
-runs = 'runs_example' # str | Runs query param. (optional)
-orient = 'orient_example' # str | Orient query param. (optional)
 path = 'path_example' # str | Path query param. (optional)
 
 try:
     # Get run artifacts tree
-    api_response = api_instance.get_run_artifacts_tree(namespace, owner, project, uuid, name=name, kind=kind, names=names, runs=runs, orient=orient, path=path)
+    api_response = api_instance.get_run_artifacts_tree(namespace, owner, project, uuid, path=path)
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling RunsV1Api->get_run_artifacts_tree: %s\n" % e)
@@ -1114,11 +1084,6 @@ Name | Type | Description  | Notes
  **owner** | **str**| Owner of the namespace | 
  **project** | **str**| Project where the run will be assigned | 
  **uuid** | **str**| Uuid identifier of the entity | 
- **name** | **str**| Artifact name. | [optional] 
- **kind** | **str**| The artifact kind.   - model: model  - audio: audio  - video: vidio  - histogram: histogram  - image: image  - tensor: tensor  - dataframe: dataframe  - chart: plotly/bokeh chart  - csv: Comma  - tsv: Tab  - psv: Pipe  - ssv: Space  - metric: Metric  - env: Env  - html: HTML  - text: Text  - file: File  - dir: Dir  - dockerfile: Dockerfile  - docker_image: docker image  - data: data  - coderef: coderef  - table: table | [optional] [default to model]
- **names** | **str**| Names query param. | [optional] 
- **runs** | **str**| Runs query param. | [optional] 
- **orient** | **str**| Orient query param. | [optional] 
  **path** | **str**| Path query param. | [optional] 
 
 ### Return type
@@ -1137,7 +1102,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_run_events**
-> V1EventsResponse get_run_events(namespace, owner, project, uuid, kind, name=name, names=names, runs=runs, orient=orient, path=path)
+> V1EventsResponse get_run_events(namespace, owner, project, uuid, kind, names=names, orient=orient)
 
 Get run events
 
@@ -1162,15 +1127,12 @@ owner = 'owner_example' # str | Owner of the namespace
 project = 'project_example' # str | Project where the run will be assigned
 uuid = 'uuid_example' # str | Uuid identifier of the entity
 kind = 'kind_example' # str | The artifact kind
-name = 'name_example' # str | Artifact name. (optional)
 names = 'names_example' # str | Names query param. (optional)
-runs = 'runs_example' # str | Runs query param. (optional)
 orient = 'orient_example' # str | Orient query param. (optional)
-path = 'path_example' # str | Path query param. (optional)
 
 try:
     # Get run events
-    api_response = api_instance.get_run_events(namespace, owner, project, uuid, kind, name=name, names=names, runs=runs, orient=orient, path=path)
+    api_response = api_instance.get_run_events(namespace, owner, project, uuid, kind, names=names, orient=orient)
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling RunsV1Api->get_run_events: %s\n" % e)
@@ -1185,11 +1147,8 @@ Name | Type | Description  | Notes
  **project** | **str**| Project where the run will be assigned | 
  **uuid** | **str**| Uuid identifier of the entity | 
  **kind** | **str**| The artifact kind | 
- **name** | **str**| Artifact name. | [optional] 
  **names** | **str**| Names query param. | [optional] 
- **runs** | **str**| Runs query param. | [optional] 
  **orient** | **str**| Orient query param. | [optional] 
- **path** | **str**| Path query param. | [optional] 
 
 ### Return type
 
@@ -1312,6 +1271,68 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**V1RunSettings**](V1RunSettings.md)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **get_run_resources**
+> V1EventsResponse get_run_resources(namespace, owner, project, uuid, names=names, tail=tail)
+
+Get run resources events
+
+### Example
+```python
+from __future__ import print_function
+import time
+import polyaxon_sdk
+from polyaxon_sdk.rest import ApiException
+from pprint import pprint
+
+# Configure API key authorization: ApiKey
+configuration = polyaxon_sdk.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
+namespace = 'namespace_example' # str | namespace
+owner = 'owner_example' # str | Owner of the namespace
+project = 'project_example' # str | Project where the run will be assigned
+uuid = 'uuid_example' # str | Uuid identifier of the entity
+names = 'names_example' # str | Names query param. (optional)
+tail = true # bool | Query param flag to tail the values. (optional)
+
+try:
+    # Get run resources events
+    api_response = api_instance.get_run_resources(namespace, owner, project, uuid, names=names, tail=tail)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling RunsV1Api->get_run_resources: %s\n" % e)
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **namespace** | **str**| namespace | 
+ **owner** | **str**| Owner of the namespace | 
+ **project** | **str**| Project where the run will be assigned | 
+ **uuid** | **str**| Uuid identifier of the entity | 
+ **names** | **str**| Names query param. | [optional] 
+ **tail** | **bool**| Query param flag to tail the values. | [optional] 
+
+### Return type
+
+[**V1EventsResponse**](V1EventsResponse.md)
 
 ### Authorization
 
@@ -1789,7 +1810,7 @@ Name | Type | Description  | Notes
 # **list_runs_io**
 > V1ListRunsResponse list_runs_io(owner, project, offset=offset, limit=limit, sort=sort, query=query)
 
-List runs
+List runs io
 
 ### Example
 ```python
@@ -1815,7 +1836,7 @@ sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search search. (optional)
 
 try:
-    # List runs
+    # List runs io
     api_response = api_instance.list_runs_io(owner, project, offset=offset, limit=limit, sort=sort, query=query)
     pprint(api_response)
 except ApiException as e:

@@ -79,11 +79,6 @@ type GetRunEventsParams struct {
 
 	*/
 	Kind string
-	/*Name
-	  Artifact name.
-
-	*/
-	Name *string
 	/*Names
 	  Names query param.
 
@@ -104,21 +99,11 @@ type GetRunEventsParams struct {
 
 	*/
 	Owner string
-	/*Path
-	  Path query param.
-
-	*/
-	Path *string
 	/*Project
 	  Project where the run will be assigned
 
 	*/
 	Project string
-	/*Runs
-	  Runs query param.
-
-	*/
-	Runs *string
 	/*UUID
 	  Uuid identifier of the entity
 
@@ -174,17 +159,6 @@ func (o *GetRunEventsParams) SetKind(kind string) {
 	o.Kind = kind
 }
 
-// WithName adds the name to the get run events params
-func (o *GetRunEventsParams) WithName(name *string) *GetRunEventsParams {
-	o.SetName(name)
-	return o
-}
-
-// SetName adds the name to the get run events params
-func (o *GetRunEventsParams) SetName(name *string) {
-	o.Name = name
-}
-
 // WithNames adds the names to the get run events params
 func (o *GetRunEventsParams) WithNames(names *string) *GetRunEventsParams {
 	o.SetNames(names)
@@ -229,17 +203,6 @@ func (o *GetRunEventsParams) SetOwner(owner string) {
 	o.Owner = owner
 }
 
-// WithPath adds the path to the get run events params
-func (o *GetRunEventsParams) WithPath(path *string) *GetRunEventsParams {
-	o.SetPath(path)
-	return o
-}
-
-// SetPath adds the path to the get run events params
-func (o *GetRunEventsParams) SetPath(path *string) {
-	o.Path = path
-}
-
 // WithProject adds the project to the get run events params
 func (o *GetRunEventsParams) WithProject(project string) *GetRunEventsParams {
 	o.SetProject(project)
@@ -249,17 +212,6 @@ func (o *GetRunEventsParams) WithProject(project string) *GetRunEventsParams {
 // SetProject adds the project to the get run events params
 func (o *GetRunEventsParams) SetProject(project string) {
 	o.Project = project
-}
-
-// WithRuns adds the runs to the get run events params
-func (o *GetRunEventsParams) WithRuns(runs *string) *GetRunEventsParams {
-	o.SetRuns(runs)
-	return o
-}
-
-// SetRuns adds the runs to the get run events params
-func (o *GetRunEventsParams) SetRuns(runs *string) {
-	o.Runs = runs
 }
 
 // WithUUID adds the uuid to the get run events params
@@ -284,22 +236,6 @@ func (o *GetRunEventsParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.
 	// path param kind
 	if err := r.SetPathParam("kind", o.Kind); err != nil {
 		return err
-	}
-
-	if o.Name != nil {
-
-		// query param name
-		var qrName string
-		if o.Name != nil {
-			qrName = *o.Name
-		}
-		qName := qrName
-		if qName != "" {
-			if err := r.SetQueryParam("name", qName); err != nil {
-				return err
-			}
-		}
-
 	}
 
 	if o.Names != nil {
@@ -344,41 +280,9 @@ func (o *GetRunEventsParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.
 		return err
 	}
 
-	if o.Path != nil {
-
-		// query param path
-		var qrPath string
-		if o.Path != nil {
-			qrPath = *o.Path
-		}
-		qPath := qrPath
-		if qPath != "" {
-			if err := r.SetQueryParam("path", qPath); err != nil {
-				return err
-			}
-		}
-
-	}
-
 	// path param project
 	if err := r.SetPathParam("project", o.Project); err != nil {
 		return err
-	}
-
-	if o.Runs != nil {
-
-		// query param runs
-		var qrRuns string
-		if o.Runs != nil {
-			qrRuns = *o.Runs
-		}
-		qRuns := qrRuns
-		if qRuns != "" {
-			if err := r.SetQueryParam("runs", qRuns); err != nil {
-				return err
-			}
-		}
-
 	}
 
 	// path param uuid

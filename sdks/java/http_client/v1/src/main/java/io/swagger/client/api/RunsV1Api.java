@@ -1253,17 +1253,12 @@ public class RunsV1Api {
      * @param uuid Uuid identifier of the entity (required)
      * @param name Artifact name (required)
      * @param namespace namespace. (optional)
-     * @param kind The artifact kind.   - model: model  - audio: audio  - video: vidio  - histogram: histogram  - image: image  - tensor: tensor  - dataframe: dataframe  - chart: plotly/bokeh chart  - csv: Comma  - tsv: Tab  - psv: Pipe  - ssv: Space  - metric: Metric  - env: Env  - html: HTML  - text: Text  - file: File  - dir: Dir  - dockerfile: Dockerfile  - docker_image: docker image  - data: data  - coderef: coderef  - table: table (optional, default to model)
-     * @param names Names query param. (optional)
-     * @param runs Runs query param. (optional)
-     * @param orient Orient query param. (optional)
-     * @param path Path query param. (optional)
      * @param progressListener Progress listener
      * @param progressRequestListener Progress request listener
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call deleteRunArtifactLineageCall(String owner, String project, String uuid, String name, String namespace, String kind, String names, String runs, String orient, String path, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call deleteRunArtifactLineageCall(String owner, String project, String uuid, String name, String namespace, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -1277,16 +1272,6 @@ public class RunsV1Api {
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
         if (namespace != null)
         localVarQueryParams.addAll(apiClient.parameterToPair("namespace", namespace));
-        if (kind != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("kind", kind));
-        if (names != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("names", names));
-        if (runs != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("runs", runs));
-        if (orient != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("orient", orient));
-        if (path != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("path", path));
 
         Map<String, String> localVarHeaderParams = new HashMap<String, String>();
 
@@ -1321,7 +1306,7 @@ public class RunsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call deleteRunArtifactLineageValidateBeforeCall(String owner, String project, String uuid, String name, String namespace, String kind, String names, String runs, String orient, String path, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call deleteRunArtifactLineageValidateBeforeCall(String owner, String project, String uuid, String name, String namespace, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
@@ -1344,7 +1329,7 @@ public class RunsV1Api {
         }
         
 
-        com.squareup.okhttp.Call call = deleteRunArtifactLineageCall(owner, project, uuid, name, namespace, kind, names, runs, orient, path, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = deleteRunArtifactLineageCall(owner, project, uuid, name, namespace, progressListener, progressRequestListener);
         return call;
 
     }
@@ -1357,15 +1342,10 @@ public class RunsV1Api {
      * @param uuid Uuid identifier of the entity (required)
      * @param name Artifact name (required)
      * @param namespace namespace. (optional)
-     * @param kind The artifact kind.   - model: model  - audio: audio  - video: vidio  - histogram: histogram  - image: image  - tensor: tensor  - dataframe: dataframe  - chart: plotly/bokeh chart  - csv: Comma  - tsv: Tab  - psv: Pipe  - ssv: Space  - metric: Metric  - env: Env  - html: HTML  - text: Text  - file: File  - dir: Dir  - dockerfile: Dockerfile  - docker_image: docker image  - data: data  - coderef: coderef  - table: table (optional, default to model)
-     * @param names Names query param. (optional)
-     * @param runs Runs query param. (optional)
-     * @param orient Orient query param. (optional)
-     * @param path Path query param. (optional)
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public void deleteRunArtifactLineage(String owner, String project, String uuid, String name, String namespace, String kind, String names, String runs, String orient, String path) throws ApiException {
-        deleteRunArtifactLineageWithHttpInfo(owner, project, uuid, name, namespace, kind, names, runs, orient, path);
+    public void deleteRunArtifactLineage(String owner, String project, String uuid, String name, String namespace) throws ApiException {
+        deleteRunArtifactLineageWithHttpInfo(owner, project, uuid, name, namespace);
     }
 
     /**
@@ -1376,16 +1356,11 @@ public class RunsV1Api {
      * @param uuid Uuid identifier of the entity (required)
      * @param name Artifact name (required)
      * @param namespace namespace. (optional)
-     * @param kind The artifact kind.   - model: model  - audio: audio  - video: vidio  - histogram: histogram  - image: image  - tensor: tensor  - dataframe: dataframe  - chart: plotly/bokeh chart  - csv: Comma  - tsv: Tab  - psv: Pipe  - ssv: Space  - metric: Metric  - env: Env  - html: HTML  - text: Text  - file: File  - dir: Dir  - dockerfile: Dockerfile  - docker_image: docker image  - data: data  - coderef: coderef  - table: table (optional, default to model)
-     * @param names Names query param. (optional)
-     * @param runs Runs query param. (optional)
-     * @param orient Orient query param. (optional)
-     * @param path Path query param. (optional)
      * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<Void> deleteRunArtifactLineageWithHttpInfo(String owner, String project, String uuid, String name, String namespace, String kind, String names, String runs, String orient, String path) throws ApiException {
-        com.squareup.okhttp.Call call = deleteRunArtifactLineageValidateBeforeCall(owner, project, uuid, name, namespace, kind, names, runs, orient, path, null, null);
+    public ApiResponse<Void> deleteRunArtifactLineageWithHttpInfo(String owner, String project, String uuid, String name, String namespace) throws ApiException {
+        com.squareup.okhttp.Call call = deleteRunArtifactLineageValidateBeforeCall(owner, project, uuid, name, namespace, null, null);
         return apiClient.execute(call);
     }
 
@@ -1397,16 +1372,11 @@ public class RunsV1Api {
      * @param uuid Uuid identifier of the entity (required)
      * @param name Artifact name (required)
      * @param namespace namespace. (optional)
-     * @param kind The artifact kind.   - model: model  - audio: audio  - video: vidio  - histogram: histogram  - image: image  - tensor: tensor  - dataframe: dataframe  - chart: plotly/bokeh chart  - csv: Comma  - tsv: Tab  - psv: Pipe  - ssv: Space  - metric: Metric  - env: Env  - html: HTML  - text: Text  - file: File  - dir: Dir  - dockerfile: Dockerfile  - docker_image: docker image  - data: data  - coderef: coderef  - table: table (optional, default to model)
-     * @param names Names query param. (optional)
-     * @param runs Runs query param. (optional)
-     * @param orient Orient query param. (optional)
-     * @param path Path query param. (optional)
      * @param callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call deleteRunArtifactLineageAsync(String owner, String project, String uuid, String name, String namespace, String kind, String names, String runs, String orient, String path, final ApiCallback<Void> callback) throws ApiException {
+    public com.squareup.okhttp.Call deleteRunArtifactLineageAsync(String owner, String project, String uuid, String name, String namespace, final ApiCallback<Void> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -1427,7 +1397,7 @@ public class RunsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = deleteRunArtifactLineageValidateBeforeCall(owner, project, uuid, name, namespace, kind, names, runs, orient, path, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = deleteRunArtifactLineageValidateBeforeCall(owner, project, uuid, name, namespace, progressListener, progressRequestListener);
         apiClient.executeAsync(call, callback);
         return call;
     }
@@ -1575,18 +1545,15 @@ public class RunsV1Api {
      * @param owner Owner of the namespace (required)
      * @param project Project where the run will be assigned (required)
      * @param kind The artifact kind (required)
-     * @param uuid Uuid identifier of the entity. (optional)
-     * @param name Artifact name. (optional)
      * @param names Names query param. (optional)
      * @param runs Runs query param. (optional)
      * @param orient Orient query param. (optional)
-     * @param path Path query param. (optional)
      * @param progressListener Progress listener
      * @param progressRequestListener Progress request listener
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call getMultiRunEventsCall(String namespace, String owner, String project, String kind, String uuid, String name, String names, String runs, String orient, String path, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call getMultiRunEventsCall(String namespace, String owner, String project, String kind, String names, String runs, String orient, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -1598,18 +1565,12 @@ public class RunsV1Api {
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-        if (uuid != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("uuid", uuid));
-        if (name != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("name", name));
         if (names != null)
         localVarQueryParams.addAll(apiClient.parameterToPair("names", names));
         if (runs != null)
         localVarQueryParams.addAll(apiClient.parameterToPair("runs", runs));
         if (orient != null)
         localVarQueryParams.addAll(apiClient.parameterToPair("orient", orient));
-        if (path != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("path", path));
 
         Map<String, String> localVarHeaderParams = new HashMap<String, String>();
 
@@ -1644,7 +1605,7 @@ public class RunsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call getMultiRunEventsValidateBeforeCall(String namespace, String owner, String project, String kind, String uuid, String name, String names, String runs, String orient, String path, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call getMultiRunEventsValidateBeforeCall(String namespace, String owner, String project, String kind, String names, String runs, String orient, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'namespace' is set
         if (namespace == null) {
@@ -1667,7 +1628,7 @@ public class RunsV1Api {
         }
         
 
-        com.squareup.okhttp.Call call = getMultiRunEventsCall(namespace, owner, project, kind, uuid, name, names, runs, orient, path, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = getMultiRunEventsCall(namespace, owner, project, kind, names, runs, orient, progressListener, progressRequestListener);
         return call;
 
     }
@@ -1679,17 +1640,14 @@ public class RunsV1Api {
      * @param owner Owner of the namespace (required)
      * @param project Project where the run will be assigned (required)
      * @param kind The artifact kind (required)
-     * @param uuid Uuid identifier of the entity. (optional)
-     * @param name Artifact name. (optional)
      * @param names Names query param. (optional)
      * @param runs Runs query param. (optional)
      * @param orient Orient query param. (optional)
-     * @param path Path query param. (optional)
      * @return V1EventsResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1EventsResponse getMultiRunEvents(String namespace, String owner, String project, String kind, String uuid, String name, String names, String runs, String orient, String path) throws ApiException {
-        ApiResponse<V1EventsResponse> resp = getMultiRunEventsWithHttpInfo(namespace, owner, project, kind, uuid, name, names, runs, orient, path);
+    public V1EventsResponse getMultiRunEvents(String namespace, String owner, String project, String kind, String names, String runs, String orient) throws ApiException {
+        ApiResponse<V1EventsResponse> resp = getMultiRunEventsWithHttpInfo(namespace, owner, project, kind, names, runs, orient);
         return resp.getData();
     }
 
@@ -1700,17 +1658,14 @@ public class RunsV1Api {
      * @param owner Owner of the namespace (required)
      * @param project Project where the run will be assigned (required)
      * @param kind The artifact kind (required)
-     * @param uuid Uuid identifier of the entity. (optional)
-     * @param name Artifact name. (optional)
      * @param names Names query param. (optional)
      * @param runs Runs query param. (optional)
      * @param orient Orient query param. (optional)
-     * @param path Path query param. (optional)
      * @return ApiResponse&lt;V1EventsResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1EventsResponse> getMultiRunEventsWithHttpInfo(String namespace, String owner, String project, String kind, String uuid, String name, String names, String runs, String orient, String path) throws ApiException {
-        com.squareup.okhttp.Call call = getMultiRunEventsValidateBeforeCall(namespace, owner, project, kind, uuid, name, names, runs, orient, path, null, null);
+    public ApiResponse<V1EventsResponse> getMultiRunEventsWithHttpInfo(String namespace, String owner, String project, String kind, String names, String runs, String orient) throws ApiException {
+        com.squareup.okhttp.Call call = getMultiRunEventsValidateBeforeCall(namespace, owner, project, kind, names, runs, orient, null, null);
         Type localVarReturnType = new TypeToken<V1EventsResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -1722,17 +1677,14 @@ public class RunsV1Api {
      * @param owner Owner of the namespace (required)
      * @param project Project where the run will be assigned (required)
      * @param kind The artifact kind (required)
-     * @param uuid Uuid identifier of the entity. (optional)
-     * @param name Artifact name. (optional)
      * @param names Names query param. (optional)
      * @param runs Runs query param. (optional)
      * @param orient Orient query param. (optional)
-     * @param path Path query param. (optional)
      * @param callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call getMultiRunEventsAsync(String namespace, String owner, String project, String kind, String uuid, String name, String names, String runs, String orient, String path, final ApiCallback<V1EventsResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call getMultiRunEventsAsync(String namespace, String owner, String project, String kind, String names, String runs, String orient, final ApiCallback<V1EventsResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -1753,7 +1705,7 @@ public class RunsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = getMultiRunEventsValidateBeforeCall(namespace, owner, project, kind, uuid, name, names, runs, orient, path, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = getMultiRunEventsValidateBeforeCall(namespace, owner, project, kind, names, runs, orient, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1EventsResponse>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
@@ -2073,17 +2025,12 @@ public class RunsV1Api {
      * @param uuid Uuid identifier of the entity (required)
      * @param name Artifact name (required)
      * @param namespace namespace. (optional)
-     * @param kind The artifact kind.   - model: model  - audio: audio  - video: vidio  - histogram: histogram  - image: image  - tensor: tensor  - dataframe: dataframe  - chart: plotly/bokeh chart  - csv: Comma  - tsv: Tab  - psv: Pipe  - ssv: Space  - metric: Metric  - env: Env  - html: HTML  - text: Text  - file: File  - dir: Dir  - dockerfile: Dockerfile  - docker_image: docker image  - data: data  - coderef: coderef  - table: table (optional, default to model)
-     * @param names Names query param. (optional)
-     * @param runs Runs query param. (optional)
-     * @param orient Orient query param. (optional)
-     * @param path Path query param. (optional)
      * @param progressListener Progress listener
      * @param progressRequestListener Progress request listener
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call getRunArtifactLineageCall(String owner, String project, String uuid, String name, String namespace, String kind, String names, String runs, String orient, String path, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call getRunArtifactLineageCall(String owner, String project, String uuid, String name, String namespace, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -2097,16 +2044,6 @@ public class RunsV1Api {
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
         if (namespace != null)
         localVarQueryParams.addAll(apiClient.parameterToPair("namespace", namespace));
-        if (kind != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("kind", kind));
-        if (names != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("names", names));
-        if (runs != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("runs", runs));
-        if (orient != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("orient", orient));
-        if (path != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("path", path));
 
         Map<String, String> localVarHeaderParams = new HashMap<String, String>();
 
@@ -2141,7 +2078,7 @@ public class RunsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call getRunArtifactLineageValidateBeforeCall(String owner, String project, String uuid, String name, String namespace, String kind, String names, String runs, String orient, String path, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call getRunArtifactLineageValidateBeforeCall(String owner, String project, String uuid, String name, String namespace, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
@@ -2164,7 +2101,7 @@ public class RunsV1Api {
         }
         
 
-        com.squareup.okhttp.Call call = getRunArtifactLineageCall(owner, project, uuid, name, namespace, kind, names, runs, orient, path, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = getRunArtifactLineageCall(owner, project, uuid, name, namespace, progressListener, progressRequestListener);
         return call;
 
     }
@@ -2177,16 +2114,11 @@ public class RunsV1Api {
      * @param uuid Uuid identifier of the entity (required)
      * @param name Artifact name (required)
      * @param namespace namespace. (optional)
-     * @param kind The artifact kind.   - model: model  - audio: audio  - video: vidio  - histogram: histogram  - image: image  - tensor: tensor  - dataframe: dataframe  - chart: plotly/bokeh chart  - csv: Comma  - tsv: Tab  - psv: Pipe  - ssv: Space  - metric: Metric  - env: Env  - html: HTML  - text: Text  - file: File  - dir: Dir  - dockerfile: Dockerfile  - docker_image: docker image  - data: data  - coderef: coderef  - table: table (optional, default to model)
-     * @param names Names query param. (optional)
-     * @param runs Runs query param. (optional)
-     * @param orient Orient query param. (optional)
-     * @param path Path query param. (optional)
      * @return V1RunArtifact
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1RunArtifact getRunArtifactLineage(String owner, String project, String uuid, String name, String namespace, String kind, String names, String runs, String orient, String path) throws ApiException {
-        ApiResponse<V1RunArtifact> resp = getRunArtifactLineageWithHttpInfo(owner, project, uuid, name, namespace, kind, names, runs, orient, path);
+    public V1RunArtifact getRunArtifactLineage(String owner, String project, String uuid, String name, String namespace) throws ApiException {
+        ApiResponse<V1RunArtifact> resp = getRunArtifactLineageWithHttpInfo(owner, project, uuid, name, namespace);
         return resp.getData();
     }
 
@@ -2198,16 +2130,11 @@ public class RunsV1Api {
      * @param uuid Uuid identifier of the entity (required)
      * @param name Artifact name (required)
      * @param namespace namespace. (optional)
-     * @param kind The artifact kind.   - model: model  - audio: audio  - video: vidio  - histogram: histogram  - image: image  - tensor: tensor  - dataframe: dataframe  - chart: plotly/bokeh chart  - csv: Comma  - tsv: Tab  - psv: Pipe  - ssv: Space  - metric: Metric  - env: Env  - html: HTML  - text: Text  - file: File  - dir: Dir  - dockerfile: Dockerfile  - docker_image: docker image  - data: data  - coderef: coderef  - table: table (optional, default to model)
-     * @param names Names query param. (optional)
-     * @param runs Runs query param. (optional)
-     * @param orient Orient query param. (optional)
-     * @param path Path query param. (optional)
      * @return ApiResponse&lt;V1RunArtifact&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1RunArtifact> getRunArtifactLineageWithHttpInfo(String owner, String project, String uuid, String name, String namespace, String kind, String names, String runs, String orient, String path) throws ApiException {
-        com.squareup.okhttp.Call call = getRunArtifactLineageValidateBeforeCall(owner, project, uuid, name, namespace, kind, names, runs, orient, path, null, null);
+    public ApiResponse<V1RunArtifact> getRunArtifactLineageWithHttpInfo(String owner, String project, String uuid, String name, String namespace) throws ApiException {
+        com.squareup.okhttp.Call call = getRunArtifactLineageValidateBeforeCall(owner, project, uuid, name, namespace, null, null);
         Type localVarReturnType = new TypeToken<V1RunArtifact>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -2220,16 +2147,11 @@ public class RunsV1Api {
      * @param uuid Uuid identifier of the entity (required)
      * @param name Artifact name (required)
      * @param namespace namespace. (optional)
-     * @param kind The artifact kind.   - model: model  - audio: audio  - video: vidio  - histogram: histogram  - image: image  - tensor: tensor  - dataframe: dataframe  - chart: plotly/bokeh chart  - csv: Comma  - tsv: Tab  - psv: Pipe  - ssv: Space  - metric: Metric  - env: Env  - html: HTML  - text: Text  - file: File  - dir: Dir  - dockerfile: Dockerfile  - docker_image: docker image  - data: data  - coderef: coderef  - table: table (optional, default to model)
-     * @param names Names query param. (optional)
-     * @param runs Runs query param. (optional)
-     * @param orient Orient query param. (optional)
-     * @param path Path query param. (optional)
      * @param callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call getRunArtifactLineageAsync(String owner, String project, String uuid, String name, String namespace, String kind, String names, String runs, String orient, String path, final ApiCallback<V1RunArtifact> callback) throws ApiException {
+    public com.squareup.okhttp.Call getRunArtifactLineageAsync(String owner, String project, String uuid, String name, String namespace, final ApiCallback<V1RunArtifact> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -2250,7 +2172,7 @@ public class RunsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = getRunArtifactLineageValidateBeforeCall(owner, project, uuid, name, namespace, kind, names, runs, orient, path, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = getRunArtifactLineageValidateBeforeCall(owner, project, uuid, name, namespace, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1RunArtifact>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
@@ -2742,18 +2664,13 @@ public class RunsV1Api {
      * @param owner Owner of the namespace (required)
      * @param project Project where the run will be assigned (required)
      * @param uuid Uuid identifier of the entity (required)
-     * @param name Artifact name. (optional)
-     * @param kind The artifact kind.   - model: model  - audio: audio  - video: vidio  - histogram: histogram  - image: image  - tensor: tensor  - dataframe: dataframe  - chart: plotly/bokeh chart  - csv: Comma  - tsv: Tab  - psv: Pipe  - ssv: Space  - metric: Metric  - env: Env  - html: HTML  - text: Text  - file: File  - dir: Dir  - dockerfile: Dockerfile  - docker_image: docker image  - data: data  - coderef: coderef  - table: table (optional, default to model)
-     * @param names Names query param. (optional)
-     * @param runs Runs query param. (optional)
-     * @param orient Orient query param. (optional)
      * @param path Path query param. (optional)
      * @param progressListener Progress listener
      * @param progressRequestListener Progress request listener
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call getRunArtifactsTreeCall(String namespace, String owner, String project, String uuid, String name, String kind, String names, String runs, String orient, String path, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call getRunArtifactsTreeCall(String namespace, String owner, String project, String uuid, String path, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -2765,16 +2682,6 @@ public class RunsV1Api {
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-        if (name != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("name", name));
-        if (kind != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("kind", kind));
-        if (names != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("names", names));
-        if (runs != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("runs", runs));
-        if (orient != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("orient", orient));
         if (path != null)
         localVarQueryParams.addAll(apiClient.parameterToPair("path", path));
 
@@ -2811,7 +2718,7 @@ public class RunsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call getRunArtifactsTreeValidateBeforeCall(String namespace, String owner, String project, String uuid, String name, String kind, String names, String runs, String orient, String path, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call getRunArtifactsTreeValidateBeforeCall(String namespace, String owner, String project, String uuid, String path, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'namespace' is set
         if (namespace == null) {
@@ -2834,7 +2741,7 @@ public class RunsV1Api {
         }
         
 
-        com.squareup.okhttp.Call call = getRunArtifactsTreeCall(namespace, owner, project, uuid, name, kind, names, runs, orient, path, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = getRunArtifactsTreeCall(namespace, owner, project, uuid, path, progressListener, progressRequestListener);
         return call;
 
     }
@@ -2846,17 +2753,12 @@ public class RunsV1Api {
      * @param owner Owner of the namespace (required)
      * @param project Project where the run will be assigned (required)
      * @param uuid Uuid identifier of the entity (required)
-     * @param name Artifact name. (optional)
-     * @param kind The artifact kind.   - model: model  - audio: audio  - video: vidio  - histogram: histogram  - image: image  - tensor: tensor  - dataframe: dataframe  - chart: plotly/bokeh chart  - csv: Comma  - tsv: Tab  - psv: Pipe  - ssv: Space  - metric: Metric  - env: Env  - html: HTML  - text: Text  - file: File  - dir: Dir  - dockerfile: Dockerfile  - docker_image: docker image  - data: data  - coderef: coderef  - table: table (optional, default to model)
-     * @param names Names query param. (optional)
-     * @param runs Runs query param. (optional)
-     * @param orient Orient query param. (optional)
      * @param path Path query param. (optional)
      * @return V1ArtifactTreeResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1ArtifactTreeResponse getRunArtifactsTree(String namespace, String owner, String project, String uuid, String name, String kind, String names, String runs, String orient, String path) throws ApiException {
-        ApiResponse<V1ArtifactTreeResponse> resp = getRunArtifactsTreeWithHttpInfo(namespace, owner, project, uuid, name, kind, names, runs, orient, path);
+    public V1ArtifactTreeResponse getRunArtifactsTree(String namespace, String owner, String project, String uuid, String path) throws ApiException {
+        ApiResponse<V1ArtifactTreeResponse> resp = getRunArtifactsTreeWithHttpInfo(namespace, owner, project, uuid, path);
         return resp.getData();
     }
 
@@ -2867,17 +2769,12 @@ public class RunsV1Api {
      * @param owner Owner of the namespace (required)
      * @param project Project where the run will be assigned (required)
      * @param uuid Uuid identifier of the entity (required)
-     * @param name Artifact name. (optional)
-     * @param kind The artifact kind.   - model: model  - audio: audio  - video: vidio  - histogram: histogram  - image: image  - tensor: tensor  - dataframe: dataframe  - chart: plotly/bokeh chart  - csv: Comma  - tsv: Tab  - psv: Pipe  - ssv: Space  - metric: Metric  - env: Env  - html: HTML  - text: Text  - file: File  - dir: Dir  - dockerfile: Dockerfile  - docker_image: docker image  - data: data  - coderef: coderef  - table: table (optional, default to model)
-     * @param names Names query param. (optional)
-     * @param runs Runs query param. (optional)
-     * @param orient Orient query param. (optional)
      * @param path Path query param. (optional)
      * @return ApiResponse&lt;V1ArtifactTreeResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1ArtifactTreeResponse> getRunArtifactsTreeWithHttpInfo(String namespace, String owner, String project, String uuid, String name, String kind, String names, String runs, String orient, String path) throws ApiException {
-        com.squareup.okhttp.Call call = getRunArtifactsTreeValidateBeforeCall(namespace, owner, project, uuid, name, kind, names, runs, orient, path, null, null);
+    public ApiResponse<V1ArtifactTreeResponse> getRunArtifactsTreeWithHttpInfo(String namespace, String owner, String project, String uuid, String path) throws ApiException {
+        com.squareup.okhttp.Call call = getRunArtifactsTreeValidateBeforeCall(namespace, owner, project, uuid, path, null, null);
         Type localVarReturnType = new TypeToken<V1ArtifactTreeResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -2889,17 +2786,12 @@ public class RunsV1Api {
      * @param owner Owner of the namespace (required)
      * @param project Project where the run will be assigned (required)
      * @param uuid Uuid identifier of the entity (required)
-     * @param name Artifact name. (optional)
-     * @param kind The artifact kind.   - model: model  - audio: audio  - video: vidio  - histogram: histogram  - image: image  - tensor: tensor  - dataframe: dataframe  - chart: plotly/bokeh chart  - csv: Comma  - tsv: Tab  - psv: Pipe  - ssv: Space  - metric: Metric  - env: Env  - html: HTML  - text: Text  - file: File  - dir: Dir  - dockerfile: Dockerfile  - docker_image: docker image  - data: data  - coderef: coderef  - table: table (optional, default to model)
-     * @param names Names query param. (optional)
-     * @param runs Runs query param. (optional)
-     * @param orient Orient query param. (optional)
      * @param path Path query param. (optional)
      * @param callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call getRunArtifactsTreeAsync(String namespace, String owner, String project, String uuid, String name, String kind, String names, String runs, String orient, String path, final ApiCallback<V1ArtifactTreeResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call getRunArtifactsTreeAsync(String namespace, String owner, String project, String uuid, String path, final ApiCallback<V1ArtifactTreeResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -2920,7 +2812,7 @@ public class RunsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = getRunArtifactsTreeValidateBeforeCall(namespace, owner, project, uuid, name, kind, names, runs, orient, path, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = getRunArtifactsTreeValidateBeforeCall(namespace, owner, project, uuid, path, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1ArtifactTreeResponse>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
@@ -2932,17 +2824,14 @@ public class RunsV1Api {
      * @param project Project where the run will be assigned (required)
      * @param uuid Uuid identifier of the entity (required)
      * @param kind The artifact kind (required)
-     * @param name Artifact name. (optional)
      * @param names Names query param. (optional)
-     * @param runs Runs query param. (optional)
      * @param orient Orient query param. (optional)
-     * @param path Path query param. (optional)
      * @param progressListener Progress listener
      * @param progressRequestListener Progress request listener
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call getRunEventsCall(String namespace, String owner, String project, String uuid, String kind, String name, String names, String runs, String orient, String path, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call getRunEventsCall(String namespace, String owner, String project, String uuid, String kind, String names, String orient, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -2955,16 +2844,10 @@ public class RunsV1Api {
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-        if (name != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("name", name));
         if (names != null)
         localVarQueryParams.addAll(apiClient.parameterToPair("names", names));
-        if (runs != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("runs", runs));
         if (orient != null)
         localVarQueryParams.addAll(apiClient.parameterToPair("orient", orient));
-        if (path != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("path", path));
 
         Map<String, String> localVarHeaderParams = new HashMap<String, String>();
 
@@ -2999,7 +2882,7 @@ public class RunsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call getRunEventsValidateBeforeCall(String namespace, String owner, String project, String uuid, String kind, String name, String names, String runs, String orient, String path, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call getRunEventsValidateBeforeCall(String namespace, String owner, String project, String uuid, String kind, String names, String orient, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'namespace' is set
         if (namespace == null) {
@@ -3027,7 +2910,7 @@ public class RunsV1Api {
         }
         
 
-        com.squareup.okhttp.Call call = getRunEventsCall(namespace, owner, project, uuid, kind, name, names, runs, orient, path, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = getRunEventsCall(namespace, owner, project, uuid, kind, names, orient, progressListener, progressRequestListener);
         return call;
 
     }
@@ -3040,16 +2923,13 @@ public class RunsV1Api {
      * @param project Project where the run will be assigned (required)
      * @param uuid Uuid identifier of the entity (required)
      * @param kind The artifact kind (required)
-     * @param name Artifact name. (optional)
      * @param names Names query param. (optional)
-     * @param runs Runs query param. (optional)
      * @param orient Orient query param. (optional)
-     * @param path Path query param. (optional)
      * @return V1EventsResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1EventsResponse getRunEvents(String namespace, String owner, String project, String uuid, String kind, String name, String names, String runs, String orient, String path) throws ApiException {
-        ApiResponse<V1EventsResponse> resp = getRunEventsWithHttpInfo(namespace, owner, project, uuid, kind, name, names, runs, orient, path);
+    public V1EventsResponse getRunEvents(String namespace, String owner, String project, String uuid, String kind, String names, String orient) throws ApiException {
+        ApiResponse<V1EventsResponse> resp = getRunEventsWithHttpInfo(namespace, owner, project, uuid, kind, names, orient);
         return resp.getData();
     }
 
@@ -3061,16 +2941,13 @@ public class RunsV1Api {
      * @param project Project where the run will be assigned (required)
      * @param uuid Uuid identifier of the entity (required)
      * @param kind The artifact kind (required)
-     * @param name Artifact name. (optional)
      * @param names Names query param. (optional)
-     * @param runs Runs query param. (optional)
      * @param orient Orient query param. (optional)
-     * @param path Path query param. (optional)
      * @return ApiResponse&lt;V1EventsResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1EventsResponse> getRunEventsWithHttpInfo(String namespace, String owner, String project, String uuid, String kind, String name, String names, String runs, String orient, String path) throws ApiException {
-        com.squareup.okhttp.Call call = getRunEventsValidateBeforeCall(namespace, owner, project, uuid, kind, name, names, runs, orient, path, null, null);
+    public ApiResponse<V1EventsResponse> getRunEventsWithHttpInfo(String namespace, String owner, String project, String uuid, String kind, String names, String orient) throws ApiException {
+        com.squareup.okhttp.Call call = getRunEventsValidateBeforeCall(namespace, owner, project, uuid, kind, names, orient, null, null);
         Type localVarReturnType = new TypeToken<V1EventsResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -3083,16 +2960,13 @@ public class RunsV1Api {
      * @param project Project where the run will be assigned (required)
      * @param uuid Uuid identifier of the entity (required)
      * @param kind The artifact kind (required)
-     * @param name Artifact name. (optional)
      * @param names Names query param. (optional)
-     * @param runs Runs query param. (optional)
      * @param orient Orient query param. (optional)
-     * @param path Path query param. (optional)
      * @param callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call getRunEventsAsync(String namespace, String owner, String project, String uuid, String kind, String name, String names, String runs, String orient, String path, final ApiCallback<V1EventsResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call getRunEventsAsync(String namespace, String owner, String project, String uuid, String kind, String names, String orient, final ApiCallback<V1EventsResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -3113,7 +2987,7 @@ public class RunsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = getRunEventsValidateBeforeCall(namespace, owner, project, uuid, kind, name, names, runs, orient, path, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = getRunEventsValidateBeforeCall(namespace, owner, project, uuid, kind, names, orient, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1EventsResponse>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
@@ -3423,6 +3297,171 @@ public class RunsV1Api {
 
         com.squareup.okhttp.Call call = getRunNamespaceValidateBeforeCall(owner, project, uuid, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1RunSettings>(){}.getType();
+        apiClient.executeAsync(call, localVarReturnType, callback);
+        return call;
+    }
+    /**
+     * Build call for getRunResources
+     * @param namespace namespace (required)
+     * @param owner Owner of the namespace (required)
+     * @param project Project where the run will be assigned (required)
+     * @param uuid Uuid identifier of the entity (required)
+     * @param names Names query param. (optional)
+     * @param tail Query param flag to tail the values. (optional)
+     * @param progressListener Progress listener
+     * @param progressRequestListener Progress request listener
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     */
+    public com.squareup.okhttp.Call getRunResourcesCall(String namespace, String owner, String project, String uuid, String names, Boolean tail, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        Object localVarPostBody = null;
+
+        // create path and map variables
+        String localVarPath = "/streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/resources"
+            .replaceAll("\\{" + "namespace" + "\\}", apiClient.escapeString(namespace.toString()))
+            .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()))
+            .replaceAll("\\{" + "project" + "\\}", apiClient.escapeString(project.toString()))
+            .replaceAll("\\{" + "uuid" + "\\}", apiClient.escapeString(uuid.toString()));
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        if (names != null)
+        localVarQueryParams.addAll(apiClient.parameterToPair("names", names));
+        if (tail != null)
+        localVarQueryParams.addAll(apiClient.parameterToPair("tail", tail));
+
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
+
+        final String[] localVarContentTypes = {
+            "application/json"
+        };
+        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+        localVarHeaderParams.put("Content-Type", localVarContentType);
+
+        if(progressListener != null) {
+            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
+                @Override
+                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
+                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
+                    return originalResponse.newBuilder()
+                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
+                    .build();
+                }
+            });
+        }
+
+        String[] localVarAuthNames = new String[] { "ApiKey" };
+        return apiClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private com.squareup.okhttp.Call getRunResourcesValidateBeforeCall(String namespace, String owner, String project, String uuid, String names, Boolean tail, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        
+        // verify the required parameter 'namespace' is set
+        if (namespace == null) {
+            throw new ApiException("Missing the required parameter 'namespace' when calling getRunResources(Async)");
+        }
+        
+        // verify the required parameter 'owner' is set
+        if (owner == null) {
+            throw new ApiException("Missing the required parameter 'owner' when calling getRunResources(Async)");
+        }
+        
+        // verify the required parameter 'project' is set
+        if (project == null) {
+            throw new ApiException("Missing the required parameter 'project' when calling getRunResources(Async)");
+        }
+        
+        // verify the required parameter 'uuid' is set
+        if (uuid == null) {
+            throw new ApiException("Missing the required parameter 'uuid' when calling getRunResources(Async)");
+        }
+        
+
+        com.squareup.okhttp.Call call = getRunResourcesCall(namespace, owner, project, uuid, names, tail, progressListener, progressRequestListener);
+        return call;
+
+    }
+
+    /**
+     * Get run resources events
+     * 
+     * @param namespace namespace (required)
+     * @param owner Owner of the namespace (required)
+     * @param project Project where the run will be assigned (required)
+     * @param uuid Uuid identifier of the entity (required)
+     * @param names Names query param. (optional)
+     * @param tail Query param flag to tail the values. (optional)
+     * @return V1EventsResponse
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public V1EventsResponse getRunResources(String namespace, String owner, String project, String uuid, String names, Boolean tail) throws ApiException {
+        ApiResponse<V1EventsResponse> resp = getRunResourcesWithHttpInfo(namespace, owner, project, uuid, names, tail);
+        return resp.getData();
+    }
+
+    /**
+     * Get run resources events
+     * 
+     * @param namespace namespace (required)
+     * @param owner Owner of the namespace (required)
+     * @param project Project where the run will be assigned (required)
+     * @param uuid Uuid identifier of the entity (required)
+     * @param names Names query param. (optional)
+     * @param tail Query param flag to tail the values. (optional)
+     * @return ApiResponse&lt;V1EventsResponse&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public ApiResponse<V1EventsResponse> getRunResourcesWithHttpInfo(String namespace, String owner, String project, String uuid, String names, Boolean tail) throws ApiException {
+        com.squareup.okhttp.Call call = getRunResourcesValidateBeforeCall(namespace, owner, project, uuid, names, tail, null, null);
+        Type localVarReturnType = new TypeToken<V1EventsResponse>(){}.getType();
+        return apiClient.execute(call, localVarReturnType);
+    }
+
+    /**
+     * Get run resources events (asynchronously)
+     * 
+     * @param namespace namespace (required)
+     * @param owner Owner of the namespace (required)
+     * @param project Project where the run will be assigned (required)
+     * @param uuid Uuid identifier of the entity (required)
+     * @param names Names query param. (optional)
+     * @param tail Query param flag to tail the values. (optional)
+     * @param callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     */
+    public com.squareup.okhttp.Call getRunResourcesAsync(String namespace, String owner, String project, String uuid, String names, Boolean tail, final ApiCallback<V1EventsResponse> callback) throws ApiException {
+
+        ProgressResponseBody.ProgressListener progressListener = null;
+        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
+
+        if (callback != null) {
+            progressListener = new ProgressResponseBody.ProgressListener() {
+                @Override
+                public void update(long bytesRead, long contentLength, boolean done) {
+                    callback.onDownloadProgress(bytesRead, contentLength, done);
+                }
+            };
+
+            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
+                @Override
+                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
+                    callback.onUploadProgress(bytesWritten, contentLength, done);
+                }
+            };
+        }
+
+        com.squareup.okhttp.Call call = getRunResourcesValidateBeforeCall(namespace, owner, project, uuid, names, tail, progressListener, progressRequestListener);
+        Type localVarReturnType = new TypeToken<V1EventsResponse>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
@@ -4676,7 +4715,7 @@ public class RunsV1Api {
     }
 
     /**
-     * List runs
+     * List runs io
      * 
      * @param owner Owner of the namespace (required)
      * @param project Project under namesapce (required)
@@ -4693,7 +4732,7 @@ public class RunsV1Api {
     }
 
     /**
-     * List runs
+     * List runs io
      * 
      * @param owner Owner of the namespace (required)
      * @param project Project under namesapce (required)
@@ -4711,7 +4750,7 @@ public class RunsV1Api {
     }
 
     /**
-     * List runs (asynchronously)
+     * List runs io (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
      * @param project Project under namesapce (required)

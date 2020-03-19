@@ -25,6 +25,7 @@ Method | HTTP request | Description
 [**getRunEvents**](RunsV1Api.md#getRunEvents) | **GET** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/events/{kind} | Get run events
 [**getRunLogs**](RunsV1Api.md#getRunLogs) | **GET** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/logs | Get run logs
 [**getRunNamespace**](RunsV1Api.md#getRunNamespace) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/namespace | Get Run namespace
+[**getRunResources**](RunsV1Api.md#getRunResources) | **GET** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/resources | Get run resources events
 [**getRunSettings**](RunsV1Api.md#getRunSettings) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/settings | Get Run settings
 [**getRunStatuses**](RunsV1Api.md#getRunStatuses) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/statuses | Get run status
 [**impersonateToken**](RunsV1Api.md#impersonateToken) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/impersonate | Impersonate run token
@@ -33,7 +34,7 @@ Method | HTTP request | Description
 [**listArchivedRuns**](RunsV1Api.md#listArchivedRuns) | **GET** /api/v1/archives/{user}/runs | List archived runs for user
 [**listBookmarkedRuns**](RunsV1Api.md#listBookmarkedRuns) | **GET** /api/v1/bookmarks/{user}/runs | List bookmarked runs for user
 [**listRuns**](RunsV1Api.md#listRuns) | **GET** /api/v1/{owner}/{project}/runs | List runs
-[**listRunsIo**](RunsV1Api.md#listRunsIo) | **GET** /api/v1/{owner}/{project}/runs/io | List runs
+[**listRunsIo**](RunsV1Api.md#listRunsIo) | **GET** /api/v1/{owner}/{project}/runs/io | List runs io
 [**notifyRunStatus**](RunsV1Api.md#notifyRunStatus) | **POST** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/notify | Notify run status
 [**patchRun**](RunsV1Api.md#patchRun) | **PATCH** /api/v1/{owner}/{project}/runs/{run.uuid} | Patch run
 [**restartRun**](RunsV1Api.md#restartRun) | **POST** /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/restart | Restart run
@@ -510,7 +511,7 @@ null (empty response body)
 
 <a name="deleteRunArtifactLineage"></a>
 # **deleteRunArtifactLineage**
-> deleteRunArtifactLineage(owner, project, uuid, name, namespace, kind, names, runs, orient, path)
+> deleteRunArtifactLineage(owner, project, uuid, name, namespace)
 
 Delete run artifact lineage
 
@@ -537,13 +538,8 @@ String project = "project_example"; // String | Project where the run will be as
 String uuid = "uuid_example"; // String | Uuid identifier of the entity
 String name = "name_example"; // String | Artifact name
 String namespace = "namespace_example"; // String | namespace.
-String kind = "model"; // String | The artifact kind.   - model: model  - audio: audio  - video: vidio  - histogram: histogram  - image: image  - tensor: tensor  - dataframe: dataframe  - chart: plotly/bokeh chart  - csv: Comma  - tsv: Tab  - psv: Pipe  - ssv: Space  - metric: Metric  - env: Env  - html: HTML  - text: Text  - file: File  - dir: Dir  - dockerfile: Dockerfile  - docker_image: docker image  - data: data  - coderef: coderef  - table: table
-String names = "names_example"; // String | Names query param.
-String runs = "runs_example"; // String | Runs query param.
-String orient = "orient_example"; // String | Orient query param.
-String path = "path_example"; // String | Path query param.
 try {
-    apiInstance.deleteRunArtifactLineage(owner, project, uuid, name, namespace, kind, names, runs, orient, path);
+    apiInstance.deleteRunArtifactLineage(owner, project, uuid, name, namespace);
 } catch (ApiException e) {
     System.err.println("Exception when calling RunsV1Api#deleteRunArtifactLineage");
     e.printStackTrace();
@@ -559,11 +555,6 @@ Name | Type | Description  | Notes
  **uuid** | **String**| Uuid identifier of the entity |
  **name** | **String**| Artifact name |
  **namespace** | **String**| namespace. | [optional]
- **kind** | **String**| The artifact kind.   - model: model  - audio: audio  - video: vidio  - histogram: histogram  - image: image  - tensor: tensor  - dataframe: dataframe  - chart: plotly/bokeh chart  - csv: Comma  - tsv: Tab  - psv: Pipe  - ssv: Space  - metric: Metric  - env: Env  - html: HTML  - text: Text  - file: File  - dir: Dir  - dockerfile: Dockerfile  - docker_image: docker image  - data: data  - coderef: coderef  - table: table | [optional] [default to model] [enum: model, audio, video, histogram, image, tensor, dataframe, chart, csv, tsv, psv, ssv, metric, env, html, text, file, dir, dockerfile, docker_image, data, coderef, table]
- **names** | **String**| Names query param. | [optional]
- **runs** | **String**| Runs query param. | [optional]
- **orient** | **String**| Orient query param. | [optional]
- **path** | **String**| Path query param. | [optional]
 
 ### Return type
 
@@ -636,7 +627,7 @@ null (empty response body)
 
 <a name="getMultiRunEvents"></a>
 # **getMultiRunEvents**
-> V1EventsResponse getMultiRunEvents(namespace, owner, project, kind, uuid, name, names, runs, orient, path)
+> V1EventsResponse getMultiRunEvents(namespace, owner, project, kind, names, runs, orient)
 
 Get multi runs events
 
@@ -662,14 +653,11 @@ String namespace = "namespace_example"; // String | namespace
 String owner = "owner_example"; // String | Owner of the namespace
 String project = "project_example"; // String | Project where the run will be assigned
 String kind = "kind_example"; // String | The artifact kind
-String uuid = "uuid_example"; // String | Uuid identifier of the entity.
-String name = "name_example"; // String | Artifact name.
 String names = "names_example"; // String | Names query param.
 String runs = "runs_example"; // String | Runs query param.
 String orient = "orient_example"; // String | Orient query param.
-String path = "path_example"; // String | Path query param.
 try {
-    V1EventsResponse result = apiInstance.getMultiRunEvents(namespace, owner, project, kind, uuid, name, names, runs, orient, path);
+    V1EventsResponse result = apiInstance.getMultiRunEvents(namespace, owner, project, kind, names, runs, orient);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling RunsV1Api#getMultiRunEvents");
@@ -685,12 +673,9 @@ Name | Type | Description  | Notes
  **owner** | **String**| Owner of the namespace |
  **project** | **String**| Project where the run will be assigned |
  **kind** | **String**| The artifact kind | [enum: model, audio, video, histogram, image, tensor, dataframe, chart, csv, tsv, psv, ssv, metric, env, html, text, file, dir, dockerfile, docker_image, data, coderef, table]
- **uuid** | **String**| Uuid identifier of the entity. | [optional]
- **name** | **String**| Artifact name. | [optional]
  **names** | **String**| Names query param. | [optional]
  **runs** | **String**| Runs query param. | [optional]
  **orient** | **String**| Orient query param. | [optional]
- **path** | **String**| Path query param. | [optional]
 
 ### Return type
 
@@ -827,7 +812,7 @@ Name | Type | Description  | Notes
 
 <a name="getRunArtifactLineage"></a>
 # **getRunArtifactLineage**
-> V1RunArtifact getRunArtifactLineage(owner, project, uuid, name, namespace, kind, names, runs, orient, path)
+> V1RunArtifact getRunArtifactLineage(owner, project, uuid, name, namespace)
 
 Get run artifacts lineage
 
@@ -854,13 +839,8 @@ String project = "project_example"; // String | Project where the run will be as
 String uuid = "uuid_example"; // String | Uuid identifier of the entity
 String name = "name_example"; // String | Artifact name
 String namespace = "namespace_example"; // String | namespace.
-String kind = "model"; // String | The artifact kind.   - model: model  - audio: audio  - video: vidio  - histogram: histogram  - image: image  - tensor: tensor  - dataframe: dataframe  - chart: plotly/bokeh chart  - csv: Comma  - tsv: Tab  - psv: Pipe  - ssv: Space  - metric: Metric  - env: Env  - html: HTML  - text: Text  - file: File  - dir: Dir  - dockerfile: Dockerfile  - docker_image: docker image  - data: data  - coderef: coderef  - table: table
-String names = "names_example"; // String | Names query param.
-String runs = "runs_example"; // String | Runs query param.
-String orient = "orient_example"; // String | Orient query param.
-String path = "path_example"; // String | Path query param.
 try {
-    V1RunArtifact result = apiInstance.getRunArtifactLineage(owner, project, uuid, name, namespace, kind, names, runs, orient, path);
+    V1RunArtifact result = apiInstance.getRunArtifactLineage(owner, project, uuid, name, namespace);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling RunsV1Api#getRunArtifactLineage");
@@ -877,11 +857,6 @@ Name | Type | Description  | Notes
  **uuid** | **String**| Uuid identifier of the entity |
  **name** | **String**| Artifact name |
  **namespace** | **String**| namespace. | [optional]
- **kind** | **String**| The artifact kind.   - model: model  - audio: audio  - video: vidio  - histogram: histogram  - image: image  - tensor: tensor  - dataframe: dataframe  - chart: plotly/bokeh chart  - csv: Comma  - tsv: Tab  - psv: Pipe  - ssv: Space  - metric: Metric  - env: Env  - html: HTML  - text: Text  - file: File  - dir: Dir  - dockerfile: Dockerfile  - docker_image: docker image  - data: data  - coderef: coderef  - table: table | [optional] [default to model] [enum: model, audio, video, histogram, image, tensor, dataframe, chart, csv, tsv, psv, ssv, metric, env, html, text, file, dir, dockerfile, docker_image, data, coderef, table]
- **names** | **String**| Names query param. | [optional]
- **runs** | **String**| Runs query param. | [optional]
- **orient** | **String**| Orient query param. | [optional]
- **path** | **String**| Path query param. | [optional]
 
 ### Return type
 
@@ -1085,7 +1060,7 @@ Name | Type | Description  | Notes
 
 <a name="getRunArtifactsTree"></a>
 # **getRunArtifactsTree**
-> V1ArtifactTreeResponse getRunArtifactsTree(namespace, owner, project, uuid, name, kind, names, runs, orient, path)
+> V1ArtifactTreeResponse getRunArtifactsTree(namespace, owner, project, uuid, path)
 
 Get run artifacts tree
 
@@ -1111,14 +1086,9 @@ String namespace = "namespace_example"; // String | namespace
 String owner = "owner_example"; // String | Owner of the namespace
 String project = "project_example"; // String | Project where the run will be assigned
 String uuid = "uuid_example"; // String | Uuid identifier of the entity
-String name = "name_example"; // String | Artifact name.
-String kind = "model"; // String | The artifact kind.   - model: model  - audio: audio  - video: vidio  - histogram: histogram  - image: image  - tensor: tensor  - dataframe: dataframe  - chart: plotly/bokeh chart  - csv: Comma  - tsv: Tab  - psv: Pipe  - ssv: Space  - metric: Metric  - env: Env  - html: HTML  - text: Text  - file: File  - dir: Dir  - dockerfile: Dockerfile  - docker_image: docker image  - data: data  - coderef: coderef  - table: table
-String names = "names_example"; // String | Names query param.
-String runs = "runs_example"; // String | Runs query param.
-String orient = "orient_example"; // String | Orient query param.
 String path = "path_example"; // String | Path query param.
 try {
-    V1ArtifactTreeResponse result = apiInstance.getRunArtifactsTree(namespace, owner, project, uuid, name, kind, names, runs, orient, path);
+    V1ArtifactTreeResponse result = apiInstance.getRunArtifactsTree(namespace, owner, project, uuid, path);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling RunsV1Api#getRunArtifactsTree");
@@ -1134,11 +1104,6 @@ Name | Type | Description  | Notes
  **owner** | **String**| Owner of the namespace |
  **project** | **String**| Project where the run will be assigned |
  **uuid** | **String**| Uuid identifier of the entity |
- **name** | **String**| Artifact name. | [optional]
- **kind** | **String**| The artifact kind.   - model: model  - audio: audio  - video: vidio  - histogram: histogram  - image: image  - tensor: tensor  - dataframe: dataframe  - chart: plotly/bokeh chart  - csv: Comma  - tsv: Tab  - psv: Pipe  - ssv: Space  - metric: Metric  - env: Env  - html: HTML  - text: Text  - file: File  - dir: Dir  - dockerfile: Dockerfile  - docker_image: docker image  - data: data  - coderef: coderef  - table: table | [optional] [default to model] [enum: model, audio, video, histogram, image, tensor, dataframe, chart, csv, tsv, psv, ssv, metric, env, html, text, file, dir, dockerfile, docker_image, data, coderef, table]
- **names** | **String**| Names query param. | [optional]
- **runs** | **String**| Runs query param. | [optional]
- **orient** | **String**| Orient query param. | [optional]
  **path** | **String**| Path query param. | [optional]
 
 ### Return type
@@ -1156,7 +1121,7 @@ Name | Type | Description  | Notes
 
 <a name="getRunEvents"></a>
 # **getRunEvents**
-> V1EventsResponse getRunEvents(namespace, owner, project, uuid, kind, name, names, runs, orient, path)
+> V1EventsResponse getRunEvents(namespace, owner, project, uuid, kind, names, orient)
 
 Get run events
 
@@ -1183,13 +1148,10 @@ String owner = "owner_example"; // String | Owner of the namespace
 String project = "project_example"; // String | Project where the run will be assigned
 String uuid = "uuid_example"; // String | Uuid identifier of the entity
 String kind = "kind_example"; // String | The artifact kind
-String name = "name_example"; // String | Artifact name.
 String names = "names_example"; // String | Names query param.
-String runs = "runs_example"; // String | Runs query param.
 String orient = "orient_example"; // String | Orient query param.
-String path = "path_example"; // String | Path query param.
 try {
-    V1EventsResponse result = apiInstance.getRunEvents(namespace, owner, project, uuid, kind, name, names, runs, orient, path);
+    V1EventsResponse result = apiInstance.getRunEvents(namespace, owner, project, uuid, kind, names, orient);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling RunsV1Api#getRunEvents");
@@ -1206,11 +1168,8 @@ Name | Type | Description  | Notes
  **project** | **String**| Project where the run will be assigned |
  **uuid** | **String**| Uuid identifier of the entity |
  **kind** | **String**| The artifact kind | [enum: model, audio, video, histogram, image, tensor, dataframe, chart, csv, tsv, psv, ssv, metric, env, html, text, file, dir, dockerfile, docker_image, data, coderef, table]
- **name** | **String**| Artifact name. | [optional]
  **names** | **String**| Names query param. | [optional]
- **runs** | **String**| Runs query param. | [optional]
  **orient** | **String**| Orient query param. | [optional]
- **path** | **String**| Path query param. | [optional]
 
 ### Return type
 
@@ -1335,6 +1294,69 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**V1RunSettings**](V1RunSettings.md)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+<a name="getRunResources"></a>
+# **getRunResources**
+> V1EventsResponse getRunResources(namespace, owner, project, uuid, names, tail)
+
+Get run resources events
+
+### Example
+```java
+// Import classes:
+//import io.swagger.client.ApiClient;
+//import io.swagger.client.ApiException;
+//import io.swagger.client.Configuration;
+//import io.swagger.client.auth.*;
+//import io.swagger.client.api.RunsV1Api;
+
+ApiClient defaultClient = Configuration.getDefaultApiClient();
+
+// Configure API key authorization: ApiKey
+ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+ApiKey.setApiKey("YOUR API KEY");
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.setApiKeyPrefix("Token");
+
+RunsV1Api apiInstance = new RunsV1Api();
+String namespace = "namespace_example"; // String | namespace
+String owner = "owner_example"; // String | Owner of the namespace
+String project = "project_example"; // String | Project where the run will be assigned
+String uuid = "uuid_example"; // String | Uuid identifier of the entity
+String names = "names_example"; // String | Names query param.
+Boolean tail = true; // Boolean | Query param flag to tail the values.
+try {
+    V1EventsResponse result = apiInstance.getRunResources(namespace, owner, project, uuid, names, tail);
+    System.out.println(result);
+} catch (ApiException e) {
+    System.err.println("Exception when calling RunsV1Api#getRunResources");
+    e.printStackTrace();
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **namespace** | **String**| namespace |
+ **owner** | **String**| Owner of the namespace |
+ **project** | **String**| Project where the run will be assigned |
+ **uuid** | **String**| Uuid identifier of the entity |
+ **names** | **String**| Names query param. | [optional]
+ **tail** | **Boolean**| Query param flag to tail the values. | [optional]
+
+### Return type
+
+[**V1EventsResponse**](V1EventsResponse.md)
 
 ### Authorization
 
@@ -1819,7 +1841,7 @@ Name | Type | Description  | Notes
 # **listRunsIo**
 > V1ListRunsResponse listRunsIo(owner, project, offset, limit, sort, query)
 
-List runs
+List runs io
 
 ### Example
 ```java

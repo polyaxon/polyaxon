@@ -116,7 +116,7 @@ service RunsV1 {
         };
     }
 
-    // List runs
+    // List runs io
     rpc ListRunsIo(ProjectResourceListRequest) returns (ListRunsResponse) {
         option (google.api.http) = {
             get: "/api/v1/{owner}/{project}/runs/io"
@@ -326,14 +326,14 @@ service RunsV1 {
     }
 
     // Delete run artifact lineage
-    rpc DeleteRunArtifactLineage(RunArtifactRequest) returns (google.protobuf.Empty) {
+    rpc DeleteRunArtifactLineage(RunArtifactLineageRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             delete: "/api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage/{name}"
         };
     }
 
     // Get run artifacts lineage
-    rpc GetRunArtifactLineage(RunArtifactRequest) returns (RunArtifact) {
+    rpc GetRunArtifactLineage(RunArtifactLineageRequest) returns (RunArtifact) {
         option (google.api.http) = {
             get: "/api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage/{name}"
         };
@@ -361,22 +361,29 @@ service RunsV1 {
         };
     }
 
+    // Get run resources events
+    rpc GetRunResources(RunResourcesRequest) returns (EventsResponse) {
+        option (google.api.http) = {
+            get: "/streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/resources"
+        };
+    }
+
     // Get run events
-    rpc GetRunEvents(RunArtifactRequest) returns (EventsResponse) {
+    rpc GetRunEvents(RunEventRequest) returns (EventsResponse) {
         option (google.api.http) = {
             get: "/streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/events/{kind}"
         };
     }
 
     // Get multi runs events
-    rpc GetMultiRunEvents(RunArtifactRequest) returns (EventsResponse) {
+    rpc GetMultiRunEvents(RunEventsRequest) returns (EventsResponse) {
         option (google.api.http) = {
             get: "/streams/v1/{namespace}/{owner}/{project}/runs/multi/events/{kind}"
         };
     }
 
     // Get run artifacts tree
-    rpc GetRunArtifactsTree(RunArtifactRequest) returns (ArtifactTreeResponse) {
+    rpc GetRunArtifactsTree(RunArtifactsTreeRequest) returns (ArtifactTreeResponse) {
         option (google.api.http) = {
             get: "/streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifacts/tree"
         };
