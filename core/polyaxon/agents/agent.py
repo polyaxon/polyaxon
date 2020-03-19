@@ -18,13 +18,13 @@ import atexit
 import sys
 import time
 
-from polyaxon_sdk import V1Agent, V1Statuses
+from polyaxon_sdk import V1Agent
 from polyaxon_sdk.rest import ApiException
 from urllib3.exceptions import HTTPError
 
 from polyaxon import settings
 from polyaxon.agents.base import BaseAgent
-from polyaxon.lifecycle import V1StatusCondition
+from polyaxon.lifecycle import V1StatusCondition, V1Statuses
 from polyaxon.logger import logger
 
 
@@ -44,7 +44,7 @@ class Agent(BaseAgent):
                 logger.info(
                     "Agent has been stopped from the platform,"
                     "but the deployment is still running."
-                    "Please either stop set the agent to starting or teardonw the agent deployment."
+                    "Please either set the agent to starting or teardown the agent deployment."
                 )
                 return
             self.sync()
