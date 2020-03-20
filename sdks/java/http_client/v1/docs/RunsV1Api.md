@@ -1060,7 +1060,7 @@ Name | Type | Description  | Notes
 
 <a name="getRunArtifactsTree"></a>
 # **getRunArtifactsTree**
-> V1ArtifactTreeResponse getRunArtifactsTree(namespace, owner, project, uuid, path)
+> V1ArtifactTree getRunArtifactsTree(namespace, owner, project, uuid, path)
 
 Get run artifacts tree
 
@@ -1088,7 +1088,7 @@ String project = "project_example"; // String | Project where the run will be as
 String uuid = "uuid_example"; // String | Uuid identifier of the entity
 String path = "path_example"; // String | Path query param.
 try {
-    V1ArtifactTreeResponse result = apiInstance.getRunArtifactsTree(namespace, owner, project, uuid, path);
+    V1ArtifactTree result = apiInstance.getRunArtifactsTree(namespace, owner, project, uuid, path);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling RunsV1Api#getRunArtifactsTree");
@@ -1108,7 +1108,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**V1ArtifactTreeResponse**](V1ArtifactTreeResponse.md)
+[**V1ArtifactTree**](V1ArtifactTree.md)
 
 ### Authorization
 

@@ -43,10 +43,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * V1ArtifactTreeResponse
+ * V1ArtifactTree
  */
 
-public class V1ArtifactTreeResponse {
+public class V1ArtifactTree {
   @SerializedName("files")
   private Map<String, String> files = null;
 
@@ -56,12 +56,12 @@ public class V1ArtifactTreeResponse {
   @SerializedName("is_done")
   private Boolean isDone = null;
 
-  public V1ArtifactTreeResponse files(Map<String, String> files) {
+  public V1ArtifactTree files(Map<String, String> files) {
     this.files = files;
     return this;
   }
 
-  public V1ArtifactTreeResponse putFilesItem(String key, String filesItem) {
+  public V1ArtifactTree putFilesItem(String key, String filesItem) {
     if (this.files == null) {
       this.files = new HashMap<String, String>();
     }
@@ -82,12 +82,12 @@ public class V1ArtifactTreeResponse {
     this.files = files;
   }
 
-  public V1ArtifactTreeResponse dirs(List<String> dirs) {
+  public V1ArtifactTree dirs(List<String> dirs) {
     this.dirs = dirs;
     return this;
   }
 
-  public V1ArtifactTreeResponse addDirsItem(String dirsItem) {
+  public V1ArtifactTree addDirsItem(String dirsItem) {
     if (this.dirs == null) {
       this.dirs = new ArrayList<String>();
     }
@@ -108,7 +108,7 @@ public class V1ArtifactTreeResponse {
     this.dirs = dirs;
   }
 
-  public V1ArtifactTreeResponse isDone(Boolean isDone) {
+  public V1ArtifactTree isDone(Boolean isDone) {
     this.isDone = isDone;
     return this;
   }
@@ -135,10 +135,10 @@ public class V1ArtifactTreeResponse {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    V1ArtifactTreeResponse v1ArtifactTreeResponse = (V1ArtifactTreeResponse) o;
-    return Objects.equals(this.files, v1ArtifactTreeResponse.files) &&
-        Objects.equals(this.dirs, v1ArtifactTreeResponse.dirs) &&
-        Objects.equals(this.isDone, v1ArtifactTreeResponse.isDone);
+    V1ArtifactTree v1ArtifactTree = (V1ArtifactTree) o;
+    return Objects.equals(this.files, v1ArtifactTree.files) &&
+        Objects.equals(this.dirs, v1ArtifactTree.dirs) &&
+        Objects.equals(this.isDone, v1ArtifactTree.isDone);
   }
 
   @Override
@@ -150,7 +150,7 @@ public class V1ArtifactTreeResponse {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class V1ArtifactTreeResponse {\n");
+    sb.append("class V1ArtifactTree {\n");
     
     sb.append("    files: ").append(toIndentedString(files)).append("\n");
     sb.append("    dirs: ").append(toIndentedString(dirs)).append("\n");

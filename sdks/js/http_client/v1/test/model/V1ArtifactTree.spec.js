@@ -45,14 +45,14 @@
   var instance;
 
   describe('(package)', function() {
-    describe('V1ArtifactTreeResponse', function() {
+    describe('V1ArtifactTree', function() {
       beforeEach(function() {
-        instance = new PolyaxonSdk.V1ArtifactTreeResponse();
+        instance = new PolyaxonSdk.V1ArtifactTree();
       });
 
-      it('should create an instance of V1ArtifactTreeResponse', function() {
-        // TODO: update the code to test V1ArtifactTreeResponse
-        expect(instance).to.be.a(PolyaxonSdk.V1ArtifactTreeResponse);
+      it('should create an instance of V1ArtifactTree', function() {
+        // TODO: update the code to test V1ArtifactTree
+        expect(instance).to.be.a(PolyaxonSdk.V1ArtifactTree);
       });
 
       it('should have the property files (base name: "files")', function() {

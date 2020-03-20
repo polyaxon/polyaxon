@@ -2413,7 +2413,7 @@ class RunsV1Api(object):
         :param str project: Project where the run will be assigned (required)
         :param str uuid: Uuid identifier of the entity (required)
         :param str path: Path query param.
-        :return: V1ArtifactTreeResponse
+        :return: V1ArtifactTree
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -2444,7 +2444,7 @@ class RunsV1Api(object):
         :param str project: Project where the run will be assigned (required)
         :param str uuid: Uuid identifier of the entity (required)
         :param str path: Path query param.
-        :return: V1ArtifactTreeResponse
+        :return: V1ArtifactTree
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -2531,7 +2531,7 @@ class RunsV1Api(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type="V1ArtifactTreeResponse",  # noqa: E501
+            response_type="V1ArtifactTree",  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get("async_req"),
             _return_http_data_only=params.get("_return_http_data_only"),

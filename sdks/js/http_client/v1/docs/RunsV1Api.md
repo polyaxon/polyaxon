@@ -1090,7 +1090,7 @@ Name | Type | Description  | Notes
 
 <a name="getRunArtifactsTree"></a>
 # **getRunArtifactsTree**
-> V1ArtifactTreeResponse getRunArtifactsTree(namespace, owner, project, uuid, opts)
+> V1ArtifactTree getRunArtifactsTree(namespace, owner, project, uuid, opts)
 
 Get run artifacts tree
 
@@ -1141,7 +1141,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**V1ArtifactTreeResponse**](V1ArtifactTreeResponse.md)
+[**V1ArtifactTree**](V1ArtifactTree.md)
 
 ### Authorization
 

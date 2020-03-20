@@ -83,20 +83,20 @@ func NewGetRunArtifactsTreeOK() *GetRunArtifactsTreeOK {
 A successful response.
 */
 type GetRunArtifactsTreeOK struct {
-	Payload *service_model.V1ArtifactTreeResponse
+	Payload *service_model.V1ArtifactTree
 }
 
 func (o *GetRunArtifactsTreeOK) Error() string {
 	return fmt.Sprintf("[GET /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifacts/tree][%d] getRunArtifactsTreeOK  %+v", 200, o.Payload)
 }
 
-func (o *GetRunArtifactsTreeOK) GetPayload() *service_model.V1ArtifactTreeResponse {
+func (o *GetRunArtifactsTreeOK) GetPayload() *service_model.V1ArtifactTree {
 	return o.Payload
 }
 
 func (o *GetRunArtifactsTreeOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
-	o.Payload = new(service_model.V1ArtifactTreeResponse)
+	o.Payload = new(service_model.V1ArtifactTree)
 
 	// response payload
 	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {

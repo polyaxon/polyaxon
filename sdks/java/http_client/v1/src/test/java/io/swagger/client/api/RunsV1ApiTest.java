@@ -31,7 +31,7 @@ import io.swagger.client.ApiException;
 import java.io.File;
 import org.threeten.bp.OffsetDateTime;
 import io.swagger.client.model.RuntimeError;
-import io.swagger.client.model.V1ArtifactTreeResponse;
+import io.swagger.client.model.V1ArtifactTree;
 import io.swagger.client.model.V1Auth;
 import io.swagger.client.model.V1EntityNotificationBody;
 import io.swagger.client.model.V1EntityStatusBodyRequest;
@@ -408,7 +408,7 @@ public class RunsV1ApiTest {
         String project = null;
         String uuid = null;
         String path = null;
-        V1ArtifactTreeResponse response = api.getRunArtifactsTree(namespace, owner, project, uuid, path);
+        V1ArtifactTree response = api.getRunArtifactsTree(namespace, owner, project, uuid, path);
 
         // TODO: test validations
     }

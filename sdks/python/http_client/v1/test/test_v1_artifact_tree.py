@@ -32,14 +32,12 @@ from __future__ import absolute_import
 import unittest
 
 import polyaxon_sdk
-from polyaxon_sdk.models.v1_artifact_tree_response import (
-    V1ArtifactTreeResponse,
-)  # noqa: E501
+from polyaxon_sdk.models.v1_artifact_tree import V1ArtifactTree  # noqa: E501
 from polyaxon_sdk.rest import ApiException
 
 
-class TestV1ArtifactTreeResponse(unittest.TestCase):
-    """V1ArtifactTreeResponse unit test stubs"""
+class TestV1ArtifactTree(unittest.TestCase):
+    """V1ArtifactTree unit test stubs"""
 
     def setUp(self):
         pass
@@ -47,10 +45,10 @@ class TestV1ArtifactTreeResponse(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def testV1ArtifactTreeResponse(self):
-        """Test V1ArtifactTreeResponse"""
+    def testV1ArtifactTree(self):
+        """Test V1ArtifactTree"""
         # FIXME: construct object with mandatory attributes with example values
-        # model = polyaxon_sdk.models.v1_artifact_tree_response.V1ArtifactTreeResponse()  # noqa: E501
+        # model = polyaxon_sdk.models.v1_artifact_tree.V1ArtifactTree()  # noqa: E501
         pass
 
 

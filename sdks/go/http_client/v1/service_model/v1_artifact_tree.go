@@ -24,10 +24,10 @@ import (
 	"github.com/go-openapi/swag"
 )
 
-// V1ArtifactTreeResponse Artifact tree response
+// V1ArtifactTree Artifact tree response
 //
-// swagger:model v1ArtifactTreeResponse
-type V1ArtifactTreeResponse struct {
+// swagger:model v1ArtifactTree
+type V1ArtifactTree struct {
 
 	// dirs
 	Dirs []string `json:"dirs"`
@@ -39,13 +39,13 @@ type V1ArtifactTreeResponse struct {
 	IsDone bool `json:"is_done,omitempty"`
 }
 
-// Validate validates this v1 artifact tree response
-func (m *V1ArtifactTreeResponse) Validate(formats strfmt.Registry) error {
+// Validate validates this v1 artifact tree
+func (m *V1ArtifactTree) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
 // MarshalBinary interface implementation
-func (m *V1ArtifactTreeResponse) MarshalBinary() ([]byte, error) {
+func (m *V1ArtifactTree) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -53,8 +53,8 @@ func (m *V1ArtifactTreeResponse) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (m *V1ArtifactTreeResponse) UnmarshalBinary(b []byte) error {
-	var res V1ArtifactTreeResponse
+func (m *V1ArtifactTree) UnmarshalBinary(b []byte) error {
+	var res V1ArtifactTree
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

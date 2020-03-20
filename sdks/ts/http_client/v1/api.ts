@@ -474,25 +474,25 @@ export enum V1ArtifactKind {
 /**
  * 
  * @export
- * @interface V1ArtifactTreeResponse
+ * @interface V1ArtifactTree
  */
-export interface V1ArtifactTreeResponse {
+export interface V1ArtifactTree {
     /**
      * 
      * @type {{ [key: string]: string; }}
-     * @memberof V1ArtifactTreeResponse
+     * @memberof V1ArtifactTree
      */
     files?: { [key: string]: string; };
     /**
      * 
      * @type {Array<string>}
-     * @memberof V1ArtifactTreeResponse
+     * @memberof V1ArtifactTree
      */
     dirs?: Array<string>;
     /**
      * 
      * @type {boolean}
-     * @memberof V1ArtifactTreeResponse
+     * @memberof V1ArtifactTree
      */
     is_done?: boolean;
 }
@@ -21679,7 +21679,7 @@ export const RunsV1ApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getRunArtifactsTree(namespace: string, owner: string, project: string, uuid: string, path?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ArtifactTreeResponse> {
+        getRunArtifactsTree(namespace: string, owner: string, project: string, uuid: string, path?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ArtifactTree> {
             const localVarFetchArgs = RunsV1ApiFetchParamCreator(configuration).getRunArtifactsTree(namespace, owner, project, uuid, path, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {

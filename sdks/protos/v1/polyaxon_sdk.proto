@@ -383,7 +383,7 @@ service RunsV1 {
     }
 
     // Get run artifacts tree
-    rpc GetRunArtifactsTree(RunArtifactsTreeRequest) returns (ArtifactTreeResponse) {
+    rpc GetRunArtifactsTree(RunArtifactsTreeRequest) returns (ArtifactTree) {
         option (google.api.http) = {
             get: "/streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifacts/tree"
         };

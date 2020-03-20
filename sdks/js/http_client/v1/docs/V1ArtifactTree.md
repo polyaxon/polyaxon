@@ -1,4 +1,4 @@
-# PolyaxonSdk.V1ArtifactTreeResponse
+# PolyaxonSdk.V1ArtifactTree
 
 ## Properties
 Name | Type | Description | Notes

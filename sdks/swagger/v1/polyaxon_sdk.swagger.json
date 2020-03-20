@@ -10280,7 +10280,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1ArtifactTreeResponse"
+              "$ref": "#/definitions/v1ArtifactTree"
             }
           },
           "204": {
@@ -11409,7 +11409,7 @@
       "description": "- model: model\n - audio: audio\n - video: vidio\n - histogram: histogram\n - image: image\n - tensor: tensor\n - dataframe: dataframe\n - chart: plotly/bokeh chart\n - csv: Comma\n - tsv: Tab\n - psv: Pipe\n - ssv: Space\n - metric: Metric\n - env: Env\n - html: HTML\n - text: Text\n - file: File\n - dir: Dir\n - dockerfile: Dockerfile\n - docker_image: docker image\n - data: data\n - coderef: coderef\n - table: table",
       "title": "Artifact kind"
     },
-    "v1ArtifactTreeResponse": {
+    "v1ArtifactTree": {
       "type": "object",
       "properties": {
         "files": {

@@ -276,7 +276,7 @@ Class | Method | HTTP request | Description
  - [V1AgentStateResponse](docs/V1AgentStateResponse.md)
  - [V1AgentStatusBodyRequest](docs/V1AgentStatusBodyRequest.md)
  - [V1ArtifactKind](docs/V1ArtifactKind.md)
- - [V1ArtifactTreeResponse](docs/V1ArtifactTreeResponse.md)
+ - [V1ArtifactTree](docs/V1ArtifactTree.md)
  - [V1ArtifactsMount](docs/V1ArtifactsMount.md)
  - [V1ArtifactsType](docs/V1ArtifactsType.md)
  - [V1Auth](docs/V1Auth.md)

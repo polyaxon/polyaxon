@@ -31,18 +31,18 @@
 (function(root, factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
-    define(['ApiClient', 'model/RuntimeError', 'model/V1ArtifactTreeResponse', 'model/V1Auth', 'model/V1EntityNotificationBody', 'model/V1EntityStatusBodyRequest', 'model/V1EventsResponse', 'model/V1ListRunArtifactsResponse', 'model/V1ListRunsResponse', 'model/V1Logs', 'model/V1OperationBody', 'model/V1ProjectEntityResourceRequest', 'model/V1Run', 'model/V1RunArtifact', 'model/V1RunArtifacts', 'model/V1RunSettings', 'model/V1Status', 'model/V1Uuids'], factory);
+    define(['ApiClient', 'model/RuntimeError', 'model/V1ArtifactTree', 'model/V1Auth', 'model/V1EntityNotificationBody', 'model/V1EntityStatusBodyRequest', 'model/V1EventsResponse', 'model/V1ListRunArtifactsResponse', 'model/V1ListRunsResponse', 'model/V1Logs', 'model/V1OperationBody', 'model/V1ProjectEntityResourceRequest', 'model/V1Run', 'model/V1RunArtifact', 'model/V1RunArtifacts', 'model/V1RunSettings', 'model/V1Status', 'model/V1Uuids'], factory);
   } else if (typeof module === 'object' && module.exports) {
     // CommonJS-like environments that support module.exports, like Node.
-    module.exports = factory(require('../ApiClient'), require('../model/RuntimeError'), require('../model/V1ArtifactTreeResponse'), require('../model/V1Auth'), require('../model/V1EntityNotificationBody'), require('../model/V1EntityStatusBodyRequest'), require('../model/V1EventsResponse'), require('../model/V1ListRunArtifactsResponse'), require('../model/V1ListRunsResponse'), require('../model/V1Logs'), require('../model/V1OperationBody'), require('../model/V1ProjectEntityResourceRequest'), require('../model/V1Run'), require('../model/V1RunArtifact'), require('../model/V1RunArtifacts'), require('../model/V1RunSettings'), require('../model/V1Status'), require('../model/V1Uuids'));
+    module.exports = factory(require('../ApiClient'), require('../model/RuntimeError'), require('../model/V1ArtifactTree'), require('../model/V1Auth'), require('../model/V1EntityNotificationBody'), require('../model/V1EntityStatusBodyRequest'), require('../model/V1EventsResponse'), require('../model/V1ListRunArtifactsResponse'), require('../model/V1ListRunsResponse'), require('../model/V1Logs'), require('../model/V1OperationBody'), require('../model/V1ProjectEntityResourceRequest'), require('../model/V1Run'), require('../model/V1RunArtifact'), require('../model/V1RunArtifacts'), require('../model/V1RunSettings'), require('../model/V1Status'), require('../model/V1Uuids'));
   } else {
     // Browser globals (root is window)
     if (!root.PolyaxonSdk) {
       root.PolyaxonSdk = {};
     }
-    root.PolyaxonSdk.RunsV1Api = factory(root.PolyaxonSdk.ApiClient, root.PolyaxonSdk.RuntimeError, root.PolyaxonSdk.V1ArtifactTreeResponse, root.PolyaxonSdk.V1Auth, root.PolyaxonSdk.V1EntityNotificationBody, root.PolyaxonSdk.V1EntityStatusBodyRequest, root.PolyaxonSdk.V1EventsResponse, root.PolyaxonSdk.V1ListRunArtifactsResponse, root.PolyaxonSdk.V1ListRunsResponse, root.PolyaxonSdk.V1Logs, root.PolyaxonSdk.V1OperationBody, root.PolyaxonSdk.V1ProjectEntityResourceRequest, root.PolyaxonSdk.V1Run, root.PolyaxonSdk.V1RunArtifact, root.PolyaxonSdk.V1RunArtifacts, root.PolyaxonSdk.V1RunSettings, root.PolyaxonSdk.V1Status, root.PolyaxonSdk.V1Uuids);
+    root.PolyaxonSdk.RunsV1Api = factory(root.PolyaxonSdk.ApiClient, root.PolyaxonSdk.RuntimeError, root.PolyaxonSdk.V1ArtifactTree, root.PolyaxonSdk.V1Auth, root.PolyaxonSdk.V1EntityNotificationBody, root.PolyaxonSdk.V1EntityStatusBodyRequest, root.PolyaxonSdk.V1EventsResponse, root.PolyaxonSdk.V1ListRunArtifactsResponse, root.PolyaxonSdk.V1ListRunsResponse, root.PolyaxonSdk.V1Logs, root.PolyaxonSdk.V1OperationBody, root.PolyaxonSdk.V1ProjectEntityResourceRequest, root.PolyaxonSdk.V1Run, root.PolyaxonSdk.V1RunArtifact, root.PolyaxonSdk.V1RunArtifacts, root.PolyaxonSdk.V1RunSettings, root.PolyaxonSdk.V1Status, root.PolyaxonSdk.V1Uuids);
   }
-}(this, function(ApiClient, RuntimeError, V1ArtifactTreeResponse, V1Auth, V1EntityNotificationBody, V1EntityStatusBodyRequest, V1EventsResponse, V1ListRunArtifactsResponse, V1ListRunsResponse, V1Logs, V1OperationBody, V1ProjectEntityResourceRequest, V1Run, V1RunArtifact, V1RunArtifacts, V1RunSettings, V1Status, V1Uuids) {
+}(this, function(ApiClient, RuntimeError, V1ArtifactTree, V1Auth, V1EntityNotificationBody, V1EntityStatusBodyRequest, V1EventsResponse, V1ListRunArtifactsResponse, V1ListRunsResponse, V1Logs, V1OperationBody, V1ProjectEntityResourceRequest, V1Run, V1RunArtifact, V1RunArtifacts, V1RunSettings, V1Status, V1Uuids) {
   'use strict';
 
   /**
@@ -1196,7 +1196,7 @@
      * Callback function to receive the result of the getRunArtifactsTree operation.
      * @callback module:api/RunsV1Api~getRunArtifactsTreeCallback
      * @param {String} error Error message, if any.
-     * @param {module:model/V1ArtifactTreeResponse} data The data returned by the service call.
+     * @param {module:model/V1ArtifactTree} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
      */
 
@@ -1209,7 +1209,7 @@
      * @param {Object} opts Optional parameters
      * @param {String} opts.path Path query param.
      * @param {module:api/RunsV1Api~getRunArtifactsTreeCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link module:model/V1ArtifactTreeResponse}
+     * data is of type: {@link module:model/V1ArtifactTree}
      */
     this.getRunArtifactsTree = function(namespace, owner, project, uuid, opts, callback) {
       opts = opts || {};
@@ -1255,7 +1255,7 @@
       var authNames = ['ApiKey'];
       var contentTypes = ['application/json'];
       var accepts = ['application/json'];
-      var returnType = V1ArtifactTreeResponse;
+      var returnType = V1ArtifactTree;
 
       return this.apiClient.callApi(
         '/streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifacts/tree', 'GET',

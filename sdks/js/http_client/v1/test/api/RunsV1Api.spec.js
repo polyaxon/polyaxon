@@ -998,7 +998,7 @@
               return;
             }
             // TODO: update response assertions
-            expect(data).to.be.a(PolyaxonSdk.V1ArtifactTreeResponse);
+            expect(data).to.be.a(PolyaxonSdk.V1ArtifactTree);
             {
               let dataCtr = data.files;
               expect(dataCtr).to.be.an(Object);

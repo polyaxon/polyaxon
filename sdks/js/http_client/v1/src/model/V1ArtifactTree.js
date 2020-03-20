@@ -40,31 +40,31 @@
     if (!root.PolyaxonSdk) {
       root.PolyaxonSdk = {};
     }
-    root.PolyaxonSdk.V1ArtifactTreeResponse = factory(root.PolyaxonSdk.ApiClient);
+    root.PolyaxonSdk.V1ArtifactTree = factory(root.PolyaxonSdk.ApiClient);
   }
 }(this, function(ApiClient) {
   'use strict';
 
   /**
-   * The V1ArtifactTreeResponse model module.
-   * @module model/V1ArtifactTreeResponse
+   * The V1ArtifactTree model module.
+   * @module model/V1ArtifactTree
    * @version 1.0.5
    */
 
   /**
-   * Constructs a new <code>V1ArtifactTreeResponse</code>.
-   * @alias module:model/V1ArtifactTreeResponse
+   * Constructs a new <code>V1ArtifactTree</code>.
+   * @alias module:model/V1ArtifactTree
    * @class
    */
   var exports = function() {
   };
 
   /**
-   * Constructs a <code>V1ArtifactTreeResponse</code> from a plain JavaScript object, optionally creating a new instance.
+   * Constructs a <code>V1ArtifactTree</code> from a plain JavaScript object, optionally creating a new instance.
    * Copies all relevant properties from <code>data</code> to <code>obj</code> if supplied or a new instance if not.
    * @param {Object} data The plain JavaScript object bearing properties of interest.
-   * @param {module:model/V1ArtifactTreeResponse} obj Optional instance to populate.
-   * @return {module:model/V1ArtifactTreeResponse} The populated <code>V1ArtifactTreeResponse</code> instance.
+   * @param {module:model/V1ArtifactTree} obj Optional instance to populate.
+   * @return {module:model/V1ArtifactTree} The populated <code>V1ArtifactTree</code> instance.
    */
   exports.constructFromObject = function(data, obj) {
     if (data) {

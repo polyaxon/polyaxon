@@ -327,7 +327,7 @@ Class | Method | HTTP request | Description
  - [PolyaxonSdk.V1AgentStateResponse](docs/V1AgentStateResponse.md)
  - [PolyaxonSdk.V1AgentStatusBodyRequest](docs/V1AgentStatusBodyRequest.md)
  - [PolyaxonSdk.V1ArtifactKind](docs/V1ArtifactKind.md)
- - [PolyaxonSdk.V1ArtifactTreeResponse](docs/V1ArtifactTreeResponse.md)
+ - [PolyaxonSdk.V1ArtifactTree](docs/V1ArtifactTree.md)
  - [PolyaxonSdk.V1ArtifactsMount](docs/V1ArtifactsMount.md)
  - [PolyaxonSdk.V1ArtifactsType](docs/V1ArtifactsType.md)
  - [PolyaxonSdk.V1Auth](docs/V1Auth.md)

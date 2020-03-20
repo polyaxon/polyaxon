@@ -71,7 +71,7 @@ from polyaxon_sdk.models.v1_agent import V1Agent
 from polyaxon_sdk.models.v1_agent_state_response import V1AgentStateResponse
 from polyaxon_sdk.models.v1_agent_status_body_request import V1AgentStatusBodyRequest
 from polyaxon_sdk.models.v1_artifact_kind import V1ArtifactKind
-from polyaxon_sdk.models.v1_artifact_tree_response import V1ArtifactTreeResponse
+from polyaxon_sdk.models.v1_artifact_tree import V1ArtifactTree
 from polyaxon_sdk.models.v1_artifacts_mount import V1ArtifactsMount
 from polyaxon_sdk.models.v1_artifacts_type import V1ArtifactsType
 from polyaxon_sdk.models.v1_auth import V1Auth

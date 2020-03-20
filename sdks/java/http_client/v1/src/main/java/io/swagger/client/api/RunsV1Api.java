@@ -44,7 +44,7 @@ import java.io.IOException;
 import java.io.File;
 import org.threeten.bp.OffsetDateTime;
 import io.swagger.client.model.RuntimeError;
-import io.swagger.client.model.V1ArtifactTreeResponse;
+import io.swagger.client.model.V1ArtifactTree;
 import io.swagger.client.model.V1Auth;
 import io.swagger.client.model.V1EntityNotificationBody;
 import io.swagger.client.model.V1EntityStatusBodyRequest;
@@ -2754,11 +2754,11 @@ public class RunsV1Api {
      * @param project Project where the run will be assigned (required)
      * @param uuid Uuid identifier of the entity (required)
      * @param path Path query param. (optional)
-     * @return V1ArtifactTreeResponse
+     * @return V1ArtifactTree
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1ArtifactTreeResponse getRunArtifactsTree(String namespace, String owner, String project, String uuid, String path) throws ApiException {
-        ApiResponse<V1ArtifactTreeResponse> resp = getRunArtifactsTreeWithHttpInfo(namespace, owner, project, uuid, path);
+    public V1ArtifactTree getRunArtifactsTree(String namespace, String owner, String project, String uuid, String path) throws ApiException {
+        ApiResponse<V1ArtifactTree> resp = getRunArtifactsTreeWithHttpInfo(namespace, owner, project, uuid, path);
         return resp.getData();
     }
 
@@ -2770,12 +2770,12 @@ public class RunsV1Api {
      * @param project Project where the run will be assigned (required)
      * @param uuid Uuid identifier of the entity (required)
      * @param path Path query param. (optional)
-     * @return ApiResponse&lt;V1ArtifactTreeResponse&gt;
+     * @return ApiResponse&lt;V1ArtifactTree&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1ArtifactTreeResponse> getRunArtifactsTreeWithHttpInfo(String namespace, String owner, String project, String uuid, String path) throws ApiException {
+    public ApiResponse<V1ArtifactTree> getRunArtifactsTreeWithHttpInfo(String namespace, String owner, String project, String uuid, String path) throws ApiException {
         com.squareup.okhttp.Call call = getRunArtifactsTreeValidateBeforeCall(namespace, owner, project, uuid, path, null, null);
-        Type localVarReturnType = new TypeToken<V1ArtifactTreeResponse>(){}.getType();
+        Type localVarReturnType = new TypeToken<V1ArtifactTree>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -2791,7 +2791,7 @@ public class RunsV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call getRunArtifactsTreeAsync(String namespace, String owner, String project, String uuid, String path, final ApiCallback<V1ArtifactTreeResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call getRunArtifactsTreeAsync(String namespace, String owner, String project, String uuid, String path, final ApiCallback<V1ArtifactTree> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -2813,7 +2813,7 @@ public class RunsV1Api {
         }
 
         com.squareup.okhttp.Call call = getRunArtifactsTreeValidateBeforeCall(namespace, owner, project, uuid, path, progressListener, progressRequestListener);
-        Type localVarReturnType = new TypeToken<V1ArtifactTreeResponse>(){}.getType();
+        Type localVarReturnType = new TypeToken<V1ArtifactTree>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }

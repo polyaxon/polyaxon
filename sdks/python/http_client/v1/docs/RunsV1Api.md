@@ -1042,7 +1042,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_run_artifacts_tree**
-> V1ArtifactTreeResponse get_run_artifacts_tree(namespace, owner, project, uuid, path=path)
+> V1ArtifactTree get_run_artifacts_tree(namespace, owner, project, uuid, path=path)
 
 Get run artifacts tree
 
@@ -1088,7 +1088,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**V1ArtifactTreeResponse**](V1ArtifactTreeResponse.md)
+[**V1ArtifactTree**](V1ArtifactTree.md)
 
 ### Authorization
 
