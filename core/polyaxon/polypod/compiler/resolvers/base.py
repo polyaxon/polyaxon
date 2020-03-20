@@ -19,8 +19,7 @@ from polyaxon.exceptions import PolyaxonCompilerError
 from polyaxon.polyaxonfile import CompiledOperationSpecification
 from polyaxon.polyflow import V1CompiledOperation
 from polyaxon.polypod.compiler.config import PolypodConfig
-from polyaxon.polypod.contexts import resolve_contexts
-from polyaxon.schemas.cli.agent_config import AgentConfig
+from polyaxon.polypod.contexts import resolve_contexts, resolve_globals_contexts
 
 
 class BaseResolver:
@@ -59,12 +58,28 @@ class BaseResolver:
         self.polyaxon_init = None
         self.iteration = None
         self.agent_config = None
+        self.globals = {}
         self.contexts = {}
 
     def resolve_edges(self):
         pass
 
+    def resolve_globals(self):
+        self.globals = resolve_globals_contexts(
+            namespace=self.namespace,
+            owner_name=self.owner_name,
+            project_name=self.project_name,
+            project_uuid=self.project_uuid,
+            run_name=self.run_name,
+            run_path=self.run_path,
+            run_uuid=self.run_uuid,
+            iteration=self.iteration,
+        )
+
     def resolve_params(self):
+        raise NotImplementedError
+
+    def resolve_connections_params(self):
         raise NotImplementedError
 
     def resolve_profile(self):
@@ -130,9 +145,11 @@ class BaseResolver:
 
     def resolve(self) -> V1CompiledOperation:
         self.resolve_edges()
+        self.resolve_globals()
         self.resolve_params()
         self.resolve_profile()
         self.resolve_agent()
+        self.resolve_connections_params()
         self.patch()
         self.apply_content()
         self.resolve_io()

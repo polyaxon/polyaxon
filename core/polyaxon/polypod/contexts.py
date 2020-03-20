@@ -94,3 +94,34 @@ def resolve_contexts(
         resolved_contexts["globals"]["base_url"] = base_url
 
     return resolved_contexts
+
+
+def resolve_globals_contexts(
+    namespace: str,
+    owner_name: str,
+    project_name: str,
+    project_uuid: str,
+    run_uuid: str,
+    run_name: str,
+    run_path: str,
+    iteration: int,
+) -> Dict:
+
+    resolved_contexts = {
+        "globals": {
+            "owner_name": owner_name,
+            "project_name": project_name,
+            "project_unique_name": "{}.{}".format(owner_name, project_name),
+            "project_uuid": project_uuid,
+            "run_info": "{}.{}.runs.{}".format(owner_name, project_name, run_uuid),
+            "name": run_name,
+            "uuid": run_uuid,
+            "namespace": namespace,
+            "iteration": iteration,
+            "artifacts_path": get_path(
+                contexts.CONTEXT_MOUNT_ARTIFACTS, run_path
+            )
+        }
+    }
+
+    return resolved_contexts

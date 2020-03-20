@@ -33,6 +33,6 @@ def parse_params(params):
         if name in parsed_params:
             Printer.print_error("Repeated parameter: '%s'" % name)
             sys.exit(1)
-        parsed_params[name] = value
+        parsed_params[name] = {"value": value}
 
     return parsed_params
