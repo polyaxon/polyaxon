@@ -407,7 +407,9 @@ class V1Events:
         return cls(name=name, kind=kind, df=df)
 
     def to_dict(self, orient: str = "list") -> Dict:
-        return self.df.to_dict(orient=orient)
+        import numpy as np
+
+        return self.df.replace({np.nan: None}).to_dict(orient=orient)
 
     def get_event_at(self, index):
         event = self.df.iloc[index].to_dict()
