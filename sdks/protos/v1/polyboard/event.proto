@@ -178,6 +178,6 @@ message Event {
 
 // Events response definition
 message EventsResponse {
-    // Name of the events
+    // Events data
     repeated google.protobuf.Struct data = 1;
 }

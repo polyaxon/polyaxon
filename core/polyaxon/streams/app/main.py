@@ -45,6 +45,10 @@ URLS_RUNS_EVENTS = (
     STREAMS_URL + "/{namespace:str}/{owner:str}/{project:str}/runs/"
     "{run_uuid:str}/events/{event_kind:str}"
 )
+URLS_RUNS_RESOURCES = (
+    STREAMS_URL + "/{namespace:str}/{owner:str}/{project:str}/runs/"
+    "{run_uuid:str}/resources"
+)
 URLS_RUNS_NOTIFY = (
     STREAMS_URL
     + "/{namespace:str}/{owner:str}/{project:str}/runs/{run_uuid:str}/notify"
@@ -77,6 +81,11 @@ routes = [
     Route(
         URLS_RUNS_LOGS, endpoints.get_logs,
         name="logs",
+        methods=["GET"]
+    ),
+    Route(
+        URLS_RUNS_RESOURCES, endpoints.get_run_resources,
+        name="resources",
         methods=["GET"]
     ),
     Route(

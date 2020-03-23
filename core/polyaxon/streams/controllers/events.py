@@ -22,7 +22,7 @@ import aiofiles
 from starlette import status
 from starlette.exceptions import HTTPException
 
-from polyaxon.polyboard.events import V1Events, get_event_path
+from polyaxon.polyboard.events import V1Events, get_event_path, get_resource_path
 from polyaxon.stores.manager import list_files
 from polyaxon.streams.stores.async_manager import download_file
 
@@ -35,13 +35,9 @@ def get_events_files(run_uuid: str, event_kind: str) -> List[str]:
     return sorted([f for f in files["files"].keys()])
 
 
-async def get_archived_operation_event(
-    run_uuid: str, event_kind: str, event_name: str, orient: str = V1Events.ORIENT_CSV
+async def process_operation_event(
+    events_path: str, event_kind: str, event_name: str, orient: str = V1Events.ORIENT_CSV
 ) -> Optional[Dict]:
-
-    subpath = get_event_path(run_path=run_uuid, kind=event_kind, name=event_name)
-    events_path = await download_file(subpath)
-
     if not events_path or not os.path.exists(events_path):
         return None
 
@@ -61,6 +57,55 @@ async def get_archived_operation_event(
                     status_code=status.HTTP_400_BAD_REQUEST,
                 )
     return None
+
+
+async def get_archived_operation_resource(
+    run_uuid: str, event_kind: str, event_name: str, orient: str = V1Events.ORIENT_CSV
+) -> Optional[Dict]:
+
+    subpath = get_resource_path(run_path=run_uuid, kind=event_kind, name=event_name)
+    events_path = await download_file(subpath)
+
+    return await process_operation_event(
+        events_path=events_path,
+        event_kind=event_kind,
+        event_name=event_name,
+        orient=orient
+    )
+
+
+async def get_archived_operation_event(
+    run_uuid: str, event_kind: str, event_name: str, orient: str = V1Events.ORIENT_CSV
+) -> Optional[Dict]:
+
+    subpath = get_event_path(run_path=run_uuid, kind=event_kind, name=event_name)
+    events_path = await download_file(subpath)
+
+    return await process_operation_event(
+        events_path=events_path,
+        event_kind=event_kind,
+        event_name=event_name,
+        orient=orient
+    )
+
+
+async def get_archived_operation_resources(
+    run_uuid: str,
+    event_kind: str,
+    event_names: Set[str],
+    orient: str = V1Events.ORIENT_CSV,
+) -> List[Dict]:
+    events = []
+    for event_name in event_names:
+        event = await get_archived_operation_resource(
+            run_uuid=run_uuid,
+            event_kind=event_kind,
+            event_name=event_name,
+            orient=orient,
+        )
+        if event:
+            events.append(event)
+    return events
 
 
 async def get_archived_operation_events(
