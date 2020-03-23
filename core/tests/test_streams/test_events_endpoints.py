@@ -97,7 +97,7 @@ class TestEventsEndpoints(BaseTestCase):
         )
         assert os.path.exists(filepath1) is False
         assert os.path.exists(filepath2) is False
-        response = self.client.get(self.base_url + "/text?names=text1")
+        response = self.client.get(self.base_url + "/text?names=text1&orient=csv")
         assert response.status_code == 200
         assert os.path.exists(filepath1) is True
         assert os.path.exists(filepath2) is False
@@ -109,7 +109,7 @@ class TestEventsEndpoints(BaseTestCase):
         assert results[0].kind == events1.kind
         assert pd.DataFrame.equals(results[0].df, events1.df)
 
-        response = self.client.get(self.base_url + "/text?names=text1,text2")
+        response = self.client.get(self.base_url + "/text?names=text1,text2&orient=csv")
         assert response.status_code == 200
         assert os.path.exists(filepath1) is True
         assert os.path.exists(filepath2) is True
@@ -124,7 +124,7 @@ class TestEventsEndpoints(BaseTestCase):
             assert res.kind == exp.kind
             assert pd.DataFrame.equals(res.df, exp.df)
 
-        response = self.client.get(self.base_url + "/text?names=text1,text2,text3")
+        response = self.client.get(self.base_url + "/text?names=text1,text2,text3&orient=csv")
         assert response.status_code == 200
         assert os.path.exists(filepath1) is True
         assert os.path.exists(filepath2) is True
@@ -147,7 +147,7 @@ class TestEventsEndpoints(BaseTestCase):
         )
         assert os.path.exists(filepath1) is False
         assert os.path.exists(filepath2) is False
-        response = self.client.get(self.base_url + "/html?names=html1")
+        response = self.client.get(self.base_url + "/html?names=html1&orient=csv")
         assert response.status_code == 200
         assert os.path.exists(filepath1) is True
         assert os.path.exists(filepath2) is False
@@ -159,7 +159,7 @@ class TestEventsEndpoints(BaseTestCase):
         assert results[0].kind == events1.kind
         assert pd.DataFrame.equals(results[0].df, events1.df)
 
-        response = self.client.get(self.base_url + "/html?names=html1,html2")
+        response = self.client.get(self.base_url + "/html?names=html1,html2&orient=csv")
         assert response.status_code == 200
         assert os.path.exists(filepath1) is True
         assert os.path.exists(filepath2) is True
@@ -174,7 +174,7 @@ class TestEventsEndpoints(BaseTestCase):
             assert res.kind == exp.kind
             assert pd.DataFrame.equals(res.df, exp.df)
 
-        response = self.client.get(self.base_url + "/html?names=text1,html1,html2")
+        response = self.client.get(self.base_url + "/html?names=text1,html1,html2&orient=csv")
         assert response.status_code == 200
         assert os.path.exists(filepath1) is True
         assert os.path.exists(filepath2) is True
