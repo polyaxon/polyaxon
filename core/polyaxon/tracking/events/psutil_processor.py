@@ -44,8 +44,7 @@ def query_psutil() -> Dict:
             pass
     except OSError:
         pass
-    results["memory_total"] = vm.total
-    results["memory_used"] = vm.used
+    results["memory_used"] = vm.used / vm.total
     return results
 
 
