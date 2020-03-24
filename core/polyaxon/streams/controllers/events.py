@@ -22,6 +22,7 @@ import aiofiles
 from starlette import status
 from starlette.exceptions import HTTPException
 
+from polyaxon.polyboard.artifacts import V1ArtifactKind
 from polyaxon.polyboard.events import V1Events, get_event_path, get_resource_path
 from polyaxon.stores.manager import list_files
 from polyaxon.streams.stores.async_manager import download_file
@@ -29,6 +30,14 @@ from polyaxon.streams.stores.async_manager import download_file
 
 def get_events_files(run_uuid: str, event_kind: str) -> List[str]:
     subpath = get_event_path(run_path=run_uuid, kind=event_kind)
+    files = list_files(subpath=subpath)
+    if not files["files"]:
+        return []
+    return sorted([f for f in files["files"].keys()])
+
+
+def get_resources_files(run_uuid: str) -> List[str]:
+    subpath = get_resource_path(run_path=run_uuid, kind=V1ArtifactKind.METRIC)
     files = list_files(subpath=subpath)
     if not files["files"]:
         return []
@@ -96,6 +105,9 @@ async def get_archived_operation_resources(
     orient: str = V1Events.ORIENT_CSV,
 ) -> List[Dict]:
     events = []
+    if not event_names:
+        files = get_resources_files(run_uuid=run_uuid)
+        event_names = [f.split('.plx')[0] for f in files]
     for event_name in event_names:
         event = await get_archived_operation_resource(
             run_uuid=run_uuid,

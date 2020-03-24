@@ -169,7 +169,7 @@ async def get_run_events(request):
 
 async def get_run_resources(request):
     run_uuid = request.path_params["run_uuid"]
-    event_names = request.query_params["names"]
+    event_names = request.query_params.get("names")
     orient = request.query_params.get("orient")
     orient = orient or V1Events.ORIENT_DICT
     event_names = {e for e in event_names.split(",") if e} if event_names else set([])
