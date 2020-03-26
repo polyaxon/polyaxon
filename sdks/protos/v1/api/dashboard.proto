@@ -44,16 +44,19 @@ message Dashboard {
     bool deleted = 6;
 
     // Optional dashboard search
-    SearchSpec search = 7;
+    bool run_view = 7;
+
+    // Optional dashboard search
+    SearchSpec search = 8;
 
     // Optional dashboard specification
-    google.protobuf.Struct spec = 8;
+    google.protobuf.Struct spec = 9;
 
     // Optional time when the entity was created
-    google.protobuf.Timestamp created_at = 9;
+    google.protobuf.Timestamp created_at = 10;
 
     // Optional last time the entity was updated
-    google.protobuf.Timestamp updated_at = 10;
+    google.protobuf.Timestamp updated_at = 11;
 }
 
  // Request data to create/update dashboard
@@ -76,22 +79,6 @@ message Dashboard {
     // Dashboard body
     Dashboard dashboard = 3;
  }
-
-  // Request data to create/update run dashboard
-  message RunDashboardBodyRequest {
-    // Owner of the namespace
-    string owner = 1;
-
-    // Project under namesapce
-    string project = 2;
-
-    // Run under namesapce
-    string run = 3;
-
-    // Dashboard body
-    Dashboard dashboard = 4;
- }
-
 
 // Contains list dashboards
 message ListDashboardsResponse {

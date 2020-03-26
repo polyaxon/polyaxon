@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **tags** | **list[str]** |  | [optional] 
 **disabled** | **bool** |  | [optional] 
 **deleted** | **bool** |  | [optional] 
+**run_view** | **bool** |  | [optional] 
 **search** | [**V1SearchSpec**](V1SearchSpec.md) |  | [optional] 
 **spec** | **object** |  | [optional] 
 **created_at** | **datetime** |  | [optional] 

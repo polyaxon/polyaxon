@@ -10,6 +10,7 @@ Name | Type | Description | Notes
 **tags** | **List&lt;String&gt;** |  |  [optional]
 **disabled** | **Boolean** |  |  [optional]
 **deleted** | **Boolean** |  |  [optional]
+**runView** | **Boolean** |  |  [optional]
 **search** | [**V1SearchSpec**](V1SearchSpec.md) |  |  [optional]
 **spec** | **Object** |  |  [optional]
 **createdAt** | [**OffsetDateTime**](OffsetDateTime.md) |  |  [optional]

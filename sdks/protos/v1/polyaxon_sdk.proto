@@ -46,7 +46,7 @@ import "v1/schemas/all.proto";
 option (grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger) = {
 	info: {
 		title: "Polyaxon sdk";
-		version: "1.0.6";
+		version: "1.0.7";
 		contact: {
 			name: "Polyaxon sdk";
 			url: "https://github.com/polyaxon/polyaxon";
@@ -336,65 +336,6 @@ service RunsV1 {
     rpc GetRunArtifactLineage(RunArtifactLineageRequest) returns (RunArtifact) {
         option (google.api.http) = {
             get: "/api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage/{name}"
-        };
-    }
-
-    // List run dashboard
-    rpc ListRunDashboardNames(RunResourceListRequest) returns (ListDashboardsResponse) {
-        option (google.api.http) = {
-            get: "/api/v1/{owner}/{project}/runs/{run}/dashboards/names"
-        };
-    }
-
-    // List run dashboards
-    rpc ListRunDashboards(RunResourceListRequest) returns (ListDashboardsResponse) {
-        option (google.api.http) = {
-            get: "/api/v1/{owner}/{project}/runs/{run}/dashboards"
-        };
-    }
-
-    // Create run dashboard
-    rpc CreateRunDashboard(RunDashboardBodyRequest) returns (Dashboard) {
-        option (google.api.http) = {
-            post: "/api/v1/{owner}/{project}/runs/{run}/dashboards"
-            body: "dashboard"
-        };
-    }
-
-    // Get project dashboard
-    rpc GetRunDashboard(RunEntityResourceRequest) returns (Dashboard) {
-        option (google.api.http) = {
-            get: "/api/v1/{owner}/{project}/runs/{run}/dashboards/{uuid}"
-        };
-    }
-
-    // Update project dashboard
-    rpc UpdateRunDashboard(RunDashboardBodyRequest) returns (Dashboard) {
-        option (google.api.http) = {
-            put: "/api/v1/{owner}/{project}/runs/{run}/dashboards/{dashboard.uuid}"
-            body: "dashboard"
-        };
-    }
-
-    // Patch project dashboard
-    rpc PatchRunDashboard(RunDashboardBodyRequest) returns (Dashboard) {
-        option (google.api.http) = {
-            patch: "/api/v1/{owner}/{project}/runs/{run}/dashboards/{dashboard.uuid}"
-            body: "dashboard"
-        };
-    }
-
-    // Delete project dashboard
-    rpc DeleteRunDashboard(RunEntityResourceRequest) returns (google.protobuf.Empty) {
-        option (google.api.http) = {
-            delete: "/api/v1/{owner}/{project}/runs/{run}/dashboards/{uuid}"
-        };
-    }
-
-    // Promote project dashboard
-    rpc PromoteRunDashboard(RunDashboardBodyRequest) returns (Dashboard) {
-        option (google.api.http) = {
-            post: "/api/v1/{owner}/{project}/runs/{run}/dashboards/{dashboard.uuid}/promote"
         };
     }
 

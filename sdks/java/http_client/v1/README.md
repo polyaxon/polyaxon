@@ -1,7 +1,7 @@
 # swagger-java-client
 
 Polyaxon SDKs and REST API specification.
-- API version: 1.0.6
+- API version: 1.0.7
 
 Polyaxon SDKs and REST API specification.
 
@@ -233,11 +233,9 @@ Class | Method | HTTP request | Description
 *RunsV1Api* | [**copyRun**](docs/RunsV1Api.md#copyRun) | **POST** /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/copy | Restart run with copy
 *RunsV1Api* | [**createRun**](docs/RunsV1Api.md#createRun) | **POST** /api/v1/{owner}/{project}/runs | Create new run
 *RunsV1Api* | [**createRunArtifactsLineage**](docs/RunsV1Api.md#createRunArtifactsLineage) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage | Create bulk run run artifacts lineage
-*RunsV1Api* | [**createRunDashboard**](docs/RunsV1Api.md#createRunDashboard) | **POST** /api/v1/{owner}/{project}/runs/{run}/dashboards | Create run dashboard
 *RunsV1Api* | [**createRunStatus**](docs/RunsV1Api.md#createRunStatus) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/statuses | Create new run status
 *RunsV1Api* | [**deleteRun**](docs/RunsV1Api.md#deleteRun) | **DELETE** /api/v1/{owner}/{project}/runs/{uuid} | Delete run
 *RunsV1Api* | [**deleteRunArtifactLineage**](docs/RunsV1Api.md#deleteRunArtifactLineage) | **DELETE** /api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage/{name} | Delete run artifact lineage
-*RunsV1Api* | [**deleteRunDashboard**](docs/RunsV1Api.md#deleteRunDashboard) | **DELETE** /api/v1/{owner}/{project}/runs/{run}/dashboards/{uuid} | Delete project dashboard
 *RunsV1Api* | [**deleteRuns**](docs/RunsV1Api.md#deleteRuns) | **DELETE** /api/v1/{owner}/{project}/runs/delete | Delete runs
 *RunsV1Api* | [**getMultiRunEvents**](docs/RunsV1Api.md#getMultiRunEvents) | **GET** /streams/v1/{namespace}/{owner}/{project}/runs/multi/events/{kind} | Get multi runs events
 *RunsV1Api* | [**getRun**](docs/RunsV1Api.md#getRun) | **GET** /api/v1/{owner}/{project}/runs/{uuid} | Get run
@@ -247,7 +245,6 @@ Class | Method | HTTP request | Description
 *RunsV1Api* | [**getRunArtifactsLineage**](docs/RunsV1Api.md#getRunArtifactsLineage) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage | Get run artifacts lineage
 *RunsV1Api* | [**getRunArtifactsLineageNames**](docs/RunsV1Api.md#getRunArtifactsLineageNames) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage/names | Get run artifacts lineage names
 *RunsV1Api* | [**getRunArtifactsTree**](docs/RunsV1Api.md#getRunArtifactsTree) | **GET** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifacts/tree | Get run artifacts tree
-*RunsV1Api* | [**getRunDashboard**](docs/RunsV1Api.md#getRunDashboard) | **GET** /api/v1/{owner}/{project}/runs/{run}/dashboards/{uuid} | Get project dashboard
 *RunsV1Api* | [**getRunEvents**](docs/RunsV1Api.md#getRunEvents) | **GET** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/events/{kind} | Get run events
 *RunsV1Api* | [**getRunLogs**](docs/RunsV1Api.md#getRunLogs) | **GET** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/logs | Get run logs
 *RunsV1Api* | [**getRunNamespace**](docs/RunsV1Api.md#getRunNamespace) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/namespace | Get Run namespace
@@ -259,14 +256,10 @@ Class | Method | HTTP request | Description
 *RunsV1Api* | [**invalidateRuns**](docs/RunsV1Api.md#invalidateRuns) | **POST** /api/v1/{owner}/{project}/runs/invalidate | Invalidate runs
 *RunsV1Api* | [**listArchivedRuns**](docs/RunsV1Api.md#listArchivedRuns) | **GET** /api/v1/archives/{user}/runs | List archived runs for user
 *RunsV1Api* | [**listBookmarkedRuns**](docs/RunsV1Api.md#listBookmarkedRuns) | **GET** /api/v1/bookmarks/{user}/runs | List bookmarked runs for user
-*RunsV1Api* | [**listRunDashboardNames**](docs/RunsV1Api.md#listRunDashboardNames) | **GET** /api/v1/{owner}/{project}/runs/{run}/dashboards/names | List run dashboard
-*RunsV1Api* | [**listRunDashboards**](docs/RunsV1Api.md#listRunDashboards) | **GET** /api/v1/{owner}/{project}/runs/{run}/dashboards | List run dashboards
 *RunsV1Api* | [**listRuns**](docs/RunsV1Api.md#listRuns) | **GET** /api/v1/{owner}/{project}/runs | List runs
 *RunsV1Api* | [**listRunsIo**](docs/RunsV1Api.md#listRunsIo) | **GET** /api/v1/{owner}/{project}/runs/io | List runs io
 *RunsV1Api* | [**notifyRunStatus**](docs/RunsV1Api.md#notifyRunStatus) | **POST** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/notify | Notify run status
 *RunsV1Api* | [**patchRun**](docs/RunsV1Api.md#patchRun) | **PATCH** /api/v1/{owner}/{project}/runs/{run.uuid} | Patch run
-*RunsV1Api* | [**patchRunDashboard**](docs/RunsV1Api.md#patchRunDashboard) | **PATCH** /api/v1/{owner}/{project}/runs/{run}/dashboards/{dashboard.uuid} | Patch project dashboard
-*RunsV1Api* | [**promoteRunDashboard**](docs/RunsV1Api.md#promoteRunDashboard) | **POST** /api/v1/{owner}/{project}/runs/{run}/dashboards/{dashboard.uuid}/promote | Promote project dashboard
 *RunsV1Api* | [**restartRun**](docs/RunsV1Api.md#restartRun) | **POST** /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/restart | Restart run
 *RunsV1Api* | [**restoreRun**](docs/RunsV1Api.md#restoreRun) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/restore | Restore run
 *RunsV1Api* | [**resumeRun**](docs/RunsV1Api.md#resumeRun) | **POST** /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/resume | Resume run
@@ -276,7 +269,6 @@ Class | Method | HTTP request | Description
 *RunsV1Api* | [**stopRuns**](docs/RunsV1Api.md#stopRuns) | **POST** /api/v1/{owner}/{project}/runs/stop | Stop runs
 *RunsV1Api* | [**unbookmarkRun**](docs/RunsV1Api.md#unbookmarkRun) | **DELETE** /api/v1/{owner}/{project}/runs/{uuid}/unbookmark | Unbookmark run
 *RunsV1Api* | [**updateRun**](docs/RunsV1Api.md#updateRun) | **PUT** /api/v1/{owner}/{project}/runs/{run.uuid} | Update run
-*RunsV1Api* | [**updateRunDashboard**](docs/RunsV1Api.md#updateRunDashboard) | **PUT** /api/v1/{owner}/{project}/runs/{run}/dashboards/{dashboard.uuid} | Update project dashboard
 *RunsV1Api* | [**uploadRunArtifact**](docs/RunsV1Api.md#uploadRunArtifact) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/artifacts/upload | Upload an artifact file to a store via run access
 *RunsV1Api* | [**uploadRunLogs**](docs/RunsV1Api.md#uploadRunLogs) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/logs/upload | Upload a logs file to a store via run access
 *SchemasV1Api* | [**noOp**](docs/SchemasV1Api.md#noOp) | **GET** /schemas | List teams names

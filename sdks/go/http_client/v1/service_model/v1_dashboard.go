@@ -48,6 +48,9 @@ type V1Dashboard struct {
 	Name string `json:"name,omitempty"`
 
 	// Optional dashboard search
+	RunView bool `json:"run_view,omitempty"`
+
+	// Optional dashboard search
 	Search *V1SearchSpec `json:"search,omitempty"`
 
 	// Optional dashboard specification

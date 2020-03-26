@@ -53,15 +53,11 @@ type ClientService interface {
 
 	CreateRunArtifactsLineage(params *CreateRunArtifactsLineageParams, authInfo runtime.ClientAuthInfoWriter) (*CreateRunArtifactsLineageOK, *CreateRunArtifactsLineageNoContent, error)
 
-	CreateRunDashboard(params *CreateRunDashboardParams, authInfo runtime.ClientAuthInfoWriter) (*CreateRunDashboardOK, *CreateRunDashboardNoContent, error)
-
 	CreateRunStatus(params *CreateRunStatusParams, authInfo runtime.ClientAuthInfoWriter) (*CreateRunStatusOK, *CreateRunStatusNoContent, error)
 
 	DeleteRun(params *DeleteRunParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteRunOK, *DeleteRunNoContent, error)
 
 	DeleteRunArtifactLineage(params *DeleteRunArtifactLineageParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteRunArtifactLineageOK, *DeleteRunArtifactLineageNoContent, error)
-
-	DeleteRunDashboard(params *DeleteRunDashboardParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteRunDashboardOK, *DeleteRunDashboardNoContent, error)
 
 	DeleteRuns(params *DeleteRunsParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteRunsOK, *DeleteRunsNoContent, error)
 
@@ -80,8 +76,6 @@ type ClientService interface {
 	GetRunArtifactsLineageNames(params *GetRunArtifactsLineageNamesParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunArtifactsLineageNamesOK, *GetRunArtifactsLineageNamesNoContent, error)
 
 	GetRunArtifactsTree(params *GetRunArtifactsTreeParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunArtifactsTreeOK, *GetRunArtifactsTreeNoContent, error)
-
-	GetRunDashboard(params *GetRunDashboardParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunDashboardOK, *GetRunDashboardNoContent, error)
 
 	GetRunEvents(params *GetRunEventsParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunEventsOK, *GetRunEventsNoContent, error)
 
@@ -105,10 +99,6 @@ type ClientService interface {
 
 	ListBookmarkedRuns(params *ListBookmarkedRunsParams, authInfo runtime.ClientAuthInfoWriter) (*ListBookmarkedRunsOK, *ListBookmarkedRunsNoContent, error)
 
-	ListRunDashboardNames(params *ListRunDashboardNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListRunDashboardNamesOK, *ListRunDashboardNamesNoContent, error)
-
-	ListRunDashboards(params *ListRunDashboardsParams, authInfo runtime.ClientAuthInfoWriter) (*ListRunDashboardsOK, *ListRunDashboardsNoContent, error)
-
 	ListRuns(params *ListRunsParams, authInfo runtime.ClientAuthInfoWriter) (*ListRunsOK, *ListRunsNoContent, error)
 
 	ListRunsIo(params *ListRunsIoParams, authInfo runtime.ClientAuthInfoWriter) (*ListRunsIoOK, *ListRunsIoNoContent, error)
@@ -116,10 +106,6 @@ type ClientService interface {
 	NotifyRunStatus(params *NotifyRunStatusParams, authInfo runtime.ClientAuthInfoWriter) (*NotifyRunStatusOK, *NotifyRunStatusNoContent, error)
 
 	PatchRun(params *PatchRunParams, authInfo runtime.ClientAuthInfoWriter) (*PatchRunOK, *PatchRunNoContent, error)
-
-	PatchRunDashboard(params *PatchRunDashboardParams, authInfo runtime.ClientAuthInfoWriter) (*PatchRunDashboardOK, *PatchRunDashboardNoContent, error)
-
-	PromoteRunDashboard(params *PromoteRunDashboardParams, authInfo runtime.ClientAuthInfoWriter) (*PromoteRunDashboardOK, *PromoteRunDashboardNoContent, error)
 
 	RestartRun(params *RestartRunParams, authInfo runtime.ClientAuthInfoWriter) (*RestartRunOK, *RestartRunNoContent, error)
 
@@ -138,8 +124,6 @@ type ClientService interface {
 	UnbookmarkRun(params *UnbookmarkRunParams, authInfo runtime.ClientAuthInfoWriter) (*UnbookmarkRunOK, *UnbookmarkRunNoContent, error)
 
 	UpdateRun(params *UpdateRunParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateRunOK, *UpdateRunNoContent, error)
-
-	UpdateRunDashboard(params *UpdateRunDashboardParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateRunDashboardOK, *UpdateRunDashboardNoContent, error)
 
 	UploadRunArtifact(params *UploadRunArtifactParams, authInfo runtime.ClientAuthInfoWriter) (*UploadRunArtifactOK, *UploadRunArtifactNoContent, error)
 
@@ -365,42 +349,6 @@ func (a *Client) CreateRunArtifactsLineage(params *CreateRunArtifactsLineagePara
 }
 
 /*
-  CreateRunDashboard creates run dashboard
-*/
-func (a *Client) CreateRunDashboard(params *CreateRunDashboardParams, authInfo runtime.ClientAuthInfoWriter) (*CreateRunDashboardOK, *CreateRunDashboardNoContent, error) {
-	// TODO: Validate the params before sending
-	if params == nil {
-		params = NewCreateRunDashboardParams()
-	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "CreateRunDashboard",
-		Method:             "POST",
-		PathPattern:        "/api/v1/{owner}/{project}/runs/{run}/dashboards",
-		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https"},
-		Params:             params,
-		Reader:             &CreateRunDashboardReader{formats: a.formats},
-		AuthInfo:           authInfo,
-		Context:            params.Context,
-		Client:             params.HTTPClient,
-	})
-	if err != nil {
-		return nil, nil, err
-	}
-	switch value := result.(type) {
-	case *CreateRunDashboardOK:
-		return value, nil, nil
-	case *CreateRunDashboardNoContent:
-		return nil, value, nil
-	}
-	// unexpected success response
-	unexpectedSuccess := result.(*CreateRunDashboardDefault)
-	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
-}
-
-/*
   CreateRunStatus creates new run status
 */
 func (a *Client) CreateRunStatus(params *CreateRunStatusParams, authInfo runtime.ClientAuthInfoWriter) (*CreateRunStatusOK, *CreateRunStatusNoContent, error) {
@@ -505,42 +453,6 @@ func (a *Client) DeleteRunArtifactLineage(params *DeleteRunArtifactLineageParams
 	}
 	// unexpected success response
 	unexpectedSuccess := result.(*DeleteRunArtifactLineageDefault)
-	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
-}
-
-/*
-  DeleteRunDashboard deletes project dashboard
-*/
-func (a *Client) DeleteRunDashboard(params *DeleteRunDashboardParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteRunDashboardOK, *DeleteRunDashboardNoContent, error) {
-	// TODO: Validate the params before sending
-	if params == nil {
-		params = NewDeleteRunDashboardParams()
-	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "DeleteRunDashboard",
-		Method:             "DELETE",
-		PathPattern:        "/api/v1/{owner}/{project}/runs/{run}/dashboards/{uuid}",
-		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https"},
-		Params:             params,
-		Reader:             &DeleteRunDashboardReader{formats: a.formats},
-		AuthInfo:           authInfo,
-		Context:            params.Context,
-		Client:             params.HTTPClient,
-	})
-	if err != nil {
-		return nil, nil, err
-	}
-	switch value := result.(type) {
-	case *DeleteRunDashboardOK:
-		return value, nil, nil
-	case *DeleteRunDashboardNoContent:
-		return nil, value, nil
-	}
-	// unexpected success response
-	unexpectedSuccess := result.(*DeleteRunDashboardDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
@@ -865,42 +777,6 @@ func (a *Client) GetRunArtifactsTree(params *GetRunArtifactsTreeParams, authInfo
 	}
 	// unexpected success response
 	unexpectedSuccess := result.(*GetRunArtifactsTreeDefault)
-	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
-}
-
-/*
-  GetRunDashboard gets project dashboard
-*/
-func (a *Client) GetRunDashboard(params *GetRunDashboardParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunDashboardOK, *GetRunDashboardNoContent, error) {
-	// TODO: Validate the params before sending
-	if params == nil {
-		params = NewGetRunDashboardParams()
-	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "GetRunDashboard",
-		Method:             "GET",
-		PathPattern:        "/api/v1/{owner}/{project}/runs/{run}/dashboards/{uuid}",
-		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https"},
-		Params:             params,
-		Reader:             &GetRunDashboardReader{formats: a.formats},
-		AuthInfo:           authInfo,
-		Context:            params.Context,
-		Client:             params.HTTPClient,
-	})
-	if err != nil {
-		return nil, nil, err
-	}
-	switch value := result.(type) {
-	case *GetRunDashboardOK:
-		return value, nil, nil
-	case *GetRunDashboardNoContent:
-		return nil, value, nil
-	}
-	// unexpected success response
-	unexpectedSuccess := result.(*GetRunDashboardDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
@@ -1301,78 +1177,6 @@ func (a *Client) ListBookmarkedRuns(params *ListBookmarkedRunsParams, authInfo r
 }
 
 /*
-  ListRunDashboardNames lists run dashboard
-*/
-func (a *Client) ListRunDashboardNames(params *ListRunDashboardNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListRunDashboardNamesOK, *ListRunDashboardNamesNoContent, error) {
-	// TODO: Validate the params before sending
-	if params == nil {
-		params = NewListRunDashboardNamesParams()
-	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "ListRunDashboardNames",
-		Method:             "GET",
-		PathPattern:        "/api/v1/{owner}/{project}/runs/{run}/dashboards/names",
-		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https"},
-		Params:             params,
-		Reader:             &ListRunDashboardNamesReader{formats: a.formats},
-		AuthInfo:           authInfo,
-		Context:            params.Context,
-		Client:             params.HTTPClient,
-	})
-	if err != nil {
-		return nil, nil, err
-	}
-	switch value := result.(type) {
-	case *ListRunDashboardNamesOK:
-		return value, nil, nil
-	case *ListRunDashboardNamesNoContent:
-		return nil, value, nil
-	}
-	// unexpected success response
-	unexpectedSuccess := result.(*ListRunDashboardNamesDefault)
-	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
-}
-
-/*
-  ListRunDashboards lists run dashboards
-*/
-func (a *Client) ListRunDashboards(params *ListRunDashboardsParams, authInfo runtime.ClientAuthInfoWriter) (*ListRunDashboardsOK, *ListRunDashboardsNoContent, error) {
-	// TODO: Validate the params before sending
-	if params == nil {
-		params = NewListRunDashboardsParams()
-	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "ListRunDashboards",
-		Method:             "GET",
-		PathPattern:        "/api/v1/{owner}/{project}/runs/{run}/dashboards",
-		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https"},
-		Params:             params,
-		Reader:             &ListRunDashboardsReader{formats: a.formats},
-		AuthInfo:           authInfo,
-		Context:            params.Context,
-		Client:             params.HTTPClient,
-	})
-	if err != nil {
-		return nil, nil, err
-	}
-	switch value := result.(type) {
-	case *ListRunDashboardsOK:
-		return value, nil, nil
-	case *ListRunDashboardsNoContent:
-		return nil, value, nil
-	}
-	// unexpected success response
-	unexpectedSuccess := result.(*ListRunDashboardsDefault)
-	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
-}
-
-/*
   ListRuns lists runs
 */
 func (a *Client) ListRuns(params *ListRunsParams, authInfo runtime.ClientAuthInfoWriter) (*ListRunsOK, *ListRunsNoContent, error) {
@@ -1513,78 +1317,6 @@ func (a *Client) PatchRun(params *PatchRunParams, authInfo runtime.ClientAuthInf
 	}
 	// unexpected success response
 	unexpectedSuccess := result.(*PatchRunDefault)
-	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
-}
-
-/*
-  PatchRunDashboard patches project dashboard
-*/
-func (a *Client) PatchRunDashboard(params *PatchRunDashboardParams, authInfo runtime.ClientAuthInfoWriter) (*PatchRunDashboardOK, *PatchRunDashboardNoContent, error) {
-	// TODO: Validate the params before sending
-	if params == nil {
-		params = NewPatchRunDashboardParams()
-	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "PatchRunDashboard",
-		Method:             "PATCH",
-		PathPattern:        "/api/v1/{owner}/{project}/runs/{run}/dashboards/{dashboard.uuid}",
-		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https"},
-		Params:             params,
-		Reader:             &PatchRunDashboardReader{formats: a.formats},
-		AuthInfo:           authInfo,
-		Context:            params.Context,
-		Client:             params.HTTPClient,
-	})
-	if err != nil {
-		return nil, nil, err
-	}
-	switch value := result.(type) {
-	case *PatchRunDashboardOK:
-		return value, nil, nil
-	case *PatchRunDashboardNoContent:
-		return nil, value, nil
-	}
-	// unexpected success response
-	unexpectedSuccess := result.(*PatchRunDashboardDefault)
-	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
-}
-
-/*
-  PromoteRunDashboard promotes project dashboard
-*/
-func (a *Client) PromoteRunDashboard(params *PromoteRunDashboardParams, authInfo runtime.ClientAuthInfoWriter) (*PromoteRunDashboardOK, *PromoteRunDashboardNoContent, error) {
-	// TODO: Validate the params before sending
-	if params == nil {
-		params = NewPromoteRunDashboardParams()
-	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "PromoteRunDashboard",
-		Method:             "POST",
-		PathPattern:        "/api/v1/{owner}/{project}/runs/{run}/dashboards/{dashboard.uuid}/promote",
-		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https"},
-		Params:             params,
-		Reader:             &PromoteRunDashboardReader{formats: a.formats},
-		AuthInfo:           authInfo,
-		Context:            params.Context,
-		Client:             params.HTTPClient,
-	})
-	if err != nil {
-		return nil, nil, err
-	}
-	switch value := result.(type) {
-	case *PromoteRunDashboardOK:
-		return value, nil, nil
-	case *PromoteRunDashboardNoContent:
-		return nil, value, nil
-	}
-	// unexpected success response
-	unexpectedSuccess := result.(*PromoteRunDashboardDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
@@ -1909,42 +1641,6 @@ func (a *Client) UpdateRun(params *UpdateRunParams, authInfo runtime.ClientAuthI
 	}
 	// unexpected success response
 	unexpectedSuccess := result.(*UpdateRunDefault)
-	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
-}
-
-/*
-  UpdateRunDashboard updates project dashboard
-*/
-func (a *Client) UpdateRunDashboard(params *UpdateRunDashboardParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateRunDashboardOK, *UpdateRunDashboardNoContent, error) {
-	// TODO: Validate the params before sending
-	if params == nil {
-		params = NewUpdateRunDashboardParams()
-	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "UpdateRunDashboard",
-		Method:             "PUT",
-		PathPattern:        "/api/v1/{owner}/{project}/runs/{run}/dashboards/{dashboard.uuid}",
-		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https"},
-		Params:             params,
-		Reader:             &UpdateRunDashboardReader{formats: a.formats},
-		AuthInfo:           authInfo,
-		Context:            params.Context,
-		Client:             params.HTTPClient,
-	})
-	if err != nil {
-		return nil, nil, err
-	}
-	switch value := result.(type) {
-	case *UpdateRunDashboardOK:
-		return value, nil, nil
-	case *UpdateRunDashboardNoContent:
-		return nil, value, nil
-	}
-	// unexpected success response
-	unexpectedSuccess := result.(*UpdateRunDashboardDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
