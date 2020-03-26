@@ -1,9 +1,0 @@
-import auditor
-
-from events.registry import experiment_job
-
-auditor.subscribe(experiment_job.ExperimentJobViewedEvent)
-auditor.subscribe(experiment_job.ExperimentJobResourcesViewedEvent)
-auditor.subscribe(experiment_job.ExperimentJobLogsViewedEvent)
-auditor.subscribe(experiment_job.ExperimentJobStatusesViewedEvent)
-auditor.subscribe(experiment_job.ExperimentJobNewStatusEvent)

@@ -1,9 +1,0 @@
-import conf
-
-from options.registry import service_accounts
-
-conf.subscribe(service_accounts.ServiceAccountsJobs)
-conf.subscribe(service_accounts.ServiceAccountsBuildJobs)
-conf.subscribe(service_accounts.ServiceAccountsExperiments)
-conf.subscribe(service_accounts.ServiceAccountsNotebooks)
-conf.subscribe(service_accounts.ServiceAccountsTensorboards)

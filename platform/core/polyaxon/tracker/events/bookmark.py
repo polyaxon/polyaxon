@@ -1,9 +1,0 @@
-import tracker
-
-from events.registry import bookmark
-
-tracker.subscribe(bookmark.BookmarkBuildJobsViewedEvent)
-tracker.subscribe(bookmark.BookmarkJobsViewedEvent)
-tracker.subscribe(bookmark.BookmarkExperimentsViewedEvent)
-tracker.subscribe(bookmark.BookmarkExperimentGroupsViewedEvent)
-tracker.subscribe(bookmark.BookmarkProjectsViewedEvent)

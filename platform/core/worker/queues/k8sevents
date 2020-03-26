@@ -1,1 +1,0 @@
-queues.k8s_events.health,queues.k8s_events.namespace,queues.k8s_events.resources,queues.k8s_events.jobStatuses

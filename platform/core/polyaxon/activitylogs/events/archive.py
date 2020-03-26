@@ -1,9 +1,0 @@
-import activitylogs
-
-from events.registry import archive
-
-activitylogs.subscribe(archive.ArchiveBuildJobsViewedEvent)
-activitylogs.subscribe(archive.ArchiveJobsViewedEvent)
-activitylogs.subscribe(archive.ArchiveExperimentsViewedEvent)
-activitylogs.subscribe(archive.ArchiveExperimentGroupsViewedEvent)
-activitylogs.subscribe(archive.ArchiveProjectsViewedEvent)

@@ -1,1 +1,0 @@
-NATIVE_BACKEND = 'native'

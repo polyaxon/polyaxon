@@ -1,2 +1,0 @@
-class GitCloneException(Exception):
-    pass

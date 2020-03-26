@@ -1,2 +1,0 @@
-class ConfException(AttributeError):
-    pass

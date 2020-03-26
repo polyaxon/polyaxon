@@ -1,2 +1,0 @@
-class PolyaxonActionException(Exception):
-    pass

@@ -1,3 +1,0 @@
--r ../requirements-base.txt
-
-GitPython==2.1.11

@@ -1,2 +1,0 @@
-class ExperimentGroupException(Exception):
-    pass

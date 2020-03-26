@@ -1,2 +1,0 @@
-class ContainerRegistryError(Exception):
-    pass
