@@ -41,6 +41,9 @@ type V1RunSettings struct {
 	// Connections
 	Connections []*V1RunSettingsCatalog `json:"connections"`
 
+	// Namespace
+	Namespace string `json:"namespace,omitempty"`
+
 	// Queue
 	Queue *V1RunSettingsCatalog `json:"queue,omitempty"`
 }

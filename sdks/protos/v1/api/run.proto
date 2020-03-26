@@ -244,6 +244,9 @@ message RunSettingsCatalog {
 
 // Run Settings specification
 message RunSettings {
+    // Namespace
+    string namespace = 1;
+
     // Agent
     RunSettingsCatalog agent = 2;
 

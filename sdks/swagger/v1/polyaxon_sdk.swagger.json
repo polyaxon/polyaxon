@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "Polyaxon SDKs and REST API specification.",
-    "version": "1.0.7",
+    "version": "1.0.71",
     "contact": {
       "name": "Polyaxon sdk",
       "url": "https://github.com/polyaxon/polyaxon",
@@ -15368,6 +15368,10 @@
     "v1RunSettings": {
       "type": "object",
       "properties": {
+        "namespace": {
+          "type": "string",
+          "title": "Namespace"
+        },
         "agent": {
           "$ref": "#/definitions/v1RunSettingsCatalog",
           "title": "Agent"

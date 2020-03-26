@@ -70,7 +70,7 @@ setup(
         "Jinja2>=2.10.3",
         "kubernetes>=10.0.1",
         "marshmallow==3.4.0",
-        "polyaxon-sdk==1.0.6",
+        "polyaxon-sdk==1.0.71",
         "python-dateutil>=2.7.3",
         "pytz>=2019.2",
         "PyYAML>=5.1",
