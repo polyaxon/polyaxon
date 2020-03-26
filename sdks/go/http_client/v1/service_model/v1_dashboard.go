@@ -20,8 +20,6 @@ package service_model
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	"strconv"
-
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -49,6 +47,12 @@ type V1Dashboard struct {
 	// Optional name
 	Name string `json:"name,omitempty"`
 
+	// Optional dashboard search
+	Search *V1SearchSpec `json:"search,omitempty"`
+
+	// Optional dashboard specification
+	Spec interface{} `json:"spec,omitempty"`
+
 	// Optional tags of this entity
 	Tags []string `json:"tags"`
 
@@ -58,9 +62,6 @@ type V1Dashboard struct {
 
 	// UUID
 	UUID string `json:"uuid,omitempty"`
-
-	// Optional Search definition
-	Widgets []*V1WidgetSpec `json:"widgets"`
 }
 
 // Validate validates this v1 dashboard
@@ -71,11 +72,11 @@ func (m *V1Dashboard) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
-	if err := m.validateUpdatedAt(formats); err != nil {
+	if err := m.validateSearch(formats); err != nil {
 		res = append(res, err)
 	}
 
-	if err := m.validateWidgets(formats); err != nil {
+	if err := m.validateUpdatedAt(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -98,6 +99,24 @@ func (m *V1Dashboard) validateCreatedAt(formats strfmt.Registry) error {
 	return nil
 }
 
+func (m *V1Dashboard) validateSearch(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Search) { // not required
+		return nil
+	}
+
+	if m.Search != nil {
+		if err := m.Search.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("search")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
 func (m *V1Dashboard) validateUpdatedAt(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.UpdatedAt) { // not required
@@ -106,31 +125,6 @@ func (m *V1Dashboard) validateUpdatedAt(formats strfmt.Registry) error {
 
 	if err := validate.FormatOf("updated_at", "body", "date-time", m.UpdatedAt.String(), formats); err != nil {
 		return err
-	}
-
-	return nil
-}
-
-func (m *V1Dashboard) validateWidgets(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.Widgets) { // not required
-		return nil
-	}
-
-	for i := 0; i < len(m.Widgets); i++ {
-		if swag.IsZero(m.Widgets[i]) { // not required
-			continue
-		}
-
-		if m.Widgets[i] != nil {
-			if err := m.Widgets[i].Validate(formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("widgets" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
 	}
 
 	return nil

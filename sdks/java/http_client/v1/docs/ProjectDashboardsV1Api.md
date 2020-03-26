@@ -96,7 +96,7 @@ ApiKey.setApiKey("YOUR API KEY");
 
 ProjectDashboardsV1Api apiInstance = new ProjectDashboardsV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
-String project = "project_example"; // String | Project where the notification will be assigned
+String project = "project_example"; // String | Project
 String uuid = "uuid_example"; // String | Uuid identifier of the entity
 try {
     apiInstance.deleteProjectDashboard(owner, project, uuid);
@@ -111,7 +111,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
- **project** | **String**| Project where the notification will be assigned |
+ **project** | **String**| Project |
  **uuid** | **String**| Uuid identifier of the entity |
 
 ### Return type
@@ -152,7 +152,7 @@ ApiKey.setApiKey("YOUR API KEY");
 
 ProjectDashboardsV1Api apiInstance = new ProjectDashboardsV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
-String project = "project_example"; // String | Project where the notification will be assigned
+String project = "project_example"; // String | Project
 String uuid = "uuid_example"; // String | Uuid identifier of the entity
 try {
     V1Dashboard result = apiInstance.getProjectDashboard(owner, project, uuid);
@@ -168,7 +168,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
- **project** | **String**| Project where the notification will be assigned |
+ **project** | **String**| Project |
  **uuid** | **String**| Uuid identifier of the entity |
 
 ### Return type

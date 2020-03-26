@@ -4,14 +4,14 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**login**](AuthV1Api.md#login) | **POST** /api/v1/users/token | Login
+[**login**](AuthV1Api.md#login) | **POST** /api/v1/users/token | List organization level queues names
 
 
 <a name="login"></a>
 # **login**
 > V1Auth login(body)
 
-Login
+List organization level queues names
 
 ### Example
 ```java

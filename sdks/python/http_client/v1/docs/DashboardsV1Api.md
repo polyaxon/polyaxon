@@ -4,19 +4,19 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**create_dashboard**](DashboardsV1Api.md#create_dashboard) | **POST** /api/v1/orgs/{owner}/dashboards | Create dashboard
-[**delete_dashboard**](DashboardsV1Api.md#delete_dashboard) | **DELETE** /api/v1/orgs/{owner}/dashboards/{uuid} | Delete dashboard
-[**get_dashboard**](DashboardsV1Api.md#get_dashboard) | **GET** /api/v1/orgs/{owner}/dashboards/{uuid} | Get dashboard
-[**list_dashboard_names**](DashboardsV1Api.md#list_dashboard_names) | **GET** /api/v1/orgs/{owner}/dashboards/names | List dashboard names
-[**list_dashboards**](DashboardsV1Api.md#list_dashboards) | **GET** /api/v1/orgs/{owner}/dashboards | List dashboards
-[**patch_dashboard**](DashboardsV1Api.md#patch_dashboard) | **PATCH** /api/v1/orgs/{owner}/dashboards/{dashboard.uuid} | Patch dashboard
-[**update_dashboard**](DashboardsV1Api.md#update_dashboard) | **PUT** /api/v1/orgs/{owner}/dashboards/{dashboard.uuid} | Update dashboard
+[**create_dashboard**](DashboardsV1Api.md#create_dashboard) | **POST** /api/v1/orgs/{owner}/dashboards | 
+[**delete_dashboard**](DashboardsV1Api.md#delete_dashboard) | **DELETE** /api/v1/orgs/{owner}/dashboards/{uuid} | 
+[**get_dashboard**](DashboardsV1Api.md#get_dashboard) | **GET** /api/v1/orgs/{owner}/dashboards/{uuid} | 
+[**list_dashboard_names**](DashboardsV1Api.md#list_dashboard_names) | **GET** /api/v1/orgs/{owner}/dashboards/names | 
+[**list_dashboards**](DashboardsV1Api.md#list_dashboards) | **GET** /api/v1/orgs/{owner}/dashboards | 
+[**patch_dashboard**](DashboardsV1Api.md#patch_dashboard) | **PATCH** /api/v1/orgs/{owner}/dashboards/{dashboard.uuid} | 
+[**update_dashboard**](DashboardsV1Api.md#update_dashboard) | **PUT** /api/v1/orgs/{owner}/dashboards/{dashboard.uuid} | 
 
 
 # **create_dashboard**
 > V1Dashboard create_dashboard(owner, body)
 
-Create dashboard
+
 
 ### Example
 ```python
@@ -38,7 +38,6 @@ owner = 'owner_example' # str | Owner of the namespace
 body = polyaxon_sdk.V1Dashboard() # V1Dashboard | Dashboard body
 
 try:
-    # Create dashboard
     api_response = api_instance.create_dashboard(owner, body)
     pprint(api_response)
 except ApiException as e:
@@ -70,7 +69,7 @@ Name | Type | Description  | Notes
 # **delete_dashboard**
 > delete_dashboard(owner, uuid)
 
-Delete dashboard
+
 
 ### Example
 ```python
@@ -92,7 +91,6 @@ owner = 'owner_example' # str | Owner of the namespace
 uuid = 'uuid_example' # str | Uuid identifier of the entity
 
 try:
-    # Delete dashboard
     api_instance.delete_dashboard(owner, uuid)
 except ApiException as e:
     print("Exception when calling DashboardsV1Api->delete_dashboard: %s\n" % e)
@@ -123,7 +121,7 @@ void (empty response body)
 # **get_dashboard**
 > V1Dashboard get_dashboard(owner, uuid)
 
-Get dashboard
+
 
 ### Example
 ```python
@@ -145,7 +143,6 @@ owner = 'owner_example' # str | Owner of the namespace
 uuid = 'uuid_example' # str | Uuid identifier of the entity
 
 try:
-    # Get dashboard
     api_response = api_instance.get_dashboard(owner, uuid)
     pprint(api_response)
 except ApiException as e:
@@ -177,7 +174,7 @@ Name | Type | Description  | Notes
 # **list_dashboard_names**
 > V1ListDashboardsResponse list_dashboard_names(owner, offset=offset, limit=limit, sort=sort, query=query)
 
-List dashboard names
+
 
 ### Example
 ```python
@@ -202,7 +199,6 @@ sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search search. (optional)
 
 try:
-    # List dashboard names
     api_response = api_instance.list_dashboard_names(owner, offset=offset, limit=limit, sort=sort, query=query)
     pprint(api_response)
 except ApiException as e:
@@ -237,7 +233,7 @@ Name | Type | Description  | Notes
 # **list_dashboards**
 > V1ListDashboardsResponse list_dashboards(owner, offset=offset, limit=limit, sort=sort, query=query)
 
-List dashboards
+
 
 ### Example
 ```python
@@ -262,7 +258,6 @@ sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search search. (optional)
 
 try:
-    # List dashboards
     api_response = api_instance.list_dashboards(owner, offset=offset, limit=limit, sort=sort, query=query)
     pprint(api_response)
 except ApiException as e:
@@ -297,7 +292,7 @@ Name | Type | Description  | Notes
 # **patch_dashboard**
 > V1Dashboard patch_dashboard(owner, dashboard_uuid, body)
 
-Patch dashboard
+
 
 ### Example
 ```python
@@ -320,7 +315,6 @@ dashboard_uuid = 'dashboard_uuid_example' # str | UUID
 body = polyaxon_sdk.V1Dashboard() # V1Dashboard | Dashboard body
 
 try:
-    # Patch dashboard
     api_response = api_instance.patch_dashboard(owner, dashboard_uuid, body)
     pprint(api_response)
 except ApiException as e:
@@ -353,7 +347,7 @@ Name | Type | Description  | Notes
 # **update_dashboard**
 > V1Dashboard update_dashboard(owner, dashboard_uuid, body)
 
-Update dashboard
+
 
 ### Example
 ```python
@@ -376,7 +370,6 @@ dashboard_uuid = 'dashboard_uuid_example' # str | UUID
 body = polyaxon_sdk.V1Dashboard() # V1Dashboard | Dashboard body
 
 try:
-    # Update dashboard
     api_response = api_instance.update_dashboard(owner, dashboard_uuid, body)
     pprint(api_response)
 except ApiException as e:

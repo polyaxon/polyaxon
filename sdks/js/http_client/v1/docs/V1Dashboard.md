@@ -9,7 +9,8 @@ Name | Type | Description | Notes
 **tags** | **[String]** |  | [optional] 
 **disabled** | **Boolean** |  | [optional] 
 **deleted** | **Boolean** |  | [optional] 
-**widgets** | [**[V1WidgetSpec]**](V1WidgetSpec.md) |  | [optional] 
+**search** | [**V1SearchSpec**](V1SearchSpec.md) |  | [optional] 
+**spec** | **Object** |  | [optional] 
 **created_at** | **Date** |  | [optional] 
 **updated_at** | **Date** |  | [optional] 
 

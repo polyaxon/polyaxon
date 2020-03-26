@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "Polyaxon SDKs and REST API specification.",
-    "version": "1.0.5",
+    "version": "1.0.6",
     "contact": {
       "name": "Polyaxon sdk",
       "url": "https://github.com/polyaxon/polyaxon",
@@ -319,7 +319,6 @@
     },
     "/api/v1/log_handler": {
       "get": {
-        "summary": "Get log handler",
         "operationId": "GetLogHandler",
         "responses": {
           "200": {
@@ -354,7 +353,6 @@
     },
     "/api/v1/orgs/create": {
       "post": {
-        "summary": "Create organization",
         "operationId": "CreateOrganization",
         "responses": {
           "200": {
@@ -399,7 +397,7 @@
     },
     "/api/v1/orgs/list": {
       "get": {
-        "summary": "List organizations",
+        "summary": "Get log handler",
         "operationId": "ListOrganizations",
         "responses": {
           "200": {
@@ -434,7 +432,7 @@
     },
     "/api/v1/orgs/names": {
       "get": {
-        "summary": "List organizations names",
+        "summary": "Get versions",
         "operationId": "ListOrganizationNames",
         "responses": {
           "200": {
@@ -469,7 +467,6 @@
     },
     "/api/v1/orgs/{owner}": {
       "get": {
-        "summary": "Get organization",
         "operationId": "GetOrganization",
         "responses": {
           "200": {
@@ -511,7 +508,6 @@
         ]
       },
       "delete": {
-        "summary": "Delete organization",
         "operationId": "DeleteOrganization",
         "responses": {
           "200": {
@@ -550,7 +546,6 @@
         ]
       },
       "put": {
-        "summary": "Update organization",
         "operationId": "UpdateOrganization",
         "responses": {
           "200": {
@@ -601,7 +596,6 @@
         ]
       },
       "patch": {
-        "summary": "Patch organization",
         "operationId": "PatchOrganization",
         "responses": {
           "200": {
@@ -1068,7 +1062,7 @@
     },
     "/api/v1/orgs/{owner}/agents": {
       "get": {
-        "summary": "List agents",
+        "summary": "List run profiles",
         "operationId": "ListAgents",
         "responses": {
           "200": {
@@ -1140,7 +1134,7 @@
         ]
       },
       "post": {
-        "summary": "Create agent",
+        "summary": "Create run profile",
         "operationId": "CreateAgent",
         "responses": {
           "200": {
@@ -1193,7 +1187,7 @@
     },
     "/api/v1/orgs/{owner}/agents/names": {
       "get": {
-        "summary": "List agents names",
+        "summary": "List run profiles names",
         "operationId": "ListAgentNames",
         "responses": {
           "200": {
@@ -1267,7 +1261,7 @@
     },
     "/api/v1/orgs/{owner}/agents/{agent.uuid}": {
       "put": {
-        "summary": "Update agent",
+        "summary": "Update run profile",
         "operationId": "UpdateAgent",
         "responses": {
           "200": {
@@ -1325,7 +1319,7 @@
         ]
       },
       "patch": {
-        "summary": "Patch agent",
+        "summary": "Patch run profile",
         "operationId": "PatchAgent",
         "responses": {
           "200": {
@@ -1385,7 +1379,6 @@
     },
     "/api/v1/orgs/{owner}/agents/{agent.uuid}/sync": {
       "patch": {
-        "summary": "Sync agent",
         "operationId": "SyncAgent",
         "responses": {
           "200": {
@@ -1442,7 +1435,7 @@
     },
     "/api/v1/orgs/{owner}/agents/{agent}/queues": {
       "get": {
-        "summary": "List queues",
+        "summary": "Get agent",
         "operationId": "ListQueues",
         "responses": {
           "200": {
@@ -1521,7 +1514,7 @@
         ]
       },
       "post": {
-        "summary": "Create queue",
+        "summary": "Update agent",
         "operationId": "CreateQueue",
         "responses": {
           "200": {
@@ -1581,7 +1574,7 @@
     },
     "/api/v1/orgs/{owner}/agents/{agent}/queues/names": {
       "get": {
-        "summary": "List queues names",
+        "summary": "Create agent",
         "operationId": "ListQueueNames",
         "responses": {
           "200": {
@@ -1662,7 +1655,7 @@
     },
     "/api/v1/orgs/{owner}/agents/{agent}/queues/{uuid}": {
       "get": {
-        "summary": "Get queue",
+        "summary": "Patch agent",
         "operationId": "GetQueue",
         "responses": {
           "200": {
@@ -1718,7 +1711,7 @@
         ]
       },
       "delete": {
-        "summary": "Delete queue",
+        "summary": "Sync agent",
         "operationId": "DeleteQueue",
         "responses": {
           "200": {
@@ -1773,7 +1766,7 @@
     },
     "/api/v1/orgs/{owner}/agents/{queue.agent}/queues/{queue.uuid}": {
       "put": {
-        "summary": "Update queue",
+        "summary": "Delete agent",
         "operationId": "UpdateQueue",
         "responses": {
           "200": {
@@ -1838,7 +1831,7 @@
         ]
       },
       "patch": {
-        "summary": "Patch queue",
+        "summary": "Get State (queues/runs)",
         "operationId": "PatchQueue",
         "responses": {
           "200": {
@@ -1905,7 +1898,7 @@
     },
     "/api/v1/orgs/{owner}/agents/{uuid}": {
       "get": {
-        "summary": "Get agent",
+        "summary": "Get run profile",
         "operationId": "GetAgent",
         "responses": {
           "200": {
@@ -1954,7 +1947,7 @@
         ]
       },
       "delete": {
-        "summary": "Delete agent",
+        "summary": "Delete run profile",
         "operationId": "DeleteAgent",
         "responses": {
           "200": {
@@ -2002,7 +1995,6 @@
     },
     "/api/v1/orgs/{owner}/agents/{uuid}/state": {
       "get": {
-        "summary": "Get State (queues/runs)",
         "operationId": "GetAgentState",
         "responses": {
           "200": {
@@ -2053,7 +2045,6 @@
     },
     "/api/v1/orgs/{owner}/agents/{uuid}/statuses": {
       "get": {
-        "summary": "Get agent status",
         "operationId": "GetAgentStatuses",
         "responses": {
           "200": {
@@ -2102,7 +2093,6 @@
         ]
       },
       "post": {
-        "summary": "Create new run status",
         "operationId": "CreateAgentStatus",
         "responses": {
           "200": {
@@ -2161,7 +2151,7 @@
     },
     "/api/v1/orgs/{owner}/components": {
       "get": {
-        "summary": "List hub components",
+        "summary": "List hub models",
         "operationId": "ListHubComponents",
         "responses": {
           "200": {
@@ -2233,7 +2223,7 @@
         ]
       },
       "post": {
-        "summary": "Create hub component",
+        "summary": "Create hub model",
         "operationId": "CreateHubComponent",
         "responses": {
           "200": {
@@ -2286,7 +2276,7 @@
     },
     "/api/v1/orgs/{owner}/components/names": {
       "get": {
-        "summary": "List hub component names",
+        "summary": "List hub model names",
         "operationId": "ListHubComponebtNames",
         "responses": {
           "200": {
@@ -2360,7 +2350,7 @@
     },
     "/api/v1/orgs/{owner}/components/{component.uuid}": {
       "put": {
-        "summary": "Update hub component",
+        "summary": "Update hub model",
         "operationId": "UpdateHubComponent",
         "responses": {
           "200": {
@@ -2418,7 +2408,7 @@
         ]
       },
       "patch": {
-        "summary": "Patch hub component",
+        "summary": "Patch hub model",
         "operationId": "PatchHubComponent",
         "responses": {
           "200": {
@@ -2478,7 +2468,7 @@
     },
     "/api/v1/orgs/{owner}/components/{uuid}": {
       "get": {
-        "summary": "Get hub component",
+        "summary": "Get hub model",
         "operationId": "GetHubComponent",
         "responses": {
           "200": {
@@ -2527,7 +2517,7 @@
         ]
       },
       "delete": {
-        "summary": "Delete hub component",
+        "summary": "Delete hub model",
         "operationId": "DeleteHubComponent",
         "responses": {
           "200": {
@@ -2989,7 +2979,6 @@
     },
     "/api/v1/orgs/{owner}/dashboards": {
       "get": {
-        "summary": "List dashboards",
         "operationId": "ListDashboards",
         "responses": {
           "200": {
@@ -3061,7 +3050,6 @@
         ]
       },
       "post": {
-        "summary": "Create dashboard",
         "operationId": "CreateDashboard",
         "responses": {
           "200": {
@@ -3114,7 +3102,6 @@
     },
     "/api/v1/orgs/{owner}/dashboards/names": {
       "get": {
-        "summary": "List dashboard names",
         "operationId": "ListDashboardNames",
         "responses": {
           "200": {
@@ -3188,7 +3175,6 @@
     },
     "/api/v1/orgs/{owner}/dashboards/{dashboard.uuid}": {
       "put": {
-        "summary": "Update dashboard",
         "operationId": "UpdateDashboard",
         "responses": {
           "200": {
@@ -3246,7 +3232,6 @@
         ]
       },
       "patch": {
-        "summary": "Patch dashboard",
         "operationId": "PatchDashboard",
         "responses": {
           "200": {
@@ -3306,7 +3291,6 @@
     },
     "/api/v1/orgs/{owner}/dashboards/{uuid}": {
       "get": {
-        "summary": "Get dashboard",
         "operationId": "GetDashboard",
         "responses": {
           "200": {
@@ -3355,7 +3339,6 @@
         ]
       },
       "delete": {
-        "summary": "Delete dashboard",
         "operationId": "DeleteDashboard",
         "responses": {
           "200": {
@@ -3403,7 +3386,6 @@
     },
     "/api/v1/orgs/{owner}/members": {
       "get": {
-        "summary": "Get organization members",
         "operationId": "ListOrganizationMembers",
         "responses": {
           "200": {
@@ -3475,7 +3457,6 @@
         ]
       },
       "post": {
-        "summary": "Create organization member",
         "operationId": "CreateOrganizationMember",
         "responses": {
           "200": {
@@ -3528,7 +3509,6 @@
     },
     "/api/v1/orgs/{owner}/members/{member.user}": {
       "put": {
-        "summary": "Update organization member",
         "operationId": "UpdateOrganizationMember",
         "responses": {
           "200": {
@@ -3586,7 +3566,6 @@
         ]
       },
       "patch": {
-        "summary": "Patch organization member",
         "operationId": "PatchOrganizationMember",
         "responses": {
           "200": {
@@ -3646,7 +3625,6 @@
     },
     "/api/v1/orgs/{owner}/members/{user}": {
       "get": {
-        "summary": "Get organization member details",
         "operationId": "GetOrganizationMember",
         "responses": {
           "200": {
@@ -3695,7 +3673,6 @@
         ]
       },
       "delete": {
-        "summary": "Delete organization member details",
         "operationId": "DeleteOrganizationMember",
         "responses": {
           "200": {
@@ -3743,7 +3720,7 @@
     },
     "/api/v1/orgs/{owner}/models": {
       "get": {
-        "summary": "List hub models",
+        "summary": "List dashboards",
         "operationId": "ListHubModels",
         "responses": {
           "200": {
@@ -3815,7 +3792,7 @@
         ]
       },
       "post": {
-        "summary": "Create hub model",
+        "summary": "Create dashboard",
         "operationId": "CreateHubModel",
         "responses": {
           "200": {
@@ -3868,7 +3845,7 @@
     },
     "/api/v1/orgs/{owner}/models/names": {
       "get": {
-        "summary": "List hub model names",
+        "summary": "List dashboard names",
         "operationId": "ListHubModelNames",
         "responses": {
           "200": {
@@ -3942,7 +3919,7 @@
     },
     "/api/v1/orgs/{owner}/models/{model.uuid}": {
       "put": {
-        "summary": "Update hub model",
+        "summary": "Update dashboard",
         "operationId": "UpdateHubModel",
         "responses": {
           "200": {
@@ -4000,7 +3977,7 @@
         ]
       },
       "patch": {
-        "summary": "Patch hub model",
+        "summary": "Patch dashboard",
         "operationId": "PatchHubModel",
         "responses": {
           "200": {
@@ -4060,7 +4037,7 @@
     },
     "/api/v1/orgs/{owner}/models/{uuid}": {
       "get": {
-        "summary": "Get hub model",
+        "summary": "Get dashboard",
         "operationId": "GetHubModel",
         "responses": {
           "200": {
@@ -4109,7 +4086,7 @@
         ]
       },
       "delete": {
-        "summary": "Delete hub model",
+        "summary": "Delete dashboard",
         "operationId": "DeleteHubModel",
         "responses": {
           "200": {
@@ -4157,7 +4134,7 @@
     },
     "/api/v1/orgs/{owner}/queues": {
       "get": {
-        "summary": "List organization level queues",
+        "summary": "List agents",
         "operationId": "ListOrganizationQueues",
         "responses": {
           "200": {
@@ -4231,7 +4208,7 @@
     },
     "/api/v1/orgs/{owner}/queues/names": {
       "get": {
-        "summary": "List organization level queues names",
+        "summary": "List agents names",
         "operationId": "ListOrganizationQueueNames",
         "responses": {
           "200": {
@@ -4305,7 +4282,7 @@
     },
     "/api/v1/orgs/{owner}/run_profiles": {
       "get": {
-        "summary": "List run profiles",
+        "summary": "List hub components",
         "operationId": "ListRunProfiles",
         "responses": {
           "200": {
@@ -4377,7 +4354,7 @@
         ]
       },
       "post": {
-        "summary": "Create run profile",
+        "summary": "Create hub component",
         "operationId": "CreateRunProfile",
         "responses": {
           "200": {
@@ -4430,7 +4407,7 @@
     },
     "/api/v1/orgs/{owner}/run_profiles/names": {
       "get": {
-        "summary": "List run profiles names",
+        "summary": "List hub component names",
         "operationId": "ListRunProfileNames",
         "responses": {
           "200": {
@@ -4504,7 +4481,7 @@
     },
     "/api/v1/orgs/{owner}/run_profiles/{run_profile.uuid}": {
       "put": {
-        "summary": "Update run profile",
+        "summary": "Update hub component",
         "operationId": "UpdateRunProfile",
         "responses": {
           "200": {
@@ -4562,7 +4539,7 @@
         ]
       },
       "patch": {
-        "summary": "Patch run profile",
+        "summary": "Patch hub component",
         "operationId": "PatchRunProfile",
         "responses": {
           "200": {
@@ -4622,7 +4599,7 @@
     },
     "/api/v1/orgs/{owner}/run_profiles/{uuid}": {
       "get": {
-        "summary": "Get run profile",
+        "summary": "Get hub component",
         "operationId": "GetRunProfile",
         "responses": {
           "200": {
@@ -4671,7 +4648,7 @@
         ]
       },
       "delete": {
-        "summary": "Delete run profile",
+        "summary": "Delete hub component",
         "operationId": "DeleteRunProfile",
         "responses": {
           "200": {
@@ -5133,7 +5110,7 @@
     },
     "/api/v1/orgs/{owner}/teams": {
       "get": {
-        "summary": "List teams",
+        "summary": "List organizations",
         "operationId": "ListTeams",
         "responses": {
           "200": {
@@ -5205,7 +5182,7 @@
         ]
       },
       "post": {
-        "summary": "Create team",
+        "summary": "Create organization",
         "operationId": "CreateTeam",
         "responses": {
           "200": {
@@ -5258,7 +5235,7 @@
     },
     "/api/v1/orgs/{owner}/teams/names": {
       "get": {
-        "summary": "List teams names",
+        "summary": "List organizations names",
         "operationId": "ListTeamNames",
         "responses": {
           "200": {
@@ -5332,7 +5309,7 @@
     },
     "/api/v1/orgs/{owner}/teams/{team.name}": {
       "put": {
-        "summary": "Update team",
+        "summary": "Update organization",
         "operationId": "UpdateTeam",
         "responses": {
           "200": {
@@ -5390,7 +5367,7 @@
         ]
       },
       "patch": {
-        "summary": "Patch team",
+        "summary": "Patch organization",
         "operationId": "PatchTeam",
         "responses": {
           "200": {
@@ -5450,7 +5427,7 @@
     },
     "/api/v1/orgs/{owner}/teams/{team}": {
       "get": {
-        "summary": "Get team",
+        "summary": "Get organization",
         "operationId": "GetTeam",
         "responses": {
           "200": {
@@ -5499,7 +5476,7 @@
         ]
       },
       "delete": {
-        "summary": "Delete team",
+        "summary": "Delete organization",
         "operationId": "DeleteTeam",
         "responses": {
           "200": {
@@ -5547,7 +5524,7 @@
     },
     "/api/v1/orgs/{owner}/teams/{team}/members": {
       "get": {
-        "summary": "Get team members",
+        "summary": "Get organization members",
         "operationId": "ListTeamMembers",
         "responses": {
           "200": {
@@ -5626,7 +5603,7 @@
         ]
       },
       "post": {
-        "summary": "Create team member",
+        "summary": "Create organization member",
         "operationId": "CreateTeamMember",
         "responses": {
           "200": {
@@ -5686,7 +5663,7 @@
     },
     "/api/v1/orgs/{owner}/teams/{team}/members/{member.user}": {
       "put": {
-        "summary": "Update team member",
+        "summary": "Update organization member",
         "operationId": "UpdateTeamMember",
         "responses": {
           "200": {
@@ -5751,7 +5728,7 @@
         ]
       },
       "patch": {
-        "summary": "Patch tram member",
+        "summary": "Patch organization member",
         "operationId": "PatchTeamMember",
         "responses": {
           "200": {
@@ -5818,7 +5795,7 @@
     },
     "/api/v1/orgs/{owner}/teams/{team}/members/{user}": {
       "get": {
-        "summary": "Get team member details",
+        "summary": "Get organization member details",
         "operationId": "GetTeamMember",
         "responses": {
           "200": {
@@ -5874,7 +5851,7 @@
         ]
       },
       "delete": {
-        "summary": "Delete team member details",
+        "summary": "Delete organization member details",
         "operationId": "DeleteTeamMember",
         "responses": {
           "200": {
@@ -5929,7 +5906,7 @@
     },
     "/api/v1/users": {
       "get": {
-        "summary": "Get current user",
+        "summary": "Login",
         "operationId": "GetUser",
         "responses": {
           "200": {
@@ -5964,7 +5941,7 @@
     },
     "/api/v1/users/token": {
       "post": {
-        "summary": "Login",
+        "summary": "List organization level queues names",
         "operationId": "Login",
         "responses": {
           "200": {
@@ -6009,7 +5986,7 @@
     },
     "/api/v1/version": {
       "get": {
-        "summary": "Get versions",
+        "summary": "Get current user",
         "operationId": "GetVersions",
         "responses": {
           "200": {
@@ -6082,7 +6059,7 @@
           },
           {
             "name": "entity.project",
-            "description": "Project where the notification will be assigned",
+            "description": "Project",
             "in": "path",
             "required": true,
             "type": "string"
@@ -6149,7 +6126,7 @@
           },
           {
             "name": "entity.project",
-            "description": "Project where the notification will be assigned",
+            "description": "Project",
             "in": "path",
             "required": true,
             "type": "string"
@@ -6216,7 +6193,7 @@
           },
           {
             "name": "entity.project",
-            "description": "Project where the notification will be assigned",
+            "description": "Project",
             "in": "path",
             "required": true,
             "type": "string"
@@ -7299,7 +7276,7 @@
           },
           {
             "name": "project",
-            "description": "Project where the notification will be assigned",
+            "description": "Project",
             "in": "path",
             "required": true,
             "type": "string"
@@ -7352,7 +7329,7 @@
           },
           {
             "name": "project",
-            "description": "Project where the notification will be assigned",
+            "description": "Project",
             "in": "path",
             "required": true,
             "type": "string"
@@ -7941,6 +7918,583 @@
         ]
       }
     },
+    "/api/v1/{owner}/{project}/runs/{run}/dashboards": {
+      "get": {
+        "summary": "List run dashboards",
+        "operationId": "ListRunDashboards",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ListDashboardsResponse"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "project",
+            "description": "Project under namesapce",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "run",
+            "description": "Run under namesapce",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "offset",
+            "description": "Pagination offset.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "limit",
+            "description": "Limit size.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "sort",
+            "description": "Sort to order the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "query",
+            "description": "Query filter the search search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "RunsV1"
+        ]
+      },
+      "post": {
+        "summary": "Create run dashboard",
+        "operationId": "CreateRunDashboard",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Dashboard"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "project",
+            "description": "Project under namesapce",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "run",
+            "description": "Run under namesapce",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "description": "Dashboard body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1Dashboard"
+            }
+          }
+        ],
+        "tags": [
+          "RunsV1"
+        ]
+      }
+    },
+    "/api/v1/{owner}/{project}/runs/{run}/dashboards/names": {
+      "get": {
+        "summary": "List run dashboard",
+        "operationId": "ListRunDashboardNames",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ListDashboardsResponse"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "project",
+            "description": "Project under namesapce",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "run",
+            "description": "Run under namesapce",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "offset",
+            "description": "Pagination offset.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "limit",
+            "description": "Limit size.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "sort",
+            "description": "Sort to order the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "query",
+            "description": "Query filter the search search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "RunsV1"
+        ]
+      }
+    },
+    "/api/v1/{owner}/{project}/runs/{run}/dashboards/{dashboard.uuid}": {
+      "put": {
+        "summary": "Update project dashboard",
+        "operationId": "UpdateRunDashboard",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Dashboard"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "project",
+            "description": "Project under namesapce",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "run",
+            "description": "Run under namesapce",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "dashboard.uuid",
+            "description": "UUID",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "description": "Dashboard body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1Dashboard"
+            }
+          }
+        ],
+        "tags": [
+          "RunsV1"
+        ]
+      },
+      "patch": {
+        "summary": "Patch project dashboard",
+        "operationId": "PatchRunDashboard",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Dashboard"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "project",
+            "description": "Project under namesapce",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "run",
+            "description": "Run under namesapce",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "dashboard.uuid",
+            "description": "UUID",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "description": "Dashboard body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1Dashboard"
+            }
+          }
+        ],
+        "tags": [
+          "RunsV1"
+        ]
+      }
+    },
+    "/api/v1/{owner}/{project}/runs/{run}/dashboards/{dashboard.uuid}/promote": {
+      "post": {
+        "summary": "Promote project dashboard",
+        "operationId": "PromoteRunDashboard",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Dashboard"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "project",
+            "description": "Project under namesapce",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "run",
+            "description": "Run under namesapce",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "dashboard.uuid",
+            "description": "UUID",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "RunsV1"
+        ]
+      }
+    },
+    "/api/v1/{owner}/{project}/runs/{run}/dashboards/{uuid}": {
+      "get": {
+        "summary": "Get project dashboard",
+        "operationId": "GetRunDashboard",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Dashboard"
+            }
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "project",
+            "description": "Project",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "run",
+            "description": "Run",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "uuid",
+            "description": "Uuid identifier of the entity",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "RunsV1"
+        ]
+      },
+      "delete": {
+        "summary": "Delete project dashboard",
+        "operationId": "DeleteRunDashboard",
+        "responses": {
+          "200": {
+            "description": "A successful response."
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "project",
+            "description": "Project",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "run",
+            "description": "Run",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "uuid",
+            "description": "Uuid identifier of the entity",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "RunsV1"
+        ]
+      }
+    },
     "/api/v1/{owner}/{project}/runs/{uuid}": {
       "get": {
         "summary": "Get run",
@@ -7981,7 +8535,7 @@
           },
           {
             "name": "project",
-            "description": "Project where the notification will be assigned",
+            "description": "Project",
             "in": "path",
             "required": true,
             "type": "string"
@@ -8034,7 +8588,7 @@
           },
           {
             "name": "project",
-            "description": "Project where the notification will be assigned",
+            "description": "Project",
             "in": "path",
             "required": true,
             "type": "string"
@@ -8089,7 +8643,7 @@
           },
           {
             "name": "project",
-            "description": "Project where the notification will be assigned",
+            "description": "Project",
             "in": "path",
             "required": true,
             "type": "string"
@@ -8505,7 +9059,7 @@
           },
           {
             "name": "project",
-            "description": "Project where the notification will be assigned",
+            "description": "Project",
             "in": "path",
             "required": true,
             "type": "string"
@@ -8563,7 +9117,7 @@
           },
           {
             "name": "project",
-            "description": "Project where the notification will be assigned",
+            "description": "Project",
             "in": "path",
             "required": true,
             "type": "string"
@@ -8618,7 +9172,7 @@
           },
           {
             "name": "project",
-            "description": "Project where the notification will be assigned",
+            "description": "Project",
             "in": "path",
             "required": true,
             "type": "string"
@@ -8684,7 +9238,7 @@
           },
           {
             "name": "project",
-            "description": "Project where the notification will be assigned",
+            "description": "Project",
             "in": "path",
             "required": true,
             "type": "string"
@@ -8739,7 +9293,7 @@
           },
           {
             "name": "project",
-            "description": "Project where the notification will be assigned",
+            "description": "Project",
             "in": "path",
             "required": true,
             "type": "string"
@@ -8797,7 +9351,7 @@
           },
           {
             "name": "project",
-            "description": "Project where the notification will be assigned",
+            "description": "Project",
             "in": "path",
             "required": true,
             "type": "string"
@@ -8855,7 +9409,7 @@
           },
           {
             "name": "project",
-            "description": "Project where the notification will be assigned",
+            "description": "Project",
             "in": "path",
             "required": true,
             "type": "string"
@@ -8974,7 +9528,7 @@
           },
           {
             "name": "project",
-            "description": "Project where the notification will be assigned",
+            "description": "Project",
             "in": "path",
             "required": true,
             "type": "string"
@@ -9029,7 +9583,7 @@
           },
           {
             "name": "project",
-            "description": "Project where the notification will be assigned",
+            "description": "Project",
             "in": "path",
             "required": true,
             "type": "string"
@@ -9092,7 +9646,7 @@
           },
           {
             "name": "project",
-            "description": "Project where the notification will be assigned",
+            "description": "Project",
             "in": "path",
             "required": true,
             "type": "string"
@@ -9147,7 +9701,7 @@
           },
           {
             "name": "project",
-            "description": "Project where the notification will be assigned",
+            "description": "Project",
             "in": "path",
             "required": true,
             "type": "string"
@@ -9557,7 +10111,7 @@
           },
           {
             "name": "project",
-            "description": "Project where the notification will be assigned",
+            "description": "Project",
             "in": "path",
             "required": true,
             "type": "string"
@@ -9610,7 +10164,7 @@
           },
           {
             "name": "project",
-            "description": "Project where the notification will be assigned",
+            "description": "Project",
             "in": "path",
             "required": true,
             "type": "string"
@@ -9665,7 +10219,7 @@
           },
           {
             "name": "project",
-            "description": "Project where the notification will be assigned",
+            "description": "Project",
             "in": "path",
             "required": true,
             "type": "string"
@@ -10067,7 +10621,7 @@
     },
     "/schemas": {
       "get": {
-        "summary": "Get random",
+        "summary": "List teams names",
         "operationId": "NoOp",
         "responses": {
           "200": {
@@ -12126,12 +12680,13 @@
           "format": "boolean",
           "title": "Optional if the entity has been deleted"
         },
-        "widgets": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/v1WidgetSpec"
-          },
-          "title": "Optional Search definition"
+        "search": {
+          "$ref": "#/definitions/v1SearchSpec",
+          "title": "Optional dashboard search"
+        },
+        "spec": {
+          "type": "object",
+          "title": "Optional dashboard specification"
         },
         "created_at": {
           "type": "string",
@@ -12733,7 +13288,7 @@
           "items": {
             "type": "object"
           },
-          "title": "Name of the events"
+          "title": "Events data"
         }
       },
       "title": "Events response definition"
@@ -14862,7 +15417,7 @@
         },
         "project": {
           "type": "string",
-          "title": "Project where the notification will be assigned"
+          "title": "Project"
         },
         "uuid": {
           "type": "string",
@@ -15204,6 +15759,10 @@
             "$ref": "#/definitions/v1StatusCondition"
           },
           "title": "The status conditions timeline"
+        },
+        "settings": {
+          "$ref": "#/definitions/v1RunSettings",
+          "title": "Optional settings"
         }
       },
       "title": "Run specification"
@@ -15381,10 +15940,6 @@
     "v1RunSettings": {
       "type": "object",
       "properties": {
-        "namespace": {
-          "type": "string",
-          "title": "Namespace"
-        },
         "agent": {
           "$ref": "#/definitions/v1RunSettingsCatalog",
           "title": "Agent"
@@ -16176,24 +16731,6 @@
         }
       },
       "title": "Wasb type specification"
-    },
-    "v1WidgetSpec": {
-      "type": "object",
-      "properties": {
-        "kind": {
-          "type": "string",
-          "title": "Widget kind"
-        },
-        "search": {
-          "$ref": "#/definitions/v1SearchSpec",
-          "title": "Search spec"
-        },
-        "meta": {
-          "type": "object",
-          "title": "Meta inforation"
-        }
-      },
-      "title": "Widget spec definition"
     },
     "v1AverageStoppingPolicy": {
       "properties": {

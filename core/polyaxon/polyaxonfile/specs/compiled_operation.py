@@ -43,7 +43,9 @@ class CompiledOperationSpecification(BaseSpecification):
         return cls.CONFIG.read(parsed_data)
 
     @staticmethod
-    def _update_params_with_contexts(params: Dict[str, ParamSpec], contexts: Dict = None) -> Dict[str, ParamSpec]:
+    def _update_params_with_contexts(
+        params: Dict[str, ParamSpec], contexts: Dict = None
+    ) -> Dict[str, ParamSpec]:
         contexts = contexts or {}
         contexts = {
             k: ParamSpec(
@@ -87,7 +89,10 @@ class CompiledOperationSpecification(BaseSpecification):
 
     @classmethod
     def apply_run_connections_params(
-        cls, config: V1CompiledOperation, artifact_store: str = None, contexts: Dict = None,
+        cls,
+        config: V1CompiledOperation,
+        artifact_store: str = None,
+        contexts: Dict = None,
     ) -> V1CompiledOperation:
         params = config.validate_params(is_template=False, check_runs=True)
         params = {param.name: param for param in params}
@@ -113,10 +118,7 @@ class CompiledOperationSpecification(BaseSpecification):
 
     @classmethod
     def apply_params(
-        cls,
-        config: V1CompiledOperation,
-        params: Dict = None,
-        context: Dict = None,
+        cls, config: V1CompiledOperation, params: Dict = None, context: Dict = None,
     ) -> V1CompiledOperation:
         config.apply_params(params, context)
         return config

@@ -45,7 +45,7 @@ type ClientService interface {
 }
 
 /*
-  GetUser gets current user
+  GetUser logins
 */
 func (a *Client) GetUser(params *GetUserParams, authInfo runtime.ClientAuthInfoWriter) (*GetUserOK, *GetUserNoContent, error) {
 	// TODO: Validate the params before sending

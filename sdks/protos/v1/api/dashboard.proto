@@ -23,18 +23,6 @@ import "google/protobuf/timestamp.proto";
 
 import "v1/api/search.proto";
 
-// Widget spec definition
-message WidgetSpec {
-    // Widget kind
-    string kind = 1;
-
-    // Search spec
-    SearchSpec search = 2;
-
-    // Meta inforation
-    google.protobuf.Struct meta = 3;
-}
-
 // Dashboard specification
 message Dashboard {
     // UUID
@@ -55,14 +43,17 @@ message Dashboard {
     // Optional if the entity has been deleted
     bool deleted = 6;
 
-    // Optional Search definition
-    repeated WidgetSpec widgets = 7;
+    // Optional dashboard search
+    SearchSpec search = 7;
+
+    // Optional dashboard specification
+    google.protobuf.Struct spec = 8;
 
     // Optional time when the entity was created
-    google.protobuf.Timestamp created_at = 8;
+    google.protobuf.Timestamp created_at = 9;
 
     // Optional last time the entity was updated
-    google.protobuf.Timestamp updated_at = 9;
+    google.protobuf.Timestamp updated_at = 10;
 }
 
  // Request data to create/update dashboard
@@ -84,6 +75,21 @@ message Dashboard {
 
     // Dashboard body
     Dashboard dashboard = 3;
+ }
+
+  // Request data to create/update run dashboard
+  message RunDashboardBodyRequest {
+    // Owner of the namespace
+    string owner = 1;
+
+    // Project under namesapce
+    string project = 2;
+
+    // Run under namesapce
+    string run = 3;
+
+    // Dashboard body
+    Dashboard dashboard = 4;
  }
 
 

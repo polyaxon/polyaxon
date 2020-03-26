@@ -61,7 +61,7 @@ type ClientService interface {
 }
 
 /*
-  CreateQueue creates queue
+  CreateQueue updates agent
 */
 func (a *Client) CreateQueue(params *CreateQueueParams, authInfo runtime.ClientAuthInfoWriter) (*CreateQueueOK, *CreateQueueNoContent, error) {
 	// TODO: Validate the params before sending
@@ -97,7 +97,7 @@ func (a *Client) CreateQueue(params *CreateQueueParams, authInfo runtime.ClientA
 }
 
 /*
-  DeleteQueue deletes queue
+  DeleteQueue syncs agent
 */
 func (a *Client) DeleteQueue(params *DeleteQueueParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteQueueOK, *DeleteQueueNoContent, error) {
 	// TODO: Validate the params before sending
@@ -133,7 +133,7 @@ func (a *Client) DeleteQueue(params *DeleteQueueParams, authInfo runtime.ClientA
 }
 
 /*
-  GetQueue gets queue
+  GetQueue patches agent
 */
 func (a *Client) GetQueue(params *GetQueueParams, authInfo runtime.ClientAuthInfoWriter) (*GetQueueOK, *GetQueueNoContent, error) {
 	// TODO: Validate the params before sending
@@ -169,7 +169,7 @@ func (a *Client) GetQueue(params *GetQueueParams, authInfo runtime.ClientAuthInf
 }
 
 /*
-  ListOrganizationQueueNames lists organization level queues names
+  ListOrganizationQueueNames lists agents names
 */
 func (a *Client) ListOrganizationQueueNames(params *ListOrganizationQueueNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListOrganizationQueueNamesOK, *ListOrganizationQueueNamesNoContent, error) {
 	// TODO: Validate the params before sending
@@ -205,7 +205,7 @@ func (a *Client) ListOrganizationQueueNames(params *ListOrganizationQueueNamesPa
 }
 
 /*
-  ListOrganizationQueues lists organization level queues
+  ListOrganizationQueues lists agents
 */
 func (a *Client) ListOrganizationQueues(params *ListOrganizationQueuesParams, authInfo runtime.ClientAuthInfoWriter) (*ListOrganizationQueuesOK, *ListOrganizationQueuesNoContent, error) {
 	// TODO: Validate the params before sending
@@ -241,7 +241,7 @@ func (a *Client) ListOrganizationQueues(params *ListOrganizationQueuesParams, au
 }
 
 /*
-  ListQueueNames lists queues names
+  ListQueueNames creates agent
 */
 func (a *Client) ListQueueNames(params *ListQueueNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListQueueNamesOK, *ListQueueNamesNoContent, error) {
 	// TODO: Validate the params before sending
@@ -277,7 +277,7 @@ func (a *Client) ListQueueNames(params *ListQueueNamesParams, authInfo runtime.C
 }
 
 /*
-  ListQueues lists queues
+  ListQueues gets agent
 */
 func (a *Client) ListQueues(params *ListQueuesParams, authInfo runtime.ClientAuthInfoWriter) (*ListQueuesOK, *ListQueuesNoContent, error) {
 	// TODO: Validate the params before sending
@@ -313,7 +313,7 @@ func (a *Client) ListQueues(params *ListQueuesParams, authInfo runtime.ClientAut
 }
 
 /*
-  PatchQueue patches queue
+  PatchQueue gets state queues runs
 */
 func (a *Client) PatchQueue(params *PatchQueueParams, authInfo runtime.ClientAuthInfoWriter) (*PatchQueueOK, *PatchQueueNoContent, error) {
 	// TODO: Validate the params before sending
@@ -349,7 +349,7 @@ func (a *Client) PatchQueue(params *PatchQueueParams, authInfo runtime.ClientAut
 }
 
 /*
-  UpdateQueue updates queue
+  UpdateQueue deletes agent
 */
 func (a *Client) UpdateQueue(params *UpdateQueueParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateQueueOK, *UpdateQueueNoContent, error) {
 	// TODO: Validate the params before sending

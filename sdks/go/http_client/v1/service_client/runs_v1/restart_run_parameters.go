@@ -87,7 +87,7 @@ type RestartRunParams struct {
 	*/
 	EntityOwner string
 	/*EntityProject
-	  Project where the notification will be assigned
+	  Project
 
 	*/
 	EntityProject string

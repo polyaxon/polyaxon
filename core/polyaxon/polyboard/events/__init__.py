@@ -37,4 +37,8 @@ from polyaxon.polyboard.events.schemas import (
     V1EventDataframe,
     EventDataframeSchema,
 )
-from polyaxon.polyboard.events.paths import get_asset_path, get_event_path, get_resource_path
+from polyaxon.polyboard.events.paths import (
+    get_asset_path,
+    get_event_path,
+    get_resource_path,
+)

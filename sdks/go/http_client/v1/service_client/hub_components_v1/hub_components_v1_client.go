@@ -57,7 +57,7 @@ type ClientService interface {
 }
 
 /*
-  CreateHubComponent creates hub component
+  CreateHubComponent creates hub model
 */
 func (a *Client) CreateHubComponent(params *CreateHubComponentParams, authInfo runtime.ClientAuthInfoWriter) (*CreateHubComponentOK, *CreateHubComponentNoContent, error) {
 	// TODO: Validate the params before sending
@@ -93,7 +93,7 @@ func (a *Client) CreateHubComponent(params *CreateHubComponentParams, authInfo r
 }
 
 /*
-  DeleteHubComponent deletes hub component
+  DeleteHubComponent deletes hub model
 */
 func (a *Client) DeleteHubComponent(params *DeleteHubComponentParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteHubComponentOK, *DeleteHubComponentNoContent, error) {
 	// TODO: Validate the params before sending
@@ -129,7 +129,7 @@ func (a *Client) DeleteHubComponent(params *DeleteHubComponentParams, authInfo r
 }
 
 /*
-  GetHubComponent gets hub component
+  GetHubComponent gets hub model
 */
 func (a *Client) GetHubComponent(params *GetHubComponentParams, authInfo runtime.ClientAuthInfoWriter) (*GetHubComponentOK, *GetHubComponentNoContent, error) {
 	// TODO: Validate the params before sending
@@ -165,7 +165,7 @@ func (a *Client) GetHubComponent(params *GetHubComponentParams, authInfo runtime
 }
 
 /*
-  ListHubComponebtNames lists hub component names
+  ListHubComponebtNames lists hub model names
 */
 func (a *Client) ListHubComponebtNames(params *ListHubComponebtNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListHubComponebtNamesOK, *ListHubComponebtNamesNoContent, error) {
 	// TODO: Validate the params before sending
@@ -201,7 +201,7 @@ func (a *Client) ListHubComponebtNames(params *ListHubComponebtNamesParams, auth
 }
 
 /*
-  ListHubComponents lists hub components
+  ListHubComponents lists hub models
 */
 func (a *Client) ListHubComponents(params *ListHubComponentsParams, authInfo runtime.ClientAuthInfoWriter) (*ListHubComponentsOK, *ListHubComponentsNoContent, error) {
 	// TODO: Validate the params before sending
@@ -237,7 +237,7 @@ func (a *Client) ListHubComponents(params *ListHubComponentsParams, authInfo run
 }
 
 /*
-  PatchHubComponent patches hub component
+  PatchHubComponent patches hub model
 */
 func (a *Client) PatchHubComponent(params *PatchHubComponentParams, authInfo runtime.ClientAuthInfoWriter) (*PatchHubComponentOK, *PatchHubComponentNoContent, error) {
 	// TODO: Validate the params before sending
@@ -273,7 +273,7 @@ func (a *Client) PatchHubComponent(params *PatchHubComponentParams, authInfo run
 }
 
 /*
-  UpdateHubComponent updates hub component
+  UpdateHubComponent updates hub model
 */
 func (a *Client) UpdateHubComponent(params *UpdateHubComponentParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateHubComponentOK, *UpdateHubComponentNoContent, error) {
 	// TODO: Validate the params before sending

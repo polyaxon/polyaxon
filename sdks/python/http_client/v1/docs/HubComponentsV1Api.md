@@ -4,19 +4,19 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**create_hub_component**](HubComponentsV1Api.md#create_hub_component) | **POST** /api/v1/orgs/{owner}/components | Create hub component
-[**delete_hub_component**](HubComponentsV1Api.md#delete_hub_component) | **DELETE** /api/v1/orgs/{owner}/components/{uuid} | Delete hub component
-[**get_hub_component**](HubComponentsV1Api.md#get_hub_component) | **GET** /api/v1/orgs/{owner}/components/{uuid} | Get hub component
-[**list_hub_componebt_names**](HubComponentsV1Api.md#list_hub_componebt_names) | **GET** /api/v1/orgs/{owner}/components/names | List hub component names
-[**list_hub_components**](HubComponentsV1Api.md#list_hub_components) | **GET** /api/v1/orgs/{owner}/components | List hub components
-[**patch_hub_component**](HubComponentsV1Api.md#patch_hub_component) | **PATCH** /api/v1/orgs/{owner}/components/{component.uuid} | Patch hub component
-[**update_hub_component**](HubComponentsV1Api.md#update_hub_component) | **PUT** /api/v1/orgs/{owner}/components/{component.uuid} | Update hub component
+[**create_hub_component**](HubComponentsV1Api.md#create_hub_component) | **POST** /api/v1/orgs/{owner}/components | Create hub model
+[**delete_hub_component**](HubComponentsV1Api.md#delete_hub_component) | **DELETE** /api/v1/orgs/{owner}/components/{uuid} | Delete hub model
+[**get_hub_component**](HubComponentsV1Api.md#get_hub_component) | **GET** /api/v1/orgs/{owner}/components/{uuid} | Get hub model
+[**list_hub_componebt_names**](HubComponentsV1Api.md#list_hub_componebt_names) | **GET** /api/v1/orgs/{owner}/components/names | List hub model names
+[**list_hub_components**](HubComponentsV1Api.md#list_hub_components) | **GET** /api/v1/orgs/{owner}/components | List hub models
+[**patch_hub_component**](HubComponentsV1Api.md#patch_hub_component) | **PATCH** /api/v1/orgs/{owner}/components/{component.uuid} | Patch hub model
+[**update_hub_component**](HubComponentsV1Api.md#update_hub_component) | **PUT** /api/v1/orgs/{owner}/components/{component.uuid} | Update hub model
 
 
 # **create_hub_component**
 > V1HubComponent create_hub_component(owner, body)
 
-Create hub component
+Create hub model
 
 ### Example
 ```python
@@ -38,7 +38,7 @@ owner = 'owner_example' # str | Owner of the namespace
 body = polyaxon_sdk.V1HubComponent() # V1HubComponent | Component body
 
 try:
-    # Create hub component
+    # Create hub model
     api_response = api_instance.create_hub_component(owner, body)
     pprint(api_response)
 except ApiException as e:
@@ -70,7 +70,7 @@ Name | Type | Description  | Notes
 # **delete_hub_component**
 > delete_hub_component(owner, uuid)
 
-Delete hub component
+Delete hub model
 
 ### Example
 ```python
@@ -92,7 +92,7 @@ owner = 'owner_example' # str | Owner of the namespace
 uuid = 'uuid_example' # str | Uuid identifier of the entity
 
 try:
-    # Delete hub component
+    # Delete hub model
     api_instance.delete_hub_component(owner, uuid)
 except ApiException as e:
     print("Exception when calling HubComponentsV1Api->delete_hub_component: %s\n" % e)
@@ -123,7 +123,7 @@ void (empty response body)
 # **get_hub_component**
 > V1HubComponent get_hub_component(owner, uuid)
 
-Get hub component
+Get hub model
 
 ### Example
 ```python
@@ -145,7 +145,7 @@ owner = 'owner_example' # str | Owner of the namespace
 uuid = 'uuid_example' # str | Uuid identifier of the entity
 
 try:
-    # Get hub component
+    # Get hub model
     api_response = api_instance.get_hub_component(owner, uuid)
     pprint(api_response)
 except ApiException as e:
@@ -177,7 +177,7 @@ Name | Type | Description  | Notes
 # **list_hub_componebt_names**
 > V1ListHubComponentsResponse list_hub_componebt_names(owner, offset=offset, limit=limit, sort=sort, query=query)
 
-List hub component names
+List hub model names
 
 ### Example
 ```python
@@ -202,7 +202,7 @@ sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search search. (optional)
 
 try:
-    # List hub component names
+    # List hub model names
     api_response = api_instance.list_hub_componebt_names(owner, offset=offset, limit=limit, sort=sort, query=query)
     pprint(api_response)
 except ApiException as e:
@@ -237,7 +237,7 @@ Name | Type | Description  | Notes
 # **list_hub_components**
 > V1ListHubComponentsResponse list_hub_components(owner, offset=offset, limit=limit, sort=sort, query=query)
 
-List hub components
+List hub models
 
 ### Example
 ```python
@@ -262,7 +262,7 @@ sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search search. (optional)
 
 try:
-    # List hub components
+    # List hub models
     api_response = api_instance.list_hub_components(owner, offset=offset, limit=limit, sort=sort, query=query)
     pprint(api_response)
 except ApiException as e:
@@ -297,7 +297,7 @@ Name | Type | Description  | Notes
 # **patch_hub_component**
 > V1HubComponent patch_hub_component(owner, component_uuid, body)
 
-Patch hub component
+Patch hub model
 
 ### Example
 ```python
@@ -320,7 +320,7 @@ component_uuid = 'component_uuid_example' # str | UUID
 body = polyaxon_sdk.V1HubComponent() # V1HubComponent | Component body
 
 try:
-    # Patch hub component
+    # Patch hub model
     api_response = api_instance.patch_hub_component(owner, component_uuid, body)
     pprint(api_response)
 except ApiException as e:
@@ -353,7 +353,7 @@ Name | Type | Description  | Notes
 # **update_hub_component**
 > V1HubComponent update_hub_component(owner, component_uuid, body)
 
-Update hub component
+Update hub model
 
 ### Example
 ```python
@@ -376,7 +376,7 @@ component_uuid = 'component_uuid_example' # str | UUID
 body = polyaxon_sdk.V1HubComponent() # V1HubComponent | Component body
 
 try:
-    # Update hub component
+    # Update hub model
     api_response = api_instance.update_hub_component(owner, component_uuid, body)
     pprint(api_response)
 except ApiException as e:

@@ -45,7 +45,10 @@ def get_resources_files(run_uuid: str) -> List[str]:
 
 
 async def process_operation_event(
-    events_path: str, event_kind: str, event_name: str, orient: str = V1Events.ORIENT_CSV
+    events_path: str,
+    event_kind: str,
+    event_name: str,
+    orient: str = V1Events.ORIENT_CSV,
 ) -> Optional[Dict]:
     if not events_path or not os.path.exists(events_path):
         return None
@@ -79,7 +82,7 @@ async def get_archived_operation_resource(
         events_path=events_path,
         event_kind=event_kind,
         event_name=event_name,
-        orient=orient
+        orient=orient,
     )
 
 
@@ -94,7 +97,7 @@ async def get_archived_operation_event(
         events_path=events_path,
         event_kind=event_kind,
         event_name=event_name,
-        orient=orient
+        orient=orient,
     )
 
 
@@ -107,7 +110,7 @@ async def get_archived_operation_resources(
     events = []
     if not event_names:
         files = get_resources_files(run_uuid=run_uuid)
-        event_names = [f.split('.plx')[0] for f in files]
+        event_names = [f.split(".plx")[0] for f in files]
     for event_name in event_names:
         event = await get_archived_operation_resource(
             run_uuid=run_uuid,

@@ -87,7 +87,7 @@ type CopyRunParams struct {
 	*/
 	EntityOwner string
 	/*EntityProject
-	  Project where the notification will be assigned
+	  Project
 
 	*/
 	EntityProject string

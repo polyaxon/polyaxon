@@ -4,15 +4,15 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**getLogHandler**](VersionsV1Api.md#getLogHandler) | **GET** /api/v1/log_handler | Get log handler
-[**getVersions**](VersionsV1Api.md#getVersions) | **GET** /api/v1/version | Get versions
+[**getLogHandler**](VersionsV1Api.md#getLogHandler) | **GET** /api/v1/log_handler | 
+[**getVersions**](VersionsV1Api.md#getVersions) | **GET** /api/v1/version | Get current user
 
 
 <a name="getLogHandler"></a>
 # **getLogHandler**
 > V1LogHandler getLogHandler()
 
-Get log handler
+
 
 ### Example
 ```javascript
@@ -57,7 +57,7 @@ This endpoint does not need any parameter.
 # **getVersions**
 > V1Versions getVersions()
 
-Get versions
+Get current user
 
 ### Example
 ```javascript

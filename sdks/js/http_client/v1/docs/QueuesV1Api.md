@@ -4,22 +4,22 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**createQueue**](QueuesV1Api.md#createQueue) | **POST** /api/v1/orgs/{owner}/agents/{agent}/queues | Create queue
-[**deleteQueue**](QueuesV1Api.md#deleteQueue) | **DELETE** /api/v1/orgs/{owner}/agents/{agent}/queues/{uuid} | Delete queue
-[**getQueue**](QueuesV1Api.md#getQueue) | **GET** /api/v1/orgs/{owner}/agents/{agent}/queues/{uuid} | Get queue
-[**listOrganizationQueueNames**](QueuesV1Api.md#listOrganizationQueueNames) | **GET** /api/v1/orgs/{owner}/queues/names | List organization level queues names
-[**listOrganizationQueues**](QueuesV1Api.md#listOrganizationQueues) | **GET** /api/v1/orgs/{owner}/queues | List organization level queues
-[**listQueueNames**](QueuesV1Api.md#listQueueNames) | **GET** /api/v1/orgs/{owner}/agents/{agent}/queues/names | List queues names
-[**listQueues**](QueuesV1Api.md#listQueues) | **GET** /api/v1/orgs/{owner}/agents/{agent}/queues | List queues
-[**patchQueue**](QueuesV1Api.md#patchQueue) | **PATCH** /api/v1/orgs/{owner}/agents/{queue.agent}/queues/{queue.uuid} | Patch queue
-[**updateQueue**](QueuesV1Api.md#updateQueue) | **PUT** /api/v1/orgs/{owner}/agents/{queue.agent}/queues/{queue.uuid} | Update queue
+[**createQueue**](QueuesV1Api.md#createQueue) | **POST** /api/v1/orgs/{owner}/agents/{agent}/queues | Update agent
+[**deleteQueue**](QueuesV1Api.md#deleteQueue) | **DELETE** /api/v1/orgs/{owner}/agents/{agent}/queues/{uuid} | Sync agent
+[**getQueue**](QueuesV1Api.md#getQueue) | **GET** /api/v1/orgs/{owner}/agents/{agent}/queues/{uuid} | Patch agent
+[**listOrganizationQueueNames**](QueuesV1Api.md#listOrganizationQueueNames) | **GET** /api/v1/orgs/{owner}/queues/names | List agents names
+[**listOrganizationQueues**](QueuesV1Api.md#listOrganizationQueues) | **GET** /api/v1/orgs/{owner}/queues | List agents
+[**listQueueNames**](QueuesV1Api.md#listQueueNames) | **GET** /api/v1/orgs/{owner}/agents/{agent}/queues/names | Create agent
+[**listQueues**](QueuesV1Api.md#listQueues) | **GET** /api/v1/orgs/{owner}/agents/{agent}/queues | Get agent
+[**patchQueue**](QueuesV1Api.md#patchQueue) | **PATCH** /api/v1/orgs/{owner}/agents/{queue.agent}/queues/{queue.uuid} | Get State (queues/runs)
+[**updateQueue**](QueuesV1Api.md#updateQueue) | **PUT** /api/v1/orgs/{owner}/agents/{queue.agent}/queues/{queue.uuid} | Delete agent
 
 
 <a name="createQueue"></a>
 # **createQueue**
 > V1Agent createQueue(owner, agent, body)
 
-Create queue
+Update agent
 
 ### Example
 ```javascript
@@ -76,7 +76,7 @@ Name | Type | Description  | Notes
 # **deleteQueue**
 > deleteQueue(owner, agent, uuid)
 
-Delete queue
+Sync agent
 
 ### Example
 ```javascript
@@ -133,7 +133,7 @@ null (empty response body)
 # **getQueue**
 > V1Queue getQueue(owner, agent, uuid)
 
-Get queue
+Patch agent
 
 ### Example
 ```javascript
@@ -190,7 +190,7 @@ Name | Type | Description  | Notes
 # **listOrganizationQueueNames**
 > V1ListQueuesResponse listOrganizationQueueNames(owner, opts)
 
-List organization level queues names
+List agents names
 
 ### Example
 ```javascript
@@ -251,7 +251,7 @@ Name | Type | Description  | Notes
 # **listOrganizationQueues**
 > V1ListQueuesResponse listOrganizationQueues(owner, opts)
 
-List organization level queues
+List agents
 
 ### Example
 ```javascript
@@ -312,7 +312,7 @@ Name | Type | Description  | Notes
 # **listQueueNames**
 > V1ListQueuesResponse listQueueNames(owner, agent, opts)
 
-List queues names
+Create agent
 
 ### Example
 ```javascript
@@ -376,7 +376,7 @@ Name | Type | Description  | Notes
 # **listQueues**
 > V1ListQueuesResponse listQueues(owner, agent, opts)
 
-List queues
+Get agent
 
 ### Example
 ```javascript
@@ -440,7 +440,7 @@ Name | Type | Description  | Notes
 # **patchQueue**
 > V1Queue patchQueue(owner, queue_agent, queue_uuid, body)
 
-Patch queue
+Get State (queues/runs)
 
 ### Example
 ```javascript
@@ -500,7 +500,7 @@ Name | Type | Description  | Notes
 # **updateQueue**
 > V1Queue updateQueue(owner, queue_agent, queue_uuid, body)
 
-Update queue
+Delete agent
 
 ### Example
 ```javascript

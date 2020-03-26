@@ -118,9 +118,7 @@ def resolve_globals_contexts(
             "uuid": run_uuid,
             "namespace": namespace,
             "iteration": iteration,
-            "artifacts_path": get_path(
-                contexts.CONTEXT_MOUNT_ARTIFACTS, run_path
-            )
+            "artifacts_path": get_path(contexts.CONTEXT_MOUNT_ARTIFACTS, run_path),
         }
     }
 

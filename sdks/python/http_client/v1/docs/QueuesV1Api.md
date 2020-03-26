@@ -4,21 +4,21 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**create_queue**](QueuesV1Api.md#create_queue) | **POST** /api/v1/orgs/{owner}/agents/{agent}/queues | Create queue
-[**delete_queue**](QueuesV1Api.md#delete_queue) | **DELETE** /api/v1/orgs/{owner}/agents/{agent}/queues/{uuid} | Delete queue
-[**get_queue**](QueuesV1Api.md#get_queue) | **GET** /api/v1/orgs/{owner}/agents/{agent}/queues/{uuid} | Get queue
-[**list_organization_queue_names**](QueuesV1Api.md#list_organization_queue_names) | **GET** /api/v1/orgs/{owner}/queues/names | List organization level queues names
-[**list_organization_queues**](QueuesV1Api.md#list_organization_queues) | **GET** /api/v1/orgs/{owner}/queues | List organization level queues
-[**list_queue_names**](QueuesV1Api.md#list_queue_names) | **GET** /api/v1/orgs/{owner}/agents/{agent}/queues/names | List queues names
-[**list_queues**](QueuesV1Api.md#list_queues) | **GET** /api/v1/orgs/{owner}/agents/{agent}/queues | List queues
-[**patch_queue**](QueuesV1Api.md#patch_queue) | **PATCH** /api/v1/orgs/{owner}/agents/{queue.agent}/queues/{queue.uuid} | Patch queue
-[**update_queue**](QueuesV1Api.md#update_queue) | **PUT** /api/v1/orgs/{owner}/agents/{queue.agent}/queues/{queue.uuid} | Update queue
+[**create_queue**](QueuesV1Api.md#create_queue) | **POST** /api/v1/orgs/{owner}/agents/{agent}/queues | Update agent
+[**delete_queue**](QueuesV1Api.md#delete_queue) | **DELETE** /api/v1/orgs/{owner}/agents/{agent}/queues/{uuid} | Sync agent
+[**get_queue**](QueuesV1Api.md#get_queue) | **GET** /api/v1/orgs/{owner}/agents/{agent}/queues/{uuid} | Patch agent
+[**list_organization_queue_names**](QueuesV1Api.md#list_organization_queue_names) | **GET** /api/v1/orgs/{owner}/queues/names | List agents names
+[**list_organization_queues**](QueuesV1Api.md#list_organization_queues) | **GET** /api/v1/orgs/{owner}/queues | List agents
+[**list_queue_names**](QueuesV1Api.md#list_queue_names) | **GET** /api/v1/orgs/{owner}/agents/{agent}/queues/names | Create agent
+[**list_queues**](QueuesV1Api.md#list_queues) | **GET** /api/v1/orgs/{owner}/agents/{agent}/queues | Get agent
+[**patch_queue**](QueuesV1Api.md#patch_queue) | **PATCH** /api/v1/orgs/{owner}/agents/{queue.agent}/queues/{queue.uuid} | Get State (queues/runs)
+[**update_queue**](QueuesV1Api.md#update_queue) | **PUT** /api/v1/orgs/{owner}/agents/{queue.agent}/queues/{queue.uuid} | Delete agent
 
 
 # **create_queue**
 > V1Agent create_queue(owner, agent, body)
 
-Create queue
+Update agent
 
 ### Example
 ```python
@@ -41,7 +41,7 @@ agent = 'agent_example' # str | Agent that consumes the queue
 body = polyaxon_sdk.V1Queue() # V1Queue | Queue body
 
 try:
-    # Create queue
+    # Update agent
     api_response = api_instance.create_queue(owner, agent, body)
     pprint(api_response)
 except ApiException as e:
@@ -74,7 +74,7 @@ Name | Type | Description  | Notes
 # **delete_queue**
 > delete_queue(owner, agent, uuid)
 
-Delete queue
+Sync agent
 
 ### Example
 ```python
@@ -97,7 +97,7 @@ agent = 'agent_example' # str | Agent managing the resource
 uuid = 'uuid_example' # str | Uuid identifier of the entity
 
 try:
-    # Delete queue
+    # Sync agent
     api_instance.delete_queue(owner, agent, uuid)
 except ApiException as e:
     print("Exception when calling QueuesV1Api->delete_queue: %s\n" % e)
@@ -129,7 +129,7 @@ void (empty response body)
 # **get_queue**
 > V1Queue get_queue(owner, agent, uuid)
 
-Get queue
+Patch agent
 
 ### Example
 ```python
@@ -152,7 +152,7 @@ agent = 'agent_example' # str | Agent managing the resource
 uuid = 'uuid_example' # str | Uuid identifier of the entity
 
 try:
-    # Get queue
+    # Patch agent
     api_response = api_instance.get_queue(owner, agent, uuid)
     pprint(api_response)
 except ApiException as e:
@@ -185,7 +185,7 @@ Name | Type | Description  | Notes
 # **list_organization_queue_names**
 > V1ListQueuesResponse list_organization_queue_names(owner, offset=offset, limit=limit, sort=sort, query=query)
 
-List organization level queues names
+List agents names
 
 ### Example
 ```python
@@ -210,7 +210,7 @@ sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search search. (optional)
 
 try:
-    # List organization level queues names
+    # List agents names
     api_response = api_instance.list_organization_queue_names(owner, offset=offset, limit=limit, sort=sort, query=query)
     pprint(api_response)
 except ApiException as e:
@@ -245,7 +245,7 @@ Name | Type | Description  | Notes
 # **list_organization_queues**
 > V1ListQueuesResponse list_organization_queues(owner, offset=offset, limit=limit, sort=sort, query=query)
 
-List organization level queues
+List agents
 
 ### Example
 ```python
@@ -270,7 +270,7 @@ sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search search. (optional)
 
 try:
-    # List organization level queues
+    # List agents
     api_response = api_instance.list_organization_queues(owner, offset=offset, limit=limit, sort=sort, query=query)
     pprint(api_response)
 except ApiException as e:
@@ -305,7 +305,7 @@ Name | Type | Description  | Notes
 # **list_queue_names**
 > V1ListQueuesResponse list_queue_names(owner, agent, offset=offset, limit=limit, sort=sort, query=query)
 
-List queues names
+Create agent
 
 ### Example
 ```python
@@ -331,7 +331,7 @@ sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search search. (optional)
 
 try:
-    # List queues names
+    # Create agent
     api_response = api_instance.list_queue_names(owner, agent, offset=offset, limit=limit, sort=sort, query=query)
     pprint(api_response)
 except ApiException as e:
@@ -367,7 +367,7 @@ Name | Type | Description  | Notes
 # **list_queues**
 > V1ListQueuesResponse list_queues(owner, agent, offset=offset, limit=limit, sort=sort, query=query)
 
-List queues
+Get agent
 
 ### Example
 ```python
@@ -393,7 +393,7 @@ sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search search. (optional)
 
 try:
-    # List queues
+    # Get agent
     api_response = api_instance.list_queues(owner, agent, offset=offset, limit=limit, sort=sort, query=query)
     pprint(api_response)
 except ApiException as e:
@@ -429,7 +429,7 @@ Name | Type | Description  | Notes
 # **patch_queue**
 > V1Queue patch_queue(owner, queue_agent, queue_uuid, body)
 
-Patch queue
+Get State (queues/runs)
 
 ### Example
 ```python
@@ -453,7 +453,7 @@ queue_uuid = 'queue_uuid_example' # str | UUID
 body = polyaxon_sdk.V1Queue() # V1Queue | Queue body
 
 try:
-    # Patch queue
+    # Get State (queues/runs)
     api_response = api_instance.patch_queue(owner, queue_agent, queue_uuid, body)
     pprint(api_response)
 except ApiException as e:
@@ -487,7 +487,7 @@ Name | Type | Description  | Notes
 # **update_queue**
 > V1Queue update_queue(owner, queue_agent, queue_uuid, body)
 
-Update queue
+Delete agent
 
 ### Example
 ```python
@@ -511,7 +511,7 @@ queue_uuid = 'queue_uuid_example' # str | UUID
 body = polyaxon_sdk.V1Queue() # V1Queue | Queue body
 
 try:
-    # Update queue
+    # Delete agent
     api_response = api_instance.update_queue(owner, queue_agent, queue_uuid, body)
     pprint(api_response)
 except ApiException as e:

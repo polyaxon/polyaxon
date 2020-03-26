@@ -106,11 +106,26 @@ message ProjectEntityResourceRequest {
     // Owner of the namespace
     string owner = 1;
 
-    // Project where the notification will be assigned
+    // Project
     string project = 2;
 
     // Uuid identifier of the entity
     string uuid = 3;
+}
+
+// Request data to get/delete project resource entity
+message RunEntityResourceRequest {
+    // Owner of the namespace
+    string owner = 1;
+
+    // Project
+    string project = 2;
+
+    // Run
+    string run = 3;
+
+    // Uuid identifier of the entity
+    string uuid = 4;
 }
 
 // Request data to get/delete agent's entity
@@ -202,6 +217,30 @@ message ProjectResourceListRequest {
 
      // Query filter the search search
     string query = 6;
+}
+
+// Request list data with owner/project/run namespace
+message RunResourceListRequest {
+    // Owner of the namespace
+    string owner = 1;
+
+    // Project under namesapce
+    string project = 2;
+
+    // Run under namesapce
+    string run = 3;
+
+    // Pagination offset
+    int32 offset = 4;
+
+    // Limit size
+    int32 limit = 5;
+
+     // Sort to order the search
+    string sort = 6;
+
+     // Query filter the search search
+    string query = 67;
 }
 
 // Request list data with owner/agent namespace

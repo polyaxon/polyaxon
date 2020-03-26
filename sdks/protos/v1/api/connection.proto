@@ -19,7 +19,6 @@ syntax = "proto3";
 package v1;
 
 import "google/protobuf/timestamp.proto";
-import "google/protobuf/struct.proto";
 
 import "v1/polyflow/connection.proto";
 

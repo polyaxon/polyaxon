@@ -4,20 +4,20 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**createRunProfile**](RunProfilesV1Api.md#createRunProfile) | **POST** /api/v1/orgs/{owner}/run_profiles | Create run profile
-[**deleteRunProfile**](RunProfilesV1Api.md#deleteRunProfile) | **DELETE** /api/v1/orgs/{owner}/run_profiles/{uuid} | Delete run profile
-[**getRunProfile**](RunProfilesV1Api.md#getRunProfile) | **GET** /api/v1/orgs/{owner}/run_profiles/{uuid} | Get run profile
-[**listRunProfileNames**](RunProfilesV1Api.md#listRunProfileNames) | **GET** /api/v1/orgs/{owner}/run_profiles/names | List run profiles names
-[**listRunProfiles**](RunProfilesV1Api.md#listRunProfiles) | **GET** /api/v1/orgs/{owner}/run_profiles | List run profiles
-[**patchRunProfile**](RunProfilesV1Api.md#patchRunProfile) | **PATCH** /api/v1/orgs/{owner}/run_profiles/{run_profile.uuid} | Patch run profile
-[**updateRunProfile**](RunProfilesV1Api.md#updateRunProfile) | **PUT** /api/v1/orgs/{owner}/run_profiles/{run_profile.uuid} | Update run profile
+[**createRunProfile**](RunProfilesV1Api.md#createRunProfile) | **POST** /api/v1/orgs/{owner}/run_profiles | Create hub component
+[**deleteRunProfile**](RunProfilesV1Api.md#deleteRunProfile) | **DELETE** /api/v1/orgs/{owner}/run_profiles/{uuid} | Delete hub component
+[**getRunProfile**](RunProfilesV1Api.md#getRunProfile) | **GET** /api/v1/orgs/{owner}/run_profiles/{uuid} | Get hub component
+[**listRunProfileNames**](RunProfilesV1Api.md#listRunProfileNames) | **GET** /api/v1/orgs/{owner}/run_profiles/names | List hub component names
+[**listRunProfiles**](RunProfilesV1Api.md#listRunProfiles) | **GET** /api/v1/orgs/{owner}/run_profiles | List hub components
+[**patchRunProfile**](RunProfilesV1Api.md#patchRunProfile) | **PATCH** /api/v1/orgs/{owner}/run_profiles/{run_profile.uuid} | Patch hub component
+[**updateRunProfile**](RunProfilesV1Api.md#updateRunProfile) | **PUT** /api/v1/orgs/{owner}/run_profiles/{run_profile.uuid} | Update hub component
 
 
 <a name="createRunProfile"></a>
 # **createRunProfile**
 > V1RunProfile createRunProfile(owner, body)
 
-Create run profile
+Create hub component
 
 ### Example
 ```java
@@ -72,7 +72,7 @@ Name | Type | Description  | Notes
 # **deleteRunProfile**
 > deleteRunProfile(owner, uuid)
 
-Delete run profile
+Delete hub component
 
 ### Example
 ```java
@@ -126,7 +126,7 @@ null (empty response body)
 # **getRunProfile**
 > V1RunProfile getRunProfile(owner, uuid)
 
-Get run profile
+Get hub component
 
 ### Example
 ```java
@@ -181,7 +181,7 @@ Name | Type | Description  | Notes
 # **listRunProfileNames**
 > V1ListRunProfilesResponse listRunProfileNames(owner, offset, limit, sort, query)
 
-List run profiles names
+List hub component names
 
 ### Example
 ```java
@@ -242,7 +242,7 @@ Name | Type | Description  | Notes
 # **listRunProfiles**
 > V1ListRunProfilesResponse listRunProfiles(owner, offset, limit, sort, query)
 
-List run profiles
+List hub components
 
 ### Example
 ```java
@@ -303,7 +303,7 @@ Name | Type | Description  | Notes
 # **patchRunProfile**
 > V1RunProfile patchRunProfile(owner, runProfileUuid, body)
 
-Patch run profile
+Patch hub component
 
 ### Example
 ```java
@@ -360,7 +360,7 @@ Name | Type | Description  | Notes
 # **updateRunProfile**
 > V1RunProfile updateRunProfile(owner, runProfileUuid, body)
 
-Update run profile
+Update hub component
 
 ### Example
 ```java

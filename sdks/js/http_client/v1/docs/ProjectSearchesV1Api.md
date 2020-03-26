@@ -92,7 +92,7 @@ var apiInstance = new PolyaxonSdk.ProjectSearchesV1Api();
 
 var owner = "owner_example"; // String | Owner of the namespace
 
-var project = "project_example"; // String | Project where the notification will be assigned
+var project = "project_example"; // String | Project
 
 var uuid = "uuid_example"; // String | Uuid identifier of the entity
 
@@ -112,7 +112,7 @@ apiInstance.deleteProjectSearch(owner, project, uuid, callback);
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace | 
- **project** | **String**| Project where the notification will be assigned | 
+ **project** | **String**| Project | 
  **uuid** | **String**| Uuid identifier of the entity | 
 
 ### Return type
@@ -149,7 +149,7 @@ var apiInstance = new PolyaxonSdk.ProjectSearchesV1Api();
 
 var owner = "owner_example"; // String | Owner of the namespace
 
-var project = "project_example"; // String | Project where the notification will be assigned
+var project = "project_example"; // String | Project
 
 var uuid = "uuid_example"; // String | Uuid identifier of the entity
 
@@ -169,7 +169,7 @@ apiInstance.getProjectSearch(owner, project, uuid, callback);
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace | 
- **project** | **String**| Project where the notification will be assigned | 
+ **project** | **String**| Project | 
  **uuid** | **String**| Uuid identifier of the entity | 
 
 ### Return type
@@ -394,7 +394,7 @@ var apiInstance = new PolyaxonSdk.ProjectSearchesV1Api();
 
 var owner = "owner_example"; // String | Owner of the namespace
 
-var project = "project_example"; // String | Project where the notification will be assigned
+var project = "project_example"; // String | Project
 
 var uuid = "uuid_example"; // String | Uuid identifier of the entity
 
@@ -414,7 +414,7 @@ apiInstance.promoteProjectSearch(owner, project, uuid, callback);
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace | 
- **project** | **String**| Project where the notification will be assigned | 
+ **project** | **String**| Project | 
  **uuid** | **String**| Uuid identifier of the entity | 
 
 ### Return type

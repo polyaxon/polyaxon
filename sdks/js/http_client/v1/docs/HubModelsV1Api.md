@@ -4,20 +4,20 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**createHubModel**](HubModelsV1Api.md#createHubModel) | **POST** /api/v1/orgs/{owner}/models | Create hub model
-[**deleteHubModel**](HubModelsV1Api.md#deleteHubModel) | **DELETE** /api/v1/orgs/{owner}/models/{uuid} | Delete hub model
-[**getHubModel**](HubModelsV1Api.md#getHubModel) | **GET** /api/v1/orgs/{owner}/models/{uuid} | Get hub model
-[**listHubModelNames**](HubModelsV1Api.md#listHubModelNames) | **GET** /api/v1/orgs/{owner}/models/names | List hub model names
-[**listHubModels**](HubModelsV1Api.md#listHubModels) | **GET** /api/v1/orgs/{owner}/models | List hub models
-[**patchHubModel**](HubModelsV1Api.md#patchHubModel) | **PATCH** /api/v1/orgs/{owner}/models/{model.uuid} | Patch hub model
-[**updateHubModel**](HubModelsV1Api.md#updateHubModel) | **PUT** /api/v1/orgs/{owner}/models/{model.uuid} | Update hub model
+[**createHubModel**](HubModelsV1Api.md#createHubModel) | **POST** /api/v1/orgs/{owner}/models | Create dashboard
+[**deleteHubModel**](HubModelsV1Api.md#deleteHubModel) | **DELETE** /api/v1/orgs/{owner}/models/{uuid} | Delete dashboard
+[**getHubModel**](HubModelsV1Api.md#getHubModel) | **GET** /api/v1/orgs/{owner}/models/{uuid} | Get dashboard
+[**listHubModelNames**](HubModelsV1Api.md#listHubModelNames) | **GET** /api/v1/orgs/{owner}/models/names | List dashboard names
+[**listHubModels**](HubModelsV1Api.md#listHubModels) | **GET** /api/v1/orgs/{owner}/models | List dashboards
+[**patchHubModel**](HubModelsV1Api.md#patchHubModel) | **PATCH** /api/v1/orgs/{owner}/models/{model.uuid} | Patch dashboard
+[**updateHubModel**](HubModelsV1Api.md#updateHubModel) | **PUT** /api/v1/orgs/{owner}/models/{model.uuid} | Update dashboard
 
 
 <a name="createHubModel"></a>
 # **createHubModel**
 > V1HubModel createHubModel(owner, body)
 
-Create hub model
+Create dashboard
 
 ### Example
 ```javascript
@@ -71,7 +71,7 @@ Name | Type | Description  | Notes
 # **deleteHubModel**
 > deleteHubModel(owner, uuid)
 
-Delete hub model
+Delete dashboard
 
 ### Example
 ```javascript
@@ -125,7 +125,7 @@ null (empty response body)
 # **getHubModel**
 > V1HubModel getHubModel(owner, uuid)
 
-Get hub model
+Get dashboard
 
 ### Example
 ```javascript
@@ -179,7 +179,7 @@ Name | Type | Description  | Notes
 # **listHubModelNames**
 > V1ListHubModelsResponse listHubModelNames(owner, opts)
 
-List hub model names
+List dashboard names
 
 ### Example
 ```javascript
@@ -240,7 +240,7 @@ Name | Type | Description  | Notes
 # **listHubModels**
 > V1ListHubModelsResponse listHubModels(owner, opts)
 
-List hub models
+List dashboards
 
 ### Example
 ```javascript
@@ -301,7 +301,7 @@ Name | Type | Description  | Notes
 # **patchHubModel**
 > V1HubModel patchHubModel(owner, model_uuid, body)
 
-Patch hub model
+Patch dashboard
 
 ### Example
 ```javascript
@@ -358,7 +358,7 @@ Name | Type | Description  | Notes
 # **updateHubModel**
 > V1HubModel updateHubModel(owner, model_uuid, body)
 
-Update hub model
+Update dashboard
 
 ### Example
 ```javascript

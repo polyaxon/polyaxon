@@ -4,14 +4,14 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**getUser**](UsersV1Api.md#getUser) | **GET** /api/v1/users | Get current user
+[**getUser**](UsersV1Api.md#getUser) | **GET** /api/v1/users | Login
 
 
 <a name="getUser"></a>
 # **getUser**
 > V1User getUser()
 
-Get current user
+Login
 
 ### Example
 ```javascript

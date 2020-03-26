@@ -32,7 +32,7 @@ type V1ProjectEntityResourceRequest struct {
 	// Owner of the namespace
 	Owner string `json:"owner,omitempty"`
 
-	// Project where the notification will be assigned
+	// Project
 	Project string `json:"project,omitempty"`
 
 	// Uuid identifier of the entity

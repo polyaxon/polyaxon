@@ -4,14 +4,14 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**get_log_handler**](VersionsV1Api.md#get_log_handler) | **GET** /api/v1/log_handler | Get log handler
-[**get_versions**](VersionsV1Api.md#get_versions) | **GET** /api/v1/version | Get versions
+[**get_log_handler**](VersionsV1Api.md#get_log_handler) | **GET** /api/v1/log_handler | 
+[**get_versions**](VersionsV1Api.md#get_versions) | **GET** /api/v1/version | Get current user
 
 
 # **get_log_handler**
 > V1LogHandler get_log_handler()
 
-Get log handler
+
 
 ### Example
 ```python
@@ -31,7 +31,6 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 api_instance = polyaxon_sdk.VersionsV1Api(polyaxon_sdk.ApiClient(configuration))
 
 try:
-    # Get log handler
     api_response = api_instance.get_log_handler()
     pprint(api_response)
 except ApiException as e:
@@ -59,7 +58,7 @@ This endpoint does not need any parameter.
 # **get_versions**
 > V1Versions get_versions()
 
-Get versions
+Get current user
 
 ### Example
 ```python
@@ -79,7 +78,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 api_instance = polyaxon_sdk.VersionsV1Api(polyaxon_sdk.ApiClient(configuration))
 
 try:
-    # Get versions
+    # Get current user
     api_response = api_instance.get_versions()
     pprint(api_response)
 except ApiException as e:

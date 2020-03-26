@@ -4,14 +4,14 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**noOp**](SchemasV1Api.md#noOp) | **GET** /schemas | Get random
+[**noOp**](SchemasV1Api.md#noOp) | **GET** /schemas | List teams names
 
 
 <a name="noOp"></a>
 # **noOp**
 > V1Schemas noOp()
 
-Get random
+List teams names
 
 ### Example
 ```javascript

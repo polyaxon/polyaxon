@@ -92,7 +92,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = polyaxon_sdk.ProjectDashboardsV1Api(polyaxon_sdk.ApiClient(configuration))
 owner = 'owner_example' # str | Owner of the namespace
-project = 'project_example' # str | Project where the notification will be assigned
+project = 'project_example' # str | Project
 uuid = 'uuid_example' # str | Uuid identifier of the entity
 
 try:
@@ -107,7 +107,7 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **str**| Owner of the namespace | 
- **project** | **str**| Project where the notification will be assigned | 
+ **project** | **str**| Project | 
  **uuid** | **str**| Uuid identifier of the entity | 
 
 ### Return type
@@ -147,7 +147,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = polyaxon_sdk.ProjectDashboardsV1Api(polyaxon_sdk.ApiClient(configuration))
 owner = 'owner_example' # str | Owner of the namespace
-project = 'project_example' # str | Project where the notification will be assigned
+project = 'project_example' # str | Project
 uuid = 'uuid_example' # str | Uuid identifier of the entity
 
 try:
@@ -163,7 +163,7 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **str**| Owner of the namespace | 
- **project** | **str**| Project where the notification will be assigned | 
+ **project** | **str**| Project | 
  **uuid** | **str**| Uuid identifier of the entity | 
 
 ### Return type

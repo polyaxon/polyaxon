@@ -10,9 +10,11 @@ Method | HTTP request | Description
 [**copy_run**](RunsV1Api.md#copy_run) | **POST** /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/copy | Restart run with copy
 [**create_run**](RunsV1Api.md#create_run) | **POST** /api/v1/{owner}/{project}/runs | Create new run
 [**create_run_artifacts_lineage**](RunsV1Api.md#create_run_artifacts_lineage) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage | Create bulk run run artifacts lineage
+[**create_run_dashboard**](RunsV1Api.md#create_run_dashboard) | **POST** /api/v1/{owner}/{project}/runs/{run}/dashboards | Create run dashboard
 [**create_run_status**](RunsV1Api.md#create_run_status) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/statuses | Create new run status
 [**delete_run**](RunsV1Api.md#delete_run) | **DELETE** /api/v1/{owner}/{project}/runs/{uuid} | Delete run
 [**delete_run_artifact_lineage**](RunsV1Api.md#delete_run_artifact_lineage) | **DELETE** /api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage/{name} | Delete run artifact lineage
+[**delete_run_dashboard**](RunsV1Api.md#delete_run_dashboard) | **DELETE** /api/v1/{owner}/{project}/runs/{run}/dashboards/{uuid} | Delete project dashboard
 [**delete_runs**](RunsV1Api.md#delete_runs) | **DELETE** /api/v1/{owner}/{project}/runs/delete | Delete runs
 [**get_multi_run_events**](RunsV1Api.md#get_multi_run_events) | **GET** /streams/v1/{namespace}/{owner}/{project}/runs/multi/events/{kind} | Get multi runs events
 [**get_run**](RunsV1Api.md#get_run) | **GET** /api/v1/{owner}/{project}/runs/{uuid} | Get run
@@ -22,6 +24,7 @@ Method | HTTP request | Description
 [**get_run_artifacts_lineage**](RunsV1Api.md#get_run_artifacts_lineage) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage | Get run artifacts lineage
 [**get_run_artifacts_lineage_names**](RunsV1Api.md#get_run_artifacts_lineage_names) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage/names | Get run artifacts lineage names
 [**get_run_artifacts_tree**](RunsV1Api.md#get_run_artifacts_tree) | **GET** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifacts/tree | Get run artifacts tree
+[**get_run_dashboard**](RunsV1Api.md#get_run_dashboard) | **GET** /api/v1/{owner}/{project}/runs/{run}/dashboards/{uuid} | Get project dashboard
 [**get_run_events**](RunsV1Api.md#get_run_events) | **GET** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/events/{kind} | Get run events
 [**get_run_logs**](RunsV1Api.md#get_run_logs) | **GET** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/logs | Get run logs
 [**get_run_namespace**](RunsV1Api.md#get_run_namespace) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/namespace | Get Run namespace
@@ -33,10 +36,14 @@ Method | HTTP request | Description
 [**invalidate_runs**](RunsV1Api.md#invalidate_runs) | **POST** /api/v1/{owner}/{project}/runs/invalidate | Invalidate runs
 [**list_archived_runs**](RunsV1Api.md#list_archived_runs) | **GET** /api/v1/archives/{user}/runs | List archived runs for user
 [**list_bookmarked_runs**](RunsV1Api.md#list_bookmarked_runs) | **GET** /api/v1/bookmarks/{user}/runs | List bookmarked runs for user
+[**list_run_dashboard_names**](RunsV1Api.md#list_run_dashboard_names) | **GET** /api/v1/{owner}/{project}/runs/{run}/dashboards/names | List run dashboard
+[**list_run_dashboards**](RunsV1Api.md#list_run_dashboards) | **GET** /api/v1/{owner}/{project}/runs/{run}/dashboards | List run dashboards
 [**list_runs**](RunsV1Api.md#list_runs) | **GET** /api/v1/{owner}/{project}/runs | List runs
 [**list_runs_io**](RunsV1Api.md#list_runs_io) | **GET** /api/v1/{owner}/{project}/runs/io | List runs io
 [**notify_run_status**](RunsV1Api.md#notify_run_status) | **POST** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/notify | Notify run status
 [**patch_run**](RunsV1Api.md#patch_run) | **PATCH** /api/v1/{owner}/{project}/runs/{run.uuid} | Patch run
+[**patch_run_dashboard**](RunsV1Api.md#patch_run_dashboard) | **PATCH** /api/v1/{owner}/{project}/runs/{run}/dashboards/{dashboard.uuid} | Patch project dashboard
+[**promote_run_dashboard**](RunsV1Api.md#promote_run_dashboard) | **POST** /api/v1/{owner}/{project}/runs/{run}/dashboards/{dashboard.uuid}/promote | Promote project dashboard
 [**restart_run**](RunsV1Api.md#restart_run) | **POST** /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/restart | Restart run
 [**restore_run**](RunsV1Api.md#restore_run) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/restore | Restore run
 [**resume_run**](RunsV1Api.md#resume_run) | **POST** /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/resume | Resume run
@@ -46,6 +53,7 @@ Method | HTTP request | Description
 [**stop_runs**](RunsV1Api.md#stop_runs) | **POST** /api/v1/{owner}/{project}/runs/stop | Stop runs
 [**unbookmark_run**](RunsV1Api.md#unbookmark_run) | **DELETE** /api/v1/{owner}/{project}/runs/{uuid}/unbookmark | Unbookmark run
 [**update_run**](RunsV1Api.md#update_run) | **PUT** /api/v1/{owner}/{project}/runs/{run.uuid} | Update run
+[**update_run_dashboard**](RunsV1Api.md#update_run_dashboard) | **PUT** /api/v1/{owner}/{project}/runs/{run}/dashboards/{dashboard.uuid} | Update project dashboard
 [**upload_run_artifact**](RunsV1Api.md#upload_run_artifact) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/artifacts/upload | Upload an artifact file to a store via run access
 [**upload_run_logs**](RunsV1Api.md#upload_run_logs) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/logs/upload | Upload a logs file to a store via run access
 
@@ -72,7 +80,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
 owner = 'owner_example' # str | Owner of the namespace
-project = 'project_example' # str | Project where the notification will be assigned
+project = 'project_example' # str | Project
 uuid = 'uuid_example' # str | Uuid identifier of the entity
 
 try:
@@ -87,7 +95,7 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **str**| Owner of the namespace | 
- **project** | **str**| Project where the notification will be assigned | 
+ **project** | **str**| Project | 
  **uuid** | **str**| Uuid identifier of the entity | 
 
 ### Return type
@@ -127,7 +135,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
 owner = 'owner_example' # str | Owner of the namespace
-project = 'project_example' # str | Project where the notification will be assigned
+project = 'project_example' # str | Project
 uuid = 'uuid_example' # str | Uuid identifier of the entity
 
 try:
@@ -142,7 +150,7 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **str**| Owner of the namespace | 
- **project** | **str**| Project where the notification will be assigned | 
+ **project** | **str**| Project | 
  **uuid** | **str**| Uuid identifier of the entity | 
 
 ### Return type
@@ -239,7 +247,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
 entity_owner = 'entity_owner_example' # str | Owner of the namespace
-entity_project = 'entity_project_example' # str | Project where the notification will be assigned
+entity_project = 'entity_project_example' # str | Project
 entity_uuid = 'entity_uuid_example' # str | Uuid identifier of the entity
 body = polyaxon_sdk.V1Run() # V1Run | Run object
 
@@ -256,7 +264,7 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **entity_owner** | **str**| Owner of the namespace | 
- **entity_project** | **str**| Project where the notification will be assigned | 
+ **entity_project** | **str**| Project | 
  **entity_uuid** | **str**| Uuid identifier of the entity | 
  **body** | [**V1Run**](V1Run.md)| Run object | 
 
@@ -388,6 +396,64 @@ void (empty response body)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **create_run_dashboard**
+> V1Dashboard create_run_dashboard(owner, project, run, body)
+
+Create run dashboard
+
+### Example
+```python
+from __future__ import print_function
+import time
+import polyaxon_sdk
+from polyaxon_sdk.rest import ApiException
+from pprint import pprint
+
+# Configure API key authorization: ApiKey
+configuration = polyaxon_sdk.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
+owner = 'owner_example' # str | Owner of the namespace
+project = 'project_example' # str | Project under namesapce
+run = 'run_example' # str | Run under namesapce
+body = polyaxon_sdk.V1Dashboard() # V1Dashboard | Dashboard body
+
+try:
+    # Create run dashboard
+    api_response = api_instance.create_run_dashboard(owner, project, run, body)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling RunsV1Api->create_run_dashboard: %s\n" % e)
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **str**| Owner of the namespace | 
+ **project** | **str**| Project under namesapce | 
+ **run** | **str**| Run under namesapce | 
+ **body** | [**V1Dashboard**](V1Dashboard.md)| Dashboard body | 
+
+### Return type
+
+[**V1Dashboard**](V1Dashboard.md)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **create_run_status**
 > V1Status create_run_status(owner, project, uuid, body)
 
@@ -468,7 +534,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
 owner = 'owner_example' # str | Owner of the namespace
-project = 'project_example' # str | Project where the notification will be assigned
+project = 'project_example' # str | Project
 uuid = 'uuid_example' # str | Uuid identifier of the entity
 
 try:
@@ -483,7 +549,7 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **str**| Owner of the namespace | 
- **project** | **str**| Project where the notification will be assigned | 
+ **project** | **str**| Project | 
  **uuid** | **str**| Uuid identifier of the entity | 
 
 ### Return type
@@ -544,6 +610,63 @@ Name | Type | Description  | Notes
  **uuid** | **str**| Uuid identifier of the entity | 
  **name** | **str**| Artifact name | 
  **namespace** | **str**| namespace. | [optional] 
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **delete_run_dashboard**
+> delete_run_dashboard(owner, project, run, uuid)
+
+Delete project dashboard
+
+### Example
+```python
+from __future__ import print_function
+import time
+import polyaxon_sdk
+from polyaxon_sdk.rest import ApiException
+from pprint import pprint
+
+# Configure API key authorization: ApiKey
+configuration = polyaxon_sdk.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
+owner = 'owner_example' # str | Owner of the namespace
+project = 'project_example' # str | Project
+run = 'run_example' # str | Run
+uuid = 'uuid_example' # str | Uuid identifier of the entity
+
+try:
+    # Delete project dashboard
+    api_instance.delete_run_dashboard(owner, project, run, uuid)
+except ApiException as e:
+    print("Exception when calling RunsV1Api->delete_run_dashboard: %s\n" % e)
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **str**| Owner of the namespace | 
+ **project** | **str**| Project | 
+ **run** | **str**| Run | 
+ **uuid** | **str**| Uuid identifier of the entity | 
 
 ### Return type
 
@@ -701,7 +824,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
 owner = 'owner_example' # str | Owner of the namespace
-project = 'project_example' # str | Project where the notification will be assigned
+project = 'project_example' # str | Project
 uuid = 'uuid_example' # str | Uuid identifier of the entity
 
 try:
@@ -717,7 +840,7 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **str**| Owner of the namespace | 
- **project** | **str**| Project where the notification will be assigned | 
+ **project** | **str**| Project | 
  **uuid** | **str**| Uuid identifier of the entity | 
 
 ### Return type
@@ -1101,6 +1224,64 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **get_run_dashboard**
+> V1Dashboard get_run_dashboard(owner, project, run, uuid)
+
+Get project dashboard
+
+### Example
+```python
+from __future__ import print_function
+import time
+import polyaxon_sdk
+from polyaxon_sdk.rest import ApiException
+from pprint import pprint
+
+# Configure API key authorization: ApiKey
+configuration = polyaxon_sdk.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
+owner = 'owner_example' # str | Owner of the namespace
+project = 'project_example' # str | Project
+run = 'run_example' # str | Run
+uuid = 'uuid_example' # str | Uuid identifier of the entity
+
+try:
+    # Get project dashboard
+    api_response = api_instance.get_run_dashboard(owner, project, run, uuid)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling RunsV1Api->get_run_dashboard: %s\n" % e)
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **str**| Owner of the namespace | 
+ **project** | **str**| Project | 
+ **run** | **str**| Run | 
+ **uuid** | **str**| Uuid identifier of the entity | 
+
+### Return type
+
+[**V1Dashboard**](V1Dashboard.md)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **get_run_events**
 > V1EventsResponse get_run_events(namespace, owner, project, uuid, kind, names=names, orient=orient)
 
@@ -1249,7 +1430,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
 owner = 'owner_example' # str | Owner of the namespace
-project = 'project_example' # str | Project where the notification will be assigned
+project = 'project_example' # str | Project
 uuid = 'uuid_example' # str | Uuid identifier of the entity
 
 try:
@@ -1265,7 +1446,7 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **str**| Owner of the namespace | 
- **project** | **str**| Project where the notification will be assigned | 
+ **project** | **str**| Project | 
  **uuid** | **str**| Uuid identifier of the entity | 
 
 ### Return type
@@ -1367,7 +1548,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
 owner = 'owner_example' # str | Owner of the namespace
-project = 'project_example' # str | Project where the notification will be assigned
+project = 'project_example' # str | Project
 uuid = 'uuid_example' # str | Uuid identifier of the entity
 
 try:
@@ -1383,7 +1564,7 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **str**| Owner of the namespace | 
- **project** | **str**| Project where the notification will be assigned | 
+ **project** | **str**| Project | 
  **uuid** | **str**| Uuid identifier of the entity | 
 
 ### Return type
@@ -1423,7 +1604,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
 owner = 'owner_example' # str | Owner of the namespace
-project = 'project_example' # str | Project where the notification will be assigned
+project = 'project_example' # str | Project
 uuid = 'uuid_example' # str | Uuid identifier of the entity
 
 try:
@@ -1439,7 +1620,7 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **str**| Owner of the namespace | 
- **project** | **str**| Project where the notification will be assigned | 
+ **project** | **str**| Project | 
  **uuid** | **str**| Uuid identifier of the entity | 
 
 ### Return type
@@ -1479,7 +1660,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
 owner = 'owner_example' # str | Owner of the namespace
-project = 'project_example' # str | Project where the notification will be assigned
+project = 'project_example' # str | Project
 uuid = 'uuid_example' # str | Uuid identifier of the entity
 
 try:
@@ -1495,7 +1676,7 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **str**| Owner of the namespace | 
- **project** | **str**| Project where the notification will be assigned | 
+ **project** | **str**| Project | 
  **uuid** | **str**| Uuid identifier of the entity | 
 
 ### Return type
@@ -1535,7 +1716,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
 owner = 'owner_example' # str | Owner of the namespace
-project = 'project_example' # str | Project where the notification will be assigned
+project = 'project_example' # str | Project
 uuid = 'uuid_example' # str | Uuid identifier of the entity
 body = polyaxon_sdk.V1ProjectEntityResourceRequest() # V1ProjectEntityResourceRequest | 
 
@@ -1551,7 +1732,7 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **str**| Owner of the namespace | 
- **project** | **str**| Project where the notification will be assigned | 
+ **project** | **str**| Project | 
  **uuid** | **str**| Uuid identifier of the entity | 
  **body** | [**V1ProjectEntityResourceRequest**](V1ProjectEntityResourceRequest.md)|  | 
 
@@ -1733,6 +1914,134 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**V1ListRunsResponse**](V1ListRunsResponse.md)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **list_run_dashboard_names**
+> V1ListDashboardsResponse list_run_dashboard_names(owner, project, run, offset=offset, limit=limit, sort=sort, query=query)
+
+List run dashboard
+
+### Example
+```python
+from __future__ import print_function
+import time
+import polyaxon_sdk
+from polyaxon_sdk.rest import ApiException
+from pprint import pprint
+
+# Configure API key authorization: ApiKey
+configuration = polyaxon_sdk.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
+owner = 'owner_example' # str | Owner of the namespace
+project = 'project_example' # str | Project under namesapce
+run = 'run_example' # str | Run under namesapce
+offset = 56 # int | Pagination offset. (optional)
+limit = 56 # int | Limit size. (optional)
+sort = 'sort_example' # str | Sort to order the search. (optional)
+query = 'query_example' # str | Query filter the search search. (optional)
+
+try:
+    # List run dashboard
+    api_response = api_instance.list_run_dashboard_names(owner, project, run, offset=offset, limit=limit, sort=sort, query=query)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling RunsV1Api->list_run_dashboard_names: %s\n" % e)
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **str**| Owner of the namespace | 
+ **project** | **str**| Project under namesapce | 
+ **run** | **str**| Run under namesapce | 
+ **offset** | **int**| Pagination offset. | [optional] 
+ **limit** | **int**| Limit size. | [optional] 
+ **sort** | **str**| Sort to order the search. | [optional] 
+ **query** | **str**| Query filter the search search. | [optional] 
+
+### Return type
+
+[**V1ListDashboardsResponse**](V1ListDashboardsResponse.md)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **list_run_dashboards**
+> V1ListDashboardsResponse list_run_dashboards(owner, project, run, offset=offset, limit=limit, sort=sort, query=query)
+
+List run dashboards
+
+### Example
+```python
+from __future__ import print_function
+import time
+import polyaxon_sdk
+from polyaxon_sdk.rest import ApiException
+from pprint import pprint
+
+# Configure API key authorization: ApiKey
+configuration = polyaxon_sdk.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
+owner = 'owner_example' # str | Owner of the namespace
+project = 'project_example' # str | Project under namesapce
+run = 'run_example' # str | Run under namesapce
+offset = 56 # int | Pagination offset. (optional)
+limit = 56 # int | Limit size. (optional)
+sort = 'sort_example' # str | Sort to order the search. (optional)
+query = 'query_example' # str | Query filter the search search. (optional)
+
+try:
+    # List run dashboards
+    api_response = api_instance.list_run_dashboards(owner, project, run, offset=offset, limit=limit, sort=sort, query=query)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling RunsV1Api->list_run_dashboards: %s\n" % e)
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **str**| Owner of the namespace | 
+ **project** | **str**| Project under namesapce | 
+ **run** | **str**| Run under namesapce | 
+ **offset** | **int**| Pagination offset. | [optional] 
+ **limit** | **int**| Limit size. | [optional] 
+ **sort** | **str**| Sort to order the search. | [optional] 
+ **query** | **str**| Query filter the search search. | [optional] 
+
+### Return type
+
+[**V1ListDashboardsResponse**](V1ListDashboardsResponse.md)
 
 ### Authorization
 
@@ -1986,6 +2295,124 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **patch_run_dashboard**
+> V1Dashboard patch_run_dashboard(owner, project, run, dashboard_uuid, body)
+
+Patch project dashboard
+
+### Example
+```python
+from __future__ import print_function
+import time
+import polyaxon_sdk
+from polyaxon_sdk.rest import ApiException
+from pprint import pprint
+
+# Configure API key authorization: ApiKey
+configuration = polyaxon_sdk.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
+owner = 'owner_example' # str | Owner of the namespace
+project = 'project_example' # str | Project under namesapce
+run = 'run_example' # str | Run under namesapce
+dashboard_uuid = 'dashboard_uuid_example' # str | UUID
+body = polyaxon_sdk.V1Dashboard() # V1Dashboard | Dashboard body
+
+try:
+    # Patch project dashboard
+    api_response = api_instance.patch_run_dashboard(owner, project, run, dashboard_uuid, body)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling RunsV1Api->patch_run_dashboard: %s\n" % e)
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **str**| Owner of the namespace | 
+ **project** | **str**| Project under namesapce | 
+ **run** | **str**| Run under namesapce | 
+ **dashboard_uuid** | **str**| UUID | 
+ **body** | [**V1Dashboard**](V1Dashboard.md)| Dashboard body | 
+
+### Return type
+
+[**V1Dashboard**](V1Dashboard.md)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **promote_run_dashboard**
+> V1Dashboard promote_run_dashboard(owner, project, run, dashboard_uuid)
+
+Promote project dashboard
+
+### Example
+```python
+from __future__ import print_function
+import time
+import polyaxon_sdk
+from polyaxon_sdk.rest import ApiException
+from pprint import pprint
+
+# Configure API key authorization: ApiKey
+configuration = polyaxon_sdk.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
+owner = 'owner_example' # str | Owner of the namespace
+project = 'project_example' # str | Project under namesapce
+run = 'run_example' # str | Run under namesapce
+dashboard_uuid = 'dashboard_uuid_example' # str | UUID
+
+try:
+    # Promote project dashboard
+    api_response = api_instance.promote_run_dashboard(owner, project, run, dashboard_uuid)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling RunsV1Api->promote_run_dashboard: %s\n" % e)
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **str**| Owner of the namespace | 
+ **project** | **str**| Project under namesapce | 
+ **run** | **str**| Run under namesapce | 
+ **dashboard_uuid** | **str**| UUID | 
+
+### Return type
+
+[**V1Dashboard**](V1Dashboard.md)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **restart_run**
 > V1Run restart_run(entity_owner, entity_project, entity_uuid, body)
 
@@ -2008,7 +2435,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
 entity_owner = 'entity_owner_example' # str | Owner of the namespace
-entity_project = 'entity_project_example' # str | Project where the notification will be assigned
+entity_project = 'entity_project_example' # str | Project
 entity_uuid = 'entity_uuid_example' # str | Uuid identifier of the entity
 body = polyaxon_sdk.V1Run() # V1Run | Run object
 
@@ -2025,7 +2452,7 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **entity_owner** | **str**| Owner of the namespace | 
- **entity_project** | **str**| Project where the notification will be assigned | 
+ **entity_project** | **str**| Project | 
  **entity_uuid** | **str**| Uuid identifier of the entity | 
  **body** | [**V1Run**](V1Run.md)| Run object | 
 
@@ -2066,7 +2493,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
 owner = 'owner_example' # str | Owner of the namespace
-project = 'project_example' # str | Project where the notification will be assigned
+project = 'project_example' # str | Project
 uuid = 'uuid_example' # str | Uuid identifier of the entity
 
 try:
@@ -2081,7 +2508,7 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **str**| Owner of the namespace | 
- **project** | **str**| Project where the notification will be assigned | 
+ **project** | **str**| Project | 
  **uuid** | **str**| Uuid identifier of the entity | 
 
 ### Return type
@@ -2121,7 +2548,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
 entity_owner = 'entity_owner_example' # str | Owner of the namespace
-entity_project = 'entity_project_example' # str | Project where the notification will be assigned
+entity_project = 'entity_project_example' # str | Project
 entity_uuid = 'entity_uuid_example' # str | Uuid identifier of the entity
 body = polyaxon_sdk.V1Run() # V1Run | Run object
 
@@ -2138,7 +2565,7 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **entity_owner** | **str**| Owner of the namespace | 
- **entity_project** | **str**| Project where the notification will be assigned | 
+ **entity_project** | **str**| Project | 
  **entity_uuid** | **str**| Uuid identifier of the entity | 
  **body** | [**V1Run**](V1Run.md)| Run object | 
 
@@ -2179,7 +2606,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
 owner = 'owner_example' # str | Owner of the namespace
-project = 'project_example' # str | Project where the notification will be assigned
+project = 'project_example' # str | Project
 uuid = 'uuid_example' # str | Uuid identifier of the entity
 body = polyaxon_sdk.V1ProjectEntityResourceRequest() # V1ProjectEntityResourceRequest | 
 
@@ -2195,7 +2622,7 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **str**| Owner of the namespace | 
- **project** | **str**| Project where the notification will be assigned | 
+ **project** | **str**| Project | 
  **uuid** | **str**| Uuid identifier of the entity | 
  **body** | [**V1ProjectEntityResourceRequest**](V1ProjectEntityResourceRequest.md)|  | 
 
@@ -2236,7 +2663,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
 owner = 'owner_example' # str | Owner of the namespace
-project = 'project_example' # str | Project where the notification will be assigned
+project = 'project_example' # str | Project
 uuid = 'uuid_example' # str | Uuid identifier of the entity
 
 try:
@@ -2251,7 +2678,7 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **str**| Owner of the namespace | 
- **project** | **str**| Project where the notification will be assigned | 
+ **project** | **str**| Project | 
  **uuid** | **str**| Uuid identifier of the entity | 
 
 ### Return type
@@ -2291,7 +2718,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
 owner = 'owner_example' # str | Owner of the namespace
-project = 'project_example' # str | Project where the notification will be assigned
+project = 'project_example' # str | Project
 uuid = 'uuid_example' # str | Uuid identifier of the entity
 
 try:
@@ -2306,7 +2733,7 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **str**| Owner of the namespace | 
- **project** | **str**| Project where the notification will be assigned | 
+ **project** | **str**| Project | 
  **uuid** | **str**| Uuid identifier of the entity | 
 
 ### Return type
@@ -2401,7 +2828,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
 owner = 'owner_example' # str | Owner of the namespace
-project = 'project_example' # str | Project where the notification will be assigned
+project = 'project_example' # str | Project
 uuid = 'uuid_example' # str | Uuid identifier of the entity
 
 try:
@@ -2416,7 +2843,7 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **str**| Owner of the namespace | 
- **project** | **str**| Project where the notification will be assigned | 
+ **project** | **str**| Project | 
  **uuid** | **str**| Uuid identifier of the entity | 
 
 ### Return type
@@ -2480,6 +2907,66 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**V1Run**](V1Run.md)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **update_run_dashboard**
+> V1Dashboard update_run_dashboard(owner, project, run, dashboard_uuid, body)
+
+Update project dashboard
+
+### Example
+```python
+from __future__ import print_function
+import time
+import polyaxon_sdk
+from polyaxon_sdk.rest import ApiException
+from pprint import pprint
+
+# Configure API key authorization: ApiKey
+configuration = polyaxon_sdk.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
+owner = 'owner_example' # str | Owner of the namespace
+project = 'project_example' # str | Project under namesapce
+run = 'run_example' # str | Run under namesapce
+dashboard_uuid = 'dashboard_uuid_example' # str | UUID
+body = polyaxon_sdk.V1Dashboard() # V1Dashboard | Dashboard body
+
+try:
+    # Update project dashboard
+    api_response = api_instance.update_run_dashboard(owner, project, run, dashboard_uuid, body)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling RunsV1Api->update_run_dashboard: %s\n" % e)
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **str**| Owner of the namespace | 
+ **project** | **str**| Project under namesapce | 
+ **run** | **str**| Run under namesapce | 
+ **dashboard_uuid** | **str**| UUID | 
+ **body** | [**V1Dashboard**](V1Dashboard.md)| Dashboard body | 
+
+### Return type
+
+[**V1Dashboard**](V1Dashboard.md)
 
 ### Authorization
 

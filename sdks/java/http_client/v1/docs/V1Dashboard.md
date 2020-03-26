@@ -10,7 +10,8 @@ Name | Type | Description | Notes
 **tags** | **List&lt;String&gt;** |  |  [optional]
 **disabled** | **Boolean** |  |  [optional]
 **deleted** | **Boolean** |  |  [optional]
-**widgets** | [**List&lt;V1WidgetSpec&gt;**](V1WidgetSpec.md) |  |  [optional]
+**search** | [**V1SearchSpec**](V1SearchSpec.md) |  |  [optional]
+**spec** | **Object** |  |  [optional]
 **createdAt** | [**OffsetDateTime**](OffsetDateTime.md) |  |  [optional]
 **updatedAt** | [**OffsetDateTime**](OffsetDateTime.md) |  |  [optional]
 

@@ -32,8 +32,8 @@ from polyaxon.polyboard.logging import V1Logs
 from polyaxon.streams.controllers.archived_logs import get_archived_operation_logs
 from polyaxon.streams.controllers.events import (
     get_archived_operation_events,
-    get_archived_operations_events,
     get_archived_operation_resources,
+    get_archived_operations_events,
 )
 from polyaxon.streams.controllers.k8s_crd import get_k8s_operation
 from polyaxon.streams.controllers.k8s_logs import get_k8s_operation_logs
@@ -174,7 +174,10 @@ async def get_run_resources(request):
     orient = orient or V1Events.ORIENT_DICT
     event_names = {e for e in event_names.split(",") if e} if event_names else set([])
     events = await get_archived_operation_resources(
-        run_uuid=run_uuid, event_kind=V1ArtifactKind.METRIC, event_names=event_names, orient=orient
+        run_uuid=run_uuid,
+        event_kind=V1ArtifactKind.METRIC,
+        event_names=event_names,
+        orient=orient,
     )
     return UJSONResponse({"data": events})
 

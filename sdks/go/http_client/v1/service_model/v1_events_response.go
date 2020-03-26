@@ -29,7 +29,7 @@ import (
 // swagger:model v1EventsResponse
 type V1EventsResponse struct {
 
-	// Name of the events
+	// Events data
 	Data []interface{} `json:"data"`
 }
 

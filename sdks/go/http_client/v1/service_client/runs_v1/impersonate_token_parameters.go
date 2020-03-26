@@ -80,7 +80,7 @@ type ImpersonateTokenParams struct {
 	*/
 	Owner string
 	/*Project
-	  Project where the notification will be assigned
+	  Project
 
 	*/
 	Project string

@@ -4,13 +4,13 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**get_user**](UsersV1Api.md#get_user) | **GET** /api/v1/users | Get current user
+[**get_user**](UsersV1Api.md#get_user) | **GET** /api/v1/users | Login
 
 
 # **get_user**
 > V1User get_user()
 
-Get current user
+Login
 
 ### Example
 ```python
@@ -30,7 +30,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 api_instance = polyaxon_sdk.UsersV1Api(polyaxon_sdk.ApiClient(configuration))
 
 try:
-    # Get current user
+    # Login
     api_response = api_instance.get_user()
     pprint(api_response)
 except ApiException as e:
