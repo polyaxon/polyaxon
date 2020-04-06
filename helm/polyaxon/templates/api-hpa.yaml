@@ -1,0 +1,27 @@
+{{- if .Values.api.hpa.enabled -}}
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: {{ template "polyaxon.fullname" . }}-api
+  labels:
+    app: {{ template "polyaxon.fullname" . }}-api
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+    type: {{ .Values.types.core }}
+    role: {{ .Values.roles.api }}
+    app.kubernetes.io/name: {{ template "polyaxon.fullname" . }}-api
+    app.kubernetes.io/instance: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    app.kubernetes.io/version: "{{ .Chart.Version }}"
+    app.kubernetes.io/part-of: {{ .Values.types.core }}
+    app.kubernetes.io/component: {{ .Values.roles.api }}
+    app.kubernetes.io/managed-by: "helm"
+spec:
+  scaleTargetRef:
+    kind: Deployment
+    apiVersion: apps/v1
+    name: {{ template "polyaxon.fullname" . }}-api
+  minReplicas: {{ .Values.api.hpa.minpods }}
+  maxReplicas: {{ .Values.api.hpa.maxpods }}
+  targetCPUUtilizationPercentage: {{ .Values.api.hpa.cputhreshold }}
+{{- end }}
