@@ -56,6 +56,12 @@ streams:
     nodePort: 31822
     annotations: {}
 
+  hpa:
+    enabled: false
+    cputhreshold: 70
+    minpods: 1
+    maxpods: 4
+
 init:
   image: polyaxon/polyaxon-init
   imageTag: 1.0.6

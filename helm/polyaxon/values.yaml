@@ -88,6 +88,12 @@ api:
     nodePort: 31811
     annotations: {}
 
+  hpa:
+    enabled: false
+    cputhreshold: 70
+    minpods: 1
+    maxpods: 4
+
 streams:
   image: polyaxon/polyaxon-streams
   imageTag: 1.0.6
@@ -108,6 +114,12 @@ streams:
     targetPort: 80
     nodePort: 31822
     annotations: {}
+
+  hpa:
+    enabled: false
+    cputhreshold: 70
+    minpods: 1
+    maxpods: 4
 
 init:
   image: polyaxon/polyaxon-init
@@ -178,6 +190,11 @@ scheduler:
       cpu: 150m
       memory: 200Mi
   celery: {}
+  hpa:
+    enabled: false
+    cputhreshold: 70
+    minpods: 1
+    maxpods: 4
 
 worker:
   enabled: false
@@ -194,6 +211,11 @@ worker:
       cpu: 130m
       memory: 200Mi
   celery: {workerPrefetchMultiplier: 10}
+  hpa:
+    enabled: false
+    cputhreshold: 70
+    minpods: 1
+    maxpods: 4
 
 beat:
   enabled: false
