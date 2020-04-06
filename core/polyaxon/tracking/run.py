@@ -614,9 +614,9 @@ class Run(RunClient):
     @check_offline
     def _wait(self):
         if self._event_logger:
-            self._event_logger.flush()
+            self._event_logger.close()
         if self._resource_logger:
-            self._resource_logger.flush()
+            self._resource_logger.close()
         if self._results:
             self.log_outputs(**self._results)
         time.sleep(1)
