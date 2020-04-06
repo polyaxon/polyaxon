@@ -50,9 +50,6 @@ type V1Dashboard struct {
 	// Optional dashboard search
 	RunView bool `json:"run_view,omitempty"`
 
-	// Optional dashboard search
-	Search *V1SearchSpec `json:"search,omitempty"`
-
 	// Optional dashboard specification
 	Spec interface{} `json:"spec,omitempty"`
 
@@ -75,10 +72,6 @@ func (m *V1Dashboard) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
-	if err := m.validateSearch(formats); err != nil {
-		res = append(res, err)
-	}
-
 	if err := m.validateUpdatedAt(formats); err != nil {
 		res = append(res, err)
 	}
@@ -97,24 +90,6 @@ func (m *V1Dashboard) validateCreatedAt(formats strfmt.Registry) error {
 
 	if err := validate.FormatOf("created_at", "body", "date-time", m.CreatedAt.String(), formats); err != nil {
 		return err
-	}
-
-	return nil
-}
-
-func (m *V1Dashboard) validateSearch(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.Search) { // not required
-		return nil
-	}
-
-	if m.Search != nil {
-		if err := m.Search.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("search")
-			}
-			return err
-		}
 	}
 
 	return nil

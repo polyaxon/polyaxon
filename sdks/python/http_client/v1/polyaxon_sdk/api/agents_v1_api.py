@@ -49,12 +49,12 @@ class AgentsV1Api(object):
             api_client = ApiClient()
         self.api_client = api_client
 
-    def create_agent(self, owner, body, **kwargs):  # noqa: E501
+    def agents_v1_create_agent(self, owner, body, **kwargs):  # noqa: E501
         """Create run profile  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.create_agent(owner, body, async_req=True)
+        >>> thread = api.agents_v1_create_agent(owner, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -66,19 +66,23 @@ class AgentsV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.create_agent_with_http_info(owner, body, **kwargs)  # noqa: E501
+            return self.agents_v1_create_agent_with_http_info(
+                owner, body, **kwargs
+            )  # noqa: E501
         else:
-            (data) = self.create_agent_with_http_info(
+            (data) = self.agents_v1_create_agent_with_http_info(
                 owner, body, **kwargs
             )  # noqa: E501
             return data
 
-    def create_agent_with_http_info(self, owner, body, **kwargs):  # noqa: E501
+    def agents_v1_create_agent_with_http_info(
+        self, owner, body, **kwargs
+    ):  # noqa: E501
         """Create run profile  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.create_agent_with_http_info(owner, body, async_req=True)
+        >>> thread = api.agents_v1_create_agent_with_http_info(owner, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -100,19 +104,19 @@ class AgentsV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method create_agent" % key
+                    " to method agents_v1_create_agent" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `create_agent`"
+                "Missing the required parameter `owner` when calling `agents_v1_create_agent`"
             )  # noqa: E501
         # verify the required parameter 'body' is set
         if "body" not in params or params["body"] is None:
             raise ValueError(
-                "Missing the required parameter `body` when calling `create_agent`"
+                "Missing the required parameter `body` when calling `agents_v1_create_agent`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -164,12 +168,12 @@ class AgentsV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def create_agent_status(self, owner, uuid, body, **kwargs):  # noqa: E501
-        """create_agent_status  # noqa: E501
+    def agents_v1_create_agent_status(self, owner, uuid, body, **kwargs):  # noqa: E501
+        """agents_v1_create_agent_status  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.create_agent_status(owner, uuid, body, async_req=True)
+        >>> thread = api.agents_v1_create_agent_status(owner, uuid, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -182,23 +186,23 @@ class AgentsV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.create_agent_status_with_http_info(
+            return self.agents_v1_create_agent_status_with_http_info(
                 owner, uuid, body, **kwargs
             )  # noqa: E501
         else:
-            (data) = self.create_agent_status_with_http_info(
+            (data) = self.agents_v1_create_agent_status_with_http_info(
                 owner, uuid, body, **kwargs
             )  # noqa: E501
             return data
 
-    def create_agent_status_with_http_info(
+    def agents_v1_create_agent_status_with_http_info(
         self, owner, uuid, body, **kwargs
     ):  # noqa: E501
-        """create_agent_status  # noqa: E501
+        """agents_v1_create_agent_status  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.create_agent_status_with_http_info(owner, uuid, body, async_req=True)
+        >>> thread = api.agents_v1_create_agent_status_with_http_info(owner, uuid, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -221,24 +225,24 @@ class AgentsV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method create_agent_status" % key
+                    " to method agents_v1_create_agent_status" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `create_agent_status`"
+                "Missing the required parameter `owner` when calling `agents_v1_create_agent_status`"
             )  # noqa: E501
         # verify the required parameter 'uuid' is set
         if "uuid" not in params or params["uuid"] is None:
             raise ValueError(
-                "Missing the required parameter `uuid` when calling `create_agent_status`"
+                "Missing the required parameter `uuid` when calling `agents_v1_create_agent_status`"
             )  # noqa: E501
         # verify the required parameter 'body' is set
         if "body" not in params or params["body"] is None:
             raise ValueError(
-                "Missing the required parameter `body` when calling `create_agent_status`"
+                "Missing the required parameter `body` when calling `agents_v1_create_agent_status`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -292,12 +296,12 @@ class AgentsV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def delete_agent(self, owner, uuid, **kwargs):  # noqa: E501
+    def agents_v1_delete_agent(self, owner, uuid, **kwargs):  # noqa: E501
         """Delete run profile  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.delete_agent(owner, uuid, async_req=True)
+        >>> thread = api.agents_v1_delete_agent(owner, uuid, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -309,19 +313,23 @@ class AgentsV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.delete_agent_with_http_info(owner, uuid, **kwargs)  # noqa: E501
+            return self.agents_v1_delete_agent_with_http_info(
+                owner, uuid, **kwargs
+            )  # noqa: E501
         else:
-            (data) = self.delete_agent_with_http_info(
+            (data) = self.agents_v1_delete_agent_with_http_info(
                 owner, uuid, **kwargs
             )  # noqa: E501
             return data
 
-    def delete_agent_with_http_info(self, owner, uuid, **kwargs):  # noqa: E501
+    def agents_v1_delete_agent_with_http_info(
+        self, owner, uuid, **kwargs
+    ):  # noqa: E501
         """Delete run profile  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.delete_agent_with_http_info(owner, uuid, async_req=True)
+        >>> thread = api.agents_v1_delete_agent_with_http_info(owner, uuid, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -343,19 +351,19 @@ class AgentsV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method delete_agent" % key
+                    " to method agents_v1_delete_agent" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `delete_agent`"
+                "Missing the required parameter `owner` when calling `agents_v1_delete_agent`"
             )  # noqa: E501
         # verify the required parameter 'uuid' is set
         if "uuid" not in params or params["uuid"] is None:
             raise ValueError(
-                "Missing the required parameter `uuid` when calling `delete_agent`"
+                "Missing the required parameter `uuid` when calling `agents_v1_delete_agent`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -407,12 +415,12 @@ class AgentsV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def get_agent(self, owner, uuid, **kwargs):  # noqa: E501
+    def agents_v1_get_agent(self, owner, uuid, **kwargs):  # noqa: E501
         """Get run profile  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.get_agent(owner, uuid, async_req=True)
+        >>> thread = api.agents_v1_get_agent(owner, uuid, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -424,17 +432,21 @@ class AgentsV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.get_agent_with_http_info(owner, uuid, **kwargs)  # noqa: E501
+            return self.agents_v1_get_agent_with_http_info(
+                owner, uuid, **kwargs
+            )  # noqa: E501
         else:
-            (data) = self.get_agent_with_http_info(owner, uuid, **kwargs)  # noqa: E501
+            (data) = self.agents_v1_get_agent_with_http_info(
+                owner, uuid, **kwargs
+            )  # noqa: E501
             return data
 
-    def get_agent_with_http_info(self, owner, uuid, **kwargs):  # noqa: E501
+    def agents_v1_get_agent_with_http_info(self, owner, uuid, **kwargs):  # noqa: E501
         """Get run profile  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.get_agent_with_http_info(owner, uuid, async_req=True)
+        >>> thread = api.agents_v1_get_agent_with_http_info(owner, uuid, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -456,19 +468,19 @@ class AgentsV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method get_agent" % key
+                    " to method agents_v1_get_agent" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `get_agent`"
+                "Missing the required parameter `owner` when calling `agents_v1_get_agent`"
             )  # noqa: E501
         # verify the required parameter 'uuid' is set
         if "uuid" not in params or params["uuid"] is None:
             raise ValueError(
-                "Missing the required parameter `uuid` when calling `get_agent`"
+                "Missing the required parameter `uuid` when calling `agents_v1_get_agent`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -520,12 +532,12 @@ class AgentsV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def get_agent_state(self, owner, uuid, **kwargs):  # noqa: E501
-        """get_agent_state  # noqa: E501
+    def agents_v1_get_agent_state(self, owner, uuid, **kwargs):  # noqa: E501
+        """agents_v1_get_agent_state  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.get_agent_state(owner, uuid, async_req=True)
+        >>> thread = api.agents_v1_get_agent_state(owner, uuid, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -537,21 +549,23 @@ class AgentsV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.get_agent_state_with_http_info(
+            return self.agents_v1_get_agent_state_with_http_info(
                 owner, uuid, **kwargs
             )  # noqa: E501
         else:
-            (data) = self.get_agent_state_with_http_info(
+            (data) = self.agents_v1_get_agent_state_with_http_info(
                 owner, uuid, **kwargs
             )  # noqa: E501
             return data
 
-    def get_agent_state_with_http_info(self, owner, uuid, **kwargs):  # noqa: E501
-        """get_agent_state  # noqa: E501
+    def agents_v1_get_agent_state_with_http_info(
+        self, owner, uuid, **kwargs
+    ):  # noqa: E501
+        """agents_v1_get_agent_state  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.get_agent_state_with_http_info(owner, uuid, async_req=True)
+        >>> thread = api.agents_v1_get_agent_state_with_http_info(owner, uuid, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -573,19 +587,19 @@ class AgentsV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method get_agent_state" % key
+                    " to method agents_v1_get_agent_state" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `get_agent_state`"
+                "Missing the required parameter `owner` when calling `agents_v1_get_agent_state`"
             )  # noqa: E501
         # verify the required parameter 'uuid' is set
         if "uuid" not in params or params["uuid"] is None:
             raise ValueError(
-                "Missing the required parameter `uuid` when calling `get_agent_state`"
+                "Missing the required parameter `uuid` when calling `agents_v1_get_agent_state`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -637,12 +651,12 @@ class AgentsV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def get_agent_statuses(self, owner, uuid, **kwargs):  # noqa: E501
-        """get_agent_statuses  # noqa: E501
+    def agents_v1_get_agent_statuses(self, owner, uuid, **kwargs):  # noqa: E501
+        """agents_v1_get_agent_statuses  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.get_agent_statuses(owner, uuid, async_req=True)
+        >>> thread = api.agents_v1_get_agent_statuses(owner, uuid, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -654,21 +668,23 @@ class AgentsV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.get_agent_statuses_with_http_info(
+            return self.agents_v1_get_agent_statuses_with_http_info(
                 owner, uuid, **kwargs
             )  # noqa: E501
         else:
-            (data) = self.get_agent_statuses_with_http_info(
+            (data) = self.agents_v1_get_agent_statuses_with_http_info(
                 owner, uuid, **kwargs
             )  # noqa: E501
             return data
 
-    def get_agent_statuses_with_http_info(self, owner, uuid, **kwargs):  # noqa: E501
-        """get_agent_statuses  # noqa: E501
+    def agents_v1_get_agent_statuses_with_http_info(
+        self, owner, uuid, **kwargs
+    ):  # noqa: E501
+        """agents_v1_get_agent_statuses  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.get_agent_statuses_with_http_info(owner, uuid, async_req=True)
+        >>> thread = api.agents_v1_get_agent_statuses_with_http_info(owner, uuid, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -690,19 +706,19 @@ class AgentsV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method get_agent_statuses" % key
+                    " to method agents_v1_get_agent_statuses" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `get_agent_statuses`"
+                "Missing the required parameter `owner` when calling `agents_v1_get_agent_statuses`"
             )  # noqa: E501
         # verify the required parameter 'uuid' is set
         if "uuid" not in params or params["uuid"] is None:
             raise ValueError(
-                "Missing the required parameter `uuid` when calling `get_agent_statuses`"
+                "Missing the required parameter `uuid` when calling `agents_v1_get_agent_statuses`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -754,12 +770,12 @@ class AgentsV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def list_agent_names(self, owner, **kwargs):  # noqa: E501
+    def agents_v1_list_agent_names(self, owner, **kwargs):  # noqa: E501
         """List run profiles names  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.list_agent_names(owner, async_req=True)
+        >>> thread = api.agents_v1_list_agent_names(owner, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -774,17 +790,21 @@ class AgentsV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.list_agent_names_with_http_info(owner, **kwargs)  # noqa: E501
+            return self.agents_v1_list_agent_names_with_http_info(
+                owner, **kwargs
+            )  # noqa: E501
         else:
-            (data) = self.list_agent_names_with_http_info(owner, **kwargs)  # noqa: E501
+            (data) = self.agents_v1_list_agent_names_with_http_info(
+                owner, **kwargs
+            )  # noqa: E501
             return data
 
-    def list_agent_names_with_http_info(self, owner, **kwargs):  # noqa: E501
+    def agents_v1_list_agent_names_with_http_info(self, owner, **kwargs):  # noqa: E501
         """List run profiles names  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.list_agent_names_with_http_info(owner, async_req=True)
+        >>> thread = api.agents_v1_list_agent_names_with_http_info(owner, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -809,14 +829,14 @@ class AgentsV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method list_agent_names" % key
+                    " to method agents_v1_list_agent_names" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `list_agent_names`"
+                "Missing the required parameter `owner` when calling `agents_v1_list_agent_names`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -874,12 +894,12 @@ class AgentsV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def list_agents(self, owner, **kwargs):  # noqa: E501
+    def agents_v1_list_agents(self, owner, **kwargs):  # noqa: E501
         """List run profiles  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.list_agents(owner, async_req=True)
+        >>> thread = api.agents_v1_list_agents(owner, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -894,17 +914,21 @@ class AgentsV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.list_agents_with_http_info(owner, **kwargs)  # noqa: E501
+            return self.agents_v1_list_agents_with_http_info(
+                owner, **kwargs
+            )  # noqa: E501
         else:
-            (data) = self.list_agents_with_http_info(owner, **kwargs)  # noqa: E501
+            (data) = self.agents_v1_list_agents_with_http_info(
+                owner, **kwargs
+            )  # noqa: E501
             return data
 
-    def list_agents_with_http_info(self, owner, **kwargs):  # noqa: E501
+    def agents_v1_list_agents_with_http_info(self, owner, **kwargs):  # noqa: E501
         """List run profiles  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.list_agents_with_http_info(owner, async_req=True)
+        >>> thread = api.agents_v1_list_agents_with_http_info(owner, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -929,14 +953,14 @@ class AgentsV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method list_agents" % key
+                    " to method agents_v1_list_agents" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `list_agents`"
+                "Missing the required parameter `owner` when calling `agents_v1_list_agents`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -994,12 +1018,12 @@ class AgentsV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def patch_agent(self, owner, agent_uuid, body, **kwargs):  # noqa: E501
+    def agents_v1_patch_agent(self, owner, agent_uuid, body, **kwargs):  # noqa: E501
         """Patch run profile  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.patch_agent(owner, agent_uuid, body, async_req=True)
+        >>> thread = api.agents_v1_patch_agent(owner, agent_uuid, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -1012,23 +1036,23 @@ class AgentsV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.patch_agent_with_http_info(
+            return self.agents_v1_patch_agent_with_http_info(
                 owner, agent_uuid, body, **kwargs
             )  # noqa: E501
         else:
-            (data) = self.patch_agent_with_http_info(
+            (data) = self.agents_v1_patch_agent_with_http_info(
                 owner, agent_uuid, body, **kwargs
             )  # noqa: E501
             return data
 
-    def patch_agent_with_http_info(
+    def agents_v1_patch_agent_with_http_info(
         self, owner, agent_uuid, body, **kwargs
     ):  # noqa: E501
         """Patch run profile  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.patch_agent_with_http_info(owner, agent_uuid, body, async_req=True)
+        >>> thread = api.agents_v1_patch_agent_with_http_info(owner, agent_uuid, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -1051,24 +1075,24 @@ class AgentsV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method patch_agent" % key
+                    " to method agents_v1_patch_agent" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `patch_agent`"
+                "Missing the required parameter `owner` when calling `agents_v1_patch_agent`"
             )  # noqa: E501
         # verify the required parameter 'agent_uuid' is set
         if "agent_uuid" not in params or params["agent_uuid"] is None:
             raise ValueError(
-                "Missing the required parameter `agent_uuid` when calling `patch_agent`"
+                "Missing the required parameter `agent_uuid` when calling `agents_v1_patch_agent`"
             )  # noqa: E501
         # verify the required parameter 'body' is set
         if "body" not in params or params["body"] is None:
             raise ValueError(
-                "Missing the required parameter `body` when calling `patch_agent`"
+                "Missing the required parameter `body` when calling `agents_v1_patch_agent`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -1122,12 +1146,12 @@ class AgentsV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def sync_agent(self, owner, agent_uuid, body, **kwargs):  # noqa: E501
-        """sync_agent  # noqa: E501
+    def agents_v1_sync_agent(self, owner, agent_uuid, body, **kwargs):  # noqa: E501
+        """agents_v1_sync_agent  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.sync_agent(owner, agent_uuid, body, async_req=True)
+        >>> thread = api.agents_v1_sync_agent(owner, agent_uuid, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -1140,23 +1164,23 @@ class AgentsV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.sync_agent_with_http_info(
+            return self.agents_v1_sync_agent_with_http_info(
                 owner, agent_uuid, body, **kwargs
             )  # noqa: E501
         else:
-            (data) = self.sync_agent_with_http_info(
+            (data) = self.agents_v1_sync_agent_with_http_info(
                 owner, agent_uuid, body, **kwargs
             )  # noqa: E501
             return data
 
-    def sync_agent_with_http_info(
+    def agents_v1_sync_agent_with_http_info(
         self, owner, agent_uuid, body, **kwargs
     ):  # noqa: E501
-        """sync_agent  # noqa: E501
+        """agents_v1_sync_agent  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.sync_agent_with_http_info(owner, agent_uuid, body, async_req=True)
+        >>> thread = api.agents_v1_sync_agent_with_http_info(owner, agent_uuid, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -1179,24 +1203,24 @@ class AgentsV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method sync_agent" % key
+                    " to method agents_v1_sync_agent" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `sync_agent`"
+                "Missing the required parameter `owner` when calling `agents_v1_sync_agent`"
             )  # noqa: E501
         # verify the required parameter 'agent_uuid' is set
         if "agent_uuid" not in params or params["agent_uuid"] is None:
             raise ValueError(
-                "Missing the required parameter `agent_uuid` when calling `sync_agent`"
+                "Missing the required parameter `agent_uuid` when calling `agents_v1_sync_agent`"
             )  # noqa: E501
         # verify the required parameter 'body' is set
         if "body" not in params or params["body"] is None:
             raise ValueError(
-                "Missing the required parameter `body` when calling `sync_agent`"
+                "Missing the required parameter `body` when calling `agents_v1_sync_agent`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -1250,12 +1274,12 @@ class AgentsV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def update_agent(self, owner, agent_uuid, body, **kwargs):  # noqa: E501
+    def agents_v1_update_agent(self, owner, agent_uuid, body, **kwargs):  # noqa: E501
         """Update run profile  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.update_agent(owner, agent_uuid, body, async_req=True)
+        >>> thread = api.agents_v1_update_agent(owner, agent_uuid, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -1268,23 +1292,23 @@ class AgentsV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.update_agent_with_http_info(
+            return self.agents_v1_update_agent_with_http_info(
                 owner, agent_uuid, body, **kwargs
             )  # noqa: E501
         else:
-            (data) = self.update_agent_with_http_info(
+            (data) = self.agents_v1_update_agent_with_http_info(
                 owner, agent_uuid, body, **kwargs
             )  # noqa: E501
             return data
 
-    def update_agent_with_http_info(
+    def agents_v1_update_agent_with_http_info(
         self, owner, agent_uuid, body, **kwargs
     ):  # noqa: E501
         """Update run profile  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.update_agent_with_http_info(owner, agent_uuid, body, async_req=True)
+        >>> thread = api.agents_v1_update_agent_with_http_info(owner, agent_uuid, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -1307,24 +1331,24 @@ class AgentsV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method update_agent" % key
+                    " to method agents_v1_update_agent" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `update_agent`"
+                "Missing the required parameter `owner` when calling `agents_v1_update_agent`"
             )  # noqa: E501
         # verify the required parameter 'agent_uuid' is set
         if "agent_uuid" not in params or params["agent_uuid"] is None:
             raise ValueError(
-                "Missing the required parameter `agent_uuid` when calling `update_agent`"
+                "Missing the required parameter `agent_uuid` when calling `agents_v1_update_agent`"
             )  # noqa: E501
         # verify the required parameter 'body' is set
         if "body" not in params or params["body"] is None:
             raise ValueError(
-                "Missing the required parameter `body` when calling `update_agent`"
+                "Missing the required parameter `body` when calling `agents_v1_update_agent`"
             )  # noqa: E501
 
         collection_formats = {}

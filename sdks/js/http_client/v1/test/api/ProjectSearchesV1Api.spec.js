@@ -50,9 +50,9 @@
 
   describe('(package)', function() {
     describe('ProjectSearchesV1Api', function() {
-      describe('createProjectSearch', function() {
-        it('should call createProjectSearch successfully', function(done) {
-          // TODO: uncomment, update parameter values for createProjectSearch call and complete the assertions
+      describe('projectSearchesV1CreateProjectSearch', function() {
+        it('should call projectSearchesV1CreateProjectSearch successfully', function(done) {
+          // TODO: uncomment, update parameter values for projectSearchesV1CreateProjectSearch call and complete the assertions
           /*
           var owner = "owner_example";
           var project = "project_example";
@@ -72,7 +72,7 @@
           body.created_at = new Date();
           body.updated_at = new Date();
 
-          instance.createProjectSearch(owner, project, body, function(error, data, response) {
+          instance.projectSearchesV1CreateProjectSearch(owner, project, body, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -122,15 +122,15 @@
           done();
         });
       });
-      describe('deleteProjectSearch', function() {
-        it('should call deleteProjectSearch successfully', function(done) {
-          // TODO: uncomment, update parameter values for deleteProjectSearch call
+      describe('projectSearchesV1DeleteProjectSearch', function() {
+        it('should call projectSearchesV1DeleteProjectSearch successfully', function(done) {
+          // TODO: uncomment, update parameter values for projectSearchesV1DeleteProjectSearch call
           /*
           var owner = "owner_example";
           var project = "project_example";
           var uuid = "uuid_example";
 
-          instance.deleteProjectSearch(owner, project, uuid, function(error, data, response) {
+          instance.projectSearchesV1DeleteProjectSearch(owner, project, uuid, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -143,15 +143,15 @@
           done();
         });
       });
-      describe('getProjectSearch', function() {
-        it('should call getProjectSearch successfully', function(done) {
-          // TODO: uncomment, update parameter values for getProjectSearch call and complete the assertions
+      describe('projectSearchesV1GetProjectSearch', function() {
+        it('should call projectSearchesV1GetProjectSearch successfully', function(done) {
+          // TODO: uncomment, update parameter values for projectSearchesV1GetProjectSearch call and complete the assertions
           /*
           var owner = "owner_example";
           var project = "project_example";
           var uuid = "uuid_example";
 
-          instance.getProjectSearch(owner, project, uuid, function(error, data, response) {
+          instance.projectSearchesV1GetProjectSearch(owner, project, uuid, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -201,9 +201,9 @@
           done();
         });
       });
-      describe('listProjectSearchNames', function() {
-        it('should call listProjectSearchNames successfully', function(done) {
-          // TODO: uncomment, update parameter values for listProjectSearchNames call and complete the assertions
+      describe('projectSearchesV1ListProjectSearchNames', function() {
+        it('should call projectSearchesV1ListProjectSearchNames successfully', function(done) {
+          // TODO: uncomment, update parameter values for projectSearchesV1ListProjectSearchNames call and complete the assertions
           /*
           var owner = "owner_example";
           var project = "project_example";
@@ -213,7 +213,7 @@
           opts.sort = "sort_example";
           opts.query = "query_example";
 
-          instance.listProjectSearchNames(owner, project, opts, function(error, data, response) {
+          instance.projectSearchesV1ListProjectSearchNames(owner, project, opts, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -278,9 +278,9 @@
           done();
         });
       });
-      describe('listProjectSearches', function() {
-        it('should call listProjectSearches successfully', function(done) {
-          // TODO: uncomment, update parameter values for listProjectSearches call and complete the assertions
+      describe('projectSearchesV1ListProjectSearches', function() {
+        it('should call projectSearchesV1ListProjectSearches successfully', function(done) {
+          // TODO: uncomment, update parameter values for projectSearchesV1ListProjectSearches call and complete the assertions
           /*
           var owner = "owner_example";
           var project = "project_example";
@@ -290,7 +290,7 @@
           opts.sort = "sort_example";
           opts.query = "query_example";
 
-          instance.listProjectSearches(owner, project, opts, function(error, data, response) {
+          instance.projectSearchesV1ListProjectSearches(owner, project, opts, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -355,9 +355,9 @@
           done();
         });
       });
-      describe('patchProjectSearch', function() {
-        it('should call patchProjectSearch successfully', function(done) {
-          // TODO: uncomment, update parameter values for patchProjectSearch call and complete the assertions
+      describe('projectSearchesV1PatchProjectSearch', function() {
+        it('should call projectSearchesV1PatchProjectSearch successfully', function(done) {
+          // TODO: uncomment, update parameter values for projectSearchesV1PatchProjectSearch call and complete the assertions
           /*
           var owner = "owner_example";
           var project = "project_example";
@@ -378,7 +378,7 @@
           body.created_at = new Date();
           body.updated_at = new Date();
 
-          instance.patchProjectSearch(owner, project, search_uuid, body, function(error, data, response) {
+          instance.projectSearchesV1PatchProjectSearch(owner, project, search_uuid, body, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -428,15 +428,15 @@
           done();
         });
       });
-      describe('promoteProjectSearch', function() {
-        it('should call promoteProjectSearch successfully', function(done) {
-          // TODO: uncomment, update parameter values for promoteProjectSearch call
+      describe('projectSearchesV1PromoteProjectSearch', function() {
+        it('should call projectSearchesV1PromoteProjectSearch successfully', function(done) {
+          // TODO: uncomment, update parameter values for projectSearchesV1PromoteProjectSearch call
           /*
           var owner = "owner_example";
           var project = "project_example";
           var uuid = "uuid_example";
 
-          instance.promoteProjectSearch(owner, project, uuid, function(error, data, response) {
+          instance.projectSearchesV1PromoteProjectSearch(owner, project, uuid, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -449,9 +449,9 @@
           done();
         });
       });
-      describe('updateProjectSearch', function() {
-        it('should call updateProjectSearch successfully', function(done) {
-          // TODO: uncomment, update parameter values for updateProjectSearch call and complete the assertions
+      describe('projectSearchesV1UpdateProjectSearch', function() {
+        it('should call projectSearchesV1UpdateProjectSearch successfully', function(done) {
+          // TODO: uncomment, update parameter values for projectSearchesV1UpdateProjectSearch call and complete the assertions
           /*
           var owner = "owner_example";
           var project = "project_example";
@@ -472,7 +472,7 @@
           body.created_at = new Date();
           body.updated_at = new Date();
 
-          instance.updateProjectSearch(owner, project, search_uuid, body, function(error, data, response) {
+          instance.projectSearchesV1UpdateProjectSearch(owner, project, search_uuid, body, function(error, data, response) {
             if (error) {
               done(error);
               return;

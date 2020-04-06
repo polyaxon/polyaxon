@@ -50,12 +50,12 @@
 
   describe('(package)', function() {
     describe('VersionsV1Api', function() {
-      describe('getLogHandler', function() {
-        it('should call getLogHandler successfully', function(done) {
-          // TODO: uncomment getLogHandler call and complete the assertions
+      describe('versionsV1GetLogHandler', function() {
+        it('should call versionsV1GetLogHandler successfully', function(done) {
+          // TODO: uncomment versionsV1GetLogHandler call and complete the assertions
           /*
 
-          instance.getLogHandler(function(error, data, response) {
+          instance.versionsV1GetLogHandler(function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -74,12 +74,12 @@
           done();
         });
       });
-      describe('getVersions', function() {
-        it('should call getVersions successfully', function(done) {
-          // TODO: uncomment getVersions call and complete the assertions
+      describe('versionsV1GetVersions', function() {
+        it('should call versionsV1GetVersions successfully', function(done) {
+          // TODO: uncomment versionsV1GetVersions call and complete the assertions
           /*
 
-          instance.getVersions(function(error, data, response) {
+          instance.versionsV1GetVersions(function(error, data, response) {
             if (error) {
               done(error);
               return;

@@ -57,10 +57,10 @@ public class HubComponentsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void createHubComponentTest() throws ApiException {
+    public void hubComponentsV1CreateHubComponentTest() throws ApiException {
         String owner = null;
         V1HubComponent body = null;
-        V1HubComponent response = api.createHubComponent(owner, body);
+        V1HubComponent response = api.hubComponentsV1CreateHubComponent(owner, body);
 
         // TODO: test validations
     }
@@ -74,10 +74,10 @@ public class HubComponentsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void deleteHubComponentTest() throws ApiException {
+    public void hubComponentsV1DeleteHubComponentTest() throws ApiException {
         String owner = null;
         String uuid = null;
-        api.deleteHubComponent(owner, uuid);
+        api.hubComponentsV1DeleteHubComponent(owner, uuid);
 
         // TODO: test validations
     }
@@ -91,10 +91,10 @@ public class HubComponentsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void getHubComponentTest() throws ApiException {
+    public void hubComponentsV1GetHubComponentTest() throws ApiException {
         String owner = null;
         String uuid = null;
-        V1HubComponent response = api.getHubComponent(owner, uuid);
+        V1HubComponent response = api.hubComponentsV1GetHubComponent(owner, uuid);
 
         // TODO: test validations
     }
@@ -108,13 +108,13 @@ public class HubComponentsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void listHubComponebtNamesTest() throws ApiException {
+    public void hubComponentsV1ListHubComponebtNamesTest() throws ApiException {
         String owner = null;
         Integer offset = null;
         Integer limit = null;
         String sort = null;
         String query = null;
-        V1ListHubComponentsResponse response = api.listHubComponebtNames(owner, offset, limit, sort, query);
+        V1ListHubComponentsResponse response = api.hubComponentsV1ListHubComponebtNames(owner, offset, limit, sort, query);
 
         // TODO: test validations
     }
@@ -128,13 +128,13 @@ public class HubComponentsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void listHubComponentsTest() throws ApiException {
+    public void hubComponentsV1ListHubComponentsTest() throws ApiException {
         String owner = null;
         Integer offset = null;
         Integer limit = null;
         String sort = null;
         String query = null;
-        V1ListHubComponentsResponse response = api.listHubComponents(owner, offset, limit, sort, query);
+        V1ListHubComponentsResponse response = api.hubComponentsV1ListHubComponents(owner, offset, limit, sort, query);
 
         // TODO: test validations
     }
@@ -148,11 +148,11 @@ public class HubComponentsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void patchHubComponentTest() throws ApiException {
+    public void hubComponentsV1PatchHubComponentTest() throws ApiException {
         String owner = null;
         String componentUuid = null;
         V1HubComponent body = null;
-        V1HubComponent response = api.patchHubComponent(owner, componentUuid, body);
+        V1HubComponent response = api.hubComponentsV1PatchHubComponent(owner, componentUuid, body);
 
         // TODO: test validations
     }
@@ -166,11 +166,11 @@ public class HubComponentsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void updateHubComponentTest() throws ApiException {
+    public void hubComponentsV1UpdateHubComponentTest() throws ApiException {
         String owner = null;
         String componentUuid = null;
         V1HubComponent body = null;
-        V1HubComponent response = api.updateHubComponent(owner, componentUuid, body);
+        V1HubComponent response = api.hubComponentsV1UpdateHubComponent(owner, componentUuid, body);
 
         // TODO: test validations
     }

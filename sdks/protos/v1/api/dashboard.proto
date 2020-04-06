@@ -46,17 +46,14 @@ message Dashboard {
     // Optional dashboard search
     bool run_view = 7;
 
-    // Optional dashboard search
-    SearchSpec search = 8;
-
     // Optional dashboard specification
-    google.protobuf.Struct spec = 9;
+    google.protobuf.Struct spec = 8;
 
     // Optional time when the entity was created
-    google.protobuf.Timestamp created_at = 10;
+    google.protobuf.Timestamp created_at = 9;
 
     // Optional last time the entity was updated
-    google.protobuf.Timestamp updated_at = 11;
+    google.protobuf.Timestamp updated_at = 10;
 }
 
  // Request data to create/update dashboard

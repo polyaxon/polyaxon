@@ -58,11 +58,11 @@ public class QueuesV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void createQueueTest() throws ApiException {
+    public void queuesV1CreateQueueTest() throws ApiException {
         String owner = null;
         String agent = null;
         V1Queue body = null;
-        V1Agent response = api.createQueue(owner, agent, body);
+        V1Agent response = api.queuesV1CreateQueue(owner, agent, body);
 
         // TODO: test validations
     }
@@ -76,11 +76,11 @@ public class QueuesV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void deleteQueueTest() throws ApiException {
+    public void queuesV1DeleteQueueTest() throws ApiException {
         String owner = null;
         String agent = null;
         String uuid = null;
-        api.deleteQueue(owner, agent, uuid);
+        api.queuesV1DeleteQueue(owner, agent, uuid);
 
         // TODO: test validations
     }
@@ -94,11 +94,11 @@ public class QueuesV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void getQueueTest() throws ApiException {
+    public void queuesV1GetQueueTest() throws ApiException {
         String owner = null;
         String agent = null;
         String uuid = null;
-        V1Queue response = api.getQueue(owner, agent, uuid);
+        V1Queue response = api.queuesV1GetQueue(owner, agent, uuid);
 
         // TODO: test validations
     }
@@ -112,13 +112,13 @@ public class QueuesV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void listOrganizationQueueNamesTest() throws ApiException {
+    public void queuesV1ListOrganizationQueueNamesTest() throws ApiException {
         String owner = null;
         Integer offset = null;
         Integer limit = null;
         String sort = null;
         String query = null;
-        V1ListQueuesResponse response = api.listOrganizationQueueNames(owner, offset, limit, sort, query);
+        V1ListQueuesResponse response = api.queuesV1ListOrganizationQueueNames(owner, offset, limit, sort, query);
 
         // TODO: test validations
     }
@@ -132,13 +132,13 @@ public class QueuesV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void listOrganizationQueuesTest() throws ApiException {
+    public void queuesV1ListOrganizationQueuesTest() throws ApiException {
         String owner = null;
         Integer offset = null;
         Integer limit = null;
         String sort = null;
         String query = null;
-        V1ListQueuesResponse response = api.listOrganizationQueues(owner, offset, limit, sort, query);
+        V1ListQueuesResponse response = api.queuesV1ListOrganizationQueues(owner, offset, limit, sort, query);
 
         // TODO: test validations
     }
@@ -152,14 +152,14 @@ public class QueuesV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void listQueueNamesTest() throws ApiException {
+    public void queuesV1ListQueueNamesTest() throws ApiException {
         String owner = null;
         String agent = null;
         Integer offset = null;
         Integer limit = null;
         String sort = null;
         String query = null;
-        V1ListQueuesResponse response = api.listQueueNames(owner, agent, offset, limit, sort, query);
+        V1ListQueuesResponse response = api.queuesV1ListQueueNames(owner, agent, offset, limit, sort, query);
 
         // TODO: test validations
     }
@@ -173,14 +173,14 @@ public class QueuesV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void listQueuesTest() throws ApiException {
+    public void queuesV1ListQueuesTest() throws ApiException {
         String owner = null;
         String agent = null;
         Integer offset = null;
         Integer limit = null;
         String sort = null;
         String query = null;
-        V1ListQueuesResponse response = api.listQueues(owner, agent, offset, limit, sort, query);
+        V1ListQueuesResponse response = api.queuesV1ListQueues(owner, agent, offset, limit, sort, query);
 
         // TODO: test validations
     }
@@ -194,12 +194,12 @@ public class QueuesV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void patchQueueTest() throws ApiException {
+    public void queuesV1PatchQueueTest() throws ApiException {
         String owner = null;
         String queueAgent = null;
         String queueUuid = null;
         V1Queue body = null;
-        V1Queue response = api.patchQueue(owner, queueAgent, queueUuid, body);
+        V1Queue response = api.queuesV1PatchQueue(owner, queueAgent, queueUuid, body);
 
         // TODO: test validations
     }
@@ -213,12 +213,12 @@ public class QueuesV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void updateQueueTest() throws ApiException {
+    public void queuesV1UpdateQueueTest() throws ApiException {
         String owner = null;
         String queueAgent = null;
         String queueUuid = null;
         V1Queue body = null;
-        V1Queue response = api.updateQueue(owner, queueAgent, queueUuid, body);
+        V1Queue response = api.queuesV1UpdateQueue(owner, queueAgent, queueUuid, body);
 
         // TODO: test validations
     }

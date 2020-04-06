@@ -71,7 +71,7 @@ public class DashboardsV1Api {
     }
 
     /**
-     * Build call for createDashboard
+     * Build call for dashboardsV1CreateDashboard
      * @param owner Owner of the namespace (required)
      * @param body Dashboard body (required)
      * @param progressListener Progress listener
@@ -79,7 +79,7 @@ public class DashboardsV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call createDashboardCall(String owner, V1Dashboard body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call dashboardsV1CreateDashboardCall(String owner, V1Dashboard body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -122,20 +122,20 @@ public class DashboardsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call createDashboardValidateBeforeCall(String owner, V1Dashboard body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call dashboardsV1CreateDashboardValidateBeforeCall(String owner, V1Dashboard body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling createDashboard(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling dashboardsV1CreateDashboard(Async)");
         }
         
         // verify the required parameter 'body' is set
         if (body == null) {
-            throw new ApiException("Missing the required parameter 'body' when calling createDashboard(Async)");
+            throw new ApiException("Missing the required parameter 'body' when calling dashboardsV1CreateDashboard(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = createDashboardCall(owner, body, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = dashboardsV1CreateDashboardCall(owner, body, progressListener, progressRequestListener);
         return call;
 
     }
@@ -148,8 +148,8 @@ public class DashboardsV1Api {
      * @return V1Dashboard
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1Dashboard createDashboard(String owner, V1Dashboard body) throws ApiException {
-        ApiResponse<V1Dashboard> resp = createDashboardWithHttpInfo(owner, body);
+    public V1Dashboard dashboardsV1CreateDashboard(String owner, V1Dashboard body) throws ApiException {
+        ApiResponse<V1Dashboard> resp = dashboardsV1CreateDashboardWithHttpInfo(owner, body);
         return resp.getData();
     }
 
@@ -161,8 +161,8 @@ public class DashboardsV1Api {
      * @return ApiResponse&lt;V1Dashboard&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1Dashboard> createDashboardWithHttpInfo(String owner, V1Dashboard body) throws ApiException {
-        com.squareup.okhttp.Call call = createDashboardValidateBeforeCall(owner, body, null, null);
+    public ApiResponse<V1Dashboard> dashboardsV1CreateDashboardWithHttpInfo(String owner, V1Dashboard body) throws ApiException {
+        com.squareup.okhttp.Call call = dashboardsV1CreateDashboardValidateBeforeCall(owner, body, null, null);
         Type localVarReturnType = new TypeToken<V1Dashboard>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -176,7 +176,7 @@ public class DashboardsV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call createDashboardAsync(String owner, V1Dashboard body, final ApiCallback<V1Dashboard> callback) throws ApiException {
+    public com.squareup.okhttp.Call dashboardsV1CreateDashboardAsync(String owner, V1Dashboard body, final ApiCallback<V1Dashboard> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -197,13 +197,13 @@ public class DashboardsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = createDashboardValidateBeforeCall(owner, body, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = dashboardsV1CreateDashboardValidateBeforeCall(owner, body, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1Dashboard>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
     /**
-     * Build call for deleteDashboard
+     * Build call for dashboardsV1DeleteDashboard
      * @param owner Owner of the namespace (required)
      * @param uuid Uuid identifier of the entity (required)
      * @param progressListener Progress listener
@@ -211,7 +211,7 @@ public class DashboardsV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call deleteDashboardCall(String owner, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call dashboardsV1DeleteDashboardCall(String owner, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -255,20 +255,20 @@ public class DashboardsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call deleteDashboardValidateBeforeCall(String owner, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call dashboardsV1DeleteDashboardValidateBeforeCall(String owner, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling deleteDashboard(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling dashboardsV1DeleteDashboard(Async)");
         }
         
         // verify the required parameter 'uuid' is set
         if (uuid == null) {
-            throw new ApiException("Missing the required parameter 'uuid' when calling deleteDashboard(Async)");
+            throw new ApiException("Missing the required parameter 'uuid' when calling dashboardsV1DeleteDashboard(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = deleteDashboardCall(owner, uuid, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = dashboardsV1DeleteDashboardCall(owner, uuid, progressListener, progressRequestListener);
         return call;
 
     }
@@ -280,8 +280,8 @@ public class DashboardsV1Api {
      * @param uuid Uuid identifier of the entity (required)
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public void deleteDashboard(String owner, String uuid) throws ApiException {
-        deleteDashboardWithHttpInfo(owner, uuid);
+    public void dashboardsV1DeleteDashboard(String owner, String uuid) throws ApiException {
+        dashboardsV1DeleteDashboardWithHttpInfo(owner, uuid);
     }
 
     /**
@@ -292,8 +292,8 @@ public class DashboardsV1Api {
      * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<Void> deleteDashboardWithHttpInfo(String owner, String uuid) throws ApiException {
-        com.squareup.okhttp.Call call = deleteDashboardValidateBeforeCall(owner, uuid, null, null);
+    public ApiResponse<Void> dashboardsV1DeleteDashboardWithHttpInfo(String owner, String uuid) throws ApiException {
+        com.squareup.okhttp.Call call = dashboardsV1DeleteDashboardValidateBeforeCall(owner, uuid, null, null);
         return apiClient.execute(call);
     }
 
@@ -306,7 +306,7 @@ public class DashboardsV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call deleteDashboardAsync(String owner, String uuid, final ApiCallback<Void> callback) throws ApiException {
+    public com.squareup.okhttp.Call dashboardsV1DeleteDashboardAsync(String owner, String uuid, final ApiCallback<Void> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -327,12 +327,12 @@ public class DashboardsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = deleteDashboardValidateBeforeCall(owner, uuid, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = dashboardsV1DeleteDashboardValidateBeforeCall(owner, uuid, progressListener, progressRequestListener);
         apiClient.executeAsync(call, callback);
         return call;
     }
     /**
-     * Build call for getDashboard
+     * Build call for dashboardsV1GetDashboard
      * @param owner Owner of the namespace (required)
      * @param uuid Uuid identifier of the entity (required)
      * @param progressListener Progress listener
@@ -340,7 +340,7 @@ public class DashboardsV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call getDashboardCall(String owner, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call dashboardsV1GetDashboardCall(String owner, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -384,20 +384,20 @@ public class DashboardsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call getDashboardValidateBeforeCall(String owner, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call dashboardsV1GetDashboardValidateBeforeCall(String owner, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling getDashboard(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling dashboardsV1GetDashboard(Async)");
         }
         
         // verify the required parameter 'uuid' is set
         if (uuid == null) {
-            throw new ApiException("Missing the required parameter 'uuid' when calling getDashboard(Async)");
+            throw new ApiException("Missing the required parameter 'uuid' when calling dashboardsV1GetDashboard(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = getDashboardCall(owner, uuid, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = dashboardsV1GetDashboardCall(owner, uuid, progressListener, progressRequestListener);
         return call;
 
     }
@@ -410,8 +410,8 @@ public class DashboardsV1Api {
      * @return V1Dashboard
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1Dashboard getDashboard(String owner, String uuid) throws ApiException {
-        ApiResponse<V1Dashboard> resp = getDashboardWithHttpInfo(owner, uuid);
+    public V1Dashboard dashboardsV1GetDashboard(String owner, String uuid) throws ApiException {
+        ApiResponse<V1Dashboard> resp = dashboardsV1GetDashboardWithHttpInfo(owner, uuid);
         return resp.getData();
     }
 
@@ -423,8 +423,8 @@ public class DashboardsV1Api {
      * @return ApiResponse&lt;V1Dashboard&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1Dashboard> getDashboardWithHttpInfo(String owner, String uuid) throws ApiException {
-        com.squareup.okhttp.Call call = getDashboardValidateBeforeCall(owner, uuid, null, null);
+    public ApiResponse<V1Dashboard> dashboardsV1GetDashboardWithHttpInfo(String owner, String uuid) throws ApiException {
+        com.squareup.okhttp.Call call = dashboardsV1GetDashboardValidateBeforeCall(owner, uuid, null, null);
         Type localVarReturnType = new TypeToken<V1Dashboard>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -438,7 +438,7 @@ public class DashboardsV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call getDashboardAsync(String owner, String uuid, final ApiCallback<V1Dashboard> callback) throws ApiException {
+    public com.squareup.okhttp.Call dashboardsV1GetDashboardAsync(String owner, String uuid, final ApiCallback<V1Dashboard> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -459,13 +459,13 @@ public class DashboardsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = getDashboardValidateBeforeCall(owner, uuid, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = dashboardsV1GetDashboardValidateBeforeCall(owner, uuid, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1Dashboard>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
     /**
-     * Build call for listDashboardNames
+     * Build call for dashboardsV1ListDashboardNames
      * @param owner Owner of the namespace (required)
      * @param offset Pagination offset. (optional)
      * @param limit Limit size. (optional)
@@ -476,7 +476,7 @@ public class DashboardsV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call listDashboardNamesCall(String owner, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call dashboardsV1ListDashboardNamesCall(String owner, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -527,15 +527,15 @@ public class DashboardsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call listDashboardNamesValidateBeforeCall(String owner, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call dashboardsV1ListDashboardNamesValidateBeforeCall(String owner, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling listDashboardNames(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling dashboardsV1ListDashboardNames(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = listDashboardNamesCall(owner, offset, limit, sort, query, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = dashboardsV1ListDashboardNamesCall(owner, offset, limit, sort, query, progressListener, progressRequestListener);
         return call;
 
     }
@@ -551,8 +551,8 @@ public class DashboardsV1Api {
      * @return V1ListDashboardsResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1ListDashboardsResponse listDashboardNames(String owner, Integer offset, Integer limit, String sort, String query) throws ApiException {
-        ApiResponse<V1ListDashboardsResponse> resp = listDashboardNamesWithHttpInfo(owner, offset, limit, sort, query);
+    public V1ListDashboardsResponse dashboardsV1ListDashboardNames(String owner, Integer offset, Integer limit, String sort, String query) throws ApiException {
+        ApiResponse<V1ListDashboardsResponse> resp = dashboardsV1ListDashboardNamesWithHttpInfo(owner, offset, limit, sort, query);
         return resp.getData();
     }
 
@@ -567,8 +567,8 @@ public class DashboardsV1Api {
      * @return ApiResponse&lt;V1ListDashboardsResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1ListDashboardsResponse> listDashboardNamesWithHttpInfo(String owner, Integer offset, Integer limit, String sort, String query) throws ApiException {
-        com.squareup.okhttp.Call call = listDashboardNamesValidateBeforeCall(owner, offset, limit, sort, query, null, null);
+    public ApiResponse<V1ListDashboardsResponse> dashboardsV1ListDashboardNamesWithHttpInfo(String owner, Integer offset, Integer limit, String sort, String query) throws ApiException {
+        com.squareup.okhttp.Call call = dashboardsV1ListDashboardNamesValidateBeforeCall(owner, offset, limit, sort, query, null, null);
         Type localVarReturnType = new TypeToken<V1ListDashboardsResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -585,7 +585,7 @@ public class DashboardsV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call listDashboardNamesAsync(String owner, Integer offset, Integer limit, String sort, String query, final ApiCallback<V1ListDashboardsResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call dashboardsV1ListDashboardNamesAsync(String owner, Integer offset, Integer limit, String sort, String query, final ApiCallback<V1ListDashboardsResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -606,13 +606,13 @@ public class DashboardsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = listDashboardNamesValidateBeforeCall(owner, offset, limit, sort, query, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = dashboardsV1ListDashboardNamesValidateBeforeCall(owner, offset, limit, sort, query, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1ListDashboardsResponse>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
     /**
-     * Build call for listDashboards
+     * Build call for dashboardsV1ListDashboards
      * @param owner Owner of the namespace (required)
      * @param offset Pagination offset. (optional)
      * @param limit Limit size. (optional)
@@ -623,7 +623,7 @@ public class DashboardsV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call listDashboardsCall(String owner, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call dashboardsV1ListDashboardsCall(String owner, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -674,15 +674,15 @@ public class DashboardsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call listDashboardsValidateBeforeCall(String owner, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call dashboardsV1ListDashboardsValidateBeforeCall(String owner, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling listDashboards(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling dashboardsV1ListDashboards(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = listDashboardsCall(owner, offset, limit, sort, query, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = dashboardsV1ListDashboardsCall(owner, offset, limit, sort, query, progressListener, progressRequestListener);
         return call;
 
     }
@@ -698,8 +698,8 @@ public class DashboardsV1Api {
      * @return V1ListDashboardsResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1ListDashboardsResponse listDashboards(String owner, Integer offset, Integer limit, String sort, String query) throws ApiException {
-        ApiResponse<V1ListDashboardsResponse> resp = listDashboardsWithHttpInfo(owner, offset, limit, sort, query);
+    public V1ListDashboardsResponse dashboardsV1ListDashboards(String owner, Integer offset, Integer limit, String sort, String query) throws ApiException {
+        ApiResponse<V1ListDashboardsResponse> resp = dashboardsV1ListDashboardsWithHttpInfo(owner, offset, limit, sort, query);
         return resp.getData();
     }
 
@@ -714,8 +714,8 @@ public class DashboardsV1Api {
      * @return ApiResponse&lt;V1ListDashboardsResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1ListDashboardsResponse> listDashboardsWithHttpInfo(String owner, Integer offset, Integer limit, String sort, String query) throws ApiException {
-        com.squareup.okhttp.Call call = listDashboardsValidateBeforeCall(owner, offset, limit, sort, query, null, null);
+    public ApiResponse<V1ListDashboardsResponse> dashboardsV1ListDashboardsWithHttpInfo(String owner, Integer offset, Integer limit, String sort, String query) throws ApiException {
+        com.squareup.okhttp.Call call = dashboardsV1ListDashboardsValidateBeforeCall(owner, offset, limit, sort, query, null, null);
         Type localVarReturnType = new TypeToken<V1ListDashboardsResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -732,7 +732,7 @@ public class DashboardsV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call listDashboardsAsync(String owner, Integer offset, Integer limit, String sort, String query, final ApiCallback<V1ListDashboardsResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call dashboardsV1ListDashboardsAsync(String owner, Integer offset, Integer limit, String sort, String query, final ApiCallback<V1ListDashboardsResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -753,13 +753,13 @@ public class DashboardsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = listDashboardsValidateBeforeCall(owner, offset, limit, sort, query, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = dashboardsV1ListDashboardsValidateBeforeCall(owner, offset, limit, sort, query, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1ListDashboardsResponse>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
     /**
-     * Build call for patchDashboard
+     * Build call for dashboardsV1PatchDashboard
      * @param owner Owner of the namespace (required)
      * @param dashboardUuid UUID (required)
      * @param body Dashboard body (required)
@@ -768,7 +768,7 @@ public class DashboardsV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call patchDashboardCall(String owner, String dashboardUuid, V1Dashboard body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call dashboardsV1PatchDashboardCall(String owner, String dashboardUuid, V1Dashboard body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -812,25 +812,25 @@ public class DashboardsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call patchDashboardValidateBeforeCall(String owner, String dashboardUuid, V1Dashboard body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call dashboardsV1PatchDashboardValidateBeforeCall(String owner, String dashboardUuid, V1Dashboard body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling patchDashboard(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling dashboardsV1PatchDashboard(Async)");
         }
         
         // verify the required parameter 'dashboardUuid' is set
         if (dashboardUuid == null) {
-            throw new ApiException("Missing the required parameter 'dashboardUuid' when calling patchDashboard(Async)");
+            throw new ApiException("Missing the required parameter 'dashboardUuid' when calling dashboardsV1PatchDashboard(Async)");
         }
         
         // verify the required parameter 'body' is set
         if (body == null) {
-            throw new ApiException("Missing the required parameter 'body' when calling patchDashboard(Async)");
+            throw new ApiException("Missing the required parameter 'body' when calling dashboardsV1PatchDashboard(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = patchDashboardCall(owner, dashboardUuid, body, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = dashboardsV1PatchDashboardCall(owner, dashboardUuid, body, progressListener, progressRequestListener);
         return call;
 
     }
@@ -844,8 +844,8 @@ public class DashboardsV1Api {
      * @return V1Dashboard
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1Dashboard patchDashboard(String owner, String dashboardUuid, V1Dashboard body) throws ApiException {
-        ApiResponse<V1Dashboard> resp = patchDashboardWithHttpInfo(owner, dashboardUuid, body);
+    public V1Dashboard dashboardsV1PatchDashboard(String owner, String dashboardUuid, V1Dashboard body) throws ApiException {
+        ApiResponse<V1Dashboard> resp = dashboardsV1PatchDashboardWithHttpInfo(owner, dashboardUuid, body);
         return resp.getData();
     }
 
@@ -858,8 +858,8 @@ public class DashboardsV1Api {
      * @return ApiResponse&lt;V1Dashboard&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1Dashboard> patchDashboardWithHttpInfo(String owner, String dashboardUuid, V1Dashboard body) throws ApiException {
-        com.squareup.okhttp.Call call = patchDashboardValidateBeforeCall(owner, dashboardUuid, body, null, null);
+    public ApiResponse<V1Dashboard> dashboardsV1PatchDashboardWithHttpInfo(String owner, String dashboardUuid, V1Dashboard body) throws ApiException {
+        com.squareup.okhttp.Call call = dashboardsV1PatchDashboardValidateBeforeCall(owner, dashboardUuid, body, null, null);
         Type localVarReturnType = new TypeToken<V1Dashboard>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -874,7 +874,7 @@ public class DashboardsV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call patchDashboardAsync(String owner, String dashboardUuid, V1Dashboard body, final ApiCallback<V1Dashboard> callback) throws ApiException {
+    public com.squareup.okhttp.Call dashboardsV1PatchDashboardAsync(String owner, String dashboardUuid, V1Dashboard body, final ApiCallback<V1Dashboard> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -895,13 +895,13 @@ public class DashboardsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = patchDashboardValidateBeforeCall(owner, dashboardUuid, body, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = dashboardsV1PatchDashboardValidateBeforeCall(owner, dashboardUuid, body, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1Dashboard>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
     /**
-     * Build call for updateDashboard
+     * Build call for dashboardsV1UpdateDashboard
      * @param owner Owner of the namespace (required)
      * @param dashboardUuid UUID (required)
      * @param body Dashboard body (required)
@@ -910,7 +910,7 @@ public class DashboardsV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call updateDashboardCall(String owner, String dashboardUuid, V1Dashboard body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call dashboardsV1UpdateDashboardCall(String owner, String dashboardUuid, V1Dashboard body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -954,25 +954,25 @@ public class DashboardsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call updateDashboardValidateBeforeCall(String owner, String dashboardUuid, V1Dashboard body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call dashboardsV1UpdateDashboardValidateBeforeCall(String owner, String dashboardUuid, V1Dashboard body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling updateDashboard(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling dashboardsV1UpdateDashboard(Async)");
         }
         
         // verify the required parameter 'dashboardUuid' is set
         if (dashboardUuid == null) {
-            throw new ApiException("Missing the required parameter 'dashboardUuid' when calling updateDashboard(Async)");
+            throw new ApiException("Missing the required parameter 'dashboardUuid' when calling dashboardsV1UpdateDashboard(Async)");
         }
         
         // verify the required parameter 'body' is set
         if (body == null) {
-            throw new ApiException("Missing the required parameter 'body' when calling updateDashboard(Async)");
+            throw new ApiException("Missing the required parameter 'body' when calling dashboardsV1UpdateDashboard(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = updateDashboardCall(owner, dashboardUuid, body, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = dashboardsV1UpdateDashboardCall(owner, dashboardUuid, body, progressListener, progressRequestListener);
         return call;
 
     }
@@ -986,8 +986,8 @@ public class DashboardsV1Api {
      * @return V1Dashboard
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1Dashboard updateDashboard(String owner, String dashboardUuid, V1Dashboard body) throws ApiException {
-        ApiResponse<V1Dashboard> resp = updateDashboardWithHttpInfo(owner, dashboardUuid, body);
+    public V1Dashboard dashboardsV1UpdateDashboard(String owner, String dashboardUuid, V1Dashboard body) throws ApiException {
+        ApiResponse<V1Dashboard> resp = dashboardsV1UpdateDashboardWithHttpInfo(owner, dashboardUuid, body);
         return resp.getData();
     }
 
@@ -1000,8 +1000,8 @@ public class DashboardsV1Api {
      * @return ApiResponse&lt;V1Dashboard&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1Dashboard> updateDashboardWithHttpInfo(String owner, String dashboardUuid, V1Dashboard body) throws ApiException {
-        com.squareup.okhttp.Call call = updateDashboardValidateBeforeCall(owner, dashboardUuid, body, null, null);
+    public ApiResponse<V1Dashboard> dashboardsV1UpdateDashboardWithHttpInfo(String owner, String dashboardUuid, V1Dashboard body) throws ApiException {
+        com.squareup.okhttp.Call call = dashboardsV1UpdateDashboardValidateBeforeCall(owner, dashboardUuid, body, null, null);
         Type localVarReturnType = new TypeToken<V1Dashboard>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -1016,7 +1016,7 @@ public class DashboardsV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call updateDashboardAsync(String owner, String dashboardUuid, V1Dashboard body, final ApiCallback<V1Dashboard> callback) throws ApiException {
+    public com.squareup.okhttp.Call dashboardsV1UpdateDashboardAsync(String owner, String dashboardUuid, V1Dashboard body, final ApiCallback<V1Dashboard> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -1037,7 +1037,7 @@ public class DashboardsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = updateDashboardValidateBeforeCall(owner, dashboardUuid, body, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = dashboardsV1UpdateDashboardValidateBeforeCall(owner, dashboardUuid, body, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1Dashboard>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;

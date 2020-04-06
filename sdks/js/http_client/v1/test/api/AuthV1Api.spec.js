@@ -50,15 +50,15 @@
 
   describe('(package)', function() {
     describe('AuthV1Api', function() {
-      describe('login', function() {
-        it('should call login successfully', function(done) {
-          // TODO: uncomment, update parameter values for login call and complete the assertions
+      describe('authV1Login', function() {
+        it('should call authV1Login successfully', function(done) {
+          // TODO: uncomment, update parameter values for authV1Login call and complete the assertions
           /*
           var body = new PolyaxonSdk.V1CredsBodyRequest();
           body.username = "";
           body.password = "";
 
-          instance.login(body, function(error, data, response) {
+          instance.authV1Login(body, function(error, data, response) {
             if (error) {
               done(error);
               return;

@@ -4,18 +4,18 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**createAccessResource**](AccessResourcesV1Api.md#createAccessResource) | **POST** /api/v1/orgs/{owner}/access_resources | Create access resource
-[**deleteAccessResource**](AccessResourcesV1Api.md#deleteAccessResource) | **DELETE** /api/v1/orgs/{owner}/access_resources/{uuid} | Delete access resource
-[**getAccessResource**](AccessResourcesV1Api.md#getAccessResource) | **GET** /api/v1/orgs/{owner}/access_resources/{uuid} | Get access resource
-[**listAccessResourceNames**](AccessResourcesV1Api.md#listAccessResourceNames) | **GET** /api/v1/orgs/{owner}/access_resources/names | List access resource names
-[**listAccessResources**](AccessResourcesV1Api.md#listAccessResources) | **GET** /api/v1/orgs/{owner}/access_resources | List access resources
-[**patchAccessResource**](AccessResourcesV1Api.md#patchAccessResource) | **PATCH** /api/v1/orgs/{owner}/access_resources/{access_resource.uuid} | Patch access resource
-[**updateAccessResource**](AccessResourcesV1Api.md#updateAccessResource) | **PUT** /api/v1/orgs/{owner}/access_resources/{access_resource.uuid} | Update access resource
+[**accessResourcesV1CreateAccessResource**](AccessResourcesV1Api.md#accessResourcesV1CreateAccessResource) | **POST** /api/v1/orgs/{owner}/access_resources | Create access resource
+[**accessResourcesV1DeleteAccessResource**](AccessResourcesV1Api.md#accessResourcesV1DeleteAccessResource) | **DELETE** /api/v1/orgs/{owner}/access_resources/{uuid} | Delete access resource
+[**accessResourcesV1GetAccessResource**](AccessResourcesV1Api.md#accessResourcesV1GetAccessResource) | **GET** /api/v1/orgs/{owner}/access_resources/{uuid} | Get access resource
+[**accessResourcesV1ListAccessResourceNames**](AccessResourcesV1Api.md#accessResourcesV1ListAccessResourceNames) | **GET** /api/v1/orgs/{owner}/access_resources/names | List access resource names
+[**accessResourcesV1ListAccessResources**](AccessResourcesV1Api.md#accessResourcesV1ListAccessResources) | **GET** /api/v1/orgs/{owner}/access_resources | List access resources
+[**accessResourcesV1PatchAccessResource**](AccessResourcesV1Api.md#accessResourcesV1PatchAccessResource) | **PATCH** /api/v1/orgs/{owner}/access_resources/{access_resource.uuid} | Patch access resource
+[**accessResourcesV1UpdateAccessResource**](AccessResourcesV1Api.md#accessResourcesV1UpdateAccessResource) | **PUT** /api/v1/orgs/{owner}/access_resources/{access_resource.uuid} | Update access resource
 
 
-<a name="createAccessResource"></a>
-# **createAccessResource**
-> V1AccessResource createAccessResource(owner, body)
+<a name="accessResourcesV1CreateAccessResource"></a>
+# **accessResourcesV1CreateAccessResource**
+> V1AccessResource accessResourcesV1CreateAccessResource(owner, body)
 
 Create access resource
 
@@ -44,7 +44,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.createAccessResource(owner, body, callback);
+apiInstance.accessResourcesV1CreateAccessResource(owner, body, callback);
 ```
 
 ### Parameters
@@ -67,9 +67,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="deleteAccessResource"></a>
-# **deleteAccessResource**
-> deleteAccessResource(owner, uuid)
+<a name="accessResourcesV1DeleteAccessResource"></a>
+# **accessResourcesV1DeleteAccessResource**
+> accessResourcesV1DeleteAccessResource(owner, uuid)
 
 Delete access resource
 
@@ -98,7 +98,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully.');
   }
 };
-apiInstance.deleteAccessResource(owner, uuid, callback);
+apiInstance.accessResourcesV1DeleteAccessResource(owner, uuid, callback);
 ```
 
 ### Parameters
@@ -121,9 +121,9 @@ null (empty response body)
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="getAccessResource"></a>
-# **getAccessResource**
-> V1AccessResource getAccessResource(owner, uuid)
+<a name="accessResourcesV1GetAccessResource"></a>
+# **accessResourcesV1GetAccessResource**
+> V1AccessResource accessResourcesV1GetAccessResource(owner, uuid)
 
 Get access resource
 
@@ -152,7 +152,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.getAccessResource(owner, uuid, callback);
+apiInstance.accessResourcesV1GetAccessResource(owner, uuid, callback);
 ```
 
 ### Parameters
@@ -175,9 +175,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="listAccessResourceNames"></a>
-# **listAccessResourceNames**
-> V1ListAccessResourcesResponse listAccessResourceNames(owner, opts)
+<a name="accessResourcesV1ListAccessResourceNames"></a>
+# **accessResourcesV1ListAccessResourceNames**
+> V1ListAccessResourcesResponse accessResourcesV1ListAccessResourceNames(owner, opts)
 
 List access resource names
 
@@ -210,7 +210,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.listAccessResourceNames(owner, opts, callback);
+apiInstance.accessResourcesV1ListAccessResourceNames(owner, opts, callback);
 ```
 
 ### Parameters
@@ -236,9 +236,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="listAccessResources"></a>
-# **listAccessResources**
-> V1ListAccessResourcesResponse listAccessResources(owner, opts)
+<a name="accessResourcesV1ListAccessResources"></a>
+# **accessResourcesV1ListAccessResources**
+> V1ListAccessResourcesResponse accessResourcesV1ListAccessResources(owner, opts)
 
 List access resources
 
@@ -271,7 +271,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.listAccessResources(owner, opts, callback);
+apiInstance.accessResourcesV1ListAccessResources(owner, opts, callback);
 ```
 
 ### Parameters
@@ -297,9 +297,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="patchAccessResource"></a>
-# **patchAccessResource**
-> V1AccessResource patchAccessResource(owner, access_resource_uuid, body)
+<a name="accessResourcesV1PatchAccessResource"></a>
+# **accessResourcesV1PatchAccessResource**
+> V1AccessResource accessResourcesV1PatchAccessResource(owner, access_resource_uuid, body)
 
 Patch access resource
 
@@ -330,7 +330,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.patchAccessResource(owner, access_resource_uuid, body, callback);
+apiInstance.accessResourcesV1PatchAccessResource(owner, access_resource_uuid, body, callback);
 ```
 
 ### Parameters
@@ -354,9 +354,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="updateAccessResource"></a>
-# **updateAccessResource**
-> V1AccessResource updateAccessResource(owner, access_resource_uuid, body)
+<a name="accessResourcesV1UpdateAccessResource"></a>
+# **accessResourcesV1UpdateAccessResource**
+> V1AccessResource accessResourcesV1UpdateAccessResource(owner, access_resource_uuid, body)
 
 Update access resource
 
@@ -387,7 +387,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.updateAccessResource(owner, access_resource_uuid, body, callback);
+apiInstance.accessResourcesV1UpdateAccessResource(owner, access_resource_uuid, body, callback);
 ```
 
 ### Parameters

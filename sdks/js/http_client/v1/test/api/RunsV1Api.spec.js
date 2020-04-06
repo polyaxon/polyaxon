@@ -50,15 +50,70 @@
 
   describe('(package)', function() {
     describe('RunsV1Api', function() {
-      describe('archiveRun', function() {
-        it('should call archiveRun successfully', function(done) {
-          // TODO: uncomment, update parameter values for archiveRun call
+      describe('getRunArtifact', function() {
+        it('should call getRunArtifact successfully', function(done) {
+          // TODO: uncomment, update parameter values for getRunArtifact call and complete the assertions
+          /*
+          var namespace = "namespace_example";
+          var owner = "owner_example";
+          var project = "project_example";
+          var uuid = "uuid_example";
+          var opts = {};
+          opts.path = "path_example";
+          opts.stream = true;
+
+          instance.getRunArtifact(namespace, owner, project, uuid, opts, function(error, data, response) {
+            if (error) {
+              done(error);
+              return;
+            }
+            // TODO: update response assertions
+            expect(data).to.be.a('string');
+            // expect(data).to.be(null);
+
+            done();
+          });
+          */
+          // TODO: uncomment and complete method invocation above, then delete this line and the next:
+          done();
+        });
+      });
+      describe('getRunArtifacts', function() {
+        it('should call getRunArtifacts successfully', function(done) {
+          // TODO: uncomment, update parameter values for getRunArtifacts call and complete the assertions
+          /*
+          var namespace = "namespace_example";
+          var owner = "owner_example";
+          var project = "project_example";
+          var uuid = "uuid_example";
+          var opts = {};
+          opts.path = "path_example";
+
+          instance.getRunArtifacts(namespace, owner, project, uuid, opts, function(error, data, response) {
+            if (error) {
+              done(error);
+              return;
+            }
+            // TODO: update response assertions
+            expect(data).to.be.a('string');
+            // expect(data).to.be(null);
+
+            done();
+          });
+          */
+          // TODO: uncomment and complete method invocation above, then delete this line and the next:
+          done();
+        });
+      });
+      describe('runsV1ArchiveRun', function() {
+        it('should call runsV1ArchiveRun successfully', function(done) {
+          // TODO: uncomment, update parameter values for runsV1ArchiveRun call
           /*
           var owner = "owner_example";
           var project = "project_example";
           var uuid = "uuid_example";
 
-          instance.archiveRun(owner, project, uuid, function(error, data, response) {
+          instance.runsV1ArchiveRun(owner, project, uuid, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -71,15 +126,15 @@
           done();
         });
       });
-      describe('bookmarkRun', function() {
-        it('should call bookmarkRun successfully', function(done) {
-          // TODO: uncomment, update parameter values for bookmarkRun call
+      describe('runsV1BookmarkRun', function() {
+        it('should call runsV1BookmarkRun successfully', function(done) {
+          // TODO: uncomment, update parameter values for runsV1BookmarkRun call
           /*
           var owner = "owner_example";
           var project = "project_example";
           var uuid = "uuid_example";
 
-          instance.bookmarkRun(owner, project, uuid, function(error, data, response) {
+          instance.runsV1BookmarkRun(owner, project, uuid, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -92,16 +147,38 @@
           done();
         });
       });
-      describe('collectRunLogs', function() {
-        it('should call collectRunLogs successfully', function(done) {
-          // TODO: uncomment, update parameter values for collectRunLogs call
+      describe('runsV1BookmarkRuns', function() {
+        it('should call runsV1BookmarkRuns successfully', function(done) {
+          // TODO: uncomment, update parameter values for runsV1BookmarkRuns call
+          /*
+          var owner = "owner_example";
+          var project = "project_example";
+          var body = new PolyaxonSdk.V1Uuids();
+          body.uuids = [""];
+
+          instance.runsV1BookmarkRuns(owner, project, body, function(error, data, response) {
+            if (error) {
+              done(error);
+              return;
+            }
+
+            done();
+          });
+          */
+          // TODO: uncomment and complete method invocation above, then delete this line and the next:
+          done();
+        });
+      });
+      describe('runsV1CollectRunLogs', function() {
+        it('should call runsV1CollectRunLogs successfully', function(done) {
+          // TODO: uncomment, update parameter values for runsV1CollectRunLogs call
           /*
           var namespace = "namespace_example";
           var owner = "owner_example";
           var project = "project_example";
           var uuid = "uuid_example";
 
-          instance.collectRunLogs(namespace, owner, project, uuid, function(error, data, response) {
+          instance.runsV1CollectRunLogs(namespace, owner, project, uuid, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -114,9 +191,9 @@
           done();
         });
       });
-      describe('copyRun', function() {
-        it('should call copyRun successfully', function(done) {
-          // TODO: uncomment, update parameter values for copyRun call and complete the assertions
+      describe('runsV1CopyRun', function() {
+        it('should call runsV1CopyRun successfully', function(done) {
+          // TODO: uncomment, update parameter values for runsV1CopyRun call and complete the assertions
           /*
           var entity_owner = "entity_owner_example";
           var entity_project = "entity_project_example";
@@ -176,7 +253,7 @@
           body.settings.connections[0].uuid = "";
           body.settings.connections[0].name = "";
 
-          instance.copyRun(entity_owner, entity_project, entity_uuid, body, function(error, data, response) {
+          instance.runsV1CopyRun(entity_owner, entity_project, entity_uuid, body, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -309,9 +386,9 @@
           done();
         });
       });
-      describe('createRun', function() {
-        it('should call createRun successfully', function(done) {
-          // TODO: uncomment, update parameter values for createRun call and complete the assertions
+      describe('runsV1CreateRun', function() {
+        it('should call runsV1CreateRun successfully', function(done) {
+          // TODO: uncomment, update parameter values for runsV1CreateRun call and complete the assertions
           /*
           var owner = "owner_example";
           var project = "project_example";
@@ -418,7 +495,7 @@
           body.description = "";
           body.tags = [""];
 
-          instance.createRun(owner, project, body, function(error, data, response) {
+          instance.runsV1CreateRun(owner, project, body, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -551,9 +628,9 @@
           done();
         });
       });
-      describe('createRunArtifactsLineage', function() {
-        it('should call createRunArtifactsLineage successfully', function(done) {
-          // TODO: uncomment, update parameter values for createRunArtifactsLineage call
+      describe('runsV1CreateRunArtifactsLineage', function() {
+        it('should call runsV1CreateRunArtifactsLineage successfully', function(done) {
+          // TODO: uncomment, update parameter values for runsV1CreateRunArtifactsLineage call
           /*
           var owner = "owner_example";
           var project = "project_example";
@@ -568,7 +645,7 @@
           body.artifacts[0].summary = ;
           body.artifacts[0].is_input = false;
 
-          instance.createRunArtifactsLineage(owner, project, uuid, body, function(error, data, response) {
+          instance.runsV1CreateRunArtifactsLineage(owner, project, uuid, body, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -581,9 +658,9 @@
           done();
         });
       });
-      describe('createRunStatus', function() {
-        it('should call createRunStatus successfully', function(done) {
-          // TODO: uncomment, update parameter values for createRunStatus call and complete the assertions
+      describe('runsV1CreateRunStatus', function() {
+        it('should call runsV1CreateRunStatus successfully', function(done) {
+          // TODO: uncomment, update parameter values for runsV1CreateRunStatus call and complete the assertions
           /*
           var owner = "owner_example";
           var project = "project_example";
@@ -600,7 +677,7 @@
           body.condition.last_update_time = new Date();
           body.condition.last_transition_time = new Date();
 
-          instance.createRunStatus(owner, project, uuid, body, function(error, data, response) {
+          instance.runsV1CreateRunStatus(owner, project, uuid, body, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -638,15 +715,15 @@
           done();
         });
       });
-      describe('deleteRun', function() {
-        it('should call deleteRun successfully', function(done) {
-          // TODO: uncomment, update parameter values for deleteRun call
+      describe('runsV1DeleteRun', function() {
+        it('should call runsV1DeleteRun successfully', function(done) {
+          // TODO: uncomment, update parameter values for runsV1DeleteRun call
           /*
           var owner = "owner_example";
           var project = "project_example";
           var uuid = "uuid_example";
 
-          instance.deleteRun(owner, project, uuid, function(error, data, response) {
+          instance.runsV1DeleteRun(owner, project, uuid, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -659,9 +736,9 @@
           done();
         });
       });
-      describe('deleteRunArtifactLineage', function() {
-        it('should call deleteRunArtifactLineage successfully', function(done) {
-          // TODO: uncomment, update parameter values for deleteRunArtifactLineage call
+      describe('runsV1DeleteRunArtifactLineage', function() {
+        it('should call runsV1DeleteRunArtifactLineage successfully', function(done) {
+          // TODO: uncomment, update parameter values for runsV1DeleteRunArtifactLineage call
           /*
           var owner = "owner_example";
           var project = "project_example";
@@ -670,7 +747,7 @@
           var opts = {};
           opts.namespace = "namespace_example";
 
-          instance.deleteRunArtifactLineage(owner, project, uuid, name, opts, function(error, data, response) {
+          instance.runsV1DeleteRunArtifactLineage(owner, project, uuid, name, opts, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -683,16 +760,16 @@
           done();
         });
       });
-      describe('deleteRuns', function() {
-        it('should call deleteRuns successfully', function(done) {
-          // TODO: uncomment, update parameter values for deleteRuns call
+      describe('runsV1DeleteRuns', function() {
+        it('should call runsV1DeleteRuns successfully', function(done) {
+          // TODO: uncomment, update parameter values for runsV1DeleteRuns call
           /*
           var owner = "owner_example";
           var project = "project_example";
           var body = new PolyaxonSdk.V1Uuids();
           body.uuids = [""];
 
-          instance.deleteRuns(owner, project, body, function(error, data, response) {
+          instance.runsV1DeleteRuns(owner, project, body, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -705,9 +782,9 @@
           done();
         });
       });
-      describe('getMultiRunEvents', function() {
-        it('should call getMultiRunEvents successfully', function(done) {
-          // TODO: uncomment, update parameter values for getMultiRunEvents call and complete the assertions
+      describe('runsV1GetMultiRunEvents', function() {
+        it('should call runsV1GetMultiRunEvents successfully', function(done) {
+          // TODO: uncomment, update parameter values for runsV1GetMultiRunEvents call and complete the assertions
           /*
           var namespace = "namespace_example";
           var owner = "owner_example";
@@ -718,7 +795,7 @@
           opts.runs = "runs_example";
           opts.orient = "orient_example";
 
-          instance.getMultiRunEvents(namespace, owner, project, kind, opts, function(error, data, response) {
+          instance.runsV1GetMultiRunEvents(namespace, owner, project, kind, opts, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -743,15 +820,15 @@
           done();
         });
       });
-      describe('getRun', function() {
-        it('should call getRun successfully', function(done) {
-          // TODO: uncomment, update parameter values for getRun call and complete the assertions
+      describe('runsV1GetRun', function() {
+        it('should call runsV1GetRun successfully', function(done) {
+          // TODO: uncomment, update parameter values for runsV1GetRun call and complete the assertions
           /*
           var owner = "owner_example";
           var project = "project_example";
           var uuid = "uuid_example";
 
-          instance.getRun(owner, project, uuid, function(error, data, response) {
+          instance.runsV1GetRun(owner, project, uuid, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -884,37 +961,9 @@
           done();
         });
       });
-      describe('getRunArtifact', function() {
-        it('should call getRunArtifact successfully', function(done) {
-          // TODO: uncomment, update parameter values for getRunArtifact call and complete the assertions
-          /*
-          var namespace = "namespace_example";
-          var owner = "owner_example";
-          var project = "project_example";
-          var uuid = "uuid_example";
-          var opts = {};
-          opts.path = "path_example";
-          opts.stream = true;
-
-          instance.getRunArtifact(namespace, owner, project, uuid, opts, function(error, data, response) {
-            if (error) {
-              done(error);
-              return;
-            }
-            // TODO: update response assertions
-            expect(data).to.be.a('string');
-            // expect(data).to.be(null);
-
-            done();
-          });
-          */
-          // TODO: uncomment and complete method invocation above, then delete this line and the next:
-          done();
-        });
-      });
-      describe('getRunArtifactLineage', function() {
-        it('should call getRunArtifactLineage successfully', function(done) {
-          // TODO: uncomment, update parameter values for getRunArtifactLineage call and complete the assertions
+      describe('runsV1GetRunArtifactLineage', function() {
+        it('should call runsV1GetRunArtifactLineage successfully', function(done) {
+          // TODO: uncomment, update parameter values for runsV1GetRunArtifactLineage call and complete the assertions
           /*
           var owner = "owner_example";
           var project = "project_example";
@@ -923,7 +972,7 @@
           var opts = {};
           opts.namespace = "namespace_example";
 
-          instance.getRunArtifactLineage(owner, project, uuid, name, opts, function(error, data, response) {
+          instance.runsV1GetRunArtifactLineage(owner, project, uuid, name, opts, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -951,36 +1000,9 @@
           done();
         });
       });
-      describe('getRunArtifacts', function() {
-        it('should call getRunArtifacts successfully', function(done) {
-          // TODO: uncomment, update parameter values for getRunArtifacts call and complete the assertions
-          /*
-          var namespace = "namespace_example";
-          var owner = "owner_example";
-          var project = "project_example";
-          var uuid = "uuid_example";
-          var opts = {};
-          opts.path = "path_example";
-
-          instance.getRunArtifacts(namespace, owner, project, uuid, opts, function(error, data, response) {
-            if (error) {
-              done(error);
-              return;
-            }
-            // TODO: update response assertions
-            expect(data).to.be.a('string');
-            // expect(data).to.be(null);
-
-            done();
-          });
-          */
-          // TODO: uncomment and complete method invocation above, then delete this line and the next:
-          done();
-        });
-      });
-      describe('getRunArtifactsLineage', function() {
-        it('should call getRunArtifactsLineage successfully', function(done) {
-          // TODO: uncomment, update parameter values for getRunArtifactsLineage call and complete the assertions
+      describe('runsV1GetRunArtifactsLineage', function() {
+        it('should call runsV1GetRunArtifactsLineage successfully', function(done) {
+          // TODO: uncomment, update parameter values for runsV1GetRunArtifactsLineage call and complete the assertions
           /*
           var owner = "owner_example";
           var project = "project_example";
@@ -990,7 +1012,7 @@
           opts.sort = "sort_example";
           opts.query = "query_example";
 
-          instance.getRunArtifactsLineage(owner, project, uuid, opts, function(error, data, response) {
+          instance.runsV1GetRunArtifactsLineage(owner, project, uuid, opts, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -1033,9 +1055,9 @@
           done();
         });
       });
-      describe('getRunArtifactsLineageNames', function() {
-        it('should call getRunArtifactsLineageNames successfully', function(done) {
-          // TODO: uncomment, update parameter values for getRunArtifactsLineageNames call and complete the assertions
+      describe('runsV1GetRunArtifactsLineageNames', function() {
+        it('should call runsV1GetRunArtifactsLineageNames successfully', function(done) {
+          // TODO: uncomment, update parameter values for runsV1GetRunArtifactsLineageNames call and complete the assertions
           /*
           var owner = "owner_example";
           var project = "project_example";
@@ -1045,7 +1067,7 @@
           opts.sort = "sort_example";
           opts.query = "query_example";
 
-          instance.getRunArtifactsLineageNames(owner, project, uuid, opts, function(error, data, response) {
+          instance.runsV1GetRunArtifactsLineageNames(owner, project, uuid, opts, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -1088,9 +1110,9 @@
           done();
         });
       });
-      describe('getRunArtifactsTree', function() {
-        it('should call getRunArtifactsTree successfully', function(done) {
-          // TODO: uncomment, update parameter values for getRunArtifactsTree call and complete the assertions
+      describe('runsV1GetRunArtifactsTree', function() {
+        it('should call runsV1GetRunArtifactsTree successfully', function(done) {
+          // TODO: uncomment, update parameter values for runsV1GetRunArtifactsTree call and complete the assertions
           /*
           var namespace = "namespace_example";
           var owner = "owner_example";
@@ -1099,7 +1121,7 @@
           var opts = {};
           opts.path = "path_example";
 
-          instance.getRunArtifactsTree(namespace, owner, project, uuid, opts, function(error, data, response) {
+          instance.runsV1GetRunArtifactsTree(namespace, owner, project, uuid, opts, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -1136,9 +1158,9 @@
           done();
         });
       });
-      describe('getRunEvents', function() {
-        it('should call getRunEvents successfully', function(done) {
-          // TODO: uncomment, update parameter values for getRunEvents call and complete the assertions
+      describe('runsV1GetRunEvents', function() {
+        it('should call runsV1GetRunEvents successfully', function(done) {
+          // TODO: uncomment, update parameter values for runsV1GetRunEvents call and complete the assertions
           /*
           var namespace = "namespace_example";
           var owner = "owner_example";
@@ -1149,7 +1171,7 @@
           opts.names = "names_example";
           opts.orient = "orient_example";
 
-          instance.getRunEvents(namespace, owner, project, uuid, kind, opts, function(error, data, response) {
+          instance.runsV1GetRunEvents(namespace, owner, project, uuid, kind, opts, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -1174,9 +1196,9 @@
           done();
         });
       });
-      describe('getRunLogs', function() {
-        it('should call getRunLogs successfully', function(done) {
-          // TODO: uncomment, update parameter values for getRunLogs call and complete the assertions
+      describe('runsV1GetRunLogs', function() {
+        it('should call runsV1GetRunLogs successfully', function(done) {
+          // TODO: uncomment, update parameter values for runsV1GetRunLogs call and complete the assertions
           /*
           var namespace = "namespace_example";
           var owner = "owner_example";
@@ -1186,7 +1208,7 @@
           opts.last_time = new Date("2013-10-20T19:20:30+01:00");
           opts.last_file = "last_file_example";
 
-          instance.getRunLogs(namespace, owner, project, uuid, opts, function(error, data, response) {
+          instance.runsV1GetRunLogs(namespace, owner, project, uuid, opts, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -1224,15 +1246,15 @@
           done();
         });
       });
-      describe('getRunNamespace', function() {
-        it('should call getRunNamespace successfully', function(done) {
-          // TODO: uncomment, update parameter values for getRunNamespace call and complete the assertions
+      describe('runsV1GetRunNamespace', function() {
+        it('should call runsV1GetRunNamespace successfully', function(done) {
+          // TODO: uncomment, update parameter values for runsV1GetRunNamespace call and complete the assertions
           /*
           var owner = "owner_example";
           var project = "project_example";
           var uuid = "uuid_example";
 
-          instance.getRunNamespace(owner, project, uuid, function(error, data, response) {
+          instance.runsV1GetRunNamespace(owner, project, uuid, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -1277,9 +1299,9 @@
           done();
         });
       });
-      describe('getRunResources', function() {
-        it('should call getRunResources successfully', function(done) {
-          // TODO: uncomment, update parameter values for getRunResources call and complete the assertions
+      describe('runsV1GetRunResources', function() {
+        it('should call runsV1GetRunResources successfully', function(done) {
+          // TODO: uncomment, update parameter values for runsV1GetRunResources call and complete the assertions
           /*
           var namespace = "namespace_example";
           var owner = "owner_example";
@@ -1289,7 +1311,7 @@
           opts.names = "names_example";
           opts.tail = true;
 
-          instance.getRunResources(namespace, owner, project, uuid, opts, function(error, data, response) {
+          instance.runsV1GetRunResources(namespace, owner, project, uuid, opts, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -1314,15 +1336,15 @@
           done();
         });
       });
-      describe('getRunSettings', function() {
-        it('should call getRunSettings successfully', function(done) {
-          // TODO: uncomment, update parameter values for getRunSettings call and complete the assertions
+      describe('runsV1GetRunSettings', function() {
+        it('should call runsV1GetRunSettings successfully', function(done) {
+          // TODO: uncomment, update parameter values for runsV1GetRunSettings call and complete the assertions
           /*
           var owner = "owner_example";
           var project = "project_example";
           var uuid = "uuid_example";
 
-          instance.getRunSettings(owner, project, uuid, function(error, data, response) {
+          instance.runsV1GetRunSettings(owner, project, uuid, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -1367,15 +1389,15 @@
           done();
         });
       });
-      describe('getRunStatuses', function() {
-        it('should call getRunStatuses successfully', function(done) {
-          // TODO: uncomment, update parameter values for getRunStatuses call and complete the assertions
+      describe('runsV1GetRunStatuses', function() {
+        it('should call runsV1GetRunStatuses successfully', function(done) {
+          // TODO: uncomment, update parameter values for runsV1GetRunStatuses call and complete the assertions
           /*
           var owner = "owner_example";
           var project = "project_example";
           var uuid = "uuid_example";
 
-          instance.getRunStatuses(owner, project, uuid, function(error, data, response) {
+          instance.runsV1GetRunStatuses(owner, project, uuid, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -1413,15 +1435,35 @@
           done();
         });
       });
-      describe('impersonateToken', function() {
-        it('should call impersonateToken successfully', function(done) {
-          // TODO: uncomment, update parameter values for impersonateToken call and complete the assertions
+      describe('runsV1GetRunsArtifactsLineage', function() {
+        it('should call runsV1GetRunsArtifactsLineage successfully', function(done) {
+          // TODO: uncomment, update parameter values for runsV1GetRunsArtifactsLineage call
+          /*
+          var owner = "owner_example";
+          var project = "project_example";
+
+          instance.runsV1GetRunsArtifactsLineage(owner, project, function(error, data, response) {
+            if (error) {
+              done(error);
+              return;
+            }
+
+            done();
+          });
+          */
+          // TODO: uncomment and complete method invocation above, then delete this line and the next:
+          done();
+        });
+      });
+      describe('runsV1ImpersonateToken', function() {
+        it('should call runsV1ImpersonateToken successfully', function(done) {
+          // TODO: uncomment, update parameter values for runsV1ImpersonateToken call and complete the assertions
           /*
           var owner = "owner_example";
           var project = "project_example";
           var uuid = "uuid_example";
 
-          instance.impersonateToken(owner, project, uuid, function(error, data, response) {
+          instance.runsV1ImpersonateToken(owner, project, uuid, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -1438,9 +1480,9 @@
           done();
         });
       });
-      describe('invalidateRun', function() {
-        it('should call invalidateRun successfully', function(done) {
-          // TODO: uncomment, update parameter values for invalidateRun call
+      describe('runsV1InvalidateRun', function() {
+        it('should call runsV1InvalidateRun successfully', function(done) {
+          // TODO: uncomment, update parameter values for runsV1InvalidateRun call
           /*
           var owner = "owner_example";
           var project = "project_example";
@@ -1450,7 +1492,7 @@
           body.project = "";
           body.uuid = "";
 
-          instance.invalidateRun(owner, project, uuid, body, function(error, data, response) {
+          instance.runsV1InvalidateRun(owner, project, uuid, body, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -1463,16 +1505,16 @@
           done();
         });
       });
-      describe('invalidateRuns', function() {
-        it('should call invalidateRuns successfully', function(done) {
-          // TODO: uncomment, update parameter values for invalidateRuns call
+      describe('runsV1InvalidateRuns', function() {
+        it('should call runsV1InvalidateRuns successfully', function(done) {
+          // TODO: uncomment, update parameter values for runsV1InvalidateRuns call
           /*
           var owner = "owner_example";
           var project = "project_example";
           var body = new PolyaxonSdk.V1Uuids();
           body.uuids = [""];
 
-          instance.invalidateRuns(owner, project, body, function(error, data, response) {
+          instance.runsV1InvalidateRuns(owner, project, body, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -1485,9 +1527,9 @@
           done();
         });
       });
-      describe('listArchivedRuns', function() {
-        it('should call listArchivedRuns successfully', function(done) {
-          // TODO: uncomment, update parameter values for listArchivedRuns call and complete the assertions
+      describe('runsV1ListArchivedRuns', function() {
+        it('should call runsV1ListArchivedRuns successfully', function(done) {
+          // TODO: uncomment, update parameter values for runsV1ListArchivedRuns call and complete the assertions
           /*
           var user = "user_example";
           var opts = {};
@@ -1496,7 +1538,7 @@
           opts.sort = "sort_example";
           opts.query = "query_example";
 
-          instance.listArchivedRuns(user, opts, function(error, data, response) {
+          instance.runsV1ListArchivedRuns(user, opts, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -1644,9 +1686,9 @@
           done();
         });
       });
-      describe('listBookmarkedRuns', function() {
-        it('should call listBookmarkedRuns successfully', function(done) {
-          // TODO: uncomment, update parameter values for listBookmarkedRuns call and complete the assertions
+      describe('runsV1ListBookmarkedRuns', function() {
+        it('should call runsV1ListBookmarkedRuns successfully', function(done) {
+          // TODO: uncomment, update parameter values for runsV1ListBookmarkedRuns call and complete the assertions
           /*
           var user = "user_example";
           var opts = {};
@@ -1655,7 +1697,7 @@
           opts.sort = "sort_example";
           opts.query = "query_example";
 
-          instance.listBookmarkedRuns(user, opts, function(error, data, response) {
+          instance.runsV1ListBookmarkedRuns(user, opts, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -1803,9 +1845,9 @@
           done();
         });
       });
-      describe('listRuns', function() {
-        it('should call listRuns successfully', function(done) {
-          // TODO: uncomment, update parameter values for listRuns call and complete the assertions
+      describe('runsV1ListRuns', function() {
+        it('should call runsV1ListRuns successfully', function(done) {
+          // TODO: uncomment, update parameter values for runsV1ListRuns call and complete the assertions
           /*
           var owner = "owner_example";
           var project = "project_example";
@@ -1815,7 +1857,7 @@
           opts.sort = "sort_example";
           opts.query = "query_example";
 
-          instance.listRuns(owner, project, opts, function(error, data, response) {
+          instance.runsV1ListRuns(owner, project, opts, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -1963,9 +2005,9 @@
           done();
         });
       });
-      describe('listRunsIo', function() {
-        it('should call listRunsIo successfully', function(done) {
-          // TODO: uncomment, update parameter values for listRunsIo call and complete the assertions
+      describe('runsV1ListRunsIo', function() {
+        it('should call runsV1ListRunsIo successfully', function(done) {
+          // TODO: uncomment, update parameter values for runsV1ListRunsIo call and complete the assertions
           /*
           var owner = "owner_example";
           var project = "project_example";
@@ -1975,7 +2017,7 @@
           opts.sort = "sort_example";
           opts.query = "query_example";
 
-          instance.listRunsIo(owner, project, opts, function(error, data, response) {
+          instance.runsV1ListRunsIo(owner, project, opts, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -2123,9 +2165,9 @@
           done();
         });
       });
-      describe('notifyRunStatus', function() {
-        it('should call notifyRunStatus successfully', function(done) {
-          // TODO: uncomment, update parameter values for notifyRunStatus call
+      describe('runsV1NotifyRunStatus', function() {
+        it('should call runsV1NotifyRunStatus successfully', function(done) {
+          // TODO: uncomment, update parameter values for runsV1NotifyRunStatus call
           /*
           var namespace = "namespace_example";
           var owner = "owner_example";
@@ -2146,7 +2188,7 @@
           body.condition.last_transition_time = new Date();
           body.connections = [""];
 
-          instance.notifyRunStatus(namespace, owner, project, uuid, body, function(error, data, response) {
+          instance.runsV1NotifyRunStatus(namespace, owner, project, uuid, body, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -2159,9 +2201,9 @@
           done();
         });
       });
-      describe('patchRun', function() {
-        it('should call patchRun successfully', function(done) {
-          // TODO: uncomment, update parameter values for patchRun call and complete the assertions
+      describe('runsV1PatchRun', function() {
+        it('should call runsV1PatchRun successfully', function(done) {
+          // TODO: uncomment, update parameter values for runsV1PatchRun call and complete the assertions
           /*
           var owner = "owner_example";
           var project = "project_example";
@@ -2221,7 +2263,7 @@
           body.settings.connections[0].uuid = "";
           body.settings.connections[0].name = "";
 
-          instance.patchRun(owner, project, run_uuid, body, function(error, data, response) {
+          instance.runsV1PatchRun(owner, project, run_uuid, body, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -2354,9 +2396,9 @@
           done();
         });
       });
-      describe('restartRun', function() {
-        it('should call restartRun successfully', function(done) {
-          // TODO: uncomment, update parameter values for restartRun call and complete the assertions
+      describe('runsV1RestartRun', function() {
+        it('should call runsV1RestartRun successfully', function(done) {
+          // TODO: uncomment, update parameter values for runsV1RestartRun call and complete the assertions
           /*
           var entity_owner = "entity_owner_example";
           var entity_project = "entity_project_example";
@@ -2416,7 +2458,7 @@
           body.settings.connections[0].uuid = "";
           body.settings.connections[0].name = "";
 
-          instance.restartRun(entity_owner, entity_project, entity_uuid, body, function(error, data, response) {
+          instance.runsV1RestartRun(entity_owner, entity_project, entity_uuid, body, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -2549,15 +2591,15 @@
           done();
         });
       });
-      describe('restoreRun', function() {
-        it('should call restoreRun successfully', function(done) {
-          // TODO: uncomment, update parameter values for restoreRun call
+      describe('runsV1RestoreRun', function() {
+        it('should call runsV1RestoreRun successfully', function(done) {
+          // TODO: uncomment, update parameter values for runsV1RestoreRun call
           /*
           var owner = "owner_example";
           var project = "project_example";
           var uuid = "uuid_example";
 
-          instance.restoreRun(owner, project, uuid, function(error, data, response) {
+          instance.runsV1RestoreRun(owner, project, uuid, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -2570,9 +2612,9 @@
           done();
         });
       });
-      describe('resumeRun', function() {
-        it('should call resumeRun successfully', function(done) {
-          // TODO: uncomment, update parameter values for resumeRun call and complete the assertions
+      describe('runsV1ResumeRun', function() {
+        it('should call runsV1ResumeRun successfully', function(done) {
+          // TODO: uncomment, update parameter values for runsV1ResumeRun call and complete the assertions
           /*
           var entity_owner = "entity_owner_example";
           var entity_project = "entity_project_example";
@@ -2632,7 +2674,7 @@
           body.settings.connections[0].uuid = "";
           body.settings.connections[0].name = "";
 
-          instance.resumeRun(entity_owner, entity_project, entity_uuid, body, function(error, data, response) {
+          instance.runsV1ResumeRun(entity_owner, entity_project, entity_uuid, body, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -2765,9 +2807,9 @@
           done();
         });
       });
-      describe('startRunTensorboard', function() {
-        it('should call startRunTensorboard successfully', function(done) {
-          // TODO: uncomment, update parameter values for startRunTensorboard call
+      describe('runsV1StartRunTensorboard', function() {
+        it('should call runsV1StartRunTensorboard successfully', function(done) {
+          // TODO: uncomment, update parameter values for runsV1StartRunTensorboard call
           /*
           var owner = "owner_example";
           var project = "project_example";
@@ -2777,7 +2819,7 @@
           body.project = "";
           body.uuid = "";
 
-          instance.startRunTensorboard(owner, project, uuid, body, function(error, data, response) {
+          instance.runsV1StartRunTensorboard(owner, project, uuid, body, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -2790,15 +2832,15 @@
           done();
         });
       });
-      describe('stopRun', function() {
-        it('should call stopRun successfully', function(done) {
-          // TODO: uncomment, update parameter values for stopRun call
+      describe('runsV1StopRun', function() {
+        it('should call runsV1StopRun successfully', function(done) {
+          // TODO: uncomment, update parameter values for runsV1StopRun call
           /*
           var owner = "owner_example";
           var project = "project_example";
           var uuid = "uuid_example";
 
-          instance.stopRun(owner, project, uuid, function(error, data, response) {
+          instance.runsV1StopRun(owner, project, uuid, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -2811,15 +2853,15 @@
           done();
         });
       });
-      describe('stopRunTensorboard', function() {
-        it('should call stopRunTensorboard successfully', function(done) {
-          // TODO: uncomment, update parameter values for stopRunTensorboard call
+      describe('runsV1StopRunTensorboard', function() {
+        it('should call runsV1StopRunTensorboard successfully', function(done) {
+          // TODO: uncomment, update parameter values for runsV1StopRunTensorboard call
           /*
           var owner = "owner_example";
           var project = "project_example";
           var uuid = "uuid_example";
 
-          instance.stopRunTensorboard(owner, project, uuid, function(error, data, response) {
+          instance.runsV1StopRunTensorboard(owner, project, uuid, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -2832,16 +2874,16 @@
           done();
         });
       });
-      describe('stopRuns', function() {
-        it('should call stopRuns successfully', function(done) {
-          // TODO: uncomment, update parameter values for stopRuns call
+      describe('runsV1StopRuns', function() {
+        it('should call runsV1StopRuns successfully', function(done) {
+          // TODO: uncomment, update parameter values for runsV1StopRuns call
           /*
           var owner = "owner_example";
           var project = "project_example";
           var body = new PolyaxonSdk.V1Uuids();
           body.uuids = [""];
 
-          instance.stopRuns(owner, project, body, function(error, data, response) {
+          instance.runsV1StopRuns(owner, project, body, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -2854,15 +2896,37 @@
           done();
         });
       });
-      describe('unbookmarkRun', function() {
-        it('should call unbookmarkRun successfully', function(done) {
-          // TODO: uncomment, update parameter values for unbookmarkRun call
+      describe('runsV1TagRuns', function() {
+        it('should call runsV1TagRuns successfully', function(done) {
+          // TODO: uncomment, update parameter values for runsV1TagRuns call
+          /*
+          var owner = "owner_example";
+          var project = "project_example";
+          var body = new PolyaxonSdk.V1Uuids();
+          body.uuids = [""];
+
+          instance.runsV1TagRuns(owner, project, body, function(error, data, response) {
+            if (error) {
+              done(error);
+              return;
+            }
+
+            done();
+          });
+          */
+          // TODO: uncomment and complete method invocation above, then delete this line and the next:
+          done();
+        });
+      });
+      describe('runsV1UnbookmarkRun', function() {
+        it('should call runsV1UnbookmarkRun successfully', function(done) {
+          // TODO: uncomment, update parameter values for runsV1UnbookmarkRun call
           /*
           var owner = "owner_example";
           var project = "project_example";
           var uuid = "uuid_example";
 
-          instance.unbookmarkRun(owner, project, uuid, function(error, data, response) {
+          instance.runsV1UnbookmarkRun(owner, project, uuid, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -2875,9 +2939,9 @@
           done();
         });
       });
-      describe('updateRun', function() {
-        it('should call updateRun successfully', function(done) {
-          // TODO: uncomment, update parameter values for updateRun call and complete the assertions
+      describe('runsV1UpdateRun', function() {
+        it('should call runsV1UpdateRun successfully', function(done) {
+          // TODO: uncomment, update parameter values for runsV1UpdateRun call and complete the assertions
           /*
           var owner = "owner_example";
           var project = "project_example";
@@ -2937,7 +3001,7 @@
           body.settings.connections[0].uuid = "";
           body.settings.connections[0].name = "";
 
-          instance.updateRun(owner, project, run_uuid, body, function(error, data, response) {
+          instance.runsV1UpdateRun(owner, project, run_uuid, body, function(error, data, response) {
             if (error) {
               done(error);
               return;

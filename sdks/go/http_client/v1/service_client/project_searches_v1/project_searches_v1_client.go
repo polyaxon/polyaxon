@@ -39,43 +39,43 @@ type Client struct {
 
 // ClientService is the interface for Client methods
 type ClientService interface {
-	CreateProjectSearch(params *CreateProjectSearchParams, authInfo runtime.ClientAuthInfoWriter) (*CreateProjectSearchOK, *CreateProjectSearchNoContent, error)
+	ProjectSearchesV1CreateProjectSearch(params *ProjectSearchesV1CreateProjectSearchParams, authInfo runtime.ClientAuthInfoWriter) (*ProjectSearchesV1CreateProjectSearchOK, *ProjectSearchesV1CreateProjectSearchNoContent, error)
 
-	DeleteProjectSearch(params *DeleteProjectSearchParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteProjectSearchOK, *DeleteProjectSearchNoContent, error)
+	ProjectSearchesV1DeleteProjectSearch(params *ProjectSearchesV1DeleteProjectSearchParams, authInfo runtime.ClientAuthInfoWriter) (*ProjectSearchesV1DeleteProjectSearchOK, *ProjectSearchesV1DeleteProjectSearchNoContent, error)
 
-	GetProjectSearch(params *GetProjectSearchParams, authInfo runtime.ClientAuthInfoWriter) (*GetProjectSearchOK, *GetProjectSearchNoContent, error)
+	ProjectSearchesV1GetProjectSearch(params *ProjectSearchesV1GetProjectSearchParams, authInfo runtime.ClientAuthInfoWriter) (*ProjectSearchesV1GetProjectSearchOK, *ProjectSearchesV1GetProjectSearchNoContent, error)
 
-	ListProjectSearchNames(params *ListProjectSearchNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListProjectSearchNamesOK, *ListProjectSearchNamesNoContent, error)
+	ProjectSearchesV1ListProjectSearchNames(params *ProjectSearchesV1ListProjectSearchNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ProjectSearchesV1ListProjectSearchNamesOK, *ProjectSearchesV1ListProjectSearchNamesNoContent, error)
 
-	ListProjectSearches(params *ListProjectSearchesParams, authInfo runtime.ClientAuthInfoWriter) (*ListProjectSearchesOK, *ListProjectSearchesNoContent, error)
+	ProjectSearchesV1ListProjectSearches(params *ProjectSearchesV1ListProjectSearchesParams, authInfo runtime.ClientAuthInfoWriter) (*ProjectSearchesV1ListProjectSearchesOK, *ProjectSearchesV1ListProjectSearchesNoContent, error)
 
-	PatchProjectSearch(params *PatchProjectSearchParams, authInfo runtime.ClientAuthInfoWriter) (*PatchProjectSearchOK, *PatchProjectSearchNoContent, error)
+	ProjectSearchesV1PatchProjectSearch(params *ProjectSearchesV1PatchProjectSearchParams, authInfo runtime.ClientAuthInfoWriter) (*ProjectSearchesV1PatchProjectSearchOK, *ProjectSearchesV1PatchProjectSearchNoContent, error)
 
-	PromoteProjectSearch(params *PromoteProjectSearchParams, authInfo runtime.ClientAuthInfoWriter) (*PromoteProjectSearchOK, *PromoteProjectSearchNoContent, error)
+	ProjectSearchesV1PromoteProjectSearch(params *ProjectSearchesV1PromoteProjectSearchParams, authInfo runtime.ClientAuthInfoWriter) (*ProjectSearchesV1PromoteProjectSearchOK, *ProjectSearchesV1PromoteProjectSearchNoContent, error)
 
-	UpdateProjectSearch(params *UpdateProjectSearchParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateProjectSearchOK, *UpdateProjectSearchNoContent, error)
+	ProjectSearchesV1UpdateProjectSearch(params *ProjectSearchesV1UpdateProjectSearchParams, authInfo runtime.ClientAuthInfoWriter) (*ProjectSearchesV1UpdateProjectSearchOK, *ProjectSearchesV1UpdateProjectSearchNoContent, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
 
 /*
-  CreateProjectSearch creates project search
+  ProjectSearchesV1CreateProjectSearch creates project search
 */
-func (a *Client) CreateProjectSearch(params *CreateProjectSearchParams, authInfo runtime.ClientAuthInfoWriter) (*CreateProjectSearchOK, *CreateProjectSearchNoContent, error) {
+func (a *Client) ProjectSearchesV1CreateProjectSearch(params *ProjectSearchesV1CreateProjectSearchParams, authInfo runtime.ClientAuthInfoWriter) (*ProjectSearchesV1CreateProjectSearchOK, *ProjectSearchesV1CreateProjectSearchNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewCreateProjectSearchParams()
+		params = NewProjectSearchesV1CreateProjectSearchParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "CreateProjectSearch",
+		ID:                 "ProjectSearchesV1_CreateProjectSearch",
 		Method:             "POST",
 		PathPattern:        "/api/v1/{owner}/{project}/searches",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &CreateProjectSearchReader{formats: a.formats},
+		Reader:             &ProjectSearchesV1CreateProjectSearchReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -84,34 +84,34 @@ func (a *Client) CreateProjectSearch(params *CreateProjectSearchParams, authInfo
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *CreateProjectSearchOK:
+	case *ProjectSearchesV1CreateProjectSearchOK:
 		return value, nil, nil
-	case *CreateProjectSearchNoContent:
+	case *ProjectSearchesV1CreateProjectSearchNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*CreateProjectSearchDefault)
+	unexpectedSuccess := result.(*ProjectSearchesV1CreateProjectSearchDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  DeleteProjectSearch deletes project search
+  ProjectSearchesV1DeleteProjectSearch deletes project search
 */
-func (a *Client) DeleteProjectSearch(params *DeleteProjectSearchParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteProjectSearchOK, *DeleteProjectSearchNoContent, error) {
+func (a *Client) ProjectSearchesV1DeleteProjectSearch(params *ProjectSearchesV1DeleteProjectSearchParams, authInfo runtime.ClientAuthInfoWriter) (*ProjectSearchesV1DeleteProjectSearchOK, *ProjectSearchesV1DeleteProjectSearchNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewDeleteProjectSearchParams()
+		params = NewProjectSearchesV1DeleteProjectSearchParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "DeleteProjectSearch",
+		ID:                 "ProjectSearchesV1_DeleteProjectSearch",
 		Method:             "DELETE",
 		PathPattern:        "/api/v1/{owner}/{project}/searches/{uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &DeleteProjectSearchReader{formats: a.formats},
+		Reader:             &ProjectSearchesV1DeleteProjectSearchReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -120,34 +120,34 @@ func (a *Client) DeleteProjectSearch(params *DeleteProjectSearchParams, authInfo
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *DeleteProjectSearchOK:
+	case *ProjectSearchesV1DeleteProjectSearchOK:
 		return value, nil, nil
-	case *DeleteProjectSearchNoContent:
+	case *ProjectSearchesV1DeleteProjectSearchNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*DeleteProjectSearchDefault)
+	unexpectedSuccess := result.(*ProjectSearchesV1DeleteProjectSearchDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  GetProjectSearch gets project search
+  ProjectSearchesV1GetProjectSearch gets project search
 */
-func (a *Client) GetProjectSearch(params *GetProjectSearchParams, authInfo runtime.ClientAuthInfoWriter) (*GetProjectSearchOK, *GetProjectSearchNoContent, error) {
+func (a *Client) ProjectSearchesV1GetProjectSearch(params *ProjectSearchesV1GetProjectSearchParams, authInfo runtime.ClientAuthInfoWriter) (*ProjectSearchesV1GetProjectSearchOK, *ProjectSearchesV1GetProjectSearchNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewGetProjectSearchParams()
+		params = NewProjectSearchesV1GetProjectSearchParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "GetProjectSearch",
+		ID:                 "ProjectSearchesV1_GetProjectSearch",
 		Method:             "GET",
 		PathPattern:        "/api/v1/{owner}/{project}/searches/{uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &GetProjectSearchReader{formats: a.formats},
+		Reader:             &ProjectSearchesV1GetProjectSearchReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -156,34 +156,34 @@ func (a *Client) GetProjectSearch(params *GetProjectSearchParams, authInfo runti
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *GetProjectSearchOK:
+	case *ProjectSearchesV1GetProjectSearchOK:
 		return value, nil, nil
-	case *GetProjectSearchNoContent:
+	case *ProjectSearchesV1GetProjectSearchNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*GetProjectSearchDefault)
+	unexpectedSuccess := result.(*ProjectSearchesV1GetProjectSearchDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  ListProjectSearchNames lists project search names
+  ProjectSearchesV1ListProjectSearchNames lists project search names
 */
-func (a *Client) ListProjectSearchNames(params *ListProjectSearchNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListProjectSearchNamesOK, *ListProjectSearchNamesNoContent, error) {
+func (a *Client) ProjectSearchesV1ListProjectSearchNames(params *ProjectSearchesV1ListProjectSearchNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ProjectSearchesV1ListProjectSearchNamesOK, *ProjectSearchesV1ListProjectSearchNamesNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewListProjectSearchNamesParams()
+		params = NewProjectSearchesV1ListProjectSearchNamesParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "ListProjectSearchNames",
+		ID:                 "ProjectSearchesV1_ListProjectSearchNames",
 		Method:             "GET",
 		PathPattern:        "/api/v1/{owner}/{project}/searches/names",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &ListProjectSearchNamesReader{formats: a.formats},
+		Reader:             &ProjectSearchesV1ListProjectSearchNamesReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -192,34 +192,34 @@ func (a *Client) ListProjectSearchNames(params *ListProjectSearchNamesParams, au
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *ListProjectSearchNamesOK:
+	case *ProjectSearchesV1ListProjectSearchNamesOK:
 		return value, nil, nil
-	case *ListProjectSearchNamesNoContent:
+	case *ProjectSearchesV1ListProjectSearchNamesNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*ListProjectSearchNamesDefault)
+	unexpectedSuccess := result.(*ProjectSearchesV1ListProjectSearchNamesDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  ListProjectSearches lists project searches
+  ProjectSearchesV1ListProjectSearches lists project searches
 */
-func (a *Client) ListProjectSearches(params *ListProjectSearchesParams, authInfo runtime.ClientAuthInfoWriter) (*ListProjectSearchesOK, *ListProjectSearchesNoContent, error) {
+func (a *Client) ProjectSearchesV1ListProjectSearches(params *ProjectSearchesV1ListProjectSearchesParams, authInfo runtime.ClientAuthInfoWriter) (*ProjectSearchesV1ListProjectSearchesOK, *ProjectSearchesV1ListProjectSearchesNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewListProjectSearchesParams()
+		params = NewProjectSearchesV1ListProjectSearchesParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "ListProjectSearches",
+		ID:                 "ProjectSearchesV1_ListProjectSearches",
 		Method:             "GET",
 		PathPattern:        "/api/v1/{owner}/{project}/searches",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &ListProjectSearchesReader{formats: a.formats},
+		Reader:             &ProjectSearchesV1ListProjectSearchesReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -228,34 +228,34 @@ func (a *Client) ListProjectSearches(params *ListProjectSearchesParams, authInfo
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *ListProjectSearchesOK:
+	case *ProjectSearchesV1ListProjectSearchesOK:
 		return value, nil, nil
-	case *ListProjectSearchesNoContent:
+	case *ProjectSearchesV1ListProjectSearchesNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*ListProjectSearchesDefault)
+	unexpectedSuccess := result.(*ProjectSearchesV1ListProjectSearchesDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  PatchProjectSearch patches project search
+  ProjectSearchesV1PatchProjectSearch patches project search
 */
-func (a *Client) PatchProjectSearch(params *PatchProjectSearchParams, authInfo runtime.ClientAuthInfoWriter) (*PatchProjectSearchOK, *PatchProjectSearchNoContent, error) {
+func (a *Client) ProjectSearchesV1PatchProjectSearch(params *ProjectSearchesV1PatchProjectSearchParams, authInfo runtime.ClientAuthInfoWriter) (*ProjectSearchesV1PatchProjectSearchOK, *ProjectSearchesV1PatchProjectSearchNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewPatchProjectSearchParams()
+		params = NewProjectSearchesV1PatchProjectSearchParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "PatchProjectSearch",
+		ID:                 "ProjectSearchesV1_PatchProjectSearch",
 		Method:             "PATCH",
 		PathPattern:        "/api/v1/{owner}/{project}/searches/{search.uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &PatchProjectSearchReader{formats: a.formats},
+		Reader:             &ProjectSearchesV1PatchProjectSearchReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -264,34 +264,34 @@ func (a *Client) PatchProjectSearch(params *PatchProjectSearchParams, authInfo r
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *PatchProjectSearchOK:
+	case *ProjectSearchesV1PatchProjectSearchOK:
 		return value, nil, nil
-	case *PatchProjectSearchNoContent:
+	case *ProjectSearchesV1PatchProjectSearchNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*PatchProjectSearchDefault)
+	unexpectedSuccess := result.(*ProjectSearchesV1PatchProjectSearchDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  PromoteProjectSearch promotes project search
+  ProjectSearchesV1PromoteProjectSearch promotes project search
 */
-func (a *Client) PromoteProjectSearch(params *PromoteProjectSearchParams, authInfo runtime.ClientAuthInfoWriter) (*PromoteProjectSearchOK, *PromoteProjectSearchNoContent, error) {
+func (a *Client) ProjectSearchesV1PromoteProjectSearch(params *ProjectSearchesV1PromoteProjectSearchParams, authInfo runtime.ClientAuthInfoWriter) (*ProjectSearchesV1PromoteProjectSearchOK, *ProjectSearchesV1PromoteProjectSearchNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewPromoteProjectSearchParams()
+		params = NewProjectSearchesV1PromoteProjectSearchParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "PromoteProjectSearch",
+		ID:                 "ProjectSearchesV1_PromoteProjectSearch",
 		Method:             "POST",
 		PathPattern:        "/api/v1/{owner}/{project}/searches/{uuid}/promote",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &PromoteProjectSearchReader{formats: a.formats},
+		Reader:             &ProjectSearchesV1PromoteProjectSearchReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -300,34 +300,34 @@ func (a *Client) PromoteProjectSearch(params *PromoteProjectSearchParams, authIn
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *PromoteProjectSearchOK:
+	case *ProjectSearchesV1PromoteProjectSearchOK:
 		return value, nil, nil
-	case *PromoteProjectSearchNoContent:
+	case *ProjectSearchesV1PromoteProjectSearchNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*PromoteProjectSearchDefault)
+	unexpectedSuccess := result.(*ProjectSearchesV1PromoteProjectSearchDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  UpdateProjectSearch updates project search
+  ProjectSearchesV1UpdateProjectSearch updates project search
 */
-func (a *Client) UpdateProjectSearch(params *UpdateProjectSearchParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateProjectSearchOK, *UpdateProjectSearchNoContent, error) {
+func (a *Client) ProjectSearchesV1UpdateProjectSearch(params *ProjectSearchesV1UpdateProjectSearchParams, authInfo runtime.ClientAuthInfoWriter) (*ProjectSearchesV1UpdateProjectSearchOK, *ProjectSearchesV1UpdateProjectSearchNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewUpdateProjectSearchParams()
+		params = NewProjectSearchesV1UpdateProjectSearchParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "UpdateProjectSearch",
+		ID:                 "ProjectSearchesV1_UpdateProjectSearch",
 		Method:             "PUT",
 		PathPattern:        "/api/v1/{owner}/{project}/searches/{search.uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &UpdateProjectSearchReader{formats: a.formats},
+		Reader:             &ProjectSearchesV1UpdateProjectSearchReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -336,13 +336,13 @@ func (a *Client) UpdateProjectSearch(params *UpdateProjectSearchParams, authInfo
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *UpdateProjectSearchOK:
+	case *ProjectSearchesV1UpdateProjectSearchOK:
 		return value, nil, nil
-	case *UpdateProjectSearchNoContent:
+	case *ProjectSearchesV1UpdateProjectSearchNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*UpdateProjectSearchDefault)
+	unexpectedSuccess := result.(*ProjectSearchesV1UpdateProjectSearchDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 

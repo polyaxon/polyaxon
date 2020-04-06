@@ -57,11 +57,11 @@ public class ProjectSearchesV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void createProjectSearchTest() throws ApiException {
+    public void projectSearchesV1CreateProjectSearchTest() throws ApiException {
         String owner = null;
         String project = null;
         V1Search body = null;
-        V1Search response = api.createProjectSearch(owner, project, body);
+        V1Search response = api.projectSearchesV1CreateProjectSearch(owner, project, body);
 
         // TODO: test validations
     }
@@ -75,11 +75,11 @@ public class ProjectSearchesV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void deleteProjectSearchTest() throws ApiException {
+    public void projectSearchesV1DeleteProjectSearchTest() throws ApiException {
         String owner = null;
         String project = null;
         String uuid = null;
-        api.deleteProjectSearch(owner, project, uuid);
+        api.projectSearchesV1DeleteProjectSearch(owner, project, uuid);
 
         // TODO: test validations
     }
@@ -93,11 +93,11 @@ public class ProjectSearchesV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void getProjectSearchTest() throws ApiException {
+    public void projectSearchesV1GetProjectSearchTest() throws ApiException {
         String owner = null;
         String project = null;
         String uuid = null;
-        V1Search response = api.getProjectSearch(owner, project, uuid);
+        V1Search response = api.projectSearchesV1GetProjectSearch(owner, project, uuid);
 
         // TODO: test validations
     }
@@ -111,14 +111,14 @@ public class ProjectSearchesV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void listProjectSearchNamesTest() throws ApiException {
+    public void projectSearchesV1ListProjectSearchNamesTest() throws ApiException {
         String owner = null;
         String project = null;
         Integer offset = null;
         Integer limit = null;
         String sort = null;
         String query = null;
-        V1ListSearchesResponse response = api.listProjectSearchNames(owner, project, offset, limit, sort, query);
+        V1ListSearchesResponse response = api.projectSearchesV1ListProjectSearchNames(owner, project, offset, limit, sort, query);
 
         // TODO: test validations
     }
@@ -132,14 +132,14 @@ public class ProjectSearchesV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void listProjectSearchesTest() throws ApiException {
+    public void projectSearchesV1ListProjectSearchesTest() throws ApiException {
         String owner = null;
         String project = null;
         Integer offset = null;
         Integer limit = null;
         String sort = null;
         String query = null;
-        V1ListSearchesResponse response = api.listProjectSearches(owner, project, offset, limit, sort, query);
+        V1ListSearchesResponse response = api.projectSearchesV1ListProjectSearches(owner, project, offset, limit, sort, query);
 
         // TODO: test validations
     }
@@ -153,12 +153,12 @@ public class ProjectSearchesV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void patchProjectSearchTest() throws ApiException {
+    public void projectSearchesV1PatchProjectSearchTest() throws ApiException {
         String owner = null;
         String project = null;
         String searchUuid = null;
         V1Search body = null;
-        V1Search response = api.patchProjectSearch(owner, project, searchUuid, body);
+        V1Search response = api.projectSearchesV1PatchProjectSearch(owner, project, searchUuid, body);
 
         // TODO: test validations
     }
@@ -172,11 +172,11 @@ public class ProjectSearchesV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void promoteProjectSearchTest() throws ApiException {
+    public void projectSearchesV1PromoteProjectSearchTest() throws ApiException {
         String owner = null;
         String project = null;
         String uuid = null;
-        api.promoteProjectSearch(owner, project, uuid);
+        api.projectSearchesV1PromoteProjectSearch(owner, project, uuid);
 
         // TODO: test validations
     }
@@ -190,12 +190,12 @@ public class ProjectSearchesV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void updateProjectSearchTest() throws ApiException {
+    public void projectSearchesV1UpdateProjectSearchTest() throws ApiException {
         String owner = null;
         String project = null;
         String searchUuid = null;
         V1Search body = null;
-        V1Search response = api.updateProjectSearch(owner, project, searchUuid, body);
+        V1Search response = api.projectSearchesV1UpdateProjectSearch(owner, project, searchUuid, body);
 
         // TODO: test validations
     }

@@ -63,8 +63,8 @@
 
 
     /**
-     * Callback function to receive the result of the getUser operation.
-     * @callback module:api/UsersV1Api~getUserCallback
+     * Callback function to receive the result of the usersV1GetUser operation.
+     * @callback module:api/UsersV1Api~usersV1GetUserCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1User} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -72,10 +72,10 @@
 
     /**
      * Login
-     * @param {module:api/UsersV1Api~getUserCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/UsersV1Api~usersV1GetUserCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1User}
      */
-    this.getUser = function(callback) {
+    this.usersV1GetUser = function(callback) {
       var postBody = null;
 
 

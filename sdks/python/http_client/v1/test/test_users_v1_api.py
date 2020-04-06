@@ -45,8 +45,8 @@ class TestUsersV1Api(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def test_get_user(self):
-        """Test case for get_user
+    def test_users_v1_get_user(self):
+        """Test case for users_v1_get_user
 
         Login  # noqa: E501
         """

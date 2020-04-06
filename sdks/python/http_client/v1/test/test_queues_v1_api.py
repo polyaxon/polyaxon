@@ -45,64 +45,64 @@ class TestQueuesV1Api(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def test_create_queue(self):
-        """Test case for create_queue
+    def test_queues_v1_create_queue(self):
+        """Test case for queues_v1_create_queue
 
         Update agent  # noqa: E501
         """
         pass
 
-    def test_delete_queue(self):
-        """Test case for delete_queue
+    def test_queues_v1_delete_queue(self):
+        """Test case for queues_v1_delete_queue
 
         Sync agent  # noqa: E501
         """
         pass
 
-    def test_get_queue(self):
-        """Test case for get_queue
+    def test_queues_v1_get_queue(self):
+        """Test case for queues_v1_get_queue
 
         Patch agent  # noqa: E501
         """
         pass
 
-    def test_list_organization_queue_names(self):
-        """Test case for list_organization_queue_names
+    def test_queues_v1_list_organization_queue_names(self):
+        """Test case for queues_v1_list_organization_queue_names
 
         List agents names  # noqa: E501
         """
         pass
 
-    def test_list_organization_queues(self):
-        """Test case for list_organization_queues
+    def test_queues_v1_list_organization_queues(self):
+        """Test case for queues_v1_list_organization_queues
 
         List agents  # noqa: E501
         """
         pass
 
-    def test_list_queue_names(self):
-        """Test case for list_queue_names
+    def test_queues_v1_list_queue_names(self):
+        """Test case for queues_v1_list_queue_names
 
         Create agent  # noqa: E501
         """
         pass
 
-    def test_list_queues(self):
-        """Test case for list_queues
+    def test_queues_v1_list_queues(self):
+        """Test case for queues_v1_list_queues
 
         Get agent  # noqa: E501
         """
         pass
 
-    def test_patch_queue(self):
-        """Test case for patch_queue
+    def test_queues_v1_patch_queue(self):
+        """Test case for queues_v1_patch_queue
 
         Get State (queues/runs)  # noqa: E501
         """
         pass
 
-    def test_update_queue(self):
-        """Test case for update_queue
+    def test_queues_v1_update_queue(self):
+        """Test case for queues_v1_update_queue
 
         Delete agent  # noqa: E501
         """

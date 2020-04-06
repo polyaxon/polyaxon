@@ -54,7 +54,6 @@ class V1Dashboard(object):
         "disabled": "bool",
         "deleted": "bool",
         "run_view": "bool",
-        "search": "V1SearchSpec",
         "spec": "object",
         "created_at": "datetime",
         "updated_at": "datetime",
@@ -68,7 +67,6 @@ class V1Dashboard(object):
         "disabled": "disabled",
         "deleted": "deleted",
         "run_view": "run_view",
-        "search": "search",
         "spec": "spec",
         "created_at": "created_at",
         "updated_at": "updated_at",
@@ -83,7 +81,6 @@ class V1Dashboard(object):
         disabled=None,
         deleted=None,
         run_view=None,
-        search=None,
         spec=None,
         created_at=None,
         updated_at=None,
@@ -97,7 +94,6 @@ class V1Dashboard(object):
         self._disabled = None
         self._deleted = None
         self._run_view = None
-        self._search = None
         self._spec = None
         self._created_at = None
         self._updated_at = None
@@ -117,8 +113,6 @@ class V1Dashboard(object):
             self.deleted = deleted
         if run_view is not None:
             self.run_view = run_view
-        if search is not None:
-            self.search = search
         if spec is not None:
             self.spec = spec
         if created_at is not None:
@@ -272,27 +266,6 @@ class V1Dashboard(object):
         """
 
         self._run_view = run_view
-
-    @property
-    def search(self):
-        """Gets the search of this V1Dashboard.  # noqa: E501
-
-
-        :return: The search of this V1Dashboard.  # noqa: E501
-        :rtype: V1SearchSpec
-        """
-        return self._search
-
-    @search.setter
-    def search(self, search):
-        """Sets the search of this V1Dashboard.
-
-
-        :param search: The search of this V1Dashboard.  # noqa: E501
-        :type: V1SearchSpec
-        """
-
-        self._search = search
 
     @property
     def spec(self):

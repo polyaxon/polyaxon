@@ -71,7 +71,7 @@ public class RunProfilesV1Api {
     }
 
     /**
-     * Build call for createRunProfile
+     * Build call for runProfilesV1CreateRunProfile
      * @param owner Owner of the namespace (required)
      * @param body Artifact store body (required)
      * @param progressListener Progress listener
@@ -79,7 +79,7 @@ public class RunProfilesV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call createRunProfileCall(String owner, V1RunProfile body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call runProfilesV1CreateRunProfileCall(String owner, V1RunProfile body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -122,20 +122,20 @@ public class RunProfilesV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call createRunProfileValidateBeforeCall(String owner, V1RunProfile body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call runProfilesV1CreateRunProfileValidateBeforeCall(String owner, V1RunProfile body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling createRunProfile(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling runProfilesV1CreateRunProfile(Async)");
         }
         
         // verify the required parameter 'body' is set
         if (body == null) {
-            throw new ApiException("Missing the required parameter 'body' when calling createRunProfile(Async)");
+            throw new ApiException("Missing the required parameter 'body' when calling runProfilesV1CreateRunProfile(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = createRunProfileCall(owner, body, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = runProfilesV1CreateRunProfileCall(owner, body, progressListener, progressRequestListener);
         return call;
 
     }
@@ -148,8 +148,8 @@ public class RunProfilesV1Api {
      * @return V1RunProfile
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1RunProfile createRunProfile(String owner, V1RunProfile body) throws ApiException {
-        ApiResponse<V1RunProfile> resp = createRunProfileWithHttpInfo(owner, body);
+    public V1RunProfile runProfilesV1CreateRunProfile(String owner, V1RunProfile body) throws ApiException {
+        ApiResponse<V1RunProfile> resp = runProfilesV1CreateRunProfileWithHttpInfo(owner, body);
         return resp.getData();
     }
 
@@ -161,8 +161,8 @@ public class RunProfilesV1Api {
      * @return ApiResponse&lt;V1RunProfile&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1RunProfile> createRunProfileWithHttpInfo(String owner, V1RunProfile body) throws ApiException {
-        com.squareup.okhttp.Call call = createRunProfileValidateBeforeCall(owner, body, null, null);
+    public ApiResponse<V1RunProfile> runProfilesV1CreateRunProfileWithHttpInfo(String owner, V1RunProfile body) throws ApiException {
+        com.squareup.okhttp.Call call = runProfilesV1CreateRunProfileValidateBeforeCall(owner, body, null, null);
         Type localVarReturnType = new TypeToken<V1RunProfile>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -176,7 +176,7 @@ public class RunProfilesV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call createRunProfileAsync(String owner, V1RunProfile body, final ApiCallback<V1RunProfile> callback) throws ApiException {
+    public com.squareup.okhttp.Call runProfilesV1CreateRunProfileAsync(String owner, V1RunProfile body, final ApiCallback<V1RunProfile> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -197,13 +197,13 @@ public class RunProfilesV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = createRunProfileValidateBeforeCall(owner, body, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = runProfilesV1CreateRunProfileValidateBeforeCall(owner, body, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1RunProfile>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
     /**
-     * Build call for deleteRunProfile
+     * Build call for runProfilesV1DeleteRunProfile
      * @param owner Owner of the namespace (required)
      * @param uuid Uuid identifier of the entity (required)
      * @param progressListener Progress listener
@@ -211,7 +211,7 @@ public class RunProfilesV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call deleteRunProfileCall(String owner, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call runProfilesV1DeleteRunProfileCall(String owner, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -255,20 +255,20 @@ public class RunProfilesV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call deleteRunProfileValidateBeforeCall(String owner, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call runProfilesV1DeleteRunProfileValidateBeforeCall(String owner, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling deleteRunProfile(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling runProfilesV1DeleteRunProfile(Async)");
         }
         
         // verify the required parameter 'uuid' is set
         if (uuid == null) {
-            throw new ApiException("Missing the required parameter 'uuid' when calling deleteRunProfile(Async)");
+            throw new ApiException("Missing the required parameter 'uuid' when calling runProfilesV1DeleteRunProfile(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = deleteRunProfileCall(owner, uuid, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = runProfilesV1DeleteRunProfileCall(owner, uuid, progressListener, progressRequestListener);
         return call;
 
     }
@@ -280,8 +280,8 @@ public class RunProfilesV1Api {
      * @param uuid Uuid identifier of the entity (required)
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public void deleteRunProfile(String owner, String uuid) throws ApiException {
-        deleteRunProfileWithHttpInfo(owner, uuid);
+    public void runProfilesV1DeleteRunProfile(String owner, String uuid) throws ApiException {
+        runProfilesV1DeleteRunProfileWithHttpInfo(owner, uuid);
     }
 
     /**
@@ -292,8 +292,8 @@ public class RunProfilesV1Api {
      * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<Void> deleteRunProfileWithHttpInfo(String owner, String uuid) throws ApiException {
-        com.squareup.okhttp.Call call = deleteRunProfileValidateBeforeCall(owner, uuid, null, null);
+    public ApiResponse<Void> runProfilesV1DeleteRunProfileWithHttpInfo(String owner, String uuid) throws ApiException {
+        com.squareup.okhttp.Call call = runProfilesV1DeleteRunProfileValidateBeforeCall(owner, uuid, null, null);
         return apiClient.execute(call);
     }
 
@@ -306,7 +306,7 @@ public class RunProfilesV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call deleteRunProfileAsync(String owner, String uuid, final ApiCallback<Void> callback) throws ApiException {
+    public com.squareup.okhttp.Call runProfilesV1DeleteRunProfileAsync(String owner, String uuid, final ApiCallback<Void> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -327,12 +327,12 @@ public class RunProfilesV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = deleteRunProfileValidateBeforeCall(owner, uuid, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = runProfilesV1DeleteRunProfileValidateBeforeCall(owner, uuid, progressListener, progressRequestListener);
         apiClient.executeAsync(call, callback);
         return call;
     }
     /**
-     * Build call for getRunProfile
+     * Build call for runProfilesV1GetRunProfile
      * @param owner Owner of the namespace (required)
      * @param uuid Uuid identifier of the entity (required)
      * @param progressListener Progress listener
@@ -340,7 +340,7 @@ public class RunProfilesV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call getRunProfileCall(String owner, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call runProfilesV1GetRunProfileCall(String owner, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -384,20 +384,20 @@ public class RunProfilesV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call getRunProfileValidateBeforeCall(String owner, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call runProfilesV1GetRunProfileValidateBeforeCall(String owner, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling getRunProfile(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling runProfilesV1GetRunProfile(Async)");
         }
         
         // verify the required parameter 'uuid' is set
         if (uuid == null) {
-            throw new ApiException("Missing the required parameter 'uuid' when calling getRunProfile(Async)");
+            throw new ApiException("Missing the required parameter 'uuid' when calling runProfilesV1GetRunProfile(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = getRunProfileCall(owner, uuid, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = runProfilesV1GetRunProfileCall(owner, uuid, progressListener, progressRequestListener);
         return call;
 
     }
@@ -410,8 +410,8 @@ public class RunProfilesV1Api {
      * @return V1RunProfile
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1RunProfile getRunProfile(String owner, String uuid) throws ApiException {
-        ApiResponse<V1RunProfile> resp = getRunProfileWithHttpInfo(owner, uuid);
+    public V1RunProfile runProfilesV1GetRunProfile(String owner, String uuid) throws ApiException {
+        ApiResponse<V1RunProfile> resp = runProfilesV1GetRunProfileWithHttpInfo(owner, uuid);
         return resp.getData();
     }
 
@@ -423,8 +423,8 @@ public class RunProfilesV1Api {
      * @return ApiResponse&lt;V1RunProfile&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1RunProfile> getRunProfileWithHttpInfo(String owner, String uuid) throws ApiException {
-        com.squareup.okhttp.Call call = getRunProfileValidateBeforeCall(owner, uuid, null, null);
+    public ApiResponse<V1RunProfile> runProfilesV1GetRunProfileWithHttpInfo(String owner, String uuid) throws ApiException {
+        com.squareup.okhttp.Call call = runProfilesV1GetRunProfileValidateBeforeCall(owner, uuid, null, null);
         Type localVarReturnType = new TypeToken<V1RunProfile>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -438,7 +438,7 @@ public class RunProfilesV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call getRunProfileAsync(String owner, String uuid, final ApiCallback<V1RunProfile> callback) throws ApiException {
+    public com.squareup.okhttp.Call runProfilesV1GetRunProfileAsync(String owner, String uuid, final ApiCallback<V1RunProfile> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -459,13 +459,13 @@ public class RunProfilesV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = getRunProfileValidateBeforeCall(owner, uuid, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = runProfilesV1GetRunProfileValidateBeforeCall(owner, uuid, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1RunProfile>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
     /**
-     * Build call for listRunProfileNames
+     * Build call for runProfilesV1ListRunProfileNames
      * @param owner Owner of the namespace (required)
      * @param offset Pagination offset. (optional)
      * @param limit Limit size. (optional)
@@ -476,7 +476,7 @@ public class RunProfilesV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call listRunProfileNamesCall(String owner, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call runProfilesV1ListRunProfileNamesCall(String owner, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -527,15 +527,15 @@ public class RunProfilesV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call listRunProfileNamesValidateBeforeCall(String owner, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call runProfilesV1ListRunProfileNamesValidateBeforeCall(String owner, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling listRunProfileNames(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling runProfilesV1ListRunProfileNames(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = listRunProfileNamesCall(owner, offset, limit, sort, query, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = runProfilesV1ListRunProfileNamesCall(owner, offset, limit, sort, query, progressListener, progressRequestListener);
         return call;
 
     }
@@ -551,8 +551,8 @@ public class RunProfilesV1Api {
      * @return V1ListRunProfilesResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1ListRunProfilesResponse listRunProfileNames(String owner, Integer offset, Integer limit, String sort, String query) throws ApiException {
-        ApiResponse<V1ListRunProfilesResponse> resp = listRunProfileNamesWithHttpInfo(owner, offset, limit, sort, query);
+    public V1ListRunProfilesResponse runProfilesV1ListRunProfileNames(String owner, Integer offset, Integer limit, String sort, String query) throws ApiException {
+        ApiResponse<V1ListRunProfilesResponse> resp = runProfilesV1ListRunProfileNamesWithHttpInfo(owner, offset, limit, sort, query);
         return resp.getData();
     }
 
@@ -567,8 +567,8 @@ public class RunProfilesV1Api {
      * @return ApiResponse&lt;V1ListRunProfilesResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1ListRunProfilesResponse> listRunProfileNamesWithHttpInfo(String owner, Integer offset, Integer limit, String sort, String query) throws ApiException {
-        com.squareup.okhttp.Call call = listRunProfileNamesValidateBeforeCall(owner, offset, limit, sort, query, null, null);
+    public ApiResponse<V1ListRunProfilesResponse> runProfilesV1ListRunProfileNamesWithHttpInfo(String owner, Integer offset, Integer limit, String sort, String query) throws ApiException {
+        com.squareup.okhttp.Call call = runProfilesV1ListRunProfileNamesValidateBeforeCall(owner, offset, limit, sort, query, null, null);
         Type localVarReturnType = new TypeToken<V1ListRunProfilesResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -585,7 +585,7 @@ public class RunProfilesV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call listRunProfileNamesAsync(String owner, Integer offset, Integer limit, String sort, String query, final ApiCallback<V1ListRunProfilesResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call runProfilesV1ListRunProfileNamesAsync(String owner, Integer offset, Integer limit, String sort, String query, final ApiCallback<V1ListRunProfilesResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -606,13 +606,13 @@ public class RunProfilesV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = listRunProfileNamesValidateBeforeCall(owner, offset, limit, sort, query, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = runProfilesV1ListRunProfileNamesValidateBeforeCall(owner, offset, limit, sort, query, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1ListRunProfilesResponse>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
     /**
-     * Build call for listRunProfiles
+     * Build call for runProfilesV1ListRunProfiles
      * @param owner Owner of the namespace (required)
      * @param offset Pagination offset. (optional)
      * @param limit Limit size. (optional)
@@ -623,7 +623,7 @@ public class RunProfilesV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call listRunProfilesCall(String owner, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call runProfilesV1ListRunProfilesCall(String owner, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -674,15 +674,15 @@ public class RunProfilesV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call listRunProfilesValidateBeforeCall(String owner, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call runProfilesV1ListRunProfilesValidateBeforeCall(String owner, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling listRunProfiles(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling runProfilesV1ListRunProfiles(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = listRunProfilesCall(owner, offset, limit, sort, query, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = runProfilesV1ListRunProfilesCall(owner, offset, limit, sort, query, progressListener, progressRequestListener);
         return call;
 
     }
@@ -698,8 +698,8 @@ public class RunProfilesV1Api {
      * @return V1ListRunProfilesResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1ListRunProfilesResponse listRunProfiles(String owner, Integer offset, Integer limit, String sort, String query) throws ApiException {
-        ApiResponse<V1ListRunProfilesResponse> resp = listRunProfilesWithHttpInfo(owner, offset, limit, sort, query);
+    public V1ListRunProfilesResponse runProfilesV1ListRunProfiles(String owner, Integer offset, Integer limit, String sort, String query) throws ApiException {
+        ApiResponse<V1ListRunProfilesResponse> resp = runProfilesV1ListRunProfilesWithHttpInfo(owner, offset, limit, sort, query);
         return resp.getData();
     }
 
@@ -714,8 +714,8 @@ public class RunProfilesV1Api {
      * @return ApiResponse&lt;V1ListRunProfilesResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1ListRunProfilesResponse> listRunProfilesWithHttpInfo(String owner, Integer offset, Integer limit, String sort, String query) throws ApiException {
-        com.squareup.okhttp.Call call = listRunProfilesValidateBeforeCall(owner, offset, limit, sort, query, null, null);
+    public ApiResponse<V1ListRunProfilesResponse> runProfilesV1ListRunProfilesWithHttpInfo(String owner, Integer offset, Integer limit, String sort, String query) throws ApiException {
+        com.squareup.okhttp.Call call = runProfilesV1ListRunProfilesValidateBeforeCall(owner, offset, limit, sort, query, null, null);
         Type localVarReturnType = new TypeToken<V1ListRunProfilesResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -732,7 +732,7 @@ public class RunProfilesV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call listRunProfilesAsync(String owner, Integer offset, Integer limit, String sort, String query, final ApiCallback<V1ListRunProfilesResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call runProfilesV1ListRunProfilesAsync(String owner, Integer offset, Integer limit, String sort, String query, final ApiCallback<V1ListRunProfilesResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -753,13 +753,13 @@ public class RunProfilesV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = listRunProfilesValidateBeforeCall(owner, offset, limit, sort, query, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = runProfilesV1ListRunProfilesValidateBeforeCall(owner, offset, limit, sort, query, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1ListRunProfilesResponse>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
     /**
-     * Build call for patchRunProfile
+     * Build call for runProfilesV1PatchRunProfile
      * @param owner Owner of the namespace (required)
      * @param runProfileUuid UUID (required)
      * @param body Artifact store body (required)
@@ -768,7 +768,7 @@ public class RunProfilesV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call patchRunProfileCall(String owner, String runProfileUuid, V1RunProfile body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call runProfilesV1PatchRunProfileCall(String owner, String runProfileUuid, V1RunProfile body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -812,25 +812,25 @@ public class RunProfilesV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call patchRunProfileValidateBeforeCall(String owner, String runProfileUuid, V1RunProfile body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call runProfilesV1PatchRunProfileValidateBeforeCall(String owner, String runProfileUuid, V1RunProfile body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling patchRunProfile(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling runProfilesV1PatchRunProfile(Async)");
         }
         
         // verify the required parameter 'runProfileUuid' is set
         if (runProfileUuid == null) {
-            throw new ApiException("Missing the required parameter 'runProfileUuid' when calling patchRunProfile(Async)");
+            throw new ApiException("Missing the required parameter 'runProfileUuid' when calling runProfilesV1PatchRunProfile(Async)");
         }
         
         // verify the required parameter 'body' is set
         if (body == null) {
-            throw new ApiException("Missing the required parameter 'body' when calling patchRunProfile(Async)");
+            throw new ApiException("Missing the required parameter 'body' when calling runProfilesV1PatchRunProfile(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = patchRunProfileCall(owner, runProfileUuid, body, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = runProfilesV1PatchRunProfileCall(owner, runProfileUuid, body, progressListener, progressRequestListener);
         return call;
 
     }
@@ -844,8 +844,8 @@ public class RunProfilesV1Api {
      * @return V1RunProfile
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1RunProfile patchRunProfile(String owner, String runProfileUuid, V1RunProfile body) throws ApiException {
-        ApiResponse<V1RunProfile> resp = patchRunProfileWithHttpInfo(owner, runProfileUuid, body);
+    public V1RunProfile runProfilesV1PatchRunProfile(String owner, String runProfileUuid, V1RunProfile body) throws ApiException {
+        ApiResponse<V1RunProfile> resp = runProfilesV1PatchRunProfileWithHttpInfo(owner, runProfileUuid, body);
         return resp.getData();
     }
 
@@ -858,8 +858,8 @@ public class RunProfilesV1Api {
      * @return ApiResponse&lt;V1RunProfile&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1RunProfile> patchRunProfileWithHttpInfo(String owner, String runProfileUuid, V1RunProfile body) throws ApiException {
-        com.squareup.okhttp.Call call = patchRunProfileValidateBeforeCall(owner, runProfileUuid, body, null, null);
+    public ApiResponse<V1RunProfile> runProfilesV1PatchRunProfileWithHttpInfo(String owner, String runProfileUuid, V1RunProfile body) throws ApiException {
+        com.squareup.okhttp.Call call = runProfilesV1PatchRunProfileValidateBeforeCall(owner, runProfileUuid, body, null, null);
         Type localVarReturnType = new TypeToken<V1RunProfile>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -874,7 +874,7 @@ public class RunProfilesV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call patchRunProfileAsync(String owner, String runProfileUuid, V1RunProfile body, final ApiCallback<V1RunProfile> callback) throws ApiException {
+    public com.squareup.okhttp.Call runProfilesV1PatchRunProfileAsync(String owner, String runProfileUuid, V1RunProfile body, final ApiCallback<V1RunProfile> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -895,13 +895,13 @@ public class RunProfilesV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = patchRunProfileValidateBeforeCall(owner, runProfileUuid, body, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = runProfilesV1PatchRunProfileValidateBeforeCall(owner, runProfileUuid, body, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1RunProfile>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
     /**
-     * Build call for updateRunProfile
+     * Build call for runProfilesV1UpdateRunProfile
      * @param owner Owner of the namespace (required)
      * @param runProfileUuid UUID (required)
      * @param body Artifact store body (required)
@@ -910,7 +910,7 @@ public class RunProfilesV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call updateRunProfileCall(String owner, String runProfileUuid, V1RunProfile body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call runProfilesV1UpdateRunProfileCall(String owner, String runProfileUuid, V1RunProfile body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -954,25 +954,25 @@ public class RunProfilesV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call updateRunProfileValidateBeforeCall(String owner, String runProfileUuid, V1RunProfile body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call runProfilesV1UpdateRunProfileValidateBeforeCall(String owner, String runProfileUuid, V1RunProfile body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling updateRunProfile(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling runProfilesV1UpdateRunProfile(Async)");
         }
         
         // verify the required parameter 'runProfileUuid' is set
         if (runProfileUuid == null) {
-            throw new ApiException("Missing the required parameter 'runProfileUuid' when calling updateRunProfile(Async)");
+            throw new ApiException("Missing the required parameter 'runProfileUuid' when calling runProfilesV1UpdateRunProfile(Async)");
         }
         
         // verify the required parameter 'body' is set
         if (body == null) {
-            throw new ApiException("Missing the required parameter 'body' when calling updateRunProfile(Async)");
+            throw new ApiException("Missing the required parameter 'body' when calling runProfilesV1UpdateRunProfile(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = updateRunProfileCall(owner, runProfileUuid, body, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = runProfilesV1UpdateRunProfileCall(owner, runProfileUuid, body, progressListener, progressRequestListener);
         return call;
 
     }
@@ -986,8 +986,8 @@ public class RunProfilesV1Api {
      * @return V1RunProfile
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1RunProfile updateRunProfile(String owner, String runProfileUuid, V1RunProfile body) throws ApiException {
-        ApiResponse<V1RunProfile> resp = updateRunProfileWithHttpInfo(owner, runProfileUuid, body);
+    public V1RunProfile runProfilesV1UpdateRunProfile(String owner, String runProfileUuid, V1RunProfile body) throws ApiException {
+        ApiResponse<V1RunProfile> resp = runProfilesV1UpdateRunProfileWithHttpInfo(owner, runProfileUuid, body);
         return resp.getData();
     }
 
@@ -1000,8 +1000,8 @@ public class RunProfilesV1Api {
      * @return ApiResponse&lt;V1RunProfile&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1RunProfile> updateRunProfileWithHttpInfo(String owner, String runProfileUuid, V1RunProfile body) throws ApiException {
-        com.squareup.okhttp.Call call = updateRunProfileValidateBeforeCall(owner, runProfileUuid, body, null, null);
+    public ApiResponse<V1RunProfile> runProfilesV1UpdateRunProfileWithHttpInfo(String owner, String runProfileUuid, V1RunProfile body) throws ApiException {
+        com.squareup.okhttp.Call call = runProfilesV1UpdateRunProfileValidateBeforeCall(owner, runProfileUuid, body, null, null);
         Type localVarReturnType = new TypeToken<V1RunProfile>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -1016,7 +1016,7 @@ public class RunProfilesV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call updateRunProfileAsync(String owner, String runProfileUuid, V1RunProfile body, final ApiCallback<V1RunProfile> callback) throws ApiException {
+    public com.squareup.okhttp.Call runProfilesV1UpdateRunProfileAsync(String owner, String runProfileUuid, V1RunProfile body, final ApiCallback<V1RunProfile> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -1037,7 +1037,7 @@ public class RunProfilesV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = updateRunProfileValidateBeforeCall(owner, runProfileUuid, body, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = runProfilesV1UpdateRunProfileValidateBeforeCall(owner, runProfileUuid, body, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1RunProfile>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;

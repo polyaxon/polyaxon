@@ -45,50 +45,50 @@ class TestRunProfilesV1Api(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def test_create_run_profile(self):
-        """Test case for create_run_profile
+    def test_run_profiles_v1_create_run_profile(self):
+        """Test case for run_profiles_v1_create_run_profile
 
         Create hub component  # noqa: E501
         """
         pass
 
-    def test_delete_run_profile(self):
-        """Test case for delete_run_profile
+    def test_run_profiles_v1_delete_run_profile(self):
+        """Test case for run_profiles_v1_delete_run_profile
 
         Delete hub component  # noqa: E501
         """
         pass
 
-    def test_get_run_profile(self):
-        """Test case for get_run_profile
+    def test_run_profiles_v1_get_run_profile(self):
+        """Test case for run_profiles_v1_get_run_profile
 
         Get hub component  # noqa: E501
         """
         pass
 
-    def test_list_run_profile_names(self):
-        """Test case for list_run_profile_names
+    def test_run_profiles_v1_list_run_profile_names(self):
+        """Test case for run_profiles_v1_list_run_profile_names
 
         List hub component names  # noqa: E501
         """
         pass
 
-    def test_list_run_profiles(self):
-        """Test case for list_run_profiles
+    def test_run_profiles_v1_list_run_profiles(self):
+        """Test case for run_profiles_v1_list_run_profiles
 
         List hub components  # noqa: E501
         """
         pass
 
-    def test_patch_run_profile(self):
-        """Test case for patch_run_profile
+    def test_run_profiles_v1_patch_run_profile(self):
+        """Test case for run_profiles_v1_patch_run_profile
 
         Patch hub component  # noqa: E501
         """
         pass
 
-    def test_update_run_profile(self):
-        """Test case for update_run_profile
+    def test_run_profiles_v1_update_run_profile(self):
+        """Test case for run_profiles_v1_update_run_profile
 
         Update hub component  # noqa: E501
         """

@@ -47,50 +47,50 @@ class TestAccessResourcesV1Api(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def test_create_access_resource(self):
-        """Test case for create_access_resource
+    def test_access_resources_v1_create_access_resource(self):
+        """Test case for access_resources_v1_create_access_resource
 
         Create access resource  # noqa: E501
         """
         pass
 
-    def test_delete_access_resource(self):
-        """Test case for delete_access_resource
+    def test_access_resources_v1_delete_access_resource(self):
+        """Test case for access_resources_v1_delete_access_resource
 
         Delete access resource  # noqa: E501
         """
         pass
 
-    def test_get_access_resource(self):
-        """Test case for get_access_resource
+    def test_access_resources_v1_get_access_resource(self):
+        """Test case for access_resources_v1_get_access_resource
 
         Get access resource  # noqa: E501
         """
         pass
 
-    def test_list_access_resource_names(self):
-        """Test case for list_access_resource_names
+    def test_access_resources_v1_list_access_resource_names(self):
+        """Test case for access_resources_v1_list_access_resource_names
 
         List access resource names  # noqa: E501
         """
         pass
 
-    def test_list_access_resources(self):
-        """Test case for list_access_resources
+    def test_access_resources_v1_list_access_resources(self):
+        """Test case for access_resources_v1_list_access_resources
 
         List access resources  # noqa: E501
         """
         pass
 
-    def test_patch_access_resource(self):
-        """Test case for patch_access_resource
+    def test_access_resources_v1_patch_access_resource(self):
+        """Test case for access_resources_v1_patch_access_resource
 
         Patch access resource  # noqa: E501
         """
         pass
 
-    def test_update_access_resource(self):
-        """Test case for update_access_resource
+    def test_access_resources_v1_update_access_resource(self):
+        """Test case for access_resources_v1_update_access_resource
 
         Update access resource  # noqa: E501
         """

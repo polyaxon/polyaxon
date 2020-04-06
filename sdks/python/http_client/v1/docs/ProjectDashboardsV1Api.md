@@ -4,18 +4,18 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**create_project_dashboard**](ProjectDashboardsV1Api.md#create_project_dashboard) | **POST** /api/v1/{owner}/{project}/dashboards | Create project dashboard
-[**delete_project_dashboard**](ProjectDashboardsV1Api.md#delete_project_dashboard) | **DELETE** /api/v1/{owner}/{project}/dashboards/{uuid} | Delete project dashboard
-[**get_project_dashboard**](ProjectDashboardsV1Api.md#get_project_dashboard) | **GET** /api/v1/{owner}/{project}/dashboards/{uuid} | Get project dashboard
-[**list_project_dashboard_names**](ProjectDashboardsV1Api.md#list_project_dashboard_names) | **GET** /api/v1/{owner}/{project}/dashboards/names | List project dashboard
-[**list_project_dashboards**](ProjectDashboardsV1Api.md#list_project_dashboards) | **GET** /api/v1/{owner}/{project}/dashboards | List project dashboards
-[**patch_project_dashboard**](ProjectDashboardsV1Api.md#patch_project_dashboard) | **PATCH** /api/v1/{owner}/{project}/dashboards/{dashboard.uuid} | Patch project dashboard
-[**promote_project_dashboard**](ProjectDashboardsV1Api.md#promote_project_dashboard) | **POST** /api/v1/{owner}/{project}/dashboards/{dashboard.uuid}/promote | Promote project dashboard
-[**update_project_dashboard**](ProjectDashboardsV1Api.md#update_project_dashboard) | **PUT** /api/v1/{owner}/{project}/dashboards/{dashboard.uuid} | Update project dashboard
+[**project_dashboards_v1_create_project_dashboard**](ProjectDashboardsV1Api.md#project_dashboards_v1_create_project_dashboard) | **POST** /api/v1/{owner}/{project}/dashboards | Create project dashboard
+[**project_dashboards_v1_delete_project_dashboard**](ProjectDashboardsV1Api.md#project_dashboards_v1_delete_project_dashboard) | **DELETE** /api/v1/{owner}/{project}/dashboards/{uuid} | Delete project dashboard
+[**project_dashboards_v1_get_project_dashboard**](ProjectDashboardsV1Api.md#project_dashboards_v1_get_project_dashboard) | **GET** /api/v1/{owner}/{project}/dashboards/{uuid} | Get project dashboard
+[**project_dashboards_v1_list_project_dashboard_names**](ProjectDashboardsV1Api.md#project_dashboards_v1_list_project_dashboard_names) | **GET** /api/v1/{owner}/{project}/dashboards/names | List project dashboard
+[**project_dashboards_v1_list_project_dashboards**](ProjectDashboardsV1Api.md#project_dashboards_v1_list_project_dashboards) | **GET** /api/v1/{owner}/{project}/dashboards | List project dashboards
+[**project_dashboards_v1_patch_project_dashboard**](ProjectDashboardsV1Api.md#project_dashboards_v1_patch_project_dashboard) | **PATCH** /api/v1/{owner}/{project}/dashboards/{dashboard.uuid} | Patch project dashboard
+[**project_dashboards_v1_promote_project_dashboard**](ProjectDashboardsV1Api.md#project_dashboards_v1_promote_project_dashboard) | **POST** /api/v1/{owner}/{project}/dashboards/{dashboard.uuid}/promote | Promote project dashboard
+[**project_dashboards_v1_update_project_dashboard**](ProjectDashboardsV1Api.md#project_dashboards_v1_update_project_dashboard) | **PUT** /api/v1/{owner}/{project}/dashboards/{dashboard.uuid} | Update project dashboard
 
 
-# **create_project_dashboard**
-> V1Dashboard create_project_dashboard(owner, project, body)
+# **project_dashboards_v1_create_project_dashboard**
+> V1Dashboard project_dashboards_v1_create_project_dashboard(owner, project, body)
 
 Create project dashboard
 
@@ -41,10 +41,10 @@ body = polyaxon_sdk.V1Dashboard() # V1Dashboard | Dashboard body
 
 try:
     # Create project dashboard
-    api_response = api_instance.create_project_dashboard(owner, project, body)
+    api_response = api_instance.project_dashboards_v1_create_project_dashboard(owner, project, body)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling ProjectDashboardsV1Api->create_project_dashboard: %s\n" % e)
+    print("Exception when calling ProjectDashboardsV1Api->project_dashboards_v1_create_project_dashboard: %s\n" % e)
 ```
 
 ### Parameters
@@ -70,8 +70,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **delete_project_dashboard**
-> delete_project_dashboard(owner, project, uuid)
+# **project_dashboards_v1_delete_project_dashboard**
+> project_dashboards_v1_delete_project_dashboard(owner, project, uuid)
 
 Delete project dashboard
 
@@ -97,9 +97,9 @@ uuid = 'uuid_example' # str | Uuid identifier of the entity
 
 try:
     # Delete project dashboard
-    api_instance.delete_project_dashboard(owner, project, uuid)
+    api_instance.project_dashboards_v1_delete_project_dashboard(owner, project, uuid)
 except ApiException as e:
-    print("Exception when calling ProjectDashboardsV1Api->delete_project_dashboard: %s\n" % e)
+    print("Exception when calling ProjectDashboardsV1Api->project_dashboards_v1_delete_project_dashboard: %s\n" % e)
 ```
 
 ### Parameters
@@ -125,8 +125,8 @@ void (empty response body)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **get_project_dashboard**
-> V1Dashboard get_project_dashboard(owner, project, uuid)
+# **project_dashboards_v1_get_project_dashboard**
+> V1Dashboard project_dashboards_v1_get_project_dashboard(owner, project, uuid)
 
 Get project dashboard
 
@@ -152,10 +152,10 @@ uuid = 'uuid_example' # str | Uuid identifier of the entity
 
 try:
     # Get project dashboard
-    api_response = api_instance.get_project_dashboard(owner, project, uuid)
+    api_response = api_instance.project_dashboards_v1_get_project_dashboard(owner, project, uuid)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling ProjectDashboardsV1Api->get_project_dashboard: %s\n" % e)
+    print("Exception when calling ProjectDashboardsV1Api->project_dashboards_v1_get_project_dashboard: %s\n" % e)
 ```
 
 ### Parameters
@@ -181,8 +181,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **list_project_dashboard_names**
-> V1ListDashboardsResponse list_project_dashboard_names(owner, project, offset=offset, limit=limit, sort=sort, query=query)
+# **project_dashboards_v1_list_project_dashboard_names**
+> V1ListDashboardsResponse project_dashboards_v1_list_project_dashboard_names(owner, project, offset=offset, limit=limit, sort=sort, query=query)
 
 List project dashboard
 
@@ -211,10 +211,10 @@ query = 'query_example' # str | Query filter the search search. (optional)
 
 try:
     # List project dashboard
-    api_response = api_instance.list_project_dashboard_names(owner, project, offset=offset, limit=limit, sort=sort, query=query)
+    api_response = api_instance.project_dashboards_v1_list_project_dashboard_names(owner, project, offset=offset, limit=limit, sort=sort, query=query)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling ProjectDashboardsV1Api->list_project_dashboard_names: %s\n" % e)
+    print("Exception when calling ProjectDashboardsV1Api->project_dashboards_v1_list_project_dashboard_names: %s\n" % e)
 ```
 
 ### Parameters
@@ -243,8 +243,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **list_project_dashboards**
-> V1ListDashboardsResponse list_project_dashboards(owner, project, offset=offset, limit=limit, sort=sort, query=query)
+# **project_dashboards_v1_list_project_dashboards**
+> V1ListDashboardsResponse project_dashboards_v1_list_project_dashboards(owner, project, offset=offset, limit=limit, sort=sort, query=query)
 
 List project dashboards
 
@@ -273,10 +273,10 @@ query = 'query_example' # str | Query filter the search search. (optional)
 
 try:
     # List project dashboards
-    api_response = api_instance.list_project_dashboards(owner, project, offset=offset, limit=limit, sort=sort, query=query)
+    api_response = api_instance.project_dashboards_v1_list_project_dashboards(owner, project, offset=offset, limit=limit, sort=sort, query=query)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling ProjectDashboardsV1Api->list_project_dashboards: %s\n" % e)
+    print("Exception when calling ProjectDashboardsV1Api->project_dashboards_v1_list_project_dashboards: %s\n" % e)
 ```
 
 ### Parameters
@@ -305,8 +305,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **patch_project_dashboard**
-> V1Dashboard patch_project_dashboard(owner, project, dashboard_uuid, body)
+# **project_dashboards_v1_patch_project_dashboard**
+> V1Dashboard project_dashboards_v1_patch_project_dashboard(owner, project, dashboard_uuid, body)
 
 Patch project dashboard
 
@@ -333,10 +333,10 @@ body = polyaxon_sdk.V1Dashboard() # V1Dashboard | Dashboard body
 
 try:
     # Patch project dashboard
-    api_response = api_instance.patch_project_dashboard(owner, project, dashboard_uuid, body)
+    api_response = api_instance.project_dashboards_v1_patch_project_dashboard(owner, project, dashboard_uuid, body)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling ProjectDashboardsV1Api->patch_project_dashboard: %s\n" % e)
+    print("Exception when calling ProjectDashboardsV1Api->project_dashboards_v1_patch_project_dashboard: %s\n" % e)
 ```
 
 ### Parameters
@@ -363,8 +363,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **promote_project_dashboard**
-> V1Dashboard promote_project_dashboard(owner, project, dashboard_uuid)
+# **project_dashboards_v1_promote_project_dashboard**
+> V1Dashboard project_dashboards_v1_promote_project_dashboard(owner, project, dashboard_uuid)
 
 Promote project dashboard
 
@@ -390,10 +390,10 @@ dashboard_uuid = 'dashboard_uuid_example' # str | UUID
 
 try:
     # Promote project dashboard
-    api_response = api_instance.promote_project_dashboard(owner, project, dashboard_uuid)
+    api_response = api_instance.project_dashboards_v1_promote_project_dashboard(owner, project, dashboard_uuid)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling ProjectDashboardsV1Api->promote_project_dashboard: %s\n" % e)
+    print("Exception when calling ProjectDashboardsV1Api->project_dashboards_v1_promote_project_dashboard: %s\n" % e)
 ```
 
 ### Parameters
@@ -419,8 +419,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **update_project_dashboard**
-> V1Dashboard update_project_dashboard(owner, project, dashboard_uuid, body)
+# **project_dashboards_v1_update_project_dashboard**
+> V1Dashboard project_dashboards_v1_update_project_dashboard(owner, project, dashboard_uuid, body)
 
 Update project dashboard
 
@@ -447,10 +447,10 @@ body = polyaxon_sdk.V1Dashboard() # V1Dashboard | Dashboard body
 
 try:
     # Update project dashboard
-    api_response = api_instance.update_project_dashboard(owner, project, dashboard_uuid, body)
+    api_response = api_instance.project_dashboards_v1_update_project_dashboard(owner, project, dashboard_uuid, body)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling ProjectDashboardsV1Api->update_project_dashboard: %s\n" % e)
+    print("Exception when calling ProjectDashboardsV1Api->project_dashboards_v1_update_project_dashboard: %s\n" % e)
 ```
 
 ### Parameters

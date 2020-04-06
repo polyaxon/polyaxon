@@ -4,18 +4,18 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**createSearch**](SearchesV1Api.md#createSearch) | **POST** /api/v1/orgs/{owner}/searches | Create search
-[**deleteSearch**](SearchesV1Api.md#deleteSearch) | **DELETE** /api/v1/orgs/{owner}/searches/{uuid} | Delete search
-[**getSearch**](SearchesV1Api.md#getSearch) | **GET** /api/v1/orgs/{owner}/searches/{uuid} | Get search
-[**listSearchNames**](SearchesV1Api.md#listSearchNames) | **GET** /api/v1/orgs/{owner}/searches/names | List search names
-[**listSearches**](SearchesV1Api.md#listSearches) | **GET** /api/v1/orgs/{owner}/searches | List searches
-[**patchSearch**](SearchesV1Api.md#patchSearch) | **PATCH** /api/v1/orgs/{owner}/searches/{search.uuid} | Patch search
-[**updateSearch**](SearchesV1Api.md#updateSearch) | **PUT** /api/v1/orgs/{owner}/searches/{search.uuid} | Update search
+[**searchesV1CreateSearch**](SearchesV1Api.md#searchesV1CreateSearch) | **POST** /api/v1/orgs/{owner}/searches | Create search
+[**searchesV1DeleteSearch**](SearchesV1Api.md#searchesV1DeleteSearch) | **DELETE** /api/v1/orgs/{owner}/searches/{uuid} | Delete search
+[**searchesV1GetSearch**](SearchesV1Api.md#searchesV1GetSearch) | **GET** /api/v1/orgs/{owner}/searches/{uuid} | Get search
+[**searchesV1ListSearchNames**](SearchesV1Api.md#searchesV1ListSearchNames) | **GET** /api/v1/orgs/{owner}/searches/names | List search names
+[**searchesV1ListSearches**](SearchesV1Api.md#searchesV1ListSearches) | **GET** /api/v1/orgs/{owner}/searches | List searches
+[**searchesV1PatchSearch**](SearchesV1Api.md#searchesV1PatchSearch) | **PATCH** /api/v1/orgs/{owner}/searches/{search.uuid} | Patch search
+[**searchesV1UpdateSearch**](SearchesV1Api.md#searchesV1UpdateSearch) | **PUT** /api/v1/orgs/{owner}/searches/{search.uuid} | Update search
 
 
-<a name="createSearch"></a>
-# **createSearch**
-> V1Search createSearch(owner, body)
+<a name="searchesV1CreateSearch"></a>
+# **searchesV1CreateSearch**
+> V1Search searchesV1CreateSearch(owner, body)
 
 Create search
 
@@ -40,10 +40,10 @@ SearchesV1Api apiInstance = new SearchesV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
 V1Search body = new V1Search(); // V1Search | Search body
 try {
-    V1Search result = apiInstance.createSearch(owner, body);
+    V1Search result = apiInstance.searchesV1CreateSearch(owner, body);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling SearchesV1Api#createSearch");
+    System.err.println("Exception when calling SearchesV1Api#searchesV1CreateSearch");
     e.printStackTrace();
 }
 ```
@@ -68,9 +68,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="deleteSearch"></a>
-# **deleteSearch**
-> deleteSearch(owner, uuid)
+<a name="searchesV1DeleteSearch"></a>
+# **searchesV1DeleteSearch**
+> searchesV1DeleteSearch(owner, uuid)
 
 Delete search
 
@@ -95,9 +95,9 @@ SearchesV1Api apiInstance = new SearchesV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
 String uuid = "uuid_example"; // String | Uuid identifier of the entity
 try {
-    apiInstance.deleteSearch(owner, uuid);
+    apiInstance.searchesV1DeleteSearch(owner, uuid);
 } catch (ApiException e) {
-    System.err.println("Exception when calling SearchesV1Api#deleteSearch");
+    System.err.println("Exception when calling SearchesV1Api#searchesV1DeleteSearch");
     e.printStackTrace();
 }
 ```
@@ -122,9 +122,9 @@ null (empty response body)
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="getSearch"></a>
-# **getSearch**
-> V1Search getSearch(owner, uuid)
+<a name="searchesV1GetSearch"></a>
+# **searchesV1GetSearch**
+> V1Search searchesV1GetSearch(owner, uuid)
 
 Get search
 
@@ -149,10 +149,10 @@ SearchesV1Api apiInstance = new SearchesV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
 String uuid = "uuid_example"; // String | Uuid identifier of the entity
 try {
-    V1Search result = apiInstance.getSearch(owner, uuid);
+    V1Search result = apiInstance.searchesV1GetSearch(owner, uuid);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling SearchesV1Api#getSearch");
+    System.err.println("Exception when calling SearchesV1Api#searchesV1GetSearch");
     e.printStackTrace();
 }
 ```
@@ -177,9 +177,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="listSearchNames"></a>
-# **listSearchNames**
-> V1ListSearchesResponse listSearchNames(owner, offset, limit, sort, query)
+<a name="searchesV1ListSearchNames"></a>
+# **searchesV1ListSearchNames**
+> V1ListSearchesResponse searchesV1ListSearchNames(owner, offset, limit, sort, query)
 
 List search names
 
@@ -207,10 +207,10 @@ Integer limit = 56; // Integer | Limit size.
 String sort = "sort_example"; // String | Sort to order the search.
 String query = "query_example"; // String | Query filter the search search.
 try {
-    V1ListSearchesResponse result = apiInstance.listSearchNames(owner, offset, limit, sort, query);
+    V1ListSearchesResponse result = apiInstance.searchesV1ListSearchNames(owner, offset, limit, sort, query);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling SearchesV1Api#listSearchNames");
+    System.err.println("Exception when calling SearchesV1Api#searchesV1ListSearchNames");
     e.printStackTrace();
 }
 ```
@@ -238,9 +238,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="listSearches"></a>
-# **listSearches**
-> V1ListSearchesResponse listSearches(owner, offset, limit, sort, query)
+<a name="searchesV1ListSearches"></a>
+# **searchesV1ListSearches**
+> V1ListSearchesResponse searchesV1ListSearches(owner, offset, limit, sort, query)
 
 List searches
 
@@ -268,10 +268,10 @@ Integer limit = 56; // Integer | Limit size.
 String sort = "sort_example"; // String | Sort to order the search.
 String query = "query_example"; // String | Query filter the search search.
 try {
-    V1ListSearchesResponse result = apiInstance.listSearches(owner, offset, limit, sort, query);
+    V1ListSearchesResponse result = apiInstance.searchesV1ListSearches(owner, offset, limit, sort, query);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling SearchesV1Api#listSearches");
+    System.err.println("Exception when calling SearchesV1Api#searchesV1ListSearches");
     e.printStackTrace();
 }
 ```
@@ -299,9 +299,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="patchSearch"></a>
-# **patchSearch**
-> V1Search patchSearch(owner, searchUuid, body)
+<a name="searchesV1PatchSearch"></a>
+# **searchesV1PatchSearch**
+> V1Search searchesV1PatchSearch(owner, searchUuid, body)
 
 Patch search
 
@@ -327,10 +327,10 @@ String owner = "owner_example"; // String | Owner of the namespace
 String searchUuid = "searchUuid_example"; // String | UUID
 V1Search body = new V1Search(); // V1Search | Search body
 try {
-    V1Search result = apiInstance.patchSearch(owner, searchUuid, body);
+    V1Search result = apiInstance.searchesV1PatchSearch(owner, searchUuid, body);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling SearchesV1Api#patchSearch");
+    System.err.println("Exception when calling SearchesV1Api#searchesV1PatchSearch");
     e.printStackTrace();
 }
 ```
@@ -356,9 +356,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="updateSearch"></a>
-# **updateSearch**
-> V1Search updateSearch(owner, searchUuid, body)
+<a name="searchesV1UpdateSearch"></a>
+# **searchesV1UpdateSearch**
+> V1Search searchesV1UpdateSearch(owner, searchUuid, body)
 
 Update search
 
@@ -384,10 +384,10 @@ String owner = "owner_example"; // String | Owner of the namespace
 String searchUuid = "searchUuid_example"; // String | UUID
 V1Search body = new V1Search(); // V1Search | Search body
 try {
-    V1Search result = apiInstance.updateSearch(owner, searchUuid, body);
+    V1Search result = apiInstance.searchesV1UpdateSearch(owner, searchUuid, body);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling SearchesV1Api#updateSearch");
+    System.err.println("Exception when calling SearchesV1Api#searchesV1UpdateSearch");
     e.printStackTrace();
 }
 ```

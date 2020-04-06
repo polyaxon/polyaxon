@@ -45,8 +45,8 @@ class TestSchemasV1Api(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def test_no_op(self):
-        """Test case for no_op
+    def test_schemas_v1_no_op(self):
+        """Test case for schemas_v1_no_op
 
         List teams names  # noqa: E501
         """

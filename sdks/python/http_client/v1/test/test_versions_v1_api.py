@@ -45,14 +45,14 @@ class TestVersionsV1Api(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def test_get_log_handler(self):
-        """Test case for get_log_handler
+    def test_versions_v1_get_log_handler(self):
+        """Test case for versions_v1_get_log_handler
 
         """
         pass
 
-    def test_get_versions(self):
-        """Test case for get_versions
+    def test_versions_v1_get_versions(self):
+        """Test case for versions_v1_get_versions
 
         Get current user  # noqa: E501
         """

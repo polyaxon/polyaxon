@@ -4,11 +4,11 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**no_op**](SchemasV1Api.md#no_op) | **GET** /schemas | List teams names
+[**schemas_v1_no_op**](SchemasV1Api.md#schemas_v1_no_op) | **GET** /schemas | List teams names
 
 
-# **no_op**
-> V1Schemas no_op()
+# **schemas_v1_no_op**
+> V1Schemas schemas_v1_no_op()
 
 List teams names
 
@@ -31,10 +31,10 @@ api_instance = polyaxon_sdk.SchemasV1Api(polyaxon_sdk.ApiClient(configuration))
 
 try:
     # List teams names
-    api_response = api_instance.no_op()
+    api_response = api_instance.schemas_v1_no_op()
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling SchemasV1Api->no_op: %s\n" % e)
+    print("Exception when calling SchemasV1Api->schemas_v1_no_op: %s\n" % e)
 ```
 
 ### Parameters

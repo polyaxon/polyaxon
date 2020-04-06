@@ -56,8 +56,8 @@ public class UsersV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void getUserTest() throws ApiException {
-        V1User response = api.getUser();
+    public void usersV1GetUserTest() throws ApiException {
+        V1User response = api.usersV1GetUser();
 
         // TODO: test validations
     }

@@ -50,9 +50,9 @@
 
   describe('(package)', function() {
     describe('ConnectionsV1Api', function() {
-      describe('createConnection', function() {
-        it('should call createConnection successfully', function(done) {
-          // TODO: uncomment, update parameter values for createConnection call and complete the assertions
+      describe('connectionsV1CreateConnection', function() {
+        it('should call connectionsV1CreateConnection successfully', function(done) {
+          // TODO: uncomment, update parameter values for connectionsV1CreateConnection call and complete the assertions
           /*
           var owner = "owner_example";
           var body = new PolyaxonSdk.V1ConnectionResponse();
@@ -67,7 +67,7 @@
           body.deleted = false;
           body.kind = new PolyaxonSdk.V1ConnectionKind();
 
-          instance.createConnection(owner, body, function(error, data, response) {
+          instance.connectionsV1CreateConnection(owner, body, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -109,14 +109,14 @@
           done();
         });
       });
-      describe('deleteConnection', function() {
-        it('should call deleteConnection successfully', function(done) {
-          // TODO: uncomment, update parameter values for deleteConnection call
+      describe('connectionsV1DeleteConnection', function() {
+        it('should call connectionsV1DeleteConnection successfully', function(done) {
+          // TODO: uncomment, update parameter values for connectionsV1DeleteConnection call
           /*
           var owner = "owner_example";
           var uuid = "uuid_example";
 
-          instance.deleteConnection(owner, uuid, function(error, data, response) {
+          instance.connectionsV1DeleteConnection(owner, uuid, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -129,14 +129,14 @@
           done();
         });
       });
-      describe('getConnection', function() {
-        it('should call getConnection successfully', function(done) {
-          // TODO: uncomment, update parameter values for getConnection call and complete the assertions
+      describe('connectionsV1GetConnection', function() {
+        it('should call connectionsV1GetConnection successfully', function(done) {
+          // TODO: uncomment, update parameter values for connectionsV1GetConnection call and complete the assertions
           /*
           var owner = "owner_example";
           var uuid = "uuid_example";
 
-          instance.getConnection(owner, uuid, function(error, data, response) {
+          instance.connectionsV1GetConnection(owner, uuid, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -178,9 +178,9 @@
           done();
         });
       });
-      describe('listConnectionNames', function() {
-        it('should call listConnectionNames successfully', function(done) {
-          // TODO: uncomment, update parameter values for listConnectionNames call and complete the assertions
+      describe('connectionsV1ListConnectionNames', function() {
+        it('should call connectionsV1ListConnectionNames successfully', function(done) {
+          // TODO: uncomment, update parameter values for connectionsV1ListConnectionNames call and complete the assertions
           /*
           var owner = "owner_example";
           var opts = {};
@@ -189,7 +189,7 @@
           opts.sort = "sort_example";
           opts.query = "query_example";
 
-          instance.listConnectionNames(owner, opts, function(error, data, response) {
+          instance.connectionsV1ListConnectionNames(owner, opts, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -247,9 +247,9 @@
           done();
         });
       });
-      describe('listConnections', function() {
-        it('should call listConnections successfully', function(done) {
-          // TODO: uncomment, update parameter values for listConnections call and complete the assertions
+      describe('connectionsV1ListConnections', function() {
+        it('should call connectionsV1ListConnections successfully', function(done) {
+          // TODO: uncomment, update parameter values for connectionsV1ListConnections call and complete the assertions
           /*
           var owner = "owner_example";
           var opts = {};
@@ -258,7 +258,7 @@
           opts.sort = "sort_example";
           opts.query = "query_example";
 
-          instance.listConnections(owner, opts, function(error, data, response) {
+          instance.connectionsV1ListConnections(owner, opts, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -316,9 +316,9 @@
           done();
         });
       });
-      describe('patchConnection', function() {
-        it('should call patchConnection successfully', function(done) {
-          // TODO: uncomment, update parameter values for patchConnection call and complete the assertions
+      describe('connectionsV1PatchConnection', function() {
+        it('should call connectionsV1PatchConnection successfully', function(done) {
+          // TODO: uncomment, update parameter values for connectionsV1PatchConnection call and complete the assertions
           /*
           var owner = "owner_example";
           var connection_uuid = "connection_uuid_example";
@@ -334,7 +334,7 @@
           body.deleted = false;
           body.kind = new PolyaxonSdk.V1ConnectionKind();
 
-          instance.patchConnection(owner, connection_uuid, body, function(error, data, response) {
+          instance.connectionsV1PatchConnection(owner, connection_uuid, body, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -376,9 +376,9 @@
           done();
         });
       });
-      describe('updateConnection', function() {
-        it('should call updateConnection successfully', function(done) {
-          // TODO: uncomment, update parameter values for updateConnection call and complete the assertions
+      describe('connectionsV1UpdateConnection', function() {
+        it('should call connectionsV1UpdateConnection successfully', function(done) {
+          // TODO: uncomment, update parameter values for connectionsV1UpdateConnection call and complete the assertions
           /*
           var owner = "owner_example";
           var connection_uuid = "connection_uuid_example";
@@ -394,7 +394,7 @@
           body.deleted = false;
           body.kind = new PolyaxonSdk.V1ConnectionKind();
 
-          instance.updateConnection(owner, connection_uuid, body, function(error, data, response) {
+          instance.connectionsV1UpdateConnection(owner, connection_uuid, body, function(error, data, response) {
             if (error) {
               done(error);
               return;

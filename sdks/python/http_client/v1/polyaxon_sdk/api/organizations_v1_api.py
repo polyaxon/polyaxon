@@ -49,12 +49,12 @@ class OrganizationsV1Api(object):
             api_client = ApiClient()
         self.api_client = api_client
 
-    def create_organization(self, body, **kwargs):  # noqa: E501
-        """create_organization  # noqa: E501
+    def organizations_v1_create_organization(self, body, **kwargs):  # noqa: E501
+        """organizations_v1_create_organization  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.create_organization(body, async_req=True)
+        >>> thread = api.organizations_v1_create_organization(body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -65,19 +65,23 @@ class OrganizationsV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.create_organization_with_http_info(body, **kwargs)  # noqa: E501
+            return self.organizations_v1_create_organization_with_http_info(
+                body, **kwargs
+            )  # noqa: E501
         else:
-            (data) = self.create_organization_with_http_info(
+            (data) = self.organizations_v1_create_organization_with_http_info(
                 body, **kwargs
             )  # noqa: E501
             return data
 
-    def create_organization_with_http_info(self, body, **kwargs):  # noqa: E501
-        """create_organization  # noqa: E501
+    def organizations_v1_create_organization_with_http_info(
+        self, body, **kwargs
+    ):  # noqa: E501
+        """organizations_v1_create_organization  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.create_organization_with_http_info(body, async_req=True)
+        >>> thread = api.organizations_v1_create_organization_with_http_info(body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -98,14 +102,14 @@ class OrganizationsV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method create_organization" % key
+                    " to method organizations_v1_create_organization" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'body' is set
         if "body" not in params or params["body"] is None:
             raise ValueError(
-                "Missing the required parameter `body` when calling `create_organization`"
+                "Missing the required parameter `body` when calling `organizations_v1_create_organization`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -155,12 +159,14 @@ class OrganizationsV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def create_organization_member(self, owner, body, **kwargs):  # noqa: E501
-        """create_organization_member  # noqa: E501
+    def organizations_v1_create_organization_member(
+        self, owner, body, **kwargs
+    ):  # noqa: E501
+        """organizations_v1_create_organization_member  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.create_organization_member(owner, body, async_req=True)
+        >>> thread = api.organizations_v1_create_organization_member(owner, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -172,23 +178,23 @@ class OrganizationsV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.create_organization_member_with_http_info(
+            return self.organizations_v1_create_organization_member_with_http_info(
                 owner, body, **kwargs
             )  # noqa: E501
         else:
-            (data) = self.create_organization_member_with_http_info(
+            (data) = self.organizations_v1_create_organization_member_with_http_info(
                 owner, body, **kwargs
             )  # noqa: E501
             return data
 
-    def create_organization_member_with_http_info(
+    def organizations_v1_create_organization_member_with_http_info(
         self, owner, body, **kwargs
     ):  # noqa: E501
-        """create_organization_member  # noqa: E501
+        """organizations_v1_create_organization_member  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.create_organization_member_with_http_info(owner, body, async_req=True)
+        >>> thread = api.organizations_v1_create_organization_member_with_http_info(owner, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -210,19 +216,19 @@ class OrganizationsV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method create_organization_member" % key
+                    " to method organizations_v1_create_organization_member" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `create_organization_member`"
+                "Missing the required parameter `owner` when calling `organizations_v1_create_organization_member`"
             )  # noqa: E501
         # verify the required parameter 'body' is set
         if "body" not in params or params["body"] is None:
             raise ValueError(
-                "Missing the required parameter `body` when calling `create_organization_member`"
+                "Missing the required parameter `body` when calling `organizations_v1_create_organization_member`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -274,12 +280,12 @@ class OrganizationsV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def delete_organization(self, owner, **kwargs):  # noqa: E501
-        """delete_organization  # noqa: E501
+    def organizations_v1_delete_organization(self, owner, **kwargs):  # noqa: E501
+        """organizations_v1_delete_organization  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.delete_organization(owner, async_req=True)
+        >>> thread = api.organizations_v1_delete_organization(owner, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -290,21 +296,23 @@ class OrganizationsV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.delete_organization_with_http_info(
+            return self.organizations_v1_delete_organization_with_http_info(
                 owner, **kwargs
             )  # noqa: E501
         else:
-            (data) = self.delete_organization_with_http_info(
+            (data) = self.organizations_v1_delete_organization_with_http_info(
                 owner, **kwargs
             )  # noqa: E501
             return data
 
-    def delete_organization_with_http_info(self, owner, **kwargs):  # noqa: E501
-        """delete_organization  # noqa: E501
+    def organizations_v1_delete_organization_with_http_info(
+        self, owner, **kwargs
+    ):  # noqa: E501
+        """organizations_v1_delete_organization  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.delete_organization_with_http_info(owner, async_req=True)
+        >>> thread = api.organizations_v1_delete_organization_with_http_info(owner, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -325,14 +333,14 @@ class OrganizationsV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method delete_organization" % key
+                    " to method organizations_v1_delete_organization" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `delete_organization`"
+                "Missing the required parameter `owner` when calling `organizations_v1_delete_organization`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -382,12 +390,14 @@ class OrganizationsV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def delete_organization_member(self, owner, user, **kwargs):  # noqa: E501
-        """delete_organization_member  # noqa: E501
+    def organizations_v1_delete_organization_member(
+        self, owner, user, **kwargs
+    ):  # noqa: E501
+        """organizations_v1_delete_organization_member  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.delete_organization_member(owner, user, async_req=True)
+        >>> thread = api.organizations_v1_delete_organization_member(owner, user, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -399,23 +409,23 @@ class OrganizationsV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.delete_organization_member_with_http_info(
+            return self.organizations_v1_delete_organization_member_with_http_info(
                 owner, user, **kwargs
             )  # noqa: E501
         else:
-            (data) = self.delete_organization_member_with_http_info(
+            (data) = self.organizations_v1_delete_organization_member_with_http_info(
                 owner, user, **kwargs
             )  # noqa: E501
             return data
 
-    def delete_organization_member_with_http_info(
+    def organizations_v1_delete_organization_member_with_http_info(
         self, owner, user, **kwargs
     ):  # noqa: E501
-        """delete_organization_member  # noqa: E501
+        """organizations_v1_delete_organization_member  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.delete_organization_member_with_http_info(owner, user, async_req=True)
+        >>> thread = api.organizations_v1_delete_organization_member_with_http_info(owner, user, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -437,19 +447,19 @@ class OrganizationsV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method delete_organization_member" % key
+                    " to method organizations_v1_delete_organization_member" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `delete_organization_member`"
+                "Missing the required parameter `owner` when calling `organizations_v1_delete_organization_member`"
             )  # noqa: E501
         # verify the required parameter 'user' is set
         if "user" not in params or params["user"] is None:
             raise ValueError(
-                "Missing the required parameter `user` when calling `delete_organization_member`"
+                "Missing the required parameter `user` when calling `organizations_v1_delete_organization_member`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -501,12 +511,12 @@ class OrganizationsV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def get_organization(self, owner, **kwargs):  # noqa: E501
-        """get_organization  # noqa: E501
+    def organizations_v1_get_organization(self, owner, **kwargs):  # noqa: E501
+        """organizations_v1_get_organization  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.get_organization(owner, async_req=True)
+        >>> thread = api.organizations_v1_get_organization(owner, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -517,17 +527,23 @@ class OrganizationsV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.get_organization_with_http_info(owner, **kwargs)  # noqa: E501
+            return self.organizations_v1_get_organization_with_http_info(
+                owner, **kwargs
+            )  # noqa: E501
         else:
-            (data) = self.get_organization_with_http_info(owner, **kwargs)  # noqa: E501
+            (data) = self.organizations_v1_get_organization_with_http_info(
+                owner, **kwargs
+            )  # noqa: E501
             return data
 
-    def get_organization_with_http_info(self, owner, **kwargs):  # noqa: E501
-        """get_organization  # noqa: E501
+    def organizations_v1_get_organization_with_http_info(
+        self, owner, **kwargs
+    ):  # noqa: E501
+        """organizations_v1_get_organization  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.get_organization_with_http_info(owner, async_req=True)
+        >>> thread = api.organizations_v1_get_organization_with_http_info(owner, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -548,14 +564,14 @@ class OrganizationsV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method get_organization" % key
+                    " to method organizations_v1_get_organization" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `get_organization`"
+                "Missing the required parameter `owner` when calling `organizations_v1_get_organization`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -605,12 +621,14 @@ class OrganizationsV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def get_organization_member(self, owner, user, **kwargs):  # noqa: E501
-        """get_organization_member  # noqa: E501
+    def organizations_v1_get_organization_member(
+        self, owner, user, **kwargs
+    ):  # noqa: E501
+        """organizations_v1_get_organization_member  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.get_organization_member(owner, user, async_req=True)
+        >>> thread = api.organizations_v1_get_organization_member(owner, user, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -622,23 +640,23 @@ class OrganizationsV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.get_organization_member_with_http_info(
+            return self.organizations_v1_get_organization_member_with_http_info(
                 owner, user, **kwargs
             )  # noqa: E501
         else:
-            (data) = self.get_organization_member_with_http_info(
+            (data) = self.organizations_v1_get_organization_member_with_http_info(
                 owner, user, **kwargs
             )  # noqa: E501
             return data
 
-    def get_organization_member_with_http_info(
+    def organizations_v1_get_organization_member_with_http_info(
         self, owner, user, **kwargs
     ):  # noqa: E501
-        """get_organization_member  # noqa: E501
+        """organizations_v1_get_organization_member  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.get_organization_member_with_http_info(owner, user, async_req=True)
+        >>> thread = api.organizations_v1_get_organization_member_with_http_info(owner, user, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -660,19 +678,19 @@ class OrganizationsV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method get_organization_member" % key
+                    " to method organizations_v1_get_organization_member" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `get_organization_member`"
+                "Missing the required parameter `owner` when calling `organizations_v1_get_organization_member`"
             )  # noqa: E501
         # verify the required parameter 'user' is set
         if "user" not in params or params["user"] is None:
             raise ValueError(
-                "Missing the required parameter `user` when calling `get_organization_member`"
+                "Missing the required parameter `user` when calling `organizations_v1_get_organization_member`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -724,12 +742,12 @@ class OrganizationsV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def list_organization_members(self, owner, **kwargs):  # noqa: E501
-        """list_organization_members  # noqa: E501
+    def organizations_v1_list_organization_members(self, owner, **kwargs):  # noqa: E501
+        """organizations_v1_list_organization_members  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.list_organization_members(owner, async_req=True)
+        >>> thread = api.organizations_v1_list_organization_members(owner, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -744,21 +762,23 @@ class OrganizationsV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.list_organization_members_with_http_info(
+            return self.organizations_v1_list_organization_members_with_http_info(
                 owner, **kwargs
             )  # noqa: E501
         else:
-            (data) = self.list_organization_members_with_http_info(
+            (data) = self.organizations_v1_list_organization_members_with_http_info(
                 owner, **kwargs
             )  # noqa: E501
             return data
 
-    def list_organization_members_with_http_info(self, owner, **kwargs):  # noqa: E501
-        """list_organization_members  # noqa: E501
+    def organizations_v1_list_organization_members_with_http_info(
+        self, owner, **kwargs
+    ):  # noqa: E501
+        """organizations_v1_list_organization_members  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.list_organization_members_with_http_info(owner, async_req=True)
+        >>> thread = api.organizations_v1_list_organization_members_with_http_info(owner, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -783,14 +803,14 @@ class OrganizationsV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method list_organization_members" % key
+                    " to method organizations_v1_list_organization_members" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `list_organization_members`"
+                "Missing the required parameter `owner` when calling `organizations_v1_list_organization_members`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -848,12 +868,12 @@ class OrganizationsV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def list_organization_names(self, **kwargs):  # noqa: E501
+    def organizations_v1_list_organization_names(self, **kwargs):  # noqa: E501
         """Get versions  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.list_organization_names(async_req=True)
+        >>> thread = api.organizations_v1_list_organization_names(async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -863,17 +883,23 @@ class OrganizationsV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.list_organization_names_with_http_info(**kwargs)  # noqa: E501
+            return self.organizations_v1_list_organization_names_with_http_info(
+                **kwargs
+            )  # noqa: E501
         else:
-            (data) = self.list_organization_names_with_http_info(**kwargs)  # noqa: E501
+            (data) = self.organizations_v1_list_organization_names_with_http_info(
+                **kwargs
+            )  # noqa: E501
             return data
 
-    def list_organization_names_with_http_info(self, **kwargs):  # noqa: E501
+    def organizations_v1_list_organization_names_with_http_info(
+        self, **kwargs
+    ):  # noqa: E501
         """Get versions  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.list_organization_names_with_http_info(async_req=True)
+        >>> thread = api.organizations_v1_list_organization_names_with_http_info(async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -893,7 +919,7 @@ class OrganizationsV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method list_organization_names" % key
+                    " to method organizations_v1_list_organization_names" % key
                 )
             params[key] = val
         del params["kwargs"]
@@ -943,12 +969,12 @@ class OrganizationsV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def list_organizations(self, **kwargs):  # noqa: E501
+    def organizations_v1_list_organizations(self, **kwargs):  # noqa: E501
         """Get log handler  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.list_organizations(async_req=True)
+        >>> thread = api.organizations_v1_list_organizations(async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -958,17 +984,23 @@ class OrganizationsV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.list_organizations_with_http_info(**kwargs)  # noqa: E501
+            return self.organizations_v1_list_organizations_with_http_info(
+                **kwargs
+            )  # noqa: E501
         else:
-            (data) = self.list_organizations_with_http_info(**kwargs)  # noqa: E501
+            (data) = self.organizations_v1_list_organizations_with_http_info(
+                **kwargs
+            )  # noqa: E501
             return data
 
-    def list_organizations_with_http_info(self, **kwargs):  # noqa: E501
+    def organizations_v1_list_organizations_with_http_info(
+        self, **kwargs
+    ):  # noqa: E501
         """Get log handler  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.list_organizations_with_http_info(async_req=True)
+        >>> thread = api.organizations_v1_list_organizations_with_http_info(async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -988,7 +1020,7 @@ class OrganizationsV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method list_organizations" % key
+                    " to method organizations_v1_list_organizations" % key
                 )
             params[key] = val
         del params["kwargs"]
@@ -1038,12 +1070,12 @@ class OrganizationsV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def patch_organization(self, owner, body, **kwargs):  # noqa: E501
-        """patch_organization  # noqa: E501
+    def organizations_v1_patch_organization(self, owner, body, **kwargs):  # noqa: E501
+        """organizations_v1_patch_organization  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.patch_organization(owner, body, async_req=True)
+        >>> thread = api.organizations_v1_patch_organization(owner, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -1055,21 +1087,23 @@ class OrganizationsV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.patch_organization_with_http_info(
+            return self.organizations_v1_patch_organization_with_http_info(
                 owner, body, **kwargs
             )  # noqa: E501
         else:
-            (data) = self.patch_organization_with_http_info(
+            (data) = self.organizations_v1_patch_organization_with_http_info(
                 owner, body, **kwargs
             )  # noqa: E501
             return data
 
-    def patch_organization_with_http_info(self, owner, body, **kwargs):  # noqa: E501
-        """patch_organization  # noqa: E501
+    def organizations_v1_patch_organization_with_http_info(
+        self, owner, body, **kwargs
+    ):  # noqa: E501
+        """organizations_v1_patch_organization  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.patch_organization_with_http_info(owner, body, async_req=True)
+        >>> thread = api.organizations_v1_patch_organization_with_http_info(owner, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -1091,19 +1125,19 @@ class OrganizationsV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method patch_organization" % key
+                    " to method organizations_v1_patch_organization" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `patch_organization`"
+                "Missing the required parameter `owner` when calling `organizations_v1_patch_organization`"
             )  # noqa: E501
         # verify the required parameter 'body' is set
         if "body" not in params or params["body"] is None:
             raise ValueError(
-                "Missing the required parameter `body` when calling `patch_organization`"
+                "Missing the required parameter `body` when calling `organizations_v1_patch_organization`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -1155,14 +1189,14 @@ class OrganizationsV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def patch_organization_member(
+    def organizations_v1_patch_organization_member(
         self, owner, member_user, body, **kwargs
     ):  # noqa: E501
-        """patch_organization_member  # noqa: E501
+        """organizations_v1_patch_organization_member  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.patch_organization_member(owner, member_user, body, async_req=True)
+        >>> thread = api.organizations_v1_patch_organization_member(owner, member_user, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -1175,23 +1209,23 @@ class OrganizationsV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.patch_organization_member_with_http_info(
+            return self.organizations_v1_patch_organization_member_with_http_info(
                 owner, member_user, body, **kwargs
             )  # noqa: E501
         else:
-            (data) = self.patch_organization_member_with_http_info(
+            (data) = self.organizations_v1_patch_organization_member_with_http_info(
                 owner, member_user, body, **kwargs
             )  # noqa: E501
             return data
 
-    def patch_organization_member_with_http_info(
+    def organizations_v1_patch_organization_member_with_http_info(
         self, owner, member_user, body, **kwargs
     ):  # noqa: E501
-        """patch_organization_member  # noqa: E501
+        """organizations_v1_patch_organization_member  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.patch_organization_member_with_http_info(owner, member_user, body, async_req=True)
+        >>> thread = api.organizations_v1_patch_organization_member_with_http_info(owner, member_user, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -1214,24 +1248,24 @@ class OrganizationsV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method patch_organization_member" % key
+                    " to method organizations_v1_patch_organization_member" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `patch_organization_member`"
+                "Missing the required parameter `owner` when calling `organizations_v1_patch_organization_member`"
             )  # noqa: E501
         # verify the required parameter 'member_user' is set
         if "member_user" not in params or params["member_user"] is None:
             raise ValueError(
-                "Missing the required parameter `member_user` when calling `patch_organization_member`"
+                "Missing the required parameter `member_user` when calling `organizations_v1_patch_organization_member`"
             )  # noqa: E501
         # verify the required parameter 'body' is set
         if "body" not in params or params["body"] is None:
             raise ValueError(
-                "Missing the required parameter `body` when calling `patch_organization_member`"
+                "Missing the required parameter `body` when calling `organizations_v1_patch_organization_member`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -1285,12 +1319,12 @@ class OrganizationsV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def update_organization(self, owner, body, **kwargs):  # noqa: E501
-        """update_organization  # noqa: E501
+    def organizations_v1_update_organization(self, owner, body, **kwargs):  # noqa: E501
+        """organizations_v1_update_organization  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.update_organization(owner, body, async_req=True)
+        >>> thread = api.organizations_v1_update_organization(owner, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -1302,21 +1336,23 @@ class OrganizationsV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.update_organization_with_http_info(
+            return self.organizations_v1_update_organization_with_http_info(
                 owner, body, **kwargs
             )  # noqa: E501
         else:
-            (data) = self.update_organization_with_http_info(
+            (data) = self.organizations_v1_update_organization_with_http_info(
                 owner, body, **kwargs
             )  # noqa: E501
             return data
 
-    def update_organization_with_http_info(self, owner, body, **kwargs):  # noqa: E501
-        """update_organization  # noqa: E501
+    def organizations_v1_update_organization_with_http_info(
+        self, owner, body, **kwargs
+    ):  # noqa: E501
+        """organizations_v1_update_organization  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.update_organization_with_http_info(owner, body, async_req=True)
+        >>> thread = api.organizations_v1_update_organization_with_http_info(owner, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -1338,19 +1374,19 @@ class OrganizationsV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method update_organization" % key
+                    " to method organizations_v1_update_organization" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `update_organization`"
+                "Missing the required parameter `owner` when calling `organizations_v1_update_organization`"
             )  # noqa: E501
         # verify the required parameter 'body' is set
         if "body" not in params or params["body"] is None:
             raise ValueError(
-                "Missing the required parameter `body` when calling `update_organization`"
+                "Missing the required parameter `body` when calling `organizations_v1_update_organization`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -1402,14 +1438,14 @@ class OrganizationsV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def update_organization_member(
+    def organizations_v1_update_organization_member(
         self, owner, member_user, body, **kwargs
     ):  # noqa: E501
-        """update_organization_member  # noqa: E501
+        """organizations_v1_update_organization_member  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.update_organization_member(owner, member_user, body, async_req=True)
+        >>> thread = api.organizations_v1_update_organization_member(owner, member_user, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -1422,23 +1458,23 @@ class OrganizationsV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.update_organization_member_with_http_info(
+            return self.organizations_v1_update_organization_member_with_http_info(
                 owner, member_user, body, **kwargs
             )  # noqa: E501
         else:
-            (data) = self.update_organization_member_with_http_info(
+            (data) = self.organizations_v1_update_organization_member_with_http_info(
                 owner, member_user, body, **kwargs
             )  # noqa: E501
             return data
 
-    def update_organization_member_with_http_info(
+    def organizations_v1_update_organization_member_with_http_info(
         self, owner, member_user, body, **kwargs
     ):  # noqa: E501
-        """update_organization_member  # noqa: E501
+        """organizations_v1_update_organization_member  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.update_organization_member_with_http_info(owner, member_user, body, async_req=True)
+        >>> thread = api.organizations_v1_update_organization_member_with_http_info(owner, member_user, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -1461,24 +1497,24 @@ class OrganizationsV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method update_organization_member" % key
+                    " to method organizations_v1_update_organization_member" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `update_organization_member`"
+                "Missing the required parameter `owner` when calling `organizations_v1_update_organization_member`"
             )  # noqa: E501
         # verify the required parameter 'member_user' is set
         if "member_user" not in params or params["member_user"] is None:
             raise ValueError(
-                "Missing the required parameter `member_user` when calling `update_organization_member`"
+                "Missing the required parameter `member_user` when calling `organizations_v1_update_organization_member`"
             )  # noqa: E501
         # verify the required parameter 'body' is set
         if "body" not in params or params["body"] is None:
             raise ValueError(
-                "Missing the required parameter `body` when calling `update_organization_member`"
+                "Missing the required parameter `body` when calling `organizations_v1_update_organization_member`"
             )  # noqa: E501
 
         collection_formats = {}

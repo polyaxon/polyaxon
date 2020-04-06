@@ -57,8 +57,8 @@ public class VersionsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void getLogHandlerTest() throws ApiException {
-        V1LogHandler response = api.getLogHandler();
+    public void versionsV1GetLogHandlerTest() throws ApiException {
+        V1LogHandler response = api.versionsV1GetLogHandler();
 
         // TODO: test validations
     }
@@ -72,8 +72,8 @@ public class VersionsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void getVersionsTest() throws ApiException {
-        V1Versions response = api.getVersions();
+    public void versionsV1GetVersionsTest() throws ApiException {
+        V1Versions response = api.versionsV1GetVersions();
 
         // TODO: test validations
     }

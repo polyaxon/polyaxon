@@ -4,11 +4,11 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**get_user**](UsersV1Api.md#get_user) | **GET** /api/v1/users | Login
+[**users_v1_get_user**](UsersV1Api.md#users_v1_get_user) | **GET** /api/v1/users | Login
 
 
-# **get_user**
-> V1User get_user()
+# **users_v1_get_user**
+> V1User users_v1_get_user()
 
 Login
 
@@ -31,10 +31,10 @@ api_instance = polyaxon_sdk.UsersV1Api(polyaxon_sdk.ApiClient(configuration))
 
 try:
     # Login
-    api_response = api_instance.get_user()
+    api_response = api_instance.users_v1_get_user()
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling UsersV1Api->get_user: %s\n" % e)
+    print("Exception when calling UsersV1Api->users_v1_get_user: %s\n" % e)
 ```
 
 ### Parameters

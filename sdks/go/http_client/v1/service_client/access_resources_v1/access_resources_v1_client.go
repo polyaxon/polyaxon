@@ -39,41 +39,41 @@ type Client struct {
 
 // ClientService is the interface for Client methods
 type ClientService interface {
-	CreateAccessResource(params *CreateAccessResourceParams, authInfo runtime.ClientAuthInfoWriter) (*CreateAccessResourceOK, *CreateAccessResourceNoContent, error)
+	AccessResourcesV1CreateAccessResource(params *AccessResourcesV1CreateAccessResourceParams, authInfo runtime.ClientAuthInfoWriter) (*AccessResourcesV1CreateAccessResourceOK, *AccessResourcesV1CreateAccessResourceNoContent, error)
 
-	DeleteAccessResource(params *DeleteAccessResourceParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteAccessResourceOK, *DeleteAccessResourceNoContent, error)
+	AccessResourcesV1DeleteAccessResource(params *AccessResourcesV1DeleteAccessResourceParams, authInfo runtime.ClientAuthInfoWriter) (*AccessResourcesV1DeleteAccessResourceOK, *AccessResourcesV1DeleteAccessResourceNoContent, error)
 
-	GetAccessResource(params *GetAccessResourceParams, authInfo runtime.ClientAuthInfoWriter) (*GetAccessResourceOK, *GetAccessResourceNoContent, error)
+	AccessResourcesV1GetAccessResource(params *AccessResourcesV1GetAccessResourceParams, authInfo runtime.ClientAuthInfoWriter) (*AccessResourcesV1GetAccessResourceOK, *AccessResourcesV1GetAccessResourceNoContent, error)
 
-	ListAccessResourceNames(params *ListAccessResourceNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListAccessResourceNamesOK, *ListAccessResourceNamesNoContent, error)
+	AccessResourcesV1ListAccessResourceNames(params *AccessResourcesV1ListAccessResourceNamesParams, authInfo runtime.ClientAuthInfoWriter) (*AccessResourcesV1ListAccessResourceNamesOK, *AccessResourcesV1ListAccessResourceNamesNoContent, error)
 
-	ListAccessResources(params *ListAccessResourcesParams, authInfo runtime.ClientAuthInfoWriter) (*ListAccessResourcesOK, *ListAccessResourcesNoContent, error)
+	AccessResourcesV1ListAccessResources(params *AccessResourcesV1ListAccessResourcesParams, authInfo runtime.ClientAuthInfoWriter) (*AccessResourcesV1ListAccessResourcesOK, *AccessResourcesV1ListAccessResourcesNoContent, error)
 
-	PatchAccessResource(params *PatchAccessResourceParams, authInfo runtime.ClientAuthInfoWriter) (*PatchAccessResourceOK, *PatchAccessResourceNoContent, error)
+	AccessResourcesV1PatchAccessResource(params *AccessResourcesV1PatchAccessResourceParams, authInfo runtime.ClientAuthInfoWriter) (*AccessResourcesV1PatchAccessResourceOK, *AccessResourcesV1PatchAccessResourceNoContent, error)
 
-	UpdateAccessResource(params *UpdateAccessResourceParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateAccessResourceOK, *UpdateAccessResourceNoContent, error)
+	AccessResourcesV1UpdateAccessResource(params *AccessResourcesV1UpdateAccessResourceParams, authInfo runtime.ClientAuthInfoWriter) (*AccessResourcesV1UpdateAccessResourceOK, *AccessResourcesV1UpdateAccessResourceNoContent, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
 
 /*
-  CreateAccessResource creates access resource
+  AccessResourcesV1CreateAccessResource creates access resource
 */
-func (a *Client) CreateAccessResource(params *CreateAccessResourceParams, authInfo runtime.ClientAuthInfoWriter) (*CreateAccessResourceOK, *CreateAccessResourceNoContent, error) {
+func (a *Client) AccessResourcesV1CreateAccessResource(params *AccessResourcesV1CreateAccessResourceParams, authInfo runtime.ClientAuthInfoWriter) (*AccessResourcesV1CreateAccessResourceOK, *AccessResourcesV1CreateAccessResourceNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewCreateAccessResourceParams()
+		params = NewAccessResourcesV1CreateAccessResourceParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "CreateAccessResource",
+		ID:                 "AccessResourcesV1_CreateAccessResource",
 		Method:             "POST",
 		PathPattern:        "/api/v1/orgs/{owner}/access_resources",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &CreateAccessResourceReader{formats: a.formats},
+		Reader:             &AccessResourcesV1CreateAccessResourceReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -82,34 +82,34 @@ func (a *Client) CreateAccessResource(params *CreateAccessResourceParams, authIn
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *CreateAccessResourceOK:
+	case *AccessResourcesV1CreateAccessResourceOK:
 		return value, nil, nil
-	case *CreateAccessResourceNoContent:
+	case *AccessResourcesV1CreateAccessResourceNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*CreateAccessResourceDefault)
+	unexpectedSuccess := result.(*AccessResourcesV1CreateAccessResourceDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  DeleteAccessResource deletes access resource
+  AccessResourcesV1DeleteAccessResource deletes access resource
 */
-func (a *Client) DeleteAccessResource(params *DeleteAccessResourceParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteAccessResourceOK, *DeleteAccessResourceNoContent, error) {
+func (a *Client) AccessResourcesV1DeleteAccessResource(params *AccessResourcesV1DeleteAccessResourceParams, authInfo runtime.ClientAuthInfoWriter) (*AccessResourcesV1DeleteAccessResourceOK, *AccessResourcesV1DeleteAccessResourceNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewDeleteAccessResourceParams()
+		params = NewAccessResourcesV1DeleteAccessResourceParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "DeleteAccessResource",
+		ID:                 "AccessResourcesV1_DeleteAccessResource",
 		Method:             "DELETE",
 		PathPattern:        "/api/v1/orgs/{owner}/access_resources/{uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &DeleteAccessResourceReader{formats: a.formats},
+		Reader:             &AccessResourcesV1DeleteAccessResourceReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -118,34 +118,34 @@ func (a *Client) DeleteAccessResource(params *DeleteAccessResourceParams, authIn
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *DeleteAccessResourceOK:
+	case *AccessResourcesV1DeleteAccessResourceOK:
 		return value, nil, nil
-	case *DeleteAccessResourceNoContent:
+	case *AccessResourcesV1DeleteAccessResourceNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*DeleteAccessResourceDefault)
+	unexpectedSuccess := result.(*AccessResourcesV1DeleteAccessResourceDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  GetAccessResource gets access resource
+  AccessResourcesV1GetAccessResource gets access resource
 */
-func (a *Client) GetAccessResource(params *GetAccessResourceParams, authInfo runtime.ClientAuthInfoWriter) (*GetAccessResourceOK, *GetAccessResourceNoContent, error) {
+func (a *Client) AccessResourcesV1GetAccessResource(params *AccessResourcesV1GetAccessResourceParams, authInfo runtime.ClientAuthInfoWriter) (*AccessResourcesV1GetAccessResourceOK, *AccessResourcesV1GetAccessResourceNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewGetAccessResourceParams()
+		params = NewAccessResourcesV1GetAccessResourceParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "GetAccessResource",
+		ID:                 "AccessResourcesV1_GetAccessResource",
 		Method:             "GET",
 		PathPattern:        "/api/v1/orgs/{owner}/access_resources/{uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &GetAccessResourceReader{formats: a.formats},
+		Reader:             &AccessResourcesV1GetAccessResourceReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -154,34 +154,34 @@ func (a *Client) GetAccessResource(params *GetAccessResourceParams, authInfo run
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *GetAccessResourceOK:
+	case *AccessResourcesV1GetAccessResourceOK:
 		return value, nil, nil
-	case *GetAccessResourceNoContent:
+	case *AccessResourcesV1GetAccessResourceNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*GetAccessResourceDefault)
+	unexpectedSuccess := result.(*AccessResourcesV1GetAccessResourceDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  ListAccessResourceNames lists access resource names
+  AccessResourcesV1ListAccessResourceNames lists access resource names
 */
-func (a *Client) ListAccessResourceNames(params *ListAccessResourceNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListAccessResourceNamesOK, *ListAccessResourceNamesNoContent, error) {
+func (a *Client) AccessResourcesV1ListAccessResourceNames(params *AccessResourcesV1ListAccessResourceNamesParams, authInfo runtime.ClientAuthInfoWriter) (*AccessResourcesV1ListAccessResourceNamesOK, *AccessResourcesV1ListAccessResourceNamesNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewListAccessResourceNamesParams()
+		params = NewAccessResourcesV1ListAccessResourceNamesParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "ListAccessResourceNames",
+		ID:                 "AccessResourcesV1_ListAccessResourceNames",
 		Method:             "GET",
 		PathPattern:        "/api/v1/orgs/{owner}/access_resources/names",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &ListAccessResourceNamesReader{formats: a.formats},
+		Reader:             &AccessResourcesV1ListAccessResourceNamesReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -190,34 +190,34 @@ func (a *Client) ListAccessResourceNames(params *ListAccessResourceNamesParams, 
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *ListAccessResourceNamesOK:
+	case *AccessResourcesV1ListAccessResourceNamesOK:
 		return value, nil, nil
-	case *ListAccessResourceNamesNoContent:
+	case *AccessResourcesV1ListAccessResourceNamesNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*ListAccessResourceNamesDefault)
+	unexpectedSuccess := result.(*AccessResourcesV1ListAccessResourceNamesDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  ListAccessResources lists access resources
+  AccessResourcesV1ListAccessResources lists access resources
 */
-func (a *Client) ListAccessResources(params *ListAccessResourcesParams, authInfo runtime.ClientAuthInfoWriter) (*ListAccessResourcesOK, *ListAccessResourcesNoContent, error) {
+func (a *Client) AccessResourcesV1ListAccessResources(params *AccessResourcesV1ListAccessResourcesParams, authInfo runtime.ClientAuthInfoWriter) (*AccessResourcesV1ListAccessResourcesOK, *AccessResourcesV1ListAccessResourcesNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewListAccessResourcesParams()
+		params = NewAccessResourcesV1ListAccessResourcesParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "ListAccessResources",
+		ID:                 "AccessResourcesV1_ListAccessResources",
 		Method:             "GET",
 		PathPattern:        "/api/v1/orgs/{owner}/access_resources",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &ListAccessResourcesReader{formats: a.formats},
+		Reader:             &AccessResourcesV1ListAccessResourcesReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -226,34 +226,34 @@ func (a *Client) ListAccessResources(params *ListAccessResourcesParams, authInfo
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *ListAccessResourcesOK:
+	case *AccessResourcesV1ListAccessResourcesOK:
 		return value, nil, nil
-	case *ListAccessResourcesNoContent:
+	case *AccessResourcesV1ListAccessResourcesNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*ListAccessResourcesDefault)
+	unexpectedSuccess := result.(*AccessResourcesV1ListAccessResourcesDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  PatchAccessResource patches access resource
+  AccessResourcesV1PatchAccessResource patches access resource
 */
-func (a *Client) PatchAccessResource(params *PatchAccessResourceParams, authInfo runtime.ClientAuthInfoWriter) (*PatchAccessResourceOK, *PatchAccessResourceNoContent, error) {
+func (a *Client) AccessResourcesV1PatchAccessResource(params *AccessResourcesV1PatchAccessResourceParams, authInfo runtime.ClientAuthInfoWriter) (*AccessResourcesV1PatchAccessResourceOK, *AccessResourcesV1PatchAccessResourceNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewPatchAccessResourceParams()
+		params = NewAccessResourcesV1PatchAccessResourceParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "PatchAccessResource",
+		ID:                 "AccessResourcesV1_PatchAccessResource",
 		Method:             "PATCH",
 		PathPattern:        "/api/v1/orgs/{owner}/access_resources/{access_resource.uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &PatchAccessResourceReader{formats: a.formats},
+		Reader:             &AccessResourcesV1PatchAccessResourceReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -262,34 +262,34 @@ func (a *Client) PatchAccessResource(params *PatchAccessResourceParams, authInfo
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *PatchAccessResourceOK:
+	case *AccessResourcesV1PatchAccessResourceOK:
 		return value, nil, nil
-	case *PatchAccessResourceNoContent:
+	case *AccessResourcesV1PatchAccessResourceNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*PatchAccessResourceDefault)
+	unexpectedSuccess := result.(*AccessResourcesV1PatchAccessResourceDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  UpdateAccessResource updates access resource
+  AccessResourcesV1UpdateAccessResource updates access resource
 */
-func (a *Client) UpdateAccessResource(params *UpdateAccessResourceParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateAccessResourceOK, *UpdateAccessResourceNoContent, error) {
+func (a *Client) AccessResourcesV1UpdateAccessResource(params *AccessResourcesV1UpdateAccessResourceParams, authInfo runtime.ClientAuthInfoWriter) (*AccessResourcesV1UpdateAccessResourceOK, *AccessResourcesV1UpdateAccessResourceNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewUpdateAccessResourceParams()
+		params = NewAccessResourcesV1UpdateAccessResourceParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "UpdateAccessResource",
+		ID:                 "AccessResourcesV1_UpdateAccessResource",
 		Method:             "PUT",
 		PathPattern:        "/api/v1/orgs/{owner}/access_resources/{access_resource.uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &UpdateAccessResourceReader{formats: a.formats},
+		Reader:             &AccessResourcesV1UpdateAccessResourceReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -298,13 +298,13 @@ func (a *Client) UpdateAccessResource(params *UpdateAccessResourceParams, authIn
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *UpdateAccessResourceOK:
+	case *AccessResourcesV1UpdateAccessResourceOK:
 		return value, nil, nil
-	case *UpdateAccessResourceNoContent:
+	case *AccessResourcesV1UpdateAccessResourceNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*UpdateAccessResourceDefault)
+	unexpectedSuccess := result.(*AccessResourcesV1UpdateAccessResourceDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 

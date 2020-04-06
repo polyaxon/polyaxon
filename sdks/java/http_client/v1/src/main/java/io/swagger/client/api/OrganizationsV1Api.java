@@ -73,14 +73,14 @@ public class OrganizationsV1Api {
     }
 
     /**
-     * Build call for createOrganization
+     * Build call for organizationsV1CreateOrganization
      * @param body  (required)
      * @param progressListener Progress listener
      * @param progressRequestListener Progress request listener
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call createOrganizationCall(V1Organization body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call organizationsV1CreateOrganizationCall(V1Organization body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -122,15 +122,15 @@ public class OrganizationsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call createOrganizationValidateBeforeCall(V1Organization body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call organizationsV1CreateOrganizationValidateBeforeCall(V1Organization body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'body' is set
         if (body == null) {
-            throw new ApiException("Missing the required parameter 'body' when calling createOrganization(Async)");
+            throw new ApiException("Missing the required parameter 'body' when calling organizationsV1CreateOrganization(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = createOrganizationCall(body, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = organizationsV1CreateOrganizationCall(body, progressListener, progressRequestListener);
         return call;
 
     }
@@ -142,8 +142,8 @@ public class OrganizationsV1Api {
      * @return V1Organization
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1Organization createOrganization(V1Organization body) throws ApiException {
-        ApiResponse<V1Organization> resp = createOrganizationWithHttpInfo(body);
+    public V1Organization organizationsV1CreateOrganization(V1Organization body) throws ApiException {
+        ApiResponse<V1Organization> resp = organizationsV1CreateOrganizationWithHttpInfo(body);
         return resp.getData();
     }
 
@@ -154,8 +154,8 @@ public class OrganizationsV1Api {
      * @return ApiResponse&lt;V1Organization&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1Organization> createOrganizationWithHttpInfo(V1Organization body) throws ApiException {
-        com.squareup.okhttp.Call call = createOrganizationValidateBeforeCall(body, null, null);
+    public ApiResponse<V1Organization> organizationsV1CreateOrganizationWithHttpInfo(V1Organization body) throws ApiException {
+        com.squareup.okhttp.Call call = organizationsV1CreateOrganizationValidateBeforeCall(body, null, null);
         Type localVarReturnType = new TypeToken<V1Organization>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -168,7 +168,7 @@ public class OrganizationsV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call createOrganizationAsync(V1Organization body, final ApiCallback<V1Organization> callback) throws ApiException {
+    public com.squareup.okhttp.Call organizationsV1CreateOrganizationAsync(V1Organization body, final ApiCallback<V1Organization> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -189,13 +189,13 @@ public class OrganizationsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = createOrganizationValidateBeforeCall(body, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = organizationsV1CreateOrganizationValidateBeforeCall(body, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1Organization>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
     /**
-     * Build call for createOrganizationMember
+     * Build call for organizationsV1CreateOrganizationMember
      * @param owner Owner of the namespace (required)
      * @param body Organization body (required)
      * @param progressListener Progress listener
@@ -203,7 +203,7 @@ public class OrganizationsV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call createOrganizationMemberCall(String owner, V1OrganizationMember body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call organizationsV1CreateOrganizationMemberCall(String owner, V1OrganizationMember body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -246,20 +246,20 @@ public class OrganizationsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call createOrganizationMemberValidateBeforeCall(String owner, V1OrganizationMember body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call organizationsV1CreateOrganizationMemberValidateBeforeCall(String owner, V1OrganizationMember body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling createOrganizationMember(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling organizationsV1CreateOrganizationMember(Async)");
         }
         
         // verify the required parameter 'body' is set
         if (body == null) {
-            throw new ApiException("Missing the required parameter 'body' when calling createOrganizationMember(Async)");
+            throw new ApiException("Missing the required parameter 'body' when calling organizationsV1CreateOrganizationMember(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = createOrganizationMemberCall(owner, body, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = organizationsV1CreateOrganizationMemberCall(owner, body, progressListener, progressRequestListener);
         return call;
 
     }
@@ -272,8 +272,8 @@ public class OrganizationsV1Api {
      * @return V1OrganizationMember
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1OrganizationMember createOrganizationMember(String owner, V1OrganizationMember body) throws ApiException {
-        ApiResponse<V1OrganizationMember> resp = createOrganizationMemberWithHttpInfo(owner, body);
+    public V1OrganizationMember organizationsV1CreateOrganizationMember(String owner, V1OrganizationMember body) throws ApiException {
+        ApiResponse<V1OrganizationMember> resp = organizationsV1CreateOrganizationMemberWithHttpInfo(owner, body);
         return resp.getData();
     }
 
@@ -285,8 +285,8 @@ public class OrganizationsV1Api {
      * @return ApiResponse&lt;V1OrganizationMember&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1OrganizationMember> createOrganizationMemberWithHttpInfo(String owner, V1OrganizationMember body) throws ApiException {
-        com.squareup.okhttp.Call call = createOrganizationMemberValidateBeforeCall(owner, body, null, null);
+    public ApiResponse<V1OrganizationMember> organizationsV1CreateOrganizationMemberWithHttpInfo(String owner, V1OrganizationMember body) throws ApiException {
+        com.squareup.okhttp.Call call = organizationsV1CreateOrganizationMemberValidateBeforeCall(owner, body, null, null);
         Type localVarReturnType = new TypeToken<V1OrganizationMember>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -300,7 +300,7 @@ public class OrganizationsV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call createOrganizationMemberAsync(String owner, V1OrganizationMember body, final ApiCallback<V1OrganizationMember> callback) throws ApiException {
+    public com.squareup.okhttp.Call organizationsV1CreateOrganizationMemberAsync(String owner, V1OrganizationMember body, final ApiCallback<V1OrganizationMember> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -321,20 +321,20 @@ public class OrganizationsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = createOrganizationMemberValidateBeforeCall(owner, body, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = organizationsV1CreateOrganizationMemberValidateBeforeCall(owner, body, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1OrganizationMember>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
     /**
-     * Build call for deleteOrganization
+     * Build call for organizationsV1DeleteOrganization
      * @param owner Owner of the namespace (required)
      * @param progressListener Progress listener
      * @param progressRequestListener Progress request listener
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call deleteOrganizationCall(String owner, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call organizationsV1DeleteOrganizationCall(String owner, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -377,15 +377,15 @@ public class OrganizationsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call deleteOrganizationValidateBeforeCall(String owner, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call organizationsV1DeleteOrganizationValidateBeforeCall(String owner, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling deleteOrganization(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling organizationsV1DeleteOrganization(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = deleteOrganizationCall(owner, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = organizationsV1DeleteOrganizationCall(owner, progressListener, progressRequestListener);
         return call;
 
     }
@@ -396,8 +396,8 @@ public class OrganizationsV1Api {
      * @param owner Owner of the namespace (required)
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public void deleteOrganization(String owner) throws ApiException {
-        deleteOrganizationWithHttpInfo(owner);
+    public void organizationsV1DeleteOrganization(String owner) throws ApiException {
+        organizationsV1DeleteOrganizationWithHttpInfo(owner);
     }
 
     /**
@@ -407,8 +407,8 @@ public class OrganizationsV1Api {
      * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<Void> deleteOrganizationWithHttpInfo(String owner) throws ApiException {
-        com.squareup.okhttp.Call call = deleteOrganizationValidateBeforeCall(owner, null, null);
+    public ApiResponse<Void> organizationsV1DeleteOrganizationWithHttpInfo(String owner) throws ApiException {
+        com.squareup.okhttp.Call call = organizationsV1DeleteOrganizationValidateBeforeCall(owner, null, null);
         return apiClient.execute(call);
     }
 
@@ -420,7 +420,7 @@ public class OrganizationsV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call deleteOrganizationAsync(String owner, final ApiCallback<Void> callback) throws ApiException {
+    public com.squareup.okhttp.Call organizationsV1DeleteOrganizationAsync(String owner, final ApiCallback<Void> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -441,12 +441,12 @@ public class OrganizationsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = deleteOrganizationValidateBeforeCall(owner, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = organizationsV1DeleteOrganizationValidateBeforeCall(owner, progressListener, progressRequestListener);
         apiClient.executeAsync(call, callback);
         return call;
     }
     /**
-     * Build call for deleteOrganizationMember
+     * Build call for organizationsV1DeleteOrganizationMember
      * @param owner Owner of the namespace (required)
      * @param user Memeber under namesapce (required)
      * @param progressListener Progress listener
@@ -454,7 +454,7 @@ public class OrganizationsV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call deleteOrganizationMemberCall(String owner, String user, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call organizationsV1DeleteOrganizationMemberCall(String owner, String user, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -498,20 +498,20 @@ public class OrganizationsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call deleteOrganizationMemberValidateBeforeCall(String owner, String user, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call organizationsV1DeleteOrganizationMemberValidateBeforeCall(String owner, String user, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling deleteOrganizationMember(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling organizationsV1DeleteOrganizationMember(Async)");
         }
         
         // verify the required parameter 'user' is set
         if (user == null) {
-            throw new ApiException("Missing the required parameter 'user' when calling deleteOrganizationMember(Async)");
+            throw new ApiException("Missing the required parameter 'user' when calling organizationsV1DeleteOrganizationMember(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = deleteOrganizationMemberCall(owner, user, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = organizationsV1DeleteOrganizationMemberCall(owner, user, progressListener, progressRequestListener);
         return call;
 
     }
@@ -523,8 +523,8 @@ public class OrganizationsV1Api {
      * @param user Memeber under namesapce (required)
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public void deleteOrganizationMember(String owner, String user) throws ApiException {
-        deleteOrganizationMemberWithHttpInfo(owner, user);
+    public void organizationsV1DeleteOrganizationMember(String owner, String user) throws ApiException {
+        organizationsV1DeleteOrganizationMemberWithHttpInfo(owner, user);
     }
 
     /**
@@ -535,8 +535,8 @@ public class OrganizationsV1Api {
      * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<Void> deleteOrganizationMemberWithHttpInfo(String owner, String user) throws ApiException {
-        com.squareup.okhttp.Call call = deleteOrganizationMemberValidateBeforeCall(owner, user, null, null);
+    public ApiResponse<Void> organizationsV1DeleteOrganizationMemberWithHttpInfo(String owner, String user) throws ApiException {
+        com.squareup.okhttp.Call call = organizationsV1DeleteOrganizationMemberValidateBeforeCall(owner, user, null, null);
         return apiClient.execute(call);
     }
 
@@ -549,7 +549,7 @@ public class OrganizationsV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call deleteOrganizationMemberAsync(String owner, String user, final ApiCallback<Void> callback) throws ApiException {
+    public com.squareup.okhttp.Call organizationsV1DeleteOrganizationMemberAsync(String owner, String user, final ApiCallback<Void> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -570,19 +570,19 @@ public class OrganizationsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = deleteOrganizationMemberValidateBeforeCall(owner, user, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = organizationsV1DeleteOrganizationMemberValidateBeforeCall(owner, user, progressListener, progressRequestListener);
         apiClient.executeAsync(call, callback);
         return call;
     }
     /**
-     * Build call for getOrganization
+     * Build call for organizationsV1GetOrganization
      * @param owner Owner of the namespace (required)
      * @param progressListener Progress listener
      * @param progressRequestListener Progress request listener
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call getOrganizationCall(String owner, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call organizationsV1GetOrganizationCall(String owner, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -625,15 +625,15 @@ public class OrganizationsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call getOrganizationValidateBeforeCall(String owner, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call organizationsV1GetOrganizationValidateBeforeCall(String owner, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling getOrganization(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling organizationsV1GetOrganization(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = getOrganizationCall(owner, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = organizationsV1GetOrganizationCall(owner, progressListener, progressRequestListener);
         return call;
 
     }
@@ -645,8 +645,8 @@ public class OrganizationsV1Api {
      * @return V1Organization
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1Organization getOrganization(String owner) throws ApiException {
-        ApiResponse<V1Organization> resp = getOrganizationWithHttpInfo(owner);
+    public V1Organization organizationsV1GetOrganization(String owner) throws ApiException {
+        ApiResponse<V1Organization> resp = organizationsV1GetOrganizationWithHttpInfo(owner);
         return resp.getData();
     }
 
@@ -657,8 +657,8 @@ public class OrganizationsV1Api {
      * @return ApiResponse&lt;V1Organization&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1Organization> getOrganizationWithHttpInfo(String owner) throws ApiException {
-        com.squareup.okhttp.Call call = getOrganizationValidateBeforeCall(owner, null, null);
+    public ApiResponse<V1Organization> organizationsV1GetOrganizationWithHttpInfo(String owner) throws ApiException {
+        com.squareup.okhttp.Call call = organizationsV1GetOrganizationValidateBeforeCall(owner, null, null);
         Type localVarReturnType = new TypeToken<V1Organization>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -671,7 +671,7 @@ public class OrganizationsV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call getOrganizationAsync(String owner, final ApiCallback<V1Organization> callback) throws ApiException {
+    public com.squareup.okhttp.Call organizationsV1GetOrganizationAsync(String owner, final ApiCallback<V1Organization> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -692,13 +692,13 @@ public class OrganizationsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = getOrganizationValidateBeforeCall(owner, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = organizationsV1GetOrganizationValidateBeforeCall(owner, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1Organization>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
     /**
-     * Build call for getOrganizationMember
+     * Build call for organizationsV1GetOrganizationMember
      * @param owner Owner of the namespace (required)
      * @param user Memeber under namesapce (required)
      * @param progressListener Progress listener
@@ -706,7 +706,7 @@ public class OrganizationsV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call getOrganizationMemberCall(String owner, String user, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call organizationsV1GetOrganizationMemberCall(String owner, String user, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -750,20 +750,20 @@ public class OrganizationsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call getOrganizationMemberValidateBeforeCall(String owner, String user, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call organizationsV1GetOrganizationMemberValidateBeforeCall(String owner, String user, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling getOrganizationMember(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling organizationsV1GetOrganizationMember(Async)");
         }
         
         // verify the required parameter 'user' is set
         if (user == null) {
-            throw new ApiException("Missing the required parameter 'user' when calling getOrganizationMember(Async)");
+            throw new ApiException("Missing the required parameter 'user' when calling organizationsV1GetOrganizationMember(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = getOrganizationMemberCall(owner, user, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = organizationsV1GetOrganizationMemberCall(owner, user, progressListener, progressRequestListener);
         return call;
 
     }
@@ -776,8 +776,8 @@ public class OrganizationsV1Api {
      * @return V1OrganizationMember
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1OrganizationMember getOrganizationMember(String owner, String user) throws ApiException {
-        ApiResponse<V1OrganizationMember> resp = getOrganizationMemberWithHttpInfo(owner, user);
+    public V1OrganizationMember organizationsV1GetOrganizationMember(String owner, String user) throws ApiException {
+        ApiResponse<V1OrganizationMember> resp = organizationsV1GetOrganizationMemberWithHttpInfo(owner, user);
         return resp.getData();
     }
 
@@ -789,8 +789,8 @@ public class OrganizationsV1Api {
      * @return ApiResponse&lt;V1OrganizationMember&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1OrganizationMember> getOrganizationMemberWithHttpInfo(String owner, String user) throws ApiException {
-        com.squareup.okhttp.Call call = getOrganizationMemberValidateBeforeCall(owner, user, null, null);
+    public ApiResponse<V1OrganizationMember> organizationsV1GetOrganizationMemberWithHttpInfo(String owner, String user) throws ApiException {
+        com.squareup.okhttp.Call call = organizationsV1GetOrganizationMemberValidateBeforeCall(owner, user, null, null);
         Type localVarReturnType = new TypeToken<V1OrganizationMember>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -804,7 +804,7 @@ public class OrganizationsV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call getOrganizationMemberAsync(String owner, String user, final ApiCallback<V1OrganizationMember> callback) throws ApiException {
+    public com.squareup.okhttp.Call organizationsV1GetOrganizationMemberAsync(String owner, String user, final ApiCallback<V1OrganizationMember> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -825,13 +825,13 @@ public class OrganizationsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = getOrganizationMemberValidateBeforeCall(owner, user, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = organizationsV1GetOrganizationMemberValidateBeforeCall(owner, user, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1OrganizationMember>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
     /**
-     * Build call for listOrganizationMembers
+     * Build call for organizationsV1ListOrganizationMembers
      * @param owner Owner of the namespace (required)
      * @param offset Pagination offset. (optional)
      * @param limit Limit size. (optional)
@@ -842,7 +842,7 @@ public class OrganizationsV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call listOrganizationMembersCall(String owner, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call organizationsV1ListOrganizationMembersCall(String owner, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -893,15 +893,15 @@ public class OrganizationsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call listOrganizationMembersValidateBeforeCall(String owner, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call organizationsV1ListOrganizationMembersValidateBeforeCall(String owner, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling listOrganizationMembers(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling organizationsV1ListOrganizationMembers(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = listOrganizationMembersCall(owner, offset, limit, sort, query, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = organizationsV1ListOrganizationMembersCall(owner, offset, limit, sort, query, progressListener, progressRequestListener);
         return call;
 
     }
@@ -917,8 +917,8 @@ public class OrganizationsV1Api {
      * @return V1ListOrganizationMembersResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1ListOrganizationMembersResponse listOrganizationMembers(String owner, Integer offset, Integer limit, String sort, String query) throws ApiException {
-        ApiResponse<V1ListOrganizationMembersResponse> resp = listOrganizationMembersWithHttpInfo(owner, offset, limit, sort, query);
+    public V1ListOrganizationMembersResponse organizationsV1ListOrganizationMembers(String owner, Integer offset, Integer limit, String sort, String query) throws ApiException {
+        ApiResponse<V1ListOrganizationMembersResponse> resp = organizationsV1ListOrganizationMembersWithHttpInfo(owner, offset, limit, sort, query);
         return resp.getData();
     }
 
@@ -933,8 +933,8 @@ public class OrganizationsV1Api {
      * @return ApiResponse&lt;V1ListOrganizationMembersResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1ListOrganizationMembersResponse> listOrganizationMembersWithHttpInfo(String owner, Integer offset, Integer limit, String sort, String query) throws ApiException {
-        com.squareup.okhttp.Call call = listOrganizationMembersValidateBeforeCall(owner, offset, limit, sort, query, null, null);
+    public ApiResponse<V1ListOrganizationMembersResponse> organizationsV1ListOrganizationMembersWithHttpInfo(String owner, Integer offset, Integer limit, String sort, String query) throws ApiException {
+        com.squareup.okhttp.Call call = organizationsV1ListOrganizationMembersValidateBeforeCall(owner, offset, limit, sort, query, null, null);
         Type localVarReturnType = new TypeToken<V1ListOrganizationMembersResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -951,7 +951,7 @@ public class OrganizationsV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call listOrganizationMembersAsync(String owner, Integer offset, Integer limit, String sort, String query, final ApiCallback<V1ListOrganizationMembersResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call organizationsV1ListOrganizationMembersAsync(String owner, Integer offset, Integer limit, String sort, String query, final ApiCallback<V1ListOrganizationMembersResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -972,19 +972,19 @@ public class OrganizationsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = listOrganizationMembersValidateBeforeCall(owner, offset, limit, sort, query, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = organizationsV1ListOrganizationMembersValidateBeforeCall(owner, offset, limit, sort, query, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1ListOrganizationMembersResponse>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
     /**
-     * Build call for listOrganizationNames
+     * Build call for organizationsV1ListOrganizationNames
      * @param progressListener Progress listener
      * @param progressRequestListener Progress request listener
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call listOrganizationNamesCall(final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call organizationsV1ListOrganizationNamesCall(final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -1026,10 +1026,10 @@ public class OrganizationsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call listOrganizationNamesValidateBeforeCall(final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call organizationsV1ListOrganizationNamesValidateBeforeCall(final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
 
-        com.squareup.okhttp.Call call = listOrganizationNamesCall(progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = organizationsV1ListOrganizationNamesCall(progressListener, progressRequestListener);
         return call;
 
     }
@@ -1040,8 +1040,8 @@ public class OrganizationsV1Api {
      * @return V1ListOrganizationsResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1ListOrganizationsResponse listOrganizationNames() throws ApiException {
-        ApiResponse<V1ListOrganizationsResponse> resp = listOrganizationNamesWithHttpInfo();
+    public V1ListOrganizationsResponse organizationsV1ListOrganizationNames() throws ApiException {
+        ApiResponse<V1ListOrganizationsResponse> resp = organizationsV1ListOrganizationNamesWithHttpInfo();
         return resp.getData();
     }
 
@@ -1051,8 +1051,8 @@ public class OrganizationsV1Api {
      * @return ApiResponse&lt;V1ListOrganizationsResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1ListOrganizationsResponse> listOrganizationNamesWithHttpInfo() throws ApiException {
-        com.squareup.okhttp.Call call = listOrganizationNamesValidateBeforeCall(null, null);
+    public ApiResponse<V1ListOrganizationsResponse> organizationsV1ListOrganizationNamesWithHttpInfo() throws ApiException {
+        com.squareup.okhttp.Call call = organizationsV1ListOrganizationNamesValidateBeforeCall(null, null);
         Type localVarReturnType = new TypeToken<V1ListOrganizationsResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -1064,7 +1064,7 @@ public class OrganizationsV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call listOrganizationNamesAsync(final ApiCallback<V1ListOrganizationsResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call organizationsV1ListOrganizationNamesAsync(final ApiCallback<V1ListOrganizationsResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -1085,19 +1085,19 @@ public class OrganizationsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = listOrganizationNamesValidateBeforeCall(progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = organizationsV1ListOrganizationNamesValidateBeforeCall(progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1ListOrganizationsResponse>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
     /**
-     * Build call for listOrganizations
+     * Build call for organizationsV1ListOrganizations
      * @param progressListener Progress listener
      * @param progressRequestListener Progress request listener
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call listOrganizationsCall(final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call organizationsV1ListOrganizationsCall(final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -1139,10 +1139,10 @@ public class OrganizationsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call listOrganizationsValidateBeforeCall(final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call organizationsV1ListOrganizationsValidateBeforeCall(final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
 
-        com.squareup.okhttp.Call call = listOrganizationsCall(progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = organizationsV1ListOrganizationsCall(progressListener, progressRequestListener);
         return call;
 
     }
@@ -1153,8 +1153,8 @@ public class OrganizationsV1Api {
      * @return V1ListOrganizationsResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1ListOrganizationsResponse listOrganizations() throws ApiException {
-        ApiResponse<V1ListOrganizationsResponse> resp = listOrganizationsWithHttpInfo();
+    public V1ListOrganizationsResponse organizationsV1ListOrganizations() throws ApiException {
+        ApiResponse<V1ListOrganizationsResponse> resp = organizationsV1ListOrganizationsWithHttpInfo();
         return resp.getData();
     }
 
@@ -1164,8 +1164,8 @@ public class OrganizationsV1Api {
      * @return ApiResponse&lt;V1ListOrganizationsResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1ListOrganizationsResponse> listOrganizationsWithHttpInfo() throws ApiException {
-        com.squareup.okhttp.Call call = listOrganizationsValidateBeforeCall(null, null);
+    public ApiResponse<V1ListOrganizationsResponse> organizationsV1ListOrganizationsWithHttpInfo() throws ApiException {
+        com.squareup.okhttp.Call call = organizationsV1ListOrganizationsValidateBeforeCall(null, null);
         Type localVarReturnType = new TypeToken<V1ListOrganizationsResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -1177,7 +1177,7 @@ public class OrganizationsV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call listOrganizationsAsync(final ApiCallback<V1ListOrganizationsResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call organizationsV1ListOrganizationsAsync(final ApiCallback<V1ListOrganizationsResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -1198,13 +1198,13 @@ public class OrganizationsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = listOrganizationsValidateBeforeCall(progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = organizationsV1ListOrganizationsValidateBeforeCall(progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1ListOrganizationsResponse>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
     /**
-     * Build call for patchOrganization
+     * Build call for organizationsV1PatchOrganization
      * @param owner Owner of the namespace (required)
      * @param body Organization body (required)
      * @param progressListener Progress listener
@@ -1212,7 +1212,7 @@ public class OrganizationsV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call patchOrganizationCall(String owner, V1Organization body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call organizationsV1PatchOrganizationCall(String owner, V1Organization body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -1255,20 +1255,20 @@ public class OrganizationsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call patchOrganizationValidateBeforeCall(String owner, V1Organization body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call organizationsV1PatchOrganizationValidateBeforeCall(String owner, V1Organization body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling patchOrganization(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling organizationsV1PatchOrganization(Async)");
         }
         
         // verify the required parameter 'body' is set
         if (body == null) {
-            throw new ApiException("Missing the required parameter 'body' when calling patchOrganization(Async)");
+            throw new ApiException("Missing the required parameter 'body' when calling organizationsV1PatchOrganization(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = patchOrganizationCall(owner, body, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = organizationsV1PatchOrganizationCall(owner, body, progressListener, progressRequestListener);
         return call;
 
     }
@@ -1281,8 +1281,8 @@ public class OrganizationsV1Api {
      * @return V1Organization
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1Organization patchOrganization(String owner, V1Organization body) throws ApiException {
-        ApiResponse<V1Organization> resp = patchOrganizationWithHttpInfo(owner, body);
+    public V1Organization organizationsV1PatchOrganization(String owner, V1Organization body) throws ApiException {
+        ApiResponse<V1Organization> resp = organizationsV1PatchOrganizationWithHttpInfo(owner, body);
         return resp.getData();
     }
 
@@ -1294,8 +1294,8 @@ public class OrganizationsV1Api {
      * @return ApiResponse&lt;V1Organization&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1Organization> patchOrganizationWithHttpInfo(String owner, V1Organization body) throws ApiException {
-        com.squareup.okhttp.Call call = patchOrganizationValidateBeforeCall(owner, body, null, null);
+    public ApiResponse<V1Organization> organizationsV1PatchOrganizationWithHttpInfo(String owner, V1Organization body) throws ApiException {
+        com.squareup.okhttp.Call call = organizationsV1PatchOrganizationValidateBeforeCall(owner, body, null, null);
         Type localVarReturnType = new TypeToken<V1Organization>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -1309,7 +1309,7 @@ public class OrganizationsV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call patchOrganizationAsync(String owner, V1Organization body, final ApiCallback<V1Organization> callback) throws ApiException {
+    public com.squareup.okhttp.Call organizationsV1PatchOrganizationAsync(String owner, V1Organization body, final ApiCallback<V1Organization> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -1330,13 +1330,13 @@ public class OrganizationsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = patchOrganizationValidateBeforeCall(owner, body, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = organizationsV1PatchOrganizationValidateBeforeCall(owner, body, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1Organization>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
     /**
-     * Build call for patchOrganizationMember
+     * Build call for organizationsV1PatchOrganizationMember
      * @param owner Owner of the namespace (required)
      * @param memberUser User (required)
      * @param body Organization body (required)
@@ -1345,7 +1345,7 @@ public class OrganizationsV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call patchOrganizationMemberCall(String owner, String memberUser, V1OrganizationMember body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call organizationsV1PatchOrganizationMemberCall(String owner, String memberUser, V1OrganizationMember body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -1389,25 +1389,25 @@ public class OrganizationsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call patchOrganizationMemberValidateBeforeCall(String owner, String memberUser, V1OrganizationMember body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call organizationsV1PatchOrganizationMemberValidateBeforeCall(String owner, String memberUser, V1OrganizationMember body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling patchOrganizationMember(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling organizationsV1PatchOrganizationMember(Async)");
         }
         
         // verify the required parameter 'memberUser' is set
         if (memberUser == null) {
-            throw new ApiException("Missing the required parameter 'memberUser' when calling patchOrganizationMember(Async)");
+            throw new ApiException("Missing the required parameter 'memberUser' when calling organizationsV1PatchOrganizationMember(Async)");
         }
         
         // verify the required parameter 'body' is set
         if (body == null) {
-            throw new ApiException("Missing the required parameter 'body' when calling patchOrganizationMember(Async)");
+            throw new ApiException("Missing the required parameter 'body' when calling organizationsV1PatchOrganizationMember(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = patchOrganizationMemberCall(owner, memberUser, body, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = organizationsV1PatchOrganizationMemberCall(owner, memberUser, body, progressListener, progressRequestListener);
         return call;
 
     }
@@ -1421,8 +1421,8 @@ public class OrganizationsV1Api {
      * @return V1OrganizationMember
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1OrganizationMember patchOrganizationMember(String owner, String memberUser, V1OrganizationMember body) throws ApiException {
-        ApiResponse<V1OrganizationMember> resp = patchOrganizationMemberWithHttpInfo(owner, memberUser, body);
+    public V1OrganizationMember organizationsV1PatchOrganizationMember(String owner, String memberUser, V1OrganizationMember body) throws ApiException {
+        ApiResponse<V1OrganizationMember> resp = organizationsV1PatchOrganizationMemberWithHttpInfo(owner, memberUser, body);
         return resp.getData();
     }
 
@@ -1435,8 +1435,8 @@ public class OrganizationsV1Api {
      * @return ApiResponse&lt;V1OrganizationMember&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1OrganizationMember> patchOrganizationMemberWithHttpInfo(String owner, String memberUser, V1OrganizationMember body) throws ApiException {
-        com.squareup.okhttp.Call call = patchOrganizationMemberValidateBeforeCall(owner, memberUser, body, null, null);
+    public ApiResponse<V1OrganizationMember> organizationsV1PatchOrganizationMemberWithHttpInfo(String owner, String memberUser, V1OrganizationMember body) throws ApiException {
+        com.squareup.okhttp.Call call = organizationsV1PatchOrganizationMemberValidateBeforeCall(owner, memberUser, body, null, null);
         Type localVarReturnType = new TypeToken<V1OrganizationMember>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -1451,7 +1451,7 @@ public class OrganizationsV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call patchOrganizationMemberAsync(String owner, String memberUser, V1OrganizationMember body, final ApiCallback<V1OrganizationMember> callback) throws ApiException {
+    public com.squareup.okhttp.Call organizationsV1PatchOrganizationMemberAsync(String owner, String memberUser, V1OrganizationMember body, final ApiCallback<V1OrganizationMember> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -1472,13 +1472,13 @@ public class OrganizationsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = patchOrganizationMemberValidateBeforeCall(owner, memberUser, body, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = organizationsV1PatchOrganizationMemberValidateBeforeCall(owner, memberUser, body, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1OrganizationMember>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
     /**
-     * Build call for updateOrganization
+     * Build call for organizationsV1UpdateOrganization
      * @param owner Owner of the namespace (required)
      * @param body Organization body (required)
      * @param progressListener Progress listener
@@ -1486,7 +1486,7 @@ public class OrganizationsV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call updateOrganizationCall(String owner, V1Organization body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call organizationsV1UpdateOrganizationCall(String owner, V1Organization body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -1529,20 +1529,20 @@ public class OrganizationsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call updateOrganizationValidateBeforeCall(String owner, V1Organization body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call organizationsV1UpdateOrganizationValidateBeforeCall(String owner, V1Organization body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling updateOrganization(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling organizationsV1UpdateOrganization(Async)");
         }
         
         // verify the required parameter 'body' is set
         if (body == null) {
-            throw new ApiException("Missing the required parameter 'body' when calling updateOrganization(Async)");
+            throw new ApiException("Missing the required parameter 'body' when calling organizationsV1UpdateOrganization(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = updateOrganizationCall(owner, body, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = organizationsV1UpdateOrganizationCall(owner, body, progressListener, progressRequestListener);
         return call;
 
     }
@@ -1555,8 +1555,8 @@ public class OrganizationsV1Api {
      * @return V1Organization
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1Organization updateOrganization(String owner, V1Organization body) throws ApiException {
-        ApiResponse<V1Organization> resp = updateOrganizationWithHttpInfo(owner, body);
+    public V1Organization organizationsV1UpdateOrganization(String owner, V1Organization body) throws ApiException {
+        ApiResponse<V1Organization> resp = organizationsV1UpdateOrganizationWithHttpInfo(owner, body);
         return resp.getData();
     }
 
@@ -1568,8 +1568,8 @@ public class OrganizationsV1Api {
      * @return ApiResponse&lt;V1Organization&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1Organization> updateOrganizationWithHttpInfo(String owner, V1Organization body) throws ApiException {
-        com.squareup.okhttp.Call call = updateOrganizationValidateBeforeCall(owner, body, null, null);
+    public ApiResponse<V1Organization> organizationsV1UpdateOrganizationWithHttpInfo(String owner, V1Organization body) throws ApiException {
+        com.squareup.okhttp.Call call = organizationsV1UpdateOrganizationValidateBeforeCall(owner, body, null, null);
         Type localVarReturnType = new TypeToken<V1Organization>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -1583,7 +1583,7 @@ public class OrganizationsV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call updateOrganizationAsync(String owner, V1Organization body, final ApiCallback<V1Organization> callback) throws ApiException {
+    public com.squareup.okhttp.Call organizationsV1UpdateOrganizationAsync(String owner, V1Organization body, final ApiCallback<V1Organization> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -1604,13 +1604,13 @@ public class OrganizationsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = updateOrganizationValidateBeforeCall(owner, body, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = organizationsV1UpdateOrganizationValidateBeforeCall(owner, body, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1Organization>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
     /**
-     * Build call for updateOrganizationMember
+     * Build call for organizationsV1UpdateOrganizationMember
      * @param owner Owner of the namespace (required)
      * @param memberUser User (required)
      * @param body Organization body (required)
@@ -1619,7 +1619,7 @@ public class OrganizationsV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call updateOrganizationMemberCall(String owner, String memberUser, V1OrganizationMember body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call organizationsV1UpdateOrganizationMemberCall(String owner, String memberUser, V1OrganizationMember body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -1663,25 +1663,25 @@ public class OrganizationsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call updateOrganizationMemberValidateBeforeCall(String owner, String memberUser, V1OrganizationMember body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call organizationsV1UpdateOrganizationMemberValidateBeforeCall(String owner, String memberUser, V1OrganizationMember body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling updateOrganizationMember(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling organizationsV1UpdateOrganizationMember(Async)");
         }
         
         // verify the required parameter 'memberUser' is set
         if (memberUser == null) {
-            throw new ApiException("Missing the required parameter 'memberUser' when calling updateOrganizationMember(Async)");
+            throw new ApiException("Missing the required parameter 'memberUser' when calling organizationsV1UpdateOrganizationMember(Async)");
         }
         
         // verify the required parameter 'body' is set
         if (body == null) {
-            throw new ApiException("Missing the required parameter 'body' when calling updateOrganizationMember(Async)");
+            throw new ApiException("Missing the required parameter 'body' when calling organizationsV1UpdateOrganizationMember(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = updateOrganizationMemberCall(owner, memberUser, body, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = organizationsV1UpdateOrganizationMemberCall(owner, memberUser, body, progressListener, progressRequestListener);
         return call;
 
     }
@@ -1695,8 +1695,8 @@ public class OrganizationsV1Api {
      * @return V1OrganizationMember
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1OrganizationMember updateOrganizationMember(String owner, String memberUser, V1OrganizationMember body) throws ApiException {
-        ApiResponse<V1OrganizationMember> resp = updateOrganizationMemberWithHttpInfo(owner, memberUser, body);
+    public V1OrganizationMember organizationsV1UpdateOrganizationMember(String owner, String memberUser, V1OrganizationMember body) throws ApiException {
+        ApiResponse<V1OrganizationMember> resp = organizationsV1UpdateOrganizationMemberWithHttpInfo(owner, memberUser, body);
         return resp.getData();
     }
 
@@ -1709,8 +1709,8 @@ public class OrganizationsV1Api {
      * @return ApiResponse&lt;V1OrganizationMember&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1OrganizationMember> updateOrganizationMemberWithHttpInfo(String owner, String memberUser, V1OrganizationMember body) throws ApiException {
-        com.squareup.okhttp.Call call = updateOrganizationMemberValidateBeforeCall(owner, memberUser, body, null, null);
+    public ApiResponse<V1OrganizationMember> organizationsV1UpdateOrganizationMemberWithHttpInfo(String owner, String memberUser, V1OrganizationMember body) throws ApiException {
+        com.squareup.okhttp.Call call = organizationsV1UpdateOrganizationMemberValidateBeforeCall(owner, memberUser, body, null, null);
         Type localVarReturnType = new TypeToken<V1OrganizationMember>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -1725,7 +1725,7 @@ public class OrganizationsV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call updateOrganizationMemberAsync(String owner, String memberUser, V1OrganizationMember body, final ApiCallback<V1OrganizationMember> callback) throws ApiException {
+    public com.squareup.okhttp.Call organizationsV1UpdateOrganizationMemberAsync(String owner, String memberUser, V1OrganizationMember body, final ApiCallback<V1OrganizationMember> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -1746,7 +1746,7 @@ public class OrganizationsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = updateOrganizationMemberValidateBeforeCall(owner, memberUser, body, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = organizationsV1UpdateOrganizationMemberValidateBeforeCall(owner, memberUser, body, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1OrganizationMember>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;

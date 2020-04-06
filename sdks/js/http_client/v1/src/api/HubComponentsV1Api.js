@@ -63,8 +63,8 @@
 
 
     /**
-     * Callback function to receive the result of the createHubComponent operation.
-     * @callback module:api/HubComponentsV1Api~createHubComponentCallback
+     * Callback function to receive the result of the hubComponentsV1CreateHubComponent operation.
+     * @callback module:api/HubComponentsV1Api~hubComponentsV1CreateHubComponentCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1HubComponent} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -74,20 +74,20 @@
      * Create hub model
      * @param {String} owner Owner of the namespace
      * @param {module:model/V1HubComponent} body Component body
-     * @param {module:api/HubComponentsV1Api~createHubComponentCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/HubComponentsV1Api~hubComponentsV1CreateHubComponentCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1HubComponent}
      */
-    this.createHubComponent = function(owner, body, callback) {
+    this.hubComponentsV1CreateHubComponent = function(owner, body, callback) {
       var postBody = body;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling createHubComponent");
+        throw new Error("Missing the required parameter 'owner' when calling hubComponentsV1CreateHubComponent");
       }
 
       // verify the required parameter 'body' is set
       if (body === undefined || body === null) {
-        throw new Error("Missing the required parameter 'body' when calling createHubComponent");
+        throw new Error("Missing the required parameter 'body' when calling hubComponentsV1CreateHubComponent");
       }
 
 
@@ -116,8 +116,8 @@
     }
 
     /**
-     * Callback function to receive the result of the deleteHubComponent operation.
-     * @callback module:api/HubComponentsV1Api~deleteHubComponentCallback
+     * Callback function to receive the result of the hubComponentsV1DeleteHubComponent operation.
+     * @callback module:api/HubComponentsV1Api~hubComponentsV1DeleteHubComponentCallback
      * @param {String} error Error message, if any.
      * @param data This operation does not return a value.
      * @param {String} response The complete HTTP response.
@@ -127,19 +127,19 @@
      * Delete hub model
      * @param {String} owner Owner of the namespace
      * @param {String} uuid Uuid identifier of the entity
-     * @param {module:api/HubComponentsV1Api~deleteHubComponentCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/HubComponentsV1Api~hubComponentsV1DeleteHubComponentCallback} callback The callback function, accepting three arguments: error, data, response
      */
-    this.deleteHubComponent = function(owner, uuid, callback) {
+    this.hubComponentsV1DeleteHubComponent = function(owner, uuid, callback) {
       var postBody = null;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling deleteHubComponent");
+        throw new Error("Missing the required parameter 'owner' when calling hubComponentsV1DeleteHubComponent");
       }
 
       // verify the required parameter 'uuid' is set
       if (uuid === undefined || uuid === null) {
-        throw new Error("Missing the required parameter 'uuid' when calling deleteHubComponent");
+        throw new Error("Missing the required parameter 'uuid' when calling hubComponentsV1DeleteHubComponent");
       }
 
 
@@ -169,8 +169,8 @@
     }
 
     /**
-     * Callback function to receive the result of the getHubComponent operation.
-     * @callback module:api/HubComponentsV1Api~getHubComponentCallback
+     * Callback function to receive the result of the hubComponentsV1GetHubComponent operation.
+     * @callback module:api/HubComponentsV1Api~hubComponentsV1GetHubComponentCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1HubComponent} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -180,20 +180,20 @@
      * Get hub model
      * @param {String} owner Owner of the namespace
      * @param {String} uuid Uuid identifier of the entity
-     * @param {module:api/HubComponentsV1Api~getHubComponentCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/HubComponentsV1Api~hubComponentsV1GetHubComponentCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1HubComponent}
      */
-    this.getHubComponent = function(owner, uuid, callback) {
+    this.hubComponentsV1GetHubComponent = function(owner, uuid, callback) {
       var postBody = null;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling getHubComponent");
+        throw new Error("Missing the required parameter 'owner' when calling hubComponentsV1GetHubComponent");
       }
 
       // verify the required parameter 'uuid' is set
       if (uuid === undefined || uuid === null) {
-        throw new Error("Missing the required parameter 'uuid' when calling getHubComponent");
+        throw new Error("Missing the required parameter 'uuid' when calling hubComponentsV1GetHubComponent");
       }
 
 
@@ -223,8 +223,8 @@
     }
 
     /**
-     * Callback function to receive the result of the listHubComponebtNames operation.
-     * @callback module:api/HubComponentsV1Api~listHubComponebtNamesCallback
+     * Callback function to receive the result of the hubComponentsV1ListHubComponebtNames operation.
+     * @callback module:api/HubComponentsV1Api~hubComponentsV1ListHubComponebtNamesCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1ListHubComponentsResponse} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -238,16 +238,16 @@
      * @param {Number} opts.limit Limit size.
      * @param {String} opts.sort Sort to order the search.
      * @param {String} opts.query Query filter the search search.
-     * @param {module:api/HubComponentsV1Api~listHubComponebtNamesCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/HubComponentsV1Api~hubComponentsV1ListHubComponebtNamesCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1ListHubComponentsResponse}
      */
-    this.listHubComponebtNames = function(owner, opts, callback) {
+    this.hubComponentsV1ListHubComponebtNames = function(owner, opts, callback) {
       opts = opts || {};
       var postBody = null;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling listHubComponebtNames");
+        throw new Error("Missing the required parameter 'owner' when calling hubComponentsV1ListHubComponebtNames");
       }
 
 
@@ -280,8 +280,8 @@
     }
 
     /**
-     * Callback function to receive the result of the listHubComponents operation.
-     * @callback module:api/HubComponentsV1Api~listHubComponentsCallback
+     * Callback function to receive the result of the hubComponentsV1ListHubComponents operation.
+     * @callback module:api/HubComponentsV1Api~hubComponentsV1ListHubComponentsCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1ListHubComponentsResponse} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -295,16 +295,16 @@
      * @param {Number} opts.limit Limit size.
      * @param {String} opts.sort Sort to order the search.
      * @param {String} opts.query Query filter the search search.
-     * @param {module:api/HubComponentsV1Api~listHubComponentsCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/HubComponentsV1Api~hubComponentsV1ListHubComponentsCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1ListHubComponentsResponse}
      */
-    this.listHubComponents = function(owner, opts, callback) {
+    this.hubComponentsV1ListHubComponents = function(owner, opts, callback) {
       opts = opts || {};
       var postBody = null;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling listHubComponents");
+        throw new Error("Missing the required parameter 'owner' when calling hubComponentsV1ListHubComponents");
       }
 
 
@@ -337,8 +337,8 @@
     }
 
     /**
-     * Callback function to receive the result of the patchHubComponent operation.
-     * @callback module:api/HubComponentsV1Api~patchHubComponentCallback
+     * Callback function to receive the result of the hubComponentsV1PatchHubComponent operation.
+     * @callback module:api/HubComponentsV1Api~hubComponentsV1PatchHubComponentCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1HubComponent} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -349,25 +349,25 @@
      * @param {String} owner Owner of the namespace
      * @param {String} component_uuid UUID
      * @param {module:model/V1HubComponent} body Component body
-     * @param {module:api/HubComponentsV1Api~patchHubComponentCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/HubComponentsV1Api~hubComponentsV1PatchHubComponentCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1HubComponent}
      */
-    this.patchHubComponent = function(owner, component_uuid, body, callback) {
+    this.hubComponentsV1PatchHubComponent = function(owner, component_uuid, body, callback) {
       var postBody = body;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling patchHubComponent");
+        throw new Error("Missing the required parameter 'owner' when calling hubComponentsV1PatchHubComponent");
       }
 
       // verify the required parameter 'component_uuid' is set
       if (component_uuid === undefined || component_uuid === null) {
-        throw new Error("Missing the required parameter 'component_uuid' when calling patchHubComponent");
+        throw new Error("Missing the required parameter 'component_uuid' when calling hubComponentsV1PatchHubComponent");
       }
 
       // verify the required parameter 'body' is set
       if (body === undefined || body === null) {
-        throw new Error("Missing the required parameter 'body' when calling patchHubComponent");
+        throw new Error("Missing the required parameter 'body' when calling hubComponentsV1PatchHubComponent");
       }
 
 
@@ -397,8 +397,8 @@
     }
 
     /**
-     * Callback function to receive the result of the updateHubComponent operation.
-     * @callback module:api/HubComponentsV1Api~updateHubComponentCallback
+     * Callback function to receive the result of the hubComponentsV1UpdateHubComponent operation.
+     * @callback module:api/HubComponentsV1Api~hubComponentsV1UpdateHubComponentCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1HubComponent} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -409,25 +409,25 @@
      * @param {String} owner Owner of the namespace
      * @param {String} component_uuid UUID
      * @param {module:model/V1HubComponent} body Component body
-     * @param {module:api/HubComponentsV1Api~updateHubComponentCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/HubComponentsV1Api~hubComponentsV1UpdateHubComponentCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1HubComponent}
      */
-    this.updateHubComponent = function(owner, component_uuid, body, callback) {
+    this.hubComponentsV1UpdateHubComponent = function(owner, component_uuid, body, callback) {
       var postBody = body;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling updateHubComponent");
+        throw new Error("Missing the required parameter 'owner' when calling hubComponentsV1UpdateHubComponent");
       }
 
       // verify the required parameter 'component_uuid' is set
       if (component_uuid === undefined || component_uuid === null) {
-        throw new Error("Missing the required parameter 'component_uuid' when calling updateHubComponent");
+        throw new Error("Missing the required parameter 'component_uuid' when calling hubComponentsV1UpdateHubComponent");
       }
 
       // verify the required parameter 'body' is set
       if (body === undefined || body === null) {
-        throw new Error("Missing the required parameter 'body' when calling updateHubComponent");
+        throw new Error("Missing the required parameter 'body' when calling hubComponentsV1UpdateHubComponent");
       }
 
 

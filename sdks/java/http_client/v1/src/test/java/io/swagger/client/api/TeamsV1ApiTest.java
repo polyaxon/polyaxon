@@ -59,10 +59,10 @@ public class TeamsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void createTeamTest() throws ApiException {
+    public void teamsV1CreateTeamTest() throws ApiException {
         String owner = null;
         V1Team body = null;
-        V1Team response = api.createTeam(owner, body);
+        V1Team response = api.teamsV1CreateTeam(owner, body);
 
         // TODO: test validations
     }
@@ -76,11 +76,11 @@ public class TeamsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void createTeamMemberTest() throws ApiException {
+    public void teamsV1CreateTeamMemberTest() throws ApiException {
         String owner = null;
         String team = null;
         V1TeamMember body = null;
-        V1TeamMember response = api.createTeamMember(owner, team, body);
+        V1TeamMember response = api.teamsV1CreateTeamMember(owner, team, body);
 
         // TODO: test validations
     }
@@ -94,10 +94,10 @@ public class TeamsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void deleteTeamTest() throws ApiException {
+    public void teamsV1DeleteTeamTest() throws ApiException {
         String owner = null;
         String team = null;
-        api.deleteTeam(owner, team);
+        api.teamsV1DeleteTeam(owner, team);
 
         // TODO: test validations
     }
@@ -111,11 +111,11 @@ public class TeamsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void deleteTeamMemberTest() throws ApiException {
+    public void teamsV1DeleteTeamMemberTest() throws ApiException {
         String owner = null;
         String team = null;
         String user = null;
-        api.deleteTeamMember(owner, team, user);
+        api.teamsV1DeleteTeamMember(owner, team, user);
 
         // TODO: test validations
     }
@@ -129,10 +129,10 @@ public class TeamsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void getTeamTest() throws ApiException {
+    public void teamsV1GetTeamTest() throws ApiException {
         String owner = null;
         String team = null;
-        V1Team response = api.getTeam(owner, team);
+        V1Team response = api.teamsV1GetTeam(owner, team);
 
         // TODO: test validations
     }
@@ -146,11 +146,11 @@ public class TeamsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void getTeamMemberTest() throws ApiException {
+    public void teamsV1GetTeamMemberTest() throws ApiException {
         String owner = null;
         String team = null;
         String user = null;
-        V1TeamMember response = api.getTeamMember(owner, team, user);
+        V1TeamMember response = api.teamsV1GetTeamMember(owner, team, user);
 
         // TODO: test validations
     }
@@ -164,14 +164,14 @@ public class TeamsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void listTeamMembersTest() throws ApiException {
+    public void teamsV1ListTeamMembersTest() throws ApiException {
         String owner = null;
         String team = null;
         Integer offset = null;
         Integer limit = null;
         String sort = null;
         String query = null;
-        V1ListTeamMembersResponse response = api.listTeamMembers(owner, team, offset, limit, sort, query);
+        V1ListTeamMembersResponse response = api.teamsV1ListTeamMembers(owner, team, offset, limit, sort, query);
 
         // TODO: test validations
     }
@@ -185,13 +185,13 @@ public class TeamsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void listTeamNamesTest() throws ApiException {
+    public void teamsV1ListTeamNamesTest() throws ApiException {
         String owner = null;
         Integer offset = null;
         Integer limit = null;
         String sort = null;
         String query = null;
-        V1ListTeamsResponse response = api.listTeamNames(owner, offset, limit, sort, query);
+        V1ListTeamsResponse response = api.teamsV1ListTeamNames(owner, offset, limit, sort, query);
 
         // TODO: test validations
     }
@@ -205,13 +205,13 @@ public class TeamsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void listTeamsTest() throws ApiException {
+    public void teamsV1ListTeamsTest() throws ApiException {
         String owner = null;
         Integer offset = null;
         Integer limit = null;
         String sort = null;
         String query = null;
-        V1ListTeamsResponse response = api.listTeams(owner, offset, limit, sort, query);
+        V1ListTeamsResponse response = api.teamsV1ListTeams(owner, offset, limit, sort, query);
 
         // TODO: test validations
     }
@@ -225,11 +225,11 @@ public class TeamsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void patchTeamTest() throws ApiException {
+    public void teamsV1PatchTeamTest() throws ApiException {
         String owner = null;
         String teamName = null;
         V1Team body = null;
-        V1Team response = api.patchTeam(owner, teamName, body);
+        V1Team response = api.teamsV1PatchTeam(owner, teamName, body);
 
         // TODO: test validations
     }
@@ -243,12 +243,12 @@ public class TeamsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void patchTeamMemberTest() throws ApiException {
+    public void teamsV1PatchTeamMemberTest() throws ApiException {
         String owner = null;
         String team = null;
         String memberUser = null;
         V1TeamMember body = null;
-        V1TeamMember response = api.patchTeamMember(owner, team, memberUser, body);
+        V1TeamMember response = api.teamsV1PatchTeamMember(owner, team, memberUser, body);
 
         // TODO: test validations
     }
@@ -262,11 +262,11 @@ public class TeamsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void updateTeamTest() throws ApiException {
+    public void teamsV1UpdateTeamTest() throws ApiException {
         String owner = null;
         String teamName = null;
         V1Team body = null;
-        V1Team response = api.updateTeam(owner, teamName, body);
+        V1Team response = api.teamsV1UpdateTeam(owner, teamName, body);
 
         // TODO: test validations
     }
@@ -280,12 +280,12 @@ public class TeamsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void updateTeamMemberTest() throws ApiException {
+    public void teamsV1UpdateTeamMemberTest() throws ApiException {
         String owner = null;
         String team = null;
         String memberUser = null;
         V1TeamMember body = null;
-        V1TeamMember response = api.updateTeamMember(owner, team, memberUser, body);
+        V1TeamMember response = api.teamsV1UpdateTeamMember(owner, team, memberUser, body);
 
         // TODO: test validations
     }

@@ -63,8 +63,8 @@
 
 
     /**
-     * Callback function to receive the result of the createDashboard operation.
-     * @callback module:api/DashboardsV1Api~createDashboardCallback
+     * Callback function to receive the result of the dashboardsV1CreateDashboard operation.
+     * @callback module:api/DashboardsV1Api~dashboardsV1CreateDashboardCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1Dashboard} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -73,20 +73,20 @@
     /**
      * @param {String} owner Owner of the namespace
      * @param {module:model/V1Dashboard} body Dashboard body
-     * @param {module:api/DashboardsV1Api~createDashboardCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/DashboardsV1Api~dashboardsV1CreateDashboardCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1Dashboard}
      */
-    this.createDashboard = function(owner, body, callback) {
+    this.dashboardsV1CreateDashboard = function(owner, body, callback) {
       var postBody = body;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling createDashboard");
+        throw new Error("Missing the required parameter 'owner' when calling dashboardsV1CreateDashboard");
       }
 
       // verify the required parameter 'body' is set
       if (body === undefined || body === null) {
-        throw new Error("Missing the required parameter 'body' when calling createDashboard");
+        throw new Error("Missing the required parameter 'body' when calling dashboardsV1CreateDashboard");
       }
 
 
@@ -115,8 +115,8 @@
     }
 
     /**
-     * Callback function to receive the result of the deleteDashboard operation.
-     * @callback module:api/DashboardsV1Api~deleteDashboardCallback
+     * Callback function to receive the result of the dashboardsV1DeleteDashboard operation.
+     * @callback module:api/DashboardsV1Api~dashboardsV1DeleteDashboardCallback
      * @param {String} error Error message, if any.
      * @param data This operation does not return a value.
      * @param {String} response The complete HTTP response.
@@ -125,19 +125,19 @@
     /**
      * @param {String} owner Owner of the namespace
      * @param {String} uuid Uuid identifier of the entity
-     * @param {module:api/DashboardsV1Api~deleteDashboardCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/DashboardsV1Api~dashboardsV1DeleteDashboardCallback} callback The callback function, accepting three arguments: error, data, response
      */
-    this.deleteDashboard = function(owner, uuid, callback) {
+    this.dashboardsV1DeleteDashboard = function(owner, uuid, callback) {
       var postBody = null;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling deleteDashboard");
+        throw new Error("Missing the required parameter 'owner' when calling dashboardsV1DeleteDashboard");
       }
 
       // verify the required parameter 'uuid' is set
       if (uuid === undefined || uuid === null) {
-        throw new Error("Missing the required parameter 'uuid' when calling deleteDashboard");
+        throw new Error("Missing the required parameter 'uuid' when calling dashboardsV1DeleteDashboard");
       }
 
 
@@ -167,8 +167,8 @@
     }
 
     /**
-     * Callback function to receive the result of the getDashboard operation.
-     * @callback module:api/DashboardsV1Api~getDashboardCallback
+     * Callback function to receive the result of the dashboardsV1GetDashboard operation.
+     * @callback module:api/DashboardsV1Api~dashboardsV1GetDashboardCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1Dashboard} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -177,20 +177,20 @@
     /**
      * @param {String} owner Owner of the namespace
      * @param {String} uuid Uuid identifier of the entity
-     * @param {module:api/DashboardsV1Api~getDashboardCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/DashboardsV1Api~dashboardsV1GetDashboardCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1Dashboard}
      */
-    this.getDashboard = function(owner, uuid, callback) {
+    this.dashboardsV1GetDashboard = function(owner, uuid, callback) {
       var postBody = null;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling getDashboard");
+        throw new Error("Missing the required parameter 'owner' when calling dashboardsV1GetDashboard");
       }
 
       // verify the required parameter 'uuid' is set
       if (uuid === undefined || uuid === null) {
-        throw new Error("Missing the required parameter 'uuid' when calling getDashboard");
+        throw new Error("Missing the required parameter 'uuid' when calling dashboardsV1GetDashboard");
       }
 
 
@@ -220,8 +220,8 @@
     }
 
     /**
-     * Callback function to receive the result of the listDashboardNames operation.
-     * @callback module:api/DashboardsV1Api~listDashboardNamesCallback
+     * Callback function to receive the result of the dashboardsV1ListDashboardNames operation.
+     * @callback module:api/DashboardsV1Api~dashboardsV1ListDashboardNamesCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1ListDashboardsResponse} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -234,16 +234,16 @@
      * @param {Number} opts.limit Limit size.
      * @param {String} opts.sort Sort to order the search.
      * @param {String} opts.query Query filter the search search.
-     * @param {module:api/DashboardsV1Api~listDashboardNamesCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/DashboardsV1Api~dashboardsV1ListDashboardNamesCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1ListDashboardsResponse}
      */
-    this.listDashboardNames = function(owner, opts, callback) {
+    this.dashboardsV1ListDashboardNames = function(owner, opts, callback) {
       opts = opts || {};
       var postBody = null;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling listDashboardNames");
+        throw new Error("Missing the required parameter 'owner' when calling dashboardsV1ListDashboardNames");
       }
 
 
@@ -276,8 +276,8 @@
     }
 
     /**
-     * Callback function to receive the result of the listDashboards operation.
-     * @callback module:api/DashboardsV1Api~listDashboardsCallback
+     * Callback function to receive the result of the dashboardsV1ListDashboards operation.
+     * @callback module:api/DashboardsV1Api~dashboardsV1ListDashboardsCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1ListDashboardsResponse} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -290,16 +290,16 @@
      * @param {Number} opts.limit Limit size.
      * @param {String} opts.sort Sort to order the search.
      * @param {String} opts.query Query filter the search search.
-     * @param {module:api/DashboardsV1Api~listDashboardsCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/DashboardsV1Api~dashboardsV1ListDashboardsCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1ListDashboardsResponse}
      */
-    this.listDashboards = function(owner, opts, callback) {
+    this.dashboardsV1ListDashboards = function(owner, opts, callback) {
       opts = opts || {};
       var postBody = null;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling listDashboards");
+        throw new Error("Missing the required parameter 'owner' when calling dashboardsV1ListDashboards");
       }
 
 
@@ -332,8 +332,8 @@
     }
 
     /**
-     * Callback function to receive the result of the patchDashboard operation.
-     * @callback module:api/DashboardsV1Api~patchDashboardCallback
+     * Callback function to receive the result of the dashboardsV1PatchDashboard operation.
+     * @callback module:api/DashboardsV1Api~dashboardsV1PatchDashboardCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1Dashboard} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -343,25 +343,25 @@
      * @param {String} owner Owner of the namespace
      * @param {String} dashboard_uuid UUID
      * @param {module:model/V1Dashboard} body Dashboard body
-     * @param {module:api/DashboardsV1Api~patchDashboardCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/DashboardsV1Api~dashboardsV1PatchDashboardCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1Dashboard}
      */
-    this.patchDashboard = function(owner, dashboard_uuid, body, callback) {
+    this.dashboardsV1PatchDashboard = function(owner, dashboard_uuid, body, callback) {
       var postBody = body;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling patchDashboard");
+        throw new Error("Missing the required parameter 'owner' when calling dashboardsV1PatchDashboard");
       }
 
       // verify the required parameter 'dashboard_uuid' is set
       if (dashboard_uuid === undefined || dashboard_uuid === null) {
-        throw new Error("Missing the required parameter 'dashboard_uuid' when calling patchDashboard");
+        throw new Error("Missing the required parameter 'dashboard_uuid' when calling dashboardsV1PatchDashboard");
       }
 
       // verify the required parameter 'body' is set
       if (body === undefined || body === null) {
-        throw new Error("Missing the required parameter 'body' when calling patchDashboard");
+        throw new Error("Missing the required parameter 'body' when calling dashboardsV1PatchDashboard");
       }
 
 
@@ -391,8 +391,8 @@
     }
 
     /**
-     * Callback function to receive the result of the updateDashboard operation.
-     * @callback module:api/DashboardsV1Api~updateDashboardCallback
+     * Callback function to receive the result of the dashboardsV1UpdateDashboard operation.
+     * @callback module:api/DashboardsV1Api~dashboardsV1UpdateDashboardCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1Dashboard} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -402,25 +402,25 @@
      * @param {String} owner Owner of the namespace
      * @param {String} dashboard_uuid UUID
      * @param {module:model/V1Dashboard} body Dashboard body
-     * @param {module:api/DashboardsV1Api~updateDashboardCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/DashboardsV1Api~dashboardsV1UpdateDashboardCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1Dashboard}
      */
-    this.updateDashboard = function(owner, dashboard_uuid, body, callback) {
+    this.dashboardsV1UpdateDashboard = function(owner, dashboard_uuid, body, callback) {
       var postBody = body;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling updateDashboard");
+        throw new Error("Missing the required parameter 'owner' when calling dashboardsV1UpdateDashboard");
       }
 
       // verify the required parameter 'dashboard_uuid' is set
       if (dashboard_uuid === undefined || dashboard_uuid === null) {
-        throw new Error("Missing the required parameter 'dashboard_uuid' when calling updateDashboard");
+        throw new Error("Missing the required parameter 'dashboard_uuid' when calling dashboardsV1UpdateDashboard");
       }
 
       // verify the required parameter 'body' is set
       if (body === undefined || body === null) {
-        throw new Error("Missing the required parameter 'body' when calling updateDashboard");
+        throw new Error("Missing the required parameter 'body' when calling dashboardsV1UpdateDashboard");
       }
 
 

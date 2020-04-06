@@ -60,10 +60,10 @@ public class ProjectsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void archiveProjectTest() throws ApiException {
+    public void projectsV1ArchiveProjectTest() throws ApiException {
         String owner = null;
         String project = null;
-        api.archiveProject(owner, project);
+        api.projectsV1ArchiveProject(owner, project);
 
         // TODO: test validations
     }
@@ -77,10 +77,10 @@ public class ProjectsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void bookmarkProjectTest() throws ApiException {
+    public void projectsV1BookmarkProjectTest() throws ApiException {
         String owner = null;
         String project = null;
-        api.bookmarkProject(owner, project);
+        api.projectsV1BookmarkProject(owner, project);
 
         // TODO: test validations
     }
@@ -94,10 +94,10 @@ public class ProjectsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void createProjectTest() throws ApiException {
+    public void projectsV1CreateProjectTest() throws ApiException {
         String owner = null;
         V1Project body = null;
-        V1Project response = api.createProject(owner, body);
+        V1Project response = api.projectsV1CreateProject(owner, body);
 
         // TODO: test validations
     }
@@ -111,10 +111,10 @@ public class ProjectsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void deleteProjectTest() throws ApiException {
+    public void projectsV1DeleteProjectTest() throws ApiException {
         String owner = null;
         String project = null;
-        api.deleteProject(owner, project);
+        api.projectsV1DeleteProject(owner, project);
 
         // TODO: test validations
     }
@@ -128,10 +128,10 @@ public class ProjectsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void disableProjectCITest() throws ApiException {
+    public void projectsV1DisableProjectCITest() throws ApiException {
         String owner = null;
         String project = null;
-        api.disableProjectCI(owner, project);
+        api.projectsV1DisableProjectCI(owner, project);
 
         // TODO: test validations
     }
@@ -145,10 +145,10 @@ public class ProjectsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void enableProjectCITest() throws ApiException {
+    public void projectsV1EnableProjectCITest() throws ApiException {
         String owner = null;
         String project = null;
-        api.enableProjectCI(owner, project);
+        api.projectsV1EnableProjectCI(owner, project);
 
         // TODO: test validations
     }
@@ -162,10 +162,10 @@ public class ProjectsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void fetchProjectTeamsTest() throws ApiException {
+    public void projectsV1FetchProjectTeamsTest() throws ApiException {
         String owner = null;
         String project = null;
-        V1ProjectTeams response = api.fetchProjectTeams(owner, project);
+        V1ProjectTeams response = api.projectsV1FetchProjectTeams(owner, project);
 
         // TODO: test validations
     }
@@ -179,10 +179,10 @@ public class ProjectsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void getProjectTest() throws ApiException {
+    public void projectsV1GetProjectTest() throws ApiException {
         String owner = null;
         String project = null;
-        V1Project response = api.getProject(owner, project);
+        V1Project response = api.projectsV1GetProject(owner, project);
 
         // TODO: test validations
     }
@@ -196,10 +196,10 @@ public class ProjectsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void getProjectSettingsTest() throws ApiException {
+    public void projectsV1GetProjectSettingsTest() throws ApiException {
         String owner = null;
         String project = null;
-        V1ProjectSettings response = api.getProjectSettings(owner, project);
+        V1ProjectSettings response = api.projectsV1GetProjectSettings(owner, project);
 
         // TODO: test validations
     }
@@ -213,13 +213,13 @@ public class ProjectsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void listArchivedProjectsTest() throws ApiException {
+    public void projectsV1ListArchivedProjectsTest() throws ApiException {
         String user = null;
         Integer offset = null;
         Integer limit = null;
         String sort = null;
         String query = null;
-        V1ListProjectsResponse response = api.listArchivedProjects(user, offset, limit, sort, query);
+        V1ListProjectsResponse response = api.projectsV1ListArchivedProjects(user, offset, limit, sort, query);
 
         // TODO: test validations
     }
@@ -233,13 +233,13 @@ public class ProjectsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void listBookmarkedProjectsTest() throws ApiException {
+    public void projectsV1ListBookmarkedProjectsTest() throws ApiException {
         String user = null;
         Integer offset = null;
         Integer limit = null;
         String sort = null;
         String query = null;
-        V1ListProjectsResponse response = api.listBookmarkedProjects(user, offset, limit, sort, query);
+        V1ListProjectsResponse response = api.projectsV1ListBookmarkedProjects(user, offset, limit, sort, query);
 
         // TODO: test validations
     }
@@ -253,13 +253,13 @@ public class ProjectsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void listProjectNamesTest() throws ApiException {
+    public void projectsV1ListProjectNamesTest() throws ApiException {
         String owner = null;
         Integer offset = null;
         Integer limit = null;
         String sort = null;
         String query = null;
-        V1ListProjectsResponse response = api.listProjectNames(owner, offset, limit, sort, query);
+        V1ListProjectsResponse response = api.projectsV1ListProjectNames(owner, offset, limit, sort, query);
 
         // TODO: test validations
     }
@@ -273,13 +273,13 @@ public class ProjectsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void listProjectsTest() throws ApiException {
+    public void projectsV1ListProjectsTest() throws ApiException {
         String owner = null;
         Integer offset = null;
         Integer limit = null;
         String sort = null;
         String query = null;
-        V1ListProjectsResponse response = api.listProjects(owner, offset, limit, sort, query);
+        V1ListProjectsResponse response = api.projectsV1ListProjects(owner, offset, limit, sort, query);
 
         // TODO: test validations
     }
@@ -293,11 +293,11 @@ public class ProjectsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void patchProjectTest() throws ApiException {
+    public void projectsV1PatchProjectTest() throws ApiException {
         String owner = null;
         String projectName = null;
         V1Project body = null;
-        V1Project response = api.patchProject(owner, projectName, body);
+        V1Project response = api.projectsV1PatchProject(owner, projectName, body);
 
         // TODO: test validations
     }
@@ -311,11 +311,11 @@ public class ProjectsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void patchProjectSettingsTest() throws ApiException {
+    public void projectsV1PatchProjectSettingsTest() throws ApiException {
         String owner = null;
         String project = null;
         V1ProjectSettings body = null;
-        V1ProjectSettings response = api.patchProjectSettings(owner, project, body);
+        V1ProjectSettings response = api.projectsV1PatchProjectSettings(owner, project, body);
 
         // TODO: test validations
     }
@@ -329,11 +329,11 @@ public class ProjectsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void patchProjectTeamsTest() throws ApiException {
+    public void projectsV1PatchProjectTeamsTest() throws ApiException {
         String owner = null;
         String project = null;
         V1ProjectTeams body = null;
-        V1ProjectTeams response = api.patchProjectTeams(owner, project, body);
+        V1ProjectTeams response = api.projectsV1PatchProjectTeams(owner, project, body);
 
         // TODO: test validations
     }
@@ -347,10 +347,10 @@ public class ProjectsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void restoreProjectTest() throws ApiException {
+    public void projectsV1RestoreProjectTest() throws ApiException {
         String owner = null;
         String project = null;
-        api.restoreProject(owner, project);
+        api.projectsV1RestoreProject(owner, project);
 
         // TODO: test validations
     }
@@ -364,10 +364,10 @@ public class ProjectsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void unbookmarkProjectTest() throws ApiException {
+    public void projectsV1UnbookmarkProjectTest() throws ApiException {
         String owner = null;
         String project = null;
-        api.unbookmarkProject(owner, project);
+        api.projectsV1UnbookmarkProject(owner, project);
 
         // TODO: test validations
     }
@@ -381,11 +381,11 @@ public class ProjectsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void updateProjectTest() throws ApiException {
+    public void projectsV1UpdateProjectTest() throws ApiException {
         String owner = null;
         String projectName = null;
         V1Project body = null;
-        V1Project response = api.updateProject(owner, projectName, body);
+        V1Project response = api.projectsV1UpdateProject(owner, projectName, body);
 
         // TODO: test validations
     }
@@ -399,11 +399,11 @@ public class ProjectsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void updateProjectSettingsTest() throws ApiException {
+    public void projectsV1UpdateProjectSettingsTest() throws ApiException {
         String owner = null;
         String project = null;
         V1ProjectSettings body = null;
-        V1ProjectSettings response = api.updateProjectSettings(owner, project, body);
+        V1ProjectSettings response = api.projectsV1UpdateProjectSettings(owner, project, body);
 
         // TODO: test validations
     }
@@ -417,11 +417,11 @@ public class ProjectsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void updateProjectTeamsTest() throws ApiException {
+    public void projectsV1UpdateProjectTeamsTest() throws ApiException {
         String owner = null;
         String project = null;
         V1ProjectTeams body = null;
-        V1ProjectTeams response = api.updateProjectTeams(owner, project, body);
+        V1ProjectTeams response = api.projectsV1UpdateProjectTeams(owner, project, body);
 
         // TODO: test validations
     }

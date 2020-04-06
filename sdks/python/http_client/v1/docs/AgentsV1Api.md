@@ -4,21 +4,21 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**create_agent**](AgentsV1Api.md#create_agent) | **POST** /api/v1/orgs/{owner}/agents | Create run profile
-[**create_agent_status**](AgentsV1Api.md#create_agent_status) | **POST** /api/v1/orgs/{owner}/agents/{uuid}/statuses | 
-[**delete_agent**](AgentsV1Api.md#delete_agent) | **DELETE** /api/v1/orgs/{owner}/agents/{uuid} | Delete run profile
-[**get_agent**](AgentsV1Api.md#get_agent) | **GET** /api/v1/orgs/{owner}/agents/{uuid} | Get run profile
-[**get_agent_state**](AgentsV1Api.md#get_agent_state) | **GET** /api/v1/orgs/{owner}/agents/{uuid}/state | 
-[**get_agent_statuses**](AgentsV1Api.md#get_agent_statuses) | **GET** /api/v1/orgs/{owner}/agents/{uuid}/statuses | 
-[**list_agent_names**](AgentsV1Api.md#list_agent_names) | **GET** /api/v1/orgs/{owner}/agents/names | List run profiles names
-[**list_agents**](AgentsV1Api.md#list_agents) | **GET** /api/v1/orgs/{owner}/agents | List run profiles
-[**patch_agent**](AgentsV1Api.md#patch_agent) | **PATCH** /api/v1/orgs/{owner}/agents/{agent.uuid} | Patch run profile
-[**sync_agent**](AgentsV1Api.md#sync_agent) | **PATCH** /api/v1/orgs/{owner}/agents/{agent.uuid}/sync | 
-[**update_agent**](AgentsV1Api.md#update_agent) | **PUT** /api/v1/orgs/{owner}/agents/{agent.uuid} | Update run profile
+[**agents_v1_create_agent**](AgentsV1Api.md#agents_v1_create_agent) | **POST** /api/v1/orgs/{owner}/agents | Create run profile
+[**agents_v1_create_agent_status**](AgentsV1Api.md#agents_v1_create_agent_status) | **POST** /api/v1/orgs/{owner}/agents/{uuid}/statuses | 
+[**agents_v1_delete_agent**](AgentsV1Api.md#agents_v1_delete_agent) | **DELETE** /api/v1/orgs/{owner}/agents/{uuid} | Delete run profile
+[**agents_v1_get_agent**](AgentsV1Api.md#agents_v1_get_agent) | **GET** /api/v1/orgs/{owner}/agents/{uuid} | Get run profile
+[**agents_v1_get_agent_state**](AgentsV1Api.md#agents_v1_get_agent_state) | **GET** /api/v1/orgs/{owner}/agents/{uuid}/state | 
+[**agents_v1_get_agent_statuses**](AgentsV1Api.md#agents_v1_get_agent_statuses) | **GET** /api/v1/orgs/{owner}/agents/{uuid}/statuses | 
+[**agents_v1_list_agent_names**](AgentsV1Api.md#agents_v1_list_agent_names) | **GET** /api/v1/orgs/{owner}/agents/names | List run profiles names
+[**agents_v1_list_agents**](AgentsV1Api.md#agents_v1_list_agents) | **GET** /api/v1/orgs/{owner}/agents | List run profiles
+[**agents_v1_patch_agent**](AgentsV1Api.md#agents_v1_patch_agent) | **PATCH** /api/v1/orgs/{owner}/agents/{agent.uuid} | Patch run profile
+[**agents_v1_sync_agent**](AgentsV1Api.md#agents_v1_sync_agent) | **PATCH** /api/v1/orgs/{owner}/agents/{agent.uuid}/sync | 
+[**agents_v1_update_agent**](AgentsV1Api.md#agents_v1_update_agent) | **PUT** /api/v1/orgs/{owner}/agents/{agent.uuid} | Update run profile
 
 
-# **create_agent**
-> V1Agent create_agent(owner, body)
+# **agents_v1_create_agent**
+> V1Agent agents_v1_create_agent(owner, body)
 
 Create run profile
 
@@ -43,10 +43,10 @@ body = polyaxon_sdk.V1Agent() # V1Agent | Agent body
 
 try:
     # Create run profile
-    api_response = api_instance.create_agent(owner, body)
+    api_response = api_instance.agents_v1_create_agent(owner, body)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling AgentsV1Api->create_agent: %s\n" % e)
+    print("Exception when calling AgentsV1Api->agents_v1_create_agent: %s\n" % e)
 ```
 
 ### Parameters
@@ -71,8 +71,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **create_agent_status**
-> V1Status create_agent_status(owner, uuid, body)
+# **agents_v1_create_agent_status**
+> V1Status agents_v1_create_agent_status(owner, uuid, body)
 
 
 
@@ -97,10 +97,10 @@ uuid = 'uuid_example' # str | Uuid identifier of the entity
 body = polyaxon_sdk.V1AgentStatusBodyRequest() # V1AgentStatusBodyRequest | 
 
 try:
-    api_response = api_instance.create_agent_status(owner, uuid, body)
+    api_response = api_instance.agents_v1_create_agent_status(owner, uuid, body)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling AgentsV1Api->create_agent_status: %s\n" % e)
+    print("Exception when calling AgentsV1Api->agents_v1_create_agent_status: %s\n" % e)
 ```
 
 ### Parameters
@@ -126,8 +126,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **delete_agent**
-> delete_agent(owner, uuid)
+# **agents_v1_delete_agent**
+> agents_v1_delete_agent(owner, uuid)
 
 Delete run profile
 
@@ -152,9 +152,9 @@ uuid = 'uuid_example' # str | Uuid identifier of the entity
 
 try:
     # Delete run profile
-    api_instance.delete_agent(owner, uuid)
+    api_instance.agents_v1_delete_agent(owner, uuid)
 except ApiException as e:
-    print("Exception when calling AgentsV1Api->delete_agent: %s\n" % e)
+    print("Exception when calling AgentsV1Api->agents_v1_delete_agent: %s\n" % e)
 ```
 
 ### Parameters
@@ -179,8 +179,8 @@ void (empty response body)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **get_agent**
-> V1Agent get_agent(owner, uuid)
+# **agents_v1_get_agent**
+> V1Agent agents_v1_get_agent(owner, uuid)
 
 Get run profile
 
@@ -205,10 +205,10 @@ uuid = 'uuid_example' # str | Uuid identifier of the entity
 
 try:
     # Get run profile
-    api_response = api_instance.get_agent(owner, uuid)
+    api_response = api_instance.agents_v1_get_agent(owner, uuid)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling AgentsV1Api->get_agent: %s\n" % e)
+    print("Exception when calling AgentsV1Api->agents_v1_get_agent: %s\n" % e)
 ```
 
 ### Parameters
@@ -233,8 +233,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **get_agent_state**
-> V1AgentStateResponse get_agent_state(owner, uuid)
+# **agents_v1_get_agent_state**
+> V1AgentStateResponse agents_v1_get_agent_state(owner, uuid)
 
 
 
@@ -258,10 +258,10 @@ owner = 'owner_example' # str | Owner of the namespace
 uuid = 'uuid_example' # str | Uuid identifier of the entity
 
 try:
-    api_response = api_instance.get_agent_state(owner, uuid)
+    api_response = api_instance.agents_v1_get_agent_state(owner, uuid)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling AgentsV1Api->get_agent_state: %s\n" % e)
+    print("Exception when calling AgentsV1Api->agents_v1_get_agent_state: %s\n" % e)
 ```
 
 ### Parameters
@@ -286,8 +286,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **get_agent_statuses**
-> V1Status get_agent_statuses(owner, uuid)
+# **agents_v1_get_agent_statuses**
+> V1Status agents_v1_get_agent_statuses(owner, uuid)
 
 
 
@@ -311,10 +311,10 @@ owner = 'owner_example' # str | Owner of the namespace
 uuid = 'uuid_example' # str | Uuid identifier of the entity
 
 try:
-    api_response = api_instance.get_agent_statuses(owner, uuid)
+    api_response = api_instance.agents_v1_get_agent_statuses(owner, uuid)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling AgentsV1Api->get_agent_statuses: %s\n" % e)
+    print("Exception when calling AgentsV1Api->agents_v1_get_agent_statuses: %s\n" % e)
 ```
 
 ### Parameters
@@ -339,8 +339,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **list_agent_names**
-> V1ListAgentsResponse list_agent_names(owner, offset=offset, limit=limit, sort=sort, query=query)
+# **agents_v1_list_agent_names**
+> V1ListAgentsResponse agents_v1_list_agent_names(owner, offset=offset, limit=limit, sort=sort, query=query)
 
 List run profiles names
 
@@ -368,10 +368,10 @@ query = 'query_example' # str | Query filter the search search. (optional)
 
 try:
     # List run profiles names
-    api_response = api_instance.list_agent_names(owner, offset=offset, limit=limit, sort=sort, query=query)
+    api_response = api_instance.agents_v1_list_agent_names(owner, offset=offset, limit=limit, sort=sort, query=query)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling AgentsV1Api->list_agent_names: %s\n" % e)
+    print("Exception when calling AgentsV1Api->agents_v1_list_agent_names: %s\n" % e)
 ```
 
 ### Parameters
@@ -399,8 +399,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **list_agents**
-> V1ListAgentsResponse list_agents(owner, offset=offset, limit=limit, sort=sort, query=query)
+# **agents_v1_list_agents**
+> V1ListAgentsResponse agents_v1_list_agents(owner, offset=offset, limit=limit, sort=sort, query=query)
 
 List run profiles
 
@@ -428,10 +428,10 @@ query = 'query_example' # str | Query filter the search search. (optional)
 
 try:
     # List run profiles
-    api_response = api_instance.list_agents(owner, offset=offset, limit=limit, sort=sort, query=query)
+    api_response = api_instance.agents_v1_list_agents(owner, offset=offset, limit=limit, sort=sort, query=query)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling AgentsV1Api->list_agents: %s\n" % e)
+    print("Exception when calling AgentsV1Api->agents_v1_list_agents: %s\n" % e)
 ```
 
 ### Parameters
@@ -459,8 +459,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **patch_agent**
-> V1Agent patch_agent(owner, agent_uuid, body)
+# **agents_v1_patch_agent**
+> V1Agent agents_v1_patch_agent(owner, agent_uuid, body)
 
 Patch run profile
 
@@ -486,10 +486,10 @@ body = polyaxon_sdk.V1Agent() # V1Agent | Agent body
 
 try:
     # Patch run profile
-    api_response = api_instance.patch_agent(owner, agent_uuid, body)
+    api_response = api_instance.agents_v1_patch_agent(owner, agent_uuid, body)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling AgentsV1Api->patch_agent: %s\n" % e)
+    print("Exception when calling AgentsV1Api->agents_v1_patch_agent: %s\n" % e)
 ```
 
 ### Parameters
@@ -515,8 +515,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **sync_agent**
-> sync_agent(owner, agent_uuid, body)
+# **agents_v1_sync_agent**
+> agents_v1_sync_agent(owner, agent_uuid, body)
 
 
 
@@ -541,9 +541,9 @@ agent_uuid = 'agent_uuid_example' # str | UUID
 body = polyaxon_sdk.V1Agent() # V1Agent | Agent body
 
 try:
-    api_instance.sync_agent(owner, agent_uuid, body)
+    api_instance.agents_v1_sync_agent(owner, agent_uuid, body)
 except ApiException as e:
-    print("Exception when calling AgentsV1Api->sync_agent: %s\n" % e)
+    print("Exception when calling AgentsV1Api->agents_v1_sync_agent: %s\n" % e)
 ```
 
 ### Parameters
@@ -569,8 +569,8 @@ void (empty response body)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **update_agent**
-> V1Agent update_agent(owner, agent_uuid, body)
+# **agents_v1_update_agent**
+> V1Agent agents_v1_update_agent(owner, agent_uuid, body)
 
 Update run profile
 
@@ -596,10 +596,10 @@ body = polyaxon_sdk.V1Agent() # V1Agent | Agent body
 
 try:
     # Update run profile
-    api_response = api_instance.update_agent(owner, agent_uuid, body)
+    api_response = api_instance.agents_v1_update_agent(owner, agent_uuid, body)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling AgentsV1Api->update_agent: %s\n" % e)
+    print("Exception when calling AgentsV1Api->agents_v1_update_agent: %s\n" % e)
 ```
 
 ### Parameters

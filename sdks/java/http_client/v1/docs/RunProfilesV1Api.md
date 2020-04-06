@@ -4,18 +4,18 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**createRunProfile**](RunProfilesV1Api.md#createRunProfile) | **POST** /api/v1/orgs/{owner}/run_profiles | Create hub component
-[**deleteRunProfile**](RunProfilesV1Api.md#deleteRunProfile) | **DELETE** /api/v1/orgs/{owner}/run_profiles/{uuid} | Delete hub component
-[**getRunProfile**](RunProfilesV1Api.md#getRunProfile) | **GET** /api/v1/orgs/{owner}/run_profiles/{uuid} | Get hub component
-[**listRunProfileNames**](RunProfilesV1Api.md#listRunProfileNames) | **GET** /api/v1/orgs/{owner}/run_profiles/names | List hub component names
-[**listRunProfiles**](RunProfilesV1Api.md#listRunProfiles) | **GET** /api/v1/orgs/{owner}/run_profiles | List hub components
-[**patchRunProfile**](RunProfilesV1Api.md#patchRunProfile) | **PATCH** /api/v1/orgs/{owner}/run_profiles/{run_profile.uuid} | Patch hub component
-[**updateRunProfile**](RunProfilesV1Api.md#updateRunProfile) | **PUT** /api/v1/orgs/{owner}/run_profiles/{run_profile.uuid} | Update hub component
+[**runProfilesV1CreateRunProfile**](RunProfilesV1Api.md#runProfilesV1CreateRunProfile) | **POST** /api/v1/orgs/{owner}/run_profiles | Create hub component
+[**runProfilesV1DeleteRunProfile**](RunProfilesV1Api.md#runProfilesV1DeleteRunProfile) | **DELETE** /api/v1/orgs/{owner}/run_profiles/{uuid} | Delete hub component
+[**runProfilesV1GetRunProfile**](RunProfilesV1Api.md#runProfilesV1GetRunProfile) | **GET** /api/v1/orgs/{owner}/run_profiles/{uuid} | Get hub component
+[**runProfilesV1ListRunProfileNames**](RunProfilesV1Api.md#runProfilesV1ListRunProfileNames) | **GET** /api/v1/orgs/{owner}/run_profiles/names | List hub component names
+[**runProfilesV1ListRunProfiles**](RunProfilesV1Api.md#runProfilesV1ListRunProfiles) | **GET** /api/v1/orgs/{owner}/run_profiles | List hub components
+[**runProfilesV1PatchRunProfile**](RunProfilesV1Api.md#runProfilesV1PatchRunProfile) | **PATCH** /api/v1/orgs/{owner}/run_profiles/{run_profile.uuid} | Patch hub component
+[**runProfilesV1UpdateRunProfile**](RunProfilesV1Api.md#runProfilesV1UpdateRunProfile) | **PUT** /api/v1/orgs/{owner}/run_profiles/{run_profile.uuid} | Update hub component
 
 
-<a name="createRunProfile"></a>
-# **createRunProfile**
-> V1RunProfile createRunProfile(owner, body)
+<a name="runProfilesV1CreateRunProfile"></a>
+# **runProfilesV1CreateRunProfile**
+> V1RunProfile runProfilesV1CreateRunProfile(owner, body)
 
 Create hub component
 
@@ -40,10 +40,10 @@ RunProfilesV1Api apiInstance = new RunProfilesV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
 V1RunProfile body = new V1RunProfile(); // V1RunProfile | Artifact store body
 try {
-    V1RunProfile result = apiInstance.createRunProfile(owner, body);
+    V1RunProfile result = apiInstance.runProfilesV1CreateRunProfile(owner, body);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling RunProfilesV1Api#createRunProfile");
+    System.err.println("Exception when calling RunProfilesV1Api#runProfilesV1CreateRunProfile");
     e.printStackTrace();
 }
 ```
@@ -68,9 +68,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="deleteRunProfile"></a>
-# **deleteRunProfile**
-> deleteRunProfile(owner, uuid)
+<a name="runProfilesV1DeleteRunProfile"></a>
+# **runProfilesV1DeleteRunProfile**
+> runProfilesV1DeleteRunProfile(owner, uuid)
 
 Delete hub component
 
@@ -95,9 +95,9 @@ RunProfilesV1Api apiInstance = new RunProfilesV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
 String uuid = "uuid_example"; // String | Uuid identifier of the entity
 try {
-    apiInstance.deleteRunProfile(owner, uuid);
+    apiInstance.runProfilesV1DeleteRunProfile(owner, uuid);
 } catch (ApiException e) {
-    System.err.println("Exception when calling RunProfilesV1Api#deleteRunProfile");
+    System.err.println("Exception when calling RunProfilesV1Api#runProfilesV1DeleteRunProfile");
     e.printStackTrace();
 }
 ```
@@ -122,9 +122,9 @@ null (empty response body)
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="getRunProfile"></a>
-# **getRunProfile**
-> V1RunProfile getRunProfile(owner, uuid)
+<a name="runProfilesV1GetRunProfile"></a>
+# **runProfilesV1GetRunProfile**
+> V1RunProfile runProfilesV1GetRunProfile(owner, uuid)
 
 Get hub component
 
@@ -149,10 +149,10 @@ RunProfilesV1Api apiInstance = new RunProfilesV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
 String uuid = "uuid_example"; // String | Uuid identifier of the entity
 try {
-    V1RunProfile result = apiInstance.getRunProfile(owner, uuid);
+    V1RunProfile result = apiInstance.runProfilesV1GetRunProfile(owner, uuid);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling RunProfilesV1Api#getRunProfile");
+    System.err.println("Exception when calling RunProfilesV1Api#runProfilesV1GetRunProfile");
     e.printStackTrace();
 }
 ```
@@ -177,9 +177,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="listRunProfileNames"></a>
-# **listRunProfileNames**
-> V1ListRunProfilesResponse listRunProfileNames(owner, offset, limit, sort, query)
+<a name="runProfilesV1ListRunProfileNames"></a>
+# **runProfilesV1ListRunProfileNames**
+> V1ListRunProfilesResponse runProfilesV1ListRunProfileNames(owner, offset, limit, sort, query)
 
 List hub component names
 
@@ -207,10 +207,10 @@ Integer limit = 56; // Integer | Limit size.
 String sort = "sort_example"; // String | Sort to order the search.
 String query = "query_example"; // String | Query filter the search search.
 try {
-    V1ListRunProfilesResponse result = apiInstance.listRunProfileNames(owner, offset, limit, sort, query);
+    V1ListRunProfilesResponse result = apiInstance.runProfilesV1ListRunProfileNames(owner, offset, limit, sort, query);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling RunProfilesV1Api#listRunProfileNames");
+    System.err.println("Exception when calling RunProfilesV1Api#runProfilesV1ListRunProfileNames");
     e.printStackTrace();
 }
 ```
@@ -238,9 +238,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="listRunProfiles"></a>
-# **listRunProfiles**
-> V1ListRunProfilesResponse listRunProfiles(owner, offset, limit, sort, query)
+<a name="runProfilesV1ListRunProfiles"></a>
+# **runProfilesV1ListRunProfiles**
+> V1ListRunProfilesResponse runProfilesV1ListRunProfiles(owner, offset, limit, sort, query)
 
 List hub components
 
@@ -268,10 +268,10 @@ Integer limit = 56; // Integer | Limit size.
 String sort = "sort_example"; // String | Sort to order the search.
 String query = "query_example"; // String | Query filter the search search.
 try {
-    V1ListRunProfilesResponse result = apiInstance.listRunProfiles(owner, offset, limit, sort, query);
+    V1ListRunProfilesResponse result = apiInstance.runProfilesV1ListRunProfiles(owner, offset, limit, sort, query);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling RunProfilesV1Api#listRunProfiles");
+    System.err.println("Exception when calling RunProfilesV1Api#runProfilesV1ListRunProfiles");
     e.printStackTrace();
 }
 ```
@@ -299,9 +299,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="patchRunProfile"></a>
-# **patchRunProfile**
-> V1RunProfile patchRunProfile(owner, runProfileUuid, body)
+<a name="runProfilesV1PatchRunProfile"></a>
+# **runProfilesV1PatchRunProfile**
+> V1RunProfile runProfilesV1PatchRunProfile(owner, runProfileUuid, body)
 
 Patch hub component
 
@@ -327,10 +327,10 @@ String owner = "owner_example"; // String | Owner of the namespace
 String runProfileUuid = "runProfileUuid_example"; // String | UUID
 V1RunProfile body = new V1RunProfile(); // V1RunProfile | Artifact store body
 try {
-    V1RunProfile result = apiInstance.patchRunProfile(owner, runProfileUuid, body);
+    V1RunProfile result = apiInstance.runProfilesV1PatchRunProfile(owner, runProfileUuid, body);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling RunProfilesV1Api#patchRunProfile");
+    System.err.println("Exception when calling RunProfilesV1Api#runProfilesV1PatchRunProfile");
     e.printStackTrace();
 }
 ```
@@ -356,9 +356,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="updateRunProfile"></a>
-# **updateRunProfile**
-> V1RunProfile updateRunProfile(owner, runProfileUuid, body)
+<a name="runProfilesV1UpdateRunProfile"></a>
+# **runProfilesV1UpdateRunProfile**
+> V1RunProfile runProfilesV1UpdateRunProfile(owner, runProfileUuid, body)
 
 Update hub component
 
@@ -384,10 +384,10 @@ String owner = "owner_example"; // String | Owner of the namespace
 String runProfileUuid = "runProfileUuid_example"; // String | UUID
 V1RunProfile body = new V1RunProfile(); // V1RunProfile | Artifact store body
 try {
-    V1RunProfile result = apiInstance.updateRunProfile(owner, runProfileUuid, body);
+    V1RunProfile result = apiInstance.runProfilesV1UpdateRunProfile(owner, runProfileUuid, body);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling RunProfilesV1Api#updateRunProfile");
+    System.err.println("Exception when calling RunProfilesV1Api#runProfilesV1UpdateRunProfile");
     e.printStackTrace();
 }
 ```

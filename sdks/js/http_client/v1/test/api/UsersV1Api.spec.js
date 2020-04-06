@@ -50,12 +50,12 @@
 
   describe('(package)', function() {
     describe('UsersV1Api', function() {
-      describe('getUser', function() {
-        it('should call getUser successfully', function(done) {
-          // TODO: uncomment getUser call and complete the assertions
+      describe('usersV1GetUser', function() {
+        it('should call usersV1GetUser successfully', function(done) {
+          // TODO: uncomment usersV1GetUser call and complete the assertions
           /*
 
-          instance.getUser(function(error, data, response) {
+          instance.usersV1GetUser(function(error, data, response) {
             if (error) {
               done(error);
               return;

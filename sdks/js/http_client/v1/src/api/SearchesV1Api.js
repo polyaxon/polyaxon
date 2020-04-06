@@ -63,8 +63,8 @@
 
 
     /**
-     * Callback function to receive the result of the createSearch operation.
-     * @callback module:api/SearchesV1Api~createSearchCallback
+     * Callback function to receive the result of the searchesV1CreateSearch operation.
+     * @callback module:api/SearchesV1Api~searchesV1CreateSearchCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1Search} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -74,20 +74,20 @@
      * Create search
      * @param {String} owner Owner of the namespace
      * @param {module:model/V1Search} body Search body
-     * @param {module:api/SearchesV1Api~createSearchCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/SearchesV1Api~searchesV1CreateSearchCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1Search}
      */
-    this.createSearch = function(owner, body, callback) {
+    this.searchesV1CreateSearch = function(owner, body, callback) {
       var postBody = body;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling createSearch");
+        throw new Error("Missing the required parameter 'owner' when calling searchesV1CreateSearch");
       }
 
       // verify the required parameter 'body' is set
       if (body === undefined || body === null) {
-        throw new Error("Missing the required parameter 'body' when calling createSearch");
+        throw new Error("Missing the required parameter 'body' when calling searchesV1CreateSearch");
       }
 
 
@@ -116,8 +116,8 @@
     }
 
     /**
-     * Callback function to receive the result of the deleteSearch operation.
-     * @callback module:api/SearchesV1Api~deleteSearchCallback
+     * Callback function to receive the result of the searchesV1DeleteSearch operation.
+     * @callback module:api/SearchesV1Api~searchesV1DeleteSearchCallback
      * @param {String} error Error message, if any.
      * @param data This operation does not return a value.
      * @param {String} response The complete HTTP response.
@@ -127,19 +127,19 @@
      * Delete search
      * @param {String} owner Owner of the namespace
      * @param {String} uuid Uuid identifier of the entity
-     * @param {module:api/SearchesV1Api~deleteSearchCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/SearchesV1Api~searchesV1DeleteSearchCallback} callback The callback function, accepting three arguments: error, data, response
      */
-    this.deleteSearch = function(owner, uuid, callback) {
+    this.searchesV1DeleteSearch = function(owner, uuid, callback) {
       var postBody = null;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling deleteSearch");
+        throw new Error("Missing the required parameter 'owner' when calling searchesV1DeleteSearch");
       }
 
       // verify the required parameter 'uuid' is set
       if (uuid === undefined || uuid === null) {
-        throw new Error("Missing the required parameter 'uuid' when calling deleteSearch");
+        throw new Error("Missing the required parameter 'uuid' when calling searchesV1DeleteSearch");
       }
 
 
@@ -169,8 +169,8 @@
     }
 
     /**
-     * Callback function to receive the result of the getSearch operation.
-     * @callback module:api/SearchesV1Api~getSearchCallback
+     * Callback function to receive the result of the searchesV1GetSearch operation.
+     * @callback module:api/SearchesV1Api~searchesV1GetSearchCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1Search} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -180,20 +180,20 @@
      * Get search
      * @param {String} owner Owner of the namespace
      * @param {String} uuid Uuid identifier of the entity
-     * @param {module:api/SearchesV1Api~getSearchCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/SearchesV1Api~searchesV1GetSearchCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1Search}
      */
-    this.getSearch = function(owner, uuid, callback) {
+    this.searchesV1GetSearch = function(owner, uuid, callback) {
       var postBody = null;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling getSearch");
+        throw new Error("Missing the required parameter 'owner' when calling searchesV1GetSearch");
       }
 
       // verify the required parameter 'uuid' is set
       if (uuid === undefined || uuid === null) {
-        throw new Error("Missing the required parameter 'uuid' when calling getSearch");
+        throw new Error("Missing the required parameter 'uuid' when calling searchesV1GetSearch");
       }
 
 
@@ -223,8 +223,8 @@
     }
 
     /**
-     * Callback function to receive the result of the listSearchNames operation.
-     * @callback module:api/SearchesV1Api~listSearchNamesCallback
+     * Callback function to receive the result of the searchesV1ListSearchNames operation.
+     * @callback module:api/SearchesV1Api~searchesV1ListSearchNamesCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1ListSearchesResponse} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -238,16 +238,16 @@
      * @param {Number} opts.limit Limit size.
      * @param {String} opts.sort Sort to order the search.
      * @param {String} opts.query Query filter the search search.
-     * @param {module:api/SearchesV1Api~listSearchNamesCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/SearchesV1Api~searchesV1ListSearchNamesCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1ListSearchesResponse}
      */
-    this.listSearchNames = function(owner, opts, callback) {
+    this.searchesV1ListSearchNames = function(owner, opts, callback) {
       opts = opts || {};
       var postBody = null;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling listSearchNames");
+        throw new Error("Missing the required parameter 'owner' when calling searchesV1ListSearchNames");
       }
 
 
@@ -280,8 +280,8 @@
     }
 
     /**
-     * Callback function to receive the result of the listSearches operation.
-     * @callback module:api/SearchesV1Api~listSearchesCallback
+     * Callback function to receive the result of the searchesV1ListSearches operation.
+     * @callback module:api/SearchesV1Api~searchesV1ListSearchesCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1ListSearchesResponse} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -295,16 +295,16 @@
      * @param {Number} opts.limit Limit size.
      * @param {String} opts.sort Sort to order the search.
      * @param {String} opts.query Query filter the search search.
-     * @param {module:api/SearchesV1Api~listSearchesCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/SearchesV1Api~searchesV1ListSearchesCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1ListSearchesResponse}
      */
-    this.listSearches = function(owner, opts, callback) {
+    this.searchesV1ListSearches = function(owner, opts, callback) {
       opts = opts || {};
       var postBody = null;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling listSearches");
+        throw new Error("Missing the required parameter 'owner' when calling searchesV1ListSearches");
       }
 
 
@@ -337,8 +337,8 @@
     }
 
     /**
-     * Callback function to receive the result of the patchSearch operation.
-     * @callback module:api/SearchesV1Api~patchSearchCallback
+     * Callback function to receive the result of the searchesV1PatchSearch operation.
+     * @callback module:api/SearchesV1Api~searchesV1PatchSearchCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1Search} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -349,25 +349,25 @@
      * @param {String} owner Owner of the namespace
      * @param {String} search_uuid UUID
      * @param {module:model/V1Search} body Search body
-     * @param {module:api/SearchesV1Api~patchSearchCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/SearchesV1Api~searchesV1PatchSearchCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1Search}
      */
-    this.patchSearch = function(owner, search_uuid, body, callback) {
+    this.searchesV1PatchSearch = function(owner, search_uuid, body, callback) {
       var postBody = body;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling patchSearch");
+        throw new Error("Missing the required parameter 'owner' when calling searchesV1PatchSearch");
       }
 
       // verify the required parameter 'search_uuid' is set
       if (search_uuid === undefined || search_uuid === null) {
-        throw new Error("Missing the required parameter 'search_uuid' when calling patchSearch");
+        throw new Error("Missing the required parameter 'search_uuid' when calling searchesV1PatchSearch");
       }
 
       // verify the required parameter 'body' is set
       if (body === undefined || body === null) {
-        throw new Error("Missing the required parameter 'body' when calling patchSearch");
+        throw new Error("Missing the required parameter 'body' when calling searchesV1PatchSearch");
       }
 
 
@@ -397,8 +397,8 @@
     }
 
     /**
-     * Callback function to receive the result of the updateSearch operation.
-     * @callback module:api/SearchesV1Api~updateSearchCallback
+     * Callback function to receive the result of the searchesV1UpdateSearch operation.
+     * @callback module:api/SearchesV1Api~searchesV1UpdateSearchCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1Search} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -409,25 +409,25 @@
      * @param {String} owner Owner of the namespace
      * @param {String} search_uuid UUID
      * @param {module:model/V1Search} body Search body
-     * @param {module:api/SearchesV1Api~updateSearchCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/SearchesV1Api~searchesV1UpdateSearchCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1Search}
      */
-    this.updateSearch = function(owner, search_uuid, body, callback) {
+    this.searchesV1UpdateSearch = function(owner, search_uuid, body, callback) {
       var postBody = body;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling updateSearch");
+        throw new Error("Missing the required parameter 'owner' when calling searchesV1UpdateSearch");
       }
 
       // verify the required parameter 'search_uuid' is set
       if (search_uuid === undefined || search_uuid === null) {
-        throw new Error("Missing the required parameter 'search_uuid' when calling updateSearch");
+        throw new Error("Missing the required parameter 'search_uuid' when calling searchesV1UpdateSearch");
       }
 
       // verify the required parameter 'body' is set
       if (body === undefined || body === null) {
-        throw new Error("Missing the required parameter 'body' when calling updateSearch");
+        throw new Error("Missing the required parameter 'body' when calling searchesV1UpdateSearch");
       }
 
 

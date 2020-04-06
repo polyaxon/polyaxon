@@ -63,780 +63,6 @@
 
 
     /**
-     * Callback function to receive the result of the archiveRun operation.
-     * @callback module:api/RunsV1Api~archiveRunCallback
-     * @param {String} error Error message, if any.
-     * @param data This operation does not return a value.
-     * @param {String} response The complete HTTP response.
-     */
-
-    /**
-     * Archive run
-     * @param {String} owner Owner of the namespace
-     * @param {String} project Project
-     * @param {String} uuid Uuid identifier of the entity
-     * @param {module:api/RunsV1Api~archiveRunCallback} callback The callback function, accepting three arguments: error, data, response
-     */
-    this.archiveRun = function(owner, project, uuid, callback) {
-      var postBody = null;
-
-      // verify the required parameter 'owner' is set
-      if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling archiveRun");
-      }
-
-      // verify the required parameter 'project' is set
-      if (project === undefined || project === null) {
-        throw new Error("Missing the required parameter 'project' when calling archiveRun");
-      }
-
-      // verify the required parameter 'uuid' is set
-      if (uuid === undefined || uuid === null) {
-        throw new Error("Missing the required parameter 'uuid' when calling archiveRun");
-      }
-
-
-      var pathParams = {
-        'owner': owner,
-        'project': project,
-        'uuid': uuid
-      };
-      var queryParams = {
-      };
-      var collectionQueryParams = {
-      };
-      var headerParams = {
-      };
-      var formParams = {
-      };
-
-      var authNames = ['ApiKey'];
-      var contentTypes = ['application/json'];
-      var accepts = ['application/json'];
-      var returnType = null;
-
-      return this.apiClient.callApi(
-        '/api/v1/{owner}/{project}/runs/{uuid}/archive', 'POST',
-        pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
-        authNames, contentTypes, accepts, returnType, callback
-      );
-    }
-
-    /**
-     * Callback function to receive the result of the bookmarkRun operation.
-     * @callback module:api/RunsV1Api~bookmarkRunCallback
-     * @param {String} error Error message, if any.
-     * @param data This operation does not return a value.
-     * @param {String} response The complete HTTP response.
-     */
-
-    /**
-     * Bookmark run
-     * @param {String} owner Owner of the namespace
-     * @param {String} project Project
-     * @param {String} uuid Uuid identifier of the entity
-     * @param {module:api/RunsV1Api~bookmarkRunCallback} callback The callback function, accepting three arguments: error, data, response
-     */
-    this.bookmarkRun = function(owner, project, uuid, callback) {
-      var postBody = null;
-
-      // verify the required parameter 'owner' is set
-      if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling bookmarkRun");
-      }
-
-      // verify the required parameter 'project' is set
-      if (project === undefined || project === null) {
-        throw new Error("Missing the required parameter 'project' when calling bookmarkRun");
-      }
-
-      // verify the required parameter 'uuid' is set
-      if (uuid === undefined || uuid === null) {
-        throw new Error("Missing the required parameter 'uuid' when calling bookmarkRun");
-      }
-
-
-      var pathParams = {
-        'owner': owner,
-        'project': project,
-        'uuid': uuid
-      };
-      var queryParams = {
-      };
-      var collectionQueryParams = {
-      };
-      var headerParams = {
-      };
-      var formParams = {
-      };
-
-      var authNames = ['ApiKey'];
-      var contentTypes = ['application/json'];
-      var accepts = ['application/json'];
-      var returnType = null;
-
-      return this.apiClient.callApi(
-        '/api/v1/{owner}/{project}/runs/{uuid}/bookmark', 'POST',
-        pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
-        authNames, contentTypes, accepts, returnType, callback
-      );
-    }
-
-    /**
-     * Callback function to receive the result of the collectRunLogs operation.
-     * @callback module:api/RunsV1Api~collectRunLogsCallback
-     * @param {String} error Error message, if any.
-     * @param data This operation does not return a value.
-     * @param {String} response The complete HTTP response.
-     */
-
-    /**
-     * Collect run logs
-     * @param {String} namespace 
-     * @param {String} owner Owner of the namespace
-     * @param {String} project Project where the run will be assigned
-     * @param {String} uuid Uuid identifier of the entity
-     * @param {module:api/RunsV1Api~collectRunLogsCallback} callback The callback function, accepting three arguments: error, data, response
-     */
-    this.collectRunLogs = function(namespace, owner, project, uuid, callback) {
-      var postBody = null;
-
-      // verify the required parameter 'namespace' is set
-      if (namespace === undefined || namespace === null) {
-        throw new Error("Missing the required parameter 'namespace' when calling collectRunLogs");
-      }
-
-      // verify the required parameter 'owner' is set
-      if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling collectRunLogs");
-      }
-
-      // verify the required parameter 'project' is set
-      if (project === undefined || project === null) {
-        throw new Error("Missing the required parameter 'project' when calling collectRunLogs");
-      }
-
-      // verify the required parameter 'uuid' is set
-      if (uuid === undefined || uuid === null) {
-        throw new Error("Missing the required parameter 'uuid' when calling collectRunLogs");
-      }
-
-
-      var pathParams = {
-        'namespace': namespace,
-        'owner': owner,
-        'project': project,
-        'uuid': uuid
-      };
-      var queryParams = {
-      };
-      var collectionQueryParams = {
-      };
-      var headerParams = {
-      };
-      var formParams = {
-      };
-
-      var authNames = ['ApiKey'];
-      var contentTypes = ['application/json'];
-      var accepts = ['application/json'];
-      var returnType = null;
-
-      return this.apiClient.callApi(
-        '/streams/v1/{namespace}/_internal/{owner}/{project}/runs/{uuid}/logs', 'POST',
-        pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
-        authNames, contentTypes, accepts, returnType, callback
-      );
-    }
-
-    /**
-     * Callback function to receive the result of the copyRun operation.
-     * @callback module:api/RunsV1Api~copyRunCallback
-     * @param {String} error Error message, if any.
-     * @param {module:model/V1Run} data The data returned by the service call.
-     * @param {String} response The complete HTTP response.
-     */
-
-    /**
-     * Restart run with copy
-     * @param {String} entity_owner Owner of the namespace
-     * @param {String} entity_project Project
-     * @param {String} entity_uuid Uuid identifier of the entity
-     * @param {module:model/V1Run} body Run object
-     * @param {module:api/RunsV1Api~copyRunCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link module:model/V1Run}
-     */
-    this.copyRun = function(entity_owner, entity_project, entity_uuid, body, callback) {
-      var postBody = body;
-
-      // verify the required parameter 'entity_owner' is set
-      if (entity_owner === undefined || entity_owner === null) {
-        throw new Error("Missing the required parameter 'entity_owner' when calling copyRun");
-      }
-
-      // verify the required parameter 'entity_project' is set
-      if (entity_project === undefined || entity_project === null) {
-        throw new Error("Missing the required parameter 'entity_project' when calling copyRun");
-      }
-
-      // verify the required parameter 'entity_uuid' is set
-      if (entity_uuid === undefined || entity_uuid === null) {
-        throw new Error("Missing the required parameter 'entity_uuid' when calling copyRun");
-      }
-
-      // verify the required parameter 'body' is set
-      if (body === undefined || body === null) {
-        throw new Error("Missing the required parameter 'body' when calling copyRun");
-      }
-
-
-      var pathParams = {
-        'entity.owner': entity_owner,
-        'entity.project': entity_project,
-        'entity.uuid': entity_uuid
-      };
-      var queryParams = {
-      };
-      var collectionQueryParams = {
-      };
-      var headerParams = {
-      };
-      var formParams = {
-      };
-
-      var authNames = ['ApiKey'];
-      var contentTypes = ['application/json'];
-      var accepts = ['application/json'];
-      var returnType = V1Run;
-
-      return this.apiClient.callApi(
-        '/api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/copy', 'POST',
-        pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
-        authNames, contentTypes, accepts, returnType, callback
-      );
-    }
-
-    /**
-     * Callback function to receive the result of the createRun operation.
-     * @callback module:api/RunsV1Api~createRunCallback
-     * @param {String} error Error message, if any.
-     * @param {module:model/V1Run} data The data returned by the service call.
-     * @param {String} response The complete HTTP response.
-     */
-
-    /**
-     * Create new run
-     * @param {String} owner Owner of the namespace
-     * @param {String} project Project where the run will be assigned
-     * @param {module:model/V1OperationBody} body operation object
-     * @param {module:api/RunsV1Api~createRunCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link module:model/V1Run}
-     */
-    this.createRun = function(owner, project, body, callback) {
-      var postBody = body;
-
-      // verify the required parameter 'owner' is set
-      if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling createRun");
-      }
-
-      // verify the required parameter 'project' is set
-      if (project === undefined || project === null) {
-        throw new Error("Missing the required parameter 'project' when calling createRun");
-      }
-
-      // verify the required parameter 'body' is set
-      if (body === undefined || body === null) {
-        throw new Error("Missing the required parameter 'body' when calling createRun");
-      }
-
-
-      var pathParams = {
-        'owner': owner,
-        'project': project
-      };
-      var queryParams = {
-      };
-      var collectionQueryParams = {
-      };
-      var headerParams = {
-      };
-      var formParams = {
-      };
-
-      var authNames = ['ApiKey'];
-      var contentTypes = ['application/json'];
-      var accepts = ['application/json'];
-      var returnType = V1Run;
-
-      return this.apiClient.callApi(
-        '/api/v1/{owner}/{project}/runs', 'POST',
-        pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
-        authNames, contentTypes, accepts, returnType, callback
-      );
-    }
-
-    /**
-     * Callback function to receive the result of the createRunArtifactsLineage operation.
-     * @callback module:api/RunsV1Api~createRunArtifactsLineageCallback
-     * @param {String} error Error message, if any.
-     * @param data This operation does not return a value.
-     * @param {String} response The complete HTTP response.
-     */
-
-    /**
-     * Create bulk run run artifacts lineage
-     * @param {String} owner Owner of the namespace
-     * @param {String} project Project where the run will be assigned
-     * @param {String} uuid Uuid identifier of the entity
-     * @param {module:model/V1RunArtifacts} body Run Artifacts
-     * @param {module:api/RunsV1Api~createRunArtifactsLineageCallback} callback The callback function, accepting three arguments: error, data, response
-     */
-    this.createRunArtifactsLineage = function(owner, project, uuid, body, callback) {
-      var postBody = body;
-
-      // verify the required parameter 'owner' is set
-      if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling createRunArtifactsLineage");
-      }
-
-      // verify the required parameter 'project' is set
-      if (project === undefined || project === null) {
-        throw new Error("Missing the required parameter 'project' when calling createRunArtifactsLineage");
-      }
-
-      // verify the required parameter 'uuid' is set
-      if (uuid === undefined || uuid === null) {
-        throw new Error("Missing the required parameter 'uuid' when calling createRunArtifactsLineage");
-      }
-
-      // verify the required parameter 'body' is set
-      if (body === undefined || body === null) {
-        throw new Error("Missing the required parameter 'body' when calling createRunArtifactsLineage");
-      }
-
-
-      var pathParams = {
-        'owner': owner,
-        'project': project,
-        'uuid': uuid
-      };
-      var queryParams = {
-      };
-      var collectionQueryParams = {
-      };
-      var headerParams = {
-      };
-      var formParams = {
-      };
-
-      var authNames = ['ApiKey'];
-      var contentTypes = ['application/json'];
-      var accepts = ['application/json'];
-      var returnType = null;
-
-      return this.apiClient.callApi(
-        '/api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage', 'POST',
-        pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
-        authNames, contentTypes, accepts, returnType, callback
-      );
-    }
-
-    /**
-     * Callback function to receive the result of the createRunStatus operation.
-     * @callback module:api/RunsV1Api~createRunStatusCallback
-     * @param {String} error Error message, if any.
-     * @param {module:model/V1Status} data The data returned by the service call.
-     * @param {String} response The complete HTTP response.
-     */
-
-    /**
-     * Create new run status
-     * @param {String} owner Owner of the namespace
-     * @param {String} project Project where the run will be assigned
-     * @param {String} uuid Uuid identifier of the entity
-     * @param {module:model/V1EntityStatusBodyRequest} body 
-     * @param {module:api/RunsV1Api~createRunStatusCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link module:model/V1Status}
-     */
-    this.createRunStatus = function(owner, project, uuid, body, callback) {
-      var postBody = body;
-
-      // verify the required parameter 'owner' is set
-      if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling createRunStatus");
-      }
-
-      // verify the required parameter 'project' is set
-      if (project === undefined || project === null) {
-        throw new Error("Missing the required parameter 'project' when calling createRunStatus");
-      }
-
-      // verify the required parameter 'uuid' is set
-      if (uuid === undefined || uuid === null) {
-        throw new Error("Missing the required parameter 'uuid' when calling createRunStatus");
-      }
-
-      // verify the required parameter 'body' is set
-      if (body === undefined || body === null) {
-        throw new Error("Missing the required parameter 'body' when calling createRunStatus");
-      }
-
-
-      var pathParams = {
-        'owner': owner,
-        'project': project,
-        'uuid': uuid
-      };
-      var queryParams = {
-      };
-      var collectionQueryParams = {
-      };
-      var headerParams = {
-      };
-      var formParams = {
-      };
-
-      var authNames = ['ApiKey'];
-      var contentTypes = ['application/json'];
-      var accepts = ['application/json'];
-      var returnType = V1Status;
-
-      return this.apiClient.callApi(
-        '/api/v1/{owner}/{project}/runs/{uuid}/statuses', 'POST',
-        pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
-        authNames, contentTypes, accepts, returnType, callback
-      );
-    }
-
-    /**
-     * Callback function to receive the result of the deleteRun operation.
-     * @callback module:api/RunsV1Api~deleteRunCallback
-     * @param {String} error Error message, if any.
-     * @param data This operation does not return a value.
-     * @param {String} response The complete HTTP response.
-     */
-
-    /**
-     * Delete run
-     * @param {String} owner Owner of the namespace
-     * @param {String} project Project
-     * @param {String} uuid Uuid identifier of the entity
-     * @param {module:api/RunsV1Api~deleteRunCallback} callback The callback function, accepting three arguments: error, data, response
-     */
-    this.deleteRun = function(owner, project, uuid, callback) {
-      var postBody = null;
-
-      // verify the required parameter 'owner' is set
-      if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling deleteRun");
-      }
-
-      // verify the required parameter 'project' is set
-      if (project === undefined || project === null) {
-        throw new Error("Missing the required parameter 'project' when calling deleteRun");
-      }
-
-      // verify the required parameter 'uuid' is set
-      if (uuid === undefined || uuid === null) {
-        throw new Error("Missing the required parameter 'uuid' when calling deleteRun");
-      }
-
-
-      var pathParams = {
-        'owner': owner,
-        'project': project,
-        'uuid': uuid
-      };
-      var queryParams = {
-      };
-      var collectionQueryParams = {
-      };
-      var headerParams = {
-      };
-      var formParams = {
-      };
-
-      var authNames = ['ApiKey'];
-      var contentTypes = ['application/json'];
-      var accepts = ['application/json'];
-      var returnType = null;
-
-      return this.apiClient.callApi(
-        '/api/v1/{owner}/{project}/runs/{uuid}', 'DELETE',
-        pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
-        authNames, contentTypes, accepts, returnType, callback
-      );
-    }
-
-    /**
-     * Callback function to receive the result of the deleteRunArtifactLineage operation.
-     * @callback module:api/RunsV1Api~deleteRunArtifactLineageCallback
-     * @param {String} error Error message, if any.
-     * @param data This operation does not return a value.
-     * @param {String} response The complete HTTP response.
-     */
-
-    /**
-     * Delete run artifact lineage
-     * @param {String} owner Owner of the namespace
-     * @param {String} project Project where the run will be assigned
-     * @param {String} uuid Uuid identifier of the entity
-     * @param {String} name Artifact name
-     * @param {Object} opts Optional parameters
-     * @param {String} opts.namespace namespace.
-     * @param {module:api/RunsV1Api~deleteRunArtifactLineageCallback} callback The callback function, accepting three arguments: error, data, response
-     */
-    this.deleteRunArtifactLineage = function(owner, project, uuid, name, opts, callback) {
-      opts = opts || {};
-      var postBody = null;
-
-      // verify the required parameter 'owner' is set
-      if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling deleteRunArtifactLineage");
-      }
-
-      // verify the required parameter 'project' is set
-      if (project === undefined || project === null) {
-        throw new Error("Missing the required parameter 'project' when calling deleteRunArtifactLineage");
-      }
-
-      // verify the required parameter 'uuid' is set
-      if (uuid === undefined || uuid === null) {
-        throw new Error("Missing the required parameter 'uuid' when calling deleteRunArtifactLineage");
-      }
-
-      // verify the required parameter 'name' is set
-      if (name === undefined || name === null) {
-        throw new Error("Missing the required parameter 'name' when calling deleteRunArtifactLineage");
-      }
-
-
-      var pathParams = {
-        'owner': owner,
-        'project': project,
-        'uuid': uuid,
-        'name': name
-      };
-      var queryParams = {
-        'namespace': opts['namespace'],
-      };
-      var collectionQueryParams = {
-      };
-      var headerParams = {
-      };
-      var formParams = {
-      };
-
-      var authNames = ['ApiKey'];
-      var contentTypes = ['application/json'];
-      var accepts = ['application/json'];
-      var returnType = null;
-
-      return this.apiClient.callApi(
-        '/api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage/{name}', 'DELETE',
-        pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
-        authNames, contentTypes, accepts, returnType, callback
-      );
-    }
-
-    /**
-     * Callback function to receive the result of the deleteRuns operation.
-     * @callback module:api/RunsV1Api~deleteRunsCallback
-     * @param {String} error Error message, if any.
-     * @param data This operation does not return a value.
-     * @param {String} response The complete HTTP response.
-     */
-
-    /**
-     * Delete runs
-     * @param {String} owner Owner of the namespace
-     * @param {String} project Project under namesapce
-     * @param {module:model/V1Uuids} body Uuids of the entities
-     * @param {module:api/RunsV1Api~deleteRunsCallback} callback The callback function, accepting three arguments: error, data, response
-     */
-    this.deleteRuns = function(owner, project, body, callback) {
-      var postBody = body;
-
-      // verify the required parameter 'owner' is set
-      if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling deleteRuns");
-      }
-
-      // verify the required parameter 'project' is set
-      if (project === undefined || project === null) {
-        throw new Error("Missing the required parameter 'project' when calling deleteRuns");
-      }
-
-      // verify the required parameter 'body' is set
-      if (body === undefined || body === null) {
-        throw new Error("Missing the required parameter 'body' when calling deleteRuns");
-      }
-
-
-      var pathParams = {
-        'owner': owner,
-        'project': project
-      };
-      var queryParams = {
-      };
-      var collectionQueryParams = {
-      };
-      var headerParams = {
-      };
-      var formParams = {
-      };
-
-      var authNames = ['ApiKey'];
-      var contentTypes = ['application/json'];
-      var accepts = ['application/json'];
-      var returnType = null;
-
-      return this.apiClient.callApi(
-        '/api/v1/{owner}/{project}/runs/delete', 'DELETE',
-        pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
-        authNames, contentTypes, accepts, returnType, callback
-      );
-    }
-
-    /**
-     * Callback function to receive the result of the getMultiRunEvents operation.
-     * @callback module:api/RunsV1Api~getMultiRunEventsCallback
-     * @param {String} error Error message, if any.
-     * @param {module:model/V1EventsResponse} data The data returned by the service call.
-     * @param {String} response The complete HTTP response.
-     */
-
-    /**
-     * Get multi runs events
-     * @param {String} namespace namespace
-     * @param {String} owner Owner of the namespace
-     * @param {String} project Project where the run will be assigned
-     * @param {module:model/String} kind The artifact kind
-     * @param {Object} opts Optional parameters
-     * @param {String} opts.names Names query param.
-     * @param {String} opts.runs Runs query param.
-     * @param {String} opts.orient Orient query param.
-     * @param {module:api/RunsV1Api~getMultiRunEventsCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link module:model/V1EventsResponse}
-     */
-    this.getMultiRunEvents = function(namespace, owner, project, kind, opts, callback) {
-      opts = opts || {};
-      var postBody = null;
-
-      // verify the required parameter 'namespace' is set
-      if (namespace === undefined || namespace === null) {
-        throw new Error("Missing the required parameter 'namespace' when calling getMultiRunEvents");
-      }
-
-      // verify the required parameter 'owner' is set
-      if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling getMultiRunEvents");
-      }
-
-      // verify the required parameter 'project' is set
-      if (project === undefined || project === null) {
-        throw new Error("Missing the required parameter 'project' when calling getMultiRunEvents");
-      }
-
-      // verify the required parameter 'kind' is set
-      if (kind === undefined || kind === null) {
-        throw new Error("Missing the required parameter 'kind' when calling getMultiRunEvents");
-      }
-
-
-      var pathParams = {
-        'namespace': namespace,
-        'owner': owner,
-        'project': project,
-        'kind': kind
-      };
-      var queryParams = {
-        'names': opts['names'],
-        'runs': opts['runs'],
-        'orient': opts['orient'],
-      };
-      var collectionQueryParams = {
-      };
-      var headerParams = {
-      };
-      var formParams = {
-      };
-
-      var authNames = ['ApiKey'];
-      var contentTypes = ['application/json'];
-      var accepts = ['application/json'];
-      var returnType = V1EventsResponse;
-
-      return this.apiClient.callApi(
-        '/streams/v1/{namespace}/{owner}/{project}/runs/multi/events/{kind}', 'GET',
-        pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
-        authNames, contentTypes, accepts, returnType, callback
-      );
-    }
-
-    /**
-     * Callback function to receive the result of the getRun operation.
-     * @callback module:api/RunsV1Api~getRunCallback
-     * @param {String} error Error message, if any.
-     * @param {module:model/V1Run} data The data returned by the service call.
-     * @param {String} response The complete HTTP response.
-     */
-
-    /**
-     * Get run
-     * @param {String} owner Owner of the namespace
-     * @param {String} project Project
-     * @param {String} uuid Uuid identifier of the entity
-     * @param {module:api/RunsV1Api~getRunCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link module:model/V1Run}
-     */
-    this.getRun = function(owner, project, uuid, callback) {
-      var postBody = null;
-
-      // verify the required parameter 'owner' is set
-      if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling getRun");
-      }
-
-      // verify the required parameter 'project' is set
-      if (project === undefined || project === null) {
-        throw new Error("Missing the required parameter 'project' when calling getRun");
-      }
-
-      // verify the required parameter 'uuid' is set
-      if (uuid === undefined || uuid === null) {
-        throw new Error("Missing the required parameter 'uuid' when calling getRun");
-      }
-
-
-      var pathParams = {
-        'owner': owner,
-        'project': project,
-        'uuid': uuid
-      };
-      var queryParams = {
-      };
-      var collectionQueryParams = {
-      };
-      var headerParams = {
-      };
-      var formParams = {
-      };
-
-      var authNames = ['ApiKey'];
-      var contentTypes = ['application/json'];
-      var accepts = ['application/json'];
-      var returnType = V1Run;
-
-      return this.apiClient.callApi(
-        '/api/v1/{owner}/{project}/runs/{uuid}', 'GET',
-        pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
-        authNames, contentTypes, accepts, returnType, callback
-      );
-    }
-
-    /**
      * Callback function to receive the result of the getRunArtifact operation.
      * @callback module:api/RunsV1Api~getRunArtifactCallback
      * @param {String} error Error message, if any.
@@ -905,78 +131,6 @@
 
       return this.apiClient.callApi(
         '/streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifact', 'GET',
-        pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
-        authNames, contentTypes, accepts, returnType, callback
-      );
-    }
-
-    /**
-     * Callback function to receive the result of the getRunArtifactLineage operation.
-     * @callback module:api/RunsV1Api~getRunArtifactLineageCallback
-     * @param {String} error Error message, if any.
-     * @param {module:model/V1RunArtifact} data The data returned by the service call.
-     * @param {String} response The complete HTTP response.
-     */
-
-    /**
-     * Get run artifacts lineage
-     * @param {String} owner Owner of the namespace
-     * @param {String} project Project where the run will be assigned
-     * @param {String} uuid Uuid identifier of the entity
-     * @param {String} name Artifact name
-     * @param {Object} opts Optional parameters
-     * @param {String} opts.namespace namespace.
-     * @param {module:api/RunsV1Api~getRunArtifactLineageCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link module:model/V1RunArtifact}
-     */
-    this.getRunArtifactLineage = function(owner, project, uuid, name, opts, callback) {
-      opts = opts || {};
-      var postBody = null;
-
-      // verify the required parameter 'owner' is set
-      if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling getRunArtifactLineage");
-      }
-
-      // verify the required parameter 'project' is set
-      if (project === undefined || project === null) {
-        throw new Error("Missing the required parameter 'project' when calling getRunArtifactLineage");
-      }
-
-      // verify the required parameter 'uuid' is set
-      if (uuid === undefined || uuid === null) {
-        throw new Error("Missing the required parameter 'uuid' when calling getRunArtifactLineage");
-      }
-
-      // verify the required parameter 'name' is set
-      if (name === undefined || name === null) {
-        throw new Error("Missing the required parameter 'name' when calling getRunArtifactLineage");
-      }
-
-
-      var pathParams = {
-        'owner': owner,
-        'project': project,
-        'uuid': uuid,
-        'name': name
-      };
-      var queryParams = {
-        'namespace': opts['namespace'],
-      };
-      var collectionQueryParams = {
-      };
-      var headerParams = {
-      };
-      var formParams = {
-      };
-
-      var authNames = ['ApiKey'];
-      var contentTypes = ['application/json'];
-      var accepts = ['application/json'];
-      var returnType = V1RunArtifact;
-
-      return this.apiClient.callApi(
-        '/api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage/{name}', 'GET',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -1055,8 +209,913 @@
     }
 
     /**
-     * Callback function to receive the result of the getRunArtifactsLineage operation.
-     * @callback module:api/RunsV1Api~getRunArtifactsLineageCallback
+     * Callback function to receive the result of the runsV1ArchiveRun operation.
+     * @callback module:api/RunsV1Api~runsV1ArchiveRunCallback
+     * @param {String} error Error message, if any.
+     * @param data This operation does not return a value.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * Archive run
+     * @param {String} owner Owner of the namespace
+     * @param {String} project Project
+     * @param {String} uuid Uuid identifier of the entity
+     * @param {module:api/RunsV1Api~runsV1ArchiveRunCallback} callback The callback function, accepting three arguments: error, data, response
+     */
+    this.runsV1ArchiveRun = function(owner, project, uuid, callback) {
+      var postBody = null;
+
+      // verify the required parameter 'owner' is set
+      if (owner === undefined || owner === null) {
+        throw new Error("Missing the required parameter 'owner' when calling runsV1ArchiveRun");
+      }
+
+      // verify the required parameter 'project' is set
+      if (project === undefined || project === null) {
+        throw new Error("Missing the required parameter 'project' when calling runsV1ArchiveRun");
+      }
+
+      // verify the required parameter 'uuid' is set
+      if (uuid === undefined || uuid === null) {
+        throw new Error("Missing the required parameter 'uuid' when calling runsV1ArchiveRun");
+      }
+
+
+      var pathParams = {
+        'owner': owner,
+        'project': project,
+        'uuid': uuid
+      };
+      var queryParams = {
+      };
+      var collectionQueryParams = {
+      };
+      var headerParams = {
+      };
+      var formParams = {
+      };
+
+      var authNames = ['ApiKey'];
+      var contentTypes = ['application/json'];
+      var accepts = ['application/json'];
+      var returnType = null;
+
+      return this.apiClient.callApi(
+        '/api/v1/{owner}/{project}/runs/{uuid}/archive', 'POST',
+        pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
+
+    /**
+     * Callback function to receive the result of the runsV1BookmarkRun operation.
+     * @callback module:api/RunsV1Api~runsV1BookmarkRunCallback
+     * @param {String} error Error message, if any.
+     * @param data This operation does not return a value.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * Bookmark run
+     * @param {String} owner Owner of the namespace
+     * @param {String} project Project
+     * @param {String} uuid Uuid identifier of the entity
+     * @param {module:api/RunsV1Api~runsV1BookmarkRunCallback} callback The callback function, accepting three arguments: error, data, response
+     */
+    this.runsV1BookmarkRun = function(owner, project, uuid, callback) {
+      var postBody = null;
+
+      // verify the required parameter 'owner' is set
+      if (owner === undefined || owner === null) {
+        throw new Error("Missing the required parameter 'owner' when calling runsV1BookmarkRun");
+      }
+
+      // verify the required parameter 'project' is set
+      if (project === undefined || project === null) {
+        throw new Error("Missing the required parameter 'project' when calling runsV1BookmarkRun");
+      }
+
+      // verify the required parameter 'uuid' is set
+      if (uuid === undefined || uuid === null) {
+        throw new Error("Missing the required parameter 'uuid' when calling runsV1BookmarkRun");
+      }
+
+
+      var pathParams = {
+        'owner': owner,
+        'project': project,
+        'uuid': uuid
+      };
+      var queryParams = {
+      };
+      var collectionQueryParams = {
+      };
+      var headerParams = {
+      };
+      var formParams = {
+      };
+
+      var authNames = ['ApiKey'];
+      var contentTypes = ['application/json'];
+      var accepts = ['application/json'];
+      var returnType = null;
+
+      return this.apiClient.callApi(
+        '/api/v1/{owner}/{project}/runs/{uuid}/bookmark', 'POST',
+        pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
+
+    /**
+     * Callback function to receive the result of the runsV1BookmarkRuns operation.
+     * @callback module:api/RunsV1Api~runsV1BookmarkRunsCallback
+     * @param {String} error Error message, if any.
+     * @param data This operation does not return a value.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * Bookmark runs
+     * @param {String} owner Owner of the namespace
+     * @param {String} project Project under namesapce
+     * @param {module:model/V1Uuids} body Uuids of the entities
+     * @param {module:api/RunsV1Api~runsV1BookmarkRunsCallback} callback The callback function, accepting three arguments: error, data, response
+     */
+    this.runsV1BookmarkRuns = function(owner, project, body, callback) {
+      var postBody = body;
+
+      // verify the required parameter 'owner' is set
+      if (owner === undefined || owner === null) {
+        throw new Error("Missing the required parameter 'owner' when calling runsV1BookmarkRuns");
+      }
+
+      // verify the required parameter 'project' is set
+      if (project === undefined || project === null) {
+        throw new Error("Missing the required parameter 'project' when calling runsV1BookmarkRuns");
+      }
+
+      // verify the required parameter 'body' is set
+      if (body === undefined || body === null) {
+        throw new Error("Missing the required parameter 'body' when calling runsV1BookmarkRuns");
+      }
+
+
+      var pathParams = {
+        'owner': owner,
+        'project': project
+      };
+      var queryParams = {
+      };
+      var collectionQueryParams = {
+      };
+      var headerParams = {
+      };
+      var formParams = {
+      };
+
+      var authNames = ['ApiKey'];
+      var contentTypes = ['application/json'];
+      var accepts = ['application/json'];
+      var returnType = null;
+
+      return this.apiClient.callApi(
+        '/api/v1/{owner}/{project}/runs/bookmark', 'POST',
+        pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
+
+    /**
+     * Callback function to receive the result of the runsV1CollectRunLogs operation.
+     * @callback module:api/RunsV1Api~runsV1CollectRunLogsCallback
+     * @param {String} error Error message, if any.
+     * @param data This operation does not return a value.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * Collect run logs
+     * @param {String} namespace 
+     * @param {String} owner Owner of the namespace
+     * @param {String} project Project where the run will be assigned
+     * @param {String} uuid Uuid identifier of the entity
+     * @param {module:api/RunsV1Api~runsV1CollectRunLogsCallback} callback The callback function, accepting three arguments: error, data, response
+     */
+    this.runsV1CollectRunLogs = function(namespace, owner, project, uuid, callback) {
+      var postBody = null;
+
+      // verify the required parameter 'namespace' is set
+      if (namespace === undefined || namespace === null) {
+        throw new Error("Missing the required parameter 'namespace' when calling runsV1CollectRunLogs");
+      }
+
+      // verify the required parameter 'owner' is set
+      if (owner === undefined || owner === null) {
+        throw new Error("Missing the required parameter 'owner' when calling runsV1CollectRunLogs");
+      }
+
+      // verify the required parameter 'project' is set
+      if (project === undefined || project === null) {
+        throw new Error("Missing the required parameter 'project' when calling runsV1CollectRunLogs");
+      }
+
+      // verify the required parameter 'uuid' is set
+      if (uuid === undefined || uuid === null) {
+        throw new Error("Missing the required parameter 'uuid' when calling runsV1CollectRunLogs");
+      }
+
+
+      var pathParams = {
+        'namespace': namespace,
+        'owner': owner,
+        'project': project,
+        'uuid': uuid
+      };
+      var queryParams = {
+      };
+      var collectionQueryParams = {
+      };
+      var headerParams = {
+      };
+      var formParams = {
+      };
+
+      var authNames = ['ApiKey'];
+      var contentTypes = ['application/json'];
+      var accepts = ['application/json'];
+      var returnType = null;
+
+      return this.apiClient.callApi(
+        '/streams/v1/{namespace}/_internal/{owner}/{project}/runs/{uuid}/logs', 'POST',
+        pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
+
+    /**
+     * Callback function to receive the result of the runsV1CopyRun operation.
+     * @callback module:api/RunsV1Api~runsV1CopyRunCallback
+     * @param {String} error Error message, if any.
+     * @param {module:model/V1Run} data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * Restart run with copy
+     * @param {String} entity_owner Owner of the namespace
+     * @param {String} entity_project Project
+     * @param {String} entity_uuid Uuid identifier of the entity
+     * @param {module:model/V1Run} body Run object
+     * @param {module:api/RunsV1Api~runsV1CopyRunCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link module:model/V1Run}
+     */
+    this.runsV1CopyRun = function(entity_owner, entity_project, entity_uuid, body, callback) {
+      var postBody = body;
+
+      // verify the required parameter 'entity_owner' is set
+      if (entity_owner === undefined || entity_owner === null) {
+        throw new Error("Missing the required parameter 'entity_owner' when calling runsV1CopyRun");
+      }
+
+      // verify the required parameter 'entity_project' is set
+      if (entity_project === undefined || entity_project === null) {
+        throw new Error("Missing the required parameter 'entity_project' when calling runsV1CopyRun");
+      }
+
+      // verify the required parameter 'entity_uuid' is set
+      if (entity_uuid === undefined || entity_uuid === null) {
+        throw new Error("Missing the required parameter 'entity_uuid' when calling runsV1CopyRun");
+      }
+
+      // verify the required parameter 'body' is set
+      if (body === undefined || body === null) {
+        throw new Error("Missing the required parameter 'body' when calling runsV1CopyRun");
+      }
+
+
+      var pathParams = {
+        'entity.owner': entity_owner,
+        'entity.project': entity_project,
+        'entity.uuid': entity_uuid
+      };
+      var queryParams = {
+      };
+      var collectionQueryParams = {
+      };
+      var headerParams = {
+      };
+      var formParams = {
+      };
+
+      var authNames = ['ApiKey'];
+      var contentTypes = ['application/json'];
+      var accepts = ['application/json'];
+      var returnType = V1Run;
+
+      return this.apiClient.callApi(
+        '/api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/copy', 'POST',
+        pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
+
+    /**
+     * Callback function to receive the result of the runsV1CreateRun operation.
+     * @callback module:api/RunsV1Api~runsV1CreateRunCallback
+     * @param {String} error Error message, if any.
+     * @param {module:model/V1Run} data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * Create new run
+     * @param {String} owner Owner of the namespace
+     * @param {String} project Project where the run will be assigned
+     * @param {module:model/V1OperationBody} body operation object
+     * @param {module:api/RunsV1Api~runsV1CreateRunCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link module:model/V1Run}
+     */
+    this.runsV1CreateRun = function(owner, project, body, callback) {
+      var postBody = body;
+
+      // verify the required parameter 'owner' is set
+      if (owner === undefined || owner === null) {
+        throw new Error("Missing the required parameter 'owner' when calling runsV1CreateRun");
+      }
+
+      // verify the required parameter 'project' is set
+      if (project === undefined || project === null) {
+        throw new Error("Missing the required parameter 'project' when calling runsV1CreateRun");
+      }
+
+      // verify the required parameter 'body' is set
+      if (body === undefined || body === null) {
+        throw new Error("Missing the required parameter 'body' when calling runsV1CreateRun");
+      }
+
+
+      var pathParams = {
+        'owner': owner,
+        'project': project
+      };
+      var queryParams = {
+      };
+      var collectionQueryParams = {
+      };
+      var headerParams = {
+      };
+      var formParams = {
+      };
+
+      var authNames = ['ApiKey'];
+      var contentTypes = ['application/json'];
+      var accepts = ['application/json'];
+      var returnType = V1Run;
+
+      return this.apiClient.callApi(
+        '/api/v1/{owner}/{project}/runs', 'POST',
+        pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
+
+    /**
+     * Callback function to receive the result of the runsV1CreateRunArtifactsLineage operation.
+     * @callback module:api/RunsV1Api~runsV1CreateRunArtifactsLineageCallback
+     * @param {String} error Error message, if any.
+     * @param data This operation does not return a value.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * Create bulk run run artifacts lineage
+     * @param {String} owner Owner of the namespace
+     * @param {String} project Project where the run will be assigned
+     * @param {String} uuid Uuid identifier of the entity
+     * @param {module:model/V1RunArtifacts} body Run Artifacts
+     * @param {module:api/RunsV1Api~runsV1CreateRunArtifactsLineageCallback} callback The callback function, accepting three arguments: error, data, response
+     */
+    this.runsV1CreateRunArtifactsLineage = function(owner, project, uuid, body, callback) {
+      var postBody = body;
+
+      // verify the required parameter 'owner' is set
+      if (owner === undefined || owner === null) {
+        throw new Error("Missing the required parameter 'owner' when calling runsV1CreateRunArtifactsLineage");
+      }
+
+      // verify the required parameter 'project' is set
+      if (project === undefined || project === null) {
+        throw new Error("Missing the required parameter 'project' when calling runsV1CreateRunArtifactsLineage");
+      }
+
+      // verify the required parameter 'uuid' is set
+      if (uuid === undefined || uuid === null) {
+        throw new Error("Missing the required parameter 'uuid' when calling runsV1CreateRunArtifactsLineage");
+      }
+
+      // verify the required parameter 'body' is set
+      if (body === undefined || body === null) {
+        throw new Error("Missing the required parameter 'body' when calling runsV1CreateRunArtifactsLineage");
+      }
+
+
+      var pathParams = {
+        'owner': owner,
+        'project': project,
+        'uuid': uuid
+      };
+      var queryParams = {
+      };
+      var collectionQueryParams = {
+      };
+      var headerParams = {
+      };
+      var formParams = {
+      };
+
+      var authNames = ['ApiKey'];
+      var contentTypes = ['application/json'];
+      var accepts = ['application/json'];
+      var returnType = null;
+
+      return this.apiClient.callApi(
+        '/api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage', 'POST',
+        pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
+
+    /**
+     * Callback function to receive the result of the runsV1CreateRunStatus operation.
+     * @callback module:api/RunsV1Api~runsV1CreateRunStatusCallback
+     * @param {String} error Error message, if any.
+     * @param {module:model/V1Status} data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * Create new run status
+     * @param {String} owner Owner of the namespace
+     * @param {String} project Project where the run will be assigned
+     * @param {String} uuid Uuid identifier of the entity
+     * @param {module:model/V1EntityStatusBodyRequest} body 
+     * @param {module:api/RunsV1Api~runsV1CreateRunStatusCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link module:model/V1Status}
+     */
+    this.runsV1CreateRunStatus = function(owner, project, uuid, body, callback) {
+      var postBody = body;
+
+      // verify the required parameter 'owner' is set
+      if (owner === undefined || owner === null) {
+        throw new Error("Missing the required parameter 'owner' when calling runsV1CreateRunStatus");
+      }
+
+      // verify the required parameter 'project' is set
+      if (project === undefined || project === null) {
+        throw new Error("Missing the required parameter 'project' when calling runsV1CreateRunStatus");
+      }
+
+      // verify the required parameter 'uuid' is set
+      if (uuid === undefined || uuid === null) {
+        throw new Error("Missing the required parameter 'uuid' when calling runsV1CreateRunStatus");
+      }
+
+      // verify the required parameter 'body' is set
+      if (body === undefined || body === null) {
+        throw new Error("Missing the required parameter 'body' when calling runsV1CreateRunStatus");
+      }
+
+
+      var pathParams = {
+        'owner': owner,
+        'project': project,
+        'uuid': uuid
+      };
+      var queryParams = {
+      };
+      var collectionQueryParams = {
+      };
+      var headerParams = {
+      };
+      var formParams = {
+      };
+
+      var authNames = ['ApiKey'];
+      var contentTypes = ['application/json'];
+      var accepts = ['application/json'];
+      var returnType = V1Status;
+
+      return this.apiClient.callApi(
+        '/api/v1/{owner}/{project}/runs/{uuid}/statuses', 'POST',
+        pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
+
+    /**
+     * Callback function to receive the result of the runsV1DeleteRun operation.
+     * @callback module:api/RunsV1Api~runsV1DeleteRunCallback
+     * @param {String} error Error message, if any.
+     * @param data This operation does not return a value.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * Delete run
+     * @param {String} owner Owner of the namespace
+     * @param {String} project Project
+     * @param {String} uuid Uuid identifier of the entity
+     * @param {module:api/RunsV1Api~runsV1DeleteRunCallback} callback The callback function, accepting three arguments: error, data, response
+     */
+    this.runsV1DeleteRun = function(owner, project, uuid, callback) {
+      var postBody = null;
+
+      // verify the required parameter 'owner' is set
+      if (owner === undefined || owner === null) {
+        throw new Error("Missing the required parameter 'owner' when calling runsV1DeleteRun");
+      }
+
+      // verify the required parameter 'project' is set
+      if (project === undefined || project === null) {
+        throw new Error("Missing the required parameter 'project' when calling runsV1DeleteRun");
+      }
+
+      // verify the required parameter 'uuid' is set
+      if (uuid === undefined || uuid === null) {
+        throw new Error("Missing the required parameter 'uuid' when calling runsV1DeleteRun");
+      }
+
+
+      var pathParams = {
+        'owner': owner,
+        'project': project,
+        'uuid': uuid
+      };
+      var queryParams = {
+      };
+      var collectionQueryParams = {
+      };
+      var headerParams = {
+      };
+      var formParams = {
+      };
+
+      var authNames = ['ApiKey'];
+      var contentTypes = ['application/json'];
+      var accepts = ['application/json'];
+      var returnType = null;
+
+      return this.apiClient.callApi(
+        '/api/v1/{owner}/{project}/runs/{uuid}', 'DELETE',
+        pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
+
+    /**
+     * Callback function to receive the result of the runsV1DeleteRunArtifactLineage operation.
+     * @callback module:api/RunsV1Api~runsV1DeleteRunArtifactLineageCallback
+     * @param {String} error Error message, if any.
+     * @param data This operation does not return a value.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * Delete run artifact lineage
+     * @param {String} owner Owner of the namespace
+     * @param {String} project Project where the run will be assigned
+     * @param {String} uuid Uuid identifier of the entity
+     * @param {String} name Artifact name
+     * @param {Object} opts Optional parameters
+     * @param {String} opts.namespace namespace.
+     * @param {module:api/RunsV1Api~runsV1DeleteRunArtifactLineageCallback} callback The callback function, accepting three arguments: error, data, response
+     */
+    this.runsV1DeleteRunArtifactLineage = function(owner, project, uuid, name, opts, callback) {
+      opts = opts || {};
+      var postBody = null;
+
+      // verify the required parameter 'owner' is set
+      if (owner === undefined || owner === null) {
+        throw new Error("Missing the required parameter 'owner' when calling runsV1DeleteRunArtifactLineage");
+      }
+
+      // verify the required parameter 'project' is set
+      if (project === undefined || project === null) {
+        throw new Error("Missing the required parameter 'project' when calling runsV1DeleteRunArtifactLineage");
+      }
+
+      // verify the required parameter 'uuid' is set
+      if (uuid === undefined || uuid === null) {
+        throw new Error("Missing the required parameter 'uuid' when calling runsV1DeleteRunArtifactLineage");
+      }
+
+      // verify the required parameter 'name' is set
+      if (name === undefined || name === null) {
+        throw new Error("Missing the required parameter 'name' when calling runsV1DeleteRunArtifactLineage");
+      }
+
+
+      var pathParams = {
+        'owner': owner,
+        'project': project,
+        'uuid': uuid,
+        'name': name
+      };
+      var queryParams = {
+        'namespace': opts['namespace'],
+      };
+      var collectionQueryParams = {
+      };
+      var headerParams = {
+      };
+      var formParams = {
+      };
+
+      var authNames = ['ApiKey'];
+      var contentTypes = ['application/json'];
+      var accepts = ['application/json'];
+      var returnType = null;
+
+      return this.apiClient.callApi(
+        '/api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage/{name}', 'DELETE',
+        pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
+
+    /**
+     * Callback function to receive the result of the runsV1DeleteRuns operation.
+     * @callback module:api/RunsV1Api~runsV1DeleteRunsCallback
+     * @param {String} error Error message, if any.
+     * @param data This operation does not return a value.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * Delete runs
+     * @param {String} owner Owner of the namespace
+     * @param {String} project Project under namesapce
+     * @param {module:model/V1Uuids} body Uuids of the entities
+     * @param {module:api/RunsV1Api~runsV1DeleteRunsCallback} callback The callback function, accepting three arguments: error, data, response
+     */
+    this.runsV1DeleteRuns = function(owner, project, body, callback) {
+      var postBody = body;
+
+      // verify the required parameter 'owner' is set
+      if (owner === undefined || owner === null) {
+        throw new Error("Missing the required parameter 'owner' when calling runsV1DeleteRuns");
+      }
+
+      // verify the required parameter 'project' is set
+      if (project === undefined || project === null) {
+        throw new Error("Missing the required parameter 'project' when calling runsV1DeleteRuns");
+      }
+
+      // verify the required parameter 'body' is set
+      if (body === undefined || body === null) {
+        throw new Error("Missing the required parameter 'body' when calling runsV1DeleteRuns");
+      }
+
+
+      var pathParams = {
+        'owner': owner,
+        'project': project
+      };
+      var queryParams = {
+      };
+      var collectionQueryParams = {
+      };
+      var headerParams = {
+      };
+      var formParams = {
+      };
+
+      var authNames = ['ApiKey'];
+      var contentTypes = ['application/json'];
+      var accepts = ['application/json'];
+      var returnType = null;
+
+      return this.apiClient.callApi(
+        '/api/v1/{owner}/{project}/runs/delete', 'DELETE',
+        pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
+
+    /**
+     * Callback function to receive the result of the runsV1GetMultiRunEvents operation.
+     * @callback module:api/RunsV1Api~runsV1GetMultiRunEventsCallback
+     * @param {String} error Error message, if any.
+     * @param {module:model/V1EventsResponse} data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * Get multi runs events
+     * @param {String} namespace namespace
+     * @param {String} owner Owner of the namespace
+     * @param {String} project Project where the run will be assigned
+     * @param {module:model/String} kind The artifact kind
+     * @param {Object} opts Optional parameters
+     * @param {String} opts.names Names query param.
+     * @param {String} opts.runs Runs query param.
+     * @param {String} opts.orient Orient query param.
+     * @param {module:api/RunsV1Api~runsV1GetMultiRunEventsCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link module:model/V1EventsResponse}
+     */
+    this.runsV1GetMultiRunEvents = function(namespace, owner, project, kind, opts, callback) {
+      opts = opts || {};
+      var postBody = null;
+
+      // verify the required parameter 'namespace' is set
+      if (namespace === undefined || namespace === null) {
+        throw new Error("Missing the required parameter 'namespace' when calling runsV1GetMultiRunEvents");
+      }
+
+      // verify the required parameter 'owner' is set
+      if (owner === undefined || owner === null) {
+        throw new Error("Missing the required parameter 'owner' when calling runsV1GetMultiRunEvents");
+      }
+
+      // verify the required parameter 'project' is set
+      if (project === undefined || project === null) {
+        throw new Error("Missing the required parameter 'project' when calling runsV1GetMultiRunEvents");
+      }
+
+      // verify the required parameter 'kind' is set
+      if (kind === undefined || kind === null) {
+        throw new Error("Missing the required parameter 'kind' when calling runsV1GetMultiRunEvents");
+      }
+
+
+      var pathParams = {
+        'namespace': namespace,
+        'owner': owner,
+        'project': project,
+        'kind': kind
+      };
+      var queryParams = {
+        'names': opts['names'],
+        'runs': opts['runs'],
+        'orient': opts['orient'],
+      };
+      var collectionQueryParams = {
+      };
+      var headerParams = {
+      };
+      var formParams = {
+      };
+
+      var authNames = ['ApiKey'];
+      var contentTypes = ['application/json'];
+      var accepts = ['application/json'];
+      var returnType = V1EventsResponse;
+
+      return this.apiClient.callApi(
+        '/streams/v1/{namespace}/{owner}/{project}/runs/multi/events/{kind}', 'GET',
+        pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
+
+    /**
+     * Callback function to receive the result of the runsV1GetRun operation.
+     * @callback module:api/RunsV1Api~runsV1GetRunCallback
+     * @param {String} error Error message, if any.
+     * @param {module:model/V1Run} data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * Get run
+     * @param {String} owner Owner of the namespace
+     * @param {String} project Project
+     * @param {String} uuid Uuid identifier of the entity
+     * @param {module:api/RunsV1Api~runsV1GetRunCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link module:model/V1Run}
+     */
+    this.runsV1GetRun = function(owner, project, uuid, callback) {
+      var postBody = null;
+
+      // verify the required parameter 'owner' is set
+      if (owner === undefined || owner === null) {
+        throw new Error("Missing the required parameter 'owner' when calling runsV1GetRun");
+      }
+
+      // verify the required parameter 'project' is set
+      if (project === undefined || project === null) {
+        throw new Error("Missing the required parameter 'project' when calling runsV1GetRun");
+      }
+
+      // verify the required parameter 'uuid' is set
+      if (uuid === undefined || uuid === null) {
+        throw new Error("Missing the required parameter 'uuid' when calling runsV1GetRun");
+      }
+
+
+      var pathParams = {
+        'owner': owner,
+        'project': project,
+        'uuid': uuid
+      };
+      var queryParams = {
+      };
+      var collectionQueryParams = {
+      };
+      var headerParams = {
+      };
+      var formParams = {
+      };
+
+      var authNames = ['ApiKey'];
+      var contentTypes = ['application/json'];
+      var accepts = ['application/json'];
+      var returnType = V1Run;
+
+      return this.apiClient.callApi(
+        '/api/v1/{owner}/{project}/runs/{uuid}', 'GET',
+        pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
+
+    /**
+     * Callback function to receive the result of the runsV1GetRunArtifactLineage operation.
+     * @callback module:api/RunsV1Api~runsV1GetRunArtifactLineageCallback
+     * @param {String} error Error message, if any.
+     * @param {module:model/V1RunArtifact} data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * Get run artifacts lineage
+     * @param {String} owner Owner of the namespace
+     * @param {String} project Project where the run will be assigned
+     * @param {String} uuid Uuid identifier of the entity
+     * @param {String} name Artifact name
+     * @param {Object} opts Optional parameters
+     * @param {String} opts.namespace namespace.
+     * @param {module:api/RunsV1Api~runsV1GetRunArtifactLineageCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link module:model/V1RunArtifact}
+     */
+    this.runsV1GetRunArtifactLineage = function(owner, project, uuid, name, opts, callback) {
+      opts = opts || {};
+      var postBody = null;
+
+      // verify the required parameter 'owner' is set
+      if (owner === undefined || owner === null) {
+        throw new Error("Missing the required parameter 'owner' when calling runsV1GetRunArtifactLineage");
+      }
+
+      // verify the required parameter 'project' is set
+      if (project === undefined || project === null) {
+        throw new Error("Missing the required parameter 'project' when calling runsV1GetRunArtifactLineage");
+      }
+
+      // verify the required parameter 'uuid' is set
+      if (uuid === undefined || uuid === null) {
+        throw new Error("Missing the required parameter 'uuid' when calling runsV1GetRunArtifactLineage");
+      }
+
+      // verify the required parameter 'name' is set
+      if (name === undefined || name === null) {
+        throw new Error("Missing the required parameter 'name' when calling runsV1GetRunArtifactLineage");
+      }
+
+
+      var pathParams = {
+        'owner': owner,
+        'project': project,
+        'uuid': uuid,
+        'name': name
+      };
+      var queryParams = {
+        'namespace': opts['namespace'],
+      };
+      var collectionQueryParams = {
+      };
+      var headerParams = {
+      };
+      var formParams = {
+      };
+
+      var authNames = ['ApiKey'];
+      var contentTypes = ['application/json'];
+      var accepts = ['application/json'];
+      var returnType = V1RunArtifact;
+
+      return this.apiClient.callApi(
+        '/api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage/{name}', 'GET',
+        pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
+
+    /**
+     * Callback function to receive the result of the runsV1GetRunArtifactsLineage operation.
+     * @callback module:api/RunsV1Api~runsV1GetRunArtifactsLineageCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1ListRunArtifactsResponse} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -1071,26 +1130,26 @@
      * @param {Number} opts.limit Limit size.
      * @param {String} opts.sort Sort to order the search.
      * @param {String} opts.query Query filter the search search.
-     * @param {module:api/RunsV1Api~getRunArtifactsLineageCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/RunsV1Api~runsV1GetRunArtifactsLineageCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1ListRunArtifactsResponse}
      */
-    this.getRunArtifactsLineage = function(owner, project, uuid, opts, callback) {
+    this.runsV1GetRunArtifactsLineage = function(owner, project, uuid, opts, callback) {
       opts = opts || {};
       var postBody = null;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling getRunArtifactsLineage");
+        throw new Error("Missing the required parameter 'owner' when calling runsV1GetRunArtifactsLineage");
       }
 
       // verify the required parameter 'project' is set
       if (project === undefined || project === null) {
-        throw new Error("Missing the required parameter 'project' when calling getRunArtifactsLineage");
+        throw new Error("Missing the required parameter 'project' when calling runsV1GetRunArtifactsLineage");
       }
 
       // verify the required parameter 'uuid' is set
       if (uuid === undefined || uuid === null) {
-        throw new Error("Missing the required parameter 'uuid' when calling getRunArtifactsLineage");
+        throw new Error("Missing the required parameter 'uuid' when calling runsV1GetRunArtifactsLineage");
       }
 
 
@@ -1124,8 +1183,8 @@
     }
 
     /**
-     * Callback function to receive the result of the getRunArtifactsLineageNames operation.
-     * @callback module:api/RunsV1Api~getRunArtifactsLineageNamesCallback
+     * Callback function to receive the result of the runsV1GetRunArtifactsLineageNames operation.
+     * @callback module:api/RunsV1Api~runsV1GetRunArtifactsLineageNamesCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1ListRunArtifactsResponse} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -1140,26 +1199,26 @@
      * @param {Number} opts.limit Limit size.
      * @param {String} opts.sort Sort to order the search.
      * @param {String} opts.query Query filter the search search.
-     * @param {module:api/RunsV1Api~getRunArtifactsLineageNamesCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/RunsV1Api~runsV1GetRunArtifactsLineageNamesCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1ListRunArtifactsResponse}
      */
-    this.getRunArtifactsLineageNames = function(owner, project, uuid, opts, callback) {
+    this.runsV1GetRunArtifactsLineageNames = function(owner, project, uuid, opts, callback) {
       opts = opts || {};
       var postBody = null;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling getRunArtifactsLineageNames");
+        throw new Error("Missing the required parameter 'owner' when calling runsV1GetRunArtifactsLineageNames");
       }
 
       // verify the required parameter 'project' is set
       if (project === undefined || project === null) {
-        throw new Error("Missing the required parameter 'project' when calling getRunArtifactsLineageNames");
+        throw new Error("Missing the required parameter 'project' when calling runsV1GetRunArtifactsLineageNames");
       }
 
       // verify the required parameter 'uuid' is set
       if (uuid === undefined || uuid === null) {
-        throw new Error("Missing the required parameter 'uuid' when calling getRunArtifactsLineageNames");
+        throw new Error("Missing the required parameter 'uuid' when calling runsV1GetRunArtifactsLineageNames");
       }
 
 
@@ -1193,8 +1252,8 @@
     }
 
     /**
-     * Callback function to receive the result of the getRunArtifactsTree operation.
-     * @callback module:api/RunsV1Api~getRunArtifactsTreeCallback
+     * Callback function to receive the result of the runsV1GetRunArtifactsTree operation.
+     * @callback module:api/RunsV1Api~runsV1GetRunArtifactsTreeCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1ArtifactTree} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -1208,31 +1267,31 @@
      * @param {String} uuid Uuid identifier of the entity
      * @param {Object} opts Optional parameters
      * @param {String} opts.path Path query param.
-     * @param {module:api/RunsV1Api~getRunArtifactsTreeCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/RunsV1Api~runsV1GetRunArtifactsTreeCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1ArtifactTree}
      */
-    this.getRunArtifactsTree = function(namespace, owner, project, uuid, opts, callback) {
+    this.runsV1GetRunArtifactsTree = function(namespace, owner, project, uuid, opts, callback) {
       opts = opts || {};
       var postBody = null;
 
       // verify the required parameter 'namespace' is set
       if (namespace === undefined || namespace === null) {
-        throw new Error("Missing the required parameter 'namespace' when calling getRunArtifactsTree");
+        throw new Error("Missing the required parameter 'namespace' when calling runsV1GetRunArtifactsTree");
       }
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling getRunArtifactsTree");
+        throw new Error("Missing the required parameter 'owner' when calling runsV1GetRunArtifactsTree");
       }
 
       // verify the required parameter 'project' is set
       if (project === undefined || project === null) {
-        throw new Error("Missing the required parameter 'project' when calling getRunArtifactsTree");
+        throw new Error("Missing the required parameter 'project' when calling runsV1GetRunArtifactsTree");
       }
 
       // verify the required parameter 'uuid' is set
       if (uuid === undefined || uuid === null) {
-        throw new Error("Missing the required parameter 'uuid' when calling getRunArtifactsTree");
+        throw new Error("Missing the required parameter 'uuid' when calling runsV1GetRunArtifactsTree");
       }
 
 
@@ -1265,8 +1324,8 @@
     }
 
     /**
-     * Callback function to receive the result of the getRunEvents operation.
-     * @callback module:api/RunsV1Api~getRunEventsCallback
+     * Callback function to receive the result of the runsV1GetRunEvents operation.
+     * @callback module:api/RunsV1Api~runsV1GetRunEventsCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1EventsResponse} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -1282,36 +1341,36 @@
      * @param {Object} opts Optional parameters
      * @param {String} opts.names Names query param.
      * @param {String} opts.orient Orient query param.
-     * @param {module:api/RunsV1Api~getRunEventsCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/RunsV1Api~runsV1GetRunEventsCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1EventsResponse}
      */
-    this.getRunEvents = function(namespace, owner, project, uuid, kind, opts, callback) {
+    this.runsV1GetRunEvents = function(namespace, owner, project, uuid, kind, opts, callback) {
       opts = opts || {};
       var postBody = null;
 
       // verify the required parameter 'namespace' is set
       if (namespace === undefined || namespace === null) {
-        throw new Error("Missing the required parameter 'namespace' when calling getRunEvents");
+        throw new Error("Missing the required parameter 'namespace' when calling runsV1GetRunEvents");
       }
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling getRunEvents");
+        throw new Error("Missing the required parameter 'owner' when calling runsV1GetRunEvents");
       }
 
       // verify the required parameter 'project' is set
       if (project === undefined || project === null) {
-        throw new Error("Missing the required parameter 'project' when calling getRunEvents");
+        throw new Error("Missing the required parameter 'project' when calling runsV1GetRunEvents");
       }
 
       // verify the required parameter 'uuid' is set
       if (uuid === undefined || uuid === null) {
-        throw new Error("Missing the required parameter 'uuid' when calling getRunEvents");
+        throw new Error("Missing the required parameter 'uuid' when calling runsV1GetRunEvents");
       }
 
       // verify the required parameter 'kind' is set
       if (kind === undefined || kind === null) {
-        throw new Error("Missing the required parameter 'kind' when calling getRunEvents");
+        throw new Error("Missing the required parameter 'kind' when calling runsV1GetRunEvents");
       }
 
 
@@ -1346,8 +1405,8 @@
     }
 
     /**
-     * Callback function to receive the result of the getRunLogs operation.
-     * @callback module:api/RunsV1Api~getRunLogsCallback
+     * Callback function to receive the result of the runsV1GetRunLogs operation.
+     * @callback module:api/RunsV1Api~runsV1GetRunLogsCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1Logs} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -1362,31 +1421,31 @@
      * @param {Object} opts Optional parameters
      * @param {Date} opts.last_time last time.
      * @param {String} opts.last_file last file.
-     * @param {module:api/RunsV1Api~getRunLogsCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/RunsV1Api~runsV1GetRunLogsCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1Logs}
      */
-    this.getRunLogs = function(namespace, owner, project, uuid, opts, callback) {
+    this.runsV1GetRunLogs = function(namespace, owner, project, uuid, opts, callback) {
       opts = opts || {};
       var postBody = null;
 
       // verify the required parameter 'namespace' is set
       if (namespace === undefined || namespace === null) {
-        throw new Error("Missing the required parameter 'namespace' when calling getRunLogs");
+        throw new Error("Missing the required parameter 'namespace' when calling runsV1GetRunLogs");
       }
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling getRunLogs");
+        throw new Error("Missing the required parameter 'owner' when calling runsV1GetRunLogs");
       }
 
       // verify the required parameter 'project' is set
       if (project === undefined || project === null) {
-        throw new Error("Missing the required parameter 'project' when calling getRunLogs");
+        throw new Error("Missing the required parameter 'project' when calling runsV1GetRunLogs");
       }
 
       // verify the required parameter 'uuid' is set
       if (uuid === undefined || uuid === null) {
-        throw new Error("Missing the required parameter 'uuid' when calling getRunLogs");
+        throw new Error("Missing the required parameter 'uuid' when calling runsV1GetRunLogs");
       }
 
 
@@ -1420,8 +1479,8 @@
     }
 
     /**
-     * Callback function to receive the result of the getRunNamespace operation.
-     * @callback module:api/RunsV1Api~getRunNamespaceCallback
+     * Callback function to receive the result of the runsV1GetRunNamespace operation.
+     * @callback module:api/RunsV1Api~runsV1GetRunNamespaceCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1RunSettings} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -1432,25 +1491,25 @@
      * @param {String} owner Owner of the namespace
      * @param {String} project Project
      * @param {String} uuid Uuid identifier of the entity
-     * @param {module:api/RunsV1Api~getRunNamespaceCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/RunsV1Api~runsV1GetRunNamespaceCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1RunSettings}
      */
-    this.getRunNamespace = function(owner, project, uuid, callback) {
+    this.runsV1GetRunNamespace = function(owner, project, uuid, callback) {
       var postBody = null;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling getRunNamespace");
+        throw new Error("Missing the required parameter 'owner' when calling runsV1GetRunNamespace");
       }
 
       // verify the required parameter 'project' is set
       if (project === undefined || project === null) {
-        throw new Error("Missing the required parameter 'project' when calling getRunNamespace");
+        throw new Error("Missing the required parameter 'project' when calling runsV1GetRunNamespace");
       }
 
       // verify the required parameter 'uuid' is set
       if (uuid === undefined || uuid === null) {
-        throw new Error("Missing the required parameter 'uuid' when calling getRunNamespace");
+        throw new Error("Missing the required parameter 'uuid' when calling runsV1GetRunNamespace");
       }
 
 
@@ -1481,8 +1540,8 @@
     }
 
     /**
-     * Callback function to receive the result of the getRunResources operation.
-     * @callback module:api/RunsV1Api~getRunResourcesCallback
+     * Callback function to receive the result of the runsV1GetRunResources operation.
+     * @callback module:api/RunsV1Api~runsV1GetRunResourcesCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1EventsResponse} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -1497,31 +1556,31 @@
      * @param {Object} opts Optional parameters
      * @param {String} opts.names Names query param.
      * @param {Boolean} opts.tail Query param flag to tail the values.
-     * @param {module:api/RunsV1Api~getRunResourcesCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/RunsV1Api~runsV1GetRunResourcesCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1EventsResponse}
      */
-    this.getRunResources = function(namespace, owner, project, uuid, opts, callback) {
+    this.runsV1GetRunResources = function(namespace, owner, project, uuid, opts, callback) {
       opts = opts || {};
       var postBody = null;
 
       // verify the required parameter 'namespace' is set
       if (namespace === undefined || namespace === null) {
-        throw new Error("Missing the required parameter 'namespace' when calling getRunResources");
+        throw new Error("Missing the required parameter 'namespace' when calling runsV1GetRunResources");
       }
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling getRunResources");
+        throw new Error("Missing the required parameter 'owner' when calling runsV1GetRunResources");
       }
 
       // verify the required parameter 'project' is set
       if (project === undefined || project === null) {
-        throw new Error("Missing the required parameter 'project' when calling getRunResources");
+        throw new Error("Missing the required parameter 'project' when calling runsV1GetRunResources");
       }
 
       // verify the required parameter 'uuid' is set
       if (uuid === undefined || uuid === null) {
-        throw new Error("Missing the required parameter 'uuid' when calling getRunResources");
+        throw new Error("Missing the required parameter 'uuid' when calling runsV1GetRunResources");
       }
 
 
@@ -1555,8 +1614,8 @@
     }
 
     /**
-     * Callback function to receive the result of the getRunSettings operation.
-     * @callback module:api/RunsV1Api~getRunSettingsCallback
+     * Callback function to receive the result of the runsV1GetRunSettings operation.
+     * @callback module:api/RunsV1Api~runsV1GetRunSettingsCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1RunSettings} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -1567,25 +1626,25 @@
      * @param {String} owner Owner of the namespace
      * @param {String} project Project
      * @param {String} uuid Uuid identifier of the entity
-     * @param {module:api/RunsV1Api~getRunSettingsCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/RunsV1Api~runsV1GetRunSettingsCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1RunSettings}
      */
-    this.getRunSettings = function(owner, project, uuid, callback) {
+    this.runsV1GetRunSettings = function(owner, project, uuid, callback) {
       var postBody = null;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling getRunSettings");
+        throw new Error("Missing the required parameter 'owner' when calling runsV1GetRunSettings");
       }
 
       // verify the required parameter 'project' is set
       if (project === undefined || project === null) {
-        throw new Error("Missing the required parameter 'project' when calling getRunSettings");
+        throw new Error("Missing the required parameter 'project' when calling runsV1GetRunSettings");
       }
 
       // verify the required parameter 'uuid' is set
       if (uuid === undefined || uuid === null) {
-        throw new Error("Missing the required parameter 'uuid' when calling getRunSettings");
+        throw new Error("Missing the required parameter 'uuid' when calling runsV1GetRunSettings");
       }
 
 
@@ -1616,8 +1675,8 @@
     }
 
     /**
-     * Callback function to receive the result of the getRunStatuses operation.
-     * @callback module:api/RunsV1Api~getRunStatusesCallback
+     * Callback function to receive the result of the runsV1GetRunStatuses operation.
+     * @callback module:api/RunsV1Api~runsV1GetRunStatusesCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1Status} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -1628,25 +1687,25 @@
      * @param {String} owner Owner of the namespace
      * @param {String} project Project
      * @param {String} uuid Uuid identifier of the entity
-     * @param {module:api/RunsV1Api~getRunStatusesCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/RunsV1Api~runsV1GetRunStatusesCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1Status}
      */
-    this.getRunStatuses = function(owner, project, uuid, callback) {
+    this.runsV1GetRunStatuses = function(owner, project, uuid, callback) {
       var postBody = null;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling getRunStatuses");
+        throw new Error("Missing the required parameter 'owner' when calling runsV1GetRunStatuses");
       }
 
       // verify the required parameter 'project' is set
       if (project === undefined || project === null) {
-        throw new Error("Missing the required parameter 'project' when calling getRunStatuses");
+        throw new Error("Missing the required parameter 'project' when calling runsV1GetRunStatuses");
       }
 
       // verify the required parameter 'uuid' is set
       if (uuid === undefined || uuid === null) {
-        throw new Error("Missing the required parameter 'uuid' when calling getRunStatuses");
+        throw new Error("Missing the required parameter 'uuid' when calling runsV1GetRunStatuses");
       }
 
 
@@ -1677,8 +1736,61 @@
     }
 
     /**
-     * Callback function to receive the result of the impersonateToken operation.
-     * @callback module:api/RunsV1Api~impersonateTokenCallback
+     * Callback function to receive the result of the runsV1GetRunsArtifactsLineage operation.
+     * @callback module:api/RunsV1Api~runsV1GetRunsArtifactsLineageCallback
+     * @param {String} error Error message, if any.
+     * @param data This operation does not return a value.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * Get runs artifacts lineage
+     * @param {String} owner Owner of the namespace
+     * @param {String} project Project under namesapce
+     * @param {module:api/RunsV1Api~runsV1GetRunsArtifactsLineageCallback} callback The callback function, accepting three arguments: error, data, response
+     */
+    this.runsV1GetRunsArtifactsLineage = function(owner, project, callback) {
+      var postBody = null;
+
+      // verify the required parameter 'owner' is set
+      if (owner === undefined || owner === null) {
+        throw new Error("Missing the required parameter 'owner' when calling runsV1GetRunsArtifactsLineage");
+      }
+
+      // verify the required parameter 'project' is set
+      if (project === undefined || project === null) {
+        throw new Error("Missing the required parameter 'project' when calling runsV1GetRunsArtifactsLineage");
+      }
+
+
+      var pathParams = {
+        'owner': owner,
+        'project': project
+      };
+      var queryParams = {
+      };
+      var collectionQueryParams = {
+      };
+      var headerParams = {
+      };
+      var formParams = {
+      };
+
+      var authNames = ['ApiKey'];
+      var contentTypes = ['application/json'];
+      var accepts = ['application/json'];
+      var returnType = null;
+
+      return this.apiClient.callApi(
+        '/api/v1/{owner}/{project}/runs/artifacts_lineage', 'GET',
+        pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
+
+    /**
+     * Callback function to receive the result of the runsV1ImpersonateToken operation.
+     * @callback module:api/RunsV1Api~runsV1ImpersonateTokenCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1Auth} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -1689,25 +1801,25 @@
      * @param {String} owner Owner of the namespace
      * @param {String} project Project
      * @param {String} uuid Uuid identifier of the entity
-     * @param {module:api/RunsV1Api~impersonateTokenCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/RunsV1Api~runsV1ImpersonateTokenCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1Auth}
      */
-    this.impersonateToken = function(owner, project, uuid, callback) {
+    this.runsV1ImpersonateToken = function(owner, project, uuid, callback) {
       var postBody = null;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling impersonateToken");
+        throw new Error("Missing the required parameter 'owner' when calling runsV1ImpersonateToken");
       }
 
       // verify the required parameter 'project' is set
       if (project === undefined || project === null) {
-        throw new Error("Missing the required parameter 'project' when calling impersonateToken");
+        throw new Error("Missing the required parameter 'project' when calling runsV1ImpersonateToken");
       }
 
       // verify the required parameter 'uuid' is set
       if (uuid === undefined || uuid === null) {
-        throw new Error("Missing the required parameter 'uuid' when calling impersonateToken");
+        throw new Error("Missing the required parameter 'uuid' when calling runsV1ImpersonateToken");
       }
 
 
@@ -1738,8 +1850,8 @@
     }
 
     /**
-     * Callback function to receive the result of the invalidateRun operation.
-     * @callback module:api/RunsV1Api~invalidateRunCallback
+     * Callback function to receive the result of the runsV1InvalidateRun operation.
+     * @callback module:api/RunsV1Api~runsV1InvalidateRunCallback
      * @param {String} error Error message, if any.
      * @param data This operation does not return a value.
      * @param {String} response The complete HTTP response.
@@ -1751,29 +1863,29 @@
      * @param {String} project Project
      * @param {String} uuid Uuid identifier of the entity
      * @param {module:model/V1ProjectEntityResourceRequest} body 
-     * @param {module:api/RunsV1Api~invalidateRunCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/RunsV1Api~runsV1InvalidateRunCallback} callback The callback function, accepting three arguments: error, data, response
      */
-    this.invalidateRun = function(owner, project, uuid, body, callback) {
+    this.runsV1InvalidateRun = function(owner, project, uuid, body, callback) {
       var postBody = body;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling invalidateRun");
+        throw new Error("Missing the required parameter 'owner' when calling runsV1InvalidateRun");
       }
 
       // verify the required parameter 'project' is set
       if (project === undefined || project === null) {
-        throw new Error("Missing the required parameter 'project' when calling invalidateRun");
+        throw new Error("Missing the required parameter 'project' when calling runsV1InvalidateRun");
       }
 
       // verify the required parameter 'uuid' is set
       if (uuid === undefined || uuid === null) {
-        throw new Error("Missing the required parameter 'uuid' when calling invalidateRun");
+        throw new Error("Missing the required parameter 'uuid' when calling runsV1InvalidateRun");
       }
 
       // verify the required parameter 'body' is set
       if (body === undefined || body === null) {
-        throw new Error("Missing the required parameter 'body' when calling invalidateRun");
+        throw new Error("Missing the required parameter 'body' when calling runsV1InvalidateRun");
       }
 
 
@@ -1804,8 +1916,8 @@
     }
 
     /**
-     * Callback function to receive the result of the invalidateRuns operation.
-     * @callback module:api/RunsV1Api~invalidateRunsCallback
+     * Callback function to receive the result of the runsV1InvalidateRuns operation.
+     * @callback module:api/RunsV1Api~runsV1InvalidateRunsCallback
      * @param {String} error Error message, if any.
      * @param data This operation does not return a value.
      * @param {String} response The complete HTTP response.
@@ -1816,24 +1928,24 @@
      * @param {String} owner Owner of the namespace
      * @param {String} project Project under namesapce
      * @param {module:model/V1Uuids} body Uuids of the entities
-     * @param {module:api/RunsV1Api~invalidateRunsCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/RunsV1Api~runsV1InvalidateRunsCallback} callback The callback function, accepting three arguments: error, data, response
      */
-    this.invalidateRuns = function(owner, project, body, callback) {
+    this.runsV1InvalidateRuns = function(owner, project, body, callback) {
       var postBody = body;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling invalidateRuns");
+        throw new Error("Missing the required parameter 'owner' when calling runsV1InvalidateRuns");
       }
 
       // verify the required parameter 'project' is set
       if (project === undefined || project === null) {
-        throw new Error("Missing the required parameter 'project' when calling invalidateRuns");
+        throw new Error("Missing the required parameter 'project' when calling runsV1InvalidateRuns");
       }
 
       // verify the required parameter 'body' is set
       if (body === undefined || body === null) {
-        throw new Error("Missing the required parameter 'body' when calling invalidateRuns");
+        throw new Error("Missing the required parameter 'body' when calling runsV1InvalidateRuns");
       }
 
 
@@ -1863,8 +1975,8 @@
     }
 
     /**
-     * Callback function to receive the result of the listArchivedRuns operation.
-     * @callback module:api/RunsV1Api~listArchivedRunsCallback
+     * Callback function to receive the result of the runsV1ListArchivedRuns operation.
+     * @callback module:api/RunsV1Api~runsV1ListArchivedRunsCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1ListRunsResponse} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -1878,16 +1990,16 @@
      * @param {Number} opts.limit Limit size.
      * @param {String} opts.sort Sort to order the search.
      * @param {String} opts.query Query filter the search search.
-     * @param {module:api/RunsV1Api~listArchivedRunsCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/RunsV1Api~runsV1ListArchivedRunsCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1ListRunsResponse}
      */
-    this.listArchivedRuns = function(user, opts, callback) {
+    this.runsV1ListArchivedRuns = function(user, opts, callback) {
       opts = opts || {};
       var postBody = null;
 
       // verify the required parameter 'user' is set
       if (user === undefined || user === null) {
-        throw new Error("Missing the required parameter 'user' when calling listArchivedRuns");
+        throw new Error("Missing the required parameter 'user' when calling runsV1ListArchivedRuns");
       }
 
 
@@ -1920,8 +2032,8 @@
     }
 
     /**
-     * Callback function to receive the result of the listBookmarkedRuns operation.
-     * @callback module:api/RunsV1Api~listBookmarkedRunsCallback
+     * Callback function to receive the result of the runsV1ListBookmarkedRuns operation.
+     * @callback module:api/RunsV1Api~runsV1ListBookmarkedRunsCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1ListRunsResponse} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -1935,16 +2047,16 @@
      * @param {Number} opts.limit Limit size.
      * @param {String} opts.sort Sort to order the search.
      * @param {String} opts.query Query filter the search search.
-     * @param {module:api/RunsV1Api~listBookmarkedRunsCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/RunsV1Api~runsV1ListBookmarkedRunsCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1ListRunsResponse}
      */
-    this.listBookmarkedRuns = function(user, opts, callback) {
+    this.runsV1ListBookmarkedRuns = function(user, opts, callback) {
       opts = opts || {};
       var postBody = null;
 
       // verify the required parameter 'user' is set
       if (user === undefined || user === null) {
-        throw new Error("Missing the required parameter 'user' when calling listBookmarkedRuns");
+        throw new Error("Missing the required parameter 'user' when calling runsV1ListBookmarkedRuns");
       }
 
 
@@ -1977,8 +2089,8 @@
     }
 
     /**
-     * Callback function to receive the result of the listRuns operation.
-     * @callback module:api/RunsV1Api~listRunsCallback
+     * Callback function to receive the result of the runsV1ListRuns operation.
+     * @callback module:api/RunsV1Api~runsV1ListRunsCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1ListRunsResponse} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -1993,21 +2105,21 @@
      * @param {Number} opts.limit Limit size.
      * @param {String} opts.sort Sort to order the search.
      * @param {String} opts.query Query filter the search search.
-     * @param {module:api/RunsV1Api~listRunsCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/RunsV1Api~runsV1ListRunsCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1ListRunsResponse}
      */
-    this.listRuns = function(owner, project, opts, callback) {
+    this.runsV1ListRuns = function(owner, project, opts, callback) {
       opts = opts || {};
       var postBody = null;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling listRuns");
+        throw new Error("Missing the required parameter 'owner' when calling runsV1ListRuns");
       }
 
       // verify the required parameter 'project' is set
       if (project === undefined || project === null) {
-        throw new Error("Missing the required parameter 'project' when calling listRuns");
+        throw new Error("Missing the required parameter 'project' when calling runsV1ListRuns");
       }
 
 
@@ -2041,8 +2153,8 @@
     }
 
     /**
-     * Callback function to receive the result of the listRunsIo operation.
-     * @callback module:api/RunsV1Api~listRunsIoCallback
+     * Callback function to receive the result of the runsV1ListRunsIo operation.
+     * @callback module:api/RunsV1Api~runsV1ListRunsIoCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1ListRunsResponse} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -2057,21 +2169,21 @@
      * @param {Number} opts.limit Limit size.
      * @param {String} opts.sort Sort to order the search.
      * @param {String} opts.query Query filter the search search.
-     * @param {module:api/RunsV1Api~listRunsIoCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/RunsV1Api~runsV1ListRunsIoCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1ListRunsResponse}
      */
-    this.listRunsIo = function(owner, project, opts, callback) {
+    this.runsV1ListRunsIo = function(owner, project, opts, callback) {
       opts = opts || {};
       var postBody = null;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling listRunsIo");
+        throw new Error("Missing the required parameter 'owner' when calling runsV1ListRunsIo");
       }
 
       // verify the required parameter 'project' is set
       if (project === undefined || project === null) {
-        throw new Error("Missing the required parameter 'project' when calling listRunsIo");
+        throw new Error("Missing the required parameter 'project' when calling runsV1ListRunsIo");
       }
 
 
@@ -2105,8 +2217,8 @@
     }
 
     /**
-     * Callback function to receive the result of the notifyRunStatus operation.
-     * @callback module:api/RunsV1Api~notifyRunStatusCallback
+     * Callback function to receive the result of the runsV1NotifyRunStatus operation.
+     * @callback module:api/RunsV1Api~runsV1NotifyRunStatusCallback
      * @param {String} error Error message, if any.
      * @param data This operation does not return a value.
      * @param {String} response The complete HTTP response.
@@ -2119,34 +2231,34 @@
      * @param {String} project Project where the run will be assigned
      * @param {String} uuid Uuid identifier of the entity
      * @param {module:model/V1EntityNotificationBody} body 
-     * @param {module:api/RunsV1Api~notifyRunStatusCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/RunsV1Api~runsV1NotifyRunStatusCallback} callback The callback function, accepting three arguments: error, data, response
      */
-    this.notifyRunStatus = function(namespace, owner, project, uuid, body, callback) {
+    this.runsV1NotifyRunStatus = function(namespace, owner, project, uuid, body, callback) {
       var postBody = body;
 
       // verify the required parameter 'namespace' is set
       if (namespace === undefined || namespace === null) {
-        throw new Error("Missing the required parameter 'namespace' when calling notifyRunStatus");
+        throw new Error("Missing the required parameter 'namespace' when calling runsV1NotifyRunStatus");
       }
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling notifyRunStatus");
+        throw new Error("Missing the required parameter 'owner' when calling runsV1NotifyRunStatus");
       }
 
       // verify the required parameter 'project' is set
       if (project === undefined || project === null) {
-        throw new Error("Missing the required parameter 'project' when calling notifyRunStatus");
+        throw new Error("Missing the required parameter 'project' when calling runsV1NotifyRunStatus");
       }
 
       // verify the required parameter 'uuid' is set
       if (uuid === undefined || uuid === null) {
-        throw new Error("Missing the required parameter 'uuid' when calling notifyRunStatus");
+        throw new Error("Missing the required parameter 'uuid' when calling runsV1NotifyRunStatus");
       }
 
       // verify the required parameter 'body' is set
       if (body === undefined || body === null) {
-        throw new Error("Missing the required parameter 'body' when calling notifyRunStatus");
+        throw new Error("Missing the required parameter 'body' when calling runsV1NotifyRunStatus");
       }
 
 
@@ -2178,8 +2290,8 @@
     }
 
     /**
-     * Callback function to receive the result of the patchRun operation.
-     * @callback module:api/RunsV1Api~patchRunCallback
+     * Callback function to receive the result of the runsV1PatchRun operation.
+     * @callback module:api/RunsV1Api~runsV1PatchRunCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1Run} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -2191,30 +2303,30 @@
      * @param {String} project Project where the run will be assigned
      * @param {String} run_uuid UUID
      * @param {module:model/V1Run} body Run object
-     * @param {module:api/RunsV1Api~patchRunCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/RunsV1Api~runsV1PatchRunCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1Run}
      */
-    this.patchRun = function(owner, project, run_uuid, body, callback) {
+    this.runsV1PatchRun = function(owner, project, run_uuid, body, callback) {
       var postBody = body;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling patchRun");
+        throw new Error("Missing the required parameter 'owner' when calling runsV1PatchRun");
       }
 
       // verify the required parameter 'project' is set
       if (project === undefined || project === null) {
-        throw new Error("Missing the required parameter 'project' when calling patchRun");
+        throw new Error("Missing the required parameter 'project' when calling runsV1PatchRun");
       }
 
       // verify the required parameter 'run_uuid' is set
       if (run_uuid === undefined || run_uuid === null) {
-        throw new Error("Missing the required parameter 'run_uuid' when calling patchRun");
+        throw new Error("Missing the required parameter 'run_uuid' when calling runsV1PatchRun");
       }
 
       // verify the required parameter 'body' is set
       if (body === undefined || body === null) {
-        throw new Error("Missing the required parameter 'body' when calling patchRun");
+        throw new Error("Missing the required parameter 'body' when calling runsV1PatchRun");
       }
 
 
@@ -2245,8 +2357,8 @@
     }
 
     /**
-     * Callback function to receive the result of the restartRun operation.
-     * @callback module:api/RunsV1Api~restartRunCallback
+     * Callback function to receive the result of the runsV1RestartRun operation.
+     * @callback module:api/RunsV1Api~runsV1RestartRunCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1Run} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -2258,30 +2370,30 @@
      * @param {String} entity_project Project
      * @param {String} entity_uuid Uuid identifier of the entity
      * @param {module:model/V1Run} body Run object
-     * @param {module:api/RunsV1Api~restartRunCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/RunsV1Api~runsV1RestartRunCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1Run}
      */
-    this.restartRun = function(entity_owner, entity_project, entity_uuid, body, callback) {
+    this.runsV1RestartRun = function(entity_owner, entity_project, entity_uuid, body, callback) {
       var postBody = body;
 
       // verify the required parameter 'entity_owner' is set
       if (entity_owner === undefined || entity_owner === null) {
-        throw new Error("Missing the required parameter 'entity_owner' when calling restartRun");
+        throw new Error("Missing the required parameter 'entity_owner' when calling runsV1RestartRun");
       }
 
       // verify the required parameter 'entity_project' is set
       if (entity_project === undefined || entity_project === null) {
-        throw new Error("Missing the required parameter 'entity_project' when calling restartRun");
+        throw new Error("Missing the required parameter 'entity_project' when calling runsV1RestartRun");
       }
 
       // verify the required parameter 'entity_uuid' is set
       if (entity_uuid === undefined || entity_uuid === null) {
-        throw new Error("Missing the required parameter 'entity_uuid' when calling restartRun");
+        throw new Error("Missing the required parameter 'entity_uuid' when calling runsV1RestartRun");
       }
 
       // verify the required parameter 'body' is set
       if (body === undefined || body === null) {
-        throw new Error("Missing the required parameter 'body' when calling restartRun");
+        throw new Error("Missing the required parameter 'body' when calling runsV1RestartRun");
       }
 
 
@@ -2312,8 +2424,8 @@
     }
 
     /**
-     * Callback function to receive the result of the restoreRun operation.
-     * @callback module:api/RunsV1Api~restoreRunCallback
+     * Callback function to receive the result of the runsV1RestoreRun operation.
+     * @callback module:api/RunsV1Api~runsV1RestoreRunCallback
      * @param {String} error Error message, if any.
      * @param data This operation does not return a value.
      * @param {String} response The complete HTTP response.
@@ -2324,24 +2436,24 @@
      * @param {String} owner Owner of the namespace
      * @param {String} project Project
      * @param {String} uuid Uuid identifier of the entity
-     * @param {module:api/RunsV1Api~restoreRunCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/RunsV1Api~runsV1RestoreRunCallback} callback The callback function, accepting three arguments: error, data, response
      */
-    this.restoreRun = function(owner, project, uuid, callback) {
+    this.runsV1RestoreRun = function(owner, project, uuid, callback) {
       var postBody = null;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling restoreRun");
+        throw new Error("Missing the required parameter 'owner' when calling runsV1RestoreRun");
       }
 
       // verify the required parameter 'project' is set
       if (project === undefined || project === null) {
-        throw new Error("Missing the required parameter 'project' when calling restoreRun");
+        throw new Error("Missing the required parameter 'project' when calling runsV1RestoreRun");
       }
 
       // verify the required parameter 'uuid' is set
       if (uuid === undefined || uuid === null) {
-        throw new Error("Missing the required parameter 'uuid' when calling restoreRun");
+        throw new Error("Missing the required parameter 'uuid' when calling runsV1RestoreRun");
       }
 
 
@@ -2372,8 +2484,8 @@
     }
 
     /**
-     * Callback function to receive the result of the resumeRun operation.
-     * @callback module:api/RunsV1Api~resumeRunCallback
+     * Callback function to receive the result of the runsV1ResumeRun operation.
+     * @callback module:api/RunsV1Api~runsV1ResumeRunCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1Run} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -2385,30 +2497,30 @@
      * @param {String} entity_project Project
      * @param {String} entity_uuid Uuid identifier of the entity
      * @param {module:model/V1Run} body Run object
-     * @param {module:api/RunsV1Api~resumeRunCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/RunsV1Api~runsV1ResumeRunCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1Run}
      */
-    this.resumeRun = function(entity_owner, entity_project, entity_uuid, body, callback) {
+    this.runsV1ResumeRun = function(entity_owner, entity_project, entity_uuid, body, callback) {
       var postBody = body;
 
       // verify the required parameter 'entity_owner' is set
       if (entity_owner === undefined || entity_owner === null) {
-        throw new Error("Missing the required parameter 'entity_owner' when calling resumeRun");
+        throw new Error("Missing the required parameter 'entity_owner' when calling runsV1ResumeRun");
       }
 
       // verify the required parameter 'entity_project' is set
       if (entity_project === undefined || entity_project === null) {
-        throw new Error("Missing the required parameter 'entity_project' when calling resumeRun");
+        throw new Error("Missing the required parameter 'entity_project' when calling runsV1ResumeRun");
       }
 
       // verify the required parameter 'entity_uuid' is set
       if (entity_uuid === undefined || entity_uuid === null) {
-        throw new Error("Missing the required parameter 'entity_uuid' when calling resumeRun");
+        throw new Error("Missing the required parameter 'entity_uuid' when calling runsV1ResumeRun");
       }
 
       // verify the required parameter 'body' is set
       if (body === undefined || body === null) {
-        throw new Error("Missing the required parameter 'body' when calling resumeRun");
+        throw new Error("Missing the required parameter 'body' when calling runsV1ResumeRun");
       }
 
 
@@ -2439,8 +2551,8 @@
     }
 
     /**
-     * Callback function to receive the result of the startRunTensorboard operation.
-     * @callback module:api/RunsV1Api~startRunTensorboardCallback
+     * Callback function to receive the result of the runsV1StartRunTensorboard operation.
+     * @callback module:api/RunsV1Api~runsV1StartRunTensorboardCallback
      * @param {String} error Error message, if any.
      * @param data This operation does not return a value.
      * @param {String} response The complete HTTP response.
@@ -2452,29 +2564,29 @@
      * @param {String} project Project
      * @param {String} uuid Uuid identifier of the entity
      * @param {module:model/V1ProjectEntityResourceRequest} body 
-     * @param {module:api/RunsV1Api~startRunTensorboardCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/RunsV1Api~runsV1StartRunTensorboardCallback} callback The callback function, accepting three arguments: error, data, response
      */
-    this.startRunTensorboard = function(owner, project, uuid, body, callback) {
+    this.runsV1StartRunTensorboard = function(owner, project, uuid, body, callback) {
       var postBody = body;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling startRunTensorboard");
+        throw new Error("Missing the required parameter 'owner' when calling runsV1StartRunTensorboard");
       }
 
       // verify the required parameter 'project' is set
       if (project === undefined || project === null) {
-        throw new Error("Missing the required parameter 'project' when calling startRunTensorboard");
+        throw new Error("Missing the required parameter 'project' when calling runsV1StartRunTensorboard");
       }
 
       // verify the required parameter 'uuid' is set
       if (uuid === undefined || uuid === null) {
-        throw new Error("Missing the required parameter 'uuid' when calling startRunTensorboard");
+        throw new Error("Missing the required parameter 'uuid' when calling runsV1StartRunTensorboard");
       }
 
       // verify the required parameter 'body' is set
       if (body === undefined || body === null) {
-        throw new Error("Missing the required parameter 'body' when calling startRunTensorboard");
+        throw new Error("Missing the required parameter 'body' when calling runsV1StartRunTensorboard");
       }
 
 
@@ -2505,8 +2617,8 @@
     }
 
     /**
-     * Callback function to receive the result of the stopRun operation.
-     * @callback module:api/RunsV1Api~stopRunCallback
+     * Callback function to receive the result of the runsV1StopRun operation.
+     * @callback module:api/RunsV1Api~runsV1StopRunCallback
      * @param {String} error Error message, if any.
      * @param data This operation does not return a value.
      * @param {String} response The complete HTTP response.
@@ -2517,24 +2629,24 @@
      * @param {String} owner Owner of the namespace
      * @param {String} project Project
      * @param {String} uuid Uuid identifier of the entity
-     * @param {module:api/RunsV1Api~stopRunCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/RunsV1Api~runsV1StopRunCallback} callback The callback function, accepting three arguments: error, data, response
      */
-    this.stopRun = function(owner, project, uuid, callback) {
+    this.runsV1StopRun = function(owner, project, uuid, callback) {
       var postBody = null;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling stopRun");
+        throw new Error("Missing the required parameter 'owner' when calling runsV1StopRun");
       }
 
       // verify the required parameter 'project' is set
       if (project === undefined || project === null) {
-        throw new Error("Missing the required parameter 'project' when calling stopRun");
+        throw new Error("Missing the required parameter 'project' when calling runsV1StopRun");
       }
 
       // verify the required parameter 'uuid' is set
       if (uuid === undefined || uuid === null) {
-        throw new Error("Missing the required parameter 'uuid' when calling stopRun");
+        throw new Error("Missing the required parameter 'uuid' when calling runsV1StopRun");
       }
 
 
@@ -2565,8 +2677,8 @@
     }
 
     /**
-     * Callback function to receive the result of the stopRunTensorboard operation.
-     * @callback module:api/RunsV1Api~stopRunTensorboardCallback
+     * Callback function to receive the result of the runsV1StopRunTensorboard operation.
+     * @callback module:api/RunsV1Api~runsV1StopRunTensorboardCallback
      * @param {String} error Error message, if any.
      * @param data This operation does not return a value.
      * @param {String} response The complete HTTP response.
@@ -2577,24 +2689,24 @@
      * @param {String} owner Owner of the namespace
      * @param {String} project Project
      * @param {String} uuid Uuid identifier of the entity
-     * @param {module:api/RunsV1Api~stopRunTensorboardCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/RunsV1Api~runsV1StopRunTensorboardCallback} callback The callback function, accepting three arguments: error, data, response
      */
-    this.stopRunTensorboard = function(owner, project, uuid, callback) {
+    this.runsV1StopRunTensorboard = function(owner, project, uuid, callback) {
       var postBody = null;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling stopRunTensorboard");
+        throw new Error("Missing the required parameter 'owner' when calling runsV1StopRunTensorboard");
       }
 
       // verify the required parameter 'project' is set
       if (project === undefined || project === null) {
-        throw new Error("Missing the required parameter 'project' when calling stopRunTensorboard");
+        throw new Error("Missing the required parameter 'project' when calling runsV1StopRunTensorboard");
       }
 
       // verify the required parameter 'uuid' is set
       if (uuid === undefined || uuid === null) {
-        throw new Error("Missing the required parameter 'uuid' when calling stopRunTensorboard");
+        throw new Error("Missing the required parameter 'uuid' when calling runsV1StopRunTensorboard");
       }
 
 
@@ -2625,8 +2737,8 @@
     }
 
     /**
-     * Callback function to receive the result of the stopRuns operation.
-     * @callback module:api/RunsV1Api~stopRunsCallback
+     * Callback function to receive the result of the runsV1StopRuns operation.
+     * @callback module:api/RunsV1Api~runsV1StopRunsCallback
      * @param {String} error Error message, if any.
      * @param data This operation does not return a value.
      * @param {String} response The complete HTTP response.
@@ -2637,24 +2749,24 @@
      * @param {String} owner Owner of the namespace
      * @param {String} project Project under namesapce
      * @param {module:model/V1Uuids} body Uuids of the entities
-     * @param {module:api/RunsV1Api~stopRunsCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/RunsV1Api~runsV1StopRunsCallback} callback The callback function, accepting three arguments: error, data, response
      */
-    this.stopRuns = function(owner, project, body, callback) {
+    this.runsV1StopRuns = function(owner, project, body, callback) {
       var postBody = body;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling stopRuns");
+        throw new Error("Missing the required parameter 'owner' when calling runsV1StopRuns");
       }
 
       // verify the required parameter 'project' is set
       if (project === undefined || project === null) {
-        throw new Error("Missing the required parameter 'project' when calling stopRuns");
+        throw new Error("Missing the required parameter 'project' when calling runsV1StopRuns");
       }
 
       // verify the required parameter 'body' is set
       if (body === undefined || body === null) {
-        throw new Error("Missing the required parameter 'body' when calling stopRuns");
+        throw new Error("Missing the required parameter 'body' when calling runsV1StopRuns");
       }
 
 
@@ -2684,8 +2796,67 @@
     }
 
     /**
-     * Callback function to receive the result of the unbookmarkRun operation.
-     * @callback module:api/RunsV1Api~unbookmarkRunCallback
+     * Callback function to receive the result of the runsV1TagRuns operation.
+     * @callback module:api/RunsV1Api~runsV1TagRunsCallback
+     * @param {String} error Error message, if any.
+     * @param data This operation does not return a value.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * Tag runs
+     * @param {String} owner Owner of the namespace
+     * @param {String} project Project under namesapce
+     * @param {module:model/V1Uuids} body Uuids of the entities
+     * @param {module:api/RunsV1Api~runsV1TagRunsCallback} callback The callback function, accepting three arguments: error, data, response
+     */
+    this.runsV1TagRuns = function(owner, project, body, callback) {
+      var postBody = body;
+
+      // verify the required parameter 'owner' is set
+      if (owner === undefined || owner === null) {
+        throw new Error("Missing the required parameter 'owner' when calling runsV1TagRuns");
+      }
+
+      // verify the required parameter 'project' is set
+      if (project === undefined || project === null) {
+        throw new Error("Missing the required parameter 'project' when calling runsV1TagRuns");
+      }
+
+      // verify the required parameter 'body' is set
+      if (body === undefined || body === null) {
+        throw new Error("Missing the required parameter 'body' when calling runsV1TagRuns");
+      }
+
+
+      var pathParams = {
+        'owner': owner,
+        'project': project
+      };
+      var queryParams = {
+      };
+      var collectionQueryParams = {
+      };
+      var headerParams = {
+      };
+      var formParams = {
+      };
+
+      var authNames = ['ApiKey'];
+      var contentTypes = ['application/json'];
+      var accepts = ['application/json'];
+      var returnType = null;
+
+      return this.apiClient.callApi(
+        '/api/v1/{owner}/{project}/runs/tag', 'POST',
+        pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
+
+    /**
+     * Callback function to receive the result of the runsV1UnbookmarkRun operation.
+     * @callback module:api/RunsV1Api~runsV1UnbookmarkRunCallback
      * @param {String} error Error message, if any.
      * @param data This operation does not return a value.
      * @param {String} response The complete HTTP response.
@@ -2696,24 +2867,24 @@
      * @param {String} owner Owner of the namespace
      * @param {String} project Project
      * @param {String} uuid Uuid identifier of the entity
-     * @param {module:api/RunsV1Api~unbookmarkRunCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/RunsV1Api~runsV1UnbookmarkRunCallback} callback The callback function, accepting three arguments: error, data, response
      */
-    this.unbookmarkRun = function(owner, project, uuid, callback) {
+    this.runsV1UnbookmarkRun = function(owner, project, uuid, callback) {
       var postBody = null;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling unbookmarkRun");
+        throw new Error("Missing the required parameter 'owner' when calling runsV1UnbookmarkRun");
       }
 
       // verify the required parameter 'project' is set
       if (project === undefined || project === null) {
-        throw new Error("Missing the required parameter 'project' when calling unbookmarkRun");
+        throw new Error("Missing the required parameter 'project' when calling runsV1UnbookmarkRun");
       }
 
       // verify the required parameter 'uuid' is set
       if (uuid === undefined || uuid === null) {
-        throw new Error("Missing the required parameter 'uuid' when calling unbookmarkRun");
+        throw new Error("Missing the required parameter 'uuid' when calling runsV1UnbookmarkRun");
       }
 
 
@@ -2744,8 +2915,8 @@
     }
 
     /**
-     * Callback function to receive the result of the updateRun operation.
-     * @callback module:api/RunsV1Api~updateRunCallback
+     * Callback function to receive the result of the runsV1UpdateRun operation.
+     * @callback module:api/RunsV1Api~runsV1UpdateRunCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1Run} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -2757,30 +2928,30 @@
      * @param {String} project Project where the run will be assigned
      * @param {String} run_uuid UUID
      * @param {module:model/V1Run} body Run object
-     * @param {module:api/RunsV1Api~updateRunCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/RunsV1Api~runsV1UpdateRunCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1Run}
      */
-    this.updateRun = function(owner, project, run_uuid, body, callback) {
+    this.runsV1UpdateRun = function(owner, project, run_uuid, body, callback) {
       var postBody = body;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling updateRun");
+        throw new Error("Missing the required parameter 'owner' when calling runsV1UpdateRun");
       }
 
       // verify the required parameter 'project' is set
       if (project === undefined || project === null) {
-        throw new Error("Missing the required parameter 'project' when calling updateRun");
+        throw new Error("Missing the required parameter 'project' when calling runsV1UpdateRun");
       }
 
       // verify the required parameter 'run_uuid' is set
       if (run_uuid === undefined || run_uuid === null) {
-        throw new Error("Missing the required parameter 'run_uuid' when calling updateRun");
+        throw new Error("Missing the required parameter 'run_uuid' when calling runsV1UpdateRun");
       }
 
       // verify the required parameter 'body' is set
       if (body === undefined || body === null) {
-        throw new Error("Missing the required parameter 'body' when calling updateRun");
+        throw new Error("Missing the required parameter 'body' when calling runsV1UpdateRun");
       }
 
 

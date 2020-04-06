@@ -39,53 +39,53 @@ type Client struct {
 
 // ClientService is the interface for Client methods
 type ClientService interface {
-	CreateOrganization(params *CreateOrganizationParams, authInfo runtime.ClientAuthInfoWriter) (*CreateOrganizationOK, *CreateOrganizationNoContent, error)
+	OrganizationsV1CreateOrganization(params *OrganizationsV1CreateOrganizationParams, authInfo runtime.ClientAuthInfoWriter) (*OrganizationsV1CreateOrganizationOK, *OrganizationsV1CreateOrganizationNoContent, error)
 
-	CreateOrganizationMember(params *CreateOrganizationMemberParams, authInfo runtime.ClientAuthInfoWriter) (*CreateOrganizationMemberOK, *CreateOrganizationMemberNoContent, error)
+	OrganizationsV1CreateOrganizationMember(params *OrganizationsV1CreateOrganizationMemberParams, authInfo runtime.ClientAuthInfoWriter) (*OrganizationsV1CreateOrganizationMemberOK, *OrganizationsV1CreateOrganizationMemberNoContent, error)
 
-	DeleteOrganization(params *DeleteOrganizationParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteOrganizationOK, *DeleteOrganizationNoContent, error)
+	OrganizationsV1DeleteOrganization(params *OrganizationsV1DeleteOrganizationParams, authInfo runtime.ClientAuthInfoWriter) (*OrganizationsV1DeleteOrganizationOK, *OrganizationsV1DeleteOrganizationNoContent, error)
 
-	DeleteOrganizationMember(params *DeleteOrganizationMemberParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteOrganizationMemberOK, *DeleteOrganizationMemberNoContent, error)
+	OrganizationsV1DeleteOrganizationMember(params *OrganizationsV1DeleteOrganizationMemberParams, authInfo runtime.ClientAuthInfoWriter) (*OrganizationsV1DeleteOrganizationMemberOK, *OrganizationsV1DeleteOrganizationMemberNoContent, error)
 
-	GetOrganization(params *GetOrganizationParams, authInfo runtime.ClientAuthInfoWriter) (*GetOrganizationOK, *GetOrganizationNoContent, error)
+	OrganizationsV1GetOrganization(params *OrganizationsV1GetOrganizationParams, authInfo runtime.ClientAuthInfoWriter) (*OrganizationsV1GetOrganizationOK, *OrganizationsV1GetOrganizationNoContent, error)
 
-	GetOrganizationMember(params *GetOrganizationMemberParams, authInfo runtime.ClientAuthInfoWriter) (*GetOrganizationMemberOK, *GetOrganizationMemberNoContent, error)
+	OrganizationsV1GetOrganizationMember(params *OrganizationsV1GetOrganizationMemberParams, authInfo runtime.ClientAuthInfoWriter) (*OrganizationsV1GetOrganizationMemberOK, *OrganizationsV1GetOrganizationMemberNoContent, error)
 
-	ListOrganizationMembers(params *ListOrganizationMembersParams, authInfo runtime.ClientAuthInfoWriter) (*ListOrganizationMembersOK, *ListOrganizationMembersNoContent, error)
+	OrganizationsV1ListOrganizationMembers(params *OrganizationsV1ListOrganizationMembersParams, authInfo runtime.ClientAuthInfoWriter) (*OrganizationsV1ListOrganizationMembersOK, *OrganizationsV1ListOrganizationMembersNoContent, error)
 
-	ListOrganizationNames(params *ListOrganizationNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListOrganizationNamesOK, *ListOrganizationNamesNoContent, error)
+	OrganizationsV1ListOrganizationNames(params *OrganizationsV1ListOrganizationNamesParams, authInfo runtime.ClientAuthInfoWriter) (*OrganizationsV1ListOrganizationNamesOK, *OrganizationsV1ListOrganizationNamesNoContent, error)
 
-	ListOrganizations(params *ListOrganizationsParams, authInfo runtime.ClientAuthInfoWriter) (*ListOrganizationsOK, *ListOrganizationsNoContent, error)
+	OrganizationsV1ListOrganizations(params *OrganizationsV1ListOrganizationsParams, authInfo runtime.ClientAuthInfoWriter) (*OrganizationsV1ListOrganizationsOK, *OrganizationsV1ListOrganizationsNoContent, error)
 
-	PatchOrganization(params *PatchOrganizationParams, authInfo runtime.ClientAuthInfoWriter) (*PatchOrganizationOK, *PatchOrganizationNoContent, error)
+	OrganizationsV1PatchOrganization(params *OrganizationsV1PatchOrganizationParams, authInfo runtime.ClientAuthInfoWriter) (*OrganizationsV1PatchOrganizationOK, *OrganizationsV1PatchOrganizationNoContent, error)
 
-	PatchOrganizationMember(params *PatchOrganizationMemberParams, authInfo runtime.ClientAuthInfoWriter) (*PatchOrganizationMemberOK, *PatchOrganizationMemberNoContent, error)
+	OrganizationsV1PatchOrganizationMember(params *OrganizationsV1PatchOrganizationMemberParams, authInfo runtime.ClientAuthInfoWriter) (*OrganizationsV1PatchOrganizationMemberOK, *OrganizationsV1PatchOrganizationMemberNoContent, error)
 
-	UpdateOrganization(params *UpdateOrganizationParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateOrganizationOK, *UpdateOrganizationNoContent, error)
+	OrganizationsV1UpdateOrganization(params *OrganizationsV1UpdateOrganizationParams, authInfo runtime.ClientAuthInfoWriter) (*OrganizationsV1UpdateOrganizationOK, *OrganizationsV1UpdateOrganizationNoContent, error)
 
-	UpdateOrganizationMember(params *UpdateOrganizationMemberParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateOrganizationMemberOK, *UpdateOrganizationMemberNoContent, error)
+	OrganizationsV1UpdateOrganizationMember(params *OrganizationsV1UpdateOrganizationMemberParams, authInfo runtime.ClientAuthInfoWriter) (*OrganizationsV1UpdateOrganizationMemberOK, *OrganizationsV1UpdateOrganizationMemberNoContent, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
 
 /*
-  CreateOrganization create organization API
+  OrganizationsV1CreateOrganization organizations v1 create organization API
 */
-func (a *Client) CreateOrganization(params *CreateOrganizationParams, authInfo runtime.ClientAuthInfoWriter) (*CreateOrganizationOK, *CreateOrganizationNoContent, error) {
+func (a *Client) OrganizationsV1CreateOrganization(params *OrganizationsV1CreateOrganizationParams, authInfo runtime.ClientAuthInfoWriter) (*OrganizationsV1CreateOrganizationOK, *OrganizationsV1CreateOrganizationNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewCreateOrganizationParams()
+		params = NewOrganizationsV1CreateOrganizationParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "CreateOrganization",
+		ID:                 "OrganizationsV1_CreateOrganization",
 		Method:             "POST",
 		PathPattern:        "/api/v1/orgs/create",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &CreateOrganizationReader{formats: a.formats},
+		Reader:             &OrganizationsV1CreateOrganizationReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -94,34 +94,34 @@ func (a *Client) CreateOrganization(params *CreateOrganizationParams, authInfo r
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *CreateOrganizationOK:
+	case *OrganizationsV1CreateOrganizationOK:
 		return value, nil, nil
-	case *CreateOrganizationNoContent:
+	case *OrganizationsV1CreateOrganizationNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*CreateOrganizationDefault)
+	unexpectedSuccess := result.(*OrganizationsV1CreateOrganizationDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  CreateOrganizationMember create organization member API
+  OrganizationsV1CreateOrganizationMember organizations v1 create organization member API
 */
-func (a *Client) CreateOrganizationMember(params *CreateOrganizationMemberParams, authInfo runtime.ClientAuthInfoWriter) (*CreateOrganizationMemberOK, *CreateOrganizationMemberNoContent, error) {
+func (a *Client) OrganizationsV1CreateOrganizationMember(params *OrganizationsV1CreateOrganizationMemberParams, authInfo runtime.ClientAuthInfoWriter) (*OrganizationsV1CreateOrganizationMemberOK, *OrganizationsV1CreateOrganizationMemberNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewCreateOrganizationMemberParams()
+		params = NewOrganizationsV1CreateOrganizationMemberParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "CreateOrganizationMember",
+		ID:                 "OrganizationsV1_CreateOrganizationMember",
 		Method:             "POST",
 		PathPattern:        "/api/v1/orgs/{owner}/members",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &CreateOrganizationMemberReader{formats: a.formats},
+		Reader:             &OrganizationsV1CreateOrganizationMemberReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -130,34 +130,34 @@ func (a *Client) CreateOrganizationMember(params *CreateOrganizationMemberParams
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *CreateOrganizationMemberOK:
+	case *OrganizationsV1CreateOrganizationMemberOK:
 		return value, nil, nil
-	case *CreateOrganizationMemberNoContent:
+	case *OrganizationsV1CreateOrganizationMemberNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*CreateOrganizationMemberDefault)
+	unexpectedSuccess := result.(*OrganizationsV1CreateOrganizationMemberDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  DeleteOrganization delete organization API
+  OrganizationsV1DeleteOrganization organizations v1 delete organization API
 */
-func (a *Client) DeleteOrganization(params *DeleteOrganizationParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteOrganizationOK, *DeleteOrganizationNoContent, error) {
+func (a *Client) OrganizationsV1DeleteOrganization(params *OrganizationsV1DeleteOrganizationParams, authInfo runtime.ClientAuthInfoWriter) (*OrganizationsV1DeleteOrganizationOK, *OrganizationsV1DeleteOrganizationNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewDeleteOrganizationParams()
+		params = NewOrganizationsV1DeleteOrganizationParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "DeleteOrganization",
+		ID:                 "OrganizationsV1_DeleteOrganization",
 		Method:             "DELETE",
 		PathPattern:        "/api/v1/orgs/{owner}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &DeleteOrganizationReader{formats: a.formats},
+		Reader:             &OrganizationsV1DeleteOrganizationReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -166,34 +166,34 @@ func (a *Client) DeleteOrganization(params *DeleteOrganizationParams, authInfo r
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *DeleteOrganizationOK:
+	case *OrganizationsV1DeleteOrganizationOK:
 		return value, nil, nil
-	case *DeleteOrganizationNoContent:
+	case *OrganizationsV1DeleteOrganizationNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*DeleteOrganizationDefault)
+	unexpectedSuccess := result.(*OrganizationsV1DeleteOrganizationDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  DeleteOrganizationMember delete organization member API
+  OrganizationsV1DeleteOrganizationMember organizations v1 delete organization member API
 */
-func (a *Client) DeleteOrganizationMember(params *DeleteOrganizationMemberParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteOrganizationMemberOK, *DeleteOrganizationMemberNoContent, error) {
+func (a *Client) OrganizationsV1DeleteOrganizationMember(params *OrganizationsV1DeleteOrganizationMemberParams, authInfo runtime.ClientAuthInfoWriter) (*OrganizationsV1DeleteOrganizationMemberOK, *OrganizationsV1DeleteOrganizationMemberNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewDeleteOrganizationMemberParams()
+		params = NewOrganizationsV1DeleteOrganizationMemberParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "DeleteOrganizationMember",
+		ID:                 "OrganizationsV1_DeleteOrganizationMember",
 		Method:             "DELETE",
 		PathPattern:        "/api/v1/orgs/{owner}/members/{user}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &DeleteOrganizationMemberReader{formats: a.formats},
+		Reader:             &OrganizationsV1DeleteOrganizationMemberReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -202,34 +202,34 @@ func (a *Client) DeleteOrganizationMember(params *DeleteOrganizationMemberParams
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *DeleteOrganizationMemberOK:
+	case *OrganizationsV1DeleteOrganizationMemberOK:
 		return value, nil, nil
-	case *DeleteOrganizationMemberNoContent:
+	case *OrganizationsV1DeleteOrganizationMemberNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*DeleteOrganizationMemberDefault)
+	unexpectedSuccess := result.(*OrganizationsV1DeleteOrganizationMemberDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  GetOrganization get organization API
+  OrganizationsV1GetOrganization organizations v1 get organization API
 */
-func (a *Client) GetOrganization(params *GetOrganizationParams, authInfo runtime.ClientAuthInfoWriter) (*GetOrganizationOK, *GetOrganizationNoContent, error) {
+func (a *Client) OrganizationsV1GetOrganization(params *OrganizationsV1GetOrganizationParams, authInfo runtime.ClientAuthInfoWriter) (*OrganizationsV1GetOrganizationOK, *OrganizationsV1GetOrganizationNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewGetOrganizationParams()
+		params = NewOrganizationsV1GetOrganizationParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "GetOrganization",
+		ID:                 "OrganizationsV1_GetOrganization",
 		Method:             "GET",
 		PathPattern:        "/api/v1/orgs/{owner}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &GetOrganizationReader{formats: a.formats},
+		Reader:             &OrganizationsV1GetOrganizationReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -238,34 +238,34 @@ func (a *Client) GetOrganization(params *GetOrganizationParams, authInfo runtime
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *GetOrganizationOK:
+	case *OrganizationsV1GetOrganizationOK:
 		return value, nil, nil
-	case *GetOrganizationNoContent:
+	case *OrganizationsV1GetOrganizationNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*GetOrganizationDefault)
+	unexpectedSuccess := result.(*OrganizationsV1GetOrganizationDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  GetOrganizationMember get organization member API
+  OrganizationsV1GetOrganizationMember organizations v1 get organization member API
 */
-func (a *Client) GetOrganizationMember(params *GetOrganizationMemberParams, authInfo runtime.ClientAuthInfoWriter) (*GetOrganizationMemberOK, *GetOrganizationMemberNoContent, error) {
+func (a *Client) OrganizationsV1GetOrganizationMember(params *OrganizationsV1GetOrganizationMemberParams, authInfo runtime.ClientAuthInfoWriter) (*OrganizationsV1GetOrganizationMemberOK, *OrganizationsV1GetOrganizationMemberNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewGetOrganizationMemberParams()
+		params = NewOrganizationsV1GetOrganizationMemberParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "GetOrganizationMember",
+		ID:                 "OrganizationsV1_GetOrganizationMember",
 		Method:             "GET",
 		PathPattern:        "/api/v1/orgs/{owner}/members/{user}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &GetOrganizationMemberReader{formats: a.formats},
+		Reader:             &OrganizationsV1GetOrganizationMemberReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -274,34 +274,34 @@ func (a *Client) GetOrganizationMember(params *GetOrganizationMemberParams, auth
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *GetOrganizationMemberOK:
+	case *OrganizationsV1GetOrganizationMemberOK:
 		return value, nil, nil
-	case *GetOrganizationMemberNoContent:
+	case *OrganizationsV1GetOrganizationMemberNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*GetOrganizationMemberDefault)
+	unexpectedSuccess := result.(*OrganizationsV1GetOrganizationMemberDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  ListOrganizationMembers list organization members API
+  OrganizationsV1ListOrganizationMembers organizations v1 list organization members API
 */
-func (a *Client) ListOrganizationMembers(params *ListOrganizationMembersParams, authInfo runtime.ClientAuthInfoWriter) (*ListOrganizationMembersOK, *ListOrganizationMembersNoContent, error) {
+func (a *Client) OrganizationsV1ListOrganizationMembers(params *OrganizationsV1ListOrganizationMembersParams, authInfo runtime.ClientAuthInfoWriter) (*OrganizationsV1ListOrganizationMembersOK, *OrganizationsV1ListOrganizationMembersNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewListOrganizationMembersParams()
+		params = NewOrganizationsV1ListOrganizationMembersParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "ListOrganizationMembers",
+		ID:                 "OrganizationsV1_ListOrganizationMembers",
 		Method:             "GET",
 		PathPattern:        "/api/v1/orgs/{owner}/members",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &ListOrganizationMembersReader{formats: a.formats},
+		Reader:             &OrganizationsV1ListOrganizationMembersReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -310,34 +310,34 @@ func (a *Client) ListOrganizationMembers(params *ListOrganizationMembersParams, 
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *ListOrganizationMembersOK:
+	case *OrganizationsV1ListOrganizationMembersOK:
 		return value, nil, nil
-	case *ListOrganizationMembersNoContent:
+	case *OrganizationsV1ListOrganizationMembersNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*ListOrganizationMembersDefault)
+	unexpectedSuccess := result.(*OrganizationsV1ListOrganizationMembersDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  ListOrganizationNames gets versions
+  OrganizationsV1ListOrganizationNames gets versions
 */
-func (a *Client) ListOrganizationNames(params *ListOrganizationNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListOrganizationNamesOK, *ListOrganizationNamesNoContent, error) {
+func (a *Client) OrganizationsV1ListOrganizationNames(params *OrganizationsV1ListOrganizationNamesParams, authInfo runtime.ClientAuthInfoWriter) (*OrganizationsV1ListOrganizationNamesOK, *OrganizationsV1ListOrganizationNamesNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewListOrganizationNamesParams()
+		params = NewOrganizationsV1ListOrganizationNamesParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "ListOrganizationNames",
+		ID:                 "OrganizationsV1_ListOrganizationNames",
 		Method:             "GET",
 		PathPattern:        "/api/v1/orgs/names",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &ListOrganizationNamesReader{formats: a.formats},
+		Reader:             &OrganizationsV1ListOrganizationNamesReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -346,34 +346,34 @@ func (a *Client) ListOrganizationNames(params *ListOrganizationNamesParams, auth
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *ListOrganizationNamesOK:
+	case *OrganizationsV1ListOrganizationNamesOK:
 		return value, nil, nil
-	case *ListOrganizationNamesNoContent:
+	case *OrganizationsV1ListOrganizationNamesNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*ListOrganizationNamesDefault)
+	unexpectedSuccess := result.(*OrganizationsV1ListOrganizationNamesDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  ListOrganizations gets log handler
+  OrganizationsV1ListOrganizations gets log handler
 */
-func (a *Client) ListOrganizations(params *ListOrganizationsParams, authInfo runtime.ClientAuthInfoWriter) (*ListOrganizationsOK, *ListOrganizationsNoContent, error) {
+func (a *Client) OrganizationsV1ListOrganizations(params *OrganizationsV1ListOrganizationsParams, authInfo runtime.ClientAuthInfoWriter) (*OrganizationsV1ListOrganizationsOK, *OrganizationsV1ListOrganizationsNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewListOrganizationsParams()
+		params = NewOrganizationsV1ListOrganizationsParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "ListOrganizations",
+		ID:                 "OrganizationsV1_ListOrganizations",
 		Method:             "GET",
 		PathPattern:        "/api/v1/orgs/list",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &ListOrganizationsReader{formats: a.formats},
+		Reader:             &OrganizationsV1ListOrganizationsReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -382,34 +382,34 @@ func (a *Client) ListOrganizations(params *ListOrganizationsParams, authInfo run
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *ListOrganizationsOK:
+	case *OrganizationsV1ListOrganizationsOK:
 		return value, nil, nil
-	case *ListOrganizationsNoContent:
+	case *OrganizationsV1ListOrganizationsNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*ListOrganizationsDefault)
+	unexpectedSuccess := result.(*OrganizationsV1ListOrganizationsDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  PatchOrganization patch organization API
+  OrganizationsV1PatchOrganization organizations v1 patch organization API
 */
-func (a *Client) PatchOrganization(params *PatchOrganizationParams, authInfo runtime.ClientAuthInfoWriter) (*PatchOrganizationOK, *PatchOrganizationNoContent, error) {
+func (a *Client) OrganizationsV1PatchOrganization(params *OrganizationsV1PatchOrganizationParams, authInfo runtime.ClientAuthInfoWriter) (*OrganizationsV1PatchOrganizationOK, *OrganizationsV1PatchOrganizationNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewPatchOrganizationParams()
+		params = NewOrganizationsV1PatchOrganizationParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "PatchOrganization",
+		ID:                 "OrganizationsV1_PatchOrganization",
 		Method:             "PATCH",
 		PathPattern:        "/api/v1/orgs/{owner}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &PatchOrganizationReader{formats: a.formats},
+		Reader:             &OrganizationsV1PatchOrganizationReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -418,34 +418,34 @@ func (a *Client) PatchOrganization(params *PatchOrganizationParams, authInfo run
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *PatchOrganizationOK:
+	case *OrganizationsV1PatchOrganizationOK:
 		return value, nil, nil
-	case *PatchOrganizationNoContent:
+	case *OrganizationsV1PatchOrganizationNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*PatchOrganizationDefault)
+	unexpectedSuccess := result.(*OrganizationsV1PatchOrganizationDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  PatchOrganizationMember patch organization member API
+  OrganizationsV1PatchOrganizationMember organizations v1 patch organization member API
 */
-func (a *Client) PatchOrganizationMember(params *PatchOrganizationMemberParams, authInfo runtime.ClientAuthInfoWriter) (*PatchOrganizationMemberOK, *PatchOrganizationMemberNoContent, error) {
+func (a *Client) OrganizationsV1PatchOrganizationMember(params *OrganizationsV1PatchOrganizationMemberParams, authInfo runtime.ClientAuthInfoWriter) (*OrganizationsV1PatchOrganizationMemberOK, *OrganizationsV1PatchOrganizationMemberNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewPatchOrganizationMemberParams()
+		params = NewOrganizationsV1PatchOrganizationMemberParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "PatchOrganizationMember",
+		ID:                 "OrganizationsV1_PatchOrganizationMember",
 		Method:             "PATCH",
 		PathPattern:        "/api/v1/orgs/{owner}/members/{member.user}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &PatchOrganizationMemberReader{formats: a.formats},
+		Reader:             &OrganizationsV1PatchOrganizationMemberReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -454,34 +454,34 @@ func (a *Client) PatchOrganizationMember(params *PatchOrganizationMemberParams, 
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *PatchOrganizationMemberOK:
+	case *OrganizationsV1PatchOrganizationMemberOK:
 		return value, nil, nil
-	case *PatchOrganizationMemberNoContent:
+	case *OrganizationsV1PatchOrganizationMemberNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*PatchOrganizationMemberDefault)
+	unexpectedSuccess := result.(*OrganizationsV1PatchOrganizationMemberDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  UpdateOrganization update organization API
+  OrganizationsV1UpdateOrganization organizations v1 update organization API
 */
-func (a *Client) UpdateOrganization(params *UpdateOrganizationParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateOrganizationOK, *UpdateOrganizationNoContent, error) {
+func (a *Client) OrganizationsV1UpdateOrganization(params *OrganizationsV1UpdateOrganizationParams, authInfo runtime.ClientAuthInfoWriter) (*OrganizationsV1UpdateOrganizationOK, *OrganizationsV1UpdateOrganizationNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewUpdateOrganizationParams()
+		params = NewOrganizationsV1UpdateOrganizationParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "UpdateOrganization",
+		ID:                 "OrganizationsV1_UpdateOrganization",
 		Method:             "PUT",
 		PathPattern:        "/api/v1/orgs/{owner}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &UpdateOrganizationReader{formats: a.formats},
+		Reader:             &OrganizationsV1UpdateOrganizationReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -490,34 +490,34 @@ func (a *Client) UpdateOrganization(params *UpdateOrganizationParams, authInfo r
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *UpdateOrganizationOK:
+	case *OrganizationsV1UpdateOrganizationOK:
 		return value, nil, nil
-	case *UpdateOrganizationNoContent:
+	case *OrganizationsV1UpdateOrganizationNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*UpdateOrganizationDefault)
+	unexpectedSuccess := result.(*OrganizationsV1UpdateOrganizationDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  UpdateOrganizationMember update organization member API
+  OrganizationsV1UpdateOrganizationMember organizations v1 update organization member API
 */
-func (a *Client) UpdateOrganizationMember(params *UpdateOrganizationMemberParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateOrganizationMemberOK, *UpdateOrganizationMemberNoContent, error) {
+func (a *Client) OrganizationsV1UpdateOrganizationMember(params *OrganizationsV1UpdateOrganizationMemberParams, authInfo runtime.ClientAuthInfoWriter) (*OrganizationsV1UpdateOrganizationMemberOK, *OrganizationsV1UpdateOrganizationMemberNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewUpdateOrganizationMemberParams()
+		params = NewOrganizationsV1UpdateOrganizationMemberParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "UpdateOrganizationMember",
+		ID:                 "OrganizationsV1_UpdateOrganizationMember",
 		Method:             "PUT",
 		PathPattern:        "/api/v1/orgs/{owner}/members/{member.user}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &UpdateOrganizationMemberReader{formats: a.formats},
+		Reader:             &OrganizationsV1UpdateOrganizationMemberReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -526,13 +526,13 @@ func (a *Client) UpdateOrganizationMember(params *UpdateOrganizationMemberParams
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *UpdateOrganizationMemberOK:
+	case *OrganizationsV1UpdateOrganizationMemberOK:
 		return value, nil, nil
-	case *UpdateOrganizationMemberNoContent:
+	case *OrganizationsV1UpdateOrganizationMemberNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*UpdateOrganizationMemberDefault)
+	unexpectedSuccess := result.(*OrganizationsV1UpdateOrganizationMemberDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 

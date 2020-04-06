@@ -45,50 +45,50 @@ class TestHubModelsV1Api(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def test_create_hub_model(self):
-        """Test case for create_hub_model
+    def test_hub_models_v1_create_hub_model(self):
+        """Test case for hub_models_v1_create_hub_model
 
         Create dashboard  # noqa: E501
         """
         pass
 
-    def test_delete_hub_model(self):
-        """Test case for delete_hub_model
+    def test_hub_models_v1_delete_hub_model(self):
+        """Test case for hub_models_v1_delete_hub_model
 
         Delete dashboard  # noqa: E501
         """
         pass
 
-    def test_get_hub_model(self):
-        """Test case for get_hub_model
+    def test_hub_models_v1_get_hub_model(self):
+        """Test case for hub_models_v1_get_hub_model
 
         Get dashboard  # noqa: E501
         """
         pass
 
-    def test_list_hub_model_names(self):
-        """Test case for list_hub_model_names
+    def test_hub_models_v1_list_hub_model_names(self):
+        """Test case for hub_models_v1_list_hub_model_names
 
         List dashboard names  # noqa: E501
         """
         pass
 
-    def test_list_hub_models(self):
-        """Test case for list_hub_models
+    def test_hub_models_v1_list_hub_models(self):
+        """Test case for hub_models_v1_list_hub_models
 
         List dashboards  # noqa: E501
         """
         pass
 
-    def test_patch_hub_model(self):
-        """Test case for patch_hub_model
+    def test_hub_models_v1_patch_hub_model(self):
+        """Test case for hub_models_v1_patch_hub_model
 
         Patch dashboard  # noqa: E501
         """
         pass
 
-    def test_update_hub_model(self):
-        """Test case for update_hub_model
+    def test_hub_models_v1_update_hub_model(self):
+        """Test case for hub_models_v1_update_hub_model
 
         Update dashboard  # noqa: E501
         """

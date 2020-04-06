@@ -63,8 +63,8 @@
 
 
     /**
-     * Callback function to receive the result of the createTeam operation.
-     * @callback module:api/TeamsV1Api~createTeamCallback
+     * Callback function to receive the result of the teamsV1CreateTeam operation.
+     * @callback module:api/TeamsV1Api~teamsV1CreateTeamCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1Team} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -74,20 +74,20 @@
      * Create organization
      * @param {String} owner Owner of the namespace
      * @param {module:model/V1Team} body Team body
-     * @param {module:api/TeamsV1Api~createTeamCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/TeamsV1Api~teamsV1CreateTeamCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1Team}
      */
-    this.createTeam = function(owner, body, callback) {
+    this.teamsV1CreateTeam = function(owner, body, callback) {
       var postBody = body;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling createTeam");
+        throw new Error("Missing the required parameter 'owner' when calling teamsV1CreateTeam");
       }
 
       // verify the required parameter 'body' is set
       if (body === undefined || body === null) {
-        throw new Error("Missing the required parameter 'body' when calling createTeam");
+        throw new Error("Missing the required parameter 'body' when calling teamsV1CreateTeam");
       }
 
 
@@ -116,8 +116,8 @@
     }
 
     /**
-     * Callback function to receive the result of the createTeamMember operation.
-     * @callback module:api/TeamsV1Api~createTeamMemberCallback
+     * Callback function to receive the result of the teamsV1CreateTeamMember operation.
+     * @callback module:api/TeamsV1Api~teamsV1CreateTeamMemberCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1TeamMember} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -128,25 +128,25 @@
      * @param {String} owner Owner of the namespace
      * @param {String} team Team
      * @param {module:model/V1TeamMember} body Team body
-     * @param {module:api/TeamsV1Api~createTeamMemberCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/TeamsV1Api~teamsV1CreateTeamMemberCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1TeamMember}
      */
-    this.createTeamMember = function(owner, team, body, callback) {
+    this.teamsV1CreateTeamMember = function(owner, team, body, callback) {
       var postBody = body;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling createTeamMember");
+        throw new Error("Missing the required parameter 'owner' when calling teamsV1CreateTeamMember");
       }
 
       // verify the required parameter 'team' is set
       if (team === undefined || team === null) {
-        throw new Error("Missing the required parameter 'team' when calling createTeamMember");
+        throw new Error("Missing the required parameter 'team' when calling teamsV1CreateTeamMember");
       }
 
       // verify the required parameter 'body' is set
       if (body === undefined || body === null) {
-        throw new Error("Missing the required parameter 'body' when calling createTeamMember");
+        throw new Error("Missing the required parameter 'body' when calling teamsV1CreateTeamMember");
       }
 
 
@@ -176,8 +176,8 @@
     }
 
     /**
-     * Callback function to receive the result of the deleteTeam operation.
-     * @callback module:api/TeamsV1Api~deleteTeamCallback
+     * Callback function to receive the result of the teamsV1DeleteTeam operation.
+     * @callback module:api/TeamsV1Api~teamsV1DeleteTeamCallback
      * @param {String} error Error message, if any.
      * @param data This operation does not return a value.
      * @param {String} response The complete HTTP response.
@@ -187,19 +187,19 @@
      * Delete organization
      * @param {String} owner Owner of the namespace
      * @param {String} team Team under namesapce
-     * @param {module:api/TeamsV1Api~deleteTeamCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/TeamsV1Api~teamsV1DeleteTeamCallback} callback The callback function, accepting three arguments: error, data, response
      */
-    this.deleteTeam = function(owner, team, callback) {
+    this.teamsV1DeleteTeam = function(owner, team, callback) {
       var postBody = null;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling deleteTeam");
+        throw new Error("Missing the required parameter 'owner' when calling teamsV1DeleteTeam");
       }
 
       // verify the required parameter 'team' is set
       if (team === undefined || team === null) {
-        throw new Error("Missing the required parameter 'team' when calling deleteTeam");
+        throw new Error("Missing the required parameter 'team' when calling teamsV1DeleteTeam");
       }
 
 
@@ -229,8 +229,8 @@
     }
 
     /**
-     * Callback function to receive the result of the deleteTeamMember operation.
-     * @callback module:api/TeamsV1Api~deleteTeamMemberCallback
+     * Callback function to receive the result of the teamsV1DeleteTeamMember operation.
+     * @callback module:api/TeamsV1Api~teamsV1DeleteTeamMemberCallback
      * @param {String} error Error message, if any.
      * @param data This operation does not return a value.
      * @param {String} response The complete HTTP response.
@@ -241,24 +241,24 @@
      * @param {String} owner Owner of the namespace
      * @param {String} team Team under namesapce
      * @param {String} user Member under team
-     * @param {module:api/TeamsV1Api~deleteTeamMemberCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/TeamsV1Api~teamsV1DeleteTeamMemberCallback} callback The callback function, accepting three arguments: error, data, response
      */
-    this.deleteTeamMember = function(owner, team, user, callback) {
+    this.teamsV1DeleteTeamMember = function(owner, team, user, callback) {
       var postBody = null;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling deleteTeamMember");
+        throw new Error("Missing the required parameter 'owner' when calling teamsV1DeleteTeamMember");
       }
 
       // verify the required parameter 'team' is set
       if (team === undefined || team === null) {
-        throw new Error("Missing the required parameter 'team' when calling deleteTeamMember");
+        throw new Error("Missing the required parameter 'team' when calling teamsV1DeleteTeamMember");
       }
 
       // verify the required parameter 'user' is set
       if (user === undefined || user === null) {
-        throw new Error("Missing the required parameter 'user' when calling deleteTeamMember");
+        throw new Error("Missing the required parameter 'user' when calling teamsV1DeleteTeamMember");
       }
 
 
@@ -289,8 +289,8 @@
     }
 
     /**
-     * Callback function to receive the result of the getTeam operation.
-     * @callback module:api/TeamsV1Api~getTeamCallback
+     * Callback function to receive the result of the teamsV1GetTeam operation.
+     * @callback module:api/TeamsV1Api~teamsV1GetTeamCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1Team} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -300,20 +300,20 @@
      * Get organization
      * @param {String} owner Owner of the namespace
      * @param {String} team Team under namesapce
-     * @param {module:api/TeamsV1Api~getTeamCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/TeamsV1Api~teamsV1GetTeamCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1Team}
      */
-    this.getTeam = function(owner, team, callback) {
+    this.teamsV1GetTeam = function(owner, team, callback) {
       var postBody = null;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling getTeam");
+        throw new Error("Missing the required parameter 'owner' when calling teamsV1GetTeam");
       }
 
       // verify the required parameter 'team' is set
       if (team === undefined || team === null) {
-        throw new Error("Missing the required parameter 'team' when calling getTeam");
+        throw new Error("Missing the required parameter 'team' when calling teamsV1GetTeam");
       }
 
 
@@ -343,8 +343,8 @@
     }
 
     /**
-     * Callback function to receive the result of the getTeamMember operation.
-     * @callback module:api/TeamsV1Api~getTeamMemberCallback
+     * Callback function to receive the result of the teamsV1GetTeamMember operation.
+     * @callback module:api/TeamsV1Api~teamsV1GetTeamMemberCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1TeamMember} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -355,25 +355,25 @@
      * @param {String} owner Owner of the namespace
      * @param {String} team Team under namesapce
      * @param {String} user Member under team
-     * @param {module:api/TeamsV1Api~getTeamMemberCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/TeamsV1Api~teamsV1GetTeamMemberCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1TeamMember}
      */
-    this.getTeamMember = function(owner, team, user, callback) {
+    this.teamsV1GetTeamMember = function(owner, team, user, callback) {
       var postBody = null;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling getTeamMember");
+        throw new Error("Missing the required parameter 'owner' when calling teamsV1GetTeamMember");
       }
 
       // verify the required parameter 'team' is set
       if (team === undefined || team === null) {
-        throw new Error("Missing the required parameter 'team' when calling getTeamMember");
+        throw new Error("Missing the required parameter 'team' when calling teamsV1GetTeamMember");
       }
 
       // verify the required parameter 'user' is set
       if (user === undefined || user === null) {
-        throw new Error("Missing the required parameter 'user' when calling getTeamMember");
+        throw new Error("Missing the required parameter 'user' when calling teamsV1GetTeamMember");
       }
 
 
@@ -404,8 +404,8 @@
     }
 
     /**
-     * Callback function to receive the result of the listTeamMembers operation.
-     * @callback module:api/TeamsV1Api~listTeamMembersCallback
+     * Callback function to receive the result of the teamsV1ListTeamMembers operation.
+     * @callback module:api/TeamsV1Api~teamsV1ListTeamMembersCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1ListTeamMembersResponse} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -420,21 +420,21 @@
      * @param {Number} opts.limit Limit size.
      * @param {String} opts.sort Sort to order the search.
      * @param {String} opts.query Query filter the search search.
-     * @param {module:api/TeamsV1Api~listTeamMembersCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/TeamsV1Api~teamsV1ListTeamMembersCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1ListTeamMembersResponse}
      */
-    this.listTeamMembers = function(owner, team, opts, callback) {
+    this.teamsV1ListTeamMembers = function(owner, team, opts, callback) {
       opts = opts || {};
       var postBody = null;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling listTeamMembers");
+        throw new Error("Missing the required parameter 'owner' when calling teamsV1ListTeamMembers");
       }
 
       // verify the required parameter 'team' is set
       if (team === undefined || team === null) {
-        throw new Error("Missing the required parameter 'team' when calling listTeamMembers");
+        throw new Error("Missing the required parameter 'team' when calling teamsV1ListTeamMembers");
       }
 
 
@@ -468,8 +468,8 @@
     }
 
     /**
-     * Callback function to receive the result of the listTeamNames operation.
-     * @callback module:api/TeamsV1Api~listTeamNamesCallback
+     * Callback function to receive the result of the teamsV1ListTeamNames operation.
+     * @callback module:api/TeamsV1Api~teamsV1ListTeamNamesCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1ListTeamsResponse} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -483,16 +483,16 @@
      * @param {Number} opts.limit Limit size.
      * @param {String} opts.sort Sort to order the search.
      * @param {String} opts.query Query filter the search search.
-     * @param {module:api/TeamsV1Api~listTeamNamesCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/TeamsV1Api~teamsV1ListTeamNamesCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1ListTeamsResponse}
      */
-    this.listTeamNames = function(owner, opts, callback) {
+    this.teamsV1ListTeamNames = function(owner, opts, callback) {
       opts = opts || {};
       var postBody = null;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling listTeamNames");
+        throw new Error("Missing the required parameter 'owner' when calling teamsV1ListTeamNames");
       }
 
 
@@ -525,8 +525,8 @@
     }
 
     /**
-     * Callback function to receive the result of the listTeams operation.
-     * @callback module:api/TeamsV1Api~listTeamsCallback
+     * Callback function to receive the result of the teamsV1ListTeams operation.
+     * @callback module:api/TeamsV1Api~teamsV1ListTeamsCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1ListTeamsResponse} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -540,16 +540,16 @@
      * @param {Number} opts.limit Limit size.
      * @param {String} opts.sort Sort to order the search.
      * @param {String} opts.query Query filter the search search.
-     * @param {module:api/TeamsV1Api~listTeamsCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/TeamsV1Api~teamsV1ListTeamsCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1ListTeamsResponse}
      */
-    this.listTeams = function(owner, opts, callback) {
+    this.teamsV1ListTeams = function(owner, opts, callback) {
       opts = opts || {};
       var postBody = null;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling listTeams");
+        throw new Error("Missing the required parameter 'owner' when calling teamsV1ListTeams");
       }
 
 
@@ -582,8 +582,8 @@
     }
 
     /**
-     * Callback function to receive the result of the patchTeam operation.
-     * @callback module:api/TeamsV1Api~patchTeamCallback
+     * Callback function to receive the result of the teamsV1PatchTeam operation.
+     * @callback module:api/TeamsV1Api~teamsV1PatchTeamCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1Team} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -594,25 +594,25 @@
      * @param {String} owner Owner of the namespace
      * @param {String} team_name Name
      * @param {module:model/V1Team} body Team body
-     * @param {module:api/TeamsV1Api~patchTeamCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/TeamsV1Api~teamsV1PatchTeamCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1Team}
      */
-    this.patchTeam = function(owner, team_name, body, callback) {
+    this.teamsV1PatchTeam = function(owner, team_name, body, callback) {
       var postBody = body;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling patchTeam");
+        throw new Error("Missing the required parameter 'owner' when calling teamsV1PatchTeam");
       }
 
       // verify the required parameter 'team_name' is set
       if (team_name === undefined || team_name === null) {
-        throw new Error("Missing the required parameter 'team_name' when calling patchTeam");
+        throw new Error("Missing the required parameter 'team_name' when calling teamsV1PatchTeam");
       }
 
       // verify the required parameter 'body' is set
       if (body === undefined || body === null) {
-        throw new Error("Missing the required parameter 'body' when calling patchTeam");
+        throw new Error("Missing the required parameter 'body' when calling teamsV1PatchTeam");
       }
 
 
@@ -642,8 +642,8 @@
     }
 
     /**
-     * Callback function to receive the result of the patchTeamMember operation.
-     * @callback module:api/TeamsV1Api~patchTeamMemberCallback
+     * Callback function to receive the result of the teamsV1PatchTeamMember operation.
+     * @callback module:api/TeamsV1Api~teamsV1PatchTeamMemberCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1TeamMember} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -655,30 +655,30 @@
      * @param {String} team Team
      * @param {String} member_user User
      * @param {module:model/V1TeamMember} body Team body
-     * @param {module:api/TeamsV1Api~patchTeamMemberCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/TeamsV1Api~teamsV1PatchTeamMemberCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1TeamMember}
      */
-    this.patchTeamMember = function(owner, team, member_user, body, callback) {
+    this.teamsV1PatchTeamMember = function(owner, team, member_user, body, callback) {
       var postBody = body;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling patchTeamMember");
+        throw new Error("Missing the required parameter 'owner' when calling teamsV1PatchTeamMember");
       }
 
       // verify the required parameter 'team' is set
       if (team === undefined || team === null) {
-        throw new Error("Missing the required parameter 'team' when calling patchTeamMember");
+        throw new Error("Missing the required parameter 'team' when calling teamsV1PatchTeamMember");
       }
 
       // verify the required parameter 'member_user' is set
       if (member_user === undefined || member_user === null) {
-        throw new Error("Missing the required parameter 'member_user' when calling patchTeamMember");
+        throw new Error("Missing the required parameter 'member_user' when calling teamsV1PatchTeamMember");
       }
 
       // verify the required parameter 'body' is set
       if (body === undefined || body === null) {
-        throw new Error("Missing the required parameter 'body' when calling patchTeamMember");
+        throw new Error("Missing the required parameter 'body' when calling teamsV1PatchTeamMember");
       }
 
 
@@ -709,8 +709,8 @@
     }
 
     /**
-     * Callback function to receive the result of the updateTeam operation.
-     * @callback module:api/TeamsV1Api~updateTeamCallback
+     * Callback function to receive the result of the teamsV1UpdateTeam operation.
+     * @callback module:api/TeamsV1Api~teamsV1UpdateTeamCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1Team} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -721,25 +721,25 @@
      * @param {String} owner Owner of the namespace
      * @param {String} team_name Name
      * @param {module:model/V1Team} body Team body
-     * @param {module:api/TeamsV1Api~updateTeamCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/TeamsV1Api~teamsV1UpdateTeamCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1Team}
      */
-    this.updateTeam = function(owner, team_name, body, callback) {
+    this.teamsV1UpdateTeam = function(owner, team_name, body, callback) {
       var postBody = body;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling updateTeam");
+        throw new Error("Missing the required parameter 'owner' when calling teamsV1UpdateTeam");
       }
 
       // verify the required parameter 'team_name' is set
       if (team_name === undefined || team_name === null) {
-        throw new Error("Missing the required parameter 'team_name' when calling updateTeam");
+        throw new Error("Missing the required parameter 'team_name' when calling teamsV1UpdateTeam");
       }
 
       // verify the required parameter 'body' is set
       if (body === undefined || body === null) {
-        throw new Error("Missing the required parameter 'body' when calling updateTeam");
+        throw new Error("Missing the required parameter 'body' when calling teamsV1UpdateTeam");
       }
 
 
@@ -769,8 +769,8 @@
     }
 
     /**
-     * Callback function to receive the result of the updateTeamMember operation.
-     * @callback module:api/TeamsV1Api~updateTeamMemberCallback
+     * Callback function to receive the result of the teamsV1UpdateTeamMember operation.
+     * @callback module:api/TeamsV1Api~teamsV1UpdateTeamMemberCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1TeamMember} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -782,30 +782,30 @@
      * @param {String} team Team
      * @param {String} member_user User
      * @param {module:model/V1TeamMember} body Team body
-     * @param {module:api/TeamsV1Api~updateTeamMemberCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/TeamsV1Api~teamsV1UpdateTeamMemberCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1TeamMember}
      */
-    this.updateTeamMember = function(owner, team, member_user, body, callback) {
+    this.teamsV1UpdateTeamMember = function(owner, team, member_user, body, callback) {
       var postBody = body;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling updateTeamMember");
+        throw new Error("Missing the required parameter 'owner' when calling teamsV1UpdateTeamMember");
       }
 
       // verify the required parameter 'team' is set
       if (team === undefined || team === null) {
-        throw new Error("Missing the required parameter 'team' when calling updateTeamMember");
+        throw new Error("Missing the required parameter 'team' when calling teamsV1UpdateTeamMember");
       }
 
       // verify the required parameter 'member_user' is set
       if (member_user === undefined || member_user === null) {
-        throw new Error("Missing the required parameter 'member_user' when calling updateTeamMember");
+        throw new Error("Missing the required parameter 'member_user' when calling teamsV1UpdateTeamMember");
       }
 
       // verify the required parameter 'body' is set
       if (body === undefined || body === null) {
-        throw new Error("Missing the required parameter 'body' when calling updateTeamMember");
+        throw new Error("Missing the required parameter 'body' when calling teamsV1UpdateTeamMember");
       }
 
 

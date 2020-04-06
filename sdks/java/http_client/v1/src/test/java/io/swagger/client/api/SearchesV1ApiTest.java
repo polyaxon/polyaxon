@@ -57,10 +57,10 @@ public class SearchesV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void createSearchTest() throws ApiException {
+    public void searchesV1CreateSearchTest() throws ApiException {
         String owner = null;
         V1Search body = null;
-        V1Search response = api.createSearch(owner, body);
+        V1Search response = api.searchesV1CreateSearch(owner, body);
 
         // TODO: test validations
     }
@@ -74,10 +74,10 @@ public class SearchesV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void deleteSearchTest() throws ApiException {
+    public void searchesV1DeleteSearchTest() throws ApiException {
         String owner = null;
         String uuid = null;
-        api.deleteSearch(owner, uuid);
+        api.searchesV1DeleteSearch(owner, uuid);
 
         // TODO: test validations
     }
@@ -91,10 +91,10 @@ public class SearchesV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void getSearchTest() throws ApiException {
+    public void searchesV1GetSearchTest() throws ApiException {
         String owner = null;
         String uuid = null;
-        V1Search response = api.getSearch(owner, uuid);
+        V1Search response = api.searchesV1GetSearch(owner, uuid);
 
         // TODO: test validations
     }
@@ -108,13 +108,13 @@ public class SearchesV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void listSearchNamesTest() throws ApiException {
+    public void searchesV1ListSearchNamesTest() throws ApiException {
         String owner = null;
         Integer offset = null;
         Integer limit = null;
         String sort = null;
         String query = null;
-        V1ListSearchesResponse response = api.listSearchNames(owner, offset, limit, sort, query);
+        V1ListSearchesResponse response = api.searchesV1ListSearchNames(owner, offset, limit, sort, query);
 
         // TODO: test validations
     }
@@ -128,13 +128,13 @@ public class SearchesV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void listSearchesTest() throws ApiException {
+    public void searchesV1ListSearchesTest() throws ApiException {
         String owner = null;
         Integer offset = null;
         Integer limit = null;
         String sort = null;
         String query = null;
-        V1ListSearchesResponse response = api.listSearches(owner, offset, limit, sort, query);
+        V1ListSearchesResponse response = api.searchesV1ListSearches(owner, offset, limit, sort, query);
 
         // TODO: test validations
     }
@@ -148,11 +148,11 @@ public class SearchesV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void patchSearchTest() throws ApiException {
+    public void searchesV1PatchSearchTest() throws ApiException {
         String owner = null;
         String searchUuid = null;
         V1Search body = null;
-        V1Search response = api.patchSearch(owner, searchUuid, body);
+        V1Search response = api.searchesV1PatchSearch(owner, searchUuid, body);
 
         // TODO: test validations
     }
@@ -166,11 +166,11 @@ public class SearchesV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void updateSearchTest() throws ApiException {
+    public void searchesV1UpdateSearchTest() throws ApiException {
         String owner = null;
         String searchUuid = null;
         V1Search body = null;
-        V1Search response = api.updateSearch(owner, searchUuid, body);
+        V1Search response = api.searchesV1UpdateSearch(owner, searchUuid, body);
 
         // TODO: test validations
     }

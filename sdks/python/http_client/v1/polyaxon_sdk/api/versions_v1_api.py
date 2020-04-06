@@ -49,12 +49,12 @@ class VersionsV1Api(object):
             api_client = ApiClient()
         self.api_client = api_client
 
-    def get_log_handler(self, **kwargs):  # noqa: E501
-        """get_log_handler  # noqa: E501
+    def versions_v1_get_log_handler(self, **kwargs):  # noqa: E501
+        """versions_v1_get_log_handler  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.get_log_handler(async_req=True)
+        >>> thread = api.versions_v1_get_log_handler(async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -64,17 +64,21 @@ class VersionsV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.get_log_handler_with_http_info(**kwargs)  # noqa: E501
+            return self.versions_v1_get_log_handler_with_http_info(
+                **kwargs
+            )  # noqa: E501
         else:
-            (data) = self.get_log_handler_with_http_info(**kwargs)  # noqa: E501
+            (data) = self.versions_v1_get_log_handler_with_http_info(
+                **kwargs
+            )  # noqa: E501
             return data
 
-    def get_log_handler_with_http_info(self, **kwargs):  # noqa: E501
-        """get_log_handler  # noqa: E501
+    def versions_v1_get_log_handler_with_http_info(self, **kwargs):  # noqa: E501
+        """versions_v1_get_log_handler  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.get_log_handler_with_http_info(async_req=True)
+        >>> thread = api.versions_v1_get_log_handler_with_http_info(async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -94,7 +98,7 @@ class VersionsV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method get_log_handler" % key
+                    " to method versions_v1_get_log_handler" % key
                 )
             params[key] = val
         del params["kwargs"]
@@ -144,12 +148,12 @@ class VersionsV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def get_versions(self, **kwargs):  # noqa: E501
+    def versions_v1_get_versions(self, **kwargs):  # noqa: E501
         """Get current user  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.get_versions(async_req=True)
+        >>> thread = api.versions_v1_get_versions(async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -159,17 +163,19 @@ class VersionsV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.get_versions_with_http_info(**kwargs)  # noqa: E501
+            return self.versions_v1_get_versions_with_http_info(**kwargs)  # noqa: E501
         else:
-            (data) = self.get_versions_with_http_info(**kwargs)  # noqa: E501
+            (data) = self.versions_v1_get_versions_with_http_info(
+                **kwargs
+            )  # noqa: E501
             return data
 
-    def get_versions_with_http_info(self, **kwargs):  # noqa: E501
+    def versions_v1_get_versions_with_http_info(self, **kwargs):  # noqa: E501
         """Get current user  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.get_versions_with_http_info(async_req=True)
+        >>> thread = api.versions_v1_get_versions_with_http_info(async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -189,7 +195,7 @@ class VersionsV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method get_versions" % key
+                    " to method versions_v1_get_versions" % key
                 )
             params[key] = val
         del params["kwargs"]

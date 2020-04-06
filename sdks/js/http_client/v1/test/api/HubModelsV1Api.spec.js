@@ -50,9 +50,9 @@
 
   describe('(package)', function() {
     describe('HubModelsV1Api', function() {
-      describe('createHubModel', function() {
-        it('should call createHubModel successfully', function(done) {
-          // TODO: uncomment, update parameter values for createHubModel call and complete the assertions
+      describe('hubModelsV1CreateHubModel', function() {
+        it('should call hubModelsV1CreateHubModel successfully', function(done) {
+          // TODO: uncomment, update parameter values for hubModelsV1CreateHubModel call and complete the assertions
           /*
           var owner = "owner_example";
           var body = new PolyaxonSdk.V1HubModel();
@@ -67,7 +67,7 @@
           body.created_at = new Date();
           body.updated_at = new Date();
 
-          instance.createHubModel(owner, body, function(error, data, response) {
+          instance.hubModelsV1CreateHubModel(owner, body, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -110,14 +110,14 @@
           done();
         });
       });
-      describe('deleteHubModel', function() {
-        it('should call deleteHubModel successfully', function(done) {
-          // TODO: uncomment, update parameter values for deleteHubModel call
+      describe('hubModelsV1DeleteHubModel', function() {
+        it('should call hubModelsV1DeleteHubModel successfully', function(done) {
+          // TODO: uncomment, update parameter values for hubModelsV1DeleteHubModel call
           /*
           var owner = "owner_example";
           var uuid = "uuid_example";
 
-          instance.deleteHubModel(owner, uuid, function(error, data, response) {
+          instance.hubModelsV1DeleteHubModel(owner, uuid, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -130,14 +130,14 @@
           done();
         });
       });
-      describe('getHubModel', function() {
-        it('should call getHubModel successfully', function(done) {
-          // TODO: uncomment, update parameter values for getHubModel call and complete the assertions
+      describe('hubModelsV1GetHubModel', function() {
+        it('should call hubModelsV1GetHubModel successfully', function(done) {
+          // TODO: uncomment, update parameter values for hubModelsV1GetHubModel call and complete the assertions
           /*
           var owner = "owner_example";
           var uuid = "uuid_example";
 
-          instance.getHubModel(owner, uuid, function(error, data, response) {
+          instance.hubModelsV1GetHubModel(owner, uuid, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -180,9 +180,9 @@
           done();
         });
       });
-      describe('listHubModelNames', function() {
-        it('should call listHubModelNames successfully', function(done) {
-          // TODO: uncomment, update parameter values for listHubModelNames call and complete the assertions
+      describe('hubModelsV1ListHubModelNames', function() {
+        it('should call hubModelsV1ListHubModelNames successfully', function(done) {
+          // TODO: uncomment, update parameter values for hubModelsV1ListHubModelNames call and complete the assertions
           /*
           var owner = "owner_example";
           var opts = {};
@@ -191,7 +191,7 @@
           opts.sort = "sort_example";
           opts.query = "query_example";
 
-          instance.listHubModelNames(owner, opts, function(error, data, response) {
+          instance.hubModelsV1ListHubModelNames(owner, opts, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -249,9 +249,9 @@
           done();
         });
       });
-      describe('listHubModels', function() {
-        it('should call listHubModels successfully', function(done) {
-          // TODO: uncomment, update parameter values for listHubModels call and complete the assertions
+      describe('hubModelsV1ListHubModels', function() {
+        it('should call hubModelsV1ListHubModels successfully', function(done) {
+          // TODO: uncomment, update parameter values for hubModelsV1ListHubModels call and complete the assertions
           /*
           var owner = "owner_example";
           var opts = {};
@@ -260,7 +260,7 @@
           opts.sort = "sort_example";
           opts.query = "query_example";
 
-          instance.listHubModels(owner, opts, function(error, data, response) {
+          instance.hubModelsV1ListHubModels(owner, opts, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -318,9 +318,9 @@
           done();
         });
       });
-      describe('patchHubModel', function() {
-        it('should call patchHubModel successfully', function(done) {
-          // TODO: uncomment, update parameter values for patchHubModel call and complete the assertions
+      describe('hubModelsV1PatchHubModel', function() {
+        it('should call hubModelsV1PatchHubModel successfully', function(done) {
+          // TODO: uncomment, update parameter values for hubModelsV1PatchHubModel call and complete the assertions
           /*
           var owner = "owner_example";
           var model_uuid = "model_uuid_example";
@@ -336,7 +336,7 @@
           body.created_at = new Date();
           body.updated_at = new Date();
 
-          instance.patchHubModel(owner, model_uuid, body, function(error, data, response) {
+          instance.hubModelsV1PatchHubModel(owner, model_uuid, body, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -379,9 +379,9 @@
           done();
         });
       });
-      describe('updateHubModel', function() {
-        it('should call updateHubModel successfully', function(done) {
-          // TODO: uncomment, update parameter values for updateHubModel call and complete the assertions
+      describe('hubModelsV1UpdateHubModel', function() {
+        it('should call hubModelsV1UpdateHubModel successfully', function(done) {
+          // TODO: uncomment, update parameter values for hubModelsV1UpdateHubModel call and complete the assertions
           /*
           var owner = "owner_example";
           var model_uuid = "model_uuid_example";
@@ -397,7 +397,7 @@
           body.created_at = new Date();
           body.updated_at = new Date();
 
-          instance.updateHubModel(owner, model_uuid, body, function(error, data, response) {
+          instance.hubModelsV1UpdateHubModel(owner, model_uuid, body, function(error, data, response) {
             if (error) {
               done(error);
               return;

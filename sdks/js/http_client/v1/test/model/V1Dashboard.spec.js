@@ -97,12 +97,6 @@
         // expect(instance.run_view).to.be(expectedValueLiteral);
       });
 
-      it('should have the property search (base name: "search")', function() {
-        // TODO: update the code to test the property search
-        expect(instance).to.have.property('search');
-        // expect(instance.search).to.be(expectedValueLiteral);
-      });
-
       it('should have the property spec (base name: "spec")', function() {
         // TODO: update the code to test the property spec
         expect(instance).to.have.property('spec');

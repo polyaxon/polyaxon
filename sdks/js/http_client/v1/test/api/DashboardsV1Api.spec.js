@@ -50,9 +50,9 @@
 
   describe('(package)', function() {
     describe('DashboardsV1Api', function() {
-      describe('createDashboard', function() {
-        it('should call createDashboard successfully', function(done) {
-          // TODO: uncomment, update parameter values for createDashboard call and complete the assertions
+      describe('dashboardsV1CreateDashboard', function() {
+        it('should call dashboardsV1CreateDashboard successfully', function(done) {
+          // TODO: uncomment, update parameter values for dashboardsV1CreateDashboard call and complete the assertions
           /*
           var owner = "owner_example";
           var body = new PolyaxonSdk.V1Dashboard();
@@ -63,17 +63,11 @@
           body.disabled = false;
           body.deleted = false;
           body.run_view = false;
-          body.search = new PolyaxonSdk.V1SearchSpec();
-          body.search.query = "";
-          body.search.sort = "";
-          body.search.limit = 0;
-          body.search.groupby = "";
-          body.search.columns = "";
           body.spec = ;
           body.created_at = new Date();
           body.updated_at = new Date();
 
-          instance.createDashboard(owner, body, function(error, data, response) {
+          instance.dashboardsV1CreateDashboard(owner, body, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -102,17 +96,6 @@
             expect(data.deleted).to.be(false);
             expect(data.run_view).to.be.a('boolean');
             expect(data.run_view).to.be(false);
-            expect(data.search).to.be.a(PolyaxonSdk.V1SearchSpec);
-                  expect(data.search.query).to.be.a('string');
-              expect(data.search.query).to.be("");
-              expect(data.search.sort).to.be.a('string');
-              expect(data.search.sort).to.be("");
-              expect(data.search.limit).to.be.a('number');
-              expect(data.search.limit).to.be(0);
-              expect(data.search.groupby).to.be.a('string');
-              expect(data.search.groupby).to.be("");
-              expect(data.search.columns).to.be.a('string');
-              expect(data.search.columns).to.be("");
             expect(data.spec).to.be.a(Object);
             expect(data.spec).to.be();
             expect(data.created_at).to.be.a(Date);
@@ -127,14 +110,14 @@
           done();
         });
       });
-      describe('deleteDashboard', function() {
-        it('should call deleteDashboard successfully', function(done) {
-          // TODO: uncomment, update parameter values for deleteDashboard call
+      describe('dashboardsV1DeleteDashboard', function() {
+        it('should call dashboardsV1DeleteDashboard successfully', function(done) {
+          // TODO: uncomment, update parameter values for dashboardsV1DeleteDashboard call
           /*
           var owner = "owner_example";
           var uuid = "uuid_example";
 
-          instance.deleteDashboard(owner, uuid, function(error, data, response) {
+          instance.dashboardsV1DeleteDashboard(owner, uuid, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -147,14 +130,14 @@
           done();
         });
       });
-      describe('getDashboard', function() {
-        it('should call getDashboard successfully', function(done) {
-          // TODO: uncomment, update parameter values for getDashboard call and complete the assertions
+      describe('dashboardsV1GetDashboard', function() {
+        it('should call dashboardsV1GetDashboard successfully', function(done) {
+          // TODO: uncomment, update parameter values for dashboardsV1GetDashboard call and complete the assertions
           /*
           var owner = "owner_example";
           var uuid = "uuid_example";
 
-          instance.getDashboard(owner, uuid, function(error, data, response) {
+          instance.dashboardsV1GetDashboard(owner, uuid, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -183,17 +166,6 @@
             expect(data.deleted).to.be(false);
             expect(data.run_view).to.be.a('boolean');
             expect(data.run_view).to.be(false);
-            expect(data.search).to.be.a(PolyaxonSdk.V1SearchSpec);
-                  expect(data.search.query).to.be.a('string');
-              expect(data.search.query).to.be("");
-              expect(data.search.sort).to.be.a('string');
-              expect(data.search.sort).to.be("");
-              expect(data.search.limit).to.be.a('number');
-              expect(data.search.limit).to.be(0);
-              expect(data.search.groupby).to.be.a('string');
-              expect(data.search.groupby).to.be("");
-              expect(data.search.columns).to.be.a('string');
-              expect(data.search.columns).to.be("");
             expect(data.spec).to.be.a(Object);
             expect(data.spec).to.be();
             expect(data.created_at).to.be.a(Date);
@@ -208,9 +180,9 @@
           done();
         });
       });
-      describe('listDashboardNames', function() {
-        it('should call listDashboardNames successfully', function(done) {
-          // TODO: uncomment, update parameter values for listDashboardNames call and complete the assertions
+      describe('dashboardsV1ListDashboardNames', function() {
+        it('should call dashboardsV1ListDashboardNames successfully', function(done) {
+          // TODO: uncomment, update parameter values for dashboardsV1ListDashboardNames call and complete the assertions
           /*
           var owner = "owner_example";
           var opts = {};
@@ -219,7 +191,7 @@
           opts.sort = "sort_example";
           opts.query = "query_example";
 
-          instance.listDashboardNames(owner, opts, function(error, data, response) {
+          instance.dashboardsV1ListDashboardNames(owner, opts, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -257,17 +229,6 @@
                 expect(data.deleted).to.be(false);
                 expect(data.run_view).to.be.a('boolean');
                 expect(data.run_view).to.be(false);
-                expect(data.search).to.be.a(PolyaxonSdk.V1SearchSpec);
-                      expect(data.search.query).to.be.a('string');
-                  expect(data.search.query).to.be("");
-                  expect(data.search.sort).to.be.a('string');
-                  expect(data.search.sort).to.be("");
-                  expect(data.search.limit).to.be.a('number');
-                  expect(data.search.limit).to.be(0);
-                  expect(data.search.groupby).to.be.a('string');
-                  expect(data.search.groupby).to.be("");
-                  expect(data.search.columns).to.be.a('string');
-                  expect(data.search.columns).to.be("");
                 expect(data.spec).to.be.a(Object);
                 expect(data.spec).to.be();
                 expect(data.created_at).to.be.a(Date);
@@ -288,9 +249,9 @@
           done();
         });
       });
-      describe('listDashboards', function() {
-        it('should call listDashboards successfully', function(done) {
-          // TODO: uncomment, update parameter values for listDashboards call and complete the assertions
+      describe('dashboardsV1ListDashboards', function() {
+        it('should call dashboardsV1ListDashboards successfully', function(done) {
+          // TODO: uncomment, update parameter values for dashboardsV1ListDashboards call and complete the assertions
           /*
           var owner = "owner_example";
           var opts = {};
@@ -299,7 +260,7 @@
           opts.sort = "sort_example";
           opts.query = "query_example";
 
-          instance.listDashboards(owner, opts, function(error, data, response) {
+          instance.dashboardsV1ListDashboards(owner, opts, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -337,17 +298,6 @@
                 expect(data.deleted).to.be(false);
                 expect(data.run_view).to.be.a('boolean');
                 expect(data.run_view).to.be(false);
-                expect(data.search).to.be.a(PolyaxonSdk.V1SearchSpec);
-                      expect(data.search.query).to.be.a('string');
-                  expect(data.search.query).to.be("");
-                  expect(data.search.sort).to.be.a('string');
-                  expect(data.search.sort).to.be("");
-                  expect(data.search.limit).to.be.a('number');
-                  expect(data.search.limit).to.be(0);
-                  expect(data.search.groupby).to.be.a('string');
-                  expect(data.search.groupby).to.be("");
-                  expect(data.search.columns).to.be.a('string');
-                  expect(data.search.columns).to.be("");
                 expect(data.spec).to.be.a(Object);
                 expect(data.spec).to.be();
                 expect(data.created_at).to.be.a(Date);
@@ -368,9 +318,9 @@
           done();
         });
       });
-      describe('patchDashboard', function() {
-        it('should call patchDashboard successfully', function(done) {
-          // TODO: uncomment, update parameter values for patchDashboard call and complete the assertions
+      describe('dashboardsV1PatchDashboard', function() {
+        it('should call dashboardsV1PatchDashboard successfully', function(done) {
+          // TODO: uncomment, update parameter values for dashboardsV1PatchDashboard call and complete the assertions
           /*
           var owner = "owner_example";
           var dashboard_uuid = "dashboard_uuid_example";
@@ -382,17 +332,11 @@
           body.disabled = false;
           body.deleted = false;
           body.run_view = false;
-          body.search = new PolyaxonSdk.V1SearchSpec();
-          body.search.query = "";
-          body.search.sort = "";
-          body.search.limit = 0;
-          body.search.groupby = "";
-          body.search.columns = "";
           body.spec = ;
           body.created_at = new Date();
           body.updated_at = new Date();
 
-          instance.patchDashboard(owner, dashboard_uuid, body, function(error, data, response) {
+          instance.dashboardsV1PatchDashboard(owner, dashboard_uuid, body, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -421,17 +365,6 @@
             expect(data.deleted).to.be(false);
             expect(data.run_view).to.be.a('boolean');
             expect(data.run_view).to.be(false);
-            expect(data.search).to.be.a(PolyaxonSdk.V1SearchSpec);
-                  expect(data.search.query).to.be.a('string');
-              expect(data.search.query).to.be("");
-              expect(data.search.sort).to.be.a('string');
-              expect(data.search.sort).to.be("");
-              expect(data.search.limit).to.be.a('number');
-              expect(data.search.limit).to.be(0);
-              expect(data.search.groupby).to.be.a('string');
-              expect(data.search.groupby).to.be("");
-              expect(data.search.columns).to.be.a('string');
-              expect(data.search.columns).to.be("");
             expect(data.spec).to.be.a(Object);
             expect(data.spec).to.be();
             expect(data.created_at).to.be.a(Date);
@@ -446,9 +379,9 @@
           done();
         });
       });
-      describe('updateDashboard', function() {
-        it('should call updateDashboard successfully', function(done) {
-          // TODO: uncomment, update parameter values for updateDashboard call and complete the assertions
+      describe('dashboardsV1UpdateDashboard', function() {
+        it('should call dashboardsV1UpdateDashboard successfully', function(done) {
+          // TODO: uncomment, update parameter values for dashboardsV1UpdateDashboard call and complete the assertions
           /*
           var owner = "owner_example";
           var dashboard_uuid = "dashboard_uuid_example";
@@ -460,17 +393,11 @@
           body.disabled = false;
           body.deleted = false;
           body.run_view = false;
-          body.search = new PolyaxonSdk.V1SearchSpec();
-          body.search.query = "";
-          body.search.sort = "";
-          body.search.limit = 0;
-          body.search.groupby = "";
-          body.search.columns = "";
           body.spec = ;
           body.created_at = new Date();
           body.updated_at = new Date();
 
-          instance.updateDashboard(owner, dashboard_uuid, body, function(error, data, response) {
+          instance.dashboardsV1UpdateDashboard(owner, dashboard_uuid, body, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -499,17 +426,6 @@
             expect(data.deleted).to.be(false);
             expect(data.run_view).to.be.a('boolean');
             expect(data.run_view).to.be(false);
-            expect(data.search).to.be.a(PolyaxonSdk.V1SearchSpec);
-                  expect(data.search.query).to.be.a('string');
-              expect(data.search.query).to.be("");
-              expect(data.search.sort).to.be.a('string');
-              expect(data.search.sort).to.be("");
-              expect(data.search.limit).to.be.a('number');
-              expect(data.search.limit).to.be(0);
-              expect(data.search.groupby).to.be.a('string');
-              expect(data.search.groupby).to.be("");
-              expect(data.search.columns).to.be.a('string');
-              expect(data.search.columns).to.be("");
             expect(data.spec).to.be.a(Object);
             expect(data.spec).to.be();
             expect(data.created_at).to.be.a(Date);

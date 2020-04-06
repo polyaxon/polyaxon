@@ -60,10 +60,10 @@ public class AgentsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void createAgentTest() throws ApiException {
+    public void agentsV1CreateAgentTest() throws ApiException {
         String owner = null;
         V1Agent body = null;
-        V1Agent response = api.createAgent(owner, body);
+        V1Agent response = api.agentsV1CreateAgent(owner, body);
 
         // TODO: test validations
     }
@@ -77,11 +77,11 @@ public class AgentsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void createAgentStatusTest() throws ApiException {
+    public void agentsV1CreateAgentStatusTest() throws ApiException {
         String owner = null;
         String uuid = null;
         V1AgentStatusBodyRequest body = null;
-        V1Status response = api.createAgentStatus(owner, uuid, body);
+        V1Status response = api.agentsV1CreateAgentStatus(owner, uuid, body);
 
         // TODO: test validations
     }
@@ -95,10 +95,10 @@ public class AgentsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void deleteAgentTest() throws ApiException {
+    public void agentsV1DeleteAgentTest() throws ApiException {
         String owner = null;
         String uuid = null;
-        api.deleteAgent(owner, uuid);
+        api.agentsV1DeleteAgent(owner, uuid);
 
         // TODO: test validations
     }
@@ -112,10 +112,10 @@ public class AgentsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void getAgentTest() throws ApiException {
+    public void agentsV1GetAgentTest() throws ApiException {
         String owner = null;
         String uuid = null;
-        V1Agent response = api.getAgent(owner, uuid);
+        V1Agent response = api.agentsV1GetAgent(owner, uuid);
 
         // TODO: test validations
     }
@@ -129,10 +129,10 @@ public class AgentsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void getAgentStateTest() throws ApiException {
+    public void agentsV1GetAgentStateTest() throws ApiException {
         String owner = null;
         String uuid = null;
-        V1AgentStateResponse response = api.getAgentState(owner, uuid);
+        V1AgentStateResponse response = api.agentsV1GetAgentState(owner, uuid);
 
         // TODO: test validations
     }
@@ -146,10 +146,10 @@ public class AgentsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void getAgentStatusesTest() throws ApiException {
+    public void agentsV1GetAgentStatusesTest() throws ApiException {
         String owner = null;
         String uuid = null;
-        V1Status response = api.getAgentStatuses(owner, uuid);
+        V1Status response = api.agentsV1GetAgentStatuses(owner, uuid);
 
         // TODO: test validations
     }
@@ -163,13 +163,13 @@ public class AgentsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void listAgentNamesTest() throws ApiException {
+    public void agentsV1ListAgentNamesTest() throws ApiException {
         String owner = null;
         Integer offset = null;
         Integer limit = null;
         String sort = null;
         String query = null;
-        V1ListAgentsResponse response = api.listAgentNames(owner, offset, limit, sort, query);
+        V1ListAgentsResponse response = api.agentsV1ListAgentNames(owner, offset, limit, sort, query);
 
         // TODO: test validations
     }
@@ -183,13 +183,13 @@ public class AgentsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void listAgentsTest() throws ApiException {
+    public void agentsV1ListAgentsTest() throws ApiException {
         String owner = null;
         Integer offset = null;
         Integer limit = null;
         String sort = null;
         String query = null;
-        V1ListAgentsResponse response = api.listAgents(owner, offset, limit, sort, query);
+        V1ListAgentsResponse response = api.agentsV1ListAgents(owner, offset, limit, sort, query);
 
         // TODO: test validations
     }
@@ -203,11 +203,11 @@ public class AgentsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void patchAgentTest() throws ApiException {
+    public void agentsV1PatchAgentTest() throws ApiException {
         String owner = null;
         String agentUuid = null;
         V1Agent body = null;
-        V1Agent response = api.patchAgent(owner, agentUuid, body);
+        V1Agent response = api.agentsV1PatchAgent(owner, agentUuid, body);
 
         // TODO: test validations
     }
@@ -221,11 +221,11 @@ public class AgentsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void syncAgentTest() throws ApiException {
+    public void agentsV1SyncAgentTest() throws ApiException {
         String owner = null;
         String agentUuid = null;
         V1Agent body = null;
-        api.syncAgent(owner, agentUuid, body);
+        api.agentsV1SyncAgent(owner, agentUuid, body);
 
         // TODO: test validations
     }
@@ -239,11 +239,11 @@ public class AgentsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void updateAgentTest() throws ApiException {
+    public void agentsV1UpdateAgentTest() throws ApiException {
         String owner = null;
         String agentUuid = null;
         V1Agent body = null;
-        V1Agent response = api.updateAgent(owner, agentUuid, body);
+        V1Agent response = api.agentsV1UpdateAgent(owner, agentUuid, body);
 
         // TODO: test validations
     }

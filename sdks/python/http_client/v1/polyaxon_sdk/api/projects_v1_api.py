@@ -49,12 +49,12 @@ class ProjectsV1Api(object):
             api_client = ApiClient()
         self.api_client = api_client
 
-    def archive_project(self, owner, project, **kwargs):  # noqa: E501
+    def projects_v1_archive_project(self, owner, project, **kwargs):  # noqa: E501
         """Archive project  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.archive_project(owner, project, async_req=True)
+        >>> thread = api.projects_v1_archive_project(owner, project, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -66,21 +66,23 @@ class ProjectsV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.archive_project_with_http_info(
+            return self.projects_v1_archive_project_with_http_info(
                 owner, project, **kwargs
             )  # noqa: E501
         else:
-            (data) = self.archive_project_with_http_info(
+            (data) = self.projects_v1_archive_project_with_http_info(
                 owner, project, **kwargs
             )  # noqa: E501
             return data
 
-    def archive_project_with_http_info(self, owner, project, **kwargs):  # noqa: E501
+    def projects_v1_archive_project_with_http_info(
+        self, owner, project, **kwargs
+    ):  # noqa: E501
         """Archive project  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.archive_project_with_http_info(owner, project, async_req=True)
+        >>> thread = api.projects_v1_archive_project_with_http_info(owner, project, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -102,19 +104,19 @@ class ProjectsV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method archive_project" % key
+                    " to method projects_v1_archive_project" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `archive_project`"
+                "Missing the required parameter `owner` when calling `projects_v1_archive_project`"
             )  # noqa: E501
         # verify the required parameter 'project' is set
         if "project" not in params or params["project"] is None:
             raise ValueError(
-                "Missing the required parameter `project` when calling `archive_project`"
+                "Missing the required parameter `project` when calling `projects_v1_archive_project`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -166,12 +168,12 @@ class ProjectsV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def bookmark_project(self, owner, project, **kwargs):  # noqa: E501
+    def projects_v1_bookmark_project(self, owner, project, **kwargs):  # noqa: E501
         """Bookmark project  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.bookmark_project(owner, project, async_req=True)
+        >>> thread = api.projects_v1_bookmark_project(owner, project, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -183,21 +185,23 @@ class ProjectsV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.bookmark_project_with_http_info(
+            return self.projects_v1_bookmark_project_with_http_info(
                 owner, project, **kwargs
             )  # noqa: E501
         else:
-            (data) = self.bookmark_project_with_http_info(
+            (data) = self.projects_v1_bookmark_project_with_http_info(
                 owner, project, **kwargs
             )  # noqa: E501
             return data
 
-    def bookmark_project_with_http_info(self, owner, project, **kwargs):  # noqa: E501
+    def projects_v1_bookmark_project_with_http_info(
+        self, owner, project, **kwargs
+    ):  # noqa: E501
         """Bookmark project  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.bookmark_project_with_http_info(owner, project, async_req=True)
+        >>> thread = api.projects_v1_bookmark_project_with_http_info(owner, project, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -219,19 +223,19 @@ class ProjectsV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method bookmark_project" % key
+                    " to method projects_v1_bookmark_project" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `bookmark_project`"
+                "Missing the required parameter `owner` when calling `projects_v1_bookmark_project`"
             )  # noqa: E501
         # verify the required parameter 'project' is set
         if "project" not in params or params["project"] is None:
             raise ValueError(
-                "Missing the required parameter `project` when calling `bookmark_project`"
+                "Missing the required parameter `project` when calling `projects_v1_bookmark_project`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -283,12 +287,12 @@ class ProjectsV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def create_project(self, owner, body, **kwargs):  # noqa: E501
+    def projects_v1_create_project(self, owner, body, **kwargs):  # noqa: E501
         """Create new project  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.create_project(owner, body, async_req=True)
+        >>> thread = api.projects_v1_create_project(owner, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -300,21 +304,23 @@ class ProjectsV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.create_project_with_http_info(
+            return self.projects_v1_create_project_with_http_info(
                 owner, body, **kwargs
             )  # noqa: E501
         else:
-            (data) = self.create_project_with_http_info(
+            (data) = self.projects_v1_create_project_with_http_info(
                 owner, body, **kwargs
             )  # noqa: E501
             return data
 
-    def create_project_with_http_info(self, owner, body, **kwargs):  # noqa: E501
+    def projects_v1_create_project_with_http_info(
+        self, owner, body, **kwargs
+    ):  # noqa: E501
         """Create new project  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.create_project_with_http_info(owner, body, async_req=True)
+        >>> thread = api.projects_v1_create_project_with_http_info(owner, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -336,19 +342,19 @@ class ProjectsV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method create_project" % key
+                    " to method projects_v1_create_project" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `create_project`"
+                "Missing the required parameter `owner` when calling `projects_v1_create_project`"
             )  # noqa: E501
         # verify the required parameter 'body' is set
         if "body" not in params or params["body"] is None:
             raise ValueError(
-                "Missing the required parameter `body` when calling `create_project`"
+                "Missing the required parameter `body` when calling `projects_v1_create_project`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -400,12 +406,12 @@ class ProjectsV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def delete_project(self, owner, project, **kwargs):  # noqa: E501
+    def projects_v1_delete_project(self, owner, project, **kwargs):  # noqa: E501
         """Delete project  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.delete_project(owner, project, async_req=True)
+        >>> thread = api.projects_v1_delete_project(owner, project, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -417,21 +423,23 @@ class ProjectsV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.delete_project_with_http_info(
+            return self.projects_v1_delete_project_with_http_info(
                 owner, project, **kwargs
             )  # noqa: E501
         else:
-            (data) = self.delete_project_with_http_info(
+            (data) = self.projects_v1_delete_project_with_http_info(
                 owner, project, **kwargs
             )  # noqa: E501
             return data
 
-    def delete_project_with_http_info(self, owner, project, **kwargs):  # noqa: E501
+    def projects_v1_delete_project_with_http_info(
+        self, owner, project, **kwargs
+    ):  # noqa: E501
         """Delete project  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.delete_project_with_http_info(owner, project, async_req=True)
+        >>> thread = api.projects_v1_delete_project_with_http_info(owner, project, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -453,19 +461,19 @@ class ProjectsV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method delete_project" % key
+                    " to method projects_v1_delete_project" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `delete_project`"
+                "Missing the required parameter `owner` when calling `projects_v1_delete_project`"
             )  # noqa: E501
         # verify the required parameter 'project' is set
         if "project" not in params or params["project"] is None:
             raise ValueError(
-                "Missing the required parameter `project` when calling `delete_project`"
+                "Missing the required parameter `project` when calling `projects_v1_delete_project`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -517,12 +525,12 @@ class ProjectsV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def disable_project_ci(self, owner, project, **kwargs):  # noqa: E501
+    def projects_v1_disable_project_ci(self, owner, project, **kwargs):  # noqa: E501
         """Disbale project CI  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.disable_project_ci(owner, project, async_req=True)
+        >>> thread = api.projects_v1_disable_project_ci(owner, project, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -534,21 +542,23 @@ class ProjectsV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.disable_project_ci_with_http_info(
+            return self.projects_v1_disable_project_ci_with_http_info(
                 owner, project, **kwargs
             )  # noqa: E501
         else:
-            (data) = self.disable_project_ci_with_http_info(
+            (data) = self.projects_v1_disable_project_ci_with_http_info(
                 owner, project, **kwargs
             )  # noqa: E501
             return data
 
-    def disable_project_ci_with_http_info(self, owner, project, **kwargs):  # noqa: E501
+    def projects_v1_disable_project_ci_with_http_info(
+        self, owner, project, **kwargs
+    ):  # noqa: E501
         """Disbale project CI  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.disable_project_ci_with_http_info(owner, project, async_req=True)
+        >>> thread = api.projects_v1_disable_project_ci_with_http_info(owner, project, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -570,19 +580,19 @@ class ProjectsV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method disable_project_ci" % key
+                    " to method projects_v1_disable_project_ci" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `disable_project_ci`"
+                "Missing the required parameter `owner` when calling `projects_v1_disable_project_ci`"
             )  # noqa: E501
         # verify the required parameter 'project' is set
         if "project" not in params or params["project"] is None:
             raise ValueError(
-                "Missing the required parameter `project` when calling `disable_project_ci`"
+                "Missing the required parameter `project` when calling `projects_v1_disable_project_ci`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -634,12 +644,12 @@ class ProjectsV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def enable_project_ci(self, owner, project, **kwargs):  # noqa: E501
+    def projects_v1_enable_project_ci(self, owner, project, **kwargs):  # noqa: E501
         """Enable project CI  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.enable_project_ci(owner, project, async_req=True)
+        >>> thread = api.projects_v1_enable_project_ci(owner, project, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -651,21 +661,23 @@ class ProjectsV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.enable_project_ci_with_http_info(
+            return self.projects_v1_enable_project_ci_with_http_info(
                 owner, project, **kwargs
             )  # noqa: E501
         else:
-            (data) = self.enable_project_ci_with_http_info(
+            (data) = self.projects_v1_enable_project_ci_with_http_info(
                 owner, project, **kwargs
             )  # noqa: E501
             return data
 
-    def enable_project_ci_with_http_info(self, owner, project, **kwargs):  # noqa: E501
+    def projects_v1_enable_project_ci_with_http_info(
+        self, owner, project, **kwargs
+    ):  # noqa: E501
         """Enable project CI  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.enable_project_ci_with_http_info(owner, project, async_req=True)
+        >>> thread = api.projects_v1_enable_project_ci_with_http_info(owner, project, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -687,19 +699,19 @@ class ProjectsV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method enable_project_ci" % key
+                    " to method projects_v1_enable_project_ci" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `enable_project_ci`"
+                "Missing the required parameter `owner` when calling `projects_v1_enable_project_ci`"
             )  # noqa: E501
         # verify the required parameter 'project' is set
         if "project" not in params or params["project"] is None:
             raise ValueError(
-                "Missing the required parameter `project` when calling `enable_project_ci`"
+                "Missing the required parameter `project` when calling `projects_v1_enable_project_ci`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -751,12 +763,12 @@ class ProjectsV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def fetch_project_teams(self, owner, project, **kwargs):  # noqa: E501
+    def projects_v1_fetch_project_teams(self, owner, project, **kwargs):  # noqa: E501
         """Get project teams  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.fetch_project_teams(owner, project, async_req=True)
+        >>> thread = api.projects_v1_fetch_project_teams(owner, project, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -768,23 +780,23 @@ class ProjectsV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.fetch_project_teams_with_http_info(
+            return self.projects_v1_fetch_project_teams_with_http_info(
                 owner, project, **kwargs
             )  # noqa: E501
         else:
-            (data) = self.fetch_project_teams_with_http_info(
+            (data) = self.projects_v1_fetch_project_teams_with_http_info(
                 owner, project, **kwargs
             )  # noqa: E501
             return data
 
-    def fetch_project_teams_with_http_info(
+    def projects_v1_fetch_project_teams_with_http_info(
         self, owner, project, **kwargs
     ):  # noqa: E501
         """Get project teams  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.fetch_project_teams_with_http_info(owner, project, async_req=True)
+        >>> thread = api.projects_v1_fetch_project_teams_with_http_info(owner, project, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -806,19 +818,19 @@ class ProjectsV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method fetch_project_teams" % key
+                    " to method projects_v1_fetch_project_teams" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `fetch_project_teams`"
+                "Missing the required parameter `owner` when calling `projects_v1_fetch_project_teams`"
             )  # noqa: E501
         # verify the required parameter 'project' is set
         if "project" not in params or params["project"] is None:
             raise ValueError(
-                "Missing the required parameter `project` when calling `fetch_project_teams`"
+                "Missing the required parameter `project` when calling `projects_v1_fetch_project_teams`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -870,12 +882,12 @@ class ProjectsV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def get_project(self, owner, project, **kwargs):  # noqa: E501
+    def projects_v1_get_project(self, owner, project, **kwargs):  # noqa: E501
         """Get project  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.get_project(owner, project, async_req=True)
+        >>> thread = api.projects_v1_get_project(owner, project, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -887,21 +899,23 @@ class ProjectsV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.get_project_with_http_info(
+            return self.projects_v1_get_project_with_http_info(
                 owner, project, **kwargs
             )  # noqa: E501
         else:
-            (data) = self.get_project_with_http_info(
+            (data) = self.projects_v1_get_project_with_http_info(
                 owner, project, **kwargs
             )  # noqa: E501
             return data
 
-    def get_project_with_http_info(self, owner, project, **kwargs):  # noqa: E501
+    def projects_v1_get_project_with_http_info(
+        self, owner, project, **kwargs
+    ):  # noqa: E501
         """Get project  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.get_project_with_http_info(owner, project, async_req=True)
+        >>> thread = api.projects_v1_get_project_with_http_info(owner, project, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -923,19 +937,19 @@ class ProjectsV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method get_project" % key
+                    " to method projects_v1_get_project" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `get_project`"
+                "Missing the required parameter `owner` when calling `projects_v1_get_project`"
             )  # noqa: E501
         # verify the required parameter 'project' is set
         if "project" not in params or params["project"] is None:
             raise ValueError(
-                "Missing the required parameter `project` when calling `get_project`"
+                "Missing the required parameter `project` when calling `projects_v1_get_project`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -987,12 +1001,12 @@ class ProjectsV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def get_project_settings(self, owner, project, **kwargs):  # noqa: E501
+    def projects_v1_get_project_settings(self, owner, project, **kwargs):  # noqa: E501
         """Get Project settings  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.get_project_settings(owner, project, async_req=True)
+        >>> thread = api.projects_v1_get_project_settings(owner, project, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -1004,23 +1018,23 @@ class ProjectsV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.get_project_settings_with_http_info(
+            return self.projects_v1_get_project_settings_with_http_info(
                 owner, project, **kwargs
             )  # noqa: E501
         else:
-            (data) = self.get_project_settings_with_http_info(
+            (data) = self.projects_v1_get_project_settings_with_http_info(
                 owner, project, **kwargs
             )  # noqa: E501
             return data
 
-    def get_project_settings_with_http_info(
+    def projects_v1_get_project_settings_with_http_info(
         self, owner, project, **kwargs
     ):  # noqa: E501
         """Get Project settings  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.get_project_settings_with_http_info(owner, project, async_req=True)
+        >>> thread = api.projects_v1_get_project_settings_with_http_info(owner, project, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -1042,19 +1056,19 @@ class ProjectsV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method get_project_settings" % key
+                    " to method projects_v1_get_project_settings" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `get_project_settings`"
+                "Missing the required parameter `owner` when calling `projects_v1_get_project_settings`"
             )  # noqa: E501
         # verify the required parameter 'project' is set
         if "project" not in params or params["project"] is None:
             raise ValueError(
-                "Missing the required parameter `project` when calling `get_project_settings`"
+                "Missing the required parameter `project` when calling `projects_v1_get_project_settings`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -1106,12 +1120,12 @@ class ProjectsV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def list_archived_projects(self, user, **kwargs):  # noqa: E501
+    def projects_v1_list_archived_projects(self, user, **kwargs):  # noqa: E501
         """List archived projects for user  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.list_archived_projects(user, async_req=True)
+        >>> thread = api.projects_v1_list_archived_projects(user, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -1126,21 +1140,23 @@ class ProjectsV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.list_archived_projects_with_http_info(
+            return self.projects_v1_list_archived_projects_with_http_info(
                 user, **kwargs
             )  # noqa: E501
         else:
-            (data) = self.list_archived_projects_with_http_info(
+            (data) = self.projects_v1_list_archived_projects_with_http_info(
                 user, **kwargs
             )  # noqa: E501
             return data
 
-    def list_archived_projects_with_http_info(self, user, **kwargs):  # noqa: E501
+    def projects_v1_list_archived_projects_with_http_info(
+        self, user, **kwargs
+    ):  # noqa: E501
         """List archived projects for user  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.list_archived_projects_with_http_info(user, async_req=True)
+        >>> thread = api.projects_v1_list_archived_projects_with_http_info(user, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -1165,14 +1181,14 @@ class ProjectsV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method list_archived_projects" % key
+                    " to method projects_v1_list_archived_projects" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'user' is set
         if "user" not in params or params["user"] is None:
             raise ValueError(
-                "Missing the required parameter `user` when calling `list_archived_projects`"
+                "Missing the required parameter `user` when calling `projects_v1_list_archived_projects`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -1230,12 +1246,12 @@ class ProjectsV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def list_bookmarked_projects(self, user, **kwargs):  # noqa: E501
+    def projects_v1_list_bookmarked_projects(self, user, **kwargs):  # noqa: E501
         """List bookmarked projects for user  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.list_bookmarked_projects(user, async_req=True)
+        >>> thread = api.projects_v1_list_bookmarked_projects(user, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -1250,21 +1266,23 @@ class ProjectsV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.list_bookmarked_projects_with_http_info(
+            return self.projects_v1_list_bookmarked_projects_with_http_info(
                 user, **kwargs
             )  # noqa: E501
         else:
-            (data) = self.list_bookmarked_projects_with_http_info(
+            (data) = self.projects_v1_list_bookmarked_projects_with_http_info(
                 user, **kwargs
             )  # noqa: E501
             return data
 
-    def list_bookmarked_projects_with_http_info(self, user, **kwargs):  # noqa: E501
+    def projects_v1_list_bookmarked_projects_with_http_info(
+        self, user, **kwargs
+    ):  # noqa: E501
         """List bookmarked projects for user  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.list_bookmarked_projects_with_http_info(user, async_req=True)
+        >>> thread = api.projects_v1_list_bookmarked_projects_with_http_info(user, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -1289,14 +1307,14 @@ class ProjectsV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method list_bookmarked_projects" % key
+                    " to method projects_v1_list_bookmarked_projects" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'user' is set
         if "user" not in params or params["user"] is None:
             raise ValueError(
-                "Missing the required parameter `user` when calling `list_bookmarked_projects`"
+                "Missing the required parameter `user` when calling `projects_v1_list_bookmarked_projects`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -1354,12 +1372,12 @@ class ProjectsV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def list_project_names(self, owner, **kwargs):  # noqa: E501
+    def projects_v1_list_project_names(self, owner, **kwargs):  # noqa: E501
         """List project names  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.list_project_names(owner, async_req=True)
+        >>> thread = api.projects_v1_list_project_names(owner, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -1374,19 +1392,23 @@ class ProjectsV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.list_project_names_with_http_info(owner, **kwargs)  # noqa: E501
+            return self.projects_v1_list_project_names_with_http_info(
+                owner, **kwargs
+            )  # noqa: E501
         else:
-            (data) = self.list_project_names_with_http_info(
+            (data) = self.projects_v1_list_project_names_with_http_info(
                 owner, **kwargs
             )  # noqa: E501
             return data
 
-    def list_project_names_with_http_info(self, owner, **kwargs):  # noqa: E501
+    def projects_v1_list_project_names_with_http_info(
+        self, owner, **kwargs
+    ):  # noqa: E501
         """List project names  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.list_project_names_with_http_info(owner, async_req=True)
+        >>> thread = api.projects_v1_list_project_names_with_http_info(owner, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -1411,14 +1433,14 @@ class ProjectsV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method list_project_names" % key
+                    " to method projects_v1_list_project_names" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `list_project_names`"
+                "Missing the required parameter `owner` when calling `projects_v1_list_project_names`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -1476,12 +1498,12 @@ class ProjectsV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def list_projects(self, owner, **kwargs):  # noqa: E501
+    def projects_v1_list_projects(self, owner, **kwargs):  # noqa: E501
         """List projects  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.list_projects(owner, async_req=True)
+        >>> thread = api.projects_v1_list_projects(owner, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -1496,17 +1518,21 @@ class ProjectsV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.list_projects_with_http_info(owner, **kwargs)  # noqa: E501
+            return self.projects_v1_list_projects_with_http_info(
+                owner, **kwargs
+            )  # noqa: E501
         else:
-            (data) = self.list_projects_with_http_info(owner, **kwargs)  # noqa: E501
+            (data) = self.projects_v1_list_projects_with_http_info(
+                owner, **kwargs
+            )  # noqa: E501
             return data
 
-    def list_projects_with_http_info(self, owner, **kwargs):  # noqa: E501
+    def projects_v1_list_projects_with_http_info(self, owner, **kwargs):  # noqa: E501
         """List projects  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.list_projects_with_http_info(owner, async_req=True)
+        >>> thread = api.projects_v1_list_projects_with_http_info(owner, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -1531,14 +1557,14 @@ class ProjectsV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method list_projects" % key
+                    " to method projects_v1_list_projects" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `list_projects`"
+                "Missing the required parameter `owner` when calling `projects_v1_list_projects`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -1596,12 +1622,14 @@ class ProjectsV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def patch_project(self, owner, project_name, body, **kwargs):  # noqa: E501
+    def projects_v1_patch_project(
+        self, owner, project_name, body, **kwargs
+    ):  # noqa: E501
         """Patch project  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.patch_project(owner, project_name, body, async_req=True)
+        >>> thread = api.projects_v1_patch_project(owner, project_name, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -1614,23 +1642,23 @@ class ProjectsV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.patch_project_with_http_info(
+            return self.projects_v1_patch_project_with_http_info(
                 owner, project_name, body, **kwargs
             )  # noqa: E501
         else:
-            (data) = self.patch_project_with_http_info(
+            (data) = self.projects_v1_patch_project_with_http_info(
                 owner, project_name, body, **kwargs
             )  # noqa: E501
             return data
 
-    def patch_project_with_http_info(
+    def projects_v1_patch_project_with_http_info(
         self, owner, project_name, body, **kwargs
     ):  # noqa: E501
         """Patch project  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.patch_project_with_http_info(owner, project_name, body, async_req=True)
+        >>> thread = api.projects_v1_patch_project_with_http_info(owner, project_name, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -1653,24 +1681,24 @@ class ProjectsV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method patch_project" % key
+                    " to method projects_v1_patch_project" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `patch_project`"
+                "Missing the required parameter `owner` when calling `projects_v1_patch_project`"
             )  # noqa: E501
         # verify the required parameter 'project_name' is set
         if "project_name" not in params or params["project_name"] is None:
             raise ValueError(
-                "Missing the required parameter `project_name` when calling `patch_project`"
+                "Missing the required parameter `project_name` when calling `projects_v1_patch_project`"
             )  # noqa: E501
         # verify the required parameter 'body' is set
         if "body" not in params or params["body"] is None:
             raise ValueError(
-                "Missing the required parameter `body` when calling `patch_project`"
+                "Missing the required parameter `body` when calling `projects_v1_patch_project`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -1724,12 +1752,14 @@ class ProjectsV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def patch_project_settings(self, owner, project, body, **kwargs):  # noqa: E501
+    def projects_v1_patch_project_settings(
+        self, owner, project, body, **kwargs
+    ):  # noqa: E501
         """Patch project settings  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.patch_project_settings(owner, project, body, async_req=True)
+        >>> thread = api.projects_v1_patch_project_settings(owner, project, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -1742,23 +1772,23 @@ class ProjectsV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.patch_project_settings_with_http_info(
+            return self.projects_v1_patch_project_settings_with_http_info(
                 owner, project, body, **kwargs
             )  # noqa: E501
         else:
-            (data) = self.patch_project_settings_with_http_info(
+            (data) = self.projects_v1_patch_project_settings_with_http_info(
                 owner, project, body, **kwargs
             )  # noqa: E501
             return data
 
-    def patch_project_settings_with_http_info(
+    def projects_v1_patch_project_settings_with_http_info(
         self, owner, project, body, **kwargs
     ):  # noqa: E501
         """Patch project settings  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.patch_project_settings_with_http_info(owner, project, body, async_req=True)
+        >>> thread = api.projects_v1_patch_project_settings_with_http_info(owner, project, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -1781,24 +1811,24 @@ class ProjectsV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method patch_project_settings" % key
+                    " to method projects_v1_patch_project_settings" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `patch_project_settings`"
+                "Missing the required parameter `owner` when calling `projects_v1_patch_project_settings`"
             )  # noqa: E501
         # verify the required parameter 'project' is set
         if "project" not in params or params["project"] is None:
             raise ValueError(
-                "Missing the required parameter `project` when calling `patch_project_settings`"
+                "Missing the required parameter `project` when calling `projects_v1_patch_project_settings`"
             )  # noqa: E501
         # verify the required parameter 'body' is set
         if "body" not in params or params["body"] is None:
             raise ValueError(
-                "Missing the required parameter `body` when calling `patch_project_settings`"
+                "Missing the required parameter `body` when calling `projects_v1_patch_project_settings`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -1852,12 +1882,14 @@ class ProjectsV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def patch_project_teams(self, owner, project, body, **kwargs):  # noqa: E501
+    def projects_v1_patch_project_teams(
+        self, owner, project, body, **kwargs
+    ):  # noqa: E501
         """Patch project teams  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.patch_project_teams(owner, project, body, async_req=True)
+        >>> thread = api.projects_v1_patch_project_teams(owner, project, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -1870,23 +1902,23 @@ class ProjectsV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.patch_project_teams_with_http_info(
+            return self.projects_v1_patch_project_teams_with_http_info(
                 owner, project, body, **kwargs
             )  # noqa: E501
         else:
-            (data) = self.patch_project_teams_with_http_info(
+            (data) = self.projects_v1_patch_project_teams_with_http_info(
                 owner, project, body, **kwargs
             )  # noqa: E501
             return data
 
-    def patch_project_teams_with_http_info(
+    def projects_v1_patch_project_teams_with_http_info(
         self, owner, project, body, **kwargs
     ):  # noqa: E501
         """Patch project teams  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.patch_project_teams_with_http_info(owner, project, body, async_req=True)
+        >>> thread = api.projects_v1_patch_project_teams_with_http_info(owner, project, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -1909,24 +1941,24 @@ class ProjectsV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method patch_project_teams" % key
+                    " to method projects_v1_patch_project_teams" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `patch_project_teams`"
+                "Missing the required parameter `owner` when calling `projects_v1_patch_project_teams`"
             )  # noqa: E501
         # verify the required parameter 'project' is set
         if "project" not in params or params["project"] is None:
             raise ValueError(
-                "Missing the required parameter `project` when calling `patch_project_teams`"
+                "Missing the required parameter `project` when calling `projects_v1_patch_project_teams`"
             )  # noqa: E501
         # verify the required parameter 'body' is set
         if "body" not in params or params["body"] is None:
             raise ValueError(
-                "Missing the required parameter `body` when calling `patch_project_teams`"
+                "Missing the required parameter `body` when calling `projects_v1_patch_project_teams`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -1980,12 +2012,12 @@ class ProjectsV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def restore_project(self, owner, project, **kwargs):  # noqa: E501
+    def projects_v1_restore_project(self, owner, project, **kwargs):  # noqa: E501
         """Restore project  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.restore_project(owner, project, async_req=True)
+        >>> thread = api.projects_v1_restore_project(owner, project, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -1997,21 +2029,23 @@ class ProjectsV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.restore_project_with_http_info(
+            return self.projects_v1_restore_project_with_http_info(
                 owner, project, **kwargs
             )  # noqa: E501
         else:
-            (data) = self.restore_project_with_http_info(
+            (data) = self.projects_v1_restore_project_with_http_info(
                 owner, project, **kwargs
             )  # noqa: E501
             return data
 
-    def restore_project_with_http_info(self, owner, project, **kwargs):  # noqa: E501
+    def projects_v1_restore_project_with_http_info(
+        self, owner, project, **kwargs
+    ):  # noqa: E501
         """Restore project  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.restore_project_with_http_info(owner, project, async_req=True)
+        >>> thread = api.projects_v1_restore_project_with_http_info(owner, project, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -2033,19 +2067,19 @@ class ProjectsV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method restore_project" % key
+                    " to method projects_v1_restore_project" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `restore_project`"
+                "Missing the required parameter `owner` when calling `projects_v1_restore_project`"
             )  # noqa: E501
         # verify the required parameter 'project' is set
         if "project" not in params or params["project"] is None:
             raise ValueError(
-                "Missing the required parameter `project` when calling `restore_project`"
+                "Missing the required parameter `project` when calling `projects_v1_restore_project`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -2097,12 +2131,12 @@ class ProjectsV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def unbookmark_project(self, owner, project, **kwargs):  # noqa: E501
+    def projects_v1_unbookmark_project(self, owner, project, **kwargs):  # noqa: E501
         """Unbookmark project  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.unbookmark_project(owner, project, async_req=True)
+        >>> thread = api.projects_v1_unbookmark_project(owner, project, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -2114,21 +2148,23 @@ class ProjectsV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.unbookmark_project_with_http_info(
+            return self.projects_v1_unbookmark_project_with_http_info(
                 owner, project, **kwargs
             )  # noqa: E501
         else:
-            (data) = self.unbookmark_project_with_http_info(
+            (data) = self.projects_v1_unbookmark_project_with_http_info(
                 owner, project, **kwargs
             )  # noqa: E501
             return data
 
-    def unbookmark_project_with_http_info(self, owner, project, **kwargs):  # noqa: E501
+    def projects_v1_unbookmark_project_with_http_info(
+        self, owner, project, **kwargs
+    ):  # noqa: E501
         """Unbookmark project  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.unbookmark_project_with_http_info(owner, project, async_req=True)
+        >>> thread = api.projects_v1_unbookmark_project_with_http_info(owner, project, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -2150,19 +2186,19 @@ class ProjectsV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method unbookmark_project" % key
+                    " to method projects_v1_unbookmark_project" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `unbookmark_project`"
+                "Missing the required parameter `owner` when calling `projects_v1_unbookmark_project`"
             )  # noqa: E501
         # verify the required parameter 'project' is set
         if "project" not in params or params["project"] is None:
             raise ValueError(
-                "Missing the required parameter `project` when calling `unbookmark_project`"
+                "Missing the required parameter `project` when calling `projects_v1_unbookmark_project`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -2214,12 +2250,14 @@ class ProjectsV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def update_project(self, owner, project_name, body, **kwargs):  # noqa: E501
+    def projects_v1_update_project(
+        self, owner, project_name, body, **kwargs
+    ):  # noqa: E501
         """Update project  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.update_project(owner, project_name, body, async_req=True)
+        >>> thread = api.projects_v1_update_project(owner, project_name, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -2232,23 +2270,23 @@ class ProjectsV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.update_project_with_http_info(
+            return self.projects_v1_update_project_with_http_info(
                 owner, project_name, body, **kwargs
             )  # noqa: E501
         else:
-            (data) = self.update_project_with_http_info(
+            (data) = self.projects_v1_update_project_with_http_info(
                 owner, project_name, body, **kwargs
             )  # noqa: E501
             return data
 
-    def update_project_with_http_info(
+    def projects_v1_update_project_with_http_info(
         self, owner, project_name, body, **kwargs
     ):  # noqa: E501
         """Update project  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.update_project_with_http_info(owner, project_name, body, async_req=True)
+        >>> thread = api.projects_v1_update_project_with_http_info(owner, project_name, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -2271,24 +2309,24 @@ class ProjectsV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method update_project" % key
+                    " to method projects_v1_update_project" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `update_project`"
+                "Missing the required parameter `owner` when calling `projects_v1_update_project`"
             )  # noqa: E501
         # verify the required parameter 'project_name' is set
         if "project_name" not in params or params["project_name"] is None:
             raise ValueError(
-                "Missing the required parameter `project_name` when calling `update_project`"
+                "Missing the required parameter `project_name` when calling `projects_v1_update_project`"
             )  # noqa: E501
         # verify the required parameter 'body' is set
         if "body" not in params or params["body"] is None:
             raise ValueError(
-                "Missing the required parameter `body` when calling `update_project`"
+                "Missing the required parameter `body` when calling `projects_v1_update_project`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -2342,12 +2380,14 @@ class ProjectsV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def update_project_settings(self, owner, project, body, **kwargs):  # noqa: E501
+    def projects_v1_update_project_settings(
+        self, owner, project, body, **kwargs
+    ):  # noqa: E501
         """Update project settings  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.update_project_settings(owner, project, body, async_req=True)
+        >>> thread = api.projects_v1_update_project_settings(owner, project, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -2360,23 +2400,23 @@ class ProjectsV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.update_project_settings_with_http_info(
+            return self.projects_v1_update_project_settings_with_http_info(
                 owner, project, body, **kwargs
             )  # noqa: E501
         else:
-            (data) = self.update_project_settings_with_http_info(
+            (data) = self.projects_v1_update_project_settings_with_http_info(
                 owner, project, body, **kwargs
             )  # noqa: E501
             return data
 
-    def update_project_settings_with_http_info(
+    def projects_v1_update_project_settings_with_http_info(
         self, owner, project, body, **kwargs
     ):  # noqa: E501
         """Update project settings  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.update_project_settings_with_http_info(owner, project, body, async_req=True)
+        >>> thread = api.projects_v1_update_project_settings_with_http_info(owner, project, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -2399,24 +2439,24 @@ class ProjectsV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method update_project_settings" % key
+                    " to method projects_v1_update_project_settings" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `update_project_settings`"
+                "Missing the required parameter `owner` when calling `projects_v1_update_project_settings`"
             )  # noqa: E501
         # verify the required parameter 'project' is set
         if "project" not in params or params["project"] is None:
             raise ValueError(
-                "Missing the required parameter `project` when calling `update_project_settings`"
+                "Missing the required parameter `project` when calling `projects_v1_update_project_settings`"
             )  # noqa: E501
         # verify the required parameter 'body' is set
         if "body" not in params or params["body"] is None:
             raise ValueError(
-                "Missing the required parameter `body` when calling `update_project_settings`"
+                "Missing the required parameter `body` when calling `projects_v1_update_project_settings`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -2470,12 +2510,14 @@ class ProjectsV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def update_project_teams(self, owner, project, body, **kwargs):  # noqa: E501
+    def projects_v1_update_project_teams(
+        self, owner, project, body, **kwargs
+    ):  # noqa: E501
         """Update project teams  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.update_project_teams(owner, project, body, async_req=True)
+        >>> thread = api.projects_v1_update_project_teams(owner, project, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -2488,23 +2530,23 @@ class ProjectsV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.update_project_teams_with_http_info(
+            return self.projects_v1_update_project_teams_with_http_info(
                 owner, project, body, **kwargs
             )  # noqa: E501
         else:
-            (data) = self.update_project_teams_with_http_info(
+            (data) = self.projects_v1_update_project_teams_with_http_info(
                 owner, project, body, **kwargs
             )  # noqa: E501
             return data
 
-    def update_project_teams_with_http_info(
+    def projects_v1_update_project_teams_with_http_info(
         self, owner, project, body, **kwargs
     ):  # noqa: E501
         """Update project teams  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.update_project_teams_with_http_info(owner, project, body, async_req=True)
+        >>> thread = api.projects_v1_update_project_teams_with_http_info(owner, project, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -2527,24 +2569,24 @@ class ProjectsV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method update_project_teams" % key
+                    " to method projects_v1_update_project_teams" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `update_project_teams`"
+                "Missing the required parameter `owner` when calling `projects_v1_update_project_teams`"
             )  # noqa: E501
         # verify the required parameter 'project' is set
         if "project" not in params or params["project"] is None:
             raise ValueError(
-                "Missing the required parameter `project` when calling `update_project_teams`"
+                "Missing the required parameter `project` when calling `projects_v1_update_project_teams`"
             )  # noqa: E501
         # verify the required parameter 'body' is set
         if "body" not in params or params["body"] is None:
             raise ValueError(
-                "Missing the required parameter `body` when calling `update_project_teams`"
+                "Missing the required parameter `body` when calling `projects_v1_update_project_teams`"
             )  # noqa: E501
 
         collection_formats = {}

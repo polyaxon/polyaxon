@@ -87,1773 +87,6 @@ public class RunsV1Api {
     }
 
     /**
-     * Build call for archiveRun
-     * @param owner Owner of the namespace (required)
-     * @param project Project (required)
-     * @param uuid Uuid identifier of the entity (required)
-     * @param progressListener Progress listener
-     * @param progressRequestListener Progress request listener
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     */
-    public com.squareup.okhttp.Call archiveRunCall(String owner, String project, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        Object localVarPostBody = null;
-
-        // create path and map variables
-        String localVarPath = "/api/v1/{owner}/{project}/runs/{uuid}/archive"
-            .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()))
-            .replaceAll("\\{" + "project" + "\\}", apiClient.escapeString(project.toString()))
-            .replaceAll("\\{" + "uuid" + "\\}", apiClient.escapeString(uuid.toString()));
-
-        List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-        final String[] localVarAccepts = {
-            "application/json"
-        };
-        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
-
-        final String[] localVarContentTypes = {
-            "application/json"
-        };
-        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
-        localVarHeaderParams.put("Content-Type", localVarContentType);
-
-        if(progressListener != null) {
-            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
-                @Override
-                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
-                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
-                    return originalResponse.newBuilder()
-                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
-                    .build();
-                }
-            });
-        }
-
-        String[] localVarAuthNames = new String[] { "ApiKey" };
-        return apiClient.buildCall(localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
-    }
-
-    @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call archiveRunValidateBeforeCall(String owner, String project, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        
-        // verify the required parameter 'owner' is set
-        if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling archiveRun(Async)");
-        }
-        
-        // verify the required parameter 'project' is set
-        if (project == null) {
-            throw new ApiException("Missing the required parameter 'project' when calling archiveRun(Async)");
-        }
-        
-        // verify the required parameter 'uuid' is set
-        if (uuid == null) {
-            throw new ApiException("Missing the required parameter 'uuid' when calling archiveRun(Async)");
-        }
-        
-
-        com.squareup.okhttp.Call call = archiveRunCall(owner, project, uuid, progressListener, progressRequestListener);
-        return call;
-
-    }
-
-    /**
-     * Archive run
-     * 
-     * @param owner Owner of the namespace (required)
-     * @param project Project (required)
-     * @param uuid Uuid identifier of the entity (required)
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     */
-    public void archiveRun(String owner, String project, String uuid) throws ApiException {
-        archiveRunWithHttpInfo(owner, project, uuid);
-    }
-
-    /**
-     * Archive run
-     * 
-     * @param owner Owner of the namespace (required)
-     * @param project Project (required)
-     * @param uuid Uuid identifier of the entity (required)
-     * @return ApiResponse&lt;Void&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     */
-    public ApiResponse<Void> archiveRunWithHttpInfo(String owner, String project, String uuid) throws ApiException {
-        com.squareup.okhttp.Call call = archiveRunValidateBeforeCall(owner, project, uuid, null, null);
-        return apiClient.execute(call);
-    }
-
-    /**
-     * Archive run (asynchronously)
-     * 
-     * @param owner Owner of the namespace (required)
-     * @param project Project (required)
-     * @param uuid Uuid identifier of the entity (required)
-     * @param callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     */
-    public com.squareup.okhttp.Call archiveRunAsync(String owner, String project, String uuid, final ApiCallback<Void> callback) throws ApiException {
-
-        ProgressResponseBody.ProgressListener progressListener = null;
-        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
-
-        if (callback != null) {
-            progressListener = new ProgressResponseBody.ProgressListener() {
-                @Override
-                public void update(long bytesRead, long contentLength, boolean done) {
-                    callback.onDownloadProgress(bytesRead, contentLength, done);
-                }
-            };
-
-            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
-                @Override
-                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
-                    callback.onUploadProgress(bytesWritten, contentLength, done);
-                }
-            };
-        }
-
-        com.squareup.okhttp.Call call = archiveRunValidateBeforeCall(owner, project, uuid, progressListener, progressRequestListener);
-        apiClient.executeAsync(call, callback);
-        return call;
-    }
-    /**
-     * Build call for bookmarkRun
-     * @param owner Owner of the namespace (required)
-     * @param project Project (required)
-     * @param uuid Uuid identifier of the entity (required)
-     * @param progressListener Progress listener
-     * @param progressRequestListener Progress request listener
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     */
-    public com.squareup.okhttp.Call bookmarkRunCall(String owner, String project, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        Object localVarPostBody = null;
-
-        // create path and map variables
-        String localVarPath = "/api/v1/{owner}/{project}/runs/{uuid}/bookmark"
-            .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()))
-            .replaceAll("\\{" + "project" + "\\}", apiClient.escapeString(project.toString()))
-            .replaceAll("\\{" + "uuid" + "\\}", apiClient.escapeString(uuid.toString()));
-
-        List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-        final String[] localVarAccepts = {
-            "application/json"
-        };
-        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
-
-        final String[] localVarContentTypes = {
-            "application/json"
-        };
-        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
-        localVarHeaderParams.put("Content-Type", localVarContentType);
-
-        if(progressListener != null) {
-            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
-                @Override
-                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
-                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
-                    return originalResponse.newBuilder()
-                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
-                    .build();
-                }
-            });
-        }
-
-        String[] localVarAuthNames = new String[] { "ApiKey" };
-        return apiClient.buildCall(localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
-    }
-
-    @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call bookmarkRunValidateBeforeCall(String owner, String project, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        
-        // verify the required parameter 'owner' is set
-        if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling bookmarkRun(Async)");
-        }
-        
-        // verify the required parameter 'project' is set
-        if (project == null) {
-            throw new ApiException("Missing the required parameter 'project' when calling bookmarkRun(Async)");
-        }
-        
-        // verify the required parameter 'uuid' is set
-        if (uuid == null) {
-            throw new ApiException("Missing the required parameter 'uuid' when calling bookmarkRun(Async)");
-        }
-        
-
-        com.squareup.okhttp.Call call = bookmarkRunCall(owner, project, uuid, progressListener, progressRequestListener);
-        return call;
-
-    }
-
-    /**
-     * Bookmark run
-     * 
-     * @param owner Owner of the namespace (required)
-     * @param project Project (required)
-     * @param uuid Uuid identifier of the entity (required)
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     */
-    public void bookmarkRun(String owner, String project, String uuid) throws ApiException {
-        bookmarkRunWithHttpInfo(owner, project, uuid);
-    }
-
-    /**
-     * Bookmark run
-     * 
-     * @param owner Owner of the namespace (required)
-     * @param project Project (required)
-     * @param uuid Uuid identifier of the entity (required)
-     * @return ApiResponse&lt;Void&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     */
-    public ApiResponse<Void> bookmarkRunWithHttpInfo(String owner, String project, String uuid) throws ApiException {
-        com.squareup.okhttp.Call call = bookmarkRunValidateBeforeCall(owner, project, uuid, null, null);
-        return apiClient.execute(call);
-    }
-
-    /**
-     * Bookmark run (asynchronously)
-     * 
-     * @param owner Owner of the namespace (required)
-     * @param project Project (required)
-     * @param uuid Uuid identifier of the entity (required)
-     * @param callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     */
-    public com.squareup.okhttp.Call bookmarkRunAsync(String owner, String project, String uuid, final ApiCallback<Void> callback) throws ApiException {
-
-        ProgressResponseBody.ProgressListener progressListener = null;
-        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
-
-        if (callback != null) {
-            progressListener = new ProgressResponseBody.ProgressListener() {
-                @Override
-                public void update(long bytesRead, long contentLength, boolean done) {
-                    callback.onDownloadProgress(bytesRead, contentLength, done);
-                }
-            };
-
-            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
-                @Override
-                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
-                    callback.onUploadProgress(bytesWritten, contentLength, done);
-                }
-            };
-        }
-
-        com.squareup.okhttp.Call call = bookmarkRunValidateBeforeCall(owner, project, uuid, progressListener, progressRequestListener);
-        apiClient.executeAsync(call, callback);
-        return call;
-    }
-    /**
-     * Build call for collectRunLogs
-     * @param namespace  (required)
-     * @param owner Owner of the namespace (required)
-     * @param project Project where the run will be assigned (required)
-     * @param uuid Uuid identifier of the entity (required)
-     * @param progressListener Progress listener
-     * @param progressRequestListener Progress request listener
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     */
-    public com.squareup.okhttp.Call collectRunLogsCall(String namespace, String owner, String project, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        Object localVarPostBody = null;
-
-        // create path and map variables
-        String localVarPath = "/streams/v1/{namespace}/_internal/{owner}/{project}/runs/{uuid}/logs"
-            .replaceAll("\\{" + "namespace" + "\\}", apiClient.escapeString(namespace.toString()))
-            .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()))
-            .replaceAll("\\{" + "project" + "\\}", apiClient.escapeString(project.toString()))
-            .replaceAll("\\{" + "uuid" + "\\}", apiClient.escapeString(uuid.toString()));
-
-        List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-        final String[] localVarAccepts = {
-            "application/json"
-        };
-        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
-
-        final String[] localVarContentTypes = {
-            "application/json"
-        };
-        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
-        localVarHeaderParams.put("Content-Type", localVarContentType);
-
-        if(progressListener != null) {
-            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
-                @Override
-                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
-                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
-                    return originalResponse.newBuilder()
-                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
-                    .build();
-                }
-            });
-        }
-
-        String[] localVarAuthNames = new String[] { "ApiKey" };
-        return apiClient.buildCall(localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
-    }
-
-    @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call collectRunLogsValidateBeforeCall(String namespace, String owner, String project, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        
-        // verify the required parameter 'namespace' is set
-        if (namespace == null) {
-            throw new ApiException("Missing the required parameter 'namespace' when calling collectRunLogs(Async)");
-        }
-        
-        // verify the required parameter 'owner' is set
-        if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling collectRunLogs(Async)");
-        }
-        
-        // verify the required parameter 'project' is set
-        if (project == null) {
-            throw new ApiException("Missing the required parameter 'project' when calling collectRunLogs(Async)");
-        }
-        
-        // verify the required parameter 'uuid' is set
-        if (uuid == null) {
-            throw new ApiException("Missing the required parameter 'uuid' when calling collectRunLogs(Async)");
-        }
-        
-
-        com.squareup.okhttp.Call call = collectRunLogsCall(namespace, owner, project, uuid, progressListener, progressRequestListener);
-        return call;
-
-    }
-
-    /**
-     * Collect run logs
-     * 
-     * @param namespace  (required)
-     * @param owner Owner of the namespace (required)
-     * @param project Project where the run will be assigned (required)
-     * @param uuid Uuid identifier of the entity (required)
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     */
-    public void collectRunLogs(String namespace, String owner, String project, String uuid) throws ApiException {
-        collectRunLogsWithHttpInfo(namespace, owner, project, uuid);
-    }
-
-    /**
-     * Collect run logs
-     * 
-     * @param namespace  (required)
-     * @param owner Owner of the namespace (required)
-     * @param project Project where the run will be assigned (required)
-     * @param uuid Uuid identifier of the entity (required)
-     * @return ApiResponse&lt;Void&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     */
-    public ApiResponse<Void> collectRunLogsWithHttpInfo(String namespace, String owner, String project, String uuid) throws ApiException {
-        com.squareup.okhttp.Call call = collectRunLogsValidateBeforeCall(namespace, owner, project, uuid, null, null);
-        return apiClient.execute(call);
-    }
-
-    /**
-     * Collect run logs (asynchronously)
-     * 
-     * @param namespace  (required)
-     * @param owner Owner of the namespace (required)
-     * @param project Project where the run will be assigned (required)
-     * @param uuid Uuid identifier of the entity (required)
-     * @param callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     */
-    public com.squareup.okhttp.Call collectRunLogsAsync(String namespace, String owner, String project, String uuid, final ApiCallback<Void> callback) throws ApiException {
-
-        ProgressResponseBody.ProgressListener progressListener = null;
-        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
-
-        if (callback != null) {
-            progressListener = new ProgressResponseBody.ProgressListener() {
-                @Override
-                public void update(long bytesRead, long contentLength, boolean done) {
-                    callback.onDownloadProgress(bytesRead, contentLength, done);
-                }
-            };
-
-            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
-                @Override
-                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
-                    callback.onUploadProgress(bytesWritten, contentLength, done);
-                }
-            };
-        }
-
-        com.squareup.okhttp.Call call = collectRunLogsValidateBeforeCall(namespace, owner, project, uuid, progressListener, progressRequestListener);
-        apiClient.executeAsync(call, callback);
-        return call;
-    }
-    /**
-     * Build call for copyRun
-     * @param entityOwner Owner of the namespace (required)
-     * @param entityProject Project (required)
-     * @param entityUuid Uuid identifier of the entity (required)
-     * @param body Run object (required)
-     * @param progressListener Progress listener
-     * @param progressRequestListener Progress request listener
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     */
-    public com.squareup.okhttp.Call copyRunCall(String entityOwner, String entityProject, String entityUuid, V1Run body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        Object localVarPostBody = body;
-
-        // create path and map variables
-        String localVarPath = "/api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/copy"
-            .replaceAll("\\{" + "entity.owner" + "\\}", apiClient.escapeString(entityOwner.toString()))
-            .replaceAll("\\{" + "entity.project" + "\\}", apiClient.escapeString(entityProject.toString()))
-            .replaceAll("\\{" + "entity.uuid" + "\\}", apiClient.escapeString(entityUuid.toString()));
-
-        List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-        final String[] localVarAccepts = {
-            "application/json"
-        };
-        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
-
-        final String[] localVarContentTypes = {
-            "application/json"
-        };
-        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
-        localVarHeaderParams.put("Content-Type", localVarContentType);
-
-        if(progressListener != null) {
-            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
-                @Override
-                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
-                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
-                    return originalResponse.newBuilder()
-                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
-                    .build();
-                }
-            });
-        }
-
-        String[] localVarAuthNames = new String[] { "ApiKey" };
-        return apiClient.buildCall(localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
-    }
-
-    @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call copyRunValidateBeforeCall(String entityOwner, String entityProject, String entityUuid, V1Run body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        
-        // verify the required parameter 'entityOwner' is set
-        if (entityOwner == null) {
-            throw new ApiException("Missing the required parameter 'entityOwner' when calling copyRun(Async)");
-        }
-        
-        // verify the required parameter 'entityProject' is set
-        if (entityProject == null) {
-            throw new ApiException("Missing the required parameter 'entityProject' when calling copyRun(Async)");
-        }
-        
-        // verify the required parameter 'entityUuid' is set
-        if (entityUuid == null) {
-            throw new ApiException("Missing the required parameter 'entityUuid' when calling copyRun(Async)");
-        }
-        
-        // verify the required parameter 'body' is set
-        if (body == null) {
-            throw new ApiException("Missing the required parameter 'body' when calling copyRun(Async)");
-        }
-        
-
-        com.squareup.okhttp.Call call = copyRunCall(entityOwner, entityProject, entityUuid, body, progressListener, progressRequestListener);
-        return call;
-
-    }
-
-    /**
-     * Restart run with copy
-     * 
-     * @param entityOwner Owner of the namespace (required)
-     * @param entityProject Project (required)
-     * @param entityUuid Uuid identifier of the entity (required)
-     * @param body Run object (required)
-     * @return V1Run
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     */
-    public V1Run copyRun(String entityOwner, String entityProject, String entityUuid, V1Run body) throws ApiException {
-        ApiResponse<V1Run> resp = copyRunWithHttpInfo(entityOwner, entityProject, entityUuid, body);
-        return resp.getData();
-    }
-
-    /**
-     * Restart run with copy
-     * 
-     * @param entityOwner Owner of the namespace (required)
-     * @param entityProject Project (required)
-     * @param entityUuid Uuid identifier of the entity (required)
-     * @param body Run object (required)
-     * @return ApiResponse&lt;V1Run&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     */
-    public ApiResponse<V1Run> copyRunWithHttpInfo(String entityOwner, String entityProject, String entityUuid, V1Run body) throws ApiException {
-        com.squareup.okhttp.Call call = copyRunValidateBeforeCall(entityOwner, entityProject, entityUuid, body, null, null);
-        Type localVarReturnType = new TypeToken<V1Run>(){}.getType();
-        return apiClient.execute(call, localVarReturnType);
-    }
-
-    /**
-     * Restart run with copy (asynchronously)
-     * 
-     * @param entityOwner Owner of the namespace (required)
-     * @param entityProject Project (required)
-     * @param entityUuid Uuid identifier of the entity (required)
-     * @param body Run object (required)
-     * @param callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     */
-    public com.squareup.okhttp.Call copyRunAsync(String entityOwner, String entityProject, String entityUuid, V1Run body, final ApiCallback<V1Run> callback) throws ApiException {
-
-        ProgressResponseBody.ProgressListener progressListener = null;
-        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
-
-        if (callback != null) {
-            progressListener = new ProgressResponseBody.ProgressListener() {
-                @Override
-                public void update(long bytesRead, long contentLength, boolean done) {
-                    callback.onDownloadProgress(bytesRead, contentLength, done);
-                }
-            };
-
-            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
-                @Override
-                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
-                    callback.onUploadProgress(bytesWritten, contentLength, done);
-                }
-            };
-        }
-
-        com.squareup.okhttp.Call call = copyRunValidateBeforeCall(entityOwner, entityProject, entityUuid, body, progressListener, progressRequestListener);
-        Type localVarReturnType = new TypeToken<V1Run>(){}.getType();
-        apiClient.executeAsync(call, localVarReturnType, callback);
-        return call;
-    }
-    /**
-     * Build call for createRun
-     * @param owner Owner of the namespace (required)
-     * @param project Project where the run will be assigned (required)
-     * @param body operation object (required)
-     * @param progressListener Progress listener
-     * @param progressRequestListener Progress request listener
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     */
-    public com.squareup.okhttp.Call createRunCall(String owner, String project, V1OperationBody body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        Object localVarPostBody = body;
-
-        // create path and map variables
-        String localVarPath = "/api/v1/{owner}/{project}/runs"
-            .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()))
-            .replaceAll("\\{" + "project" + "\\}", apiClient.escapeString(project.toString()));
-
-        List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-        final String[] localVarAccepts = {
-            "application/json"
-        };
-        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
-
-        final String[] localVarContentTypes = {
-            "application/json"
-        };
-        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
-        localVarHeaderParams.put("Content-Type", localVarContentType);
-
-        if(progressListener != null) {
-            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
-                @Override
-                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
-                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
-                    return originalResponse.newBuilder()
-                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
-                    .build();
-                }
-            });
-        }
-
-        String[] localVarAuthNames = new String[] { "ApiKey" };
-        return apiClient.buildCall(localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
-    }
-
-    @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call createRunValidateBeforeCall(String owner, String project, V1OperationBody body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        
-        // verify the required parameter 'owner' is set
-        if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling createRun(Async)");
-        }
-        
-        // verify the required parameter 'project' is set
-        if (project == null) {
-            throw new ApiException("Missing the required parameter 'project' when calling createRun(Async)");
-        }
-        
-        // verify the required parameter 'body' is set
-        if (body == null) {
-            throw new ApiException("Missing the required parameter 'body' when calling createRun(Async)");
-        }
-        
-
-        com.squareup.okhttp.Call call = createRunCall(owner, project, body, progressListener, progressRequestListener);
-        return call;
-
-    }
-
-    /**
-     * Create new run
-     * 
-     * @param owner Owner of the namespace (required)
-     * @param project Project where the run will be assigned (required)
-     * @param body operation object (required)
-     * @return V1Run
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     */
-    public V1Run createRun(String owner, String project, V1OperationBody body) throws ApiException {
-        ApiResponse<V1Run> resp = createRunWithHttpInfo(owner, project, body);
-        return resp.getData();
-    }
-
-    /**
-     * Create new run
-     * 
-     * @param owner Owner of the namespace (required)
-     * @param project Project where the run will be assigned (required)
-     * @param body operation object (required)
-     * @return ApiResponse&lt;V1Run&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     */
-    public ApiResponse<V1Run> createRunWithHttpInfo(String owner, String project, V1OperationBody body) throws ApiException {
-        com.squareup.okhttp.Call call = createRunValidateBeforeCall(owner, project, body, null, null);
-        Type localVarReturnType = new TypeToken<V1Run>(){}.getType();
-        return apiClient.execute(call, localVarReturnType);
-    }
-
-    /**
-     * Create new run (asynchronously)
-     * 
-     * @param owner Owner of the namespace (required)
-     * @param project Project where the run will be assigned (required)
-     * @param body operation object (required)
-     * @param callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     */
-    public com.squareup.okhttp.Call createRunAsync(String owner, String project, V1OperationBody body, final ApiCallback<V1Run> callback) throws ApiException {
-
-        ProgressResponseBody.ProgressListener progressListener = null;
-        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
-
-        if (callback != null) {
-            progressListener = new ProgressResponseBody.ProgressListener() {
-                @Override
-                public void update(long bytesRead, long contentLength, boolean done) {
-                    callback.onDownloadProgress(bytesRead, contentLength, done);
-                }
-            };
-
-            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
-                @Override
-                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
-                    callback.onUploadProgress(bytesWritten, contentLength, done);
-                }
-            };
-        }
-
-        com.squareup.okhttp.Call call = createRunValidateBeforeCall(owner, project, body, progressListener, progressRequestListener);
-        Type localVarReturnType = new TypeToken<V1Run>(){}.getType();
-        apiClient.executeAsync(call, localVarReturnType, callback);
-        return call;
-    }
-    /**
-     * Build call for createRunArtifactsLineage
-     * @param owner Owner of the namespace (required)
-     * @param project Project where the run will be assigned (required)
-     * @param uuid Uuid identifier of the entity (required)
-     * @param body Run Artifacts (required)
-     * @param progressListener Progress listener
-     * @param progressRequestListener Progress request listener
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     */
-    public com.squareup.okhttp.Call createRunArtifactsLineageCall(String owner, String project, String uuid, V1RunArtifacts body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        Object localVarPostBody = body;
-
-        // create path and map variables
-        String localVarPath = "/api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage"
-            .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()))
-            .replaceAll("\\{" + "project" + "\\}", apiClient.escapeString(project.toString()))
-            .replaceAll("\\{" + "uuid" + "\\}", apiClient.escapeString(uuid.toString()));
-
-        List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-        final String[] localVarAccepts = {
-            "application/json"
-        };
-        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
-
-        final String[] localVarContentTypes = {
-            "application/json"
-        };
-        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
-        localVarHeaderParams.put("Content-Type", localVarContentType);
-
-        if(progressListener != null) {
-            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
-                @Override
-                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
-                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
-                    return originalResponse.newBuilder()
-                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
-                    .build();
-                }
-            });
-        }
-
-        String[] localVarAuthNames = new String[] { "ApiKey" };
-        return apiClient.buildCall(localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
-    }
-
-    @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call createRunArtifactsLineageValidateBeforeCall(String owner, String project, String uuid, V1RunArtifacts body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        
-        // verify the required parameter 'owner' is set
-        if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling createRunArtifactsLineage(Async)");
-        }
-        
-        // verify the required parameter 'project' is set
-        if (project == null) {
-            throw new ApiException("Missing the required parameter 'project' when calling createRunArtifactsLineage(Async)");
-        }
-        
-        // verify the required parameter 'uuid' is set
-        if (uuid == null) {
-            throw new ApiException("Missing the required parameter 'uuid' when calling createRunArtifactsLineage(Async)");
-        }
-        
-        // verify the required parameter 'body' is set
-        if (body == null) {
-            throw new ApiException("Missing the required parameter 'body' when calling createRunArtifactsLineage(Async)");
-        }
-        
-
-        com.squareup.okhttp.Call call = createRunArtifactsLineageCall(owner, project, uuid, body, progressListener, progressRequestListener);
-        return call;
-
-    }
-
-    /**
-     * Create bulk run run artifacts lineage
-     * 
-     * @param owner Owner of the namespace (required)
-     * @param project Project where the run will be assigned (required)
-     * @param uuid Uuid identifier of the entity (required)
-     * @param body Run Artifacts (required)
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     */
-    public void createRunArtifactsLineage(String owner, String project, String uuid, V1RunArtifacts body) throws ApiException {
-        createRunArtifactsLineageWithHttpInfo(owner, project, uuid, body);
-    }
-
-    /**
-     * Create bulk run run artifacts lineage
-     * 
-     * @param owner Owner of the namespace (required)
-     * @param project Project where the run will be assigned (required)
-     * @param uuid Uuid identifier of the entity (required)
-     * @param body Run Artifacts (required)
-     * @return ApiResponse&lt;Void&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     */
-    public ApiResponse<Void> createRunArtifactsLineageWithHttpInfo(String owner, String project, String uuid, V1RunArtifacts body) throws ApiException {
-        com.squareup.okhttp.Call call = createRunArtifactsLineageValidateBeforeCall(owner, project, uuid, body, null, null);
-        return apiClient.execute(call);
-    }
-
-    /**
-     * Create bulk run run artifacts lineage (asynchronously)
-     * 
-     * @param owner Owner of the namespace (required)
-     * @param project Project where the run will be assigned (required)
-     * @param uuid Uuid identifier of the entity (required)
-     * @param body Run Artifacts (required)
-     * @param callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     */
-    public com.squareup.okhttp.Call createRunArtifactsLineageAsync(String owner, String project, String uuid, V1RunArtifacts body, final ApiCallback<Void> callback) throws ApiException {
-
-        ProgressResponseBody.ProgressListener progressListener = null;
-        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
-
-        if (callback != null) {
-            progressListener = new ProgressResponseBody.ProgressListener() {
-                @Override
-                public void update(long bytesRead, long contentLength, boolean done) {
-                    callback.onDownloadProgress(bytesRead, contentLength, done);
-                }
-            };
-
-            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
-                @Override
-                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
-                    callback.onUploadProgress(bytesWritten, contentLength, done);
-                }
-            };
-        }
-
-        com.squareup.okhttp.Call call = createRunArtifactsLineageValidateBeforeCall(owner, project, uuid, body, progressListener, progressRequestListener);
-        apiClient.executeAsync(call, callback);
-        return call;
-    }
-    /**
-     * Build call for createRunStatus
-     * @param owner Owner of the namespace (required)
-     * @param project Project where the run will be assigned (required)
-     * @param uuid Uuid identifier of the entity (required)
-     * @param body  (required)
-     * @param progressListener Progress listener
-     * @param progressRequestListener Progress request listener
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     */
-    public com.squareup.okhttp.Call createRunStatusCall(String owner, String project, String uuid, V1EntityStatusBodyRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        Object localVarPostBody = body;
-
-        // create path and map variables
-        String localVarPath = "/api/v1/{owner}/{project}/runs/{uuid}/statuses"
-            .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()))
-            .replaceAll("\\{" + "project" + "\\}", apiClient.escapeString(project.toString()))
-            .replaceAll("\\{" + "uuid" + "\\}", apiClient.escapeString(uuid.toString()));
-
-        List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-        final String[] localVarAccepts = {
-            "application/json"
-        };
-        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
-
-        final String[] localVarContentTypes = {
-            "application/json"
-        };
-        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
-        localVarHeaderParams.put("Content-Type", localVarContentType);
-
-        if(progressListener != null) {
-            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
-                @Override
-                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
-                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
-                    return originalResponse.newBuilder()
-                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
-                    .build();
-                }
-            });
-        }
-
-        String[] localVarAuthNames = new String[] { "ApiKey" };
-        return apiClient.buildCall(localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
-    }
-
-    @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call createRunStatusValidateBeforeCall(String owner, String project, String uuid, V1EntityStatusBodyRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        
-        // verify the required parameter 'owner' is set
-        if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling createRunStatus(Async)");
-        }
-        
-        // verify the required parameter 'project' is set
-        if (project == null) {
-            throw new ApiException("Missing the required parameter 'project' when calling createRunStatus(Async)");
-        }
-        
-        // verify the required parameter 'uuid' is set
-        if (uuid == null) {
-            throw new ApiException("Missing the required parameter 'uuid' when calling createRunStatus(Async)");
-        }
-        
-        // verify the required parameter 'body' is set
-        if (body == null) {
-            throw new ApiException("Missing the required parameter 'body' when calling createRunStatus(Async)");
-        }
-        
-
-        com.squareup.okhttp.Call call = createRunStatusCall(owner, project, uuid, body, progressListener, progressRequestListener);
-        return call;
-
-    }
-
-    /**
-     * Create new run status
-     * 
-     * @param owner Owner of the namespace (required)
-     * @param project Project where the run will be assigned (required)
-     * @param uuid Uuid identifier of the entity (required)
-     * @param body  (required)
-     * @return V1Status
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     */
-    public V1Status createRunStatus(String owner, String project, String uuid, V1EntityStatusBodyRequest body) throws ApiException {
-        ApiResponse<V1Status> resp = createRunStatusWithHttpInfo(owner, project, uuid, body);
-        return resp.getData();
-    }
-
-    /**
-     * Create new run status
-     * 
-     * @param owner Owner of the namespace (required)
-     * @param project Project where the run will be assigned (required)
-     * @param uuid Uuid identifier of the entity (required)
-     * @param body  (required)
-     * @return ApiResponse&lt;V1Status&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     */
-    public ApiResponse<V1Status> createRunStatusWithHttpInfo(String owner, String project, String uuid, V1EntityStatusBodyRequest body) throws ApiException {
-        com.squareup.okhttp.Call call = createRunStatusValidateBeforeCall(owner, project, uuid, body, null, null);
-        Type localVarReturnType = new TypeToken<V1Status>(){}.getType();
-        return apiClient.execute(call, localVarReturnType);
-    }
-
-    /**
-     * Create new run status (asynchronously)
-     * 
-     * @param owner Owner of the namespace (required)
-     * @param project Project where the run will be assigned (required)
-     * @param uuid Uuid identifier of the entity (required)
-     * @param body  (required)
-     * @param callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     */
-    public com.squareup.okhttp.Call createRunStatusAsync(String owner, String project, String uuid, V1EntityStatusBodyRequest body, final ApiCallback<V1Status> callback) throws ApiException {
-
-        ProgressResponseBody.ProgressListener progressListener = null;
-        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
-
-        if (callback != null) {
-            progressListener = new ProgressResponseBody.ProgressListener() {
-                @Override
-                public void update(long bytesRead, long contentLength, boolean done) {
-                    callback.onDownloadProgress(bytesRead, contentLength, done);
-                }
-            };
-
-            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
-                @Override
-                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
-                    callback.onUploadProgress(bytesWritten, contentLength, done);
-                }
-            };
-        }
-
-        com.squareup.okhttp.Call call = createRunStatusValidateBeforeCall(owner, project, uuid, body, progressListener, progressRequestListener);
-        Type localVarReturnType = new TypeToken<V1Status>(){}.getType();
-        apiClient.executeAsync(call, localVarReturnType, callback);
-        return call;
-    }
-    /**
-     * Build call for deleteRun
-     * @param owner Owner of the namespace (required)
-     * @param project Project (required)
-     * @param uuid Uuid identifier of the entity (required)
-     * @param progressListener Progress listener
-     * @param progressRequestListener Progress request listener
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     */
-    public com.squareup.okhttp.Call deleteRunCall(String owner, String project, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        Object localVarPostBody = null;
-
-        // create path and map variables
-        String localVarPath = "/api/v1/{owner}/{project}/runs/{uuid}"
-            .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()))
-            .replaceAll("\\{" + "project" + "\\}", apiClient.escapeString(project.toString()))
-            .replaceAll("\\{" + "uuid" + "\\}", apiClient.escapeString(uuid.toString()));
-
-        List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-        final String[] localVarAccepts = {
-            "application/json"
-        };
-        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
-
-        final String[] localVarContentTypes = {
-            "application/json"
-        };
-        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
-        localVarHeaderParams.put("Content-Type", localVarContentType);
-
-        if(progressListener != null) {
-            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
-                @Override
-                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
-                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
-                    return originalResponse.newBuilder()
-                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
-                    .build();
-                }
-            });
-        }
-
-        String[] localVarAuthNames = new String[] { "ApiKey" };
-        return apiClient.buildCall(localVarPath, "DELETE", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
-    }
-
-    @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call deleteRunValidateBeforeCall(String owner, String project, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        
-        // verify the required parameter 'owner' is set
-        if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling deleteRun(Async)");
-        }
-        
-        // verify the required parameter 'project' is set
-        if (project == null) {
-            throw new ApiException("Missing the required parameter 'project' when calling deleteRun(Async)");
-        }
-        
-        // verify the required parameter 'uuid' is set
-        if (uuid == null) {
-            throw new ApiException("Missing the required parameter 'uuid' when calling deleteRun(Async)");
-        }
-        
-
-        com.squareup.okhttp.Call call = deleteRunCall(owner, project, uuid, progressListener, progressRequestListener);
-        return call;
-
-    }
-
-    /**
-     * Delete run
-     * 
-     * @param owner Owner of the namespace (required)
-     * @param project Project (required)
-     * @param uuid Uuid identifier of the entity (required)
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     */
-    public void deleteRun(String owner, String project, String uuid) throws ApiException {
-        deleteRunWithHttpInfo(owner, project, uuid);
-    }
-
-    /**
-     * Delete run
-     * 
-     * @param owner Owner of the namespace (required)
-     * @param project Project (required)
-     * @param uuid Uuid identifier of the entity (required)
-     * @return ApiResponse&lt;Void&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     */
-    public ApiResponse<Void> deleteRunWithHttpInfo(String owner, String project, String uuid) throws ApiException {
-        com.squareup.okhttp.Call call = deleteRunValidateBeforeCall(owner, project, uuid, null, null);
-        return apiClient.execute(call);
-    }
-
-    /**
-     * Delete run (asynchronously)
-     * 
-     * @param owner Owner of the namespace (required)
-     * @param project Project (required)
-     * @param uuid Uuid identifier of the entity (required)
-     * @param callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     */
-    public com.squareup.okhttp.Call deleteRunAsync(String owner, String project, String uuid, final ApiCallback<Void> callback) throws ApiException {
-
-        ProgressResponseBody.ProgressListener progressListener = null;
-        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
-
-        if (callback != null) {
-            progressListener = new ProgressResponseBody.ProgressListener() {
-                @Override
-                public void update(long bytesRead, long contentLength, boolean done) {
-                    callback.onDownloadProgress(bytesRead, contentLength, done);
-                }
-            };
-
-            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
-                @Override
-                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
-                    callback.onUploadProgress(bytesWritten, contentLength, done);
-                }
-            };
-        }
-
-        com.squareup.okhttp.Call call = deleteRunValidateBeforeCall(owner, project, uuid, progressListener, progressRequestListener);
-        apiClient.executeAsync(call, callback);
-        return call;
-    }
-    /**
-     * Build call for deleteRunArtifactLineage
-     * @param owner Owner of the namespace (required)
-     * @param project Project where the run will be assigned (required)
-     * @param uuid Uuid identifier of the entity (required)
-     * @param name Artifact name (required)
-     * @param namespace namespace. (optional)
-     * @param progressListener Progress listener
-     * @param progressRequestListener Progress request listener
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     */
-    public com.squareup.okhttp.Call deleteRunArtifactLineageCall(String owner, String project, String uuid, String name, String namespace, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        Object localVarPostBody = null;
-
-        // create path and map variables
-        String localVarPath = "/api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage/{name}"
-            .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()))
-            .replaceAll("\\{" + "project" + "\\}", apiClient.escapeString(project.toString()))
-            .replaceAll("\\{" + "uuid" + "\\}", apiClient.escapeString(uuid.toString()))
-            .replaceAll("\\{" + "name" + "\\}", apiClient.escapeString(name.toString()));
-
-        List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-        if (namespace != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("namespace", namespace));
-
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-        final String[] localVarAccepts = {
-            "application/json"
-        };
-        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
-
-        final String[] localVarContentTypes = {
-            "application/json"
-        };
-        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
-        localVarHeaderParams.put("Content-Type", localVarContentType);
-
-        if(progressListener != null) {
-            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
-                @Override
-                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
-                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
-                    return originalResponse.newBuilder()
-                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
-                    .build();
-                }
-            });
-        }
-
-        String[] localVarAuthNames = new String[] { "ApiKey" };
-        return apiClient.buildCall(localVarPath, "DELETE", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
-    }
-
-    @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call deleteRunArtifactLineageValidateBeforeCall(String owner, String project, String uuid, String name, String namespace, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        
-        // verify the required parameter 'owner' is set
-        if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling deleteRunArtifactLineage(Async)");
-        }
-        
-        // verify the required parameter 'project' is set
-        if (project == null) {
-            throw new ApiException("Missing the required parameter 'project' when calling deleteRunArtifactLineage(Async)");
-        }
-        
-        // verify the required parameter 'uuid' is set
-        if (uuid == null) {
-            throw new ApiException("Missing the required parameter 'uuid' when calling deleteRunArtifactLineage(Async)");
-        }
-        
-        // verify the required parameter 'name' is set
-        if (name == null) {
-            throw new ApiException("Missing the required parameter 'name' when calling deleteRunArtifactLineage(Async)");
-        }
-        
-
-        com.squareup.okhttp.Call call = deleteRunArtifactLineageCall(owner, project, uuid, name, namespace, progressListener, progressRequestListener);
-        return call;
-
-    }
-
-    /**
-     * Delete run artifact lineage
-     * 
-     * @param owner Owner of the namespace (required)
-     * @param project Project where the run will be assigned (required)
-     * @param uuid Uuid identifier of the entity (required)
-     * @param name Artifact name (required)
-     * @param namespace namespace. (optional)
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     */
-    public void deleteRunArtifactLineage(String owner, String project, String uuid, String name, String namespace) throws ApiException {
-        deleteRunArtifactLineageWithHttpInfo(owner, project, uuid, name, namespace);
-    }
-
-    /**
-     * Delete run artifact lineage
-     * 
-     * @param owner Owner of the namespace (required)
-     * @param project Project where the run will be assigned (required)
-     * @param uuid Uuid identifier of the entity (required)
-     * @param name Artifact name (required)
-     * @param namespace namespace. (optional)
-     * @return ApiResponse&lt;Void&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     */
-    public ApiResponse<Void> deleteRunArtifactLineageWithHttpInfo(String owner, String project, String uuid, String name, String namespace) throws ApiException {
-        com.squareup.okhttp.Call call = deleteRunArtifactLineageValidateBeforeCall(owner, project, uuid, name, namespace, null, null);
-        return apiClient.execute(call);
-    }
-
-    /**
-     * Delete run artifact lineage (asynchronously)
-     * 
-     * @param owner Owner of the namespace (required)
-     * @param project Project where the run will be assigned (required)
-     * @param uuid Uuid identifier of the entity (required)
-     * @param name Artifact name (required)
-     * @param namespace namespace. (optional)
-     * @param callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     */
-    public com.squareup.okhttp.Call deleteRunArtifactLineageAsync(String owner, String project, String uuid, String name, String namespace, final ApiCallback<Void> callback) throws ApiException {
-
-        ProgressResponseBody.ProgressListener progressListener = null;
-        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
-
-        if (callback != null) {
-            progressListener = new ProgressResponseBody.ProgressListener() {
-                @Override
-                public void update(long bytesRead, long contentLength, boolean done) {
-                    callback.onDownloadProgress(bytesRead, contentLength, done);
-                }
-            };
-
-            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
-                @Override
-                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
-                    callback.onUploadProgress(bytesWritten, contentLength, done);
-                }
-            };
-        }
-
-        com.squareup.okhttp.Call call = deleteRunArtifactLineageValidateBeforeCall(owner, project, uuid, name, namespace, progressListener, progressRequestListener);
-        apiClient.executeAsync(call, callback);
-        return call;
-    }
-    /**
-     * Build call for deleteRuns
-     * @param owner Owner of the namespace (required)
-     * @param project Project under namesapce (required)
-     * @param body Uuids of the entities (required)
-     * @param progressListener Progress listener
-     * @param progressRequestListener Progress request listener
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     */
-    public com.squareup.okhttp.Call deleteRunsCall(String owner, String project, V1Uuids body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        Object localVarPostBody = body;
-
-        // create path and map variables
-        String localVarPath = "/api/v1/{owner}/{project}/runs/delete"
-            .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()))
-            .replaceAll("\\{" + "project" + "\\}", apiClient.escapeString(project.toString()));
-
-        List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-        final String[] localVarAccepts = {
-            "application/json"
-        };
-        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
-
-        final String[] localVarContentTypes = {
-            "application/json"
-        };
-        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
-        localVarHeaderParams.put("Content-Type", localVarContentType);
-
-        if(progressListener != null) {
-            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
-                @Override
-                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
-                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
-                    return originalResponse.newBuilder()
-                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
-                    .build();
-                }
-            });
-        }
-
-        String[] localVarAuthNames = new String[] { "ApiKey" };
-        return apiClient.buildCall(localVarPath, "DELETE", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
-    }
-
-    @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call deleteRunsValidateBeforeCall(String owner, String project, V1Uuids body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        
-        // verify the required parameter 'owner' is set
-        if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling deleteRuns(Async)");
-        }
-        
-        // verify the required parameter 'project' is set
-        if (project == null) {
-            throw new ApiException("Missing the required parameter 'project' when calling deleteRuns(Async)");
-        }
-        
-        // verify the required parameter 'body' is set
-        if (body == null) {
-            throw new ApiException("Missing the required parameter 'body' when calling deleteRuns(Async)");
-        }
-        
-
-        com.squareup.okhttp.Call call = deleteRunsCall(owner, project, body, progressListener, progressRequestListener);
-        return call;
-
-    }
-
-    /**
-     * Delete runs
-     * 
-     * @param owner Owner of the namespace (required)
-     * @param project Project under namesapce (required)
-     * @param body Uuids of the entities (required)
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     */
-    public void deleteRuns(String owner, String project, V1Uuids body) throws ApiException {
-        deleteRunsWithHttpInfo(owner, project, body);
-    }
-
-    /**
-     * Delete runs
-     * 
-     * @param owner Owner of the namespace (required)
-     * @param project Project under namesapce (required)
-     * @param body Uuids of the entities (required)
-     * @return ApiResponse&lt;Void&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     */
-    public ApiResponse<Void> deleteRunsWithHttpInfo(String owner, String project, V1Uuids body) throws ApiException {
-        com.squareup.okhttp.Call call = deleteRunsValidateBeforeCall(owner, project, body, null, null);
-        return apiClient.execute(call);
-    }
-
-    /**
-     * Delete runs (asynchronously)
-     * 
-     * @param owner Owner of the namespace (required)
-     * @param project Project under namesapce (required)
-     * @param body Uuids of the entities (required)
-     * @param callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     */
-    public com.squareup.okhttp.Call deleteRunsAsync(String owner, String project, V1Uuids body, final ApiCallback<Void> callback) throws ApiException {
-
-        ProgressResponseBody.ProgressListener progressListener = null;
-        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
-
-        if (callback != null) {
-            progressListener = new ProgressResponseBody.ProgressListener() {
-                @Override
-                public void update(long bytesRead, long contentLength, boolean done) {
-                    callback.onDownloadProgress(bytesRead, contentLength, done);
-                }
-            };
-
-            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
-                @Override
-                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
-                    callback.onUploadProgress(bytesWritten, contentLength, done);
-                }
-            };
-        }
-
-        com.squareup.okhttp.Call call = deleteRunsValidateBeforeCall(owner, project, body, progressListener, progressRequestListener);
-        apiClient.executeAsync(call, callback);
-        return call;
-    }
-    /**
-     * Build call for getMultiRunEvents
-     * @param namespace namespace (required)
-     * @param owner Owner of the namespace (required)
-     * @param project Project where the run will be assigned (required)
-     * @param kind The artifact kind (required)
-     * @param names Names query param. (optional)
-     * @param runs Runs query param. (optional)
-     * @param orient Orient query param. (optional)
-     * @param progressListener Progress listener
-     * @param progressRequestListener Progress request listener
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     */
-    public com.squareup.okhttp.Call getMultiRunEventsCall(String namespace, String owner, String project, String kind, String names, String runs, String orient, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        Object localVarPostBody = null;
-
-        // create path and map variables
-        String localVarPath = "/streams/v1/{namespace}/{owner}/{project}/runs/multi/events/{kind}"
-            .replaceAll("\\{" + "namespace" + "\\}", apiClient.escapeString(namespace.toString()))
-            .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()))
-            .replaceAll("\\{" + "project" + "\\}", apiClient.escapeString(project.toString()))
-            .replaceAll("\\{" + "kind" + "\\}", apiClient.escapeString(kind.toString()));
-
-        List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-        if (names != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("names", names));
-        if (runs != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("runs", runs));
-        if (orient != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("orient", orient));
-
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-        final String[] localVarAccepts = {
-            "application/json"
-        };
-        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
-
-        final String[] localVarContentTypes = {
-            "application/json"
-        };
-        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
-        localVarHeaderParams.put("Content-Type", localVarContentType);
-
-        if(progressListener != null) {
-            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
-                @Override
-                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
-                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
-                    return originalResponse.newBuilder()
-                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
-                    .build();
-                }
-            });
-        }
-
-        String[] localVarAuthNames = new String[] { "ApiKey" };
-        return apiClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
-    }
-
-    @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call getMultiRunEventsValidateBeforeCall(String namespace, String owner, String project, String kind, String names, String runs, String orient, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        
-        // verify the required parameter 'namespace' is set
-        if (namespace == null) {
-            throw new ApiException("Missing the required parameter 'namespace' when calling getMultiRunEvents(Async)");
-        }
-        
-        // verify the required parameter 'owner' is set
-        if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling getMultiRunEvents(Async)");
-        }
-        
-        // verify the required parameter 'project' is set
-        if (project == null) {
-            throw new ApiException("Missing the required parameter 'project' when calling getMultiRunEvents(Async)");
-        }
-        
-        // verify the required parameter 'kind' is set
-        if (kind == null) {
-            throw new ApiException("Missing the required parameter 'kind' when calling getMultiRunEvents(Async)");
-        }
-        
-
-        com.squareup.okhttp.Call call = getMultiRunEventsCall(namespace, owner, project, kind, names, runs, orient, progressListener, progressRequestListener);
-        return call;
-
-    }
-
-    /**
-     * Get multi runs events
-     * 
-     * @param namespace namespace (required)
-     * @param owner Owner of the namespace (required)
-     * @param project Project where the run will be assigned (required)
-     * @param kind The artifact kind (required)
-     * @param names Names query param. (optional)
-     * @param runs Runs query param. (optional)
-     * @param orient Orient query param. (optional)
-     * @return V1EventsResponse
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     */
-    public V1EventsResponse getMultiRunEvents(String namespace, String owner, String project, String kind, String names, String runs, String orient) throws ApiException {
-        ApiResponse<V1EventsResponse> resp = getMultiRunEventsWithHttpInfo(namespace, owner, project, kind, names, runs, orient);
-        return resp.getData();
-    }
-
-    /**
-     * Get multi runs events
-     * 
-     * @param namespace namespace (required)
-     * @param owner Owner of the namespace (required)
-     * @param project Project where the run will be assigned (required)
-     * @param kind The artifact kind (required)
-     * @param names Names query param. (optional)
-     * @param runs Runs query param. (optional)
-     * @param orient Orient query param. (optional)
-     * @return ApiResponse&lt;V1EventsResponse&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     */
-    public ApiResponse<V1EventsResponse> getMultiRunEventsWithHttpInfo(String namespace, String owner, String project, String kind, String names, String runs, String orient) throws ApiException {
-        com.squareup.okhttp.Call call = getMultiRunEventsValidateBeforeCall(namespace, owner, project, kind, names, runs, orient, null, null);
-        Type localVarReturnType = new TypeToken<V1EventsResponse>(){}.getType();
-        return apiClient.execute(call, localVarReturnType);
-    }
-
-    /**
-     * Get multi runs events (asynchronously)
-     * 
-     * @param namespace namespace (required)
-     * @param owner Owner of the namespace (required)
-     * @param project Project where the run will be assigned (required)
-     * @param kind The artifact kind (required)
-     * @param names Names query param. (optional)
-     * @param runs Runs query param. (optional)
-     * @param orient Orient query param. (optional)
-     * @param callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     */
-    public com.squareup.okhttp.Call getMultiRunEventsAsync(String namespace, String owner, String project, String kind, String names, String runs, String orient, final ApiCallback<V1EventsResponse> callback) throws ApiException {
-
-        ProgressResponseBody.ProgressListener progressListener = null;
-        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
-
-        if (callback != null) {
-            progressListener = new ProgressResponseBody.ProgressListener() {
-                @Override
-                public void update(long bytesRead, long contentLength, boolean done) {
-                    callback.onDownloadProgress(bytesRead, contentLength, done);
-                }
-            };
-
-            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
-                @Override
-                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
-                    callback.onUploadProgress(bytesWritten, contentLength, done);
-                }
-            };
-        }
-
-        com.squareup.okhttp.Call call = getMultiRunEventsValidateBeforeCall(namespace, owner, project, kind, names, runs, orient, progressListener, progressRequestListener);
-        Type localVarReturnType = new TypeToken<V1EventsResponse>(){}.getType();
-        apiClient.executeAsync(call, localVarReturnType, callback);
-        return call;
-    }
-    /**
-     * Build call for getRun
-     * @param owner Owner of the namespace (required)
-     * @param project Project (required)
-     * @param uuid Uuid identifier of the entity (required)
-     * @param progressListener Progress listener
-     * @param progressRequestListener Progress request listener
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     */
-    public com.squareup.okhttp.Call getRunCall(String owner, String project, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        Object localVarPostBody = null;
-
-        // create path and map variables
-        String localVarPath = "/api/v1/{owner}/{project}/runs/{uuid}"
-            .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()))
-            .replaceAll("\\{" + "project" + "\\}", apiClient.escapeString(project.toString()))
-            .replaceAll("\\{" + "uuid" + "\\}", apiClient.escapeString(uuid.toString()));
-
-        List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-        final String[] localVarAccepts = {
-            "application/json"
-        };
-        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
-
-        final String[] localVarContentTypes = {
-            "application/json"
-        };
-        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
-        localVarHeaderParams.put("Content-Type", localVarContentType);
-
-        if(progressListener != null) {
-            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
-                @Override
-                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
-                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
-                    return originalResponse.newBuilder()
-                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
-                    .build();
-                }
-            });
-        }
-
-        String[] localVarAuthNames = new String[] { "ApiKey" };
-        return apiClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
-    }
-
-    @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call getRunValidateBeforeCall(String owner, String project, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        
-        // verify the required parameter 'owner' is set
-        if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling getRun(Async)");
-        }
-        
-        // verify the required parameter 'project' is set
-        if (project == null) {
-            throw new ApiException("Missing the required parameter 'project' when calling getRun(Async)");
-        }
-        
-        // verify the required parameter 'uuid' is set
-        if (uuid == null) {
-            throw new ApiException("Missing the required parameter 'uuid' when calling getRun(Async)");
-        }
-        
-
-        com.squareup.okhttp.Call call = getRunCall(owner, project, uuid, progressListener, progressRequestListener);
-        return call;
-
-    }
-
-    /**
-     * Get run
-     * 
-     * @param owner Owner of the namespace (required)
-     * @param project Project (required)
-     * @param uuid Uuid identifier of the entity (required)
-     * @return V1Run
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     */
-    public V1Run getRun(String owner, String project, String uuid) throws ApiException {
-        ApiResponse<V1Run> resp = getRunWithHttpInfo(owner, project, uuid);
-        return resp.getData();
-    }
-
-    /**
-     * Get run
-     * 
-     * @param owner Owner of the namespace (required)
-     * @param project Project (required)
-     * @param uuid Uuid identifier of the entity (required)
-     * @return ApiResponse&lt;V1Run&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     */
-    public ApiResponse<V1Run> getRunWithHttpInfo(String owner, String project, String uuid) throws ApiException {
-        com.squareup.okhttp.Call call = getRunValidateBeforeCall(owner, project, uuid, null, null);
-        Type localVarReturnType = new TypeToken<V1Run>(){}.getType();
-        return apiClient.execute(call, localVarReturnType);
-    }
-
-    /**
-     * Get run (asynchronously)
-     * 
-     * @param owner Owner of the namespace (required)
-     * @param project Project (required)
-     * @param uuid Uuid identifier of the entity (required)
-     * @param callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     */
-    public com.squareup.okhttp.Call getRunAsync(String owner, String project, String uuid, final ApiCallback<V1Run> callback) throws ApiException {
-
-        ProgressResponseBody.ProgressListener progressListener = null;
-        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
-
-        if (callback != null) {
-            progressListener = new ProgressResponseBody.ProgressListener() {
-                @Override
-                public void update(long bytesRead, long contentLength, boolean done) {
-                    callback.onDownloadProgress(bytesRead, contentLength, done);
-                }
-            };
-
-            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
-                @Override
-                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
-                    callback.onUploadProgress(bytesWritten, contentLength, done);
-                }
-            };
-        }
-
-        com.squareup.okhttp.Call call = getRunValidateBeforeCall(owner, project, uuid, progressListener, progressRequestListener);
-        Type localVarReturnType = new TypeToken<V1Run>(){}.getType();
-        apiClient.executeAsync(call, localVarReturnType, callback);
-        return call;
-    }
-    /**
      * Build call for getRunArtifact
      * @param namespace namespace (required)
      * @param owner Owner of the namespace (required)
@@ -2019,165 +252,6 @@ public class RunsV1Api {
         return call;
     }
     /**
-     * Build call for getRunArtifactLineage
-     * @param owner Owner of the namespace (required)
-     * @param project Project where the run will be assigned (required)
-     * @param uuid Uuid identifier of the entity (required)
-     * @param name Artifact name (required)
-     * @param namespace namespace. (optional)
-     * @param progressListener Progress listener
-     * @param progressRequestListener Progress request listener
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     */
-    public com.squareup.okhttp.Call getRunArtifactLineageCall(String owner, String project, String uuid, String name, String namespace, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        Object localVarPostBody = null;
-
-        // create path and map variables
-        String localVarPath = "/api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage/{name}"
-            .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()))
-            .replaceAll("\\{" + "project" + "\\}", apiClient.escapeString(project.toString()))
-            .replaceAll("\\{" + "uuid" + "\\}", apiClient.escapeString(uuid.toString()))
-            .replaceAll("\\{" + "name" + "\\}", apiClient.escapeString(name.toString()));
-
-        List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-        if (namespace != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("namespace", namespace));
-
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-        final String[] localVarAccepts = {
-            "application/json"
-        };
-        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
-
-        final String[] localVarContentTypes = {
-            "application/json"
-        };
-        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
-        localVarHeaderParams.put("Content-Type", localVarContentType);
-
-        if(progressListener != null) {
-            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
-                @Override
-                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
-                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
-                    return originalResponse.newBuilder()
-                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
-                    .build();
-                }
-            });
-        }
-
-        String[] localVarAuthNames = new String[] { "ApiKey" };
-        return apiClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
-    }
-
-    @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call getRunArtifactLineageValidateBeforeCall(String owner, String project, String uuid, String name, String namespace, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        
-        // verify the required parameter 'owner' is set
-        if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling getRunArtifactLineage(Async)");
-        }
-        
-        // verify the required parameter 'project' is set
-        if (project == null) {
-            throw new ApiException("Missing the required parameter 'project' when calling getRunArtifactLineage(Async)");
-        }
-        
-        // verify the required parameter 'uuid' is set
-        if (uuid == null) {
-            throw new ApiException("Missing the required parameter 'uuid' when calling getRunArtifactLineage(Async)");
-        }
-        
-        // verify the required parameter 'name' is set
-        if (name == null) {
-            throw new ApiException("Missing the required parameter 'name' when calling getRunArtifactLineage(Async)");
-        }
-        
-
-        com.squareup.okhttp.Call call = getRunArtifactLineageCall(owner, project, uuid, name, namespace, progressListener, progressRequestListener);
-        return call;
-
-    }
-
-    /**
-     * Get run artifacts lineage
-     * 
-     * @param owner Owner of the namespace (required)
-     * @param project Project where the run will be assigned (required)
-     * @param uuid Uuid identifier of the entity (required)
-     * @param name Artifact name (required)
-     * @param namespace namespace. (optional)
-     * @return V1RunArtifact
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     */
-    public V1RunArtifact getRunArtifactLineage(String owner, String project, String uuid, String name, String namespace) throws ApiException {
-        ApiResponse<V1RunArtifact> resp = getRunArtifactLineageWithHttpInfo(owner, project, uuid, name, namespace);
-        return resp.getData();
-    }
-
-    /**
-     * Get run artifacts lineage
-     * 
-     * @param owner Owner of the namespace (required)
-     * @param project Project where the run will be assigned (required)
-     * @param uuid Uuid identifier of the entity (required)
-     * @param name Artifact name (required)
-     * @param namespace namespace. (optional)
-     * @return ApiResponse&lt;V1RunArtifact&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     */
-    public ApiResponse<V1RunArtifact> getRunArtifactLineageWithHttpInfo(String owner, String project, String uuid, String name, String namespace) throws ApiException {
-        com.squareup.okhttp.Call call = getRunArtifactLineageValidateBeforeCall(owner, project, uuid, name, namespace, null, null);
-        Type localVarReturnType = new TypeToken<V1RunArtifact>(){}.getType();
-        return apiClient.execute(call, localVarReturnType);
-    }
-
-    /**
-     * Get run artifacts lineage (asynchronously)
-     * 
-     * @param owner Owner of the namespace (required)
-     * @param project Project where the run will be assigned (required)
-     * @param uuid Uuid identifier of the entity (required)
-     * @param name Artifact name (required)
-     * @param namespace namespace. (optional)
-     * @param callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     */
-    public com.squareup.okhttp.Call getRunArtifactLineageAsync(String owner, String project, String uuid, String name, String namespace, final ApiCallback<V1RunArtifact> callback) throws ApiException {
-
-        ProgressResponseBody.ProgressListener progressListener = null;
-        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
-
-        if (callback != null) {
-            progressListener = new ProgressResponseBody.ProgressListener() {
-                @Override
-                public void update(long bytesRead, long contentLength, boolean done) {
-                    callback.onDownloadProgress(bytesRead, contentLength, done);
-                }
-            };
-
-            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
-                @Override
-                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
-                    callback.onUploadProgress(bytesWritten, contentLength, done);
-                }
-            };
-        }
-
-        com.squareup.okhttp.Call call = getRunArtifactLineageValidateBeforeCall(owner, project, uuid, name, namespace, progressListener, progressRequestListener);
-        Type localVarReturnType = new TypeToken<V1RunArtifact>(){}.getType();
-        apiClient.executeAsync(call, localVarReturnType, callback);
-        return call;
-    }
-    /**
      * Build call for getRunArtifacts
      * @param namespace namespace (required)
      * @param owner Owner of the namespace (required)
@@ -2337,7 +411,2071 @@ public class RunsV1Api {
         return call;
     }
     /**
-     * Build call for getRunArtifactsLineage
+     * Build call for runsV1ArchiveRun
+     * @param owner Owner of the namespace (required)
+     * @param project Project (required)
+     * @param uuid Uuid identifier of the entity (required)
+     * @param progressListener Progress listener
+     * @param progressRequestListener Progress request listener
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     */
+    public com.squareup.okhttp.Call runsV1ArchiveRunCall(String owner, String project, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        Object localVarPostBody = null;
+
+        // create path and map variables
+        String localVarPath = "/api/v1/{owner}/{project}/runs/{uuid}/archive"
+            .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()))
+            .replaceAll("\\{" + "project" + "\\}", apiClient.escapeString(project.toString()))
+            .replaceAll("\\{" + "uuid" + "\\}", apiClient.escapeString(uuid.toString()));
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
+
+        final String[] localVarContentTypes = {
+            "application/json"
+        };
+        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+        localVarHeaderParams.put("Content-Type", localVarContentType);
+
+        if(progressListener != null) {
+            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
+                @Override
+                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
+                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
+                    return originalResponse.newBuilder()
+                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
+                    .build();
+                }
+            });
+        }
+
+        String[] localVarAuthNames = new String[] { "ApiKey" };
+        return apiClient.buildCall(localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private com.squareup.okhttp.Call runsV1ArchiveRunValidateBeforeCall(String owner, String project, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        
+        // verify the required parameter 'owner' is set
+        if (owner == null) {
+            throw new ApiException("Missing the required parameter 'owner' when calling runsV1ArchiveRun(Async)");
+        }
+        
+        // verify the required parameter 'project' is set
+        if (project == null) {
+            throw new ApiException("Missing the required parameter 'project' when calling runsV1ArchiveRun(Async)");
+        }
+        
+        // verify the required parameter 'uuid' is set
+        if (uuid == null) {
+            throw new ApiException("Missing the required parameter 'uuid' when calling runsV1ArchiveRun(Async)");
+        }
+        
+
+        com.squareup.okhttp.Call call = runsV1ArchiveRunCall(owner, project, uuid, progressListener, progressRequestListener);
+        return call;
+
+    }
+
+    /**
+     * Archive run
+     * 
+     * @param owner Owner of the namespace (required)
+     * @param project Project (required)
+     * @param uuid Uuid identifier of the entity (required)
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public void runsV1ArchiveRun(String owner, String project, String uuid) throws ApiException {
+        runsV1ArchiveRunWithHttpInfo(owner, project, uuid);
+    }
+
+    /**
+     * Archive run
+     * 
+     * @param owner Owner of the namespace (required)
+     * @param project Project (required)
+     * @param uuid Uuid identifier of the entity (required)
+     * @return ApiResponse&lt;Void&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public ApiResponse<Void> runsV1ArchiveRunWithHttpInfo(String owner, String project, String uuid) throws ApiException {
+        com.squareup.okhttp.Call call = runsV1ArchiveRunValidateBeforeCall(owner, project, uuid, null, null);
+        return apiClient.execute(call);
+    }
+
+    /**
+     * Archive run (asynchronously)
+     * 
+     * @param owner Owner of the namespace (required)
+     * @param project Project (required)
+     * @param uuid Uuid identifier of the entity (required)
+     * @param callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     */
+    public com.squareup.okhttp.Call runsV1ArchiveRunAsync(String owner, String project, String uuid, final ApiCallback<Void> callback) throws ApiException {
+
+        ProgressResponseBody.ProgressListener progressListener = null;
+        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
+
+        if (callback != null) {
+            progressListener = new ProgressResponseBody.ProgressListener() {
+                @Override
+                public void update(long bytesRead, long contentLength, boolean done) {
+                    callback.onDownloadProgress(bytesRead, contentLength, done);
+                }
+            };
+
+            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
+                @Override
+                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
+                    callback.onUploadProgress(bytesWritten, contentLength, done);
+                }
+            };
+        }
+
+        com.squareup.okhttp.Call call = runsV1ArchiveRunValidateBeforeCall(owner, project, uuid, progressListener, progressRequestListener);
+        apiClient.executeAsync(call, callback);
+        return call;
+    }
+    /**
+     * Build call for runsV1BookmarkRun
+     * @param owner Owner of the namespace (required)
+     * @param project Project (required)
+     * @param uuid Uuid identifier of the entity (required)
+     * @param progressListener Progress listener
+     * @param progressRequestListener Progress request listener
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     */
+    public com.squareup.okhttp.Call runsV1BookmarkRunCall(String owner, String project, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        Object localVarPostBody = null;
+
+        // create path and map variables
+        String localVarPath = "/api/v1/{owner}/{project}/runs/{uuid}/bookmark"
+            .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()))
+            .replaceAll("\\{" + "project" + "\\}", apiClient.escapeString(project.toString()))
+            .replaceAll("\\{" + "uuid" + "\\}", apiClient.escapeString(uuid.toString()));
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
+
+        final String[] localVarContentTypes = {
+            "application/json"
+        };
+        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+        localVarHeaderParams.put("Content-Type", localVarContentType);
+
+        if(progressListener != null) {
+            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
+                @Override
+                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
+                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
+                    return originalResponse.newBuilder()
+                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
+                    .build();
+                }
+            });
+        }
+
+        String[] localVarAuthNames = new String[] { "ApiKey" };
+        return apiClient.buildCall(localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private com.squareup.okhttp.Call runsV1BookmarkRunValidateBeforeCall(String owner, String project, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        
+        // verify the required parameter 'owner' is set
+        if (owner == null) {
+            throw new ApiException("Missing the required parameter 'owner' when calling runsV1BookmarkRun(Async)");
+        }
+        
+        // verify the required parameter 'project' is set
+        if (project == null) {
+            throw new ApiException("Missing the required parameter 'project' when calling runsV1BookmarkRun(Async)");
+        }
+        
+        // verify the required parameter 'uuid' is set
+        if (uuid == null) {
+            throw new ApiException("Missing the required parameter 'uuid' when calling runsV1BookmarkRun(Async)");
+        }
+        
+
+        com.squareup.okhttp.Call call = runsV1BookmarkRunCall(owner, project, uuid, progressListener, progressRequestListener);
+        return call;
+
+    }
+
+    /**
+     * Bookmark run
+     * 
+     * @param owner Owner of the namespace (required)
+     * @param project Project (required)
+     * @param uuid Uuid identifier of the entity (required)
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public void runsV1BookmarkRun(String owner, String project, String uuid) throws ApiException {
+        runsV1BookmarkRunWithHttpInfo(owner, project, uuid);
+    }
+
+    /**
+     * Bookmark run
+     * 
+     * @param owner Owner of the namespace (required)
+     * @param project Project (required)
+     * @param uuid Uuid identifier of the entity (required)
+     * @return ApiResponse&lt;Void&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public ApiResponse<Void> runsV1BookmarkRunWithHttpInfo(String owner, String project, String uuid) throws ApiException {
+        com.squareup.okhttp.Call call = runsV1BookmarkRunValidateBeforeCall(owner, project, uuid, null, null);
+        return apiClient.execute(call);
+    }
+
+    /**
+     * Bookmark run (asynchronously)
+     * 
+     * @param owner Owner of the namespace (required)
+     * @param project Project (required)
+     * @param uuid Uuid identifier of the entity (required)
+     * @param callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     */
+    public com.squareup.okhttp.Call runsV1BookmarkRunAsync(String owner, String project, String uuid, final ApiCallback<Void> callback) throws ApiException {
+
+        ProgressResponseBody.ProgressListener progressListener = null;
+        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
+
+        if (callback != null) {
+            progressListener = new ProgressResponseBody.ProgressListener() {
+                @Override
+                public void update(long bytesRead, long contentLength, boolean done) {
+                    callback.onDownloadProgress(bytesRead, contentLength, done);
+                }
+            };
+
+            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
+                @Override
+                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
+                    callback.onUploadProgress(bytesWritten, contentLength, done);
+                }
+            };
+        }
+
+        com.squareup.okhttp.Call call = runsV1BookmarkRunValidateBeforeCall(owner, project, uuid, progressListener, progressRequestListener);
+        apiClient.executeAsync(call, callback);
+        return call;
+    }
+    /**
+     * Build call for runsV1BookmarkRuns
+     * @param owner Owner of the namespace (required)
+     * @param project Project under namesapce (required)
+     * @param body Uuids of the entities (required)
+     * @param progressListener Progress listener
+     * @param progressRequestListener Progress request listener
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     */
+    public com.squareup.okhttp.Call runsV1BookmarkRunsCall(String owner, String project, V1Uuids body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        Object localVarPostBody = body;
+
+        // create path and map variables
+        String localVarPath = "/api/v1/{owner}/{project}/runs/bookmark"
+            .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()))
+            .replaceAll("\\{" + "project" + "\\}", apiClient.escapeString(project.toString()));
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
+
+        final String[] localVarContentTypes = {
+            "application/json"
+        };
+        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+        localVarHeaderParams.put("Content-Type", localVarContentType);
+
+        if(progressListener != null) {
+            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
+                @Override
+                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
+                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
+                    return originalResponse.newBuilder()
+                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
+                    .build();
+                }
+            });
+        }
+
+        String[] localVarAuthNames = new String[] { "ApiKey" };
+        return apiClient.buildCall(localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private com.squareup.okhttp.Call runsV1BookmarkRunsValidateBeforeCall(String owner, String project, V1Uuids body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        
+        // verify the required parameter 'owner' is set
+        if (owner == null) {
+            throw new ApiException("Missing the required parameter 'owner' when calling runsV1BookmarkRuns(Async)");
+        }
+        
+        // verify the required parameter 'project' is set
+        if (project == null) {
+            throw new ApiException("Missing the required parameter 'project' when calling runsV1BookmarkRuns(Async)");
+        }
+        
+        // verify the required parameter 'body' is set
+        if (body == null) {
+            throw new ApiException("Missing the required parameter 'body' when calling runsV1BookmarkRuns(Async)");
+        }
+        
+
+        com.squareup.okhttp.Call call = runsV1BookmarkRunsCall(owner, project, body, progressListener, progressRequestListener);
+        return call;
+
+    }
+
+    /**
+     * Bookmark runs
+     * 
+     * @param owner Owner of the namespace (required)
+     * @param project Project under namesapce (required)
+     * @param body Uuids of the entities (required)
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public void runsV1BookmarkRuns(String owner, String project, V1Uuids body) throws ApiException {
+        runsV1BookmarkRunsWithHttpInfo(owner, project, body);
+    }
+
+    /**
+     * Bookmark runs
+     * 
+     * @param owner Owner of the namespace (required)
+     * @param project Project under namesapce (required)
+     * @param body Uuids of the entities (required)
+     * @return ApiResponse&lt;Void&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public ApiResponse<Void> runsV1BookmarkRunsWithHttpInfo(String owner, String project, V1Uuids body) throws ApiException {
+        com.squareup.okhttp.Call call = runsV1BookmarkRunsValidateBeforeCall(owner, project, body, null, null);
+        return apiClient.execute(call);
+    }
+
+    /**
+     * Bookmark runs (asynchronously)
+     * 
+     * @param owner Owner of the namespace (required)
+     * @param project Project under namesapce (required)
+     * @param body Uuids of the entities (required)
+     * @param callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     */
+    public com.squareup.okhttp.Call runsV1BookmarkRunsAsync(String owner, String project, V1Uuids body, final ApiCallback<Void> callback) throws ApiException {
+
+        ProgressResponseBody.ProgressListener progressListener = null;
+        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
+
+        if (callback != null) {
+            progressListener = new ProgressResponseBody.ProgressListener() {
+                @Override
+                public void update(long bytesRead, long contentLength, boolean done) {
+                    callback.onDownloadProgress(bytesRead, contentLength, done);
+                }
+            };
+
+            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
+                @Override
+                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
+                    callback.onUploadProgress(bytesWritten, contentLength, done);
+                }
+            };
+        }
+
+        com.squareup.okhttp.Call call = runsV1BookmarkRunsValidateBeforeCall(owner, project, body, progressListener, progressRequestListener);
+        apiClient.executeAsync(call, callback);
+        return call;
+    }
+    /**
+     * Build call for runsV1CollectRunLogs
+     * @param namespace  (required)
+     * @param owner Owner of the namespace (required)
+     * @param project Project where the run will be assigned (required)
+     * @param uuid Uuid identifier of the entity (required)
+     * @param progressListener Progress listener
+     * @param progressRequestListener Progress request listener
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     */
+    public com.squareup.okhttp.Call runsV1CollectRunLogsCall(String namespace, String owner, String project, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        Object localVarPostBody = null;
+
+        // create path and map variables
+        String localVarPath = "/streams/v1/{namespace}/_internal/{owner}/{project}/runs/{uuid}/logs"
+            .replaceAll("\\{" + "namespace" + "\\}", apiClient.escapeString(namespace.toString()))
+            .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()))
+            .replaceAll("\\{" + "project" + "\\}", apiClient.escapeString(project.toString()))
+            .replaceAll("\\{" + "uuid" + "\\}", apiClient.escapeString(uuid.toString()));
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
+
+        final String[] localVarContentTypes = {
+            "application/json"
+        };
+        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+        localVarHeaderParams.put("Content-Type", localVarContentType);
+
+        if(progressListener != null) {
+            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
+                @Override
+                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
+                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
+                    return originalResponse.newBuilder()
+                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
+                    .build();
+                }
+            });
+        }
+
+        String[] localVarAuthNames = new String[] { "ApiKey" };
+        return apiClient.buildCall(localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private com.squareup.okhttp.Call runsV1CollectRunLogsValidateBeforeCall(String namespace, String owner, String project, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        
+        // verify the required parameter 'namespace' is set
+        if (namespace == null) {
+            throw new ApiException("Missing the required parameter 'namespace' when calling runsV1CollectRunLogs(Async)");
+        }
+        
+        // verify the required parameter 'owner' is set
+        if (owner == null) {
+            throw new ApiException("Missing the required parameter 'owner' when calling runsV1CollectRunLogs(Async)");
+        }
+        
+        // verify the required parameter 'project' is set
+        if (project == null) {
+            throw new ApiException("Missing the required parameter 'project' when calling runsV1CollectRunLogs(Async)");
+        }
+        
+        // verify the required parameter 'uuid' is set
+        if (uuid == null) {
+            throw new ApiException("Missing the required parameter 'uuid' when calling runsV1CollectRunLogs(Async)");
+        }
+        
+
+        com.squareup.okhttp.Call call = runsV1CollectRunLogsCall(namespace, owner, project, uuid, progressListener, progressRequestListener);
+        return call;
+
+    }
+
+    /**
+     * Collect run logs
+     * 
+     * @param namespace  (required)
+     * @param owner Owner of the namespace (required)
+     * @param project Project where the run will be assigned (required)
+     * @param uuid Uuid identifier of the entity (required)
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public void runsV1CollectRunLogs(String namespace, String owner, String project, String uuid) throws ApiException {
+        runsV1CollectRunLogsWithHttpInfo(namespace, owner, project, uuid);
+    }
+
+    /**
+     * Collect run logs
+     * 
+     * @param namespace  (required)
+     * @param owner Owner of the namespace (required)
+     * @param project Project where the run will be assigned (required)
+     * @param uuid Uuid identifier of the entity (required)
+     * @return ApiResponse&lt;Void&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public ApiResponse<Void> runsV1CollectRunLogsWithHttpInfo(String namespace, String owner, String project, String uuid) throws ApiException {
+        com.squareup.okhttp.Call call = runsV1CollectRunLogsValidateBeforeCall(namespace, owner, project, uuid, null, null);
+        return apiClient.execute(call);
+    }
+
+    /**
+     * Collect run logs (asynchronously)
+     * 
+     * @param namespace  (required)
+     * @param owner Owner of the namespace (required)
+     * @param project Project where the run will be assigned (required)
+     * @param uuid Uuid identifier of the entity (required)
+     * @param callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     */
+    public com.squareup.okhttp.Call runsV1CollectRunLogsAsync(String namespace, String owner, String project, String uuid, final ApiCallback<Void> callback) throws ApiException {
+
+        ProgressResponseBody.ProgressListener progressListener = null;
+        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
+
+        if (callback != null) {
+            progressListener = new ProgressResponseBody.ProgressListener() {
+                @Override
+                public void update(long bytesRead, long contentLength, boolean done) {
+                    callback.onDownloadProgress(bytesRead, contentLength, done);
+                }
+            };
+
+            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
+                @Override
+                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
+                    callback.onUploadProgress(bytesWritten, contentLength, done);
+                }
+            };
+        }
+
+        com.squareup.okhttp.Call call = runsV1CollectRunLogsValidateBeforeCall(namespace, owner, project, uuid, progressListener, progressRequestListener);
+        apiClient.executeAsync(call, callback);
+        return call;
+    }
+    /**
+     * Build call for runsV1CopyRun
+     * @param entityOwner Owner of the namespace (required)
+     * @param entityProject Project (required)
+     * @param entityUuid Uuid identifier of the entity (required)
+     * @param body Run object (required)
+     * @param progressListener Progress listener
+     * @param progressRequestListener Progress request listener
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     */
+    public com.squareup.okhttp.Call runsV1CopyRunCall(String entityOwner, String entityProject, String entityUuid, V1Run body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        Object localVarPostBody = body;
+
+        // create path and map variables
+        String localVarPath = "/api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/copy"
+            .replaceAll("\\{" + "entity.owner" + "\\}", apiClient.escapeString(entityOwner.toString()))
+            .replaceAll("\\{" + "entity.project" + "\\}", apiClient.escapeString(entityProject.toString()))
+            .replaceAll("\\{" + "entity.uuid" + "\\}", apiClient.escapeString(entityUuid.toString()));
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
+
+        final String[] localVarContentTypes = {
+            "application/json"
+        };
+        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+        localVarHeaderParams.put("Content-Type", localVarContentType);
+
+        if(progressListener != null) {
+            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
+                @Override
+                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
+                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
+                    return originalResponse.newBuilder()
+                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
+                    .build();
+                }
+            });
+        }
+
+        String[] localVarAuthNames = new String[] { "ApiKey" };
+        return apiClient.buildCall(localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private com.squareup.okhttp.Call runsV1CopyRunValidateBeforeCall(String entityOwner, String entityProject, String entityUuid, V1Run body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        
+        // verify the required parameter 'entityOwner' is set
+        if (entityOwner == null) {
+            throw new ApiException("Missing the required parameter 'entityOwner' when calling runsV1CopyRun(Async)");
+        }
+        
+        // verify the required parameter 'entityProject' is set
+        if (entityProject == null) {
+            throw new ApiException("Missing the required parameter 'entityProject' when calling runsV1CopyRun(Async)");
+        }
+        
+        // verify the required parameter 'entityUuid' is set
+        if (entityUuid == null) {
+            throw new ApiException("Missing the required parameter 'entityUuid' when calling runsV1CopyRun(Async)");
+        }
+        
+        // verify the required parameter 'body' is set
+        if (body == null) {
+            throw new ApiException("Missing the required parameter 'body' when calling runsV1CopyRun(Async)");
+        }
+        
+
+        com.squareup.okhttp.Call call = runsV1CopyRunCall(entityOwner, entityProject, entityUuid, body, progressListener, progressRequestListener);
+        return call;
+
+    }
+
+    /**
+     * Restart run with copy
+     * 
+     * @param entityOwner Owner of the namespace (required)
+     * @param entityProject Project (required)
+     * @param entityUuid Uuid identifier of the entity (required)
+     * @param body Run object (required)
+     * @return V1Run
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public V1Run runsV1CopyRun(String entityOwner, String entityProject, String entityUuid, V1Run body) throws ApiException {
+        ApiResponse<V1Run> resp = runsV1CopyRunWithHttpInfo(entityOwner, entityProject, entityUuid, body);
+        return resp.getData();
+    }
+
+    /**
+     * Restart run with copy
+     * 
+     * @param entityOwner Owner of the namespace (required)
+     * @param entityProject Project (required)
+     * @param entityUuid Uuid identifier of the entity (required)
+     * @param body Run object (required)
+     * @return ApiResponse&lt;V1Run&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public ApiResponse<V1Run> runsV1CopyRunWithHttpInfo(String entityOwner, String entityProject, String entityUuid, V1Run body) throws ApiException {
+        com.squareup.okhttp.Call call = runsV1CopyRunValidateBeforeCall(entityOwner, entityProject, entityUuid, body, null, null);
+        Type localVarReturnType = new TypeToken<V1Run>(){}.getType();
+        return apiClient.execute(call, localVarReturnType);
+    }
+
+    /**
+     * Restart run with copy (asynchronously)
+     * 
+     * @param entityOwner Owner of the namespace (required)
+     * @param entityProject Project (required)
+     * @param entityUuid Uuid identifier of the entity (required)
+     * @param body Run object (required)
+     * @param callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     */
+    public com.squareup.okhttp.Call runsV1CopyRunAsync(String entityOwner, String entityProject, String entityUuid, V1Run body, final ApiCallback<V1Run> callback) throws ApiException {
+
+        ProgressResponseBody.ProgressListener progressListener = null;
+        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
+
+        if (callback != null) {
+            progressListener = new ProgressResponseBody.ProgressListener() {
+                @Override
+                public void update(long bytesRead, long contentLength, boolean done) {
+                    callback.onDownloadProgress(bytesRead, contentLength, done);
+                }
+            };
+
+            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
+                @Override
+                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
+                    callback.onUploadProgress(bytesWritten, contentLength, done);
+                }
+            };
+        }
+
+        com.squareup.okhttp.Call call = runsV1CopyRunValidateBeforeCall(entityOwner, entityProject, entityUuid, body, progressListener, progressRequestListener);
+        Type localVarReturnType = new TypeToken<V1Run>(){}.getType();
+        apiClient.executeAsync(call, localVarReturnType, callback);
+        return call;
+    }
+    /**
+     * Build call for runsV1CreateRun
+     * @param owner Owner of the namespace (required)
+     * @param project Project where the run will be assigned (required)
+     * @param body operation object (required)
+     * @param progressListener Progress listener
+     * @param progressRequestListener Progress request listener
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     */
+    public com.squareup.okhttp.Call runsV1CreateRunCall(String owner, String project, V1OperationBody body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        Object localVarPostBody = body;
+
+        // create path and map variables
+        String localVarPath = "/api/v1/{owner}/{project}/runs"
+            .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()))
+            .replaceAll("\\{" + "project" + "\\}", apiClient.escapeString(project.toString()));
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
+
+        final String[] localVarContentTypes = {
+            "application/json"
+        };
+        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+        localVarHeaderParams.put("Content-Type", localVarContentType);
+
+        if(progressListener != null) {
+            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
+                @Override
+                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
+                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
+                    return originalResponse.newBuilder()
+                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
+                    .build();
+                }
+            });
+        }
+
+        String[] localVarAuthNames = new String[] { "ApiKey" };
+        return apiClient.buildCall(localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private com.squareup.okhttp.Call runsV1CreateRunValidateBeforeCall(String owner, String project, V1OperationBody body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        
+        // verify the required parameter 'owner' is set
+        if (owner == null) {
+            throw new ApiException("Missing the required parameter 'owner' when calling runsV1CreateRun(Async)");
+        }
+        
+        // verify the required parameter 'project' is set
+        if (project == null) {
+            throw new ApiException("Missing the required parameter 'project' when calling runsV1CreateRun(Async)");
+        }
+        
+        // verify the required parameter 'body' is set
+        if (body == null) {
+            throw new ApiException("Missing the required parameter 'body' when calling runsV1CreateRun(Async)");
+        }
+        
+
+        com.squareup.okhttp.Call call = runsV1CreateRunCall(owner, project, body, progressListener, progressRequestListener);
+        return call;
+
+    }
+
+    /**
+     * Create new run
+     * 
+     * @param owner Owner of the namespace (required)
+     * @param project Project where the run will be assigned (required)
+     * @param body operation object (required)
+     * @return V1Run
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public V1Run runsV1CreateRun(String owner, String project, V1OperationBody body) throws ApiException {
+        ApiResponse<V1Run> resp = runsV1CreateRunWithHttpInfo(owner, project, body);
+        return resp.getData();
+    }
+
+    /**
+     * Create new run
+     * 
+     * @param owner Owner of the namespace (required)
+     * @param project Project where the run will be assigned (required)
+     * @param body operation object (required)
+     * @return ApiResponse&lt;V1Run&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public ApiResponse<V1Run> runsV1CreateRunWithHttpInfo(String owner, String project, V1OperationBody body) throws ApiException {
+        com.squareup.okhttp.Call call = runsV1CreateRunValidateBeforeCall(owner, project, body, null, null);
+        Type localVarReturnType = new TypeToken<V1Run>(){}.getType();
+        return apiClient.execute(call, localVarReturnType);
+    }
+
+    /**
+     * Create new run (asynchronously)
+     * 
+     * @param owner Owner of the namespace (required)
+     * @param project Project where the run will be assigned (required)
+     * @param body operation object (required)
+     * @param callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     */
+    public com.squareup.okhttp.Call runsV1CreateRunAsync(String owner, String project, V1OperationBody body, final ApiCallback<V1Run> callback) throws ApiException {
+
+        ProgressResponseBody.ProgressListener progressListener = null;
+        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
+
+        if (callback != null) {
+            progressListener = new ProgressResponseBody.ProgressListener() {
+                @Override
+                public void update(long bytesRead, long contentLength, boolean done) {
+                    callback.onDownloadProgress(bytesRead, contentLength, done);
+                }
+            };
+
+            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
+                @Override
+                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
+                    callback.onUploadProgress(bytesWritten, contentLength, done);
+                }
+            };
+        }
+
+        com.squareup.okhttp.Call call = runsV1CreateRunValidateBeforeCall(owner, project, body, progressListener, progressRequestListener);
+        Type localVarReturnType = new TypeToken<V1Run>(){}.getType();
+        apiClient.executeAsync(call, localVarReturnType, callback);
+        return call;
+    }
+    /**
+     * Build call for runsV1CreateRunArtifactsLineage
+     * @param owner Owner of the namespace (required)
+     * @param project Project where the run will be assigned (required)
+     * @param uuid Uuid identifier of the entity (required)
+     * @param body Run Artifacts (required)
+     * @param progressListener Progress listener
+     * @param progressRequestListener Progress request listener
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     */
+    public com.squareup.okhttp.Call runsV1CreateRunArtifactsLineageCall(String owner, String project, String uuid, V1RunArtifacts body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        Object localVarPostBody = body;
+
+        // create path and map variables
+        String localVarPath = "/api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage"
+            .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()))
+            .replaceAll("\\{" + "project" + "\\}", apiClient.escapeString(project.toString()))
+            .replaceAll("\\{" + "uuid" + "\\}", apiClient.escapeString(uuid.toString()));
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
+
+        final String[] localVarContentTypes = {
+            "application/json"
+        };
+        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+        localVarHeaderParams.put("Content-Type", localVarContentType);
+
+        if(progressListener != null) {
+            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
+                @Override
+                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
+                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
+                    return originalResponse.newBuilder()
+                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
+                    .build();
+                }
+            });
+        }
+
+        String[] localVarAuthNames = new String[] { "ApiKey" };
+        return apiClient.buildCall(localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private com.squareup.okhttp.Call runsV1CreateRunArtifactsLineageValidateBeforeCall(String owner, String project, String uuid, V1RunArtifacts body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        
+        // verify the required parameter 'owner' is set
+        if (owner == null) {
+            throw new ApiException("Missing the required parameter 'owner' when calling runsV1CreateRunArtifactsLineage(Async)");
+        }
+        
+        // verify the required parameter 'project' is set
+        if (project == null) {
+            throw new ApiException("Missing the required parameter 'project' when calling runsV1CreateRunArtifactsLineage(Async)");
+        }
+        
+        // verify the required parameter 'uuid' is set
+        if (uuid == null) {
+            throw new ApiException("Missing the required parameter 'uuid' when calling runsV1CreateRunArtifactsLineage(Async)");
+        }
+        
+        // verify the required parameter 'body' is set
+        if (body == null) {
+            throw new ApiException("Missing the required parameter 'body' when calling runsV1CreateRunArtifactsLineage(Async)");
+        }
+        
+
+        com.squareup.okhttp.Call call = runsV1CreateRunArtifactsLineageCall(owner, project, uuid, body, progressListener, progressRequestListener);
+        return call;
+
+    }
+
+    /**
+     * Create bulk run run artifacts lineage
+     * 
+     * @param owner Owner of the namespace (required)
+     * @param project Project where the run will be assigned (required)
+     * @param uuid Uuid identifier of the entity (required)
+     * @param body Run Artifacts (required)
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public void runsV1CreateRunArtifactsLineage(String owner, String project, String uuid, V1RunArtifacts body) throws ApiException {
+        runsV1CreateRunArtifactsLineageWithHttpInfo(owner, project, uuid, body);
+    }
+
+    /**
+     * Create bulk run run artifacts lineage
+     * 
+     * @param owner Owner of the namespace (required)
+     * @param project Project where the run will be assigned (required)
+     * @param uuid Uuid identifier of the entity (required)
+     * @param body Run Artifacts (required)
+     * @return ApiResponse&lt;Void&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public ApiResponse<Void> runsV1CreateRunArtifactsLineageWithHttpInfo(String owner, String project, String uuid, V1RunArtifacts body) throws ApiException {
+        com.squareup.okhttp.Call call = runsV1CreateRunArtifactsLineageValidateBeforeCall(owner, project, uuid, body, null, null);
+        return apiClient.execute(call);
+    }
+
+    /**
+     * Create bulk run run artifacts lineage (asynchronously)
+     * 
+     * @param owner Owner of the namespace (required)
+     * @param project Project where the run will be assigned (required)
+     * @param uuid Uuid identifier of the entity (required)
+     * @param body Run Artifacts (required)
+     * @param callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     */
+    public com.squareup.okhttp.Call runsV1CreateRunArtifactsLineageAsync(String owner, String project, String uuid, V1RunArtifacts body, final ApiCallback<Void> callback) throws ApiException {
+
+        ProgressResponseBody.ProgressListener progressListener = null;
+        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
+
+        if (callback != null) {
+            progressListener = new ProgressResponseBody.ProgressListener() {
+                @Override
+                public void update(long bytesRead, long contentLength, boolean done) {
+                    callback.onDownloadProgress(bytesRead, contentLength, done);
+                }
+            };
+
+            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
+                @Override
+                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
+                    callback.onUploadProgress(bytesWritten, contentLength, done);
+                }
+            };
+        }
+
+        com.squareup.okhttp.Call call = runsV1CreateRunArtifactsLineageValidateBeforeCall(owner, project, uuid, body, progressListener, progressRequestListener);
+        apiClient.executeAsync(call, callback);
+        return call;
+    }
+    /**
+     * Build call for runsV1CreateRunStatus
+     * @param owner Owner of the namespace (required)
+     * @param project Project where the run will be assigned (required)
+     * @param uuid Uuid identifier of the entity (required)
+     * @param body  (required)
+     * @param progressListener Progress listener
+     * @param progressRequestListener Progress request listener
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     */
+    public com.squareup.okhttp.Call runsV1CreateRunStatusCall(String owner, String project, String uuid, V1EntityStatusBodyRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        Object localVarPostBody = body;
+
+        // create path and map variables
+        String localVarPath = "/api/v1/{owner}/{project}/runs/{uuid}/statuses"
+            .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()))
+            .replaceAll("\\{" + "project" + "\\}", apiClient.escapeString(project.toString()))
+            .replaceAll("\\{" + "uuid" + "\\}", apiClient.escapeString(uuid.toString()));
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
+
+        final String[] localVarContentTypes = {
+            "application/json"
+        };
+        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+        localVarHeaderParams.put("Content-Type", localVarContentType);
+
+        if(progressListener != null) {
+            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
+                @Override
+                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
+                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
+                    return originalResponse.newBuilder()
+                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
+                    .build();
+                }
+            });
+        }
+
+        String[] localVarAuthNames = new String[] { "ApiKey" };
+        return apiClient.buildCall(localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private com.squareup.okhttp.Call runsV1CreateRunStatusValidateBeforeCall(String owner, String project, String uuid, V1EntityStatusBodyRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        
+        // verify the required parameter 'owner' is set
+        if (owner == null) {
+            throw new ApiException("Missing the required parameter 'owner' when calling runsV1CreateRunStatus(Async)");
+        }
+        
+        // verify the required parameter 'project' is set
+        if (project == null) {
+            throw new ApiException("Missing the required parameter 'project' when calling runsV1CreateRunStatus(Async)");
+        }
+        
+        // verify the required parameter 'uuid' is set
+        if (uuid == null) {
+            throw new ApiException("Missing the required parameter 'uuid' when calling runsV1CreateRunStatus(Async)");
+        }
+        
+        // verify the required parameter 'body' is set
+        if (body == null) {
+            throw new ApiException("Missing the required parameter 'body' when calling runsV1CreateRunStatus(Async)");
+        }
+        
+
+        com.squareup.okhttp.Call call = runsV1CreateRunStatusCall(owner, project, uuid, body, progressListener, progressRequestListener);
+        return call;
+
+    }
+
+    /**
+     * Create new run status
+     * 
+     * @param owner Owner of the namespace (required)
+     * @param project Project where the run will be assigned (required)
+     * @param uuid Uuid identifier of the entity (required)
+     * @param body  (required)
+     * @return V1Status
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public V1Status runsV1CreateRunStatus(String owner, String project, String uuid, V1EntityStatusBodyRequest body) throws ApiException {
+        ApiResponse<V1Status> resp = runsV1CreateRunStatusWithHttpInfo(owner, project, uuid, body);
+        return resp.getData();
+    }
+
+    /**
+     * Create new run status
+     * 
+     * @param owner Owner of the namespace (required)
+     * @param project Project where the run will be assigned (required)
+     * @param uuid Uuid identifier of the entity (required)
+     * @param body  (required)
+     * @return ApiResponse&lt;V1Status&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public ApiResponse<V1Status> runsV1CreateRunStatusWithHttpInfo(String owner, String project, String uuid, V1EntityStatusBodyRequest body) throws ApiException {
+        com.squareup.okhttp.Call call = runsV1CreateRunStatusValidateBeforeCall(owner, project, uuid, body, null, null);
+        Type localVarReturnType = new TypeToken<V1Status>(){}.getType();
+        return apiClient.execute(call, localVarReturnType);
+    }
+
+    /**
+     * Create new run status (asynchronously)
+     * 
+     * @param owner Owner of the namespace (required)
+     * @param project Project where the run will be assigned (required)
+     * @param uuid Uuid identifier of the entity (required)
+     * @param body  (required)
+     * @param callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     */
+    public com.squareup.okhttp.Call runsV1CreateRunStatusAsync(String owner, String project, String uuid, V1EntityStatusBodyRequest body, final ApiCallback<V1Status> callback) throws ApiException {
+
+        ProgressResponseBody.ProgressListener progressListener = null;
+        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
+
+        if (callback != null) {
+            progressListener = new ProgressResponseBody.ProgressListener() {
+                @Override
+                public void update(long bytesRead, long contentLength, boolean done) {
+                    callback.onDownloadProgress(bytesRead, contentLength, done);
+                }
+            };
+
+            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
+                @Override
+                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
+                    callback.onUploadProgress(bytesWritten, contentLength, done);
+                }
+            };
+        }
+
+        com.squareup.okhttp.Call call = runsV1CreateRunStatusValidateBeforeCall(owner, project, uuid, body, progressListener, progressRequestListener);
+        Type localVarReturnType = new TypeToken<V1Status>(){}.getType();
+        apiClient.executeAsync(call, localVarReturnType, callback);
+        return call;
+    }
+    /**
+     * Build call for runsV1DeleteRun
+     * @param owner Owner of the namespace (required)
+     * @param project Project (required)
+     * @param uuid Uuid identifier of the entity (required)
+     * @param progressListener Progress listener
+     * @param progressRequestListener Progress request listener
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     */
+    public com.squareup.okhttp.Call runsV1DeleteRunCall(String owner, String project, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        Object localVarPostBody = null;
+
+        // create path and map variables
+        String localVarPath = "/api/v1/{owner}/{project}/runs/{uuid}"
+            .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()))
+            .replaceAll("\\{" + "project" + "\\}", apiClient.escapeString(project.toString()))
+            .replaceAll("\\{" + "uuid" + "\\}", apiClient.escapeString(uuid.toString()));
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
+
+        final String[] localVarContentTypes = {
+            "application/json"
+        };
+        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+        localVarHeaderParams.put("Content-Type", localVarContentType);
+
+        if(progressListener != null) {
+            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
+                @Override
+                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
+                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
+                    return originalResponse.newBuilder()
+                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
+                    .build();
+                }
+            });
+        }
+
+        String[] localVarAuthNames = new String[] { "ApiKey" };
+        return apiClient.buildCall(localVarPath, "DELETE", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private com.squareup.okhttp.Call runsV1DeleteRunValidateBeforeCall(String owner, String project, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        
+        // verify the required parameter 'owner' is set
+        if (owner == null) {
+            throw new ApiException("Missing the required parameter 'owner' when calling runsV1DeleteRun(Async)");
+        }
+        
+        // verify the required parameter 'project' is set
+        if (project == null) {
+            throw new ApiException("Missing the required parameter 'project' when calling runsV1DeleteRun(Async)");
+        }
+        
+        // verify the required parameter 'uuid' is set
+        if (uuid == null) {
+            throw new ApiException("Missing the required parameter 'uuid' when calling runsV1DeleteRun(Async)");
+        }
+        
+
+        com.squareup.okhttp.Call call = runsV1DeleteRunCall(owner, project, uuid, progressListener, progressRequestListener);
+        return call;
+
+    }
+
+    /**
+     * Delete run
+     * 
+     * @param owner Owner of the namespace (required)
+     * @param project Project (required)
+     * @param uuid Uuid identifier of the entity (required)
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public void runsV1DeleteRun(String owner, String project, String uuid) throws ApiException {
+        runsV1DeleteRunWithHttpInfo(owner, project, uuid);
+    }
+
+    /**
+     * Delete run
+     * 
+     * @param owner Owner of the namespace (required)
+     * @param project Project (required)
+     * @param uuid Uuid identifier of the entity (required)
+     * @return ApiResponse&lt;Void&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public ApiResponse<Void> runsV1DeleteRunWithHttpInfo(String owner, String project, String uuid) throws ApiException {
+        com.squareup.okhttp.Call call = runsV1DeleteRunValidateBeforeCall(owner, project, uuid, null, null);
+        return apiClient.execute(call);
+    }
+
+    /**
+     * Delete run (asynchronously)
+     * 
+     * @param owner Owner of the namespace (required)
+     * @param project Project (required)
+     * @param uuid Uuid identifier of the entity (required)
+     * @param callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     */
+    public com.squareup.okhttp.Call runsV1DeleteRunAsync(String owner, String project, String uuid, final ApiCallback<Void> callback) throws ApiException {
+
+        ProgressResponseBody.ProgressListener progressListener = null;
+        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
+
+        if (callback != null) {
+            progressListener = new ProgressResponseBody.ProgressListener() {
+                @Override
+                public void update(long bytesRead, long contentLength, boolean done) {
+                    callback.onDownloadProgress(bytesRead, contentLength, done);
+                }
+            };
+
+            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
+                @Override
+                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
+                    callback.onUploadProgress(bytesWritten, contentLength, done);
+                }
+            };
+        }
+
+        com.squareup.okhttp.Call call = runsV1DeleteRunValidateBeforeCall(owner, project, uuid, progressListener, progressRequestListener);
+        apiClient.executeAsync(call, callback);
+        return call;
+    }
+    /**
+     * Build call for runsV1DeleteRunArtifactLineage
+     * @param owner Owner of the namespace (required)
+     * @param project Project where the run will be assigned (required)
+     * @param uuid Uuid identifier of the entity (required)
+     * @param name Artifact name (required)
+     * @param namespace namespace. (optional)
+     * @param progressListener Progress listener
+     * @param progressRequestListener Progress request listener
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     */
+    public com.squareup.okhttp.Call runsV1DeleteRunArtifactLineageCall(String owner, String project, String uuid, String name, String namespace, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        Object localVarPostBody = null;
+
+        // create path and map variables
+        String localVarPath = "/api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage/{name}"
+            .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()))
+            .replaceAll("\\{" + "project" + "\\}", apiClient.escapeString(project.toString()))
+            .replaceAll("\\{" + "uuid" + "\\}", apiClient.escapeString(uuid.toString()))
+            .replaceAll("\\{" + "name" + "\\}", apiClient.escapeString(name.toString()));
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        if (namespace != null)
+        localVarQueryParams.addAll(apiClient.parameterToPair("namespace", namespace));
+
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
+
+        final String[] localVarContentTypes = {
+            "application/json"
+        };
+        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+        localVarHeaderParams.put("Content-Type", localVarContentType);
+
+        if(progressListener != null) {
+            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
+                @Override
+                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
+                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
+                    return originalResponse.newBuilder()
+                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
+                    .build();
+                }
+            });
+        }
+
+        String[] localVarAuthNames = new String[] { "ApiKey" };
+        return apiClient.buildCall(localVarPath, "DELETE", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private com.squareup.okhttp.Call runsV1DeleteRunArtifactLineageValidateBeforeCall(String owner, String project, String uuid, String name, String namespace, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        
+        // verify the required parameter 'owner' is set
+        if (owner == null) {
+            throw new ApiException("Missing the required parameter 'owner' when calling runsV1DeleteRunArtifactLineage(Async)");
+        }
+        
+        // verify the required parameter 'project' is set
+        if (project == null) {
+            throw new ApiException("Missing the required parameter 'project' when calling runsV1DeleteRunArtifactLineage(Async)");
+        }
+        
+        // verify the required parameter 'uuid' is set
+        if (uuid == null) {
+            throw new ApiException("Missing the required parameter 'uuid' when calling runsV1DeleteRunArtifactLineage(Async)");
+        }
+        
+        // verify the required parameter 'name' is set
+        if (name == null) {
+            throw new ApiException("Missing the required parameter 'name' when calling runsV1DeleteRunArtifactLineage(Async)");
+        }
+        
+
+        com.squareup.okhttp.Call call = runsV1DeleteRunArtifactLineageCall(owner, project, uuid, name, namespace, progressListener, progressRequestListener);
+        return call;
+
+    }
+
+    /**
+     * Delete run artifact lineage
+     * 
+     * @param owner Owner of the namespace (required)
+     * @param project Project where the run will be assigned (required)
+     * @param uuid Uuid identifier of the entity (required)
+     * @param name Artifact name (required)
+     * @param namespace namespace. (optional)
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public void runsV1DeleteRunArtifactLineage(String owner, String project, String uuid, String name, String namespace) throws ApiException {
+        runsV1DeleteRunArtifactLineageWithHttpInfo(owner, project, uuid, name, namespace);
+    }
+
+    /**
+     * Delete run artifact lineage
+     * 
+     * @param owner Owner of the namespace (required)
+     * @param project Project where the run will be assigned (required)
+     * @param uuid Uuid identifier of the entity (required)
+     * @param name Artifact name (required)
+     * @param namespace namespace. (optional)
+     * @return ApiResponse&lt;Void&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public ApiResponse<Void> runsV1DeleteRunArtifactLineageWithHttpInfo(String owner, String project, String uuid, String name, String namespace) throws ApiException {
+        com.squareup.okhttp.Call call = runsV1DeleteRunArtifactLineageValidateBeforeCall(owner, project, uuid, name, namespace, null, null);
+        return apiClient.execute(call);
+    }
+
+    /**
+     * Delete run artifact lineage (asynchronously)
+     * 
+     * @param owner Owner of the namespace (required)
+     * @param project Project where the run will be assigned (required)
+     * @param uuid Uuid identifier of the entity (required)
+     * @param name Artifact name (required)
+     * @param namespace namespace. (optional)
+     * @param callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     */
+    public com.squareup.okhttp.Call runsV1DeleteRunArtifactLineageAsync(String owner, String project, String uuid, String name, String namespace, final ApiCallback<Void> callback) throws ApiException {
+
+        ProgressResponseBody.ProgressListener progressListener = null;
+        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
+
+        if (callback != null) {
+            progressListener = new ProgressResponseBody.ProgressListener() {
+                @Override
+                public void update(long bytesRead, long contentLength, boolean done) {
+                    callback.onDownloadProgress(bytesRead, contentLength, done);
+                }
+            };
+
+            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
+                @Override
+                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
+                    callback.onUploadProgress(bytesWritten, contentLength, done);
+                }
+            };
+        }
+
+        com.squareup.okhttp.Call call = runsV1DeleteRunArtifactLineageValidateBeforeCall(owner, project, uuid, name, namespace, progressListener, progressRequestListener);
+        apiClient.executeAsync(call, callback);
+        return call;
+    }
+    /**
+     * Build call for runsV1DeleteRuns
+     * @param owner Owner of the namespace (required)
+     * @param project Project under namesapce (required)
+     * @param body Uuids of the entities (required)
+     * @param progressListener Progress listener
+     * @param progressRequestListener Progress request listener
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     */
+    public com.squareup.okhttp.Call runsV1DeleteRunsCall(String owner, String project, V1Uuids body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        Object localVarPostBody = body;
+
+        // create path and map variables
+        String localVarPath = "/api/v1/{owner}/{project}/runs/delete"
+            .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()))
+            .replaceAll("\\{" + "project" + "\\}", apiClient.escapeString(project.toString()));
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
+
+        final String[] localVarContentTypes = {
+            "application/json"
+        };
+        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+        localVarHeaderParams.put("Content-Type", localVarContentType);
+
+        if(progressListener != null) {
+            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
+                @Override
+                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
+                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
+                    return originalResponse.newBuilder()
+                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
+                    .build();
+                }
+            });
+        }
+
+        String[] localVarAuthNames = new String[] { "ApiKey" };
+        return apiClient.buildCall(localVarPath, "DELETE", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private com.squareup.okhttp.Call runsV1DeleteRunsValidateBeforeCall(String owner, String project, V1Uuids body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        
+        // verify the required parameter 'owner' is set
+        if (owner == null) {
+            throw new ApiException("Missing the required parameter 'owner' when calling runsV1DeleteRuns(Async)");
+        }
+        
+        // verify the required parameter 'project' is set
+        if (project == null) {
+            throw new ApiException("Missing the required parameter 'project' when calling runsV1DeleteRuns(Async)");
+        }
+        
+        // verify the required parameter 'body' is set
+        if (body == null) {
+            throw new ApiException("Missing the required parameter 'body' when calling runsV1DeleteRuns(Async)");
+        }
+        
+
+        com.squareup.okhttp.Call call = runsV1DeleteRunsCall(owner, project, body, progressListener, progressRequestListener);
+        return call;
+
+    }
+
+    /**
+     * Delete runs
+     * 
+     * @param owner Owner of the namespace (required)
+     * @param project Project under namesapce (required)
+     * @param body Uuids of the entities (required)
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public void runsV1DeleteRuns(String owner, String project, V1Uuids body) throws ApiException {
+        runsV1DeleteRunsWithHttpInfo(owner, project, body);
+    }
+
+    /**
+     * Delete runs
+     * 
+     * @param owner Owner of the namespace (required)
+     * @param project Project under namesapce (required)
+     * @param body Uuids of the entities (required)
+     * @return ApiResponse&lt;Void&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public ApiResponse<Void> runsV1DeleteRunsWithHttpInfo(String owner, String project, V1Uuids body) throws ApiException {
+        com.squareup.okhttp.Call call = runsV1DeleteRunsValidateBeforeCall(owner, project, body, null, null);
+        return apiClient.execute(call);
+    }
+
+    /**
+     * Delete runs (asynchronously)
+     * 
+     * @param owner Owner of the namespace (required)
+     * @param project Project under namesapce (required)
+     * @param body Uuids of the entities (required)
+     * @param callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     */
+    public com.squareup.okhttp.Call runsV1DeleteRunsAsync(String owner, String project, V1Uuids body, final ApiCallback<Void> callback) throws ApiException {
+
+        ProgressResponseBody.ProgressListener progressListener = null;
+        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
+
+        if (callback != null) {
+            progressListener = new ProgressResponseBody.ProgressListener() {
+                @Override
+                public void update(long bytesRead, long contentLength, boolean done) {
+                    callback.onDownloadProgress(bytesRead, contentLength, done);
+                }
+            };
+
+            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
+                @Override
+                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
+                    callback.onUploadProgress(bytesWritten, contentLength, done);
+                }
+            };
+        }
+
+        com.squareup.okhttp.Call call = runsV1DeleteRunsValidateBeforeCall(owner, project, body, progressListener, progressRequestListener);
+        apiClient.executeAsync(call, callback);
+        return call;
+    }
+    /**
+     * Build call for runsV1GetMultiRunEvents
+     * @param namespace namespace (required)
+     * @param owner Owner of the namespace (required)
+     * @param project Project where the run will be assigned (required)
+     * @param kind The artifact kind (required)
+     * @param names Names query param. (optional)
+     * @param runs Runs query param. (optional)
+     * @param orient Orient query param. (optional)
+     * @param progressListener Progress listener
+     * @param progressRequestListener Progress request listener
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     */
+    public com.squareup.okhttp.Call runsV1GetMultiRunEventsCall(String namespace, String owner, String project, String kind, String names, String runs, String orient, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        Object localVarPostBody = null;
+
+        // create path and map variables
+        String localVarPath = "/streams/v1/{namespace}/{owner}/{project}/runs/multi/events/{kind}"
+            .replaceAll("\\{" + "namespace" + "\\}", apiClient.escapeString(namespace.toString()))
+            .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()))
+            .replaceAll("\\{" + "project" + "\\}", apiClient.escapeString(project.toString()))
+            .replaceAll("\\{" + "kind" + "\\}", apiClient.escapeString(kind.toString()));
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        if (names != null)
+        localVarQueryParams.addAll(apiClient.parameterToPair("names", names));
+        if (runs != null)
+        localVarQueryParams.addAll(apiClient.parameterToPair("runs", runs));
+        if (orient != null)
+        localVarQueryParams.addAll(apiClient.parameterToPair("orient", orient));
+
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
+
+        final String[] localVarContentTypes = {
+            "application/json"
+        };
+        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+        localVarHeaderParams.put("Content-Type", localVarContentType);
+
+        if(progressListener != null) {
+            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
+                @Override
+                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
+                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
+                    return originalResponse.newBuilder()
+                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
+                    .build();
+                }
+            });
+        }
+
+        String[] localVarAuthNames = new String[] { "ApiKey" };
+        return apiClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private com.squareup.okhttp.Call runsV1GetMultiRunEventsValidateBeforeCall(String namespace, String owner, String project, String kind, String names, String runs, String orient, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        
+        // verify the required parameter 'namespace' is set
+        if (namespace == null) {
+            throw new ApiException("Missing the required parameter 'namespace' when calling runsV1GetMultiRunEvents(Async)");
+        }
+        
+        // verify the required parameter 'owner' is set
+        if (owner == null) {
+            throw new ApiException("Missing the required parameter 'owner' when calling runsV1GetMultiRunEvents(Async)");
+        }
+        
+        // verify the required parameter 'project' is set
+        if (project == null) {
+            throw new ApiException("Missing the required parameter 'project' when calling runsV1GetMultiRunEvents(Async)");
+        }
+        
+        // verify the required parameter 'kind' is set
+        if (kind == null) {
+            throw new ApiException("Missing the required parameter 'kind' when calling runsV1GetMultiRunEvents(Async)");
+        }
+        
+
+        com.squareup.okhttp.Call call = runsV1GetMultiRunEventsCall(namespace, owner, project, kind, names, runs, orient, progressListener, progressRequestListener);
+        return call;
+
+    }
+
+    /**
+     * Get multi runs events
+     * 
+     * @param namespace namespace (required)
+     * @param owner Owner of the namespace (required)
+     * @param project Project where the run will be assigned (required)
+     * @param kind The artifact kind (required)
+     * @param names Names query param. (optional)
+     * @param runs Runs query param. (optional)
+     * @param orient Orient query param. (optional)
+     * @return V1EventsResponse
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public V1EventsResponse runsV1GetMultiRunEvents(String namespace, String owner, String project, String kind, String names, String runs, String orient) throws ApiException {
+        ApiResponse<V1EventsResponse> resp = runsV1GetMultiRunEventsWithHttpInfo(namespace, owner, project, kind, names, runs, orient);
+        return resp.getData();
+    }
+
+    /**
+     * Get multi runs events
+     * 
+     * @param namespace namespace (required)
+     * @param owner Owner of the namespace (required)
+     * @param project Project where the run will be assigned (required)
+     * @param kind The artifact kind (required)
+     * @param names Names query param. (optional)
+     * @param runs Runs query param. (optional)
+     * @param orient Orient query param. (optional)
+     * @return ApiResponse&lt;V1EventsResponse&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public ApiResponse<V1EventsResponse> runsV1GetMultiRunEventsWithHttpInfo(String namespace, String owner, String project, String kind, String names, String runs, String orient) throws ApiException {
+        com.squareup.okhttp.Call call = runsV1GetMultiRunEventsValidateBeforeCall(namespace, owner, project, kind, names, runs, orient, null, null);
+        Type localVarReturnType = new TypeToken<V1EventsResponse>(){}.getType();
+        return apiClient.execute(call, localVarReturnType);
+    }
+
+    /**
+     * Get multi runs events (asynchronously)
+     * 
+     * @param namespace namespace (required)
+     * @param owner Owner of the namespace (required)
+     * @param project Project where the run will be assigned (required)
+     * @param kind The artifact kind (required)
+     * @param names Names query param. (optional)
+     * @param runs Runs query param. (optional)
+     * @param orient Orient query param. (optional)
+     * @param callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     */
+    public com.squareup.okhttp.Call runsV1GetMultiRunEventsAsync(String namespace, String owner, String project, String kind, String names, String runs, String orient, final ApiCallback<V1EventsResponse> callback) throws ApiException {
+
+        ProgressResponseBody.ProgressListener progressListener = null;
+        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
+
+        if (callback != null) {
+            progressListener = new ProgressResponseBody.ProgressListener() {
+                @Override
+                public void update(long bytesRead, long contentLength, boolean done) {
+                    callback.onDownloadProgress(bytesRead, contentLength, done);
+                }
+            };
+
+            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
+                @Override
+                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
+                    callback.onUploadProgress(bytesWritten, contentLength, done);
+                }
+            };
+        }
+
+        com.squareup.okhttp.Call call = runsV1GetMultiRunEventsValidateBeforeCall(namespace, owner, project, kind, names, runs, orient, progressListener, progressRequestListener);
+        Type localVarReturnType = new TypeToken<V1EventsResponse>(){}.getType();
+        apiClient.executeAsync(call, localVarReturnType, callback);
+        return call;
+    }
+    /**
+     * Build call for runsV1GetRun
+     * @param owner Owner of the namespace (required)
+     * @param project Project (required)
+     * @param uuid Uuid identifier of the entity (required)
+     * @param progressListener Progress listener
+     * @param progressRequestListener Progress request listener
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     */
+    public com.squareup.okhttp.Call runsV1GetRunCall(String owner, String project, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        Object localVarPostBody = null;
+
+        // create path and map variables
+        String localVarPath = "/api/v1/{owner}/{project}/runs/{uuid}"
+            .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()))
+            .replaceAll("\\{" + "project" + "\\}", apiClient.escapeString(project.toString()))
+            .replaceAll("\\{" + "uuid" + "\\}", apiClient.escapeString(uuid.toString()));
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
+
+        final String[] localVarContentTypes = {
+            "application/json"
+        };
+        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+        localVarHeaderParams.put("Content-Type", localVarContentType);
+
+        if(progressListener != null) {
+            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
+                @Override
+                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
+                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
+                    return originalResponse.newBuilder()
+                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
+                    .build();
+                }
+            });
+        }
+
+        String[] localVarAuthNames = new String[] { "ApiKey" };
+        return apiClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private com.squareup.okhttp.Call runsV1GetRunValidateBeforeCall(String owner, String project, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        
+        // verify the required parameter 'owner' is set
+        if (owner == null) {
+            throw new ApiException("Missing the required parameter 'owner' when calling runsV1GetRun(Async)");
+        }
+        
+        // verify the required parameter 'project' is set
+        if (project == null) {
+            throw new ApiException("Missing the required parameter 'project' when calling runsV1GetRun(Async)");
+        }
+        
+        // verify the required parameter 'uuid' is set
+        if (uuid == null) {
+            throw new ApiException("Missing the required parameter 'uuid' when calling runsV1GetRun(Async)");
+        }
+        
+
+        com.squareup.okhttp.Call call = runsV1GetRunCall(owner, project, uuid, progressListener, progressRequestListener);
+        return call;
+
+    }
+
+    /**
+     * Get run
+     * 
+     * @param owner Owner of the namespace (required)
+     * @param project Project (required)
+     * @param uuid Uuid identifier of the entity (required)
+     * @return V1Run
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public V1Run runsV1GetRun(String owner, String project, String uuid) throws ApiException {
+        ApiResponse<V1Run> resp = runsV1GetRunWithHttpInfo(owner, project, uuid);
+        return resp.getData();
+    }
+
+    /**
+     * Get run
+     * 
+     * @param owner Owner of the namespace (required)
+     * @param project Project (required)
+     * @param uuid Uuid identifier of the entity (required)
+     * @return ApiResponse&lt;V1Run&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public ApiResponse<V1Run> runsV1GetRunWithHttpInfo(String owner, String project, String uuid) throws ApiException {
+        com.squareup.okhttp.Call call = runsV1GetRunValidateBeforeCall(owner, project, uuid, null, null);
+        Type localVarReturnType = new TypeToken<V1Run>(){}.getType();
+        return apiClient.execute(call, localVarReturnType);
+    }
+
+    /**
+     * Get run (asynchronously)
+     * 
+     * @param owner Owner of the namespace (required)
+     * @param project Project (required)
+     * @param uuid Uuid identifier of the entity (required)
+     * @param callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     */
+    public com.squareup.okhttp.Call runsV1GetRunAsync(String owner, String project, String uuid, final ApiCallback<V1Run> callback) throws ApiException {
+
+        ProgressResponseBody.ProgressListener progressListener = null;
+        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
+
+        if (callback != null) {
+            progressListener = new ProgressResponseBody.ProgressListener() {
+                @Override
+                public void update(long bytesRead, long contentLength, boolean done) {
+                    callback.onDownloadProgress(bytesRead, contentLength, done);
+                }
+            };
+
+            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
+                @Override
+                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
+                    callback.onUploadProgress(bytesWritten, contentLength, done);
+                }
+            };
+        }
+
+        com.squareup.okhttp.Call call = runsV1GetRunValidateBeforeCall(owner, project, uuid, progressListener, progressRequestListener);
+        Type localVarReturnType = new TypeToken<V1Run>(){}.getType();
+        apiClient.executeAsync(call, localVarReturnType, callback);
+        return call;
+    }
+    /**
+     * Build call for runsV1GetRunArtifactLineage
+     * @param owner Owner of the namespace (required)
+     * @param project Project where the run will be assigned (required)
+     * @param uuid Uuid identifier of the entity (required)
+     * @param name Artifact name (required)
+     * @param namespace namespace. (optional)
+     * @param progressListener Progress listener
+     * @param progressRequestListener Progress request listener
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     */
+    public com.squareup.okhttp.Call runsV1GetRunArtifactLineageCall(String owner, String project, String uuid, String name, String namespace, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        Object localVarPostBody = null;
+
+        // create path and map variables
+        String localVarPath = "/api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage/{name}"
+            .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()))
+            .replaceAll("\\{" + "project" + "\\}", apiClient.escapeString(project.toString()))
+            .replaceAll("\\{" + "uuid" + "\\}", apiClient.escapeString(uuid.toString()))
+            .replaceAll("\\{" + "name" + "\\}", apiClient.escapeString(name.toString()));
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        if (namespace != null)
+        localVarQueryParams.addAll(apiClient.parameterToPair("namespace", namespace));
+
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
+
+        final String[] localVarContentTypes = {
+            "application/json"
+        };
+        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+        localVarHeaderParams.put("Content-Type", localVarContentType);
+
+        if(progressListener != null) {
+            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
+                @Override
+                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
+                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
+                    return originalResponse.newBuilder()
+                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
+                    .build();
+                }
+            });
+        }
+
+        String[] localVarAuthNames = new String[] { "ApiKey" };
+        return apiClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private com.squareup.okhttp.Call runsV1GetRunArtifactLineageValidateBeforeCall(String owner, String project, String uuid, String name, String namespace, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        
+        // verify the required parameter 'owner' is set
+        if (owner == null) {
+            throw new ApiException("Missing the required parameter 'owner' when calling runsV1GetRunArtifactLineage(Async)");
+        }
+        
+        // verify the required parameter 'project' is set
+        if (project == null) {
+            throw new ApiException("Missing the required parameter 'project' when calling runsV1GetRunArtifactLineage(Async)");
+        }
+        
+        // verify the required parameter 'uuid' is set
+        if (uuid == null) {
+            throw new ApiException("Missing the required parameter 'uuid' when calling runsV1GetRunArtifactLineage(Async)");
+        }
+        
+        // verify the required parameter 'name' is set
+        if (name == null) {
+            throw new ApiException("Missing the required parameter 'name' when calling runsV1GetRunArtifactLineage(Async)");
+        }
+        
+
+        com.squareup.okhttp.Call call = runsV1GetRunArtifactLineageCall(owner, project, uuid, name, namespace, progressListener, progressRequestListener);
+        return call;
+
+    }
+
+    /**
+     * Get run artifacts lineage
+     * 
+     * @param owner Owner of the namespace (required)
+     * @param project Project where the run will be assigned (required)
+     * @param uuid Uuid identifier of the entity (required)
+     * @param name Artifact name (required)
+     * @param namespace namespace. (optional)
+     * @return V1RunArtifact
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public V1RunArtifact runsV1GetRunArtifactLineage(String owner, String project, String uuid, String name, String namespace) throws ApiException {
+        ApiResponse<V1RunArtifact> resp = runsV1GetRunArtifactLineageWithHttpInfo(owner, project, uuid, name, namespace);
+        return resp.getData();
+    }
+
+    /**
+     * Get run artifacts lineage
+     * 
+     * @param owner Owner of the namespace (required)
+     * @param project Project where the run will be assigned (required)
+     * @param uuid Uuid identifier of the entity (required)
+     * @param name Artifact name (required)
+     * @param namespace namespace. (optional)
+     * @return ApiResponse&lt;V1RunArtifact&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public ApiResponse<V1RunArtifact> runsV1GetRunArtifactLineageWithHttpInfo(String owner, String project, String uuid, String name, String namespace) throws ApiException {
+        com.squareup.okhttp.Call call = runsV1GetRunArtifactLineageValidateBeforeCall(owner, project, uuid, name, namespace, null, null);
+        Type localVarReturnType = new TypeToken<V1RunArtifact>(){}.getType();
+        return apiClient.execute(call, localVarReturnType);
+    }
+
+    /**
+     * Get run artifacts lineage (asynchronously)
+     * 
+     * @param owner Owner of the namespace (required)
+     * @param project Project where the run will be assigned (required)
+     * @param uuid Uuid identifier of the entity (required)
+     * @param name Artifact name (required)
+     * @param namespace namespace. (optional)
+     * @param callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     */
+    public com.squareup.okhttp.Call runsV1GetRunArtifactLineageAsync(String owner, String project, String uuid, String name, String namespace, final ApiCallback<V1RunArtifact> callback) throws ApiException {
+
+        ProgressResponseBody.ProgressListener progressListener = null;
+        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
+
+        if (callback != null) {
+            progressListener = new ProgressResponseBody.ProgressListener() {
+                @Override
+                public void update(long bytesRead, long contentLength, boolean done) {
+                    callback.onDownloadProgress(bytesRead, contentLength, done);
+                }
+            };
+
+            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
+                @Override
+                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
+                    callback.onUploadProgress(bytesWritten, contentLength, done);
+                }
+            };
+        }
+
+        com.squareup.okhttp.Call call = runsV1GetRunArtifactLineageValidateBeforeCall(owner, project, uuid, name, namespace, progressListener, progressRequestListener);
+        Type localVarReturnType = new TypeToken<V1RunArtifact>(){}.getType();
+        apiClient.executeAsync(call, localVarReturnType, callback);
+        return call;
+    }
+    /**
+     * Build call for runsV1GetRunArtifactsLineage
      * @param owner Owner of the namespace (required)
      * @param project Project where the run will be assigned (required)
      * @param uuid Uuid identifier of the entity (required)
@@ -2349,7 +2487,7 @@ public class RunsV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call getRunArtifactsLineageCall(String owner, String project, String uuid, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call runsV1GetRunArtifactsLineageCall(String owner, String project, String uuid, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -2400,25 +2538,25 @@ public class RunsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call getRunArtifactsLineageValidateBeforeCall(String owner, String project, String uuid, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call runsV1GetRunArtifactsLineageValidateBeforeCall(String owner, String project, String uuid, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling getRunArtifactsLineage(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling runsV1GetRunArtifactsLineage(Async)");
         }
         
         // verify the required parameter 'project' is set
         if (project == null) {
-            throw new ApiException("Missing the required parameter 'project' when calling getRunArtifactsLineage(Async)");
+            throw new ApiException("Missing the required parameter 'project' when calling runsV1GetRunArtifactsLineage(Async)");
         }
         
         // verify the required parameter 'uuid' is set
         if (uuid == null) {
-            throw new ApiException("Missing the required parameter 'uuid' when calling getRunArtifactsLineage(Async)");
+            throw new ApiException("Missing the required parameter 'uuid' when calling runsV1GetRunArtifactsLineage(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = getRunArtifactsLineageCall(owner, project, uuid, limit, sort, query, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = runsV1GetRunArtifactsLineageCall(owner, project, uuid, limit, sort, query, progressListener, progressRequestListener);
         return call;
 
     }
@@ -2435,8 +2573,8 @@ public class RunsV1Api {
      * @return V1ListRunArtifactsResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1ListRunArtifactsResponse getRunArtifactsLineage(String owner, String project, String uuid, Integer limit, String sort, String query) throws ApiException {
-        ApiResponse<V1ListRunArtifactsResponse> resp = getRunArtifactsLineageWithHttpInfo(owner, project, uuid, limit, sort, query);
+    public V1ListRunArtifactsResponse runsV1GetRunArtifactsLineage(String owner, String project, String uuid, Integer limit, String sort, String query) throws ApiException {
+        ApiResponse<V1ListRunArtifactsResponse> resp = runsV1GetRunArtifactsLineageWithHttpInfo(owner, project, uuid, limit, sort, query);
         return resp.getData();
     }
 
@@ -2452,8 +2590,8 @@ public class RunsV1Api {
      * @return ApiResponse&lt;V1ListRunArtifactsResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1ListRunArtifactsResponse> getRunArtifactsLineageWithHttpInfo(String owner, String project, String uuid, Integer limit, String sort, String query) throws ApiException {
-        com.squareup.okhttp.Call call = getRunArtifactsLineageValidateBeforeCall(owner, project, uuid, limit, sort, query, null, null);
+    public ApiResponse<V1ListRunArtifactsResponse> runsV1GetRunArtifactsLineageWithHttpInfo(String owner, String project, String uuid, Integer limit, String sort, String query) throws ApiException {
+        com.squareup.okhttp.Call call = runsV1GetRunArtifactsLineageValidateBeforeCall(owner, project, uuid, limit, sort, query, null, null);
         Type localVarReturnType = new TypeToken<V1ListRunArtifactsResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -2471,7 +2609,7 @@ public class RunsV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call getRunArtifactsLineageAsync(String owner, String project, String uuid, Integer limit, String sort, String query, final ApiCallback<V1ListRunArtifactsResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call runsV1GetRunArtifactsLineageAsync(String owner, String project, String uuid, Integer limit, String sort, String query, final ApiCallback<V1ListRunArtifactsResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -2492,13 +2630,13 @@ public class RunsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = getRunArtifactsLineageValidateBeforeCall(owner, project, uuid, limit, sort, query, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = runsV1GetRunArtifactsLineageValidateBeforeCall(owner, project, uuid, limit, sort, query, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1ListRunArtifactsResponse>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
     /**
-     * Build call for getRunArtifactsLineageNames
+     * Build call for runsV1GetRunArtifactsLineageNames
      * @param owner Owner of the namespace (required)
      * @param project Project where the run will be assigned (required)
      * @param uuid Uuid identifier of the entity (required)
@@ -2510,7 +2648,7 @@ public class RunsV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call getRunArtifactsLineageNamesCall(String owner, String project, String uuid, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call runsV1GetRunArtifactsLineageNamesCall(String owner, String project, String uuid, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -2561,25 +2699,25 @@ public class RunsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call getRunArtifactsLineageNamesValidateBeforeCall(String owner, String project, String uuid, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call runsV1GetRunArtifactsLineageNamesValidateBeforeCall(String owner, String project, String uuid, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling getRunArtifactsLineageNames(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling runsV1GetRunArtifactsLineageNames(Async)");
         }
         
         // verify the required parameter 'project' is set
         if (project == null) {
-            throw new ApiException("Missing the required parameter 'project' when calling getRunArtifactsLineageNames(Async)");
+            throw new ApiException("Missing the required parameter 'project' when calling runsV1GetRunArtifactsLineageNames(Async)");
         }
         
         // verify the required parameter 'uuid' is set
         if (uuid == null) {
-            throw new ApiException("Missing the required parameter 'uuid' when calling getRunArtifactsLineageNames(Async)");
+            throw new ApiException("Missing the required parameter 'uuid' when calling runsV1GetRunArtifactsLineageNames(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = getRunArtifactsLineageNamesCall(owner, project, uuid, limit, sort, query, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = runsV1GetRunArtifactsLineageNamesCall(owner, project, uuid, limit, sort, query, progressListener, progressRequestListener);
         return call;
 
     }
@@ -2596,8 +2734,8 @@ public class RunsV1Api {
      * @return V1ListRunArtifactsResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1ListRunArtifactsResponse getRunArtifactsLineageNames(String owner, String project, String uuid, Integer limit, String sort, String query) throws ApiException {
-        ApiResponse<V1ListRunArtifactsResponse> resp = getRunArtifactsLineageNamesWithHttpInfo(owner, project, uuid, limit, sort, query);
+    public V1ListRunArtifactsResponse runsV1GetRunArtifactsLineageNames(String owner, String project, String uuid, Integer limit, String sort, String query) throws ApiException {
+        ApiResponse<V1ListRunArtifactsResponse> resp = runsV1GetRunArtifactsLineageNamesWithHttpInfo(owner, project, uuid, limit, sort, query);
         return resp.getData();
     }
 
@@ -2613,8 +2751,8 @@ public class RunsV1Api {
      * @return ApiResponse&lt;V1ListRunArtifactsResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1ListRunArtifactsResponse> getRunArtifactsLineageNamesWithHttpInfo(String owner, String project, String uuid, Integer limit, String sort, String query) throws ApiException {
-        com.squareup.okhttp.Call call = getRunArtifactsLineageNamesValidateBeforeCall(owner, project, uuid, limit, sort, query, null, null);
+    public ApiResponse<V1ListRunArtifactsResponse> runsV1GetRunArtifactsLineageNamesWithHttpInfo(String owner, String project, String uuid, Integer limit, String sort, String query) throws ApiException {
+        com.squareup.okhttp.Call call = runsV1GetRunArtifactsLineageNamesValidateBeforeCall(owner, project, uuid, limit, sort, query, null, null);
         Type localVarReturnType = new TypeToken<V1ListRunArtifactsResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -2632,7 +2770,7 @@ public class RunsV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call getRunArtifactsLineageNamesAsync(String owner, String project, String uuid, Integer limit, String sort, String query, final ApiCallback<V1ListRunArtifactsResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call runsV1GetRunArtifactsLineageNamesAsync(String owner, String project, String uuid, Integer limit, String sort, String query, final ApiCallback<V1ListRunArtifactsResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -2653,13 +2791,13 @@ public class RunsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = getRunArtifactsLineageNamesValidateBeforeCall(owner, project, uuid, limit, sort, query, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = runsV1GetRunArtifactsLineageNamesValidateBeforeCall(owner, project, uuid, limit, sort, query, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1ListRunArtifactsResponse>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
     /**
-     * Build call for getRunArtifactsTree
+     * Build call for runsV1GetRunArtifactsTree
      * @param namespace namespace (required)
      * @param owner Owner of the namespace (required)
      * @param project Project where the run will be assigned (required)
@@ -2670,7 +2808,7 @@ public class RunsV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call getRunArtifactsTreeCall(String namespace, String owner, String project, String uuid, String path, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call runsV1GetRunArtifactsTreeCall(String namespace, String owner, String project, String uuid, String path, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -2718,30 +2856,30 @@ public class RunsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call getRunArtifactsTreeValidateBeforeCall(String namespace, String owner, String project, String uuid, String path, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call runsV1GetRunArtifactsTreeValidateBeforeCall(String namespace, String owner, String project, String uuid, String path, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'namespace' is set
         if (namespace == null) {
-            throw new ApiException("Missing the required parameter 'namespace' when calling getRunArtifactsTree(Async)");
+            throw new ApiException("Missing the required parameter 'namespace' when calling runsV1GetRunArtifactsTree(Async)");
         }
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling getRunArtifactsTree(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling runsV1GetRunArtifactsTree(Async)");
         }
         
         // verify the required parameter 'project' is set
         if (project == null) {
-            throw new ApiException("Missing the required parameter 'project' when calling getRunArtifactsTree(Async)");
+            throw new ApiException("Missing the required parameter 'project' when calling runsV1GetRunArtifactsTree(Async)");
         }
         
         // verify the required parameter 'uuid' is set
         if (uuid == null) {
-            throw new ApiException("Missing the required parameter 'uuid' when calling getRunArtifactsTree(Async)");
+            throw new ApiException("Missing the required parameter 'uuid' when calling runsV1GetRunArtifactsTree(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = getRunArtifactsTreeCall(namespace, owner, project, uuid, path, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = runsV1GetRunArtifactsTreeCall(namespace, owner, project, uuid, path, progressListener, progressRequestListener);
         return call;
 
     }
@@ -2757,8 +2895,8 @@ public class RunsV1Api {
      * @return V1ArtifactTree
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1ArtifactTree getRunArtifactsTree(String namespace, String owner, String project, String uuid, String path) throws ApiException {
-        ApiResponse<V1ArtifactTree> resp = getRunArtifactsTreeWithHttpInfo(namespace, owner, project, uuid, path);
+    public V1ArtifactTree runsV1GetRunArtifactsTree(String namespace, String owner, String project, String uuid, String path) throws ApiException {
+        ApiResponse<V1ArtifactTree> resp = runsV1GetRunArtifactsTreeWithHttpInfo(namespace, owner, project, uuid, path);
         return resp.getData();
     }
 
@@ -2773,8 +2911,8 @@ public class RunsV1Api {
      * @return ApiResponse&lt;V1ArtifactTree&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1ArtifactTree> getRunArtifactsTreeWithHttpInfo(String namespace, String owner, String project, String uuid, String path) throws ApiException {
-        com.squareup.okhttp.Call call = getRunArtifactsTreeValidateBeforeCall(namespace, owner, project, uuid, path, null, null);
+    public ApiResponse<V1ArtifactTree> runsV1GetRunArtifactsTreeWithHttpInfo(String namespace, String owner, String project, String uuid, String path) throws ApiException {
+        com.squareup.okhttp.Call call = runsV1GetRunArtifactsTreeValidateBeforeCall(namespace, owner, project, uuid, path, null, null);
         Type localVarReturnType = new TypeToken<V1ArtifactTree>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -2791,7 +2929,7 @@ public class RunsV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call getRunArtifactsTreeAsync(String namespace, String owner, String project, String uuid, String path, final ApiCallback<V1ArtifactTree> callback) throws ApiException {
+    public com.squareup.okhttp.Call runsV1GetRunArtifactsTreeAsync(String namespace, String owner, String project, String uuid, String path, final ApiCallback<V1ArtifactTree> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -2812,13 +2950,13 @@ public class RunsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = getRunArtifactsTreeValidateBeforeCall(namespace, owner, project, uuid, path, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = runsV1GetRunArtifactsTreeValidateBeforeCall(namespace, owner, project, uuid, path, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1ArtifactTree>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
     /**
-     * Build call for getRunEvents
+     * Build call for runsV1GetRunEvents
      * @param namespace namespace (required)
      * @param owner Owner of the namespace (required)
      * @param project Project where the run will be assigned (required)
@@ -2831,7 +2969,7 @@ public class RunsV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call getRunEventsCall(String namespace, String owner, String project, String uuid, String kind, String names, String orient, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call runsV1GetRunEventsCall(String namespace, String owner, String project, String uuid, String kind, String names, String orient, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -2882,35 +3020,35 @@ public class RunsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call getRunEventsValidateBeforeCall(String namespace, String owner, String project, String uuid, String kind, String names, String orient, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call runsV1GetRunEventsValidateBeforeCall(String namespace, String owner, String project, String uuid, String kind, String names, String orient, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'namespace' is set
         if (namespace == null) {
-            throw new ApiException("Missing the required parameter 'namespace' when calling getRunEvents(Async)");
+            throw new ApiException("Missing the required parameter 'namespace' when calling runsV1GetRunEvents(Async)");
         }
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling getRunEvents(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling runsV1GetRunEvents(Async)");
         }
         
         // verify the required parameter 'project' is set
         if (project == null) {
-            throw new ApiException("Missing the required parameter 'project' when calling getRunEvents(Async)");
+            throw new ApiException("Missing the required parameter 'project' when calling runsV1GetRunEvents(Async)");
         }
         
         // verify the required parameter 'uuid' is set
         if (uuid == null) {
-            throw new ApiException("Missing the required parameter 'uuid' when calling getRunEvents(Async)");
+            throw new ApiException("Missing the required parameter 'uuid' when calling runsV1GetRunEvents(Async)");
         }
         
         // verify the required parameter 'kind' is set
         if (kind == null) {
-            throw new ApiException("Missing the required parameter 'kind' when calling getRunEvents(Async)");
+            throw new ApiException("Missing the required parameter 'kind' when calling runsV1GetRunEvents(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = getRunEventsCall(namespace, owner, project, uuid, kind, names, orient, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = runsV1GetRunEventsCall(namespace, owner, project, uuid, kind, names, orient, progressListener, progressRequestListener);
         return call;
 
     }
@@ -2928,8 +3066,8 @@ public class RunsV1Api {
      * @return V1EventsResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1EventsResponse getRunEvents(String namespace, String owner, String project, String uuid, String kind, String names, String orient) throws ApiException {
-        ApiResponse<V1EventsResponse> resp = getRunEventsWithHttpInfo(namespace, owner, project, uuid, kind, names, orient);
+    public V1EventsResponse runsV1GetRunEvents(String namespace, String owner, String project, String uuid, String kind, String names, String orient) throws ApiException {
+        ApiResponse<V1EventsResponse> resp = runsV1GetRunEventsWithHttpInfo(namespace, owner, project, uuid, kind, names, orient);
         return resp.getData();
     }
 
@@ -2946,8 +3084,8 @@ public class RunsV1Api {
      * @return ApiResponse&lt;V1EventsResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1EventsResponse> getRunEventsWithHttpInfo(String namespace, String owner, String project, String uuid, String kind, String names, String orient) throws ApiException {
-        com.squareup.okhttp.Call call = getRunEventsValidateBeforeCall(namespace, owner, project, uuid, kind, names, orient, null, null);
+    public ApiResponse<V1EventsResponse> runsV1GetRunEventsWithHttpInfo(String namespace, String owner, String project, String uuid, String kind, String names, String orient) throws ApiException {
+        com.squareup.okhttp.Call call = runsV1GetRunEventsValidateBeforeCall(namespace, owner, project, uuid, kind, names, orient, null, null);
         Type localVarReturnType = new TypeToken<V1EventsResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -2966,7 +3104,7 @@ public class RunsV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call getRunEventsAsync(String namespace, String owner, String project, String uuid, String kind, String names, String orient, final ApiCallback<V1EventsResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call runsV1GetRunEventsAsync(String namespace, String owner, String project, String uuid, String kind, String names, String orient, final ApiCallback<V1EventsResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -2987,13 +3125,13 @@ public class RunsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = getRunEventsValidateBeforeCall(namespace, owner, project, uuid, kind, names, orient, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = runsV1GetRunEventsValidateBeforeCall(namespace, owner, project, uuid, kind, names, orient, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1EventsResponse>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
     /**
-     * Build call for getRunLogs
+     * Build call for runsV1GetRunLogs
      * @param namespace  (required)
      * @param owner Owner of the namespace (required)
      * @param project Project where the run will be assigned (required)
@@ -3005,7 +3143,7 @@ public class RunsV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call getRunLogsCall(String namespace, String owner, String project, String uuid, OffsetDateTime lastTime, String lastFile, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call runsV1GetRunLogsCall(String namespace, String owner, String project, String uuid, OffsetDateTime lastTime, String lastFile, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -3055,30 +3193,30 @@ public class RunsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call getRunLogsValidateBeforeCall(String namespace, String owner, String project, String uuid, OffsetDateTime lastTime, String lastFile, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call runsV1GetRunLogsValidateBeforeCall(String namespace, String owner, String project, String uuid, OffsetDateTime lastTime, String lastFile, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'namespace' is set
         if (namespace == null) {
-            throw new ApiException("Missing the required parameter 'namespace' when calling getRunLogs(Async)");
+            throw new ApiException("Missing the required parameter 'namespace' when calling runsV1GetRunLogs(Async)");
         }
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling getRunLogs(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling runsV1GetRunLogs(Async)");
         }
         
         // verify the required parameter 'project' is set
         if (project == null) {
-            throw new ApiException("Missing the required parameter 'project' when calling getRunLogs(Async)");
+            throw new ApiException("Missing the required parameter 'project' when calling runsV1GetRunLogs(Async)");
         }
         
         // verify the required parameter 'uuid' is set
         if (uuid == null) {
-            throw new ApiException("Missing the required parameter 'uuid' when calling getRunLogs(Async)");
+            throw new ApiException("Missing the required parameter 'uuid' when calling runsV1GetRunLogs(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = getRunLogsCall(namespace, owner, project, uuid, lastTime, lastFile, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = runsV1GetRunLogsCall(namespace, owner, project, uuid, lastTime, lastFile, progressListener, progressRequestListener);
         return call;
 
     }
@@ -3095,8 +3233,8 @@ public class RunsV1Api {
      * @return V1Logs
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1Logs getRunLogs(String namespace, String owner, String project, String uuid, OffsetDateTime lastTime, String lastFile) throws ApiException {
-        ApiResponse<V1Logs> resp = getRunLogsWithHttpInfo(namespace, owner, project, uuid, lastTime, lastFile);
+    public V1Logs runsV1GetRunLogs(String namespace, String owner, String project, String uuid, OffsetDateTime lastTime, String lastFile) throws ApiException {
+        ApiResponse<V1Logs> resp = runsV1GetRunLogsWithHttpInfo(namespace, owner, project, uuid, lastTime, lastFile);
         return resp.getData();
     }
 
@@ -3112,8 +3250,8 @@ public class RunsV1Api {
      * @return ApiResponse&lt;V1Logs&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1Logs> getRunLogsWithHttpInfo(String namespace, String owner, String project, String uuid, OffsetDateTime lastTime, String lastFile) throws ApiException {
-        com.squareup.okhttp.Call call = getRunLogsValidateBeforeCall(namespace, owner, project, uuid, lastTime, lastFile, null, null);
+    public ApiResponse<V1Logs> runsV1GetRunLogsWithHttpInfo(String namespace, String owner, String project, String uuid, OffsetDateTime lastTime, String lastFile) throws ApiException {
+        com.squareup.okhttp.Call call = runsV1GetRunLogsValidateBeforeCall(namespace, owner, project, uuid, lastTime, lastFile, null, null);
         Type localVarReturnType = new TypeToken<V1Logs>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -3131,7 +3269,7 @@ public class RunsV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call getRunLogsAsync(String namespace, String owner, String project, String uuid, OffsetDateTime lastTime, String lastFile, final ApiCallback<V1Logs> callback) throws ApiException {
+    public com.squareup.okhttp.Call runsV1GetRunLogsAsync(String namespace, String owner, String project, String uuid, OffsetDateTime lastTime, String lastFile, final ApiCallback<V1Logs> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -3152,13 +3290,13 @@ public class RunsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = getRunLogsValidateBeforeCall(namespace, owner, project, uuid, lastTime, lastFile, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = runsV1GetRunLogsValidateBeforeCall(namespace, owner, project, uuid, lastTime, lastFile, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1Logs>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
     /**
-     * Build call for getRunNamespace
+     * Build call for runsV1GetRunNamespace
      * @param owner Owner of the namespace (required)
      * @param project Project (required)
      * @param uuid Uuid identifier of the entity (required)
@@ -3167,7 +3305,7 @@ public class RunsV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call getRunNamespaceCall(String owner, String project, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call runsV1GetRunNamespaceCall(String owner, String project, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -3212,25 +3350,25 @@ public class RunsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call getRunNamespaceValidateBeforeCall(String owner, String project, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call runsV1GetRunNamespaceValidateBeforeCall(String owner, String project, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling getRunNamespace(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling runsV1GetRunNamespace(Async)");
         }
         
         // verify the required parameter 'project' is set
         if (project == null) {
-            throw new ApiException("Missing the required parameter 'project' when calling getRunNamespace(Async)");
+            throw new ApiException("Missing the required parameter 'project' when calling runsV1GetRunNamespace(Async)");
         }
         
         // verify the required parameter 'uuid' is set
         if (uuid == null) {
-            throw new ApiException("Missing the required parameter 'uuid' when calling getRunNamespace(Async)");
+            throw new ApiException("Missing the required parameter 'uuid' when calling runsV1GetRunNamespace(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = getRunNamespaceCall(owner, project, uuid, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = runsV1GetRunNamespaceCall(owner, project, uuid, progressListener, progressRequestListener);
         return call;
 
     }
@@ -3244,8 +3382,8 @@ public class RunsV1Api {
      * @return V1RunSettings
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1RunSettings getRunNamespace(String owner, String project, String uuid) throws ApiException {
-        ApiResponse<V1RunSettings> resp = getRunNamespaceWithHttpInfo(owner, project, uuid);
+    public V1RunSettings runsV1GetRunNamespace(String owner, String project, String uuid) throws ApiException {
+        ApiResponse<V1RunSettings> resp = runsV1GetRunNamespaceWithHttpInfo(owner, project, uuid);
         return resp.getData();
     }
 
@@ -3258,8 +3396,8 @@ public class RunsV1Api {
      * @return ApiResponse&lt;V1RunSettings&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1RunSettings> getRunNamespaceWithHttpInfo(String owner, String project, String uuid) throws ApiException {
-        com.squareup.okhttp.Call call = getRunNamespaceValidateBeforeCall(owner, project, uuid, null, null);
+    public ApiResponse<V1RunSettings> runsV1GetRunNamespaceWithHttpInfo(String owner, String project, String uuid) throws ApiException {
+        com.squareup.okhttp.Call call = runsV1GetRunNamespaceValidateBeforeCall(owner, project, uuid, null, null);
         Type localVarReturnType = new TypeToken<V1RunSettings>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -3274,7 +3412,7 @@ public class RunsV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call getRunNamespaceAsync(String owner, String project, String uuid, final ApiCallback<V1RunSettings> callback) throws ApiException {
+    public com.squareup.okhttp.Call runsV1GetRunNamespaceAsync(String owner, String project, String uuid, final ApiCallback<V1RunSettings> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -3295,13 +3433,13 @@ public class RunsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = getRunNamespaceValidateBeforeCall(owner, project, uuid, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = runsV1GetRunNamespaceValidateBeforeCall(owner, project, uuid, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1RunSettings>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
     /**
-     * Build call for getRunResources
+     * Build call for runsV1GetRunResources
      * @param namespace namespace (required)
      * @param owner Owner of the namespace (required)
      * @param project Project where the run will be assigned (required)
@@ -3313,7 +3451,7 @@ public class RunsV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call getRunResourcesCall(String namespace, String owner, String project, String uuid, String names, Boolean tail, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call runsV1GetRunResourcesCall(String namespace, String owner, String project, String uuid, String names, Boolean tail, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -3363,30 +3501,30 @@ public class RunsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call getRunResourcesValidateBeforeCall(String namespace, String owner, String project, String uuid, String names, Boolean tail, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call runsV1GetRunResourcesValidateBeforeCall(String namespace, String owner, String project, String uuid, String names, Boolean tail, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'namespace' is set
         if (namespace == null) {
-            throw new ApiException("Missing the required parameter 'namespace' when calling getRunResources(Async)");
+            throw new ApiException("Missing the required parameter 'namespace' when calling runsV1GetRunResources(Async)");
         }
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling getRunResources(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling runsV1GetRunResources(Async)");
         }
         
         // verify the required parameter 'project' is set
         if (project == null) {
-            throw new ApiException("Missing the required parameter 'project' when calling getRunResources(Async)");
+            throw new ApiException("Missing the required parameter 'project' when calling runsV1GetRunResources(Async)");
         }
         
         // verify the required parameter 'uuid' is set
         if (uuid == null) {
-            throw new ApiException("Missing the required parameter 'uuid' when calling getRunResources(Async)");
+            throw new ApiException("Missing the required parameter 'uuid' when calling runsV1GetRunResources(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = getRunResourcesCall(namespace, owner, project, uuid, names, tail, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = runsV1GetRunResourcesCall(namespace, owner, project, uuid, names, tail, progressListener, progressRequestListener);
         return call;
 
     }
@@ -3403,8 +3541,8 @@ public class RunsV1Api {
      * @return V1EventsResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1EventsResponse getRunResources(String namespace, String owner, String project, String uuid, String names, Boolean tail) throws ApiException {
-        ApiResponse<V1EventsResponse> resp = getRunResourcesWithHttpInfo(namespace, owner, project, uuid, names, tail);
+    public V1EventsResponse runsV1GetRunResources(String namespace, String owner, String project, String uuid, String names, Boolean tail) throws ApiException {
+        ApiResponse<V1EventsResponse> resp = runsV1GetRunResourcesWithHttpInfo(namespace, owner, project, uuid, names, tail);
         return resp.getData();
     }
 
@@ -3420,8 +3558,8 @@ public class RunsV1Api {
      * @return ApiResponse&lt;V1EventsResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1EventsResponse> getRunResourcesWithHttpInfo(String namespace, String owner, String project, String uuid, String names, Boolean tail) throws ApiException {
-        com.squareup.okhttp.Call call = getRunResourcesValidateBeforeCall(namespace, owner, project, uuid, names, tail, null, null);
+    public ApiResponse<V1EventsResponse> runsV1GetRunResourcesWithHttpInfo(String namespace, String owner, String project, String uuid, String names, Boolean tail) throws ApiException {
+        com.squareup.okhttp.Call call = runsV1GetRunResourcesValidateBeforeCall(namespace, owner, project, uuid, names, tail, null, null);
         Type localVarReturnType = new TypeToken<V1EventsResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -3439,7 +3577,7 @@ public class RunsV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call getRunResourcesAsync(String namespace, String owner, String project, String uuid, String names, Boolean tail, final ApiCallback<V1EventsResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call runsV1GetRunResourcesAsync(String namespace, String owner, String project, String uuid, String names, Boolean tail, final ApiCallback<V1EventsResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -3460,13 +3598,13 @@ public class RunsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = getRunResourcesValidateBeforeCall(namespace, owner, project, uuid, names, tail, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = runsV1GetRunResourcesValidateBeforeCall(namespace, owner, project, uuid, names, tail, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1EventsResponse>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
     /**
-     * Build call for getRunSettings
+     * Build call for runsV1GetRunSettings
      * @param owner Owner of the namespace (required)
      * @param project Project (required)
      * @param uuid Uuid identifier of the entity (required)
@@ -3475,7 +3613,7 @@ public class RunsV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call getRunSettingsCall(String owner, String project, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call runsV1GetRunSettingsCall(String owner, String project, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -3520,25 +3658,25 @@ public class RunsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call getRunSettingsValidateBeforeCall(String owner, String project, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call runsV1GetRunSettingsValidateBeforeCall(String owner, String project, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling getRunSettings(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling runsV1GetRunSettings(Async)");
         }
         
         // verify the required parameter 'project' is set
         if (project == null) {
-            throw new ApiException("Missing the required parameter 'project' when calling getRunSettings(Async)");
+            throw new ApiException("Missing the required parameter 'project' when calling runsV1GetRunSettings(Async)");
         }
         
         // verify the required parameter 'uuid' is set
         if (uuid == null) {
-            throw new ApiException("Missing the required parameter 'uuid' when calling getRunSettings(Async)");
+            throw new ApiException("Missing the required parameter 'uuid' when calling runsV1GetRunSettings(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = getRunSettingsCall(owner, project, uuid, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = runsV1GetRunSettingsCall(owner, project, uuid, progressListener, progressRequestListener);
         return call;
 
     }
@@ -3552,8 +3690,8 @@ public class RunsV1Api {
      * @return V1RunSettings
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1RunSettings getRunSettings(String owner, String project, String uuid) throws ApiException {
-        ApiResponse<V1RunSettings> resp = getRunSettingsWithHttpInfo(owner, project, uuid);
+    public V1RunSettings runsV1GetRunSettings(String owner, String project, String uuid) throws ApiException {
+        ApiResponse<V1RunSettings> resp = runsV1GetRunSettingsWithHttpInfo(owner, project, uuid);
         return resp.getData();
     }
 
@@ -3566,8 +3704,8 @@ public class RunsV1Api {
      * @return ApiResponse&lt;V1RunSettings&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1RunSettings> getRunSettingsWithHttpInfo(String owner, String project, String uuid) throws ApiException {
-        com.squareup.okhttp.Call call = getRunSettingsValidateBeforeCall(owner, project, uuid, null, null);
+    public ApiResponse<V1RunSettings> runsV1GetRunSettingsWithHttpInfo(String owner, String project, String uuid) throws ApiException {
+        com.squareup.okhttp.Call call = runsV1GetRunSettingsValidateBeforeCall(owner, project, uuid, null, null);
         Type localVarReturnType = new TypeToken<V1RunSettings>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -3582,7 +3720,7 @@ public class RunsV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call getRunSettingsAsync(String owner, String project, String uuid, final ApiCallback<V1RunSettings> callback) throws ApiException {
+    public com.squareup.okhttp.Call runsV1GetRunSettingsAsync(String owner, String project, String uuid, final ApiCallback<V1RunSettings> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -3603,13 +3741,13 @@ public class RunsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = getRunSettingsValidateBeforeCall(owner, project, uuid, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = runsV1GetRunSettingsValidateBeforeCall(owner, project, uuid, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1RunSettings>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
     /**
-     * Build call for getRunStatuses
+     * Build call for runsV1GetRunStatuses
      * @param owner Owner of the namespace (required)
      * @param project Project (required)
      * @param uuid Uuid identifier of the entity (required)
@@ -3618,7 +3756,7 @@ public class RunsV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call getRunStatusesCall(String owner, String project, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call runsV1GetRunStatusesCall(String owner, String project, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -3663,25 +3801,25 @@ public class RunsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call getRunStatusesValidateBeforeCall(String owner, String project, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call runsV1GetRunStatusesValidateBeforeCall(String owner, String project, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling getRunStatuses(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling runsV1GetRunStatuses(Async)");
         }
         
         // verify the required parameter 'project' is set
         if (project == null) {
-            throw new ApiException("Missing the required parameter 'project' when calling getRunStatuses(Async)");
+            throw new ApiException("Missing the required parameter 'project' when calling runsV1GetRunStatuses(Async)");
         }
         
         // verify the required parameter 'uuid' is set
         if (uuid == null) {
-            throw new ApiException("Missing the required parameter 'uuid' when calling getRunStatuses(Async)");
+            throw new ApiException("Missing the required parameter 'uuid' when calling runsV1GetRunStatuses(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = getRunStatusesCall(owner, project, uuid, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = runsV1GetRunStatusesCall(owner, project, uuid, progressListener, progressRequestListener);
         return call;
 
     }
@@ -3695,8 +3833,8 @@ public class RunsV1Api {
      * @return V1Status
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1Status getRunStatuses(String owner, String project, String uuid) throws ApiException {
-        ApiResponse<V1Status> resp = getRunStatusesWithHttpInfo(owner, project, uuid);
+    public V1Status runsV1GetRunStatuses(String owner, String project, String uuid) throws ApiException {
+        ApiResponse<V1Status> resp = runsV1GetRunStatusesWithHttpInfo(owner, project, uuid);
         return resp.getData();
     }
 
@@ -3709,8 +3847,8 @@ public class RunsV1Api {
      * @return ApiResponse&lt;V1Status&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1Status> getRunStatusesWithHttpInfo(String owner, String project, String uuid) throws ApiException {
-        com.squareup.okhttp.Call call = getRunStatusesValidateBeforeCall(owner, project, uuid, null, null);
+    public ApiResponse<V1Status> runsV1GetRunStatusesWithHttpInfo(String owner, String project, String uuid) throws ApiException {
+        com.squareup.okhttp.Call call = runsV1GetRunStatusesValidateBeforeCall(owner, project, uuid, null, null);
         Type localVarReturnType = new TypeToken<V1Status>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -3725,7 +3863,7 @@ public class RunsV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call getRunStatusesAsync(String owner, String project, String uuid, final ApiCallback<V1Status> callback) throws ApiException {
+    public com.squareup.okhttp.Call runsV1GetRunStatusesAsync(String owner, String project, String uuid, final ApiCallback<V1Status> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -3746,13 +3884,142 @@ public class RunsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = getRunStatusesValidateBeforeCall(owner, project, uuid, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = runsV1GetRunStatusesValidateBeforeCall(owner, project, uuid, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1Status>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
     /**
-     * Build call for impersonateToken
+     * Build call for runsV1GetRunsArtifactsLineage
+     * @param owner Owner of the namespace (required)
+     * @param project Project under namesapce (required)
+     * @param progressListener Progress listener
+     * @param progressRequestListener Progress request listener
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     */
+    public com.squareup.okhttp.Call runsV1GetRunsArtifactsLineageCall(String owner, String project, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        Object localVarPostBody = null;
+
+        // create path and map variables
+        String localVarPath = "/api/v1/{owner}/{project}/runs/artifacts_lineage"
+            .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()))
+            .replaceAll("\\{" + "project" + "\\}", apiClient.escapeString(project.toString()));
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
+
+        final String[] localVarContentTypes = {
+            "application/json"
+        };
+        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+        localVarHeaderParams.put("Content-Type", localVarContentType);
+
+        if(progressListener != null) {
+            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
+                @Override
+                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
+                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
+                    return originalResponse.newBuilder()
+                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
+                    .build();
+                }
+            });
+        }
+
+        String[] localVarAuthNames = new String[] { "ApiKey" };
+        return apiClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private com.squareup.okhttp.Call runsV1GetRunsArtifactsLineageValidateBeforeCall(String owner, String project, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        
+        // verify the required parameter 'owner' is set
+        if (owner == null) {
+            throw new ApiException("Missing the required parameter 'owner' when calling runsV1GetRunsArtifactsLineage(Async)");
+        }
+        
+        // verify the required parameter 'project' is set
+        if (project == null) {
+            throw new ApiException("Missing the required parameter 'project' when calling runsV1GetRunsArtifactsLineage(Async)");
+        }
+        
+
+        com.squareup.okhttp.Call call = runsV1GetRunsArtifactsLineageCall(owner, project, progressListener, progressRequestListener);
+        return call;
+
+    }
+
+    /**
+     * Get runs artifacts lineage
+     * 
+     * @param owner Owner of the namespace (required)
+     * @param project Project under namesapce (required)
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public void runsV1GetRunsArtifactsLineage(String owner, String project) throws ApiException {
+        runsV1GetRunsArtifactsLineageWithHttpInfo(owner, project);
+    }
+
+    /**
+     * Get runs artifacts lineage
+     * 
+     * @param owner Owner of the namespace (required)
+     * @param project Project under namesapce (required)
+     * @return ApiResponse&lt;Void&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public ApiResponse<Void> runsV1GetRunsArtifactsLineageWithHttpInfo(String owner, String project) throws ApiException {
+        com.squareup.okhttp.Call call = runsV1GetRunsArtifactsLineageValidateBeforeCall(owner, project, null, null);
+        return apiClient.execute(call);
+    }
+
+    /**
+     * Get runs artifacts lineage (asynchronously)
+     * 
+     * @param owner Owner of the namespace (required)
+     * @param project Project under namesapce (required)
+     * @param callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     */
+    public com.squareup.okhttp.Call runsV1GetRunsArtifactsLineageAsync(String owner, String project, final ApiCallback<Void> callback) throws ApiException {
+
+        ProgressResponseBody.ProgressListener progressListener = null;
+        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
+
+        if (callback != null) {
+            progressListener = new ProgressResponseBody.ProgressListener() {
+                @Override
+                public void update(long bytesRead, long contentLength, boolean done) {
+                    callback.onDownloadProgress(bytesRead, contentLength, done);
+                }
+            };
+
+            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
+                @Override
+                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
+                    callback.onUploadProgress(bytesWritten, contentLength, done);
+                }
+            };
+        }
+
+        com.squareup.okhttp.Call call = runsV1GetRunsArtifactsLineageValidateBeforeCall(owner, project, progressListener, progressRequestListener);
+        apiClient.executeAsync(call, callback);
+        return call;
+    }
+    /**
+     * Build call for runsV1ImpersonateToken
      * @param owner Owner of the namespace (required)
      * @param project Project (required)
      * @param uuid Uuid identifier of the entity (required)
@@ -3761,7 +4028,7 @@ public class RunsV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call impersonateTokenCall(String owner, String project, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call runsV1ImpersonateTokenCall(String owner, String project, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -3806,25 +4073,25 @@ public class RunsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call impersonateTokenValidateBeforeCall(String owner, String project, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call runsV1ImpersonateTokenValidateBeforeCall(String owner, String project, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling impersonateToken(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling runsV1ImpersonateToken(Async)");
         }
         
         // verify the required parameter 'project' is set
         if (project == null) {
-            throw new ApiException("Missing the required parameter 'project' when calling impersonateToken(Async)");
+            throw new ApiException("Missing the required parameter 'project' when calling runsV1ImpersonateToken(Async)");
         }
         
         // verify the required parameter 'uuid' is set
         if (uuid == null) {
-            throw new ApiException("Missing the required parameter 'uuid' when calling impersonateToken(Async)");
+            throw new ApiException("Missing the required parameter 'uuid' when calling runsV1ImpersonateToken(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = impersonateTokenCall(owner, project, uuid, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = runsV1ImpersonateTokenCall(owner, project, uuid, progressListener, progressRequestListener);
         return call;
 
     }
@@ -3838,8 +4105,8 @@ public class RunsV1Api {
      * @return V1Auth
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1Auth impersonateToken(String owner, String project, String uuid) throws ApiException {
-        ApiResponse<V1Auth> resp = impersonateTokenWithHttpInfo(owner, project, uuid);
+    public V1Auth runsV1ImpersonateToken(String owner, String project, String uuid) throws ApiException {
+        ApiResponse<V1Auth> resp = runsV1ImpersonateTokenWithHttpInfo(owner, project, uuid);
         return resp.getData();
     }
 
@@ -3852,8 +4119,8 @@ public class RunsV1Api {
      * @return ApiResponse&lt;V1Auth&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1Auth> impersonateTokenWithHttpInfo(String owner, String project, String uuid) throws ApiException {
-        com.squareup.okhttp.Call call = impersonateTokenValidateBeforeCall(owner, project, uuid, null, null);
+    public ApiResponse<V1Auth> runsV1ImpersonateTokenWithHttpInfo(String owner, String project, String uuid) throws ApiException {
+        com.squareup.okhttp.Call call = runsV1ImpersonateTokenValidateBeforeCall(owner, project, uuid, null, null);
         Type localVarReturnType = new TypeToken<V1Auth>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -3868,7 +4135,7 @@ public class RunsV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call impersonateTokenAsync(String owner, String project, String uuid, final ApiCallback<V1Auth> callback) throws ApiException {
+    public com.squareup.okhttp.Call runsV1ImpersonateTokenAsync(String owner, String project, String uuid, final ApiCallback<V1Auth> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -3889,13 +4156,13 @@ public class RunsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = impersonateTokenValidateBeforeCall(owner, project, uuid, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = runsV1ImpersonateTokenValidateBeforeCall(owner, project, uuid, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1Auth>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
     /**
-     * Build call for invalidateRun
+     * Build call for runsV1InvalidateRun
      * @param owner Owner of the namespace (required)
      * @param project Project (required)
      * @param uuid Uuid identifier of the entity (required)
@@ -3905,7 +4172,7 @@ public class RunsV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call invalidateRunCall(String owner, String project, String uuid, V1ProjectEntityResourceRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call runsV1InvalidateRunCall(String owner, String project, String uuid, V1ProjectEntityResourceRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -3950,30 +4217,30 @@ public class RunsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call invalidateRunValidateBeforeCall(String owner, String project, String uuid, V1ProjectEntityResourceRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call runsV1InvalidateRunValidateBeforeCall(String owner, String project, String uuid, V1ProjectEntityResourceRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling invalidateRun(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling runsV1InvalidateRun(Async)");
         }
         
         // verify the required parameter 'project' is set
         if (project == null) {
-            throw new ApiException("Missing the required parameter 'project' when calling invalidateRun(Async)");
+            throw new ApiException("Missing the required parameter 'project' when calling runsV1InvalidateRun(Async)");
         }
         
         // verify the required parameter 'uuid' is set
         if (uuid == null) {
-            throw new ApiException("Missing the required parameter 'uuid' when calling invalidateRun(Async)");
+            throw new ApiException("Missing the required parameter 'uuid' when calling runsV1InvalidateRun(Async)");
         }
         
         // verify the required parameter 'body' is set
         if (body == null) {
-            throw new ApiException("Missing the required parameter 'body' when calling invalidateRun(Async)");
+            throw new ApiException("Missing the required parameter 'body' when calling runsV1InvalidateRun(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = invalidateRunCall(owner, project, uuid, body, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = runsV1InvalidateRunCall(owner, project, uuid, body, progressListener, progressRequestListener);
         return call;
 
     }
@@ -3987,8 +4254,8 @@ public class RunsV1Api {
      * @param body  (required)
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public void invalidateRun(String owner, String project, String uuid, V1ProjectEntityResourceRequest body) throws ApiException {
-        invalidateRunWithHttpInfo(owner, project, uuid, body);
+    public void runsV1InvalidateRun(String owner, String project, String uuid, V1ProjectEntityResourceRequest body) throws ApiException {
+        runsV1InvalidateRunWithHttpInfo(owner, project, uuid, body);
     }
 
     /**
@@ -4001,8 +4268,8 @@ public class RunsV1Api {
      * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<Void> invalidateRunWithHttpInfo(String owner, String project, String uuid, V1ProjectEntityResourceRequest body) throws ApiException {
-        com.squareup.okhttp.Call call = invalidateRunValidateBeforeCall(owner, project, uuid, body, null, null);
+    public ApiResponse<Void> runsV1InvalidateRunWithHttpInfo(String owner, String project, String uuid, V1ProjectEntityResourceRequest body) throws ApiException {
+        com.squareup.okhttp.Call call = runsV1InvalidateRunValidateBeforeCall(owner, project, uuid, body, null, null);
         return apiClient.execute(call);
     }
 
@@ -4017,7 +4284,7 @@ public class RunsV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call invalidateRunAsync(String owner, String project, String uuid, V1ProjectEntityResourceRequest body, final ApiCallback<Void> callback) throws ApiException {
+    public com.squareup.okhttp.Call runsV1InvalidateRunAsync(String owner, String project, String uuid, V1ProjectEntityResourceRequest body, final ApiCallback<Void> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -4038,12 +4305,12 @@ public class RunsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = invalidateRunValidateBeforeCall(owner, project, uuid, body, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = runsV1InvalidateRunValidateBeforeCall(owner, project, uuid, body, progressListener, progressRequestListener);
         apiClient.executeAsync(call, callback);
         return call;
     }
     /**
-     * Build call for invalidateRuns
+     * Build call for runsV1InvalidateRuns
      * @param owner Owner of the namespace (required)
      * @param project Project under namesapce (required)
      * @param body Uuids of the entities (required)
@@ -4052,7 +4319,7 @@ public class RunsV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call invalidateRunsCall(String owner, String project, V1Uuids body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call runsV1InvalidateRunsCall(String owner, String project, V1Uuids body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -4096,25 +4363,25 @@ public class RunsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call invalidateRunsValidateBeforeCall(String owner, String project, V1Uuids body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call runsV1InvalidateRunsValidateBeforeCall(String owner, String project, V1Uuids body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling invalidateRuns(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling runsV1InvalidateRuns(Async)");
         }
         
         // verify the required parameter 'project' is set
         if (project == null) {
-            throw new ApiException("Missing the required parameter 'project' when calling invalidateRuns(Async)");
+            throw new ApiException("Missing the required parameter 'project' when calling runsV1InvalidateRuns(Async)");
         }
         
         // verify the required parameter 'body' is set
         if (body == null) {
-            throw new ApiException("Missing the required parameter 'body' when calling invalidateRuns(Async)");
+            throw new ApiException("Missing the required parameter 'body' when calling runsV1InvalidateRuns(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = invalidateRunsCall(owner, project, body, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = runsV1InvalidateRunsCall(owner, project, body, progressListener, progressRequestListener);
         return call;
 
     }
@@ -4127,8 +4394,8 @@ public class RunsV1Api {
      * @param body Uuids of the entities (required)
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public void invalidateRuns(String owner, String project, V1Uuids body) throws ApiException {
-        invalidateRunsWithHttpInfo(owner, project, body);
+    public void runsV1InvalidateRuns(String owner, String project, V1Uuids body) throws ApiException {
+        runsV1InvalidateRunsWithHttpInfo(owner, project, body);
     }
 
     /**
@@ -4140,8 +4407,8 @@ public class RunsV1Api {
      * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<Void> invalidateRunsWithHttpInfo(String owner, String project, V1Uuids body) throws ApiException {
-        com.squareup.okhttp.Call call = invalidateRunsValidateBeforeCall(owner, project, body, null, null);
+    public ApiResponse<Void> runsV1InvalidateRunsWithHttpInfo(String owner, String project, V1Uuids body) throws ApiException {
+        com.squareup.okhttp.Call call = runsV1InvalidateRunsValidateBeforeCall(owner, project, body, null, null);
         return apiClient.execute(call);
     }
 
@@ -4155,7 +4422,7 @@ public class RunsV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call invalidateRunsAsync(String owner, String project, V1Uuids body, final ApiCallback<Void> callback) throws ApiException {
+    public com.squareup.okhttp.Call runsV1InvalidateRunsAsync(String owner, String project, V1Uuids body, final ApiCallback<Void> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -4176,12 +4443,12 @@ public class RunsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = invalidateRunsValidateBeforeCall(owner, project, body, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = runsV1InvalidateRunsValidateBeforeCall(owner, project, body, progressListener, progressRequestListener);
         apiClient.executeAsync(call, callback);
         return call;
     }
     /**
-     * Build call for listArchivedRuns
+     * Build call for runsV1ListArchivedRuns
      * @param user User (required)
      * @param offset Pagination offset. (optional)
      * @param limit Limit size. (optional)
@@ -4192,7 +4459,7 @@ public class RunsV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call listArchivedRunsCall(String user, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call runsV1ListArchivedRunsCall(String user, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -4243,15 +4510,15 @@ public class RunsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call listArchivedRunsValidateBeforeCall(String user, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call runsV1ListArchivedRunsValidateBeforeCall(String user, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'user' is set
         if (user == null) {
-            throw new ApiException("Missing the required parameter 'user' when calling listArchivedRuns(Async)");
+            throw new ApiException("Missing the required parameter 'user' when calling runsV1ListArchivedRuns(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = listArchivedRunsCall(user, offset, limit, sort, query, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = runsV1ListArchivedRunsCall(user, offset, limit, sort, query, progressListener, progressRequestListener);
         return call;
 
     }
@@ -4267,8 +4534,8 @@ public class RunsV1Api {
      * @return V1ListRunsResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1ListRunsResponse listArchivedRuns(String user, Integer offset, Integer limit, String sort, String query) throws ApiException {
-        ApiResponse<V1ListRunsResponse> resp = listArchivedRunsWithHttpInfo(user, offset, limit, sort, query);
+    public V1ListRunsResponse runsV1ListArchivedRuns(String user, Integer offset, Integer limit, String sort, String query) throws ApiException {
+        ApiResponse<V1ListRunsResponse> resp = runsV1ListArchivedRunsWithHttpInfo(user, offset, limit, sort, query);
         return resp.getData();
     }
 
@@ -4283,8 +4550,8 @@ public class RunsV1Api {
      * @return ApiResponse&lt;V1ListRunsResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1ListRunsResponse> listArchivedRunsWithHttpInfo(String user, Integer offset, Integer limit, String sort, String query) throws ApiException {
-        com.squareup.okhttp.Call call = listArchivedRunsValidateBeforeCall(user, offset, limit, sort, query, null, null);
+    public ApiResponse<V1ListRunsResponse> runsV1ListArchivedRunsWithHttpInfo(String user, Integer offset, Integer limit, String sort, String query) throws ApiException {
+        com.squareup.okhttp.Call call = runsV1ListArchivedRunsValidateBeforeCall(user, offset, limit, sort, query, null, null);
         Type localVarReturnType = new TypeToken<V1ListRunsResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -4301,7 +4568,7 @@ public class RunsV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call listArchivedRunsAsync(String user, Integer offset, Integer limit, String sort, String query, final ApiCallback<V1ListRunsResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call runsV1ListArchivedRunsAsync(String user, Integer offset, Integer limit, String sort, String query, final ApiCallback<V1ListRunsResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -4322,13 +4589,13 @@ public class RunsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = listArchivedRunsValidateBeforeCall(user, offset, limit, sort, query, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = runsV1ListArchivedRunsValidateBeforeCall(user, offset, limit, sort, query, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1ListRunsResponse>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
     /**
-     * Build call for listBookmarkedRuns
+     * Build call for runsV1ListBookmarkedRuns
      * @param user User (required)
      * @param offset Pagination offset. (optional)
      * @param limit Limit size. (optional)
@@ -4339,7 +4606,7 @@ public class RunsV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call listBookmarkedRunsCall(String user, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call runsV1ListBookmarkedRunsCall(String user, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -4390,15 +4657,15 @@ public class RunsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call listBookmarkedRunsValidateBeforeCall(String user, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call runsV1ListBookmarkedRunsValidateBeforeCall(String user, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'user' is set
         if (user == null) {
-            throw new ApiException("Missing the required parameter 'user' when calling listBookmarkedRuns(Async)");
+            throw new ApiException("Missing the required parameter 'user' when calling runsV1ListBookmarkedRuns(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = listBookmarkedRunsCall(user, offset, limit, sort, query, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = runsV1ListBookmarkedRunsCall(user, offset, limit, sort, query, progressListener, progressRequestListener);
         return call;
 
     }
@@ -4414,8 +4681,8 @@ public class RunsV1Api {
      * @return V1ListRunsResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1ListRunsResponse listBookmarkedRuns(String user, Integer offset, Integer limit, String sort, String query) throws ApiException {
-        ApiResponse<V1ListRunsResponse> resp = listBookmarkedRunsWithHttpInfo(user, offset, limit, sort, query);
+    public V1ListRunsResponse runsV1ListBookmarkedRuns(String user, Integer offset, Integer limit, String sort, String query) throws ApiException {
+        ApiResponse<V1ListRunsResponse> resp = runsV1ListBookmarkedRunsWithHttpInfo(user, offset, limit, sort, query);
         return resp.getData();
     }
 
@@ -4430,8 +4697,8 @@ public class RunsV1Api {
      * @return ApiResponse&lt;V1ListRunsResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1ListRunsResponse> listBookmarkedRunsWithHttpInfo(String user, Integer offset, Integer limit, String sort, String query) throws ApiException {
-        com.squareup.okhttp.Call call = listBookmarkedRunsValidateBeforeCall(user, offset, limit, sort, query, null, null);
+    public ApiResponse<V1ListRunsResponse> runsV1ListBookmarkedRunsWithHttpInfo(String user, Integer offset, Integer limit, String sort, String query) throws ApiException {
+        com.squareup.okhttp.Call call = runsV1ListBookmarkedRunsValidateBeforeCall(user, offset, limit, sort, query, null, null);
         Type localVarReturnType = new TypeToken<V1ListRunsResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -4448,7 +4715,7 @@ public class RunsV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call listBookmarkedRunsAsync(String user, Integer offset, Integer limit, String sort, String query, final ApiCallback<V1ListRunsResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call runsV1ListBookmarkedRunsAsync(String user, Integer offset, Integer limit, String sort, String query, final ApiCallback<V1ListRunsResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -4469,13 +4736,13 @@ public class RunsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = listBookmarkedRunsValidateBeforeCall(user, offset, limit, sort, query, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = runsV1ListBookmarkedRunsValidateBeforeCall(user, offset, limit, sort, query, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1ListRunsResponse>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
     /**
-     * Build call for listRuns
+     * Build call for runsV1ListRuns
      * @param owner Owner of the namespace (required)
      * @param project Project under namesapce (required)
      * @param offset Pagination offset. (optional)
@@ -4487,7 +4754,7 @@ public class RunsV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call listRunsCall(String owner, String project, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call runsV1ListRunsCall(String owner, String project, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -4539,20 +4806,20 @@ public class RunsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call listRunsValidateBeforeCall(String owner, String project, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call runsV1ListRunsValidateBeforeCall(String owner, String project, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling listRuns(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling runsV1ListRuns(Async)");
         }
         
         // verify the required parameter 'project' is set
         if (project == null) {
-            throw new ApiException("Missing the required parameter 'project' when calling listRuns(Async)");
+            throw new ApiException("Missing the required parameter 'project' when calling runsV1ListRuns(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = listRunsCall(owner, project, offset, limit, sort, query, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = runsV1ListRunsCall(owner, project, offset, limit, sort, query, progressListener, progressRequestListener);
         return call;
 
     }
@@ -4569,8 +4836,8 @@ public class RunsV1Api {
      * @return V1ListRunsResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1ListRunsResponse listRuns(String owner, String project, Integer offset, Integer limit, String sort, String query) throws ApiException {
-        ApiResponse<V1ListRunsResponse> resp = listRunsWithHttpInfo(owner, project, offset, limit, sort, query);
+    public V1ListRunsResponse runsV1ListRuns(String owner, String project, Integer offset, Integer limit, String sort, String query) throws ApiException {
+        ApiResponse<V1ListRunsResponse> resp = runsV1ListRunsWithHttpInfo(owner, project, offset, limit, sort, query);
         return resp.getData();
     }
 
@@ -4586,8 +4853,8 @@ public class RunsV1Api {
      * @return ApiResponse&lt;V1ListRunsResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1ListRunsResponse> listRunsWithHttpInfo(String owner, String project, Integer offset, Integer limit, String sort, String query) throws ApiException {
-        com.squareup.okhttp.Call call = listRunsValidateBeforeCall(owner, project, offset, limit, sort, query, null, null);
+    public ApiResponse<V1ListRunsResponse> runsV1ListRunsWithHttpInfo(String owner, String project, Integer offset, Integer limit, String sort, String query) throws ApiException {
+        com.squareup.okhttp.Call call = runsV1ListRunsValidateBeforeCall(owner, project, offset, limit, sort, query, null, null);
         Type localVarReturnType = new TypeToken<V1ListRunsResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -4605,7 +4872,7 @@ public class RunsV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call listRunsAsync(String owner, String project, Integer offset, Integer limit, String sort, String query, final ApiCallback<V1ListRunsResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call runsV1ListRunsAsync(String owner, String project, Integer offset, Integer limit, String sort, String query, final ApiCallback<V1ListRunsResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -4626,13 +4893,13 @@ public class RunsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = listRunsValidateBeforeCall(owner, project, offset, limit, sort, query, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = runsV1ListRunsValidateBeforeCall(owner, project, offset, limit, sort, query, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1ListRunsResponse>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
     /**
-     * Build call for listRunsIo
+     * Build call for runsV1ListRunsIo
      * @param owner Owner of the namespace (required)
      * @param project Project under namesapce (required)
      * @param offset Pagination offset. (optional)
@@ -4644,7 +4911,7 @@ public class RunsV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call listRunsIoCall(String owner, String project, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call runsV1ListRunsIoCall(String owner, String project, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -4696,20 +4963,20 @@ public class RunsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call listRunsIoValidateBeforeCall(String owner, String project, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call runsV1ListRunsIoValidateBeforeCall(String owner, String project, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling listRunsIo(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling runsV1ListRunsIo(Async)");
         }
         
         // verify the required parameter 'project' is set
         if (project == null) {
-            throw new ApiException("Missing the required parameter 'project' when calling listRunsIo(Async)");
+            throw new ApiException("Missing the required parameter 'project' when calling runsV1ListRunsIo(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = listRunsIoCall(owner, project, offset, limit, sort, query, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = runsV1ListRunsIoCall(owner, project, offset, limit, sort, query, progressListener, progressRequestListener);
         return call;
 
     }
@@ -4726,8 +4993,8 @@ public class RunsV1Api {
      * @return V1ListRunsResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1ListRunsResponse listRunsIo(String owner, String project, Integer offset, Integer limit, String sort, String query) throws ApiException {
-        ApiResponse<V1ListRunsResponse> resp = listRunsIoWithHttpInfo(owner, project, offset, limit, sort, query);
+    public V1ListRunsResponse runsV1ListRunsIo(String owner, String project, Integer offset, Integer limit, String sort, String query) throws ApiException {
+        ApiResponse<V1ListRunsResponse> resp = runsV1ListRunsIoWithHttpInfo(owner, project, offset, limit, sort, query);
         return resp.getData();
     }
 
@@ -4743,8 +5010,8 @@ public class RunsV1Api {
      * @return ApiResponse&lt;V1ListRunsResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1ListRunsResponse> listRunsIoWithHttpInfo(String owner, String project, Integer offset, Integer limit, String sort, String query) throws ApiException {
-        com.squareup.okhttp.Call call = listRunsIoValidateBeforeCall(owner, project, offset, limit, sort, query, null, null);
+    public ApiResponse<V1ListRunsResponse> runsV1ListRunsIoWithHttpInfo(String owner, String project, Integer offset, Integer limit, String sort, String query) throws ApiException {
+        com.squareup.okhttp.Call call = runsV1ListRunsIoValidateBeforeCall(owner, project, offset, limit, sort, query, null, null);
         Type localVarReturnType = new TypeToken<V1ListRunsResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -4762,7 +5029,7 @@ public class RunsV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call listRunsIoAsync(String owner, String project, Integer offset, Integer limit, String sort, String query, final ApiCallback<V1ListRunsResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call runsV1ListRunsIoAsync(String owner, String project, Integer offset, Integer limit, String sort, String query, final ApiCallback<V1ListRunsResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -4783,13 +5050,13 @@ public class RunsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = listRunsIoValidateBeforeCall(owner, project, offset, limit, sort, query, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = runsV1ListRunsIoValidateBeforeCall(owner, project, offset, limit, sort, query, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1ListRunsResponse>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
     /**
-     * Build call for notifyRunStatus
+     * Build call for runsV1NotifyRunStatus
      * @param namespace Na,espace (required)
      * @param owner Owner of the namespace (required)
      * @param project Project where the run will be assigned (required)
@@ -4800,7 +5067,7 @@ public class RunsV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call notifyRunStatusCall(String namespace, String owner, String project, String uuid, V1EntityNotificationBody body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call runsV1NotifyRunStatusCall(String namespace, String owner, String project, String uuid, V1EntityNotificationBody body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -4846,35 +5113,35 @@ public class RunsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call notifyRunStatusValidateBeforeCall(String namespace, String owner, String project, String uuid, V1EntityNotificationBody body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call runsV1NotifyRunStatusValidateBeforeCall(String namespace, String owner, String project, String uuid, V1EntityNotificationBody body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'namespace' is set
         if (namespace == null) {
-            throw new ApiException("Missing the required parameter 'namespace' when calling notifyRunStatus(Async)");
+            throw new ApiException("Missing the required parameter 'namespace' when calling runsV1NotifyRunStatus(Async)");
         }
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling notifyRunStatus(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling runsV1NotifyRunStatus(Async)");
         }
         
         // verify the required parameter 'project' is set
         if (project == null) {
-            throw new ApiException("Missing the required parameter 'project' when calling notifyRunStatus(Async)");
+            throw new ApiException("Missing the required parameter 'project' when calling runsV1NotifyRunStatus(Async)");
         }
         
         // verify the required parameter 'uuid' is set
         if (uuid == null) {
-            throw new ApiException("Missing the required parameter 'uuid' when calling notifyRunStatus(Async)");
+            throw new ApiException("Missing the required parameter 'uuid' when calling runsV1NotifyRunStatus(Async)");
         }
         
         // verify the required parameter 'body' is set
         if (body == null) {
-            throw new ApiException("Missing the required parameter 'body' when calling notifyRunStatus(Async)");
+            throw new ApiException("Missing the required parameter 'body' when calling runsV1NotifyRunStatus(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = notifyRunStatusCall(namespace, owner, project, uuid, body, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = runsV1NotifyRunStatusCall(namespace, owner, project, uuid, body, progressListener, progressRequestListener);
         return call;
 
     }
@@ -4889,8 +5156,8 @@ public class RunsV1Api {
      * @param body  (required)
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public void notifyRunStatus(String namespace, String owner, String project, String uuid, V1EntityNotificationBody body) throws ApiException {
-        notifyRunStatusWithHttpInfo(namespace, owner, project, uuid, body);
+    public void runsV1NotifyRunStatus(String namespace, String owner, String project, String uuid, V1EntityNotificationBody body) throws ApiException {
+        runsV1NotifyRunStatusWithHttpInfo(namespace, owner, project, uuid, body);
     }
 
     /**
@@ -4904,8 +5171,8 @@ public class RunsV1Api {
      * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<Void> notifyRunStatusWithHttpInfo(String namespace, String owner, String project, String uuid, V1EntityNotificationBody body) throws ApiException {
-        com.squareup.okhttp.Call call = notifyRunStatusValidateBeforeCall(namespace, owner, project, uuid, body, null, null);
+    public ApiResponse<Void> runsV1NotifyRunStatusWithHttpInfo(String namespace, String owner, String project, String uuid, V1EntityNotificationBody body) throws ApiException {
+        com.squareup.okhttp.Call call = runsV1NotifyRunStatusValidateBeforeCall(namespace, owner, project, uuid, body, null, null);
         return apiClient.execute(call);
     }
 
@@ -4921,7 +5188,7 @@ public class RunsV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call notifyRunStatusAsync(String namespace, String owner, String project, String uuid, V1EntityNotificationBody body, final ApiCallback<Void> callback) throws ApiException {
+    public com.squareup.okhttp.Call runsV1NotifyRunStatusAsync(String namespace, String owner, String project, String uuid, V1EntityNotificationBody body, final ApiCallback<Void> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -4942,12 +5209,12 @@ public class RunsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = notifyRunStatusValidateBeforeCall(namespace, owner, project, uuid, body, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = runsV1NotifyRunStatusValidateBeforeCall(namespace, owner, project, uuid, body, progressListener, progressRequestListener);
         apiClient.executeAsync(call, callback);
         return call;
     }
     /**
-     * Build call for patchRun
+     * Build call for runsV1PatchRun
      * @param owner Owner of the namespace (required)
      * @param project Project where the run will be assigned (required)
      * @param runUuid UUID (required)
@@ -4957,7 +5224,7 @@ public class RunsV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call patchRunCall(String owner, String project, String runUuid, V1Run body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call runsV1PatchRunCall(String owner, String project, String runUuid, V1Run body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -5002,30 +5269,30 @@ public class RunsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call patchRunValidateBeforeCall(String owner, String project, String runUuid, V1Run body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call runsV1PatchRunValidateBeforeCall(String owner, String project, String runUuid, V1Run body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling patchRun(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling runsV1PatchRun(Async)");
         }
         
         // verify the required parameter 'project' is set
         if (project == null) {
-            throw new ApiException("Missing the required parameter 'project' when calling patchRun(Async)");
+            throw new ApiException("Missing the required parameter 'project' when calling runsV1PatchRun(Async)");
         }
         
         // verify the required parameter 'runUuid' is set
         if (runUuid == null) {
-            throw new ApiException("Missing the required parameter 'runUuid' when calling patchRun(Async)");
+            throw new ApiException("Missing the required parameter 'runUuid' when calling runsV1PatchRun(Async)");
         }
         
         // verify the required parameter 'body' is set
         if (body == null) {
-            throw new ApiException("Missing the required parameter 'body' when calling patchRun(Async)");
+            throw new ApiException("Missing the required parameter 'body' when calling runsV1PatchRun(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = patchRunCall(owner, project, runUuid, body, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = runsV1PatchRunCall(owner, project, runUuid, body, progressListener, progressRequestListener);
         return call;
 
     }
@@ -5040,8 +5307,8 @@ public class RunsV1Api {
      * @return V1Run
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1Run patchRun(String owner, String project, String runUuid, V1Run body) throws ApiException {
-        ApiResponse<V1Run> resp = patchRunWithHttpInfo(owner, project, runUuid, body);
+    public V1Run runsV1PatchRun(String owner, String project, String runUuid, V1Run body) throws ApiException {
+        ApiResponse<V1Run> resp = runsV1PatchRunWithHttpInfo(owner, project, runUuid, body);
         return resp.getData();
     }
 
@@ -5055,8 +5322,8 @@ public class RunsV1Api {
      * @return ApiResponse&lt;V1Run&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1Run> patchRunWithHttpInfo(String owner, String project, String runUuid, V1Run body) throws ApiException {
-        com.squareup.okhttp.Call call = patchRunValidateBeforeCall(owner, project, runUuid, body, null, null);
+    public ApiResponse<V1Run> runsV1PatchRunWithHttpInfo(String owner, String project, String runUuid, V1Run body) throws ApiException {
+        com.squareup.okhttp.Call call = runsV1PatchRunValidateBeforeCall(owner, project, runUuid, body, null, null);
         Type localVarReturnType = new TypeToken<V1Run>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -5072,7 +5339,7 @@ public class RunsV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call patchRunAsync(String owner, String project, String runUuid, V1Run body, final ApiCallback<V1Run> callback) throws ApiException {
+    public com.squareup.okhttp.Call runsV1PatchRunAsync(String owner, String project, String runUuid, V1Run body, final ApiCallback<V1Run> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -5093,13 +5360,13 @@ public class RunsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = patchRunValidateBeforeCall(owner, project, runUuid, body, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = runsV1PatchRunValidateBeforeCall(owner, project, runUuid, body, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1Run>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
     /**
-     * Build call for restartRun
+     * Build call for runsV1RestartRun
      * @param entityOwner Owner of the namespace (required)
      * @param entityProject Project (required)
      * @param entityUuid Uuid identifier of the entity (required)
@@ -5109,7 +5376,7 @@ public class RunsV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call restartRunCall(String entityOwner, String entityProject, String entityUuid, V1Run body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call runsV1RestartRunCall(String entityOwner, String entityProject, String entityUuid, V1Run body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -5154,30 +5421,30 @@ public class RunsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call restartRunValidateBeforeCall(String entityOwner, String entityProject, String entityUuid, V1Run body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call runsV1RestartRunValidateBeforeCall(String entityOwner, String entityProject, String entityUuid, V1Run body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'entityOwner' is set
         if (entityOwner == null) {
-            throw new ApiException("Missing the required parameter 'entityOwner' when calling restartRun(Async)");
+            throw new ApiException("Missing the required parameter 'entityOwner' when calling runsV1RestartRun(Async)");
         }
         
         // verify the required parameter 'entityProject' is set
         if (entityProject == null) {
-            throw new ApiException("Missing the required parameter 'entityProject' when calling restartRun(Async)");
+            throw new ApiException("Missing the required parameter 'entityProject' when calling runsV1RestartRun(Async)");
         }
         
         // verify the required parameter 'entityUuid' is set
         if (entityUuid == null) {
-            throw new ApiException("Missing the required parameter 'entityUuid' when calling restartRun(Async)");
+            throw new ApiException("Missing the required parameter 'entityUuid' when calling runsV1RestartRun(Async)");
         }
         
         // verify the required parameter 'body' is set
         if (body == null) {
-            throw new ApiException("Missing the required parameter 'body' when calling restartRun(Async)");
+            throw new ApiException("Missing the required parameter 'body' when calling runsV1RestartRun(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = restartRunCall(entityOwner, entityProject, entityUuid, body, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = runsV1RestartRunCall(entityOwner, entityProject, entityUuid, body, progressListener, progressRequestListener);
         return call;
 
     }
@@ -5192,8 +5459,8 @@ public class RunsV1Api {
      * @return V1Run
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1Run restartRun(String entityOwner, String entityProject, String entityUuid, V1Run body) throws ApiException {
-        ApiResponse<V1Run> resp = restartRunWithHttpInfo(entityOwner, entityProject, entityUuid, body);
+    public V1Run runsV1RestartRun(String entityOwner, String entityProject, String entityUuid, V1Run body) throws ApiException {
+        ApiResponse<V1Run> resp = runsV1RestartRunWithHttpInfo(entityOwner, entityProject, entityUuid, body);
         return resp.getData();
     }
 
@@ -5207,8 +5474,8 @@ public class RunsV1Api {
      * @return ApiResponse&lt;V1Run&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1Run> restartRunWithHttpInfo(String entityOwner, String entityProject, String entityUuid, V1Run body) throws ApiException {
-        com.squareup.okhttp.Call call = restartRunValidateBeforeCall(entityOwner, entityProject, entityUuid, body, null, null);
+    public ApiResponse<V1Run> runsV1RestartRunWithHttpInfo(String entityOwner, String entityProject, String entityUuid, V1Run body) throws ApiException {
+        com.squareup.okhttp.Call call = runsV1RestartRunValidateBeforeCall(entityOwner, entityProject, entityUuid, body, null, null);
         Type localVarReturnType = new TypeToken<V1Run>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -5224,7 +5491,7 @@ public class RunsV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call restartRunAsync(String entityOwner, String entityProject, String entityUuid, V1Run body, final ApiCallback<V1Run> callback) throws ApiException {
+    public com.squareup.okhttp.Call runsV1RestartRunAsync(String entityOwner, String entityProject, String entityUuid, V1Run body, final ApiCallback<V1Run> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -5245,13 +5512,13 @@ public class RunsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = restartRunValidateBeforeCall(entityOwner, entityProject, entityUuid, body, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = runsV1RestartRunValidateBeforeCall(entityOwner, entityProject, entityUuid, body, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1Run>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
     /**
-     * Build call for restoreRun
+     * Build call for runsV1RestoreRun
      * @param owner Owner of the namespace (required)
      * @param project Project (required)
      * @param uuid Uuid identifier of the entity (required)
@@ -5260,7 +5527,7 @@ public class RunsV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call restoreRunCall(String owner, String project, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call runsV1RestoreRunCall(String owner, String project, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -5305,25 +5572,25 @@ public class RunsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call restoreRunValidateBeforeCall(String owner, String project, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call runsV1RestoreRunValidateBeforeCall(String owner, String project, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling restoreRun(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling runsV1RestoreRun(Async)");
         }
         
         // verify the required parameter 'project' is set
         if (project == null) {
-            throw new ApiException("Missing the required parameter 'project' when calling restoreRun(Async)");
+            throw new ApiException("Missing the required parameter 'project' when calling runsV1RestoreRun(Async)");
         }
         
         // verify the required parameter 'uuid' is set
         if (uuid == null) {
-            throw new ApiException("Missing the required parameter 'uuid' when calling restoreRun(Async)");
+            throw new ApiException("Missing the required parameter 'uuid' when calling runsV1RestoreRun(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = restoreRunCall(owner, project, uuid, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = runsV1RestoreRunCall(owner, project, uuid, progressListener, progressRequestListener);
         return call;
 
     }
@@ -5336,8 +5603,8 @@ public class RunsV1Api {
      * @param uuid Uuid identifier of the entity (required)
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public void restoreRun(String owner, String project, String uuid) throws ApiException {
-        restoreRunWithHttpInfo(owner, project, uuid);
+    public void runsV1RestoreRun(String owner, String project, String uuid) throws ApiException {
+        runsV1RestoreRunWithHttpInfo(owner, project, uuid);
     }
 
     /**
@@ -5349,8 +5616,8 @@ public class RunsV1Api {
      * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<Void> restoreRunWithHttpInfo(String owner, String project, String uuid) throws ApiException {
-        com.squareup.okhttp.Call call = restoreRunValidateBeforeCall(owner, project, uuid, null, null);
+    public ApiResponse<Void> runsV1RestoreRunWithHttpInfo(String owner, String project, String uuid) throws ApiException {
+        com.squareup.okhttp.Call call = runsV1RestoreRunValidateBeforeCall(owner, project, uuid, null, null);
         return apiClient.execute(call);
     }
 
@@ -5364,7 +5631,7 @@ public class RunsV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call restoreRunAsync(String owner, String project, String uuid, final ApiCallback<Void> callback) throws ApiException {
+    public com.squareup.okhttp.Call runsV1RestoreRunAsync(String owner, String project, String uuid, final ApiCallback<Void> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -5385,12 +5652,12 @@ public class RunsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = restoreRunValidateBeforeCall(owner, project, uuid, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = runsV1RestoreRunValidateBeforeCall(owner, project, uuid, progressListener, progressRequestListener);
         apiClient.executeAsync(call, callback);
         return call;
     }
     /**
-     * Build call for resumeRun
+     * Build call for runsV1ResumeRun
      * @param entityOwner Owner of the namespace (required)
      * @param entityProject Project (required)
      * @param entityUuid Uuid identifier of the entity (required)
@@ -5400,7 +5667,7 @@ public class RunsV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call resumeRunCall(String entityOwner, String entityProject, String entityUuid, V1Run body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call runsV1ResumeRunCall(String entityOwner, String entityProject, String entityUuid, V1Run body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -5445,30 +5712,30 @@ public class RunsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call resumeRunValidateBeforeCall(String entityOwner, String entityProject, String entityUuid, V1Run body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call runsV1ResumeRunValidateBeforeCall(String entityOwner, String entityProject, String entityUuid, V1Run body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'entityOwner' is set
         if (entityOwner == null) {
-            throw new ApiException("Missing the required parameter 'entityOwner' when calling resumeRun(Async)");
+            throw new ApiException("Missing the required parameter 'entityOwner' when calling runsV1ResumeRun(Async)");
         }
         
         // verify the required parameter 'entityProject' is set
         if (entityProject == null) {
-            throw new ApiException("Missing the required parameter 'entityProject' when calling resumeRun(Async)");
+            throw new ApiException("Missing the required parameter 'entityProject' when calling runsV1ResumeRun(Async)");
         }
         
         // verify the required parameter 'entityUuid' is set
         if (entityUuid == null) {
-            throw new ApiException("Missing the required parameter 'entityUuid' when calling resumeRun(Async)");
+            throw new ApiException("Missing the required parameter 'entityUuid' when calling runsV1ResumeRun(Async)");
         }
         
         // verify the required parameter 'body' is set
         if (body == null) {
-            throw new ApiException("Missing the required parameter 'body' when calling resumeRun(Async)");
+            throw new ApiException("Missing the required parameter 'body' when calling runsV1ResumeRun(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = resumeRunCall(entityOwner, entityProject, entityUuid, body, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = runsV1ResumeRunCall(entityOwner, entityProject, entityUuid, body, progressListener, progressRequestListener);
         return call;
 
     }
@@ -5483,8 +5750,8 @@ public class RunsV1Api {
      * @return V1Run
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1Run resumeRun(String entityOwner, String entityProject, String entityUuid, V1Run body) throws ApiException {
-        ApiResponse<V1Run> resp = resumeRunWithHttpInfo(entityOwner, entityProject, entityUuid, body);
+    public V1Run runsV1ResumeRun(String entityOwner, String entityProject, String entityUuid, V1Run body) throws ApiException {
+        ApiResponse<V1Run> resp = runsV1ResumeRunWithHttpInfo(entityOwner, entityProject, entityUuid, body);
         return resp.getData();
     }
 
@@ -5498,8 +5765,8 @@ public class RunsV1Api {
      * @return ApiResponse&lt;V1Run&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1Run> resumeRunWithHttpInfo(String entityOwner, String entityProject, String entityUuid, V1Run body) throws ApiException {
-        com.squareup.okhttp.Call call = resumeRunValidateBeforeCall(entityOwner, entityProject, entityUuid, body, null, null);
+    public ApiResponse<V1Run> runsV1ResumeRunWithHttpInfo(String entityOwner, String entityProject, String entityUuid, V1Run body) throws ApiException {
+        com.squareup.okhttp.Call call = runsV1ResumeRunValidateBeforeCall(entityOwner, entityProject, entityUuid, body, null, null);
         Type localVarReturnType = new TypeToken<V1Run>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -5515,7 +5782,7 @@ public class RunsV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call resumeRunAsync(String entityOwner, String entityProject, String entityUuid, V1Run body, final ApiCallback<V1Run> callback) throws ApiException {
+    public com.squareup.okhttp.Call runsV1ResumeRunAsync(String entityOwner, String entityProject, String entityUuid, V1Run body, final ApiCallback<V1Run> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -5536,13 +5803,13 @@ public class RunsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = resumeRunValidateBeforeCall(entityOwner, entityProject, entityUuid, body, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = runsV1ResumeRunValidateBeforeCall(entityOwner, entityProject, entityUuid, body, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1Run>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
     /**
-     * Build call for startRunTensorboard
+     * Build call for runsV1StartRunTensorboard
      * @param owner Owner of the namespace (required)
      * @param project Project (required)
      * @param uuid Uuid identifier of the entity (required)
@@ -5552,7 +5819,7 @@ public class RunsV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call startRunTensorboardCall(String owner, String project, String uuid, V1ProjectEntityResourceRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call runsV1StartRunTensorboardCall(String owner, String project, String uuid, V1ProjectEntityResourceRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -5597,30 +5864,30 @@ public class RunsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call startRunTensorboardValidateBeforeCall(String owner, String project, String uuid, V1ProjectEntityResourceRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call runsV1StartRunTensorboardValidateBeforeCall(String owner, String project, String uuid, V1ProjectEntityResourceRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling startRunTensorboard(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling runsV1StartRunTensorboard(Async)");
         }
         
         // verify the required parameter 'project' is set
         if (project == null) {
-            throw new ApiException("Missing the required parameter 'project' when calling startRunTensorboard(Async)");
+            throw new ApiException("Missing the required parameter 'project' when calling runsV1StartRunTensorboard(Async)");
         }
         
         // verify the required parameter 'uuid' is set
         if (uuid == null) {
-            throw new ApiException("Missing the required parameter 'uuid' when calling startRunTensorboard(Async)");
+            throw new ApiException("Missing the required parameter 'uuid' when calling runsV1StartRunTensorboard(Async)");
         }
         
         // verify the required parameter 'body' is set
         if (body == null) {
-            throw new ApiException("Missing the required parameter 'body' when calling startRunTensorboard(Async)");
+            throw new ApiException("Missing the required parameter 'body' when calling runsV1StartRunTensorboard(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = startRunTensorboardCall(owner, project, uuid, body, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = runsV1StartRunTensorboardCall(owner, project, uuid, body, progressListener, progressRequestListener);
         return call;
 
     }
@@ -5634,8 +5901,8 @@ public class RunsV1Api {
      * @param body  (required)
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public void startRunTensorboard(String owner, String project, String uuid, V1ProjectEntityResourceRequest body) throws ApiException {
-        startRunTensorboardWithHttpInfo(owner, project, uuid, body);
+    public void runsV1StartRunTensorboard(String owner, String project, String uuid, V1ProjectEntityResourceRequest body) throws ApiException {
+        runsV1StartRunTensorboardWithHttpInfo(owner, project, uuid, body);
     }
 
     /**
@@ -5648,8 +5915,8 @@ public class RunsV1Api {
      * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<Void> startRunTensorboardWithHttpInfo(String owner, String project, String uuid, V1ProjectEntityResourceRequest body) throws ApiException {
-        com.squareup.okhttp.Call call = startRunTensorboardValidateBeforeCall(owner, project, uuid, body, null, null);
+    public ApiResponse<Void> runsV1StartRunTensorboardWithHttpInfo(String owner, String project, String uuid, V1ProjectEntityResourceRequest body) throws ApiException {
+        com.squareup.okhttp.Call call = runsV1StartRunTensorboardValidateBeforeCall(owner, project, uuid, body, null, null);
         return apiClient.execute(call);
     }
 
@@ -5664,7 +5931,7 @@ public class RunsV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call startRunTensorboardAsync(String owner, String project, String uuid, V1ProjectEntityResourceRequest body, final ApiCallback<Void> callback) throws ApiException {
+    public com.squareup.okhttp.Call runsV1StartRunTensorboardAsync(String owner, String project, String uuid, V1ProjectEntityResourceRequest body, final ApiCallback<Void> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -5685,12 +5952,12 @@ public class RunsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = startRunTensorboardValidateBeforeCall(owner, project, uuid, body, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = runsV1StartRunTensorboardValidateBeforeCall(owner, project, uuid, body, progressListener, progressRequestListener);
         apiClient.executeAsync(call, callback);
         return call;
     }
     /**
-     * Build call for stopRun
+     * Build call for runsV1StopRun
      * @param owner Owner of the namespace (required)
      * @param project Project (required)
      * @param uuid Uuid identifier of the entity (required)
@@ -5699,7 +5966,7 @@ public class RunsV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call stopRunCall(String owner, String project, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call runsV1StopRunCall(String owner, String project, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -5744,25 +6011,25 @@ public class RunsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call stopRunValidateBeforeCall(String owner, String project, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call runsV1StopRunValidateBeforeCall(String owner, String project, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling stopRun(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling runsV1StopRun(Async)");
         }
         
         // verify the required parameter 'project' is set
         if (project == null) {
-            throw new ApiException("Missing the required parameter 'project' when calling stopRun(Async)");
+            throw new ApiException("Missing the required parameter 'project' when calling runsV1StopRun(Async)");
         }
         
         // verify the required parameter 'uuid' is set
         if (uuid == null) {
-            throw new ApiException("Missing the required parameter 'uuid' when calling stopRun(Async)");
+            throw new ApiException("Missing the required parameter 'uuid' when calling runsV1StopRun(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = stopRunCall(owner, project, uuid, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = runsV1StopRunCall(owner, project, uuid, progressListener, progressRequestListener);
         return call;
 
     }
@@ -5775,8 +6042,8 @@ public class RunsV1Api {
      * @param uuid Uuid identifier of the entity (required)
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public void stopRun(String owner, String project, String uuid) throws ApiException {
-        stopRunWithHttpInfo(owner, project, uuid);
+    public void runsV1StopRun(String owner, String project, String uuid) throws ApiException {
+        runsV1StopRunWithHttpInfo(owner, project, uuid);
     }
 
     /**
@@ -5788,8 +6055,8 @@ public class RunsV1Api {
      * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<Void> stopRunWithHttpInfo(String owner, String project, String uuid) throws ApiException {
-        com.squareup.okhttp.Call call = stopRunValidateBeforeCall(owner, project, uuid, null, null);
+    public ApiResponse<Void> runsV1StopRunWithHttpInfo(String owner, String project, String uuid) throws ApiException {
+        com.squareup.okhttp.Call call = runsV1StopRunValidateBeforeCall(owner, project, uuid, null, null);
         return apiClient.execute(call);
     }
 
@@ -5803,7 +6070,7 @@ public class RunsV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call stopRunAsync(String owner, String project, String uuid, final ApiCallback<Void> callback) throws ApiException {
+    public com.squareup.okhttp.Call runsV1StopRunAsync(String owner, String project, String uuid, final ApiCallback<Void> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -5824,12 +6091,12 @@ public class RunsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = stopRunValidateBeforeCall(owner, project, uuid, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = runsV1StopRunValidateBeforeCall(owner, project, uuid, progressListener, progressRequestListener);
         apiClient.executeAsync(call, callback);
         return call;
     }
     /**
-     * Build call for stopRunTensorboard
+     * Build call for runsV1StopRunTensorboard
      * @param owner Owner of the namespace (required)
      * @param project Project (required)
      * @param uuid Uuid identifier of the entity (required)
@@ -5838,7 +6105,7 @@ public class RunsV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call stopRunTensorboardCall(String owner, String project, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call runsV1StopRunTensorboardCall(String owner, String project, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -5883,25 +6150,25 @@ public class RunsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call stopRunTensorboardValidateBeforeCall(String owner, String project, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call runsV1StopRunTensorboardValidateBeforeCall(String owner, String project, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling stopRunTensorboard(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling runsV1StopRunTensorboard(Async)");
         }
         
         // verify the required parameter 'project' is set
         if (project == null) {
-            throw new ApiException("Missing the required parameter 'project' when calling stopRunTensorboard(Async)");
+            throw new ApiException("Missing the required parameter 'project' when calling runsV1StopRunTensorboard(Async)");
         }
         
         // verify the required parameter 'uuid' is set
         if (uuid == null) {
-            throw new ApiException("Missing the required parameter 'uuid' when calling stopRunTensorboard(Async)");
+            throw new ApiException("Missing the required parameter 'uuid' when calling runsV1StopRunTensorboard(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = stopRunTensorboardCall(owner, project, uuid, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = runsV1StopRunTensorboardCall(owner, project, uuid, progressListener, progressRequestListener);
         return call;
 
     }
@@ -5914,8 +6181,8 @@ public class RunsV1Api {
      * @param uuid Uuid identifier of the entity (required)
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public void stopRunTensorboard(String owner, String project, String uuid) throws ApiException {
-        stopRunTensorboardWithHttpInfo(owner, project, uuid);
+    public void runsV1StopRunTensorboard(String owner, String project, String uuid) throws ApiException {
+        runsV1StopRunTensorboardWithHttpInfo(owner, project, uuid);
     }
 
     /**
@@ -5927,8 +6194,8 @@ public class RunsV1Api {
      * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<Void> stopRunTensorboardWithHttpInfo(String owner, String project, String uuid) throws ApiException {
-        com.squareup.okhttp.Call call = stopRunTensorboardValidateBeforeCall(owner, project, uuid, null, null);
+    public ApiResponse<Void> runsV1StopRunTensorboardWithHttpInfo(String owner, String project, String uuid) throws ApiException {
+        com.squareup.okhttp.Call call = runsV1StopRunTensorboardValidateBeforeCall(owner, project, uuid, null, null);
         return apiClient.execute(call);
     }
 
@@ -5942,7 +6209,7 @@ public class RunsV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call stopRunTensorboardAsync(String owner, String project, String uuid, final ApiCallback<Void> callback) throws ApiException {
+    public com.squareup.okhttp.Call runsV1StopRunTensorboardAsync(String owner, String project, String uuid, final ApiCallback<Void> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -5963,12 +6230,12 @@ public class RunsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = stopRunTensorboardValidateBeforeCall(owner, project, uuid, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = runsV1StopRunTensorboardValidateBeforeCall(owner, project, uuid, progressListener, progressRequestListener);
         apiClient.executeAsync(call, callback);
         return call;
     }
     /**
-     * Build call for stopRuns
+     * Build call for runsV1StopRuns
      * @param owner Owner of the namespace (required)
      * @param project Project under namesapce (required)
      * @param body Uuids of the entities (required)
@@ -5977,7 +6244,7 @@ public class RunsV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call stopRunsCall(String owner, String project, V1Uuids body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call runsV1StopRunsCall(String owner, String project, V1Uuids body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -6021,25 +6288,25 @@ public class RunsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call stopRunsValidateBeforeCall(String owner, String project, V1Uuids body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call runsV1StopRunsValidateBeforeCall(String owner, String project, V1Uuids body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling stopRuns(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling runsV1StopRuns(Async)");
         }
         
         // verify the required parameter 'project' is set
         if (project == null) {
-            throw new ApiException("Missing the required parameter 'project' when calling stopRuns(Async)");
+            throw new ApiException("Missing the required parameter 'project' when calling runsV1StopRuns(Async)");
         }
         
         // verify the required parameter 'body' is set
         if (body == null) {
-            throw new ApiException("Missing the required parameter 'body' when calling stopRuns(Async)");
+            throw new ApiException("Missing the required parameter 'body' when calling runsV1StopRuns(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = stopRunsCall(owner, project, body, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = runsV1StopRunsCall(owner, project, body, progressListener, progressRequestListener);
         return call;
 
     }
@@ -6052,8 +6319,8 @@ public class RunsV1Api {
      * @param body Uuids of the entities (required)
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public void stopRuns(String owner, String project, V1Uuids body) throws ApiException {
-        stopRunsWithHttpInfo(owner, project, body);
+    public void runsV1StopRuns(String owner, String project, V1Uuids body) throws ApiException {
+        runsV1StopRunsWithHttpInfo(owner, project, body);
     }
 
     /**
@@ -6065,8 +6332,8 @@ public class RunsV1Api {
      * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<Void> stopRunsWithHttpInfo(String owner, String project, V1Uuids body) throws ApiException {
-        com.squareup.okhttp.Call call = stopRunsValidateBeforeCall(owner, project, body, null, null);
+    public ApiResponse<Void> runsV1StopRunsWithHttpInfo(String owner, String project, V1Uuids body) throws ApiException {
+        com.squareup.okhttp.Call call = runsV1StopRunsValidateBeforeCall(owner, project, body, null, null);
         return apiClient.execute(call);
     }
 
@@ -6080,7 +6347,7 @@ public class RunsV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call stopRunsAsync(String owner, String project, V1Uuids body, final ApiCallback<Void> callback) throws ApiException {
+    public com.squareup.okhttp.Call runsV1StopRunsAsync(String owner, String project, V1Uuids body, final ApiCallback<Void> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -6101,12 +6368,150 @@ public class RunsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = stopRunsValidateBeforeCall(owner, project, body, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = runsV1StopRunsValidateBeforeCall(owner, project, body, progressListener, progressRequestListener);
         apiClient.executeAsync(call, callback);
         return call;
     }
     /**
-     * Build call for unbookmarkRun
+     * Build call for runsV1TagRuns
+     * @param owner Owner of the namespace (required)
+     * @param project Project under namesapce (required)
+     * @param body Uuids of the entities (required)
+     * @param progressListener Progress listener
+     * @param progressRequestListener Progress request listener
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     */
+    public com.squareup.okhttp.Call runsV1TagRunsCall(String owner, String project, V1Uuids body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        Object localVarPostBody = body;
+
+        // create path and map variables
+        String localVarPath = "/api/v1/{owner}/{project}/runs/tag"
+            .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()))
+            .replaceAll("\\{" + "project" + "\\}", apiClient.escapeString(project.toString()));
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
+
+        final String[] localVarContentTypes = {
+            "application/json"
+        };
+        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+        localVarHeaderParams.put("Content-Type", localVarContentType);
+
+        if(progressListener != null) {
+            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
+                @Override
+                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
+                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
+                    return originalResponse.newBuilder()
+                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
+                    .build();
+                }
+            });
+        }
+
+        String[] localVarAuthNames = new String[] { "ApiKey" };
+        return apiClient.buildCall(localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private com.squareup.okhttp.Call runsV1TagRunsValidateBeforeCall(String owner, String project, V1Uuids body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        
+        // verify the required parameter 'owner' is set
+        if (owner == null) {
+            throw new ApiException("Missing the required parameter 'owner' when calling runsV1TagRuns(Async)");
+        }
+        
+        // verify the required parameter 'project' is set
+        if (project == null) {
+            throw new ApiException("Missing the required parameter 'project' when calling runsV1TagRuns(Async)");
+        }
+        
+        // verify the required parameter 'body' is set
+        if (body == null) {
+            throw new ApiException("Missing the required parameter 'body' when calling runsV1TagRuns(Async)");
+        }
+        
+
+        com.squareup.okhttp.Call call = runsV1TagRunsCall(owner, project, body, progressListener, progressRequestListener);
+        return call;
+
+    }
+
+    /**
+     * Tag runs
+     * 
+     * @param owner Owner of the namespace (required)
+     * @param project Project under namesapce (required)
+     * @param body Uuids of the entities (required)
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public void runsV1TagRuns(String owner, String project, V1Uuids body) throws ApiException {
+        runsV1TagRunsWithHttpInfo(owner, project, body);
+    }
+
+    /**
+     * Tag runs
+     * 
+     * @param owner Owner of the namespace (required)
+     * @param project Project under namesapce (required)
+     * @param body Uuids of the entities (required)
+     * @return ApiResponse&lt;Void&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public ApiResponse<Void> runsV1TagRunsWithHttpInfo(String owner, String project, V1Uuids body) throws ApiException {
+        com.squareup.okhttp.Call call = runsV1TagRunsValidateBeforeCall(owner, project, body, null, null);
+        return apiClient.execute(call);
+    }
+
+    /**
+     * Tag runs (asynchronously)
+     * 
+     * @param owner Owner of the namespace (required)
+     * @param project Project under namesapce (required)
+     * @param body Uuids of the entities (required)
+     * @param callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     */
+    public com.squareup.okhttp.Call runsV1TagRunsAsync(String owner, String project, V1Uuids body, final ApiCallback<Void> callback) throws ApiException {
+
+        ProgressResponseBody.ProgressListener progressListener = null;
+        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
+
+        if (callback != null) {
+            progressListener = new ProgressResponseBody.ProgressListener() {
+                @Override
+                public void update(long bytesRead, long contentLength, boolean done) {
+                    callback.onDownloadProgress(bytesRead, contentLength, done);
+                }
+            };
+
+            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
+                @Override
+                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
+                    callback.onUploadProgress(bytesWritten, contentLength, done);
+                }
+            };
+        }
+
+        com.squareup.okhttp.Call call = runsV1TagRunsValidateBeforeCall(owner, project, body, progressListener, progressRequestListener);
+        apiClient.executeAsync(call, callback);
+        return call;
+    }
+    /**
+     * Build call for runsV1UnbookmarkRun
      * @param owner Owner of the namespace (required)
      * @param project Project (required)
      * @param uuid Uuid identifier of the entity (required)
@@ -6115,7 +6520,7 @@ public class RunsV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call unbookmarkRunCall(String owner, String project, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call runsV1UnbookmarkRunCall(String owner, String project, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -6160,25 +6565,25 @@ public class RunsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call unbookmarkRunValidateBeforeCall(String owner, String project, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call runsV1UnbookmarkRunValidateBeforeCall(String owner, String project, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling unbookmarkRun(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling runsV1UnbookmarkRun(Async)");
         }
         
         // verify the required parameter 'project' is set
         if (project == null) {
-            throw new ApiException("Missing the required parameter 'project' when calling unbookmarkRun(Async)");
+            throw new ApiException("Missing the required parameter 'project' when calling runsV1UnbookmarkRun(Async)");
         }
         
         // verify the required parameter 'uuid' is set
         if (uuid == null) {
-            throw new ApiException("Missing the required parameter 'uuid' when calling unbookmarkRun(Async)");
+            throw new ApiException("Missing the required parameter 'uuid' when calling runsV1UnbookmarkRun(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = unbookmarkRunCall(owner, project, uuid, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = runsV1UnbookmarkRunCall(owner, project, uuid, progressListener, progressRequestListener);
         return call;
 
     }
@@ -6191,8 +6596,8 @@ public class RunsV1Api {
      * @param uuid Uuid identifier of the entity (required)
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public void unbookmarkRun(String owner, String project, String uuid) throws ApiException {
-        unbookmarkRunWithHttpInfo(owner, project, uuid);
+    public void runsV1UnbookmarkRun(String owner, String project, String uuid) throws ApiException {
+        runsV1UnbookmarkRunWithHttpInfo(owner, project, uuid);
     }
 
     /**
@@ -6204,8 +6609,8 @@ public class RunsV1Api {
      * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<Void> unbookmarkRunWithHttpInfo(String owner, String project, String uuid) throws ApiException {
-        com.squareup.okhttp.Call call = unbookmarkRunValidateBeforeCall(owner, project, uuid, null, null);
+    public ApiResponse<Void> runsV1UnbookmarkRunWithHttpInfo(String owner, String project, String uuid) throws ApiException {
+        com.squareup.okhttp.Call call = runsV1UnbookmarkRunValidateBeforeCall(owner, project, uuid, null, null);
         return apiClient.execute(call);
     }
 
@@ -6219,7 +6624,7 @@ public class RunsV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call unbookmarkRunAsync(String owner, String project, String uuid, final ApiCallback<Void> callback) throws ApiException {
+    public com.squareup.okhttp.Call runsV1UnbookmarkRunAsync(String owner, String project, String uuid, final ApiCallback<Void> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -6240,12 +6645,12 @@ public class RunsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = unbookmarkRunValidateBeforeCall(owner, project, uuid, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = runsV1UnbookmarkRunValidateBeforeCall(owner, project, uuid, progressListener, progressRequestListener);
         apiClient.executeAsync(call, callback);
         return call;
     }
     /**
-     * Build call for updateRun
+     * Build call for runsV1UpdateRun
      * @param owner Owner of the namespace (required)
      * @param project Project where the run will be assigned (required)
      * @param runUuid UUID (required)
@@ -6255,7 +6660,7 @@ public class RunsV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call updateRunCall(String owner, String project, String runUuid, V1Run body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call runsV1UpdateRunCall(String owner, String project, String runUuid, V1Run body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -6300,30 +6705,30 @@ public class RunsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call updateRunValidateBeforeCall(String owner, String project, String runUuid, V1Run body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call runsV1UpdateRunValidateBeforeCall(String owner, String project, String runUuid, V1Run body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling updateRun(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling runsV1UpdateRun(Async)");
         }
         
         // verify the required parameter 'project' is set
         if (project == null) {
-            throw new ApiException("Missing the required parameter 'project' when calling updateRun(Async)");
+            throw new ApiException("Missing the required parameter 'project' when calling runsV1UpdateRun(Async)");
         }
         
         // verify the required parameter 'runUuid' is set
         if (runUuid == null) {
-            throw new ApiException("Missing the required parameter 'runUuid' when calling updateRun(Async)");
+            throw new ApiException("Missing the required parameter 'runUuid' when calling runsV1UpdateRun(Async)");
         }
         
         // verify the required parameter 'body' is set
         if (body == null) {
-            throw new ApiException("Missing the required parameter 'body' when calling updateRun(Async)");
+            throw new ApiException("Missing the required parameter 'body' when calling runsV1UpdateRun(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = updateRunCall(owner, project, runUuid, body, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = runsV1UpdateRunCall(owner, project, runUuid, body, progressListener, progressRequestListener);
         return call;
 
     }
@@ -6338,8 +6743,8 @@ public class RunsV1Api {
      * @return V1Run
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1Run updateRun(String owner, String project, String runUuid, V1Run body) throws ApiException {
-        ApiResponse<V1Run> resp = updateRunWithHttpInfo(owner, project, runUuid, body);
+    public V1Run runsV1UpdateRun(String owner, String project, String runUuid, V1Run body) throws ApiException {
+        ApiResponse<V1Run> resp = runsV1UpdateRunWithHttpInfo(owner, project, runUuid, body);
         return resp.getData();
     }
 
@@ -6353,8 +6758,8 @@ public class RunsV1Api {
      * @return ApiResponse&lt;V1Run&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1Run> updateRunWithHttpInfo(String owner, String project, String runUuid, V1Run body) throws ApiException {
-        com.squareup.okhttp.Call call = updateRunValidateBeforeCall(owner, project, runUuid, body, null, null);
+    public ApiResponse<V1Run> runsV1UpdateRunWithHttpInfo(String owner, String project, String runUuid, V1Run body) throws ApiException {
+        com.squareup.okhttp.Call call = runsV1UpdateRunValidateBeforeCall(owner, project, runUuid, body, null, null);
         Type localVarReturnType = new TypeToken<V1Run>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -6370,7 +6775,7 @@ public class RunsV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call updateRunAsync(String owner, String project, String runUuid, V1Run body, final ApiCallback<V1Run> callback) throws ApiException {
+    public com.squareup.okhttp.Call runsV1UpdateRunAsync(String owner, String project, String runUuid, V1Run body, final ApiCallback<V1Run> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -6391,7 +6796,7 @@ public class RunsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = updateRunValidateBeforeCall(owner, project, runUuid, body, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = runsV1UpdateRunValidateBeforeCall(owner, project, runUuid, body, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1Run>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;

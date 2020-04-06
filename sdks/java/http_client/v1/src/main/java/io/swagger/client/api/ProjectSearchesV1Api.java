@@ -71,7 +71,7 @@ public class ProjectSearchesV1Api {
     }
 
     /**
-     * Build call for createProjectSearch
+     * Build call for projectSearchesV1CreateProjectSearch
      * @param owner Owner of the namespace (required)
      * @param project Project under namesapce (required)
      * @param body Search body (required)
@@ -80,7 +80,7 @@ public class ProjectSearchesV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call createProjectSearchCall(String owner, String project, V1Search body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call projectSearchesV1CreateProjectSearchCall(String owner, String project, V1Search body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -124,25 +124,25 @@ public class ProjectSearchesV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call createProjectSearchValidateBeforeCall(String owner, String project, V1Search body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call projectSearchesV1CreateProjectSearchValidateBeforeCall(String owner, String project, V1Search body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling createProjectSearch(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling projectSearchesV1CreateProjectSearch(Async)");
         }
         
         // verify the required parameter 'project' is set
         if (project == null) {
-            throw new ApiException("Missing the required parameter 'project' when calling createProjectSearch(Async)");
+            throw new ApiException("Missing the required parameter 'project' when calling projectSearchesV1CreateProjectSearch(Async)");
         }
         
         // verify the required parameter 'body' is set
         if (body == null) {
-            throw new ApiException("Missing the required parameter 'body' when calling createProjectSearch(Async)");
+            throw new ApiException("Missing the required parameter 'body' when calling projectSearchesV1CreateProjectSearch(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = createProjectSearchCall(owner, project, body, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = projectSearchesV1CreateProjectSearchCall(owner, project, body, progressListener, progressRequestListener);
         return call;
 
     }
@@ -156,8 +156,8 @@ public class ProjectSearchesV1Api {
      * @return V1Search
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1Search createProjectSearch(String owner, String project, V1Search body) throws ApiException {
-        ApiResponse<V1Search> resp = createProjectSearchWithHttpInfo(owner, project, body);
+    public V1Search projectSearchesV1CreateProjectSearch(String owner, String project, V1Search body) throws ApiException {
+        ApiResponse<V1Search> resp = projectSearchesV1CreateProjectSearchWithHttpInfo(owner, project, body);
         return resp.getData();
     }
 
@@ -170,8 +170,8 @@ public class ProjectSearchesV1Api {
      * @return ApiResponse&lt;V1Search&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1Search> createProjectSearchWithHttpInfo(String owner, String project, V1Search body) throws ApiException {
-        com.squareup.okhttp.Call call = createProjectSearchValidateBeforeCall(owner, project, body, null, null);
+    public ApiResponse<V1Search> projectSearchesV1CreateProjectSearchWithHttpInfo(String owner, String project, V1Search body) throws ApiException {
+        com.squareup.okhttp.Call call = projectSearchesV1CreateProjectSearchValidateBeforeCall(owner, project, body, null, null);
         Type localVarReturnType = new TypeToken<V1Search>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -186,7 +186,7 @@ public class ProjectSearchesV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call createProjectSearchAsync(String owner, String project, V1Search body, final ApiCallback<V1Search> callback) throws ApiException {
+    public com.squareup.okhttp.Call projectSearchesV1CreateProjectSearchAsync(String owner, String project, V1Search body, final ApiCallback<V1Search> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -207,13 +207,13 @@ public class ProjectSearchesV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = createProjectSearchValidateBeforeCall(owner, project, body, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = projectSearchesV1CreateProjectSearchValidateBeforeCall(owner, project, body, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1Search>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
     /**
-     * Build call for deleteProjectSearch
+     * Build call for projectSearchesV1DeleteProjectSearch
      * @param owner Owner of the namespace (required)
      * @param project Project (required)
      * @param uuid Uuid identifier of the entity (required)
@@ -222,7 +222,7 @@ public class ProjectSearchesV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call deleteProjectSearchCall(String owner, String project, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call projectSearchesV1DeleteProjectSearchCall(String owner, String project, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -267,25 +267,25 @@ public class ProjectSearchesV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call deleteProjectSearchValidateBeforeCall(String owner, String project, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call projectSearchesV1DeleteProjectSearchValidateBeforeCall(String owner, String project, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling deleteProjectSearch(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling projectSearchesV1DeleteProjectSearch(Async)");
         }
         
         // verify the required parameter 'project' is set
         if (project == null) {
-            throw new ApiException("Missing the required parameter 'project' when calling deleteProjectSearch(Async)");
+            throw new ApiException("Missing the required parameter 'project' when calling projectSearchesV1DeleteProjectSearch(Async)");
         }
         
         // verify the required parameter 'uuid' is set
         if (uuid == null) {
-            throw new ApiException("Missing the required parameter 'uuid' when calling deleteProjectSearch(Async)");
+            throw new ApiException("Missing the required parameter 'uuid' when calling projectSearchesV1DeleteProjectSearch(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = deleteProjectSearchCall(owner, project, uuid, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = projectSearchesV1DeleteProjectSearchCall(owner, project, uuid, progressListener, progressRequestListener);
         return call;
 
     }
@@ -298,8 +298,8 @@ public class ProjectSearchesV1Api {
      * @param uuid Uuid identifier of the entity (required)
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public void deleteProjectSearch(String owner, String project, String uuid) throws ApiException {
-        deleteProjectSearchWithHttpInfo(owner, project, uuid);
+    public void projectSearchesV1DeleteProjectSearch(String owner, String project, String uuid) throws ApiException {
+        projectSearchesV1DeleteProjectSearchWithHttpInfo(owner, project, uuid);
     }
 
     /**
@@ -311,8 +311,8 @@ public class ProjectSearchesV1Api {
      * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<Void> deleteProjectSearchWithHttpInfo(String owner, String project, String uuid) throws ApiException {
-        com.squareup.okhttp.Call call = deleteProjectSearchValidateBeforeCall(owner, project, uuid, null, null);
+    public ApiResponse<Void> projectSearchesV1DeleteProjectSearchWithHttpInfo(String owner, String project, String uuid) throws ApiException {
+        com.squareup.okhttp.Call call = projectSearchesV1DeleteProjectSearchValidateBeforeCall(owner, project, uuid, null, null);
         return apiClient.execute(call);
     }
 
@@ -326,7 +326,7 @@ public class ProjectSearchesV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call deleteProjectSearchAsync(String owner, String project, String uuid, final ApiCallback<Void> callback) throws ApiException {
+    public com.squareup.okhttp.Call projectSearchesV1DeleteProjectSearchAsync(String owner, String project, String uuid, final ApiCallback<Void> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -347,12 +347,12 @@ public class ProjectSearchesV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = deleteProjectSearchValidateBeforeCall(owner, project, uuid, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = projectSearchesV1DeleteProjectSearchValidateBeforeCall(owner, project, uuid, progressListener, progressRequestListener);
         apiClient.executeAsync(call, callback);
         return call;
     }
     /**
-     * Build call for getProjectSearch
+     * Build call for projectSearchesV1GetProjectSearch
      * @param owner Owner of the namespace (required)
      * @param project Project (required)
      * @param uuid Uuid identifier of the entity (required)
@@ -361,7 +361,7 @@ public class ProjectSearchesV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call getProjectSearchCall(String owner, String project, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call projectSearchesV1GetProjectSearchCall(String owner, String project, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -406,25 +406,25 @@ public class ProjectSearchesV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call getProjectSearchValidateBeforeCall(String owner, String project, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call projectSearchesV1GetProjectSearchValidateBeforeCall(String owner, String project, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling getProjectSearch(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling projectSearchesV1GetProjectSearch(Async)");
         }
         
         // verify the required parameter 'project' is set
         if (project == null) {
-            throw new ApiException("Missing the required parameter 'project' when calling getProjectSearch(Async)");
+            throw new ApiException("Missing the required parameter 'project' when calling projectSearchesV1GetProjectSearch(Async)");
         }
         
         // verify the required parameter 'uuid' is set
         if (uuid == null) {
-            throw new ApiException("Missing the required parameter 'uuid' when calling getProjectSearch(Async)");
+            throw new ApiException("Missing the required parameter 'uuid' when calling projectSearchesV1GetProjectSearch(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = getProjectSearchCall(owner, project, uuid, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = projectSearchesV1GetProjectSearchCall(owner, project, uuid, progressListener, progressRequestListener);
         return call;
 
     }
@@ -438,8 +438,8 @@ public class ProjectSearchesV1Api {
      * @return V1Search
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1Search getProjectSearch(String owner, String project, String uuid) throws ApiException {
-        ApiResponse<V1Search> resp = getProjectSearchWithHttpInfo(owner, project, uuid);
+    public V1Search projectSearchesV1GetProjectSearch(String owner, String project, String uuid) throws ApiException {
+        ApiResponse<V1Search> resp = projectSearchesV1GetProjectSearchWithHttpInfo(owner, project, uuid);
         return resp.getData();
     }
 
@@ -452,8 +452,8 @@ public class ProjectSearchesV1Api {
      * @return ApiResponse&lt;V1Search&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1Search> getProjectSearchWithHttpInfo(String owner, String project, String uuid) throws ApiException {
-        com.squareup.okhttp.Call call = getProjectSearchValidateBeforeCall(owner, project, uuid, null, null);
+    public ApiResponse<V1Search> projectSearchesV1GetProjectSearchWithHttpInfo(String owner, String project, String uuid) throws ApiException {
+        com.squareup.okhttp.Call call = projectSearchesV1GetProjectSearchValidateBeforeCall(owner, project, uuid, null, null);
         Type localVarReturnType = new TypeToken<V1Search>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -468,7 +468,7 @@ public class ProjectSearchesV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call getProjectSearchAsync(String owner, String project, String uuid, final ApiCallback<V1Search> callback) throws ApiException {
+    public com.squareup.okhttp.Call projectSearchesV1GetProjectSearchAsync(String owner, String project, String uuid, final ApiCallback<V1Search> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -489,13 +489,13 @@ public class ProjectSearchesV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = getProjectSearchValidateBeforeCall(owner, project, uuid, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = projectSearchesV1GetProjectSearchValidateBeforeCall(owner, project, uuid, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1Search>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
     /**
-     * Build call for listProjectSearchNames
+     * Build call for projectSearchesV1ListProjectSearchNames
      * @param owner Owner of the namespace (required)
      * @param project Project under namesapce (required)
      * @param offset Pagination offset. (optional)
@@ -507,7 +507,7 @@ public class ProjectSearchesV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call listProjectSearchNamesCall(String owner, String project, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call projectSearchesV1ListProjectSearchNamesCall(String owner, String project, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -559,20 +559,20 @@ public class ProjectSearchesV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call listProjectSearchNamesValidateBeforeCall(String owner, String project, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call projectSearchesV1ListProjectSearchNamesValidateBeforeCall(String owner, String project, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling listProjectSearchNames(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling projectSearchesV1ListProjectSearchNames(Async)");
         }
         
         // verify the required parameter 'project' is set
         if (project == null) {
-            throw new ApiException("Missing the required parameter 'project' when calling listProjectSearchNames(Async)");
+            throw new ApiException("Missing the required parameter 'project' when calling projectSearchesV1ListProjectSearchNames(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = listProjectSearchNamesCall(owner, project, offset, limit, sort, query, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = projectSearchesV1ListProjectSearchNamesCall(owner, project, offset, limit, sort, query, progressListener, progressRequestListener);
         return call;
 
     }
@@ -589,8 +589,8 @@ public class ProjectSearchesV1Api {
      * @return V1ListSearchesResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1ListSearchesResponse listProjectSearchNames(String owner, String project, Integer offset, Integer limit, String sort, String query) throws ApiException {
-        ApiResponse<V1ListSearchesResponse> resp = listProjectSearchNamesWithHttpInfo(owner, project, offset, limit, sort, query);
+    public V1ListSearchesResponse projectSearchesV1ListProjectSearchNames(String owner, String project, Integer offset, Integer limit, String sort, String query) throws ApiException {
+        ApiResponse<V1ListSearchesResponse> resp = projectSearchesV1ListProjectSearchNamesWithHttpInfo(owner, project, offset, limit, sort, query);
         return resp.getData();
     }
 
@@ -606,8 +606,8 @@ public class ProjectSearchesV1Api {
      * @return ApiResponse&lt;V1ListSearchesResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1ListSearchesResponse> listProjectSearchNamesWithHttpInfo(String owner, String project, Integer offset, Integer limit, String sort, String query) throws ApiException {
-        com.squareup.okhttp.Call call = listProjectSearchNamesValidateBeforeCall(owner, project, offset, limit, sort, query, null, null);
+    public ApiResponse<V1ListSearchesResponse> projectSearchesV1ListProjectSearchNamesWithHttpInfo(String owner, String project, Integer offset, Integer limit, String sort, String query) throws ApiException {
+        com.squareup.okhttp.Call call = projectSearchesV1ListProjectSearchNamesValidateBeforeCall(owner, project, offset, limit, sort, query, null, null);
         Type localVarReturnType = new TypeToken<V1ListSearchesResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -625,7 +625,7 @@ public class ProjectSearchesV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call listProjectSearchNamesAsync(String owner, String project, Integer offset, Integer limit, String sort, String query, final ApiCallback<V1ListSearchesResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call projectSearchesV1ListProjectSearchNamesAsync(String owner, String project, Integer offset, Integer limit, String sort, String query, final ApiCallback<V1ListSearchesResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -646,13 +646,13 @@ public class ProjectSearchesV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = listProjectSearchNamesValidateBeforeCall(owner, project, offset, limit, sort, query, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = projectSearchesV1ListProjectSearchNamesValidateBeforeCall(owner, project, offset, limit, sort, query, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1ListSearchesResponse>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
     /**
-     * Build call for listProjectSearches
+     * Build call for projectSearchesV1ListProjectSearches
      * @param owner Owner of the namespace (required)
      * @param project Project under namesapce (required)
      * @param offset Pagination offset. (optional)
@@ -664,7 +664,7 @@ public class ProjectSearchesV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call listProjectSearchesCall(String owner, String project, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call projectSearchesV1ListProjectSearchesCall(String owner, String project, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -716,20 +716,20 @@ public class ProjectSearchesV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call listProjectSearchesValidateBeforeCall(String owner, String project, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call projectSearchesV1ListProjectSearchesValidateBeforeCall(String owner, String project, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling listProjectSearches(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling projectSearchesV1ListProjectSearches(Async)");
         }
         
         // verify the required parameter 'project' is set
         if (project == null) {
-            throw new ApiException("Missing the required parameter 'project' when calling listProjectSearches(Async)");
+            throw new ApiException("Missing the required parameter 'project' when calling projectSearchesV1ListProjectSearches(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = listProjectSearchesCall(owner, project, offset, limit, sort, query, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = projectSearchesV1ListProjectSearchesCall(owner, project, offset, limit, sort, query, progressListener, progressRequestListener);
         return call;
 
     }
@@ -746,8 +746,8 @@ public class ProjectSearchesV1Api {
      * @return V1ListSearchesResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1ListSearchesResponse listProjectSearches(String owner, String project, Integer offset, Integer limit, String sort, String query) throws ApiException {
-        ApiResponse<V1ListSearchesResponse> resp = listProjectSearchesWithHttpInfo(owner, project, offset, limit, sort, query);
+    public V1ListSearchesResponse projectSearchesV1ListProjectSearches(String owner, String project, Integer offset, Integer limit, String sort, String query) throws ApiException {
+        ApiResponse<V1ListSearchesResponse> resp = projectSearchesV1ListProjectSearchesWithHttpInfo(owner, project, offset, limit, sort, query);
         return resp.getData();
     }
 
@@ -763,8 +763,8 @@ public class ProjectSearchesV1Api {
      * @return ApiResponse&lt;V1ListSearchesResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1ListSearchesResponse> listProjectSearchesWithHttpInfo(String owner, String project, Integer offset, Integer limit, String sort, String query) throws ApiException {
-        com.squareup.okhttp.Call call = listProjectSearchesValidateBeforeCall(owner, project, offset, limit, sort, query, null, null);
+    public ApiResponse<V1ListSearchesResponse> projectSearchesV1ListProjectSearchesWithHttpInfo(String owner, String project, Integer offset, Integer limit, String sort, String query) throws ApiException {
+        com.squareup.okhttp.Call call = projectSearchesV1ListProjectSearchesValidateBeforeCall(owner, project, offset, limit, sort, query, null, null);
         Type localVarReturnType = new TypeToken<V1ListSearchesResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -782,7 +782,7 @@ public class ProjectSearchesV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call listProjectSearchesAsync(String owner, String project, Integer offset, Integer limit, String sort, String query, final ApiCallback<V1ListSearchesResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call projectSearchesV1ListProjectSearchesAsync(String owner, String project, Integer offset, Integer limit, String sort, String query, final ApiCallback<V1ListSearchesResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -803,13 +803,13 @@ public class ProjectSearchesV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = listProjectSearchesValidateBeforeCall(owner, project, offset, limit, sort, query, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = projectSearchesV1ListProjectSearchesValidateBeforeCall(owner, project, offset, limit, sort, query, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1ListSearchesResponse>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
     /**
-     * Build call for patchProjectSearch
+     * Build call for projectSearchesV1PatchProjectSearch
      * @param owner Owner of the namespace (required)
      * @param project Project under namesapce (required)
      * @param searchUuid UUID (required)
@@ -819,7 +819,7 @@ public class ProjectSearchesV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call patchProjectSearchCall(String owner, String project, String searchUuid, V1Search body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call projectSearchesV1PatchProjectSearchCall(String owner, String project, String searchUuid, V1Search body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -864,30 +864,30 @@ public class ProjectSearchesV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call patchProjectSearchValidateBeforeCall(String owner, String project, String searchUuid, V1Search body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call projectSearchesV1PatchProjectSearchValidateBeforeCall(String owner, String project, String searchUuid, V1Search body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling patchProjectSearch(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling projectSearchesV1PatchProjectSearch(Async)");
         }
         
         // verify the required parameter 'project' is set
         if (project == null) {
-            throw new ApiException("Missing the required parameter 'project' when calling patchProjectSearch(Async)");
+            throw new ApiException("Missing the required parameter 'project' when calling projectSearchesV1PatchProjectSearch(Async)");
         }
         
         // verify the required parameter 'searchUuid' is set
         if (searchUuid == null) {
-            throw new ApiException("Missing the required parameter 'searchUuid' when calling patchProjectSearch(Async)");
+            throw new ApiException("Missing the required parameter 'searchUuid' when calling projectSearchesV1PatchProjectSearch(Async)");
         }
         
         // verify the required parameter 'body' is set
         if (body == null) {
-            throw new ApiException("Missing the required parameter 'body' when calling patchProjectSearch(Async)");
+            throw new ApiException("Missing the required parameter 'body' when calling projectSearchesV1PatchProjectSearch(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = patchProjectSearchCall(owner, project, searchUuid, body, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = projectSearchesV1PatchProjectSearchCall(owner, project, searchUuid, body, progressListener, progressRequestListener);
         return call;
 
     }
@@ -902,8 +902,8 @@ public class ProjectSearchesV1Api {
      * @return V1Search
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1Search patchProjectSearch(String owner, String project, String searchUuid, V1Search body) throws ApiException {
-        ApiResponse<V1Search> resp = patchProjectSearchWithHttpInfo(owner, project, searchUuid, body);
+    public V1Search projectSearchesV1PatchProjectSearch(String owner, String project, String searchUuid, V1Search body) throws ApiException {
+        ApiResponse<V1Search> resp = projectSearchesV1PatchProjectSearchWithHttpInfo(owner, project, searchUuid, body);
         return resp.getData();
     }
 
@@ -917,8 +917,8 @@ public class ProjectSearchesV1Api {
      * @return ApiResponse&lt;V1Search&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1Search> patchProjectSearchWithHttpInfo(String owner, String project, String searchUuid, V1Search body) throws ApiException {
-        com.squareup.okhttp.Call call = patchProjectSearchValidateBeforeCall(owner, project, searchUuid, body, null, null);
+    public ApiResponse<V1Search> projectSearchesV1PatchProjectSearchWithHttpInfo(String owner, String project, String searchUuid, V1Search body) throws ApiException {
+        com.squareup.okhttp.Call call = projectSearchesV1PatchProjectSearchValidateBeforeCall(owner, project, searchUuid, body, null, null);
         Type localVarReturnType = new TypeToken<V1Search>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -934,7 +934,7 @@ public class ProjectSearchesV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call patchProjectSearchAsync(String owner, String project, String searchUuid, V1Search body, final ApiCallback<V1Search> callback) throws ApiException {
+    public com.squareup.okhttp.Call projectSearchesV1PatchProjectSearchAsync(String owner, String project, String searchUuid, V1Search body, final ApiCallback<V1Search> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -955,13 +955,13 @@ public class ProjectSearchesV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = patchProjectSearchValidateBeforeCall(owner, project, searchUuid, body, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = projectSearchesV1PatchProjectSearchValidateBeforeCall(owner, project, searchUuid, body, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1Search>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
     /**
-     * Build call for promoteProjectSearch
+     * Build call for projectSearchesV1PromoteProjectSearch
      * @param owner Owner of the namespace (required)
      * @param project Project (required)
      * @param uuid Uuid identifier of the entity (required)
@@ -970,7 +970,7 @@ public class ProjectSearchesV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call promoteProjectSearchCall(String owner, String project, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call projectSearchesV1PromoteProjectSearchCall(String owner, String project, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -1015,25 +1015,25 @@ public class ProjectSearchesV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call promoteProjectSearchValidateBeforeCall(String owner, String project, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call projectSearchesV1PromoteProjectSearchValidateBeforeCall(String owner, String project, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling promoteProjectSearch(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling projectSearchesV1PromoteProjectSearch(Async)");
         }
         
         // verify the required parameter 'project' is set
         if (project == null) {
-            throw new ApiException("Missing the required parameter 'project' when calling promoteProjectSearch(Async)");
+            throw new ApiException("Missing the required parameter 'project' when calling projectSearchesV1PromoteProjectSearch(Async)");
         }
         
         // verify the required parameter 'uuid' is set
         if (uuid == null) {
-            throw new ApiException("Missing the required parameter 'uuid' when calling promoteProjectSearch(Async)");
+            throw new ApiException("Missing the required parameter 'uuid' when calling projectSearchesV1PromoteProjectSearch(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = promoteProjectSearchCall(owner, project, uuid, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = projectSearchesV1PromoteProjectSearchCall(owner, project, uuid, progressListener, progressRequestListener);
         return call;
 
     }
@@ -1046,8 +1046,8 @@ public class ProjectSearchesV1Api {
      * @param uuid Uuid identifier of the entity (required)
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public void promoteProjectSearch(String owner, String project, String uuid) throws ApiException {
-        promoteProjectSearchWithHttpInfo(owner, project, uuid);
+    public void projectSearchesV1PromoteProjectSearch(String owner, String project, String uuid) throws ApiException {
+        projectSearchesV1PromoteProjectSearchWithHttpInfo(owner, project, uuid);
     }
 
     /**
@@ -1059,8 +1059,8 @@ public class ProjectSearchesV1Api {
      * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<Void> promoteProjectSearchWithHttpInfo(String owner, String project, String uuid) throws ApiException {
-        com.squareup.okhttp.Call call = promoteProjectSearchValidateBeforeCall(owner, project, uuid, null, null);
+    public ApiResponse<Void> projectSearchesV1PromoteProjectSearchWithHttpInfo(String owner, String project, String uuid) throws ApiException {
+        com.squareup.okhttp.Call call = projectSearchesV1PromoteProjectSearchValidateBeforeCall(owner, project, uuid, null, null);
         return apiClient.execute(call);
     }
 
@@ -1074,7 +1074,7 @@ public class ProjectSearchesV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call promoteProjectSearchAsync(String owner, String project, String uuid, final ApiCallback<Void> callback) throws ApiException {
+    public com.squareup.okhttp.Call projectSearchesV1PromoteProjectSearchAsync(String owner, String project, String uuid, final ApiCallback<Void> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -1095,12 +1095,12 @@ public class ProjectSearchesV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = promoteProjectSearchValidateBeforeCall(owner, project, uuid, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = projectSearchesV1PromoteProjectSearchValidateBeforeCall(owner, project, uuid, progressListener, progressRequestListener);
         apiClient.executeAsync(call, callback);
         return call;
     }
     /**
-     * Build call for updateProjectSearch
+     * Build call for projectSearchesV1UpdateProjectSearch
      * @param owner Owner of the namespace (required)
      * @param project Project under namesapce (required)
      * @param searchUuid UUID (required)
@@ -1110,7 +1110,7 @@ public class ProjectSearchesV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call updateProjectSearchCall(String owner, String project, String searchUuid, V1Search body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call projectSearchesV1UpdateProjectSearchCall(String owner, String project, String searchUuid, V1Search body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -1155,30 +1155,30 @@ public class ProjectSearchesV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call updateProjectSearchValidateBeforeCall(String owner, String project, String searchUuid, V1Search body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call projectSearchesV1UpdateProjectSearchValidateBeforeCall(String owner, String project, String searchUuid, V1Search body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling updateProjectSearch(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling projectSearchesV1UpdateProjectSearch(Async)");
         }
         
         // verify the required parameter 'project' is set
         if (project == null) {
-            throw new ApiException("Missing the required parameter 'project' when calling updateProjectSearch(Async)");
+            throw new ApiException("Missing the required parameter 'project' when calling projectSearchesV1UpdateProjectSearch(Async)");
         }
         
         // verify the required parameter 'searchUuid' is set
         if (searchUuid == null) {
-            throw new ApiException("Missing the required parameter 'searchUuid' when calling updateProjectSearch(Async)");
+            throw new ApiException("Missing the required parameter 'searchUuid' when calling projectSearchesV1UpdateProjectSearch(Async)");
         }
         
         // verify the required parameter 'body' is set
         if (body == null) {
-            throw new ApiException("Missing the required parameter 'body' when calling updateProjectSearch(Async)");
+            throw new ApiException("Missing the required parameter 'body' when calling projectSearchesV1UpdateProjectSearch(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = updateProjectSearchCall(owner, project, searchUuid, body, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = projectSearchesV1UpdateProjectSearchCall(owner, project, searchUuid, body, progressListener, progressRequestListener);
         return call;
 
     }
@@ -1193,8 +1193,8 @@ public class ProjectSearchesV1Api {
      * @return V1Search
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1Search updateProjectSearch(String owner, String project, String searchUuid, V1Search body) throws ApiException {
-        ApiResponse<V1Search> resp = updateProjectSearchWithHttpInfo(owner, project, searchUuid, body);
+    public V1Search projectSearchesV1UpdateProjectSearch(String owner, String project, String searchUuid, V1Search body) throws ApiException {
+        ApiResponse<V1Search> resp = projectSearchesV1UpdateProjectSearchWithHttpInfo(owner, project, searchUuid, body);
         return resp.getData();
     }
 
@@ -1208,8 +1208,8 @@ public class ProjectSearchesV1Api {
      * @return ApiResponse&lt;V1Search&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1Search> updateProjectSearchWithHttpInfo(String owner, String project, String searchUuid, V1Search body) throws ApiException {
-        com.squareup.okhttp.Call call = updateProjectSearchValidateBeforeCall(owner, project, searchUuid, body, null, null);
+    public ApiResponse<V1Search> projectSearchesV1UpdateProjectSearchWithHttpInfo(String owner, String project, String searchUuid, V1Search body) throws ApiException {
+        com.squareup.okhttp.Call call = projectSearchesV1UpdateProjectSearchValidateBeforeCall(owner, project, searchUuid, body, null, null);
         Type localVarReturnType = new TypeToken<V1Search>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -1225,7 +1225,7 @@ public class ProjectSearchesV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call updateProjectSearchAsync(String owner, String project, String searchUuid, V1Search body, final ApiCallback<V1Search> callback) throws ApiException {
+    public com.squareup.okhttp.Call projectSearchesV1UpdateProjectSearchAsync(String owner, String project, String searchUuid, V1Search body, final ApiCallback<V1Search> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -1246,7 +1246,7 @@ public class ProjectSearchesV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = updateProjectSearchValidateBeforeCall(owner, project, searchUuid, body, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = projectSearchesV1UpdateProjectSearchValidateBeforeCall(owner, project, searchUuid, body, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1Search>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;

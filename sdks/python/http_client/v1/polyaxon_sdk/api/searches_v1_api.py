@@ -49,12 +49,12 @@ class SearchesV1Api(object):
             api_client = ApiClient()
         self.api_client = api_client
 
-    def create_search(self, owner, body, **kwargs):  # noqa: E501
+    def searches_v1_create_search(self, owner, body, **kwargs):  # noqa: E501
         """Create search  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.create_search(owner, body, async_req=True)
+        >>> thread = api.searches_v1_create_search(owner, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -66,21 +66,23 @@ class SearchesV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.create_search_with_http_info(
+            return self.searches_v1_create_search_with_http_info(
                 owner, body, **kwargs
             )  # noqa: E501
         else:
-            (data) = self.create_search_with_http_info(
+            (data) = self.searches_v1_create_search_with_http_info(
                 owner, body, **kwargs
             )  # noqa: E501
             return data
 
-    def create_search_with_http_info(self, owner, body, **kwargs):  # noqa: E501
+    def searches_v1_create_search_with_http_info(
+        self, owner, body, **kwargs
+    ):  # noqa: E501
         """Create search  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.create_search_with_http_info(owner, body, async_req=True)
+        >>> thread = api.searches_v1_create_search_with_http_info(owner, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -102,19 +104,19 @@ class SearchesV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method create_search" % key
+                    " to method searches_v1_create_search" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `create_search`"
+                "Missing the required parameter `owner` when calling `searches_v1_create_search`"
             )  # noqa: E501
         # verify the required parameter 'body' is set
         if "body" not in params or params["body"] is None:
             raise ValueError(
-                "Missing the required parameter `body` when calling `create_search`"
+                "Missing the required parameter `body` when calling `searches_v1_create_search`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -166,12 +168,12 @@ class SearchesV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def delete_search(self, owner, uuid, **kwargs):  # noqa: E501
+    def searches_v1_delete_search(self, owner, uuid, **kwargs):  # noqa: E501
         """Delete search  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.delete_search(owner, uuid, async_req=True)
+        >>> thread = api.searches_v1_delete_search(owner, uuid, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -183,21 +185,23 @@ class SearchesV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.delete_search_with_http_info(
+            return self.searches_v1_delete_search_with_http_info(
                 owner, uuid, **kwargs
             )  # noqa: E501
         else:
-            (data) = self.delete_search_with_http_info(
+            (data) = self.searches_v1_delete_search_with_http_info(
                 owner, uuid, **kwargs
             )  # noqa: E501
             return data
 
-    def delete_search_with_http_info(self, owner, uuid, **kwargs):  # noqa: E501
+    def searches_v1_delete_search_with_http_info(
+        self, owner, uuid, **kwargs
+    ):  # noqa: E501
         """Delete search  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.delete_search_with_http_info(owner, uuid, async_req=True)
+        >>> thread = api.searches_v1_delete_search_with_http_info(owner, uuid, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -219,19 +223,19 @@ class SearchesV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method delete_search" % key
+                    " to method searches_v1_delete_search" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `delete_search`"
+                "Missing the required parameter `owner` when calling `searches_v1_delete_search`"
             )  # noqa: E501
         # verify the required parameter 'uuid' is set
         if "uuid" not in params or params["uuid"] is None:
             raise ValueError(
-                "Missing the required parameter `uuid` when calling `delete_search`"
+                "Missing the required parameter `uuid` when calling `searches_v1_delete_search`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -283,12 +287,12 @@ class SearchesV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def get_search(self, owner, uuid, **kwargs):  # noqa: E501
+    def searches_v1_get_search(self, owner, uuid, **kwargs):  # noqa: E501
         """Get search  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.get_search(owner, uuid, async_req=True)
+        >>> thread = api.searches_v1_get_search(owner, uuid, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -300,17 +304,23 @@ class SearchesV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.get_search_with_http_info(owner, uuid, **kwargs)  # noqa: E501
+            return self.searches_v1_get_search_with_http_info(
+                owner, uuid, **kwargs
+            )  # noqa: E501
         else:
-            (data) = self.get_search_with_http_info(owner, uuid, **kwargs)  # noqa: E501
+            (data) = self.searches_v1_get_search_with_http_info(
+                owner, uuid, **kwargs
+            )  # noqa: E501
             return data
 
-    def get_search_with_http_info(self, owner, uuid, **kwargs):  # noqa: E501
+    def searches_v1_get_search_with_http_info(
+        self, owner, uuid, **kwargs
+    ):  # noqa: E501
         """Get search  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.get_search_with_http_info(owner, uuid, async_req=True)
+        >>> thread = api.searches_v1_get_search_with_http_info(owner, uuid, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -332,19 +342,19 @@ class SearchesV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method get_search" % key
+                    " to method searches_v1_get_search" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `get_search`"
+                "Missing the required parameter `owner` when calling `searches_v1_get_search`"
             )  # noqa: E501
         # verify the required parameter 'uuid' is set
         if "uuid" not in params or params["uuid"] is None:
             raise ValueError(
-                "Missing the required parameter `uuid` when calling `get_search`"
+                "Missing the required parameter `uuid` when calling `searches_v1_get_search`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -396,12 +406,12 @@ class SearchesV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def list_search_names(self, owner, **kwargs):  # noqa: E501
+    def searches_v1_list_search_names(self, owner, **kwargs):  # noqa: E501
         """List search names  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.list_search_names(owner, async_req=True)
+        >>> thread = api.searches_v1_list_search_names(owner, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -416,19 +426,23 @@ class SearchesV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.list_search_names_with_http_info(owner, **kwargs)  # noqa: E501
+            return self.searches_v1_list_search_names_with_http_info(
+                owner, **kwargs
+            )  # noqa: E501
         else:
-            (data) = self.list_search_names_with_http_info(
+            (data) = self.searches_v1_list_search_names_with_http_info(
                 owner, **kwargs
             )  # noqa: E501
             return data
 
-    def list_search_names_with_http_info(self, owner, **kwargs):  # noqa: E501
+    def searches_v1_list_search_names_with_http_info(
+        self, owner, **kwargs
+    ):  # noqa: E501
         """List search names  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.list_search_names_with_http_info(owner, async_req=True)
+        >>> thread = api.searches_v1_list_search_names_with_http_info(owner, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -453,14 +467,14 @@ class SearchesV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method list_search_names" % key
+                    " to method searches_v1_list_search_names" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `list_search_names`"
+                "Missing the required parameter `owner` when calling `searches_v1_list_search_names`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -518,12 +532,12 @@ class SearchesV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def list_searches(self, owner, **kwargs):  # noqa: E501
+    def searches_v1_list_searches(self, owner, **kwargs):  # noqa: E501
         """List searches  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.list_searches(owner, async_req=True)
+        >>> thread = api.searches_v1_list_searches(owner, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -538,17 +552,21 @@ class SearchesV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.list_searches_with_http_info(owner, **kwargs)  # noqa: E501
+            return self.searches_v1_list_searches_with_http_info(
+                owner, **kwargs
+            )  # noqa: E501
         else:
-            (data) = self.list_searches_with_http_info(owner, **kwargs)  # noqa: E501
+            (data) = self.searches_v1_list_searches_with_http_info(
+                owner, **kwargs
+            )  # noqa: E501
             return data
 
-    def list_searches_with_http_info(self, owner, **kwargs):  # noqa: E501
+    def searches_v1_list_searches_with_http_info(self, owner, **kwargs):  # noqa: E501
         """List searches  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.list_searches_with_http_info(owner, async_req=True)
+        >>> thread = api.searches_v1_list_searches_with_http_info(owner, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -573,14 +591,14 @@ class SearchesV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method list_searches" % key
+                    " to method searches_v1_list_searches" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `list_searches`"
+                "Missing the required parameter `owner` when calling `searches_v1_list_searches`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -638,12 +656,14 @@ class SearchesV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def patch_search(self, owner, search_uuid, body, **kwargs):  # noqa: E501
+    def searches_v1_patch_search(
+        self, owner, search_uuid, body, **kwargs
+    ):  # noqa: E501
         """Patch search  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.patch_search(owner, search_uuid, body, async_req=True)
+        >>> thread = api.searches_v1_patch_search(owner, search_uuid, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -656,23 +676,23 @@ class SearchesV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.patch_search_with_http_info(
+            return self.searches_v1_patch_search_with_http_info(
                 owner, search_uuid, body, **kwargs
             )  # noqa: E501
         else:
-            (data) = self.patch_search_with_http_info(
+            (data) = self.searches_v1_patch_search_with_http_info(
                 owner, search_uuid, body, **kwargs
             )  # noqa: E501
             return data
 
-    def patch_search_with_http_info(
+    def searches_v1_patch_search_with_http_info(
         self, owner, search_uuid, body, **kwargs
     ):  # noqa: E501
         """Patch search  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.patch_search_with_http_info(owner, search_uuid, body, async_req=True)
+        >>> thread = api.searches_v1_patch_search_with_http_info(owner, search_uuid, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -695,24 +715,24 @@ class SearchesV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method patch_search" % key
+                    " to method searches_v1_patch_search" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `patch_search`"
+                "Missing the required parameter `owner` when calling `searches_v1_patch_search`"
             )  # noqa: E501
         # verify the required parameter 'search_uuid' is set
         if "search_uuid" not in params or params["search_uuid"] is None:
             raise ValueError(
-                "Missing the required parameter `search_uuid` when calling `patch_search`"
+                "Missing the required parameter `search_uuid` when calling `searches_v1_patch_search`"
             )  # noqa: E501
         # verify the required parameter 'body' is set
         if "body" not in params or params["body"] is None:
             raise ValueError(
-                "Missing the required parameter `body` when calling `patch_search`"
+                "Missing the required parameter `body` when calling `searches_v1_patch_search`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -766,12 +786,14 @@ class SearchesV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def update_search(self, owner, search_uuid, body, **kwargs):  # noqa: E501
+    def searches_v1_update_search(
+        self, owner, search_uuid, body, **kwargs
+    ):  # noqa: E501
         """Update search  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.update_search(owner, search_uuid, body, async_req=True)
+        >>> thread = api.searches_v1_update_search(owner, search_uuid, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -784,23 +806,23 @@ class SearchesV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.update_search_with_http_info(
+            return self.searches_v1_update_search_with_http_info(
                 owner, search_uuid, body, **kwargs
             )  # noqa: E501
         else:
-            (data) = self.update_search_with_http_info(
+            (data) = self.searches_v1_update_search_with_http_info(
                 owner, search_uuid, body, **kwargs
             )  # noqa: E501
             return data
 
-    def update_search_with_http_info(
+    def searches_v1_update_search_with_http_info(
         self, owner, search_uuid, body, **kwargs
     ):  # noqa: E501
         """Update search  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.update_search_with_http_info(owner, search_uuid, body, async_req=True)
+        >>> thread = api.searches_v1_update_search_with_http_info(owner, search_uuid, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -823,24 +845,24 @@ class SearchesV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method update_search" % key
+                    " to method searches_v1_update_search" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `update_search`"
+                "Missing the required parameter `owner` when calling `searches_v1_update_search`"
             )  # noqa: E501
         # verify the required parameter 'search_uuid' is set
         if "search_uuid" not in params or params["search_uuid"] is None:
             raise ValueError(
-                "Missing the required parameter `search_uuid` when calling `update_search`"
+                "Missing the required parameter `search_uuid` when calling `searches_v1_update_search`"
             )  # noqa: E501
         # verify the required parameter 'body' is set
         if "body" not in params or params["body"] is None:
             raise ValueError(
-                "Missing the required parameter `body` when calling `update_search`"
+                "Missing the required parameter `body` when calling `searches_v1_update_search`"
             )  # noqa: E501
 
         collection_formats = {}

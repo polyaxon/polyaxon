@@ -39,29 +39,29 @@ type Client struct {
 
 // ClientService is the interface for Client methods
 type ClientService interface {
-	NoOp(params *NoOpParams, authInfo runtime.ClientAuthInfoWriter) (*NoOpOK, *NoOpNoContent, error)
+	SchemasV1NoOp(params *SchemasV1NoOpParams, authInfo runtime.ClientAuthInfoWriter) (*SchemasV1NoOpOK, *SchemasV1NoOpNoContent, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
 
 /*
-  NoOp lists teams names
+  SchemasV1NoOp lists teams names
 */
-func (a *Client) NoOp(params *NoOpParams, authInfo runtime.ClientAuthInfoWriter) (*NoOpOK, *NoOpNoContent, error) {
+func (a *Client) SchemasV1NoOp(params *SchemasV1NoOpParams, authInfo runtime.ClientAuthInfoWriter) (*SchemasV1NoOpOK, *SchemasV1NoOpNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewNoOpParams()
+		params = NewSchemasV1NoOpParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "NoOp",
+		ID:                 "SchemasV1_NoOp",
 		Method:             "GET",
 		PathPattern:        "/schemas",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &NoOpReader{formats: a.formats},
+		Reader:             &SchemasV1NoOpReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -70,13 +70,13 @@ func (a *Client) NoOp(params *NoOpParams, authInfo runtime.ClientAuthInfoWriter)
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *NoOpOK:
+	case *SchemasV1NoOpOK:
 		return value, nil, nil
-	case *NoOpNoContent:
+	case *SchemasV1NoOpNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*NoOpDefault)
+	unexpectedSuccess := result.(*SchemasV1NoOpDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 

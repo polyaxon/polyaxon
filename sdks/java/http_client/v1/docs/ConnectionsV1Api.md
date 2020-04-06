@@ -4,18 +4,18 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**createConnection**](ConnectionsV1Api.md#createConnection) | **POST** /api/v1/orgs/{owner}/connections | Create connection
-[**deleteConnection**](ConnectionsV1Api.md#deleteConnection) | **DELETE** /api/v1/orgs/{owner}/connections/{uuid} | Delete connection
-[**getConnection**](ConnectionsV1Api.md#getConnection) | **GET** /api/v1/orgs/{owner}/connections/{uuid} | Get connection
-[**listConnectionNames**](ConnectionsV1Api.md#listConnectionNames) | **GET** /api/v1/orgs/{owner}/connections/names | List connections names
-[**listConnections**](ConnectionsV1Api.md#listConnections) | **GET** /api/v1/orgs/{owner}/connections | List connections
-[**patchConnection**](ConnectionsV1Api.md#patchConnection) | **PATCH** /api/v1/orgs/{owner}/connections/{connection.uuid} | Patch connection
-[**updateConnection**](ConnectionsV1Api.md#updateConnection) | **PUT** /api/v1/orgs/{owner}/connections/{connection.uuid} | Update connection
+[**connectionsV1CreateConnection**](ConnectionsV1Api.md#connectionsV1CreateConnection) | **POST** /api/v1/orgs/{owner}/connections | Create connection
+[**connectionsV1DeleteConnection**](ConnectionsV1Api.md#connectionsV1DeleteConnection) | **DELETE** /api/v1/orgs/{owner}/connections/{uuid} | Delete connection
+[**connectionsV1GetConnection**](ConnectionsV1Api.md#connectionsV1GetConnection) | **GET** /api/v1/orgs/{owner}/connections/{uuid} | Get connection
+[**connectionsV1ListConnectionNames**](ConnectionsV1Api.md#connectionsV1ListConnectionNames) | **GET** /api/v1/orgs/{owner}/connections/names | List connections names
+[**connectionsV1ListConnections**](ConnectionsV1Api.md#connectionsV1ListConnections) | **GET** /api/v1/orgs/{owner}/connections | List connections
+[**connectionsV1PatchConnection**](ConnectionsV1Api.md#connectionsV1PatchConnection) | **PATCH** /api/v1/orgs/{owner}/connections/{connection.uuid} | Patch connection
+[**connectionsV1UpdateConnection**](ConnectionsV1Api.md#connectionsV1UpdateConnection) | **PUT** /api/v1/orgs/{owner}/connections/{connection.uuid} | Update connection
 
 
-<a name="createConnection"></a>
-# **createConnection**
-> V1ConnectionResponse createConnection(owner, body)
+<a name="connectionsV1CreateConnection"></a>
+# **connectionsV1CreateConnection**
+> V1ConnectionResponse connectionsV1CreateConnection(owner, body)
 
 Create connection
 
@@ -40,10 +40,10 @@ ConnectionsV1Api apiInstance = new ConnectionsV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
 V1ConnectionResponse body = new V1ConnectionResponse(); // V1ConnectionResponse | Connection body
 try {
-    V1ConnectionResponse result = apiInstance.createConnection(owner, body);
+    V1ConnectionResponse result = apiInstance.connectionsV1CreateConnection(owner, body);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling ConnectionsV1Api#createConnection");
+    System.err.println("Exception when calling ConnectionsV1Api#connectionsV1CreateConnection");
     e.printStackTrace();
 }
 ```
@@ -68,9 +68,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="deleteConnection"></a>
-# **deleteConnection**
-> deleteConnection(owner, uuid)
+<a name="connectionsV1DeleteConnection"></a>
+# **connectionsV1DeleteConnection**
+> connectionsV1DeleteConnection(owner, uuid)
 
 Delete connection
 
@@ -95,9 +95,9 @@ ConnectionsV1Api apiInstance = new ConnectionsV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
 String uuid = "uuid_example"; // String | Uuid identifier of the entity
 try {
-    apiInstance.deleteConnection(owner, uuid);
+    apiInstance.connectionsV1DeleteConnection(owner, uuid);
 } catch (ApiException e) {
-    System.err.println("Exception when calling ConnectionsV1Api#deleteConnection");
+    System.err.println("Exception when calling ConnectionsV1Api#connectionsV1DeleteConnection");
     e.printStackTrace();
 }
 ```
@@ -122,9 +122,9 @@ null (empty response body)
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="getConnection"></a>
-# **getConnection**
-> V1ConnectionResponse getConnection(owner, uuid)
+<a name="connectionsV1GetConnection"></a>
+# **connectionsV1GetConnection**
+> V1ConnectionResponse connectionsV1GetConnection(owner, uuid)
 
 Get connection
 
@@ -149,10 +149,10 @@ ConnectionsV1Api apiInstance = new ConnectionsV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
 String uuid = "uuid_example"; // String | Uuid identifier of the entity
 try {
-    V1ConnectionResponse result = apiInstance.getConnection(owner, uuid);
+    V1ConnectionResponse result = apiInstance.connectionsV1GetConnection(owner, uuid);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling ConnectionsV1Api#getConnection");
+    System.err.println("Exception when calling ConnectionsV1Api#connectionsV1GetConnection");
     e.printStackTrace();
 }
 ```
@@ -177,9 +177,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="listConnectionNames"></a>
-# **listConnectionNames**
-> V1ListConnectionsResponse listConnectionNames(owner, offset, limit, sort, query)
+<a name="connectionsV1ListConnectionNames"></a>
+# **connectionsV1ListConnectionNames**
+> V1ListConnectionsResponse connectionsV1ListConnectionNames(owner, offset, limit, sort, query)
 
 List connections names
 
@@ -207,10 +207,10 @@ Integer limit = 56; // Integer | Limit size.
 String sort = "sort_example"; // String | Sort to order the search.
 String query = "query_example"; // String | Query filter the search search.
 try {
-    V1ListConnectionsResponse result = apiInstance.listConnectionNames(owner, offset, limit, sort, query);
+    V1ListConnectionsResponse result = apiInstance.connectionsV1ListConnectionNames(owner, offset, limit, sort, query);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling ConnectionsV1Api#listConnectionNames");
+    System.err.println("Exception when calling ConnectionsV1Api#connectionsV1ListConnectionNames");
     e.printStackTrace();
 }
 ```
@@ -238,9 +238,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="listConnections"></a>
-# **listConnections**
-> V1ListConnectionsResponse listConnections(owner, offset, limit, sort, query)
+<a name="connectionsV1ListConnections"></a>
+# **connectionsV1ListConnections**
+> V1ListConnectionsResponse connectionsV1ListConnections(owner, offset, limit, sort, query)
 
 List connections
 
@@ -268,10 +268,10 @@ Integer limit = 56; // Integer | Limit size.
 String sort = "sort_example"; // String | Sort to order the search.
 String query = "query_example"; // String | Query filter the search search.
 try {
-    V1ListConnectionsResponse result = apiInstance.listConnections(owner, offset, limit, sort, query);
+    V1ListConnectionsResponse result = apiInstance.connectionsV1ListConnections(owner, offset, limit, sort, query);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling ConnectionsV1Api#listConnections");
+    System.err.println("Exception when calling ConnectionsV1Api#connectionsV1ListConnections");
     e.printStackTrace();
 }
 ```
@@ -299,9 +299,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="patchConnection"></a>
-# **patchConnection**
-> V1ConnectionResponse patchConnection(owner, connectionUuid, body)
+<a name="connectionsV1PatchConnection"></a>
+# **connectionsV1PatchConnection**
+> V1ConnectionResponse connectionsV1PatchConnection(owner, connectionUuid, body)
 
 Patch connection
 
@@ -327,10 +327,10 @@ String owner = "owner_example"; // String | Owner of the namespace
 String connectionUuid = "connectionUuid_example"; // String | UUID
 V1ConnectionResponse body = new V1ConnectionResponse(); // V1ConnectionResponse | Connection body
 try {
-    V1ConnectionResponse result = apiInstance.patchConnection(owner, connectionUuid, body);
+    V1ConnectionResponse result = apiInstance.connectionsV1PatchConnection(owner, connectionUuid, body);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling ConnectionsV1Api#patchConnection");
+    System.err.println("Exception when calling ConnectionsV1Api#connectionsV1PatchConnection");
     e.printStackTrace();
 }
 ```
@@ -356,9 +356,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="updateConnection"></a>
-# **updateConnection**
-> V1ConnectionResponse updateConnection(owner, connectionUuid, body)
+<a name="connectionsV1UpdateConnection"></a>
+# **connectionsV1UpdateConnection**
+> V1ConnectionResponse connectionsV1UpdateConnection(owner, connectionUuid, body)
 
 Update connection
 
@@ -384,10 +384,10 @@ String owner = "owner_example"; // String | Owner of the namespace
 String connectionUuid = "connectionUuid_example"; // String | UUID
 V1ConnectionResponse body = new V1ConnectionResponse(); // V1ConnectionResponse | Connection body
 try {
-    V1ConnectionResponse result = apiInstance.updateConnection(owner, connectionUuid, body);
+    V1ConnectionResponse result = apiInstance.connectionsV1UpdateConnection(owner, connectionUuid, body);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling ConnectionsV1Api#updateConnection");
+    System.err.println("Exception when calling ConnectionsV1Api#connectionsV1UpdateConnection");
     e.printStackTrace();
 }
 ```

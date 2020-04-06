@@ -49,12 +49,12 @@ class RunProfilesV1Api(object):
             api_client = ApiClient()
         self.api_client = api_client
 
-    def create_run_profile(self, owner, body, **kwargs):  # noqa: E501
+    def run_profiles_v1_create_run_profile(self, owner, body, **kwargs):  # noqa: E501
         """Create hub component  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.create_run_profile(owner, body, async_req=True)
+        >>> thread = api.run_profiles_v1_create_run_profile(owner, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -66,21 +66,23 @@ class RunProfilesV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.create_run_profile_with_http_info(
+            return self.run_profiles_v1_create_run_profile_with_http_info(
                 owner, body, **kwargs
             )  # noqa: E501
         else:
-            (data) = self.create_run_profile_with_http_info(
+            (data) = self.run_profiles_v1_create_run_profile_with_http_info(
                 owner, body, **kwargs
             )  # noqa: E501
             return data
 
-    def create_run_profile_with_http_info(self, owner, body, **kwargs):  # noqa: E501
+    def run_profiles_v1_create_run_profile_with_http_info(
+        self, owner, body, **kwargs
+    ):  # noqa: E501
         """Create hub component  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.create_run_profile_with_http_info(owner, body, async_req=True)
+        >>> thread = api.run_profiles_v1_create_run_profile_with_http_info(owner, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -102,19 +104,19 @@ class RunProfilesV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method create_run_profile" % key
+                    " to method run_profiles_v1_create_run_profile" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `create_run_profile`"
+                "Missing the required parameter `owner` when calling `run_profiles_v1_create_run_profile`"
             )  # noqa: E501
         # verify the required parameter 'body' is set
         if "body" not in params or params["body"] is None:
             raise ValueError(
-                "Missing the required parameter `body` when calling `create_run_profile`"
+                "Missing the required parameter `body` when calling `run_profiles_v1_create_run_profile`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -166,12 +168,12 @@ class RunProfilesV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def delete_run_profile(self, owner, uuid, **kwargs):  # noqa: E501
+    def run_profiles_v1_delete_run_profile(self, owner, uuid, **kwargs):  # noqa: E501
         """Delete hub component  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.delete_run_profile(owner, uuid, async_req=True)
+        >>> thread = api.run_profiles_v1_delete_run_profile(owner, uuid, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -183,21 +185,23 @@ class RunProfilesV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.delete_run_profile_with_http_info(
+            return self.run_profiles_v1_delete_run_profile_with_http_info(
                 owner, uuid, **kwargs
             )  # noqa: E501
         else:
-            (data) = self.delete_run_profile_with_http_info(
+            (data) = self.run_profiles_v1_delete_run_profile_with_http_info(
                 owner, uuid, **kwargs
             )  # noqa: E501
             return data
 
-    def delete_run_profile_with_http_info(self, owner, uuid, **kwargs):  # noqa: E501
+    def run_profiles_v1_delete_run_profile_with_http_info(
+        self, owner, uuid, **kwargs
+    ):  # noqa: E501
         """Delete hub component  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.delete_run_profile_with_http_info(owner, uuid, async_req=True)
+        >>> thread = api.run_profiles_v1_delete_run_profile_with_http_info(owner, uuid, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -219,19 +223,19 @@ class RunProfilesV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method delete_run_profile" % key
+                    " to method run_profiles_v1_delete_run_profile" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `delete_run_profile`"
+                "Missing the required parameter `owner` when calling `run_profiles_v1_delete_run_profile`"
             )  # noqa: E501
         # verify the required parameter 'uuid' is set
         if "uuid" not in params or params["uuid"] is None:
             raise ValueError(
-                "Missing the required parameter `uuid` when calling `delete_run_profile`"
+                "Missing the required parameter `uuid` when calling `run_profiles_v1_delete_run_profile`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -283,12 +287,12 @@ class RunProfilesV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def get_run_profile(self, owner, uuid, **kwargs):  # noqa: E501
+    def run_profiles_v1_get_run_profile(self, owner, uuid, **kwargs):  # noqa: E501
         """Get hub component  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.get_run_profile(owner, uuid, async_req=True)
+        >>> thread = api.run_profiles_v1_get_run_profile(owner, uuid, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -300,21 +304,23 @@ class RunProfilesV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.get_run_profile_with_http_info(
+            return self.run_profiles_v1_get_run_profile_with_http_info(
                 owner, uuid, **kwargs
             )  # noqa: E501
         else:
-            (data) = self.get_run_profile_with_http_info(
+            (data) = self.run_profiles_v1_get_run_profile_with_http_info(
                 owner, uuid, **kwargs
             )  # noqa: E501
             return data
 
-    def get_run_profile_with_http_info(self, owner, uuid, **kwargs):  # noqa: E501
+    def run_profiles_v1_get_run_profile_with_http_info(
+        self, owner, uuid, **kwargs
+    ):  # noqa: E501
         """Get hub component  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.get_run_profile_with_http_info(owner, uuid, async_req=True)
+        >>> thread = api.run_profiles_v1_get_run_profile_with_http_info(owner, uuid, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -336,19 +342,19 @@ class RunProfilesV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method get_run_profile" % key
+                    " to method run_profiles_v1_get_run_profile" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `get_run_profile`"
+                "Missing the required parameter `owner` when calling `run_profiles_v1_get_run_profile`"
             )  # noqa: E501
         # verify the required parameter 'uuid' is set
         if "uuid" not in params or params["uuid"] is None:
             raise ValueError(
-                "Missing the required parameter `uuid` when calling `get_run_profile`"
+                "Missing the required parameter `uuid` when calling `run_profiles_v1_get_run_profile`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -400,12 +406,12 @@ class RunProfilesV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def list_run_profile_names(self, owner, **kwargs):  # noqa: E501
+    def run_profiles_v1_list_run_profile_names(self, owner, **kwargs):  # noqa: E501
         """List hub component names  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.list_run_profile_names(owner, async_req=True)
+        >>> thread = api.run_profiles_v1_list_run_profile_names(owner, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -420,21 +426,23 @@ class RunProfilesV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.list_run_profile_names_with_http_info(
+            return self.run_profiles_v1_list_run_profile_names_with_http_info(
                 owner, **kwargs
             )  # noqa: E501
         else:
-            (data) = self.list_run_profile_names_with_http_info(
+            (data) = self.run_profiles_v1_list_run_profile_names_with_http_info(
                 owner, **kwargs
             )  # noqa: E501
             return data
 
-    def list_run_profile_names_with_http_info(self, owner, **kwargs):  # noqa: E501
+    def run_profiles_v1_list_run_profile_names_with_http_info(
+        self, owner, **kwargs
+    ):  # noqa: E501
         """List hub component names  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.list_run_profile_names_with_http_info(owner, async_req=True)
+        >>> thread = api.run_profiles_v1_list_run_profile_names_with_http_info(owner, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -459,14 +467,14 @@ class RunProfilesV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method list_run_profile_names" % key
+                    " to method run_profiles_v1_list_run_profile_names" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `list_run_profile_names`"
+                "Missing the required parameter `owner` when calling `run_profiles_v1_list_run_profile_names`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -524,12 +532,12 @@ class RunProfilesV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def list_run_profiles(self, owner, **kwargs):  # noqa: E501
+    def run_profiles_v1_list_run_profiles(self, owner, **kwargs):  # noqa: E501
         """List hub components  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.list_run_profiles(owner, async_req=True)
+        >>> thread = api.run_profiles_v1_list_run_profiles(owner, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -544,19 +552,23 @@ class RunProfilesV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.list_run_profiles_with_http_info(owner, **kwargs)  # noqa: E501
+            return self.run_profiles_v1_list_run_profiles_with_http_info(
+                owner, **kwargs
+            )  # noqa: E501
         else:
-            (data) = self.list_run_profiles_with_http_info(
+            (data) = self.run_profiles_v1_list_run_profiles_with_http_info(
                 owner, **kwargs
             )  # noqa: E501
             return data
 
-    def list_run_profiles_with_http_info(self, owner, **kwargs):  # noqa: E501
+    def run_profiles_v1_list_run_profiles_with_http_info(
+        self, owner, **kwargs
+    ):  # noqa: E501
         """List hub components  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.list_run_profiles_with_http_info(owner, async_req=True)
+        >>> thread = api.run_profiles_v1_list_run_profiles_with_http_info(owner, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -581,14 +593,14 @@ class RunProfilesV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method list_run_profiles" % key
+                    " to method run_profiles_v1_list_run_profiles" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `list_run_profiles`"
+                "Missing the required parameter `owner` when calling `run_profiles_v1_list_run_profiles`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -646,12 +658,14 @@ class RunProfilesV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def patch_run_profile(self, owner, run_profile_uuid, body, **kwargs):  # noqa: E501
+    def run_profiles_v1_patch_run_profile(
+        self, owner, run_profile_uuid, body, **kwargs
+    ):  # noqa: E501
         """Patch hub component  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.patch_run_profile(owner, run_profile_uuid, body, async_req=True)
+        >>> thread = api.run_profiles_v1_patch_run_profile(owner, run_profile_uuid, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -664,23 +678,23 @@ class RunProfilesV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.patch_run_profile_with_http_info(
+            return self.run_profiles_v1_patch_run_profile_with_http_info(
                 owner, run_profile_uuid, body, **kwargs
             )  # noqa: E501
         else:
-            (data) = self.patch_run_profile_with_http_info(
+            (data) = self.run_profiles_v1_patch_run_profile_with_http_info(
                 owner, run_profile_uuid, body, **kwargs
             )  # noqa: E501
             return data
 
-    def patch_run_profile_with_http_info(
+    def run_profiles_v1_patch_run_profile_with_http_info(
         self, owner, run_profile_uuid, body, **kwargs
     ):  # noqa: E501
         """Patch hub component  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.patch_run_profile_with_http_info(owner, run_profile_uuid, body, async_req=True)
+        >>> thread = api.run_profiles_v1_patch_run_profile_with_http_info(owner, run_profile_uuid, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -703,24 +717,24 @@ class RunProfilesV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method patch_run_profile" % key
+                    " to method run_profiles_v1_patch_run_profile" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `patch_run_profile`"
+                "Missing the required parameter `owner` when calling `run_profiles_v1_patch_run_profile`"
             )  # noqa: E501
         # verify the required parameter 'run_profile_uuid' is set
         if "run_profile_uuid" not in params or params["run_profile_uuid"] is None:
             raise ValueError(
-                "Missing the required parameter `run_profile_uuid` when calling `patch_run_profile`"
+                "Missing the required parameter `run_profile_uuid` when calling `run_profiles_v1_patch_run_profile`"
             )  # noqa: E501
         # verify the required parameter 'body' is set
         if "body" not in params or params["body"] is None:
             raise ValueError(
-                "Missing the required parameter `body` when calling `patch_run_profile`"
+                "Missing the required parameter `body` when calling `run_profiles_v1_patch_run_profile`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -774,12 +788,14 @@ class RunProfilesV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def update_run_profile(self, owner, run_profile_uuid, body, **kwargs):  # noqa: E501
+    def run_profiles_v1_update_run_profile(
+        self, owner, run_profile_uuid, body, **kwargs
+    ):  # noqa: E501
         """Update hub component  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.update_run_profile(owner, run_profile_uuid, body, async_req=True)
+        >>> thread = api.run_profiles_v1_update_run_profile(owner, run_profile_uuid, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -792,23 +808,23 @@ class RunProfilesV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.update_run_profile_with_http_info(
+            return self.run_profiles_v1_update_run_profile_with_http_info(
                 owner, run_profile_uuid, body, **kwargs
             )  # noqa: E501
         else:
-            (data) = self.update_run_profile_with_http_info(
+            (data) = self.run_profiles_v1_update_run_profile_with_http_info(
                 owner, run_profile_uuid, body, **kwargs
             )  # noqa: E501
             return data
 
-    def update_run_profile_with_http_info(
+    def run_profiles_v1_update_run_profile_with_http_info(
         self, owner, run_profile_uuid, body, **kwargs
     ):  # noqa: E501
         """Update hub component  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.update_run_profile_with_http_info(owner, run_profile_uuid, body, async_req=True)
+        >>> thread = api.run_profiles_v1_update_run_profile_with_http_info(owner, run_profile_uuid, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -831,24 +847,24 @@ class RunProfilesV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method update_run_profile" % key
+                    " to method run_profiles_v1_update_run_profile" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `update_run_profile`"
+                "Missing the required parameter `owner` when calling `run_profiles_v1_update_run_profile`"
             )  # noqa: E501
         # verify the required parameter 'run_profile_uuid' is set
         if "run_profile_uuid" not in params or params["run_profile_uuid"] is None:
             raise ValueError(
-                "Missing the required parameter `run_profile_uuid` when calling `update_run_profile`"
+                "Missing the required parameter `run_profile_uuid` when calling `run_profiles_v1_update_run_profile`"
             )  # noqa: E501
         # verify the required parameter 'body' is set
         if "body" not in params or params["body"] is None:
             raise ValueError(
-                "Missing the required parameter `body` when calling `update_run_profile`"
+                "Missing the required parameter `body` when calling `run_profiles_v1_update_run_profile`"
             )  # noqa: E501
 
         collection_formats = {}

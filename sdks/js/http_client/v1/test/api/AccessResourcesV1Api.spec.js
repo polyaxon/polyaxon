@@ -50,9 +50,9 @@
 
   describe('(package)', function() {
     describe('AccessResourcesV1Api', function() {
-      describe('createAccessResource', function() {
-        it('should call createAccessResource successfully', function(done) {
-          // TODO: uncomment, update parameter values for createAccessResource call and complete the assertions
+      describe('accessResourcesV1CreateAccessResource', function() {
+        it('should call accessResourcesV1CreateAccessResource successfully', function(done) {
+          // TODO: uncomment, update parameter values for accessResourcesV1CreateAccessResource call and complete the assertions
           /*
           var owner = "owner_example";
           var body = new PolyaxonSdk.V1AccessResource();
@@ -67,7 +67,7 @@
           body.disabled = false;
           body.deleted = false;
 
-          instance.createAccessResource(owner, body, function(error, data, response) {
+          instance.accessResourcesV1CreateAccessResource(owner, body, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -110,14 +110,14 @@
           done();
         });
       });
-      describe('deleteAccessResource', function() {
-        it('should call deleteAccessResource successfully', function(done) {
-          // TODO: uncomment, update parameter values for deleteAccessResource call
+      describe('accessResourcesV1DeleteAccessResource', function() {
+        it('should call accessResourcesV1DeleteAccessResource successfully', function(done) {
+          // TODO: uncomment, update parameter values for accessResourcesV1DeleteAccessResource call
           /*
           var owner = "owner_example";
           var uuid = "uuid_example";
 
-          instance.deleteAccessResource(owner, uuid, function(error, data, response) {
+          instance.accessResourcesV1DeleteAccessResource(owner, uuid, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -130,14 +130,14 @@
           done();
         });
       });
-      describe('getAccessResource', function() {
-        it('should call getAccessResource successfully', function(done) {
-          // TODO: uncomment, update parameter values for getAccessResource call and complete the assertions
+      describe('accessResourcesV1GetAccessResource', function() {
+        it('should call accessResourcesV1GetAccessResource successfully', function(done) {
+          // TODO: uncomment, update parameter values for accessResourcesV1GetAccessResource call and complete the assertions
           /*
           var owner = "owner_example";
           var uuid = "uuid_example";
 
-          instance.getAccessResource(owner, uuid, function(error, data, response) {
+          instance.accessResourcesV1GetAccessResource(owner, uuid, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -180,9 +180,9 @@
           done();
         });
       });
-      describe('listAccessResourceNames', function() {
-        it('should call listAccessResourceNames successfully', function(done) {
-          // TODO: uncomment, update parameter values for listAccessResourceNames call and complete the assertions
+      describe('accessResourcesV1ListAccessResourceNames', function() {
+        it('should call accessResourcesV1ListAccessResourceNames successfully', function(done) {
+          // TODO: uncomment, update parameter values for accessResourcesV1ListAccessResourceNames call and complete the assertions
           /*
           var owner = "owner_example";
           var opts = {};
@@ -191,7 +191,7 @@
           opts.sort = "sort_example";
           opts.query = "query_example";
 
-          instance.listAccessResourceNames(owner, opts, function(error, data, response) {
+          instance.accessResourcesV1ListAccessResourceNames(owner, opts, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -249,9 +249,9 @@
           done();
         });
       });
-      describe('listAccessResources', function() {
-        it('should call listAccessResources successfully', function(done) {
-          // TODO: uncomment, update parameter values for listAccessResources call and complete the assertions
+      describe('accessResourcesV1ListAccessResources', function() {
+        it('should call accessResourcesV1ListAccessResources successfully', function(done) {
+          // TODO: uncomment, update parameter values for accessResourcesV1ListAccessResources call and complete the assertions
           /*
           var owner = "owner_example";
           var opts = {};
@@ -260,7 +260,7 @@
           opts.sort = "sort_example";
           opts.query = "query_example";
 
-          instance.listAccessResources(owner, opts, function(error, data, response) {
+          instance.accessResourcesV1ListAccessResources(owner, opts, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -318,9 +318,9 @@
           done();
         });
       });
-      describe('patchAccessResource', function() {
-        it('should call patchAccessResource successfully', function(done) {
-          // TODO: uncomment, update parameter values for patchAccessResource call and complete the assertions
+      describe('accessResourcesV1PatchAccessResource', function() {
+        it('should call accessResourcesV1PatchAccessResource successfully', function(done) {
+          // TODO: uncomment, update parameter values for accessResourcesV1PatchAccessResource call and complete the assertions
           /*
           var owner = "owner_example";
           var access_resource_uuid = "access_resource_uuid_example";
@@ -336,7 +336,7 @@
           body.disabled = false;
           body.deleted = false;
 
-          instance.patchAccessResource(owner, access_resource_uuid, body, function(error, data, response) {
+          instance.accessResourcesV1PatchAccessResource(owner, access_resource_uuid, body, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -379,9 +379,9 @@
           done();
         });
       });
-      describe('updateAccessResource', function() {
-        it('should call updateAccessResource successfully', function(done) {
-          // TODO: uncomment, update parameter values for updateAccessResource call and complete the assertions
+      describe('accessResourcesV1UpdateAccessResource', function() {
+        it('should call accessResourcesV1UpdateAccessResource successfully', function(done) {
+          // TODO: uncomment, update parameter values for accessResourcesV1UpdateAccessResource call and complete the assertions
           /*
           var owner = "owner_example";
           var access_resource_uuid = "access_resource_uuid_example";
@@ -397,7 +397,7 @@
           body.disabled = false;
           body.deleted = false;
 
-          instance.updateAccessResource(owner, access_resource_uuid, body, function(error, data, response) {
+          instance.accessResourcesV1UpdateAccessResource(owner, access_resource_uuid, body, function(error, data, response) {
             if (error) {
               done(error);
               return;

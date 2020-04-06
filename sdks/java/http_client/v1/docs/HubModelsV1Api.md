@@ -4,18 +4,18 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**createHubModel**](HubModelsV1Api.md#createHubModel) | **POST** /api/v1/orgs/{owner}/models | Create dashboard
-[**deleteHubModel**](HubModelsV1Api.md#deleteHubModel) | **DELETE** /api/v1/orgs/{owner}/models/{uuid} | Delete dashboard
-[**getHubModel**](HubModelsV1Api.md#getHubModel) | **GET** /api/v1/orgs/{owner}/models/{uuid} | Get dashboard
-[**listHubModelNames**](HubModelsV1Api.md#listHubModelNames) | **GET** /api/v1/orgs/{owner}/models/names | List dashboard names
-[**listHubModels**](HubModelsV1Api.md#listHubModels) | **GET** /api/v1/orgs/{owner}/models | List dashboards
-[**patchHubModel**](HubModelsV1Api.md#patchHubModel) | **PATCH** /api/v1/orgs/{owner}/models/{model.uuid} | Patch dashboard
-[**updateHubModel**](HubModelsV1Api.md#updateHubModel) | **PUT** /api/v1/orgs/{owner}/models/{model.uuid} | Update dashboard
+[**hubModelsV1CreateHubModel**](HubModelsV1Api.md#hubModelsV1CreateHubModel) | **POST** /api/v1/orgs/{owner}/models | Create dashboard
+[**hubModelsV1DeleteHubModel**](HubModelsV1Api.md#hubModelsV1DeleteHubModel) | **DELETE** /api/v1/orgs/{owner}/models/{uuid} | Delete dashboard
+[**hubModelsV1GetHubModel**](HubModelsV1Api.md#hubModelsV1GetHubModel) | **GET** /api/v1/orgs/{owner}/models/{uuid} | Get dashboard
+[**hubModelsV1ListHubModelNames**](HubModelsV1Api.md#hubModelsV1ListHubModelNames) | **GET** /api/v1/orgs/{owner}/models/names | List dashboard names
+[**hubModelsV1ListHubModels**](HubModelsV1Api.md#hubModelsV1ListHubModels) | **GET** /api/v1/orgs/{owner}/models | List dashboards
+[**hubModelsV1PatchHubModel**](HubModelsV1Api.md#hubModelsV1PatchHubModel) | **PATCH** /api/v1/orgs/{owner}/models/{model.uuid} | Patch dashboard
+[**hubModelsV1UpdateHubModel**](HubModelsV1Api.md#hubModelsV1UpdateHubModel) | **PUT** /api/v1/orgs/{owner}/models/{model.uuid} | Update dashboard
 
 
-<a name="createHubModel"></a>
-# **createHubModel**
-> V1HubModel createHubModel(owner, body)
+<a name="hubModelsV1CreateHubModel"></a>
+# **hubModelsV1CreateHubModel**
+> V1HubModel hubModelsV1CreateHubModel(owner, body)
 
 Create dashboard
 
@@ -40,10 +40,10 @@ HubModelsV1Api apiInstance = new HubModelsV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
 V1HubModel body = new V1HubModel(); // V1HubModel | Model body
 try {
-    V1HubModel result = apiInstance.createHubModel(owner, body);
+    V1HubModel result = apiInstance.hubModelsV1CreateHubModel(owner, body);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling HubModelsV1Api#createHubModel");
+    System.err.println("Exception when calling HubModelsV1Api#hubModelsV1CreateHubModel");
     e.printStackTrace();
 }
 ```
@@ -68,9 +68,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="deleteHubModel"></a>
-# **deleteHubModel**
-> deleteHubModel(owner, uuid)
+<a name="hubModelsV1DeleteHubModel"></a>
+# **hubModelsV1DeleteHubModel**
+> hubModelsV1DeleteHubModel(owner, uuid)
 
 Delete dashboard
 
@@ -95,9 +95,9 @@ HubModelsV1Api apiInstance = new HubModelsV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
 String uuid = "uuid_example"; // String | Uuid identifier of the entity
 try {
-    apiInstance.deleteHubModel(owner, uuid);
+    apiInstance.hubModelsV1DeleteHubModel(owner, uuid);
 } catch (ApiException e) {
-    System.err.println("Exception when calling HubModelsV1Api#deleteHubModel");
+    System.err.println("Exception when calling HubModelsV1Api#hubModelsV1DeleteHubModel");
     e.printStackTrace();
 }
 ```
@@ -122,9 +122,9 @@ null (empty response body)
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="getHubModel"></a>
-# **getHubModel**
-> V1HubModel getHubModel(owner, uuid)
+<a name="hubModelsV1GetHubModel"></a>
+# **hubModelsV1GetHubModel**
+> V1HubModel hubModelsV1GetHubModel(owner, uuid)
 
 Get dashboard
 
@@ -149,10 +149,10 @@ HubModelsV1Api apiInstance = new HubModelsV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
 String uuid = "uuid_example"; // String | Uuid identifier of the entity
 try {
-    V1HubModel result = apiInstance.getHubModel(owner, uuid);
+    V1HubModel result = apiInstance.hubModelsV1GetHubModel(owner, uuid);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling HubModelsV1Api#getHubModel");
+    System.err.println("Exception when calling HubModelsV1Api#hubModelsV1GetHubModel");
     e.printStackTrace();
 }
 ```
@@ -177,9 +177,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="listHubModelNames"></a>
-# **listHubModelNames**
-> V1ListHubModelsResponse listHubModelNames(owner, offset, limit, sort, query)
+<a name="hubModelsV1ListHubModelNames"></a>
+# **hubModelsV1ListHubModelNames**
+> V1ListHubModelsResponse hubModelsV1ListHubModelNames(owner, offset, limit, sort, query)
 
 List dashboard names
 
@@ -207,10 +207,10 @@ Integer limit = 56; // Integer | Limit size.
 String sort = "sort_example"; // String | Sort to order the search.
 String query = "query_example"; // String | Query filter the search search.
 try {
-    V1ListHubModelsResponse result = apiInstance.listHubModelNames(owner, offset, limit, sort, query);
+    V1ListHubModelsResponse result = apiInstance.hubModelsV1ListHubModelNames(owner, offset, limit, sort, query);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling HubModelsV1Api#listHubModelNames");
+    System.err.println("Exception when calling HubModelsV1Api#hubModelsV1ListHubModelNames");
     e.printStackTrace();
 }
 ```
@@ -238,9 +238,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="listHubModels"></a>
-# **listHubModels**
-> V1ListHubModelsResponse listHubModels(owner, offset, limit, sort, query)
+<a name="hubModelsV1ListHubModels"></a>
+# **hubModelsV1ListHubModels**
+> V1ListHubModelsResponse hubModelsV1ListHubModels(owner, offset, limit, sort, query)
 
 List dashboards
 
@@ -268,10 +268,10 @@ Integer limit = 56; // Integer | Limit size.
 String sort = "sort_example"; // String | Sort to order the search.
 String query = "query_example"; // String | Query filter the search search.
 try {
-    V1ListHubModelsResponse result = apiInstance.listHubModels(owner, offset, limit, sort, query);
+    V1ListHubModelsResponse result = apiInstance.hubModelsV1ListHubModels(owner, offset, limit, sort, query);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling HubModelsV1Api#listHubModels");
+    System.err.println("Exception when calling HubModelsV1Api#hubModelsV1ListHubModels");
     e.printStackTrace();
 }
 ```
@@ -299,9 +299,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="patchHubModel"></a>
-# **patchHubModel**
-> V1HubModel patchHubModel(owner, modelUuid, body)
+<a name="hubModelsV1PatchHubModel"></a>
+# **hubModelsV1PatchHubModel**
+> V1HubModel hubModelsV1PatchHubModel(owner, modelUuid, body)
 
 Patch dashboard
 
@@ -327,10 +327,10 @@ String owner = "owner_example"; // String | Owner of the namespace
 String modelUuid = "modelUuid_example"; // String | UUID
 V1HubModel body = new V1HubModel(); // V1HubModel | Model body
 try {
-    V1HubModel result = apiInstance.patchHubModel(owner, modelUuid, body);
+    V1HubModel result = apiInstance.hubModelsV1PatchHubModel(owner, modelUuid, body);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling HubModelsV1Api#patchHubModel");
+    System.err.println("Exception when calling HubModelsV1Api#hubModelsV1PatchHubModel");
     e.printStackTrace();
 }
 ```
@@ -356,9 +356,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="updateHubModel"></a>
-# **updateHubModel**
-> V1HubModel updateHubModel(owner, modelUuid, body)
+<a name="hubModelsV1UpdateHubModel"></a>
+# **hubModelsV1UpdateHubModel**
+> V1HubModel hubModelsV1UpdateHubModel(owner, modelUuid, body)
 
 Update dashboard
 
@@ -384,10 +384,10 @@ String owner = "owner_example"; // String | Owner of the namespace
 String modelUuid = "modelUuid_example"; // String | UUID
 V1HubModel body = new V1HubModel(); // V1HubModel | Model body
 try {
-    V1HubModel result = apiInstance.updateHubModel(owner, modelUuid, body);
+    V1HubModel result = apiInstance.hubModelsV1UpdateHubModel(owner, modelUuid, body);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling HubModelsV1Api#updateHubModel");
+    System.err.println("Exception when calling HubModelsV1Api#hubModelsV1UpdateHubModel");
     e.printStackTrace();
 }
 ```

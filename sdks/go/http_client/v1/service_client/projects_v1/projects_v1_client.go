@@ -41,47 +41,47 @@ type Client struct {
 
 // ClientService is the interface for Client methods
 type ClientService interface {
-	ArchiveProject(params *ArchiveProjectParams, authInfo runtime.ClientAuthInfoWriter) (*ArchiveProjectOK, *ArchiveProjectNoContent, error)
+	ProjectsV1ArchiveProject(params *ProjectsV1ArchiveProjectParams, authInfo runtime.ClientAuthInfoWriter) (*ProjectsV1ArchiveProjectOK, *ProjectsV1ArchiveProjectNoContent, error)
 
-	BookmarkProject(params *BookmarkProjectParams, authInfo runtime.ClientAuthInfoWriter) (*BookmarkProjectOK, *BookmarkProjectNoContent, error)
+	ProjectsV1BookmarkProject(params *ProjectsV1BookmarkProjectParams, authInfo runtime.ClientAuthInfoWriter) (*ProjectsV1BookmarkProjectOK, *ProjectsV1BookmarkProjectNoContent, error)
 
-	CreateProject(params *CreateProjectParams, authInfo runtime.ClientAuthInfoWriter) (*CreateProjectOK, *CreateProjectNoContent, error)
+	ProjectsV1CreateProject(params *ProjectsV1CreateProjectParams, authInfo runtime.ClientAuthInfoWriter) (*ProjectsV1CreateProjectOK, *ProjectsV1CreateProjectNoContent, error)
 
-	DeleteProject(params *DeleteProjectParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteProjectOK, *DeleteProjectNoContent, error)
+	ProjectsV1DeleteProject(params *ProjectsV1DeleteProjectParams, authInfo runtime.ClientAuthInfoWriter) (*ProjectsV1DeleteProjectOK, *ProjectsV1DeleteProjectNoContent, error)
 
-	DisableProjectCI(params *DisableProjectCIParams, authInfo runtime.ClientAuthInfoWriter) (*DisableProjectCIOK, *DisableProjectCINoContent, error)
+	ProjectsV1DisableProjectCI(params *ProjectsV1DisableProjectCIParams, authInfo runtime.ClientAuthInfoWriter) (*ProjectsV1DisableProjectCIOK, *ProjectsV1DisableProjectCINoContent, error)
 
-	EnableProjectCI(params *EnableProjectCIParams, authInfo runtime.ClientAuthInfoWriter) (*EnableProjectCIOK, *EnableProjectCINoContent, error)
+	ProjectsV1EnableProjectCI(params *ProjectsV1EnableProjectCIParams, authInfo runtime.ClientAuthInfoWriter) (*ProjectsV1EnableProjectCIOK, *ProjectsV1EnableProjectCINoContent, error)
 
-	FetchProjectTeams(params *FetchProjectTeamsParams, authInfo runtime.ClientAuthInfoWriter) (*FetchProjectTeamsOK, *FetchProjectTeamsNoContent, error)
+	ProjectsV1FetchProjectTeams(params *ProjectsV1FetchProjectTeamsParams, authInfo runtime.ClientAuthInfoWriter) (*ProjectsV1FetchProjectTeamsOK, *ProjectsV1FetchProjectTeamsNoContent, error)
 
-	GetProject(params *GetProjectParams, authInfo runtime.ClientAuthInfoWriter) (*GetProjectOK, *GetProjectNoContent, error)
+	ProjectsV1GetProject(params *ProjectsV1GetProjectParams, authInfo runtime.ClientAuthInfoWriter) (*ProjectsV1GetProjectOK, *ProjectsV1GetProjectNoContent, error)
 
-	GetProjectSettings(params *GetProjectSettingsParams, authInfo runtime.ClientAuthInfoWriter) (*GetProjectSettingsOK, *GetProjectSettingsNoContent, error)
+	ProjectsV1GetProjectSettings(params *ProjectsV1GetProjectSettingsParams, authInfo runtime.ClientAuthInfoWriter) (*ProjectsV1GetProjectSettingsOK, *ProjectsV1GetProjectSettingsNoContent, error)
 
-	ListArchivedProjects(params *ListArchivedProjectsParams, authInfo runtime.ClientAuthInfoWriter) (*ListArchivedProjectsOK, *ListArchivedProjectsNoContent, error)
+	ProjectsV1ListArchivedProjects(params *ProjectsV1ListArchivedProjectsParams, authInfo runtime.ClientAuthInfoWriter) (*ProjectsV1ListArchivedProjectsOK, *ProjectsV1ListArchivedProjectsNoContent, error)
 
-	ListBookmarkedProjects(params *ListBookmarkedProjectsParams, authInfo runtime.ClientAuthInfoWriter) (*ListBookmarkedProjectsOK, *ListBookmarkedProjectsNoContent, error)
+	ProjectsV1ListBookmarkedProjects(params *ProjectsV1ListBookmarkedProjectsParams, authInfo runtime.ClientAuthInfoWriter) (*ProjectsV1ListBookmarkedProjectsOK, *ProjectsV1ListBookmarkedProjectsNoContent, error)
 
-	ListProjectNames(params *ListProjectNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListProjectNamesOK, *ListProjectNamesNoContent, error)
+	ProjectsV1ListProjectNames(params *ProjectsV1ListProjectNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ProjectsV1ListProjectNamesOK, *ProjectsV1ListProjectNamesNoContent, error)
 
-	ListProjects(params *ListProjectsParams, authInfo runtime.ClientAuthInfoWriter) (*ListProjectsOK, *ListProjectsNoContent, error)
+	ProjectsV1ListProjects(params *ProjectsV1ListProjectsParams, authInfo runtime.ClientAuthInfoWriter) (*ProjectsV1ListProjectsOK, *ProjectsV1ListProjectsNoContent, error)
 
-	PatchProject(params *PatchProjectParams, authInfo runtime.ClientAuthInfoWriter) (*PatchProjectOK, *PatchProjectNoContent, error)
+	ProjectsV1PatchProject(params *ProjectsV1PatchProjectParams, authInfo runtime.ClientAuthInfoWriter) (*ProjectsV1PatchProjectOK, *ProjectsV1PatchProjectNoContent, error)
 
-	PatchProjectSettings(params *PatchProjectSettingsParams, authInfo runtime.ClientAuthInfoWriter) (*PatchProjectSettingsOK, *PatchProjectSettingsNoContent, error)
+	ProjectsV1PatchProjectSettings(params *ProjectsV1PatchProjectSettingsParams, authInfo runtime.ClientAuthInfoWriter) (*ProjectsV1PatchProjectSettingsOK, *ProjectsV1PatchProjectSettingsNoContent, error)
 
-	PatchProjectTeams(params *PatchProjectTeamsParams, authInfo runtime.ClientAuthInfoWriter) (*PatchProjectTeamsOK, *PatchProjectTeamsNoContent, error)
+	ProjectsV1PatchProjectTeams(params *ProjectsV1PatchProjectTeamsParams, authInfo runtime.ClientAuthInfoWriter) (*ProjectsV1PatchProjectTeamsOK, *ProjectsV1PatchProjectTeamsNoContent, error)
 
-	RestoreProject(params *RestoreProjectParams, authInfo runtime.ClientAuthInfoWriter) (*RestoreProjectOK, *RestoreProjectNoContent, error)
+	ProjectsV1RestoreProject(params *ProjectsV1RestoreProjectParams, authInfo runtime.ClientAuthInfoWriter) (*ProjectsV1RestoreProjectOK, *ProjectsV1RestoreProjectNoContent, error)
 
-	UnbookmarkProject(params *UnbookmarkProjectParams, authInfo runtime.ClientAuthInfoWriter) (*UnbookmarkProjectOK, *UnbookmarkProjectNoContent, error)
+	ProjectsV1UnbookmarkProject(params *ProjectsV1UnbookmarkProjectParams, authInfo runtime.ClientAuthInfoWriter) (*ProjectsV1UnbookmarkProjectOK, *ProjectsV1UnbookmarkProjectNoContent, error)
 
-	UpdateProject(params *UpdateProjectParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateProjectOK, *UpdateProjectNoContent, error)
+	ProjectsV1UpdateProject(params *ProjectsV1UpdateProjectParams, authInfo runtime.ClientAuthInfoWriter) (*ProjectsV1UpdateProjectOK, *ProjectsV1UpdateProjectNoContent, error)
 
-	UpdateProjectSettings(params *UpdateProjectSettingsParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateProjectSettingsOK, *UpdateProjectSettingsNoContent, error)
+	ProjectsV1UpdateProjectSettings(params *ProjectsV1UpdateProjectSettingsParams, authInfo runtime.ClientAuthInfoWriter) (*ProjectsV1UpdateProjectSettingsOK, *ProjectsV1UpdateProjectSettingsNoContent, error)
 
-	UpdateProjectTeams(params *UpdateProjectTeamsParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateProjectTeamsOK, *UpdateProjectTeamsNoContent, error)
+	ProjectsV1UpdateProjectTeams(params *ProjectsV1UpdateProjectTeamsParams, authInfo runtime.ClientAuthInfoWriter) (*ProjectsV1UpdateProjectTeamsOK, *ProjectsV1UpdateProjectTeamsNoContent, error)
 
 	UploadProjectArtifact(params *UploadProjectArtifactParams, authInfo runtime.ClientAuthInfoWriter) (*UploadProjectArtifactOK, *UploadProjectArtifactNoContent, error)
 
@@ -89,23 +89,23 @@ type ClientService interface {
 }
 
 /*
-  ArchiveProject archives project
+  ProjectsV1ArchiveProject archives project
 */
-func (a *Client) ArchiveProject(params *ArchiveProjectParams, authInfo runtime.ClientAuthInfoWriter) (*ArchiveProjectOK, *ArchiveProjectNoContent, error) {
+func (a *Client) ProjectsV1ArchiveProject(params *ProjectsV1ArchiveProjectParams, authInfo runtime.ClientAuthInfoWriter) (*ProjectsV1ArchiveProjectOK, *ProjectsV1ArchiveProjectNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewArchiveProjectParams()
+		params = NewProjectsV1ArchiveProjectParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "ArchiveProject",
+		ID:                 "ProjectsV1_ArchiveProject",
 		Method:             "POST",
 		PathPattern:        "/api/v1/{owner}/{project}/archive",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &ArchiveProjectReader{formats: a.formats},
+		Reader:             &ProjectsV1ArchiveProjectReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -114,34 +114,34 @@ func (a *Client) ArchiveProject(params *ArchiveProjectParams, authInfo runtime.C
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *ArchiveProjectOK:
+	case *ProjectsV1ArchiveProjectOK:
 		return value, nil, nil
-	case *ArchiveProjectNoContent:
+	case *ProjectsV1ArchiveProjectNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*ArchiveProjectDefault)
+	unexpectedSuccess := result.(*ProjectsV1ArchiveProjectDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  BookmarkProject bookmarks project
+  ProjectsV1BookmarkProject bookmarks project
 */
-func (a *Client) BookmarkProject(params *BookmarkProjectParams, authInfo runtime.ClientAuthInfoWriter) (*BookmarkProjectOK, *BookmarkProjectNoContent, error) {
+func (a *Client) ProjectsV1BookmarkProject(params *ProjectsV1BookmarkProjectParams, authInfo runtime.ClientAuthInfoWriter) (*ProjectsV1BookmarkProjectOK, *ProjectsV1BookmarkProjectNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewBookmarkProjectParams()
+		params = NewProjectsV1BookmarkProjectParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "BookmarkProject",
+		ID:                 "ProjectsV1_BookmarkProject",
 		Method:             "POST",
 		PathPattern:        "/api/v1/{owner}/{project}/bookmark",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &BookmarkProjectReader{formats: a.formats},
+		Reader:             &ProjectsV1BookmarkProjectReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -150,34 +150,34 @@ func (a *Client) BookmarkProject(params *BookmarkProjectParams, authInfo runtime
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *BookmarkProjectOK:
+	case *ProjectsV1BookmarkProjectOK:
 		return value, nil, nil
-	case *BookmarkProjectNoContent:
+	case *ProjectsV1BookmarkProjectNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*BookmarkProjectDefault)
+	unexpectedSuccess := result.(*ProjectsV1BookmarkProjectDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  CreateProject creates new project
+  ProjectsV1CreateProject creates new project
 */
-func (a *Client) CreateProject(params *CreateProjectParams, authInfo runtime.ClientAuthInfoWriter) (*CreateProjectOK, *CreateProjectNoContent, error) {
+func (a *Client) ProjectsV1CreateProject(params *ProjectsV1CreateProjectParams, authInfo runtime.ClientAuthInfoWriter) (*ProjectsV1CreateProjectOK, *ProjectsV1CreateProjectNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewCreateProjectParams()
+		params = NewProjectsV1CreateProjectParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "CreateProject",
+		ID:                 "ProjectsV1_CreateProject",
 		Method:             "POST",
 		PathPattern:        "/api/v1/{owner}/projects/create",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &CreateProjectReader{formats: a.formats},
+		Reader:             &ProjectsV1CreateProjectReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -186,34 +186,34 @@ func (a *Client) CreateProject(params *CreateProjectParams, authInfo runtime.Cli
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *CreateProjectOK:
+	case *ProjectsV1CreateProjectOK:
 		return value, nil, nil
-	case *CreateProjectNoContent:
+	case *ProjectsV1CreateProjectNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*CreateProjectDefault)
+	unexpectedSuccess := result.(*ProjectsV1CreateProjectDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  DeleteProject deletes project
+  ProjectsV1DeleteProject deletes project
 */
-func (a *Client) DeleteProject(params *DeleteProjectParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteProjectOK, *DeleteProjectNoContent, error) {
+func (a *Client) ProjectsV1DeleteProject(params *ProjectsV1DeleteProjectParams, authInfo runtime.ClientAuthInfoWriter) (*ProjectsV1DeleteProjectOK, *ProjectsV1DeleteProjectNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewDeleteProjectParams()
+		params = NewProjectsV1DeleteProjectParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "DeleteProject",
+		ID:                 "ProjectsV1_DeleteProject",
 		Method:             "DELETE",
 		PathPattern:        "/api/v1/{owner}/{project}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &DeleteProjectReader{formats: a.formats},
+		Reader:             &ProjectsV1DeleteProjectReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -222,34 +222,34 @@ func (a *Client) DeleteProject(params *DeleteProjectParams, authInfo runtime.Cli
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *DeleteProjectOK:
+	case *ProjectsV1DeleteProjectOK:
 		return value, nil, nil
-	case *DeleteProjectNoContent:
+	case *ProjectsV1DeleteProjectNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*DeleteProjectDefault)
+	unexpectedSuccess := result.(*ProjectsV1DeleteProjectDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  DisableProjectCI disbales project c i
+  ProjectsV1DisableProjectCI disbales project c i
 */
-func (a *Client) DisableProjectCI(params *DisableProjectCIParams, authInfo runtime.ClientAuthInfoWriter) (*DisableProjectCIOK, *DisableProjectCINoContent, error) {
+func (a *Client) ProjectsV1DisableProjectCI(params *ProjectsV1DisableProjectCIParams, authInfo runtime.ClientAuthInfoWriter) (*ProjectsV1DisableProjectCIOK, *ProjectsV1DisableProjectCINoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewDisableProjectCIParams()
+		params = NewProjectsV1DisableProjectCIParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "DisableProjectCI",
+		ID:                 "ProjectsV1_DisableProjectCI",
 		Method:             "DELETE",
 		PathPattern:        "/api/v1/{owner}/{project}/ci",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &DisableProjectCIReader{formats: a.formats},
+		Reader:             &ProjectsV1DisableProjectCIReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -258,34 +258,34 @@ func (a *Client) DisableProjectCI(params *DisableProjectCIParams, authInfo runti
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *DisableProjectCIOK:
+	case *ProjectsV1DisableProjectCIOK:
 		return value, nil, nil
-	case *DisableProjectCINoContent:
+	case *ProjectsV1DisableProjectCINoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*DisableProjectCIDefault)
+	unexpectedSuccess := result.(*ProjectsV1DisableProjectCIDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  EnableProjectCI enables project c i
+  ProjectsV1EnableProjectCI enables project c i
 */
-func (a *Client) EnableProjectCI(params *EnableProjectCIParams, authInfo runtime.ClientAuthInfoWriter) (*EnableProjectCIOK, *EnableProjectCINoContent, error) {
+func (a *Client) ProjectsV1EnableProjectCI(params *ProjectsV1EnableProjectCIParams, authInfo runtime.ClientAuthInfoWriter) (*ProjectsV1EnableProjectCIOK, *ProjectsV1EnableProjectCINoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewEnableProjectCIParams()
+		params = NewProjectsV1EnableProjectCIParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "EnableProjectCI",
+		ID:                 "ProjectsV1_EnableProjectCI",
 		Method:             "POST",
 		PathPattern:        "/api/v1/{owner}/{project}/ci",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &EnableProjectCIReader{formats: a.formats},
+		Reader:             &ProjectsV1EnableProjectCIReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -294,34 +294,34 @@ func (a *Client) EnableProjectCI(params *EnableProjectCIParams, authInfo runtime
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *EnableProjectCIOK:
+	case *ProjectsV1EnableProjectCIOK:
 		return value, nil, nil
-	case *EnableProjectCINoContent:
+	case *ProjectsV1EnableProjectCINoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*EnableProjectCIDefault)
+	unexpectedSuccess := result.(*ProjectsV1EnableProjectCIDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  FetchProjectTeams gets project teams
+  ProjectsV1FetchProjectTeams gets project teams
 */
-func (a *Client) FetchProjectTeams(params *FetchProjectTeamsParams, authInfo runtime.ClientAuthInfoWriter) (*FetchProjectTeamsOK, *FetchProjectTeamsNoContent, error) {
+func (a *Client) ProjectsV1FetchProjectTeams(params *ProjectsV1FetchProjectTeamsParams, authInfo runtime.ClientAuthInfoWriter) (*ProjectsV1FetchProjectTeamsOK, *ProjectsV1FetchProjectTeamsNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewFetchProjectTeamsParams()
+		params = NewProjectsV1FetchProjectTeamsParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "FetchProjectTeams",
+		ID:                 "ProjectsV1_FetchProjectTeams",
 		Method:             "GET",
 		PathPattern:        "/api/v1/{owner}/{project}/teams",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &FetchProjectTeamsReader{formats: a.formats},
+		Reader:             &ProjectsV1FetchProjectTeamsReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -330,34 +330,34 @@ func (a *Client) FetchProjectTeams(params *FetchProjectTeamsParams, authInfo run
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *FetchProjectTeamsOK:
+	case *ProjectsV1FetchProjectTeamsOK:
 		return value, nil, nil
-	case *FetchProjectTeamsNoContent:
+	case *ProjectsV1FetchProjectTeamsNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*FetchProjectTeamsDefault)
+	unexpectedSuccess := result.(*ProjectsV1FetchProjectTeamsDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  GetProject gets project
+  ProjectsV1GetProject gets project
 */
-func (a *Client) GetProject(params *GetProjectParams, authInfo runtime.ClientAuthInfoWriter) (*GetProjectOK, *GetProjectNoContent, error) {
+func (a *Client) ProjectsV1GetProject(params *ProjectsV1GetProjectParams, authInfo runtime.ClientAuthInfoWriter) (*ProjectsV1GetProjectOK, *ProjectsV1GetProjectNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewGetProjectParams()
+		params = NewProjectsV1GetProjectParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "GetProject",
+		ID:                 "ProjectsV1_GetProject",
 		Method:             "GET",
 		PathPattern:        "/api/v1/{owner}/{project}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &GetProjectReader{formats: a.formats},
+		Reader:             &ProjectsV1GetProjectReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -366,34 +366,34 @@ func (a *Client) GetProject(params *GetProjectParams, authInfo runtime.ClientAut
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *GetProjectOK:
+	case *ProjectsV1GetProjectOK:
 		return value, nil, nil
-	case *GetProjectNoContent:
+	case *ProjectsV1GetProjectNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*GetProjectDefault)
+	unexpectedSuccess := result.(*ProjectsV1GetProjectDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  GetProjectSettings gets project settings
+  ProjectsV1GetProjectSettings gets project settings
 */
-func (a *Client) GetProjectSettings(params *GetProjectSettingsParams, authInfo runtime.ClientAuthInfoWriter) (*GetProjectSettingsOK, *GetProjectSettingsNoContent, error) {
+func (a *Client) ProjectsV1GetProjectSettings(params *ProjectsV1GetProjectSettingsParams, authInfo runtime.ClientAuthInfoWriter) (*ProjectsV1GetProjectSettingsOK, *ProjectsV1GetProjectSettingsNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewGetProjectSettingsParams()
+		params = NewProjectsV1GetProjectSettingsParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "GetProjectSettings",
+		ID:                 "ProjectsV1_GetProjectSettings",
 		Method:             "GET",
 		PathPattern:        "/api/v1/{owner}/{project}/settings",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &GetProjectSettingsReader{formats: a.formats},
+		Reader:             &ProjectsV1GetProjectSettingsReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -402,34 +402,34 @@ func (a *Client) GetProjectSettings(params *GetProjectSettingsParams, authInfo r
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *GetProjectSettingsOK:
+	case *ProjectsV1GetProjectSettingsOK:
 		return value, nil, nil
-	case *GetProjectSettingsNoContent:
+	case *ProjectsV1GetProjectSettingsNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*GetProjectSettingsDefault)
+	unexpectedSuccess := result.(*ProjectsV1GetProjectSettingsDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  ListArchivedProjects lists archived projects for user
+  ProjectsV1ListArchivedProjects lists archived projects for user
 */
-func (a *Client) ListArchivedProjects(params *ListArchivedProjectsParams, authInfo runtime.ClientAuthInfoWriter) (*ListArchivedProjectsOK, *ListArchivedProjectsNoContent, error) {
+func (a *Client) ProjectsV1ListArchivedProjects(params *ProjectsV1ListArchivedProjectsParams, authInfo runtime.ClientAuthInfoWriter) (*ProjectsV1ListArchivedProjectsOK, *ProjectsV1ListArchivedProjectsNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewListArchivedProjectsParams()
+		params = NewProjectsV1ListArchivedProjectsParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "ListArchivedProjects",
+		ID:                 "ProjectsV1_ListArchivedProjects",
 		Method:             "GET",
 		PathPattern:        "/api/v1/archives/{user}/projects",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &ListArchivedProjectsReader{formats: a.formats},
+		Reader:             &ProjectsV1ListArchivedProjectsReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -438,34 +438,34 @@ func (a *Client) ListArchivedProjects(params *ListArchivedProjectsParams, authIn
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *ListArchivedProjectsOK:
+	case *ProjectsV1ListArchivedProjectsOK:
 		return value, nil, nil
-	case *ListArchivedProjectsNoContent:
+	case *ProjectsV1ListArchivedProjectsNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*ListArchivedProjectsDefault)
+	unexpectedSuccess := result.(*ProjectsV1ListArchivedProjectsDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  ListBookmarkedProjects lists bookmarked projects for user
+  ProjectsV1ListBookmarkedProjects lists bookmarked projects for user
 */
-func (a *Client) ListBookmarkedProjects(params *ListBookmarkedProjectsParams, authInfo runtime.ClientAuthInfoWriter) (*ListBookmarkedProjectsOK, *ListBookmarkedProjectsNoContent, error) {
+func (a *Client) ProjectsV1ListBookmarkedProjects(params *ProjectsV1ListBookmarkedProjectsParams, authInfo runtime.ClientAuthInfoWriter) (*ProjectsV1ListBookmarkedProjectsOK, *ProjectsV1ListBookmarkedProjectsNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewListBookmarkedProjectsParams()
+		params = NewProjectsV1ListBookmarkedProjectsParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "ListBookmarkedProjects",
+		ID:                 "ProjectsV1_ListBookmarkedProjects",
 		Method:             "GET",
 		PathPattern:        "/api/v1/bookmarks/{user}/projects",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &ListBookmarkedProjectsReader{formats: a.formats},
+		Reader:             &ProjectsV1ListBookmarkedProjectsReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -474,34 +474,34 @@ func (a *Client) ListBookmarkedProjects(params *ListBookmarkedProjectsParams, au
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *ListBookmarkedProjectsOK:
+	case *ProjectsV1ListBookmarkedProjectsOK:
 		return value, nil, nil
-	case *ListBookmarkedProjectsNoContent:
+	case *ProjectsV1ListBookmarkedProjectsNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*ListBookmarkedProjectsDefault)
+	unexpectedSuccess := result.(*ProjectsV1ListBookmarkedProjectsDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  ListProjectNames lists project names
+  ProjectsV1ListProjectNames lists project names
 */
-func (a *Client) ListProjectNames(params *ListProjectNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListProjectNamesOK, *ListProjectNamesNoContent, error) {
+func (a *Client) ProjectsV1ListProjectNames(params *ProjectsV1ListProjectNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ProjectsV1ListProjectNamesOK, *ProjectsV1ListProjectNamesNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewListProjectNamesParams()
+		params = NewProjectsV1ListProjectNamesParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "ListProjectNames",
+		ID:                 "ProjectsV1_ListProjectNames",
 		Method:             "GET",
 		PathPattern:        "/api/v1/{owner}/projects/names",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &ListProjectNamesReader{formats: a.formats},
+		Reader:             &ProjectsV1ListProjectNamesReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -510,34 +510,34 @@ func (a *Client) ListProjectNames(params *ListProjectNamesParams, authInfo runti
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *ListProjectNamesOK:
+	case *ProjectsV1ListProjectNamesOK:
 		return value, nil, nil
-	case *ListProjectNamesNoContent:
+	case *ProjectsV1ListProjectNamesNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*ListProjectNamesDefault)
+	unexpectedSuccess := result.(*ProjectsV1ListProjectNamesDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  ListProjects lists projects
+  ProjectsV1ListProjects lists projects
 */
-func (a *Client) ListProjects(params *ListProjectsParams, authInfo runtime.ClientAuthInfoWriter) (*ListProjectsOK, *ListProjectsNoContent, error) {
+func (a *Client) ProjectsV1ListProjects(params *ProjectsV1ListProjectsParams, authInfo runtime.ClientAuthInfoWriter) (*ProjectsV1ListProjectsOK, *ProjectsV1ListProjectsNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewListProjectsParams()
+		params = NewProjectsV1ListProjectsParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "ListProjects",
+		ID:                 "ProjectsV1_ListProjects",
 		Method:             "GET",
 		PathPattern:        "/api/v1/{owner}/projects/list",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &ListProjectsReader{formats: a.formats},
+		Reader:             &ProjectsV1ListProjectsReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -546,34 +546,34 @@ func (a *Client) ListProjects(params *ListProjectsParams, authInfo runtime.Clien
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *ListProjectsOK:
+	case *ProjectsV1ListProjectsOK:
 		return value, nil, nil
-	case *ListProjectsNoContent:
+	case *ProjectsV1ListProjectsNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*ListProjectsDefault)
+	unexpectedSuccess := result.(*ProjectsV1ListProjectsDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  PatchProject patches project
+  ProjectsV1PatchProject patches project
 */
-func (a *Client) PatchProject(params *PatchProjectParams, authInfo runtime.ClientAuthInfoWriter) (*PatchProjectOK, *PatchProjectNoContent, error) {
+func (a *Client) ProjectsV1PatchProject(params *ProjectsV1PatchProjectParams, authInfo runtime.ClientAuthInfoWriter) (*ProjectsV1PatchProjectOK, *ProjectsV1PatchProjectNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewPatchProjectParams()
+		params = NewProjectsV1PatchProjectParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "PatchProject",
+		ID:                 "ProjectsV1_PatchProject",
 		Method:             "PATCH",
 		PathPattern:        "/api/v1/{owner}/{project.name}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &PatchProjectReader{formats: a.formats},
+		Reader:             &ProjectsV1PatchProjectReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -582,34 +582,34 @@ func (a *Client) PatchProject(params *PatchProjectParams, authInfo runtime.Clien
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *PatchProjectOK:
+	case *ProjectsV1PatchProjectOK:
 		return value, nil, nil
-	case *PatchProjectNoContent:
+	case *ProjectsV1PatchProjectNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*PatchProjectDefault)
+	unexpectedSuccess := result.(*ProjectsV1PatchProjectDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  PatchProjectSettings patches project settings
+  ProjectsV1PatchProjectSettings patches project settings
 */
-func (a *Client) PatchProjectSettings(params *PatchProjectSettingsParams, authInfo runtime.ClientAuthInfoWriter) (*PatchProjectSettingsOK, *PatchProjectSettingsNoContent, error) {
+func (a *Client) ProjectsV1PatchProjectSettings(params *ProjectsV1PatchProjectSettingsParams, authInfo runtime.ClientAuthInfoWriter) (*ProjectsV1PatchProjectSettingsOK, *ProjectsV1PatchProjectSettingsNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewPatchProjectSettingsParams()
+		params = NewProjectsV1PatchProjectSettingsParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "PatchProjectSettings",
+		ID:                 "ProjectsV1_PatchProjectSettings",
 		Method:             "PATCH",
 		PathPattern:        "/api/v1/{owner}/{project}/settings",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &PatchProjectSettingsReader{formats: a.formats},
+		Reader:             &ProjectsV1PatchProjectSettingsReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -618,34 +618,34 @@ func (a *Client) PatchProjectSettings(params *PatchProjectSettingsParams, authIn
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *PatchProjectSettingsOK:
+	case *ProjectsV1PatchProjectSettingsOK:
 		return value, nil, nil
-	case *PatchProjectSettingsNoContent:
+	case *ProjectsV1PatchProjectSettingsNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*PatchProjectSettingsDefault)
+	unexpectedSuccess := result.(*ProjectsV1PatchProjectSettingsDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  PatchProjectTeams patches project teams
+  ProjectsV1PatchProjectTeams patches project teams
 */
-func (a *Client) PatchProjectTeams(params *PatchProjectTeamsParams, authInfo runtime.ClientAuthInfoWriter) (*PatchProjectTeamsOK, *PatchProjectTeamsNoContent, error) {
+func (a *Client) ProjectsV1PatchProjectTeams(params *ProjectsV1PatchProjectTeamsParams, authInfo runtime.ClientAuthInfoWriter) (*ProjectsV1PatchProjectTeamsOK, *ProjectsV1PatchProjectTeamsNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewPatchProjectTeamsParams()
+		params = NewProjectsV1PatchProjectTeamsParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "PatchProjectTeams",
+		ID:                 "ProjectsV1_PatchProjectTeams",
 		Method:             "PATCH",
 		PathPattern:        "/api/v1/{owner}/{project}/teams",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &PatchProjectTeamsReader{formats: a.formats},
+		Reader:             &ProjectsV1PatchProjectTeamsReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -654,34 +654,34 @@ func (a *Client) PatchProjectTeams(params *PatchProjectTeamsParams, authInfo run
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *PatchProjectTeamsOK:
+	case *ProjectsV1PatchProjectTeamsOK:
 		return value, nil, nil
-	case *PatchProjectTeamsNoContent:
+	case *ProjectsV1PatchProjectTeamsNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*PatchProjectTeamsDefault)
+	unexpectedSuccess := result.(*ProjectsV1PatchProjectTeamsDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  RestoreProject restores project
+  ProjectsV1RestoreProject restores project
 */
-func (a *Client) RestoreProject(params *RestoreProjectParams, authInfo runtime.ClientAuthInfoWriter) (*RestoreProjectOK, *RestoreProjectNoContent, error) {
+func (a *Client) ProjectsV1RestoreProject(params *ProjectsV1RestoreProjectParams, authInfo runtime.ClientAuthInfoWriter) (*ProjectsV1RestoreProjectOK, *ProjectsV1RestoreProjectNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewRestoreProjectParams()
+		params = NewProjectsV1RestoreProjectParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "RestoreProject",
+		ID:                 "ProjectsV1_RestoreProject",
 		Method:             "POST",
 		PathPattern:        "/api/v1/{owner}/{project}/restore",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &RestoreProjectReader{formats: a.formats},
+		Reader:             &ProjectsV1RestoreProjectReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -690,34 +690,34 @@ func (a *Client) RestoreProject(params *RestoreProjectParams, authInfo runtime.C
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *RestoreProjectOK:
+	case *ProjectsV1RestoreProjectOK:
 		return value, nil, nil
-	case *RestoreProjectNoContent:
+	case *ProjectsV1RestoreProjectNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*RestoreProjectDefault)
+	unexpectedSuccess := result.(*ProjectsV1RestoreProjectDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  UnbookmarkProject unbookmarks project
+  ProjectsV1UnbookmarkProject unbookmarks project
 */
-func (a *Client) UnbookmarkProject(params *UnbookmarkProjectParams, authInfo runtime.ClientAuthInfoWriter) (*UnbookmarkProjectOK, *UnbookmarkProjectNoContent, error) {
+func (a *Client) ProjectsV1UnbookmarkProject(params *ProjectsV1UnbookmarkProjectParams, authInfo runtime.ClientAuthInfoWriter) (*ProjectsV1UnbookmarkProjectOK, *ProjectsV1UnbookmarkProjectNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewUnbookmarkProjectParams()
+		params = NewProjectsV1UnbookmarkProjectParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "UnbookmarkProject",
+		ID:                 "ProjectsV1_UnbookmarkProject",
 		Method:             "DELETE",
 		PathPattern:        "/api/v1/{owner}/{project}/unbookmark",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &UnbookmarkProjectReader{formats: a.formats},
+		Reader:             &ProjectsV1UnbookmarkProjectReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -726,34 +726,34 @@ func (a *Client) UnbookmarkProject(params *UnbookmarkProjectParams, authInfo run
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *UnbookmarkProjectOK:
+	case *ProjectsV1UnbookmarkProjectOK:
 		return value, nil, nil
-	case *UnbookmarkProjectNoContent:
+	case *ProjectsV1UnbookmarkProjectNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*UnbookmarkProjectDefault)
+	unexpectedSuccess := result.(*ProjectsV1UnbookmarkProjectDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  UpdateProject updates project
+  ProjectsV1UpdateProject updates project
 */
-func (a *Client) UpdateProject(params *UpdateProjectParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateProjectOK, *UpdateProjectNoContent, error) {
+func (a *Client) ProjectsV1UpdateProject(params *ProjectsV1UpdateProjectParams, authInfo runtime.ClientAuthInfoWriter) (*ProjectsV1UpdateProjectOK, *ProjectsV1UpdateProjectNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewUpdateProjectParams()
+		params = NewProjectsV1UpdateProjectParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "UpdateProject",
+		ID:                 "ProjectsV1_UpdateProject",
 		Method:             "PUT",
 		PathPattern:        "/api/v1/{owner}/{project.name}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &UpdateProjectReader{formats: a.formats},
+		Reader:             &ProjectsV1UpdateProjectReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -762,34 +762,34 @@ func (a *Client) UpdateProject(params *UpdateProjectParams, authInfo runtime.Cli
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *UpdateProjectOK:
+	case *ProjectsV1UpdateProjectOK:
 		return value, nil, nil
-	case *UpdateProjectNoContent:
+	case *ProjectsV1UpdateProjectNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*UpdateProjectDefault)
+	unexpectedSuccess := result.(*ProjectsV1UpdateProjectDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  UpdateProjectSettings updates project settings
+  ProjectsV1UpdateProjectSettings updates project settings
 */
-func (a *Client) UpdateProjectSettings(params *UpdateProjectSettingsParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateProjectSettingsOK, *UpdateProjectSettingsNoContent, error) {
+func (a *Client) ProjectsV1UpdateProjectSettings(params *ProjectsV1UpdateProjectSettingsParams, authInfo runtime.ClientAuthInfoWriter) (*ProjectsV1UpdateProjectSettingsOK, *ProjectsV1UpdateProjectSettingsNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewUpdateProjectSettingsParams()
+		params = NewProjectsV1UpdateProjectSettingsParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "UpdateProjectSettings",
+		ID:                 "ProjectsV1_UpdateProjectSettings",
 		Method:             "PUT",
 		PathPattern:        "/api/v1/{owner}/{project}/settings",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &UpdateProjectSettingsReader{formats: a.formats},
+		Reader:             &ProjectsV1UpdateProjectSettingsReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -798,34 +798,34 @@ func (a *Client) UpdateProjectSettings(params *UpdateProjectSettingsParams, auth
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *UpdateProjectSettingsOK:
+	case *ProjectsV1UpdateProjectSettingsOK:
 		return value, nil, nil
-	case *UpdateProjectSettingsNoContent:
+	case *ProjectsV1UpdateProjectSettingsNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*UpdateProjectSettingsDefault)
+	unexpectedSuccess := result.(*ProjectsV1UpdateProjectSettingsDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  UpdateProjectTeams updates project teams
+  ProjectsV1UpdateProjectTeams updates project teams
 */
-func (a *Client) UpdateProjectTeams(params *UpdateProjectTeamsParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateProjectTeamsOK, *UpdateProjectTeamsNoContent, error) {
+func (a *Client) ProjectsV1UpdateProjectTeams(params *ProjectsV1UpdateProjectTeamsParams, authInfo runtime.ClientAuthInfoWriter) (*ProjectsV1UpdateProjectTeamsOK, *ProjectsV1UpdateProjectTeamsNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewUpdateProjectTeamsParams()
+		params = NewProjectsV1UpdateProjectTeamsParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "UpdateProjectTeams",
+		ID:                 "ProjectsV1_UpdateProjectTeams",
 		Method:             "PUT",
 		PathPattern:        "/api/v1/{owner}/{project}/teams",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &UpdateProjectTeamsReader{formats: a.formats},
+		Reader:             &ProjectsV1UpdateProjectTeamsReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -834,13 +834,13 @@ func (a *Client) UpdateProjectTeams(params *UpdateProjectTeamsParams, authInfo r
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *UpdateProjectTeamsOK:
+	case *ProjectsV1UpdateProjectTeamsOK:
 		return value, nil, nil
-	case *UpdateProjectTeamsNoContent:
+	case *ProjectsV1UpdateProjectTeamsNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*UpdateProjectTeamsDefault)
+	unexpectedSuccess := result.(*ProjectsV1UpdateProjectTeamsDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 

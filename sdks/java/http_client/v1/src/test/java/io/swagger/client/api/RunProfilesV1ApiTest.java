@@ -57,10 +57,10 @@ public class RunProfilesV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void createRunProfileTest() throws ApiException {
+    public void runProfilesV1CreateRunProfileTest() throws ApiException {
         String owner = null;
         V1RunProfile body = null;
-        V1RunProfile response = api.createRunProfile(owner, body);
+        V1RunProfile response = api.runProfilesV1CreateRunProfile(owner, body);
 
         // TODO: test validations
     }
@@ -74,10 +74,10 @@ public class RunProfilesV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void deleteRunProfileTest() throws ApiException {
+    public void runProfilesV1DeleteRunProfileTest() throws ApiException {
         String owner = null;
         String uuid = null;
-        api.deleteRunProfile(owner, uuid);
+        api.runProfilesV1DeleteRunProfile(owner, uuid);
 
         // TODO: test validations
     }
@@ -91,10 +91,10 @@ public class RunProfilesV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void getRunProfileTest() throws ApiException {
+    public void runProfilesV1GetRunProfileTest() throws ApiException {
         String owner = null;
         String uuid = null;
-        V1RunProfile response = api.getRunProfile(owner, uuid);
+        V1RunProfile response = api.runProfilesV1GetRunProfile(owner, uuid);
 
         // TODO: test validations
     }
@@ -108,13 +108,13 @@ public class RunProfilesV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void listRunProfileNamesTest() throws ApiException {
+    public void runProfilesV1ListRunProfileNamesTest() throws ApiException {
         String owner = null;
         Integer offset = null;
         Integer limit = null;
         String sort = null;
         String query = null;
-        V1ListRunProfilesResponse response = api.listRunProfileNames(owner, offset, limit, sort, query);
+        V1ListRunProfilesResponse response = api.runProfilesV1ListRunProfileNames(owner, offset, limit, sort, query);
 
         // TODO: test validations
     }
@@ -128,13 +128,13 @@ public class RunProfilesV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void listRunProfilesTest() throws ApiException {
+    public void runProfilesV1ListRunProfilesTest() throws ApiException {
         String owner = null;
         Integer offset = null;
         Integer limit = null;
         String sort = null;
         String query = null;
-        V1ListRunProfilesResponse response = api.listRunProfiles(owner, offset, limit, sort, query);
+        V1ListRunProfilesResponse response = api.runProfilesV1ListRunProfiles(owner, offset, limit, sort, query);
 
         // TODO: test validations
     }
@@ -148,11 +148,11 @@ public class RunProfilesV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void patchRunProfileTest() throws ApiException {
+    public void runProfilesV1PatchRunProfileTest() throws ApiException {
         String owner = null;
         String runProfileUuid = null;
         V1RunProfile body = null;
-        V1RunProfile response = api.patchRunProfile(owner, runProfileUuid, body);
+        V1RunProfile response = api.runProfilesV1PatchRunProfile(owner, runProfileUuid, body);
 
         // TODO: test validations
     }
@@ -166,11 +166,11 @@ public class RunProfilesV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void updateRunProfileTest() throws ApiException {
+    public void runProfilesV1UpdateRunProfileTest() throws ApiException {
         String owner = null;
         String runProfileUuid = null;
         V1RunProfile body = null;
-        V1RunProfile response = api.updateRunProfile(owner, runProfileUuid, body);
+        V1RunProfile response = api.runProfilesV1UpdateRunProfile(owner, runProfileUuid, body);
 
         // TODO: test validations
     }

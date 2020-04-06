@@ -63,8 +63,8 @@
 
 
     /**
-     * Callback function to receive the result of the archiveProject operation.
-     * @callback module:api/ProjectsV1Api~archiveProjectCallback
+     * Callback function to receive the result of the projectsV1ArchiveProject operation.
+     * @callback module:api/ProjectsV1Api~projectsV1ArchiveProjectCallback
      * @param {String} error Error message, if any.
      * @param data This operation does not return a value.
      * @param {String} response The complete HTTP response.
@@ -74,19 +74,19 @@
      * Archive project
      * @param {String} owner Owner of the namespace
      * @param {String} project Project under namesapce
-     * @param {module:api/ProjectsV1Api~archiveProjectCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/ProjectsV1Api~projectsV1ArchiveProjectCallback} callback The callback function, accepting three arguments: error, data, response
      */
-    this.archiveProject = function(owner, project, callback) {
+    this.projectsV1ArchiveProject = function(owner, project, callback) {
       var postBody = null;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling archiveProject");
+        throw new Error("Missing the required parameter 'owner' when calling projectsV1ArchiveProject");
       }
 
       // verify the required parameter 'project' is set
       if (project === undefined || project === null) {
-        throw new Error("Missing the required parameter 'project' when calling archiveProject");
+        throw new Error("Missing the required parameter 'project' when calling projectsV1ArchiveProject");
       }
 
 
@@ -116,8 +116,8 @@
     }
 
     /**
-     * Callback function to receive the result of the bookmarkProject operation.
-     * @callback module:api/ProjectsV1Api~bookmarkProjectCallback
+     * Callback function to receive the result of the projectsV1BookmarkProject operation.
+     * @callback module:api/ProjectsV1Api~projectsV1BookmarkProjectCallback
      * @param {String} error Error message, if any.
      * @param data This operation does not return a value.
      * @param {String} response The complete HTTP response.
@@ -127,19 +127,19 @@
      * Bookmark project
      * @param {String} owner Owner of the namespace
      * @param {String} project Project under namesapce
-     * @param {module:api/ProjectsV1Api~bookmarkProjectCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/ProjectsV1Api~projectsV1BookmarkProjectCallback} callback The callback function, accepting three arguments: error, data, response
      */
-    this.bookmarkProject = function(owner, project, callback) {
+    this.projectsV1BookmarkProject = function(owner, project, callback) {
       var postBody = null;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling bookmarkProject");
+        throw new Error("Missing the required parameter 'owner' when calling projectsV1BookmarkProject");
       }
 
       // verify the required parameter 'project' is set
       if (project === undefined || project === null) {
-        throw new Error("Missing the required parameter 'project' when calling bookmarkProject");
+        throw new Error("Missing the required parameter 'project' when calling projectsV1BookmarkProject");
       }
 
 
@@ -169,8 +169,8 @@
     }
 
     /**
-     * Callback function to receive the result of the createProject operation.
-     * @callback module:api/ProjectsV1Api~createProjectCallback
+     * Callback function to receive the result of the projectsV1CreateProject operation.
+     * @callback module:api/ProjectsV1Api~projectsV1CreateProjectCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1Project} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -180,20 +180,20 @@
      * Create new project
      * @param {String} owner Owner of the namespace
      * @param {module:model/V1Project} body Project body
-     * @param {module:api/ProjectsV1Api~createProjectCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/ProjectsV1Api~projectsV1CreateProjectCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1Project}
      */
-    this.createProject = function(owner, body, callback) {
+    this.projectsV1CreateProject = function(owner, body, callback) {
       var postBody = body;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling createProject");
+        throw new Error("Missing the required parameter 'owner' when calling projectsV1CreateProject");
       }
 
       // verify the required parameter 'body' is set
       if (body === undefined || body === null) {
-        throw new Error("Missing the required parameter 'body' when calling createProject");
+        throw new Error("Missing the required parameter 'body' when calling projectsV1CreateProject");
       }
 
 
@@ -222,8 +222,8 @@
     }
 
     /**
-     * Callback function to receive the result of the deleteProject operation.
-     * @callback module:api/ProjectsV1Api~deleteProjectCallback
+     * Callback function to receive the result of the projectsV1DeleteProject operation.
+     * @callback module:api/ProjectsV1Api~projectsV1DeleteProjectCallback
      * @param {String} error Error message, if any.
      * @param data This operation does not return a value.
      * @param {String} response The complete HTTP response.
@@ -233,19 +233,19 @@
      * Delete project
      * @param {String} owner Owner of the namespace
      * @param {String} project Project under namesapce
-     * @param {module:api/ProjectsV1Api~deleteProjectCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/ProjectsV1Api~projectsV1DeleteProjectCallback} callback The callback function, accepting three arguments: error, data, response
      */
-    this.deleteProject = function(owner, project, callback) {
+    this.projectsV1DeleteProject = function(owner, project, callback) {
       var postBody = null;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling deleteProject");
+        throw new Error("Missing the required parameter 'owner' when calling projectsV1DeleteProject");
       }
 
       // verify the required parameter 'project' is set
       if (project === undefined || project === null) {
-        throw new Error("Missing the required parameter 'project' when calling deleteProject");
+        throw new Error("Missing the required parameter 'project' when calling projectsV1DeleteProject");
       }
 
 
@@ -275,8 +275,8 @@
     }
 
     /**
-     * Callback function to receive the result of the disableProjectCI operation.
-     * @callback module:api/ProjectsV1Api~disableProjectCICallback
+     * Callback function to receive the result of the projectsV1DisableProjectCI operation.
+     * @callback module:api/ProjectsV1Api~projectsV1DisableProjectCICallback
      * @param {String} error Error message, if any.
      * @param data This operation does not return a value.
      * @param {String} response The complete HTTP response.
@@ -286,19 +286,19 @@
      * Disbale project CI
      * @param {String} owner Owner of the namespace
      * @param {String} project Project under namesapce
-     * @param {module:api/ProjectsV1Api~disableProjectCICallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/ProjectsV1Api~projectsV1DisableProjectCICallback} callback The callback function, accepting three arguments: error, data, response
      */
-    this.disableProjectCI = function(owner, project, callback) {
+    this.projectsV1DisableProjectCI = function(owner, project, callback) {
       var postBody = null;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling disableProjectCI");
+        throw new Error("Missing the required parameter 'owner' when calling projectsV1DisableProjectCI");
       }
 
       // verify the required parameter 'project' is set
       if (project === undefined || project === null) {
-        throw new Error("Missing the required parameter 'project' when calling disableProjectCI");
+        throw new Error("Missing the required parameter 'project' when calling projectsV1DisableProjectCI");
       }
 
 
@@ -328,8 +328,8 @@
     }
 
     /**
-     * Callback function to receive the result of the enableProjectCI operation.
-     * @callback module:api/ProjectsV1Api~enableProjectCICallback
+     * Callback function to receive the result of the projectsV1EnableProjectCI operation.
+     * @callback module:api/ProjectsV1Api~projectsV1EnableProjectCICallback
      * @param {String} error Error message, if any.
      * @param data This operation does not return a value.
      * @param {String} response The complete HTTP response.
@@ -339,19 +339,19 @@
      * Enable project CI
      * @param {String} owner Owner of the namespace
      * @param {String} project Project under namesapce
-     * @param {module:api/ProjectsV1Api~enableProjectCICallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/ProjectsV1Api~projectsV1EnableProjectCICallback} callback The callback function, accepting three arguments: error, data, response
      */
-    this.enableProjectCI = function(owner, project, callback) {
+    this.projectsV1EnableProjectCI = function(owner, project, callback) {
       var postBody = null;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling enableProjectCI");
+        throw new Error("Missing the required parameter 'owner' when calling projectsV1EnableProjectCI");
       }
 
       // verify the required parameter 'project' is set
       if (project === undefined || project === null) {
-        throw new Error("Missing the required parameter 'project' when calling enableProjectCI");
+        throw new Error("Missing the required parameter 'project' when calling projectsV1EnableProjectCI");
       }
 
 
@@ -381,8 +381,8 @@
     }
 
     /**
-     * Callback function to receive the result of the fetchProjectTeams operation.
-     * @callback module:api/ProjectsV1Api~fetchProjectTeamsCallback
+     * Callback function to receive the result of the projectsV1FetchProjectTeams operation.
+     * @callback module:api/ProjectsV1Api~projectsV1FetchProjectTeamsCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1ProjectTeams} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -392,20 +392,20 @@
      * Get project teams
      * @param {String} owner Owner of the namespace
      * @param {String} project Project under namesapce
-     * @param {module:api/ProjectsV1Api~fetchProjectTeamsCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/ProjectsV1Api~projectsV1FetchProjectTeamsCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1ProjectTeams}
      */
-    this.fetchProjectTeams = function(owner, project, callback) {
+    this.projectsV1FetchProjectTeams = function(owner, project, callback) {
       var postBody = null;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling fetchProjectTeams");
+        throw new Error("Missing the required parameter 'owner' when calling projectsV1FetchProjectTeams");
       }
 
       // verify the required parameter 'project' is set
       if (project === undefined || project === null) {
-        throw new Error("Missing the required parameter 'project' when calling fetchProjectTeams");
+        throw new Error("Missing the required parameter 'project' when calling projectsV1FetchProjectTeams");
       }
 
 
@@ -435,8 +435,8 @@
     }
 
     /**
-     * Callback function to receive the result of the getProject operation.
-     * @callback module:api/ProjectsV1Api~getProjectCallback
+     * Callback function to receive the result of the projectsV1GetProject operation.
+     * @callback module:api/ProjectsV1Api~projectsV1GetProjectCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1Project} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -446,20 +446,20 @@
      * Get project
      * @param {String} owner Owner of the namespace
      * @param {String} project Project under namesapce
-     * @param {module:api/ProjectsV1Api~getProjectCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/ProjectsV1Api~projectsV1GetProjectCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1Project}
      */
-    this.getProject = function(owner, project, callback) {
+    this.projectsV1GetProject = function(owner, project, callback) {
       var postBody = null;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling getProject");
+        throw new Error("Missing the required parameter 'owner' when calling projectsV1GetProject");
       }
 
       // verify the required parameter 'project' is set
       if (project === undefined || project === null) {
-        throw new Error("Missing the required parameter 'project' when calling getProject");
+        throw new Error("Missing the required parameter 'project' when calling projectsV1GetProject");
       }
 
 
@@ -489,8 +489,8 @@
     }
 
     /**
-     * Callback function to receive the result of the getProjectSettings operation.
-     * @callback module:api/ProjectsV1Api~getProjectSettingsCallback
+     * Callback function to receive the result of the projectsV1GetProjectSettings operation.
+     * @callback module:api/ProjectsV1Api~projectsV1GetProjectSettingsCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1ProjectSettings} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -500,20 +500,20 @@
      * Get Project settings
      * @param {String} owner Owner of the namespace
      * @param {String} project Project under namesapce
-     * @param {module:api/ProjectsV1Api~getProjectSettingsCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/ProjectsV1Api~projectsV1GetProjectSettingsCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1ProjectSettings}
      */
-    this.getProjectSettings = function(owner, project, callback) {
+    this.projectsV1GetProjectSettings = function(owner, project, callback) {
       var postBody = null;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling getProjectSettings");
+        throw new Error("Missing the required parameter 'owner' when calling projectsV1GetProjectSettings");
       }
 
       // verify the required parameter 'project' is set
       if (project === undefined || project === null) {
-        throw new Error("Missing the required parameter 'project' when calling getProjectSettings");
+        throw new Error("Missing the required parameter 'project' when calling projectsV1GetProjectSettings");
       }
 
 
@@ -543,8 +543,8 @@
     }
 
     /**
-     * Callback function to receive the result of the listArchivedProjects operation.
-     * @callback module:api/ProjectsV1Api~listArchivedProjectsCallback
+     * Callback function to receive the result of the projectsV1ListArchivedProjects operation.
+     * @callback module:api/ProjectsV1Api~projectsV1ListArchivedProjectsCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1ListProjectsResponse} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -558,16 +558,16 @@
      * @param {Number} opts.limit Limit size.
      * @param {String} opts.sort Sort to order the search.
      * @param {String} opts.query Query filter the search search.
-     * @param {module:api/ProjectsV1Api~listArchivedProjectsCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/ProjectsV1Api~projectsV1ListArchivedProjectsCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1ListProjectsResponse}
      */
-    this.listArchivedProjects = function(user, opts, callback) {
+    this.projectsV1ListArchivedProjects = function(user, opts, callback) {
       opts = opts || {};
       var postBody = null;
 
       // verify the required parameter 'user' is set
       if (user === undefined || user === null) {
-        throw new Error("Missing the required parameter 'user' when calling listArchivedProjects");
+        throw new Error("Missing the required parameter 'user' when calling projectsV1ListArchivedProjects");
       }
 
 
@@ -600,8 +600,8 @@
     }
 
     /**
-     * Callback function to receive the result of the listBookmarkedProjects operation.
-     * @callback module:api/ProjectsV1Api~listBookmarkedProjectsCallback
+     * Callback function to receive the result of the projectsV1ListBookmarkedProjects operation.
+     * @callback module:api/ProjectsV1Api~projectsV1ListBookmarkedProjectsCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1ListProjectsResponse} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -615,16 +615,16 @@
      * @param {Number} opts.limit Limit size.
      * @param {String} opts.sort Sort to order the search.
      * @param {String} opts.query Query filter the search search.
-     * @param {module:api/ProjectsV1Api~listBookmarkedProjectsCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/ProjectsV1Api~projectsV1ListBookmarkedProjectsCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1ListProjectsResponse}
      */
-    this.listBookmarkedProjects = function(user, opts, callback) {
+    this.projectsV1ListBookmarkedProjects = function(user, opts, callback) {
       opts = opts || {};
       var postBody = null;
 
       // verify the required parameter 'user' is set
       if (user === undefined || user === null) {
-        throw new Error("Missing the required parameter 'user' when calling listBookmarkedProjects");
+        throw new Error("Missing the required parameter 'user' when calling projectsV1ListBookmarkedProjects");
       }
 
 
@@ -657,8 +657,8 @@
     }
 
     /**
-     * Callback function to receive the result of the listProjectNames operation.
-     * @callback module:api/ProjectsV1Api~listProjectNamesCallback
+     * Callback function to receive the result of the projectsV1ListProjectNames operation.
+     * @callback module:api/ProjectsV1Api~projectsV1ListProjectNamesCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1ListProjectsResponse} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -672,16 +672,16 @@
      * @param {Number} opts.limit Limit size.
      * @param {String} opts.sort Sort to order the search.
      * @param {String} opts.query Query filter the search search.
-     * @param {module:api/ProjectsV1Api~listProjectNamesCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/ProjectsV1Api~projectsV1ListProjectNamesCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1ListProjectsResponse}
      */
-    this.listProjectNames = function(owner, opts, callback) {
+    this.projectsV1ListProjectNames = function(owner, opts, callback) {
       opts = opts || {};
       var postBody = null;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling listProjectNames");
+        throw new Error("Missing the required parameter 'owner' when calling projectsV1ListProjectNames");
       }
 
 
@@ -714,8 +714,8 @@
     }
 
     /**
-     * Callback function to receive the result of the listProjects operation.
-     * @callback module:api/ProjectsV1Api~listProjectsCallback
+     * Callback function to receive the result of the projectsV1ListProjects operation.
+     * @callback module:api/ProjectsV1Api~projectsV1ListProjectsCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1ListProjectsResponse} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -729,16 +729,16 @@
      * @param {Number} opts.limit Limit size.
      * @param {String} opts.sort Sort to order the search.
      * @param {String} opts.query Query filter the search search.
-     * @param {module:api/ProjectsV1Api~listProjectsCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/ProjectsV1Api~projectsV1ListProjectsCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1ListProjectsResponse}
      */
-    this.listProjects = function(owner, opts, callback) {
+    this.projectsV1ListProjects = function(owner, opts, callback) {
       opts = opts || {};
       var postBody = null;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling listProjects");
+        throw new Error("Missing the required parameter 'owner' when calling projectsV1ListProjects");
       }
 
 
@@ -771,8 +771,8 @@
     }
 
     /**
-     * Callback function to receive the result of the patchProject operation.
-     * @callback module:api/ProjectsV1Api~patchProjectCallback
+     * Callback function to receive the result of the projectsV1PatchProject operation.
+     * @callback module:api/ProjectsV1Api~projectsV1PatchProjectCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1Project} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -783,25 +783,25 @@
      * @param {String} owner Owner of the namespace
      * @param {String} project_name Required name
      * @param {module:model/V1Project} body Project body
-     * @param {module:api/ProjectsV1Api~patchProjectCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/ProjectsV1Api~projectsV1PatchProjectCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1Project}
      */
-    this.patchProject = function(owner, project_name, body, callback) {
+    this.projectsV1PatchProject = function(owner, project_name, body, callback) {
       var postBody = body;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling patchProject");
+        throw new Error("Missing the required parameter 'owner' when calling projectsV1PatchProject");
       }
 
       // verify the required parameter 'project_name' is set
       if (project_name === undefined || project_name === null) {
-        throw new Error("Missing the required parameter 'project_name' when calling patchProject");
+        throw new Error("Missing the required parameter 'project_name' when calling projectsV1PatchProject");
       }
 
       // verify the required parameter 'body' is set
       if (body === undefined || body === null) {
-        throw new Error("Missing the required parameter 'body' when calling patchProject");
+        throw new Error("Missing the required parameter 'body' when calling projectsV1PatchProject");
       }
 
 
@@ -831,8 +831,8 @@
     }
 
     /**
-     * Callback function to receive the result of the patchProjectSettings operation.
-     * @callback module:api/ProjectsV1Api~patchProjectSettingsCallback
+     * Callback function to receive the result of the projectsV1PatchProjectSettings operation.
+     * @callback module:api/ProjectsV1Api~projectsV1PatchProjectSettingsCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1ProjectSettings} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -843,25 +843,25 @@
      * @param {String} owner Owner of the namespace
      * @param {String} project Project name
      * @param {module:model/V1ProjectSettings} body Project settings body
-     * @param {module:api/ProjectsV1Api~patchProjectSettingsCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/ProjectsV1Api~projectsV1PatchProjectSettingsCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1ProjectSettings}
      */
-    this.patchProjectSettings = function(owner, project, body, callback) {
+    this.projectsV1PatchProjectSettings = function(owner, project, body, callback) {
       var postBody = body;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling patchProjectSettings");
+        throw new Error("Missing the required parameter 'owner' when calling projectsV1PatchProjectSettings");
       }
 
       // verify the required parameter 'project' is set
       if (project === undefined || project === null) {
-        throw new Error("Missing the required parameter 'project' when calling patchProjectSettings");
+        throw new Error("Missing the required parameter 'project' when calling projectsV1PatchProjectSettings");
       }
 
       // verify the required parameter 'body' is set
       if (body === undefined || body === null) {
-        throw new Error("Missing the required parameter 'body' when calling patchProjectSettings");
+        throw new Error("Missing the required parameter 'body' when calling projectsV1PatchProjectSettings");
       }
 
 
@@ -891,8 +891,8 @@
     }
 
     /**
-     * Callback function to receive the result of the patchProjectTeams operation.
-     * @callback module:api/ProjectsV1Api~patchProjectTeamsCallback
+     * Callback function to receive the result of the projectsV1PatchProjectTeams operation.
+     * @callback module:api/ProjectsV1Api~projectsV1PatchProjectTeamsCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1ProjectTeams} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -903,25 +903,25 @@
      * @param {String} owner Owner of the namespace
      * @param {String} project Project name
      * @param {module:model/V1ProjectTeams} body Project settings body
-     * @param {module:api/ProjectsV1Api~patchProjectTeamsCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/ProjectsV1Api~projectsV1PatchProjectTeamsCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1ProjectTeams}
      */
-    this.patchProjectTeams = function(owner, project, body, callback) {
+    this.projectsV1PatchProjectTeams = function(owner, project, body, callback) {
       var postBody = body;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling patchProjectTeams");
+        throw new Error("Missing the required parameter 'owner' when calling projectsV1PatchProjectTeams");
       }
 
       // verify the required parameter 'project' is set
       if (project === undefined || project === null) {
-        throw new Error("Missing the required parameter 'project' when calling patchProjectTeams");
+        throw new Error("Missing the required parameter 'project' when calling projectsV1PatchProjectTeams");
       }
 
       // verify the required parameter 'body' is set
       if (body === undefined || body === null) {
-        throw new Error("Missing the required parameter 'body' when calling patchProjectTeams");
+        throw new Error("Missing the required parameter 'body' when calling projectsV1PatchProjectTeams");
       }
 
 
@@ -951,8 +951,8 @@
     }
 
     /**
-     * Callback function to receive the result of the restoreProject operation.
-     * @callback module:api/ProjectsV1Api~restoreProjectCallback
+     * Callback function to receive the result of the projectsV1RestoreProject operation.
+     * @callback module:api/ProjectsV1Api~projectsV1RestoreProjectCallback
      * @param {String} error Error message, if any.
      * @param data This operation does not return a value.
      * @param {String} response The complete HTTP response.
@@ -962,19 +962,19 @@
      * Restore project
      * @param {String} owner Owner of the namespace
      * @param {String} project Project under namesapce
-     * @param {module:api/ProjectsV1Api~restoreProjectCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/ProjectsV1Api~projectsV1RestoreProjectCallback} callback The callback function, accepting three arguments: error, data, response
      */
-    this.restoreProject = function(owner, project, callback) {
+    this.projectsV1RestoreProject = function(owner, project, callback) {
       var postBody = null;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling restoreProject");
+        throw new Error("Missing the required parameter 'owner' when calling projectsV1RestoreProject");
       }
 
       // verify the required parameter 'project' is set
       if (project === undefined || project === null) {
-        throw new Error("Missing the required parameter 'project' when calling restoreProject");
+        throw new Error("Missing the required parameter 'project' when calling projectsV1RestoreProject");
       }
 
 
@@ -1004,8 +1004,8 @@
     }
 
     /**
-     * Callback function to receive the result of the unbookmarkProject operation.
-     * @callback module:api/ProjectsV1Api~unbookmarkProjectCallback
+     * Callback function to receive the result of the projectsV1UnbookmarkProject operation.
+     * @callback module:api/ProjectsV1Api~projectsV1UnbookmarkProjectCallback
      * @param {String} error Error message, if any.
      * @param data This operation does not return a value.
      * @param {String} response The complete HTTP response.
@@ -1015,19 +1015,19 @@
      * Unbookmark project
      * @param {String} owner Owner of the namespace
      * @param {String} project Project under namesapce
-     * @param {module:api/ProjectsV1Api~unbookmarkProjectCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/ProjectsV1Api~projectsV1UnbookmarkProjectCallback} callback The callback function, accepting three arguments: error, data, response
      */
-    this.unbookmarkProject = function(owner, project, callback) {
+    this.projectsV1UnbookmarkProject = function(owner, project, callback) {
       var postBody = null;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling unbookmarkProject");
+        throw new Error("Missing the required parameter 'owner' when calling projectsV1UnbookmarkProject");
       }
 
       // verify the required parameter 'project' is set
       if (project === undefined || project === null) {
-        throw new Error("Missing the required parameter 'project' when calling unbookmarkProject");
+        throw new Error("Missing the required parameter 'project' when calling projectsV1UnbookmarkProject");
       }
 
 
@@ -1057,8 +1057,8 @@
     }
 
     /**
-     * Callback function to receive the result of the updateProject operation.
-     * @callback module:api/ProjectsV1Api~updateProjectCallback
+     * Callback function to receive the result of the projectsV1UpdateProject operation.
+     * @callback module:api/ProjectsV1Api~projectsV1UpdateProjectCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1Project} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -1069,25 +1069,25 @@
      * @param {String} owner Owner of the namespace
      * @param {String} project_name Required name
      * @param {module:model/V1Project} body Project body
-     * @param {module:api/ProjectsV1Api~updateProjectCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/ProjectsV1Api~projectsV1UpdateProjectCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1Project}
      */
-    this.updateProject = function(owner, project_name, body, callback) {
+    this.projectsV1UpdateProject = function(owner, project_name, body, callback) {
       var postBody = body;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling updateProject");
+        throw new Error("Missing the required parameter 'owner' when calling projectsV1UpdateProject");
       }
 
       // verify the required parameter 'project_name' is set
       if (project_name === undefined || project_name === null) {
-        throw new Error("Missing the required parameter 'project_name' when calling updateProject");
+        throw new Error("Missing the required parameter 'project_name' when calling projectsV1UpdateProject");
       }
 
       // verify the required parameter 'body' is set
       if (body === undefined || body === null) {
-        throw new Error("Missing the required parameter 'body' when calling updateProject");
+        throw new Error("Missing the required parameter 'body' when calling projectsV1UpdateProject");
       }
 
 
@@ -1117,8 +1117,8 @@
     }
 
     /**
-     * Callback function to receive the result of the updateProjectSettings operation.
-     * @callback module:api/ProjectsV1Api~updateProjectSettingsCallback
+     * Callback function to receive the result of the projectsV1UpdateProjectSettings operation.
+     * @callback module:api/ProjectsV1Api~projectsV1UpdateProjectSettingsCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1ProjectSettings} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -1129,25 +1129,25 @@
      * @param {String} owner Owner of the namespace
      * @param {String} project Project name
      * @param {module:model/V1ProjectSettings} body Project settings body
-     * @param {module:api/ProjectsV1Api~updateProjectSettingsCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/ProjectsV1Api~projectsV1UpdateProjectSettingsCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1ProjectSettings}
      */
-    this.updateProjectSettings = function(owner, project, body, callback) {
+    this.projectsV1UpdateProjectSettings = function(owner, project, body, callback) {
       var postBody = body;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling updateProjectSettings");
+        throw new Error("Missing the required parameter 'owner' when calling projectsV1UpdateProjectSettings");
       }
 
       // verify the required parameter 'project' is set
       if (project === undefined || project === null) {
-        throw new Error("Missing the required parameter 'project' when calling updateProjectSettings");
+        throw new Error("Missing the required parameter 'project' when calling projectsV1UpdateProjectSettings");
       }
 
       // verify the required parameter 'body' is set
       if (body === undefined || body === null) {
-        throw new Error("Missing the required parameter 'body' when calling updateProjectSettings");
+        throw new Error("Missing the required parameter 'body' when calling projectsV1UpdateProjectSettings");
       }
 
 
@@ -1177,8 +1177,8 @@
     }
 
     /**
-     * Callback function to receive the result of the updateProjectTeams operation.
-     * @callback module:api/ProjectsV1Api~updateProjectTeamsCallback
+     * Callback function to receive the result of the projectsV1UpdateProjectTeams operation.
+     * @callback module:api/ProjectsV1Api~projectsV1UpdateProjectTeamsCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1ProjectTeams} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -1189,25 +1189,25 @@
      * @param {String} owner Owner of the namespace
      * @param {String} project Project name
      * @param {module:model/V1ProjectTeams} body Project settings body
-     * @param {module:api/ProjectsV1Api~updateProjectTeamsCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/ProjectsV1Api~projectsV1UpdateProjectTeamsCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1ProjectTeams}
      */
-    this.updateProjectTeams = function(owner, project, body, callback) {
+    this.projectsV1UpdateProjectTeams = function(owner, project, body, callback) {
       var postBody = body;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling updateProjectTeams");
+        throw new Error("Missing the required parameter 'owner' when calling projectsV1UpdateProjectTeams");
       }
 
       // verify the required parameter 'project' is set
       if (project === undefined || project === null) {
-        throw new Error("Missing the required parameter 'project' when calling updateProjectTeams");
+        throw new Error("Missing the required parameter 'project' when calling projectsV1UpdateProjectTeams");
       }
 
       // verify the required parameter 'body' is set
       if (body === undefined || body === null) {
-        throw new Error("Missing the required parameter 'body' when calling updateProjectTeams");
+        throw new Error("Missing the required parameter 'body' when calling projectsV1UpdateProjectTeams");
       }
 
 

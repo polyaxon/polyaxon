@@ -70,13 +70,13 @@ public class SchemasV1Api {
     }
 
     /**
-     * Build call for noOp
+     * Build call for schemasV1NoOp
      * @param progressListener Progress listener
      * @param progressRequestListener Progress request listener
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call noOpCall(final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call schemasV1NoOpCall(final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -118,10 +118,10 @@ public class SchemasV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call noOpValidateBeforeCall(final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call schemasV1NoOpValidateBeforeCall(final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
 
-        com.squareup.okhttp.Call call = noOpCall(progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = schemasV1NoOpCall(progressListener, progressRequestListener);
         return call;
 
     }
@@ -132,8 +132,8 @@ public class SchemasV1Api {
      * @return V1Schemas
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1Schemas noOp() throws ApiException {
-        ApiResponse<V1Schemas> resp = noOpWithHttpInfo();
+    public V1Schemas schemasV1NoOp() throws ApiException {
+        ApiResponse<V1Schemas> resp = schemasV1NoOpWithHttpInfo();
         return resp.getData();
     }
 
@@ -143,8 +143,8 @@ public class SchemasV1Api {
      * @return ApiResponse&lt;V1Schemas&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1Schemas> noOpWithHttpInfo() throws ApiException {
-        com.squareup.okhttp.Call call = noOpValidateBeforeCall(null, null);
+    public ApiResponse<V1Schemas> schemasV1NoOpWithHttpInfo() throws ApiException {
+        com.squareup.okhttp.Call call = schemasV1NoOpValidateBeforeCall(null, null);
         Type localVarReturnType = new TypeToken<V1Schemas>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -156,7 +156,7 @@ public class SchemasV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call noOpAsync(final ApiCallback<V1Schemas> callback) throws ApiException {
+    public com.squareup.okhttp.Call schemasV1NoOpAsync(final ApiCallback<V1Schemas> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -177,7 +177,7 @@ public class SchemasV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = noOpValidateBeforeCall(progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = schemasV1NoOpValidateBeforeCall(progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1Schemas>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;

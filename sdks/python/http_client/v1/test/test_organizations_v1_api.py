@@ -47,82 +47,82 @@ class TestOrganizationsV1Api(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def test_create_organization(self):
-        """Test case for create_organization
+    def test_organizations_v1_create_organization(self):
+        """Test case for organizations_v1_create_organization
 
         """
         pass
 
-    def test_create_organization_member(self):
-        """Test case for create_organization_member
+    def test_organizations_v1_create_organization_member(self):
+        """Test case for organizations_v1_create_organization_member
 
         """
         pass
 
-    def test_delete_organization(self):
-        """Test case for delete_organization
+    def test_organizations_v1_delete_organization(self):
+        """Test case for organizations_v1_delete_organization
 
         """
         pass
 
-    def test_delete_organization_member(self):
-        """Test case for delete_organization_member
+    def test_organizations_v1_delete_organization_member(self):
+        """Test case for organizations_v1_delete_organization_member
 
         """
         pass
 
-    def test_get_organization(self):
-        """Test case for get_organization
+    def test_organizations_v1_get_organization(self):
+        """Test case for organizations_v1_get_organization
 
         """
         pass
 
-    def test_get_organization_member(self):
-        """Test case for get_organization_member
+    def test_organizations_v1_get_organization_member(self):
+        """Test case for organizations_v1_get_organization_member
 
         """
         pass
 
-    def test_list_organization_members(self):
-        """Test case for list_organization_members
+    def test_organizations_v1_list_organization_members(self):
+        """Test case for organizations_v1_list_organization_members
 
         """
         pass
 
-    def test_list_organization_names(self):
-        """Test case for list_organization_names
+    def test_organizations_v1_list_organization_names(self):
+        """Test case for organizations_v1_list_organization_names
 
         Get versions  # noqa: E501
         """
         pass
 
-    def test_list_organizations(self):
-        """Test case for list_organizations
+    def test_organizations_v1_list_organizations(self):
+        """Test case for organizations_v1_list_organizations
 
         Get log handler  # noqa: E501
         """
         pass
 
-    def test_patch_organization(self):
-        """Test case for patch_organization
+    def test_organizations_v1_patch_organization(self):
+        """Test case for organizations_v1_patch_organization
 
         """
         pass
 
-    def test_patch_organization_member(self):
-        """Test case for patch_organization_member
+    def test_organizations_v1_patch_organization_member(self):
+        """Test case for organizations_v1_patch_organization_member
 
         """
         pass
 
-    def test_update_organization(self):
-        """Test case for update_organization
+    def test_organizations_v1_update_organization(self):
+        """Test case for organizations_v1_update_organization
 
         """
         pass
 
-    def test_update_organization_member(self):
-        """Test case for update_organization_member
+    def test_organizations_v1_update_organization_member(self):
+        """Test case for organizations_v1_update_organization_member
 
         """
         pass

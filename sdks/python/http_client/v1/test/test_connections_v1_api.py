@@ -45,50 +45,50 @@ class TestConnectionsV1Api(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def test_create_connection(self):
-        """Test case for create_connection
+    def test_connections_v1_create_connection(self):
+        """Test case for connections_v1_create_connection
 
         Create connection  # noqa: E501
         """
         pass
 
-    def test_delete_connection(self):
-        """Test case for delete_connection
+    def test_connections_v1_delete_connection(self):
+        """Test case for connections_v1_delete_connection
 
         Delete connection  # noqa: E501
         """
         pass
 
-    def test_get_connection(self):
-        """Test case for get_connection
+    def test_connections_v1_get_connection(self):
+        """Test case for connections_v1_get_connection
 
         Get connection  # noqa: E501
         """
         pass
 
-    def test_list_connection_names(self):
-        """Test case for list_connection_names
+    def test_connections_v1_list_connection_names(self):
+        """Test case for connections_v1_list_connection_names
 
         List connections names  # noqa: E501
         """
         pass
 
-    def test_list_connections(self):
-        """Test case for list_connections
+    def test_connections_v1_list_connections(self):
+        """Test case for connections_v1_list_connections
 
         List connections  # noqa: E501
         """
         pass
 
-    def test_patch_connection(self):
-        """Test case for patch_connection
+    def test_connections_v1_patch_connection(self):
+        """Test case for connections_v1_patch_connection
 
         Patch connection  # noqa: E501
         """
         pass
 
-    def test_update_connection(self):
-        """Test case for update_connection
+    def test_connections_v1_update_connection(self):
+        """Test case for connections_v1_update_connection
 
         Update connection  # noqa: E501
         """

@@ -49,12 +49,14 @@ class HubComponentsV1Api(object):
             api_client = ApiClient()
         self.api_client = api_client
 
-    def create_hub_component(self, owner, body, **kwargs):  # noqa: E501
+    def hub_components_v1_create_hub_component(
+        self, owner, body, **kwargs
+    ):  # noqa: E501
         """Create hub model  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.create_hub_component(owner, body, async_req=True)
+        >>> thread = api.hub_components_v1_create_hub_component(owner, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -66,21 +68,23 @@ class HubComponentsV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.create_hub_component_with_http_info(
+            return self.hub_components_v1_create_hub_component_with_http_info(
                 owner, body, **kwargs
             )  # noqa: E501
         else:
-            (data) = self.create_hub_component_with_http_info(
+            (data) = self.hub_components_v1_create_hub_component_with_http_info(
                 owner, body, **kwargs
             )  # noqa: E501
             return data
 
-    def create_hub_component_with_http_info(self, owner, body, **kwargs):  # noqa: E501
+    def hub_components_v1_create_hub_component_with_http_info(
+        self, owner, body, **kwargs
+    ):  # noqa: E501
         """Create hub model  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.create_hub_component_with_http_info(owner, body, async_req=True)
+        >>> thread = api.hub_components_v1_create_hub_component_with_http_info(owner, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -102,19 +106,19 @@ class HubComponentsV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method create_hub_component" % key
+                    " to method hub_components_v1_create_hub_component" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `create_hub_component`"
+                "Missing the required parameter `owner` when calling `hub_components_v1_create_hub_component`"
             )  # noqa: E501
         # verify the required parameter 'body' is set
         if "body" not in params or params["body"] is None:
             raise ValueError(
-                "Missing the required parameter `body` when calling `create_hub_component`"
+                "Missing the required parameter `body` when calling `hub_components_v1_create_hub_component`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -166,12 +170,14 @@ class HubComponentsV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def delete_hub_component(self, owner, uuid, **kwargs):  # noqa: E501
+    def hub_components_v1_delete_hub_component(
+        self, owner, uuid, **kwargs
+    ):  # noqa: E501
         """Delete hub model  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.delete_hub_component(owner, uuid, async_req=True)
+        >>> thread = api.hub_components_v1_delete_hub_component(owner, uuid, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -183,21 +189,23 @@ class HubComponentsV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.delete_hub_component_with_http_info(
+            return self.hub_components_v1_delete_hub_component_with_http_info(
                 owner, uuid, **kwargs
             )  # noqa: E501
         else:
-            (data) = self.delete_hub_component_with_http_info(
+            (data) = self.hub_components_v1_delete_hub_component_with_http_info(
                 owner, uuid, **kwargs
             )  # noqa: E501
             return data
 
-    def delete_hub_component_with_http_info(self, owner, uuid, **kwargs):  # noqa: E501
+    def hub_components_v1_delete_hub_component_with_http_info(
+        self, owner, uuid, **kwargs
+    ):  # noqa: E501
         """Delete hub model  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.delete_hub_component_with_http_info(owner, uuid, async_req=True)
+        >>> thread = api.hub_components_v1_delete_hub_component_with_http_info(owner, uuid, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -219,19 +227,19 @@ class HubComponentsV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method delete_hub_component" % key
+                    " to method hub_components_v1_delete_hub_component" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `delete_hub_component`"
+                "Missing the required parameter `owner` when calling `hub_components_v1_delete_hub_component`"
             )  # noqa: E501
         # verify the required parameter 'uuid' is set
         if "uuid" not in params or params["uuid"] is None:
             raise ValueError(
-                "Missing the required parameter `uuid` when calling `delete_hub_component`"
+                "Missing the required parameter `uuid` when calling `hub_components_v1_delete_hub_component`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -283,12 +291,12 @@ class HubComponentsV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def get_hub_component(self, owner, uuid, **kwargs):  # noqa: E501
+    def hub_components_v1_get_hub_component(self, owner, uuid, **kwargs):  # noqa: E501
         """Get hub model  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.get_hub_component(owner, uuid, async_req=True)
+        >>> thread = api.hub_components_v1_get_hub_component(owner, uuid, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -300,21 +308,23 @@ class HubComponentsV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.get_hub_component_with_http_info(
+            return self.hub_components_v1_get_hub_component_with_http_info(
                 owner, uuid, **kwargs
             )  # noqa: E501
         else:
-            (data) = self.get_hub_component_with_http_info(
+            (data) = self.hub_components_v1_get_hub_component_with_http_info(
                 owner, uuid, **kwargs
             )  # noqa: E501
             return data
 
-    def get_hub_component_with_http_info(self, owner, uuid, **kwargs):  # noqa: E501
+    def hub_components_v1_get_hub_component_with_http_info(
+        self, owner, uuid, **kwargs
+    ):  # noqa: E501
         """Get hub model  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.get_hub_component_with_http_info(owner, uuid, async_req=True)
+        >>> thread = api.hub_components_v1_get_hub_component_with_http_info(owner, uuid, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -336,19 +346,19 @@ class HubComponentsV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method get_hub_component" % key
+                    " to method hub_components_v1_get_hub_component" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `get_hub_component`"
+                "Missing the required parameter `owner` when calling `hub_components_v1_get_hub_component`"
             )  # noqa: E501
         # verify the required parameter 'uuid' is set
         if "uuid" not in params or params["uuid"] is None:
             raise ValueError(
-                "Missing the required parameter `uuid` when calling `get_hub_component`"
+                "Missing the required parameter `uuid` when calling `hub_components_v1_get_hub_component`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -400,12 +410,12 @@ class HubComponentsV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def list_hub_componebt_names(self, owner, **kwargs):  # noqa: E501
+    def hub_components_v1_list_hub_componebt_names(self, owner, **kwargs):  # noqa: E501
         """List hub model names  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.list_hub_componebt_names(owner, async_req=True)
+        >>> thread = api.hub_components_v1_list_hub_componebt_names(owner, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -420,21 +430,23 @@ class HubComponentsV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.list_hub_componebt_names_with_http_info(
+            return self.hub_components_v1_list_hub_componebt_names_with_http_info(
                 owner, **kwargs
             )  # noqa: E501
         else:
-            (data) = self.list_hub_componebt_names_with_http_info(
+            (data) = self.hub_components_v1_list_hub_componebt_names_with_http_info(
                 owner, **kwargs
             )  # noqa: E501
             return data
 
-    def list_hub_componebt_names_with_http_info(self, owner, **kwargs):  # noqa: E501
+    def hub_components_v1_list_hub_componebt_names_with_http_info(
+        self, owner, **kwargs
+    ):  # noqa: E501
         """List hub model names  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.list_hub_componebt_names_with_http_info(owner, async_req=True)
+        >>> thread = api.hub_components_v1_list_hub_componebt_names_with_http_info(owner, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -459,14 +471,14 @@ class HubComponentsV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method list_hub_componebt_names" % key
+                    " to method hub_components_v1_list_hub_componebt_names" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `list_hub_componebt_names`"
+                "Missing the required parameter `owner` when calling `hub_components_v1_list_hub_componebt_names`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -524,12 +536,12 @@ class HubComponentsV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def list_hub_components(self, owner, **kwargs):  # noqa: E501
+    def hub_components_v1_list_hub_components(self, owner, **kwargs):  # noqa: E501
         """List hub models  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.list_hub_components(owner, async_req=True)
+        >>> thread = api.hub_components_v1_list_hub_components(owner, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -544,21 +556,23 @@ class HubComponentsV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.list_hub_components_with_http_info(
+            return self.hub_components_v1_list_hub_components_with_http_info(
                 owner, **kwargs
             )  # noqa: E501
         else:
-            (data) = self.list_hub_components_with_http_info(
+            (data) = self.hub_components_v1_list_hub_components_with_http_info(
                 owner, **kwargs
             )  # noqa: E501
             return data
 
-    def list_hub_components_with_http_info(self, owner, **kwargs):  # noqa: E501
+    def hub_components_v1_list_hub_components_with_http_info(
+        self, owner, **kwargs
+    ):  # noqa: E501
         """List hub models  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.list_hub_components_with_http_info(owner, async_req=True)
+        >>> thread = api.hub_components_v1_list_hub_components_with_http_info(owner, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -583,14 +597,14 @@ class HubComponentsV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method list_hub_components" % key
+                    " to method hub_components_v1_list_hub_components" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `list_hub_components`"
+                "Missing the required parameter `owner` when calling `hub_components_v1_list_hub_components`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -648,12 +662,14 @@ class HubComponentsV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def patch_hub_component(self, owner, component_uuid, body, **kwargs):  # noqa: E501
+    def hub_components_v1_patch_hub_component(
+        self, owner, component_uuid, body, **kwargs
+    ):  # noqa: E501
         """Patch hub model  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.patch_hub_component(owner, component_uuid, body, async_req=True)
+        >>> thread = api.hub_components_v1_patch_hub_component(owner, component_uuid, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -666,23 +682,23 @@ class HubComponentsV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.patch_hub_component_with_http_info(
+            return self.hub_components_v1_patch_hub_component_with_http_info(
                 owner, component_uuid, body, **kwargs
             )  # noqa: E501
         else:
-            (data) = self.patch_hub_component_with_http_info(
+            (data) = self.hub_components_v1_patch_hub_component_with_http_info(
                 owner, component_uuid, body, **kwargs
             )  # noqa: E501
             return data
 
-    def patch_hub_component_with_http_info(
+    def hub_components_v1_patch_hub_component_with_http_info(
         self, owner, component_uuid, body, **kwargs
     ):  # noqa: E501
         """Patch hub model  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.patch_hub_component_with_http_info(owner, component_uuid, body, async_req=True)
+        >>> thread = api.hub_components_v1_patch_hub_component_with_http_info(owner, component_uuid, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -705,24 +721,24 @@ class HubComponentsV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method patch_hub_component" % key
+                    " to method hub_components_v1_patch_hub_component" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `patch_hub_component`"
+                "Missing the required parameter `owner` when calling `hub_components_v1_patch_hub_component`"
             )  # noqa: E501
         # verify the required parameter 'component_uuid' is set
         if "component_uuid" not in params or params["component_uuid"] is None:
             raise ValueError(
-                "Missing the required parameter `component_uuid` when calling `patch_hub_component`"
+                "Missing the required parameter `component_uuid` when calling `hub_components_v1_patch_hub_component`"
             )  # noqa: E501
         # verify the required parameter 'body' is set
         if "body" not in params or params["body"] is None:
             raise ValueError(
-                "Missing the required parameter `body` when calling `patch_hub_component`"
+                "Missing the required parameter `body` when calling `hub_components_v1_patch_hub_component`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -776,12 +792,14 @@ class HubComponentsV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def update_hub_component(self, owner, component_uuid, body, **kwargs):  # noqa: E501
+    def hub_components_v1_update_hub_component(
+        self, owner, component_uuid, body, **kwargs
+    ):  # noqa: E501
         """Update hub model  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.update_hub_component(owner, component_uuid, body, async_req=True)
+        >>> thread = api.hub_components_v1_update_hub_component(owner, component_uuid, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -794,23 +812,23 @@ class HubComponentsV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.update_hub_component_with_http_info(
+            return self.hub_components_v1_update_hub_component_with_http_info(
                 owner, component_uuid, body, **kwargs
             )  # noqa: E501
         else:
-            (data) = self.update_hub_component_with_http_info(
+            (data) = self.hub_components_v1_update_hub_component_with_http_info(
                 owner, component_uuid, body, **kwargs
             )  # noqa: E501
             return data
 
-    def update_hub_component_with_http_info(
+    def hub_components_v1_update_hub_component_with_http_info(
         self, owner, component_uuid, body, **kwargs
     ):  # noqa: E501
         """Update hub model  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.update_hub_component_with_http_info(owner, component_uuid, body, async_req=True)
+        >>> thread = api.hub_components_v1_update_hub_component_with_http_info(owner, component_uuid, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -833,24 +851,24 @@ class HubComponentsV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method update_hub_component" % key
+                    " to method hub_components_v1_update_hub_component" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `update_hub_component`"
+                "Missing the required parameter `owner` when calling `hub_components_v1_update_hub_component`"
             )  # noqa: E501
         # verify the required parameter 'component_uuid' is set
         if "component_uuid" not in params or params["component_uuid"] is None:
             raise ValueError(
-                "Missing the required parameter `component_uuid` when calling `update_hub_component`"
+                "Missing the required parameter `component_uuid` when calling `hub_components_v1_update_hub_component`"
             )  # noqa: E501
         # verify the required parameter 'body' is set
         if "body" not in params or params["body"] is None:
             raise ValueError(
-                "Missing the required parameter `body` when calling `update_hub_component`"
+                "Missing the required parameter `body` when calling `hub_components_v1_update_hub_component`"
             )  # noqa: E501
 
         collection_formats = {}

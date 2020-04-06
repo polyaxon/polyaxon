@@ -11,7 +11,6 @@ Name | Type | Description | Notes
 **disabled** | **Boolean** |  |  [optional]
 **deleted** | **Boolean** |  |  [optional]
 **runView** | **Boolean** |  |  [optional]
-**search** | [**V1SearchSpec**](V1SearchSpec.md) |  |  [optional]
 **spec** | **Object** |  |  [optional]
 **createdAt** | [**OffsetDateTime**](OffsetDateTime.md) |  |  [optional]
 **updatedAt** | [**OffsetDateTime**](OffsetDateTime.md) |  |  [optional]

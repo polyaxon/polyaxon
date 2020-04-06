@@ -4,33 +4,33 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**archiveProject**](ProjectsV1Api.md#archiveProject) | **POST** /api/v1/{owner}/{project}/archive | Archive project
-[**bookmarkProject**](ProjectsV1Api.md#bookmarkProject) | **POST** /api/v1/{owner}/{project}/bookmark | Bookmark project
-[**createProject**](ProjectsV1Api.md#createProject) | **POST** /api/v1/{owner}/projects/create | Create new project
-[**deleteProject**](ProjectsV1Api.md#deleteProject) | **DELETE** /api/v1/{owner}/{project} | Delete project
-[**disableProjectCI**](ProjectsV1Api.md#disableProjectCI) | **DELETE** /api/v1/{owner}/{project}/ci | Disbale project CI
-[**enableProjectCI**](ProjectsV1Api.md#enableProjectCI) | **POST** /api/v1/{owner}/{project}/ci | Enable project CI
-[**fetchProjectTeams**](ProjectsV1Api.md#fetchProjectTeams) | **GET** /api/v1/{owner}/{project}/teams | Get project teams
-[**getProject**](ProjectsV1Api.md#getProject) | **GET** /api/v1/{owner}/{project} | Get project
-[**getProjectSettings**](ProjectsV1Api.md#getProjectSettings) | **GET** /api/v1/{owner}/{project}/settings | Get Project settings
-[**listArchivedProjects**](ProjectsV1Api.md#listArchivedProjects) | **GET** /api/v1/archives/{user}/projects | List archived projects for user
-[**listBookmarkedProjects**](ProjectsV1Api.md#listBookmarkedProjects) | **GET** /api/v1/bookmarks/{user}/projects | List bookmarked projects for user
-[**listProjectNames**](ProjectsV1Api.md#listProjectNames) | **GET** /api/v1/{owner}/projects/names | List project names
-[**listProjects**](ProjectsV1Api.md#listProjects) | **GET** /api/v1/{owner}/projects/list | List projects
-[**patchProject**](ProjectsV1Api.md#patchProject) | **PATCH** /api/v1/{owner}/{project.name} | Patch project
-[**patchProjectSettings**](ProjectsV1Api.md#patchProjectSettings) | **PATCH** /api/v1/{owner}/{project}/settings | Patch project settings
-[**patchProjectTeams**](ProjectsV1Api.md#patchProjectTeams) | **PATCH** /api/v1/{owner}/{project}/teams | Patch project teams
-[**restoreProject**](ProjectsV1Api.md#restoreProject) | **POST** /api/v1/{owner}/{project}/restore | Restore project
-[**unbookmarkProject**](ProjectsV1Api.md#unbookmarkProject) | **DELETE** /api/v1/{owner}/{project}/unbookmark | Unbookmark project
-[**updateProject**](ProjectsV1Api.md#updateProject) | **PUT** /api/v1/{owner}/{project.name} | Update project
-[**updateProjectSettings**](ProjectsV1Api.md#updateProjectSettings) | **PUT** /api/v1/{owner}/{project}/settings | Update project settings
-[**updateProjectTeams**](ProjectsV1Api.md#updateProjectTeams) | **PUT** /api/v1/{owner}/{project}/teams | Update project teams
+[**projectsV1ArchiveProject**](ProjectsV1Api.md#projectsV1ArchiveProject) | **POST** /api/v1/{owner}/{project}/archive | Archive project
+[**projectsV1BookmarkProject**](ProjectsV1Api.md#projectsV1BookmarkProject) | **POST** /api/v1/{owner}/{project}/bookmark | Bookmark project
+[**projectsV1CreateProject**](ProjectsV1Api.md#projectsV1CreateProject) | **POST** /api/v1/{owner}/projects/create | Create new project
+[**projectsV1DeleteProject**](ProjectsV1Api.md#projectsV1DeleteProject) | **DELETE** /api/v1/{owner}/{project} | Delete project
+[**projectsV1DisableProjectCI**](ProjectsV1Api.md#projectsV1DisableProjectCI) | **DELETE** /api/v1/{owner}/{project}/ci | Disbale project CI
+[**projectsV1EnableProjectCI**](ProjectsV1Api.md#projectsV1EnableProjectCI) | **POST** /api/v1/{owner}/{project}/ci | Enable project CI
+[**projectsV1FetchProjectTeams**](ProjectsV1Api.md#projectsV1FetchProjectTeams) | **GET** /api/v1/{owner}/{project}/teams | Get project teams
+[**projectsV1GetProject**](ProjectsV1Api.md#projectsV1GetProject) | **GET** /api/v1/{owner}/{project} | Get project
+[**projectsV1GetProjectSettings**](ProjectsV1Api.md#projectsV1GetProjectSettings) | **GET** /api/v1/{owner}/{project}/settings | Get Project settings
+[**projectsV1ListArchivedProjects**](ProjectsV1Api.md#projectsV1ListArchivedProjects) | **GET** /api/v1/archives/{user}/projects | List archived projects for user
+[**projectsV1ListBookmarkedProjects**](ProjectsV1Api.md#projectsV1ListBookmarkedProjects) | **GET** /api/v1/bookmarks/{user}/projects | List bookmarked projects for user
+[**projectsV1ListProjectNames**](ProjectsV1Api.md#projectsV1ListProjectNames) | **GET** /api/v1/{owner}/projects/names | List project names
+[**projectsV1ListProjects**](ProjectsV1Api.md#projectsV1ListProjects) | **GET** /api/v1/{owner}/projects/list | List projects
+[**projectsV1PatchProject**](ProjectsV1Api.md#projectsV1PatchProject) | **PATCH** /api/v1/{owner}/{project.name} | Patch project
+[**projectsV1PatchProjectSettings**](ProjectsV1Api.md#projectsV1PatchProjectSettings) | **PATCH** /api/v1/{owner}/{project}/settings | Patch project settings
+[**projectsV1PatchProjectTeams**](ProjectsV1Api.md#projectsV1PatchProjectTeams) | **PATCH** /api/v1/{owner}/{project}/teams | Patch project teams
+[**projectsV1RestoreProject**](ProjectsV1Api.md#projectsV1RestoreProject) | **POST** /api/v1/{owner}/{project}/restore | Restore project
+[**projectsV1UnbookmarkProject**](ProjectsV1Api.md#projectsV1UnbookmarkProject) | **DELETE** /api/v1/{owner}/{project}/unbookmark | Unbookmark project
+[**projectsV1UpdateProject**](ProjectsV1Api.md#projectsV1UpdateProject) | **PUT** /api/v1/{owner}/{project.name} | Update project
+[**projectsV1UpdateProjectSettings**](ProjectsV1Api.md#projectsV1UpdateProjectSettings) | **PUT** /api/v1/{owner}/{project}/settings | Update project settings
+[**projectsV1UpdateProjectTeams**](ProjectsV1Api.md#projectsV1UpdateProjectTeams) | **PUT** /api/v1/{owner}/{project}/teams | Update project teams
 [**uploadProjectArtifact**](ProjectsV1Api.md#uploadProjectArtifact) | **POST** /api/v1/{owner}/{project}/artifacts/{uuid}/upload | Upload artifact to a store via project access
 
 
-<a name="archiveProject"></a>
-# **archiveProject**
-> archiveProject(owner, project)
+<a name="projectsV1ArchiveProject"></a>
+# **projectsV1ArchiveProject**
+> projectsV1ArchiveProject(owner, project)
 
 Archive project
 
@@ -59,7 +59,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully.');
   }
 };
-apiInstance.archiveProject(owner, project, callback);
+apiInstance.projectsV1ArchiveProject(owner, project, callback);
 ```
 
 ### Parameters
@@ -82,9 +82,9 @@ null (empty response body)
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="bookmarkProject"></a>
-# **bookmarkProject**
-> bookmarkProject(owner, project)
+<a name="projectsV1BookmarkProject"></a>
+# **projectsV1BookmarkProject**
+> projectsV1BookmarkProject(owner, project)
 
 Bookmark project
 
@@ -113,7 +113,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully.');
   }
 };
-apiInstance.bookmarkProject(owner, project, callback);
+apiInstance.projectsV1BookmarkProject(owner, project, callback);
 ```
 
 ### Parameters
@@ -136,9 +136,9 @@ null (empty response body)
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="createProject"></a>
-# **createProject**
-> V1Project createProject(owner, body)
+<a name="projectsV1CreateProject"></a>
+# **projectsV1CreateProject**
+> V1Project projectsV1CreateProject(owner, body)
 
 Create new project
 
@@ -167,7 +167,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.createProject(owner, body, callback);
+apiInstance.projectsV1CreateProject(owner, body, callback);
 ```
 
 ### Parameters
@@ -190,9 +190,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="deleteProject"></a>
-# **deleteProject**
-> deleteProject(owner, project)
+<a name="projectsV1DeleteProject"></a>
+# **projectsV1DeleteProject**
+> projectsV1DeleteProject(owner, project)
 
 Delete project
 
@@ -221,7 +221,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully.');
   }
 };
-apiInstance.deleteProject(owner, project, callback);
+apiInstance.projectsV1DeleteProject(owner, project, callback);
 ```
 
 ### Parameters
@@ -244,9 +244,9 @@ null (empty response body)
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="disableProjectCI"></a>
-# **disableProjectCI**
-> disableProjectCI(owner, project)
+<a name="projectsV1DisableProjectCI"></a>
+# **projectsV1DisableProjectCI**
+> projectsV1DisableProjectCI(owner, project)
 
 Disbale project CI
 
@@ -275,7 +275,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully.');
   }
 };
-apiInstance.disableProjectCI(owner, project, callback);
+apiInstance.projectsV1DisableProjectCI(owner, project, callback);
 ```
 
 ### Parameters
@@ -298,9 +298,9 @@ null (empty response body)
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="enableProjectCI"></a>
-# **enableProjectCI**
-> enableProjectCI(owner, project)
+<a name="projectsV1EnableProjectCI"></a>
+# **projectsV1EnableProjectCI**
+> projectsV1EnableProjectCI(owner, project)
 
 Enable project CI
 
@@ -329,7 +329,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully.');
   }
 };
-apiInstance.enableProjectCI(owner, project, callback);
+apiInstance.projectsV1EnableProjectCI(owner, project, callback);
 ```
 
 ### Parameters
@@ -352,9 +352,9 @@ null (empty response body)
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="fetchProjectTeams"></a>
-# **fetchProjectTeams**
-> V1ProjectTeams fetchProjectTeams(owner, project)
+<a name="projectsV1FetchProjectTeams"></a>
+# **projectsV1FetchProjectTeams**
+> V1ProjectTeams projectsV1FetchProjectTeams(owner, project)
 
 Get project teams
 
@@ -383,7 +383,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.fetchProjectTeams(owner, project, callback);
+apiInstance.projectsV1FetchProjectTeams(owner, project, callback);
 ```
 
 ### Parameters
@@ -406,9 +406,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="getProject"></a>
-# **getProject**
-> V1Project getProject(owner, project)
+<a name="projectsV1GetProject"></a>
+# **projectsV1GetProject**
+> V1Project projectsV1GetProject(owner, project)
 
 Get project
 
@@ -437,7 +437,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.getProject(owner, project, callback);
+apiInstance.projectsV1GetProject(owner, project, callback);
 ```
 
 ### Parameters
@@ -460,9 +460,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="getProjectSettings"></a>
-# **getProjectSettings**
-> V1ProjectSettings getProjectSettings(owner, project)
+<a name="projectsV1GetProjectSettings"></a>
+# **projectsV1GetProjectSettings**
+> V1ProjectSettings projectsV1GetProjectSettings(owner, project)
 
 Get Project settings
 
@@ -491,7 +491,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.getProjectSettings(owner, project, callback);
+apiInstance.projectsV1GetProjectSettings(owner, project, callback);
 ```
 
 ### Parameters
@@ -514,9 +514,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="listArchivedProjects"></a>
-# **listArchivedProjects**
-> V1ListProjectsResponse listArchivedProjects(user, opts)
+<a name="projectsV1ListArchivedProjects"></a>
+# **projectsV1ListArchivedProjects**
+> V1ListProjectsResponse projectsV1ListArchivedProjects(user, opts)
 
 List archived projects for user
 
@@ -549,7 +549,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.listArchivedProjects(user, opts, callback);
+apiInstance.projectsV1ListArchivedProjects(user, opts, callback);
 ```
 
 ### Parameters
@@ -575,9 +575,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="listBookmarkedProjects"></a>
-# **listBookmarkedProjects**
-> V1ListProjectsResponse listBookmarkedProjects(user, opts)
+<a name="projectsV1ListBookmarkedProjects"></a>
+# **projectsV1ListBookmarkedProjects**
+> V1ListProjectsResponse projectsV1ListBookmarkedProjects(user, opts)
 
 List bookmarked projects for user
 
@@ -610,7 +610,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.listBookmarkedProjects(user, opts, callback);
+apiInstance.projectsV1ListBookmarkedProjects(user, opts, callback);
 ```
 
 ### Parameters
@@ -636,9 +636,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="listProjectNames"></a>
-# **listProjectNames**
-> V1ListProjectsResponse listProjectNames(owner, opts)
+<a name="projectsV1ListProjectNames"></a>
+# **projectsV1ListProjectNames**
+> V1ListProjectsResponse projectsV1ListProjectNames(owner, opts)
 
 List project names
 
@@ -671,7 +671,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.listProjectNames(owner, opts, callback);
+apiInstance.projectsV1ListProjectNames(owner, opts, callback);
 ```
 
 ### Parameters
@@ -697,9 +697,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="listProjects"></a>
-# **listProjects**
-> V1ListProjectsResponse listProjects(owner, opts)
+<a name="projectsV1ListProjects"></a>
+# **projectsV1ListProjects**
+> V1ListProjectsResponse projectsV1ListProjects(owner, opts)
 
 List projects
 
@@ -732,7 +732,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.listProjects(owner, opts, callback);
+apiInstance.projectsV1ListProjects(owner, opts, callback);
 ```
 
 ### Parameters
@@ -758,9 +758,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="patchProject"></a>
-# **patchProject**
-> V1Project patchProject(owner, project_name, body)
+<a name="projectsV1PatchProject"></a>
+# **projectsV1PatchProject**
+> V1Project projectsV1PatchProject(owner, project_name, body)
 
 Patch project
 
@@ -791,7 +791,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.patchProject(owner, project_name, body, callback);
+apiInstance.projectsV1PatchProject(owner, project_name, body, callback);
 ```
 
 ### Parameters
@@ -815,9 +815,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="patchProjectSettings"></a>
-# **patchProjectSettings**
-> V1ProjectSettings patchProjectSettings(owner, project, body)
+<a name="projectsV1PatchProjectSettings"></a>
+# **projectsV1PatchProjectSettings**
+> V1ProjectSettings projectsV1PatchProjectSettings(owner, project, body)
 
 Patch project settings
 
@@ -848,7 +848,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.patchProjectSettings(owner, project, body, callback);
+apiInstance.projectsV1PatchProjectSettings(owner, project, body, callback);
 ```
 
 ### Parameters
@@ -872,9 +872,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="patchProjectTeams"></a>
-# **patchProjectTeams**
-> V1ProjectTeams patchProjectTeams(owner, project, body)
+<a name="projectsV1PatchProjectTeams"></a>
+# **projectsV1PatchProjectTeams**
+> V1ProjectTeams projectsV1PatchProjectTeams(owner, project, body)
 
 Patch project teams
 
@@ -905,7 +905,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.patchProjectTeams(owner, project, body, callback);
+apiInstance.projectsV1PatchProjectTeams(owner, project, body, callback);
 ```
 
 ### Parameters
@@ -929,9 +929,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="restoreProject"></a>
-# **restoreProject**
-> restoreProject(owner, project)
+<a name="projectsV1RestoreProject"></a>
+# **projectsV1RestoreProject**
+> projectsV1RestoreProject(owner, project)
 
 Restore project
 
@@ -960,7 +960,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully.');
   }
 };
-apiInstance.restoreProject(owner, project, callback);
+apiInstance.projectsV1RestoreProject(owner, project, callback);
 ```
 
 ### Parameters
@@ -983,9 +983,9 @@ null (empty response body)
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="unbookmarkProject"></a>
-# **unbookmarkProject**
-> unbookmarkProject(owner, project)
+<a name="projectsV1UnbookmarkProject"></a>
+# **projectsV1UnbookmarkProject**
+> projectsV1UnbookmarkProject(owner, project)
 
 Unbookmark project
 
@@ -1014,7 +1014,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully.');
   }
 };
-apiInstance.unbookmarkProject(owner, project, callback);
+apiInstance.projectsV1UnbookmarkProject(owner, project, callback);
 ```
 
 ### Parameters
@@ -1037,9 +1037,9 @@ null (empty response body)
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="updateProject"></a>
-# **updateProject**
-> V1Project updateProject(owner, project_name, body)
+<a name="projectsV1UpdateProject"></a>
+# **projectsV1UpdateProject**
+> V1Project projectsV1UpdateProject(owner, project_name, body)
 
 Update project
 
@@ -1070,7 +1070,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.updateProject(owner, project_name, body, callback);
+apiInstance.projectsV1UpdateProject(owner, project_name, body, callback);
 ```
 
 ### Parameters
@@ -1094,9 +1094,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="updateProjectSettings"></a>
-# **updateProjectSettings**
-> V1ProjectSettings updateProjectSettings(owner, project, body)
+<a name="projectsV1UpdateProjectSettings"></a>
+# **projectsV1UpdateProjectSettings**
+> V1ProjectSettings projectsV1UpdateProjectSettings(owner, project, body)
 
 Update project settings
 
@@ -1127,7 +1127,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.updateProjectSettings(owner, project, body, callback);
+apiInstance.projectsV1UpdateProjectSettings(owner, project, body, callback);
 ```
 
 ### Parameters
@@ -1151,9 +1151,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="updateProjectTeams"></a>
-# **updateProjectTeams**
-> V1ProjectTeams updateProjectTeams(owner, project, body)
+<a name="projectsV1UpdateProjectTeams"></a>
+# **projectsV1UpdateProjectTeams**
+> V1ProjectTeams projectsV1UpdateProjectTeams(owner, project, body)
 
 Update project teams
 
@@ -1184,7 +1184,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.updateProjectTeams(owner, project, body, callback);
+apiInstance.projectsV1UpdateProjectTeams(owner, project, body, callback);
 ```
 
 ### Parameters

@@ -49,12 +49,12 @@ class TeamsV1Api(object):
             api_client = ApiClient()
         self.api_client = api_client
 
-    def create_team(self, owner, body, **kwargs):  # noqa: E501
+    def teams_v1_create_team(self, owner, body, **kwargs):  # noqa: E501
         """Create organization  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.create_team(owner, body, async_req=True)
+        >>> thread = api.teams_v1_create_team(owner, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -66,19 +66,21 @@ class TeamsV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.create_team_with_http_info(owner, body, **kwargs)  # noqa: E501
+            return self.teams_v1_create_team_with_http_info(
+                owner, body, **kwargs
+            )  # noqa: E501
         else:
-            (data) = self.create_team_with_http_info(
+            (data) = self.teams_v1_create_team_with_http_info(
                 owner, body, **kwargs
             )  # noqa: E501
             return data
 
-    def create_team_with_http_info(self, owner, body, **kwargs):  # noqa: E501
+    def teams_v1_create_team_with_http_info(self, owner, body, **kwargs):  # noqa: E501
         """Create organization  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.create_team_with_http_info(owner, body, async_req=True)
+        >>> thread = api.teams_v1_create_team_with_http_info(owner, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -100,19 +102,19 @@ class TeamsV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method create_team" % key
+                    " to method teams_v1_create_team" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `create_team`"
+                "Missing the required parameter `owner` when calling `teams_v1_create_team`"
             )  # noqa: E501
         # verify the required parameter 'body' is set
         if "body" not in params or params["body"] is None:
             raise ValueError(
-                "Missing the required parameter `body` when calling `create_team`"
+                "Missing the required parameter `body` when calling `teams_v1_create_team`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -164,12 +166,12 @@ class TeamsV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def create_team_member(self, owner, team, body, **kwargs):  # noqa: E501
+    def teams_v1_create_team_member(self, owner, team, body, **kwargs):  # noqa: E501
         """Create organization member  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.create_team_member(owner, team, body, async_req=True)
+        >>> thread = api.teams_v1_create_team_member(owner, team, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -182,23 +184,23 @@ class TeamsV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.create_team_member_with_http_info(
+            return self.teams_v1_create_team_member_with_http_info(
                 owner, team, body, **kwargs
             )  # noqa: E501
         else:
-            (data) = self.create_team_member_with_http_info(
+            (data) = self.teams_v1_create_team_member_with_http_info(
                 owner, team, body, **kwargs
             )  # noqa: E501
             return data
 
-    def create_team_member_with_http_info(
+    def teams_v1_create_team_member_with_http_info(
         self, owner, team, body, **kwargs
     ):  # noqa: E501
         """Create organization member  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.create_team_member_with_http_info(owner, team, body, async_req=True)
+        >>> thread = api.teams_v1_create_team_member_with_http_info(owner, team, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -221,24 +223,24 @@ class TeamsV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method create_team_member" % key
+                    " to method teams_v1_create_team_member" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `create_team_member`"
+                "Missing the required parameter `owner` when calling `teams_v1_create_team_member`"
             )  # noqa: E501
         # verify the required parameter 'team' is set
         if "team" not in params or params["team"] is None:
             raise ValueError(
-                "Missing the required parameter `team` when calling `create_team_member`"
+                "Missing the required parameter `team` when calling `teams_v1_create_team_member`"
             )  # noqa: E501
         # verify the required parameter 'body' is set
         if "body" not in params or params["body"] is None:
             raise ValueError(
-                "Missing the required parameter `body` when calling `create_team_member`"
+                "Missing the required parameter `body` when calling `teams_v1_create_team_member`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -292,12 +294,12 @@ class TeamsV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def delete_team(self, owner, team, **kwargs):  # noqa: E501
+    def teams_v1_delete_team(self, owner, team, **kwargs):  # noqa: E501
         """Delete organization  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.delete_team(owner, team, async_req=True)
+        >>> thread = api.teams_v1_delete_team(owner, team, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -309,19 +311,21 @@ class TeamsV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.delete_team_with_http_info(owner, team, **kwargs)  # noqa: E501
+            return self.teams_v1_delete_team_with_http_info(
+                owner, team, **kwargs
+            )  # noqa: E501
         else:
-            (data) = self.delete_team_with_http_info(
+            (data) = self.teams_v1_delete_team_with_http_info(
                 owner, team, **kwargs
             )  # noqa: E501
             return data
 
-    def delete_team_with_http_info(self, owner, team, **kwargs):  # noqa: E501
+    def teams_v1_delete_team_with_http_info(self, owner, team, **kwargs):  # noqa: E501
         """Delete organization  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.delete_team_with_http_info(owner, team, async_req=True)
+        >>> thread = api.teams_v1_delete_team_with_http_info(owner, team, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -343,19 +347,19 @@ class TeamsV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method delete_team" % key
+                    " to method teams_v1_delete_team" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `delete_team`"
+                "Missing the required parameter `owner` when calling `teams_v1_delete_team`"
             )  # noqa: E501
         # verify the required parameter 'team' is set
         if "team" not in params or params["team"] is None:
             raise ValueError(
-                "Missing the required parameter `team` when calling `delete_team`"
+                "Missing the required parameter `team` when calling `teams_v1_delete_team`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -407,12 +411,12 @@ class TeamsV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def delete_team_member(self, owner, team, user, **kwargs):  # noqa: E501
+    def teams_v1_delete_team_member(self, owner, team, user, **kwargs):  # noqa: E501
         """Delete organization member details  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.delete_team_member(owner, team, user, async_req=True)
+        >>> thread = api.teams_v1_delete_team_member(owner, team, user, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -425,23 +429,23 @@ class TeamsV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.delete_team_member_with_http_info(
+            return self.teams_v1_delete_team_member_with_http_info(
                 owner, team, user, **kwargs
             )  # noqa: E501
         else:
-            (data) = self.delete_team_member_with_http_info(
+            (data) = self.teams_v1_delete_team_member_with_http_info(
                 owner, team, user, **kwargs
             )  # noqa: E501
             return data
 
-    def delete_team_member_with_http_info(
+    def teams_v1_delete_team_member_with_http_info(
         self, owner, team, user, **kwargs
     ):  # noqa: E501
         """Delete organization member details  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.delete_team_member_with_http_info(owner, team, user, async_req=True)
+        >>> thread = api.teams_v1_delete_team_member_with_http_info(owner, team, user, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -464,24 +468,24 @@ class TeamsV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method delete_team_member" % key
+                    " to method teams_v1_delete_team_member" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `delete_team_member`"
+                "Missing the required parameter `owner` when calling `teams_v1_delete_team_member`"
             )  # noqa: E501
         # verify the required parameter 'team' is set
         if "team" not in params or params["team"] is None:
             raise ValueError(
-                "Missing the required parameter `team` when calling `delete_team_member`"
+                "Missing the required parameter `team` when calling `teams_v1_delete_team_member`"
             )  # noqa: E501
         # verify the required parameter 'user' is set
         if "user" not in params or params["user"] is None:
             raise ValueError(
-                "Missing the required parameter `user` when calling `delete_team_member`"
+                "Missing the required parameter `user` when calling `teams_v1_delete_team_member`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -535,12 +539,12 @@ class TeamsV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def get_team(self, owner, team, **kwargs):  # noqa: E501
+    def teams_v1_get_team(self, owner, team, **kwargs):  # noqa: E501
         """Get organization  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.get_team(owner, team, async_req=True)
+        >>> thread = api.teams_v1_get_team(owner, team, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -552,17 +556,21 @@ class TeamsV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.get_team_with_http_info(owner, team, **kwargs)  # noqa: E501
+            return self.teams_v1_get_team_with_http_info(
+                owner, team, **kwargs
+            )  # noqa: E501
         else:
-            (data) = self.get_team_with_http_info(owner, team, **kwargs)  # noqa: E501
+            (data) = self.teams_v1_get_team_with_http_info(
+                owner, team, **kwargs
+            )  # noqa: E501
             return data
 
-    def get_team_with_http_info(self, owner, team, **kwargs):  # noqa: E501
+    def teams_v1_get_team_with_http_info(self, owner, team, **kwargs):  # noqa: E501
         """Get organization  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.get_team_with_http_info(owner, team, async_req=True)
+        >>> thread = api.teams_v1_get_team_with_http_info(owner, team, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -584,19 +592,19 @@ class TeamsV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method get_team" % key
+                    " to method teams_v1_get_team" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `get_team`"
+                "Missing the required parameter `owner` when calling `teams_v1_get_team`"
             )  # noqa: E501
         # verify the required parameter 'team' is set
         if "team" not in params or params["team"] is None:
             raise ValueError(
-                "Missing the required parameter `team` when calling `get_team`"
+                "Missing the required parameter `team` when calling `teams_v1_get_team`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -648,12 +656,12 @@ class TeamsV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def get_team_member(self, owner, team, user, **kwargs):  # noqa: E501
+    def teams_v1_get_team_member(self, owner, team, user, **kwargs):  # noqa: E501
         """Get organization member details  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.get_team_member(owner, team, user, async_req=True)
+        >>> thread = api.teams_v1_get_team_member(owner, team, user, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -666,21 +674,23 @@ class TeamsV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.get_team_member_with_http_info(
+            return self.teams_v1_get_team_member_with_http_info(
                 owner, team, user, **kwargs
             )  # noqa: E501
         else:
-            (data) = self.get_team_member_with_http_info(
+            (data) = self.teams_v1_get_team_member_with_http_info(
                 owner, team, user, **kwargs
             )  # noqa: E501
             return data
 
-    def get_team_member_with_http_info(self, owner, team, user, **kwargs):  # noqa: E501
+    def teams_v1_get_team_member_with_http_info(
+        self, owner, team, user, **kwargs
+    ):  # noqa: E501
         """Get organization member details  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.get_team_member_with_http_info(owner, team, user, async_req=True)
+        >>> thread = api.teams_v1_get_team_member_with_http_info(owner, team, user, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -703,24 +713,24 @@ class TeamsV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method get_team_member" % key
+                    " to method teams_v1_get_team_member" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `get_team_member`"
+                "Missing the required parameter `owner` when calling `teams_v1_get_team_member`"
             )  # noqa: E501
         # verify the required parameter 'team' is set
         if "team" not in params or params["team"] is None:
             raise ValueError(
-                "Missing the required parameter `team` when calling `get_team_member`"
+                "Missing the required parameter `team` when calling `teams_v1_get_team_member`"
             )  # noqa: E501
         # verify the required parameter 'user' is set
         if "user" not in params or params["user"] is None:
             raise ValueError(
-                "Missing the required parameter `user` when calling `get_team_member`"
+                "Missing the required parameter `user` when calling `teams_v1_get_team_member`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -774,12 +784,12 @@ class TeamsV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def list_team_members(self, owner, team, **kwargs):  # noqa: E501
+    def teams_v1_list_team_members(self, owner, team, **kwargs):  # noqa: E501
         """Get organization members  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.list_team_members(owner, team, async_req=True)
+        >>> thread = api.teams_v1_list_team_members(owner, team, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -795,21 +805,23 @@ class TeamsV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.list_team_members_with_http_info(
+            return self.teams_v1_list_team_members_with_http_info(
                 owner, team, **kwargs
             )  # noqa: E501
         else:
-            (data) = self.list_team_members_with_http_info(
+            (data) = self.teams_v1_list_team_members_with_http_info(
                 owner, team, **kwargs
             )  # noqa: E501
             return data
 
-    def list_team_members_with_http_info(self, owner, team, **kwargs):  # noqa: E501
+    def teams_v1_list_team_members_with_http_info(
+        self, owner, team, **kwargs
+    ):  # noqa: E501
         """Get organization members  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.list_team_members_with_http_info(owner, team, async_req=True)
+        >>> thread = api.teams_v1_list_team_members_with_http_info(owner, team, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -835,19 +847,19 @@ class TeamsV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method list_team_members" % key
+                    " to method teams_v1_list_team_members" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `list_team_members`"
+                "Missing the required parameter `owner` when calling `teams_v1_list_team_members`"
             )  # noqa: E501
         # verify the required parameter 'team' is set
         if "team" not in params or params["team"] is None:
             raise ValueError(
-                "Missing the required parameter `team` when calling `list_team_members`"
+                "Missing the required parameter `team` when calling `teams_v1_list_team_members`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -907,12 +919,12 @@ class TeamsV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def list_team_names(self, owner, **kwargs):  # noqa: E501
+    def teams_v1_list_team_names(self, owner, **kwargs):  # noqa: E501
         """List organizations names  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.list_team_names(owner, async_req=True)
+        >>> thread = api.teams_v1_list_team_names(owner, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -927,17 +939,21 @@ class TeamsV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.list_team_names_with_http_info(owner, **kwargs)  # noqa: E501
+            return self.teams_v1_list_team_names_with_http_info(
+                owner, **kwargs
+            )  # noqa: E501
         else:
-            (data) = self.list_team_names_with_http_info(owner, **kwargs)  # noqa: E501
+            (data) = self.teams_v1_list_team_names_with_http_info(
+                owner, **kwargs
+            )  # noqa: E501
             return data
 
-    def list_team_names_with_http_info(self, owner, **kwargs):  # noqa: E501
+    def teams_v1_list_team_names_with_http_info(self, owner, **kwargs):  # noqa: E501
         """List organizations names  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.list_team_names_with_http_info(owner, async_req=True)
+        >>> thread = api.teams_v1_list_team_names_with_http_info(owner, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -962,14 +978,14 @@ class TeamsV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method list_team_names" % key
+                    " to method teams_v1_list_team_names" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `list_team_names`"
+                "Missing the required parameter `owner` when calling `teams_v1_list_team_names`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -1027,12 +1043,12 @@ class TeamsV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def list_teams(self, owner, **kwargs):  # noqa: E501
+    def teams_v1_list_teams(self, owner, **kwargs):  # noqa: E501
         """List organizations  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.list_teams(owner, async_req=True)
+        >>> thread = api.teams_v1_list_teams(owner, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -1047,17 +1063,21 @@ class TeamsV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.list_teams_with_http_info(owner, **kwargs)  # noqa: E501
+            return self.teams_v1_list_teams_with_http_info(
+                owner, **kwargs
+            )  # noqa: E501
         else:
-            (data) = self.list_teams_with_http_info(owner, **kwargs)  # noqa: E501
+            (data) = self.teams_v1_list_teams_with_http_info(
+                owner, **kwargs
+            )  # noqa: E501
             return data
 
-    def list_teams_with_http_info(self, owner, **kwargs):  # noqa: E501
+    def teams_v1_list_teams_with_http_info(self, owner, **kwargs):  # noqa: E501
         """List organizations  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.list_teams_with_http_info(owner, async_req=True)
+        >>> thread = api.teams_v1_list_teams_with_http_info(owner, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -1082,14 +1102,14 @@ class TeamsV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method list_teams" % key
+                    " to method teams_v1_list_teams" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `list_teams`"
+                "Missing the required parameter `owner` when calling `teams_v1_list_teams`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -1147,12 +1167,12 @@ class TeamsV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def patch_team(self, owner, team_name, body, **kwargs):  # noqa: E501
+    def teams_v1_patch_team(self, owner, team_name, body, **kwargs):  # noqa: E501
         """Patch organization  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.patch_team(owner, team_name, body, async_req=True)
+        >>> thread = api.teams_v1_patch_team(owner, team_name, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -1165,21 +1185,23 @@ class TeamsV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.patch_team_with_http_info(
+            return self.teams_v1_patch_team_with_http_info(
                 owner, team_name, body, **kwargs
             )  # noqa: E501
         else:
-            (data) = self.patch_team_with_http_info(
+            (data) = self.teams_v1_patch_team_with_http_info(
                 owner, team_name, body, **kwargs
             )  # noqa: E501
             return data
 
-    def patch_team_with_http_info(self, owner, team_name, body, **kwargs):  # noqa: E501
+    def teams_v1_patch_team_with_http_info(
+        self, owner, team_name, body, **kwargs
+    ):  # noqa: E501
         """Patch organization  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.patch_team_with_http_info(owner, team_name, body, async_req=True)
+        >>> thread = api.teams_v1_patch_team_with_http_info(owner, team_name, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -1202,24 +1224,24 @@ class TeamsV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method patch_team" % key
+                    " to method teams_v1_patch_team" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `patch_team`"
+                "Missing the required parameter `owner` when calling `teams_v1_patch_team`"
             )  # noqa: E501
         # verify the required parameter 'team_name' is set
         if "team_name" not in params or params["team_name"] is None:
             raise ValueError(
-                "Missing the required parameter `team_name` when calling `patch_team`"
+                "Missing the required parameter `team_name` when calling `teams_v1_patch_team`"
             )  # noqa: E501
         # verify the required parameter 'body' is set
         if "body" not in params or params["body"] is None:
             raise ValueError(
-                "Missing the required parameter `body` when calling `patch_team`"
+                "Missing the required parameter `body` when calling `teams_v1_patch_team`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -1273,12 +1295,14 @@ class TeamsV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def patch_team_member(self, owner, team, member_user, body, **kwargs):  # noqa: E501
+    def teams_v1_patch_team_member(
+        self, owner, team, member_user, body, **kwargs
+    ):  # noqa: E501
         """Patch organization member  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.patch_team_member(owner, team, member_user, body, async_req=True)
+        >>> thread = api.teams_v1_patch_team_member(owner, team, member_user, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -1292,23 +1316,23 @@ class TeamsV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.patch_team_member_with_http_info(
+            return self.teams_v1_patch_team_member_with_http_info(
                 owner, team, member_user, body, **kwargs
             )  # noqa: E501
         else:
-            (data) = self.patch_team_member_with_http_info(
+            (data) = self.teams_v1_patch_team_member_with_http_info(
                 owner, team, member_user, body, **kwargs
             )  # noqa: E501
             return data
 
-    def patch_team_member_with_http_info(
+    def teams_v1_patch_team_member_with_http_info(
         self, owner, team, member_user, body, **kwargs
     ):  # noqa: E501
         """Patch organization member  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.patch_team_member_with_http_info(owner, team, member_user, body, async_req=True)
+        >>> thread = api.teams_v1_patch_team_member_with_http_info(owner, team, member_user, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -1332,29 +1356,29 @@ class TeamsV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method patch_team_member" % key
+                    " to method teams_v1_patch_team_member" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `patch_team_member`"
+                "Missing the required parameter `owner` when calling `teams_v1_patch_team_member`"
             )  # noqa: E501
         # verify the required parameter 'team' is set
         if "team" not in params or params["team"] is None:
             raise ValueError(
-                "Missing the required parameter `team` when calling `patch_team_member`"
+                "Missing the required parameter `team` when calling `teams_v1_patch_team_member`"
             )  # noqa: E501
         # verify the required parameter 'member_user' is set
         if "member_user" not in params or params["member_user"] is None:
             raise ValueError(
-                "Missing the required parameter `member_user` when calling `patch_team_member`"
+                "Missing the required parameter `member_user` when calling `teams_v1_patch_team_member`"
             )  # noqa: E501
         # verify the required parameter 'body' is set
         if "body" not in params or params["body"] is None:
             raise ValueError(
-                "Missing the required parameter `body` when calling `patch_team_member`"
+                "Missing the required parameter `body` when calling `teams_v1_patch_team_member`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -1410,12 +1434,12 @@ class TeamsV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def update_team(self, owner, team_name, body, **kwargs):  # noqa: E501
+    def teams_v1_update_team(self, owner, team_name, body, **kwargs):  # noqa: E501
         """Update organization  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.update_team(owner, team_name, body, async_req=True)
+        >>> thread = api.teams_v1_update_team(owner, team_name, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -1428,23 +1452,23 @@ class TeamsV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.update_team_with_http_info(
+            return self.teams_v1_update_team_with_http_info(
                 owner, team_name, body, **kwargs
             )  # noqa: E501
         else:
-            (data) = self.update_team_with_http_info(
+            (data) = self.teams_v1_update_team_with_http_info(
                 owner, team_name, body, **kwargs
             )  # noqa: E501
             return data
 
-    def update_team_with_http_info(
+    def teams_v1_update_team_with_http_info(
         self, owner, team_name, body, **kwargs
     ):  # noqa: E501
         """Update organization  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.update_team_with_http_info(owner, team_name, body, async_req=True)
+        >>> thread = api.teams_v1_update_team_with_http_info(owner, team_name, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -1467,24 +1491,24 @@ class TeamsV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method update_team" % key
+                    " to method teams_v1_update_team" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `update_team`"
+                "Missing the required parameter `owner` when calling `teams_v1_update_team`"
             )  # noqa: E501
         # verify the required parameter 'team_name' is set
         if "team_name" not in params or params["team_name"] is None:
             raise ValueError(
-                "Missing the required parameter `team_name` when calling `update_team`"
+                "Missing the required parameter `team_name` when calling `teams_v1_update_team`"
             )  # noqa: E501
         # verify the required parameter 'body' is set
         if "body" not in params or params["body"] is None:
             raise ValueError(
-                "Missing the required parameter `body` when calling `update_team`"
+                "Missing the required parameter `body` when calling `teams_v1_update_team`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -1538,14 +1562,14 @@ class TeamsV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def update_team_member(
+    def teams_v1_update_team_member(
         self, owner, team, member_user, body, **kwargs
     ):  # noqa: E501
         """Update organization member  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.update_team_member(owner, team, member_user, body, async_req=True)
+        >>> thread = api.teams_v1_update_team_member(owner, team, member_user, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -1559,23 +1583,23 @@ class TeamsV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.update_team_member_with_http_info(
+            return self.teams_v1_update_team_member_with_http_info(
                 owner, team, member_user, body, **kwargs
             )  # noqa: E501
         else:
-            (data) = self.update_team_member_with_http_info(
+            (data) = self.teams_v1_update_team_member_with_http_info(
                 owner, team, member_user, body, **kwargs
             )  # noqa: E501
             return data
 
-    def update_team_member_with_http_info(
+    def teams_v1_update_team_member_with_http_info(
         self, owner, team, member_user, body, **kwargs
     ):  # noqa: E501
         """Update organization member  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.update_team_member_with_http_info(owner, team, member_user, body, async_req=True)
+        >>> thread = api.teams_v1_update_team_member_with_http_info(owner, team, member_user, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -1599,29 +1623,29 @@ class TeamsV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method update_team_member" % key
+                    " to method teams_v1_update_team_member" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `update_team_member`"
+                "Missing the required parameter `owner` when calling `teams_v1_update_team_member`"
             )  # noqa: E501
         # verify the required parameter 'team' is set
         if "team" not in params or params["team"] is None:
             raise ValueError(
-                "Missing the required parameter `team` when calling `update_team_member`"
+                "Missing the required parameter `team` when calling `teams_v1_update_team_member`"
             )  # noqa: E501
         # verify the required parameter 'member_user' is set
         if "member_user" not in params or params["member_user"] is None:
             raise ValueError(
-                "Missing the required parameter `member_user` when calling `update_team_member`"
+                "Missing the required parameter `member_user` when calling `teams_v1_update_team_member`"
             )  # noqa: E501
         # verify the required parameter 'body' is set
         if "body" not in params or params["body"] is None:
             raise ValueError(
-                "Missing the required parameter `body` when calling `update_team_member`"
+                "Missing the required parameter `body` when calling `teams_v1_update_team_member`"
             )  # noqa: E501
 
         collection_formats = {}

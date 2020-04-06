@@ -49,12 +49,12 @@ class QueuesV1Api(object):
             api_client = ApiClient()
         self.api_client = api_client
 
-    def create_queue(self, owner, agent, body, **kwargs):  # noqa: E501
+    def queues_v1_create_queue(self, owner, agent, body, **kwargs):  # noqa: E501
         """Update agent  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.create_queue(owner, agent, body, async_req=True)
+        >>> thread = api.queues_v1_create_queue(owner, agent, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -67,21 +67,23 @@ class QueuesV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.create_queue_with_http_info(
+            return self.queues_v1_create_queue_with_http_info(
                 owner, agent, body, **kwargs
             )  # noqa: E501
         else:
-            (data) = self.create_queue_with_http_info(
+            (data) = self.queues_v1_create_queue_with_http_info(
                 owner, agent, body, **kwargs
             )  # noqa: E501
             return data
 
-    def create_queue_with_http_info(self, owner, agent, body, **kwargs):  # noqa: E501
+    def queues_v1_create_queue_with_http_info(
+        self, owner, agent, body, **kwargs
+    ):  # noqa: E501
         """Update agent  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.create_queue_with_http_info(owner, agent, body, async_req=True)
+        >>> thread = api.queues_v1_create_queue_with_http_info(owner, agent, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -104,24 +106,24 @@ class QueuesV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method create_queue" % key
+                    " to method queues_v1_create_queue" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `create_queue`"
+                "Missing the required parameter `owner` when calling `queues_v1_create_queue`"
             )  # noqa: E501
         # verify the required parameter 'agent' is set
         if "agent" not in params or params["agent"] is None:
             raise ValueError(
-                "Missing the required parameter `agent` when calling `create_queue`"
+                "Missing the required parameter `agent` when calling `queues_v1_create_queue`"
             )  # noqa: E501
         # verify the required parameter 'body' is set
         if "body" not in params or params["body"] is None:
             raise ValueError(
-                "Missing the required parameter `body` when calling `create_queue`"
+                "Missing the required parameter `body` when calling `queues_v1_create_queue`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -175,12 +177,12 @@ class QueuesV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def delete_queue(self, owner, agent, uuid, **kwargs):  # noqa: E501
+    def queues_v1_delete_queue(self, owner, agent, uuid, **kwargs):  # noqa: E501
         """Sync agent  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.delete_queue(owner, agent, uuid, async_req=True)
+        >>> thread = api.queues_v1_delete_queue(owner, agent, uuid, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -193,21 +195,23 @@ class QueuesV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.delete_queue_with_http_info(
+            return self.queues_v1_delete_queue_with_http_info(
                 owner, agent, uuid, **kwargs
             )  # noqa: E501
         else:
-            (data) = self.delete_queue_with_http_info(
+            (data) = self.queues_v1_delete_queue_with_http_info(
                 owner, agent, uuid, **kwargs
             )  # noqa: E501
             return data
 
-    def delete_queue_with_http_info(self, owner, agent, uuid, **kwargs):  # noqa: E501
+    def queues_v1_delete_queue_with_http_info(
+        self, owner, agent, uuid, **kwargs
+    ):  # noqa: E501
         """Sync agent  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.delete_queue_with_http_info(owner, agent, uuid, async_req=True)
+        >>> thread = api.queues_v1_delete_queue_with_http_info(owner, agent, uuid, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -230,24 +234,24 @@ class QueuesV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method delete_queue" % key
+                    " to method queues_v1_delete_queue" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `delete_queue`"
+                "Missing the required parameter `owner` when calling `queues_v1_delete_queue`"
             )  # noqa: E501
         # verify the required parameter 'agent' is set
         if "agent" not in params or params["agent"] is None:
             raise ValueError(
-                "Missing the required parameter `agent` when calling `delete_queue`"
+                "Missing the required parameter `agent` when calling `queues_v1_delete_queue`"
             )  # noqa: E501
         # verify the required parameter 'uuid' is set
         if "uuid" not in params or params["uuid"] is None:
             raise ValueError(
-                "Missing the required parameter `uuid` when calling `delete_queue`"
+                "Missing the required parameter `uuid` when calling `queues_v1_delete_queue`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -301,12 +305,12 @@ class QueuesV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def get_queue(self, owner, agent, uuid, **kwargs):  # noqa: E501
+    def queues_v1_get_queue(self, owner, agent, uuid, **kwargs):  # noqa: E501
         """Patch agent  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.get_queue(owner, agent, uuid, async_req=True)
+        >>> thread = api.queues_v1_get_queue(owner, agent, uuid, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -319,21 +323,23 @@ class QueuesV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.get_queue_with_http_info(
+            return self.queues_v1_get_queue_with_http_info(
                 owner, agent, uuid, **kwargs
             )  # noqa: E501
         else:
-            (data) = self.get_queue_with_http_info(
+            (data) = self.queues_v1_get_queue_with_http_info(
                 owner, agent, uuid, **kwargs
             )  # noqa: E501
             return data
 
-    def get_queue_with_http_info(self, owner, agent, uuid, **kwargs):  # noqa: E501
+    def queues_v1_get_queue_with_http_info(
+        self, owner, agent, uuid, **kwargs
+    ):  # noqa: E501
         """Patch agent  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.get_queue_with_http_info(owner, agent, uuid, async_req=True)
+        >>> thread = api.queues_v1_get_queue_with_http_info(owner, agent, uuid, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -356,24 +362,24 @@ class QueuesV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method get_queue" % key
+                    " to method queues_v1_get_queue" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `get_queue`"
+                "Missing the required parameter `owner` when calling `queues_v1_get_queue`"
             )  # noqa: E501
         # verify the required parameter 'agent' is set
         if "agent" not in params or params["agent"] is None:
             raise ValueError(
-                "Missing the required parameter `agent` when calling `get_queue`"
+                "Missing the required parameter `agent` when calling `queues_v1_get_queue`"
             )  # noqa: E501
         # verify the required parameter 'uuid' is set
         if "uuid" not in params or params["uuid"] is None:
             raise ValueError(
-                "Missing the required parameter `uuid` when calling `get_queue`"
+                "Missing the required parameter `uuid` when calling `queues_v1_get_queue`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -427,12 +433,12 @@ class QueuesV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def list_organization_queue_names(self, owner, **kwargs):  # noqa: E501
+    def queues_v1_list_organization_queue_names(self, owner, **kwargs):  # noqa: E501
         """List agents names  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.list_organization_queue_names(owner, async_req=True)
+        >>> thread = api.queues_v1_list_organization_queue_names(owner, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -447,23 +453,23 @@ class QueuesV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.list_organization_queue_names_with_http_info(
+            return self.queues_v1_list_organization_queue_names_with_http_info(
                 owner, **kwargs
             )  # noqa: E501
         else:
-            (data) = self.list_organization_queue_names_with_http_info(
+            (data) = self.queues_v1_list_organization_queue_names_with_http_info(
                 owner, **kwargs
             )  # noqa: E501
             return data
 
-    def list_organization_queue_names_with_http_info(
+    def queues_v1_list_organization_queue_names_with_http_info(
         self, owner, **kwargs
     ):  # noqa: E501
         """List agents names  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.list_organization_queue_names_with_http_info(owner, async_req=True)
+        >>> thread = api.queues_v1_list_organization_queue_names_with_http_info(owner, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -488,14 +494,14 @@ class QueuesV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method list_organization_queue_names" % key
+                    " to method queues_v1_list_organization_queue_names" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `list_organization_queue_names`"
+                "Missing the required parameter `owner` when calling `queues_v1_list_organization_queue_names`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -553,12 +559,12 @@ class QueuesV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def list_organization_queues(self, owner, **kwargs):  # noqa: E501
+    def queues_v1_list_organization_queues(self, owner, **kwargs):  # noqa: E501
         """List agents  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.list_organization_queues(owner, async_req=True)
+        >>> thread = api.queues_v1_list_organization_queues(owner, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -573,21 +579,23 @@ class QueuesV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.list_organization_queues_with_http_info(
+            return self.queues_v1_list_organization_queues_with_http_info(
                 owner, **kwargs
             )  # noqa: E501
         else:
-            (data) = self.list_organization_queues_with_http_info(
+            (data) = self.queues_v1_list_organization_queues_with_http_info(
                 owner, **kwargs
             )  # noqa: E501
             return data
 
-    def list_organization_queues_with_http_info(self, owner, **kwargs):  # noqa: E501
+    def queues_v1_list_organization_queues_with_http_info(
+        self, owner, **kwargs
+    ):  # noqa: E501
         """List agents  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.list_organization_queues_with_http_info(owner, async_req=True)
+        >>> thread = api.queues_v1_list_organization_queues_with_http_info(owner, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -612,14 +620,14 @@ class QueuesV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method list_organization_queues" % key
+                    " to method queues_v1_list_organization_queues" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `list_organization_queues`"
+                "Missing the required parameter `owner` when calling `queues_v1_list_organization_queues`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -677,12 +685,12 @@ class QueuesV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def list_queue_names(self, owner, agent, **kwargs):  # noqa: E501
+    def queues_v1_list_queue_names(self, owner, agent, **kwargs):  # noqa: E501
         """Create agent  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.list_queue_names(owner, agent, async_req=True)
+        >>> thread = api.queues_v1_list_queue_names(owner, agent, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -698,21 +706,23 @@ class QueuesV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.list_queue_names_with_http_info(
+            return self.queues_v1_list_queue_names_with_http_info(
                 owner, agent, **kwargs
             )  # noqa: E501
         else:
-            (data) = self.list_queue_names_with_http_info(
+            (data) = self.queues_v1_list_queue_names_with_http_info(
                 owner, agent, **kwargs
             )  # noqa: E501
             return data
 
-    def list_queue_names_with_http_info(self, owner, agent, **kwargs):  # noqa: E501
+    def queues_v1_list_queue_names_with_http_info(
+        self, owner, agent, **kwargs
+    ):  # noqa: E501
         """Create agent  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.list_queue_names_with_http_info(owner, agent, async_req=True)
+        >>> thread = api.queues_v1_list_queue_names_with_http_info(owner, agent, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -745,19 +755,19 @@ class QueuesV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method list_queue_names" % key
+                    " to method queues_v1_list_queue_names" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `list_queue_names`"
+                "Missing the required parameter `owner` when calling `queues_v1_list_queue_names`"
             )  # noqa: E501
         # verify the required parameter 'agent' is set
         if "agent" not in params or params["agent"] is None:
             raise ValueError(
-                "Missing the required parameter `agent` when calling `list_queue_names`"
+                "Missing the required parameter `agent` when calling `queues_v1_list_queue_names`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -817,12 +827,12 @@ class QueuesV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def list_queues(self, owner, agent, **kwargs):  # noqa: E501
+    def queues_v1_list_queues(self, owner, agent, **kwargs):  # noqa: E501
         """Get agent  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.list_queues(owner, agent, async_req=True)
+        >>> thread = api.queues_v1_list_queues(owner, agent, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -838,19 +848,23 @@ class QueuesV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.list_queues_with_http_info(owner, agent, **kwargs)  # noqa: E501
+            return self.queues_v1_list_queues_with_http_info(
+                owner, agent, **kwargs
+            )  # noqa: E501
         else:
-            (data) = self.list_queues_with_http_info(
+            (data) = self.queues_v1_list_queues_with_http_info(
                 owner, agent, **kwargs
             )  # noqa: E501
             return data
 
-    def list_queues_with_http_info(self, owner, agent, **kwargs):  # noqa: E501
+    def queues_v1_list_queues_with_http_info(
+        self, owner, agent, **kwargs
+    ):  # noqa: E501
         """Get agent  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.list_queues_with_http_info(owner, agent, async_req=True)
+        >>> thread = api.queues_v1_list_queues_with_http_info(owner, agent, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -883,19 +897,19 @@ class QueuesV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method list_queues" % key
+                    " to method queues_v1_list_queues" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `list_queues`"
+                "Missing the required parameter `owner` when calling `queues_v1_list_queues`"
             )  # noqa: E501
         # verify the required parameter 'agent' is set
         if "agent" not in params or params["agent"] is None:
             raise ValueError(
-                "Missing the required parameter `agent` when calling `list_queues`"
+                "Missing the required parameter `agent` when calling `queues_v1_list_queues`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -955,12 +969,14 @@ class QueuesV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def patch_queue(self, owner, queue_agent, queue_uuid, body, **kwargs):  # noqa: E501
+    def queues_v1_patch_queue(
+        self, owner, queue_agent, queue_uuid, body, **kwargs
+    ):  # noqa: E501
         """Get State (queues/runs)  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.patch_queue(owner, queue_agent, queue_uuid, body, async_req=True)
+        >>> thread = api.queues_v1_patch_queue(owner, queue_agent, queue_uuid, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -974,23 +990,23 @@ class QueuesV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.patch_queue_with_http_info(
+            return self.queues_v1_patch_queue_with_http_info(
                 owner, queue_agent, queue_uuid, body, **kwargs
             )  # noqa: E501
         else:
-            (data) = self.patch_queue_with_http_info(
+            (data) = self.queues_v1_patch_queue_with_http_info(
                 owner, queue_agent, queue_uuid, body, **kwargs
             )  # noqa: E501
             return data
 
-    def patch_queue_with_http_info(
+    def queues_v1_patch_queue_with_http_info(
         self, owner, queue_agent, queue_uuid, body, **kwargs
     ):  # noqa: E501
         """Get State (queues/runs)  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.patch_queue_with_http_info(owner, queue_agent, queue_uuid, body, async_req=True)
+        >>> thread = api.queues_v1_patch_queue_with_http_info(owner, queue_agent, queue_uuid, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -1014,29 +1030,29 @@ class QueuesV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method patch_queue" % key
+                    " to method queues_v1_patch_queue" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `patch_queue`"
+                "Missing the required parameter `owner` when calling `queues_v1_patch_queue`"
             )  # noqa: E501
         # verify the required parameter 'queue_agent' is set
         if "queue_agent" not in params or params["queue_agent"] is None:
             raise ValueError(
-                "Missing the required parameter `queue_agent` when calling `patch_queue`"
+                "Missing the required parameter `queue_agent` when calling `queues_v1_patch_queue`"
             )  # noqa: E501
         # verify the required parameter 'queue_uuid' is set
         if "queue_uuid" not in params or params["queue_uuid"] is None:
             raise ValueError(
-                "Missing the required parameter `queue_uuid` when calling `patch_queue`"
+                "Missing the required parameter `queue_uuid` when calling `queues_v1_patch_queue`"
             )  # noqa: E501
         # verify the required parameter 'body' is set
         if "body" not in params or params["body"] is None:
             raise ValueError(
-                "Missing the required parameter `body` when calling `patch_queue`"
+                "Missing the required parameter `body` when calling `queues_v1_patch_queue`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -1092,14 +1108,14 @@ class QueuesV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def update_queue(
+    def queues_v1_update_queue(
         self, owner, queue_agent, queue_uuid, body, **kwargs
     ):  # noqa: E501
         """Delete agent  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.update_queue(owner, queue_agent, queue_uuid, body, async_req=True)
+        >>> thread = api.queues_v1_update_queue(owner, queue_agent, queue_uuid, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -1113,23 +1129,23 @@ class QueuesV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.update_queue_with_http_info(
+            return self.queues_v1_update_queue_with_http_info(
                 owner, queue_agent, queue_uuid, body, **kwargs
             )  # noqa: E501
         else:
-            (data) = self.update_queue_with_http_info(
+            (data) = self.queues_v1_update_queue_with_http_info(
                 owner, queue_agent, queue_uuid, body, **kwargs
             )  # noqa: E501
             return data
 
-    def update_queue_with_http_info(
+    def queues_v1_update_queue_with_http_info(
         self, owner, queue_agent, queue_uuid, body, **kwargs
     ):  # noqa: E501
         """Delete agent  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.update_queue_with_http_info(owner, queue_agent, queue_uuid, body, async_req=True)
+        >>> thread = api.queues_v1_update_queue_with_http_info(owner, queue_agent, queue_uuid, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -1153,29 +1169,29 @@ class QueuesV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method update_queue" % key
+                    " to method queues_v1_update_queue" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `update_queue`"
+                "Missing the required parameter `owner` when calling `queues_v1_update_queue`"
             )  # noqa: E501
         # verify the required parameter 'queue_agent' is set
         if "queue_agent" not in params or params["queue_agent"] is None:
             raise ValueError(
-                "Missing the required parameter `queue_agent` when calling `update_queue`"
+                "Missing the required parameter `queue_agent` when calling `queues_v1_update_queue`"
             )  # noqa: E501
         # verify the required parameter 'queue_uuid' is set
         if "queue_uuid" not in params or params["queue_uuid"] is None:
             raise ValueError(
-                "Missing the required parameter `queue_uuid` when calling `update_queue`"
+                "Missing the required parameter `queue_uuid` when calling `queues_v1_update_queue`"
             )  # noqa: E501
         # verify the required parameter 'body' is set
         if "body" not in params or params["body"] is None:
             raise ValueError(
-                "Missing the required parameter `body` when calling `update_queue`"
+                "Missing the required parameter `body` when calling `queues_v1_update_queue`"
             )  # noqa: E501
 
         collection_formats = {}

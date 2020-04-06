@@ -63,8 +63,8 @@
 
 
     /**
-     * Callback function to receive the result of the createConnection operation.
-     * @callback module:api/ConnectionsV1Api~createConnectionCallback
+     * Callback function to receive the result of the connectionsV1CreateConnection operation.
+     * @callback module:api/ConnectionsV1Api~connectionsV1CreateConnectionCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1ConnectionResponse} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -74,20 +74,20 @@
      * Create connection
      * @param {String} owner Owner of the namespace
      * @param {module:model/V1ConnectionResponse} body Connection body
-     * @param {module:api/ConnectionsV1Api~createConnectionCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/ConnectionsV1Api~connectionsV1CreateConnectionCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1ConnectionResponse}
      */
-    this.createConnection = function(owner, body, callback) {
+    this.connectionsV1CreateConnection = function(owner, body, callback) {
       var postBody = body;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling createConnection");
+        throw new Error("Missing the required parameter 'owner' when calling connectionsV1CreateConnection");
       }
 
       // verify the required parameter 'body' is set
       if (body === undefined || body === null) {
-        throw new Error("Missing the required parameter 'body' when calling createConnection");
+        throw new Error("Missing the required parameter 'body' when calling connectionsV1CreateConnection");
       }
 
 
@@ -116,8 +116,8 @@
     }
 
     /**
-     * Callback function to receive the result of the deleteConnection operation.
-     * @callback module:api/ConnectionsV1Api~deleteConnectionCallback
+     * Callback function to receive the result of the connectionsV1DeleteConnection operation.
+     * @callback module:api/ConnectionsV1Api~connectionsV1DeleteConnectionCallback
      * @param {String} error Error message, if any.
      * @param data This operation does not return a value.
      * @param {String} response The complete HTTP response.
@@ -127,19 +127,19 @@
      * Delete connection
      * @param {String} owner Owner of the namespace
      * @param {String} uuid Uuid identifier of the entity
-     * @param {module:api/ConnectionsV1Api~deleteConnectionCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/ConnectionsV1Api~connectionsV1DeleteConnectionCallback} callback The callback function, accepting three arguments: error, data, response
      */
-    this.deleteConnection = function(owner, uuid, callback) {
+    this.connectionsV1DeleteConnection = function(owner, uuid, callback) {
       var postBody = null;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling deleteConnection");
+        throw new Error("Missing the required parameter 'owner' when calling connectionsV1DeleteConnection");
       }
 
       // verify the required parameter 'uuid' is set
       if (uuid === undefined || uuid === null) {
-        throw new Error("Missing the required parameter 'uuid' when calling deleteConnection");
+        throw new Error("Missing the required parameter 'uuid' when calling connectionsV1DeleteConnection");
       }
 
 
@@ -169,8 +169,8 @@
     }
 
     /**
-     * Callback function to receive the result of the getConnection operation.
-     * @callback module:api/ConnectionsV1Api~getConnectionCallback
+     * Callback function to receive the result of the connectionsV1GetConnection operation.
+     * @callback module:api/ConnectionsV1Api~connectionsV1GetConnectionCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1ConnectionResponse} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -180,20 +180,20 @@
      * Get connection
      * @param {String} owner Owner of the namespace
      * @param {String} uuid Uuid identifier of the entity
-     * @param {module:api/ConnectionsV1Api~getConnectionCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/ConnectionsV1Api~connectionsV1GetConnectionCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1ConnectionResponse}
      */
-    this.getConnection = function(owner, uuid, callback) {
+    this.connectionsV1GetConnection = function(owner, uuid, callback) {
       var postBody = null;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling getConnection");
+        throw new Error("Missing the required parameter 'owner' when calling connectionsV1GetConnection");
       }
 
       // verify the required parameter 'uuid' is set
       if (uuid === undefined || uuid === null) {
-        throw new Error("Missing the required parameter 'uuid' when calling getConnection");
+        throw new Error("Missing the required parameter 'uuid' when calling connectionsV1GetConnection");
       }
 
 
@@ -223,8 +223,8 @@
     }
 
     /**
-     * Callback function to receive the result of the listConnectionNames operation.
-     * @callback module:api/ConnectionsV1Api~listConnectionNamesCallback
+     * Callback function to receive the result of the connectionsV1ListConnectionNames operation.
+     * @callback module:api/ConnectionsV1Api~connectionsV1ListConnectionNamesCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1ListConnectionsResponse} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -238,16 +238,16 @@
      * @param {Number} opts.limit Limit size.
      * @param {String} opts.sort Sort to order the search.
      * @param {String} opts.query Query filter the search search.
-     * @param {module:api/ConnectionsV1Api~listConnectionNamesCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/ConnectionsV1Api~connectionsV1ListConnectionNamesCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1ListConnectionsResponse}
      */
-    this.listConnectionNames = function(owner, opts, callback) {
+    this.connectionsV1ListConnectionNames = function(owner, opts, callback) {
       opts = opts || {};
       var postBody = null;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling listConnectionNames");
+        throw new Error("Missing the required parameter 'owner' when calling connectionsV1ListConnectionNames");
       }
 
 
@@ -280,8 +280,8 @@
     }
 
     /**
-     * Callback function to receive the result of the listConnections operation.
-     * @callback module:api/ConnectionsV1Api~listConnectionsCallback
+     * Callback function to receive the result of the connectionsV1ListConnections operation.
+     * @callback module:api/ConnectionsV1Api~connectionsV1ListConnectionsCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1ListConnectionsResponse} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -295,16 +295,16 @@
      * @param {Number} opts.limit Limit size.
      * @param {String} opts.sort Sort to order the search.
      * @param {String} opts.query Query filter the search search.
-     * @param {module:api/ConnectionsV1Api~listConnectionsCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/ConnectionsV1Api~connectionsV1ListConnectionsCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1ListConnectionsResponse}
      */
-    this.listConnections = function(owner, opts, callback) {
+    this.connectionsV1ListConnections = function(owner, opts, callback) {
       opts = opts || {};
       var postBody = null;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling listConnections");
+        throw new Error("Missing the required parameter 'owner' when calling connectionsV1ListConnections");
       }
 
 
@@ -337,8 +337,8 @@
     }
 
     /**
-     * Callback function to receive the result of the patchConnection operation.
-     * @callback module:api/ConnectionsV1Api~patchConnectionCallback
+     * Callback function to receive the result of the connectionsV1PatchConnection operation.
+     * @callback module:api/ConnectionsV1Api~connectionsV1PatchConnectionCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1ConnectionResponse} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -349,25 +349,25 @@
      * @param {String} owner Owner of the namespace
      * @param {String} connection_uuid UUID
      * @param {module:model/V1ConnectionResponse} body Connection body
-     * @param {module:api/ConnectionsV1Api~patchConnectionCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/ConnectionsV1Api~connectionsV1PatchConnectionCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1ConnectionResponse}
      */
-    this.patchConnection = function(owner, connection_uuid, body, callback) {
+    this.connectionsV1PatchConnection = function(owner, connection_uuid, body, callback) {
       var postBody = body;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling patchConnection");
+        throw new Error("Missing the required parameter 'owner' when calling connectionsV1PatchConnection");
       }
 
       // verify the required parameter 'connection_uuid' is set
       if (connection_uuid === undefined || connection_uuid === null) {
-        throw new Error("Missing the required parameter 'connection_uuid' when calling patchConnection");
+        throw new Error("Missing the required parameter 'connection_uuid' when calling connectionsV1PatchConnection");
       }
 
       // verify the required parameter 'body' is set
       if (body === undefined || body === null) {
-        throw new Error("Missing the required parameter 'body' when calling patchConnection");
+        throw new Error("Missing the required parameter 'body' when calling connectionsV1PatchConnection");
       }
 
 
@@ -397,8 +397,8 @@
     }
 
     /**
-     * Callback function to receive the result of the updateConnection operation.
-     * @callback module:api/ConnectionsV1Api~updateConnectionCallback
+     * Callback function to receive the result of the connectionsV1UpdateConnection operation.
+     * @callback module:api/ConnectionsV1Api~connectionsV1UpdateConnectionCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1ConnectionResponse} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -409,25 +409,25 @@
      * @param {String} owner Owner of the namespace
      * @param {String} connection_uuid UUID
      * @param {module:model/V1ConnectionResponse} body Connection body
-     * @param {module:api/ConnectionsV1Api~updateConnectionCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/ConnectionsV1Api~connectionsV1UpdateConnectionCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1ConnectionResponse}
      */
-    this.updateConnection = function(owner, connection_uuid, body, callback) {
+    this.connectionsV1UpdateConnection = function(owner, connection_uuid, body, callback) {
       var postBody = body;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling updateConnection");
+        throw new Error("Missing the required parameter 'owner' when calling connectionsV1UpdateConnection");
       }
 
       // verify the required parameter 'connection_uuid' is set
       if (connection_uuid === undefined || connection_uuid === null) {
-        throw new Error("Missing the required parameter 'connection_uuid' when calling updateConnection");
+        throw new Error("Missing the required parameter 'connection_uuid' when calling connectionsV1UpdateConnection");
       }
 
       // verify the required parameter 'body' is set
       if (body === undefined || body === null) {
-        throw new Error("Missing the required parameter 'body' when calling updateConnection");
+        throw new Error("Missing the required parameter 'body' when calling connectionsV1UpdateConnection");
       }
 
 

@@ -45,8 +45,8 @@ class TestAuthV1Api(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def test_login(self):
-        """Test case for login
+    def test_auth_v1_login(self):
+        """Test case for auth_v1_login
 
         List organization level queues names  # noqa: E501
         """

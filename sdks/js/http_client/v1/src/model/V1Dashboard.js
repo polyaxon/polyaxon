@@ -31,18 +31,18 @@
 (function(root, factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
-    define(['ApiClient', 'model/V1SearchSpec'], factory);
+    define(['ApiClient'], factory);
   } else if (typeof module === 'object' && module.exports) {
     // CommonJS-like environments that support module.exports, like Node.
-    module.exports = factory(require('../ApiClient'), require('./V1SearchSpec'));
+    module.exports = factory(require('../ApiClient'));
   } else {
     // Browser globals (root is window)
     if (!root.PolyaxonSdk) {
       root.PolyaxonSdk = {};
     }
-    root.PolyaxonSdk.V1Dashboard = factory(root.PolyaxonSdk.ApiClient, root.PolyaxonSdk.V1SearchSpec);
+    root.PolyaxonSdk.V1Dashboard = factory(root.PolyaxonSdk.ApiClient);
   }
-}(this, function(ApiClient, V1SearchSpec) {
+}(this, function(ApiClient) {
   'use strict';
 
   /**
@@ -83,8 +83,6 @@
         obj.deleted = ApiClient.convertToType(data['deleted'], 'Boolean');
       if (data.hasOwnProperty('run_view'))
         obj.run_view = ApiClient.convertToType(data['run_view'], 'Boolean');
-      if (data.hasOwnProperty('search'))
-        obj.search = V1SearchSpec.constructFromObject(data['search']);
       if (data.hasOwnProperty('spec'))
         obj.spec = ApiClient.convertToType(data['spec'], Object);
       if (data.hasOwnProperty('created_at'))
@@ -129,11 +127,6 @@
    * @member {Boolean} run_view
    */
   exports.prototype.run_view = undefined;
-
-  /**
-   * @member {module:model/V1SearchSpec} search
-   */
-  exports.prototype.search = undefined;
 
   /**
    * @member {Object} spec

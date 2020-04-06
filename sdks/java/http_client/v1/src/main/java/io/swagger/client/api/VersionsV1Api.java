@@ -71,13 +71,13 @@ public class VersionsV1Api {
     }
 
     /**
-     * Build call for getLogHandler
+     * Build call for versionsV1GetLogHandler
      * @param progressListener Progress listener
      * @param progressRequestListener Progress request listener
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call getLogHandlerCall(final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call versionsV1GetLogHandlerCall(final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -119,10 +119,10 @@ public class VersionsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call getLogHandlerValidateBeforeCall(final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call versionsV1GetLogHandlerValidateBeforeCall(final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
 
-        com.squareup.okhttp.Call call = getLogHandlerCall(progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = versionsV1GetLogHandlerCall(progressListener, progressRequestListener);
         return call;
 
     }
@@ -133,8 +133,8 @@ public class VersionsV1Api {
      * @return V1LogHandler
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1LogHandler getLogHandler() throws ApiException {
-        ApiResponse<V1LogHandler> resp = getLogHandlerWithHttpInfo();
+    public V1LogHandler versionsV1GetLogHandler() throws ApiException {
+        ApiResponse<V1LogHandler> resp = versionsV1GetLogHandlerWithHttpInfo();
         return resp.getData();
     }
 
@@ -144,8 +144,8 @@ public class VersionsV1Api {
      * @return ApiResponse&lt;V1LogHandler&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1LogHandler> getLogHandlerWithHttpInfo() throws ApiException {
-        com.squareup.okhttp.Call call = getLogHandlerValidateBeforeCall(null, null);
+    public ApiResponse<V1LogHandler> versionsV1GetLogHandlerWithHttpInfo() throws ApiException {
+        com.squareup.okhttp.Call call = versionsV1GetLogHandlerValidateBeforeCall(null, null);
         Type localVarReturnType = new TypeToken<V1LogHandler>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -157,7 +157,7 @@ public class VersionsV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call getLogHandlerAsync(final ApiCallback<V1LogHandler> callback) throws ApiException {
+    public com.squareup.okhttp.Call versionsV1GetLogHandlerAsync(final ApiCallback<V1LogHandler> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -178,19 +178,19 @@ public class VersionsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = getLogHandlerValidateBeforeCall(progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = versionsV1GetLogHandlerValidateBeforeCall(progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1LogHandler>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
     /**
-     * Build call for getVersions
+     * Build call for versionsV1GetVersions
      * @param progressListener Progress listener
      * @param progressRequestListener Progress request listener
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call getVersionsCall(final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call versionsV1GetVersionsCall(final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -232,10 +232,10 @@ public class VersionsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call getVersionsValidateBeforeCall(final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call versionsV1GetVersionsValidateBeforeCall(final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
 
-        com.squareup.okhttp.Call call = getVersionsCall(progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = versionsV1GetVersionsCall(progressListener, progressRequestListener);
         return call;
 
     }
@@ -246,8 +246,8 @@ public class VersionsV1Api {
      * @return V1Versions
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1Versions getVersions() throws ApiException {
-        ApiResponse<V1Versions> resp = getVersionsWithHttpInfo();
+    public V1Versions versionsV1GetVersions() throws ApiException {
+        ApiResponse<V1Versions> resp = versionsV1GetVersionsWithHttpInfo();
         return resp.getData();
     }
 
@@ -257,8 +257,8 @@ public class VersionsV1Api {
      * @return ApiResponse&lt;V1Versions&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1Versions> getVersionsWithHttpInfo() throws ApiException {
-        com.squareup.okhttp.Call call = getVersionsValidateBeforeCall(null, null);
+    public ApiResponse<V1Versions> versionsV1GetVersionsWithHttpInfo() throws ApiException {
+        com.squareup.okhttp.Call call = versionsV1GetVersionsValidateBeforeCall(null, null);
         Type localVarReturnType = new TypeToken<V1Versions>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -270,7 +270,7 @@ public class VersionsV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call getVersionsAsync(final ApiCallback<V1Versions> callback) throws ApiException {
+    public com.squareup.okhttp.Call versionsV1GetVersionsAsync(final ApiCallback<V1Versions> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -291,7 +291,7 @@ public class VersionsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = getVersionsValidateBeforeCall(progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = versionsV1GetVersionsValidateBeforeCall(progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1Versions>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;

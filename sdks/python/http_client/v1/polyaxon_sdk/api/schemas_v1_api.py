@@ -49,12 +49,12 @@ class SchemasV1Api(object):
             api_client = ApiClient()
         self.api_client = api_client
 
-    def no_op(self, **kwargs):  # noqa: E501
+    def schemas_v1_no_op(self, **kwargs):  # noqa: E501
         """List teams names  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.no_op(async_req=True)
+        >>> thread = api.schemas_v1_no_op(async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -64,17 +64,17 @@ class SchemasV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.no_op_with_http_info(**kwargs)  # noqa: E501
+            return self.schemas_v1_no_op_with_http_info(**kwargs)  # noqa: E501
         else:
-            (data) = self.no_op_with_http_info(**kwargs)  # noqa: E501
+            (data) = self.schemas_v1_no_op_with_http_info(**kwargs)  # noqa: E501
             return data
 
-    def no_op_with_http_info(self, **kwargs):  # noqa: E501
+    def schemas_v1_no_op_with_http_info(self, **kwargs):  # noqa: E501
         """List teams names  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.no_op_with_http_info(async_req=True)
+        >>> thread = api.schemas_v1_no_op_with_http_info(async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -93,7 +93,8 @@ class SchemasV1Api(object):
         for key, val in six.iteritems(params["kwargs"]):
             if key not in all_params:
                 raise TypeError(
-                    "Got an unexpected keyword argument '%s'" " to method no_op" % key
+                    "Got an unexpected keyword argument '%s'"
+                    " to method schemas_v1_no_op" % key
                 )
             params[key] = val
         del params["kwargs"]

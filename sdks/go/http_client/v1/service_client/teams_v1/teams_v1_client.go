@@ -39,53 +39,53 @@ type Client struct {
 
 // ClientService is the interface for Client methods
 type ClientService interface {
-	CreateTeam(params *CreateTeamParams, authInfo runtime.ClientAuthInfoWriter) (*CreateTeamOK, *CreateTeamNoContent, error)
+	TeamsV1CreateTeam(params *TeamsV1CreateTeamParams, authInfo runtime.ClientAuthInfoWriter) (*TeamsV1CreateTeamOK, *TeamsV1CreateTeamNoContent, error)
 
-	CreateTeamMember(params *CreateTeamMemberParams, authInfo runtime.ClientAuthInfoWriter) (*CreateTeamMemberOK, *CreateTeamMemberNoContent, error)
+	TeamsV1CreateTeamMember(params *TeamsV1CreateTeamMemberParams, authInfo runtime.ClientAuthInfoWriter) (*TeamsV1CreateTeamMemberOK, *TeamsV1CreateTeamMemberNoContent, error)
 
-	DeleteTeam(params *DeleteTeamParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteTeamOK, *DeleteTeamNoContent, error)
+	TeamsV1DeleteTeam(params *TeamsV1DeleteTeamParams, authInfo runtime.ClientAuthInfoWriter) (*TeamsV1DeleteTeamOK, *TeamsV1DeleteTeamNoContent, error)
 
-	DeleteTeamMember(params *DeleteTeamMemberParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteTeamMemberOK, *DeleteTeamMemberNoContent, error)
+	TeamsV1DeleteTeamMember(params *TeamsV1DeleteTeamMemberParams, authInfo runtime.ClientAuthInfoWriter) (*TeamsV1DeleteTeamMemberOK, *TeamsV1DeleteTeamMemberNoContent, error)
 
-	GetTeam(params *GetTeamParams, authInfo runtime.ClientAuthInfoWriter) (*GetTeamOK, *GetTeamNoContent, error)
+	TeamsV1GetTeam(params *TeamsV1GetTeamParams, authInfo runtime.ClientAuthInfoWriter) (*TeamsV1GetTeamOK, *TeamsV1GetTeamNoContent, error)
 
-	GetTeamMember(params *GetTeamMemberParams, authInfo runtime.ClientAuthInfoWriter) (*GetTeamMemberOK, *GetTeamMemberNoContent, error)
+	TeamsV1GetTeamMember(params *TeamsV1GetTeamMemberParams, authInfo runtime.ClientAuthInfoWriter) (*TeamsV1GetTeamMemberOK, *TeamsV1GetTeamMemberNoContent, error)
 
-	ListTeamMembers(params *ListTeamMembersParams, authInfo runtime.ClientAuthInfoWriter) (*ListTeamMembersOK, *ListTeamMembersNoContent, error)
+	TeamsV1ListTeamMembers(params *TeamsV1ListTeamMembersParams, authInfo runtime.ClientAuthInfoWriter) (*TeamsV1ListTeamMembersOK, *TeamsV1ListTeamMembersNoContent, error)
 
-	ListTeamNames(params *ListTeamNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListTeamNamesOK, *ListTeamNamesNoContent, error)
+	TeamsV1ListTeamNames(params *TeamsV1ListTeamNamesParams, authInfo runtime.ClientAuthInfoWriter) (*TeamsV1ListTeamNamesOK, *TeamsV1ListTeamNamesNoContent, error)
 
-	ListTeams(params *ListTeamsParams, authInfo runtime.ClientAuthInfoWriter) (*ListTeamsOK, *ListTeamsNoContent, error)
+	TeamsV1ListTeams(params *TeamsV1ListTeamsParams, authInfo runtime.ClientAuthInfoWriter) (*TeamsV1ListTeamsOK, *TeamsV1ListTeamsNoContent, error)
 
-	PatchTeam(params *PatchTeamParams, authInfo runtime.ClientAuthInfoWriter) (*PatchTeamOK, *PatchTeamNoContent, error)
+	TeamsV1PatchTeam(params *TeamsV1PatchTeamParams, authInfo runtime.ClientAuthInfoWriter) (*TeamsV1PatchTeamOK, *TeamsV1PatchTeamNoContent, error)
 
-	PatchTeamMember(params *PatchTeamMemberParams, authInfo runtime.ClientAuthInfoWriter) (*PatchTeamMemberOK, *PatchTeamMemberNoContent, error)
+	TeamsV1PatchTeamMember(params *TeamsV1PatchTeamMemberParams, authInfo runtime.ClientAuthInfoWriter) (*TeamsV1PatchTeamMemberOK, *TeamsV1PatchTeamMemberNoContent, error)
 
-	UpdateTeam(params *UpdateTeamParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateTeamOK, *UpdateTeamNoContent, error)
+	TeamsV1UpdateTeam(params *TeamsV1UpdateTeamParams, authInfo runtime.ClientAuthInfoWriter) (*TeamsV1UpdateTeamOK, *TeamsV1UpdateTeamNoContent, error)
 
-	UpdateTeamMember(params *UpdateTeamMemberParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateTeamMemberOK, *UpdateTeamMemberNoContent, error)
+	TeamsV1UpdateTeamMember(params *TeamsV1UpdateTeamMemberParams, authInfo runtime.ClientAuthInfoWriter) (*TeamsV1UpdateTeamMemberOK, *TeamsV1UpdateTeamMemberNoContent, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
 
 /*
-  CreateTeam creates organization
+  TeamsV1CreateTeam creates organization
 */
-func (a *Client) CreateTeam(params *CreateTeamParams, authInfo runtime.ClientAuthInfoWriter) (*CreateTeamOK, *CreateTeamNoContent, error) {
+func (a *Client) TeamsV1CreateTeam(params *TeamsV1CreateTeamParams, authInfo runtime.ClientAuthInfoWriter) (*TeamsV1CreateTeamOK, *TeamsV1CreateTeamNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewCreateTeamParams()
+		params = NewTeamsV1CreateTeamParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "CreateTeam",
+		ID:                 "TeamsV1_CreateTeam",
 		Method:             "POST",
 		PathPattern:        "/api/v1/orgs/{owner}/teams",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &CreateTeamReader{formats: a.formats},
+		Reader:             &TeamsV1CreateTeamReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -94,34 +94,34 @@ func (a *Client) CreateTeam(params *CreateTeamParams, authInfo runtime.ClientAut
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *CreateTeamOK:
+	case *TeamsV1CreateTeamOK:
 		return value, nil, nil
-	case *CreateTeamNoContent:
+	case *TeamsV1CreateTeamNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*CreateTeamDefault)
+	unexpectedSuccess := result.(*TeamsV1CreateTeamDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  CreateTeamMember creates organization member
+  TeamsV1CreateTeamMember creates organization member
 */
-func (a *Client) CreateTeamMember(params *CreateTeamMemberParams, authInfo runtime.ClientAuthInfoWriter) (*CreateTeamMemberOK, *CreateTeamMemberNoContent, error) {
+func (a *Client) TeamsV1CreateTeamMember(params *TeamsV1CreateTeamMemberParams, authInfo runtime.ClientAuthInfoWriter) (*TeamsV1CreateTeamMemberOK, *TeamsV1CreateTeamMemberNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewCreateTeamMemberParams()
+		params = NewTeamsV1CreateTeamMemberParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "CreateTeamMember",
+		ID:                 "TeamsV1_CreateTeamMember",
 		Method:             "POST",
 		PathPattern:        "/api/v1/orgs/{owner}/teams/{team}/members",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &CreateTeamMemberReader{formats: a.formats},
+		Reader:             &TeamsV1CreateTeamMemberReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -130,34 +130,34 @@ func (a *Client) CreateTeamMember(params *CreateTeamMemberParams, authInfo runti
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *CreateTeamMemberOK:
+	case *TeamsV1CreateTeamMemberOK:
 		return value, nil, nil
-	case *CreateTeamMemberNoContent:
+	case *TeamsV1CreateTeamMemberNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*CreateTeamMemberDefault)
+	unexpectedSuccess := result.(*TeamsV1CreateTeamMemberDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  DeleteTeam deletes organization
+  TeamsV1DeleteTeam deletes organization
 */
-func (a *Client) DeleteTeam(params *DeleteTeamParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteTeamOK, *DeleteTeamNoContent, error) {
+func (a *Client) TeamsV1DeleteTeam(params *TeamsV1DeleteTeamParams, authInfo runtime.ClientAuthInfoWriter) (*TeamsV1DeleteTeamOK, *TeamsV1DeleteTeamNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewDeleteTeamParams()
+		params = NewTeamsV1DeleteTeamParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "DeleteTeam",
+		ID:                 "TeamsV1_DeleteTeam",
 		Method:             "DELETE",
 		PathPattern:        "/api/v1/orgs/{owner}/teams/{team}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &DeleteTeamReader{formats: a.formats},
+		Reader:             &TeamsV1DeleteTeamReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -166,34 +166,34 @@ func (a *Client) DeleteTeam(params *DeleteTeamParams, authInfo runtime.ClientAut
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *DeleteTeamOK:
+	case *TeamsV1DeleteTeamOK:
 		return value, nil, nil
-	case *DeleteTeamNoContent:
+	case *TeamsV1DeleteTeamNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*DeleteTeamDefault)
+	unexpectedSuccess := result.(*TeamsV1DeleteTeamDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  DeleteTeamMember deletes organization member details
+  TeamsV1DeleteTeamMember deletes organization member details
 */
-func (a *Client) DeleteTeamMember(params *DeleteTeamMemberParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteTeamMemberOK, *DeleteTeamMemberNoContent, error) {
+func (a *Client) TeamsV1DeleteTeamMember(params *TeamsV1DeleteTeamMemberParams, authInfo runtime.ClientAuthInfoWriter) (*TeamsV1DeleteTeamMemberOK, *TeamsV1DeleteTeamMemberNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewDeleteTeamMemberParams()
+		params = NewTeamsV1DeleteTeamMemberParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "DeleteTeamMember",
+		ID:                 "TeamsV1_DeleteTeamMember",
 		Method:             "DELETE",
 		PathPattern:        "/api/v1/orgs/{owner}/teams/{team}/members/{user}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &DeleteTeamMemberReader{formats: a.formats},
+		Reader:             &TeamsV1DeleteTeamMemberReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -202,34 +202,34 @@ func (a *Client) DeleteTeamMember(params *DeleteTeamMemberParams, authInfo runti
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *DeleteTeamMemberOK:
+	case *TeamsV1DeleteTeamMemberOK:
 		return value, nil, nil
-	case *DeleteTeamMemberNoContent:
+	case *TeamsV1DeleteTeamMemberNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*DeleteTeamMemberDefault)
+	unexpectedSuccess := result.(*TeamsV1DeleteTeamMemberDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  GetTeam gets organization
+  TeamsV1GetTeam gets organization
 */
-func (a *Client) GetTeam(params *GetTeamParams, authInfo runtime.ClientAuthInfoWriter) (*GetTeamOK, *GetTeamNoContent, error) {
+func (a *Client) TeamsV1GetTeam(params *TeamsV1GetTeamParams, authInfo runtime.ClientAuthInfoWriter) (*TeamsV1GetTeamOK, *TeamsV1GetTeamNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewGetTeamParams()
+		params = NewTeamsV1GetTeamParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "GetTeam",
+		ID:                 "TeamsV1_GetTeam",
 		Method:             "GET",
 		PathPattern:        "/api/v1/orgs/{owner}/teams/{team}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &GetTeamReader{formats: a.formats},
+		Reader:             &TeamsV1GetTeamReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -238,34 +238,34 @@ func (a *Client) GetTeam(params *GetTeamParams, authInfo runtime.ClientAuthInfoW
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *GetTeamOK:
+	case *TeamsV1GetTeamOK:
 		return value, nil, nil
-	case *GetTeamNoContent:
+	case *TeamsV1GetTeamNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*GetTeamDefault)
+	unexpectedSuccess := result.(*TeamsV1GetTeamDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  GetTeamMember gets organization member details
+  TeamsV1GetTeamMember gets organization member details
 */
-func (a *Client) GetTeamMember(params *GetTeamMemberParams, authInfo runtime.ClientAuthInfoWriter) (*GetTeamMemberOK, *GetTeamMemberNoContent, error) {
+func (a *Client) TeamsV1GetTeamMember(params *TeamsV1GetTeamMemberParams, authInfo runtime.ClientAuthInfoWriter) (*TeamsV1GetTeamMemberOK, *TeamsV1GetTeamMemberNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewGetTeamMemberParams()
+		params = NewTeamsV1GetTeamMemberParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "GetTeamMember",
+		ID:                 "TeamsV1_GetTeamMember",
 		Method:             "GET",
 		PathPattern:        "/api/v1/orgs/{owner}/teams/{team}/members/{user}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &GetTeamMemberReader{formats: a.formats},
+		Reader:             &TeamsV1GetTeamMemberReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -274,34 +274,34 @@ func (a *Client) GetTeamMember(params *GetTeamMemberParams, authInfo runtime.Cli
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *GetTeamMemberOK:
+	case *TeamsV1GetTeamMemberOK:
 		return value, nil, nil
-	case *GetTeamMemberNoContent:
+	case *TeamsV1GetTeamMemberNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*GetTeamMemberDefault)
+	unexpectedSuccess := result.(*TeamsV1GetTeamMemberDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  ListTeamMembers gets organization members
+  TeamsV1ListTeamMembers gets organization members
 */
-func (a *Client) ListTeamMembers(params *ListTeamMembersParams, authInfo runtime.ClientAuthInfoWriter) (*ListTeamMembersOK, *ListTeamMembersNoContent, error) {
+func (a *Client) TeamsV1ListTeamMembers(params *TeamsV1ListTeamMembersParams, authInfo runtime.ClientAuthInfoWriter) (*TeamsV1ListTeamMembersOK, *TeamsV1ListTeamMembersNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewListTeamMembersParams()
+		params = NewTeamsV1ListTeamMembersParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "ListTeamMembers",
+		ID:                 "TeamsV1_ListTeamMembers",
 		Method:             "GET",
 		PathPattern:        "/api/v1/orgs/{owner}/teams/{team}/members",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &ListTeamMembersReader{formats: a.formats},
+		Reader:             &TeamsV1ListTeamMembersReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -310,34 +310,34 @@ func (a *Client) ListTeamMembers(params *ListTeamMembersParams, authInfo runtime
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *ListTeamMembersOK:
+	case *TeamsV1ListTeamMembersOK:
 		return value, nil, nil
-	case *ListTeamMembersNoContent:
+	case *TeamsV1ListTeamMembersNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*ListTeamMembersDefault)
+	unexpectedSuccess := result.(*TeamsV1ListTeamMembersDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  ListTeamNames lists organizations names
+  TeamsV1ListTeamNames lists organizations names
 */
-func (a *Client) ListTeamNames(params *ListTeamNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListTeamNamesOK, *ListTeamNamesNoContent, error) {
+func (a *Client) TeamsV1ListTeamNames(params *TeamsV1ListTeamNamesParams, authInfo runtime.ClientAuthInfoWriter) (*TeamsV1ListTeamNamesOK, *TeamsV1ListTeamNamesNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewListTeamNamesParams()
+		params = NewTeamsV1ListTeamNamesParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "ListTeamNames",
+		ID:                 "TeamsV1_ListTeamNames",
 		Method:             "GET",
 		PathPattern:        "/api/v1/orgs/{owner}/teams/names",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &ListTeamNamesReader{formats: a.formats},
+		Reader:             &TeamsV1ListTeamNamesReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -346,34 +346,34 @@ func (a *Client) ListTeamNames(params *ListTeamNamesParams, authInfo runtime.Cli
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *ListTeamNamesOK:
+	case *TeamsV1ListTeamNamesOK:
 		return value, nil, nil
-	case *ListTeamNamesNoContent:
+	case *TeamsV1ListTeamNamesNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*ListTeamNamesDefault)
+	unexpectedSuccess := result.(*TeamsV1ListTeamNamesDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  ListTeams lists organizations
+  TeamsV1ListTeams lists organizations
 */
-func (a *Client) ListTeams(params *ListTeamsParams, authInfo runtime.ClientAuthInfoWriter) (*ListTeamsOK, *ListTeamsNoContent, error) {
+func (a *Client) TeamsV1ListTeams(params *TeamsV1ListTeamsParams, authInfo runtime.ClientAuthInfoWriter) (*TeamsV1ListTeamsOK, *TeamsV1ListTeamsNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewListTeamsParams()
+		params = NewTeamsV1ListTeamsParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "ListTeams",
+		ID:                 "TeamsV1_ListTeams",
 		Method:             "GET",
 		PathPattern:        "/api/v1/orgs/{owner}/teams",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &ListTeamsReader{formats: a.formats},
+		Reader:             &TeamsV1ListTeamsReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -382,34 +382,34 @@ func (a *Client) ListTeams(params *ListTeamsParams, authInfo runtime.ClientAuthI
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *ListTeamsOK:
+	case *TeamsV1ListTeamsOK:
 		return value, nil, nil
-	case *ListTeamsNoContent:
+	case *TeamsV1ListTeamsNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*ListTeamsDefault)
+	unexpectedSuccess := result.(*TeamsV1ListTeamsDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  PatchTeam patches organization
+  TeamsV1PatchTeam patches organization
 */
-func (a *Client) PatchTeam(params *PatchTeamParams, authInfo runtime.ClientAuthInfoWriter) (*PatchTeamOK, *PatchTeamNoContent, error) {
+func (a *Client) TeamsV1PatchTeam(params *TeamsV1PatchTeamParams, authInfo runtime.ClientAuthInfoWriter) (*TeamsV1PatchTeamOK, *TeamsV1PatchTeamNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewPatchTeamParams()
+		params = NewTeamsV1PatchTeamParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "PatchTeam",
+		ID:                 "TeamsV1_PatchTeam",
 		Method:             "PATCH",
 		PathPattern:        "/api/v1/orgs/{owner}/teams/{team.name}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &PatchTeamReader{formats: a.formats},
+		Reader:             &TeamsV1PatchTeamReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -418,34 +418,34 @@ func (a *Client) PatchTeam(params *PatchTeamParams, authInfo runtime.ClientAuthI
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *PatchTeamOK:
+	case *TeamsV1PatchTeamOK:
 		return value, nil, nil
-	case *PatchTeamNoContent:
+	case *TeamsV1PatchTeamNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*PatchTeamDefault)
+	unexpectedSuccess := result.(*TeamsV1PatchTeamDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  PatchTeamMember patches organization member
+  TeamsV1PatchTeamMember patches organization member
 */
-func (a *Client) PatchTeamMember(params *PatchTeamMemberParams, authInfo runtime.ClientAuthInfoWriter) (*PatchTeamMemberOK, *PatchTeamMemberNoContent, error) {
+func (a *Client) TeamsV1PatchTeamMember(params *TeamsV1PatchTeamMemberParams, authInfo runtime.ClientAuthInfoWriter) (*TeamsV1PatchTeamMemberOK, *TeamsV1PatchTeamMemberNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewPatchTeamMemberParams()
+		params = NewTeamsV1PatchTeamMemberParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "PatchTeamMember",
+		ID:                 "TeamsV1_PatchTeamMember",
 		Method:             "PATCH",
 		PathPattern:        "/api/v1/orgs/{owner}/teams/{team}/members/{member.user}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &PatchTeamMemberReader{formats: a.formats},
+		Reader:             &TeamsV1PatchTeamMemberReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -454,34 +454,34 @@ func (a *Client) PatchTeamMember(params *PatchTeamMemberParams, authInfo runtime
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *PatchTeamMemberOK:
+	case *TeamsV1PatchTeamMemberOK:
 		return value, nil, nil
-	case *PatchTeamMemberNoContent:
+	case *TeamsV1PatchTeamMemberNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*PatchTeamMemberDefault)
+	unexpectedSuccess := result.(*TeamsV1PatchTeamMemberDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  UpdateTeam updates organization
+  TeamsV1UpdateTeam updates organization
 */
-func (a *Client) UpdateTeam(params *UpdateTeamParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateTeamOK, *UpdateTeamNoContent, error) {
+func (a *Client) TeamsV1UpdateTeam(params *TeamsV1UpdateTeamParams, authInfo runtime.ClientAuthInfoWriter) (*TeamsV1UpdateTeamOK, *TeamsV1UpdateTeamNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewUpdateTeamParams()
+		params = NewTeamsV1UpdateTeamParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "UpdateTeam",
+		ID:                 "TeamsV1_UpdateTeam",
 		Method:             "PUT",
 		PathPattern:        "/api/v1/orgs/{owner}/teams/{team.name}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &UpdateTeamReader{formats: a.formats},
+		Reader:             &TeamsV1UpdateTeamReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -490,34 +490,34 @@ func (a *Client) UpdateTeam(params *UpdateTeamParams, authInfo runtime.ClientAut
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *UpdateTeamOK:
+	case *TeamsV1UpdateTeamOK:
 		return value, nil, nil
-	case *UpdateTeamNoContent:
+	case *TeamsV1UpdateTeamNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*UpdateTeamDefault)
+	unexpectedSuccess := result.(*TeamsV1UpdateTeamDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  UpdateTeamMember updates organization member
+  TeamsV1UpdateTeamMember updates organization member
 */
-func (a *Client) UpdateTeamMember(params *UpdateTeamMemberParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateTeamMemberOK, *UpdateTeamMemberNoContent, error) {
+func (a *Client) TeamsV1UpdateTeamMember(params *TeamsV1UpdateTeamMemberParams, authInfo runtime.ClientAuthInfoWriter) (*TeamsV1UpdateTeamMemberOK, *TeamsV1UpdateTeamMemberNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewUpdateTeamMemberParams()
+		params = NewTeamsV1UpdateTeamMemberParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "UpdateTeamMember",
+		ID:                 "TeamsV1_UpdateTeamMember",
 		Method:             "PUT",
 		PathPattern:        "/api/v1/orgs/{owner}/teams/{team}/members/{member.user}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &UpdateTeamMemberReader{formats: a.formats},
+		Reader:             &TeamsV1UpdateTeamMemberReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -526,13 +526,13 @@ func (a *Client) UpdateTeamMember(params *UpdateTeamMemberParams, authInfo runti
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *UpdateTeamMemberOK:
+	case *TeamsV1UpdateTeamMemberOK:
 		return value, nil, nil
-	case *UpdateTeamMemberNoContent:
+	case *TeamsV1UpdateTeamMemberNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*UpdateTeamMemberDefault)
+	unexpectedSuccess := result.(*TeamsV1UpdateTeamMemberDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 

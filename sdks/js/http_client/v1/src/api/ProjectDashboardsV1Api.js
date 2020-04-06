@@ -63,8 +63,8 @@
 
 
     /**
-     * Callback function to receive the result of the createProjectDashboard operation.
-     * @callback module:api/ProjectDashboardsV1Api~createProjectDashboardCallback
+     * Callback function to receive the result of the projectDashboardsV1CreateProjectDashboard operation.
+     * @callback module:api/ProjectDashboardsV1Api~projectDashboardsV1CreateProjectDashboardCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1Dashboard} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -75,25 +75,25 @@
      * @param {String} owner Owner of the namespace
      * @param {String} project Project under namesapce
      * @param {module:model/V1Dashboard} body Dashboard body
-     * @param {module:api/ProjectDashboardsV1Api~createProjectDashboardCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/ProjectDashboardsV1Api~projectDashboardsV1CreateProjectDashboardCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1Dashboard}
      */
-    this.createProjectDashboard = function(owner, project, body, callback) {
+    this.projectDashboardsV1CreateProjectDashboard = function(owner, project, body, callback) {
       var postBody = body;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling createProjectDashboard");
+        throw new Error("Missing the required parameter 'owner' when calling projectDashboardsV1CreateProjectDashboard");
       }
 
       // verify the required parameter 'project' is set
       if (project === undefined || project === null) {
-        throw new Error("Missing the required parameter 'project' when calling createProjectDashboard");
+        throw new Error("Missing the required parameter 'project' when calling projectDashboardsV1CreateProjectDashboard");
       }
 
       // verify the required parameter 'body' is set
       if (body === undefined || body === null) {
-        throw new Error("Missing the required parameter 'body' when calling createProjectDashboard");
+        throw new Error("Missing the required parameter 'body' when calling projectDashboardsV1CreateProjectDashboard");
       }
 
 
@@ -123,8 +123,8 @@
     }
 
     /**
-     * Callback function to receive the result of the deleteProjectDashboard operation.
-     * @callback module:api/ProjectDashboardsV1Api~deleteProjectDashboardCallback
+     * Callback function to receive the result of the projectDashboardsV1DeleteProjectDashboard operation.
+     * @callback module:api/ProjectDashboardsV1Api~projectDashboardsV1DeleteProjectDashboardCallback
      * @param {String} error Error message, if any.
      * @param data This operation does not return a value.
      * @param {String} response The complete HTTP response.
@@ -135,24 +135,24 @@
      * @param {String} owner Owner of the namespace
      * @param {String} project Project
      * @param {String} uuid Uuid identifier of the entity
-     * @param {module:api/ProjectDashboardsV1Api~deleteProjectDashboardCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/ProjectDashboardsV1Api~projectDashboardsV1DeleteProjectDashboardCallback} callback The callback function, accepting three arguments: error, data, response
      */
-    this.deleteProjectDashboard = function(owner, project, uuid, callback) {
+    this.projectDashboardsV1DeleteProjectDashboard = function(owner, project, uuid, callback) {
       var postBody = null;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling deleteProjectDashboard");
+        throw new Error("Missing the required parameter 'owner' when calling projectDashboardsV1DeleteProjectDashboard");
       }
 
       // verify the required parameter 'project' is set
       if (project === undefined || project === null) {
-        throw new Error("Missing the required parameter 'project' when calling deleteProjectDashboard");
+        throw new Error("Missing the required parameter 'project' when calling projectDashboardsV1DeleteProjectDashboard");
       }
 
       // verify the required parameter 'uuid' is set
       if (uuid === undefined || uuid === null) {
-        throw new Error("Missing the required parameter 'uuid' when calling deleteProjectDashboard");
+        throw new Error("Missing the required parameter 'uuid' when calling projectDashboardsV1DeleteProjectDashboard");
       }
 
 
@@ -183,8 +183,8 @@
     }
 
     /**
-     * Callback function to receive the result of the getProjectDashboard operation.
-     * @callback module:api/ProjectDashboardsV1Api~getProjectDashboardCallback
+     * Callback function to receive the result of the projectDashboardsV1GetProjectDashboard operation.
+     * @callback module:api/ProjectDashboardsV1Api~projectDashboardsV1GetProjectDashboardCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1Dashboard} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -195,25 +195,25 @@
      * @param {String} owner Owner of the namespace
      * @param {String} project Project
      * @param {String} uuid Uuid identifier of the entity
-     * @param {module:api/ProjectDashboardsV1Api~getProjectDashboardCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/ProjectDashboardsV1Api~projectDashboardsV1GetProjectDashboardCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1Dashboard}
      */
-    this.getProjectDashboard = function(owner, project, uuid, callback) {
+    this.projectDashboardsV1GetProjectDashboard = function(owner, project, uuid, callback) {
       var postBody = null;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling getProjectDashboard");
+        throw new Error("Missing the required parameter 'owner' when calling projectDashboardsV1GetProjectDashboard");
       }
 
       // verify the required parameter 'project' is set
       if (project === undefined || project === null) {
-        throw new Error("Missing the required parameter 'project' when calling getProjectDashboard");
+        throw new Error("Missing the required parameter 'project' when calling projectDashboardsV1GetProjectDashboard");
       }
 
       // verify the required parameter 'uuid' is set
       if (uuid === undefined || uuid === null) {
-        throw new Error("Missing the required parameter 'uuid' when calling getProjectDashboard");
+        throw new Error("Missing the required parameter 'uuid' when calling projectDashboardsV1GetProjectDashboard");
       }
 
 
@@ -244,8 +244,8 @@
     }
 
     /**
-     * Callback function to receive the result of the listProjectDashboardNames operation.
-     * @callback module:api/ProjectDashboardsV1Api~listProjectDashboardNamesCallback
+     * Callback function to receive the result of the projectDashboardsV1ListProjectDashboardNames operation.
+     * @callback module:api/ProjectDashboardsV1Api~projectDashboardsV1ListProjectDashboardNamesCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1ListDashboardsResponse} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -260,21 +260,21 @@
      * @param {Number} opts.limit Limit size.
      * @param {String} opts.sort Sort to order the search.
      * @param {String} opts.query Query filter the search search.
-     * @param {module:api/ProjectDashboardsV1Api~listProjectDashboardNamesCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/ProjectDashboardsV1Api~projectDashboardsV1ListProjectDashboardNamesCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1ListDashboardsResponse}
      */
-    this.listProjectDashboardNames = function(owner, project, opts, callback) {
+    this.projectDashboardsV1ListProjectDashboardNames = function(owner, project, opts, callback) {
       opts = opts || {};
       var postBody = null;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling listProjectDashboardNames");
+        throw new Error("Missing the required parameter 'owner' when calling projectDashboardsV1ListProjectDashboardNames");
       }
 
       // verify the required parameter 'project' is set
       if (project === undefined || project === null) {
-        throw new Error("Missing the required parameter 'project' when calling listProjectDashboardNames");
+        throw new Error("Missing the required parameter 'project' when calling projectDashboardsV1ListProjectDashboardNames");
       }
 
 
@@ -308,8 +308,8 @@
     }
 
     /**
-     * Callback function to receive the result of the listProjectDashboards operation.
-     * @callback module:api/ProjectDashboardsV1Api~listProjectDashboardsCallback
+     * Callback function to receive the result of the projectDashboardsV1ListProjectDashboards operation.
+     * @callback module:api/ProjectDashboardsV1Api~projectDashboardsV1ListProjectDashboardsCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1ListDashboardsResponse} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -324,21 +324,21 @@
      * @param {Number} opts.limit Limit size.
      * @param {String} opts.sort Sort to order the search.
      * @param {String} opts.query Query filter the search search.
-     * @param {module:api/ProjectDashboardsV1Api~listProjectDashboardsCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/ProjectDashboardsV1Api~projectDashboardsV1ListProjectDashboardsCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1ListDashboardsResponse}
      */
-    this.listProjectDashboards = function(owner, project, opts, callback) {
+    this.projectDashboardsV1ListProjectDashboards = function(owner, project, opts, callback) {
       opts = opts || {};
       var postBody = null;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling listProjectDashboards");
+        throw new Error("Missing the required parameter 'owner' when calling projectDashboardsV1ListProjectDashboards");
       }
 
       // verify the required parameter 'project' is set
       if (project === undefined || project === null) {
-        throw new Error("Missing the required parameter 'project' when calling listProjectDashboards");
+        throw new Error("Missing the required parameter 'project' when calling projectDashboardsV1ListProjectDashboards");
       }
 
 
@@ -372,8 +372,8 @@
     }
 
     /**
-     * Callback function to receive the result of the patchProjectDashboard operation.
-     * @callback module:api/ProjectDashboardsV1Api~patchProjectDashboardCallback
+     * Callback function to receive the result of the projectDashboardsV1PatchProjectDashboard operation.
+     * @callback module:api/ProjectDashboardsV1Api~projectDashboardsV1PatchProjectDashboardCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1Dashboard} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -385,30 +385,30 @@
      * @param {String} project Project under namesapce
      * @param {String} dashboard_uuid UUID
      * @param {module:model/V1Dashboard} body Dashboard body
-     * @param {module:api/ProjectDashboardsV1Api~patchProjectDashboardCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/ProjectDashboardsV1Api~projectDashboardsV1PatchProjectDashboardCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1Dashboard}
      */
-    this.patchProjectDashboard = function(owner, project, dashboard_uuid, body, callback) {
+    this.projectDashboardsV1PatchProjectDashboard = function(owner, project, dashboard_uuid, body, callback) {
       var postBody = body;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling patchProjectDashboard");
+        throw new Error("Missing the required parameter 'owner' when calling projectDashboardsV1PatchProjectDashboard");
       }
 
       // verify the required parameter 'project' is set
       if (project === undefined || project === null) {
-        throw new Error("Missing the required parameter 'project' when calling patchProjectDashboard");
+        throw new Error("Missing the required parameter 'project' when calling projectDashboardsV1PatchProjectDashboard");
       }
 
       // verify the required parameter 'dashboard_uuid' is set
       if (dashboard_uuid === undefined || dashboard_uuid === null) {
-        throw new Error("Missing the required parameter 'dashboard_uuid' when calling patchProjectDashboard");
+        throw new Error("Missing the required parameter 'dashboard_uuid' when calling projectDashboardsV1PatchProjectDashboard");
       }
 
       // verify the required parameter 'body' is set
       if (body === undefined || body === null) {
-        throw new Error("Missing the required parameter 'body' when calling patchProjectDashboard");
+        throw new Error("Missing the required parameter 'body' when calling projectDashboardsV1PatchProjectDashboard");
       }
 
 
@@ -439,8 +439,8 @@
     }
 
     /**
-     * Callback function to receive the result of the promoteProjectDashboard operation.
-     * @callback module:api/ProjectDashboardsV1Api~promoteProjectDashboardCallback
+     * Callback function to receive the result of the projectDashboardsV1PromoteProjectDashboard operation.
+     * @callback module:api/ProjectDashboardsV1Api~projectDashboardsV1PromoteProjectDashboardCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1Dashboard} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -451,25 +451,25 @@
      * @param {String} owner Owner of the namespace
      * @param {String} project Project under namesapce
      * @param {String} dashboard_uuid UUID
-     * @param {module:api/ProjectDashboardsV1Api~promoteProjectDashboardCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/ProjectDashboardsV1Api~projectDashboardsV1PromoteProjectDashboardCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1Dashboard}
      */
-    this.promoteProjectDashboard = function(owner, project, dashboard_uuid, callback) {
+    this.projectDashboardsV1PromoteProjectDashboard = function(owner, project, dashboard_uuid, callback) {
       var postBody = null;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling promoteProjectDashboard");
+        throw new Error("Missing the required parameter 'owner' when calling projectDashboardsV1PromoteProjectDashboard");
       }
 
       // verify the required parameter 'project' is set
       if (project === undefined || project === null) {
-        throw new Error("Missing the required parameter 'project' when calling promoteProjectDashboard");
+        throw new Error("Missing the required parameter 'project' when calling projectDashboardsV1PromoteProjectDashboard");
       }
 
       // verify the required parameter 'dashboard_uuid' is set
       if (dashboard_uuid === undefined || dashboard_uuid === null) {
-        throw new Error("Missing the required parameter 'dashboard_uuid' when calling promoteProjectDashboard");
+        throw new Error("Missing the required parameter 'dashboard_uuid' when calling projectDashboardsV1PromoteProjectDashboard");
       }
 
 
@@ -500,8 +500,8 @@
     }
 
     /**
-     * Callback function to receive the result of the updateProjectDashboard operation.
-     * @callback module:api/ProjectDashboardsV1Api~updateProjectDashboardCallback
+     * Callback function to receive the result of the projectDashboardsV1UpdateProjectDashboard operation.
+     * @callback module:api/ProjectDashboardsV1Api~projectDashboardsV1UpdateProjectDashboardCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1Dashboard} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -513,30 +513,30 @@
      * @param {String} project Project under namesapce
      * @param {String} dashboard_uuid UUID
      * @param {module:model/V1Dashboard} body Dashboard body
-     * @param {module:api/ProjectDashboardsV1Api~updateProjectDashboardCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/ProjectDashboardsV1Api~projectDashboardsV1UpdateProjectDashboardCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1Dashboard}
      */
-    this.updateProjectDashboard = function(owner, project, dashboard_uuid, body, callback) {
+    this.projectDashboardsV1UpdateProjectDashboard = function(owner, project, dashboard_uuid, body, callback) {
       var postBody = body;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling updateProjectDashboard");
+        throw new Error("Missing the required parameter 'owner' when calling projectDashboardsV1UpdateProjectDashboard");
       }
 
       // verify the required parameter 'project' is set
       if (project === undefined || project === null) {
-        throw new Error("Missing the required parameter 'project' when calling updateProjectDashboard");
+        throw new Error("Missing the required parameter 'project' when calling projectDashboardsV1UpdateProjectDashboard");
       }
 
       // verify the required parameter 'dashboard_uuid' is set
       if (dashboard_uuid === undefined || dashboard_uuid === null) {
-        throw new Error("Missing the required parameter 'dashboard_uuid' when calling updateProjectDashboard");
+        throw new Error("Missing the required parameter 'dashboard_uuid' when calling projectDashboardsV1UpdateProjectDashboard");
       }
 
       // verify the required parameter 'body' is set
       if (body === undefined || body === null) {
-        throw new Error("Missing the required parameter 'body' when calling updateProjectDashboard");
+        throw new Error("Missing the required parameter 'body' when calling projectDashboardsV1UpdateProjectDashboard");
       }
 
 

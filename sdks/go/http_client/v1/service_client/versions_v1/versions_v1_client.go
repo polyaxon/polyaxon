@@ -39,31 +39,31 @@ type Client struct {
 
 // ClientService is the interface for Client methods
 type ClientService interface {
-	GetLogHandler(params *GetLogHandlerParams, authInfo runtime.ClientAuthInfoWriter) (*GetLogHandlerOK, *GetLogHandlerNoContent, error)
+	VersionsV1GetLogHandler(params *VersionsV1GetLogHandlerParams, authInfo runtime.ClientAuthInfoWriter) (*VersionsV1GetLogHandlerOK, *VersionsV1GetLogHandlerNoContent, error)
 
-	GetVersions(params *GetVersionsParams, authInfo runtime.ClientAuthInfoWriter) (*GetVersionsOK, *GetVersionsNoContent, error)
+	VersionsV1GetVersions(params *VersionsV1GetVersionsParams, authInfo runtime.ClientAuthInfoWriter) (*VersionsV1GetVersionsOK, *VersionsV1GetVersionsNoContent, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
 
 /*
-  GetLogHandler get log handler API
+  VersionsV1GetLogHandler versions v1 get log handler API
 */
-func (a *Client) GetLogHandler(params *GetLogHandlerParams, authInfo runtime.ClientAuthInfoWriter) (*GetLogHandlerOK, *GetLogHandlerNoContent, error) {
+func (a *Client) VersionsV1GetLogHandler(params *VersionsV1GetLogHandlerParams, authInfo runtime.ClientAuthInfoWriter) (*VersionsV1GetLogHandlerOK, *VersionsV1GetLogHandlerNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewGetLogHandlerParams()
+		params = NewVersionsV1GetLogHandlerParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "GetLogHandler",
+		ID:                 "VersionsV1_GetLogHandler",
 		Method:             "GET",
 		PathPattern:        "/api/v1/log_handler",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &GetLogHandlerReader{formats: a.formats},
+		Reader:             &VersionsV1GetLogHandlerReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -72,34 +72,34 @@ func (a *Client) GetLogHandler(params *GetLogHandlerParams, authInfo runtime.Cli
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *GetLogHandlerOK:
+	case *VersionsV1GetLogHandlerOK:
 		return value, nil, nil
-	case *GetLogHandlerNoContent:
+	case *VersionsV1GetLogHandlerNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*GetLogHandlerDefault)
+	unexpectedSuccess := result.(*VersionsV1GetLogHandlerDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  GetVersions gets current user
+  VersionsV1GetVersions gets current user
 */
-func (a *Client) GetVersions(params *GetVersionsParams, authInfo runtime.ClientAuthInfoWriter) (*GetVersionsOK, *GetVersionsNoContent, error) {
+func (a *Client) VersionsV1GetVersions(params *VersionsV1GetVersionsParams, authInfo runtime.ClientAuthInfoWriter) (*VersionsV1GetVersionsOK, *VersionsV1GetVersionsNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewGetVersionsParams()
+		params = NewVersionsV1GetVersionsParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "GetVersions",
+		ID:                 "VersionsV1_GetVersions",
 		Method:             "GET",
 		PathPattern:        "/api/v1/version",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &GetVersionsReader{formats: a.formats},
+		Reader:             &VersionsV1GetVersionsReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -108,13 +108,13 @@ func (a *Client) GetVersions(params *GetVersionsParams, authInfo runtime.ClientA
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *GetVersionsOK:
+	case *VersionsV1GetVersionsOK:
 		return value, nil, nil
-	case *GetVersionsNoContent:
+	case *VersionsV1GetVersionsNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*GetVersionsDefault)
+	unexpectedSuccess := result.(*VersionsV1GetVersionsDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 

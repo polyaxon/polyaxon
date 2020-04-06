@@ -118,7 +118,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-api.createAccessResource(owner, body, callback);
+api.accessResourcesV1CreateAccessResource(owner, body, callback);
 
 ```
 
@@ -128,189 +128,192 @@ All URIs are relative to *http://localhost*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*PolyaxonSdk.AccessResourcesV1Api* | [**createAccessResource**](docs/AccessResourcesV1Api.md#createAccessResource) | **POST** /api/v1/orgs/{owner}/access_resources | Create access resource
-*PolyaxonSdk.AccessResourcesV1Api* | [**deleteAccessResource**](docs/AccessResourcesV1Api.md#deleteAccessResource) | **DELETE** /api/v1/orgs/{owner}/access_resources/{uuid} | Delete access resource
-*PolyaxonSdk.AccessResourcesV1Api* | [**getAccessResource**](docs/AccessResourcesV1Api.md#getAccessResource) | **GET** /api/v1/orgs/{owner}/access_resources/{uuid} | Get access resource
-*PolyaxonSdk.AccessResourcesV1Api* | [**listAccessResourceNames**](docs/AccessResourcesV1Api.md#listAccessResourceNames) | **GET** /api/v1/orgs/{owner}/access_resources/names | List access resource names
-*PolyaxonSdk.AccessResourcesV1Api* | [**listAccessResources**](docs/AccessResourcesV1Api.md#listAccessResources) | **GET** /api/v1/orgs/{owner}/access_resources | List access resources
-*PolyaxonSdk.AccessResourcesV1Api* | [**patchAccessResource**](docs/AccessResourcesV1Api.md#patchAccessResource) | **PATCH** /api/v1/orgs/{owner}/access_resources/{access_resource.uuid} | Patch access resource
-*PolyaxonSdk.AccessResourcesV1Api* | [**updateAccessResource**](docs/AccessResourcesV1Api.md#updateAccessResource) | **PUT** /api/v1/orgs/{owner}/access_resources/{access_resource.uuid} | Update access resource
-*PolyaxonSdk.AgentsV1Api* | [**createAgent**](docs/AgentsV1Api.md#createAgent) | **POST** /api/v1/orgs/{owner}/agents | Create run profile
-*PolyaxonSdk.AgentsV1Api* | [**createAgentStatus**](docs/AgentsV1Api.md#createAgentStatus) | **POST** /api/v1/orgs/{owner}/agents/{uuid}/statuses | 
-*PolyaxonSdk.AgentsV1Api* | [**deleteAgent**](docs/AgentsV1Api.md#deleteAgent) | **DELETE** /api/v1/orgs/{owner}/agents/{uuid} | Delete run profile
-*PolyaxonSdk.AgentsV1Api* | [**getAgent**](docs/AgentsV1Api.md#getAgent) | **GET** /api/v1/orgs/{owner}/agents/{uuid} | Get run profile
-*PolyaxonSdk.AgentsV1Api* | [**getAgentState**](docs/AgentsV1Api.md#getAgentState) | **GET** /api/v1/orgs/{owner}/agents/{uuid}/state | 
-*PolyaxonSdk.AgentsV1Api* | [**getAgentStatuses**](docs/AgentsV1Api.md#getAgentStatuses) | **GET** /api/v1/orgs/{owner}/agents/{uuid}/statuses | 
-*PolyaxonSdk.AgentsV1Api* | [**listAgentNames**](docs/AgentsV1Api.md#listAgentNames) | **GET** /api/v1/orgs/{owner}/agents/names | List run profiles names
-*PolyaxonSdk.AgentsV1Api* | [**listAgents**](docs/AgentsV1Api.md#listAgents) | **GET** /api/v1/orgs/{owner}/agents | List run profiles
-*PolyaxonSdk.AgentsV1Api* | [**patchAgent**](docs/AgentsV1Api.md#patchAgent) | **PATCH** /api/v1/orgs/{owner}/agents/{agent.uuid} | Patch run profile
-*PolyaxonSdk.AgentsV1Api* | [**syncAgent**](docs/AgentsV1Api.md#syncAgent) | **PATCH** /api/v1/orgs/{owner}/agents/{agent.uuid}/sync | 
-*PolyaxonSdk.AgentsV1Api* | [**updateAgent**](docs/AgentsV1Api.md#updateAgent) | **PUT** /api/v1/orgs/{owner}/agents/{agent.uuid} | Update run profile
+*PolyaxonSdk.AccessResourcesV1Api* | [**accessResourcesV1CreateAccessResource**](docs/AccessResourcesV1Api.md#accessResourcesV1CreateAccessResource) | **POST** /api/v1/orgs/{owner}/access_resources | Create access resource
+*PolyaxonSdk.AccessResourcesV1Api* | [**accessResourcesV1DeleteAccessResource**](docs/AccessResourcesV1Api.md#accessResourcesV1DeleteAccessResource) | **DELETE** /api/v1/orgs/{owner}/access_resources/{uuid} | Delete access resource
+*PolyaxonSdk.AccessResourcesV1Api* | [**accessResourcesV1GetAccessResource**](docs/AccessResourcesV1Api.md#accessResourcesV1GetAccessResource) | **GET** /api/v1/orgs/{owner}/access_resources/{uuid} | Get access resource
+*PolyaxonSdk.AccessResourcesV1Api* | [**accessResourcesV1ListAccessResourceNames**](docs/AccessResourcesV1Api.md#accessResourcesV1ListAccessResourceNames) | **GET** /api/v1/orgs/{owner}/access_resources/names | List access resource names
+*PolyaxonSdk.AccessResourcesV1Api* | [**accessResourcesV1ListAccessResources**](docs/AccessResourcesV1Api.md#accessResourcesV1ListAccessResources) | **GET** /api/v1/orgs/{owner}/access_resources | List access resources
+*PolyaxonSdk.AccessResourcesV1Api* | [**accessResourcesV1PatchAccessResource**](docs/AccessResourcesV1Api.md#accessResourcesV1PatchAccessResource) | **PATCH** /api/v1/orgs/{owner}/access_resources/{access_resource.uuid} | Patch access resource
+*PolyaxonSdk.AccessResourcesV1Api* | [**accessResourcesV1UpdateAccessResource**](docs/AccessResourcesV1Api.md#accessResourcesV1UpdateAccessResource) | **PUT** /api/v1/orgs/{owner}/access_resources/{access_resource.uuid} | Update access resource
+*PolyaxonSdk.AgentsV1Api* | [**agentsV1CreateAgent**](docs/AgentsV1Api.md#agentsV1CreateAgent) | **POST** /api/v1/orgs/{owner}/agents | Create run profile
+*PolyaxonSdk.AgentsV1Api* | [**agentsV1CreateAgentStatus**](docs/AgentsV1Api.md#agentsV1CreateAgentStatus) | **POST** /api/v1/orgs/{owner}/agents/{uuid}/statuses | 
+*PolyaxonSdk.AgentsV1Api* | [**agentsV1DeleteAgent**](docs/AgentsV1Api.md#agentsV1DeleteAgent) | **DELETE** /api/v1/orgs/{owner}/agents/{uuid} | Delete run profile
+*PolyaxonSdk.AgentsV1Api* | [**agentsV1GetAgent**](docs/AgentsV1Api.md#agentsV1GetAgent) | **GET** /api/v1/orgs/{owner}/agents/{uuid} | Get run profile
+*PolyaxonSdk.AgentsV1Api* | [**agentsV1GetAgentState**](docs/AgentsV1Api.md#agentsV1GetAgentState) | **GET** /api/v1/orgs/{owner}/agents/{uuid}/state | 
+*PolyaxonSdk.AgentsV1Api* | [**agentsV1GetAgentStatuses**](docs/AgentsV1Api.md#agentsV1GetAgentStatuses) | **GET** /api/v1/orgs/{owner}/agents/{uuid}/statuses | 
+*PolyaxonSdk.AgentsV1Api* | [**agentsV1ListAgentNames**](docs/AgentsV1Api.md#agentsV1ListAgentNames) | **GET** /api/v1/orgs/{owner}/agents/names | List run profiles names
+*PolyaxonSdk.AgentsV1Api* | [**agentsV1ListAgents**](docs/AgentsV1Api.md#agentsV1ListAgents) | **GET** /api/v1/orgs/{owner}/agents | List run profiles
+*PolyaxonSdk.AgentsV1Api* | [**agentsV1PatchAgent**](docs/AgentsV1Api.md#agentsV1PatchAgent) | **PATCH** /api/v1/orgs/{owner}/agents/{agent.uuid} | Patch run profile
+*PolyaxonSdk.AgentsV1Api* | [**agentsV1SyncAgent**](docs/AgentsV1Api.md#agentsV1SyncAgent) | **PATCH** /api/v1/orgs/{owner}/agents/{agent.uuid}/sync | 
+*PolyaxonSdk.AgentsV1Api* | [**agentsV1UpdateAgent**](docs/AgentsV1Api.md#agentsV1UpdateAgent) | **PUT** /api/v1/orgs/{owner}/agents/{agent.uuid} | Update run profile
 *PolyaxonSdk.ArtifactsStoresV1Api* | [**uploadArtifact**](docs/ArtifactsStoresV1Api.md#uploadArtifact) | **POST** /api/v1/catalogs/{owner}/artifacts/{uuid}/upload | Upload artifact to a store
-*PolyaxonSdk.AuthV1Api* | [**login**](docs/AuthV1Api.md#login) | **POST** /api/v1/users/token | List organization level queues names
-*PolyaxonSdk.ConnectionsV1Api* | [**createConnection**](docs/ConnectionsV1Api.md#createConnection) | **POST** /api/v1/orgs/{owner}/connections | Create connection
-*PolyaxonSdk.ConnectionsV1Api* | [**deleteConnection**](docs/ConnectionsV1Api.md#deleteConnection) | **DELETE** /api/v1/orgs/{owner}/connections/{uuid} | Delete connection
-*PolyaxonSdk.ConnectionsV1Api* | [**getConnection**](docs/ConnectionsV1Api.md#getConnection) | **GET** /api/v1/orgs/{owner}/connections/{uuid} | Get connection
-*PolyaxonSdk.ConnectionsV1Api* | [**listConnectionNames**](docs/ConnectionsV1Api.md#listConnectionNames) | **GET** /api/v1/orgs/{owner}/connections/names | List connections names
-*PolyaxonSdk.ConnectionsV1Api* | [**listConnections**](docs/ConnectionsV1Api.md#listConnections) | **GET** /api/v1/orgs/{owner}/connections | List connections
-*PolyaxonSdk.ConnectionsV1Api* | [**patchConnection**](docs/ConnectionsV1Api.md#patchConnection) | **PATCH** /api/v1/orgs/{owner}/connections/{connection.uuid} | Patch connection
-*PolyaxonSdk.ConnectionsV1Api* | [**updateConnection**](docs/ConnectionsV1Api.md#updateConnection) | **PUT** /api/v1/orgs/{owner}/connections/{connection.uuid} | Update connection
-*PolyaxonSdk.DashboardsV1Api* | [**createDashboard**](docs/DashboardsV1Api.md#createDashboard) | **POST** /api/v1/orgs/{owner}/dashboards | 
-*PolyaxonSdk.DashboardsV1Api* | [**deleteDashboard**](docs/DashboardsV1Api.md#deleteDashboard) | **DELETE** /api/v1/orgs/{owner}/dashboards/{uuid} | 
-*PolyaxonSdk.DashboardsV1Api* | [**getDashboard**](docs/DashboardsV1Api.md#getDashboard) | **GET** /api/v1/orgs/{owner}/dashboards/{uuid} | 
-*PolyaxonSdk.DashboardsV1Api* | [**listDashboardNames**](docs/DashboardsV1Api.md#listDashboardNames) | **GET** /api/v1/orgs/{owner}/dashboards/names | 
-*PolyaxonSdk.DashboardsV1Api* | [**listDashboards**](docs/DashboardsV1Api.md#listDashboards) | **GET** /api/v1/orgs/{owner}/dashboards | 
-*PolyaxonSdk.DashboardsV1Api* | [**patchDashboard**](docs/DashboardsV1Api.md#patchDashboard) | **PATCH** /api/v1/orgs/{owner}/dashboards/{dashboard.uuid} | 
-*PolyaxonSdk.DashboardsV1Api* | [**updateDashboard**](docs/DashboardsV1Api.md#updateDashboard) | **PUT** /api/v1/orgs/{owner}/dashboards/{dashboard.uuid} | 
-*PolyaxonSdk.HubComponentsV1Api* | [**createHubComponent**](docs/HubComponentsV1Api.md#createHubComponent) | **POST** /api/v1/orgs/{owner}/components | Create hub model
-*PolyaxonSdk.HubComponentsV1Api* | [**deleteHubComponent**](docs/HubComponentsV1Api.md#deleteHubComponent) | **DELETE** /api/v1/orgs/{owner}/components/{uuid} | Delete hub model
-*PolyaxonSdk.HubComponentsV1Api* | [**getHubComponent**](docs/HubComponentsV1Api.md#getHubComponent) | **GET** /api/v1/orgs/{owner}/components/{uuid} | Get hub model
-*PolyaxonSdk.HubComponentsV1Api* | [**listHubComponebtNames**](docs/HubComponentsV1Api.md#listHubComponebtNames) | **GET** /api/v1/orgs/{owner}/components/names | List hub model names
-*PolyaxonSdk.HubComponentsV1Api* | [**listHubComponents**](docs/HubComponentsV1Api.md#listHubComponents) | **GET** /api/v1/orgs/{owner}/components | List hub models
-*PolyaxonSdk.HubComponentsV1Api* | [**patchHubComponent**](docs/HubComponentsV1Api.md#patchHubComponent) | **PATCH** /api/v1/orgs/{owner}/components/{component.uuid} | Patch hub model
-*PolyaxonSdk.HubComponentsV1Api* | [**updateHubComponent**](docs/HubComponentsV1Api.md#updateHubComponent) | **PUT** /api/v1/orgs/{owner}/components/{component.uuid} | Update hub model
-*PolyaxonSdk.HubModelsV1Api* | [**createHubModel**](docs/HubModelsV1Api.md#createHubModel) | **POST** /api/v1/orgs/{owner}/models | Create dashboard
-*PolyaxonSdk.HubModelsV1Api* | [**deleteHubModel**](docs/HubModelsV1Api.md#deleteHubModel) | **DELETE** /api/v1/orgs/{owner}/models/{uuid} | Delete dashboard
-*PolyaxonSdk.HubModelsV1Api* | [**getHubModel**](docs/HubModelsV1Api.md#getHubModel) | **GET** /api/v1/orgs/{owner}/models/{uuid} | Get dashboard
-*PolyaxonSdk.HubModelsV1Api* | [**listHubModelNames**](docs/HubModelsV1Api.md#listHubModelNames) | **GET** /api/v1/orgs/{owner}/models/names | List dashboard names
-*PolyaxonSdk.HubModelsV1Api* | [**listHubModels**](docs/HubModelsV1Api.md#listHubModels) | **GET** /api/v1/orgs/{owner}/models | List dashboards
-*PolyaxonSdk.HubModelsV1Api* | [**patchHubModel**](docs/HubModelsV1Api.md#patchHubModel) | **PATCH** /api/v1/orgs/{owner}/models/{model.uuid} | Patch dashboard
-*PolyaxonSdk.HubModelsV1Api* | [**updateHubModel**](docs/HubModelsV1Api.md#updateHubModel) | **PUT** /api/v1/orgs/{owner}/models/{model.uuid} | Update dashboard
-*PolyaxonSdk.OrganizationsV1Api* | [**createOrganization**](docs/OrganizationsV1Api.md#createOrganization) | **POST** /api/v1/orgs/create | 
-*PolyaxonSdk.OrganizationsV1Api* | [**createOrganizationMember**](docs/OrganizationsV1Api.md#createOrganizationMember) | **POST** /api/v1/orgs/{owner}/members | 
-*PolyaxonSdk.OrganizationsV1Api* | [**deleteOrganization**](docs/OrganizationsV1Api.md#deleteOrganization) | **DELETE** /api/v1/orgs/{owner} | 
-*PolyaxonSdk.OrganizationsV1Api* | [**deleteOrganizationMember**](docs/OrganizationsV1Api.md#deleteOrganizationMember) | **DELETE** /api/v1/orgs/{owner}/members/{user} | 
-*PolyaxonSdk.OrganizationsV1Api* | [**getOrganization**](docs/OrganizationsV1Api.md#getOrganization) | **GET** /api/v1/orgs/{owner} | 
-*PolyaxonSdk.OrganizationsV1Api* | [**getOrganizationMember**](docs/OrganizationsV1Api.md#getOrganizationMember) | **GET** /api/v1/orgs/{owner}/members/{user} | 
-*PolyaxonSdk.OrganizationsV1Api* | [**listOrganizationMembers**](docs/OrganizationsV1Api.md#listOrganizationMembers) | **GET** /api/v1/orgs/{owner}/members | 
-*PolyaxonSdk.OrganizationsV1Api* | [**listOrganizationNames**](docs/OrganizationsV1Api.md#listOrganizationNames) | **GET** /api/v1/orgs/names | Get versions
-*PolyaxonSdk.OrganizationsV1Api* | [**listOrganizations**](docs/OrganizationsV1Api.md#listOrganizations) | **GET** /api/v1/orgs/list | Get log handler
-*PolyaxonSdk.OrganizationsV1Api* | [**patchOrganization**](docs/OrganizationsV1Api.md#patchOrganization) | **PATCH** /api/v1/orgs/{owner} | 
-*PolyaxonSdk.OrganizationsV1Api* | [**patchOrganizationMember**](docs/OrganizationsV1Api.md#patchOrganizationMember) | **PATCH** /api/v1/orgs/{owner}/members/{member.user} | 
-*PolyaxonSdk.OrganizationsV1Api* | [**updateOrganization**](docs/OrganizationsV1Api.md#updateOrganization) | **PUT** /api/v1/orgs/{owner} | 
-*PolyaxonSdk.OrganizationsV1Api* | [**updateOrganizationMember**](docs/OrganizationsV1Api.md#updateOrganizationMember) | **PUT** /api/v1/orgs/{owner}/members/{member.user} | 
-*PolyaxonSdk.ProjectDashboardsV1Api* | [**createProjectDashboard**](docs/ProjectDashboardsV1Api.md#createProjectDashboard) | **POST** /api/v1/{owner}/{project}/dashboards | Create project dashboard
-*PolyaxonSdk.ProjectDashboardsV1Api* | [**deleteProjectDashboard**](docs/ProjectDashboardsV1Api.md#deleteProjectDashboard) | **DELETE** /api/v1/{owner}/{project}/dashboards/{uuid} | Delete project dashboard
-*PolyaxonSdk.ProjectDashboardsV1Api* | [**getProjectDashboard**](docs/ProjectDashboardsV1Api.md#getProjectDashboard) | **GET** /api/v1/{owner}/{project}/dashboards/{uuid} | Get project dashboard
-*PolyaxonSdk.ProjectDashboardsV1Api* | [**listProjectDashboardNames**](docs/ProjectDashboardsV1Api.md#listProjectDashboardNames) | **GET** /api/v1/{owner}/{project}/dashboards/names | List project dashboard
-*PolyaxonSdk.ProjectDashboardsV1Api* | [**listProjectDashboards**](docs/ProjectDashboardsV1Api.md#listProjectDashboards) | **GET** /api/v1/{owner}/{project}/dashboards | List project dashboards
-*PolyaxonSdk.ProjectDashboardsV1Api* | [**patchProjectDashboard**](docs/ProjectDashboardsV1Api.md#patchProjectDashboard) | **PATCH** /api/v1/{owner}/{project}/dashboards/{dashboard.uuid} | Patch project dashboard
-*PolyaxonSdk.ProjectDashboardsV1Api* | [**promoteProjectDashboard**](docs/ProjectDashboardsV1Api.md#promoteProjectDashboard) | **POST** /api/v1/{owner}/{project}/dashboards/{dashboard.uuid}/promote | Promote project dashboard
-*PolyaxonSdk.ProjectDashboardsV1Api* | [**updateProjectDashboard**](docs/ProjectDashboardsV1Api.md#updateProjectDashboard) | **PUT** /api/v1/{owner}/{project}/dashboards/{dashboard.uuid} | Update project dashboard
-*PolyaxonSdk.ProjectSearchesV1Api* | [**createProjectSearch**](docs/ProjectSearchesV1Api.md#createProjectSearch) | **POST** /api/v1/{owner}/{project}/searches | Create project search
-*PolyaxonSdk.ProjectSearchesV1Api* | [**deleteProjectSearch**](docs/ProjectSearchesV1Api.md#deleteProjectSearch) | **DELETE** /api/v1/{owner}/{project}/searches/{uuid} | Delete project search
-*PolyaxonSdk.ProjectSearchesV1Api* | [**getProjectSearch**](docs/ProjectSearchesV1Api.md#getProjectSearch) | **GET** /api/v1/{owner}/{project}/searches/{uuid} | Get project search
-*PolyaxonSdk.ProjectSearchesV1Api* | [**listProjectSearchNames**](docs/ProjectSearchesV1Api.md#listProjectSearchNames) | **GET** /api/v1/{owner}/{project}/searches/names | List project search names
-*PolyaxonSdk.ProjectSearchesV1Api* | [**listProjectSearches**](docs/ProjectSearchesV1Api.md#listProjectSearches) | **GET** /api/v1/{owner}/{project}/searches | List project searches
-*PolyaxonSdk.ProjectSearchesV1Api* | [**patchProjectSearch**](docs/ProjectSearchesV1Api.md#patchProjectSearch) | **PATCH** /api/v1/{owner}/{project}/searches/{search.uuid} | Patch project search
-*PolyaxonSdk.ProjectSearchesV1Api* | [**promoteProjectSearch**](docs/ProjectSearchesV1Api.md#promoteProjectSearch) | **POST** /api/v1/{owner}/{project}/searches/{uuid}/promote | Promote project search
-*PolyaxonSdk.ProjectSearchesV1Api* | [**updateProjectSearch**](docs/ProjectSearchesV1Api.md#updateProjectSearch) | **PUT** /api/v1/{owner}/{project}/searches/{search.uuid} | Update project search
-*PolyaxonSdk.ProjectsV1Api* | [**archiveProject**](docs/ProjectsV1Api.md#archiveProject) | **POST** /api/v1/{owner}/{project}/archive | Archive project
-*PolyaxonSdk.ProjectsV1Api* | [**bookmarkProject**](docs/ProjectsV1Api.md#bookmarkProject) | **POST** /api/v1/{owner}/{project}/bookmark | Bookmark project
-*PolyaxonSdk.ProjectsV1Api* | [**createProject**](docs/ProjectsV1Api.md#createProject) | **POST** /api/v1/{owner}/projects/create | Create new project
-*PolyaxonSdk.ProjectsV1Api* | [**deleteProject**](docs/ProjectsV1Api.md#deleteProject) | **DELETE** /api/v1/{owner}/{project} | Delete project
-*PolyaxonSdk.ProjectsV1Api* | [**disableProjectCI**](docs/ProjectsV1Api.md#disableProjectCI) | **DELETE** /api/v1/{owner}/{project}/ci | Disbale project CI
-*PolyaxonSdk.ProjectsV1Api* | [**enableProjectCI**](docs/ProjectsV1Api.md#enableProjectCI) | **POST** /api/v1/{owner}/{project}/ci | Enable project CI
-*PolyaxonSdk.ProjectsV1Api* | [**fetchProjectTeams**](docs/ProjectsV1Api.md#fetchProjectTeams) | **GET** /api/v1/{owner}/{project}/teams | Get project teams
-*PolyaxonSdk.ProjectsV1Api* | [**getProject**](docs/ProjectsV1Api.md#getProject) | **GET** /api/v1/{owner}/{project} | Get project
-*PolyaxonSdk.ProjectsV1Api* | [**getProjectSettings**](docs/ProjectsV1Api.md#getProjectSettings) | **GET** /api/v1/{owner}/{project}/settings | Get Project settings
-*PolyaxonSdk.ProjectsV1Api* | [**listArchivedProjects**](docs/ProjectsV1Api.md#listArchivedProjects) | **GET** /api/v1/archives/{user}/projects | List archived projects for user
-*PolyaxonSdk.ProjectsV1Api* | [**listBookmarkedProjects**](docs/ProjectsV1Api.md#listBookmarkedProjects) | **GET** /api/v1/bookmarks/{user}/projects | List bookmarked projects for user
-*PolyaxonSdk.ProjectsV1Api* | [**listProjectNames**](docs/ProjectsV1Api.md#listProjectNames) | **GET** /api/v1/{owner}/projects/names | List project names
-*PolyaxonSdk.ProjectsV1Api* | [**listProjects**](docs/ProjectsV1Api.md#listProjects) | **GET** /api/v1/{owner}/projects/list | List projects
-*PolyaxonSdk.ProjectsV1Api* | [**patchProject**](docs/ProjectsV1Api.md#patchProject) | **PATCH** /api/v1/{owner}/{project.name} | Patch project
-*PolyaxonSdk.ProjectsV1Api* | [**patchProjectSettings**](docs/ProjectsV1Api.md#patchProjectSettings) | **PATCH** /api/v1/{owner}/{project}/settings | Patch project settings
-*PolyaxonSdk.ProjectsV1Api* | [**patchProjectTeams**](docs/ProjectsV1Api.md#patchProjectTeams) | **PATCH** /api/v1/{owner}/{project}/teams | Patch project teams
-*PolyaxonSdk.ProjectsV1Api* | [**restoreProject**](docs/ProjectsV1Api.md#restoreProject) | **POST** /api/v1/{owner}/{project}/restore | Restore project
-*PolyaxonSdk.ProjectsV1Api* | [**unbookmarkProject**](docs/ProjectsV1Api.md#unbookmarkProject) | **DELETE** /api/v1/{owner}/{project}/unbookmark | Unbookmark project
-*PolyaxonSdk.ProjectsV1Api* | [**updateProject**](docs/ProjectsV1Api.md#updateProject) | **PUT** /api/v1/{owner}/{project.name} | Update project
-*PolyaxonSdk.ProjectsV1Api* | [**updateProjectSettings**](docs/ProjectsV1Api.md#updateProjectSettings) | **PUT** /api/v1/{owner}/{project}/settings | Update project settings
-*PolyaxonSdk.ProjectsV1Api* | [**updateProjectTeams**](docs/ProjectsV1Api.md#updateProjectTeams) | **PUT** /api/v1/{owner}/{project}/teams | Update project teams
+*PolyaxonSdk.AuthV1Api* | [**authV1Login**](docs/AuthV1Api.md#authV1Login) | **POST** /api/v1/users/token | List organization level queues names
+*PolyaxonSdk.ConnectionsV1Api* | [**connectionsV1CreateConnection**](docs/ConnectionsV1Api.md#connectionsV1CreateConnection) | **POST** /api/v1/orgs/{owner}/connections | Create connection
+*PolyaxonSdk.ConnectionsV1Api* | [**connectionsV1DeleteConnection**](docs/ConnectionsV1Api.md#connectionsV1DeleteConnection) | **DELETE** /api/v1/orgs/{owner}/connections/{uuid} | Delete connection
+*PolyaxonSdk.ConnectionsV1Api* | [**connectionsV1GetConnection**](docs/ConnectionsV1Api.md#connectionsV1GetConnection) | **GET** /api/v1/orgs/{owner}/connections/{uuid} | Get connection
+*PolyaxonSdk.ConnectionsV1Api* | [**connectionsV1ListConnectionNames**](docs/ConnectionsV1Api.md#connectionsV1ListConnectionNames) | **GET** /api/v1/orgs/{owner}/connections/names | List connections names
+*PolyaxonSdk.ConnectionsV1Api* | [**connectionsV1ListConnections**](docs/ConnectionsV1Api.md#connectionsV1ListConnections) | **GET** /api/v1/orgs/{owner}/connections | List connections
+*PolyaxonSdk.ConnectionsV1Api* | [**connectionsV1PatchConnection**](docs/ConnectionsV1Api.md#connectionsV1PatchConnection) | **PATCH** /api/v1/orgs/{owner}/connections/{connection.uuid} | Patch connection
+*PolyaxonSdk.ConnectionsV1Api* | [**connectionsV1UpdateConnection**](docs/ConnectionsV1Api.md#connectionsV1UpdateConnection) | **PUT** /api/v1/orgs/{owner}/connections/{connection.uuid} | Update connection
+*PolyaxonSdk.DashboardsV1Api* | [**dashboardsV1CreateDashboard**](docs/DashboardsV1Api.md#dashboardsV1CreateDashboard) | **POST** /api/v1/orgs/{owner}/dashboards | 
+*PolyaxonSdk.DashboardsV1Api* | [**dashboardsV1DeleteDashboard**](docs/DashboardsV1Api.md#dashboardsV1DeleteDashboard) | **DELETE** /api/v1/orgs/{owner}/dashboards/{uuid} | 
+*PolyaxonSdk.DashboardsV1Api* | [**dashboardsV1GetDashboard**](docs/DashboardsV1Api.md#dashboardsV1GetDashboard) | **GET** /api/v1/orgs/{owner}/dashboards/{uuid} | 
+*PolyaxonSdk.DashboardsV1Api* | [**dashboardsV1ListDashboardNames**](docs/DashboardsV1Api.md#dashboardsV1ListDashboardNames) | **GET** /api/v1/orgs/{owner}/dashboards/names | 
+*PolyaxonSdk.DashboardsV1Api* | [**dashboardsV1ListDashboards**](docs/DashboardsV1Api.md#dashboardsV1ListDashboards) | **GET** /api/v1/orgs/{owner}/dashboards | 
+*PolyaxonSdk.DashboardsV1Api* | [**dashboardsV1PatchDashboard**](docs/DashboardsV1Api.md#dashboardsV1PatchDashboard) | **PATCH** /api/v1/orgs/{owner}/dashboards/{dashboard.uuid} | 
+*PolyaxonSdk.DashboardsV1Api* | [**dashboardsV1UpdateDashboard**](docs/DashboardsV1Api.md#dashboardsV1UpdateDashboard) | **PUT** /api/v1/orgs/{owner}/dashboards/{dashboard.uuid} | 
+*PolyaxonSdk.HubComponentsV1Api* | [**hubComponentsV1CreateHubComponent**](docs/HubComponentsV1Api.md#hubComponentsV1CreateHubComponent) | **POST** /api/v1/orgs/{owner}/components | Create hub model
+*PolyaxonSdk.HubComponentsV1Api* | [**hubComponentsV1DeleteHubComponent**](docs/HubComponentsV1Api.md#hubComponentsV1DeleteHubComponent) | **DELETE** /api/v1/orgs/{owner}/components/{uuid} | Delete hub model
+*PolyaxonSdk.HubComponentsV1Api* | [**hubComponentsV1GetHubComponent**](docs/HubComponentsV1Api.md#hubComponentsV1GetHubComponent) | **GET** /api/v1/orgs/{owner}/components/{uuid} | Get hub model
+*PolyaxonSdk.HubComponentsV1Api* | [**hubComponentsV1ListHubComponebtNames**](docs/HubComponentsV1Api.md#hubComponentsV1ListHubComponebtNames) | **GET** /api/v1/orgs/{owner}/components/names | List hub model names
+*PolyaxonSdk.HubComponentsV1Api* | [**hubComponentsV1ListHubComponents**](docs/HubComponentsV1Api.md#hubComponentsV1ListHubComponents) | **GET** /api/v1/orgs/{owner}/components | List hub models
+*PolyaxonSdk.HubComponentsV1Api* | [**hubComponentsV1PatchHubComponent**](docs/HubComponentsV1Api.md#hubComponentsV1PatchHubComponent) | **PATCH** /api/v1/orgs/{owner}/components/{component.uuid} | Patch hub model
+*PolyaxonSdk.HubComponentsV1Api* | [**hubComponentsV1UpdateHubComponent**](docs/HubComponentsV1Api.md#hubComponentsV1UpdateHubComponent) | **PUT** /api/v1/orgs/{owner}/components/{component.uuid} | Update hub model
+*PolyaxonSdk.HubModelsV1Api* | [**hubModelsV1CreateHubModel**](docs/HubModelsV1Api.md#hubModelsV1CreateHubModel) | **POST** /api/v1/orgs/{owner}/models | Create dashboard
+*PolyaxonSdk.HubModelsV1Api* | [**hubModelsV1DeleteHubModel**](docs/HubModelsV1Api.md#hubModelsV1DeleteHubModel) | **DELETE** /api/v1/orgs/{owner}/models/{uuid} | Delete dashboard
+*PolyaxonSdk.HubModelsV1Api* | [**hubModelsV1GetHubModel**](docs/HubModelsV1Api.md#hubModelsV1GetHubModel) | **GET** /api/v1/orgs/{owner}/models/{uuid} | Get dashboard
+*PolyaxonSdk.HubModelsV1Api* | [**hubModelsV1ListHubModelNames**](docs/HubModelsV1Api.md#hubModelsV1ListHubModelNames) | **GET** /api/v1/orgs/{owner}/models/names | List dashboard names
+*PolyaxonSdk.HubModelsV1Api* | [**hubModelsV1ListHubModels**](docs/HubModelsV1Api.md#hubModelsV1ListHubModels) | **GET** /api/v1/orgs/{owner}/models | List dashboards
+*PolyaxonSdk.HubModelsV1Api* | [**hubModelsV1PatchHubModel**](docs/HubModelsV1Api.md#hubModelsV1PatchHubModel) | **PATCH** /api/v1/orgs/{owner}/models/{model.uuid} | Patch dashboard
+*PolyaxonSdk.HubModelsV1Api* | [**hubModelsV1UpdateHubModel**](docs/HubModelsV1Api.md#hubModelsV1UpdateHubModel) | **PUT** /api/v1/orgs/{owner}/models/{model.uuid} | Update dashboard
+*PolyaxonSdk.OrganizationsV1Api* | [**organizationsV1CreateOrganization**](docs/OrganizationsV1Api.md#organizationsV1CreateOrganization) | **POST** /api/v1/orgs/create | 
+*PolyaxonSdk.OrganizationsV1Api* | [**organizationsV1CreateOrganizationMember**](docs/OrganizationsV1Api.md#organizationsV1CreateOrganizationMember) | **POST** /api/v1/orgs/{owner}/members | 
+*PolyaxonSdk.OrganizationsV1Api* | [**organizationsV1DeleteOrganization**](docs/OrganizationsV1Api.md#organizationsV1DeleteOrganization) | **DELETE** /api/v1/orgs/{owner} | 
+*PolyaxonSdk.OrganizationsV1Api* | [**organizationsV1DeleteOrganizationMember**](docs/OrganizationsV1Api.md#organizationsV1DeleteOrganizationMember) | **DELETE** /api/v1/orgs/{owner}/members/{user} | 
+*PolyaxonSdk.OrganizationsV1Api* | [**organizationsV1GetOrganization**](docs/OrganizationsV1Api.md#organizationsV1GetOrganization) | **GET** /api/v1/orgs/{owner} | 
+*PolyaxonSdk.OrganizationsV1Api* | [**organizationsV1GetOrganizationMember**](docs/OrganizationsV1Api.md#organizationsV1GetOrganizationMember) | **GET** /api/v1/orgs/{owner}/members/{user} | 
+*PolyaxonSdk.OrganizationsV1Api* | [**organizationsV1ListOrganizationMembers**](docs/OrganizationsV1Api.md#organizationsV1ListOrganizationMembers) | **GET** /api/v1/orgs/{owner}/members | 
+*PolyaxonSdk.OrganizationsV1Api* | [**organizationsV1ListOrganizationNames**](docs/OrganizationsV1Api.md#organizationsV1ListOrganizationNames) | **GET** /api/v1/orgs/names | Get versions
+*PolyaxonSdk.OrganizationsV1Api* | [**organizationsV1ListOrganizations**](docs/OrganizationsV1Api.md#organizationsV1ListOrganizations) | **GET** /api/v1/orgs/list | Get log handler
+*PolyaxonSdk.OrganizationsV1Api* | [**organizationsV1PatchOrganization**](docs/OrganizationsV1Api.md#organizationsV1PatchOrganization) | **PATCH** /api/v1/orgs/{owner} | 
+*PolyaxonSdk.OrganizationsV1Api* | [**organizationsV1PatchOrganizationMember**](docs/OrganizationsV1Api.md#organizationsV1PatchOrganizationMember) | **PATCH** /api/v1/orgs/{owner}/members/{member.user} | 
+*PolyaxonSdk.OrganizationsV1Api* | [**organizationsV1UpdateOrganization**](docs/OrganizationsV1Api.md#organizationsV1UpdateOrganization) | **PUT** /api/v1/orgs/{owner} | 
+*PolyaxonSdk.OrganizationsV1Api* | [**organizationsV1UpdateOrganizationMember**](docs/OrganizationsV1Api.md#organizationsV1UpdateOrganizationMember) | **PUT** /api/v1/orgs/{owner}/members/{member.user} | 
+*PolyaxonSdk.ProjectDashboardsV1Api* | [**projectDashboardsV1CreateProjectDashboard**](docs/ProjectDashboardsV1Api.md#projectDashboardsV1CreateProjectDashboard) | **POST** /api/v1/{owner}/{project}/dashboards | Create project dashboard
+*PolyaxonSdk.ProjectDashboardsV1Api* | [**projectDashboardsV1DeleteProjectDashboard**](docs/ProjectDashboardsV1Api.md#projectDashboardsV1DeleteProjectDashboard) | **DELETE** /api/v1/{owner}/{project}/dashboards/{uuid} | Delete project dashboard
+*PolyaxonSdk.ProjectDashboardsV1Api* | [**projectDashboardsV1GetProjectDashboard**](docs/ProjectDashboardsV1Api.md#projectDashboardsV1GetProjectDashboard) | **GET** /api/v1/{owner}/{project}/dashboards/{uuid} | Get project dashboard
+*PolyaxonSdk.ProjectDashboardsV1Api* | [**projectDashboardsV1ListProjectDashboardNames**](docs/ProjectDashboardsV1Api.md#projectDashboardsV1ListProjectDashboardNames) | **GET** /api/v1/{owner}/{project}/dashboards/names | List project dashboard
+*PolyaxonSdk.ProjectDashboardsV1Api* | [**projectDashboardsV1ListProjectDashboards**](docs/ProjectDashboardsV1Api.md#projectDashboardsV1ListProjectDashboards) | **GET** /api/v1/{owner}/{project}/dashboards | List project dashboards
+*PolyaxonSdk.ProjectDashboardsV1Api* | [**projectDashboardsV1PatchProjectDashboard**](docs/ProjectDashboardsV1Api.md#projectDashboardsV1PatchProjectDashboard) | **PATCH** /api/v1/{owner}/{project}/dashboards/{dashboard.uuid} | Patch project dashboard
+*PolyaxonSdk.ProjectDashboardsV1Api* | [**projectDashboardsV1PromoteProjectDashboard**](docs/ProjectDashboardsV1Api.md#projectDashboardsV1PromoteProjectDashboard) | **POST** /api/v1/{owner}/{project}/dashboards/{dashboard.uuid}/promote | Promote project dashboard
+*PolyaxonSdk.ProjectDashboardsV1Api* | [**projectDashboardsV1UpdateProjectDashboard**](docs/ProjectDashboardsV1Api.md#projectDashboardsV1UpdateProjectDashboard) | **PUT** /api/v1/{owner}/{project}/dashboards/{dashboard.uuid} | Update project dashboard
+*PolyaxonSdk.ProjectSearchesV1Api* | [**projectSearchesV1CreateProjectSearch**](docs/ProjectSearchesV1Api.md#projectSearchesV1CreateProjectSearch) | **POST** /api/v1/{owner}/{project}/searches | Create project search
+*PolyaxonSdk.ProjectSearchesV1Api* | [**projectSearchesV1DeleteProjectSearch**](docs/ProjectSearchesV1Api.md#projectSearchesV1DeleteProjectSearch) | **DELETE** /api/v1/{owner}/{project}/searches/{uuid} | Delete project search
+*PolyaxonSdk.ProjectSearchesV1Api* | [**projectSearchesV1GetProjectSearch**](docs/ProjectSearchesV1Api.md#projectSearchesV1GetProjectSearch) | **GET** /api/v1/{owner}/{project}/searches/{uuid} | Get project search
+*PolyaxonSdk.ProjectSearchesV1Api* | [**projectSearchesV1ListProjectSearchNames**](docs/ProjectSearchesV1Api.md#projectSearchesV1ListProjectSearchNames) | **GET** /api/v1/{owner}/{project}/searches/names | List project search names
+*PolyaxonSdk.ProjectSearchesV1Api* | [**projectSearchesV1ListProjectSearches**](docs/ProjectSearchesV1Api.md#projectSearchesV1ListProjectSearches) | **GET** /api/v1/{owner}/{project}/searches | List project searches
+*PolyaxonSdk.ProjectSearchesV1Api* | [**projectSearchesV1PatchProjectSearch**](docs/ProjectSearchesV1Api.md#projectSearchesV1PatchProjectSearch) | **PATCH** /api/v1/{owner}/{project}/searches/{search.uuid} | Patch project search
+*PolyaxonSdk.ProjectSearchesV1Api* | [**projectSearchesV1PromoteProjectSearch**](docs/ProjectSearchesV1Api.md#projectSearchesV1PromoteProjectSearch) | **POST** /api/v1/{owner}/{project}/searches/{uuid}/promote | Promote project search
+*PolyaxonSdk.ProjectSearchesV1Api* | [**projectSearchesV1UpdateProjectSearch**](docs/ProjectSearchesV1Api.md#projectSearchesV1UpdateProjectSearch) | **PUT** /api/v1/{owner}/{project}/searches/{search.uuid} | Update project search
+*PolyaxonSdk.ProjectsV1Api* | [**projectsV1ArchiveProject**](docs/ProjectsV1Api.md#projectsV1ArchiveProject) | **POST** /api/v1/{owner}/{project}/archive | Archive project
+*PolyaxonSdk.ProjectsV1Api* | [**projectsV1BookmarkProject**](docs/ProjectsV1Api.md#projectsV1BookmarkProject) | **POST** /api/v1/{owner}/{project}/bookmark | Bookmark project
+*PolyaxonSdk.ProjectsV1Api* | [**projectsV1CreateProject**](docs/ProjectsV1Api.md#projectsV1CreateProject) | **POST** /api/v1/{owner}/projects/create | Create new project
+*PolyaxonSdk.ProjectsV1Api* | [**projectsV1DeleteProject**](docs/ProjectsV1Api.md#projectsV1DeleteProject) | **DELETE** /api/v1/{owner}/{project} | Delete project
+*PolyaxonSdk.ProjectsV1Api* | [**projectsV1DisableProjectCI**](docs/ProjectsV1Api.md#projectsV1DisableProjectCI) | **DELETE** /api/v1/{owner}/{project}/ci | Disbale project CI
+*PolyaxonSdk.ProjectsV1Api* | [**projectsV1EnableProjectCI**](docs/ProjectsV1Api.md#projectsV1EnableProjectCI) | **POST** /api/v1/{owner}/{project}/ci | Enable project CI
+*PolyaxonSdk.ProjectsV1Api* | [**projectsV1FetchProjectTeams**](docs/ProjectsV1Api.md#projectsV1FetchProjectTeams) | **GET** /api/v1/{owner}/{project}/teams | Get project teams
+*PolyaxonSdk.ProjectsV1Api* | [**projectsV1GetProject**](docs/ProjectsV1Api.md#projectsV1GetProject) | **GET** /api/v1/{owner}/{project} | Get project
+*PolyaxonSdk.ProjectsV1Api* | [**projectsV1GetProjectSettings**](docs/ProjectsV1Api.md#projectsV1GetProjectSettings) | **GET** /api/v1/{owner}/{project}/settings | Get Project settings
+*PolyaxonSdk.ProjectsV1Api* | [**projectsV1ListArchivedProjects**](docs/ProjectsV1Api.md#projectsV1ListArchivedProjects) | **GET** /api/v1/archives/{user}/projects | List archived projects for user
+*PolyaxonSdk.ProjectsV1Api* | [**projectsV1ListBookmarkedProjects**](docs/ProjectsV1Api.md#projectsV1ListBookmarkedProjects) | **GET** /api/v1/bookmarks/{user}/projects | List bookmarked projects for user
+*PolyaxonSdk.ProjectsV1Api* | [**projectsV1ListProjectNames**](docs/ProjectsV1Api.md#projectsV1ListProjectNames) | **GET** /api/v1/{owner}/projects/names | List project names
+*PolyaxonSdk.ProjectsV1Api* | [**projectsV1ListProjects**](docs/ProjectsV1Api.md#projectsV1ListProjects) | **GET** /api/v1/{owner}/projects/list | List projects
+*PolyaxonSdk.ProjectsV1Api* | [**projectsV1PatchProject**](docs/ProjectsV1Api.md#projectsV1PatchProject) | **PATCH** /api/v1/{owner}/{project.name} | Patch project
+*PolyaxonSdk.ProjectsV1Api* | [**projectsV1PatchProjectSettings**](docs/ProjectsV1Api.md#projectsV1PatchProjectSettings) | **PATCH** /api/v1/{owner}/{project}/settings | Patch project settings
+*PolyaxonSdk.ProjectsV1Api* | [**projectsV1PatchProjectTeams**](docs/ProjectsV1Api.md#projectsV1PatchProjectTeams) | **PATCH** /api/v1/{owner}/{project}/teams | Patch project teams
+*PolyaxonSdk.ProjectsV1Api* | [**projectsV1RestoreProject**](docs/ProjectsV1Api.md#projectsV1RestoreProject) | **POST** /api/v1/{owner}/{project}/restore | Restore project
+*PolyaxonSdk.ProjectsV1Api* | [**projectsV1UnbookmarkProject**](docs/ProjectsV1Api.md#projectsV1UnbookmarkProject) | **DELETE** /api/v1/{owner}/{project}/unbookmark | Unbookmark project
+*PolyaxonSdk.ProjectsV1Api* | [**projectsV1UpdateProject**](docs/ProjectsV1Api.md#projectsV1UpdateProject) | **PUT** /api/v1/{owner}/{project.name} | Update project
+*PolyaxonSdk.ProjectsV1Api* | [**projectsV1UpdateProjectSettings**](docs/ProjectsV1Api.md#projectsV1UpdateProjectSettings) | **PUT** /api/v1/{owner}/{project}/settings | Update project settings
+*PolyaxonSdk.ProjectsV1Api* | [**projectsV1UpdateProjectTeams**](docs/ProjectsV1Api.md#projectsV1UpdateProjectTeams) | **PUT** /api/v1/{owner}/{project}/teams | Update project teams
 *PolyaxonSdk.ProjectsV1Api* | [**uploadProjectArtifact**](docs/ProjectsV1Api.md#uploadProjectArtifact) | **POST** /api/v1/{owner}/{project}/artifacts/{uuid}/upload | Upload artifact to a store via project access
-*PolyaxonSdk.QueuesV1Api* | [**createQueue**](docs/QueuesV1Api.md#createQueue) | **POST** /api/v1/orgs/{owner}/agents/{agent}/queues | Update agent
-*PolyaxonSdk.QueuesV1Api* | [**deleteQueue**](docs/QueuesV1Api.md#deleteQueue) | **DELETE** /api/v1/orgs/{owner}/agents/{agent}/queues/{uuid} | Sync agent
-*PolyaxonSdk.QueuesV1Api* | [**getQueue**](docs/QueuesV1Api.md#getQueue) | **GET** /api/v1/orgs/{owner}/agents/{agent}/queues/{uuid} | Patch agent
-*PolyaxonSdk.QueuesV1Api* | [**listOrganizationQueueNames**](docs/QueuesV1Api.md#listOrganizationQueueNames) | **GET** /api/v1/orgs/{owner}/queues/names | List agents names
-*PolyaxonSdk.QueuesV1Api* | [**listOrganizationQueues**](docs/QueuesV1Api.md#listOrganizationQueues) | **GET** /api/v1/orgs/{owner}/queues | List agents
-*PolyaxonSdk.QueuesV1Api* | [**listQueueNames**](docs/QueuesV1Api.md#listQueueNames) | **GET** /api/v1/orgs/{owner}/agents/{agent}/queues/names | Create agent
-*PolyaxonSdk.QueuesV1Api* | [**listQueues**](docs/QueuesV1Api.md#listQueues) | **GET** /api/v1/orgs/{owner}/agents/{agent}/queues | Get agent
-*PolyaxonSdk.QueuesV1Api* | [**patchQueue**](docs/QueuesV1Api.md#patchQueue) | **PATCH** /api/v1/orgs/{owner}/agents/{queue.agent}/queues/{queue.uuid} | Get State (queues/runs)
-*PolyaxonSdk.QueuesV1Api* | [**updateQueue**](docs/QueuesV1Api.md#updateQueue) | **PUT** /api/v1/orgs/{owner}/agents/{queue.agent}/queues/{queue.uuid} | Delete agent
-*PolyaxonSdk.RunProfilesV1Api* | [**createRunProfile**](docs/RunProfilesV1Api.md#createRunProfile) | **POST** /api/v1/orgs/{owner}/run_profiles | Create hub component
-*PolyaxonSdk.RunProfilesV1Api* | [**deleteRunProfile**](docs/RunProfilesV1Api.md#deleteRunProfile) | **DELETE** /api/v1/orgs/{owner}/run_profiles/{uuid} | Delete hub component
-*PolyaxonSdk.RunProfilesV1Api* | [**getRunProfile**](docs/RunProfilesV1Api.md#getRunProfile) | **GET** /api/v1/orgs/{owner}/run_profiles/{uuid} | Get hub component
-*PolyaxonSdk.RunProfilesV1Api* | [**listRunProfileNames**](docs/RunProfilesV1Api.md#listRunProfileNames) | **GET** /api/v1/orgs/{owner}/run_profiles/names | List hub component names
-*PolyaxonSdk.RunProfilesV1Api* | [**listRunProfiles**](docs/RunProfilesV1Api.md#listRunProfiles) | **GET** /api/v1/orgs/{owner}/run_profiles | List hub components
-*PolyaxonSdk.RunProfilesV1Api* | [**patchRunProfile**](docs/RunProfilesV1Api.md#patchRunProfile) | **PATCH** /api/v1/orgs/{owner}/run_profiles/{run_profile.uuid} | Patch hub component
-*PolyaxonSdk.RunProfilesV1Api* | [**updateRunProfile**](docs/RunProfilesV1Api.md#updateRunProfile) | **PUT** /api/v1/orgs/{owner}/run_profiles/{run_profile.uuid} | Update hub component
-*PolyaxonSdk.RunsV1Api* | [**archiveRun**](docs/RunsV1Api.md#archiveRun) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/archive | Archive run
-*PolyaxonSdk.RunsV1Api* | [**bookmarkRun**](docs/RunsV1Api.md#bookmarkRun) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/bookmark | Bookmark run
-*PolyaxonSdk.RunsV1Api* | [**collectRunLogs**](docs/RunsV1Api.md#collectRunLogs) | **POST** /streams/v1/{namespace}/_internal/{owner}/{project}/runs/{uuid}/logs | Collect run logs
-*PolyaxonSdk.RunsV1Api* | [**copyRun**](docs/RunsV1Api.md#copyRun) | **POST** /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/copy | Restart run with copy
-*PolyaxonSdk.RunsV1Api* | [**createRun**](docs/RunsV1Api.md#createRun) | **POST** /api/v1/{owner}/{project}/runs | Create new run
-*PolyaxonSdk.RunsV1Api* | [**createRunArtifactsLineage**](docs/RunsV1Api.md#createRunArtifactsLineage) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage | Create bulk run run artifacts lineage
-*PolyaxonSdk.RunsV1Api* | [**createRunStatus**](docs/RunsV1Api.md#createRunStatus) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/statuses | Create new run status
-*PolyaxonSdk.RunsV1Api* | [**deleteRun**](docs/RunsV1Api.md#deleteRun) | **DELETE** /api/v1/{owner}/{project}/runs/{uuid} | Delete run
-*PolyaxonSdk.RunsV1Api* | [**deleteRunArtifactLineage**](docs/RunsV1Api.md#deleteRunArtifactLineage) | **DELETE** /api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage/{name} | Delete run artifact lineage
-*PolyaxonSdk.RunsV1Api* | [**deleteRuns**](docs/RunsV1Api.md#deleteRuns) | **DELETE** /api/v1/{owner}/{project}/runs/delete | Delete runs
-*PolyaxonSdk.RunsV1Api* | [**getMultiRunEvents**](docs/RunsV1Api.md#getMultiRunEvents) | **GET** /streams/v1/{namespace}/{owner}/{project}/runs/multi/events/{kind} | Get multi runs events
-*PolyaxonSdk.RunsV1Api* | [**getRun**](docs/RunsV1Api.md#getRun) | **GET** /api/v1/{owner}/{project}/runs/{uuid} | Get run
+*PolyaxonSdk.QueuesV1Api* | [**queuesV1CreateQueue**](docs/QueuesV1Api.md#queuesV1CreateQueue) | **POST** /api/v1/orgs/{owner}/agents/{agent}/queues | Update agent
+*PolyaxonSdk.QueuesV1Api* | [**queuesV1DeleteQueue**](docs/QueuesV1Api.md#queuesV1DeleteQueue) | **DELETE** /api/v1/orgs/{owner}/agents/{agent}/queues/{uuid} | Sync agent
+*PolyaxonSdk.QueuesV1Api* | [**queuesV1GetQueue**](docs/QueuesV1Api.md#queuesV1GetQueue) | **GET** /api/v1/orgs/{owner}/agents/{agent}/queues/{uuid} | Patch agent
+*PolyaxonSdk.QueuesV1Api* | [**queuesV1ListOrganizationQueueNames**](docs/QueuesV1Api.md#queuesV1ListOrganizationQueueNames) | **GET** /api/v1/orgs/{owner}/queues/names | List agents names
+*PolyaxonSdk.QueuesV1Api* | [**queuesV1ListOrganizationQueues**](docs/QueuesV1Api.md#queuesV1ListOrganizationQueues) | **GET** /api/v1/orgs/{owner}/queues | List agents
+*PolyaxonSdk.QueuesV1Api* | [**queuesV1ListQueueNames**](docs/QueuesV1Api.md#queuesV1ListQueueNames) | **GET** /api/v1/orgs/{owner}/agents/{agent}/queues/names | Create agent
+*PolyaxonSdk.QueuesV1Api* | [**queuesV1ListQueues**](docs/QueuesV1Api.md#queuesV1ListQueues) | **GET** /api/v1/orgs/{owner}/agents/{agent}/queues | Get agent
+*PolyaxonSdk.QueuesV1Api* | [**queuesV1PatchQueue**](docs/QueuesV1Api.md#queuesV1PatchQueue) | **PATCH** /api/v1/orgs/{owner}/agents/{queue.agent}/queues/{queue.uuid} | Get State (queues/runs)
+*PolyaxonSdk.QueuesV1Api* | [**queuesV1UpdateQueue**](docs/QueuesV1Api.md#queuesV1UpdateQueue) | **PUT** /api/v1/orgs/{owner}/agents/{queue.agent}/queues/{queue.uuid} | Delete agent
+*PolyaxonSdk.RunProfilesV1Api* | [**runProfilesV1CreateRunProfile**](docs/RunProfilesV1Api.md#runProfilesV1CreateRunProfile) | **POST** /api/v1/orgs/{owner}/run_profiles | Create hub component
+*PolyaxonSdk.RunProfilesV1Api* | [**runProfilesV1DeleteRunProfile**](docs/RunProfilesV1Api.md#runProfilesV1DeleteRunProfile) | **DELETE** /api/v1/orgs/{owner}/run_profiles/{uuid} | Delete hub component
+*PolyaxonSdk.RunProfilesV1Api* | [**runProfilesV1GetRunProfile**](docs/RunProfilesV1Api.md#runProfilesV1GetRunProfile) | **GET** /api/v1/orgs/{owner}/run_profiles/{uuid} | Get hub component
+*PolyaxonSdk.RunProfilesV1Api* | [**runProfilesV1ListRunProfileNames**](docs/RunProfilesV1Api.md#runProfilesV1ListRunProfileNames) | **GET** /api/v1/orgs/{owner}/run_profiles/names | List hub component names
+*PolyaxonSdk.RunProfilesV1Api* | [**runProfilesV1ListRunProfiles**](docs/RunProfilesV1Api.md#runProfilesV1ListRunProfiles) | **GET** /api/v1/orgs/{owner}/run_profiles | List hub components
+*PolyaxonSdk.RunProfilesV1Api* | [**runProfilesV1PatchRunProfile**](docs/RunProfilesV1Api.md#runProfilesV1PatchRunProfile) | **PATCH** /api/v1/orgs/{owner}/run_profiles/{run_profile.uuid} | Patch hub component
+*PolyaxonSdk.RunProfilesV1Api* | [**runProfilesV1UpdateRunProfile**](docs/RunProfilesV1Api.md#runProfilesV1UpdateRunProfile) | **PUT** /api/v1/orgs/{owner}/run_profiles/{run_profile.uuid} | Update hub component
 *PolyaxonSdk.RunsV1Api* | [**getRunArtifact**](docs/RunsV1Api.md#getRunArtifact) | **GET** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifact | Get run artifact
-*PolyaxonSdk.RunsV1Api* | [**getRunArtifactLineage**](docs/RunsV1Api.md#getRunArtifactLineage) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage/{name} | Get run artifacts lineage
 *PolyaxonSdk.RunsV1Api* | [**getRunArtifacts**](docs/RunsV1Api.md#getRunArtifacts) | **GET** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifacts | Get run artifacts
-*PolyaxonSdk.RunsV1Api* | [**getRunArtifactsLineage**](docs/RunsV1Api.md#getRunArtifactsLineage) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage | Get run artifacts lineage
-*PolyaxonSdk.RunsV1Api* | [**getRunArtifactsLineageNames**](docs/RunsV1Api.md#getRunArtifactsLineageNames) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage/names | Get run artifacts lineage names
-*PolyaxonSdk.RunsV1Api* | [**getRunArtifactsTree**](docs/RunsV1Api.md#getRunArtifactsTree) | **GET** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifacts/tree | Get run artifacts tree
-*PolyaxonSdk.RunsV1Api* | [**getRunEvents**](docs/RunsV1Api.md#getRunEvents) | **GET** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/events/{kind} | Get run events
-*PolyaxonSdk.RunsV1Api* | [**getRunLogs**](docs/RunsV1Api.md#getRunLogs) | **GET** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/logs | Get run logs
-*PolyaxonSdk.RunsV1Api* | [**getRunNamespace**](docs/RunsV1Api.md#getRunNamespace) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/namespace | Get Run namespace
-*PolyaxonSdk.RunsV1Api* | [**getRunResources**](docs/RunsV1Api.md#getRunResources) | **GET** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/resources | Get run resources events
-*PolyaxonSdk.RunsV1Api* | [**getRunSettings**](docs/RunsV1Api.md#getRunSettings) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/settings | Get Run settings
-*PolyaxonSdk.RunsV1Api* | [**getRunStatuses**](docs/RunsV1Api.md#getRunStatuses) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/statuses | Get run status
-*PolyaxonSdk.RunsV1Api* | [**impersonateToken**](docs/RunsV1Api.md#impersonateToken) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/impersonate | Impersonate run token
-*PolyaxonSdk.RunsV1Api* | [**invalidateRun**](docs/RunsV1Api.md#invalidateRun) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/invalidate | Invalidate run
-*PolyaxonSdk.RunsV1Api* | [**invalidateRuns**](docs/RunsV1Api.md#invalidateRuns) | **POST** /api/v1/{owner}/{project}/runs/invalidate | Invalidate runs
-*PolyaxonSdk.RunsV1Api* | [**listArchivedRuns**](docs/RunsV1Api.md#listArchivedRuns) | **GET** /api/v1/archives/{user}/runs | List archived runs for user
-*PolyaxonSdk.RunsV1Api* | [**listBookmarkedRuns**](docs/RunsV1Api.md#listBookmarkedRuns) | **GET** /api/v1/bookmarks/{user}/runs | List bookmarked runs for user
-*PolyaxonSdk.RunsV1Api* | [**listRuns**](docs/RunsV1Api.md#listRuns) | **GET** /api/v1/{owner}/{project}/runs | List runs
-*PolyaxonSdk.RunsV1Api* | [**listRunsIo**](docs/RunsV1Api.md#listRunsIo) | **GET** /api/v1/{owner}/{project}/runs/io | List runs io
-*PolyaxonSdk.RunsV1Api* | [**notifyRunStatus**](docs/RunsV1Api.md#notifyRunStatus) | **POST** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/notify | Notify run status
-*PolyaxonSdk.RunsV1Api* | [**patchRun**](docs/RunsV1Api.md#patchRun) | **PATCH** /api/v1/{owner}/{project}/runs/{run.uuid} | Patch run
-*PolyaxonSdk.RunsV1Api* | [**restartRun**](docs/RunsV1Api.md#restartRun) | **POST** /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/restart | Restart run
-*PolyaxonSdk.RunsV1Api* | [**restoreRun**](docs/RunsV1Api.md#restoreRun) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/restore | Restore run
-*PolyaxonSdk.RunsV1Api* | [**resumeRun**](docs/RunsV1Api.md#resumeRun) | **POST** /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/resume | Resume run
-*PolyaxonSdk.RunsV1Api* | [**startRunTensorboard**](docs/RunsV1Api.md#startRunTensorboard) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/tensorboard/start | Start run tensorboard
-*PolyaxonSdk.RunsV1Api* | [**stopRun**](docs/RunsV1Api.md#stopRun) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/stop | Stop run
-*PolyaxonSdk.RunsV1Api* | [**stopRunTensorboard**](docs/RunsV1Api.md#stopRunTensorboard) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/tensorboard/stop | Stop run tensorboard
-*PolyaxonSdk.RunsV1Api* | [**stopRuns**](docs/RunsV1Api.md#stopRuns) | **POST** /api/v1/{owner}/{project}/runs/stop | Stop runs
-*PolyaxonSdk.RunsV1Api* | [**unbookmarkRun**](docs/RunsV1Api.md#unbookmarkRun) | **DELETE** /api/v1/{owner}/{project}/runs/{uuid}/unbookmark | Unbookmark run
-*PolyaxonSdk.RunsV1Api* | [**updateRun**](docs/RunsV1Api.md#updateRun) | **PUT** /api/v1/{owner}/{project}/runs/{run.uuid} | Update run
+*PolyaxonSdk.RunsV1Api* | [**runsV1ArchiveRun**](docs/RunsV1Api.md#runsV1ArchiveRun) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/archive | Archive run
+*PolyaxonSdk.RunsV1Api* | [**runsV1BookmarkRun**](docs/RunsV1Api.md#runsV1BookmarkRun) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/bookmark | Bookmark run
+*PolyaxonSdk.RunsV1Api* | [**runsV1BookmarkRuns**](docs/RunsV1Api.md#runsV1BookmarkRuns) | **POST** /api/v1/{owner}/{project}/runs/bookmark | Bookmark runs
+*PolyaxonSdk.RunsV1Api* | [**runsV1CollectRunLogs**](docs/RunsV1Api.md#runsV1CollectRunLogs) | **POST** /streams/v1/{namespace}/_internal/{owner}/{project}/runs/{uuid}/logs | Collect run logs
+*PolyaxonSdk.RunsV1Api* | [**runsV1CopyRun**](docs/RunsV1Api.md#runsV1CopyRun) | **POST** /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/copy | Restart run with copy
+*PolyaxonSdk.RunsV1Api* | [**runsV1CreateRun**](docs/RunsV1Api.md#runsV1CreateRun) | **POST** /api/v1/{owner}/{project}/runs | Create new run
+*PolyaxonSdk.RunsV1Api* | [**runsV1CreateRunArtifactsLineage**](docs/RunsV1Api.md#runsV1CreateRunArtifactsLineage) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage | Create bulk run run artifacts lineage
+*PolyaxonSdk.RunsV1Api* | [**runsV1CreateRunStatus**](docs/RunsV1Api.md#runsV1CreateRunStatus) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/statuses | Create new run status
+*PolyaxonSdk.RunsV1Api* | [**runsV1DeleteRun**](docs/RunsV1Api.md#runsV1DeleteRun) | **DELETE** /api/v1/{owner}/{project}/runs/{uuid} | Delete run
+*PolyaxonSdk.RunsV1Api* | [**runsV1DeleteRunArtifactLineage**](docs/RunsV1Api.md#runsV1DeleteRunArtifactLineage) | **DELETE** /api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage/{name} | Delete run artifact lineage
+*PolyaxonSdk.RunsV1Api* | [**runsV1DeleteRuns**](docs/RunsV1Api.md#runsV1DeleteRuns) | **DELETE** /api/v1/{owner}/{project}/runs/delete | Delete runs
+*PolyaxonSdk.RunsV1Api* | [**runsV1GetMultiRunEvents**](docs/RunsV1Api.md#runsV1GetMultiRunEvents) | **GET** /streams/v1/{namespace}/{owner}/{project}/runs/multi/events/{kind} | Get multi runs events
+*PolyaxonSdk.RunsV1Api* | [**runsV1GetRun**](docs/RunsV1Api.md#runsV1GetRun) | **GET** /api/v1/{owner}/{project}/runs/{uuid} | Get run
+*PolyaxonSdk.RunsV1Api* | [**runsV1GetRunArtifactLineage**](docs/RunsV1Api.md#runsV1GetRunArtifactLineage) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage/{name} | Get run artifacts lineage
+*PolyaxonSdk.RunsV1Api* | [**runsV1GetRunArtifactsLineage**](docs/RunsV1Api.md#runsV1GetRunArtifactsLineage) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage | Get run artifacts lineage
+*PolyaxonSdk.RunsV1Api* | [**runsV1GetRunArtifactsLineageNames**](docs/RunsV1Api.md#runsV1GetRunArtifactsLineageNames) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage/names | Get run artifacts lineage names
+*PolyaxonSdk.RunsV1Api* | [**runsV1GetRunArtifactsTree**](docs/RunsV1Api.md#runsV1GetRunArtifactsTree) | **GET** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifacts/tree | Get run artifacts tree
+*PolyaxonSdk.RunsV1Api* | [**runsV1GetRunEvents**](docs/RunsV1Api.md#runsV1GetRunEvents) | **GET** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/events/{kind} | Get run events
+*PolyaxonSdk.RunsV1Api* | [**runsV1GetRunLogs**](docs/RunsV1Api.md#runsV1GetRunLogs) | **GET** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/logs | Get run logs
+*PolyaxonSdk.RunsV1Api* | [**runsV1GetRunNamespace**](docs/RunsV1Api.md#runsV1GetRunNamespace) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/namespace | Get Run namespace
+*PolyaxonSdk.RunsV1Api* | [**runsV1GetRunResources**](docs/RunsV1Api.md#runsV1GetRunResources) | **GET** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/resources | Get run resources events
+*PolyaxonSdk.RunsV1Api* | [**runsV1GetRunSettings**](docs/RunsV1Api.md#runsV1GetRunSettings) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/settings | Get Run settings
+*PolyaxonSdk.RunsV1Api* | [**runsV1GetRunStatuses**](docs/RunsV1Api.md#runsV1GetRunStatuses) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/statuses | Get run status
+*PolyaxonSdk.RunsV1Api* | [**runsV1GetRunsArtifactsLineage**](docs/RunsV1Api.md#runsV1GetRunsArtifactsLineage) | **GET** /api/v1/{owner}/{project}/runs/artifacts_lineage | Get runs artifacts lineage
+*PolyaxonSdk.RunsV1Api* | [**runsV1ImpersonateToken**](docs/RunsV1Api.md#runsV1ImpersonateToken) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/impersonate | Impersonate run token
+*PolyaxonSdk.RunsV1Api* | [**runsV1InvalidateRun**](docs/RunsV1Api.md#runsV1InvalidateRun) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/invalidate | Invalidate run
+*PolyaxonSdk.RunsV1Api* | [**runsV1InvalidateRuns**](docs/RunsV1Api.md#runsV1InvalidateRuns) | **POST** /api/v1/{owner}/{project}/runs/invalidate | Invalidate runs
+*PolyaxonSdk.RunsV1Api* | [**runsV1ListArchivedRuns**](docs/RunsV1Api.md#runsV1ListArchivedRuns) | **GET** /api/v1/archives/{user}/runs | List archived runs for user
+*PolyaxonSdk.RunsV1Api* | [**runsV1ListBookmarkedRuns**](docs/RunsV1Api.md#runsV1ListBookmarkedRuns) | **GET** /api/v1/bookmarks/{user}/runs | List bookmarked runs for user
+*PolyaxonSdk.RunsV1Api* | [**runsV1ListRuns**](docs/RunsV1Api.md#runsV1ListRuns) | **GET** /api/v1/{owner}/{project}/runs | List runs
+*PolyaxonSdk.RunsV1Api* | [**runsV1ListRunsIo**](docs/RunsV1Api.md#runsV1ListRunsIo) | **GET** /api/v1/{owner}/{project}/runs/io | List runs io
+*PolyaxonSdk.RunsV1Api* | [**runsV1NotifyRunStatus**](docs/RunsV1Api.md#runsV1NotifyRunStatus) | **POST** /streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/notify | Notify run status
+*PolyaxonSdk.RunsV1Api* | [**runsV1PatchRun**](docs/RunsV1Api.md#runsV1PatchRun) | **PATCH** /api/v1/{owner}/{project}/runs/{run.uuid} | Patch run
+*PolyaxonSdk.RunsV1Api* | [**runsV1RestartRun**](docs/RunsV1Api.md#runsV1RestartRun) | **POST** /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/restart | Restart run
+*PolyaxonSdk.RunsV1Api* | [**runsV1RestoreRun**](docs/RunsV1Api.md#runsV1RestoreRun) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/restore | Restore run
+*PolyaxonSdk.RunsV1Api* | [**runsV1ResumeRun**](docs/RunsV1Api.md#runsV1ResumeRun) | **POST** /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/resume | Resume run
+*PolyaxonSdk.RunsV1Api* | [**runsV1StartRunTensorboard**](docs/RunsV1Api.md#runsV1StartRunTensorboard) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/tensorboard/start | Start run tensorboard
+*PolyaxonSdk.RunsV1Api* | [**runsV1StopRun**](docs/RunsV1Api.md#runsV1StopRun) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/stop | Stop run
+*PolyaxonSdk.RunsV1Api* | [**runsV1StopRunTensorboard**](docs/RunsV1Api.md#runsV1StopRunTensorboard) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/tensorboard/stop | Stop run tensorboard
+*PolyaxonSdk.RunsV1Api* | [**runsV1StopRuns**](docs/RunsV1Api.md#runsV1StopRuns) | **POST** /api/v1/{owner}/{project}/runs/stop | Stop runs
+*PolyaxonSdk.RunsV1Api* | [**runsV1TagRuns**](docs/RunsV1Api.md#runsV1TagRuns) | **POST** /api/v1/{owner}/{project}/runs/tag | Tag runs
+*PolyaxonSdk.RunsV1Api* | [**runsV1UnbookmarkRun**](docs/RunsV1Api.md#runsV1UnbookmarkRun) | **DELETE** /api/v1/{owner}/{project}/runs/{uuid}/unbookmark | Unbookmark run
+*PolyaxonSdk.RunsV1Api* | [**runsV1UpdateRun**](docs/RunsV1Api.md#runsV1UpdateRun) | **PUT** /api/v1/{owner}/{project}/runs/{run.uuid} | Update run
 *PolyaxonSdk.RunsV1Api* | [**uploadRunArtifact**](docs/RunsV1Api.md#uploadRunArtifact) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/artifacts/upload | Upload an artifact file to a store via run access
 *PolyaxonSdk.RunsV1Api* | [**uploadRunLogs**](docs/RunsV1Api.md#uploadRunLogs) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/logs/upload | Upload a logs file to a store via run access
-*PolyaxonSdk.SchemasV1Api* | [**noOp**](docs/SchemasV1Api.md#noOp) | **GET** /schemas | List teams names
-*PolyaxonSdk.SearchesV1Api* | [**createSearch**](docs/SearchesV1Api.md#createSearch) | **POST** /api/v1/orgs/{owner}/searches | Create search
-*PolyaxonSdk.SearchesV1Api* | [**deleteSearch**](docs/SearchesV1Api.md#deleteSearch) | **DELETE** /api/v1/orgs/{owner}/searches/{uuid} | Delete search
-*PolyaxonSdk.SearchesV1Api* | [**getSearch**](docs/SearchesV1Api.md#getSearch) | **GET** /api/v1/orgs/{owner}/searches/{uuid} | Get search
-*PolyaxonSdk.SearchesV1Api* | [**listSearchNames**](docs/SearchesV1Api.md#listSearchNames) | **GET** /api/v1/orgs/{owner}/searches/names | List search names
-*PolyaxonSdk.SearchesV1Api* | [**listSearches**](docs/SearchesV1Api.md#listSearches) | **GET** /api/v1/orgs/{owner}/searches | List searches
-*PolyaxonSdk.SearchesV1Api* | [**patchSearch**](docs/SearchesV1Api.md#patchSearch) | **PATCH** /api/v1/orgs/{owner}/searches/{search.uuid} | Patch search
-*PolyaxonSdk.SearchesV1Api* | [**updateSearch**](docs/SearchesV1Api.md#updateSearch) | **PUT** /api/v1/orgs/{owner}/searches/{search.uuid} | Update search
-*PolyaxonSdk.TeamsV1Api* | [**createTeam**](docs/TeamsV1Api.md#createTeam) | **POST** /api/v1/orgs/{owner}/teams | Create organization
-*PolyaxonSdk.TeamsV1Api* | [**createTeamMember**](docs/TeamsV1Api.md#createTeamMember) | **POST** /api/v1/orgs/{owner}/teams/{team}/members | Create organization member
-*PolyaxonSdk.TeamsV1Api* | [**deleteTeam**](docs/TeamsV1Api.md#deleteTeam) | **DELETE** /api/v1/orgs/{owner}/teams/{team} | Delete organization
-*PolyaxonSdk.TeamsV1Api* | [**deleteTeamMember**](docs/TeamsV1Api.md#deleteTeamMember) | **DELETE** /api/v1/orgs/{owner}/teams/{team}/members/{user} | Delete organization member details
-*PolyaxonSdk.TeamsV1Api* | [**getTeam**](docs/TeamsV1Api.md#getTeam) | **GET** /api/v1/orgs/{owner}/teams/{team} | Get organization
-*PolyaxonSdk.TeamsV1Api* | [**getTeamMember**](docs/TeamsV1Api.md#getTeamMember) | **GET** /api/v1/orgs/{owner}/teams/{team}/members/{user} | Get organization member details
-*PolyaxonSdk.TeamsV1Api* | [**listTeamMembers**](docs/TeamsV1Api.md#listTeamMembers) | **GET** /api/v1/orgs/{owner}/teams/{team}/members | Get organization members
-*PolyaxonSdk.TeamsV1Api* | [**listTeamNames**](docs/TeamsV1Api.md#listTeamNames) | **GET** /api/v1/orgs/{owner}/teams/names | List organizations names
-*PolyaxonSdk.TeamsV1Api* | [**listTeams**](docs/TeamsV1Api.md#listTeams) | **GET** /api/v1/orgs/{owner}/teams | List organizations
-*PolyaxonSdk.TeamsV1Api* | [**patchTeam**](docs/TeamsV1Api.md#patchTeam) | **PATCH** /api/v1/orgs/{owner}/teams/{team.name} | Patch organization
-*PolyaxonSdk.TeamsV1Api* | [**patchTeamMember**](docs/TeamsV1Api.md#patchTeamMember) | **PATCH** /api/v1/orgs/{owner}/teams/{team}/members/{member.user} | Patch organization member
-*PolyaxonSdk.TeamsV1Api* | [**updateTeam**](docs/TeamsV1Api.md#updateTeam) | **PUT** /api/v1/orgs/{owner}/teams/{team.name} | Update organization
-*PolyaxonSdk.TeamsV1Api* | [**updateTeamMember**](docs/TeamsV1Api.md#updateTeamMember) | **PUT** /api/v1/orgs/{owner}/teams/{team}/members/{member.user} | Update organization member
-*PolyaxonSdk.UsersV1Api* | [**getUser**](docs/UsersV1Api.md#getUser) | **GET** /api/v1/users | Login
-*PolyaxonSdk.VersionsV1Api* | [**getLogHandler**](docs/VersionsV1Api.md#getLogHandler) | **GET** /api/v1/log_handler | 
-*PolyaxonSdk.VersionsV1Api* | [**getVersions**](docs/VersionsV1Api.md#getVersions) | **GET** /api/v1/version | Get current user
+*PolyaxonSdk.SchemasV1Api* | [**schemasV1NoOp**](docs/SchemasV1Api.md#schemasV1NoOp) | **GET** /schemas | List teams names
+*PolyaxonSdk.SearchesV1Api* | [**searchesV1CreateSearch**](docs/SearchesV1Api.md#searchesV1CreateSearch) | **POST** /api/v1/orgs/{owner}/searches | Create search
+*PolyaxonSdk.SearchesV1Api* | [**searchesV1DeleteSearch**](docs/SearchesV1Api.md#searchesV1DeleteSearch) | **DELETE** /api/v1/orgs/{owner}/searches/{uuid} | Delete search
+*PolyaxonSdk.SearchesV1Api* | [**searchesV1GetSearch**](docs/SearchesV1Api.md#searchesV1GetSearch) | **GET** /api/v1/orgs/{owner}/searches/{uuid} | Get search
+*PolyaxonSdk.SearchesV1Api* | [**searchesV1ListSearchNames**](docs/SearchesV1Api.md#searchesV1ListSearchNames) | **GET** /api/v1/orgs/{owner}/searches/names | List search names
+*PolyaxonSdk.SearchesV1Api* | [**searchesV1ListSearches**](docs/SearchesV1Api.md#searchesV1ListSearches) | **GET** /api/v1/orgs/{owner}/searches | List searches
+*PolyaxonSdk.SearchesV1Api* | [**searchesV1PatchSearch**](docs/SearchesV1Api.md#searchesV1PatchSearch) | **PATCH** /api/v1/orgs/{owner}/searches/{search.uuid} | Patch search
+*PolyaxonSdk.SearchesV1Api* | [**searchesV1UpdateSearch**](docs/SearchesV1Api.md#searchesV1UpdateSearch) | **PUT** /api/v1/orgs/{owner}/searches/{search.uuid} | Update search
+*PolyaxonSdk.TeamsV1Api* | [**teamsV1CreateTeam**](docs/TeamsV1Api.md#teamsV1CreateTeam) | **POST** /api/v1/orgs/{owner}/teams | Create organization
+*PolyaxonSdk.TeamsV1Api* | [**teamsV1CreateTeamMember**](docs/TeamsV1Api.md#teamsV1CreateTeamMember) | **POST** /api/v1/orgs/{owner}/teams/{team}/members | Create organization member
+*PolyaxonSdk.TeamsV1Api* | [**teamsV1DeleteTeam**](docs/TeamsV1Api.md#teamsV1DeleteTeam) | **DELETE** /api/v1/orgs/{owner}/teams/{team} | Delete organization
+*PolyaxonSdk.TeamsV1Api* | [**teamsV1DeleteTeamMember**](docs/TeamsV1Api.md#teamsV1DeleteTeamMember) | **DELETE** /api/v1/orgs/{owner}/teams/{team}/members/{user} | Delete organization member details
+*PolyaxonSdk.TeamsV1Api* | [**teamsV1GetTeam**](docs/TeamsV1Api.md#teamsV1GetTeam) | **GET** /api/v1/orgs/{owner}/teams/{team} | Get organization
+*PolyaxonSdk.TeamsV1Api* | [**teamsV1GetTeamMember**](docs/TeamsV1Api.md#teamsV1GetTeamMember) | **GET** /api/v1/orgs/{owner}/teams/{team}/members/{user} | Get organization member details
+*PolyaxonSdk.TeamsV1Api* | [**teamsV1ListTeamMembers**](docs/TeamsV1Api.md#teamsV1ListTeamMembers) | **GET** /api/v1/orgs/{owner}/teams/{team}/members | Get organization members
+*PolyaxonSdk.TeamsV1Api* | [**teamsV1ListTeamNames**](docs/TeamsV1Api.md#teamsV1ListTeamNames) | **GET** /api/v1/orgs/{owner}/teams/names | List organizations names
+*PolyaxonSdk.TeamsV1Api* | [**teamsV1ListTeams**](docs/TeamsV1Api.md#teamsV1ListTeams) | **GET** /api/v1/orgs/{owner}/teams | List organizations
+*PolyaxonSdk.TeamsV1Api* | [**teamsV1PatchTeam**](docs/TeamsV1Api.md#teamsV1PatchTeam) | **PATCH** /api/v1/orgs/{owner}/teams/{team.name} | Patch organization
+*PolyaxonSdk.TeamsV1Api* | [**teamsV1PatchTeamMember**](docs/TeamsV1Api.md#teamsV1PatchTeamMember) | **PATCH** /api/v1/orgs/{owner}/teams/{team}/members/{member.user} | Patch organization member
+*PolyaxonSdk.TeamsV1Api* | [**teamsV1UpdateTeam**](docs/TeamsV1Api.md#teamsV1UpdateTeam) | **PUT** /api/v1/orgs/{owner}/teams/{team.name} | Update organization
+*PolyaxonSdk.TeamsV1Api* | [**teamsV1UpdateTeamMember**](docs/TeamsV1Api.md#teamsV1UpdateTeamMember) | **PUT** /api/v1/orgs/{owner}/teams/{team}/members/{member.user} | Update organization member
+*PolyaxonSdk.UsersV1Api* | [**usersV1GetUser**](docs/UsersV1Api.md#usersV1GetUser) | **GET** /api/v1/users | Login
+*PolyaxonSdk.VersionsV1Api* | [**versionsV1GetLogHandler**](docs/VersionsV1Api.md#versionsV1GetLogHandler) | **GET** /api/v1/log_handler | 
+*PolyaxonSdk.VersionsV1Api* | [**versionsV1GetVersions**](docs/VersionsV1Api.md#versionsV1GetVersions) | **GET** /api/v1/version | Get current user
 
 
 ## Documentation for Models

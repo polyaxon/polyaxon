@@ -56,8 +56,8 @@ public class SchemasV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void noOpTest() throws ApiException {
-        V1Schemas response = api.noOp();
+    public void schemasV1NoOpTest() throws ApiException {
+        V1Schemas response = api.schemasV1NoOp();
 
         // TODO: test validations
     }

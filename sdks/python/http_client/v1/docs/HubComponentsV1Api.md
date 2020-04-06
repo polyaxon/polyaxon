@@ -4,17 +4,17 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**create_hub_component**](HubComponentsV1Api.md#create_hub_component) | **POST** /api/v1/orgs/{owner}/components | Create hub model
-[**delete_hub_component**](HubComponentsV1Api.md#delete_hub_component) | **DELETE** /api/v1/orgs/{owner}/components/{uuid} | Delete hub model
-[**get_hub_component**](HubComponentsV1Api.md#get_hub_component) | **GET** /api/v1/orgs/{owner}/components/{uuid} | Get hub model
-[**list_hub_componebt_names**](HubComponentsV1Api.md#list_hub_componebt_names) | **GET** /api/v1/orgs/{owner}/components/names | List hub model names
-[**list_hub_components**](HubComponentsV1Api.md#list_hub_components) | **GET** /api/v1/orgs/{owner}/components | List hub models
-[**patch_hub_component**](HubComponentsV1Api.md#patch_hub_component) | **PATCH** /api/v1/orgs/{owner}/components/{component.uuid} | Patch hub model
-[**update_hub_component**](HubComponentsV1Api.md#update_hub_component) | **PUT** /api/v1/orgs/{owner}/components/{component.uuid} | Update hub model
+[**hub_components_v1_create_hub_component**](HubComponentsV1Api.md#hub_components_v1_create_hub_component) | **POST** /api/v1/orgs/{owner}/components | Create hub model
+[**hub_components_v1_delete_hub_component**](HubComponentsV1Api.md#hub_components_v1_delete_hub_component) | **DELETE** /api/v1/orgs/{owner}/components/{uuid} | Delete hub model
+[**hub_components_v1_get_hub_component**](HubComponentsV1Api.md#hub_components_v1_get_hub_component) | **GET** /api/v1/orgs/{owner}/components/{uuid} | Get hub model
+[**hub_components_v1_list_hub_componebt_names**](HubComponentsV1Api.md#hub_components_v1_list_hub_componebt_names) | **GET** /api/v1/orgs/{owner}/components/names | List hub model names
+[**hub_components_v1_list_hub_components**](HubComponentsV1Api.md#hub_components_v1_list_hub_components) | **GET** /api/v1/orgs/{owner}/components | List hub models
+[**hub_components_v1_patch_hub_component**](HubComponentsV1Api.md#hub_components_v1_patch_hub_component) | **PATCH** /api/v1/orgs/{owner}/components/{component.uuid} | Patch hub model
+[**hub_components_v1_update_hub_component**](HubComponentsV1Api.md#hub_components_v1_update_hub_component) | **PUT** /api/v1/orgs/{owner}/components/{component.uuid} | Update hub model
 
 
-# **create_hub_component**
-> V1HubComponent create_hub_component(owner, body)
+# **hub_components_v1_create_hub_component**
+> V1HubComponent hub_components_v1_create_hub_component(owner, body)
 
 Create hub model
 
@@ -39,10 +39,10 @@ body = polyaxon_sdk.V1HubComponent() # V1HubComponent | Component body
 
 try:
     # Create hub model
-    api_response = api_instance.create_hub_component(owner, body)
+    api_response = api_instance.hub_components_v1_create_hub_component(owner, body)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling HubComponentsV1Api->create_hub_component: %s\n" % e)
+    print("Exception when calling HubComponentsV1Api->hub_components_v1_create_hub_component: %s\n" % e)
 ```
 
 ### Parameters
@@ -67,8 +67,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **delete_hub_component**
-> delete_hub_component(owner, uuid)
+# **hub_components_v1_delete_hub_component**
+> hub_components_v1_delete_hub_component(owner, uuid)
 
 Delete hub model
 
@@ -93,9 +93,9 @@ uuid = 'uuid_example' # str | Uuid identifier of the entity
 
 try:
     # Delete hub model
-    api_instance.delete_hub_component(owner, uuid)
+    api_instance.hub_components_v1_delete_hub_component(owner, uuid)
 except ApiException as e:
-    print("Exception when calling HubComponentsV1Api->delete_hub_component: %s\n" % e)
+    print("Exception when calling HubComponentsV1Api->hub_components_v1_delete_hub_component: %s\n" % e)
 ```
 
 ### Parameters
@@ -120,8 +120,8 @@ void (empty response body)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **get_hub_component**
-> V1HubComponent get_hub_component(owner, uuid)
+# **hub_components_v1_get_hub_component**
+> V1HubComponent hub_components_v1_get_hub_component(owner, uuid)
 
 Get hub model
 
@@ -146,10 +146,10 @@ uuid = 'uuid_example' # str | Uuid identifier of the entity
 
 try:
     # Get hub model
-    api_response = api_instance.get_hub_component(owner, uuid)
+    api_response = api_instance.hub_components_v1_get_hub_component(owner, uuid)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling HubComponentsV1Api->get_hub_component: %s\n" % e)
+    print("Exception when calling HubComponentsV1Api->hub_components_v1_get_hub_component: %s\n" % e)
 ```
 
 ### Parameters
@@ -174,8 +174,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **list_hub_componebt_names**
-> V1ListHubComponentsResponse list_hub_componebt_names(owner, offset=offset, limit=limit, sort=sort, query=query)
+# **hub_components_v1_list_hub_componebt_names**
+> V1ListHubComponentsResponse hub_components_v1_list_hub_componebt_names(owner, offset=offset, limit=limit, sort=sort, query=query)
 
 List hub model names
 
@@ -203,10 +203,10 @@ query = 'query_example' # str | Query filter the search search. (optional)
 
 try:
     # List hub model names
-    api_response = api_instance.list_hub_componebt_names(owner, offset=offset, limit=limit, sort=sort, query=query)
+    api_response = api_instance.hub_components_v1_list_hub_componebt_names(owner, offset=offset, limit=limit, sort=sort, query=query)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling HubComponentsV1Api->list_hub_componebt_names: %s\n" % e)
+    print("Exception when calling HubComponentsV1Api->hub_components_v1_list_hub_componebt_names: %s\n" % e)
 ```
 
 ### Parameters
@@ -234,8 +234,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **list_hub_components**
-> V1ListHubComponentsResponse list_hub_components(owner, offset=offset, limit=limit, sort=sort, query=query)
+# **hub_components_v1_list_hub_components**
+> V1ListHubComponentsResponse hub_components_v1_list_hub_components(owner, offset=offset, limit=limit, sort=sort, query=query)
 
 List hub models
 
@@ -263,10 +263,10 @@ query = 'query_example' # str | Query filter the search search. (optional)
 
 try:
     # List hub models
-    api_response = api_instance.list_hub_components(owner, offset=offset, limit=limit, sort=sort, query=query)
+    api_response = api_instance.hub_components_v1_list_hub_components(owner, offset=offset, limit=limit, sort=sort, query=query)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling HubComponentsV1Api->list_hub_components: %s\n" % e)
+    print("Exception when calling HubComponentsV1Api->hub_components_v1_list_hub_components: %s\n" % e)
 ```
 
 ### Parameters
@@ -294,8 +294,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **patch_hub_component**
-> V1HubComponent patch_hub_component(owner, component_uuid, body)
+# **hub_components_v1_patch_hub_component**
+> V1HubComponent hub_components_v1_patch_hub_component(owner, component_uuid, body)
 
 Patch hub model
 
@@ -321,10 +321,10 @@ body = polyaxon_sdk.V1HubComponent() # V1HubComponent | Component body
 
 try:
     # Patch hub model
-    api_response = api_instance.patch_hub_component(owner, component_uuid, body)
+    api_response = api_instance.hub_components_v1_patch_hub_component(owner, component_uuid, body)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling HubComponentsV1Api->patch_hub_component: %s\n" % e)
+    print("Exception when calling HubComponentsV1Api->hub_components_v1_patch_hub_component: %s\n" % e)
 ```
 
 ### Parameters
@@ -350,8 +350,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **update_hub_component**
-> V1HubComponent update_hub_component(owner, component_uuid, body)
+# **hub_components_v1_update_hub_component**
+> V1HubComponent hub_components_v1_update_hub_component(owner, component_uuid, body)
 
 Update hub model
 
@@ -377,10 +377,10 @@ body = polyaxon_sdk.V1HubComponent() # V1HubComponent | Component body
 
 try:
     # Update hub model
-    api_response = api_instance.update_hub_component(owner, component_uuid, body)
+    api_response = api_instance.hub_components_v1_update_hub_component(owner, component_uuid, body)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling HubComponentsV1Api->update_hub_component: %s\n" % e)
+    print("Exception when calling HubComponentsV1Api->hub_components_v1_update_hub_component: %s\n" % e)
 ```
 
 ### Parameters

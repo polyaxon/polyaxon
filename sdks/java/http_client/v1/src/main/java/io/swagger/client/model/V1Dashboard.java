@@ -36,7 +36,6 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import io.swagger.client.model.V1SearchSpec;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -67,9 +66,6 @@ public class V1Dashboard {
 
   @SerializedName("run_view")
   private Boolean runView = null;
-
-  @SerializedName("search")
-  private V1SearchSpec search = null;
 
   @SerializedName("spec")
   private Object spec = null;
@@ -214,24 +210,6 @@ public class V1Dashboard {
     this.runView = runView;
   }
 
-  public V1Dashboard search(V1SearchSpec search) {
-    this.search = search;
-    return this;
-  }
-
-   /**
-   * Get search
-   * @return search
-  **/
-  @ApiModelProperty(value = "")
-  public V1SearchSpec getSearch() {
-    return search;
-  }
-
-  public void setSearch(V1SearchSpec search) {
-    this.search = search;
-  }
-
   public V1Dashboard spec(Object spec) {
     this.spec = spec;
     return this;
@@ -303,7 +281,6 @@ public class V1Dashboard {
         Objects.equals(this.disabled, v1Dashboard.disabled) &&
         Objects.equals(this.deleted, v1Dashboard.deleted) &&
         Objects.equals(this.runView, v1Dashboard.runView) &&
-        Objects.equals(this.search, v1Dashboard.search) &&
         Objects.equals(this.spec, v1Dashboard.spec) &&
         Objects.equals(this.createdAt, v1Dashboard.createdAt) &&
         Objects.equals(this.updatedAt, v1Dashboard.updatedAt);
@@ -311,7 +288,7 @@ public class V1Dashboard {
 
   @Override
   public int hashCode() {
-    return Objects.hash(uuid, name, description, tags, disabled, deleted, runView, search, spec, createdAt, updatedAt);
+    return Objects.hash(uuid, name, description, tags, disabled, deleted, runView, spec, createdAt, updatedAt);
   }
 
 
@@ -327,7 +304,6 @@ public class V1Dashboard {
     sb.append("    disabled: ").append(toIndentedString(disabled)).append("\n");
     sb.append("    deleted: ").append(toIndentedString(deleted)).append("\n");
     sb.append("    runView: ").append(toIndentedString(runView)).append("\n");
-    sb.append("    search: ").append(toIndentedString(search)).append("\n");
     sb.append("    spec: ").append(toIndentedString(spec)).append("\n");
     sb.append("    createdAt: ").append(toIndentedString(createdAt)).append("\n");
     sb.append("    updatedAt: ").append(toIndentedString(updatedAt)).append("\n");

@@ -57,9 +57,9 @@ public class AuthV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void loginTest() throws ApiException {
+    public void authV1LoginTest() throws ApiException {
         V1CredsBodyRequest body = null;
-        V1Auth response = api.login(body);
+        V1Auth response = api.authV1Login(body);
 
         // TODO: test validations
     }

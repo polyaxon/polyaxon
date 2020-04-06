@@ -63,8 +63,8 @@
 
 
     /**
-     * Callback function to receive the result of the createProjectSearch operation.
-     * @callback module:api/ProjectSearchesV1Api~createProjectSearchCallback
+     * Callback function to receive the result of the projectSearchesV1CreateProjectSearch operation.
+     * @callback module:api/ProjectSearchesV1Api~projectSearchesV1CreateProjectSearchCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1Search} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -75,25 +75,25 @@
      * @param {String} owner Owner of the namespace
      * @param {String} project Project under namesapce
      * @param {module:model/V1Search} body Search body
-     * @param {module:api/ProjectSearchesV1Api~createProjectSearchCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/ProjectSearchesV1Api~projectSearchesV1CreateProjectSearchCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1Search}
      */
-    this.createProjectSearch = function(owner, project, body, callback) {
+    this.projectSearchesV1CreateProjectSearch = function(owner, project, body, callback) {
       var postBody = body;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling createProjectSearch");
+        throw new Error("Missing the required parameter 'owner' when calling projectSearchesV1CreateProjectSearch");
       }
 
       // verify the required parameter 'project' is set
       if (project === undefined || project === null) {
-        throw new Error("Missing the required parameter 'project' when calling createProjectSearch");
+        throw new Error("Missing the required parameter 'project' when calling projectSearchesV1CreateProjectSearch");
       }
 
       // verify the required parameter 'body' is set
       if (body === undefined || body === null) {
-        throw new Error("Missing the required parameter 'body' when calling createProjectSearch");
+        throw new Error("Missing the required parameter 'body' when calling projectSearchesV1CreateProjectSearch");
       }
 
 
@@ -123,8 +123,8 @@
     }
 
     /**
-     * Callback function to receive the result of the deleteProjectSearch operation.
-     * @callback module:api/ProjectSearchesV1Api~deleteProjectSearchCallback
+     * Callback function to receive the result of the projectSearchesV1DeleteProjectSearch operation.
+     * @callback module:api/ProjectSearchesV1Api~projectSearchesV1DeleteProjectSearchCallback
      * @param {String} error Error message, if any.
      * @param data This operation does not return a value.
      * @param {String} response The complete HTTP response.
@@ -135,24 +135,24 @@
      * @param {String} owner Owner of the namespace
      * @param {String} project Project
      * @param {String} uuid Uuid identifier of the entity
-     * @param {module:api/ProjectSearchesV1Api~deleteProjectSearchCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/ProjectSearchesV1Api~projectSearchesV1DeleteProjectSearchCallback} callback The callback function, accepting three arguments: error, data, response
      */
-    this.deleteProjectSearch = function(owner, project, uuid, callback) {
+    this.projectSearchesV1DeleteProjectSearch = function(owner, project, uuid, callback) {
       var postBody = null;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling deleteProjectSearch");
+        throw new Error("Missing the required parameter 'owner' when calling projectSearchesV1DeleteProjectSearch");
       }
 
       // verify the required parameter 'project' is set
       if (project === undefined || project === null) {
-        throw new Error("Missing the required parameter 'project' when calling deleteProjectSearch");
+        throw new Error("Missing the required parameter 'project' when calling projectSearchesV1DeleteProjectSearch");
       }
 
       // verify the required parameter 'uuid' is set
       if (uuid === undefined || uuid === null) {
-        throw new Error("Missing the required parameter 'uuid' when calling deleteProjectSearch");
+        throw new Error("Missing the required parameter 'uuid' when calling projectSearchesV1DeleteProjectSearch");
       }
 
 
@@ -183,8 +183,8 @@
     }
 
     /**
-     * Callback function to receive the result of the getProjectSearch operation.
-     * @callback module:api/ProjectSearchesV1Api~getProjectSearchCallback
+     * Callback function to receive the result of the projectSearchesV1GetProjectSearch operation.
+     * @callback module:api/ProjectSearchesV1Api~projectSearchesV1GetProjectSearchCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1Search} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -195,25 +195,25 @@
      * @param {String} owner Owner of the namespace
      * @param {String} project Project
      * @param {String} uuid Uuid identifier of the entity
-     * @param {module:api/ProjectSearchesV1Api~getProjectSearchCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/ProjectSearchesV1Api~projectSearchesV1GetProjectSearchCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1Search}
      */
-    this.getProjectSearch = function(owner, project, uuid, callback) {
+    this.projectSearchesV1GetProjectSearch = function(owner, project, uuid, callback) {
       var postBody = null;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling getProjectSearch");
+        throw new Error("Missing the required parameter 'owner' when calling projectSearchesV1GetProjectSearch");
       }
 
       // verify the required parameter 'project' is set
       if (project === undefined || project === null) {
-        throw new Error("Missing the required parameter 'project' when calling getProjectSearch");
+        throw new Error("Missing the required parameter 'project' when calling projectSearchesV1GetProjectSearch");
       }
 
       // verify the required parameter 'uuid' is set
       if (uuid === undefined || uuid === null) {
-        throw new Error("Missing the required parameter 'uuid' when calling getProjectSearch");
+        throw new Error("Missing the required parameter 'uuid' when calling projectSearchesV1GetProjectSearch");
       }
 
 
@@ -244,8 +244,8 @@
     }
 
     /**
-     * Callback function to receive the result of the listProjectSearchNames operation.
-     * @callback module:api/ProjectSearchesV1Api~listProjectSearchNamesCallback
+     * Callback function to receive the result of the projectSearchesV1ListProjectSearchNames operation.
+     * @callback module:api/ProjectSearchesV1Api~projectSearchesV1ListProjectSearchNamesCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1ListSearchesResponse} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -260,21 +260,21 @@
      * @param {Number} opts.limit Limit size.
      * @param {String} opts.sort Sort to order the search.
      * @param {String} opts.query Query filter the search search.
-     * @param {module:api/ProjectSearchesV1Api~listProjectSearchNamesCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/ProjectSearchesV1Api~projectSearchesV1ListProjectSearchNamesCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1ListSearchesResponse}
      */
-    this.listProjectSearchNames = function(owner, project, opts, callback) {
+    this.projectSearchesV1ListProjectSearchNames = function(owner, project, opts, callback) {
       opts = opts || {};
       var postBody = null;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling listProjectSearchNames");
+        throw new Error("Missing the required parameter 'owner' when calling projectSearchesV1ListProjectSearchNames");
       }
 
       // verify the required parameter 'project' is set
       if (project === undefined || project === null) {
-        throw new Error("Missing the required parameter 'project' when calling listProjectSearchNames");
+        throw new Error("Missing the required parameter 'project' when calling projectSearchesV1ListProjectSearchNames");
       }
 
 
@@ -308,8 +308,8 @@
     }
 
     /**
-     * Callback function to receive the result of the listProjectSearches operation.
-     * @callback module:api/ProjectSearchesV1Api~listProjectSearchesCallback
+     * Callback function to receive the result of the projectSearchesV1ListProjectSearches operation.
+     * @callback module:api/ProjectSearchesV1Api~projectSearchesV1ListProjectSearchesCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1ListSearchesResponse} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -324,21 +324,21 @@
      * @param {Number} opts.limit Limit size.
      * @param {String} opts.sort Sort to order the search.
      * @param {String} opts.query Query filter the search search.
-     * @param {module:api/ProjectSearchesV1Api~listProjectSearchesCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/ProjectSearchesV1Api~projectSearchesV1ListProjectSearchesCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1ListSearchesResponse}
      */
-    this.listProjectSearches = function(owner, project, opts, callback) {
+    this.projectSearchesV1ListProjectSearches = function(owner, project, opts, callback) {
       opts = opts || {};
       var postBody = null;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling listProjectSearches");
+        throw new Error("Missing the required parameter 'owner' when calling projectSearchesV1ListProjectSearches");
       }
 
       // verify the required parameter 'project' is set
       if (project === undefined || project === null) {
-        throw new Error("Missing the required parameter 'project' when calling listProjectSearches");
+        throw new Error("Missing the required parameter 'project' when calling projectSearchesV1ListProjectSearches");
       }
 
 
@@ -372,8 +372,8 @@
     }
 
     /**
-     * Callback function to receive the result of the patchProjectSearch operation.
-     * @callback module:api/ProjectSearchesV1Api~patchProjectSearchCallback
+     * Callback function to receive the result of the projectSearchesV1PatchProjectSearch operation.
+     * @callback module:api/ProjectSearchesV1Api~projectSearchesV1PatchProjectSearchCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1Search} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -385,30 +385,30 @@
      * @param {String} project Project under namesapce
      * @param {String} search_uuid UUID
      * @param {module:model/V1Search} body Search body
-     * @param {module:api/ProjectSearchesV1Api~patchProjectSearchCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/ProjectSearchesV1Api~projectSearchesV1PatchProjectSearchCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1Search}
      */
-    this.patchProjectSearch = function(owner, project, search_uuid, body, callback) {
+    this.projectSearchesV1PatchProjectSearch = function(owner, project, search_uuid, body, callback) {
       var postBody = body;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling patchProjectSearch");
+        throw new Error("Missing the required parameter 'owner' when calling projectSearchesV1PatchProjectSearch");
       }
 
       // verify the required parameter 'project' is set
       if (project === undefined || project === null) {
-        throw new Error("Missing the required parameter 'project' when calling patchProjectSearch");
+        throw new Error("Missing the required parameter 'project' when calling projectSearchesV1PatchProjectSearch");
       }
 
       // verify the required parameter 'search_uuid' is set
       if (search_uuid === undefined || search_uuid === null) {
-        throw new Error("Missing the required parameter 'search_uuid' when calling patchProjectSearch");
+        throw new Error("Missing the required parameter 'search_uuid' when calling projectSearchesV1PatchProjectSearch");
       }
 
       // verify the required parameter 'body' is set
       if (body === undefined || body === null) {
-        throw new Error("Missing the required parameter 'body' when calling patchProjectSearch");
+        throw new Error("Missing the required parameter 'body' when calling projectSearchesV1PatchProjectSearch");
       }
 
 
@@ -439,8 +439,8 @@
     }
 
     /**
-     * Callback function to receive the result of the promoteProjectSearch operation.
-     * @callback module:api/ProjectSearchesV1Api~promoteProjectSearchCallback
+     * Callback function to receive the result of the projectSearchesV1PromoteProjectSearch operation.
+     * @callback module:api/ProjectSearchesV1Api~projectSearchesV1PromoteProjectSearchCallback
      * @param {String} error Error message, if any.
      * @param data This operation does not return a value.
      * @param {String} response The complete HTTP response.
@@ -451,24 +451,24 @@
      * @param {String} owner Owner of the namespace
      * @param {String} project Project
      * @param {String} uuid Uuid identifier of the entity
-     * @param {module:api/ProjectSearchesV1Api~promoteProjectSearchCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/ProjectSearchesV1Api~projectSearchesV1PromoteProjectSearchCallback} callback The callback function, accepting three arguments: error, data, response
      */
-    this.promoteProjectSearch = function(owner, project, uuid, callback) {
+    this.projectSearchesV1PromoteProjectSearch = function(owner, project, uuid, callback) {
       var postBody = null;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling promoteProjectSearch");
+        throw new Error("Missing the required parameter 'owner' when calling projectSearchesV1PromoteProjectSearch");
       }
 
       // verify the required parameter 'project' is set
       if (project === undefined || project === null) {
-        throw new Error("Missing the required parameter 'project' when calling promoteProjectSearch");
+        throw new Error("Missing the required parameter 'project' when calling projectSearchesV1PromoteProjectSearch");
       }
 
       // verify the required parameter 'uuid' is set
       if (uuid === undefined || uuid === null) {
-        throw new Error("Missing the required parameter 'uuid' when calling promoteProjectSearch");
+        throw new Error("Missing the required parameter 'uuid' when calling projectSearchesV1PromoteProjectSearch");
       }
 
 
@@ -499,8 +499,8 @@
     }
 
     /**
-     * Callback function to receive the result of the updateProjectSearch operation.
-     * @callback module:api/ProjectSearchesV1Api~updateProjectSearchCallback
+     * Callback function to receive the result of the projectSearchesV1UpdateProjectSearch operation.
+     * @callback module:api/ProjectSearchesV1Api~projectSearchesV1UpdateProjectSearchCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1Search} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -512,30 +512,30 @@
      * @param {String} project Project under namesapce
      * @param {String} search_uuid UUID
      * @param {module:model/V1Search} body Search body
-     * @param {module:api/ProjectSearchesV1Api~updateProjectSearchCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/ProjectSearchesV1Api~projectSearchesV1UpdateProjectSearchCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1Search}
      */
-    this.updateProjectSearch = function(owner, project, search_uuid, body, callback) {
+    this.projectSearchesV1UpdateProjectSearch = function(owner, project, search_uuid, body, callback) {
       var postBody = body;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling updateProjectSearch");
+        throw new Error("Missing the required parameter 'owner' when calling projectSearchesV1UpdateProjectSearch");
       }
 
       // verify the required parameter 'project' is set
       if (project === undefined || project === null) {
-        throw new Error("Missing the required parameter 'project' when calling updateProjectSearch");
+        throw new Error("Missing the required parameter 'project' when calling projectSearchesV1UpdateProjectSearch");
       }
 
       // verify the required parameter 'search_uuid' is set
       if (search_uuid === undefined || search_uuid === null) {
-        throw new Error("Missing the required parameter 'search_uuid' when calling updateProjectSearch");
+        throw new Error("Missing the required parameter 'search_uuid' when calling projectSearchesV1UpdateProjectSearch");
       }
 
       // verify the required parameter 'body' is set
       if (body === undefined || body === null) {
-        throw new Error("Missing the required parameter 'body' when calling updateProjectSearch");
+        throw new Error("Missing the required parameter 'body' when calling projectSearchesV1UpdateProjectSearch");
       }
 
 

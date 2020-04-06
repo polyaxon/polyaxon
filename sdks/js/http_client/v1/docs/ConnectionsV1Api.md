@@ -4,18 +4,18 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**createConnection**](ConnectionsV1Api.md#createConnection) | **POST** /api/v1/orgs/{owner}/connections | Create connection
-[**deleteConnection**](ConnectionsV1Api.md#deleteConnection) | **DELETE** /api/v1/orgs/{owner}/connections/{uuid} | Delete connection
-[**getConnection**](ConnectionsV1Api.md#getConnection) | **GET** /api/v1/orgs/{owner}/connections/{uuid} | Get connection
-[**listConnectionNames**](ConnectionsV1Api.md#listConnectionNames) | **GET** /api/v1/orgs/{owner}/connections/names | List connections names
-[**listConnections**](ConnectionsV1Api.md#listConnections) | **GET** /api/v1/orgs/{owner}/connections | List connections
-[**patchConnection**](ConnectionsV1Api.md#patchConnection) | **PATCH** /api/v1/orgs/{owner}/connections/{connection.uuid} | Patch connection
-[**updateConnection**](ConnectionsV1Api.md#updateConnection) | **PUT** /api/v1/orgs/{owner}/connections/{connection.uuid} | Update connection
+[**connectionsV1CreateConnection**](ConnectionsV1Api.md#connectionsV1CreateConnection) | **POST** /api/v1/orgs/{owner}/connections | Create connection
+[**connectionsV1DeleteConnection**](ConnectionsV1Api.md#connectionsV1DeleteConnection) | **DELETE** /api/v1/orgs/{owner}/connections/{uuid} | Delete connection
+[**connectionsV1GetConnection**](ConnectionsV1Api.md#connectionsV1GetConnection) | **GET** /api/v1/orgs/{owner}/connections/{uuid} | Get connection
+[**connectionsV1ListConnectionNames**](ConnectionsV1Api.md#connectionsV1ListConnectionNames) | **GET** /api/v1/orgs/{owner}/connections/names | List connections names
+[**connectionsV1ListConnections**](ConnectionsV1Api.md#connectionsV1ListConnections) | **GET** /api/v1/orgs/{owner}/connections | List connections
+[**connectionsV1PatchConnection**](ConnectionsV1Api.md#connectionsV1PatchConnection) | **PATCH** /api/v1/orgs/{owner}/connections/{connection.uuid} | Patch connection
+[**connectionsV1UpdateConnection**](ConnectionsV1Api.md#connectionsV1UpdateConnection) | **PUT** /api/v1/orgs/{owner}/connections/{connection.uuid} | Update connection
 
 
-<a name="createConnection"></a>
-# **createConnection**
-> V1ConnectionResponse createConnection(owner, body)
+<a name="connectionsV1CreateConnection"></a>
+# **connectionsV1CreateConnection**
+> V1ConnectionResponse connectionsV1CreateConnection(owner, body)
 
 Create connection
 
@@ -44,7 +44,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.createConnection(owner, body, callback);
+apiInstance.connectionsV1CreateConnection(owner, body, callback);
 ```
 
 ### Parameters
@@ -67,9 +67,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="deleteConnection"></a>
-# **deleteConnection**
-> deleteConnection(owner, uuid)
+<a name="connectionsV1DeleteConnection"></a>
+# **connectionsV1DeleteConnection**
+> connectionsV1DeleteConnection(owner, uuid)
 
 Delete connection
 
@@ -98,7 +98,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully.');
   }
 };
-apiInstance.deleteConnection(owner, uuid, callback);
+apiInstance.connectionsV1DeleteConnection(owner, uuid, callback);
 ```
 
 ### Parameters
@@ -121,9 +121,9 @@ null (empty response body)
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="getConnection"></a>
-# **getConnection**
-> V1ConnectionResponse getConnection(owner, uuid)
+<a name="connectionsV1GetConnection"></a>
+# **connectionsV1GetConnection**
+> V1ConnectionResponse connectionsV1GetConnection(owner, uuid)
 
 Get connection
 
@@ -152,7 +152,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.getConnection(owner, uuid, callback);
+apiInstance.connectionsV1GetConnection(owner, uuid, callback);
 ```
 
 ### Parameters
@@ -175,9 +175,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="listConnectionNames"></a>
-# **listConnectionNames**
-> V1ListConnectionsResponse listConnectionNames(owner, opts)
+<a name="connectionsV1ListConnectionNames"></a>
+# **connectionsV1ListConnectionNames**
+> V1ListConnectionsResponse connectionsV1ListConnectionNames(owner, opts)
 
 List connections names
 
@@ -210,7 +210,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.listConnectionNames(owner, opts, callback);
+apiInstance.connectionsV1ListConnectionNames(owner, opts, callback);
 ```
 
 ### Parameters
@@ -236,9 +236,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="listConnections"></a>
-# **listConnections**
-> V1ListConnectionsResponse listConnections(owner, opts)
+<a name="connectionsV1ListConnections"></a>
+# **connectionsV1ListConnections**
+> V1ListConnectionsResponse connectionsV1ListConnections(owner, opts)
 
 List connections
 
@@ -271,7 +271,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.listConnections(owner, opts, callback);
+apiInstance.connectionsV1ListConnections(owner, opts, callback);
 ```
 
 ### Parameters
@@ -297,9 +297,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="patchConnection"></a>
-# **patchConnection**
-> V1ConnectionResponse patchConnection(owner, connection_uuid, body)
+<a name="connectionsV1PatchConnection"></a>
+# **connectionsV1PatchConnection**
+> V1ConnectionResponse connectionsV1PatchConnection(owner, connection_uuid, body)
 
 Patch connection
 
@@ -330,7 +330,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.patchConnection(owner, connection_uuid, body, callback);
+apiInstance.connectionsV1PatchConnection(owner, connection_uuid, body, callback);
 ```
 
 ### Parameters
@@ -354,9 +354,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="updateConnection"></a>
-# **updateConnection**
-> V1ConnectionResponse updateConnection(owner, connection_uuid, body)
+<a name="connectionsV1UpdateConnection"></a>
+# **connectionsV1UpdateConnection**
+> V1ConnectionResponse connectionsV1UpdateConnection(owner, connection_uuid, body)
 
 Update connection
 
@@ -387,7 +387,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.updateConnection(owner, connection_uuid, body, callback);
+apiInstance.connectionsV1UpdateConnection(owner, connection_uuid, body, callback);
 ```
 
 ### Parameters

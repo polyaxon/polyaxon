@@ -49,12 +49,14 @@ class AccessResourcesV1Api(object):
             api_client = ApiClient()
         self.api_client = api_client
 
-    def create_access_resource(self, owner, body, **kwargs):  # noqa: E501
+    def access_resources_v1_create_access_resource(
+        self, owner, body, **kwargs
+    ):  # noqa: E501
         """Create access resource  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.create_access_resource(owner, body, async_req=True)
+        >>> thread = api.access_resources_v1_create_access_resource(owner, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -66,23 +68,23 @@ class AccessResourcesV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.create_access_resource_with_http_info(
+            return self.access_resources_v1_create_access_resource_with_http_info(
                 owner, body, **kwargs
             )  # noqa: E501
         else:
-            (data) = self.create_access_resource_with_http_info(
+            (data) = self.access_resources_v1_create_access_resource_with_http_info(
                 owner, body, **kwargs
             )  # noqa: E501
             return data
 
-    def create_access_resource_with_http_info(
+    def access_resources_v1_create_access_resource_with_http_info(
         self, owner, body, **kwargs
     ):  # noqa: E501
         """Create access resource  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.create_access_resource_with_http_info(owner, body, async_req=True)
+        >>> thread = api.access_resources_v1_create_access_resource_with_http_info(owner, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -104,19 +106,19 @@ class AccessResourcesV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method create_access_resource" % key
+                    " to method access_resources_v1_create_access_resource" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `create_access_resource`"
+                "Missing the required parameter `owner` when calling `access_resources_v1_create_access_resource`"
             )  # noqa: E501
         # verify the required parameter 'body' is set
         if "body" not in params or params["body"] is None:
             raise ValueError(
-                "Missing the required parameter `body` when calling `create_access_resource`"
+                "Missing the required parameter `body` when calling `access_resources_v1_create_access_resource`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -168,12 +170,14 @@ class AccessResourcesV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def delete_access_resource(self, owner, uuid, **kwargs):  # noqa: E501
+    def access_resources_v1_delete_access_resource(
+        self, owner, uuid, **kwargs
+    ):  # noqa: E501
         """Delete access resource  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.delete_access_resource(owner, uuid, async_req=True)
+        >>> thread = api.access_resources_v1_delete_access_resource(owner, uuid, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -185,23 +189,23 @@ class AccessResourcesV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.delete_access_resource_with_http_info(
+            return self.access_resources_v1_delete_access_resource_with_http_info(
                 owner, uuid, **kwargs
             )  # noqa: E501
         else:
-            (data) = self.delete_access_resource_with_http_info(
+            (data) = self.access_resources_v1_delete_access_resource_with_http_info(
                 owner, uuid, **kwargs
             )  # noqa: E501
             return data
 
-    def delete_access_resource_with_http_info(
+    def access_resources_v1_delete_access_resource_with_http_info(
         self, owner, uuid, **kwargs
     ):  # noqa: E501
         """Delete access resource  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.delete_access_resource_with_http_info(owner, uuid, async_req=True)
+        >>> thread = api.access_resources_v1_delete_access_resource_with_http_info(owner, uuid, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -223,19 +227,19 @@ class AccessResourcesV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method delete_access_resource" % key
+                    " to method access_resources_v1_delete_access_resource" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `delete_access_resource`"
+                "Missing the required parameter `owner` when calling `access_resources_v1_delete_access_resource`"
             )  # noqa: E501
         # verify the required parameter 'uuid' is set
         if "uuid" not in params or params["uuid"] is None:
             raise ValueError(
-                "Missing the required parameter `uuid` when calling `delete_access_resource`"
+                "Missing the required parameter `uuid` when calling `access_resources_v1_delete_access_resource`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -287,12 +291,14 @@ class AccessResourcesV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def get_access_resource(self, owner, uuid, **kwargs):  # noqa: E501
+    def access_resources_v1_get_access_resource(
+        self, owner, uuid, **kwargs
+    ):  # noqa: E501
         """Get access resource  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.get_access_resource(owner, uuid, async_req=True)
+        >>> thread = api.access_resources_v1_get_access_resource(owner, uuid, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -304,21 +310,23 @@ class AccessResourcesV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.get_access_resource_with_http_info(
+            return self.access_resources_v1_get_access_resource_with_http_info(
                 owner, uuid, **kwargs
             )  # noqa: E501
         else:
-            (data) = self.get_access_resource_with_http_info(
+            (data) = self.access_resources_v1_get_access_resource_with_http_info(
                 owner, uuid, **kwargs
             )  # noqa: E501
             return data
 
-    def get_access_resource_with_http_info(self, owner, uuid, **kwargs):  # noqa: E501
+    def access_resources_v1_get_access_resource_with_http_info(
+        self, owner, uuid, **kwargs
+    ):  # noqa: E501
         """Get access resource  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.get_access_resource_with_http_info(owner, uuid, async_req=True)
+        >>> thread = api.access_resources_v1_get_access_resource_with_http_info(owner, uuid, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -340,19 +348,19 @@ class AccessResourcesV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method get_access_resource" % key
+                    " to method access_resources_v1_get_access_resource" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `get_access_resource`"
+                "Missing the required parameter `owner` when calling `access_resources_v1_get_access_resource`"
             )  # noqa: E501
         # verify the required parameter 'uuid' is set
         if "uuid" not in params or params["uuid"] is None:
             raise ValueError(
-                "Missing the required parameter `uuid` when calling `get_access_resource`"
+                "Missing the required parameter `uuid` when calling `access_resources_v1_get_access_resource`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -404,12 +412,14 @@ class AccessResourcesV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def list_access_resource_names(self, owner, **kwargs):  # noqa: E501
+    def access_resources_v1_list_access_resource_names(
+        self, owner, **kwargs
+    ):  # noqa: E501
         """List access resource names  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.list_access_resource_names(owner, async_req=True)
+        >>> thread = api.access_resources_v1_list_access_resource_names(owner, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -424,21 +434,23 @@ class AccessResourcesV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.list_access_resource_names_with_http_info(
+            return self.access_resources_v1_list_access_resource_names_with_http_info(
                 owner, **kwargs
             )  # noqa: E501
         else:
-            (data) = self.list_access_resource_names_with_http_info(
+            (data) = self.access_resources_v1_list_access_resource_names_with_http_info(
                 owner, **kwargs
             )  # noqa: E501
             return data
 
-    def list_access_resource_names_with_http_info(self, owner, **kwargs):  # noqa: E501
+    def access_resources_v1_list_access_resource_names_with_http_info(
+        self, owner, **kwargs
+    ):  # noqa: E501
         """List access resource names  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.list_access_resource_names_with_http_info(owner, async_req=True)
+        >>> thread = api.access_resources_v1_list_access_resource_names_with_http_info(owner, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -463,14 +475,14 @@ class AccessResourcesV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method list_access_resource_names" % key
+                    " to method access_resources_v1_list_access_resource_names" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `list_access_resource_names`"
+                "Missing the required parameter `owner` when calling `access_resources_v1_list_access_resource_names`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -528,12 +540,12 @@ class AccessResourcesV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def list_access_resources(self, owner, **kwargs):  # noqa: E501
+    def access_resources_v1_list_access_resources(self, owner, **kwargs):  # noqa: E501
         """List access resources  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.list_access_resources(owner, async_req=True)
+        >>> thread = api.access_resources_v1_list_access_resources(owner, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -548,21 +560,23 @@ class AccessResourcesV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.list_access_resources_with_http_info(
+            return self.access_resources_v1_list_access_resources_with_http_info(
                 owner, **kwargs
             )  # noqa: E501
         else:
-            (data) = self.list_access_resources_with_http_info(
+            (data) = self.access_resources_v1_list_access_resources_with_http_info(
                 owner, **kwargs
             )  # noqa: E501
             return data
 
-    def list_access_resources_with_http_info(self, owner, **kwargs):  # noqa: E501
+    def access_resources_v1_list_access_resources_with_http_info(
+        self, owner, **kwargs
+    ):  # noqa: E501
         """List access resources  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.list_access_resources_with_http_info(owner, async_req=True)
+        >>> thread = api.access_resources_v1_list_access_resources_with_http_info(owner, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -587,14 +601,14 @@ class AccessResourcesV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method list_access_resources" % key
+                    " to method access_resources_v1_list_access_resources" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `list_access_resources`"
+                "Missing the required parameter `owner` when calling `access_resources_v1_list_access_resources`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -652,14 +666,14 @@ class AccessResourcesV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def patch_access_resource(
+    def access_resources_v1_patch_access_resource(
         self, owner, access_resource_uuid, body, **kwargs
     ):  # noqa: E501
         """Patch access resource  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.patch_access_resource(owner, access_resource_uuid, body, async_req=True)
+        >>> thread = api.access_resources_v1_patch_access_resource(owner, access_resource_uuid, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -672,23 +686,23 @@ class AccessResourcesV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.patch_access_resource_with_http_info(
+            return self.access_resources_v1_patch_access_resource_with_http_info(
                 owner, access_resource_uuid, body, **kwargs
             )  # noqa: E501
         else:
-            (data) = self.patch_access_resource_with_http_info(
+            (data) = self.access_resources_v1_patch_access_resource_with_http_info(
                 owner, access_resource_uuid, body, **kwargs
             )  # noqa: E501
             return data
 
-    def patch_access_resource_with_http_info(
+    def access_resources_v1_patch_access_resource_with_http_info(
         self, owner, access_resource_uuid, body, **kwargs
     ):  # noqa: E501
         """Patch access resource  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.patch_access_resource_with_http_info(owner, access_resource_uuid, body, async_req=True)
+        >>> thread = api.access_resources_v1_patch_access_resource_with_http_info(owner, access_resource_uuid, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -711,14 +725,14 @@ class AccessResourcesV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method patch_access_resource" % key
+                    " to method access_resources_v1_patch_access_resource" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `patch_access_resource`"
+                "Missing the required parameter `owner` when calling `access_resources_v1_patch_access_resource`"
             )  # noqa: E501
         # verify the required parameter 'access_resource_uuid' is set
         if (
@@ -726,12 +740,12 @@ class AccessResourcesV1Api(object):
             or params["access_resource_uuid"] is None
         ):
             raise ValueError(
-                "Missing the required parameter `access_resource_uuid` when calling `patch_access_resource`"
+                "Missing the required parameter `access_resource_uuid` when calling `access_resources_v1_patch_access_resource`"
             )  # noqa: E501
         # verify the required parameter 'body' is set
         if "body" not in params or params["body"] is None:
             raise ValueError(
-                "Missing the required parameter `body` when calling `patch_access_resource`"
+                "Missing the required parameter `body` when calling `access_resources_v1_patch_access_resource`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -787,14 +801,14 @@ class AccessResourcesV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def update_access_resource(
+    def access_resources_v1_update_access_resource(
         self, owner, access_resource_uuid, body, **kwargs
     ):  # noqa: E501
         """Update access resource  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.update_access_resource(owner, access_resource_uuid, body, async_req=True)
+        >>> thread = api.access_resources_v1_update_access_resource(owner, access_resource_uuid, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -807,23 +821,23 @@ class AccessResourcesV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.update_access_resource_with_http_info(
+            return self.access_resources_v1_update_access_resource_with_http_info(
                 owner, access_resource_uuid, body, **kwargs
             )  # noqa: E501
         else:
-            (data) = self.update_access_resource_with_http_info(
+            (data) = self.access_resources_v1_update_access_resource_with_http_info(
                 owner, access_resource_uuid, body, **kwargs
             )  # noqa: E501
             return data
 
-    def update_access_resource_with_http_info(
+    def access_resources_v1_update_access_resource_with_http_info(
         self, owner, access_resource_uuid, body, **kwargs
     ):  # noqa: E501
         """Update access resource  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.update_access_resource_with_http_info(owner, access_resource_uuid, body, async_req=True)
+        >>> thread = api.access_resources_v1_update_access_resource_with_http_info(owner, access_resource_uuid, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -846,14 +860,14 @@ class AccessResourcesV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method update_access_resource" % key
+                    " to method access_resources_v1_update_access_resource" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `update_access_resource`"
+                "Missing the required parameter `owner` when calling `access_resources_v1_update_access_resource`"
             )  # noqa: E501
         # verify the required parameter 'access_resource_uuid' is set
         if (
@@ -861,12 +875,12 @@ class AccessResourcesV1Api(object):
             or params["access_resource_uuid"] is None
         ):
             raise ValueError(
-                "Missing the required parameter `access_resource_uuid` when calling `update_access_resource`"
+                "Missing the required parameter `access_resource_uuid` when calling `access_resources_v1_update_access_resource`"
             )  # noqa: E501
         # verify the required parameter 'body' is set
         if "body" not in params or params["body"] is None:
             raise ValueError(
-                "Missing the required parameter `body` when calling `update_access_resource`"
+                "Missing the required parameter `body` when calling `access_resources_v1_update_access_resource`"
             )  # noqa: E501
 
         collection_formats = {}

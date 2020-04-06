@@ -49,12 +49,14 @@ class ProjectDashboardsV1Api(object):
             api_client = ApiClient()
         self.api_client = api_client
 
-    def create_project_dashboard(self, owner, project, body, **kwargs):  # noqa: E501
+    def project_dashboards_v1_create_project_dashboard(
+        self, owner, project, body, **kwargs
+    ):  # noqa: E501
         """Create project dashboard  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.create_project_dashboard(owner, project, body, async_req=True)
+        >>> thread = api.project_dashboards_v1_create_project_dashboard(owner, project, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -67,23 +69,23 @@ class ProjectDashboardsV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.create_project_dashboard_with_http_info(
+            return self.project_dashboards_v1_create_project_dashboard_with_http_info(
                 owner, project, body, **kwargs
             )  # noqa: E501
         else:
-            (data) = self.create_project_dashboard_with_http_info(
+            (data) = self.project_dashboards_v1_create_project_dashboard_with_http_info(
                 owner, project, body, **kwargs
             )  # noqa: E501
             return data
 
-    def create_project_dashboard_with_http_info(
+    def project_dashboards_v1_create_project_dashboard_with_http_info(
         self, owner, project, body, **kwargs
     ):  # noqa: E501
         """Create project dashboard  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.create_project_dashboard_with_http_info(owner, project, body, async_req=True)
+        >>> thread = api.project_dashboards_v1_create_project_dashboard_with_http_info(owner, project, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -106,24 +108,24 @@ class ProjectDashboardsV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method create_project_dashboard" % key
+                    " to method project_dashboards_v1_create_project_dashboard" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `create_project_dashboard`"
+                "Missing the required parameter `owner` when calling `project_dashboards_v1_create_project_dashboard`"
             )  # noqa: E501
         # verify the required parameter 'project' is set
         if "project" not in params or params["project"] is None:
             raise ValueError(
-                "Missing the required parameter `project` when calling `create_project_dashboard`"
+                "Missing the required parameter `project` when calling `project_dashboards_v1_create_project_dashboard`"
             )  # noqa: E501
         # verify the required parameter 'body' is set
         if "body" not in params or params["body"] is None:
             raise ValueError(
-                "Missing the required parameter `body` when calling `create_project_dashboard`"
+                "Missing the required parameter `body` when calling `project_dashboards_v1_create_project_dashboard`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -177,12 +179,14 @@ class ProjectDashboardsV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def delete_project_dashboard(self, owner, project, uuid, **kwargs):  # noqa: E501
+    def project_dashboards_v1_delete_project_dashboard(
+        self, owner, project, uuid, **kwargs
+    ):  # noqa: E501
         """Delete project dashboard  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.delete_project_dashboard(owner, project, uuid, async_req=True)
+        >>> thread = api.project_dashboards_v1_delete_project_dashboard(owner, project, uuid, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -195,23 +199,23 @@ class ProjectDashboardsV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.delete_project_dashboard_with_http_info(
+            return self.project_dashboards_v1_delete_project_dashboard_with_http_info(
                 owner, project, uuid, **kwargs
             )  # noqa: E501
         else:
-            (data) = self.delete_project_dashboard_with_http_info(
+            (data) = self.project_dashboards_v1_delete_project_dashboard_with_http_info(
                 owner, project, uuid, **kwargs
             )  # noqa: E501
             return data
 
-    def delete_project_dashboard_with_http_info(
+    def project_dashboards_v1_delete_project_dashboard_with_http_info(
         self, owner, project, uuid, **kwargs
     ):  # noqa: E501
         """Delete project dashboard  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.delete_project_dashboard_with_http_info(owner, project, uuid, async_req=True)
+        >>> thread = api.project_dashboards_v1_delete_project_dashboard_with_http_info(owner, project, uuid, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -234,24 +238,24 @@ class ProjectDashboardsV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method delete_project_dashboard" % key
+                    " to method project_dashboards_v1_delete_project_dashboard" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `delete_project_dashboard`"
+                "Missing the required parameter `owner` when calling `project_dashboards_v1_delete_project_dashboard`"
             )  # noqa: E501
         # verify the required parameter 'project' is set
         if "project" not in params or params["project"] is None:
             raise ValueError(
-                "Missing the required parameter `project` when calling `delete_project_dashboard`"
+                "Missing the required parameter `project` when calling `project_dashboards_v1_delete_project_dashboard`"
             )  # noqa: E501
         # verify the required parameter 'uuid' is set
         if "uuid" not in params or params["uuid"] is None:
             raise ValueError(
-                "Missing the required parameter `uuid` when calling `delete_project_dashboard`"
+                "Missing the required parameter `uuid` when calling `project_dashboards_v1_delete_project_dashboard`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -305,12 +309,14 @@ class ProjectDashboardsV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def get_project_dashboard(self, owner, project, uuid, **kwargs):  # noqa: E501
+    def project_dashboards_v1_get_project_dashboard(
+        self, owner, project, uuid, **kwargs
+    ):  # noqa: E501
         """Get project dashboard  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.get_project_dashboard(owner, project, uuid, async_req=True)
+        >>> thread = api.project_dashboards_v1_get_project_dashboard(owner, project, uuid, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -323,23 +329,23 @@ class ProjectDashboardsV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.get_project_dashboard_with_http_info(
+            return self.project_dashboards_v1_get_project_dashboard_with_http_info(
                 owner, project, uuid, **kwargs
             )  # noqa: E501
         else:
-            (data) = self.get_project_dashboard_with_http_info(
+            (data) = self.project_dashboards_v1_get_project_dashboard_with_http_info(
                 owner, project, uuid, **kwargs
             )  # noqa: E501
             return data
 
-    def get_project_dashboard_with_http_info(
+    def project_dashboards_v1_get_project_dashboard_with_http_info(
         self, owner, project, uuid, **kwargs
     ):  # noqa: E501
         """Get project dashboard  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.get_project_dashboard_with_http_info(owner, project, uuid, async_req=True)
+        >>> thread = api.project_dashboards_v1_get_project_dashboard_with_http_info(owner, project, uuid, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -362,24 +368,24 @@ class ProjectDashboardsV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method get_project_dashboard" % key
+                    " to method project_dashboards_v1_get_project_dashboard" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `get_project_dashboard`"
+                "Missing the required parameter `owner` when calling `project_dashboards_v1_get_project_dashboard`"
             )  # noqa: E501
         # verify the required parameter 'project' is set
         if "project" not in params or params["project"] is None:
             raise ValueError(
-                "Missing the required parameter `project` when calling `get_project_dashboard`"
+                "Missing the required parameter `project` when calling `project_dashboards_v1_get_project_dashboard`"
             )  # noqa: E501
         # verify the required parameter 'uuid' is set
         if "uuid" not in params or params["uuid"] is None:
             raise ValueError(
-                "Missing the required parameter `uuid` when calling `get_project_dashboard`"
+                "Missing the required parameter `uuid` when calling `project_dashboards_v1_get_project_dashboard`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -433,12 +439,14 @@ class ProjectDashboardsV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def list_project_dashboard_names(self, owner, project, **kwargs):  # noqa: E501
+    def project_dashboards_v1_list_project_dashboard_names(
+        self, owner, project, **kwargs
+    ):  # noqa: E501
         """List project dashboard  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.list_project_dashboard_names(owner, project, async_req=True)
+        >>> thread = api.project_dashboards_v1_list_project_dashboard_names(owner, project, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -454,23 +462,25 @@ class ProjectDashboardsV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.list_project_dashboard_names_with_http_info(
+            return self.project_dashboards_v1_list_project_dashboard_names_with_http_info(
                 owner, project, **kwargs
             )  # noqa: E501
         else:
-            (data) = self.list_project_dashboard_names_with_http_info(
+            (
+                data
+            ) = self.project_dashboards_v1_list_project_dashboard_names_with_http_info(
                 owner, project, **kwargs
             )  # noqa: E501
             return data
 
-    def list_project_dashboard_names_with_http_info(
+    def project_dashboards_v1_list_project_dashboard_names_with_http_info(
         self, owner, project, **kwargs
     ):  # noqa: E501
         """List project dashboard  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.list_project_dashboard_names_with_http_info(owner, project, async_req=True)
+        >>> thread = api.project_dashboards_v1_list_project_dashboard_names_with_http_info(owner, project, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -503,19 +513,20 @@ class ProjectDashboardsV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method list_project_dashboard_names" % key
+                    " to method project_dashboards_v1_list_project_dashboard_names"
+                    % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `list_project_dashboard_names`"
+                "Missing the required parameter `owner` when calling `project_dashboards_v1_list_project_dashboard_names`"
             )  # noqa: E501
         # verify the required parameter 'project' is set
         if "project" not in params or params["project"] is None:
             raise ValueError(
-                "Missing the required parameter `project` when calling `list_project_dashboard_names`"
+                "Missing the required parameter `project` when calling `project_dashboards_v1_list_project_dashboard_names`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -575,12 +586,14 @@ class ProjectDashboardsV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def list_project_dashboards(self, owner, project, **kwargs):  # noqa: E501
+    def project_dashboards_v1_list_project_dashboards(
+        self, owner, project, **kwargs
+    ):  # noqa: E501
         """List project dashboards  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.list_project_dashboards(owner, project, async_req=True)
+        >>> thread = api.project_dashboards_v1_list_project_dashboards(owner, project, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -596,23 +609,23 @@ class ProjectDashboardsV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.list_project_dashboards_with_http_info(
+            return self.project_dashboards_v1_list_project_dashboards_with_http_info(
                 owner, project, **kwargs
             )  # noqa: E501
         else:
-            (data) = self.list_project_dashboards_with_http_info(
+            (data) = self.project_dashboards_v1_list_project_dashboards_with_http_info(
                 owner, project, **kwargs
             )  # noqa: E501
             return data
 
-    def list_project_dashboards_with_http_info(
+    def project_dashboards_v1_list_project_dashboards_with_http_info(
         self, owner, project, **kwargs
     ):  # noqa: E501
         """List project dashboards  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.list_project_dashboards_with_http_info(owner, project, async_req=True)
+        >>> thread = api.project_dashboards_v1_list_project_dashboards_with_http_info(owner, project, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -645,19 +658,19 @@ class ProjectDashboardsV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method list_project_dashboards" % key
+                    " to method project_dashboards_v1_list_project_dashboards" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `list_project_dashboards`"
+                "Missing the required parameter `owner` when calling `project_dashboards_v1_list_project_dashboards`"
             )  # noqa: E501
         # verify the required parameter 'project' is set
         if "project" not in params or params["project"] is None:
             raise ValueError(
-                "Missing the required parameter `project` when calling `list_project_dashboards`"
+                "Missing the required parameter `project` when calling `project_dashboards_v1_list_project_dashboards`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -717,14 +730,14 @@ class ProjectDashboardsV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def patch_project_dashboard(
+    def project_dashboards_v1_patch_project_dashboard(
         self, owner, project, dashboard_uuid, body, **kwargs
     ):  # noqa: E501
         """Patch project dashboard  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.patch_project_dashboard(owner, project, dashboard_uuid, body, async_req=True)
+        >>> thread = api.project_dashboards_v1_patch_project_dashboard(owner, project, dashboard_uuid, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -738,23 +751,23 @@ class ProjectDashboardsV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.patch_project_dashboard_with_http_info(
+            return self.project_dashboards_v1_patch_project_dashboard_with_http_info(
                 owner, project, dashboard_uuid, body, **kwargs
             )  # noqa: E501
         else:
-            (data) = self.patch_project_dashboard_with_http_info(
+            (data) = self.project_dashboards_v1_patch_project_dashboard_with_http_info(
                 owner, project, dashboard_uuid, body, **kwargs
             )  # noqa: E501
             return data
 
-    def patch_project_dashboard_with_http_info(
+    def project_dashboards_v1_patch_project_dashboard_with_http_info(
         self, owner, project, dashboard_uuid, body, **kwargs
     ):  # noqa: E501
         """Patch project dashboard  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.patch_project_dashboard_with_http_info(owner, project, dashboard_uuid, body, async_req=True)
+        >>> thread = api.project_dashboards_v1_patch_project_dashboard_with_http_info(owner, project, dashboard_uuid, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -778,29 +791,29 @@ class ProjectDashboardsV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method patch_project_dashboard" % key
+                    " to method project_dashboards_v1_patch_project_dashboard" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `patch_project_dashboard`"
+                "Missing the required parameter `owner` when calling `project_dashboards_v1_patch_project_dashboard`"
             )  # noqa: E501
         # verify the required parameter 'project' is set
         if "project" not in params or params["project"] is None:
             raise ValueError(
-                "Missing the required parameter `project` when calling `patch_project_dashboard`"
+                "Missing the required parameter `project` when calling `project_dashboards_v1_patch_project_dashboard`"
             )  # noqa: E501
         # verify the required parameter 'dashboard_uuid' is set
         if "dashboard_uuid" not in params or params["dashboard_uuid"] is None:
             raise ValueError(
-                "Missing the required parameter `dashboard_uuid` when calling `patch_project_dashboard`"
+                "Missing the required parameter `dashboard_uuid` when calling `project_dashboards_v1_patch_project_dashboard`"
             )  # noqa: E501
         # verify the required parameter 'body' is set
         if "body" not in params or params["body"] is None:
             raise ValueError(
-                "Missing the required parameter `body` when calling `patch_project_dashboard`"
+                "Missing the required parameter `body` when calling `project_dashboards_v1_patch_project_dashboard`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -856,14 +869,14 @@ class ProjectDashboardsV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def promote_project_dashboard(
+    def project_dashboards_v1_promote_project_dashboard(
         self, owner, project, dashboard_uuid, **kwargs
     ):  # noqa: E501
         """Promote project dashboard  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.promote_project_dashboard(owner, project, dashboard_uuid, async_req=True)
+        >>> thread = api.project_dashboards_v1_promote_project_dashboard(owner, project, dashboard_uuid, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -876,23 +889,25 @@ class ProjectDashboardsV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.promote_project_dashboard_with_http_info(
+            return self.project_dashboards_v1_promote_project_dashboard_with_http_info(
                 owner, project, dashboard_uuid, **kwargs
             )  # noqa: E501
         else:
-            (data) = self.promote_project_dashboard_with_http_info(
+            (
+                data
+            ) = self.project_dashboards_v1_promote_project_dashboard_with_http_info(
                 owner, project, dashboard_uuid, **kwargs
             )  # noqa: E501
             return data
 
-    def promote_project_dashboard_with_http_info(
+    def project_dashboards_v1_promote_project_dashboard_with_http_info(
         self, owner, project, dashboard_uuid, **kwargs
     ):  # noqa: E501
         """Promote project dashboard  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.promote_project_dashboard_with_http_info(owner, project, dashboard_uuid, async_req=True)
+        >>> thread = api.project_dashboards_v1_promote_project_dashboard_with_http_info(owner, project, dashboard_uuid, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -915,24 +930,24 @@ class ProjectDashboardsV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method promote_project_dashboard" % key
+                    " to method project_dashboards_v1_promote_project_dashboard" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `promote_project_dashboard`"
+                "Missing the required parameter `owner` when calling `project_dashboards_v1_promote_project_dashboard`"
             )  # noqa: E501
         # verify the required parameter 'project' is set
         if "project" not in params or params["project"] is None:
             raise ValueError(
-                "Missing the required parameter `project` when calling `promote_project_dashboard`"
+                "Missing the required parameter `project` when calling `project_dashboards_v1_promote_project_dashboard`"
             )  # noqa: E501
         # verify the required parameter 'dashboard_uuid' is set
         if "dashboard_uuid" not in params or params["dashboard_uuid"] is None:
             raise ValueError(
-                "Missing the required parameter `dashboard_uuid` when calling `promote_project_dashboard`"
+                "Missing the required parameter `dashboard_uuid` when calling `project_dashboards_v1_promote_project_dashboard`"
             )  # noqa: E501
 
         collection_formats = {}
@@ -986,14 +1001,14 @@ class ProjectDashboardsV1Api(object):
             collection_formats=collection_formats,
         )
 
-    def update_project_dashboard(
+    def project_dashboards_v1_update_project_dashboard(
         self, owner, project, dashboard_uuid, body, **kwargs
     ):  # noqa: E501
         """Update project dashboard  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.update_project_dashboard(owner, project, dashboard_uuid, body, async_req=True)
+        >>> thread = api.project_dashboards_v1_update_project_dashboard(owner, project, dashboard_uuid, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -1007,23 +1022,23 @@ class ProjectDashboardsV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.update_project_dashboard_with_http_info(
+            return self.project_dashboards_v1_update_project_dashboard_with_http_info(
                 owner, project, dashboard_uuid, body, **kwargs
             )  # noqa: E501
         else:
-            (data) = self.update_project_dashboard_with_http_info(
+            (data) = self.project_dashboards_v1_update_project_dashboard_with_http_info(
                 owner, project, dashboard_uuid, body, **kwargs
             )  # noqa: E501
             return data
 
-    def update_project_dashboard_with_http_info(
+    def project_dashboards_v1_update_project_dashboard_with_http_info(
         self, owner, project, dashboard_uuid, body, **kwargs
     ):  # noqa: E501
         """Update project dashboard  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.update_project_dashboard_with_http_info(owner, project, dashboard_uuid, body, async_req=True)
+        >>> thread = api.project_dashboards_v1_update_project_dashboard_with_http_info(owner, project, dashboard_uuid, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -1047,29 +1062,29 @@ class ProjectDashboardsV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method update_project_dashboard" % key
+                    " to method project_dashboards_v1_update_project_dashboard" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'owner' is set
         if "owner" not in params or params["owner"] is None:
             raise ValueError(
-                "Missing the required parameter `owner` when calling `update_project_dashboard`"
+                "Missing the required parameter `owner` when calling `project_dashboards_v1_update_project_dashboard`"
             )  # noqa: E501
         # verify the required parameter 'project' is set
         if "project" not in params or params["project"] is None:
             raise ValueError(
-                "Missing the required parameter `project` when calling `update_project_dashboard`"
+                "Missing the required parameter `project` when calling `project_dashboards_v1_update_project_dashboard`"
             )  # noqa: E501
         # verify the required parameter 'dashboard_uuid' is set
         if "dashboard_uuid" not in params or params["dashboard_uuid"] is None:
             raise ValueError(
-                "Missing the required parameter `dashboard_uuid` when calling `update_project_dashboard`"
+                "Missing the required parameter `dashboard_uuid` when calling `project_dashboards_v1_update_project_dashboard`"
             )  # noqa: E501
         # verify the required parameter 'body' is set
         if "body" not in params or params["body"] is None:
             raise ValueError(
-                "Missing the required parameter `body` when calling `update_project_dashboard`"
+                "Missing the required parameter `body` when calling `project_dashboards_v1_update_project_dashboard`"
             )  # noqa: E501
 
         collection_formats = {}

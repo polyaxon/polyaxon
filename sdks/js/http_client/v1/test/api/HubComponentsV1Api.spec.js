@@ -50,9 +50,9 @@
 
   describe('(package)', function() {
     describe('HubComponentsV1Api', function() {
-      describe('createHubComponent', function() {
-        it('should call createHubComponent successfully', function(done) {
-          // TODO: uncomment, update parameter values for createHubComponent call and complete the assertions
+      describe('hubComponentsV1CreateHubComponent', function() {
+        it('should call hubComponentsV1CreateHubComponent successfully', function(done) {
+          // TODO: uncomment, update parameter values for hubComponentsV1CreateHubComponent call and complete the assertions
           /*
           var owner = "owner_example";
           var body = new PolyaxonSdk.V1HubComponent();
@@ -116,7 +116,7 @@
           body.created_at = new Date();
           body.updated_at = new Date();
 
-          instance.createHubComponent(owner, body, function(error, data, response) {
+          instance.hubComponentsV1CreateHubComponent(owner, body, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -306,14 +306,14 @@
           done();
         });
       });
-      describe('deleteHubComponent', function() {
-        it('should call deleteHubComponent successfully', function(done) {
-          // TODO: uncomment, update parameter values for deleteHubComponent call
+      describe('hubComponentsV1DeleteHubComponent', function() {
+        it('should call hubComponentsV1DeleteHubComponent successfully', function(done) {
+          // TODO: uncomment, update parameter values for hubComponentsV1DeleteHubComponent call
           /*
           var owner = "owner_example";
           var uuid = "uuid_example";
 
-          instance.deleteHubComponent(owner, uuid, function(error, data, response) {
+          instance.hubComponentsV1DeleteHubComponent(owner, uuid, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -326,14 +326,14 @@
           done();
         });
       });
-      describe('getHubComponent', function() {
-        it('should call getHubComponent successfully', function(done) {
-          // TODO: uncomment, update parameter values for getHubComponent call and complete the assertions
+      describe('hubComponentsV1GetHubComponent', function() {
+        it('should call hubComponentsV1GetHubComponent successfully', function(done) {
+          // TODO: uncomment, update parameter values for hubComponentsV1GetHubComponent call and complete the assertions
           /*
           var owner = "owner_example";
           var uuid = "uuid_example";
 
-          instance.getHubComponent(owner, uuid, function(error, data, response) {
+          instance.hubComponentsV1GetHubComponent(owner, uuid, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -523,9 +523,9 @@
           done();
         });
       });
-      describe('listHubComponebtNames', function() {
-        it('should call listHubComponebtNames successfully', function(done) {
-          // TODO: uncomment, update parameter values for listHubComponebtNames call and complete the assertions
+      describe('hubComponentsV1ListHubComponebtNames', function() {
+        it('should call hubComponentsV1ListHubComponebtNames successfully', function(done) {
+          // TODO: uncomment, update parameter values for hubComponentsV1ListHubComponebtNames call and complete the assertions
           /*
           var owner = "owner_example";
           var opts = {};
@@ -534,7 +534,7 @@
           opts.sort = "sort_example";
           opts.query = "query_example";
 
-          instance.listHubComponebtNames(owner, opts, function(error, data, response) {
+          instance.hubComponentsV1ListHubComponebtNames(owner, opts, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -739,9 +739,9 @@
           done();
         });
       });
-      describe('listHubComponents', function() {
-        it('should call listHubComponents successfully', function(done) {
-          // TODO: uncomment, update parameter values for listHubComponents call and complete the assertions
+      describe('hubComponentsV1ListHubComponents', function() {
+        it('should call hubComponentsV1ListHubComponents successfully', function(done) {
+          // TODO: uncomment, update parameter values for hubComponentsV1ListHubComponents call and complete the assertions
           /*
           var owner = "owner_example";
           var opts = {};
@@ -750,7 +750,7 @@
           opts.sort = "sort_example";
           opts.query = "query_example";
 
-          instance.listHubComponents(owner, opts, function(error, data, response) {
+          instance.hubComponentsV1ListHubComponents(owner, opts, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -955,9 +955,9 @@
           done();
         });
       });
-      describe('patchHubComponent', function() {
-        it('should call patchHubComponent successfully', function(done) {
-          // TODO: uncomment, update parameter values for patchHubComponent call and complete the assertions
+      describe('hubComponentsV1PatchHubComponent', function() {
+        it('should call hubComponentsV1PatchHubComponent successfully', function(done) {
+          // TODO: uncomment, update parameter values for hubComponentsV1PatchHubComponent call and complete the assertions
           /*
           var owner = "owner_example";
           var component_uuid = "component_uuid_example";
@@ -1022,7 +1022,7 @@
           body.created_at = new Date();
           body.updated_at = new Date();
 
-          instance.patchHubComponent(owner, component_uuid, body, function(error, data, response) {
+          instance.hubComponentsV1PatchHubComponent(owner, component_uuid, body, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -1212,9 +1212,9 @@
           done();
         });
       });
-      describe('updateHubComponent', function() {
-        it('should call updateHubComponent successfully', function(done) {
-          // TODO: uncomment, update parameter values for updateHubComponent call and complete the assertions
+      describe('hubComponentsV1UpdateHubComponent', function() {
+        it('should call hubComponentsV1UpdateHubComponent successfully', function(done) {
+          // TODO: uncomment, update parameter values for hubComponentsV1UpdateHubComponent call and complete the assertions
           /*
           var owner = "owner_example";
           var component_uuid = "component_uuid_example";
@@ -1279,7 +1279,7 @@
           body.created_at = new Date();
           body.updated_at = new Date();
 
-          instance.updateHubComponent(owner, component_uuid, body, function(error, data, response) {
+          instance.hubComponentsV1UpdateHubComponent(owner, component_uuid, body, function(error, data, response) {
             if (error) {
               done(error);
               return;

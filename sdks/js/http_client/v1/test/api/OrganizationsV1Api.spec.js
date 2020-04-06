@@ -50,9 +50,9 @@
 
   describe('(package)', function() {
     describe('OrganizationsV1Api', function() {
-      describe('createOrganization', function() {
-        it('should call createOrganization successfully', function(done) {
-          // TODO: uncomment, update parameter values for createOrganization call and complete the assertions
+      describe('organizationsV1CreateOrganization', function() {
+        it('should call organizationsV1CreateOrganization successfully', function(done) {
+          // TODO: uncomment, update parameter values for organizationsV1CreateOrganization call and complete the assertions
           /*
           var body = new PolyaxonSdk.V1Organization();
           body.user = "";
@@ -62,7 +62,7 @@
           body.created_at = new Date();
           body.updated_at = new Date();
 
-          instance.createOrganization(body, function(error, data, response) {
+          instance.organizationsV1CreateOrganization(body, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -89,9 +89,9 @@
           done();
         });
       });
-      describe('createOrganizationMember', function() {
-        it('should call createOrganizationMember successfully', function(done) {
-          // TODO: uncomment, update parameter values for createOrganizationMember call and complete the assertions
+      describe('organizationsV1CreateOrganizationMember', function() {
+        it('should call organizationsV1CreateOrganizationMember successfully', function(done) {
+          // TODO: uncomment, update parameter values for organizationsV1CreateOrganizationMember call and complete the assertions
           /*
           var owner = "owner_example";
           var body = new PolyaxonSdk.V1OrganizationMember();
@@ -102,7 +102,7 @@
           body.created_at = new Date();
           body.updated_at = new Date();
 
-          instance.createOrganizationMember(owner, body, function(error, data, response) {
+          instance.organizationsV1CreateOrganizationMember(owner, body, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -129,13 +129,13 @@
           done();
         });
       });
-      describe('deleteOrganization', function() {
-        it('should call deleteOrganization successfully', function(done) {
-          // TODO: uncomment, update parameter values for deleteOrganization call
+      describe('organizationsV1DeleteOrganization', function() {
+        it('should call organizationsV1DeleteOrganization successfully', function(done) {
+          // TODO: uncomment, update parameter values for organizationsV1DeleteOrganization call
           /*
           var owner = "owner_example";
 
-          instance.deleteOrganization(owner, function(error, data, response) {
+          instance.organizationsV1DeleteOrganization(owner, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -148,14 +148,14 @@
           done();
         });
       });
-      describe('deleteOrganizationMember', function() {
-        it('should call deleteOrganizationMember successfully', function(done) {
-          // TODO: uncomment, update parameter values for deleteOrganizationMember call
+      describe('organizationsV1DeleteOrganizationMember', function() {
+        it('should call organizationsV1DeleteOrganizationMember successfully', function(done) {
+          // TODO: uncomment, update parameter values for organizationsV1DeleteOrganizationMember call
           /*
           var owner = "owner_example";
           var user = "user_example";
 
-          instance.deleteOrganizationMember(owner, user, function(error, data, response) {
+          instance.organizationsV1DeleteOrganizationMember(owner, user, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -168,13 +168,13 @@
           done();
         });
       });
-      describe('getOrganization', function() {
-        it('should call getOrganization successfully', function(done) {
-          // TODO: uncomment, update parameter values for getOrganization call and complete the assertions
+      describe('organizationsV1GetOrganization', function() {
+        it('should call organizationsV1GetOrganization successfully', function(done) {
+          // TODO: uncomment, update parameter values for organizationsV1GetOrganization call and complete the assertions
           /*
           var owner = "owner_example";
 
-          instance.getOrganization(owner, function(error, data, response) {
+          instance.organizationsV1GetOrganization(owner, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -201,14 +201,14 @@
           done();
         });
       });
-      describe('getOrganizationMember', function() {
-        it('should call getOrganizationMember successfully', function(done) {
-          // TODO: uncomment, update parameter values for getOrganizationMember call and complete the assertions
+      describe('organizationsV1GetOrganizationMember', function() {
+        it('should call organizationsV1GetOrganizationMember successfully', function(done) {
+          // TODO: uncomment, update parameter values for organizationsV1GetOrganizationMember call and complete the assertions
           /*
           var owner = "owner_example";
           var user = "user_example";
 
-          instance.getOrganizationMember(owner, user, function(error, data, response) {
+          instance.organizationsV1GetOrganizationMember(owner, user, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -235,9 +235,9 @@
           done();
         });
       });
-      describe('listOrganizationMembers', function() {
-        it('should call listOrganizationMembers successfully', function(done) {
-          // TODO: uncomment, update parameter values for listOrganizationMembers call and complete the assertions
+      describe('organizationsV1ListOrganizationMembers', function() {
+        it('should call organizationsV1ListOrganizationMembers successfully', function(done) {
+          // TODO: uncomment, update parameter values for organizationsV1ListOrganizationMembers call and complete the assertions
           /*
           var owner = "owner_example";
           var opts = {};
@@ -246,7 +246,7 @@
           opts.sort = "sort_example";
           opts.query = "query_example";
 
-          instance.listOrganizationMembers(owner, opts, function(error, data, response) {
+          instance.organizationsV1ListOrganizationMembers(owner, opts, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -288,12 +288,12 @@
           done();
         });
       });
-      describe('listOrganizationNames', function() {
-        it('should call listOrganizationNames successfully', function(done) {
-          // TODO: uncomment listOrganizationNames call and complete the assertions
+      describe('organizationsV1ListOrganizationNames', function() {
+        it('should call organizationsV1ListOrganizationNames successfully', function(done) {
+          // TODO: uncomment organizationsV1ListOrganizationNames call and complete the assertions
           /*
 
-          instance.listOrganizationNames(function(error, data, response) {
+          instance.organizationsV1ListOrganizationNames(function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -335,12 +335,12 @@
           done();
         });
       });
-      describe('listOrganizations', function() {
-        it('should call listOrganizations successfully', function(done) {
-          // TODO: uncomment listOrganizations call and complete the assertions
+      describe('organizationsV1ListOrganizations', function() {
+        it('should call organizationsV1ListOrganizations successfully', function(done) {
+          // TODO: uncomment organizationsV1ListOrganizations call and complete the assertions
           /*
 
-          instance.listOrganizations(function(error, data, response) {
+          instance.organizationsV1ListOrganizations(function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -382,9 +382,9 @@
           done();
         });
       });
-      describe('patchOrganization', function() {
-        it('should call patchOrganization successfully', function(done) {
-          // TODO: uncomment, update parameter values for patchOrganization call and complete the assertions
+      describe('organizationsV1PatchOrganization', function() {
+        it('should call organizationsV1PatchOrganization successfully', function(done) {
+          // TODO: uncomment, update parameter values for organizationsV1PatchOrganization call and complete the assertions
           /*
           var owner = "owner_example";
           var body = new PolyaxonSdk.V1Organization();
@@ -395,7 +395,7 @@
           body.created_at = new Date();
           body.updated_at = new Date();
 
-          instance.patchOrganization(owner, body, function(error, data, response) {
+          instance.organizationsV1PatchOrganization(owner, body, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -422,9 +422,9 @@
           done();
         });
       });
-      describe('patchOrganizationMember', function() {
-        it('should call patchOrganizationMember successfully', function(done) {
-          // TODO: uncomment, update parameter values for patchOrganizationMember call and complete the assertions
+      describe('organizationsV1PatchOrganizationMember', function() {
+        it('should call organizationsV1PatchOrganizationMember successfully', function(done) {
+          // TODO: uncomment, update parameter values for organizationsV1PatchOrganizationMember call and complete the assertions
           /*
           var owner = "owner_example";
           var member_user = "member_user_example";
@@ -436,7 +436,7 @@
           body.created_at = new Date();
           body.updated_at = new Date();
 
-          instance.patchOrganizationMember(owner, member_user, body, function(error, data, response) {
+          instance.organizationsV1PatchOrganizationMember(owner, member_user, body, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -463,9 +463,9 @@
           done();
         });
       });
-      describe('updateOrganization', function() {
-        it('should call updateOrganization successfully', function(done) {
-          // TODO: uncomment, update parameter values for updateOrganization call and complete the assertions
+      describe('organizationsV1UpdateOrganization', function() {
+        it('should call organizationsV1UpdateOrganization successfully', function(done) {
+          // TODO: uncomment, update parameter values for organizationsV1UpdateOrganization call and complete the assertions
           /*
           var owner = "owner_example";
           var body = new PolyaxonSdk.V1Organization();
@@ -476,7 +476,7 @@
           body.created_at = new Date();
           body.updated_at = new Date();
 
-          instance.updateOrganization(owner, body, function(error, data, response) {
+          instance.organizationsV1UpdateOrganization(owner, body, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -503,9 +503,9 @@
           done();
         });
       });
-      describe('updateOrganizationMember', function() {
-        it('should call updateOrganizationMember successfully', function(done) {
-          // TODO: uncomment, update parameter values for updateOrganizationMember call and complete the assertions
+      describe('organizationsV1UpdateOrganizationMember', function() {
+        it('should call organizationsV1UpdateOrganizationMember successfully', function(done) {
+          // TODO: uncomment, update parameter values for organizationsV1UpdateOrganizationMember call and complete the assertions
           /*
           var owner = "owner_example";
           var member_user = "member_user_example";
@@ -517,7 +517,7 @@
           body.created_at = new Date();
           body.updated_at = new Date();
 
-          instance.updateOrganizationMember(owner, member_user, body, function(error, data, response) {
+          instance.organizationsV1UpdateOrganizationMember(owner, member_user, body, function(error, data, response) {
             if (error) {
               done(error);
               return;

@@ -49,57 +49,57 @@ class TestProjectDashboardsV1Api(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def test_create_project_dashboard(self):
-        """Test case for create_project_dashboard
+    def test_project_dashboards_v1_create_project_dashboard(self):
+        """Test case for project_dashboards_v1_create_project_dashboard
 
         Create project dashboard  # noqa: E501
         """
         pass
 
-    def test_delete_project_dashboard(self):
-        """Test case for delete_project_dashboard
+    def test_project_dashboards_v1_delete_project_dashboard(self):
+        """Test case for project_dashboards_v1_delete_project_dashboard
 
         Delete project dashboard  # noqa: E501
         """
         pass
 
-    def test_get_project_dashboard(self):
-        """Test case for get_project_dashboard
+    def test_project_dashboards_v1_get_project_dashboard(self):
+        """Test case for project_dashboards_v1_get_project_dashboard
 
         Get project dashboard  # noqa: E501
         """
         pass
 
-    def test_list_project_dashboard_names(self):
-        """Test case for list_project_dashboard_names
+    def test_project_dashboards_v1_list_project_dashboard_names(self):
+        """Test case for project_dashboards_v1_list_project_dashboard_names
 
         List project dashboard  # noqa: E501
         """
         pass
 
-    def test_list_project_dashboards(self):
-        """Test case for list_project_dashboards
+    def test_project_dashboards_v1_list_project_dashboards(self):
+        """Test case for project_dashboards_v1_list_project_dashboards
 
         List project dashboards  # noqa: E501
         """
         pass
 
-    def test_patch_project_dashboard(self):
-        """Test case for patch_project_dashboard
+    def test_project_dashboards_v1_patch_project_dashboard(self):
+        """Test case for project_dashboards_v1_patch_project_dashboard
 
         Patch project dashboard  # noqa: E501
         """
         pass
 
-    def test_promote_project_dashboard(self):
-        """Test case for promote_project_dashboard
+    def test_project_dashboards_v1_promote_project_dashboard(self):
+        """Test case for project_dashboards_v1_promote_project_dashboard
 
         Promote project dashboard  # noqa: E501
         """
         pass
 
-    def test_update_project_dashboard(self):
-        """Test case for update_project_dashboard
+    def test_project_dashboards_v1_update_project_dashboard(self):
+        """Test case for project_dashboards_v1_update_project_dashboard
 
         Update project dashboard  # noqa: E501
         """

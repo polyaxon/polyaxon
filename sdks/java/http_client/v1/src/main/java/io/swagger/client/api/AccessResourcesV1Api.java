@@ -71,7 +71,7 @@ public class AccessResourcesV1Api {
     }
 
     /**
-     * Build call for createAccessResource
+     * Build call for accessResourcesV1CreateAccessResource
      * @param owner Owner of the namespace (required)
      * @param body Artifact store body (required)
      * @param progressListener Progress listener
@@ -79,7 +79,7 @@ public class AccessResourcesV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call createAccessResourceCall(String owner, V1AccessResource body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call accessResourcesV1CreateAccessResourceCall(String owner, V1AccessResource body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -122,20 +122,20 @@ public class AccessResourcesV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call createAccessResourceValidateBeforeCall(String owner, V1AccessResource body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call accessResourcesV1CreateAccessResourceValidateBeforeCall(String owner, V1AccessResource body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling createAccessResource(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling accessResourcesV1CreateAccessResource(Async)");
         }
         
         // verify the required parameter 'body' is set
         if (body == null) {
-            throw new ApiException("Missing the required parameter 'body' when calling createAccessResource(Async)");
+            throw new ApiException("Missing the required parameter 'body' when calling accessResourcesV1CreateAccessResource(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = createAccessResourceCall(owner, body, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = accessResourcesV1CreateAccessResourceCall(owner, body, progressListener, progressRequestListener);
         return call;
 
     }
@@ -148,8 +148,8 @@ public class AccessResourcesV1Api {
      * @return V1AccessResource
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1AccessResource createAccessResource(String owner, V1AccessResource body) throws ApiException {
-        ApiResponse<V1AccessResource> resp = createAccessResourceWithHttpInfo(owner, body);
+    public V1AccessResource accessResourcesV1CreateAccessResource(String owner, V1AccessResource body) throws ApiException {
+        ApiResponse<V1AccessResource> resp = accessResourcesV1CreateAccessResourceWithHttpInfo(owner, body);
         return resp.getData();
     }
 
@@ -161,8 +161,8 @@ public class AccessResourcesV1Api {
      * @return ApiResponse&lt;V1AccessResource&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1AccessResource> createAccessResourceWithHttpInfo(String owner, V1AccessResource body) throws ApiException {
-        com.squareup.okhttp.Call call = createAccessResourceValidateBeforeCall(owner, body, null, null);
+    public ApiResponse<V1AccessResource> accessResourcesV1CreateAccessResourceWithHttpInfo(String owner, V1AccessResource body) throws ApiException {
+        com.squareup.okhttp.Call call = accessResourcesV1CreateAccessResourceValidateBeforeCall(owner, body, null, null);
         Type localVarReturnType = new TypeToken<V1AccessResource>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -176,7 +176,7 @@ public class AccessResourcesV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call createAccessResourceAsync(String owner, V1AccessResource body, final ApiCallback<V1AccessResource> callback) throws ApiException {
+    public com.squareup.okhttp.Call accessResourcesV1CreateAccessResourceAsync(String owner, V1AccessResource body, final ApiCallback<V1AccessResource> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -197,13 +197,13 @@ public class AccessResourcesV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = createAccessResourceValidateBeforeCall(owner, body, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = accessResourcesV1CreateAccessResourceValidateBeforeCall(owner, body, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1AccessResource>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
     /**
-     * Build call for deleteAccessResource
+     * Build call for accessResourcesV1DeleteAccessResource
      * @param owner Owner of the namespace (required)
      * @param uuid Uuid identifier of the entity (required)
      * @param progressListener Progress listener
@@ -211,7 +211,7 @@ public class AccessResourcesV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call deleteAccessResourceCall(String owner, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call accessResourcesV1DeleteAccessResourceCall(String owner, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -255,20 +255,20 @@ public class AccessResourcesV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call deleteAccessResourceValidateBeforeCall(String owner, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call accessResourcesV1DeleteAccessResourceValidateBeforeCall(String owner, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling deleteAccessResource(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling accessResourcesV1DeleteAccessResource(Async)");
         }
         
         // verify the required parameter 'uuid' is set
         if (uuid == null) {
-            throw new ApiException("Missing the required parameter 'uuid' when calling deleteAccessResource(Async)");
+            throw new ApiException("Missing the required parameter 'uuid' when calling accessResourcesV1DeleteAccessResource(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = deleteAccessResourceCall(owner, uuid, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = accessResourcesV1DeleteAccessResourceCall(owner, uuid, progressListener, progressRequestListener);
         return call;
 
     }
@@ -280,8 +280,8 @@ public class AccessResourcesV1Api {
      * @param uuid Uuid identifier of the entity (required)
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public void deleteAccessResource(String owner, String uuid) throws ApiException {
-        deleteAccessResourceWithHttpInfo(owner, uuid);
+    public void accessResourcesV1DeleteAccessResource(String owner, String uuid) throws ApiException {
+        accessResourcesV1DeleteAccessResourceWithHttpInfo(owner, uuid);
     }
 
     /**
@@ -292,8 +292,8 @@ public class AccessResourcesV1Api {
      * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<Void> deleteAccessResourceWithHttpInfo(String owner, String uuid) throws ApiException {
-        com.squareup.okhttp.Call call = deleteAccessResourceValidateBeforeCall(owner, uuid, null, null);
+    public ApiResponse<Void> accessResourcesV1DeleteAccessResourceWithHttpInfo(String owner, String uuid) throws ApiException {
+        com.squareup.okhttp.Call call = accessResourcesV1DeleteAccessResourceValidateBeforeCall(owner, uuid, null, null);
         return apiClient.execute(call);
     }
 
@@ -306,7 +306,7 @@ public class AccessResourcesV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call deleteAccessResourceAsync(String owner, String uuid, final ApiCallback<Void> callback) throws ApiException {
+    public com.squareup.okhttp.Call accessResourcesV1DeleteAccessResourceAsync(String owner, String uuid, final ApiCallback<Void> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -327,12 +327,12 @@ public class AccessResourcesV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = deleteAccessResourceValidateBeforeCall(owner, uuid, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = accessResourcesV1DeleteAccessResourceValidateBeforeCall(owner, uuid, progressListener, progressRequestListener);
         apiClient.executeAsync(call, callback);
         return call;
     }
     /**
-     * Build call for getAccessResource
+     * Build call for accessResourcesV1GetAccessResource
      * @param owner Owner of the namespace (required)
      * @param uuid Uuid identifier of the entity (required)
      * @param progressListener Progress listener
@@ -340,7 +340,7 @@ public class AccessResourcesV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call getAccessResourceCall(String owner, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call accessResourcesV1GetAccessResourceCall(String owner, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -384,20 +384,20 @@ public class AccessResourcesV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call getAccessResourceValidateBeforeCall(String owner, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call accessResourcesV1GetAccessResourceValidateBeforeCall(String owner, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling getAccessResource(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling accessResourcesV1GetAccessResource(Async)");
         }
         
         // verify the required parameter 'uuid' is set
         if (uuid == null) {
-            throw new ApiException("Missing the required parameter 'uuid' when calling getAccessResource(Async)");
+            throw new ApiException("Missing the required parameter 'uuid' when calling accessResourcesV1GetAccessResource(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = getAccessResourceCall(owner, uuid, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = accessResourcesV1GetAccessResourceCall(owner, uuid, progressListener, progressRequestListener);
         return call;
 
     }
@@ -410,8 +410,8 @@ public class AccessResourcesV1Api {
      * @return V1AccessResource
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1AccessResource getAccessResource(String owner, String uuid) throws ApiException {
-        ApiResponse<V1AccessResource> resp = getAccessResourceWithHttpInfo(owner, uuid);
+    public V1AccessResource accessResourcesV1GetAccessResource(String owner, String uuid) throws ApiException {
+        ApiResponse<V1AccessResource> resp = accessResourcesV1GetAccessResourceWithHttpInfo(owner, uuid);
         return resp.getData();
     }
 
@@ -423,8 +423,8 @@ public class AccessResourcesV1Api {
      * @return ApiResponse&lt;V1AccessResource&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1AccessResource> getAccessResourceWithHttpInfo(String owner, String uuid) throws ApiException {
-        com.squareup.okhttp.Call call = getAccessResourceValidateBeforeCall(owner, uuid, null, null);
+    public ApiResponse<V1AccessResource> accessResourcesV1GetAccessResourceWithHttpInfo(String owner, String uuid) throws ApiException {
+        com.squareup.okhttp.Call call = accessResourcesV1GetAccessResourceValidateBeforeCall(owner, uuid, null, null);
         Type localVarReturnType = new TypeToken<V1AccessResource>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -438,7 +438,7 @@ public class AccessResourcesV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call getAccessResourceAsync(String owner, String uuid, final ApiCallback<V1AccessResource> callback) throws ApiException {
+    public com.squareup.okhttp.Call accessResourcesV1GetAccessResourceAsync(String owner, String uuid, final ApiCallback<V1AccessResource> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -459,13 +459,13 @@ public class AccessResourcesV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = getAccessResourceValidateBeforeCall(owner, uuid, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = accessResourcesV1GetAccessResourceValidateBeforeCall(owner, uuid, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1AccessResource>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
     /**
-     * Build call for listAccessResourceNames
+     * Build call for accessResourcesV1ListAccessResourceNames
      * @param owner Owner of the namespace (required)
      * @param offset Pagination offset. (optional)
      * @param limit Limit size. (optional)
@@ -476,7 +476,7 @@ public class AccessResourcesV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call listAccessResourceNamesCall(String owner, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call accessResourcesV1ListAccessResourceNamesCall(String owner, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -527,15 +527,15 @@ public class AccessResourcesV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call listAccessResourceNamesValidateBeforeCall(String owner, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call accessResourcesV1ListAccessResourceNamesValidateBeforeCall(String owner, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling listAccessResourceNames(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling accessResourcesV1ListAccessResourceNames(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = listAccessResourceNamesCall(owner, offset, limit, sort, query, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = accessResourcesV1ListAccessResourceNamesCall(owner, offset, limit, sort, query, progressListener, progressRequestListener);
         return call;
 
     }
@@ -551,8 +551,8 @@ public class AccessResourcesV1Api {
      * @return V1ListAccessResourcesResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1ListAccessResourcesResponse listAccessResourceNames(String owner, Integer offset, Integer limit, String sort, String query) throws ApiException {
-        ApiResponse<V1ListAccessResourcesResponse> resp = listAccessResourceNamesWithHttpInfo(owner, offset, limit, sort, query);
+    public V1ListAccessResourcesResponse accessResourcesV1ListAccessResourceNames(String owner, Integer offset, Integer limit, String sort, String query) throws ApiException {
+        ApiResponse<V1ListAccessResourcesResponse> resp = accessResourcesV1ListAccessResourceNamesWithHttpInfo(owner, offset, limit, sort, query);
         return resp.getData();
     }
 
@@ -567,8 +567,8 @@ public class AccessResourcesV1Api {
      * @return ApiResponse&lt;V1ListAccessResourcesResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1ListAccessResourcesResponse> listAccessResourceNamesWithHttpInfo(String owner, Integer offset, Integer limit, String sort, String query) throws ApiException {
-        com.squareup.okhttp.Call call = listAccessResourceNamesValidateBeforeCall(owner, offset, limit, sort, query, null, null);
+    public ApiResponse<V1ListAccessResourcesResponse> accessResourcesV1ListAccessResourceNamesWithHttpInfo(String owner, Integer offset, Integer limit, String sort, String query) throws ApiException {
+        com.squareup.okhttp.Call call = accessResourcesV1ListAccessResourceNamesValidateBeforeCall(owner, offset, limit, sort, query, null, null);
         Type localVarReturnType = new TypeToken<V1ListAccessResourcesResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -585,7 +585,7 @@ public class AccessResourcesV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call listAccessResourceNamesAsync(String owner, Integer offset, Integer limit, String sort, String query, final ApiCallback<V1ListAccessResourcesResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call accessResourcesV1ListAccessResourceNamesAsync(String owner, Integer offset, Integer limit, String sort, String query, final ApiCallback<V1ListAccessResourcesResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -606,13 +606,13 @@ public class AccessResourcesV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = listAccessResourceNamesValidateBeforeCall(owner, offset, limit, sort, query, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = accessResourcesV1ListAccessResourceNamesValidateBeforeCall(owner, offset, limit, sort, query, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1ListAccessResourcesResponse>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
     /**
-     * Build call for listAccessResources
+     * Build call for accessResourcesV1ListAccessResources
      * @param owner Owner of the namespace (required)
      * @param offset Pagination offset. (optional)
      * @param limit Limit size. (optional)
@@ -623,7 +623,7 @@ public class AccessResourcesV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call listAccessResourcesCall(String owner, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call accessResourcesV1ListAccessResourcesCall(String owner, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -674,15 +674,15 @@ public class AccessResourcesV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call listAccessResourcesValidateBeforeCall(String owner, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call accessResourcesV1ListAccessResourcesValidateBeforeCall(String owner, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling listAccessResources(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling accessResourcesV1ListAccessResources(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = listAccessResourcesCall(owner, offset, limit, sort, query, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = accessResourcesV1ListAccessResourcesCall(owner, offset, limit, sort, query, progressListener, progressRequestListener);
         return call;
 
     }
@@ -698,8 +698,8 @@ public class AccessResourcesV1Api {
      * @return V1ListAccessResourcesResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1ListAccessResourcesResponse listAccessResources(String owner, Integer offset, Integer limit, String sort, String query) throws ApiException {
-        ApiResponse<V1ListAccessResourcesResponse> resp = listAccessResourcesWithHttpInfo(owner, offset, limit, sort, query);
+    public V1ListAccessResourcesResponse accessResourcesV1ListAccessResources(String owner, Integer offset, Integer limit, String sort, String query) throws ApiException {
+        ApiResponse<V1ListAccessResourcesResponse> resp = accessResourcesV1ListAccessResourcesWithHttpInfo(owner, offset, limit, sort, query);
         return resp.getData();
     }
 
@@ -714,8 +714,8 @@ public class AccessResourcesV1Api {
      * @return ApiResponse&lt;V1ListAccessResourcesResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1ListAccessResourcesResponse> listAccessResourcesWithHttpInfo(String owner, Integer offset, Integer limit, String sort, String query) throws ApiException {
-        com.squareup.okhttp.Call call = listAccessResourcesValidateBeforeCall(owner, offset, limit, sort, query, null, null);
+    public ApiResponse<V1ListAccessResourcesResponse> accessResourcesV1ListAccessResourcesWithHttpInfo(String owner, Integer offset, Integer limit, String sort, String query) throws ApiException {
+        com.squareup.okhttp.Call call = accessResourcesV1ListAccessResourcesValidateBeforeCall(owner, offset, limit, sort, query, null, null);
         Type localVarReturnType = new TypeToken<V1ListAccessResourcesResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -732,7 +732,7 @@ public class AccessResourcesV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call listAccessResourcesAsync(String owner, Integer offset, Integer limit, String sort, String query, final ApiCallback<V1ListAccessResourcesResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call accessResourcesV1ListAccessResourcesAsync(String owner, Integer offset, Integer limit, String sort, String query, final ApiCallback<V1ListAccessResourcesResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -753,13 +753,13 @@ public class AccessResourcesV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = listAccessResourcesValidateBeforeCall(owner, offset, limit, sort, query, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = accessResourcesV1ListAccessResourcesValidateBeforeCall(owner, offset, limit, sort, query, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1ListAccessResourcesResponse>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
     /**
-     * Build call for patchAccessResource
+     * Build call for accessResourcesV1PatchAccessResource
      * @param owner Owner of the namespace (required)
      * @param accessResourceUuid UUID (required)
      * @param body Artifact store body (required)
@@ -768,7 +768,7 @@ public class AccessResourcesV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call patchAccessResourceCall(String owner, String accessResourceUuid, V1AccessResource body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call accessResourcesV1PatchAccessResourceCall(String owner, String accessResourceUuid, V1AccessResource body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -812,25 +812,25 @@ public class AccessResourcesV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call patchAccessResourceValidateBeforeCall(String owner, String accessResourceUuid, V1AccessResource body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call accessResourcesV1PatchAccessResourceValidateBeforeCall(String owner, String accessResourceUuid, V1AccessResource body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling patchAccessResource(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling accessResourcesV1PatchAccessResource(Async)");
         }
         
         // verify the required parameter 'accessResourceUuid' is set
         if (accessResourceUuid == null) {
-            throw new ApiException("Missing the required parameter 'accessResourceUuid' when calling patchAccessResource(Async)");
+            throw new ApiException("Missing the required parameter 'accessResourceUuid' when calling accessResourcesV1PatchAccessResource(Async)");
         }
         
         // verify the required parameter 'body' is set
         if (body == null) {
-            throw new ApiException("Missing the required parameter 'body' when calling patchAccessResource(Async)");
+            throw new ApiException("Missing the required parameter 'body' when calling accessResourcesV1PatchAccessResource(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = patchAccessResourceCall(owner, accessResourceUuid, body, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = accessResourcesV1PatchAccessResourceCall(owner, accessResourceUuid, body, progressListener, progressRequestListener);
         return call;
 
     }
@@ -844,8 +844,8 @@ public class AccessResourcesV1Api {
      * @return V1AccessResource
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1AccessResource patchAccessResource(String owner, String accessResourceUuid, V1AccessResource body) throws ApiException {
-        ApiResponse<V1AccessResource> resp = patchAccessResourceWithHttpInfo(owner, accessResourceUuid, body);
+    public V1AccessResource accessResourcesV1PatchAccessResource(String owner, String accessResourceUuid, V1AccessResource body) throws ApiException {
+        ApiResponse<V1AccessResource> resp = accessResourcesV1PatchAccessResourceWithHttpInfo(owner, accessResourceUuid, body);
         return resp.getData();
     }
 
@@ -858,8 +858,8 @@ public class AccessResourcesV1Api {
      * @return ApiResponse&lt;V1AccessResource&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1AccessResource> patchAccessResourceWithHttpInfo(String owner, String accessResourceUuid, V1AccessResource body) throws ApiException {
-        com.squareup.okhttp.Call call = patchAccessResourceValidateBeforeCall(owner, accessResourceUuid, body, null, null);
+    public ApiResponse<V1AccessResource> accessResourcesV1PatchAccessResourceWithHttpInfo(String owner, String accessResourceUuid, V1AccessResource body) throws ApiException {
+        com.squareup.okhttp.Call call = accessResourcesV1PatchAccessResourceValidateBeforeCall(owner, accessResourceUuid, body, null, null);
         Type localVarReturnType = new TypeToken<V1AccessResource>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -874,7 +874,7 @@ public class AccessResourcesV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call patchAccessResourceAsync(String owner, String accessResourceUuid, V1AccessResource body, final ApiCallback<V1AccessResource> callback) throws ApiException {
+    public com.squareup.okhttp.Call accessResourcesV1PatchAccessResourceAsync(String owner, String accessResourceUuid, V1AccessResource body, final ApiCallback<V1AccessResource> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -895,13 +895,13 @@ public class AccessResourcesV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = patchAccessResourceValidateBeforeCall(owner, accessResourceUuid, body, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = accessResourcesV1PatchAccessResourceValidateBeforeCall(owner, accessResourceUuid, body, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1AccessResource>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
     /**
-     * Build call for updateAccessResource
+     * Build call for accessResourcesV1UpdateAccessResource
      * @param owner Owner of the namespace (required)
      * @param accessResourceUuid UUID (required)
      * @param body Artifact store body (required)
@@ -910,7 +910,7 @@ public class AccessResourcesV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call updateAccessResourceCall(String owner, String accessResourceUuid, V1AccessResource body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call accessResourcesV1UpdateAccessResourceCall(String owner, String accessResourceUuid, V1AccessResource body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -954,25 +954,25 @@ public class AccessResourcesV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call updateAccessResourceValidateBeforeCall(String owner, String accessResourceUuid, V1AccessResource body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call accessResourcesV1UpdateAccessResourceValidateBeforeCall(String owner, String accessResourceUuid, V1AccessResource body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling updateAccessResource(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling accessResourcesV1UpdateAccessResource(Async)");
         }
         
         // verify the required parameter 'accessResourceUuid' is set
         if (accessResourceUuid == null) {
-            throw new ApiException("Missing the required parameter 'accessResourceUuid' when calling updateAccessResource(Async)");
+            throw new ApiException("Missing the required parameter 'accessResourceUuid' when calling accessResourcesV1UpdateAccessResource(Async)");
         }
         
         // verify the required parameter 'body' is set
         if (body == null) {
-            throw new ApiException("Missing the required parameter 'body' when calling updateAccessResource(Async)");
+            throw new ApiException("Missing the required parameter 'body' when calling accessResourcesV1UpdateAccessResource(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = updateAccessResourceCall(owner, accessResourceUuid, body, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = accessResourcesV1UpdateAccessResourceCall(owner, accessResourceUuid, body, progressListener, progressRequestListener);
         return call;
 
     }
@@ -986,8 +986,8 @@ public class AccessResourcesV1Api {
      * @return V1AccessResource
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1AccessResource updateAccessResource(String owner, String accessResourceUuid, V1AccessResource body) throws ApiException {
-        ApiResponse<V1AccessResource> resp = updateAccessResourceWithHttpInfo(owner, accessResourceUuid, body);
+    public V1AccessResource accessResourcesV1UpdateAccessResource(String owner, String accessResourceUuid, V1AccessResource body) throws ApiException {
+        ApiResponse<V1AccessResource> resp = accessResourcesV1UpdateAccessResourceWithHttpInfo(owner, accessResourceUuid, body);
         return resp.getData();
     }
 
@@ -1000,8 +1000,8 @@ public class AccessResourcesV1Api {
      * @return ApiResponse&lt;V1AccessResource&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1AccessResource> updateAccessResourceWithHttpInfo(String owner, String accessResourceUuid, V1AccessResource body) throws ApiException {
-        com.squareup.okhttp.Call call = updateAccessResourceValidateBeforeCall(owner, accessResourceUuid, body, null, null);
+    public ApiResponse<V1AccessResource> accessResourcesV1UpdateAccessResourceWithHttpInfo(String owner, String accessResourceUuid, V1AccessResource body) throws ApiException {
+        com.squareup.okhttp.Call call = accessResourcesV1UpdateAccessResourceValidateBeforeCall(owner, accessResourceUuid, body, null, null);
         Type localVarReturnType = new TypeToken<V1AccessResource>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -1016,7 +1016,7 @@ public class AccessResourcesV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call updateAccessResourceAsync(String owner, String accessResourceUuid, V1AccessResource body, final ApiCallback<V1AccessResource> callback) throws ApiException {
+    public com.squareup.okhttp.Call accessResourcesV1UpdateAccessResourceAsync(String owner, String accessResourceUuid, V1AccessResource body, final ApiCallback<V1AccessResource> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -1037,7 +1037,7 @@ public class AccessResourcesV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = updateAccessResourceValidateBeforeCall(owner, accessResourceUuid, body, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = accessResourcesV1UpdateAccessResourceValidateBeforeCall(owner, accessResourceUuid, body, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1AccessResource>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;

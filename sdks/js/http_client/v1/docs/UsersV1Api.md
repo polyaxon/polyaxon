@@ -4,12 +4,12 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**getUser**](UsersV1Api.md#getUser) | **GET** /api/v1/users | Login
+[**usersV1GetUser**](UsersV1Api.md#usersV1GetUser) | **GET** /api/v1/users | Login
 
 
-<a name="getUser"></a>
-# **getUser**
-> V1User getUser()
+<a name="usersV1GetUser"></a>
+# **usersV1GetUser**
+> V1User usersV1GetUser()
 
 Login
 
@@ -33,7 +33,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.getUser(callback);
+apiInstance.usersV1GetUser(callback);
 ```
 
 ### Parameters

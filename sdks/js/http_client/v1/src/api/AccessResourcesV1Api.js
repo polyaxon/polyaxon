@@ -63,8 +63,8 @@
 
 
     /**
-     * Callback function to receive the result of the createAccessResource operation.
-     * @callback module:api/AccessResourcesV1Api~createAccessResourceCallback
+     * Callback function to receive the result of the accessResourcesV1CreateAccessResource operation.
+     * @callback module:api/AccessResourcesV1Api~accessResourcesV1CreateAccessResourceCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1AccessResource} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -74,20 +74,20 @@
      * Create access resource
      * @param {String} owner Owner of the namespace
      * @param {module:model/V1AccessResource} body Artifact store body
-     * @param {module:api/AccessResourcesV1Api~createAccessResourceCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/AccessResourcesV1Api~accessResourcesV1CreateAccessResourceCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1AccessResource}
      */
-    this.createAccessResource = function(owner, body, callback) {
+    this.accessResourcesV1CreateAccessResource = function(owner, body, callback) {
       var postBody = body;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling createAccessResource");
+        throw new Error("Missing the required parameter 'owner' when calling accessResourcesV1CreateAccessResource");
       }
 
       // verify the required parameter 'body' is set
       if (body === undefined || body === null) {
-        throw new Error("Missing the required parameter 'body' when calling createAccessResource");
+        throw new Error("Missing the required parameter 'body' when calling accessResourcesV1CreateAccessResource");
       }
 
 
@@ -116,8 +116,8 @@
     }
 
     /**
-     * Callback function to receive the result of the deleteAccessResource operation.
-     * @callback module:api/AccessResourcesV1Api~deleteAccessResourceCallback
+     * Callback function to receive the result of the accessResourcesV1DeleteAccessResource operation.
+     * @callback module:api/AccessResourcesV1Api~accessResourcesV1DeleteAccessResourceCallback
      * @param {String} error Error message, if any.
      * @param data This operation does not return a value.
      * @param {String} response The complete HTTP response.
@@ -127,19 +127,19 @@
      * Delete access resource
      * @param {String} owner Owner of the namespace
      * @param {String} uuid Uuid identifier of the entity
-     * @param {module:api/AccessResourcesV1Api~deleteAccessResourceCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/AccessResourcesV1Api~accessResourcesV1DeleteAccessResourceCallback} callback The callback function, accepting three arguments: error, data, response
      */
-    this.deleteAccessResource = function(owner, uuid, callback) {
+    this.accessResourcesV1DeleteAccessResource = function(owner, uuid, callback) {
       var postBody = null;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling deleteAccessResource");
+        throw new Error("Missing the required parameter 'owner' when calling accessResourcesV1DeleteAccessResource");
       }
 
       // verify the required parameter 'uuid' is set
       if (uuid === undefined || uuid === null) {
-        throw new Error("Missing the required parameter 'uuid' when calling deleteAccessResource");
+        throw new Error("Missing the required parameter 'uuid' when calling accessResourcesV1DeleteAccessResource");
       }
 
 
@@ -169,8 +169,8 @@
     }
 
     /**
-     * Callback function to receive the result of the getAccessResource operation.
-     * @callback module:api/AccessResourcesV1Api~getAccessResourceCallback
+     * Callback function to receive the result of the accessResourcesV1GetAccessResource operation.
+     * @callback module:api/AccessResourcesV1Api~accessResourcesV1GetAccessResourceCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1AccessResource} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -180,20 +180,20 @@
      * Get access resource
      * @param {String} owner Owner of the namespace
      * @param {String} uuid Uuid identifier of the entity
-     * @param {module:api/AccessResourcesV1Api~getAccessResourceCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/AccessResourcesV1Api~accessResourcesV1GetAccessResourceCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1AccessResource}
      */
-    this.getAccessResource = function(owner, uuid, callback) {
+    this.accessResourcesV1GetAccessResource = function(owner, uuid, callback) {
       var postBody = null;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling getAccessResource");
+        throw new Error("Missing the required parameter 'owner' when calling accessResourcesV1GetAccessResource");
       }
 
       // verify the required parameter 'uuid' is set
       if (uuid === undefined || uuid === null) {
-        throw new Error("Missing the required parameter 'uuid' when calling getAccessResource");
+        throw new Error("Missing the required parameter 'uuid' when calling accessResourcesV1GetAccessResource");
       }
 
 
@@ -223,8 +223,8 @@
     }
 
     /**
-     * Callback function to receive the result of the listAccessResourceNames operation.
-     * @callback module:api/AccessResourcesV1Api~listAccessResourceNamesCallback
+     * Callback function to receive the result of the accessResourcesV1ListAccessResourceNames operation.
+     * @callback module:api/AccessResourcesV1Api~accessResourcesV1ListAccessResourceNamesCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1ListAccessResourcesResponse} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -238,16 +238,16 @@
      * @param {Number} opts.limit Limit size.
      * @param {String} opts.sort Sort to order the search.
      * @param {String} opts.query Query filter the search search.
-     * @param {module:api/AccessResourcesV1Api~listAccessResourceNamesCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/AccessResourcesV1Api~accessResourcesV1ListAccessResourceNamesCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1ListAccessResourcesResponse}
      */
-    this.listAccessResourceNames = function(owner, opts, callback) {
+    this.accessResourcesV1ListAccessResourceNames = function(owner, opts, callback) {
       opts = opts || {};
       var postBody = null;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling listAccessResourceNames");
+        throw new Error("Missing the required parameter 'owner' when calling accessResourcesV1ListAccessResourceNames");
       }
 
 
@@ -280,8 +280,8 @@
     }
 
     /**
-     * Callback function to receive the result of the listAccessResources operation.
-     * @callback module:api/AccessResourcesV1Api~listAccessResourcesCallback
+     * Callback function to receive the result of the accessResourcesV1ListAccessResources operation.
+     * @callback module:api/AccessResourcesV1Api~accessResourcesV1ListAccessResourcesCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1ListAccessResourcesResponse} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -295,16 +295,16 @@
      * @param {Number} opts.limit Limit size.
      * @param {String} opts.sort Sort to order the search.
      * @param {String} opts.query Query filter the search search.
-     * @param {module:api/AccessResourcesV1Api~listAccessResourcesCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/AccessResourcesV1Api~accessResourcesV1ListAccessResourcesCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1ListAccessResourcesResponse}
      */
-    this.listAccessResources = function(owner, opts, callback) {
+    this.accessResourcesV1ListAccessResources = function(owner, opts, callback) {
       opts = opts || {};
       var postBody = null;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling listAccessResources");
+        throw new Error("Missing the required parameter 'owner' when calling accessResourcesV1ListAccessResources");
       }
 
 
@@ -337,8 +337,8 @@
     }
 
     /**
-     * Callback function to receive the result of the patchAccessResource operation.
-     * @callback module:api/AccessResourcesV1Api~patchAccessResourceCallback
+     * Callback function to receive the result of the accessResourcesV1PatchAccessResource operation.
+     * @callback module:api/AccessResourcesV1Api~accessResourcesV1PatchAccessResourceCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1AccessResource} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -349,25 +349,25 @@
      * @param {String} owner Owner of the namespace
      * @param {String} access_resource_uuid UUID
      * @param {module:model/V1AccessResource} body Artifact store body
-     * @param {module:api/AccessResourcesV1Api~patchAccessResourceCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/AccessResourcesV1Api~accessResourcesV1PatchAccessResourceCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1AccessResource}
      */
-    this.patchAccessResource = function(owner, access_resource_uuid, body, callback) {
+    this.accessResourcesV1PatchAccessResource = function(owner, access_resource_uuid, body, callback) {
       var postBody = body;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling patchAccessResource");
+        throw new Error("Missing the required parameter 'owner' when calling accessResourcesV1PatchAccessResource");
       }
 
       // verify the required parameter 'access_resource_uuid' is set
       if (access_resource_uuid === undefined || access_resource_uuid === null) {
-        throw new Error("Missing the required parameter 'access_resource_uuid' when calling patchAccessResource");
+        throw new Error("Missing the required parameter 'access_resource_uuid' when calling accessResourcesV1PatchAccessResource");
       }
 
       // verify the required parameter 'body' is set
       if (body === undefined || body === null) {
-        throw new Error("Missing the required parameter 'body' when calling patchAccessResource");
+        throw new Error("Missing the required parameter 'body' when calling accessResourcesV1PatchAccessResource");
       }
 
 
@@ -397,8 +397,8 @@
     }
 
     /**
-     * Callback function to receive the result of the updateAccessResource operation.
-     * @callback module:api/AccessResourcesV1Api~updateAccessResourceCallback
+     * Callback function to receive the result of the accessResourcesV1UpdateAccessResource operation.
+     * @callback module:api/AccessResourcesV1Api~accessResourcesV1UpdateAccessResourceCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1AccessResource} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -409,25 +409,25 @@
      * @param {String} owner Owner of the namespace
      * @param {String} access_resource_uuid UUID
      * @param {module:model/V1AccessResource} body Artifact store body
-     * @param {module:api/AccessResourcesV1Api~updateAccessResourceCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/AccessResourcesV1Api~accessResourcesV1UpdateAccessResourceCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1AccessResource}
      */
-    this.updateAccessResource = function(owner, access_resource_uuid, body, callback) {
+    this.accessResourcesV1UpdateAccessResource = function(owner, access_resource_uuid, body, callback) {
       var postBody = body;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling updateAccessResource");
+        throw new Error("Missing the required parameter 'owner' when calling accessResourcesV1UpdateAccessResource");
       }
 
       // verify the required parameter 'access_resource_uuid' is set
       if (access_resource_uuid === undefined || access_resource_uuid === null) {
-        throw new Error("Missing the required parameter 'access_resource_uuid' when calling updateAccessResource");
+        throw new Error("Missing the required parameter 'access_resource_uuid' when calling accessResourcesV1UpdateAccessResource");
       }
 
       // verify the required parameter 'body' is set
       if (body === undefined || body === null) {
-        throw new Error("Missing the required parameter 'body' when calling updateAccessResource");
+        throw new Error("Missing the required parameter 'body' when calling accessResourcesV1UpdateAccessResource");
       }
 
 

@@ -74,7 +74,7 @@ public class AgentsV1Api {
     }
 
     /**
-     * Build call for createAgent
+     * Build call for agentsV1CreateAgent
      * @param owner Owner of the namespace (required)
      * @param body Agent body (required)
      * @param progressListener Progress listener
@@ -82,7 +82,7 @@ public class AgentsV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call createAgentCall(String owner, V1Agent body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call agentsV1CreateAgentCall(String owner, V1Agent body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -125,20 +125,20 @@ public class AgentsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call createAgentValidateBeforeCall(String owner, V1Agent body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call agentsV1CreateAgentValidateBeforeCall(String owner, V1Agent body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling createAgent(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling agentsV1CreateAgent(Async)");
         }
         
         // verify the required parameter 'body' is set
         if (body == null) {
-            throw new ApiException("Missing the required parameter 'body' when calling createAgent(Async)");
+            throw new ApiException("Missing the required parameter 'body' when calling agentsV1CreateAgent(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = createAgentCall(owner, body, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = agentsV1CreateAgentCall(owner, body, progressListener, progressRequestListener);
         return call;
 
     }
@@ -151,8 +151,8 @@ public class AgentsV1Api {
      * @return V1Agent
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1Agent createAgent(String owner, V1Agent body) throws ApiException {
-        ApiResponse<V1Agent> resp = createAgentWithHttpInfo(owner, body);
+    public V1Agent agentsV1CreateAgent(String owner, V1Agent body) throws ApiException {
+        ApiResponse<V1Agent> resp = agentsV1CreateAgentWithHttpInfo(owner, body);
         return resp.getData();
     }
 
@@ -164,8 +164,8 @@ public class AgentsV1Api {
      * @return ApiResponse&lt;V1Agent&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1Agent> createAgentWithHttpInfo(String owner, V1Agent body) throws ApiException {
-        com.squareup.okhttp.Call call = createAgentValidateBeforeCall(owner, body, null, null);
+    public ApiResponse<V1Agent> agentsV1CreateAgentWithHttpInfo(String owner, V1Agent body) throws ApiException {
+        com.squareup.okhttp.Call call = agentsV1CreateAgentValidateBeforeCall(owner, body, null, null);
         Type localVarReturnType = new TypeToken<V1Agent>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -179,7 +179,7 @@ public class AgentsV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call createAgentAsync(String owner, V1Agent body, final ApiCallback<V1Agent> callback) throws ApiException {
+    public com.squareup.okhttp.Call agentsV1CreateAgentAsync(String owner, V1Agent body, final ApiCallback<V1Agent> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -200,13 +200,13 @@ public class AgentsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = createAgentValidateBeforeCall(owner, body, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = agentsV1CreateAgentValidateBeforeCall(owner, body, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1Agent>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
     /**
-     * Build call for createAgentStatus
+     * Build call for agentsV1CreateAgentStatus
      * @param owner Owner of the namespace (required)
      * @param uuid Uuid identifier of the entity (required)
      * @param body  (required)
@@ -215,7 +215,7 @@ public class AgentsV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call createAgentStatusCall(String owner, String uuid, V1AgentStatusBodyRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call agentsV1CreateAgentStatusCall(String owner, String uuid, V1AgentStatusBodyRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -259,25 +259,25 @@ public class AgentsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call createAgentStatusValidateBeforeCall(String owner, String uuid, V1AgentStatusBodyRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call agentsV1CreateAgentStatusValidateBeforeCall(String owner, String uuid, V1AgentStatusBodyRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling createAgentStatus(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling agentsV1CreateAgentStatus(Async)");
         }
         
         // verify the required parameter 'uuid' is set
         if (uuid == null) {
-            throw new ApiException("Missing the required parameter 'uuid' when calling createAgentStatus(Async)");
+            throw new ApiException("Missing the required parameter 'uuid' when calling agentsV1CreateAgentStatus(Async)");
         }
         
         // verify the required parameter 'body' is set
         if (body == null) {
-            throw new ApiException("Missing the required parameter 'body' when calling createAgentStatus(Async)");
+            throw new ApiException("Missing the required parameter 'body' when calling agentsV1CreateAgentStatus(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = createAgentStatusCall(owner, uuid, body, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = agentsV1CreateAgentStatusCall(owner, uuid, body, progressListener, progressRequestListener);
         return call;
 
     }
@@ -291,8 +291,8 @@ public class AgentsV1Api {
      * @return V1Status
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1Status createAgentStatus(String owner, String uuid, V1AgentStatusBodyRequest body) throws ApiException {
-        ApiResponse<V1Status> resp = createAgentStatusWithHttpInfo(owner, uuid, body);
+    public V1Status agentsV1CreateAgentStatus(String owner, String uuid, V1AgentStatusBodyRequest body) throws ApiException {
+        ApiResponse<V1Status> resp = agentsV1CreateAgentStatusWithHttpInfo(owner, uuid, body);
         return resp.getData();
     }
 
@@ -305,8 +305,8 @@ public class AgentsV1Api {
      * @return ApiResponse&lt;V1Status&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1Status> createAgentStatusWithHttpInfo(String owner, String uuid, V1AgentStatusBodyRequest body) throws ApiException {
-        com.squareup.okhttp.Call call = createAgentStatusValidateBeforeCall(owner, uuid, body, null, null);
+    public ApiResponse<V1Status> agentsV1CreateAgentStatusWithHttpInfo(String owner, String uuid, V1AgentStatusBodyRequest body) throws ApiException {
+        com.squareup.okhttp.Call call = agentsV1CreateAgentStatusValidateBeforeCall(owner, uuid, body, null, null);
         Type localVarReturnType = new TypeToken<V1Status>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -321,7 +321,7 @@ public class AgentsV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call createAgentStatusAsync(String owner, String uuid, V1AgentStatusBodyRequest body, final ApiCallback<V1Status> callback) throws ApiException {
+    public com.squareup.okhttp.Call agentsV1CreateAgentStatusAsync(String owner, String uuid, V1AgentStatusBodyRequest body, final ApiCallback<V1Status> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -342,13 +342,13 @@ public class AgentsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = createAgentStatusValidateBeforeCall(owner, uuid, body, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = agentsV1CreateAgentStatusValidateBeforeCall(owner, uuid, body, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1Status>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
     /**
-     * Build call for deleteAgent
+     * Build call for agentsV1DeleteAgent
      * @param owner Owner of the namespace (required)
      * @param uuid Uuid identifier of the entity (required)
      * @param progressListener Progress listener
@@ -356,7 +356,7 @@ public class AgentsV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call deleteAgentCall(String owner, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call agentsV1DeleteAgentCall(String owner, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -400,20 +400,20 @@ public class AgentsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call deleteAgentValidateBeforeCall(String owner, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call agentsV1DeleteAgentValidateBeforeCall(String owner, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling deleteAgent(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling agentsV1DeleteAgent(Async)");
         }
         
         // verify the required parameter 'uuid' is set
         if (uuid == null) {
-            throw new ApiException("Missing the required parameter 'uuid' when calling deleteAgent(Async)");
+            throw new ApiException("Missing the required parameter 'uuid' when calling agentsV1DeleteAgent(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = deleteAgentCall(owner, uuid, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = agentsV1DeleteAgentCall(owner, uuid, progressListener, progressRequestListener);
         return call;
 
     }
@@ -425,8 +425,8 @@ public class AgentsV1Api {
      * @param uuid Uuid identifier of the entity (required)
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public void deleteAgent(String owner, String uuid) throws ApiException {
-        deleteAgentWithHttpInfo(owner, uuid);
+    public void agentsV1DeleteAgent(String owner, String uuid) throws ApiException {
+        agentsV1DeleteAgentWithHttpInfo(owner, uuid);
     }
 
     /**
@@ -437,8 +437,8 @@ public class AgentsV1Api {
      * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<Void> deleteAgentWithHttpInfo(String owner, String uuid) throws ApiException {
-        com.squareup.okhttp.Call call = deleteAgentValidateBeforeCall(owner, uuid, null, null);
+    public ApiResponse<Void> agentsV1DeleteAgentWithHttpInfo(String owner, String uuid) throws ApiException {
+        com.squareup.okhttp.Call call = agentsV1DeleteAgentValidateBeforeCall(owner, uuid, null, null);
         return apiClient.execute(call);
     }
 
@@ -451,7 +451,7 @@ public class AgentsV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call deleteAgentAsync(String owner, String uuid, final ApiCallback<Void> callback) throws ApiException {
+    public com.squareup.okhttp.Call agentsV1DeleteAgentAsync(String owner, String uuid, final ApiCallback<Void> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -472,12 +472,12 @@ public class AgentsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = deleteAgentValidateBeforeCall(owner, uuid, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = agentsV1DeleteAgentValidateBeforeCall(owner, uuid, progressListener, progressRequestListener);
         apiClient.executeAsync(call, callback);
         return call;
     }
     /**
-     * Build call for getAgent
+     * Build call for agentsV1GetAgent
      * @param owner Owner of the namespace (required)
      * @param uuid Uuid identifier of the entity (required)
      * @param progressListener Progress listener
@@ -485,7 +485,7 @@ public class AgentsV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call getAgentCall(String owner, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call agentsV1GetAgentCall(String owner, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -529,20 +529,20 @@ public class AgentsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call getAgentValidateBeforeCall(String owner, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call agentsV1GetAgentValidateBeforeCall(String owner, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling getAgent(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling agentsV1GetAgent(Async)");
         }
         
         // verify the required parameter 'uuid' is set
         if (uuid == null) {
-            throw new ApiException("Missing the required parameter 'uuid' when calling getAgent(Async)");
+            throw new ApiException("Missing the required parameter 'uuid' when calling agentsV1GetAgent(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = getAgentCall(owner, uuid, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = agentsV1GetAgentCall(owner, uuid, progressListener, progressRequestListener);
         return call;
 
     }
@@ -555,8 +555,8 @@ public class AgentsV1Api {
      * @return V1Agent
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1Agent getAgent(String owner, String uuid) throws ApiException {
-        ApiResponse<V1Agent> resp = getAgentWithHttpInfo(owner, uuid);
+    public V1Agent agentsV1GetAgent(String owner, String uuid) throws ApiException {
+        ApiResponse<V1Agent> resp = agentsV1GetAgentWithHttpInfo(owner, uuid);
         return resp.getData();
     }
 
@@ -568,8 +568,8 @@ public class AgentsV1Api {
      * @return ApiResponse&lt;V1Agent&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1Agent> getAgentWithHttpInfo(String owner, String uuid) throws ApiException {
-        com.squareup.okhttp.Call call = getAgentValidateBeforeCall(owner, uuid, null, null);
+    public ApiResponse<V1Agent> agentsV1GetAgentWithHttpInfo(String owner, String uuid) throws ApiException {
+        com.squareup.okhttp.Call call = agentsV1GetAgentValidateBeforeCall(owner, uuid, null, null);
         Type localVarReturnType = new TypeToken<V1Agent>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -583,7 +583,7 @@ public class AgentsV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call getAgentAsync(String owner, String uuid, final ApiCallback<V1Agent> callback) throws ApiException {
+    public com.squareup.okhttp.Call agentsV1GetAgentAsync(String owner, String uuid, final ApiCallback<V1Agent> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -604,13 +604,13 @@ public class AgentsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = getAgentValidateBeforeCall(owner, uuid, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = agentsV1GetAgentValidateBeforeCall(owner, uuid, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1Agent>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
     /**
-     * Build call for getAgentState
+     * Build call for agentsV1GetAgentState
      * @param owner Owner of the namespace (required)
      * @param uuid Uuid identifier of the entity (required)
      * @param progressListener Progress listener
@@ -618,7 +618,7 @@ public class AgentsV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call getAgentStateCall(String owner, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call agentsV1GetAgentStateCall(String owner, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -662,20 +662,20 @@ public class AgentsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call getAgentStateValidateBeforeCall(String owner, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call agentsV1GetAgentStateValidateBeforeCall(String owner, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling getAgentState(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling agentsV1GetAgentState(Async)");
         }
         
         // verify the required parameter 'uuid' is set
         if (uuid == null) {
-            throw new ApiException("Missing the required parameter 'uuid' when calling getAgentState(Async)");
+            throw new ApiException("Missing the required parameter 'uuid' when calling agentsV1GetAgentState(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = getAgentStateCall(owner, uuid, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = agentsV1GetAgentStateCall(owner, uuid, progressListener, progressRequestListener);
         return call;
 
     }
@@ -688,8 +688,8 @@ public class AgentsV1Api {
      * @return V1AgentStateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1AgentStateResponse getAgentState(String owner, String uuid) throws ApiException {
-        ApiResponse<V1AgentStateResponse> resp = getAgentStateWithHttpInfo(owner, uuid);
+    public V1AgentStateResponse agentsV1GetAgentState(String owner, String uuid) throws ApiException {
+        ApiResponse<V1AgentStateResponse> resp = agentsV1GetAgentStateWithHttpInfo(owner, uuid);
         return resp.getData();
     }
 
@@ -701,8 +701,8 @@ public class AgentsV1Api {
      * @return ApiResponse&lt;V1AgentStateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1AgentStateResponse> getAgentStateWithHttpInfo(String owner, String uuid) throws ApiException {
-        com.squareup.okhttp.Call call = getAgentStateValidateBeforeCall(owner, uuid, null, null);
+    public ApiResponse<V1AgentStateResponse> agentsV1GetAgentStateWithHttpInfo(String owner, String uuid) throws ApiException {
+        com.squareup.okhttp.Call call = agentsV1GetAgentStateValidateBeforeCall(owner, uuid, null, null);
         Type localVarReturnType = new TypeToken<V1AgentStateResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -716,7 +716,7 @@ public class AgentsV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call getAgentStateAsync(String owner, String uuid, final ApiCallback<V1AgentStateResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call agentsV1GetAgentStateAsync(String owner, String uuid, final ApiCallback<V1AgentStateResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -737,13 +737,13 @@ public class AgentsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = getAgentStateValidateBeforeCall(owner, uuid, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = agentsV1GetAgentStateValidateBeforeCall(owner, uuid, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1AgentStateResponse>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
     /**
-     * Build call for getAgentStatuses
+     * Build call for agentsV1GetAgentStatuses
      * @param owner Owner of the namespace (required)
      * @param uuid Uuid identifier of the entity (required)
      * @param progressListener Progress listener
@@ -751,7 +751,7 @@ public class AgentsV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call getAgentStatusesCall(String owner, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call agentsV1GetAgentStatusesCall(String owner, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -795,20 +795,20 @@ public class AgentsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call getAgentStatusesValidateBeforeCall(String owner, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call agentsV1GetAgentStatusesValidateBeforeCall(String owner, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling getAgentStatuses(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling agentsV1GetAgentStatuses(Async)");
         }
         
         // verify the required parameter 'uuid' is set
         if (uuid == null) {
-            throw new ApiException("Missing the required parameter 'uuid' when calling getAgentStatuses(Async)");
+            throw new ApiException("Missing the required parameter 'uuid' when calling agentsV1GetAgentStatuses(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = getAgentStatusesCall(owner, uuid, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = agentsV1GetAgentStatusesCall(owner, uuid, progressListener, progressRequestListener);
         return call;
 
     }
@@ -821,8 +821,8 @@ public class AgentsV1Api {
      * @return V1Status
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1Status getAgentStatuses(String owner, String uuid) throws ApiException {
-        ApiResponse<V1Status> resp = getAgentStatusesWithHttpInfo(owner, uuid);
+    public V1Status agentsV1GetAgentStatuses(String owner, String uuid) throws ApiException {
+        ApiResponse<V1Status> resp = agentsV1GetAgentStatusesWithHttpInfo(owner, uuid);
         return resp.getData();
     }
 
@@ -834,8 +834,8 @@ public class AgentsV1Api {
      * @return ApiResponse&lt;V1Status&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1Status> getAgentStatusesWithHttpInfo(String owner, String uuid) throws ApiException {
-        com.squareup.okhttp.Call call = getAgentStatusesValidateBeforeCall(owner, uuid, null, null);
+    public ApiResponse<V1Status> agentsV1GetAgentStatusesWithHttpInfo(String owner, String uuid) throws ApiException {
+        com.squareup.okhttp.Call call = agentsV1GetAgentStatusesValidateBeforeCall(owner, uuid, null, null);
         Type localVarReturnType = new TypeToken<V1Status>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -849,7 +849,7 @@ public class AgentsV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call getAgentStatusesAsync(String owner, String uuid, final ApiCallback<V1Status> callback) throws ApiException {
+    public com.squareup.okhttp.Call agentsV1GetAgentStatusesAsync(String owner, String uuid, final ApiCallback<V1Status> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -870,13 +870,13 @@ public class AgentsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = getAgentStatusesValidateBeforeCall(owner, uuid, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = agentsV1GetAgentStatusesValidateBeforeCall(owner, uuid, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1Status>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
     /**
-     * Build call for listAgentNames
+     * Build call for agentsV1ListAgentNames
      * @param owner Owner of the namespace (required)
      * @param offset Pagination offset. (optional)
      * @param limit Limit size. (optional)
@@ -887,7 +887,7 @@ public class AgentsV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call listAgentNamesCall(String owner, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call agentsV1ListAgentNamesCall(String owner, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -938,15 +938,15 @@ public class AgentsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call listAgentNamesValidateBeforeCall(String owner, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call agentsV1ListAgentNamesValidateBeforeCall(String owner, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling listAgentNames(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling agentsV1ListAgentNames(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = listAgentNamesCall(owner, offset, limit, sort, query, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = agentsV1ListAgentNamesCall(owner, offset, limit, sort, query, progressListener, progressRequestListener);
         return call;
 
     }
@@ -962,8 +962,8 @@ public class AgentsV1Api {
      * @return V1ListAgentsResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1ListAgentsResponse listAgentNames(String owner, Integer offset, Integer limit, String sort, String query) throws ApiException {
-        ApiResponse<V1ListAgentsResponse> resp = listAgentNamesWithHttpInfo(owner, offset, limit, sort, query);
+    public V1ListAgentsResponse agentsV1ListAgentNames(String owner, Integer offset, Integer limit, String sort, String query) throws ApiException {
+        ApiResponse<V1ListAgentsResponse> resp = agentsV1ListAgentNamesWithHttpInfo(owner, offset, limit, sort, query);
         return resp.getData();
     }
 
@@ -978,8 +978,8 @@ public class AgentsV1Api {
      * @return ApiResponse&lt;V1ListAgentsResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1ListAgentsResponse> listAgentNamesWithHttpInfo(String owner, Integer offset, Integer limit, String sort, String query) throws ApiException {
-        com.squareup.okhttp.Call call = listAgentNamesValidateBeforeCall(owner, offset, limit, sort, query, null, null);
+    public ApiResponse<V1ListAgentsResponse> agentsV1ListAgentNamesWithHttpInfo(String owner, Integer offset, Integer limit, String sort, String query) throws ApiException {
+        com.squareup.okhttp.Call call = agentsV1ListAgentNamesValidateBeforeCall(owner, offset, limit, sort, query, null, null);
         Type localVarReturnType = new TypeToken<V1ListAgentsResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -996,7 +996,7 @@ public class AgentsV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call listAgentNamesAsync(String owner, Integer offset, Integer limit, String sort, String query, final ApiCallback<V1ListAgentsResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call agentsV1ListAgentNamesAsync(String owner, Integer offset, Integer limit, String sort, String query, final ApiCallback<V1ListAgentsResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -1017,13 +1017,13 @@ public class AgentsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = listAgentNamesValidateBeforeCall(owner, offset, limit, sort, query, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = agentsV1ListAgentNamesValidateBeforeCall(owner, offset, limit, sort, query, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1ListAgentsResponse>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
     /**
-     * Build call for listAgents
+     * Build call for agentsV1ListAgents
      * @param owner Owner of the namespace (required)
      * @param offset Pagination offset. (optional)
      * @param limit Limit size. (optional)
@@ -1034,7 +1034,7 @@ public class AgentsV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call listAgentsCall(String owner, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call agentsV1ListAgentsCall(String owner, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -1085,15 +1085,15 @@ public class AgentsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call listAgentsValidateBeforeCall(String owner, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call agentsV1ListAgentsValidateBeforeCall(String owner, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling listAgents(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling agentsV1ListAgents(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = listAgentsCall(owner, offset, limit, sort, query, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = agentsV1ListAgentsCall(owner, offset, limit, sort, query, progressListener, progressRequestListener);
         return call;
 
     }
@@ -1109,8 +1109,8 @@ public class AgentsV1Api {
      * @return V1ListAgentsResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1ListAgentsResponse listAgents(String owner, Integer offset, Integer limit, String sort, String query) throws ApiException {
-        ApiResponse<V1ListAgentsResponse> resp = listAgentsWithHttpInfo(owner, offset, limit, sort, query);
+    public V1ListAgentsResponse agentsV1ListAgents(String owner, Integer offset, Integer limit, String sort, String query) throws ApiException {
+        ApiResponse<V1ListAgentsResponse> resp = agentsV1ListAgentsWithHttpInfo(owner, offset, limit, sort, query);
         return resp.getData();
     }
 
@@ -1125,8 +1125,8 @@ public class AgentsV1Api {
      * @return ApiResponse&lt;V1ListAgentsResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1ListAgentsResponse> listAgentsWithHttpInfo(String owner, Integer offset, Integer limit, String sort, String query) throws ApiException {
-        com.squareup.okhttp.Call call = listAgentsValidateBeforeCall(owner, offset, limit, sort, query, null, null);
+    public ApiResponse<V1ListAgentsResponse> agentsV1ListAgentsWithHttpInfo(String owner, Integer offset, Integer limit, String sort, String query) throws ApiException {
+        com.squareup.okhttp.Call call = agentsV1ListAgentsValidateBeforeCall(owner, offset, limit, sort, query, null, null);
         Type localVarReturnType = new TypeToken<V1ListAgentsResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -1143,7 +1143,7 @@ public class AgentsV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call listAgentsAsync(String owner, Integer offset, Integer limit, String sort, String query, final ApiCallback<V1ListAgentsResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call agentsV1ListAgentsAsync(String owner, Integer offset, Integer limit, String sort, String query, final ApiCallback<V1ListAgentsResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -1164,13 +1164,13 @@ public class AgentsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = listAgentsValidateBeforeCall(owner, offset, limit, sort, query, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = agentsV1ListAgentsValidateBeforeCall(owner, offset, limit, sort, query, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1ListAgentsResponse>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
     /**
-     * Build call for patchAgent
+     * Build call for agentsV1PatchAgent
      * @param owner Owner of the namespace (required)
      * @param agentUuid UUID (required)
      * @param body Agent body (required)
@@ -1179,7 +1179,7 @@ public class AgentsV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call patchAgentCall(String owner, String agentUuid, V1Agent body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call agentsV1PatchAgentCall(String owner, String agentUuid, V1Agent body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -1223,25 +1223,25 @@ public class AgentsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call patchAgentValidateBeforeCall(String owner, String agentUuid, V1Agent body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call agentsV1PatchAgentValidateBeforeCall(String owner, String agentUuid, V1Agent body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling patchAgent(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling agentsV1PatchAgent(Async)");
         }
         
         // verify the required parameter 'agentUuid' is set
         if (agentUuid == null) {
-            throw new ApiException("Missing the required parameter 'agentUuid' when calling patchAgent(Async)");
+            throw new ApiException("Missing the required parameter 'agentUuid' when calling agentsV1PatchAgent(Async)");
         }
         
         // verify the required parameter 'body' is set
         if (body == null) {
-            throw new ApiException("Missing the required parameter 'body' when calling patchAgent(Async)");
+            throw new ApiException("Missing the required parameter 'body' when calling agentsV1PatchAgent(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = patchAgentCall(owner, agentUuid, body, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = agentsV1PatchAgentCall(owner, agentUuid, body, progressListener, progressRequestListener);
         return call;
 
     }
@@ -1255,8 +1255,8 @@ public class AgentsV1Api {
      * @return V1Agent
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1Agent patchAgent(String owner, String agentUuid, V1Agent body) throws ApiException {
-        ApiResponse<V1Agent> resp = patchAgentWithHttpInfo(owner, agentUuid, body);
+    public V1Agent agentsV1PatchAgent(String owner, String agentUuid, V1Agent body) throws ApiException {
+        ApiResponse<V1Agent> resp = agentsV1PatchAgentWithHttpInfo(owner, agentUuid, body);
         return resp.getData();
     }
 
@@ -1269,8 +1269,8 @@ public class AgentsV1Api {
      * @return ApiResponse&lt;V1Agent&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1Agent> patchAgentWithHttpInfo(String owner, String agentUuid, V1Agent body) throws ApiException {
-        com.squareup.okhttp.Call call = patchAgentValidateBeforeCall(owner, agentUuid, body, null, null);
+    public ApiResponse<V1Agent> agentsV1PatchAgentWithHttpInfo(String owner, String agentUuid, V1Agent body) throws ApiException {
+        com.squareup.okhttp.Call call = agentsV1PatchAgentValidateBeforeCall(owner, agentUuid, body, null, null);
         Type localVarReturnType = new TypeToken<V1Agent>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -1285,7 +1285,7 @@ public class AgentsV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call patchAgentAsync(String owner, String agentUuid, V1Agent body, final ApiCallback<V1Agent> callback) throws ApiException {
+    public com.squareup.okhttp.Call agentsV1PatchAgentAsync(String owner, String agentUuid, V1Agent body, final ApiCallback<V1Agent> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -1306,13 +1306,13 @@ public class AgentsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = patchAgentValidateBeforeCall(owner, agentUuid, body, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = agentsV1PatchAgentValidateBeforeCall(owner, agentUuid, body, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1Agent>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
     /**
-     * Build call for syncAgent
+     * Build call for agentsV1SyncAgent
      * @param owner Owner of the namespace (required)
      * @param agentUuid UUID (required)
      * @param body Agent body (required)
@@ -1321,7 +1321,7 @@ public class AgentsV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call syncAgentCall(String owner, String agentUuid, V1Agent body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call agentsV1SyncAgentCall(String owner, String agentUuid, V1Agent body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -1365,25 +1365,25 @@ public class AgentsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call syncAgentValidateBeforeCall(String owner, String agentUuid, V1Agent body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call agentsV1SyncAgentValidateBeforeCall(String owner, String agentUuid, V1Agent body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling syncAgent(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling agentsV1SyncAgent(Async)");
         }
         
         // verify the required parameter 'agentUuid' is set
         if (agentUuid == null) {
-            throw new ApiException("Missing the required parameter 'agentUuid' when calling syncAgent(Async)");
+            throw new ApiException("Missing the required parameter 'agentUuid' when calling agentsV1SyncAgent(Async)");
         }
         
         // verify the required parameter 'body' is set
         if (body == null) {
-            throw new ApiException("Missing the required parameter 'body' when calling syncAgent(Async)");
+            throw new ApiException("Missing the required parameter 'body' when calling agentsV1SyncAgent(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = syncAgentCall(owner, agentUuid, body, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = agentsV1SyncAgentCall(owner, agentUuid, body, progressListener, progressRequestListener);
         return call;
 
     }
@@ -1396,8 +1396,8 @@ public class AgentsV1Api {
      * @param body Agent body (required)
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public void syncAgent(String owner, String agentUuid, V1Agent body) throws ApiException {
-        syncAgentWithHttpInfo(owner, agentUuid, body);
+    public void agentsV1SyncAgent(String owner, String agentUuid, V1Agent body) throws ApiException {
+        agentsV1SyncAgentWithHttpInfo(owner, agentUuid, body);
     }
 
     /**
@@ -1409,8 +1409,8 @@ public class AgentsV1Api {
      * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<Void> syncAgentWithHttpInfo(String owner, String agentUuid, V1Agent body) throws ApiException {
-        com.squareup.okhttp.Call call = syncAgentValidateBeforeCall(owner, agentUuid, body, null, null);
+    public ApiResponse<Void> agentsV1SyncAgentWithHttpInfo(String owner, String agentUuid, V1Agent body) throws ApiException {
+        com.squareup.okhttp.Call call = agentsV1SyncAgentValidateBeforeCall(owner, agentUuid, body, null, null);
         return apiClient.execute(call);
     }
 
@@ -1424,7 +1424,7 @@ public class AgentsV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call syncAgentAsync(String owner, String agentUuid, V1Agent body, final ApiCallback<Void> callback) throws ApiException {
+    public com.squareup.okhttp.Call agentsV1SyncAgentAsync(String owner, String agentUuid, V1Agent body, final ApiCallback<Void> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -1445,12 +1445,12 @@ public class AgentsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = syncAgentValidateBeforeCall(owner, agentUuid, body, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = agentsV1SyncAgentValidateBeforeCall(owner, agentUuid, body, progressListener, progressRequestListener);
         apiClient.executeAsync(call, callback);
         return call;
     }
     /**
-     * Build call for updateAgent
+     * Build call for agentsV1UpdateAgent
      * @param owner Owner of the namespace (required)
      * @param agentUuid UUID (required)
      * @param body Agent body (required)
@@ -1459,7 +1459,7 @@ public class AgentsV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call updateAgentCall(String owner, String agentUuid, V1Agent body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call agentsV1UpdateAgentCall(String owner, String agentUuid, V1Agent body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -1503,25 +1503,25 @@ public class AgentsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call updateAgentValidateBeforeCall(String owner, String agentUuid, V1Agent body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call agentsV1UpdateAgentValidateBeforeCall(String owner, String agentUuid, V1Agent body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling updateAgent(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling agentsV1UpdateAgent(Async)");
         }
         
         // verify the required parameter 'agentUuid' is set
         if (agentUuid == null) {
-            throw new ApiException("Missing the required parameter 'agentUuid' when calling updateAgent(Async)");
+            throw new ApiException("Missing the required parameter 'agentUuid' when calling agentsV1UpdateAgent(Async)");
         }
         
         // verify the required parameter 'body' is set
         if (body == null) {
-            throw new ApiException("Missing the required parameter 'body' when calling updateAgent(Async)");
+            throw new ApiException("Missing the required parameter 'body' when calling agentsV1UpdateAgent(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = updateAgentCall(owner, agentUuid, body, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = agentsV1UpdateAgentCall(owner, agentUuid, body, progressListener, progressRequestListener);
         return call;
 
     }
@@ -1535,8 +1535,8 @@ public class AgentsV1Api {
      * @return V1Agent
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1Agent updateAgent(String owner, String agentUuid, V1Agent body) throws ApiException {
-        ApiResponse<V1Agent> resp = updateAgentWithHttpInfo(owner, agentUuid, body);
+    public V1Agent agentsV1UpdateAgent(String owner, String agentUuid, V1Agent body) throws ApiException {
+        ApiResponse<V1Agent> resp = agentsV1UpdateAgentWithHttpInfo(owner, agentUuid, body);
         return resp.getData();
     }
 
@@ -1549,8 +1549,8 @@ public class AgentsV1Api {
      * @return ApiResponse&lt;V1Agent&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1Agent> updateAgentWithHttpInfo(String owner, String agentUuid, V1Agent body) throws ApiException {
-        com.squareup.okhttp.Call call = updateAgentValidateBeforeCall(owner, agentUuid, body, null, null);
+    public ApiResponse<V1Agent> agentsV1UpdateAgentWithHttpInfo(String owner, String agentUuid, V1Agent body) throws ApiException {
+        com.squareup.okhttp.Call call = agentsV1UpdateAgentValidateBeforeCall(owner, agentUuid, body, null, null);
         Type localVarReturnType = new TypeToken<V1Agent>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -1565,7 +1565,7 @@ public class AgentsV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call updateAgentAsync(String owner, String agentUuid, V1Agent body, final ApiCallback<V1Agent> callback) throws ApiException {
+    public com.squareup.okhttp.Call agentsV1UpdateAgentAsync(String owner, String agentUuid, V1Agent body, final ApiCallback<V1Agent> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -1586,7 +1586,7 @@ public class AgentsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = updateAgentValidateBeforeCall(owner, agentUuid, body, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = agentsV1UpdateAgentValidateBeforeCall(owner, agentUuid, body, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1Agent>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;

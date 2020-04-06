@@ -57,10 +57,10 @@ public class DashboardsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void createDashboardTest() throws ApiException {
+    public void dashboardsV1CreateDashboardTest() throws ApiException {
         String owner = null;
         V1Dashboard body = null;
-        V1Dashboard response = api.createDashboard(owner, body);
+        V1Dashboard response = api.dashboardsV1CreateDashboard(owner, body);
 
         // TODO: test validations
     }
@@ -74,10 +74,10 @@ public class DashboardsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void deleteDashboardTest() throws ApiException {
+    public void dashboardsV1DeleteDashboardTest() throws ApiException {
         String owner = null;
         String uuid = null;
-        api.deleteDashboard(owner, uuid);
+        api.dashboardsV1DeleteDashboard(owner, uuid);
 
         // TODO: test validations
     }
@@ -91,10 +91,10 @@ public class DashboardsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void getDashboardTest() throws ApiException {
+    public void dashboardsV1GetDashboardTest() throws ApiException {
         String owner = null;
         String uuid = null;
-        V1Dashboard response = api.getDashboard(owner, uuid);
+        V1Dashboard response = api.dashboardsV1GetDashboard(owner, uuid);
 
         // TODO: test validations
     }
@@ -108,13 +108,13 @@ public class DashboardsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void listDashboardNamesTest() throws ApiException {
+    public void dashboardsV1ListDashboardNamesTest() throws ApiException {
         String owner = null;
         Integer offset = null;
         Integer limit = null;
         String sort = null;
         String query = null;
-        V1ListDashboardsResponse response = api.listDashboardNames(owner, offset, limit, sort, query);
+        V1ListDashboardsResponse response = api.dashboardsV1ListDashboardNames(owner, offset, limit, sort, query);
 
         // TODO: test validations
     }
@@ -128,13 +128,13 @@ public class DashboardsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void listDashboardsTest() throws ApiException {
+    public void dashboardsV1ListDashboardsTest() throws ApiException {
         String owner = null;
         Integer offset = null;
         Integer limit = null;
         String sort = null;
         String query = null;
-        V1ListDashboardsResponse response = api.listDashboards(owner, offset, limit, sort, query);
+        V1ListDashboardsResponse response = api.dashboardsV1ListDashboards(owner, offset, limit, sort, query);
 
         // TODO: test validations
     }
@@ -148,11 +148,11 @@ public class DashboardsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void patchDashboardTest() throws ApiException {
+    public void dashboardsV1PatchDashboardTest() throws ApiException {
         String owner = null;
         String dashboardUuid = null;
         V1Dashboard body = null;
-        V1Dashboard response = api.patchDashboard(owner, dashboardUuid, body);
+        V1Dashboard response = api.dashboardsV1PatchDashboard(owner, dashboardUuid, body);
 
         // TODO: test validations
     }
@@ -166,11 +166,11 @@ public class DashboardsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void updateDashboardTest() throws ApiException {
+    public void dashboardsV1UpdateDashboardTest() throws ApiException {
         String owner = null;
         String dashboardUuid = null;
         V1Dashboard body = null;
-        V1Dashboard response = api.updateDashboard(owner, dashboardUuid, body);
+        V1Dashboard response = api.dashboardsV1UpdateDashboard(owner, dashboardUuid, body);
 
         // TODO: test validations
     }

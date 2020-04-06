@@ -4,17 +4,17 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**create_hub_model**](HubModelsV1Api.md#create_hub_model) | **POST** /api/v1/orgs/{owner}/models | Create dashboard
-[**delete_hub_model**](HubModelsV1Api.md#delete_hub_model) | **DELETE** /api/v1/orgs/{owner}/models/{uuid} | Delete dashboard
-[**get_hub_model**](HubModelsV1Api.md#get_hub_model) | **GET** /api/v1/orgs/{owner}/models/{uuid} | Get dashboard
-[**list_hub_model_names**](HubModelsV1Api.md#list_hub_model_names) | **GET** /api/v1/orgs/{owner}/models/names | List dashboard names
-[**list_hub_models**](HubModelsV1Api.md#list_hub_models) | **GET** /api/v1/orgs/{owner}/models | List dashboards
-[**patch_hub_model**](HubModelsV1Api.md#patch_hub_model) | **PATCH** /api/v1/orgs/{owner}/models/{model.uuid} | Patch dashboard
-[**update_hub_model**](HubModelsV1Api.md#update_hub_model) | **PUT** /api/v1/orgs/{owner}/models/{model.uuid} | Update dashboard
+[**hub_models_v1_create_hub_model**](HubModelsV1Api.md#hub_models_v1_create_hub_model) | **POST** /api/v1/orgs/{owner}/models | Create dashboard
+[**hub_models_v1_delete_hub_model**](HubModelsV1Api.md#hub_models_v1_delete_hub_model) | **DELETE** /api/v1/orgs/{owner}/models/{uuid} | Delete dashboard
+[**hub_models_v1_get_hub_model**](HubModelsV1Api.md#hub_models_v1_get_hub_model) | **GET** /api/v1/orgs/{owner}/models/{uuid} | Get dashboard
+[**hub_models_v1_list_hub_model_names**](HubModelsV1Api.md#hub_models_v1_list_hub_model_names) | **GET** /api/v1/orgs/{owner}/models/names | List dashboard names
+[**hub_models_v1_list_hub_models**](HubModelsV1Api.md#hub_models_v1_list_hub_models) | **GET** /api/v1/orgs/{owner}/models | List dashboards
+[**hub_models_v1_patch_hub_model**](HubModelsV1Api.md#hub_models_v1_patch_hub_model) | **PATCH** /api/v1/orgs/{owner}/models/{model.uuid} | Patch dashboard
+[**hub_models_v1_update_hub_model**](HubModelsV1Api.md#hub_models_v1_update_hub_model) | **PUT** /api/v1/orgs/{owner}/models/{model.uuid} | Update dashboard
 
 
-# **create_hub_model**
-> V1HubModel create_hub_model(owner, body)
+# **hub_models_v1_create_hub_model**
+> V1HubModel hub_models_v1_create_hub_model(owner, body)
 
 Create dashboard
 
@@ -39,10 +39,10 @@ body = polyaxon_sdk.V1HubModel() # V1HubModel | Model body
 
 try:
     # Create dashboard
-    api_response = api_instance.create_hub_model(owner, body)
+    api_response = api_instance.hub_models_v1_create_hub_model(owner, body)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling HubModelsV1Api->create_hub_model: %s\n" % e)
+    print("Exception when calling HubModelsV1Api->hub_models_v1_create_hub_model: %s\n" % e)
 ```
 
 ### Parameters
@@ -67,8 +67,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **delete_hub_model**
-> delete_hub_model(owner, uuid)
+# **hub_models_v1_delete_hub_model**
+> hub_models_v1_delete_hub_model(owner, uuid)
 
 Delete dashboard
 
@@ -93,9 +93,9 @@ uuid = 'uuid_example' # str | Uuid identifier of the entity
 
 try:
     # Delete dashboard
-    api_instance.delete_hub_model(owner, uuid)
+    api_instance.hub_models_v1_delete_hub_model(owner, uuid)
 except ApiException as e:
-    print("Exception when calling HubModelsV1Api->delete_hub_model: %s\n" % e)
+    print("Exception when calling HubModelsV1Api->hub_models_v1_delete_hub_model: %s\n" % e)
 ```
 
 ### Parameters
@@ -120,8 +120,8 @@ void (empty response body)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **get_hub_model**
-> V1HubModel get_hub_model(owner, uuid)
+# **hub_models_v1_get_hub_model**
+> V1HubModel hub_models_v1_get_hub_model(owner, uuid)
 
 Get dashboard
 
@@ -146,10 +146,10 @@ uuid = 'uuid_example' # str | Uuid identifier of the entity
 
 try:
     # Get dashboard
-    api_response = api_instance.get_hub_model(owner, uuid)
+    api_response = api_instance.hub_models_v1_get_hub_model(owner, uuid)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling HubModelsV1Api->get_hub_model: %s\n" % e)
+    print("Exception when calling HubModelsV1Api->hub_models_v1_get_hub_model: %s\n" % e)
 ```
 
 ### Parameters
@@ -174,8 +174,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **list_hub_model_names**
-> V1ListHubModelsResponse list_hub_model_names(owner, offset=offset, limit=limit, sort=sort, query=query)
+# **hub_models_v1_list_hub_model_names**
+> V1ListHubModelsResponse hub_models_v1_list_hub_model_names(owner, offset=offset, limit=limit, sort=sort, query=query)
 
 List dashboard names
 
@@ -203,10 +203,10 @@ query = 'query_example' # str | Query filter the search search. (optional)
 
 try:
     # List dashboard names
-    api_response = api_instance.list_hub_model_names(owner, offset=offset, limit=limit, sort=sort, query=query)
+    api_response = api_instance.hub_models_v1_list_hub_model_names(owner, offset=offset, limit=limit, sort=sort, query=query)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling HubModelsV1Api->list_hub_model_names: %s\n" % e)
+    print("Exception when calling HubModelsV1Api->hub_models_v1_list_hub_model_names: %s\n" % e)
 ```
 
 ### Parameters
@@ -234,8 +234,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **list_hub_models**
-> V1ListHubModelsResponse list_hub_models(owner, offset=offset, limit=limit, sort=sort, query=query)
+# **hub_models_v1_list_hub_models**
+> V1ListHubModelsResponse hub_models_v1_list_hub_models(owner, offset=offset, limit=limit, sort=sort, query=query)
 
 List dashboards
 
@@ -263,10 +263,10 @@ query = 'query_example' # str | Query filter the search search. (optional)
 
 try:
     # List dashboards
-    api_response = api_instance.list_hub_models(owner, offset=offset, limit=limit, sort=sort, query=query)
+    api_response = api_instance.hub_models_v1_list_hub_models(owner, offset=offset, limit=limit, sort=sort, query=query)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling HubModelsV1Api->list_hub_models: %s\n" % e)
+    print("Exception when calling HubModelsV1Api->hub_models_v1_list_hub_models: %s\n" % e)
 ```
 
 ### Parameters
@@ -294,8 +294,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **patch_hub_model**
-> V1HubModel patch_hub_model(owner, model_uuid, body)
+# **hub_models_v1_patch_hub_model**
+> V1HubModel hub_models_v1_patch_hub_model(owner, model_uuid, body)
 
 Patch dashboard
 
@@ -321,10 +321,10 @@ body = polyaxon_sdk.V1HubModel() # V1HubModel | Model body
 
 try:
     # Patch dashboard
-    api_response = api_instance.patch_hub_model(owner, model_uuid, body)
+    api_response = api_instance.hub_models_v1_patch_hub_model(owner, model_uuid, body)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling HubModelsV1Api->patch_hub_model: %s\n" % e)
+    print("Exception when calling HubModelsV1Api->hub_models_v1_patch_hub_model: %s\n" % e)
 ```
 
 ### Parameters
@@ -350,8 +350,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **update_hub_model**
-> V1HubModel update_hub_model(owner, model_uuid, body)
+# **hub_models_v1_update_hub_model**
+> V1HubModel hub_models_v1_update_hub_model(owner, model_uuid, body)
 
 Update dashboard
 
@@ -377,10 +377,10 @@ body = polyaxon_sdk.V1HubModel() # V1HubModel | Model body
 
 try:
     # Update dashboard
-    api_response = api_instance.update_hub_model(owner, model_uuid, body)
+    api_response = api_instance.hub_models_v1_update_hub_model(owner, model_uuid, body)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling HubModelsV1Api->update_hub_model: %s\n" % e)
+    print("Exception when calling HubModelsV1Api->hub_models_v1_update_hub_model: %s\n" % e)
 ```
 
 ### Parameters

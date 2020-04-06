@@ -59,9 +59,9 @@ public class OrganizationsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void createOrganizationTest() throws ApiException {
+    public void organizationsV1CreateOrganizationTest() throws ApiException {
         V1Organization body = null;
-        V1Organization response = api.createOrganization(body);
+        V1Organization response = api.organizationsV1CreateOrganization(body);
 
         // TODO: test validations
     }
@@ -75,10 +75,10 @@ public class OrganizationsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void createOrganizationMemberTest() throws ApiException {
+    public void organizationsV1CreateOrganizationMemberTest() throws ApiException {
         String owner = null;
         V1OrganizationMember body = null;
-        V1OrganizationMember response = api.createOrganizationMember(owner, body);
+        V1OrganizationMember response = api.organizationsV1CreateOrganizationMember(owner, body);
 
         // TODO: test validations
     }
@@ -92,9 +92,9 @@ public class OrganizationsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void deleteOrganizationTest() throws ApiException {
+    public void organizationsV1DeleteOrganizationTest() throws ApiException {
         String owner = null;
-        api.deleteOrganization(owner);
+        api.organizationsV1DeleteOrganization(owner);
 
         // TODO: test validations
     }
@@ -108,43 +108,10 @@ public class OrganizationsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void deleteOrganizationMemberTest() throws ApiException {
-        String owner = null;
-        String user = null;
-        api.deleteOrganizationMember(owner, user);
-
-        // TODO: test validations
-    }
-    
-    /**
-     * 
-     *
-     * 
-     *
-     * @throws ApiException
-     *          if the Api call fails
-     */
-    @Test
-    public void getOrganizationTest() throws ApiException {
-        String owner = null;
-        V1Organization response = api.getOrganization(owner);
-
-        // TODO: test validations
-    }
-    
-    /**
-     * 
-     *
-     * 
-     *
-     * @throws ApiException
-     *          if the Api call fails
-     */
-    @Test
-    public void getOrganizationMemberTest() throws ApiException {
+    public void organizationsV1DeleteOrganizationMemberTest() throws ApiException {
         String owner = null;
         String user = null;
-        V1OrganizationMember response = api.getOrganizationMember(owner, user);
+        api.organizationsV1DeleteOrganizationMember(owner, user);
 
         // TODO: test validations
     }
@@ -158,13 +125,46 @@ public class OrganizationsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void listOrganizationMembersTest() throws ApiException {
+    public void organizationsV1GetOrganizationTest() throws ApiException {
+        String owner = null;
+        V1Organization response = api.organizationsV1GetOrganization(owner);
+
+        // TODO: test validations
+    }
+    
+    /**
+     * 
+     *
+     * 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void organizationsV1GetOrganizationMemberTest() throws ApiException {
+        String owner = null;
+        String user = null;
+        V1OrganizationMember response = api.organizationsV1GetOrganizationMember(owner, user);
+
+        // TODO: test validations
+    }
+    
+    /**
+     * 
+     *
+     * 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void organizationsV1ListOrganizationMembersTest() throws ApiException {
         String owner = null;
         Integer offset = null;
         Integer limit = null;
         String sort = null;
         String query = null;
-        V1ListOrganizationMembersResponse response = api.listOrganizationMembers(owner, offset, limit, sort, query);
+        V1ListOrganizationMembersResponse response = api.organizationsV1ListOrganizationMembers(owner, offset, limit, sort, query);
 
         // TODO: test validations
     }
@@ -178,8 +178,8 @@ public class OrganizationsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void listOrganizationNamesTest() throws ApiException {
-        V1ListOrganizationsResponse response = api.listOrganizationNames();
+    public void organizationsV1ListOrganizationNamesTest() throws ApiException {
+        V1ListOrganizationsResponse response = api.organizationsV1ListOrganizationNames();
 
         // TODO: test validations
     }
@@ -193,8 +193,8 @@ public class OrganizationsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void listOrganizationsTest() throws ApiException {
-        V1ListOrganizationsResponse response = api.listOrganizations();
+    public void organizationsV1ListOrganizationsTest() throws ApiException {
+        V1ListOrganizationsResponse response = api.organizationsV1ListOrganizations();
 
         // TODO: test validations
     }
@@ -208,10 +208,10 @@ public class OrganizationsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void patchOrganizationTest() throws ApiException {
+    public void organizationsV1PatchOrganizationTest() throws ApiException {
         String owner = null;
         V1Organization body = null;
-        V1Organization response = api.patchOrganization(owner, body);
+        V1Organization response = api.organizationsV1PatchOrganization(owner, body);
 
         // TODO: test validations
     }
@@ -225,11 +225,11 @@ public class OrganizationsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void patchOrganizationMemberTest() throws ApiException {
+    public void organizationsV1PatchOrganizationMemberTest() throws ApiException {
         String owner = null;
         String memberUser = null;
         V1OrganizationMember body = null;
-        V1OrganizationMember response = api.patchOrganizationMember(owner, memberUser, body);
+        V1OrganizationMember response = api.organizationsV1PatchOrganizationMember(owner, memberUser, body);
 
         // TODO: test validations
     }
@@ -243,10 +243,10 @@ public class OrganizationsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void updateOrganizationTest() throws ApiException {
+    public void organizationsV1UpdateOrganizationTest() throws ApiException {
         String owner = null;
         V1Organization body = null;
-        V1Organization response = api.updateOrganization(owner, body);
+        V1Organization response = api.organizationsV1UpdateOrganization(owner, body);
 
         // TODO: test validations
     }
@@ -260,11 +260,11 @@ public class OrganizationsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void updateOrganizationMemberTest() throws ApiException {
+    public void organizationsV1UpdateOrganizationMemberTest() throws ApiException {
         String owner = null;
         String memberUser = null;
         V1OrganizationMember body = null;
-        V1OrganizationMember response = api.updateOrganizationMember(owner, memberUser, body);
+        V1OrganizationMember response = api.organizationsV1UpdateOrganizationMember(owner, memberUser, body);
 
         // TODO: test validations
     }

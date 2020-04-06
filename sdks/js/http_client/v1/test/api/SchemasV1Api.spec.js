@@ -50,12 +50,12 @@
 
   describe('(package)', function() {
     describe('SchemasV1Api', function() {
-      describe('noOp', function() {
-        it('should call noOp successfully', function(done) {
-          // TODO: uncomment noOp call and complete the assertions
+      describe('schemasV1NoOp', function() {
+        it('should call schemasV1NoOp successfully', function(done) {
+          // TODO: uncomment schemasV1NoOp call and complete the assertions
           /*
 
-          instance.noOp(function(error, data, response) {
+          instance.schemasV1NoOp(function(error, data, response) {
             if (error) {
               done(error);
               return;

@@ -57,11 +57,11 @@ public class ProjectDashboardsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void createProjectDashboardTest() throws ApiException {
+    public void projectDashboardsV1CreateProjectDashboardTest() throws ApiException {
         String owner = null;
         String project = null;
         V1Dashboard body = null;
-        V1Dashboard response = api.createProjectDashboard(owner, project, body);
+        V1Dashboard response = api.projectDashboardsV1CreateProjectDashboard(owner, project, body);
 
         // TODO: test validations
     }
@@ -75,11 +75,11 @@ public class ProjectDashboardsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void deleteProjectDashboardTest() throws ApiException {
+    public void projectDashboardsV1DeleteProjectDashboardTest() throws ApiException {
         String owner = null;
         String project = null;
         String uuid = null;
-        api.deleteProjectDashboard(owner, project, uuid);
+        api.projectDashboardsV1DeleteProjectDashboard(owner, project, uuid);
 
         // TODO: test validations
     }
@@ -93,11 +93,11 @@ public class ProjectDashboardsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void getProjectDashboardTest() throws ApiException {
+    public void projectDashboardsV1GetProjectDashboardTest() throws ApiException {
         String owner = null;
         String project = null;
         String uuid = null;
-        V1Dashboard response = api.getProjectDashboard(owner, project, uuid);
+        V1Dashboard response = api.projectDashboardsV1GetProjectDashboard(owner, project, uuid);
 
         // TODO: test validations
     }
@@ -111,14 +111,14 @@ public class ProjectDashboardsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void listProjectDashboardNamesTest() throws ApiException {
+    public void projectDashboardsV1ListProjectDashboardNamesTest() throws ApiException {
         String owner = null;
         String project = null;
         Integer offset = null;
         Integer limit = null;
         String sort = null;
         String query = null;
-        V1ListDashboardsResponse response = api.listProjectDashboardNames(owner, project, offset, limit, sort, query);
+        V1ListDashboardsResponse response = api.projectDashboardsV1ListProjectDashboardNames(owner, project, offset, limit, sort, query);
 
         // TODO: test validations
     }
@@ -132,14 +132,14 @@ public class ProjectDashboardsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void listProjectDashboardsTest() throws ApiException {
+    public void projectDashboardsV1ListProjectDashboardsTest() throws ApiException {
         String owner = null;
         String project = null;
         Integer offset = null;
         Integer limit = null;
         String sort = null;
         String query = null;
-        V1ListDashboardsResponse response = api.listProjectDashboards(owner, project, offset, limit, sort, query);
+        V1ListDashboardsResponse response = api.projectDashboardsV1ListProjectDashboards(owner, project, offset, limit, sort, query);
 
         // TODO: test validations
     }
@@ -153,12 +153,12 @@ public class ProjectDashboardsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void patchProjectDashboardTest() throws ApiException {
+    public void projectDashboardsV1PatchProjectDashboardTest() throws ApiException {
         String owner = null;
         String project = null;
         String dashboardUuid = null;
         V1Dashboard body = null;
-        V1Dashboard response = api.patchProjectDashboard(owner, project, dashboardUuid, body);
+        V1Dashboard response = api.projectDashboardsV1PatchProjectDashboard(owner, project, dashboardUuid, body);
 
         // TODO: test validations
     }
@@ -172,11 +172,11 @@ public class ProjectDashboardsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void promoteProjectDashboardTest() throws ApiException {
+    public void projectDashboardsV1PromoteProjectDashboardTest() throws ApiException {
         String owner = null;
         String project = null;
         String dashboardUuid = null;
-        V1Dashboard response = api.promoteProjectDashboard(owner, project, dashboardUuid);
+        V1Dashboard response = api.projectDashboardsV1PromoteProjectDashboard(owner, project, dashboardUuid);
 
         // TODO: test validations
     }
@@ -190,12 +190,12 @@ public class ProjectDashboardsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void updateProjectDashboardTest() throws ApiException {
+    public void projectDashboardsV1UpdateProjectDashboardTest() throws ApiException {
         String owner = null;
         String project = null;
         String dashboardUuid = null;
         V1Dashboard body = null;
-        V1Dashboard response = api.updateProjectDashboard(owner, project, dashboardUuid, body);
+        V1Dashboard response = api.projectDashboardsV1UpdateProjectDashboard(owner, project, dashboardUuid, body);
 
         // TODO: test validations
     }

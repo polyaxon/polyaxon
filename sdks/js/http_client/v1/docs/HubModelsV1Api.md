@@ -4,18 +4,18 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**createHubModel**](HubModelsV1Api.md#createHubModel) | **POST** /api/v1/orgs/{owner}/models | Create dashboard
-[**deleteHubModel**](HubModelsV1Api.md#deleteHubModel) | **DELETE** /api/v1/orgs/{owner}/models/{uuid} | Delete dashboard
-[**getHubModel**](HubModelsV1Api.md#getHubModel) | **GET** /api/v1/orgs/{owner}/models/{uuid} | Get dashboard
-[**listHubModelNames**](HubModelsV1Api.md#listHubModelNames) | **GET** /api/v1/orgs/{owner}/models/names | List dashboard names
-[**listHubModels**](HubModelsV1Api.md#listHubModels) | **GET** /api/v1/orgs/{owner}/models | List dashboards
-[**patchHubModel**](HubModelsV1Api.md#patchHubModel) | **PATCH** /api/v1/orgs/{owner}/models/{model.uuid} | Patch dashboard
-[**updateHubModel**](HubModelsV1Api.md#updateHubModel) | **PUT** /api/v1/orgs/{owner}/models/{model.uuid} | Update dashboard
+[**hubModelsV1CreateHubModel**](HubModelsV1Api.md#hubModelsV1CreateHubModel) | **POST** /api/v1/orgs/{owner}/models | Create dashboard
+[**hubModelsV1DeleteHubModel**](HubModelsV1Api.md#hubModelsV1DeleteHubModel) | **DELETE** /api/v1/orgs/{owner}/models/{uuid} | Delete dashboard
+[**hubModelsV1GetHubModel**](HubModelsV1Api.md#hubModelsV1GetHubModel) | **GET** /api/v1/orgs/{owner}/models/{uuid} | Get dashboard
+[**hubModelsV1ListHubModelNames**](HubModelsV1Api.md#hubModelsV1ListHubModelNames) | **GET** /api/v1/orgs/{owner}/models/names | List dashboard names
+[**hubModelsV1ListHubModels**](HubModelsV1Api.md#hubModelsV1ListHubModels) | **GET** /api/v1/orgs/{owner}/models | List dashboards
+[**hubModelsV1PatchHubModel**](HubModelsV1Api.md#hubModelsV1PatchHubModel) | **PATCH** /api/v1/orgs/{owner}/models/{model.uuid} | Patch dashboard
+[**hubModelsV1UpdateHubModel**](HubModelsV1Api.md#hubModelsV1UpdateHubModel) | **PUT** /api/v1/orgs/{owner}/models/{model.uuid} | Update dashboard
 
 
-<a name="createHubModel"></a>
-# **createHubModel**
-> V1HubModel createHubModel(owner, body)
+<a name="hubModelsV1CreateHubModel"></a>
+# **hubModelsV1CreateHubModel**
+> V1HubModel hubModelsV1CreateHubModel(owner, body)
 
 Create dashboard
 
@@ -44,7 +44,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.createHubModel(owner, body, callback);
+apiInstance.hubModelsV1CreateHubModel(owner, body, callback);
 ```
 
 ### Parameters
@@ -67,9 +67,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="deleteHubModel"></a>
-# **deleteHubModel**
-> deleteHubModel(owner, uuid)
+<a name="hubModelsV1DeleteHubModel"></a>
+# **hubModelsV1DeleteHubModel**
+> hubModelsV1DeleteHubModel(owner, uuid)
 
 Delete dashboard
 
@@ -98,7 +98,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully.');
   }
 };
-apiInstance.deleteHubModel(owner, uuid, callback);
+apiInstance.hubModelsV1DeleteHubModel(owner, uuid, callback);
 ```
 
 ### Parameters
@@ -121,9 +121,9 @@ null (empty response body)
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="getHubModel"></a>
-# **getHubModel**
-> V1HubModel getHubModel(owner, uuid)
+<a name="hubModelsV1GetHubModel"></a>
+# **hubModelsV1GetHubModel**
+> V1HubModel hubModelsV1GetHubModel(owner, uuid)
 
 Get dashboard
 
@@ -152,7 +152,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.getHubModel(owner, uuid, callback);
+apiInstance.hubModelsV1GetHubModel(owner, uuid, callback);
 ```
 
 ### Parameters
@@ -175,9 +175,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="listHubModelNames"></a>
-# **listHubModelNames**
-> V1ListHubModelsResponse listHubModelNames(owner, opts)
+<a name="hubModelsV1ListHubModelNames"></a>
+# **hubModelsV1ListHubModelNames**
+> V1ListHubModelsResponse hubModelsV1ListHubModelNames(owner, opts)
 
 List dashboard names
 
@@ -210,7 +210,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.listHubModelNames(owner, opts, callback);
+apiInstance.hubModelsV1ListHubModelNames(owner, opts, callback);
 ```
 
 ### Parameters
@@ -236,9 +236,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="listHubModels"></a>
-# **listHubModels**
-> V1ListHubModelsResponse listHubModels(owner, opts)
+<a name="hubModelsV1ListHubModels"></a>
+# **hubModelsV1ListHubModels**
+> V1ListHubModelsResponse hubModelsV1ListHubModels(owner, opts)
 
 List dashboards
 
@@ -271,7 +271,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.listHubModels(owner, opts, callback);
+apiInstance.hubModelsV1ListHubModels(owner, opts, callback);
 ```
 
 ### Parameters
@@ -297,9 +297,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="patchHubModel"></a>
-# **patchHubModel**
-> V1HubModel patchHubModel(owner, model_uuid, body)
+<a name="hubModelsV1PatchHubModel"></a>
+# **hubModelsV1PatchHubModel**
+> V1HubModel hubModelsV1PatchHubModel(owner, model_uuid, body)
 
 Patch dashboard
 
@@ -330,7 +330,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.patchHubModel(owner, model_uuid, body, callback);
+apiInstance.hubModelsV1PatchHubModel(owner, model_uuid, body, callback);
 ```
 
 ### Parameters
@@ -354,9 +354,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="updateHubModel"></a>
-# **updateHubModel**
-> V1HubModel updateHubModel(owner, model_uuid, body)
+<a name="hubModelsV1UpdateHubModel"></a>
+# **hubModelsV1UpdateHubModel**
+> V1HubModel hubModelsV1UpdateHubModel(owner, model_uuid, body)
 
 Update dashboard
 
@@ -387,7 +387,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.updateHubModel(owner, model_uuid, body, callback);
+apiInstance.hubModelsV1UpdateHubModel(owner, model_uuid, body, callback);
 ```
 
 ### Parameters

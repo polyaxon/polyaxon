@@ -45,148 +45,148 @@ class TestProjectsV1Api(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def test_archive_project(self):
-        """Test case for archive_project
+    def test_projects_v1_archive_project(self):
+        """Test case for projects_v1_archive_project
 
         Archive project  # noqa: E501
         """
         pass
 
-    def test_bookmark_project(self):
-        """Test case for bookmark_project
+    def test_projects_v1_bookmark_project(self):
+        """Test case for projects_v1_bookmark_project
 
         Bookmark project  # noqa: E501
         """
         pass
 
-    def test_create_project(self):
-        """Test case for create_project
+    def test_projects_v1_create_project(self):
+        """Test case for projects_v1_create_project
 
         Create new project  # noqa: E501
         """
         pass
 
-    def test_delete_project(self):
-        """Test case for delete_project
+    def test_projects_v1_delete_project(self):
+        """Test case for projects_v1_delete_project
 
         Delete project  # noqa: E501
         """
         pass
 
-    def test_disable_project_ci(self):
-        """Test case for disable_project_ci
+    def test_projects_v1_disable_project_ci(self):
+        """Test case for projects_v1_disable_project_ci
 
         Disbale project CI  # noqa: E501
         """
         pass
 
-    def test_enable_project_ci(self):
-        """Test case for enable_project_ci
+    def test_projects_v1_enable_project_ci(self):
+        """Test case for projects_v1_enable_project_ci
 
         Enable project CI  # noqa: E501
         """
         pass
 
-    def test_fetch_project_teams(self):
-        """Test case for fetch_project_teams
+    def test_projects_v1_fetch_project_teams(self):
+        """Test case for projects_v1_fetch_project_teams
 
         Get project teams  # noqa: E501
         """
         pass
 
-    def test_get_project(self):
-        """Test case for get_project
+    def test_projects_v1_get_project(self):
+        """Test case for projects_v1_get_project
 
         Get project  # noqa: E501
         """
         pass
 
-    def test_get_project_settings(self):
-        """Test case for get_project_settings
+    def test_projects_v1_get_project_settings(self):
+        """Test case for projects_v1_get_project_settings
 
         Get Project settings  # noqa: E501
         """
         pass
 
-    def test_list_archived_projects(self):
-        """Test case for list_archived_projects
+    def test_projects_v1_list_archived_projects(self):
+        """Test case for projects_v1_list_archived_projects
 
         List archived projects for user  # noqa: E501
         """
         pass
 
-    def test_list_bookmarked_projects(self):
-        """Test case for list_bookmarked_projects
+    def test_projects_v1_list_bookmarked_projects(self):
+        """Test case for projects_v1_list_bookmarked_projects
 
         List bookmarked projects for user  # noqa: E501
         """
         pass
 
-    def test_list_project_names(self):
-        """Test case for list_project_names
+    def test_projects_v1_list_project_names(self):
+        """Test case for projects_v1_list_project_names
 
         List project names  # noqa: E501
         """
         pass
 
-    def test_list_projects(self):
-        """Test case for list_projects
+    def test_projects_v1_list_projects(self):
+        """Test case for projects_v1_list_projects
 
         List projects  # noqa: E501
         """
         pass
 
-    def test_patch_project(self):
-        """Test case for patch_project
+    def test_projects_v1_patch_project(self):
+        """Test case for projects_v1_patch_project
 
         Patch project  # noqa: E501
         """
         pass
 
-    def test_patch_project_settings(self):
-        """Test case for patch_project_settings
+    def test_projects_v1_patch_project_settings(self):
+        """Test case for projects_v1_patch_project_settings
 
         Patch project settings  # noqa: E501
         """
         pass
 
-    def test_patch_project_teams(self):
-        """Test case for patch_project_teams
+    def test_projects_v1_patch_project_teams(self):
+        """Test case for projects_v1_patch_project_teams
 
         Patch project teams  # noqa: E501
         """
         pass
 
-    def test_restore_project(self):
-        """Test case for restore_project
+    def test_projects_v1_restore_project(self):
+        """Test case for projects_v1_restore_project
 
         Restore project  # noqa: E501
         """
         pass
 
-    def test_unbookmark_project(self):
-        """Test case for unbookmark_project
+    def test_projects_v1_unbookmark_project(self):
+        """Test case for projects_v1_unbookmark_project
 
         Unbookmark project  # noqa: E501
         """
         pass
 
-    def test_update_project(self):
-        """Test case for update_project
+    def test_projects_v1_update_project(self):
+        """Test case for projects_v1_update_project
 
         Update project  # noqa: E501
         """
         pass
 
-    def test_update_project_settings(self):
-        """Test case for update_project_settings
+    def test_projects_v1_update_project_settings(self):
+        """Test case for projects_v1_update_project_settings
 
         Update project settings  # noqa: E501
         """
         pass
 
-    def test_update_project_teams(self):
-        """Test case for update_project_teams
+    def test_projects_v1_update_project_teams(self):
+        """Test case for projects_v1_update_project_teams
 
         Update project teams  # noqa: E501
         """

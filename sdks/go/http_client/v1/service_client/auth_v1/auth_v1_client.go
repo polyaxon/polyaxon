@@ -39,29 +39,29 @@ type Client struct {
 
 // ClientService is the interface for Client methods
 type ClientService interface {
-	Login(params *LoginParams, authInfo runtime.ClientAuthInfoWriter) (*LoginOK, *LoginNoContent, error)
+	AuthV1Login(params *AuthV1LoginParams, authInfo runtime.ClientAuthInfoWriter) (*AuthV1LoginOK, *AuthV1LoginNoContent, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
 
 /*
-  Login lists organization level queues names
+  AuthV1Login lists organization level queues names
 */
-func (a *Client) Login(params *LoginParams, authInfo runtime.ClientAuthInfoWriter) (*LoginOK, *LoginNoContent, error) {
+func (a *Client) AuthV1Login(params *AuthV1LoginParams, authInfo runtime.ClientAuthInfoWriter) (*AuthV1LoginOK, *AuthV1LoginNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewLoginParams()
+		params = NewAuthV1LoginParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "Login",
+		ID:                 "AuthV1_Login",
 		Method:             "POST",
 		PathPattern:        "/api/v1/users/token",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &LoginReader{formats: a.formats},
+		Reader:             &AuthV1LoginReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -70,13 +70,13 @@ func (a *Client) Login(params *LoginParams, authInfo runtime.ClientAuthInfoWrite
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *LoginOK:
+	case *AuthV1LoginOK:
 		return value, nil, nil
-	case *LoginNoContent:
+	case *AuthV1LoginNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*LoginDefault)
+	unexpectedSuccess := result.(*AuthV1LoginDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 

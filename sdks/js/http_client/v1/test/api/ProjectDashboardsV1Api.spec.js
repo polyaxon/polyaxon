@@ -50,9 +50,9 @@
 
   describe('(package)', function() {
     describe('ProjectDashboardsV1Api', function() {
-      describe('createProjectDashboard', function() {
-        it('should call createProjectDashboard successfully', function(done) {
-          // TODO: uncomment, update parameter values for createProjectDashboard call and complete the assertions
+      describe('projectDashboardsV1CreateProjectDashboard', function() {
+        it('should call projectDashboardsV1CreateProjectDashboard successfully', function(done) {
+          // TODO: uncomment, update parameter values for projectDashboardsV1CreateProjectDashboard call and complete the assertions
           /*
           var owner = "owner_example";
           var project = "project_example";
@@ -64,17 +64,11 @@
           body.disabled = false;
           body.deleted = false;
           body.run_view = false;
-          body.search = new PolyaxonSdk.V1SearchSpec();
-          body.search.query = "";
-          body.search.sort = "";
-          body.search.limit = 0;
-          body.search.groupby = "";
-          body.search.columns = "";
           body.spec = ;
           body.created_at = new Date();
           body.updated_at = new Date();
 
-          instance.createProjectDashboard(owner, project, body, function(error, data, response) {
+          instance.projectDashboardsV1CreateProjectDashboard(owner, project, body, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -103,17 +97,6 @@
             expect(data.deleted).to.be(false);
             expect(data.run_view).to.be.a('boolean');
             expect(data.run_view).to.be(false);
-            expect(data.search).to.be.a(PolyaxonSdk.V1SearchSpec);
-                  expect(data.search.query).to.be.a('string');
-              expect(data.search.query).to.be("");
-              expect(data.search.sort).to.be.a('string');
-              expect(data.search.sort).to.be("");
-              expect(data.search.limit).to.be.a('number');
-              expect(data.search.limit).to.be(0);
-              expect(data.search.groupby).to.be.a('string');
-              expect(data.search.groupby).to.be("");
-              expect(data.search.columns).to.be.a('string');
-              expect(data.search.columns).to.be("");
             expect(data.spec).to.be.a(Object);
             expect(data.spec).to.be();
             expect(data.created_at).to.be.a(Date);
@@ -128,15 +111,15 @@
           done();
         });
       });
-      describe('deleteProjectDashboard', function() {
-        it('should call deleteProjectDashboard successfully', function(done) {
-          // TODO: uncomment, update parameter values for deleteProjectDashboard call
+      describe('projectDashboardsV1DeleteProjectDashboard', function() {
+        it('should call projectDashboardsV1DeleteProjectDashboard successfully', function(done) {
+          // TODO: uncomment, update parameter values for projectDashboardsV1DeleteProjectDashboard call
           /*
           var owner = "owner_example";
           var project = "project_example";
           var uuid = "uuid_example";
 
-          instance.deleteProjectDashboard(owner, project, uuid, function(error, data, response) {
+          instance.projectDashboardsV1DeleteProjectDashboard(owner, project, uuid, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -149,15 +132,15 @@
           done();
         });
       });
-      describe('getProjectDashboard', function() {
-        it('should call getProjectDashboard successfully', function(done) {
-          // TODO: uncomment, update parameter values for getProjectDashboard call and complete the assertions
+      describe('projectDashboardsV1GetProjectDashboard', function() {
+        it('should call projectDashboardsV1GetProjectDashboard successfully', function(done) {
+          // TODO: uncomment, update parameter values for projectDashboardsV1GetProjectDashboard call and complete the assertions
           /*
           var owner = "owner_example";
           var project = "project_example";
           var uuid = "uuid_example";
 
-          instance.getProjectDashboard(owner, project, uuid, function(error, data, response) {
+          instance.projectDashboardsV1GetProjectDashboard(owner, project, uuid, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -186,17 +169,6 @@
             expect(data.deleted).to.be(false);
             expect(data.run_view).to.be.a('boolean');
             expect(data.run_view).to.be(false);
-            expect(data.search).to.be.a(PolyaxonSdk.V1SearchSpec);
-                  expect(data.search.query).to.be.a('string');
-              expect(data.search.query).to.be("");
-              expect(data.search.sort).to.be.a('string');
-              expect(data.search.sort).to.be("");
-              expect(data.search.limit).to.be.a('number');
-              expect(data.search.limit).to.be(0);
-              expect(data.search.groupby).to.be.a('string');
-              expect(data.search.groupby).to.be("");
-              expect(data.search.columns).to.be.a('string');
-              expect(data.search.columns).to.be("");
             expect(data.spec).to.be.a(Object);
             expect(data.spec).to.be();
             expect(data.created_at).to.be.a(Date);
@@ -211,9 +183,9 @@
           done();
         });
       });
-      describe('listProjectDashboardNames', function() {
-        it('should call listProjectDashboardNames successfully', function(done) {
-          // TODO: uncomment, update parameter values for listProjectDashboardNames call and complete the assertions
+      describe('projectDashboardsV1ListProjectDashboardNames', function() {
+        it('should call projectDashboardsV1ListProjectDashboardNames successfully', function(done) {
+          // TODO: uncomment, update parameter values for projectDashboardsV1ListProjectDashboardNames call and complete the assertions
           /*
           var owner = "owner_example";
           var project = "project_example";
@@ -223,7 +195,7 @@
           opts.sort = "sort_example";
           opts.query = "query_example";
 
-          instance.listProjectDashboardNames(owner, project, opts, function(error, data, response) {
+          instance.projectDashboardsV1ListProjectDashboardNames(owner, project, opts, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -261,17 +233,6 @@
                 expect(data.deleted).to.be(false);
                 expect(data.run_view).to.be.a('boolean');
                 expect(data.run_view).to.be(false);
-                expect(data.search).to.be.a(PolyaxonSdk.V1SearchSpec);
-                      expect(data.search.query).to.be.a('string');
-                  expect(data.search.query).to.be("");
-                  expect(data.search.sort).to.be.a('string');
-                  expect(data.search.sort).to.be("");
-                  expect(data.search.limit).to.be.a('number');
-                  expect(data.search.limit).to.be(0);
-                  expect(data.search.groupby).to.be.a('string');
-                  expect(data.search.groupby).to.be("");
-                  expect(data.search.columns).to.be.a('string');
-                  expect(data.search.columns).to.be("");
                 expect(data.spec).to.be.a(Object);
                 expect(data.spec).to.be();
                 expect(data.created_at).to.be.a(Date);
@@ -292,9 +253,9 @@
           done();
         });
       });
-      describe('listProjectDashboards', function() {
-        it('should call listProjectDashboards successfully', function(done) {
-          // TODO: uncomment, update parameter values for listProjectDashboards call and complete the assertions
+      describe('projectDashboardsV1ListProjectDashboards', function() {
+        it('should call projectDashboardsV1ListProjectDashboards successfully', function(done) {
+          // TODO: uncomment, update parameter values for projectDashboardsV1ListProjectDashboards call and complete the assertions
           /*
           var owner = "owner_example";
           var project = "project_example";
@@ -304,7 +265,7 @@
           opts.sort = "sort_example";
           opts.query = "query_example";
 
-          instance.listProjectDashboards(owner, project, opts, function(error, data, response) {
+          instance.projectDashboardsV1ListProjectDashboards(owner, project, opts, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -342,17 +303,6 @@
                 expect(data.deleted).to.be(false);
                 expect(data.run_view).to.be.a('boolean');
                 expect(data.run_view).to.be(false);
-                expect(data.search).to.be.a(PolyaxonSdk.V1SearchSpec);
-                      expect(data.search.query).to.be.a('string');
-                  expect(data.search.query).to.be("");
-                  expect(data.search.sort).to.be.a('string');
-                  expect(data.search.sort).to.be("");
-                  expect(data.search.limit).to.be.a('number');
-                  expect(data.search.limit).to.be(0);
-                  expect(data.search.groupby).to.be.a('string');
-                  expect(data.search.groupby).to.be("");
-                  expect(data.search.columns).to.be.a('string');
-                  expect(data.search.columns).to.be("");
                 expect(data.spec).to.be.a(Object);
                 expect(data.spec).to.be();
                 expect(data.created_at).to.be.a(Date);
@@ -373,9 +323,9 @@
           done();
         });
       });
-      describe('patchProjectDashboard', function() {
-        it('should call patchProjectDashboard successfully', function(done) {
-          // TODO: uncomment, update parameter values for patchProjectDashboard call and complete the assertions
+      describe('projectDashboardsV1PatchProjectDashboard', function() {
+        it('should call projectDashboardsV1PatchProjectDashboard successfully', function(done) {
+          // TODO: uncomment, update parameter values for projectDashboardsV1PatchProjectDashboard call and complete the assertions
           /*
           var owner = "owner_example";
           var project = "project_example";
@@ -388,17 +338,11 @@
           body.disabled = false;
           body.deleted = false;
           body.run_view = false;
-          body.search = new PolyaxonSdk.V1SearchSpec();
-          body.search.query = "";
-          body.search.sort = "";
-          body.search.limit = 0;
-          body.search.groupby = "";
-          body.search.columns = "";
           body.spec = ;
           body.created_at = new Date();
           body.updated_at = new Date();
 
-          instance.patchProjectDashboard(owner, project, dashboard_uuid, body, function(error, data, response) {
+          instance.projectDashboardsV1PatchProjectDashboard(owner, project, dashboard_uuid, body, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -427,17 +371,6 @@
             expect(data.deleted).to.be(false);
             expect(data.run_view).to.be.a('boolean');
             expect(data.run_view).to.be(false);
-            expect(data.search).to.be.a(PolyaxonSdk.V1SearchSpec);
-                  expect(data.search.query).to.be.a('string');
-              expect(data.search.query).to.be("");
-              expect(data.search.sort).to.be.a('string');
-              expect(data.search.sort).to.be("");
-              expect(data.search.limit).to.be.a('number');
-              expect(data.search.limit).to.be(0);
-              expect(data.search.groupby).to.be.a('string');
-              expect(data.search.groupby).to.be("");
-              expect(data.search.columns).to.be.a('string');
-              expect(data.search.columns).to.be("");
             expect(data.spec).to.be.a(Object);
             expect(data.spec).to.be();
             expect(data.created_at).to.be.a(Date);
@@ -452,15 +385,15 @@
           done();
         });
       });
-      describe('promoteProjectDashboard', function() {
-        it('should call promoteProjectDashboard successfully', function(done) {
-          // TODO: uncomment, update parameter values for promoteProjectDashboard call and complete the assertions
+      describe('projectDashboardsV1PromoteProjectDashboard', function() {
+        it('should call projectDashboardsV1PromoteProjectDashboard successfully', function(done) {
+          // TODO: uncomment, update parameter values for projectDashboardsV1PromoteProjectDashboard call and complete the assertions
           /*
           var owner = "owner_example";
           var project = "project_example";
           var dashboard_uuid = "dashboard_uuid_example";
 
-          instance.promoteProjectDashboard(owner, project, dashboard_uuid, function(error, data, response) {
+          instance.projectDashboardsV1PromoteProjectDashboard(owner, project, dashboard_uuid, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -489,17 +422,6 @@
             expect(data.deleted).to.be(false);
             expect(data.run_view).to.be.a('boolean');
             expect(data.run_view).to.be(false);
-            expect(data.search).to.be.a(PolyaxonSdk.V1SearchSpec);
-                  expect(data.search.query).to.be.a('string');
-              expect(data.search.query).to.be("");
-              expect(data.search.sort).to.be.a('string');
-              expect(data.search.sort).to.be("");
-              expect(data.search.limit).to.be.a('number');
-              expect(data.search.limit).to.be(0);
-              expect(data.search.groupby).to.be.a('string');
-              expect(data.search.groupby).to.be("");
-              expect(data.search.columns).to.be.a('string');
-              expect(data.search.columns).to.be("");
             expect(data.spec).to.be.a(Object);
             expect(data.spec).to.be();
             expect(data.created_at).to.be.a(Date);
@@ -514,9 +436,9 @@
           done();
         });
       });
-      describe('updateProjectDashboard', function() {
-        it('should call updateProjectDashboard successfully', function(done) {
-          // TODO: uncomment, update parameter values for updateProjectDashboard call and complete the assertions
+      describe('projectDashboardsV1UpdateProjectDashboard', function() {
+        it('should call projectDashboardsV1UpdateProjectDashboard successfully', function(done) {
+          // TODO: uncomment, update parameter values for projectDashboardsV1UpdateProjectDashboard call and complete the assertions
           /*
           var owner = "owner_example";
           var project = "project_example";
@@ -529,17 +451,11 @@
           body.disabled = false;
           body.deleted = false;
           body.run_view = false;
-          body.search = new PolyaxonSdk.V1SearchSpec();
-          body.search.query = "";
-          body.search.sort = "";
-          body.search.limit = 0;
-          body.search.groupby = "";
-          body.search.columns = "";
           body.spec = ;
           body.created_at = new Date();
           body.updated_at = new Date();
 
-          instance.updateProjectDashboard(owner, project, dashboard_uuid, body, function(error, data, response) {
+          instance.projectDashboardsV1UpdateProjectDashboard(owner, project, dashboard_uuid, body, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -568,17 +484,6 @@
             expect(data.deleted).to.be(false);
             expect(data.run_view).to.be.a('boolean');
             expect(data.run_view).to.be(false);
-            expect(data.search).to.be.a(PolyaxonSdk.V1SearchSpec);
-                  expect(data.search.query).to.be.a('string');
-              expect(data.search.query).to.be("");
-              expect(data.search.sort).to.be.a('string');
-              expect(data.search.sort).to.be("");
-              expect(data.search.limit).to.be.a('number');
-              expect(data.search.limit).to.be(0);
-              expect(data.search.groupby).to.be.a('string');
-              expect(data.search.groupby).to.be("");
-              expect(data.search.columns).to.be.a('string');
-              expect(data.search.columns).to.be("");
             expect(data.spec).to.be.a(Object);
             expect(data.spec).to.be();
             expect(data.created_at).to.be.a(Date);

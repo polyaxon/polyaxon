@@ -63,8 +63,8 @@
 
 
     /**
-     * Callback function to receive the result of the noOp operation.
-     * @callback module:api/SchemasV1Api~noOpCallback
+     * Callback function to receive the result of the schemasV1NoOp operation.
+     * @callback module:api/SchemasV1Api~schemasV1NoOpCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1Schemas} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -72,10 +72,10 @@
 
     /**
      * List teams names
-     * @param {module:api/SchemasV1Api~noOpCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/SchemasV1Api~schemasV1NoOpCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1Schemas}
      */
-    this.noOp = function(callback) {
+    this.schemasV1NoOp = function(callback) {
       var postBody = null;
 
 

@@ -50,9 +50,9 @@
 
   describe('(package)', function() {
     describe('SearchesV1Api', function() {
-      describe('createSearch', function() {
-        it('should call createSearch successfully', function(done) {
-          // TODO: uncomment, update parameter values for createSearch call and complete the assertions
+      describe('searchesV1CreateSearch', function() {
+        it('should call searchesV1CreateSearch successfully', function(done) {
+          // TODO: uncomment, update parameter values for searchesV1CreateSearch call and complete the assertions
           /*
           var owner = "owner_example";
           var body = new PolyaxonSdk.V1Search();
@@ -71,7 +71,7 @@
           body.created_at = new Date();
           body.updated_at = new Date();
 
-          instance.createSearch(owner, body, function(error, data, response) {
+          instance.searchesV1CreateSearch(owner, body, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -121,14 +121,14 @@
           done();
         });
       });
-      describe('deleteSearch', function() {
-        it('should call deleteSearch successfully', function(done) {
-          // TODO: uncomment, update parameter values for deleteSearch call
+      describe('searchesV1DeleteSearch', function() {
+        it('should call searchesV1DeleteSearch successfully', function(done) {
+          // TODO: uncomment, update parameter values for searchesV1DeleteSearch call
           /*
           var owner = "owner_example";
           var uuid = "uuid_example";
 
-          instance.deleteSearch(owner, uuid, function(error, data, response) {
+          instance.searchesV1DeleteSearch(owner, uuid, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -141,14 +141,14 @@
           done();
         });
       });
-      describe('getSearch', function() {
-        it('should call getSearch successfully', function(done) {
-          // TODO: uncomment, update parameter values for getSearch call and complete the assertions
+      describe('searchesV1GetSearch', function() {
+        it('should call searchesV1GetSearch successfully', function(done) {
+          // TODO: uncomment, update parameter values for searchesV1GetSearch call and complete the assertions
           /*
           var owner = "owner_example";
           var uuid = "uuid_example";
 
-          instance.getSearch(owner, uuid, function(error, data, response) {
+          instance.searchesV1GetSearch(owner, uuid, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -198,9 +198,9 @@
           done();
         });
       });
-      describe('listSearchNames', function() {
-        it('should call listSearchNames successfully', function(done) {
-          // TODO: uncomment, update parameter values for listSearchNames call and complete the assertions
+      describe('searchesV1ListSearchNames', function() {
+        it('should call searchesV1ListSearchNames successfully', function(done) {
+          // TODO: uncomment, update parameter values for searchesV1ListSearchNames call and complete the assertions
           /*
           var owner = "owner_example";
           var opts = {};
@@ -209,7 +209,7 @@
           opts.sort = "sort_example";
           opts.query = "query_example";
 
-          instance.listSearchNames(owner, opts, function(error, data, response) {
+          instance.searchesV1ListSearchNames(owner, opts, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -274,9 +274,9 @@
           done();
         });
       });
-      describe('listSearches', function() {
-        it('should call listSearches successfully', function(done) {
-          // TODO: uncomment, update parameter values for listSearches call and complete the assertions
+      describe('searchesV1ListSearches', function() {
+        it('should call searchesV1ListSearches successfully', function(done) {
+          // TODO: uncomment, update parameter values for searchesV1ListSearches call and complete the assertions
           /*
           var owner = "owner_example";
           var opts = {};
@@ -285,7 +285,7 @@
           opts.sort = "sort_example";
           opts.query = "query_example";
 
-          instance.listSearches(owner, opts, function(error, data, response) {
+          instance.searchesV1ListSearches(owner, opts, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -350,9 +350,9 @@
           done();
         });
       });
-      describe('patchSearch', function() {
-        it('should call patchSearch successfully', function(done) {
-          // TODO: uncomment, update parameter values for patchSearch call and complete the assertions
+      describe('searchesV1PatchSearch', function() {
+        it('should call searchesV1PatchSearch successfully', function(done) {
+          // TODO: uncomment, update parameter values for searchesV1PatchSearch call and complete the assertions
           /*
           var owner = "owner_example";
           var search_uuid = "search_uuid_example";
@@ -372,7 +372,7 @@
           body.created_at = new Date();
           body.updated_at = new Date();
 
-          instance.patchSearch(owner, search_uuid, body, function(error, data, response) {
+          instance.searchesV1PatchSearch(owner, search_uuid, body, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -422,9 +422,9 @@
           done();
         });
       });
-      describe('updateSearch', function() {
-        it('should call updateSearch successfully', function(done) {
-          // TODO: uncomment, update parameter values for updateSearch call and complete the assertions
+      describe('searchesV1UpdateSearch', function() {
+        it('should call searchesV1UpdateSearch successfully', function(done) {
+          // TODO: uncomment, update parameter values for searchesV1UpdateSearch call and complete the assertions
           /*
           var owner = "owner_example";
           var search_uuid = "search_uuid_example";
@@ -444,7 +444,7 @@
           body.created_at = new Date();
           body.updated_at = new Date();
 
-          instance.updateSearch(owner, search_uuid, body, function(error, data, response) {
+          instance.searchesV1UpdateSearch(owner, search_uuid, body, function(error, data, response) {
             if (error) {
               done(error);
               return;

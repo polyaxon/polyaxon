@@ -49,12 +49,12 @@ class AuthV1Api(object):
             api_client = ApiClient()
         self.api_client = api_client
 
-    def login(self, body, **kwargs):  # noqa: E501
+    def auth_v1_login(self, body, **kwargs):  # noqa: E501
         """List organization level queues names  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.login(body, async_req=True)
+        >>> thread = api.auth_v1_login(body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -65,17 +65,17 @@ class AuthV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.login_with_http_info(body, **kwargs)  # noqa: E501
+            return self.auth_v1_login_with_http_info(body, **kwargs)  # noqa: E501
         else:
-            (data) = self.login_with_http_info(body, **kwargs)  # noqa: E501
+            (data) = self.auth_v1_login_with_http_info(body, **kwargs)  # noqa: E501
             return data
 
-    def login_with_http_info(self, body, **kwargs):  # noqa: E501
+    def auth_v1_login_with_http_info(self, body, **kwargs):  # noqa: E501
         """List organization level queues names  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.login_with_http_info(body, async_req=True)
+        >>> thread = api.auth_v1_login_with_http_info(body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -95,14 +95,15 @@ class AuthV1Api(object):
         for key, val in six.iteritems(params["kwargs"]):
             if key not in all_params:
                 raise TypeError(
-                    "Got an unexpected keyword argument '%s'" " to method login" % key
+                    "Got an unexpected keyword argument '%s'"
+                    " to method auth_v1_login" % key
                 )
             params[key] = val
         del params["kwargs"]
         # verify the required parameter 'body' is set
         if "body" not in params or params["body"] is None:
             raise ValueError(
-                "Missing the required parameter `body` when calling `login`"
+                "Missing the required parameter `body` when calling `auth_v1_login`"
             )  # noqa: E501
 
         collection_formats = {}

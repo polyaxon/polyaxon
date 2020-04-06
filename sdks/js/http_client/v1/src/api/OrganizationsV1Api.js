@@ -63,8 +63,8 @@
 
 
     /**
-     * Callback function to receive the result of the createOrganization operation.
-     * @callback module:api/OrganizationsV1Api~createOrganizationCallback
+     * Callback function to receive the result of the organizationsV1CreateOrganization operation.
+     * @callback module:api/OrganizationsV1Api~organizationsV1CreateOrganizationCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1Organization} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -72,15 +72,15 @@
 
     /**
      * @param {module:model/V1Organization} body 
-     * @param {module:api/OrganizationsV1Api~createOrganizationCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/OrganizationsV1Api~organizationsV1CreateOrganizationCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1Organization}
      */
-    this.createOrganization = function(body, callback) {
+    this.organizationsV1CreateOrganization = function(body, callback) {
       var postBody = body;
 
       // verify the required parameter 'body' is set
       if (body === undefined || body === null) {
-        throw new Error("Missing the required parameter 'body' when calling createOrganization");
+        throw new Error("Missing the required parameter 'body' when calling organizationsV1CreateOrganization");
       }
 
 
@@ -108,8 +108,8 @@
     }
 
     /**
-     * Callback function to receive the result of the createOrganizationMember operation.
-     * @callback module:api/OrganizationsV1Api~createOrganizationMemberCallback
+     * Callback function to receive the result of the organizationsV1CreateOrganizationMember operation.
+     * @callback module:api/OrganizationsV1Api~organizationsV1CreateOrganizationMemberCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1OrganizationMember} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -118,20 +118,20 @@
     /**
      * @param {String} owner Owner of the namespace
      * @param {module:model/V1OrganizationMember} body Organization body
-     * @param {module:api/OrganizationsV1Api~createOrganizationMemberCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/OrganizationsV1Api~organizationsV1CreateOrganizationMemberCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1OrganizationMember}
      */
-    this.createOrganizationMember = function(owner, body, callback) {
+    this.organizationsV1CreateOrganizationMember = function(owner, body, callback) {
       var postBody = body;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling createOrganizationMember");
+        throw new Error("Missing the required parameter 'owner' when calling organizationsV1CreateOrganizationMember");
       }
 
       // verify the required parameter 'body' is set
       if (body === undefined || body === null) {
-        throw new Error("Missing the required parameter 'body' when calling createOrganizationMember");
+        throw new Error("Missing the required parameter 'body' when calling organizationsV1CreateOrganizationMember");
       }
 
 
@@ -160,8 +160,8 @@
     }
 
     /**
-     * Callback function to receive the result of the deleteOrganization operation.
-     * @callback module:api/OrganizationsV1Api~deleteOrganizationCallback
+     * Callback function to receive the result of the organizationsV1DeleteOrganization operation.
+     * @callback module:api/OrganizationsV1Api~organizationsV1DeleteOrganizationCallback
      * @param {String} error Error message, if any.
      * @param data This operation does not return a value.
      * @param {String} response The complete HTTP response.
@@ -169,14 +169,14 @@
 
     /**
      * @param {String} owner Owner of the namespace
-     * @param {module:api/OrganizationsV1Api~deleteOrganizationCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/OrganizationsV1Api~organizationsV1DeleteOrganizationCallback} callback The callback function, accepting three arguments: error, data, response
      */
-    this.deleteOrganization = function(owner, callback) {
+    this.organizationsV1DeleteOrganization = function(owner, callback) {
       var postBody = null;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling deleteOrganization");
+        throw new Error("Missing the required parameter 'owner' when calling organizationsV1DeleteOrganization");
       }
 
 
@@ -205,8 +205,8 @@
     }
 
     /**
-     * Callback function to receive the result of the deleteOrganizationMember operation.
-     * @callback module:api/OrganizationsV1Api~deleteOrganizationMemberCallback
+     * Callback function to receive the result of the organizationsV1DeleteOrganizationMember operation.
+     * @callback module:api/OrganizationsV1Api~organizationsV1DeleteOrganizationMemberCallback
      * @param {String} error Error message, if any.
      * @param data This operation does not return a value.
      * @param {String} response The complete HTTP response.
@@ -215,19 +215,19 @@
     /**
      * @param {String} owner Owner of the namespace
      * @param {String} user Memeber under namesapce
-     * @param {module:api/OrganizationsV1Api~deleteOrganizationMemberCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/OrganizationsV1Api~organizationsV1DeleteOrganizationMemberCallback} callback The callback function, accepting three arguments: error, data, response
      */
-    this.deleteOrganizationMember = function(owner, user, callback) {
+    this.organizationsV1DeleteOrganizationMember = function(owner, user, callback) {
       var postBody = null;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling deleteOrganizationMember");
+        throw new Error("Missing the required parameter 'owner' when calling organizationsV1DeleteOrganizationMember");
       }
 
       // verify the required parameter 'user' is set
       if (user === undefined || user === null) {
-        throw new Error("Missing the required parameter 'user' when calling deleteOrganizationMember");
+        throw new Error("Missing the required parameter 'user' when calling organizationsV1DeleteOrganizationMember");
       }
 
 
@@ -257,8 +257,8 @@
     }
 
     /**
-     * Callback function to receive the result of the getOrganization operation.
-     * @callback module:api/OrganizationsV1Api~getOrganizationCallback
+     * Callback function to receive the result of the organizationsV1GetOrganization operation.
+     * @callback module:api/OrganizationsV1Api~organizationsV1GetOrganizationCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1Organization} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -266,15 +266,15 @@
 
     /**
      * @param {String} owner Owner of the namespace
-     * @param {module:api/OrganizationsV1Api~getOrganizationCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/OrganizationsV1Api~organizationsV1GetOrganizationCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1Organization}
      */
-    this.getOrganization = function(owner, callback) {
+    this.organizationsV1GetOrganization = function(owner, callback) {
       var postBody = null;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling getOrganization");
+        throw new Error("Missing the required parameter 'owner' when calling organizationsV1GetOrganization");
       }
 
 
@@ -303,8 +303,8 @@
     }
 
     /**
-     * Callback function to receive the result of the getOrganizationMember operation.
-     * @callback module:api/OrganizationsV1Api~getOrganizationMemberCallback
+     * Callback function to receive the result of the organizationsV1GetOrganizationMember operation.
+     * @callback module:api/OrganizationsV1Api~organizationsV1GetOrganizationMemberCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1OrganizationMember} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -313,20 +313,20 @@
     /**
      * @param {String} owner Owner of the namespace
      * @param {String} user Memeber under namesapce
-     * @param {module:api/OrganizationsV1Api~getOrganizationMemberCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/OrganizationsV1Api~organizationsV1GetOrganizationMemberCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1OrganizationMember}
      */
-    this.getOrganizationMember = function(owner, user, callback) {
+    this.organizationsV1GetOrganizationMember = function(owner, user, callback) {
       var postBody = null;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling getOrganizationMember");
+        throw new Error("Missing the required parameter 'owner' when calling organizationsV1GetOrganizationMember");
       }
 
       // verify the required parameter 'user' is set
       if (user === undefined || user === null) {
-        throw new Error("Missing the required parameter 'user' when calling getOrganizationMember");
+        throw new Error("Missing the required parameter 'user' when calling organizationsV1GetOrganizationMember");
       }
 
 
@@ -356,8 +356,8 @@
     }
 
     /**
-     * Callback function to receive the result of the listOrganizationMembers operation.
-     * @callback module:api/OrganizationsV1Api~listOrganizationMembersCallback
+     * Callback function to receive the result of the organizationsV1ListOrganizationMembers operation.
+     * @callback module:api/OrganizationsV1Api~organizationsV1ListOrganizationMembersCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1ListOrganizationMembersResponse} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -370,16 +370,16 @@
      * @param {Number} opts.limit Limit size.
      * @param {String} opts.sort Sort to order the search.
      * @param {String} opts.query Query filter the search search.
-     * @param {module:api/OrganizationsV1Api~listOrganizationMembersCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/OrganizationsV1Api~organizationsV1ListOrganizationMembersCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1ListOrganizationMembersResponse}
      */
-    this.listOrganizationMembers = function(owner, opts, callback) {
+    this.organizationsV1ListOrganizationMembers = function(owner, opts, callback) {
       opts = opts || {};
       var postBody = null;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling listOrganizationMembers");
+        throw new Error("Missing the required parameter 'owner' when calling organizationsV1ListOrganizationMembers");
       }
 
 
@@ -412,8 +412,8 @@
     }
 
     /**
-     * Callback function to receive the result of the listOrganizationNames operation.
-     * @callback module:api/OrganizationsV1Api~listOrganizationNamesCallback
+     * Callback function to receive the result of the organizationsV1ListOrganizationNames operation.
+     * @callback module:api/OrganizationsV1Api~organizationsV1ListOrganizationNamesCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1ListOrganizationsResponse} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -421,10 +421,10 @@
 
     /**
      * Get versions
-     * @param {module:api/OrganizationsV1Api~listOrganizationNamesCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/OrganizationsV1Api~organizationsV1ListOrganizationNamesCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1ListOrganizationsResponse}
      */
-    this.listOrganizationNames = function(callback) {
+    this.organizationsV1ListOrganizationNames = function(callback) {
       var postBody = null;
 
 
@@ -452,8 +452,8 @@
     }
 
     /**
-     * Callback function to receive the result of the listOrganizations operation.
-     * @callback module:api/OrganizationsV1Api~listOrganizationsCallback
+     * Callback function to receive the result of the organizationsV1ListOrganizations operation.
+     * @callback module:api/OrganizationsV1Api~organizationsV1ListOrganizationsCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1ListOrganizationsResponse} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -461,10 +461,10 @@
 
     /**
      * Get log handler
-     * @param {module:api/OrganizationsV1Api~listOrganizationsCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/OrganizationsV1Api~organizationsV1ListOrganizationsCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1ListOrganizationsResponse}
      */
-    this.listOrganizations = function(callback) {
+    this.organizationsV1ListOrganizations = function(callback) {
       var postBody = null;
 
 
@@ -492,8 +492,8 @@
     }
 
     /**
-     * Callback function to receive the result of the patchOrganization operation.
-     * @callback module:api/OrganizationsV1Api~patchOrganizationCallback
+     * Callback function to receive the result of the organizationsV1PatchOrganization operation.
+     * @callback module:api/OrganizationsV1Api~organizationsV1PatchOrganizationCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1Organization} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -502,20 +502,20 @@
     /**
      * @param {String} owner Owner of the namespace
      * @param {module:model/V1Organization} body Organization body
-     * @param {module:api/OrganizationsV1Api~patchOrganizationCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/OrganizationsV1Api~organizationsV1PatchOrganizationCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1Organization}
      */
-    this.patchOrganization = function(owner, body, callback) {
+    this.organizationsV1PatchOrganization = function(owner, body, callback) {
       var postBody = body;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling patchOrganization");
+        throw new Error("Missing the required parameter 'owner' when calling organizationsV1PatchOrganization");
       }
 
       // verify the required parameter 'body' is set
       if (body === undefined || body === null) {
-        throw new Error("Missing the required parameter 'body' when calling patchOrganization");
+        throw new Error("Missing the required parameter 'body' when calling organizationsV1PatchOrganization");
       }
 
 
@@ -544,8 +544,8 @@
     }
 
     /**
-     * Callback function to receive the result of the patchOrganizationMember operation.
-     * @callback module:api/OrganizationsV1Api~patchOrganizationMemberCallback
+     * Callback function to receive the result of the organizationsV1PatchOrganizationMember operation.
+     * @callback module:api/OrganizationsV1Api~organizationsV1PatchOrganizationMemberCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1OrganizationMember} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -555,25 +555,25 @@
      * @param {String} owner Owner of the namespace
      * @param {String} member_user User
      * @param {module:model/V1OrganizationMember} body Organization body
-     * @param {module:api/OrganizationsV1Api~patchOrganizationMemberCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/OrganizationsV1Api~organizationsV1PatchOrganizationMemberCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1OrganizationMember}
      */
-    this.patchOrganizationMember = function(owner, member_user, body, callback) {
+    this.organizationsV1PatchOrganizationMember = function(owner, member_user, body, callback) {
       var postBody = body;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling patchOrganizationMember");
+        throw new Error("Missing the required parameter 'owner' when calling organizationsV1PatchOrganizationMember");
       }
 
       // verify the required parameter 'member_user' is set
       if (member_user === undefined || member_user === null) {
-        throw new Error("Missing the required parameter 'member_user' when calling patchOrganizationMember");
+        throw new Error("Missing the required parameter 'member_user' when calling organizationsV1PatchOrganizationMember");
       }
 
       // verify the required parameter 'body' is set
       if (body === undefined || body === null) {
-        throw new Error("Missing the required parameter 'body' when calling patchOrganizationMember");
+        throw new Error("Missing the required parameter 'body' when calling organizationsV1PatchOrganizationMember");
       }
 
 
@@ -603,8 +603,8 @@
     }
 
     /**
-     * Callback function to receive the result of the updateOrganization operation.
-     * @callback module:api/OrganizationsV1Api~updateOrganizationCallback
+     * Callback function to receive the result of the organizationsV1UpdateOrganization operation.
+     * @callback module:api/OrganizationsV1Api~organizationsV1UpdateOrganizationCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1Organization} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -613,20 +613,20 @@
     /**
      * @param {String} owner Owner of the namespace
      * @param {module:model/V1Organization} body Organization body
-     * @param {module:api/OrganizationsV1Api~updateOrganizationCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/OrganizationsV1Api~organizationsV1UpdateOrganizationCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1Organization}
      */
-    this.updateOrganization = function(owner, body, callback) {
+    this.organizationsV1UpdateOrganization = function(owner, body, callback) {
       var postBody = body;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling updateOrganization");
+        throw new Error("Missing the required parameter 'owner' when calling organizationsV1UpdateOrganization");
       }
 
       // verify the required parameter 'body' is set
       if (body === undefined || body === null) {
-        throw new Error("Missing the required parameter 'body' when calling updateOrganization");
+        throw new Error("Missing the required parameter 'body' when calling organizationsV1UpdateOrganization");
       }
 
 
@@ -655,8 +655,8 @@
     }
 
     /**
-     * Callback function to receive the result of the updateOrganizationMember operation.
-     * @callback module:api/OrganizationsV1Api~updateOrganizationMemberCallback
+     * Callback function to receive the result of the organizationsV1UpdateOrganizationMember operation.
+     * @callback module:api/OrganizationsV1Api~organizationsV1UpdateOrganizationMemberCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1OrganizationMember} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -666,25 +666,25 @@
      * @param {String} owner Owner of the namespace
      * @param {String} member_user User
      * @param {module:model/V1OrganizationMember} body Organization body
-     * @param {module:api/OrganizationsV1Api~updateOrganizationMemberCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/OrganizationsV1Api~organizationsV1UpdateOrganizationMemberCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1OrganizationMember}
      */
-    this.updateOrganizationMember = function(owner, member_user, body, callback) {
+    this.organizationsV1UpdateOrganizationMember = function(owner, member_user, body, callback) {
       var postBody = body;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling updateOrganizationMember");
+        throw new Error("Missing the required parameter 'owner' when calling organizationsV1UpdateOrganizationMember");
       }
 
       // verify the required parameter 'member_user' is set
       if (member_user === undefined || member_user === null) {
-        throw new Error("Missing the required parameter 'member_user' when calling updateOrganizationMember");
+        throw new Error("Missing the required parameter 'member_user' when calling organizationsV1UpdateOrganizationMember");
       }
 
       // verify the required parameter 'body' is set
       if (body === undefined || body === null) {
-        throw new Error("Missing the required parameter 'body' when calling updateOrganizationMember");
+        throw new Error("Missing the required parameter 'body' when calling organizationsV1UpdateOrganizationMember");
       }
 
 

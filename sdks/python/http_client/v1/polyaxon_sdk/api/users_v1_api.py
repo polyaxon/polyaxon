@@ -49,12 +49,12 @@ class UsersV1Api(object):
             api_client = ApiClient()
         self.api_client = api_client
 
-    def get_user(self, **kwargs):  # noqa: E501
+    def users_v1_get_user(self, **kwargs):  # noqa: E501
         """Login  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.get_user(async_req=True)
+        >>> thread = api.users_v1_get_user(async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -64,17 +64,17 @@ class UsersV1Api(object):
         """
         kwargs["_return_http_data_only"] = True
         if kwargs.get("async_req"):
-            return self.get_user_with_http_info(**kwargs)  # noqa: E501
+            return self.users_v1_get_user_with_http_info(**kwargs)  # noqa: E501
         else:
-            (data) = self.get_user_with_http_info(**kwargs)  # noqa: E501
+            (data) = self.users_v1_get_user_with_http_info(**kwargs)  # noqa: E501
             return data
 
-    def get_user_with_http_info(self, **kwargs):  # noqa: E501
+    def users_v1_get_user_with_http_info(self, **kwargs):  # noqa: E501
         """Login  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.get_user_with_http_info(async_req=True)
+        >>> thread = api.users_v1_get_user_with_http_info(async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -94,7 +94,7 @@ class UsersV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method get_user" % key
+                    " to method users_v1_get_user" % key
                 )
             params[key] = val
         del params["kwargs"]

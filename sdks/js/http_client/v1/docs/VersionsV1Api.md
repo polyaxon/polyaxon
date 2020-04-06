@@ -4,13 +4,13 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**getLogHandler**](VersionsV1Api.md#getLogHandler) | **GET** /api/v1/log_handler | 
-[**getVersions**](VersionsV1Api.md#getVersions) | **GET** /api/v1/version | Get current user
+[**versionsV1GetLogHandler**](VersionsV1Api.md#versionsV1GetLogHandler) | **GET** /api/v1/log_handler | 
+[**versionsV1GetVersions**](VersionsV1Api.md#versionsV1GetVersions) | **GET** /api/v1/version | Get current user
 
 
-<a name="getLogHandler"></a>
-# **getLogHandler**
-> V1LogHandler getLogHandler()
+<a name="versionsV1GetLogHandler"></a>
+# **versionsV1GetLogHandler**
+> V1LogHandler versionsV1GetLogHandler()
 
 
 
@@ -34,7 +34,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.getLogHandler(callback);
+apiInstance.versionsV1GetLogHandler(callback);
 ```
 
 ### Parameters
@@ -53,9 +53,9 @@ This endpoint does not need any parameter.
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="getVersions"></a>
-# **getVersions**
-> V1Versions getVersions()
+<a name="versionsV1GetVersions"></a>
+# **versionsV1GetVersions**
+> V1Versions versionsV1GetVersions()
 
 Get current user
 
@@ -79,7 +79,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.getVersions(callback);
+apiInstance.versionsV1GetVersions(callback);
 ```
 
 ### Parameters

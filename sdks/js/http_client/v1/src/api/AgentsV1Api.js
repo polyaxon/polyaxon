@@ -63,8 +63,8 @@
 
 
     /**
-     * Callback function to receive the result of the createAgent operation.
-     * @callback module:api/AgentsV1Api~createAgentCallback
+     * Callback function to receive the result of the agentsV1CreateAgent operation.
+     * @callback module:api/AgentsV1Api~agentsV1CreateAgentCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1Agent} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -74,20 +74,20 @@
      * Create run profile
      * @param {String} owner Owner of the namespace
      * @param {module:model/V1Agent} body Agent body
-     * @param {module:api/AgentsV1Api~createAgentCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/AgentsV1Api~agentsV1CreateAgentCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1Agent}
      */
-    this.createAgent = function(owner, body, callback) {
+    this.agentsV1CreateAgent = function(owner, body, callback) {
       var postBody = body;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling createAgent");
+        throw new Error("Missing the required parameter 'owner' when calling agentsV1CreateAgent");
       }
 
       // verify the required parameter 'body' is set
       if (body === undefined || body === null) {
-        throw new Error("Missing the required parameter 'body' when calling createAgent");
+        throw new Error("Missing the required parameter 'body' when calling agentsV1CreateAgent");
       }
 
 
@@ -116,8 +116,8 @@
     }
 
     /**
-     * Callback function to receive the result of the createAgentStatus operation.
-     * @callback module:api/AgentsV1Api~createAgentStatusCallback
+     * Callback function to receive the result of the agentsV1CreateAgentStatus operation.
+     * @callback module:api/AgentsV1Api~agentsV1CreateAgentStatusCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1Status} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -127,25 +127,25 @@
      * @param {String} owner Owner of the namespace
      * @param {String} uuid Uuid identifier of the entity
      * @param {module:model/V1AgentStatusBodyRequest} body 
-     * @param {module:api/AgentsV1Api~createAgentStatusCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/AgentsV1Api~agentsV1CreateAgentStatusCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1Status}
      */
-    this.createAgentStatus = function(owner, uuid, body, callback) {
+    this.agentsV1CreateAgentStatus = function(owner, uuid, body, callback) {
       var postBody = body;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling createAgentStatus");
+        throw new Error("Missing the required parameter 'owner' when calling agentsV1CreateAgentStatus");
       }
 
       // verify the required parameter 'uuid' is set
       if (uuid === undefined || uuid === null) {
-        throw new Error("Missing the required parameter 'uuid' when calling createAgentStatus");
+        throw new Error("Missing the required parameter 'uuid' when calling agentsV1CreateAgentStatus");
       }
 
       // verify the required parameter 'body' is set
       if (body === undefined || body === null) {
-        throw new Error("Missing the required parameter 'body' when calling createAgentStatus");
+        throw new Error("Missing the required parameter 'body' when calling agentsV1CreateAgentStatus");
       }
 
 
@@ -175,8 +175,8 @@
     }
 
     /**
-     * Callback function to receive the result of the deleteAgent operation.
-     * @callback module:api/AgentsV1Api~deleteAgentCallback
+     * Callback function to receive the result of the agentsV1DeleteAgent operation.
+     * @callback module:api/AgentsV1Api~agentsV1DeleteAgentCallback
      * @param {String} error Error message, if any.
      * @param data This operation does not return a value.
      * @param {String} response The complete HTTP response.
@@ -186,19 +186,19 @@
      * Delete run profile
      * @param {String} owner Owner of the namespace
      * @param {String} uuid Uuid identifier of the entity
-     * @param {module:api/AgentsV1Api~deleteAgentCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/AgentsV1Api~agentsV1DeleteAgentCallback} callback The callback function, accepting three arguments: error, data, response
      */
-    this.deleteAgent = function(owner, uuid, callback) {
+    this.agentsV1DeleteAgent = function(owner, uuid, callback) {
       var postBody = null;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling deleteAgent");
+        throw new Error("Missing the required parameter 'owner' when calling agentsV1DeleteAgent");
       }
 
       // verify the required parameter 'uuid' is set
       if (uuid === undefined || uuid === null) {
-        throw new Error("Missing the required parameter 'uuid' when calling deleteAgent");
+        throw new Error("Missing the required parameter 'uuid' when calling agentsV1DeleteAgent");
       }
 
 
@@ -228,8 +228,8 @@
     }
 
     /**
-     * Callback function to receive the result of the getAgent operation.
-     * @callback module:api/AgentsV1Api~getAgentCallback
+     * Callback function to receive the result of the agentsV1GetAgent operation.
+     * @callback module:api/AgentsV1Api~agentsV1GetAgentCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1Agent} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -239,20 +239,20 @@
      * Get run profile
      * @param {String} owner Owner of the namespace
      * @param {String} uuid Uuid identifier of the entity
-     * @param {module:api/AgentsV1Api~getAgentCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/AgentsV1Api~agentsV1GetAgentCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1Agent}
      */
-    this.getAgent = function(owner, uuid, callback) {
+    this.agentsV1GetAgent = function(owner, uuid, callback) {
       var postBody = null;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling getAgent");
+        throw new Error("Missing the required parameter 'owner' when calling agentsV1GetAgent");
       }
 
       // verify the required parameter 'uuid' is set
       if (uuid === undefined || uuid === null) {
-        throw new Error("Missing the required parameter 'uuid' when calling getAgent");
+        throw new Error("Missing the required parameter 'uuid' when calling agentsV1GetAgent");
       }
 
 
@@ -282,8 +282,8 @@
     }
 
     /**
-     * Callback function to receive the result of the getAgentState operation.
-     * @callback module:api/AgentsV1Api~getAgentStateCallback
+     * Callback function to receive the result of the agentsV1GetAgentState operation.
+     * @callback module:api/AgentsV1Api~agentsV1GetAgentStateCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1AgentStateResponse} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -292,20 +292,20 @@
     /**
      * @param {String} owner Owner of the namespace
      * @param {String} uuid Uuid identifier of the entity
-     * @param {module:api/AgentsV1Api~getAgentStateCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/AgentsV1Api~agentsV1GetAgentStateCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1AgentStateResponse}
      */
-    this.getAgentState = function(owner, uuid, callback) {
+    this.agentsV1GetAgentState = function(owner, uuid, callback) {
       var postBody = null;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling getAgentState");
+        throw new Error("Missing the required parameter 'owner' when calling agentsV1GetAgentState");
       }
 
       // verify the required parameter 'uuid' is set
       if (uuid === undefined || uuid === null) {
-        throw new Error("Missing the required parameter 'uuid' when calling getAgentState");
+        throw new Error("Missing the required parameter 'uuid' when calling agentsV1GetAgentState");
       }
 
 
@@ -335,8 +335,8 @@
     }
 
     /**
-     * Callback function to receive the result of the getAgentStatuses operation.
-     * @callback module:api/AgentsV1Api~getAgentStatusesCallback
+     * Callback function to receive the result of the agentsV1GetAgentStatuses operation.
+     * @callback module:api/AgentsV1Api~agentsV1GetAgentStatusesCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1Status} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -345,20 +345,20 @@
     /**
      * @param {String} owner Owner of the namespace
      * @param {String} uuid Uuid identifier of the entity
-     * @param {module:api/AgentsV1Api~getAgentStatusesCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/AgentsV1Api~agentsV1GetAgentStatusesCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1Status}
      */
-    this.getAgentStatuses = function(owner, uuid, callback) {
+    this.agentsV1GetAgentStatuses = function(owner, uuid, callback) {
       var postBody = null;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling getAgentStatuses");
+        throw new Error("Missing the required parameter 'owner' when calling agentsV1GetAgentStatuses");
       }
 
       // verify the required parameter 'uuid' is set
       if (uuid === undefined || uuid === null) {
-        throw new Error("Missing the required parameter 'uuid' when calling getAgentStatuses");
+        throw new Error("Missing the required parameter 'uuid' when calling agentsV1GetAgentStatuses");
       }
 
 
@@ -388,8 +388,8 @@
     }
 
     /**
-     * Callback function to receive the result of the listAgentNames operation.
-     * @callback module:api/AgentsV1Api~listAgentNamesCallback
+     * Callback function to receive the result of the agentsV1ListAgentNames operation.
+     * @callback module:api/AgentsV1Api~agentsV1ListAgentNamesCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1ListAgentsResponse} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -403,16 +403,16 @@
      * @param {Number} opts.limit Limit size.
      * @param {String} opts.sort Sort to order the search.
      * @param {String} opts.query Query filter the search search.
-     * @param {module:api/AgentsV1Api~listAgentNamesCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/AgentsV1Api~agentsV1ListAgentNamesCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1ListAgentsResponse}
      */
-    this.listAgentNames = function(owner, opts, callback) {
+    this.agentsV1ListAgentNames = function(owner, opts, callback) {
       opts = opts || {};
       var postBody = null;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling listAgentNames");
+        throw new Error("Missing the required parameter 'owner' when calling agentsV1ListAgentNames");
       }
 
 
@@ -445,8 +445,8 @@
     }
 
     /**
-     * Callback function to receive the result of the listAgents operation.
-     * @callback module:api/AgentsV1Api~listAgentsCallback
+     * Callback function to receive the result of the agentsV1ListAgents operation.
+     * @callback module:api/AgentsV1Api~agentsV1ListAgentsCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1ListAgentsResponse} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -460,16 +460,16 @@
      * @param {Number} opts.limit Limit size.
      * @param {String} opts.sort Sort to order the search.
      * @param {String} opts.query Query filter the search search.
-     * @param {module:api/AgentsV1Api~listAgentsCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/AgentsV1Api~agentsV1ListAgentsCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1ListAgentsResponse}
      */
-    this.listAgents = function(owner, opts, callback) {
+    this.agentsV1ListAgents = function(owner, opts, callback) {
       opts = opts || {};
       var postBody = null;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling listAgents");
+        throw new Error("Missing the required parameter 'owner' when calling agentsV1ListAgents");
       }
 
 
@@ -502,8 +502,8 @@
     }
 
     /**
-     * Callback function to receive the result of the patchAgent operation.
-     * @callback module:api/AgentsV1Api~patchAgentCallback
+     * Callback function to receive the result of the agentsV1PatchAgent operation.
+     * @callback module:api/AgentsV1Api~agentsV1PatchAgentCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1Agent} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -514,25 +514,25 @@
      * @param {String} owner Owner of the namespace
      * @param {String} agent_uuid UUID
      * @param {module:model/V1Agent} body Agent body
-     * @param {module:api/AgentsV1Api~patchAgentCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/AgentsV1Api~agentsV1PatchAgentCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1Agent}
      */
-    this.patchAgent = function(owner, agent_uuid, body, callback) {
+    this.agentsV1PatchAgent = function(owner, agent_uuid, body, callback) {
       var postBody = body;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling patchAgent");
+        throw new Error("Missing the required parameter 'owner' when calling agentsV1PatchAgent");
       }
 
       // verify the required parameter 'agent_uuid' is set
       if (agent_uuid === undefined || agent_uuid === null) {
-        throw new Error("Missing the required parameter 'agent_uuid' when calling patchAgent");
+        throw new Error("Missing the required parameter 'agent_uuid' when calling agentsV1PatchAgent");
       }
 
       // verify the required parameter 'body' is set
       if (body === undefined || body === null) {
-        throw new Error("Missing the required parameter 'body' when calling patchAgent");
+        throw new Error("Missing the required parameter 'body' when calling agentsV1PatchAgent");
       }
 
 
@@ -562,8 +562,8 @@
     }
 
     /**
-     * Callback function to receive the result of the syncAgent operation.
-     * @callback module:api/AgentsV1Api~syncAgentCallback
+     * Callback function to receive the result of the agentsV1SyncAgent operation.
+     * @callback module:api/AgentsV1Api~agentsV1SyncAgentCallback
      * @param {String} error Error message, if any.
      * @param data This operation does not return a value.
      * @param {String} response The complete HTTP response.
@@ -573,24 +573,24 @@
      * @param {String} owner Owner of the namespace
      * @param {String} agent_uuid UUID
      * @param {module:model/V1Agent} body Agent body
-     * @param {module:api/AgentsV1Api~syncAgentCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/AgentsV1Api~agentsV1SyncAgentCallback} callback The callback function, accepting three arguments: error, data, response
      */
-    this.syncAgent = function(owner, agent_uuid, body, callback) {
+    this.agentsV1SyncAgent = function(owner, agent_uuid, body, callback) {
       var postBody = body;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling syncAgent");
+        throw new Error("Missing the required parameter 'owner' when calling agentsV1SyncAgent");
       }
 
       // verify the required parameter 'agent_uuid' is set
       if (agent_uuid === undefined || agent_uuid === null) {
-        throw new Error("Missing the required parameter 'agent_uuid' when calling syncAgent");
+        throw new Error("Missing the required parameter 'agent_uuid' when calling agentsV1SyncAgent");
       }
 
       // verify the required parameter 'body' is set
       if (body === undefined || body === null) {
-        throw new Error("Missing the required parameter 'body' when calling syncAgent");
+        throw new Error("Missing the required parameter 'body' when calling agentsV1SyncAgent");
       }
 
 
@@ -620,8 +620,8 @@
     }
 
     /**
-     * Callback function to receive the result of the updateAgent operation.
-     * @callback module:api/AgentsV1Api~updateAgentCallback
+     * Callback function to receive the result of the agentsV1UpdateAgent operation.
+     * @callback module:api/AgentsV1Api~agentsV1UpdateAgentCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1Agent} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -632,25 +632,25 @@
      * @param {String} owner Owner of the namespace
      * @param {String} agent_uuid UUID
      * @param {module:model/V1Agent} body Agent body
-     * @param {module:api/AgentsV1Api~updateAgentCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/AgentsV1Api~agentsV1UpdateAgentCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1Agent}
      */
-    this.updateAgent = function(owner, agent_uuid, body, callback) {
+    this.agentsV1UpdateAgent = function(owner, agent_uuid, body, callback) {
       var postBody = body;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling updateAgent");
+        throw new Error("Missing the required parameter 'owner' when calling agentsV1UpdateAgent");
       }
 
       // verify the required parameter 'agent_uuid' is set
       if (agent_uuid === undefined || agent_uuid === null) {
-        throw new Error("Missing the required parameter 'agent_uuid' when calling updateAgent");
+        throw new Error("Missing the required parameter 'agent_uuid' when calling agentsV1UpdateAgent");
       }
 
       // verify the required parameter 'body' is set
       if (body === undefined || body === null) {
-        throw new Error("Missing the required parameter 'body' when calling updateAgent");
+        throw new Error("Missing the required parameter 'body' when calling agentsV1UpdateAgent");
       }
 
 

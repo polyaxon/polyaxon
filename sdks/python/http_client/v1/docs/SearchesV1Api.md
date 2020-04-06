@@ -4,17 +4,17 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**create_search**](SearchesV1Api.md#create_search) | **POST** /api/v1/orgs/{owner}/searches | Create search
-[**delete_search**](SearchesV1Api.md#delete_search) | **DELETE** /api/v1/orgs/{owner}/searches/{uuid} | Delete search
-[**get_search**](SearchesV1Api.md#get_search) | **GET** /api/v1/orgs/{owner}/searches/{uuid} | Get search
-[**list_search_names**](SearchesV1Api.md#list_search_names) | **GET** /api/v1/orgs/{owner}/searches/names | List search names
-[**list_searches**](SearchesV1Api.md#list_searches) | **GET** /api/v1/orgs/{owner}/searches | List searches
-[**patch_search**](SearchesV1Api.md#patch_search) | **PATCH** /api/v1/orgs/{owner}/searches/{search.uuid} | Patch search
-[**update_search**](SearchesV1Api.md#update_search) | **PUT** /api/v1/orgs/{owner}/searches/{search.uuid} | Update search
+[**searches_v1_create_search**](SearchesV1Api.md#searches_v1_create_search) | **POST** /api/v1/orgs/{owner}/searches | Create search
+[**searches_v1_delete_search**](SearchesV1Api.md#searches_v1_delete_search) | **DELETE** /api/v1/orgs/{owner}/searches/{uuid} | Delete search
+[**searches_v1_get_search**](SearchesV1Api.md#searches_v1_get_search) | **GET** /api/v1/orgs/{owner}/searches/{uuid} | Get search
+[**searches_v1_list_search_names**](SearchesV1Api.md#searches_v1_list_search_names) | **GET** /api/v1/orgs/{owner}/searches/names | List search names
+[**searches_v1_list_searches**](SearchesV1Api.md#searches_v1_list_searches) | **GET** /api/v1/orgs/{owner}/searches | List searches
+[**searches_v1_patch_search**](SearchesV1Api.md#searches_v1_patch_search) | **PATCH** /api/v1/orgs/{owner}/searches/{search.uuid} | Patch search
+[**searches_v1_update_search**](SearchesV1Api.md#searches_v1_update_search) | **PUT** /api/v1/orgs/{owner}/searches/{search.uuid} | Update search
 
 
-# **create_search**
-> V1Search create_search(owner, body)
+# **searches_v1_create_search**
+> V1Search searches_v1_create_search(owner, body)
 
 Create search
 
@@ -39,10 +39,10 @@ body = polyaxon_sdk.V1Search() # V1Search | Search body
 
 try:
     # Create search
-    api_response = api_instance.create_search(owner, body)
+    api_response = api_instance.searches_v1_create_search(owner, body)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling SearchesV1Api->create_search: %s\n" % e)
+    print("Exception when calling SearchesV1Api->searches_v1_create_search: %s\n" % e)
 ```
 
 ### Parameters
@@ -67,8 +67,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **delete_search**
-> delete_search(owner, uuid)
+# **searches_v1_delete_search**
+> searches_v1_delete_search(owner, uuid)
 
 Delete search
 
@@ -93,9 +93,9 @@ uuid = 'uuid_example' # str | Uuid identifier of the entity
 
 try:
     # Delete search
-    api_instance.delete_search(owner, uuid)
+    api_instance.searches_v1_delete_search(owner, uuid)
 except ApiException as e:
-    print("Exception when calling SearchesV1Api->delete_search: %s\n" % e)
+    print("Exception when calling SearchesV1Api->searches_v1_delete_search: %s\n" % e)
 ```
 
 ### Parameters
@@ -120,8 +120,8 @@ void (empty response body)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **get_search**
-> V1Search get_search(owner, uuid)
+# **searches_v1_get_search**
+> V1Search searches_v1_get_search(owner, uuid)
 
 Get search
 
@@ -146,10 +146,10 @@ uuid = 'uuid_example' # str | Uuid identifier of the entity
 
 try:
     # Get search
-    api_response = api_instance.get_search(owner, uuid)
+    api_response = api_instance.searches_v1_get_search(owner, uuid)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling SearchesV1Api->get_search: %s\n" % e)
+    print("Exception when calling SearchesV1Api->searches_v1_get_search: %s\n" % e)
 ```
 
 ### Parameters
@@ -174,8 +174,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **list_search_names**
-> V1ListSearchesResponse list_search_names(owner, offset=offset, limit=limit, sort=sort, query=query)
+# **searches_v1_list_search_names**
+> V1ListSearchesResponse searches_v1_list_search_names(owner, offset=offset, limit=limit, sort=sort, query=query)
 
 List search names
 
@@ -203,10 +203,10 @@ query = 'query_example' # str | Query filter the search search. (optional)
 
 try:
     # List search names
-    api_response = api_instance.list_search_names(owner, offset=offset, limit=limit, sort=sort, query=query)
+    api_response = api_instance.searches_v1_list_search_names(owner, offset=offset, limit=limit, sort=sort, query=query)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling SearchesV1Api->list_search_names: %s\n" % e)
+    print("Exception when calling SearchesV1Api->searches_v1_list_search_names: %s\n" % e)
 ```
 
 ### Parameters
@@ -234,8 +234,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **list_searches**
-> V1ListSearchesResponse list_searches(owner, offset=offset, limit=limit, sort=sort, query=query)
+# **searches_v1_list_searches**
+> V1ListSearchesResponse searches_v1_list_searches(owner, offset=offset, limit=limit, sort=sort, query=query)
 
 List searches
 
@@ -263,10 +263,10 @@ query = 'query_example' # str | Query filter the search search. (optional)
 
 try:
     # List searches
-    api_response = api_instance.list_searches(owner, offset=offset, limit=limit, sort=sort, query=query)
+    api_response = api_instance.searches_v1_list_searches(owner, offset=offset, limit=limit, sort=sort, query=query)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling SearchesV1Api->list_searches: %s\n" % e)
+    print("Exception when calling SearchesV1Api->searches_v1_list_searches: %s\n" % e)
 ```
 
 ### Parameters
@@ -294,8 +294,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **patch_search**
-> V1Search patch_search(owner, search_uuid, body)
+# **searches_v1_patch_search**
+> V1Search searches_v1_patch_search(owner, search_uuid, body)
 
 Patch search
 
@@ -321,10 +321,10 @@ body = polyaxon_sdk.V1Search() # V1Search | Search body
 
 try:
     # Patch search
-    api_response = api_instance.patch_search(owner, search_uuid, body)
+    api_response = api_instance.searches_v1_patch_search(owner, search_uuid, body)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling SearchesV1Api->patch_search: %s\n" % e)
+    print("Exception when calling SearchesV1Api->searches_v1_patch_search: %s\n" % e)
 ```
 
 ### Parameters
@@ -350,8 +350,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **update_search**
-> V1Search update_search(owner, search_uuid, body)
+# **searches_v1_update_search**
+> V1Search searches_v1_update_search(owner, search_uuid, body)
 
 Update search
 
@@ -377,10 +377,10 @@ body = polyaxon_sdk.V1Search() # V1Search | Search body
 
 try:
     # Update search
-    api_response = api_instance.update_search(owner, search_uuid, body)
+    api_response = api_instance.searches_v1_update_search(owner, search_uuid, body)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling SearchesV1Api->update_search: %s\n" % e)
+    print("Exception when calling SearchesV1Api->searches_v1_update_search: %s\n" % e)
 ```
 
 ### Parameters

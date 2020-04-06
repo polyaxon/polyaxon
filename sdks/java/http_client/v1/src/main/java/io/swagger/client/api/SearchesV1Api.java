@@ -71,7 +71,7 @@ public class SearchesV1Api {
     }
 
     /**
-     * Build call for createSearch
+     * Build call for searchesV1CreateSearch
      * @param owner Owner of the namespace (required)
      * @param body Search body (required)
      * @param progressListener Progress listener
@@ -79,7 +79,7 @@ public class SearchesV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call createSearchCall(String owner, V1Search body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call searchesV1CreateSearchCall(String owner, V1Search body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -122,20 +122,20 @@ public class SearchesV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call createSearchValidateBeforeCall(String owner, V1Search body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call searchesV1CreateSearchValidateBeforeCall(String owner, V1Search body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling createSearch(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling searchesV1CreateSearch(Async)");
         }
         
         // verify the required parameter 'body' is set
         if (body == null) {
-            throw new ApiException("Missing the required parameter 'body' when calling createSearch(Async)");
+            throw new ApiException("Missing the required parameter 'body' when calling searchesV1CreateSearch(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = createSearchCall(owner, body, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = searchesV1CreateSearchCall(owner, body, progressListener, progressRequestListener);
         return call;
 
     }
@@ -148,8 +148,8 @@ public class SearchesV1Api {
      * @return V1Search
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1Search createSearch(String owner, V1Search body) throws ApiException {
-        ApiResponse<V1Search> resp = createSearchWithHttpInfo(owner, body);
+    public V1Search searchesV1CreateSearch(String owner, V1Search body) throws ApiException {
+        ApiResponse<V1Search> resp = searchesV1CreateSearchWithHttpInfo(owner, body);
         return resp.getData();
     }
 
@@ -161,8 +161,8 @@ public class SearchesV1Api {
      * @return ApiResponse&lt;V1Search&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1Search> createSearchWithHttpInfo(String owner, V1Search body) throws ApiException {
-        com.squareup.okhttp.Call call = createSearchValidateBeforeCall(owner, body, null, null);
+    public ApiResponse<V1Search> searchesV1CreateSearchWithHttpInfo(String owner, V1Search body) throws ApiException {
+        com.squareup.okhttp.Call call = searchesV1CreateSearchValidateBeforeCall(owner, body, null, null);
         Type localVarReturnType = new TypeToken<V1Search>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -176,7 +176,7 @@ public class SearchesV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call createSearchAsync(String owner, V1Search body, final ApiCallback<V1Search> callback) throws ApiException {
+    public com.squareup.okhttp.Call searchesV1CreateSearchAsync(String owner, V1Search body, final ApiCallback<V1Search> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -197,13 +197,13 @@ public class SearchesV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = createSearchValidateBeforeCall(owner, body, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = searchesV1CreateSearchValidateBeforeCall(owner, body, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1Search>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
     /**
-     * Build call for deleteSearch
+     * Build call for searchesV1DeleteSearch
      * @param owner Owner of the namespace (required)
      * @param uuid Uuid identifier of the entity (required)
      * @param progressListener Progress listener
@@ -211,7 +211,7 @@ public class SearchesV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call deleteSearchCall(String owner, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call searchesV1DeleteSearchCall(String owner, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -255,20 +255,20 @@ public class SearchesV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call deleteSearchValidateBeforeCall(String owner, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call searchesV1DeleteSearchValidateBeforeCall(String owner, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling deleteSearch(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling searchesV1DeleteSearch(Async)");
         }
         
         // verify the required parameter 'uuid' is set
         if (uuid == null) {
-            throw new ApiException("Missing the required parameter 'uuid' when calling deleteSearch(Async)");
+            throw new ApiException("Missing the required parameter 'uuid' when calling searchesV1DeleteSearch(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = deleteSearchCall(owner, uuid, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = searchesV1DeleteSearchCall(owner, uuid, progressListener, progressRequestListener);
         return call;
 
     }
@@ -280,8 +280,8 @@ public class SearchesV1Api {
      * @param uuid Uuid identifier of the entity (required)
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public void deleteSearch(String owner, String uuid) throws ApiException {
-        deleteSearchWithHttpInfo(owner, uuid);
+    public void searchesV1DeleteSearch(String owner, String uuid) throws ApiException {
+        searchesV1DeleteSearchWithHttpInfo(owner, uuid);
     }
 
     /**
@@ -292,8 +292,8 @@ public class SearchesV1Api {
      * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<Void> deleteSearchWithHttpInfo(String owner, String uuid) throws ApiException {
-        com.squareup.okhttp.Call call = deleteSearchValidateBeforeCall(owner, uuid, null, null);
+    public ApiResponse<Void> searchesV1DeleteSearchWithHttpInfo(String owner, String uuid) throws ApiException {
+        com.squareup.okhttp.Call call = searchesV1DeleteSearchValidateBeforeCall(owner, uuid, null, null);
         return apiClient.execute(call);
     }
 
@@ -306,7 +306,7 @@ public class SearchesV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call deleteSearchAsync(String owner, String uuid, final ApiCallback<Void> callback) throws ApiException {
+    public com.squareup.okhttp.Call searchesV1DeleteSearchAsync(String owner, String uuid, final ApiCallback<Void> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -327,12 +327,12 @@ public class SearchesV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = deleteSearchValidateBeforeCall(owner, uuid, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = searchesV1DeleteSearchValidateBeforeCall(owner, uuid, progressListener, progressRequestListener);
         apiClient.executeAsync(call, callback);
         return call;
     }
     /**
-     * Build call for getSearch
+     * Build call for searchesV1GetSearch
      * @param owner Owner of the namespace (required)
      * @param uuid Uuid identifier of the entity (required)
      * @param progressListener Progress listener
@@ -340,7 +340,7 @@ public class SearchesV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call getSearchCall(String owner, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call searchesV1GetSearchCall(String owner, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -384,20 +384,20 @@ public class SearchesV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call getSearchValidateBeforeCall(String owner, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call searchesV1GetSearchValidateBeforeCall(String owner, String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling getSearch(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling searchesV1GetSearch(Async)");
         }
         
         // verify the required parameter 'uuid' is set
         if (uuid == null) {
-            throw new ApiException("Missing the required parameter 'uuid' when calling getSearch(Async)");
+            throw new ApiException("Missing the required parameter 'uuid' when calling searchesV1GetSearch(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = getSearchCall(owner, uuid, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = searchesV1GetSearchCall(owner, uuid, progressListener, progressRequestListener);
         return call;
 
     }
@@ -410,8 +410,8 @@ public class SearchesV1Api {
      * @return V1Search
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1Search getSearch(String owner, String uuid) throws ApiException {
-        ApiResponse<V1Search> resp = getSearchWithHttpInfo(owner, uuid);
+    public V1Search searchesV1GetSearch(String owner, String uuid) throws ApiException {
+        ApiResponse<V1Search> resp = searchesV1GetSearchWithHttpInfo(owner, uuid);
         return resp.getData();
     }
 
@@ -423,8 +423,8 @@ public class SearchesV1Api {
      * @return ApiResponse&lt;V1Search&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1Search> getSearchWithHttpInfo(String owner, String uuid) throws ApiException {
-        com.squareup.okhttp.Call call = getSearchValidateBeforeCall(owner, uuid, null, null);
+    public ApiResponse<V1Search> searchesV1GetSearchWithHttpInfo(String owner, String uuid) throws ApiException {
+        com.squareup.okhttp.Call call = searchesV1GetSearchValidateBeforeCall(owner, uuid, null, null);
         Type localVarReturnType = new TypeToken<V1Search>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -438,7 +438,7 @@ public class SearchesV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call getSearchAsync(String owner, String uuid, final ApiCallback<V1Search> callback) throws ApiException {
+    public com.squareup.okhttp.Call searchesV1GetSearchAsync(String owner, String uuid, final ApiCallback<V1Search> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -459,13 +459,13 @@ public class SearchesV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = getSearchValidateBeforeCall(owner, uuid, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = searchesV1GetSearchValidateBeforeCall(owner, uuid, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1Search>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
     /**
-     * Build call for listSearchNames
+     * Build call for searchesV1ListSearchNames
      * @param owner Owner of the namespace (required)
      * @param offset Pagination offset. (optional)
      * @param limit Limit size. (optional)
@@ -476,7 +476,7 @@ public class SearchesV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call listSearchNamesCall(String owner, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call searchesV1ListSearchNamesCall(String owner, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -527,15 +527,15 @@ public class SearchesV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call listSearchNamesValidateBeforeCall(String owner, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call searchesV1ListSearchNamesValidateBeforeCall(String owner, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling listSearchNames(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling searchesV1ListSearchNames(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = listSearchNamesCall(owner, offset, limit, sort, query, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = searchesV1ListSearchNamesCall(owner, offset, limit, sort, query, progressListener, progressRequestListener);
         return call;
 
     }
@@ -551,8 +551,8 @@ public class SearchesV1Api {
      * @return V1ListSearchesResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1ListSearchesResponse listSearchNames(String owner, Integer offset, Integer limit, String sort, String query) throws ApiException {
-        ApiResponse<V1ListSearchesResponse> resp = listSearchNamesWithHttpInfo(owner, offset, limit, sort, query);
+    public V1ListSearchesResponse searchesV1ListSearchNames(String owner, Integer offset, Integer limit, String sort, String query) throws ApiException {
+        ApiResponse<V1ListSearchesResponse> resp = searchesV1ListSearchNamesWithHttpInfo(owner, offset, limit, sort, query);
         return resp.getData();
     }
 
@@ -567,8 +567,8 @@ public class SearchesV1Api {
      * @return ApiResponse&lt;V1ListSearchesResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1ListSearchesResponse> listSearchNamesWithHttpInfo(String owner, Integer offset, Integer limit, String sort, String query) throws ApiException {
-        com.squareup.okhttp.Call call = listSearchNamesValidateBeforeCall(owner, offset, limit, sort, query, null, null);
+    public ApiResponse<V1ListSearchesResponse> searchesV1ListSearchNamesWithHttpInfo(String owner, Integer offset, Integer limit, String sort, String query) throws ApiException {
+        com.squareup.okhttp.Call call = searchesV1ListSearchNamesValidateBeforeCall(owner, offset, limit, sort, query, null, null);
         Type localVarReturnType = new TypeToken<V1ListSearchesResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -585,7 +585,7 @@ public class SearchesV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call listSearchNamesAsync(String owner, Integer offset, Integer limit, String sort, String query, final ApiCallback<V1ListSearchesResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call searchesV1ListSearchNamesAsync(String owner, Integer offset, Integer limit, String sort, String query, final ApiCallback<V1ListSearchesResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -606,13 +606,13 @@ public class SearchesV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = listSearchNamesValidateBeforeCall(owner, offset, limit, sort, query, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = searchesV1ListSearchNamesValidateBeforeCall(owner, offset, limit, sort, query, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1ListSearchesResponse>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
     /**
-     * Build call for listSearches
+     * Build call for searchesV1ListSearches
      * @param owner Owner of the namespace (required)
      * @param offset Pagination offset. (optional)
      * @param limit Limit size. (optional)
@@ -623,7 +623,7 @@ public class SearchesV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call listSearchesCall(String owner, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call searchesV1ListSearchesCall(String owner, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -674,15 +674,15 @@ public class SearchesV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call listSearchesValidateBeforeCall(String owner, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call searchesV1ListSearchesValidateBeforeCall(String owner, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling listSearches(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling searchesV1ListSearches(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = listSearchesCall(owner, offset, limit, sort, query, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = searchesV1ListSearchesCall(owner, offset, limit, sort, query, progressListener, progressRequestListener);
         return call;
 
     }
@@ -698,8 +698,8 @@ public class SearchesV1Api {
      * @return V1ListSearchesResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1ListSearchesResponse listSearches(String owner, Integer offset, Integer limit, String sort, String query) throws ApiException {
-        ApiResponse<V1ListSearchesResponse> resp = listSearchesWithHttpInfo(owner, offset, limit, sort, query);
+    public V1ListSearchesResponse searchesV1ListSearches(String owner, Integer offset, Integer limit, String sort, String query) throws ApiException {
+        ApiResponse<V1ListSearchesResponse> resp = searchesV1ListSearchesWithHttpInfo(owner, offset, limit, sort, query);
         return resp.getData();
     }
 
@@ -714,8 +714,8 @@ public class SearchesV1Api {
      * @return ApiResponse&lt;V1ListSearchesResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1ListSearchesResponse> listSearchesWithHttpInfo(String owner, Integer offset, Integer limit, String sort, String query) throws ApiException {
-        com.squareup.okhttp.Call call = listSearchesValidateBeforeCall(owner, offset, limit, sort, query, null, null);
+    public ApiResponse<V1ListSearchesResponse> searchesV1ListSearchesWithHttpInfo(String owner, Integer offset, Integer limit, String sort, String query) throws ApiException {
+        com.squareup.okhttp.Call call = searchesV1ListSearchesValidateBeforeCall(owner, offset, limit, sort, query, null, null);
         Type localVarReturnType = new TypeToken<V1ListSearchesResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -732,7 +732,7 @@ public class SearchesV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call listSearchesAsync(String owner, Integer offset, Integer limit, String sort, String query, final ApiCallback<V1ListSearchesResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call searchesV1ListSearchesAsync(String owner, Integer offset, Integer limit, String sort, String query, final ApiCallback<V1ListSearchesResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -753,13 +753,13 @@ public class SearchesV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = listSearchesValidateBeforeCall(owner, offset, limit, sort, query, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = searchesV1ListSearchesValidateBeforeCall(owner, offset, limit, sort, query, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1ListSearchesResponse>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
     /**
-     * Build call for patchSearch
+     * Build call for searchesV1PatchSearch
      * @param owner Owner of the namespace (required)
      * @param searchUuid UUID (required)
      * @param body Search body (required)
@@ -768,7 +768,7 @@ public class SearchesV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call patchSearchCall(String owner, String searchUuid, V1Search body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call searchesV1PatchSearchCall(String owner, String searchUuid, V1Search body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -812,25 +812,25 @@ public class SearchesV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call patchSearchValidateBeforeCall(String owner, String searchUuid, V1Search body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call searchesV1PatchSearchValidateBeforeCall(String owner, String searchUuid, V1Search body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling patchSearch(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling searchesV1PatchSearch(Async)");
         }
         
         // verify the required parameter 'searchUuid' is set
         if (searchUuid == null) {
-            throw new ApiException("Missing the required parameter 'searchUuid' when calling patchSearch(Async)");
+            throw new ApiException("Missing the required parameter 'searchUuid' when calling searchesV1PatchSearch(Async)");
         }
         
         // verify the required parameter 'body' is set
         if (body == null) {
-            throw new ApiException("Missing the required parameter 'body' when calling patchSearch(Async)");
+            throw new ApiException("Missing the required parameter 'body' when calling searchesV1PatchSearch(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = patchSearchCall(owner, searchUuid, body, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = searchesV1PatchSearchCall(owner, searchUuid, body, progressListener, progressRequestListener);
         return call;
 
     }
@@ -844,8 +844,8 @@ public class SearchesV1Api {
      * @return V1Search
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1Search patchSearch(String owner, String searchUuid, V1Search body) throws ApiException {
-        ApiResponse<V1Search> resp = patchSearchWithHttpInfo(owner, searchUuid, body);
+    public V1Search searchesV1PatchSearch(String owner, String searchUuid, V1Search body) throws ApiException {
+        ApiResponse<V1Search> resp = searchesV1PatchSearchWithHttpInfo(owner, searchUuid, body);
         return resp.getData();
     }
 
@@ -858,8 +858,8 @@ public class SearchesV1Api {
      * @return ApiResponse&lt;V1Search&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1Search> patchSearchWithHttpInfo(String owner, String searchUuid, V1Search body) throws ApiException {
-        com.squareup.okhttp.Call call = patchSearchValidateBeforeCall(owner, searchUuid, body, null, null);
+    public ApiResponse<V1Search> searchesV1PatchSearchWithHttpInfo(String owner, String searchUuid, V1Search body) throws ApiException {
+        com.squareup.okhttp.Call call = searchesV1PatchSearchValidateBeforeCall(owner, searchUuid, body, null, null);
         Type localVarReturnType = new TypeToken<V1Search>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -874,7 +874,7 @@ public class SearchesV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call patchSearchAsync(String owner, String searchUuid, V1Search body, final ApiCallback<V1Search> callback) throws ApiException {
+    public com.squareup.okhttp.Call searchesV1PatchSearchAsync(String owner, String searchUuid, V1Search body, final ApiCallback<V1Search> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -895,13 +895,13 @@ public class SearchesV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = patchSearchValidateBeforeCall(owner, searchUuid, body, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = searchesV1PatchSearchValidateBeforeCall(owner, searchUuid, body, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1Search>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
     /**
-     * Build call for updateSearch
+     * Build call for searchesV1UpdateSearch
      * @param owner Owner of the namespace (required)
      * @param searchUuid UUID (required)
      * @param body Search body (required)
@@ -910,7 +910,7 @@ public class SearchesV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call updateSearchCall(String owner, String searchUuid, V1Search body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call searchesV1UpdateSearchCall(String owner, String searchUuid, V1Search body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -954,25 +954,25 @@ public class SearchesV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call updateSearchValidateBeforeCall(String owner, String searchUuid, V1Search body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call searchesV1UpdateSearchValidateBeforeCall(String owner, String searchUuid, V1Search body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling updateSearch(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling searchesV1UpdateSearch(Async)");
         }
         
         // verify the required parameter 'searchUuid' is set
         if (searchUuid == null) {
-            throw new ApiException("Missing the required parameter 'searchUuid' when calling updateSearch(Async)");
+            throw new ApiException("Missing the required parameter 'searchUuid' when calling searchesV1UpdateSearch(Async)");
         }
         
         // verify the required parameter 'body' is set
         if (body == null) {
-            throw new ApiException("Missing the required parameter 'body' when calling updateSearch(Async)");
+            throw new ApiException("Missing the required parameter 'body' when calling searchesV1UpdateSearch(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = updateSearchCall(owner, searchUuid, body, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = searchesV1UpdateSearchCall(owner, searchUuid, body, progressListener, progressRequestListener);
         return call;
 
     }
@@ -986,8 +986,8 @@ public class SearchesV1Api {
      * @return V1Search
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1Search updateSearch(String owner, String searchUuid, V1Search body) throws ApiException {
-        ApiResponse<V1Search> resp = updateSearchWithHttpInfo(owner, searchUuid, body);
+    public V1Search searchesV1UpdateSearch(String owner, String searchUuid, V1Search body) throws ApiException {
+        ApiResponse<V1Search> resp = searchesV1UpdateSearchWithHttpInfo(owner, searchUuid, body);
         return resp.getData();
     }
 
@@ -1000,8 +1000,8 @@ public class SearchesV1Api {
      * @return ApiResponse&lt;V1Search&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1Search> updateSearchWithHttpInfo(String owner, String searchUuid, V1Search body) throws ApiException {
-        com.squareup.okhttp.Call call = updateSearchValidateBeforeCall(owner, searchUuid, body, null, null);
+    public ApiResponse<V1Search> searchesV1UpdateSearchWithHttpInfo(String owner, String searchUuid, V1Search body) throws ApiException {
+        com.squareup.okhttp.Call call = searchesV1UpdateSearchValidateBeforeCall(owner, searchUuid, body, null, null);
         Type localVarReturnType = new TypeToken<V1Search>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -1016,7 +1016,7 @@ public class SearchesV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call updateSearchAsync(String owner, String searchUuid, V1Search body, final ApiCallback<V1Search> callback) throws ApiException {
+    public com.squareup.okhttp.Call searchesV1UpdateSearchAsync(String owner, String searchUuid, V1Search body, final ApiCallback<V1Search> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -1037,7 +1037,7 @@ public class SearchesV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = updateSearchValidateBeforeCall(owner, searchUuid, body, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = searchesV1UpdateSearchValidateBeforeCall(owner, searchUuid, body, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1Search>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;

@@ -57,10 +57,10 @@ public class ConnectionsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void createConnectionTest() throws ApiException {
+    public void connectionsV1CreateConnectionTest() throws ApiException {
         String owner = null;
         V1ConnectionResponse body = null;
-        V1ConnectionResponse response = api.createConnection(owner, body);
+        V1ConnectionResponse response = api.connectionsV1CreateConnection(owner, body);
 
         // TODO: test validations
     }
@@ -74,10 +74,10 @@ public class ConnectionsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void deleteConnectionTest() throws ApiException {
+    public void connectionsV1DeleteConnectionTest() throws ApiException {
         String owner = null;
         String uuid = null;
-        api.deleteConnection(owner, uuid);
+        api.connectionsV1DeleteConnection(owner, uuid);
 
         // TODO: test validations
     }
@@ -91,10 +91,10 @@ public class ConnectionsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void getConnectionTest() throws ApiException {
+    public void connectionsV1GetConnectionTest() throws ApiException {
         String owner = null;
         String uuid = null;
-        V1ConnectionResponse response = api.getConnection(owner, uuid);
+        V1ConnectionResponse response = api.connectionsV1GetConnection(owner, uuid);
 
         // TODO: test validations
     }
@@ -108,13 +108,13 @@ public class ConnectionsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void listConnectionNamesTest() throws ApiException {
+    public void connectionsV1ListConnectionNamesTest() throws ApiException {
         String owner = null;
         Integer offset = null;
         Integer limit = null;
         String sort = null;
         String query = null;
-        V1ListConnectionsResponse response = api.listConnectionNames(owner, offset, limit, sort, query);
+        V1ListConnectionsResponse response = api.connectionsV1ListConnectionNames(owner, offset, limit, sort, query);
 
         // TODO: test validations
     }
@@ -128,13 +128,13 @@ public class ConnectionsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void listConnectionsTest() throws ApiException {
+    public void connectionsV1ListConnectionsTest() throws ApiException {
         String owner = null;
         Integer offset = null;
         Integer limit = null;
         String sort = null;
         String query = null;
-        V1ListConnectionsResponse response = api.listConnections(owner, offset, limit, sort, query);
+        V1ListConnectionsResponse response = api.connectionsV1ListConnections(owner, offset, limit, sort, query);
 
         // TODO: test validations
     }
@@ -148,11 +148,11 @@ public class ConnectionsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void patchConnectionTest() throws ApiException {
+    public void connectionsV1PatchConnectionTest() throws ApiException {
         String owner = null;
         String connectionUuid = null;
         V1ConnectionResponse body = null;
-        V1ConnectionResponse response = api.patchConnection(owner, connectionUuid, body);
+        V1ConnectionResponse response = api.connectionsV1PatchConnection(owner, connectionUuid, body);
 
         // TODO: test validations
     }
@@ -166,11 +166,11 @@ public class ConnectionsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void updateConnectionTest() throws ApiException {
+    public void connectionsV1UpdateConnectionTest() throws ApiException {
         String owner = null;
         String connectionUuid = null;
         V1ConnectionResponse body = null;
-        V1ConnectionResponse response = api.updateConnection(owner, connectionUuid, body);
+        V1ConnectionResponse response = api.connectionsV1UpdateConnection(owner, connectionUuid, body);
 
         // TODO: test validations
     }

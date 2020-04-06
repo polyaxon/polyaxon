@@ -57,10 +57,10 @@ public class HubModelsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void createHubModelTest() throws ApiException {
+    public void hubModelsV1CreateHubModelTest() throws ApiException {
         String owner = null;
         V1HubModel body = null;
-        V1HubModel response = api.createHubModel(owner, body);
+        V1HubModel response = api.hubModelsV1CreateHubModel(owner, body);
 
         // TODO: test validations
     }
@@ -74,10 +74,10 @@ public class HubModelsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void deleteHubModelTest() throws ApiException {
+    public void hubModelsV1DeleteHubModelTest() throws ApiException {
         String owner = null;
         String uuid = null;
-        api.deleteHubModel(owner, uuid);
+        api.hubModelsV1DeleteHubModel(owner, uuid);
 
         // TODO: test validations
     }
@@ -91,10 +91,10 @@ public class HubModelsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void getHubModelTest() throws ApiException {
+    public void hubModelsV1GetHubModelTest() throws ApiException {
         String owner = null;
         String uuid = null;
-        V1HubModel response = api.getHubModel(owner, uuid);
+        V1HubModel response = api.hubModelsV1GetHubModel(owner, uuid);
 
         // TODO: test validations
     }
@@ -108,13 +108,13 @@ public class HubModelsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void listHubModelNamesTest() throws ApiException {
+    public void hubModelsV1ListHubModelNamesTest() throws ApiException {
         String owner = null;
         Integer offset = null;
         Integer limit = null;
         String sort = null;
         String query = null;
-        V1ListHubModelsResponse response = api.listHubModelNames(owner, offset, limit, sort, query);
+        V1ListHubModelsResponse response = api.hubModelsV1ListHubModelNames(owner, offset, limit, sort, query);
 
         // TODO: test validations
     }
@@ -128,13 +128,13 @@ public class HubModelsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void listHubModelsTest() throws ApiException {
+    public void hubModelsV1ListHubModelsTest() throws ApiException {
         String owner = null;
         Integer offset = null;
         Integer limit = null;
         String sort = null;
         String query = null;
-        V1ListHubModelsResponse response = api.listHubModels(owner, offset, limit, sort, query);
+        V1ListHubModelsResponse response = api.hubModelsV1ListHubModels(owner, offset, limit, sort, query);
 
         // TODO: test validations
     }
@@ -148,11 +148,11 @@ public class HubModelsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void patchHubModelTest() throws ApiException {
+    public void hubModelsV1PatchHubModelTest() throws ApiException {
         String owner = null;
         String modelUuid = null;
         V1HubModel body = null;
-        V1HubModel response = api.patchHubModel(owner, modelUuid, body);
+        V1HubModel response = api.hubModelsV1PatchHubModel(owner, modelUuid, body);
 
         // TODO: test validations
     }
@@ -166,11 +166,11 @@ public class HubModelsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void updateHubModelTest() throws ApiException {
+    public void hubModelsV1UpdateHubModelTest() throws ApiException {
         String owner = null;
         String modelUuid = null;
         V1HubModel body = null;
-        V1HubModel response = api.updateHubModel(owner, modelUuid, body);
+        V1HubModel response = api.hubModelsV1UpdateHubModel(owner, modelUuid, body);
 
         // TODO: test validations
     }

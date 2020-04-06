@@ -184,6 +184,14 @@ service RunsV1 {
         };
     }
 
+    // Tag runs
+    rpc TagRuns(ProjectResourceUuidsBodyRequest) returns (google.protobuf.Empty) {
+        option (google.api.http) = {
+            post: "/api/v1/{owner}/{project}/runs/tag"
+            body: "uuids"
+        };
+    }
+
     // Invalidate run
     rpc InvalidateRun(ProjectEntityResourceRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
@@ -242,6 +250,14 @@ service RunsV1 {
     rpc BookmarkRun(ProjectEntityResourceRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/api/v1/{owner}/{project}/runs/{uuid}/bookmark"
+        };
+    }
+
+    // Bookmark runs
+    rpc BookmarkRuns(ProjectResourceUuidsBodyRequest) returns (google.protobuf.Empty) {
+        option (google.api.http) = {
+            post: "/api/v1/{owner}/{project}/runs/bookmark"
+            body: "uuids"
         };
     }
 
@@ -307,6 +323,13 @@ service RunsV1 {
     rpc GetRunArtifactsLineage(RunArtifactSearchRequest) returns (ListRunArtifactsResponse) {
         option (google.api.http) = {
             get: "/api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage"
+        };
+    }
+
+    // Get runs artifacts lineage
+    rpc GetRunsArtifactsLineage(ProjectResourceRequest) returns (google.protobuf.Empty) {
+        option (google.api.http) = {
+            get: "/api/v1/{owner}/{project}/runs/artifacts_lineage"
         };
     }
 

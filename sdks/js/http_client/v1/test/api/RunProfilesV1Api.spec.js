@@ -50,9 +50,9 @@
 
   describe('(package)', function() {
     describe('RunProfilesV1Api', function() {
-      describe('createRunProfile', function() {
-        it('should call createRunProfile successfully', function(done) {
-          // TODO: uncomment, update parameter values for createRunProfile call and complete the assertions
+      describe('runProfilesV1CreateRunProfile', function() {
+        it('should call runProfilesV1CreateRunProfile successfully', function(done) {
+          // TODO: uncomment, update parameter values for runProfilesV1CreateRunProfile call and complete the assertions
           /*
           var owner = "owner_example";
           var body = new PolyaxonSdk.V1RunProfile();
@@ -70,7 +70,7 @@
           body.termination = ;
           body.environment = ;
 
-          instance.createRunProfile(owner, body, function(error, data, response) {
+          instance.runProfilesV1CreateRunProfile(owner, body, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -119,14 +119,14 @@
           done();
         });
       });
-      describe('deleteRunProfile', function() {
-        it('should call deleteRunProfile successfully', function(done) {
-          // TODO: uncomment, update parameter values for deleteRunProfile call
+      describe('runProfilesV1DeleteRunProfile', function() {
+        it('should call runProfilesV1DeleteRunProfile successfully', function(done) {
+          // TODO: uncomment, update parameter values for runProfilesV1DeleteRunProfile call
           /*
           var owner = "owner_example";
           var uuid = "uuid_example";
 
-          instance.deleteRunProfile(owner, uuid, function(error, data, response) {
+          instance.runProfilesV1DeleteRunProfile(owner, uuid, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -139,14 +139,14 @@
           done();
         });
       });
-      describe('getRunProfile', function() {
-        it('should call getRunProfile successfully', function(done) {
-          // TODO: uncomment, update parameter values for getRunProfile call and complete the assertions
+      describe('runProfilesV1GetRunProfile', function() {
+        it('should call runProfilesV1GetRunProfile successfully', function(done) {
+          // TODO: uncomment, update parameter values for runProfilesV1GetRunProfile call and complete the assertions
           /*
           var owner = "owner_example";
           var uuid = "uuid_example";
 
-          instance.getRunProfile(owner, uuid, function(error, data, response) {
+          instance.runProfilesV1GetRunProfile(owner, uuid, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -195,9 +195,9 @@
           done();
         });
       });
-      describe('listRunProfileNames', function() {
-        it('should call listRunProfileNames successfully', function(done) {
-          // TODO: uncomment, update parameter values for listRunProfileNames call and complete the assertions
+      describe('runProfilesV1ListRunProfileNames', function() {
+        it('should call runProfilesV1ListRunProfileNames successfully', function(done) {
+          // TODO: uncomment, update parameter values for runProfilesV1ListRunProfileNames call and complete the assertions
           /*
           var owner = "owner_example";
           var opts = {};
@@ -206,7 +206,7 @@
           opts.sort = "sort_example";
           opts.query = "query_example";
 
-          instance.listRunProfileNames(owner, opts, function(error, data, response) {
+          instance.runProfilesV1ListRunProfileNames(owner, opts, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -270,9 +270,9 @@
           done();
         });
       });
-      describe('listRunProfiles', function() {
-        it('should call listRunProfiles successfully', function(done) {
-          // TODO: uncomment, update parameter values for listRunProfiles call and complete the assertions
+      describe('runProfilesV1ListRunProfiles', function() {
+        it('should call runProfilesV1ListRunProfiles successfully', function(done) {
+          // TODO: uncomment, update parameter values for runProfilesV1ListRunProfiles call and complete the assertions
           /*
           var owner = "owner_example";
           var opts = {};
@@ -281,7 +281,7 @@
           opts.sort = "sort_example";
           opts.query = "query_example";
 
-          instance.listRunProfiles(owner, opts, function(error, data, response) {
+          instance.runProfilesV1ListRunProfiles(owner, opts, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -345,9 +345,9 @@
           done();
         });
       });
-      describe('patchRunProfile', function() {
-        it('should call patchRunProfile successfully', function(done) {
-          // TODO: uncomment, update parameter values for patchRunProfile call and complete the assertions
+      describe('runProfilesV1PatchRunProfile', function() {
+        it('should call runProfilesV1PatchRunProfile successfully', function(done) {
+          // TODO: uncomment, update parameter values for runProfilesV1PatchRunProfile call and complete the assertions
           /*
           var owner = "owner_example";
           var run_profile_uuid = "run_profile_uuid_example";
@@ -366,7 +366,7 @@
           body.termination = ;
           body.environment = ;
 
-          instance.patchRunProfile(owner, run_profile_uuid, body, function(error, data, response) {
+          instance.runProfilesV1PatchRunProfile(owner, run_profile_uuid, body, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -415,9 +415,9 @@
           done();
         });
       });
-      describe('updateRunProfile', function() {
-        it('should call updateRunProfile successfully', function(done) {
-          // TODO: uncomment, update parameter values for updateRunProfile call and complete the assertions
+      describe('runProfilesV1UpdateRunProfile', function() {
+        it('should call runProfilesV1UpdateRunProfile successfully', function(done) {
+          // TODO: uncomment, update parameter values for runProfilesV1UpdateRunProfile call and complete the assertions
           /*
           var owner = "owner_example";
           var run_profile_uuid = "run_profile_uuid_example";
@@ -436,7 +436,7 @@
           body.termination = ;
           body.environment = ;
 
-          instance.updateRunProfile(owner, run_profile_uuid, body, function(error, data, response) {
+          instance.runProfilesV1UpdateRunProfile(owner, run_profile_uuid, body, function(error, data, response) {
             if (error) {
               done(error);
               return;

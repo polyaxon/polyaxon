@@ -4,24 +4,24 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**createOrganization**](OrganizationsV1Api.md#createOrganization) | **POST** /api/v1/orgs/create | 
-[**createOrganizationMember**](OrganizationsV1Api.md#createOrganizationMember) | **POST** /api/v1/orgs/{owner}/members | 
-[**deleteOrganization**](OrganizationsV1Api.md#deleteOrganization) | **DELETE** /api/v1/orgs/{owner} | 
-[**deleteOrganizationMember**](OrganizationsV1Api.md#deleteOrganizationMember) | **DELETE** /api/v1/orgs/{owner}/members/{user} | 
-[**getOrganization**](OrganizationsV1Api.md#getOrganization) | **GET** /api/v1/orgs/{owner} | 
-[**getOrganizationMember**](OrganizationsV1Api.md#getOrganizationMember) | **GET** /api/v1/orgs/{owner}/members/{user} | 
-[**listOrganizationMembers**](OrganizationsV1Api.md#listOrganizationMembers) | **GET** /api/v1/orgs/{owner}/members | 
-[**listOrganizationNames**](OrganizationsV1Api.md#listOrganizationNames) | **GET** /api/v1/orgs/names | Get versions
-[**listOrganizations**](OrganizationsV1Api.md#listOrganizations) | **GET** /api/v1/orgs/list | Get log handler
-[**patchOrganization**](OrganizationsV1Api.md#patchOrganization) | **PATCH** /api/v1/orgs/{owner} | 
-[**patchOrganizationMember**](OrganizationsV1Api.md#patchOrganizationMember) | **PATCH** /api/v1/orgs/{owner}/members/{member.user} | 
-[**updateOrganization**](OrganizationsV1Api.md#updateOrganization) | **PUT** /api/v1/orgs/{owner} | 
-[**updateOrganizationMember**](OrganizationsV1Api.md#updateOrganizationMember) | **PUT** /api/v1/orgs/{owner}/members/{member.user} | 
+[**organizationsV1CreateOrganization**](OrganizationsV1Api.md#organizationsV1CreateOrganization) | **POST** /api/v1/orgs/create | 
+[**organizationsV1CreateOrganizationMember**](OrganizationsV1Api.md#organizationsV1CreateOrganizationMember) | **POST** /api/v1/orgs/{owner}/members | 
+[**organizationsV1DeleteOrganization**](OrganizationsV1Api.md#organizationsV1DeleteOrganization) | **DELETE** /api/v1/orgs/{owner} | 
+[**organizationsV1DeleteOrganizationMember**](OrganizationsV1Api.md#organizationsV1DeleteOrganizationMember) | **DELETE** /api/v1/orgs/{owner}/members/{user} | 
+[**organizationsV1GetOrganization**](OrganizationsV1Api.md#organizationsV1GetOrganization) | **GET** /api/v1/orgs/{owner} | 
+[**organizationsV1GetOrganizationMember**](OrganizationsV1Api.md#organizationsV1GetOrganizationMember) | **GET** /api/v1/orgs/{owner}/members/{user} | 
+[**organizationsV1ListOrganizationMembers**](OrganizationsV1Api.md#organizationsV1ListOrganizationMembers) | **GET** /api/v1/orgs/{owner}/members | 
+[**organizationsV1ListOrganizationNames**](OrganizationsV1Api.md#organizationsV1ListOrganizationNames) | **GET** /api/v1/orgs/names | Get versions
+[**organizationsV1ListOrganizations**](OrganizationsV1Api.md#organizationsV1ListOrganizations) | **GET** /api/v1/orgs/list | Get log handler
+[**organizationsV1PatchOrganization**](OrganizationsV1Api.md#organizationsV1PatchOrganization) | **PATCH** /api/v1/orgs/{owner} | 
+[**organizationsV1PatchOrganizationMember**](OrganizationsV1Api.md#organizationsV1PatchOrganizationMember) | **PATCH** /api/v1/orgs/{owner}/members/{member.user} | 
+[**organizationsV1UpdateOrganization**](OrganizationsV1Api.md#organizationsV1UpdateOrganization) | **PUT** /api/v1/orgs/{owner} | 
+[**organizationsV1UpdateOrganizationMember**](OrganizationsV1Api.md#organizationsV1UpdateOrganizationMember) | **PUT** /api/v1/orgs/{owner}/members/{member.user} | 
 
 
-<a name="createOrganization"></a>
-# **createOrganization**
-> V1Organization createOrganization(body)
+<a name="organizationsV1CreateOrganization"></a>
+# **organizationsV1CreateOrganization**
+> V1Organization organizationsV1CreateOrganization(body)
 
 
 
@@ -48,7 +48,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.createOrganization(body, callback);
+apiInstance.organizationsV1CreateOrganization(body, callback);
 ```
 
 ### Parameters
@@ -70,9 +70,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="createOrganizationMember"></a>
-# **createOrganizationMember**
-> V1OrganizationMember createOrganizationMember(owner, body)
+<a name="organizationsV1CreateOrganizationMember"></a>
+# **organizationsV1CreateOrganizationMember**
+> V1OrganizationMember organizationsV1CreateOrganizationMember(owner, body)
 
 
 
@@ -101,7 +101,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.createOrganizationMember(owner, body, callback);
+apiInstance.organizationsV1CreateOrganizationMember(owner, body, callback);
 ```
 
 ### Parameters
@@ -124,9 +124,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="deleteOrganization"></a>
-# **deleteOrganization**
-> deleteOrganization(owner)
+<a name="organizationsV1DeleteOrganization"></a>
+# **organizationsV1DeleteOrganization**
+> organizationsV1DeleteOrganization(owner)
 
 
 
@@ -153,7 +153,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully.');
   }
 };
-apiInstance.deleteOrganization(owner, callback);
+apiInstance.organizationsV1DeleteOrganization(owner, callback);
 ```
 
 ### Parameters
@@ -175,9 +175,9 @@ null (empty response body)
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="deleteOrganizationMember"></a>
-# **deleteOrganizationMember**
-> deleteOrganizationMember(owner, user)
+<a name="organizationsV1DeleteOrganizationMember"></a>
+# **organizationsV1DeleteOrganizationMember**
+> organizationsV1DeleteOrganizationMember(owner, user)
 
 
 
@@ -206,7 +206,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully.');
   }
 };
-apiInstance.deleteOrganizationMember(owner, user, callback);
+apiInstance.organizationsV1DeleteOrganizationMember(owner, user, callback);
 ```
 
 ### Parameters
@@ -229,9 +229,9 @@ null (empty response body)
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="getOrganization"></a>
-# **getOrganization**
-> V1Organization getOrganization(owner)
+<a name="organizationsV1GetOrganization"></a>
+# **organizationsV1GetOrganization**
+> V1Organization organizationsV1GetOrganization(owner)
 
 
 
@@ -258,7 +258,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.getOrganization(owner, callback);
+apiInstance.organizationsV1GetOrganization(owner, callback);
 ```
 
 ### Parameters
@@ -280,9 +280,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="getOrganizationMember"></a>
-# **getOrganizationMember**
-> V1OrganizationMember getOrganizationMember(owner, user)
+<a name="organizationsV1GetOrganizationMember"></a>
+# **organizationsV1GetOrganizationMember**
+> V1OrganizationMember organizationsV1GetOrganizationMember(owner, user)
 
 
 
@@ -311,7 +311,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.getOrganizationMember(owner, user, callback);
+apiInstance.organizationsV1GetOrganizationMember(owner, user, callback);
 ```
 
 ### Parameters
@@ -334,9 +334,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="listOrganizationMembers"></a>
-# **listOrganizationMembers**
-> V1ListOrganizationMembersResponse listOrganizationMembers(owner, opts)
+<a name="organizationsV1ListOrganizationMembers"></a>
+# **organizationsV1ListOrganizationMembers**
+> V1ListOrganizationMembersResponse organizationsV1ListOrganizationMembers(owner, opts)
 
 
 
@@ -369,7 +369,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.listOrganizationMembers(owner, opts, callback);
+apiInstance.organizationsV1ListOrganizationMembers(owner, opts, callback);
 ```
 
 ### Parameters
@@ -395,9 +395,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="listOrganizationNames"></a>
-# **listOrganizationNames**
-> V1ListOrganizationsResponse listOrganizationNames()
+<a name="organizationsV1ListOrganizationNames"></a>
+# **organizationsV1ListOrganizationNames**
+> V1ListOrganizationsResponse organizationsV1ListOrganizationNames()
 
 Get versions
 
@@ -421,7 +421,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.listOrganizationNames(callback);
+apiInstance.organizationsV1ListOrganizationNames(callback);
 ```
 
 ### Parameters
@@ -440,9 +440,9 @@ This endpoint does not need any parameter.
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="listOrganizations"></a>
-# **listOrganizations**
-> V1ListOrganizationsResponse listOrganizations()
+<a name="organizationsV1ListOrganizations"></a>
+# **organizationsV1ListOrganizations**
+> V1ListOrganizationsResponse organizationsV1ListOrganizations()
 
 Get log handler
 
@@ -466,7 +466,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.listOrganizations(callback);
+apiInstance.organizationsV1ListOrganizations(callback);
 ```
 
 ### Parameters
@@ -485,9 +485,9 @@ This endpoint does not need any parameter.
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="patchOrganization"></a>
-# **patchOrganization**
-> V1Organization patchOrganization(owner, body)
+<a name="organizationsV1PatchOrganization"></a>
+# **organizationsV1PatchOrganization**
+> V1Organization organizationsV1PatchOrganization(owner, body)
 
 
 
@@ -516,7 +516,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.patchOrganization(owner, body, callback);
+apiInstance.organizationsV1PatchOrganization(owner, body, callback);
 ```
 
 ### Parameters
@@ -539,9 +539,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="patchOrganizationMember"></a>
-# **patchOrganizationMember**
-> V1OrganizationMember patchOrganizationMember(owner, member_user, body)
+<a name="organizationsV1PatchOrganizationMember"></a>
+# **organizationsV1PatchOrganizationMember**
+> V1OrganizationMember organizationsV1PatchOrganizationMember(owner, member_user, body)
 
 
 
@@ -572,7 +572,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.patchOrganizationMember(owner, member_user, body, callback);
+apiInstance.organizationsV1PatchOrganizationMember(owner, member_user, body, callback);
 ```
 
 ### Parameters
@@ -596,9 +596,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="updateOrganization"></a>
-# **updateOrganization**
-> V1Organization updateOrganization(owner, body)
+<a name="organizationsV1UpdateOrganization"></a>
+# **organizationsV1UpdateOrganization**
+> V1Organization organizationsV1UpdateOrganization(owner, body)
 
 
 
@@ -627,7 +627,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.updateOrganization(owner, body, callback);
+apiInstance.organizationsV1UpdateOrganization(owner, body, callback);
 ```
 
 ### Parameters
@@ -650,9 +650,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="updateOrganizationMember"></a>
-# **updateOrganizationMember**
-> V1OrganizationMember updateOrganizationMember(owner, member_user, body)
+<a name="organizationsV1UpdateOrganizationMember"></a>
+# **organizationsV1UpdateOrganizationMember**
+> V1OrganizationMember organizationsV1UpdateOrganizationMember(owner, member_user, body)
 
 
 
@@ -683,7 +683,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.updateOrganizationMember(owner, member_user, body, callback);
+apiInstance.organizationsV1UpdateOrganizationMember(owner, member_user, body, callback);
 ```
 
 ### Parameters

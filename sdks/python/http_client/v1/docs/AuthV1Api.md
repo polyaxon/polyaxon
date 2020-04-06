@@ -4,11 +4,11 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**login**](AuthV1Api.md#login) | **POST** /api/v1/users/token | List organization level queues names
+[**auth_v1_login**](AuthV1Api.md#auth_v1_login) | **POST** /api/v1/users/token | List organization level queues names
 
 
-# **login**
-> V1Auth login(body)
+# **auth_v1_login**
+> V1Auth auth_v1_login(body)
 
 List organization level queues names
 
@@ -32,10 +32,10 @@ body = polyaxon_sdk.V1CredsBodyRequest() # V1CredsBodyRequest |
 
 try:
     # List organization level queues names
-    api_response = api_instance.login(body)
+    api_response = api_instance.auth_v1_login(body)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling AuthV1Api->login: %s\n" % e)
+    print("Exception when calling AuthV1Api->auth_v1_login: %s\n" % e)
 ```
 
 ### Parameters

@@ -63,18 +63,18 @@
 
 
     /**
-     * Callback function to receive the result of the getLogHandler operation.
-     * @callback module:api/VersionsV1Api~getLogHandlerCallback
+     * Callback function to receive the result of the versionsV1GetLogHandler operation.
+     * @callback module:api/VersionsV1Api~versionsV1GetLogHandlerCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1LogHandler} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
      */
 
     /**
-     * @param {module:api/VersionsV1Api~getLogHandlerCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/VersionsV1Api~versionsV1GetLogHandlerCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1LogHandler}
      */
-    this.getLogHandler = function(callback) {
+    this.versionsV1GetLogHandler = function(callback) {
       var postBody = null;
 
 
@@ -102,8 +102,8 @@
     }
 
     /**
-     * Callback function to receive the result of the getVersions operation.
-     * @callback module:api/VersionsV1Api~getVersionsCallback
+     * Callback function to receive the result of the versionsV1GetVersions operation.
+     * @callback module:api/VersionsV1Api~versionsV1GetVersionsCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1Versions} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -111,10 +111,10 @@
 
     /**
      * Get current user
-     * @param {module:api/VersionsV1Api~getVersionsCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/VersionsV1Api~versionsV1GetVersionsCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1Versions}
      */
-    this.getVersions = function(callback) {
+    this.versionsV1GetVersions = function(callback) {
       var postBody = null;
 
 

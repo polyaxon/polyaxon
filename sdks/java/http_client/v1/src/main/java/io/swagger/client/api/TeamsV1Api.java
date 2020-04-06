@@ -73,7 +73,7 @@ public class TeamsV1Api {
     }
 
     /**
-     * Build call for createTeam
+     * Build call for teamsV1CreateTeam
      * @param owner Owner of the namespace (required)
      * @param body Team body (required)
      * @param progressListener Progress listener
@@ -81,7 +81,7 @@ public class TeamsV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call createTeamCall(String owner, V1Team body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call teamsV1CreateTeamCall(String owner, V1Team body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -124,20 +124,20 @@ public class TeamsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call createTeamValidateBeforeCall(String owner, V1Team body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call teamsV1CreateTeamValidateBeforeCall(String owner, V1Team body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling createTeam(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling teamsV1CreateTeam(Async)");
         }
         
         // verify the required parameter 'body' is set
         if (body == null) {
-            throw new ApiException("Missing the required parameter 'body' when calling createTeam(Async)");
+            throw new ApiException("Missing the required parameter 'body' when calling teamsV1CreateTeam(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = createTeamCall(owner, body, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = teamsV1CreateTeamCall(owner, body, progressListener, progressRequestListener);
         return call;
 
     }
@@ -150,8 +150,8 @@ public class TeamsV1Api {
      * @return V1Team
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1Team createTeam(String owner, V1Team body) throws ApiException {
-        ApiResponse<V1Team> resp = createTeamWithHttpInfo(owner, body);
+    public V1Team teamsV1CreateTeam(String owner, V1Team body) throws ApiException {
+        ApiResponse<V1Team> resp = teamsV1CreateTeamWithHttpInfo(owner, body);
         return resp.getData();
     }
 
@@ -163,8 +163,8 @@ public class TeamsV1Api {
      * @return ApiResponse&lt;V1Team&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1Team> createTeamWithHttpInfo(String owner, V1Team body) throws ApiException {
-        com.squareup.okhttp.Call call = createTeamValidateBeforeCall(owner, body, null, null);
+    public ApiResponse<V1Team> teamsV1CreateTeamWithHttpInfo(String owner, V1Team body) throws ApiException {
+        com.squareup.okhttp.Call call = teamsV1CreateTeamValidateBeforeCall(owner, body, null, null);
         Type localVarReturnType = new TypeToken<V1Team>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -178,7 +178,7 @@ public class TeamsV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call createTeamAsync(String owner, V1Team body, final ApiCallback<V1Team> callback) throws ApiException {
+    public com.squareup.okhttp.Call teamsV1CreateTeamAsync(String owner, V1Team body, final ApiCallback<V1Team> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -199,13 +199,13 @@ public class TeamsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = createTeamValidateBeforeCall(owner, body, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = teamsV1CreateTeamValidateBeforeCall(owner, body, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1Team>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
     /**
-     * Build call for createTeamMember
+     * Build call for teamsV1CreateTeamMember
      * @param owner Owner of the namespace (required)
      * @param team Team (required)
      * @param body Team body (required)
@@ -214,7 +214,7 @@ public class TeamsV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call createTeamMemberCall(String owner, String team, V1TeamMember body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call teamsV1CreateTeamMemberCall(String owner, String team, V1TeamMember body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -258,25 +258,25 @@ public class TeamsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call createTeamMemberValidateBeforeCall(String owner, String team, V1TeamMember body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call teamsV1CreateTeamMemberValidateBeforeCall(String owner, String team, V1TeamMember body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling createTeamMember(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling teamsV1CreateTeamMember(Async)");
         }
         
         // verify the required parameter 'team' is set
         if (team == null) {
-            throw new ApiException("Missing the required parameter 'team' when calling createTeamMember(Async)");
+            throw new ApiException("Missing the required parameter 'team' when calling teamsV1CreateTeamMember(Async)");
         }
         
         // verify the required parameter 'body' is set
         if (body == null) {
-            throw new ApiException("Missing the required parameter 'body' when calling createTeamMember(Async)");
+            throw new ApiException("Missing the required parameter 'body' when calling teamsV1CreateTeamMember(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = createTeamMemberCall(owner, team, body, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = teamsV1CreateTeamMemberCall(owner, team, body, progressListener, progressRequestListener);
         return call;
 
     }
@@ -290,8 +290,8 @@ public class TeamsV1Api {
      * @return V1TeamMember
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1TeamMember createTeamMember(String owner, String team, V1TeamMember body) throws ApiException {
-        ApiResponse<V1TeamMember> resp = createTeamMemberWithHttpInfo(owner, team, body);
+    public V1TeamMember teamsV1CreateTeamMember(String owner, String team, V1TeamMember body) throws ApiException {
+        ApiResponse<V1TeamMember> resp = teamsV1CreateTeamMemberWithHttpInfo(owner, team, body);
         return resp.getData();
     }
 
@@ -304,8 +304,8 @@ public class TeamsV1Api {
      * @return ApiResponse&lt;V1TeamMember&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1TeamMember> createTeamMemberWithHttpInfo(String owner, String team, V1TeamMember body) throws ApiException {
-        com.squareup.okhttp.Call call = createTeamMemberValidateBeforeCall(owner, team, body, null, null);
+    public ApiResponse<V1TeamMember> teamsV1CreateTeamMemberWithHttpInfo(String owner, String team, V1TeamMember body) throws ApiException {
+        com.squareup.okhttp.Call call = teamsV1CreateTeamMemberValidateBeforeCall(owner, team, body, null, null);
         Type localVarReturnType = new TypeToken<V1TeamMember>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -320,7 +320,7 @@ public class TeamsV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call createTeamMemberAsync(String owner, String team, V1TeamMember body, final ApiCallback<V1TeamMember> callback) throws ApiException {
+    public com.squareup.okhttp.Call teamsV1CreateTeamMemberAsync(String owner, String team, V1TeamMember body, final ApiCallback<V1TeamMember> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -341,13 +341,13 @@ public class TeamsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = createTeamMemberValidateBeforeCall(owner, team, body, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = teamsV1CreateTeamMemberValidateBeforeCall(owner, team, body, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1TeamMember>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
     /**
-     * Build call for deleteTeam
+     * Build call for teamsV1DeleteTeam
      * @param owner Owner of the namespace (required)
      * @param team Team under namesapce (required)
      * @param progressListener Progress listener
@@ -355,7 +355,7 @@ public class TeamsV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call deleteTeamCall(String owner, String team, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call teamsV1DeleteTeamCall(String owner, String team, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -399,20 +399,20 @@ public class TeamsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call deleteTeamValidateBeforeCall(String owner, String team, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call teamsV1DeleteTeamValidateBeforeCall(String owner, String team, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling deleteTeam(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling teamsV1DeleteTeam(Async)");
         }
         
         // verify the required parameter 'team' is set
         if (team == null) {
-            throw new ApiException("Missing the required parameter 'team' when calling deleteTeam(Async)");
+            throw new ApiException("Missing the required parameter 'team' when calling teamsV1DeleteTeam(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = deleteTeamCall(owner, team, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = teamsV1DeleteTeamCall(owner, team, progressListener, progressRequestListener);
         return call;
 
     }
@@ -424,8 +424,8 @@ public class TeamsV1Api {
      * @param team Team under namesapce (required)
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public void deleteTeam(String owner, String team) throws ApiException {
-        deleteTeamWithHttpInfo(owner, team);
+    public void teamsV1DeleteTeam(String owner, String team) throws ApiException {
+        teamsV1DeleteTeamWithHttpInfo(owner, team);
     }
 
     /**
@@ -436,8 +436,8 @@ public class TeamsV1Api {
      * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<Void> deleteTeamWithHttpInfo(String owner, String team) throws ApiException {
-        com.squareup.okhttp.Call call = deleteTeamValidateBeforeCall(owner, team, null, null);
+    public ApiResponse<Void> teamsV1DeleteTeamWithHttpInfo(String owner, String team) throws ApiException {
+        com.squareup.okhttp.Call call = teamsV1DeleteTeamValidateBeforeCall(owner, team, null, null);
         return apiClient.execute(call);
     }
 
@@ -450,7 +450,7 @@ public class TeamsV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call deleteTeamAsync(String owner, String team, final ApiCallback<Void> callback) throws ApiException {
+    public com.squareup.okhttp.Call teamsV1DeleteTeamAsync(String owner, String team, final ApiCallback<Void> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -471,12 +471,12 @@ public class TeamsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = deleteTeamValidateBeforeCall(owner, team, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = teamsV1DeleteTeamValidateBeforeCall(owner, team, progressListener, progressRequestListener);
         apiClient.executeAsync(call, callback);
         return call;
     }
     /**
-     * Build call for deleteTeamMember
+     * Build call for teamsV1DeleteTeamMember
      * @param owner Owner of the namespace (required)
      * @param team Team under namesapce (required)
      * @param user Member under team (required)
@@ -485,7 +485,7 @@ public class TeamsV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call deleteTeamMemberCall(String owner, String team, String user, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call teamsV1DeleteTeamMemberCall(String owner, String team, String user, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -530,25 +530,25 @@ public class TeamsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call deleteTeamMemberValidateBeforeCall(String owner, String team, String user, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call teamsV1DeleteTeamMemberValidateBeforeCall(String owner, String team, String user, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling deleteTeamMember(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling teamsV1DeleteTeamMember(Async)");
         }
         
         // verify the required parameter 'team' is set
         if (team == null) {
-            throw new ApiException("Missing the required parameter 'team' when calling deleteTeamMember(Async)");
+            throw new ApiException("Missing the required parameter 'team' when calling teamsV1DeleteTeamMember(Async)");
         }
         
         // verify the required parameter 'user' is set
         if (user == null) {
-            throw new ApiException("Missing the required parameter 'user' when calling deleteTeamMember(Async)");
+            throw new ApiException("Missing the required parameter 'user' when calling teamsV1DeleteTeamMember(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = deleteTeamMemberCall(owner, team, user, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = teamsV1DeleteTeamMemberCall(owner, team, user, progressListener, progressRequestListener);
         return call;
 
     }
@@ -561,8 +561,8 @@ public class TeamsV1Api {
      * @param user Member under team (required)
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public void deleteTeamMember(String owner, String team, String user) throws ApiException {
-        deleteTeamMemberWithHttpInfo(owner, team, user);
+    public void teamsV1DeleteTeamMember(String owner, String team, String user) throws ApiException {
+        teamsV1DeleteTeamMemberWithHttpInfo(owner, team, user);
     }
 
     /**
@@ -574,8 +574,8 @@ public class TeamsV1Api {
      * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<Void> deleteTeamMemberWithHttpInfo(String owner, String team, String user) throws ApiException {
-        com.squareup.okhttp.Call call = deleteTeamMemberValidateBeforeCall(owner, team, user, null, null);
+    public ApiResponse<Void> teamsV1DeleteTeamMemberWithHttpInfo(String owner, String team, String user) throws ApiException {
+        com.squareup.okhttp.Call call = teamsV1DeleteTeamMemberValidateBeforeCall(owner, team, user, null, null);
         return apiClient.execute(call);
     }
 
@@ -589,7 +589,7 @@ public class TeamsV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call deleteTeamMemberAsync(String owner, String team, String user, final ApiCallback<Void> callback) throws ApiException {
+    public com.squareup.okhttp.Call teamsV1DeleteTeamMemberAsync(String owner, String team, String user, final ApiCallback<Void> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -610,12 +610,12 @@ public class TeamsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = deleteTeamMemberValidateBeforeCall(owner, team, user, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = teamsV1DeleteTeamMemberValidateBeforeCall(owner, team, user, progressListener, progressRequestListener);
         apiClient.executeAsync(call, callback);
         return call;
     }
     /**
-     * Build call for getTeam
+     * Build call for teamsV1GetTeam
      * @param owner Owner of the namespace (required)
      * @param team Team under namesapce (required)
      * @param progressListener Progress listener
@@ -623,7 +623,7 @@ public class TeamsV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call getTeamCall(String owner, String team, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call teamsV1GetTeamCall(String owner, String team, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -667,20 +667,20 @@ public class TeamsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call getTeamValidateBeforeCall(String owner, String team, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call teamsV1GetTeamValidateBeforeCall(String owner, String team, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling getTeam(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling teamsV1GetTeam(Async)");
         }
         
         // verify the required parameter 'team' is set
         if (team == null) {
-            throw new ApiException("Missing the required parameter 'team' when calling getTeam(Async)");
+            throw new ApiException("Missing the required parameter 'team' when calling teamsV1GetTeam(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = getTeamCall(owner, team, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = teamsV1GetTeamCall(owner, team, progressListener, progressRequestListener);
         return call;
 
     }
@@ -693,8 +693,8 @@ public class TeamsV1Api {
      * @return V1Team
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1Team getTeam(String owner, String team) throws ApiException {
-        ApiResponse<V1Team> resp = getTeamWithHttpInfo(owner, team);
+    public V1Team teamsV1GetTeam(String owner, String team) throws ApiException {
+        ApiResponse<V1Team> resp = teamsV1GetTeamWithHttpInfo(owner, team);
         return resp.getData();
     }
 
@@ -706,8 +706,8 @@ public class TeamsV1Api {
      * @return ApiResponse&lt;V1Team&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1Team> getTeamWithHttpInfo(String owner, String team) throws ApiException {
-        com.squareup.okhttp.Call call = getTeamValidateBeforeCall(owner, team, null, null);
+    public ApiResponse<V1Team> teamsV1GetTeamWithHttpInfo(String owner, String team) throws ApiException {
+        com.squareup.okhttp.Call call = teamsV1GetTeamValidateBeforeCall(owner, team, null, null);
         Type localVarReturnType = new TypeToken<V1Team>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -721,7 +721,7 @@ public class TeamsV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call getTeamAsync(String owner, String team, final ApiCallback<V1Team> callback) throws ApiException {
+    public com.squareup.okhttp.Call teamsV1GetTeamAsync(String owner, String team, final ApiCallback<V1Team> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -742,13 +742,13 @@ public class TeamsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = getTeamValidateBeforeCall(owner, team, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = teamsV1GetTeamValidateBeforeCall(owner, team, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1Team>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
     /**
-     * Build call for getTeamMember
+     * Build call for teamsV1GetTeamMember
      * @param owner Owner of the namespace (required)
      * @param team Team under namesapce (required)
      * @param user Member under team (required)
@@ -757,7 +757,7 @@ public class TeamsV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call getTeamMemberCall(String owner, String team, String user, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call teamsV1GetTeamMemberCall(String owner, String team, String user, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -802,25 +802,25 @@ public class TeamsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call getTeamMemberValidateBeforeCall(String owner, String team, String user, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call teamsV1GetTeamMemberValidateBeforeCall(String owner, String team, String user, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling getTeamMember(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling teamsV1GetTeamMember(Async)");
         }
         
         // verify the required parameter 'team' is set
         if (team == null) {
-            throw new ApiException("Missing the required parameter 'team' when calling getTeamMember(Async)");
+            throw new ApiException("Missing the required parameter 'team' when calling teamsV1GetTeamMember(Async)");
         }
         
         // verify the required parameter 'user' is set
         if (user == null) {
-            throw new ApiException("Missing the required parameter 'user' when calling getTeamMember(Async)");
+            throw new ApiException("Missing the required parameter 'user' when calling teamsV1GetTeamMember(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = getTeamMemberCall(owner, team, user, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = teamsV1GetTeamMemberCall(owner, team, user, progressListener, progressRequestListener);
         return call;
 
     }
@@ -834,8 +834,8 @@ public class TeamsV1Api {
      * @return V1TeamMember
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1TeamMember getTeamMember(String owner, String team, String user) throws ApiException {
-        ApiResponse<V1TeamMember> resp = getTeamMemberWithHttpInfo(owner, team, user);
+    public V1TeamMember teamsV1GetTeamMember(String owner, String team, String user) throws ApiException {
+        ApiResponse<V1TeamMember> resp = teamsV1GetTeamMemberWithHttpInfo(owner, team, user);
         return resp.getData();
     }
 
@@ -848,8 +848,8 @@ public class TeamsV1Api {
      * @return ApiResponse&lt;V1TeamMember&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1TeamMember> getTeamMemberWithHttpInfo(String owner, String team, String user) throws ApiException {
-        com.squareup.okhttp.Call call = getTeamMemberValidateBeforeCall(owner, team, user, null, null);
+    public ApiResponse<V1TeamMember> teamsV1GetTeamMemberWithHttpInfo(String owner, String team, String user) throws ApiException {
+        com.squareup.okhttp.Call call = teamsV1GetTeamMemberValidateBeforeCall(owner, team, user, null, null);
         Type localVarReturnType = new TypeToken<V1TeamMember>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -864,7 +864,7 @@ public class TeamsV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call getTeamMemberAsync(String owner, String team, String user, final ApiCallback<V1TeamMember> callback) throws ApiException {
+    public com.squareup.okhttp.Call teamsV1GetTeamMemberAsync(String owner, String team, String user, final ApiCallback<V1TeamMember> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -885,13 +885,13 @@ public class TeamsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = getTeamMemberValidateBeforeCall(owner, team, user, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = teamsV1GetTeamMemberValidateBeforeCall(owner, team, user, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1TeamMember>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
     /**
-     * Build call for listTeamMembers
+     * Build call for teamsV1ListTeamMembers
      * @param owner Owner of the namespace (required)
      * @param team Team under namesapce (required)
      * @param offset Pagination offset. (optional)
@@ -903,7 +903,7 @@ public class TeamsV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call listTeamMembersCall(String owner, String team, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call teamsV1ListTeamMembersCall(String owner, String team, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -955,20 +955,20 @@ public class TeamsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call listTeamMembersValidateBeforeCall(String owner, String team, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call teamsV1ListTeamMembersValidateBeforeCall(String owner, String team, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling listTeamMembers(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling teamsV1ListTeamMembers(Async)");
         }
         
         // verify the required parameter 'team' is set
         if (team == null) {
-            throw new ApiException("Missing the required parameter 'team' when calling listTeamMembers(Async)");
+            throw new ApiException("Missing the required parameter 'team' when calling teamsV1ListTeamMembers(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = listTeamMembersCall(owner, team, offset, limit, sort, query, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = teamsV1ListTeamMembersCall(owner, team, offset, limit, sort, query, progressListener, progressRequestListener);
         return call;
 
     }
@@ -985,8 +985,8 @@ public class TeamsV1Api {
      * @return V1ListTeamMembersResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1ListTeamMembersResponse listTeamMembers(String owner, String team, Integer offset, Integer limit, String sort, String query) throws ApiException {
-        ApiResponse<V1ListTeamMembersResponse> resp = listTeamMembersWithHttpInfo(owner, team, offset, limit, sort, query);
+    public V1ListTeamMembersResponse teamsV1ListTeamMembers(String owner, String team, Integer offset, Integer limit, String sort, String query) throws ApiException {
+        ApiResponse<V1ListTeamMembersResponse> resp = teamsV1ListTeamMembersWithHttpInfo(owner, team, offset, limit, sort, query);
         return resp.getData();
     }
 
@@ -1002,8 +1002,8 @@ public class TeamsV1Api {
      * @return ApiResponse&lt;V1ListTeamMembersResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1ListTeamMembersResponse> listTeamMembersWithHttpInfo(String owner, String team, Integer offset, Integer limit, String sort, String query) throws ApiException {
-        com.squareup.okhttp.Call call = listTeamMembersValidateBeforeCall(owner, team, offset, limit, sort, query, null, null);
+    public ApiResponse<V1ListTeamMembersResponse> teamsV1ListTeamMembersWithHttpInfo(String owner, String team, Integer offset, Integer limit, String sort, String query) throws ApiException {
+        com.squareup.okhttp.Call call = teamsV1ListTeamMembersValidateBeforeCall(owner, team, offset, limit, sort, query, null, null);
         Type localVarReturnType = new TypeToken<V1ListTeamMembersResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -1021,7 +1021,7 @@ public class TeamsV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call listTeamMembersAsync(String owner, String team, Integer offset, Integer limit, String sort, String query, final ApiCallback<V1ListTeamMembersResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call teamsV1ListTeamMembersAsync(String owner, String team, Integer offset, Integer limit, String sort, String query, final ApiCallback<V1ListTeamMembersResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -1042,13 +1042,13 @@ public class TeamsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = listTeamMembersValidateBeforeCall(owner, team, offset, limit, sort, query, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = teamsV1ListTeamMembersValidateBeforeCall(owner, team, offset, limit, sort, query, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1ListTeamMembersResponse>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
     /**
-     * Build call for listTeamNames
+     * Build call for teamsV1ListTeamNames
      * @param owner Owner of the namespace (required)
      * @param offset Pagination offset. (optional)
      * @param limit Limit size. (optional)
@@ -1059,7 +1059,7 @@ public class TeamsV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call listTeamNamesCall(String owner, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call teamsV1ListTeamNamesCall(String owner, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -1110,15 +1110,15 @@ public class TeamsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call listTeamNamesValidateBeforeCall(String owner, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call teamsV1ListTeamNamesValidateBeforeCall(String owner, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling listTeamNames(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling teamsV1ListTeamNames(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = listTeamNamesCall(owner, offset, limit, sort, query, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = teamsV1ListTeamNamesCall(owner, offset, limit, sort, query, progressListener, progressRequestListener);
         return call;
 
     }
@@ -1134,8 +1134,8 @@ public class TeamsV1Api {
      * @return V1ListTeamsResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1ListTeamsResponse listTeamNames(String owner, Integer offset, Integer limit, String sort, String query) throws ApiException {
-        ApiResponse<V1ListTeamsResponse> resp = listTeamNamesWithHttpInfo(owner, offset, limit, sort, query);
+    public V1ListTeamsResponse teamsV1ListTeamNames(String owner, Integer offset, Integer limit, String sort, String query) throws ApiException {
+        ApiResponse<V1ListTeamsResponse> resp = teamsV1ListTeamNamesWithHttpInfo(owner, offset, limit, sort, query);
         return resp.getData();
     }
 
@@ -1150,8 +1150,8 @@ public class TeamsV1Api {
      * @return ApiResponse&lt;V1ListTeamsResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1ListTeamsResponse> listTeamNamesWithHttpInfo(String owner, Integer offset, Integer limit, String sort, String query) throws ApiException {
-        com.squareup.okhttp.Call call = listTeamNamesValidateBeforeCall(owner, offset, limit, sort, query, null, null);
+    public ApiResponse<V1ListTeamsResponse> teamsV1ListTeamNamesWithHttpInfo(String owner, Integer offset, Integer limit, String sort, String query) throws ApiException {
+        com.squareup.okhttp.Call call = teamsV1ListTeamNamesValidateBeforeCall(owner, offset, limit, sort, query, null, null);
         Type localVarReturnType = new TypeToken<V1ListTeamsResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -1168,7 +1168,7 @@ public class TeamsV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call listTeamNamesAsync(String owner, Integer offset, Integer limit, String sort, String query, final ApiCallback<V1ListTeamsResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call teamsV1ListTeamNamesAsync(String owner, Integer offset, Integer limit, String sort, String query, final ApiCallback<V1ListTeamsResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -1189,13 +1189,13 @@ public class TeamsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = listTeamNamesValidateBeforeCall(owner, offset, limit, sort, query, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = teamsV1ListTeamNamesValidateBeforeCall(owner, offset, limit, sort, query, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1ListTeamsResponse>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
     /**
-     * Build call for listTeams
+     * Build call for teamsV1ListTeams
      * @param owner Owner of the namespace (required)
      * @param offset Pagination offset. (optional)
      * @param limit Limit size. (optional)
@@ -1206,7 +1206,7 @@ public class TeamsV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call listTeamsCall(String owner, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call teamsV1ListTeamsCall(String owner, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -1257,15 +1257,15 @@ public class TeamsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call listTeamsValidateBeforeCall(String owner, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call teamsV1ListTeamsValidateBeforeCall(String owner, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling listTeams(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling teamsV1ListTeams(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = listTeamsCall(owner, offset, limit, sort, query, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = teamsV1ListTeamsCall(owner, offset, limit, sort, query, progressListener, progressRequestListener);
         return call;
 
     }
@@ -1281,8 +1281,8 @@ public class TeamsV1Api {
      * @return V1ListTeamsResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1ListTeamsResponse listTeams(String owner, Integer offset, Integer limit, String sort, String query) throws ApiException {
-        ApiResponse<V1ListTeamsResponse> resp = listTeamsWithHttpInfo(owner, offset, limit, sort, query);
+    public V1ListTeamsResponse teamsV1ListTeams(String owner, Integer offset, Integer limit, String sort, String query) throws ApiException {
+        ApiResponse<V1ListTeamsResponse> resp = teamsV1ListTeamsWithHttpInfo(owner, offset, limit, sort, query);
         return resp.getData();
     }
 
@@ -1297,8 +1297,8 @@ public class TeamsV1Api {
      * @return ApiResponse&lt;V1ListTeamsResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1ListTeamsResponse> listTeamsWithHttpInfo(String owner, Integer offset, Integer limit, String sort, String query) throws ApiException {
-        com.squareup.okhttp.Call call = listTeamsValidateBeforeCall(owner, offset, limit, sort, query, null, null);
+    public ApiResponse<V1ListTeamsResponse> teamsV1ListTeamsWithHttpInfo(String owner, Integer offset, Integer limit, String sort, String query) throws ApiException {
+        com.squareup.okhttp.Call call = teamsV1ListTeamsValidateBeforeCall(owner, offset, limit, sort, query, null, null);
         Type localVarReturnType = new TypeToken<V1ListTeamsResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -1315,7 +1315,7 @@ public class TeamsV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call listTeamsAsync(String owner, Integer offset, Integer limit, String sort, String query, final ApiCallback<V1ListTeamsResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call teamsV1ListTeamsAsync(String owner, Integer offset, Integer limit, String sort, String query, final ApiCallback<V1ListTeamsResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -1336,13 +1336,13 @@ public class TeamsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = listTeamsValidateBeforeCall(owner, offset, limit, sort, query, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = teamsV1ListTeamsValidateBeforeCall(owner, offset, limit, sort, query, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1ListTeamsResponse>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
     /**
-     * Build call for patchTeam
+     * Build call for teamsV1PatchTeam
      * @param owner Owner of the namespace (required)
      * @param teamName Name (required)
      * @param body Team body (required)
@@ -1351,7 +1351,7 @@ public class TeamsV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call patchTeamCall(String owner, String teamName, V1Team body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call teamsV1PatchTeamCall(String owner, String teamName, V1Team body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -1395,25 +1395,25 @@ public class TeamsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call patchTeamValidateBeforeCall(String owner, String teamName, V1Team body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call teamsV1PatchTeamValidateBeforeCall(String owner, String teamName, V1Team body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling patchTeam(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling teamsV1PatchTeam(Async)");
         }
         
         // verify the required parameter 'teamName' is set
         if (teamName == null) {
-            throw new ApiException("Missing the required parameter 'teamName' when calling patchTeam(Async)");
+            throw new ApiException("Missing the required parameter 'teamName' when calling teamsV1PatchTeam(Async)");
         }
         
         // verify the required parameter 'body' is set
         if (body == null) {
-            throw new ApiException("Missing the required parameter 'body' when calling patchTeam(Async)");
+            throw new ApiException("Missing the required parameter 'body' when calling teamsV1PatchTeam(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = patchTeamCall(owner, teamName, body, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = teamsV1PatchTeamCall(owner, teamName, body, progressListener, progressRequestListener);
         return call;
 
     }
@@ -1427,8 +1427,8 @@ public class TeamsV1Api {
      * @return V1Team
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1Team patchTeam(String owner, String teamName, V1Team body) throws ApiException {
-        ApiResponse<V1Team> resp = patchTeamWithHttpInfo(owner, teamName, body);
+    public V1Team teamsV1PatchTeam(String owner, String teamName, V1Team body) throws ApiException {
+        ApiResponse<V1Team> resp = teamsV1PatchTeamWithHttpInfo(owner, teamName, body);
         return resp.getData();
     }
 
@@ -1441,8 +1441,8 @@ public class TeamsV1Api {
      * @return ApiResponse&lt;V1Team&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1Team> patchTeamWithHttpInfo(String owner, String teamName, V1Team body) throws ApiException {
-        com.squareup.okhttp.Call call = patchTeamValidateBeforeCall(owner, teamName, body, null, null);
+    public ApiResponse<V1Team> teamsV1PatchTeamWithHttpInfo(String owner, String teamName, V1Team body) throws ApiException {
+        com.squareup.okhttp.Call call = teamsV1PatchTeamValidateBeforeCall(owner, teamName, body, null, null);
         Type localVarReturnType = new TypeToken<V1Team>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -1457,7 +1457,7 @@ public class TeamsV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call patchTeamAsync(String owner, String teamName, V1Team body, final ApiCallback<V1Team> callback) throws ApiException {
+    public com.squareup.okhttp.Call teamsV1PatchTeamAsync(String owner, String teamName, V1Team body, final ApiCallback<V1Team> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -1478,13 +1478,13 @@ public class TeamsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = patchTeamValidateBeforeCall(owner, teamName, body, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = teamsV1PatchTeamValidateBeforeCall(owner, teamName, body, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1Team>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
     /**
-     * Build call for patchTeamMember
+     * Build call for teamsV1PatchTeamMember
      * @param owner Owner of the namespace (required)
      * @param team Team (required)
      * @param memberUser User (required)
@@ -1494,7 +1494,7 @@ public class TeamsV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call patchTeamMemberCall(String owner, String team, String memberUser, V1TeamMember body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call teamsV1PatchTeamMemberCall(String owner, String team, String memberUser, V1TeamMember body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -1539,30 +1539,30 @@ public class TeamsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call patchTeamMemberValidateBeforeCall(String owner, String team, String memberUser, V1TeamMember body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call teamsV1PatchTeamMemberValidateBeforeCall(String owner, String team, String memberUser, V1TeamMember body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling patchTeamMember(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling teamsV1PatchTeamMember(Async)");
         }
         
         // verify the required parameter 'team' is set
         if (team == null) {
-            throw new ApiException("Missing the required parameter 'team' when calling patchTeamMember(Async)");
+            throw new ApiException("Missing the required parameter 'team' when calling teamsV1PatchTeamMember(Async)");
         }
         
         // verify the required parameter 'memberUser' is set
         if (memberUser == null) {
-            throw new ApiException("Missing the required parameter 'memberUser' when calling patchTeamMember(Async)");
+            throw new ApiException("Missing the required parameter 'memberUser' when calling teamsV1PatchTeamMember(Async)");
         }
         
         // verify the required parameter 'body' is set
         if (body == null) {
-            throw new ApiException("Missing the required parameter 'body' when calling patchTeamMember(Async)");
+            throw new ApiException("Missing the required parameter 'body' when calling teamsV1PatchTeamMember(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = patchTeamMemberCall(owner, team, memberUser, body, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = teamsV1PatchTeamMemberCall(owner, team, memberUser, body, progressListener, progressRequestListener);
         return call;
 
     }
@@ -1577,8 +1577,8 @@ public class TeamsV1Api {
      * @return V1TeamMember
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1TeamMember patchTeamMember(String owner, String team, String memberUser, V1TeamMember body) throws ApiException {
-        ApiResponse<V1TeamMember> resp = patchTeamMemberWithHttpInfo(owner, team, memberUser, body);
+    public V1TeamMember teamsV1PatchTeamMember(String owner, String team, String memberUser, V1TeamMember body) throws ApiException {
+        ApiResponse<V1TeamMember> resp = teamsV1PatchTeamMemberWithHttpInfo(owner, team, memberUser, body);
         return resp.getData();
     }
 
@@ -1592,8 +1592,8 @@ public class TeamsV1Api {
      * @return ApiResponse&lt;V1TeamMember&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1TeamMember> patchTeamMemberWithHttpInfo(String owner, String team, String memberUser, V1TeamMember body) throws ApiException {
-        com.squareup.okhttp.Call call = patchTeamMemberValidateBeforeCall(owner, team, memberUser, body, null, null);
+    public ApiResponse<V1TeamMember> teamsV1PatchTeamMemberWithHttpInfo(String owner, String team, String memberUser, V1TeamMember body) throws ApiException {
+        com.squareup.okhttp.Call call = teamsV1PatchTeamMemberValidateBeforeCall(owner, team, memberUser, body, null, null);
         Type localVarReturnType = new TypeToken<V1TeamMember>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -1609,7 +1609,7 @@ public class TeamsV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call patchTeamMemberAsync(String owner, String team, String memberUser, V1TeamMember body, final ApiCallback<V1TeamMember> callback) throws ApiException {
+    public com.squareup.okhttp.Call teamsV1PatchTeamMemberAsync(String owner, String team, String memberUser, V1TeamMember body, final ApiCallback<V1TeamMember> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -1630,13 +1630,13 @@ public class TeamsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = patchTeamMemberValidateBeforeCall(owner, team, memberUser, body, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = teamsV1PatchTeamMemberValidateBeforeCall(owner, team, memberUser, body, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1TeamMember>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
     /**
-     * Build call for updateTeam
+     * Build call for teamsV1UpdateTeam
      * @param owner Owner of the namespace (required)
      * @param teamName Name (required)
      * @param body Team body (required)
@@ -1645,7 +1645,7 @@ public class TeamsV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call updateTeamCall(String owner, String teamName, V1Team body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call teamsV1UpdateTeamCall(String owner, String teamName, V1Team body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -1689,25 +1689,25 @@ public class TeamsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call updateTeamValidateBeforeCall(String owner, String teamName, V1Team body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call teamsV1UpdateTeamValidateBeforeCall(String owner, String teamName, V1Team body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling updateTeam(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling teamsV1UpdateTeam(Async)");
         }
         
         // verify the required parameter 'teamName' is set
         if (teamName == null) {
-            throw new ApiException("Missing the required parameter 'teamName' when calling updateTeam(Async)");
+            throw new ApiException("Missing the required parameter 'teamName' when calling teamsV1UpdateTeam(Async)");
         }
         
         // verify the required parameter 'body' is set
         if (body == null) {
-            throw new ApiException("Missing the required parameter 'body' when calling updateTeam(Async)");
+            throw new ApiException("Missing the required parameter 'body' when calling teamsV1UpdateTeam(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = updateTeamCall(owner, teamName, body, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = teamsV1UpdateTeamCall(owner, teamName, body, progressListener, progressRequestListener);
         return call;
 
     }
@@ -1721,8 +1721,8 @@ public class TeamsV1Api {
      * @return V1Team
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1Team updateTeam(String owner, String teamName, V1Team body) throws ApiException {
-        ApiResponse<V1Team> resp = updateTeamWithHttpInfo(owner, teamName, body);
+    public V1Team teamsV1UpdateTeam(String owner, String teamName, V1Team body) throws ApiException {
+        ApiResponse<V1Team> resp = teamsV1UpdateTeamWithHttpInfo(owner, teamName, body);
         return resp.getData();
     }
 
@@ -1735,8 +1735,8 @@ public class TeamsV1Api {
      * @return ApiResponse&lt;V1Team&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1Team> updateTeamWithHttpInfo(String owner, String teamName, V1Team body) throws ApiException {
-        com.squareup.okhttp.Call call = updateTeamValidateBeforeCall(owner, teamName, body, null, null);
+    public ApiResponse<V1Team> teamsV1UpdateTeamWithHttpInfo(String owner, String teamName, V1Team body) throws ApiException {
+        com.squareup.okhttp.Call call = teamsV1UpdateTeamValidateBeforeCall(owner, teamName, body, null, null);
         Type localVarReturnType = new TypeToken<V1Team>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -1751,7 +1751,7 @@ public class TeamsV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call updateTeamAsync(String owner, String teamName, V1Team body, final ApiCallback<V1Team> callback) throws ApiException {
+    public com.squareup.okhttp.Call teamsV1UpdateTeamAsync(String owner, String teamName, V1Team body, final ApiCallback<V1Team> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -1772,13 +1772,13 @@ public class TeamsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = updateTeamValidateBeforeCall(owner, teamName, body, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = teamsV1UpdateTeamValidateBeforeCall(owner, teamName, body, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1Team>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
     /**
-     * Build call for updateTeamMember
+     * Build call for teamsV1UpdateTeamMember
      * @param owner Owner of the namespace (required)
      * @param team Team (required)
      * @param memberUser User (required)
@@ -1788,7 +1788,7 @@ public class TeamsV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call updateTeamMemberCall(String owner, String team, String memberUser, V1TeamMember body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call teamsV1UpdateTeamMemberCall(String owner, String team, String memberUser, V1TeamMember body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -1833,30 +1833,30 @@ public class TeamsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call updateTeamMemberValidateBeforeCall(String owner, String team, String memberUser, V1TeamMember body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call teamsV1UpdateTeamMemberValidateBeforeCall(String owner, String team, String memberUser, V1TeamMember body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling updateTeamMember(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling teamsV1UpdateTeamMember(Async)");
         }
         
         // verify the required parameter 'team' is set
         if (team == null) {
-            throw new ApiException("Missing the required parameter 'team' when calling updateTeamMember(Async)");
+            throw new ApiException("Missing the required parameter 'team' when calling teamsV1UpdateTeamMember(Async)");
         }
         
         // verify the required parameter 'memberUser' is set
         if (memberUser == null) {
-            throw new ApiException("Missing the required parameter 'memberUser' when calling updateTeamMember(Async)");
+            throw new ApiException("Missing the required parameter 'memberUser' when calling teamsV1UpdateTeamMember(Async)");
         }
         
         // verify the required parameter 'body' is set
         if (body == null) {
-            throw new ApiException("Missing the required parameter 'body' when calling updateTeamMember(Async)");
+            throw new ApiException("Missing the required parameter 'body' when calling teamsV1UpdateTeamMember(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = updateTeamMemberCall(owner, team, memberUser, body, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = teamsV1UpdateTeamMemberCall(owner, team, memberUser, body, progressListener, progressRequestListener);
         return call;
 
     }
@@ -1871,8 +1871,8 @@ public class TeamsV1Api {
      * @return V1TeamMember
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1TeamMember updateTeamMember(String owner, String team, String memberUser, V1TeamMember body) throws ApiException {
-        ApiResponse<V1TeamMember> resp = updateTeamMemberWithHttpInfo(owner, team, memberUser, body);
+    public V1TeamMember teamsV1UpdateTeamMember(String owner, String team, String memberUser, V1TeamMember body) throws ApiException {
+        ApiResponse<V1TeamMember> resp = teamsV1UpdateTeamMemberWithHttpInfo(owner, team, memberUser, body);
         return resp.getData();
     }
 
@@ -1886,8 +1886,8 @@ public class TeamsV1Api {
      * @return ApiResponse&lt;V1TeamMember&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1TeamMember> updateTeamMemberWithHttpInfo(String owner, String team, String memberUser, V1TeamMember body) throws ApiException {
-        com.squareup.okhttp.Call call = updateTeamMemberValidateBeforeCall(owner, team, memberUser, body, null, null);
+    public ApiResponse<V1TeamMember> teamsV1UpdateTeamMemberWithHttpInfo(String owner, String team, String memberUser, V1TeamMember body) throws ApiException {
+        com.squareup.okhttp.Call call = teamsV1UpdateTeamMemberValidateBeforeCall(owner, team, memberUser, body, null, null);
         Type localVarReturnType = new TypeToken<V1TeamMember>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -1903,7 +1903,7 @@ public class TeamsV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call updateTeamMemberAsync(String owner, String team, String memberUser, V1TeamMember body, final ApiCallback<V1TeamMember> callback) throws ApiException {
+    public com.squareup.okhttp.Call teamsV1UpdateTeamMemberAsync(String owner, String team, String memberUser, V1TeamMember body, final ApiCallback<V1TeamMember> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -1924,7 +1924,7 @@ public class TeamsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = updateTeamMemberValidateBeforeCall(owner, team, memberUser, body, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = teamsV1UpdateTeamMemberValidateBeforeCall(owner, team, memberUser, body, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1TeamMember>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;

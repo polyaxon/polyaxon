@@ -63,8 +63,8 @@
 
 
     /**
-     * Callback function to receive the result of the login operation.
-     * @callback module:api/AuthV1Api~loginCallback
+     * Callback function to receive the result of the authV1Login operation.
+     * @callback module:api/AuthV1Api~authV1LoginCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1Auth} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -73,15 +73,15 @@
     /**
      * List organization level queues names
      * @param {module:model/V1CredsBodyRequest} body 
-     * @param {module:api/AuthV1Api~loginCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/AuthV1Api~authV1LoginCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1Auth}
      */
-    this.login = function(body, callback) {
+    this.authV1Login = function(body, callback) {
       var postBody = body;
 
       // verify the required parameter 'body' is set
       if (body === undefined || body === null) {
-        throw new Error("Missing the required parameter 'body' when calling login");
+        throw new Error("Missing the required parameter 'body' when calling authV1Login");
       }
 
 

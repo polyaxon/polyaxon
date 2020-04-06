@@ -45,44 +45,44 @@ class TestDashboardsV1Api(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def test_create_dashboard(self):
-        """Test case for create_dashboard
+    def test_dashboards_v1_create_dashboard(self):
+        """Test case for dashboards_v1_create_dashboard
 
         """
         pass
 
-    def test_delete_dashboard(self):
-        """Test case for delete_dashboard
+    def test_dashboards_v1_delete_dashboard(self):
+        """Test case for dashboards_v1_delete_dashboard
 
         """
         pass
 
-    def test_get_dashboard(self):
-        """Test case for get_dashboard
+    def test_dashboards_v1_get_dashboard(self):
+        """Test case for dashboards_v1_get_dashboard
 
         """
         pass
 
-    def test_list_dashboard_names(self):
-        """Test case for list_dashboard_names
+    def test_dashboards_v1_list_dashboard_names(self):
+        """Test case for dashboards_v1_list_dashboard_names
 
         """
         pass
 
-    def test_list_dashboards(self):
-        """Test case for list_dashboards
+    def test_dashboards_v1_list_dashboards(self):
+        """Test case for dashboards_v1_list_dashboards
 
         """
         pass
 
-    def test_patch_dashboard(self):
-        """Test case for patch_dashboard
+    def test_dashboards_v1_patch_dashboard(self):
+        """Test case for dashboards_v1_patch_dashboard
 
         """
         pass
 
-    def test_update_dashboard(self):
-        """Test case for update_dashboard
+    def test_dashboards_v1_update_dashboard(self):
+        """Test case for dashboards_v1_update_dashboard
 
         """
         pass

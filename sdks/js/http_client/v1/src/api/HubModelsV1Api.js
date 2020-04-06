@@ -63,8 +63,8 @@
 
 
     /**
-     * Callback function to receive the result of the createHubModel operation.
-     * @callback module:api/HubModelsV1Api~createHubModelCallback
+     * Callback function to receive the result of the hubModelsV1CreateHubModel operation.
+     * @callback module:api/HubModelsV1Api~hubModelsV1CreateHubModelCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1HubModel} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -74,20 +74,20 @@
      * Create dashboard
      * @param {String} owner Owner of the namespace
      * @param {module:model/V1HubModel} body Model body
-     * @param {module:api/HubModelsV1Api~createHubModelCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/HubModelsV1Api~hubModelsV1CreateHubModelCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1HubModel}
      */
-    this.createHubModel = function(owner, body, callback) {
+    this.hubModelsV1CreateHubModel = function(owner, body, callback) {
       var postBody = body;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling createHubModel");
+        throw new Error("Missing the required parameter 'owner' when calling hubModelsV1CreateHubModel");
       }
 
       // verify the required parameter 'body' is set
       if (body === undefined || body === null) {
-        throw new Error("Missing the required parameter 'body' when calling createHubModel");
+        throw new Error("Missing the required parameter 'body' when calling hubModelsV1CreateHubModel");
       }
 
 
@@ -116,8 +116,8 @@
     }
 
     /**
-     * Callback function to receive the result of the deleteHubModel operation.
-     * @callback module:api/HubModelsV1Api~deleteHubModelCallback
+     * Callback function to receive the result of the hubModelsV1DeleteHubModel operation.
+     * @callback module:api/HubModelsV1Api~hubModelsV1DeleteHubModelCallback
      * @param {String} error Error message, if any.
      * @param data This operation does not return a value.
      * @param {String} response The complete HTTP response.
@@ -127,19 +127,19 @@
      * Delete dashboard
      * @param {String} owner Owner of the namespace
      * @param {String} uuid Uuid identifier of the entity
-     * @param {module:api/HubModelsV1Api~deleteHubModelCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/HubModelsV1Api~hubModelsV1DeleteHubModelCallback} callback The callback function, accepting three arguments: error, data, response
      */
-    this.deleteHubModel = function(owner, uuid, callback) {
+    this.hubModelsV1DeleteHubModel = function(owner, uuid, callback) {
       var postBody = null;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling deleteHubModel");
+        throw new Error("Missing the required parameter 'owner' when calling hubModelsV1DeleteHubModel");
       }
 
       // verify the required parameter 'uuid' is set
       if (uuid === undefined || uuid === null) {
-        throw new Error("Missing the required parameter 'uuid' when calling deleteHubModel");
+        throw new Error("Missing the required parameter 'uuid' when calling hubModelsV1DeleteHubModel");
       }
 
 
@@ -169,8 +169,8 @@
     }
 
     /**
-     * Callback function to receive the result of the getHubModel operation.
-     * @callback module:api/HubModelsV1Api~getHubModelCallback
+     * Callback function to receive the result of the hubModelsV1GetHubModel operation.
+     * @callback module:api/HubModelsV1Api~hubModelsV1GetHubModelCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1HubModel} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -180,20 +180,20 @@
      * Get dashboard
      * @param {String} owner Owner of the namespace
      * @param {String} uuid Uuid identifier of the entity
-     * @param {module:api/HubModelsV1Api~getHubModelCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/HubModelsV1Api~hubModelsV1GetHubModelCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1HubModel}
      */
-    this.getHubModel = function(owner, uuid, callback) {
+    this.hubModelsV1GetHubModel = function(owner, uuid, callback) {
       var postBody = null;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling getHubModel");
+        throw new Error("Missing the required parameter 'owner' when calling hubModelsV1GetHubModel");
       }
 
       // verify the required parameter 'uuid' is set
       if (uuid === undefined || uuid === null) {
-        throw new Error("Missing the required parameter 'uuid' when calling getHubModel");
+        throw new Error("Missing the required parameter 'uuid' when calling hubModelsV1GetHubModel");
       }
 
 
@@ -223,8 +223,8 @@
     }
 
     /**
-     * Callback function to receive the result of the listHubModelNames operation.
-     * @callback module:api/HubModelsV1Api~listHubModelNamesCallback
+     * Callback function to receive the result of the hubModelsV1ListHubModelNames operation.
+     * @callback module:api/HubModelsV1Api~hubModelsV1ListHubModelNamesCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1ListHubModelsResponse} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -238,16 +238,16 @@
      * @param {Number} opts.limit Limit size.
      * @param {String} opts.sort Sort to order the search.
      * @param {String} opts.query Query filter the search search.
-     * @param {module:api/HubModelsV1Api~listHubModelNamesCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/HubModelsV1Api~hubModelsV1ListHubModelNamesCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1ListHubModelsResponse}
      */
-    this.listHubModelNames = function(owner, opts, callback) {
+    this.hubModelsV1ListHubModelNames = function(owner, opts, callback) {
       opts = opts || {};
       var postBody = null;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling listHubModelNames");
+        throw new Error("Missing the required parameter 'owner' when calling hubModelsV1ListHubModelNames");
       }
 
 
@@ -280,8 +280,8 @@
     }
 
     /**
-     * Callback function to receive the result of the listHubModels operation.
-     * @callback module:api/HubModelsV1Api~listHubModelsCallback
+     * Callback function to receive the result of the hubModelsV1ListHubModels operation.
+     * @callback module:api/HubModelsV1Api~hubModelsV1ListHubModelsCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1ListHubModelsResponse} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -295,16 +295,16 @@
      * @param {Number} opts.limit Limit size.
      * @param {String} opts.sort Sort to order the search.
      * @param {String} opts.query Query filter the search search.
-     * @param {module:api/HubModelsV1Api~listHubModelsCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/HubModelsV1Api~hubModelsV1ListHubModelsCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1ListHubModelsResponse}
      */
-    this.listHubModels = function(owner, opts, callback) {
+    this.hubModelsV1ListHubModels = function(owner, opts, callback) {
       opts = opts || {};
       var postBody = null;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling listHubModels");
+        throw new Error("Missing the required parameter 'owner' when calling hubModelsV1ListHubModels");
       }
 
 
@@ -337,8 +337,8 @@
     }
 
     /**
-     * Callback function to receive the result of the patchHubModel operation.
-     * @callback module:api/HubModelsV1Api~patchHubModelCallback
+     * Callback function to receive the result of the hubModelsV1PatchHubModel operation.
+     * @callback module:api/HubModelsV1Api~hubModelsV1PatchHubModelCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1HubModel} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -349,25 +349,25 @@
      * @param {String} owner Owner of the namespace
      * @param {String} model_uuid UUID
      * @param {module:model/V1HubModel} body Model body
-     * @param {module:api/HubModelsV1Api~patchHubModelCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/HubModelsV1Api~hubModelsV1PatchHubModelCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1HubModel}
      */
-    this.patchHubModel = function(owner, model_uuid, body, callback) {
+    this.hubModelsV1PatchHubModel = function(owner, model_uuid, body, callback) {
       var postBody = body;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling patchHubModel");
+        throw new Error("Missing the required parameter 'owner' when calling hubModelsV1PatchHubModel");
       }
 
       // verify the required parameter 'model_uuid' is set
       if (model_uuid === undefined || model_uuid === null) {
-        throw new Error("Missing the required parameter 'model_uuid' when calling patchHubModel");
+        throw new Error("Missing the required parameter 'model_uuid' when calling hubModelsV1PatchHubModel");
       }
 
       // verify the required parameter 'body' is set
       if (body === undefined || body === null) {
-        throw new Error("Missing the required parameter 'body' when calling patchHubModel");
+        throw new Error("Missing the required parameter 'body' when calling hubModelsV1PatchHubModel");
       }
 
 
@@ -397,8 +397,8 @@
     }
 
     /**
-     * Callback function to receive the result of the updateHubModel operation.
-     * @callback module:api/HubModelsV1Api~updateHubModelCallback
+     * Callback function to receive the result of the hubModelsV1UpdateHubModel operation.
+     * @callback module:api/HubModelsV1Api~hubModelsV1UpdateHubModelCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1HubModel} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -409,25 +409,25 @@
      * @param {String} owner Owner of the namespace
      * @param {String} model_uuid UUID
      * @param {module:model/V1HubModel} body Model body
-     * @param {module:api/HubModelsV1Api~updateHubModelCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/HubModelsV1Api~hubModelsV1UpdateHubModelCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1HubModel}
      */
-    this.updateHubModel = function(owner, model_uuid, body, callback) {
+    this.hubModelsV1UpdateHubModel = function(owner, model_uuid, body, callback) {
       var postBody = body;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling updateHubModel");
+        throw new Error("Missing the required parameter 'owner' when calling hubModelsV1UpdateHubModel");
       }
 
       // verify the required parameter 'model_uuid' is set
       if (model_uuid === undefined || model_uuid === null) {
-        throw new Error("Missing the required parameter 'model_uuid' when calling updateHubModel");
+        throw new Error("Missing the required parameter 'model_uuid' when calling hubModelsV1UpdateHubModel");
       }
 
       // verify the required parameter 'body' is set
       if (body === undefined || body === null) {
-        throw new Error("Missing the required parameter 'body' when calling updateHubModel");
+        throw new Error("Missing the required parameter 'body' when calling hubModelsV1UpdateHubModel");
       }
 
 

@@ -4,24 +4,24 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**createTeam**](TeamsV1Api.md#createTeam) | **POST** /api/v1/orgs/{owner}/teams | Create organization
-[**createTeamMember**](TeamsV1Api.md#createTeamMember) | **POST** /api/v1/orgs/{owner}/teams/{team}/members | Create organization member
-[**deleteTeam**](TeamsV1Api.md#deleteTeam) | **DELETE** /api/v1/orgs/{owner}/teams/{team} | Delete organization
-[**deleteTeamMember**](TeamsV1Api.md#deleteTeamMember) | **DELETE** /api/v1/orgs/{owner}/teams/{team}/members/{user} | Delete organization member details
-[**getTeam**](TeamsV1Api.md#getTeam) | **GET** /api/v1/orgs/{owner}/teams/{team} | Get organization
-[**getTeamMember**](TeamsV1Api.md#getTeamMember) | **GET** /api/v1/orgs/{owner}/teams/{team}/members/{user} | Get organization member details
-[**listTeamMembers**](TeamsV1Api.md#listTeamMembers) | **GET** /api/v1/orgs/{owner}/teams/{team}/members | Get organization members
-[**listTeamNames**](TeamsV1Api.md#listTeamNames) | **GET** /api/v1/orgs/{owner}/teams/names | List organizations names
-[**listTeams**](TeamsV1Api.md#listTeams) | **GET** /api/v1/orgs/{owner}/teams | List organizations
-[**patchTeam**](TeamsV1Api.md#patchTeam) | **PATCH** /api/v1/orgs/{owner}/teams/{team.name} | Patch organization
-[**patchTeamMember**](TeamsV1Api.md#patchTeamMember) | **PATCH** /api/v1/orgs/{owner}/teams/{team}/members/{member.user} | Patch organization member
-[**updateTeam**](TeamsV1Api.md#updateTeam) | **PUT** /api/v1/orgs/{owner}/teams/{team.name} | Update organization
-[**updateTeamMember**](TeamsV1Api.md#updateTeamMember) | **PUT** /api/v1/orgs/{owner}/teams/{team}/members/{member.user} | Update organization member
+[**teamsV1CreateTeam**](TeamsV1Api.md#teamsV1CreateTeam) | **POST** /api/v1/orgs/{owner}/teams | Create organization
+[**teamsV1CreateTeamMember**](TeamsV1Api.md#teamsV1CreateTeamMember) | **POST** /api/v1/orgs/{owner}/teams/{team}/members | Create organization member
+[**teamsV1DeleteTeam**](TeamsV1Api.md#teamsV1DeleteTeam) | **DELETE** /api/v1/orgs/{owner}/teams/{team} | Delete organization
+[**teamsV1DeleteTeamMember**](TeamsV1Api.md#teamsV1DeleteTeamMember) | **DELETE** /api/v1/orgs/{owner}/teams/{team}/members/{user} | Delete organization member details
+[**teamsV1GetTeam**](TeamsV1Api.md#teamsV1GetTeam) | **GET** /api/v1/orgs/{owner}/teams/{team} | Get organization
+[**teamsV1GetTeamMember**](TeamsV1Api.md#teamsV1GetTeamMember) | **GET** /api/v1/orgs/{owner}/teams/{team}/members/{user} | Get organization member details
+[**teamsV1ListTeamMembers**](TeamsV1Api.md#teamsV1ListTeamMembers) | **GET** /api/v1/orgs/{owner}/teams/{team}/members | Get organization members
+[**teamsV1ListTeamNames**](TeamsV1Api.md#teamsV1ListTeamNames) | **GET** /api/v1/orgs/{owner}/teams/names | List organizations names
+[**teamsV1ListTeams**](TeamsV1Api.md#teamsV1ListTeams) | **GET** /api/v1/orgs/{owner}/teams | List organizations
+[**teamsV1PatchTeam**](TeamsV1Api.md#teamsV1PatchTeam) | **PATCH** /api/v1/orgs/{owner}/teams/{team.name} | Patch organization
+[**teamsV1PatchTeamMember**](TeamsV1Api.md#teamsV1PatchTeamMember) | **PATCH** /api/v1/orgs/{owner}/teams/{team}/members/{member.user} | Patch organization member
+[**teamsV1UpdateTeam**](TeamsV1Api.md#teamsV1UpdateTeam) | **PUT** /api/v1/orgs/{owner}/teams/{team.name} | Update organization
+[**teamsV1UpdateTeamMember**](TeamsV1Api.md#teamsV1UpdateTeamMember) | **PUT** /api/v1/orgs/{owner}/teams/{team}/members/{member.user} | Update organization member
 
 
-<a name="createTeam"></a>
-# **createTeam**
-> V1Team createTeam(owner, body)
+<a name="teamsV1CreateTeam"></a>
+# **teamsV1CreateTeam**
+> V1Team teamsV1CreateTeam(owner, body)
 
 Create organization
 
@@ -46,10 +46,10 @@ TeamsV1Api apiInstance = new TeamsV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
 V1Team body = new V1Team(); // V1Team | Team body
 try {
-    V1Team result = apiInstance.createTeam(owner, body);
+    V1Team result = apiInstance.teamsV1CreateTeam(owner, body);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling TeamsV1Api#createTeam");
+    System.err.println("Exception when calling TeamsV1Api#teamsV1CreateTeam");
     e.printStackTrace();
 }
 ```
@@ -74,9 +74,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="createTeamMember"></a>
-# **createTeamMember**
-> V1TeamMember createTeamMember(owner, team, body)
+<a name="teamsV1CreateTeamMember"></a>
+# **teamsV1CreateTeamMember**
+> V1TeamMember teamsV1CreateTeamMember(owner, team, body)
 
 Create organization member
 
@@ -102,10 +102,10 @@ String owner = "owner_example"; // String | Owner of the namespace
 String team = "team_example"; // String | Team
 V1TeamMember body = new V1TeamMember(); // V1TeamMember | Team body
 try {
-    V1TeamMember result = apiInstance.createTeamMember(owner, team, body);
+    V1TeamMember result = apiInstance.teamsV1CreateTeamMember(owner, team, body);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling TeamsV1Api#createTeamMember");
+    System.err.println("Exception when calling TeamsV1Api#teamsV1CreateTeamMember");
     e.printStackTrace();
 }
 ```
@@ -131,9 +131,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="deleteTeam"></a>
-# **deleteTeam**
-> deleteTeam(owner, team)
+<a name="teamsV1DeleteTeam"></a>
+# **teamsV1DeleteTeam**
+> teamsV1DeleteTeam(owner, team)
 
 Delete organization
 
@@ -158,9 +158,9 @@ TeamsV1Api apiInstance = new TeamsV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
 String team = "team_example"; // String | Team under namesapce
 try {
-    apiInstance.deleteTeam(owner, team);
+    apiInstance.teamsV1DeleteTeam(owner, team);
 } catch (ApiException e) {
-    System.err.println("Exception when calling TeamsV1Api#deleteTeam");
+    System.err.println("Exception when calling TeamsV1Api#teamsV1DeleteTeam");
     e.printStackTrace();
 }
 ```
@@ -185,9 +185,9 @@ null (empty response body)
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="deleteTeamMember"></a>
-# **deleteTeamMember**
-> deleteTeamMember(owner, team, user)
+<a name="teamsV1DeleteTeamMember"></a>
+# **teamsV1DeleteTeamMember**
+> teamsV1DeleteTeamMember(owner, team, user)
 
 Delete organization member details
 
@@ -213,9 +213,9 @@ String owner = "owner_example"; // String | Owner of the namespace
 String team = "team_example"; // String | Team under namesapce
 String user = "user_example"; // String | Member under team
 try {
-    apiInstance.deleteTeamMember(owner, team, user);
+    apiInstance.teamsV1DeleteTeamMember(owner, team, user);
 } catch (ApiException e) {
-    System.err.println("Exception when calling TeamsV1Api#deleteTeamMember");
+    System.err.println("Exception when calling TeamsV1Api#teamsV1DeleteTeamMember");
     e.printStackTrace();
 }
 ```
@@ -241,9 +241,9 @@ null (empty response body)
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="getTeam"></a>
-# **getTeam**
-> V1Team getTeam(owner, team)
+<a name="teamsV1GetTeam"></a>
+# **teamsV1GetTeam**
+> V1Team teamsV1GetTeam(owner, team)
 
 Get organization
 
@@ -268,10 +268,10 @@ TeamsV1Api apiInstance = new TeamsV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
 String team = "team_example"; // String | Team under namesapce
 try {
-    V1Team result = apiInstance.getTeam(owner, team);
+    V1Team result = apiInstance.teamsV1GetTeam(owner, team);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling TeamsV1Api#getTeam");
+    System.err.println("Exception when calling TeamsV1Api#teamsV1GetTeam");
     e.printStackTrace();
 }
 ```
@@ -296,9 +296,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="getTeamMember"></a>
-# **getTeamMember**
-> V1TeamMember getTeamMember(owner, team, user)
+<a name="teamsV1GetTeamMember"></a>
+# **teamsV1GetTeamMember**
+> V1TeamMember teamsV1GetTeamMember(owner, team, user)
 
 Get organization member details
 
@@ -324,10 +324,10 @@ String owner = "owner_example"; // String | Owner of the namespace
 String team = "team_example"; // String | Team under namesapce
 String user = "user_example"; // String | Member under team
 try {
-    V1TeamMember result = apiInstance.getTeamMember(owner, team, user);
+    V1TeamMember result = apiInstance.teamsV1GetTeamMember(owner, team, user);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling TeamsV1Api#getTeamMember");
+    System.err.println("Exception when calling TeamsV1Api#teamsV1GetTeamMember");
     e.printStackTrace();
 }
 ```
@@ -353,9 +353,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="listTeamMembers"></a>
-# **listTeamMembers**
-> V1ListTeamMembersResponse listTeamMembers(owner, team, offset, limit, sort, query)
+<a name="teamsV1ListTeamMembers"></a>
+# **teamsV1ListTeamMembers**
+> V1ListTeamMembersResponse teamsV1ListTeamMembers(owner, team, offset, limit, sort, query)
 
 Get organization members
 
@@ -384,10 +384,10 @@ Integer limit = 56; // Integer | Limit size.
 String sort = "sort_example"; // String | Sort to order the search.
 String query = "query_example"; // String | Query filter the search search.
 try {
-    V1ListTeamMembersResponse result = apiInstance.listTeamMembers(owner, team, offset, limit, sort, query);
+    V1ListTeamMembersResponse result = apiInstance.teamsV1ListTeamMembers(owner, team, offset, limit, sort, query);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling TeamsV1Api#listTeamMembers");
+    System.err.println("Exception when calling TeamsV1Api#teamsV1ListTeamMembers");
     e.printStackTrace();
 }
 ```
@@ -416,9 +416,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="listTeamNames"></a>
-# **listTeamNames**
-> V1ListTeamsResponse listTeamNames(owner, offset, limit, sort, query)
+<a name="teamsV1ListTeamNames"></a>
+# **teamsV1ListTeamNames**
+> V1ListTeamsResponse teamsV1ListTeamNames(owner, offset, limit, sort, query)
 
 List organizations names
 
@@ -446,10 +446,10 @@ Integer limit = 56; // Integer | Limit size.
 String sort = "sort_example"; // String | Sort to order the search.
 String query = "query_example"; // String | Query filter the search search.
 try {
-    V1ListTeamsResponse result = apiInstance.listTeamNames(owner, offset, limit, sort, query);
+    V1ListTeamsResponse result = apiInstance.teamsV1ListTeamNames(owner, offset, limit, sort, query);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling TeamsV1Api#listTeamNames");
+    System.err.println("Exception when calling TeamsV1Api#teamsV1ListTeamNames");
     e.printStackTrace();
 }
 ```
@@ -477,9 +477,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="listTeams"></a>
-# **listTeams**
-> V1ListTeamsResponse listTeams(owner, offset, limit, sort, query)
+<a name="teamsV1ListTeams"></a>
+# **teamsV1ListTeams**
+> V1ListTeamsResponse teamsV1ListTeams(owner, offset, limit, sort, query)
 
 List organizations
 
@@ -507,10 +507,10 @@ Integer limit = 56; // Integer | Limit size.
 String sort = "sort_example"; // String | Sort to order the search.
 String query = "query_example"; // String | Query filter the search search.
 try {
-    V1ListTeamsResponse result = apiInstance.listTeams(owner, offset, limit, sort, query);
+    V1ListTeamsResponse result = apiInstance.teamsV1ListTeams(owner, offset, limit, sort, query);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling TeamsV1Api#listTeams");
+    System.err.println("Exception when calling TeamsV1Api#teamsV1ListTeams");
     e.printStackTrace();
 }
 ```
@@ -538,9 +538,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="patchTeam"></a>
-# **patchTeam**
-> V1Team patchTeam(owner, teamName, body)
+<a name="teamsV1PatchTeam"></a>
+# **teamsV1PatchTeam**
+> V1Team teamsV1PatchTeam(owner, teamName, body)
 
 Patch organization
 
@@ -566,10 +566,10 @@ String owner = "owner_example"; // String | Owner of the namespace
 String teamName = "teamName_example"; // String | Name
 V1Team body = new V1Team(); // V1Team | Team body
 try {
-    V1Team result = apiInstance.patchTeam(owner, teamName, body);
+    V1Team result = apiInstance.teamsV1PatchTeam(owner, teamName, body);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling TeamsV1Api#patchTeam");
+    System.err.println("Exception when calling TeamsV1Api#teamsV1PatchTeam");
     e.printStackTrace();
 }
 ```
@@ -595,9 +595,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="patchTeamMember"></a>
-# **patchTeamMember**
-> V1TeamMember patchTeamMember(owner, team, memberUser, body)
+<a name="teamsV1PatchTeamMember"></a>
+# **teamsV1PatchTeamMember**
+> V1TeamMember teamsV1PatchTeamMember(owner, team, memberUser, body)
 
 Patch organization member
 
@@ -624,10 +624,10 @@ String team = "team_example"; // String | Team
 String memberUser = "memberUser_example"; // String | User
 V1TeamMember body = new V1TeamMember(); // V1TeamMember | Team body
 try {
-    V1TeamMember result = apiInstance.patchTeamMember(owner, team, memberUser, body);
+    V1TeamMember result = apiInstance.teamsV1PatchTeamMember(owner, team, memberUser, body);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling TeamsV1Api#patchTeamMember");
+    System.err.println("Exception when calling TeamsV1Api#teamsV1PatchTeamMember");
     e.printStackTrace();
 }
 ```
@@ -654,9 +654,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="updateTeam"></a>
-# **updateTeam**
-> V1Team updateTeam(owner, teamName, body)
+<a name="teamsV1UpdateTeam"></a>
+# **teamsV1UpdateTeam**
+> V1Team teamsV1UpdateTeam(owner, teamName, body)
 
 Update organization
 
@@ -682,10 +682,10 @@ String owner = "owner_example"; // String | Owner of the namespace
 String teamName = "teamName_example"; // String | Name
 V1Team body = new V1Team(); // V1Team | Team body
 try {
-    V1Team result = apiInstance.updateTeam(owner, teamName, body);
+    V1Team result = apiInstance.teamsV1UpdateTeam(owner, teamName, body);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling TeamsV1Api#updateTeam");
+    System.err.println("Exception when calling TeamsV1Api#teamsV1UpdateTeam");
     e.printStackTrace();
 }
 ```
@@ -711,9 +711,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="updateTeamMember"></a>
-# **updateTeamMember**
-> V1TeamMember updateTeamMember(owner, team, memberUser, body)
+<a name="teamsV1UpdateTeamMember"></a>
+# **teamsV1UpdateTeamMember**
+> V1TeamMember teamsV1UpdateTeamMember(owner, team, memberUser, body)
 
 Update organization member
 
@@ -740,10 +740,10 @@ String team = "team_example"; // String | Team
 String memberUser = "memberUser_example"; // String | User
 V1TeamMember body = new V1TeamMember(); // V1TeamMember | Team body
 try {
-    V1TeamMember result = apiInstance.updateTeamMember(owner, team, memberUser, body);
+    V1TeamMember result = apiInstance.teamsV1UpdateTeamMember(owner, team, memberUser, body);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling TeamsV1Api#updateTeamMember");
+    System.err.println("Exception when calling TeamsV1Api#teamsV1UpdateTeamMember");
     e.printStackTrace();
 }
 ```

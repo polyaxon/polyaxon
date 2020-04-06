@@ -63,8 +63,8 @@
 
 
     /**
-     * Callback function to receive the result of the createRunProfile operation.
-     * @callback module:api/RunProfilesV1Api~createRunProfileCallback
+     * Callback function to receive the result of the runProfilesV1CreateRunProfile operation.
+     * @callback module:api/RunProfilesV1Api~runProfilesV1CreateRunProfileCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1RunProfile} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -74,20 +74,20 @@
      * Create hub component
      * @param {String} owner Owner of the namespace
      * @param {module:model/V1RunProfile} body Artifact store body
-     * @param {module:api/RunProfilesV1Api~createRunProfileCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/RunProfilesV1Api~runProfilesV1CreateRunProfileCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1RunProfile}
      */
-    this.createRunProfile = function(owner, body, callback) {
+    this.runProfilesV1CreateRunProfile = function(owner, body, callback) {
       var postBody = body;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling createRunProfile");
+        throw new Error("Missing the required parameter 'owner' when calling runProfilesV1CreateRunProfile");
       }
 
       // verify the required parameter 'body' is set
       if (body === undefined || body === null) {
-        throw new Error("Missing the required parameter 'body' when calling createRunProfile");
+        throw new Error("Missing the required parameter 'body' when calling runProfilesV1CreateRunProfile");
       }
 
 
@@ -116,8 +116,8 @@
     }
 
     /**
-     * Callback function to receive the result of the deleteRunProfile operation.
-     * @callback module:api/RunProfilesV1Api~deleteRunProfileCallback
+     * Callback function to receive the result of the runProfilesV1DeleteRunProfile operation.
+     * @callback module:api/RunProfilesV1Api~runProfilesV1DeleteRunProfileCallback
      * @param {String} error Error message, if any.
      * @param data This operation does not return a value.
      * @param {String} response The complete HTTP response.
@@ -127,19 +127,19 @@
      * Delete hub component
      * @param {String} owner Owner of the namespace
      * @param {String} uuid Uuid identifier of the entity
-     * @param {module:api/RunProfilesV1Api~deleteRunProfileCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/RunProfilesV1Api~runProfilesV1DeleteRunProfileCallback} callback The callback function, accepting three arguments: error, data, response
      */
-    this.deleteRunProfile = function(owner, uuid, callback) {
+    this.runProfilesV1DeleteRunProfile = function(owner, uuid, callback) {
       var postBody = null;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling deleteRunProfile");
+        throw new Error("Missing the required parameter 'owner' when calling runProfilesV1DeleteRunProfile");
       }
 
       // verify the required parameter 'uuid' is set
       if (uuid === undefined || uuid === null) {
-        throw new Error("Missing the required parameter 'uuid' when calling deleteRunProfile");
+        throw new Error("Missing the required parameter 'uuid' when calling runProfilesV1DeleteRunProfile");
       }
 
 
@@ -169,8 +169,8 @@
     }
 
     /**
-     * Callback function to receive the result of the getRunProfile operation.
-     * @callback module:api/RunProfilesV1Api~getRunProfileCallback
+     * Callback function to receive the result of the runProfilesV1GetRunProfile operation.
+     * @callback module:api/RunProfilesV1Api~runProfilesV1GetRunProfileCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1RunProfile} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -180,20 +180,20 @@
      * Get hub component
      * @param {String} owner Owner of the namespace
      * @param {String} uuid Uuid identifier of the entity
-     * @param {module:api/RunProfilesV1Api~getRunProfileCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/RunProfilesV1Api~runProfilesV1GetRunProfileCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1RunProfile}
      */
-    this.getRunProfile = function(owner, uuid, callback) {
+    this.runProfilesV1GetRunProfile = function(owner, uuid, callback) {
       var postBody = null;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling getRunProfile");
+        throw new Error("Missing the required parameter 'owner' when calling runProfilesV1GetRunProfile");
       }
 
       // verify the required parameter 'uuid' is set
       if (uuid === undefined || uuid === null) {
-        throw new Error("Missing the required parameter 'uuid' when calling getRunProfile");
+        throw new Error("Missing the required parameter 'uuid' when calling runProfilesV1GetRunProfile");
       }
 
 
@@ -223,8 +223,8 @@
     }
 
     /**
-     * Callback function to receive the result of the listRunProfileNames operation.
-     * @callback module:api/RunProfilesV1Api~listRunProfileNamesCallback
+     * Callback function to receive the result of the runProfilesV1ListRunProfileNames operation.
+     * @callback module:api/RunProfilesV1Api~runProfilesV1ListRunProfileNamesCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1ListRunProfilesResponse} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -238,16 +238,16 @@
      * @param {Number} opts.limit Limit size.
      * @param {String} opts.sort Sort to order the search.
      * @param {String} opts.query Query filter the search search.
-     * @param {module:api/RunProfilesV1Api~listRunProfileNamesCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/RunProfilesV1Api~runProfilesV1ListRunProfileNamesCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1ListRunProfilesResponse}
      */
-    this.listRunProfileNames = function(owner, opts, callback) {
+    this.runProfilesV1ListRunProfileNames = function(owner, opts, callback) {
       opts = opts || {};
       var postBody = null;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling listRunProfileNames");
+        throw new Error("Missing the required parameter 'owner' when calling runProfilesV1ListRunProfileNames");
       }
 
 
@@ -280,8 +280,8 @@
     }
 
     /**
-     * Callback function to receive the result of the listRunProfiles operation.
-     * @callback module:api/RunProfilesV1Api~listRunProfilesCallback
+     * Callback function to receive the result of the runProfilesV1ListRunProfiles operation.
+     * @callback module:api/RunProfilesV1Api~runProfilesV1ListRunProfilesCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1ListRunProfilesResponse} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -295,16 +295,16 @@
      * @param {Number} opts.limit Limit size.
      * @param {String} opts.sort Sort to order the search.
      * @param {String} opts.query Query filter the search search.
-     * @param {module:api/RunProfilesV1Api~listRunProfilesCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/RunProfilesV1Api~runProfilesV1ListRunProfilesCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1ListRunProfilesResponse}
      */
-    this.listRunProfiles = function(owner, opts, callback) {
+    this.runProfilesV1ListRunProfiles = function(owner, opts, callback) {
       opts = opts || {};
       var postBody = null;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling listRunProfiles");
+        throw new Error("Missing the required parameter 'owner' when calling runProfilesV1ListRunProfiles");
       }
 
 
@@ -337,8 +337,8 @@
     }
 
     /**
-     * Callback function to receive the result of the patchRunProfile operation.
-     * @callback module:api/RunProfilesV1Api~patchRunProfileCallback
+     * Callback function to receive the result of the runProfilesV1PatchRunProfile operation.
+     * @callback module:api/RunProfilesV1Api~runProfilesV1PatchRunProfileCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1RunProfile} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -349,25 +349,25 @@
      * @param {String} owner Owner of the namespace
      * @param {String} run_profile_uuid UUID
      * @param {module:model/V1RunProfile} body Artifact store body
-     * @param {module:api/RunProfilesV1Api~patchRunProfileCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/RunProfilesV1Api~runProfilesV1PatchRunProfileCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1RunProfile}
      */
-    this.patchRunProfile = function(owner, run_profile_uuid, body, callback) {
+    this.runProfilesV1PatchRunProfile = function(owner, run_profile_uuid, body, callback) {
       var postBody = body;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling patchRunProfile");
+        throw new Error("Missing the required parameter 'owner' when calling runProfilesV1PatchRunProfile");
       }
 
       // verify the required parameter 'run_profile_uuid' is set
       if (run_profile_uuid === undefined || run_profile_uuid === null) {
-        throw new Error("Missing the required parameter 'run_profile_uuid' when calling patchRunProfile");
+        throw new Error("Missing the required parameter 'run_profile_uuid' when calling runProfilesV1PatchRunProfile");
       }
 
       // verify the required parameter 'body' is set
       if (body === undefined || body === null) {
-        throw new Error("Missing the required parameter 'body' when calling patchRunProfile");
+        throw new Error("Missing the required parameter 'body' when calling runProfilesV1PatchRunProfile");
       }
 
 
@@ -397,8 +397,8 @@
     }
 
     /**
-     * Callback function to receive the result of the updateRunProfile operation.
-     * @callback module:api/RunProfilesV1Api~updateRunProfileCallback
+     * Callback function to receive the result of the runProfilesV1UpdateRunProfile operation.
+     * @callback module:api/RunProfilesV1Api~runProfilesV1UpdateRunProfileCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1RunProfile} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -409,25 +409,25 @@
      * @param {String} owner Owner of the namespace
      * @param {String} run_profile_uuid UUID
      * @param {module:model/V1RunProfile} body Artifact store body
-     * @param {module:api/RunProfilesV1Api~updateRunProfileCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/RunProfilesV1Api~runProfilesV1UpdateRunProfileCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1RunProfile}
      */
-    this.updateRunProfile = function(owner, run_profile_uuid, body, callback) {
+    this.runProfilesV1UpdateRunProfile = function(owner, run_profile_uuid, body, callback) {
       var postBody = body;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling updateRunProfile");
+        throw new Error("Missing the required parameter 'owner' when calling runProfilesV1UpdateRunProfile");
       }
 
       // verify the required parameter 'run_profile_uuid' is set
       if (run_profile_uuid === undefined || run_profile_uuid === null) {
-        throw new Error("Missing the required parameter 'run_profile_uuid' when calling updateRunProfile");
+        throw new Error("Missing the required parameter 'run_profile_uuid' when calling runProfilesV1UpdateRunProfile");
       }
 
       // verify the required parameter 'body' is set
       if (body === undefined || body === null) {
-        throw new Error("Missing the required parameter 'body' when calling updateRunProfile");
+        throw new Error("Missing the required parameter 'body' when calling runProfilesV1UpdateRunProfile");
       }
 
 

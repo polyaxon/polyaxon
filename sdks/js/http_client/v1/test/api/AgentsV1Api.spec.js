@@ -50,9 +50,9 @@
 
   describe('(package)', function() {
     describe('AgentsV1Api', function() {
-      describe('createAgent', function() {
-        it('should call createAgent successfully', function(done) {
-          // TODO: uncomment, update parameter values for createAgent call and complete the assertions
+      describe('agentsV1CreateAgent', function() {
+        it('should call agentsV1CreateAgent successfully', function(done) {
+          // TODO: uncomment, update parameter values for agentsV1CreateAgent call and complete the assertions
           /*
           var owner = "owner_example";
           var body = new PolyaxonSdk.V1Agent();
@@ -70,7 +70,7 @@
           body.updated_at = new Date();
           body.status = new PolyaxonSdk.V1Statuses();
 
-          instance.createAgent(owner, body, function(error, data, response) {
+          instance.agentsV1CreateAgent(owner, body, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -118,9 +118,9 @@
           done();
         });
       });
-      describe('createAgentStatus', function() {
-        it('should call createAgentStatus successfully', function(done) {
-          // TODO: uncomment, update parameter values for createAgentStatus call and complete the assertions
+      describe('agentsV1CreateAgentStatus', function() {
+        it('should call agentsV1CreateAgentStatus successfully', function(done) {
+          // TODO: uncomment, update parameter values for agentsV1CreateAgentStatus call and complete the assertions
           /*
           var owner = "owner_example";
           var uuid = "uuid_example";
@@ -135,7 +135,7 @@
           body.condition.last_update_time = new Date();
           body.condition.last_transition_time = new Date();
 
-          instance.createAgentStatus(owner, uuid, body, function(error, data, response) {
+          instance.agentsV1CreateAgentStatus(owner, uuid, body, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -173,14 +173,14 @@
           done();
         });
       });
-      describe('deleteAgent', function() {
-        it('should call deleteAgent successfully', function(done) {
-          // TODO: uncomment, update parameter values for deleteAgent call
+      describe('agentsV1DeleteAgent', function() {
+        it('should call agentsV1DeleteAgent successfully', function(done) {
+          // TODO: uncomment, update parameter values for agentsV1DeleteAgent call
           /*
           var owner = "owner_example";
           var uuid = "uuid_example";
 
-          instance.deleteAgent(owner, uuid, function(error, data, response) {
+          instance.agentsV1DeleteAgent(owner, uuid, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -193,14 +193,14 @@
           done();
         });
       });
-      describe('getAgent', function() {
-        it('should call getAgent successfully', function(done) {
-          // TODO: uncomment, update parameter values for getAgent call and complete the assertions
+      describe('agentsV1GetAgent', function() {
+        it('should call agentsV1GetAgent successfully', function(done) {
+          // TODO: uncomment, update parameter values for agentsV1GetAgent call and complete the assertions
           /*
           var owner = "owner_example";
           var uuid = "uuid_example";
 
-          instance.getAgent(owner, uuid, function(error, data, response) {
+          instance.agentsV1GetAgent(owner, uuid, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -248,14 +248,14 @@
           done();
         });
       });
-      describe('getAgentState', function() {
-        it('should call getAgentState successfully', function(done) {
-          // TODO: uncomment, update parameter values for getAgentState call and complete the assertions
+      describe('agentsV1GetAgentState', function() {
+        it('should call agentsV1GetAgentState successfully', function(done) {
+          // TODO: uncomment, update parameter values for agentsV1GetAgentState call and complete the assertions
           /*
           var owner = "owner_example";
           var uuid = "uuid_example";
 
-          instance.getAgentState(owner, uuid, function(error, data, response) {
+          instance.agentsV1GetAgentState(owner, uuid, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -288,14 +288,14 @@
           done();
         });
       });
-      describe('getAgentStatuses', function() {
-        it('should call getAgentStatuses successfully', function(done) {
-          // TODO: uncomment, update parameter values for getAgentStatuses call and complete the assertions
+      describe('agentsV1GetAgentStatuses', function() {
+        it('should call agentsV1GetAgentStatuses successfully', function(done) {
+          // TODO: uncomment, update parameter values for agentsV1GetAgentStatuses call and complete the assertions
           /*
           var owner = "owner_example";
           var uuid = "uuid_example";
 
-          instance.getAgentStatuses(owner, uuid, function(error, data, response) {
+          instance.agentsV1GetAgentStatuses(owner, uuid, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -333,9 +333,9 @@
           done();
         });
       });
-      describe('listAgentNames', function() {
-        it('should call listAgentNames successfully', function(done) {
-          // TODO: uncomment, update parameter values for listAgentNames call and complete the assertions
+      describe('agentsV1ListAgentNames', function() {
+        it('should call agentsV1ListAgentNames successfully', function(done) {
+          // TODO: uncomment, update parameter values for agentsV1ListAgentNames call and complete the assertions
           /*
           var owner = "owner_example";
           var opts = {};
@@ -344,7 +344,7 @@
           opts.sort = "sort_example";
           opts.query = "query_example";
 
-          instance.listAgentNames(owner, opts, function(error, data, response) {
+          instance.agentsV1ListAgentNames(owner, opts, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -408,9 +408,9 @@
           done();
         });
       });
-      describe('listAgents', function() {
-        it('should call listAgents successfully', function(done) {
-          // TODO: uncomment, update parameter values for listAgents call and complete the assertions
+      describe('agentsV1ListAgents', function() {
+        it('should call agentsV1ListAgents successfully', function(done) {
+          // TODO: uncomment, update parameter values for agentsV1ListAgents call and complete the assertions
           /*
           var owner = "owner_example";
           var opts = {};
@@ -419,7 +419,7 @@
           opts.sort = "sort_example";
           opts.query = "query_example";
 
-          instance.listAgents(owner, opts, function(error, data, response) {
+          instance.agentsV1ListAgents(owner, opts, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -483,9 +483,9 @@
           done();
         });
       });
-      describe('patchAgent', function() {
-        it('should call patchAgent successfully', function(done) {
-          // TODO: uncomment, update parameter values for patchAgent call and complete the assertions
+      describe('agentsV1PatchAgent', function() {
+        it('should call agentsV1PatchAgent successfully', function(done) {
+          // TODO: uncomment, update parameter values for agentsV1PatchAgent call and complete the assertions
           /*
           var owner = "owner_example";
           var agent_uuid = "agent_uuid_example";
@@ -504,7 +504,7 @@
           body.updated_at = new Date();
           body.status = new PolyaxonSdk.V1Statuses();
 
-          instance.patchAgent(owner, agent_uuid, body, function(error, data, response) {
+          instance.agentsV1PatchAgent(owner, agent_uuid, body, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -552,9 +552,9 @@
           done();
         });
       });
-      describe('syncAgent', function() {
-        it('should call syncAgent successfully', function(done) {
-          // TODO: uncomment, update parameter values for syncAgent call
+      describe('agentsV1SyncAgent', function() {
+        it('should call agentsV1SyncAgent successfully', function(done) {
+          // TODO: uncomment, update parameter values for agentsV1SyncAgent call
           /*
           var owner = "owner_example";
           var agent_uuid = "agent_uuid_example";
@@ -573,7 +573,7 @@
           body.updated_at = new Date();
           body.status = new PolyaxonSdk.V1Statuses();
 
-          instance.syncAgent(owner, agent_uuid, body, function(error, data, response) {
+          instance.agentsV1SyncAgent(owner, agent_uuid, body, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -586,9 +586,9 @@
           done();
         });
       });
-      describe('updateAgent', function() {
-        it('should call updateAgent successfully', function(done) {
-          // TODO: uncomment, update parameter values for updateAgent call and complete the assertions
+      describe('agentsV1UpdateAgent', function() {
+        it('should call agentsV1UpdateAgent successfully', function(done) {
+          // TODO: uncomment, update parameter values for agentsV1UpdateAgent call and complete the assertions
           /*
           var owner = "owner_example";
           var agent_uuid = "agent_uuid_example";
@@ -607,7 +607,7 @@
           body.updated_at = new Date();
           body.status = new PolyaxonSdk.V1Statuses();
 
-          instance.updateAgent(owner, agent_uuid, body, function(error, data, response) {
+          instance.agentsV1UpdateAgent(owner, agent_uuid, body, function(error, data, response) {
             if (error) {
               done(error);
               return;

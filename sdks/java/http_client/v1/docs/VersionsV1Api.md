@@ -4,13 +4,13 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**getLogHandler**](VersionsV1Api.md#getLogHandler) | **GET** /api/v1/log_handler | 
-[**getVersions**](VersionsV1Api.md#getVersions) | **GET** /api/v1/version | Get current user
+[**versionsV1GetLogHandler**](VersionsV1Api.md#versionsV1GetLogHandler) | **GET** /api/v1/log_handler | 
+[**versionsV1GetVersions**](VersionsV1Api.md#versionsV1GetVersions) | **GET** /api/v1/version | Get current user
 
 
-<a name="getLogHandler"></a>
-# **getLogHandler**
-> V1LogHandler getLogHandler()
+<a name="versionsV1GetLogHandler"></a>
+# **versionsV1GetLogHandler**
+> V1LogHandler versionsV1GetLogHandler()
 
 
 
@@ -33,10 +33,10 @@ ApiKey.setApiKey("YOUR API KEY");
 
 VersionsV1Api apiInstance = new VersionsV1Api();
 try {
-    V1LogHandler result = apiInstance.getLogHandler();
+    V1LogHandler result = apiInstance.versionsV1GetLogHandler();
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling VersionsV1Api#getLogHandler");
+    System.err.println("Exception when calling VersionsV1Api#versionsV1GetLogHandler");
     e.printStackTrace();
 }
 ```
@@ -57,9 +57,9 @@ This endpoint does not need any parameter.
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="getVersions"></a>
-# **getVersions**
-> V1Versions getVersions()
+<a name="versionsV1GetVersions"></a>
+# **versionsV1GetVersions**
+> V1Versions versionsV1GetVersions()
 
 Get current user
 
@@ -82,10 +82,10 @@ ApiKey.setApiKey("YOUR API KEY");
 
 VersionsV1Api apiInstance = new VersionsV1Api();
 try {
-    V1Versions result = apiInstance.getVersions();
+    V1Versions result = apiInstance.versionsV1GetVersions();
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling VersionsV1Api#getVersions");
+    System.err.println("Exception when calling VersionsV1Api#versionsV1GetVersions");
     e.printStackTrace();
 }
 ```

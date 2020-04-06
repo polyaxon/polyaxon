@@ -70,13 +70,13 @@ public class UsersV1Api {
     }
 
     /**
-     * Build call for getUser
+     * Build call for usersV1GetUser
      * @param progressListener Progress listener
      * @param progressRequestListener Progress request listener
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call getUserCall(final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call usersV1GetUserCall(final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -118,10 +118,10 @@ public class UsersV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call getUserValidateBeforeCall(final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call usersV1GetUserValidateBeforeCall(final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
 
-        com.squareup.okhttp.Call call = getUserCall(progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = usersV1GetUserCall(progressListener, progressRequestListener);
         return call;
 
     }
@@ -132,8 +132,8 @@ public class UsersV1Api {
      * @return V1User
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1User getUser() throws ApiException {
-        ApiResponse<V1User> resp = getUserWithHttpInfo();
+    public V1User usersV1GetUser() throws ApiException {
+        ApiResponse<V1User> resp = usersV1GetUserWithHttpInfo();
         return resp.getData();
     }
 
@@ -143,8 +143,8 @@ public class UsersV1Api {
      * @return ApiResponse&lt;V1User&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1User> getUserWithHttpInfo() throws ApiException {
-        com.squareup.okhttp.Call call = getUserValidateBeforeCall(null, null);
+    public ApiResponse<V1User> usersV1GetUserWithHttpInfo() throws ApiException {
+        com.squareup.okhttp.Call call = usersV1GetUserValidateBeforeCall(null, null);
         Type localVarReturnType = new TypeToken<V1User>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -156,7 +156,7 @@ public class UsersV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call getUserAsync(final ApiCallback<V1User> callback) throws ApiException {
+    public com.squareup.okhttp.Call usersV1GetUserAsync(final ApiCallback<V1User> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -177,7 +177,7 @@ public class UsersV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = getUserValidateBeforeCall(progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = usersV1GetUserValidateBeforeCall(progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1User>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;

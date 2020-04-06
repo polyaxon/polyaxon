@@ -45,50 +45,50 @@ class TestSearchesV1Api(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def test_create_search(self):
-        """Test case for create_search
+    def test_searches_v1_create_search(self):
+        """Test case for searches_v1_create_search
 
         Create search  # noqa: E501
         """
         pass
 
-    def test_delete_search(self):
-        """Test case for delete_search
+    def test_searches_v1_delete_search(self):
+        """Test case for searches_v1_delete_search
 
         Delete search  # noqa: E501
         """
         pass
 
-    def test_get_search(self):
-        """Test case for get_search
+    def test_searches_v1_get_search(self):
+        """Test case for searches_v1_get_search
 
         Get search  # noqa: E501
         """
         pass
 
-    def test_list_search_names(self):
-        """Test case for list_search_names
+    def test_searches_v1_list_search_names(self):
+        """Test case for searches_v1_list_search_names
 
         List search names  # noqa: E501
         """
         pass
 
-    def test_list_searches(self):
-        """Test case for list_searches
+    def test_searches_v1_list_searches(self):
+        """Test case for searches_v1_list_searches
 
         List searches  # noqa: E501
         """
         pass
 
-    def test_patch_search(self):
-        """Test case for patch_search
+    def test_searches_v1_patch_search(self):
+        """Test case for searches_v1_patch_search
 
         Patch search  # noqa: E501
         """
         pass
 
-    def test_update_search(self):
-        """Test case for update_search
+    def test_searches_v1_update_search(self):
+        """Test case for searches_v1_update_search
 
         Update search  # noqa: E501
         """

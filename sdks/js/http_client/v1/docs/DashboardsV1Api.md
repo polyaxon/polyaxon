@@ -4,18 +4,18 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**createDashboard**](DashboardsV1Api.md#createDashboard) | **POST** /api/v1/orgs/{owner}/dashboards | 
-[**deleteDashboard**](DashboardsV1Api.md#deleteDashboard) | **DELETE** /api/v1/orgs/{owner}/dashboards/{uuid} | 
-[**getDashboard**](DashboardsV1Api.md#getDashboard) | **GET** /api/v1/orgs/{owner}/dashboards/{uuid} | 
-[**listDashboardNames**](DashboardsV1Api.md#listDashboardNames) | **GET** /api/v1/orgs/{owner}/dashboards/names | 
-[**listDashboards**](DashboardsV1Api.md#listDashboards) | **GET** /api/v1/orgs/{owner}/dashboards | 
-[**patchDashboard**](DashboardsV1Api.md#patchDashboard) | **PATCH** /api/v1/orgs/{owner}/dashboards/{dashboard.uuid} | 
-[**updateDashboard**](DashboardsV1Api.md#updateDashboard) | **PUT** /api/v1/orgs/{owner}/dashboards/{dashboard.uuid} | 
+[**dashboardsV1CreateDashboard**](DashboardsV1Api.md#dashboardsV1CreateDashboard) | **POST** /api/v1/orgs/{owner}/dashboards | 
+[**dashboardsV1DeleteDashboard**](DashboardsV1Api.md#dashboardsV1DeleteDashboard) | **DELETE** /api/v1/orgs/{owner}/dashboards/{uuid} | 
+[**dashboardsV1GetDashboard**](DashboardsV1Api.md#dashboardsV1GetDashboard) | **GET** /api/v1/orgs/{owner}/dashboards/{uuid} | 
+[**dashboardsV1ListDashboardNames**](DashboardsV1Api.md#dashboardsV1ListDashboardNames) | **GET** /api/v1/orgs/{owner}/dashboards/names | 
+[**dashboardsV1ListDashboards**](DashboardsV1Api.md#dashboardsV1ListDashboards) | **GET** /api/v1/orgs/{owner}/dashboards | 
+[**dashboardsV1PatchDashboard**](DashboardsV1Api.md#dashboardsV1PatchDashboard) | **PATCH** /api/v1/orgs/{owner}/dashboards/{dashboard.uuid} | 
+[**dashboardsV1UpdateDashboard**](DashboardsV1Api.md#dashboardsV1UpdateDashboard) | **PUT** /api/v1/orgs/{owner}/dashboards/{dashboard.uuid} | 
 
 
-<a name="createDashboard"></a>
-# **createDashboard**
-> V1Dashboard createDashboard(owner, body)
+<a name="dashboardsV1CreateDashboard"></a>
+# **dashboardsV1CreateDashboard**
+> V1Dashboard dashboardsV1CreateDashboard(owner, body)
 
 
 
@@ -44,7 +44,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.createDashboard(owner, body, callback);
+apiInstance.dashboardsV1CreateDashboard(owner, body, callback);
 ```
 
 ### Parameters
@@ -67,9 +67,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="deleteDashboard"></a>
-# **deleteDashboard**
-> deleteDashboard(owner, uuid)
+<a name="dashboardsV1DeleteDashboard"></a>
+# **dashboardsV1DeleteDashboard**
+> dashboardsV1DeleteDashboard(owner, uuid)
 
 
 
@@ -98,7 +98,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully.');
   }
 };
-apiInstance.deleteDashboard(owner, uuid, callback);
+apiInstance.dashboardsV1DeleteDashboard(owner, uuid, callback);
 ```
 
 ### Parameters
@@ -121,9 +121,9 @@ null (empty response body)
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="getDashboard"></a>
-# **getDashboard**
-> V1Dashboard getDashboard(owner, uuid)
+<a name="dashboardsV1GetDashboard"></a>
+# **dashboardsV1GetDashboard**
+> V1Dashboard dashboardsV1GetDashboard(owner, uuid)
 
 
 
@@ -152,7 +152,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.getDashboard(owner, uuid, callback);
+apiInstance.dashboardsV1GetDashboard(owner, uuid, callback);
 ```
 
 ### Parameters
@@ -175,9 +175,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="listDashboardNames"></a>
-# **listDashboardNames**
-> V1ListDashboardsResponse listDashboardNames(owner, opts)
+<a name="dashboardsV1ListDashboardNames"></a>
+# **dashboardsV1ListDashboardNames**
+> V1ListDashboardsResponse dashboardsV1ListDashboardNames(owner, opts)
 
 
 
@@ -210,7 +210,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.listDashboardNames(owner, opts, callback);
+apiInstance.dashboardsV1ListDashboardNames(owner, opts, callback);
 ```
 
 ### Parameters
@@ -236,9 +236,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="listDashboards"></a>
-# **listDashboards**
-> V1ListDashboardsResponse listDashboards(owner, opts)
+<a name="dashboardsV1ListDashboards"></a>
+# **dashboardsV1ListDashboards**
+> V1ListDashboardsResponse dashboardsV1ListDashboards(owner, opts)
 
 
 
@@ -271,7 +271,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.listDashboards(owner, opts, callback);
+apiInstance.dashboardsV1ListDashboards(owner, opts, callback);
 ```
 
 ### Parameters
@@ -297,9 +297,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="patchDashboard"></a>
-# **patchDashboard**
-> V1Dashboard patchDashboard(owner, dashboard_uuid, body)
+<a name="dashboardsV1PatchDashboard"></a>
+# **dashboardsV1PatchDashboard**
+> V1Dashboard dashboardsV1PatchDashboard(owner, dashboard_uuid, body)
 
 
 
@@ -330,7 +330,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.patchDashboard(owner, dashboard_uuid, body, callback);
+apiInstance.dashboardsV1PatchDashboard(owner, dashboard_uuid, body, callback);
 ```
 
 ### Parameters
@@ -354,9 +354,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="updateDashboard"></a>
-# **updateDashboard**
-> V1Dashboard updateDashboard(owner, dashboard_uuid, body)
+<a name="dashboardsV1UpdateDashboard"></a>
+# **dashboardsV1UpdateDashboard**
+> V1Dashboard dashboardsV1UpdateDashboard(owner, dashboard_uuid, body)
 
 
 
@@ -387,7 +387,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.updateDashboard(owner, dashboard_uuid, body, callback);
+apiInstance.dashboardsV1UpdateDashboard(owner, dashboard_uuid, body, callback);
 ```
 
 ### Parameters

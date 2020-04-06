@@ -50,9 +50,9 @@
 
   describe('(package)', function() {
     describe('TeamsV1Api', function() {
-      describe('createTeam', function() {
-        it('should call createTeam successfully', function(done) {
-          // TODO: uncomment, update parameter values for createTeam call and complete the assertions
+      describe('teamsV1CreateTeam', function() {
+        it('should call teamsV1CreateTeam successfully', function(done) {
+          // TODO: uncomment, update parameter values for teamsV1CreateTeam call and complete the assertions
           /*
           var owner = "owner_example";
           var body = new PolyaxonSdk.V1Team();
@@ -62,7 +62,7 @@
           body.created_at = new Date();
           body.updated_at = new Date();
 
-          instance.createTeam(owner, body, function(error, data, response) {
+          instance.teamsV1CreateTeam(owner, body, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -95,9 +95,9 @@
           done();
         });
       });
-      describe('createTeamMember', function() {
-        it('should call createTeamMember successfully', function(done) {
-          // TODO: uncomment, update parameter values for createTeamMember call and complete the assertions
+      describe('teamsV1CreateTeamMember', function() {
+        it('should call teamsV1CreateTeamMember successfully', function(done) {
+          // TODO: uncomment, update parameter values for teamsV1CreateTeamMember call and complete the assertions
           /*
           var owner = "owner_example";
           var team = "team_example";
@@ -109,7 +109,7 @@
           body.created_at = new Date();
           body.updated_at = new Date();
 
-          instance.createTeamMember(owner, team, body, function(error, data, response) {
+          instance.teamsV1CreateTeamMember(owner, team, body, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -136,14 +136,14 @@
           done();
         });
       });
-      describe('deleteTeam', function() {
-        it('should call deleteTeam successfully', function(done) {
-          // TODO: uncomment, update parameter values for deleteTeam call
+      describe('teamsV1DeleteTeam', function() {
+        it('should call teamsV1DeleteTeam successfully', function(done) {
+          // TODO: uncomment, update parameter values for teamsV1DeleteTeam call
           /*
           var owner = "owner_example";
           var team = "team_example";
 
-          instance.deleteTeam(owner, team, function(error, data, response) {
+          instance.teamsV1DeleteTeam(owner, team, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -156,15 +156,15 @@
           done();
         });
       });
-      describe('deleteTeamMember', function() {
-        it('should call deleteTeamMember successfully', function(done) {
-          // TODO: uncomment, update parameter values for deleteTeamMember call
+      describe('teamsV1DeleteTeamMember', function() {
+        it('should call teamsV1DeleteTeamMember successfully', function(done) {
+          // TODO: uncomment, update parameter values for teamsV1DeleteTeamMember call
           /*
           var owner = "owner_example";
           var team = "team_example";
           var user = "user_example";
 
-          instance.deleteTeamMember(owner, team, user, function(error, data, response) {
+          instance.teamsV1DeleteTeamMember(owner, team, user, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -177,14 +177,14 @@
           done();
         });
       });
-      describe('getTeam', function() {
-        it('should call getTeam successfully', function(done) {
-          // TODO: uncomment, update parameter values for getTeam call and complete the assertions
+      describe('teamsV1GetTeam', function() {
+        it('should call teamsV1GetTeam successfully', function(done) {
+          // TODO: uncomment, update parameter values for teamsV1GetTeam call and complete the assertions
           /*
           var owner = "owner_example";
           var team = "team_example";
 
-          instance.getTeam(owner, team, function(error, data, response) {
+          instance.teamsV1GetTeam(owner, team, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -217,15 +217,15 @@
           done();
         });
       });
-      describe('getTeamMember', function() {
-        it('should call getTeamMember successfully', function(done) {
-          // TODO: uncomment, update parameter values for getTeamMember call and complete the assertions
+      describe('teamsV1GetTeamMember', function() {
+        it('should call teamsV1GetTeamMember successfully', function(done) {
+          // TODO: uncomment, update parameter values for teamsV1GetTeamMember call and complete the assertions
           /*
           var owner = "owner_example";
           var team = "team_example";
           var user = "user_example";
 
-          instance.getTeamMember(owner, team, user, function(error, data, response) {
+          instance.teamsV1GetTeamMember(owner, team, user, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -252,9 +252,9 @@
           done();
         });
       });
-      describe('listTeamMembers', function() {
-        it('should call listTeamMembers successfully', function(done) {
-          // TODO: uncomment, update parameter values for listTeamMembers call and complete the assertions
+      describe('teamsV1ListTeamMembers', function() {
+        it('should call teamsV1ListTeamMembers successfully', function(done) {
+          // TODO: uncomment, update parameter values for teamsV1ListTeamMembers call and complete the assertions
           /*
           var owner = "owner_example";
           var team = "team_example";
@@ -264,7 +264,7 @@
           opts.sort = "sort_example";
           opts.query = "query_example";
 
-          instance.listTeamMembers(owner, team, opts, function(error, data, response) {
+          instance.teamsV1ListTeamMembers(owner, team, opts, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -306,9 +306,9 @@
           done();
         });
       });
-      describe('listTeamNames', function() {
-        it('should call listTeamNames successfully', function(done) {
-          // TODO: uncomment, update parameter values for listTeamNames call and complete the assertions
+      describe('teamsV1ListTeamNames', function() {
+        it('should call teamsV1ListTeamNames successfully', function(done) {
+          // TODO: uncomment, update parameter values for teamsV1ListTeamNames call and complete the assertions
           /*
           var owner = "owner_example";
           var opts = {};
@@ -317,7 +317,7 @@
           opts.sort = "sort_example";
           opts.query = "query_example";
 
-          instance.listTeamNames(owner, opts, function(error, data, response) {
+          instance.teamsV1ListTeamNames(owner, opts, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -365,9 +365,9 @@
           done();
         });
       });
-      describe('listTeams', function() {
-        it('should call listTeams successfully', function(done) {
-          // TODO: uncomment, update parameter values for listTeams call and complete the assertions
+      describe('teamsV1ListTeams', function() {
+        it('should call teamsV1ListTeams successfully', function(done) {
+          // TODO: uncomment, update parameter values for teamsV1ListTeams call and complete the assertions
           /*
           var owner = "owner_example";
           var opts = {};
@@ -376,7 +376,7 @@
           opts.sort = "sort_example";
           opts.query = "query_example";
 
-          instance.listTeams(owner, opts, function(error, data, response) {
+          instance.teamsV1ListTeams(owner, opts, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -424,9 +424,9 @@
           done();
         });
       });
-      describe('patchTeam', function() {
-        it('should call patchTeam successfully', function(done) {
-          // TODO: uncomment, update parameter values for patchTeam call and complete the assertions
+      describe('teamsV1PatchTeam', function() {
+        it('should call teamsV1PatchTeam successfully', function(done) {
+          // TODO: uncomment, update parameter values for teamsV1PatchTeam call and complete the assertions
           /*
           var owner = "owner_example";
           var team_name = "team_name_example";
@@ -437,7 +437,7 @@
           body.created_at = new Date();
           body.updated_at = new Date();
 
-          instance.patchTeam(owner, team_name, body, function(error, data, response) {
+          instance.teamsV1PatchTeam(owner, team_name, body, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -470,9 +470,9 @@
           done();
         });
       });
-      describe('patchTeamMember', function() {
-        it('should call patchTeamMember successfully', function(done) {
-          // TODO: uncomment, update parameter values for patchTeamMember call and complete the assertions
+      describe('teamsV1PatchTeamMember', function() {
+        it('should call teamsV1PatchTeamMember successfully', function(done) {
+          // TODO: uncomment, update parameter values for teamsV1PatchTeamMember call and complete the assertions
           /*
           var owner = "owner_example";
           var team = "team_example";
@@ -485,7 +485,7 @@
           body.created_at = new Date();
           body.updated_at = new Date();
 
-          instance.patchTeamMember(owner, team, member_user, body, function(error, data, response) {
+          instance.teamsV1PatchTeamMember(owner, team, member_user, body, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -512,9 +512,9 @@
           done();
         });
       });
-      describe('updateTeam', function() {
-        it('should call updateTeam successfully', function(done) {
-          // TODO: uncomment, update parameter values for updateTeam call and complete the assertions
+      describe('teamsV1UpdateTeam', function() {
+        it('should call teamsV1UpdateTeam successfully', function(done) {
+          // TODO: uncomment, update parameter values for teamsV1UpdateTeam call and complete the assertions
           /*
           var owner = "owner_example";
           var team_name = "team_name_example";
@@ -525,7 +525,7 @@
           body.created_at = new Date();
           body.updated_at = new Date();
 
-          instance.updateTeam(owner, team_name, body, function(error, data, response) {
+          instance.teamsV1UpdateTeam(owner, team_name, body, function(error, data, response) {
             if (error) {
               done(error);
               return;
@@ -558,9 +558,9 @@
           done();
         });
       });
-      describe('updateTeamMember', function() {
-        it('should call updateTeamMember successfully', function(done) {
-          // TODO: uncomment, update parameter values for updateTeamMember call and complete the assertions
+      describe('teamsV1UpdateTeamMember', function() {
+        it('should call teamsV1UpdateTeamMember successfully', function(done) {
+          // TODO: uncomment, update parameter values for teamsV1UpdateTeamMember call and complete the assertions
           /*
           var owner = "owner_example";
           var team = "team_example";
@@ -573,7 +573,7 @@
           body.created_at = new Date();
           body.updated_at = new Date();
 
-          instance.updateTeamMember(owner, team, member_user, body, function(error, data, response) {
+          instance.teamsV1UpdateTeamMember(owner, team, member_user, body, function(error, data, response) {
             if (error) {
               done(error);
               return;

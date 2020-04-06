@@ -57,10 +57,10 @@ public class AccessResourcesV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void createAccessResourceTest() throws ApiException {
+    public void accessResourcesV1CreateAccessResourceTest() throws ApiException {
         String owner = null;
         V1AccessResource body = null;
-        V1AccessResource response = api.createAccessResource(owner, body);
+        V1AccessResource response = api.accessResourcesV1CreateAccessResource(owner, body);
 
         // TODO: test validations
     }
@@ -74,10 +74,10 @@ public class AccessResourcesV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void deleteAccessResourceTest() throws ApiException {
+    public void accessResourcesV1DeleteAccessResourceTest() throws ApiException {
         String owner = null;
         String uuid = null;
-        api.deleteAccessResource(owner, uuid);
+        api.accessResourcesV1DeleteAccessResource(owner, uuid);
 
         // TODO: test validations
     }
@@ -91,10 +91,10 @@ public class AccessResourcesV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void getAccessResourceTest() throws ApiException {
+    public void accessResourcesV1GetAccessResourceTest() throws ApiException {
         String owner = null;
         String uuid = null;
-        V1AccessResource response = api.getAccessResource(owner, uuid);
+        V1AccessResource response = api.accessResourcesV1GetAccessResource(owner, uuid);
 
         // TODO: test validations
     }
@@ -108,13 +108,13 @@ public class AccessResourcesV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void listAccessResourceNamesTest() throws ApiException {
+    public void accessResourcesV1ListAccessResourceNamesTest() throws ApiException {
         String owner = null;
         Integer offset = null;
         Integer limit = null;
         String sort = null;
         String query = null;
-        V1ListAccessResourcesResponse response = api.listAccessResourceNames(owner, offset, limit, sort, query);
+        V1ListAccessResourcesResponse response = api.accessResourcesV1ListAccessResourceNames(owner, offset, limit, sort, query);
 
         // TODO: test validations
     }
@@ -128,13 +128,13 @@ public class AccessResourcesV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void listAccessResourcesTest() throws ApiException {
+    public void accessResourcesV1ListAccessResourcesTest() throws ApiException {
         String owner = null;
         Integer offset = null;
         Integer limit = null;
         String sort = null;
         String query = null;
-        V1ListAccessResourcesResponse response = api.listAccessResources(owner, offset, limit, sort, query);
+        V1ListAccessResourcesResponse response = api.accessResourcesV1ListAccessResources(owner, offset, limit, sort, query);
 
         // TODO: test validations
     }
@@ -148,11 +148,11 @@ public class AccessResourcesV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void patchAccessResourceTest() throws ApiException {
+    public void accessResourcesV1PatchAccessResourceTest() throws ApiException {
         String owner = null;
         String accessResourceUuid = null;
         V1AccessResource body = null;
-        V1AccessResource response = api.patchAccessResource(owner, accessResourceUuid, body);
+        V1AccessResource response = api.accessResourcesV1PatchAccessResource(owner, accessResourceUuid, body);
 
         // TODO: test validations
     }
@@ -166,11 +166,11 @@ public class AccessResourcesV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void updateAccessResourceTest() throws ApiException {
+    public void accessResourcesV1UpdateAccessResourceTest() throws ApiException {
         String owner = null;
         String accessResourceUuid = null;
         V1AccessResource body = null;
-        V1AccessResource response = api.updateAccessResource(owner, accessResourceUuid, body);
+        V1AccessResource response = api.accessResourcesV1UpdateAccessResource(owner, accessResourceUuid, body);
 
         // TODO: test validations
     }

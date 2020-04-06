@@ -4,19 +4,19 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**createProjectDashboard**](ProjectDashboardsV1Api.md#createProjectDashboard) | **POST** /api/v1/{owner}/{project}/dashboards | Create project dashboard
-[**deleteProjectDashboard**](ProjectDashboardsV1Api.md#deleteProjectDashboard) | **DELETE** /api/v1/{owner}/{project}/dashboards/{uuid} | Delete project dashboard
-[**getProjectDashboard**](ProjectDashboardsV1Api.md#getProjectDashboard) | **GET** /api/v1/{owner}/{project}/dashboards/{uuid} | Get project dashboard
-[**listProjectDashboardNames**](ProjectDashboardsV1Api.md#listProjectDashboardNames) | **GET** /api/v1/{owner}/{project}/dashboards/names | List project dashboard
-[**listProjectDashboards**](ProjectDashboardsV1Api.md#listProjectDashboards) | **GET** /api/v1/{owner}/{project}/dashboards | List project dashboards
-[**patchProjectDashboard**](ProjectDashboardsV1Api.md#patchProjectDashboard) | **PATCH** /api/v1/{owner}/{project}/dashboards/{dashboard.uuid} | Patch project dashboard
-[**promoteProjectDashboard**](ProjectDashboardsV1Api.md#promoteProjectDashboard) | **POST** /api/v1/{owner}/{project}/dashboards/{dashboard.uuid}/promote | Promote project dashboard
-[**updateProjectDashboard**](ProjectDashboardsV1Api.md#updateProjectDashboard) | **PUT** /api/v1/{owner}/{project}/dashboards/{dashboard.uuid} | Update project dashboard
+[**projectDashboardsV1CreateProjectDashboard**](ProjectDashboardsV1Api.md#projectDashboardsV1CreateProjectDashboard) | **POST** /api/v1/{owner}/{project}/dashboards | Create project dashboard
+[**projectDashboardsV1DeleteProjectDashboard**](ProjectDashboardsV1Api.md#projectDashboardsV1DeleteProjectDashboard) | **DELETE** /api/v1/{owner}/{project}/dashboards/{uuid} | Delete project dashboard
+[**projectDashboardsV1GetProjectDashboard**](ProjectDashboardsV1Api.md#projectDashboardsV1GetProjectDashboard) | **GET** /api/v1/{owner}/{project}/dashboards/{uuid} | Get project dashboard
+[**projectDashboardsV1ListProjectDashboardNames**](ProjectDashboardsV1Api.md#projectDashboardsV1ListProjectDashboardNames) | **GET** /api/v1/{owner}/{project}/dashboards/names | List project dashboard
+[**projectDashboardsV1ListProjectDashboards**](ProjectDashboardsV1Api.md#projectDashboardsV1ListProjectDashboards) | **GET** /api/v1/{owner}/{project}/dashboards | List project dashboards
+[**projectDashboardsV1PatchProjectDashboard**](ProjectDashboardsV1Api.md#projectDashboardsV1PatchProjectDashboard) | **PATCH** /api/v1/{owner}/{project}/dashboards/{dashboard.uuid} | Patch project dashboard
+[**projectDashboardsV1PromoteProjectDashboard**](ProjectDashboardsV1Api.md#projectDashboardsV1PromoteProjectDashboard) | **POST** /api/v1/{owner}/{project}/dashboards/{dashboard.uuid}/promote | Promote project dashboard
+[**projectDashboardsV1UpdateProjectDashboard**](ProjectDashboardsV1Api.md#projectDashboardsV1UpdateProjectDashboard) | **PUT** /api/v1/{owner}/{project}/dashboards/{dashboard.uuid} | Update project dashboard
 
 
-<a name="createProjectDashboard"></a>
-# **createProjectDashboard**
-> V1Dashboard createProjectDashboard(owner, project, body)
+<a name="projectDashboardsV1CreateProjectDashboard"></a>
+# **projectDashboardsV1CreateProjectDashboard**
+> V1Dashboard projectDashboardsV1CreateProjectDashboard(owner, project, body)
 
 Create project dashboard
 
@@ -47,7 +47,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.createProjectDashboard(owner, project, body, callback);
+apiInstance.projectDashboardsV1CreateProjectDashboard(owner, project, body, callback);
 ```
 
 ### Parameters
@@ -71,9 +71,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="deleteProjectDashboard"></a>
-# **deleteProjectDashboard**
-> deleteProjectDashboard(owner, project, uuid)
+<a name="projectDashboardsV1DeleteProjectDashboard"></a>
+# **projectDashboardsV1DeleteProjectDashboard**
+> projectDashboardsV1DeleteProjectDashboard(owner, project, uuid)
 
 Delete project dashboard
 
@@ -104,7 +104,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully.');
   }
 };
-apiInstance.deleteProjectDashboard(owner, project, uuid, callback);
+apiInstance.projectDashboardsV1DeleteProjectDashboard(owner, project, uuid, callback);
 ```
 
 ### Parameters
@@ -128,9 +128,9 @@ null (empty response body)
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="getProjectDashboard"></a>
-# **getProjectDashboard**
-> V1Dashboard getProjectDashboard(owner, project, uuid)
+<a name="projectDashboardsV1GetProjectDashboard"></a>
+# **projectDashboardsV1GetProjectDashboard**
+> V1Dashboard projectDashboardsV1GetProjectDashboard(owner, project, uuid)
 
 Get project dashboard
 
@@ -161,7 +161,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.getProjectDashboard(owner, project, uuid, callback);
+apiInstance.projectDashboardsV1GetProjectDashboard(owner, project, uuid, callback);
 ```
 
 ### Parameters
@@ -185,9 +185,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="listProjectDashboardNames"></a>
-# **listProjectDashboardNames**
-> V1ListDashboardsResponse listProjectDashboardNames(owner, project, opts)
+<a name="projectDashboardsV1ListProjectDashboardNames"></a>
+# **projectDashboardsV1ListProjectDashboardNames**
+> V1ListDashboardsResponse projectDashboardsV1ListProjectDashboardNames(owner, project, opts)
 
 List project dashboard
 
@@ -222,7 +222,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.listProjectDashboardNames(owner, project, opts, callback);
+apiInstance.projectDashboardsV1ListProjectDashboardNames(owner, project, opts, callback);
 ```
 
 ### Parameters
@@ -249,9 +249,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="listProjectDashboards"></a>
-# **listProjectDashboards**
-> V1ListDashboardsResponse listProjectDashboards(owner, project, opts)
+<a name="projectDashboardsV1ListProjectDashboards"></a>
+# **projectDashboardsV1ListProjectDashboards**
+> V1ListDashboardsResponse projectDashboardsV1ListProjectDashboards(owner, project, opts)
 
 List project dashboards
 
@@ -286,7 +286,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.listProjectDashboards(owner, project, opts, callback);
+apiInstance.projectDashboardsV1ListProjectDashboards(owner, project, opts, callback);
 ```
 
 ### Parameters
@@ -313,9 +313,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="patchProjectDashboard"></a>
-# **patchProjectDashboard**
-> V1Dashboard patchProjectDashboard(owner, project, dashboard_uuid, body)
+<a name="projectDashboardsV1PatchProjectDashboard"></a>
+# **projectDashboardsV1PatchProjectDashboard**
+> V1Dashboard projectDashboardsV1PatchProjectDashboard(owner, project, dashboard_uuid, body)
 
 Patch project dashboard
 
@@ -348,7 +348,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.patchProjectDashboard(owner, project, dashboard_uuid, body, callback);
+apiInstance.projectDashboardsV1PatchProjectDashboard(owner, project, dashboard_uuid, body, callback);
 ```
 
 ### Parameters
@@ -373,9 +373,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="promoteProjectDashboard"></a>
-# **promoteProjectDashboard**
-> V1Dashboard promoteProjectDashboard(owner, project, dashboard_uuid)
+<a name="projectDashboardsV1PromoteProjectDashboard"></a>
+# **projectDashboardsV1PromoteProjectDashboard**
+> V1Dashboard projectDashboardsV1PromoteProjectDashboard(owner, project, dashboard_uuid)
 
 Promote project dashboard
 
@@ -406,7 +406,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.promoteProjectDashboard(owner, project, dashboard_uuid, callback);
+apiInstance.projectDashboardsV1PromoteProjectDashboard(owner, project, dashboard_uuid, callback);
 ```
 
 ### Parameters
@@ -430,9 +430,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="updateProjectDashboard"></a>
-# **updateProjectDashboard**
-> V1Dashboard updateProjectDashboard(owner, project, dashboard_uuid, body)
+<a name="projectDashboardsV1UpdateProjectDashboard"></a>
+# **projectDashboardsV1UpdateProjectDashboard**
+> V1Dashboard projectDashboardsV1UpdateProjectDashboard(owner, project, dashboard_uuid, body)
 
 Update project dashboard
 
@@ -465,7 +465,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.updateProjectDashboard(owner, project, dashboard_uuid, body, callback);
+apiInstance.projectDashboardsV1UpdateProjectDashboard(owner, project, dashboard_uuid, body, callback);
 ```
 
 ### Parameters

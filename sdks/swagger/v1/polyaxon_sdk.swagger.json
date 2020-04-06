@@ -24,7 +24,7 @@
     "/api/v1/archives/{user}/projects": {
       "get": {
         "summary": "List archived projects for user",
-        "operationId": "ListArchivedProjects",
+        "operationId": "ProjectsV1_ListArchivedProjects",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -98,7 +98,7 @@
     "/api/v1/archives/{user}/runs": {
       "get": {
         "summary": "List archived runs for user",
-        "operationId": "ListArchivedRuns",
+        "operationId": "RunsV1_ListArchivedRuns",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -172,7 +172,7 @@
     "/api/v1/bookmarks/{user}/projects": {
       "get": {
         "summary": "List bookmarked projects for user",
-        "operationId": "ListBookmarkedProjects",
+        "operationId": "ProjectsV1_ListBookmarkedProjects",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -246,7 +246,7 @@
     "/api/v1/bookmarks/{user}/runs": {
       "get": {
         "summary": "List bookmarked runs for user",
-        "operationId": "ListBookmarkedRuns",
+        "operationId": "RunsV1_ListBookmarkedRuns",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -319,7 +319,7 @@
     },
     "/api/v1/log_handler": {
       "get": {
-        "operationId": "GetLogHandler",
+        "operationId": "VersionsV1_GetLogHandler",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -353,7 +353,7 @@
     },
     "/api/v1/orgs/create": {
       "post": {
-        "operationId": "CreateOrganization",
+        "operationId": "OrganizationsV1_CreateOrganization",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -398,7 +398,7 @@
     "/api/v1/orgs/list": {
       "get": {
         "summary": "Get log handler",
-        "operationId": "ListOrganizations",
+        "operationId": "OrganizationsV1_ListOrganizations",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -433,7 +433,7 @@
     "/api/v1/orgs/names": {
       "get": {
         "summary": "Get versions",
-        "operationId": "ListOrganizationNames",
+        "operationId": "OrganizationsV1_ListOrganizationNames",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -467,7 +467,7 @@
     },
     "/api/v1/orgs/{owner}": {
       "get": {
-        "operationId": "GetOrganization",
+        "operationId": "OrganizationsV1_GetOrganization",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -508,7 +508,7 @@
         ]
       },
       "delete": {
-        "operationId": "DeleteOrganization",
+        "operationId": "OrganizationsV1_DeleteOrganization",
         "responses": {
           "200": {
             "description": "A successful response."
@@ -546,7 +546,7 @@
         ]
       },
       "put": {
-        "operationId": "UpdateOrganization",
+        "operationId": "OrganizationsV1_UpdateOrganization",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -596,7 +596,7 @@
         ]
       },
       "patch": {
-        "operationId": "PatchOrganization",
+        "operationId": "OrganizationsV1_PatchOrganization",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -649,7 +649,7 @@
     "/api/v1/orgs/{owner}/access_resources": {
       "get": {
         "summary": "List access resources",
-        "operationId": "ListAccessResources",
+        "operationId": "AccessResourcesV1_ListAccessResources",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -721,7 +721,7 @@
       },
       "post": {
         "summary": "Create access resource",
-        "operationId": "CreateAccessResource",
+        "operationId": "AccessResourcesV1_CreateAccessResource",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -774,7 +774,7 @@
     "/api/v1/orgs/{owner}/access_resources/names": {
       "get": {
         "summary": "List access resource names",
-        "operationId": "ListAccessResourceNames",
+        "operationId": "AccessResourcesV1_ListAccessResourceNames",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -848,7 +848,7 @@
     "/api/v1/orgs/{owner}/access_resources/{access_resource.uuid}": {
       "put": {
         "summary": "Update access resource",
-        "operationId": "UpdateAccessResource",
+        "operationId": "AccessResourcesV1_UpdateAccessResource",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -906,7 +906,7 @@
       },
       "patch": {
         "summary": "Patch access resource",
-        "operationId": "PatchAccessResource",
+        "operationId": "AccessResourcesV1_PatchAccessResource",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -966,7 +966,7 @@
     "/api/v1/orgs/{owner}/access_resources/{uuid}": {
       "get": {
         "summary": "Get access resource",
-        "operationId": "GetAccessResource",
+        "operationId": "AccessResourcesV1_GetAccessResource",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -1015,7 +1015,7 @@
       },
       "delete": {
         "summary": "Delete access resource",
-        "operationId": "DeleteAccessResource",
+        "operationId": "AccessResourcesV1_DeleteAccessResource",
         "responses": {
           "200": {
             "description": "A successful response."
@@ -1063,7 +1063,7 @@
     "/api/v1/orgs/{owner}/agents": {
       "get": {
         "summary": "List run profiles",
-        "operationId": "ListAgents",
+        "operationId": "AgentsV1_ListAgents",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -1135,7 +1135,7 @@
       },
       "post": {
         "summary": "Create run profile",
-        "operationId": "CreateAgent",
+        "operationId": "AgentsV1_CreateAgent",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -1188,7 +1188,7 @@
     "/api/v1/orgs/{owner}/agents/names": {
       "get": {
         "summary": "List run profiles names",
-        "operationId": "ListAgentNames",
+        "operationId": "AgentsV1_ListAgentNames",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -1262,7 +1262,7 @@
     "/api/v1/orgs/{owner}/agents/{agent.uuid}": {
       "put": {
         "summary": "Update run profile",
-        "operationId": "UpdateAgent",
+        "operationId": "AgentsV1_UpdateAgent",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -1320,7 +1320,7 @@
       },
       "patch": {
         "summary": "Patch run profile",
-        "operationId": "PatchAgent",
+        "operationId": "AgentsV1_PatchAgent",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -1379,7 +1379,7 @@
     },
     "/api/v1/orgs/{owner}/agents/{agent.uuid}/sync": {
       "patch": {
-        "operationId": "SyncAgent",
+        "operationId": "AgentsV1_SyncAgent",
         "responses": {
           "200": {
             "description": "A successful response."
@@ -1436,7 +1436,7 @@
     "/api/v1/orgs/{owner}/agents/{agent}/queues": {
       "get": {
         "summary": "Get agent",
-        "operationId": "ListQueues",
+        "operationId": "QueuesV1_ListQueues",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -1515,7 +1515,7 @@
       },
       "post": {
         "summary": "Update agent",
-        "operationId": "CreateQueue",
+        "operationId": "QueuesV1_CreateQueue",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -1575,7 +1575,7 @@
     "/api/v1/orgs/{owner}/agents/{agent}/queues/names": {
       "get": {
         "summary": "Create agent",
-        "operationId": "ListQueueNames",
+        "operationId": "QueuesV1_ListQueueNames",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -1656,7 +1656,7 @@
     "/api/v1/orgs/{owner}/agents/{agent}/queues/{uuid}": {
       "get": {
         "summary": "Patch agent",
-        "operationId": "GetQueue",
+        "operationId": "QueuesV1_GetQueue",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -1712,7 +1712,7 @@
       },
       "delete": {
         "summary": "Sync agent",
-        "operationId": "DeleteQueue",
+        "operationId": "QueuesV1_DeleteQueue",
         "responses": {
           "200": {
             "description": "A successful response."
@@ -1767,7 +1767,7 @@
     "/api/v1/orgs/{owner}/agents/{queue.agent}/queues/{queue.uuid}": {
       "put": {
         "summary": "Delete agent",
-        "operationId": "UpdateQueue",
+        "operationId": "QueuesV1_UpdateQueue",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -1832,7 +1832,7 @@
       },
       "patch": {
         "summary": "Get State (queues/runs)",
-        "operationId": "PatchQueue",
+        "operationId": "QueuesV1_PatchQueue",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -1899,7 +1899,7 @@
     "/api/v1/orgs/{owner}/agents/{uuid}": {
       "get": {
         "summary": "Get run profile",
-        "operationId": "GetAgent",
+        "operationId": "AgentsV1_GetAgent",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -1948,7 +1948,7 @@
       },
       "delete": {
         "summary": "Delete run profile",
-        "operationId": "DeleteAgent",
+        "operationId": "AgentsV1_DeleteAgent",
         "responses": {
           "200": {
             "description": "A successful response."
@@ -1995,7 +1995,7 @@
     },
     "/api/v1/orgs/{owner}/agents/{uuid}/state": {
       "get": {
-        "operationId": "GetAgentState",
+        "operationId": "AgentsV1_GetAgentState",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -2045,7 +2045,7 @@
     },
     "/api/v1/orgs/{owner}/agents/{uuid}/statuses": {
       "get": {
-        "operationId": "GetAgentStatuses",
+        "operationId": "AgentsV1_GetAgentStatuses",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -2093,7 +2093,7 @@
         ]
       },
       "post": {
-        "operationId": "CreateAgentStatus",
+        "operationId": "AgentsV1_CreateAgentStatus",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -2152,7 +2152,7 @@
     "/api/v1/orgs/{owner}/components": {
       "get": {
         "summary": "List hub models",
-        "operationId": "ListHubComponents",
+        "operationId": "HubComponentsV1_ListHubComponents",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -2224,7 +2224,7 @@
       },
       "post": {
         "summary": "Create hub model",
-        "operationId": "CreateHubComponent",
+        "operationId": "HubComponentsV1_CreateHubComponent",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -2277,7 +2277,7 @@
     "/api/v1/orgs/{owner}/components/names": {
       "get": {
         "summary": "List hub model names",
-        "operationId": "ListHubComponebtNames",
+        "operationId": "HubComponentsV1_ListHubComponebtNames",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -2351,7 +2351,7 @@
     "/api/v1/orgs/{owner}/components/{component.uuid}": {
       "put": {
         "summary": "Update hub model",
-        "operationId": "UpdateHubComponent",
+        "operationId": "HubComponentsV1_UpdateHubComponent",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -2409,7 +2409,7 @@
       },
       "patch": {
         "summary": "Patch hub model",
-        "operationId": "PatchHubComponent",
+        "operationId": "HubComponentsV1_PatchHubComponent",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -2469,7 +2469,7 @@
     "/api/v1/orgs/{owner}/components/{uuid}": {
       "get": {
         "summary": "Get hub model",
-        "operationId": "GetHubComponent",
+        "operationId": "HubComponentsV1_GetHubComponent",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -2518,7 +2518,7 @@
       },
       "delete": {
         "summary": "Delete hub model",
-        "operationId": "DeleteHubComponent",
+        "operationId": "HubComponentsV1_DeleteHubComponent",
         "responses": {
           "200": {
             "description": "A successful response."
@@ -2566,7 +2566,7 @@
     "/api/v1/orgs/{owner}/connections": {
       "get": {
         "summary": "List connections",
-        "operationId": "ListConnections",
+        "operationId": "ConnectionsV1_ListConnections",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -2638,7 +2638,7 @@
       },
       "post": {
         "summary": "Create connection",
-        "operationId": "CreateConnection",
+        "operationId": "ConnectionsV1_CreateConnection",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -2691,7 +2691,7 @@
     "/api/v1/orgs/{owner}/connections/names": {
       "get": {
         "summary": "List connections names",
-        "operationId": "ListConnectionNames",
+        "operationId": "ConnectionsV1_ListConnectionNames",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -2765,7 +2765,7 @@
     "/api/v1/orgs/{owner}/connections/{connection.uuid}": {
       "put": {
         "summary": "Update connection",
-        "operationId": "UpdateConnection",
+        "operationId": "ConnectionsV1_UpdateConnection",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -2823,7 +2823,7 @@
       },
       "patch": {
         "summary": "Patch connection",
-        "operationId": "PatchConnection",
+        "operationId": "ConnectionsV1_PatchConnection",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -2883,7 +2883,7 @@
     "/api/v1/orgs/{owner}/connections/{uuid}": {
       "get": {
         "summary": "Get connection",
-        "operationId": "GetConnection",
+        "operationId": "ConnectionsV1_GetConnection",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -2932,7 +2932,7 @@
       },
       "delete": {
         "summary": "Delete connection",
-        "operationId": "DeleteConnection",
+        "operationId": "ConnectionsV1_DeleteConnection",
         "responses": {
           "200": {
             "description": "A successful response."
@@ -2979,7 +2979,7 @@
     },
     "/api/v1/orgs/{owner}/dashboards": {
       "get": {
-        "operationId": "ListDashboards",
+        "operationId": "DashboardsV1_ListDashboards",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -3050,7 +3050,7 @@
         ]
       },
       "post": {
-        "operationId": "CreateDashboard",
+        "operationId": "DashboardsV1_CreateDashboard",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -3102,7 +3102,7 @@
     },
     "/api/v1/orgs/{owner}/dashboards/names": {
       "get": {
-        "operationId": "ListDashboardNames",
+        "operationId": "DashboardsV1_ListDashboardNames",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -3175,7 +3175,7 @@
     },
     "/api/v1/orgs/{owner}/dashboards/{dashboard.uuid}": {
       "put": {
-        "operationId": "UpdateDashboard",
+        "operationId": "DashboardsV1_UpdateDashboard",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -3232,7 +3232,7 @@
         ]
       },
       "patch": {
-        "operationId": "PatchDashboard",
+        "operationId": "DashboardsV1_PatchDashboard",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -3291,7 +3291,7 @@
     },
     "/api/v1/orgs/{owner}/dashboards/{uuid}": {
       "get": {
-        "operationId": "GetDashboard",
+        "operationId": "DashboardsV1_GetDashboard",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -3339,7 +3339,7 @@
         ]
       },
       "delete": {
-        "operationId": "DeleteDashboard",
+        "operationId": "DashboardsV1_DeleteDashboard",
         "responses": {
           "200": {
             "description": "A successful response."
@@ -3386,7 +3386,7 @@
     },
     "/api/v1/orgs/{owner}/members": {
       "get": {
-        "operationId": "ListOrganizationMembers",
+        "operationId": "OrganizationsV1_ListOrganizationMembers",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -3457,7 +3457,7 @@
         ]
       },
       "post": {
-        "operationId": "CreateOrganizationMember",
+        "operationId": "OrganizationsV1_CreateOrganizationMember",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -3509,7 +3509,7 @@
     },
     "/api/v1/orgs/{owner}/members/{member.user}": {
       "put": {
-        "operationId": "UpdateOrganizationMember",
+        "operationId": "OrganizationsV1_UpdateOrganizationMember",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -3566,7 +3566,7 @@
         ]
       },
       "patch": {
-        "operationId": "PatchOrganizationMember",
+        "operationId": "OrganizationsV1_PatchOrganizationMember",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -3625,7 +3625,7 @@
     },
     "/api/v1/orgs/{owner}/members/{user}": {
       "get": {
-        "operationId": "GetOrganizationMember",
+        "operationId": "OrganizationsV1_GetOrganizationMember",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -3673,7 +3673,7 @@
         ]
       },
       "delete": {
-        "operationId": "DeleteOrganizationMember",
+        "operationId": "OrganizationsV1_DeleteOrganizationMember",
         "responses": {
           "200": {
             "description": "A successful response."
@@ -3721,7 +3721,7 @@
     "/api/v1/orgs/{owner}/models": {
       "get": {
         "summary": "List dashboards",
-        "operationId": "ListHubModels",
+        "operationId": "HubModelsV1_ListHubModels",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -3793,7 +3793,7 @@
       },
       "post": {
         "summary": "Create dashboard",
-        "operationId": "CreateHubModel",
+        "operationId": "HubModelsV1_CreateHubModel",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -3846,7 +3846,7 @@
     "/api/v1/orgs/{owner}/models/names": {
       "get": {
         "summary": "List dashboard names",
-        "operationId": "ListHubModelNames",
+        "operationId": "HubModelsV1_ListHubModelNames",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -3920,7 +3920,7 @@
     "/api/v1/orgs/{owner}/models/{model.uuid}": {
       "put": {
         "summary": "Update dashboard",
-        "operationId": "UpdateHubModel",
+        "operationId": "HubModelsV1_UpdateHubModel",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -3978,7 +3978,7 @@
       },
       "patch": {
         "summary": "Patch dashboard",
-        "operationId": "PatchHubModel",
+        "operationId": "HubModelsV1_PatchHubModel",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -4038,7 +4038,7 @@
     "/api/v1/orgs/{owner}/models/{uuid}": {
       "get": {
         "summary": "Get dashboard",
-        "operationId": "GetHubModel",
+        "operationId": "HubModelsV1_GetHubModel",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -4087,7 +4087,7 @@
       },
       "delete": {
         "summary": "Delete dashboard",
-        "operationId": "DeleteHubModel",
+        "operationId": "HubModelsV1_DeleteHubModel",
         "responses": {
           "200": {
             "description": "A successful response."
@@ -4135,7 +4135,7 @@
     "/api/v1/orgs/{owner}/queues": {
       "get": {
         "summary": "List agents",
-        "operationId": "ListOrganizationQueues",
+        "operationId": "QueuesV1_ListOrganizationQueues",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -4209,7 +4209,7 @@
     "/api/v1/orgs/{owner}/queues/names": {
       "get": {
         "summary": "List agents names",
-        "operationId": "ListOrganizationQueueNames",
+        "operationId": "QueuesV1_ListOrganizationQueueNames",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -4283,7 +4283,7 @@
     "/api/v1/orgs/{owner}/run_profiles": {
       "get": {
         "summary": "List hub components",
-        "operationId": "ListRunProfiles",
+        "operationId": "RunProfilesV1_ListRunProfiles",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -4355,7 +4355,7 @@
       },
       "post": {
         "summary": "Create hub component",
-        "operationId": "CreateRunProfile",
+        "operationId": "RunProfilesV1_CreateRunProfile",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -4408,7 +4408,7 @@
     "/api/v1/orgs/{owner}/run_profiles/names": {
       "get": {
         "summary": "List hub component names",
-        "operationId": "ListRunProfileNames",
+        "operationId": "RunProfilesV1_ListRunProfileNames",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -4482,7 +4482,7 @@
     "/api/v1/orgs/{owner}/run_profiles/{run_profile.uuid}": {
       "put": {
         "summary": "Update hub component",
-        "operationId": "UpdateRunProfile",
+        "operationId": "RunProfilesV1_UpdateRunProfile",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -4540,7 +4540,7 @@
       },
       "patch": {
         "summary": "Patch hub component",
-        "operationId": "PatchRunProfile",
+        "operationId": "RunProfilesV1_PatchRunProfile",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -4600,7 +4600,7 @@
     "/api/v1/orgs/{owner}/run_profiles/{uuid}": {
       "get": {
         "summary": "Get hub component",
-        "operationId": "GetRunProfile",
+        "operationId": "RunProfilesV1_GetRunProfile",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -4649,7 +4649,7 @@
       },
       "delete": {
         "summary": "Delete hub component",
-        "operationId": "DeleteRunProfile",
+        "operationId": "RunProfilesV1_DeleteRunProfile",
         "responses": {
           "200": {
             "description": "A successful response."
@@ -4697,7 +4697,7 @@
     "/api/v1/orgs/{owner}/searches": {
       "get": {
         "summary": "List searches",
-        "operationId": "ListSearches",
+        "operationId": "SearchesV1_ListSearches",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -4769,7 +4769,7 @@
       },
       "post": {
         "summary": "Create search",
-        "operationId": "CreateSearch",
+        "operationId": "SearchesV1_CreateSearch",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -4822,7 +4822,7 @@
     "/api/v1/orgs/{owner}/searches/names": {
       "get": {
         "summary": "List search names",
-        "operationId": "ListSearchNames",
+        "operationId": "SearchesV1_ListSearchNames",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -4896,7 +4896,7 @@
     "/api/v1/orgs/{owner}/searches/{search.uuid}": {
       "put": {
         "summary": "Update search",
-        "operationId": "UpdateSearch",
+        "operationId": "SearchesV1_UpdateSearch",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -4954,7 +4954,7 @@
       },
       "patch": {
         "summary": "Patch search",
-        "operationId": "PatchSearch",
+        "operationId": "SearchesV1_PatchSearch",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -5014,7 +5014,7 @@
     "/api/v1/orgs/{owner}/searches/{uuid}": {
       "get": {
         "summary": "Get search",
-        "operationId": "GetSearch",
+        "operationId": "SearchesV1_GetSearch",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -5063,7 +5063,7 @@
       },
       "delete": {
         "summary": "Delete search",
-        "operationId": "DeleteSearch",
+        "operationId": "SearchesV1_DeleteSearch",
         "responses": {
           "200": {
             "description": "A successful response."
@@ -5111,7 +5111,7 @@
     "/api/v1/orgs/{owner}/teams": {
       "get": {
         "summary": "List organizations",
-        "operationId": "ListTeams",
+        "operationId": "TeamsV1_ListTeams",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -5183,7 +5183,7 @@
       },
       "post": {
         "summary": "Create organization",
-        "operationId": "CreateTeam",
+        "operationId": "TeamsV1_CreateTeam",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -5236,7 +5236,7 @@
     "/api/v1/orgs/{owner}/teams/names": {
       "get": {
         "summary": "List organizations names",
-        "operationId": "ListTeamNames",
+        "operationId": "TeamsV1_ListTeamNames",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -5310,7 +5310,7 @@
     "/api/v1/orgs/{owner}/teams/{team.name}": {
       "put": {
         "summary": "Update organization",
-        "operationId": "UpdateTeam",
+        "operationId": "TeamsV1_UpdateTeam",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -5368,7 +5368,7 @@
       },
       "patch": {
         "summary": "Patch organization",
-        "operationId": "PatchTeam",
+        "operationId": "TeamsV1_PatchTeam",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -5428,7 +5428,7 @@
     "/api/v1/orgs/{owner}/teams/{team}": {
       "get": {
         "summary": "Get organization",
-        "operationId": "GetTeam",
+        "operationId": "TeamsV1_GetTeam",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -5477,7 +5477,7 @@
       },
       "delete": {
         "summary": "Delete organization",
-        "operationId": "DeleteTeam",
+        "operationId": "TeamsV1_DeleteTeam",
         "responses": {
           "200": {
             "description": "A successful response."
@@ -5525,7 +5525,7 @@
     "/api/v1/orgs/{owner}/teams/{team}/members": {
       "get": {
         "summary": "Get organization members",
-        "operationId": "ListTeamMembers",
+        "operationId": "TeamsV1_ListTeamMembers",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -5604,7 +5604,7 @@
       },
       "post": {
         "summary": "Create organization member",
-        "operationId": "CreateTeamMember",
+        "operationId": "TeamsV1_CreateTeamMember",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -5664,7 +5664,7 @@
     "/api/v1/orgs/{owner}/teams/{team}/members/{member.user}": {
       "put": {
         "summary": "Update organization member",
-        "operationId": "UpdateTeamMember",
+        "operationId": "TeamsV1_UpdateTeamMember",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -5729,7 +5729,7 @@
       },
       "patch": {
         "summary": "Patch organization member",
-        "operationId": "PatchTeamMember",
+        "operationId": "TeamsV1_PatchTeamMember",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -5796,7 +5796,7 @@
     "/api/v1/orgs/{owner}/teams/{team}/members/{user}": {
       "get": {
         "summary": "Get organization member details",
-        "operationId": "GetTeamMember",
+        "operationId": "TeamsV1_GetTeamMember",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -5852,7 +5852,7 @@
       },
       "delete": {
         "summary": "Delete organization member details",
-        "operationId": "DeleteTeamMember",
+        "operationId": "TeamsV1_DeleteTeamMember",
         "responses": {
           "200": {
             "description": "A successful response."
@@ -5907,7 +5907,7 @@
     "/api/v1/users": {
       "get": {
         "summary": "Login",
-        "operationId": "GetUser",
+        "operationId": "UsersV1_GetUser",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -5942,7 +5942,7 @@
     "/api/v1/users/token": {
       "post": {
         "summary": "List organization level queues names",
-        "operationId": "Login",
+        "operationId": "AuthV1_Login",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -5987,7 +5987,7 @@
     "/api/v1/version": {
       "get": {
         "summary": "Get current user",
-        "operationId": "GetVersions",
+        "operationId": "VersionsV1_GetVersions",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -6022,7 +6022,7 @@
     "/api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/copy": {
       "post": {
         "summary": "Restart run with copy",
-        "operationId": "CopyRun",
+        "operationId": "RunsV1_CopyRun",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -6089,7 +6089,7 @@
     "/api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/restart": {
       "post": {
         "summary": "Restart run",
-        "operationId": "RestartRun",
+        "operationId": "RunsV1_RestartRun",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -6156,7 +6156,7 @@
     "/api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/resume": {
       "post": {
         "summary": "Resume run",
-        "operationId": "ResumeRun",
+        "operationId": "RunsV1_ResumeRun",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -6223,7 +6223,7 @@
     "/api/v1/{owner}/projects/create": {
       "post": {
         "summary": "Create new project",
-        "operationId": "CreateProject",
+        "operationId": "ProjectsV1_CreateProject",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -6276,7 +6276,7 @@
     "/api/v1/{owner}/projects/list": {
       "get": {
         "summary": "List projects",
-        "operationId": "ListProjects",
+        "operationId": "ProjectsV1_ListProjects",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -6350,7 +6350,7 @@
     "/api/v1/{owner}/projects/names": {
       "get": {
         "summary": "List project names",
-        "operationId": "ListProjectNames",
+        "operationId": "ProjectsV1_ListProjectNames",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -6424,7 +6424,7 @@
     "/api/v1/{owner}/{project.name}": {
       "put": {
         "summary": "Update project",
-        "operationId": "UpdateProject",
+        "operationId": "ProjectsV1_UpdateProject",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -6482,7 +6482,7 @@
       },
       "patch": {
         "summary": "Patch project",
-        "operationId": "PatchProject",
+        "operationId": "ProjectsV1_PatchProject",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -6542,7 +6542,7 @@
     "/api/v1/{owner}/{project}": {
       "get": {
         "summary": "Get project",
-        "operationId": "GetProject",
+        "operationId": "ProjectsV1_GetProject",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -6591,7 +6591,7 @@
       },
       "delete": {
         "summary": "Delete project",
-        "operationId": "DeleteProject",
+        "operationId": "ProjectsV1_DeleteProject",
         "responses": {
           "200": {
             "description": "A successful response."
@@ -6639,7 +6639,7 @@
     "/api/v1/{owner}/{project}/archive": {
       "post": {
         "summary": "Archive project",
-        "operationId": "ArchiveProject",
+        "operationId": "ProjectsV1_ArchiveProject",
         "responses": {
           "200": {
             "description": "A successful response."
@@ -6687,7 +6687,7 @@
     "/api/v1/{owner}/{project}/bookmark": {
       "post": {
         "summary": "Bookmark project",
-        "operationId": "BookmarkProject",
+        "operationId": "ProjectsV1_BookmarkProject",
         "responses": {
           "200": {
             "description": "A successful response."
@@ -6735,7 +6735,7 @@
     "/api/v1/{owner}/{project}/ci": {
       "delete": {
         "summary": "Disbale project CI",
-        "operationId": "DisableProjectCI",
+        "operationId": "ProjectsV1_DisableProjectCI",
         "responses": {
           "200": {
             "description": "A successful response."
@@ -6781,7 +6781,7 @@
       },
       "post": {
         "summary": "Enable project CI",
-        "operationId": "EnableProjectCI",
+        "operationId": "ProjectsV1_EnableProjectCI",
         "responses": {
           "200": {
             "description": "A successful response."
@@ -6829,7 +6829,7 @@
     "/api/v1/{owner}/{project}/dashboards": {
       "get": {
         "summary": "List project dashboards",
-        "operationId": "ListProjectDashboards",
+        "operationId": "ProjectDashboardsV1_ListProjectDashboards",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -6908,7 +6908,7 @@
       },
       "post": {
         "summary": "Create project dashboard",
-        "operationId": "CreateProjectDashboard",
+        "operationId": "ProjectDashboardsV1_CreateProjectDashboard",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -6968,7 +6968,7 @@
     "/api/v1/{owner}/{project}/dashboards/names": {
       "get": {
         "summary": "List project dashboard",
-        "operationId": "ListProjectDashboardNames",
+        "operationId": "ProjectDashboardsV1_ListProjectDashboardNames",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -7049,7 +7049,7 @@
     "/api/v1/{owner}/{project}/dashboards/{dashboard.uuid}": {
       "put": {
         "summary": "Update project dashboard",
-        "operationId": "UpdateProjectDashboard",
+        "operationId": "ProjectDashboardsV1_UpdateProjectDashboard",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -7114,7 +7114,7 @@
       },
       "patch": {
         "summary": "Patch project dashboard",
-        "operationId": "PatchProjectDashboard",
+        "operationId": "ProjectDashboardsV1_PatchProjectDashboard",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -7181,7 +7181,7 @@
     "/api/v1/{owner}/{project}/dashboards/{dashboard.uuid}/promote": {
       "post": {
         "summary": "Promote project dashboard",
-        "operationId": "PromoteProjectDashboard",
+        "operationId": "ProjectDashboardsV1_PromoteProjectDashboard",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -7239,7 +7239,7 @@
     "/api/v1/{owner}/{project}/dashboards/{uuid}": {
       "get": {
         "summary": "Get project dashboard",
-        "operationId": "GetProjectDashboard",
+        "operationId": "ProjectDashboardsV1_GetProjectDashboard",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -7295,7 +7295,7 @@
       },
       "delete": {
         "summary": "Delete project dashboard",
-        "operationId": "DeleteProjectDashboard",
+        "operationId": "ProjectDashboardsV1_DeleteProjectDashboard",
         "responses": {
           "200": {
             "description": "A successful response."
@@ -7350,7 +7350,7 @@
     "/api/v1/{owner}/{project}/restore": {
       "post": {
         "summary": "Restore project",
-        "operationId": "RestoreProject",
+        "operationId": "ProjectsV1_RestoreProject",
         "responses": {
           "200": {
             "description": "A successful response."
@@ -7398,7 +7398,7 @@
     "/api/v1/{owner}/{project}/runs": {
       "get": {
         "summary": "List runs",
-        "operationId": "ListRuns",
+        "operationId": "RunsV1_ListRuns",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -7477,7 +7477,7 @@
       },
       "post": {
         "summary": "Create new run",
-        "operationId": "CreateRun",
+        "operationId": "RunsV1_CreateRun",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -7534,10 +7534,115 @@
         ]
       }
     },
+    "/api/v1/{owner}/{project}/runs/artifacts_lineage": {
+      "get": {
+        "summary": "Get runs artifacts lineage",
+        "operationId": "RunsV1_GetRunsArtifactsLineage",
+        "responses": {
+          "200": {
+            "description": "A successful response."
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "project",
+            "description": "Project under namesapce",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "RunsV1"
+        ]
+      }
+    },
+    "/api/v1/{owner}/{project}/runs/bookmark": {
+      "post": {
+        "summary": "Bookmark runs",
+        "operationId": "RunsV1_BookmarkRuns",
+        "responses": {
+          "200": {
+            "description": "A successful response."
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "project",
+            "description": "Project under namesapce",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "description": "Uuids of the entities",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1Uuids"
+            }
+          }
+        ],
+        "tags": [
+          "RunsV1"
+        ]
+      }
+    },
     "/api/v1/{owner}/{project}/runs/delete": {
       "delete": {
         "summary": "Delete runs",
-        "operationId": "DeleteRuns",
+        "operationId": "RunsV1_DeleteRuns",
         "responses": {
           "200": {
             "description": "A successful response."
@@ -7594,7 +7699,7 @@
     "/api/v1/{owner}/{project}/runs/invalidate": {
       "post": {
         "summary": "Invalidate runs",
-        "operationId": "InvalidateRuns",
+        "operationId": "RunsV1_InvalidateRuns",
         "responses": {
           "200": {
             "description": "A successful response."
@@ -7651,7 +7756,7 @@
     "/api/v1/{owner}/{project}/runs/io": {
       "get": {
         "summary": "List runs io",
-        "operationId": "ListRunsIo",
+        "operationId": "RunsV1_ListRunsIo",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -7732,7 +7837,64 @@
     "/api/v1/{owner}/{project}/runs/stop": {
       "post": {
         "summary": "Stop runs",
-        "operationId": "StopRuns",
+        "operationId": "RunsV1_StopRuns",
+        "responses": {
+          "200": {
+            "description": "A successful response."
+          },
+          "204": {
+            "description": "No content.",
+            "schema": {}
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "project",
+            "description": "Project under namesapce",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "description": "Uuids of the entities",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1Uuids"
+            }
+          }
+        ],
+        "tags": [
+          "RunsV1"
+        ]
+      }
+    },
+    "/api/v1/{owner}/{project}/runs/tag": {
+      "post": {
+        "summary": "Tag runs",
+        "operationId": "RunsV1_TagRuns",
         "responses": {
           "200": {
             "description": "A successful response."
@@ -7789,7 +7951,7 @@
     "/api/v1/{owner}/{project}/runs/{run.uuid}": {
       "put": {
         "summary": "Update run",
-        "operationId": "UpdateRun",
+        "operationId": "RunsV1_UpdateRun",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -7854,7 +8016,7 @@
       },
       "patch": {
         "summary": "Patch run",
-        "operationId": "PatchRun",
+        "operationId": "RunsV1_PatchRun",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -7921,7 +8083,7 @@
     "/api/v1/{owner}/{project}/runs/{uuid}": {
       "get": {
         "summary": "Get run",
-        "operationId": "GetRun",
+        "operationId": "RunsV1_GetRun",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -7977,7 +8139,7 @@
       },
       "delete": {
         "summary": "Delete run",
-        "operationId": "DeleteRun",
+        "operationId": "RunsV1_DeleteRun",
         "responses": {
           "200": {
             "description": "A successful response."
@@ -8032,7 +8194,7 @@
     "/api/v1/{owner}/{project}/runs/{uuid}/archive": {
       "post": {
         "summary": "Archive run",
-        "operationId": "ArchiveRun",
+        "operationId": "RunsV1_ArchiveRun",
         "responses": {
           "200": {
             "description": "A successful response."
@@ -8087,7 +8249,7 @@
     "/api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage": {
       "get": {
         "summary": "Get run artifacts lineage",
-        "operationId": "GetRunArtifactsLineage",
+        "operationId": "RunsV1_GetRunArtifactsLineage",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -8165,7 +8327,7 @@
       },
       "post": {
         "summary": "Create bulk run run artifacts lineage",
-        "operationId": "CreateRunArtifactsLineage",
+        "operationId": "RunsV1_CreateRunArtifactsLineage",
         "responses": {
           "200": {
             "description": "A successful response."
@@ -8229,7 +8391,7 @@
     "/api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage/names": {
       "get": {
         "summary": "Get run artifacts lineage names",
-        "operationId": "GetRunArtifactsLineageNames",
+        "operationId": "RunsV1_GetRunArtifactsLineageNames",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -8309,7 +8471,7 @@
     "/api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage/{name}": {
       "get": {
         "summary": "Get run artifacts lineage",
-        "operationId": "GetRunArtifactLineage",
+        "operationId": "RunsV1_GetRunArtifactLineage",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -8379,7 +8541,7 @@
       },
       "delete": {
         "summary": "Delete run artifact lineage",
-        "operationId": "DeleteRunArtifactLineage",
+        "operationId": "RunsV1_DeleteRunArtifactLineage",
         "responses": {
           "200": {
             "description": "A successful response."
@@ -8448,7 +8610,7 @@
     "/api/v1/{owner}/{project}/runs/{uuid}/bookmark": {
       "post": {
         "summary": "Bookmark run",
-        "operationId": "BookmarkRun",
+        "operationId": "RunsV1_BookmarkRun",
         "responses": {
           "200": {
             "description": "A successful response."
@@ -8503,7 +8665,7 @@
     "/api/v1/{owner}/{project}/runs/{uuid}/impersonate": {
       "post": {
         "summary": "Impersonate run token",
-        "operationId": "ImpersonateToken",
+        "operationId": "RunsV1_ImpersonateToken",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -8561,7 +8723,7 @@
     "/api/v1/{owner}/{project}/runs/{uuid}/invalidate": {
       "post": {
         "summary": "Invalidate run",
-        "operationId": "InvalidateRun",
+        "operationId": "RunsV1_InvalidateRun",
         "responses": {
           "200": {
             "description": "A successful response."
@@ -8624,7 +8786,7 @@
     "/api/v1/{owner}/{project}/runs/{uuid}/namespace": {
       "get": {
         "summary": "Get Run namespace",
-        "operationId": "GetRunNamespace",
+        "operationId": "RunsV1_GetRunNamespace",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -8682,7 +8844,7 @@
     "/api/v1/{owner}/{project}/runs/{uuid}/restore": {
       "post": {
         "summary": "Restore run",
-        "operationId": "RestoreRun",
+        "operationId": "RunsV1_RestoreRun",
         "responses": {
           "200": {
             "description": "A successful response."
@@ -8737,7 +8899,7 @@
     "/api/v1/{owner}/{project}/runs/{uuid}/settings": {
       "get": {
         "summary": "Get Run settings",
-        "operationId": "GetRunSettings",
+        "operationId": "RunsV1_GetRunSettings",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -8795,7 +8957,7 @@
     "/api/v1/{owner}/{project}/runs/{uuid}/statuses": {
       "get": {
         "summary": "Get run status",
-        "operationId": "GetRunStatuses",
+        "operationId": "RunsV1_GetRunStatuses",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -8851,7 +9013,7 @@
       },
       "post": {
         "summary": "Create new run status",
-        "operationId": "CreateRunStatus",
+        "operationId": "RunsV1_CreateRunStatus",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -8917,7 +9079,7 @@
     "/api/v1/{owner}/{project}/runs/{uuid}/stop": {
       "post": {
         "summary": "Stop run",
-        "operationId": "StopRun",
+        "operationId": "RunsV1_StopRun",
         "responses": {
           "200": {
             "description": "A successful response."
@@ -8972,7 +9134,7 @@
     "/api/v1/{owner}/{project}/runs/{uuid}/tensorboard/start": {
       "post": {
         "summary": "Start run tensorboard",
-        "operationId": "StartRunTensorboard",
+        "operationId": "RunsV1_StartRunTensorboard",
         "responses": {
           "200": {
             "description": "A successful response."
@@ -9035,7 +9197,7 @@
     "/api/v1/{owner}/{project}/runs/{uuid}/tensorboard/stop": {
       "post": {
         "summary": "Stop run tensorboard",
-        "operationId": "StopRunTensorboard",
+        "operationId": "RunsV1_StopRunTensorboard",
         "responses": {
           "200": {
             "description": "A successful response."
@@ -9090,7 +9252,7 @@
     "/api/v1/{owner}/{project}/runs/{uuid}/unbookmark": {
       "delete": {
         "summary": "Unbookmark run",
-        "operationId": "UnbookmarkRun",
+        "operationId": "RunsV1_UnbookmarkRun",
         "responses": {
           "200": {
             "description": "A successful response."
@@ -9145,7 +9307,7 @@
     "/api/v1/{owner}/{project}/searches": {
       "get": {
         "summary": "List project searches",
-        "operationId": "ListProjectSearches",
+        "operationId": "ProjectSearchesV1_ListProjectSearches",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -9224,7 +9386,7 @@
       },
       "post": {
         "summary": "Create project search",
-        "operationId": "CreateProjectSearch",
+        "operationId": "ProjectSearchesV1_CreateProjectSearch",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -9284,7 +9446,7 @@
     "/api/v1/{owner}/{project}/searches/names": {
       "get": {
         "summary": "List project search names",
-        "operationId": "ListProjectSearchNames",
+        "operationId": "ProjectSearchesV1_ListProjectSearchNames",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -9365,7 +9527,7 @@
     "/api/v1/{owner}/{project}/searches/{search.uuid}": {
       "put": {
         "summary": "Update project search",
-        "operationId": "UpdateProjectSearch",
+        "operationId": "ProjectSearchesV1_UpdateProjectSearch",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -9430,7 +9592,7 @@
       },
       "patch": {
         "summary": "Patch project search",
-        "operationId": "PatchProjectSearch",
+        "operationId": "ProjectSearchesV1_PatchProjectSearch",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -9497,7 +9659,7 @@
     "/api/v1/{owner}/{project}/searches/{uuid}": {
       "get": {
         "summary": "Get project search",
-        "operationId": "GetProjectSearch",
+        "operationId": "ProjectSearchesV1_GetProjectSearch",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -9553,7 +9715,7 @@
       },
       "delete": {
         "summary": "Delete project search",
-        "operationId": "DeleteProjectSearch",
+        "operationId": "ProjectSearchesV1_DeleteProjectSearch",
         "responses": {
           "200": {
             "description": "A successful response."
@@ -9608,7 +9770,7 @@
     "/api/v1/{owner}/{project}/searches/{uuid}/promote": {
       "post": {
         "summary": "Promote project search",
-        "operationId": "PromoteProjectSearch",
+        "operationId": "ProjectSearchesV1_PromoteProjectSearch",
         "responses": {
           "200": {
             "description": "A successful response."
@@ -9663,7 +9825,7 @@
     "/api/v1/{owner}/{project}/settings": {
       "get": {
         "summary": "Get Project settings",
-        "operationId": "GetProjectSettings",
+        "operationId": "ProjectsV1_GetProjectSettings",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -9712,7 +9874,7 @@
       },
       "put": {
         "summary": "Update project settings",
-        "operationId": "UpdateProjectSettings",
+        "operationId": "ProjectsV1_UpdateProjectSettings",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -9770,7 +9932,7 @@
       },
       "patch": {
         "summary": "Patch project settings",
-        "operationId": "PatchProjectSettings",
+        "operationId": "ProjectsV1_PatchProjectSettings",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -9830,7 +9992,7 @@
     "/api/v1/{owner}/{project}/teams": {
       "get": {
         "summary": "Get project teams",
-        "operationId": "FetchProjectTeams",
+        "operationId": "ProjectsV1_FetchProjectTeams",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -9879,7 +10041,7 @@
       },
       "put": {
         "summary": "Update project teams",
-        "operationId": "UpdateProjectTeams",
+        "operationId": "ProjectsV1_UpdateProjectTeams",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -9937,7 +10099,7 @@
       },
       "patch": {
         "summary": "Patch project teams",
-        "operationId": "PatchProjectTeams",
+        "operationId": "ProjectsV1_PatchProjectTeams",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -9997,7 +10159,7 @@
     "/api/v1/{owner}/{project}/unbookmark": {
       "delete": {
         "summary": "Unbookmark project",
-        "operationId": "UnbookmarkProject",
+        "operationId": "ProjectsV1_UnbookmarkProject",
         "responses": {
           "200": {
             "description": "A successful response."
@@ -10045,7 +10207,7 @@
     "/schemas": {
       "get": {
         "summary": "List teams names",
-        "operationId": "NoOp",
+        "operationId": "SchemasV1_NoOp",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -10080,7 +10242,7 @@
     "/streams/v1/{namespace}/_internal/{owner}/{project}/runs/{uuid}/logs": {
       "post": {
         "summary": "Collect run logs",
-        "operationId": "CollectRunLogs",
+        "operationId": "RunsV1_CollectRunLogs",
         "responses": {
           "200": {
             "description": "A successful response."
@@ -10141,7 +10303,7 @@
     "/streams/v1/{namespace}/{owner}/{project}/runs/multi/events/{kind}": {
       "get": {
         "summary": "Get multi runs events",
-        "operationId": "GetMultiRunEvents",
+        "operationId": "RunsV1_GetMultiRunEvents",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -10252,7 +10414,7 @@
     "/streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifacts/tree": {
       "get": {
         "summary": "Get run artifacts tree",
-        "operationId": "GetRunArtifactsTree",
+        "operationId": "RunsV1_GetRunArtifactsTree",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -10324,7 +10486,7 @@
     "/streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/events/{kind}": {
       "get": {
         "summary": "Get run events",
-        "operationId": "GetRunEvents",
+        "operationId": "RunsV1_GetRunEvents",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -10435,7 +10597,7 @@
     "/streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/logs": {
       "get": {
         "summary": "Get run logs",
-        "operationId": "GetRunLogs",
+        "operationId": "RunsV1_GetRunLogs",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -10514,7 +10676,7 @@
     "/streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/notify": {
       "post": {
         "summary": "Notify run status",
-        "operationId": "NotifyRunStatus",
+        "operationId": "RunsV1_NotifyRunStatus",
         "responses": {
           "200": {
             "description": "A successful response."
@@ -10584,7 +10746,7 @@
     "/streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/resources": {
       "get": {
         "summary": "Get run resources events",
-        "operationId": "GetRunResources",
+        "operationId": "RunsV1_GetRunResources",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -12106,10 +12268,6 @@
         "run_view": {
           "type": "boolean",
           "format": "boolean",
-          "title": "Optional dashboard search"
-        },
-        "search": {
-          "$ref": "#/definitions/v1SearchSpec",
           "title": "Optional dashboard search"
         },
         "spec": {
