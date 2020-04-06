@@ -26,15 +26,12 @@ RUN mv protoc3/bin/* /usr/bin/
 RUN mv protoc3/include/* /usr/local/include/
 
 # Go Deps
+RUN go mod init sdks
 RUN go get -u github.com/golang/protobuf/protoc-gen-go
-RUN go get -u github.com/grpc-ecosystem/grpc-gateway/protoc-gen-grpc-gateway
-RUN go get -u github.com/grpc-ecosystem/grpc-gateway/protoc-gen-swagger
+RUN go get -u github.com/grpc-ecosystem/grpc-gateway/protoc-gen-grpc-gateway@v1.14.3
+RUN go get -u github.com/grpc-ecosystem/grpc-gateway/protoc-gen-swagger@v1.14.3
 RUN go get -u github.com/go-swagger/go-swagger/cmd/swagger
-# Hhhm???
-RUN go install github.com/golang/protobuf/protoc-gen-go
-RUN go install github.com/grpc-ecosystem/grpc-gateway/protoc-gen-grpc-gateway
-RUN go install github.com/grpc-ecosystem/grpc-gateway/protoc-gen-swagger
-RUN go install github.com/go-swagger/go-swagger/cmd/swagger
+
 # HTML openapi
 RUN npm install -g bootprint
 RUN npm install -g bootprint-openapi
