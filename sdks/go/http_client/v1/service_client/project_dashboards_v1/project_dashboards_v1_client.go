@@ -39,43 +39,43 @@ type Client struct {
 
 // ClientService is the interface for Client methods
 type ClientService interface {
-	ProjectDashboardsV1CreateProjectDashboard(params *ProjectDashboardsV1CreateProjectDashboardParams, authInfo runtime.ClientAuthInfoWriter) (*ProjectDashboardsV1CreateProjectDashboardOK, *ProjectDashboardsV1CreateProjectDashboardNoContent, error)
+	CreateProjectDashboard(params *CreateProjectDashboardParams, authInfo runtime.ClientAuthInfoWriter) (*CreateProjectDashboardOK, *CreateProjectDashboardNoContent, error)
 
-	ProjectDashboardsV1DeleteProjectDashboard(params *ProjectDashboardsV1DeleteProjectDashboardParams, authInfo runtime.ClientAuthInfoWriter) (*ProjectDashboardsV1DeleteProjectDashboardOK, *ProjectDashboardsV1DeleteProjectDashboardNoContent, error)
+	DeleteProjectDashboard(params *DeleteProjectDashboardParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteProjectDashboardOK, *DeleteProjectDashboardNoContent, error)
 
-	ProjectDashboardsV1GetProjectDashboard(params *ProjectDashboardsV1GetProjectDashboardParams, authInfo runtime.ClientAuthInfoWriter) (*ProjectDashboardsV1GetProjectDashboardOK, *ProjectDashboardsV1GetProjectDashboardNoContent, error)
+	GetProjectDashboard(params *GetProjectDashboardParams, authInfo runtime.ClientAuthInfoWriter) (*GetProjectDashboardOK, *GetProjectDashboardNoContent, error)
 
-	ProjectDashboardsV1ListProjectDashboardNames(params *ProjectDashboardsV1ListProjectDashboardNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ProjectDashboardsV1ListProjectDashboardNamesOK, *ProjectDashboardsV1ListProjectDashboardNamesNoContent, error)
+	ListProjectDashboardNames(params *ListProjectDashboardNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListProjectDashboardNamesOK, *ListProjectDashboardNamesNoContent, error)
 
-	ProjectDashboardsV1ListProjectDashboards(params *ProjectDashboardsV1ListProjectDashboardsParams, authInfo runtime.ClientAuthInfoWriter) (*ProjectDashboardsV1ListProjectDashboardsOK, *ProjectDashboardsV1ListProjectDashboardsNoContent, error)
+	ListProjectDashboards(params *ListProjectDashboardsParams, authInfo runtime.ClientAuthInfoWriter) (*ListProjectDashboardsOK, *ListProjectDashboardsNoContent, error)
 
-	ProjectDashboardsV1PatchProjectDashboard(params *ProjectDashboardsV1PatchProjectDashboardParams, authInfo runtime.ClientAuthInfoWriter) (*ProjectDashboardsV1PatchProjectDashboardOK, *ProjectDashboardsV1PatchProjectDashboardNoContent, error)
+	PatchProjectDashboard(params *PatchProjectDashboardParams, authInfo runtime.ClientAuthInfoWriter) (*PatchProjectDashboardOK, *PatchProjectDashboardNoContent, error)
 
-	ProjectDashboardsV1PromoteProjectDashboard(params *ProjectDashboardsV1PromoteProjectDashboardParams, authInfo runtime.ClientAuthInfoWriter) (*ProjectDashboardsV1PromoteProjectDashboardOK, *ProjectDashboardsV1PromoteProjectDashboardNoContent, error)
+	PromoteProjectDashboard(params *PromoteProjectDashboardParams, authInfo runtime.ClientAuthInfoWriter) (*PromoteProjectDashboardOK, *PromoteProjectDashboardNoContent, error)
 
-	ProjectDashboardsV1UpdateProjectDashboard(params *ProjectDashboardsV1UpdateProjectDashboardParams, authInfo runtime.ClientAuthInfoWriter) (*ProjectDashboardsV1UpdateProjectDashboardOK, *ProjectDashboardsV1UpdateProjectDashboardNoContent, error)
+	UpdateProjectDashboard(params *UpdateProjectDashboardParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateProjectDashboardOK, *UpdateProjectDashboardNoContent, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
 
 /*
-  ProjectDashboardsV1CreateProjectDashboard creates project dashboard
+  CreateProjectDashboard creates project dashboard
 */
-func (a *Client) ProjectDashboardsV1CreateProjectDashboard(params *ProjectDashboardsV1CreateProjectDashboardParams, authInfo runtime.ClientAuthInfoWriter) (*ProjectDashboardsV1CreateProjectDashboardOK, *ProjectDashboardsV1CreateProjectDashboardNoContent, error) {
+func (a *Client) CreateProjectDashboard(params *CreateProjectDashboardParams, authInfo runtime.ClientAuthInfoWriter) (*CreateProjectDashboardOK, *CreateProjectDashboardNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewProjectDashboardsV1CreateProjectDashboardParams()
+		params = NewCreateProjectDashboardParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "ProjectDashboardsV1_CreateProjectDashboard",
+		ID:                 "CreateProjectDashboard",
 		Method:             "POST",
 		PathPattern:        "/api/v1/{owner}/{project}/dashboards",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &ProjectDashboardsV1CreateProjectDashboardReader{formats: a.formats},
+		Reader:             &CreateProjectDashboardReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -84,34 +84,34 @@ func (a *Client) ProjectDashboardsV1CreateProjectDashboard(params *ProjectDashbo
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *ProjectDashboardsV1CreateProjectDashboardOK:
+	case *CreateProjectDashboardOK:
 		return value, nil, nil
-	case *ProjectDashboardsV1CreateProjectDashboardNoContent:
+	case *CreateProjectDashboardNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*ProjectDashboardsV1CreateProjectDashboardDefault)
+	unexpectedSuccess := result.(*CreateProjectDashboardDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  ProjectDashboardsV1DeleteProjectDashboard deletes project dashboard
+  DeleteProjectDashboard deletes project dashboard
 */
-func (a *Client) ProjectDashboardsV1DeleteProjectDashboard(params *ProjectDashboardsV1DeleteProjectDashboardParams, authInfo runtime.ClientAuthInfoWriter) (*ProjectDashboardsV1DeleteProjectDashboardOK, *ProjectDashboardsV1DeleteProjectDashboardNoContent, error) {
+func (a *Client) DeleteProjectDashboard(params *DeleteProjectDashboardParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteProjectDashboardOK, *DeleteProjectDashboardNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewProjectDashboardsV1DeleteProjectDashboardParams()
+		params = NewDeleteProjectDashboardParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "ProjectDashboardsV1_DeleteProjectDashboard",
+		ID:                 "DeleteProjectDashboard",
 		Method:             "DELETE",
 		PathPattern:        "/api/v1/{owner}/{project}/dashboards/{uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &ProjectDashboardsV1DeleteProjectDashboardReader{formats: a.formats},
+		Reader:             &DeleteProjectDashboardReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -120,34 +120,34 @@ func (a *Client) ProjectDashboardsV1DeleteProjectDashboard(params *ProjectDashbo
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *ProjectDashboardsV1DeleteProjectDashboardOK:
+	case *DeleteProjectDashboardOK:
 		return value, nil, nil
-	case *ProjectDashboardsV1DeleteProjectDashboardNoContent:
+	case *DeleteProjectDashboardNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*ProjectDashboardsV1DeleteProjectDashboardDefault)
+	unexpectedSuccess := result.(*DeleteProjectDashboardDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  ProjectDashboardsV1GetProjectDashboard gets project dashboard
+  GetProjectDashboard gets project dashboard
 */
-func (a *Client) ProjectDashboardsV1GetProjectDashboard(params *ProjectDashboardsV1GetProjectDashboardParams, authInfo runtime.ClientAuthInfoWriter) (*ProjectDashboardsV1GetProjectDashboardOK, *ProjectDashboardsV1GetProjectDashboardNoContent, error) {
+func (a *Client) GetProjectDashboard(params *GetProjectDashboardParams, authInfo runtime.ClientAuthInfoWriter) (*GetProjectDashboardOK, *GetProjectDashboardNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewProjectDashboardsV1GetProjectDashboardParams()
+		params = NewGetProjectDashboardParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "ProjectDashboardsV1_GetProjectDashboard",
+		ID:                 "GetProjectDashboard",
 		Method:             "GET",
 		PathPattern:        "/api/v1/{owner}/{project}/dashboards/{uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &ProjectDashboardsV1GetProjectDashboardReader{formats: a.formats},
+		Reader:             &GetProjectDashboardReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -156,34 +156,34 @@ func (a *Client) ProjectDashboardsV1GetProjectDashboard(params *ProjectDashboard
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *ProjectDashboardsV1GetProjectDashboardOK:
+	case *GetProjectDashboardOK:
 		return value, nil, nil
-	case *ProjectDashboardsV1GetProjectDashboardNoContent:
+	case *GetProjectDashboardNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*ProjectDashboardsV1GetProjectDashboardDefault)
+	unexpectedSuccess := result.(*GetProjectDashboardDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  ProjectDashboardsV1ListProjectDashboardNames lists project dashboard
+  ListProjectDashboardNames lists project dashboard
 */
-func (a *Client) ProjectDashboardsV1ListProjectDashboardNames(params *ProjectDashboardsV1ListProjectDashboardNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ProjectDashboardsV1ListProjectDashboardNamesOK, *ProjectDashboardsV1ListProjectDashboardNamesNoContent, error) {
+func (a *Client) ListProjectDashboardNames(params *ListProjectDashboardNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListProjectDashboardNamesOK, *ListProjectDashboardNamesNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewProjectDashboardsV1ListProjectDashboardNamesParams()
+		params = NewListProjectDashboardNamesParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "ProjectDashboardsV1_ListProjectDashboardNames",
+		ID:                 "ListProjectDashboardNames",
 		Method:             "GET",
 		PathPattern:        "/api/v1/{owner}/{project}/dashboards/names",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &ProjectDashboardsV1ListProjectDashboardNamesReader{formats: a.formats},
+		Reader:             &ListProjectDashboardNamesReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -192,34 +192,34 @@ func (a *Client) ProjectDashboardsV1ListProjectDashboardNames(params *ProjectDas
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *ProjectDashboardsV1ListProjectDashboardNamesOK:
+	case *ListProjectDashboardNamesOK:
 		return value, nil, nil
-	case *ProjectDashboardsV1ListProjectDashboardNamesNoContent:
+	case *ListProjectDashboardNamesNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*ProjectDashboardsV1ListProjectDashboardNamesDefault)
+	unexpectedSuccess := result.(*ListProjectDashboardNamesDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  ProjectDashboardsV1ListProjectDashboards lists project dashboards
+  ListProjectDashboards lists project dashboards
 */
-func (a *Client) ProjectDashboardsV1ListProjectDashboards(params *ProjectDashboardsV1ListProjectDashboardsParams, authInfo runtime.ClientAuthInfoWriter) (*ProjectDashboardsV1ListProjectDashboardsOK, *ProjectDashboardsV1ListProjectDashboardsNoContent, error) {
+func (a *Client) ListProjectDashboards(params *ListProjectDashboardsParams, authInfo runtime.ClientAuthInfoWriter) (*ListProjectDashboardsOK, *ListProjectDashboardsNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewProjectDashboardsV1ListProjectDashboardsParams()
+		params = NewListProjectDashboardsParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "ProjectDashboardsV1_ListProjectDashboards",
+		ID:                 "ListProjectDashboards",
 		Method:             "GET",
 		PathPattern:        "/api/v1/{owner}/{project}/dashboards",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &ProjectDashboardsV1ListProjectDashboardsReader{formats: a.formats},
+		Reader:             &ListProjectDashboardsReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -228,34 +228,34 @@ func (a *Client) ProjectDashboardsV1ListProjectDashboards(params *ProjectDashboa
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *ProjectDashboardsV1ListProjectDashboardsOK:
+	case *ListProjectDashboardsOK:
 		return value, nil, nil
-	case *ProjectDashboardsV1ListProjectDashboardsNoContent:
+	case *ListProjectDashboardsNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*ProjectDashboardsV1ListProjectDashboardsDefault)
+	unexpectedSuccess := result.(*ListProjectDashboardsDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  ProjectDashboardsV1PatchProjectDashboard patches project dashboard
+  PatchProjectDashboard patches project dashboard
 */
-func (a *Client) ProjectDashboardsV1PatchProjectDashboard(params *ProjectDashboardsV1PatchProjectDashboardParams, authInfo runtime.ClientAuthInfoWriter) (*ProjectDashboardsV1PatchProjectDashboardOK, *ProjectDashboardsV1PatchProjectDashboardNoContent, error) {
+func (a *Client) PatchProjectDashboard(params *PatchProjectDashboardParams, authInfo runtime.ClientAuthInfoWriter) (*PatchProjectDashboardOK, *PatchProjectDashboardNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewProjectDashboardsV1PatchProjectDashboardParams()
+		params = NewPatchProjectDashboardParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "ProjectDashboardsV1_PatchProjectDashboard",
+		ID:                 "PatchProjectDashboard",
 		Method:             "PATCH",
 		PathPattern:        "/api/v1/{owner}/{project}/dashboards/{dashboard.uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &ProjectDashboardsV1PatchProjectDashboardReader{formats: a.formats},
+		Reader:             &PatchProjectDashboardReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -264,34 +264,34 @@ func (a *Client) ProjectDashboardsV1PatchProjectDashboard(params *ProjectDashboa
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *ProjectDashboardsV1PatchProjectDashboardOK:
+	case *PatchProjectDashboardOK:
 		return value, nil, nil
-	case *ProjectDashboardsV1PatchProjectDashboardNoContent:
+	case *PatchProjectDashboardNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*ProjectDashboardsV1PatchProjectDashboardDefault)
+	unexpectedSuccess := result.(*PatchProjectDashboardDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  ProjectDashboardsV1PromoteProjectDashboard promotes project dashboard
+  PromoteProjectDashboard promotes project dashboard
 */
-func (a *Client) ProjectDashboardsV1PromoteProjectDashboard(params *ProjectDashboardsV1PromoteProjectDashboardParams, authInfo runtime.ClientAuthInfoWriter) (*ProjectDashboardsV1PromoteProjectDashboardOK, *ProjectDashboardsV1PromoteProjectDashboardNoContent, error) {
+func (a *Client) PromoteProjectDashboard(params *PromoteProjectDashboardParams, authInfo runtime.ClientAuthInfoWriter) (*PromoteProjectDashboardOK, *PromoteProjectDashboardNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewProjectDashboardsV1PromoteProjectDashboardParams()
+		params = NewPromoteProjectDashboardParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "ProjectDashboardsV1_PromoteProjectDashboard",
+		ID:                 "PromoteProjectDashboard",
 		Method:             "POST",
 		PathPattern:        "/api/v1/{owner}/{project}/dashboards/{dashboard.uuid}/promote",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &ProjectDashboardsV1PromoteProjectDashboardReader{formats: a.formats},
+		Reader:             &PromoteProjectDashboardReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -300,34 +300,34 @@ func (a *Client) ProjectDashboardsV1PromoteProjectDashboard(params *ProjectDashb
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *ProjectDashboardsV1PromoteProjectDashboardOK:
+	case *PromoteProjectDashboardOK:
 		return value, nil, nil
-	case *ProjectDashboardsV1PromoteProjectDashboardNoContent:
+	case *PromoteProjectDashboardNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*ProjectDashboardsV1PromoteProjectDashboardDefault)
+	unexpectedSuccess := result.(*PromoteProjectDashboardDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  ProjectDashboardsV1UpdateProjectDashboard updates project dashboard
+  UpdateProjectDashboard updates project dashboard
 */
-func (a *Client) ProjectDashboardsV1UpdateProjectDashboard(params *ProjectDashboardsV1UpdateProjectDashboardParams, authInfo runtime.ClientAuthInfoWriter) (*ProjectDashboardsV1UpdateProjectDashboardOK, *ProjectDashboardsV1UpdateProjectDashboardNoContent, error) {
+func (a *Client) UpdateProjectDashboard(params *UpdateProjectDashboardParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateProjectDashboardOK, *UpdateProjectDashboardNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewProjectDashboardsV1UpdateProjectDashboardParams()
+		params = NewUpdateProjectDashboardParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "ProjectDashboardsV1_UpdateProjectDashboard",
+		ID:                 "UpdateProjectDashboard",
 		Method:             "PUT",
 		PathPattern:        "/api/v1/{owner}/{project}/dashboards/{dashboard.uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &ProjectDashboardsV1UpdateProjectDashboardReader{formats: a.formats},
+		Reader:             &UpdateProjectDashboardReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -336,13 +336,13 @@ func (a *Client) ProjectDashboardsV1UpdateProjectDashboard(params *ProjectDashbo
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *ProjectDashboardsV1UpdateProjectDashboardOK:
+	case *UpdateProjectDashboardOK:
 		return value, nil, nil
-	case *ProjectDashboardsV1UpdateProjectDashboardNoContent:
+	case *UpdateProjectDashboardNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*ProjectDashboardsV1UpdateProjectDashboardDefault)
+	unexpectedSuccess := result.(*UpdateProjectDashboardDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 

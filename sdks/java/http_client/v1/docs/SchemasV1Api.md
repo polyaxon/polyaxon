@@ -4,12 +4,12 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**schemasV1NoOp**](SchemasV1Api.md#schemasV1NoOp) | **GET** /schemas | List teams names
+[**noOp**](SchemasV1Api.md#noOp) | **GET** /schemas | List teams names
 
 
-<a name="schemasV1NoOp"></a>
-# **schemasV1NoOp**
-> V1Schemas schemasV1NoOp()
+<a name="noOp"></a>
+# **noOp**
+> V1Schemas noOp()
 
 List teams names
 
@@ -32,10 +32,10 @@ ApiKey.setApiKey("YOUR API KEY");
 
 SchemasV1Api apiInstance = new SchemasV1Api();
 try {
-    V1Schemas result = apiInstance.schemasV1NoOp();
+    V1Schemas result = apiInstance.noOp();
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling SchemasV1Api#schemasV1NoOp");
+    System.err.println("Exception when calling SchemasV1Api#noOp");
     e.printStackTrace();
 }
 ```

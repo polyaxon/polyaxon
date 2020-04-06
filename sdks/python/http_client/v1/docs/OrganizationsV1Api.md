@@ -4,23 +4,23 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**organizations_v1_create_organization**](OrganizationsV1Api.md#organizations_v1_create_organization) | **POST** /api/v1/orgs/create | 
-[**organizations_v1_create_organization_member**](OrganizationsV1Api.md#organizations_v1_create_organization_member) | **POST** /api/v1/orgs/{owner}/members | 
-[**organizations_v1_delete_organization**](OrganizationsV1Api.md#organizations_v1_delete_organization) | **DELETE** /api/v1/orgs/{owner} | 
-[**organizations_v1_delete_organization_member**](OrganizationsV1Api.md#organizations_v1_delete_organization_member) | **DELETE** /api/v1/orgs/{owner}/members/{user} | 
-[**organizations_v1_get_organization**](OrganizationsV1Api.md#organizations_v1_get_organization) | **GET** /api/v1/orgs/{owner} | 
-[**organizations_v1_get_organization_member**](OrganizationsV1Api.md#organizations_v1_get_organization_member) | **GET** /api/v1/orgs/{owner}/members/{user} | 
-[**organizations_v1_list_organization_members**](OrganizationsV1Api.md#organizations_v1_list_organization_members) | **GET** /api/v1/orgs/{owner}/members | 
-[**organizations_v1_list_organization_names**](OrganizationsV1Api.md#organizations_v1_list_organization_names) | **GET** /api/v1/orgs/names | Get versions
-[**organizations_v1_list_organizations**](OrganizationsV1Api.md#organizations_v1_list_organizations) | **GET** /api/v1/orgs/list | Get log handler
-[**organizations_v1_patch_organization**](OrganizationsV1Api.md#organizations_v1_patch_organization) | **PATCH** /api/v1/orgs/{owner} | 
-[**organizations_v1_patch_organization_member**](OrganizationsV1Api.md#organizations_v1_patch_organization_member) | **PATCH** /api/v1/orgs/{owner}/members/{member.user} | 
-[**organizations_v1_update_organization**](OrganizationsV1Api.md#organizations_v1_update_organization) | **PUT** /api/v1/orgs/{owner} | 
-[**organizations_v1_update_organization_member**](OrganizationsV1Api.md#organizations_v1_update_organization_member) | **PUT** /api/v1/orgs/{owner}/members/{member.user} | 
+[**create_organization**](OrganizationsV1Api.md#create_organization) | **POST** /api/v1/orgs/create | 
+[**create_organization_member**](OrganizationsV1Api.md#create_organization_member) | **POST** /api/v1/orgs/{owner}/members | 
+[**delete_organization**](OrganizationsV1Api.md#delete_organization) | **DELETE** /api/v1/orgs/{owner} | 
+[**delete_organization_member**](OrganizationsV1Api.md#delete_organization_member) | **DELETE** /api/v1/orgs/{owner}/members/{user} | 
+[**get_organization**](OrganizationsV1Api.md#get_organization) | **GET** /api/v1/orgs/{owner} | 
+[**get_organization_member**](OrganizationsV1Api.md#get_organization_member) | **GET** /api/v1/orgs/{owner}/members/{user} | 
+[**list_organization_members**](OrganizationsV1Api.md#list_organization_members) | **GET** /api/v1/orgs/{owner}/members | 
+[**list_organization_names**](OrganizationsV1Api.md#list_organization_names) | **GET** /api/v1/orgs/names | Get versions
+[**list_organizations**](OrganizationsV1Api.md#list_organizations) | **GET** /api/v1/orgs/list | Get log handler
+[**patch_organization**](OrganizationsV1Api.md#patch_organization) | **PATCH** /api/v1/orgs/{owner} | 
+[**patch_organization_member**](OrganizationsV1Api.md#patch_organization_member) | **PATCH** /api/v1/orgs/{owner}/members/{member.user} | 
+[**update_organization**](OrganizationsV1Api.md#update_organization) | **PUT** /api/v1/orgs/{owner} | 
+[**update_organization_member**](OrganizationsV1Api.md#update_organization_member) | **PUT** /api/v1/orgs/{owner}/members/{member.user} | 
 
 
-# **organizations_v1_create_organization**
-> V1Organization organizations_v1_create_organization(body)
+# **create_organization**
+> V1Organization create_organization(body)
 
 
 
@@ -43,10 +43,10 @@ api_instance = polyaxon_sdk.OrganizationsV1Api(polyaxon_sdk.ApiClient(configurat
 body = polyaxon_sdk.V1Organization() # V1Organization | 
 
 try:
-    api_response = api_instance.organizations_v1_create_organization(body)
+    api_response = api_instance.create_organization(body)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling OrganizationsV1Api->organizations_v1_create_organization: %s\n" % e)
+    print("Exception when calling OrganizationsV1Api->create_organization: %s\n" % e)
 ```
 
 ### Parameters
@@ -70,8 +70,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **organizations_v1_create_organization_member**
-> V1OrganizationMember organizations_v1_create_organization_member(owner, body)
+# **create_organization_member**
+> V1OrganizationMember create_organization_member(owner, body)
 
 
 
@@ -95,10 +95,10 @@ owner = 'owner_example' # str | Owner of the namespace
 body = polyaxon_sdk.V1OrganizationMember() # V1OrganizationMember | Organization body
 
 try:
-    api_response = api_instance.organizations_v1_create_organization_member(owner, body)
+    api_response = api_instance.create_organization_member(owner, body)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling OrganizationsV1Api->organizations_v1_create_organization_member: %s\n" % e)
+    print("Exception when calling OrganizationsV1Api->create_organization_member: %s\n" % e)
 ```
 
 ### Parameters
@@ -123,8 +123,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **organizations_v1_delete_organization**
-> organizations_v1_delete_organization(owner)
+# **delete_organization**
+> delete_organization(owner)
 
 
 
@@ -147,9 +147,9 @@ api_instance = polyaxon_sdk.OrganizationsV1Api(polyaxon_sdk.ApiClient(configurat
 owner = 'owner_example' # str | Owner of the namespace
 
 try:
-    api_instance.organizations_v1_delete_organization(owner)
+    api_instance.delete_organization(owner)
 except ApiException as e:
-    print("Exception when calling OrganizationsV1Api->organizations_v1_delete_organization: %s\n" % e)
+    print("Exception when calling OrganizationsV1Api->delete_organization: %s\n" % e)
 ```
 
 ### Parameters
@@ -173,8 +173,8 @@ void (empty response body)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **organizations_v1_delete_organization_member**
-> organizations_v1_delete_organization_member(owner, user)
+# **delete_organization_member**
+> delete_organization_member(owner, user)
 
 
 
@@ -198,9 +198,9 @@ owner = 'owner_example' # str | Owner of the namespace
 user = 'user_example' # str | Memeber under namesapce
 
 try:
-    api_instance.organizations_v1_delete_organization_member(owner, user)
+    api_instance.delete_organization_member(owner, user)
 except ApiException as e:
-    print("Exception when calling OrganizationsV1Api->organizations_v1_delete_organization_member: %s\n" % e)
+    print("Exception when calling OrganizationsV1Api->delete_organization_member: %s\n" % e)
 ```
 
 ### Parameters
@@ -225,8 +225,8 @@ void (empty response body)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **organizations_v1_get_organization**
-> V1Organization organizations_v1_get_organization(owner)
+# **get_organization**
+> V1Organization get_organization(owner)
 
 
 
@@ -249,10 +249,10 @@ api_instance = polyaxon_sdk.OrganizationsV1Api(polyaxon_sdk.ApiClient(configurat
 owner = 'owner_example' # str | Owner of the namespace
 
 try:
-    api_response = api_instance.organizations_v1_get_organization(owner)
+    api_response = api_instance.get_organization(owner)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling OrganizationsV1Api->organizations_v1_get_organization: %s\n" % e)
+    print("Exception when calling OrganizationsV1Api->get_organization: %s\n" % e)
 ```
 
 ### Parameters
@@ -276,8 +276,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **organizations_v1_get_organization_member**
-> V1OrganizationMember organizations_v1_get_organization_member(owner, user)
+# **get_organization_member**
+> V1OrganizationMember get_organization_member(owner, user)
 
 
 
@@ -301,10 +301,10 @@ owner = 'owner_example' # str | Owner of the namespace
 user = 'user_example' # str | Memeber under namesapce
 
 try:
-    api_response = api_instance.organizations_v1_get_organization_member(owner, user)
+    api_response = api_instance.get_organization_member(owner, user)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling OrganizationsV1Api->organizations_v1_get_organization_member: %s\n" % e)
+    print("Exception when calling OrganizationsV1Api->get_organization_member: %s\n" % e)
 ```
 
 ### Parameters
@@ -329,8 +329,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **organizations_v1_list_organization_members**
-> V1ListOrganizationMembersResponse organizations_v1_list_organization_members(owner, offset=offset, limit=limit, sort=sort, query=query)
+# **list_organization_members**
+> V1ListOrganizationMembersResponse list_organization_members(owner, offset=offset, limit=limit, sort=sort, query=query)
 
 
 
@@ -357,10 +357,10 @@ sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search search. (optional)
 
 try:
-    api_response = api_instance.organizations_v1_list_organization_members(owner, offset=offset, limit=limit, sort=sort, query=query)
+    api_response = api_instance.list_organization_members(owner, offset=offset, limit=limit, sort=sort, query=query)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling OrganizationsV1Api->organizations_v1_list_organization_members: %s\n" % e)
+    print("Exception when calling OrganizationsV1Api->list_organization_members: %s\n" % e)
 ```
 
 ### Parameters
@@ -388,8 +388,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **organizations_v1_list_organization_names**
-> V1ListOrganizationsResponse organizations_v1_list_organization_names()
+# **list_organization_names**
+> V1ListOrganizationsResponse list_organization_names()
 
 Get versions
 
@@ -412,10 +412,10 @@ api_instance = polyaxon_sdk.OrganizationsV1Api(polyaxon_sdk.ApiClient(configurat
 
 try:
     # Get versions
-    api_response = api_instance.organizations_v1_list_organization_names()
+    api_response = api_instance.list_organization_names()
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling OrganizationsV1Api->organizations_v1_list_organization_names: %s\n" % e)
+    print("Exception when calling OrganizationsV1Api->list_organization_names: %s\n" % e)
 ```
 
 ### Parameters
@@ -436,8 +436,8 @@ This endpoint does not need any parameter.
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **organizations_v1_list_organizations**
-> V1ListOrganizationsResponse organizations_v1_list_organizations()
+# **list_organizations**
+> V1ListOrganizationsResponse list_organizations()
 
 Get log handler
 
@@ -460,10 +460,10 @@ api_instance = polyaxon_sdk.OrganizationsV1Api(polyaxon_sdk.ApiClient(configurat
 
 try:
     # Get log handler
-    api_response = api_instance.organizations_v1_list_organizations()
+    api_response = api_instance.list_organizations()
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling OrganizationsV1Api->organizations_v1_list_organizations: %s\n" % e)
+    print("Exception when calling OrganizationsV1Api->list_organizations: %s\n" % e)
 ```
 
 ### Parameters
@@ -484,8 +484,8 @@ This endpoint does not need any parameter.
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **organizations_v1_patch_organization**
-> V1Organization organizations_v1_patch_organization(owner, body)
+# **patch_organization**
+> V1Organization patch_organization(owner, body)
 
 
 
@@ -509,10 +509,10 @@ owner = 'owner_example' # str | Owner of the namespace
 body = polyaxon_sdk.V1Organization() # V1Organization | Organization body
 
 try:
-    api_response = api_instance.organizations_v1_patch_organization(owner, body)
+    api_response = api_instance.patch_organization(owner, body)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling OrganizationsV1Api->organizations_v1_patch_organization: %s\n" % e)
+    print("Exception when calling OrganizationsV1Api->patch_organization: %s\n" % e)
 ```
 
 ### Parameters
@@ -537,8 +537,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **organizations_v1_patch_organization_member**
-> V1OrganizationMember organizations_v1_patch_organization_member(owner, member_user, body)
+# **patch_organization_member**
+> V1OrganizationMember patch_organization_member(owner, member_user, body)
 
 
 
@@ -563,10 +563,10 @@ member_user = 'member_user_example' # str | User
 body = polyaxon_sdk.V1OrganizationMember() # V1OrganizationMember | Organization body
 
 try:
-    api_response = api_instance.organizations_v1_patch_organization_member(owner, member_user, body)
+    api_response = api_instance.patch_organization_member(owner, member_user, body)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling OrganizationsV1Api->organizations_v1_patch_organization_member: %s\n" % e)
+    print("Exception when calling OrganizationsV1Api->patch_organization_member: %s\n" % e)
 ```
 
 ### Parameters
@@ -592,8 +592,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **organizations_v1_update_organization**
-> V1Organization organizations_v1_update_organization(owner, body)
+# **update_organization**
+> V1Organization update_organization(owner, body)
 
 
 
@@ -617,10 +617,10 @@ owner = 'owner_example' # str | Owner of the namespace
 body = polyaxon_sdk.V1Organization() # V1Organization | Organization body
 
 try:
-    api_response = api_instance.organizations_v1_update_organization(owner, body)
+    api_response = api_instance.update_organization(owner, body)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling OrganizationsV1Api->organizations_v1_update_organization: %s\n" % e)
+    print("Exception when calling OrganizationsV1Api->update_organization: %s\n" % e)
 ```
 
 ### Parameters
@@ -645,8 +645,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **organizations_v1_update_organization_member**
-> V1OrganizationMember organizations_v1_update_organization_member(owner, member_user, body)
+# **update_organization_member**
+> V1OrganizationMember update_organization_member(owner, member_user, body)
 
 
 
@@ -671,10 +671,10 @@ member_user = 'member_user_example' # str | User
 body = polyaxon_sdk.V1OrganizationMember() # V1OrganizationMember | Organization body
 
 try:
-    api_response = api_instance.organizations_v1_update_organization_member(owner, member_user, body)
+    api_response = api_instance.update_organization_member(owner, member_user, body)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling OrganizationsV1Api->organizations_v1_update_organization_member: %s\n" % e)
+    print("Exception when calling OrganizationsV1Api->update_organization_member: %s\n" % e)
 ```
 
 ### Parameters

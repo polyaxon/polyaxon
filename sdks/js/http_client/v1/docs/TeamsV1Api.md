@@ -4,24 +4,24 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**teamsV1CreateTeam**](TeamsV1Api.md#teamsV1CreateTeam) | **POST** /api/v1/orgs/{owner}/teams | Create organization
-[**teamsV1CreateTeamMember**](TeamsV1Api.md#teamsV1CreateTeamMember) | **POST** /api/v1/orgs/{owner}/teams/{team}/members | Create organization member
-[**teamsV1DeleteTeam**](TeamsV1Api.md#teamsV1DeleteTeam) | **DELETE** /api/v1/orgs/{owner}/teams/{team} | Delete organization
-[**teamsV1DeleteTeamMember**](TeamsV1Api.md#teamsV1DeleteTeamMember) | **DELETE** /api/v1/orgs/{owner}/teams/{team}/members/{user} | Delete organization member details
-[**teamsV1GetTeam**](TeamsV1Api.md#teamsV1GetTeam) | **GET** /api/v1/orgs/{owner}/teams/{team} | Get organization
-[**teamsV1GetTeamMember**](TeamsV1Api.md#teamsV1GetTeamMember) | **GET** /api/v1/orgs/{owner}/teams/{team}/members/{user} | Get organization member details
-[**teamsV1ListTeamMembers**](TeamsV1Api.md#teamsV1ListTeamMembers) | **GET** /api/v1/orgs/{owner}/teams/{team}/members | Get organization members
-[**teamsV1ListTeamNames**](TeamsV1Api.md#teamsV1ListTeamNames) | **GET** /api/v1/orgs/{owner}/teams/names | List organizations names
-[**teamsV1ListTeams**](TeamsV1Api.md#teamsV1ListTeams) | **GET** /api/v1/orgs/{owner}/teams | List organizations
-[**teamsV1PatchTeam**](TeamsV1Api.md#teamsV1PatchTeam) | **PATCH** /api/v1/orgs/{owner}/teams/{team.name} | Patch organization
-[**teamsV1PatchTeamMember**](TeamsV1Api.md#teamsV1PatchTeamMember) | **PATCH** /api/v1/orgs/{owner}/teams/{team}/members/{member.user} | Patch organization member
-[**teamsV1UpdateTeam**](TeamsV1Api.md#teamsV1UpdateTeam) | **PUT** /api/v1/orgs/{owner}/teams/{team.name} | Update organization
-[**teamsV1UpdateTeamMember**](TeamsV1Api.md#teamsV1UpdateTeamMember) | **PUT** /api/v1/orgs/{owner}/teams/{team}/members/{member.user} | Update organization member
+[**createTeam**](TeamsV1Api.md#createTeam) | **POST** /api/v1/orgs/{owner}/teams | Create organization
+[**createTeamMember**](TeamsV1Api.md#createTeamMember) | **POST** /api/v1/orgs/{owner}/teams/{team}/members | Create organization member
+[**deleteTeam**](TeamsV1Api.md#deleteTeam) | **DELETE** /api/v1/orgs/{owner}/teams/{team} | Delete organization
+[**deleteTeamMember**](TeamsV1Api.md#deleteTeamMember) | **DELETE** /api/v1/orgs/{owner}/teams/{team}/members/{user} | Delete organization member details
+[**getTeam**](TeamsV1Api.md#getTeam) | **GET** /api/v1/orgs/{owner}/teams/{team} | Get organization
+[**getTeamMember**](TeamsV1Api.md#getTeamMember) | **GET** /api/v1/orgs/{owner}/teams/{team}/members/{user} | Get organization member details
+[**listTeamMembers**](TeamsV1Api.md#listTeamMembers) | **GET** /api/v1/orgs/{owner}/teams/{team}/members | Get organization members
+[**listTeamNames**](TeamsV1Api.md#listTeamNames) | **GET** /api/v1/orgs/{owner}/teams/names | List organizations names
+[**listTeams**](TeamsV1Api.md#listTeams) | **GET** /api/v1/orgs/{owner}/teams | List organizations
+[**patchTeam**](TeamsV1Api.md#patchTeam) | **PATCH** /api/v1/orgs/{owner}/teams/{team.name} | Patch organization
+[**patchTeamMember**](TeamsV1Api.md#patchTeamMember) | **PATCH** /api/v1/orgs/{owner}/teams/{team}/members/{member.user} | Patch organization member
+[**updateTeam**](TeamsV1Api.md#updateTeam) | **PUT** /api/v1/orgs/{owner}/teams/{team.name} | Update organization
+[**updateTeamMember**](TeamsV1Api.md#updateTeamMember) | **PUT** /api/v1/orgs/{owner}/teams/{team}/members/{member.user} | Update organization member
 
 
-<a name="teamsV1CreateTeam"></a>
-# **teamsV1CreateTeam**
-> V1Team teamsV1CreateTeam(owner, body)
+<a name="createTeam"></a>
+# **createTeam**
+> V1Team createTeam(owner, body)
 
 Create organization
 
@@ -50,7 +50,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.teamsV1CreateTeam(owner, body, callback);
+apiInstance.createTeam(owner, body, callback);
 ```
 
 ### Parameters
@@ -73,9 +73,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="teamsV1CreateTeamMember"></a>
-# **teamsV1CreateTeamMember**
-> V1TeamMember teamsV1CreateTeamMember(owner, team, body)
+<a name="createTeamMember"></a>
+# **createTeamMember**
+> V1TeamMember createTeamMember(owner, team, body)
 
 Create organization member
 
@@ -106,7 +106,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.teamsV1CreateTeamMember(owner, team, body, callback);
+apiInstance.createTeamMember(owner, team, body, callback);
 ```
 
 ### Parameters
@@ -130,9 +130,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="teamsV1DeleteTeam"></a>
-# **teamsV1DeleteTeam**
-> teamsV1DeleteTeam(owner, team)
+<a name="deleteTeam"></a>
+# **deleteTeam**
+> deleteTeam(owner, team)
 
 Delete organization
 
@@ -161,7 +161,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully.');
   }
 };
-apiInstance.teamsV1DeleteTeam(owner, team, callback);
+apiInstance.deleteTeam(owner, team, callback);
 ```
 
 ### Parameters
@@ -184,9 +184,9 @@ null (empty response body)
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="teamsV1DeleteTeamMember"></a>
-# **teamsV1DeleteTeamMember**
-> teamsV1DeleteTeamMember(owner, team, user)
+<a name="deleteTeamMember"></a>
+# **deleteTeamMember**
+> deleteTeamMember(owner, team, user)
 
 Delete organization member details
 
@@ -217,7 +217,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully.');
   }
 };
-apiInstance.teamsV1DeleteTeamMember(owner, team, user, callback);
+apiInstance.deleteTeamMember(owner, team, user, callback);
 ```
 
 ### Parameters
@@ -241,9 +241,9 @@ null (empty response body)
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="teamsV1GetTeam"></a>
-# **teamsV1GetTeam**
-> V1Team teamsV1GetTeam(owner, team)
+<a name="getTeam"></a>
+# **getTeam**
+> V1Team getTeam(owner, team)
 
 Get organization
 
@@ -272,7 +272,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.teamsV1GetTeam(owner, team, callback);
+apiInstance.getTeam(owner, team, callback);
 ```
 
 ### Parameters
@@ -295,9 +295,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="teamsV1GetTeamMember"></a>
-# **teamsV1GetTeamMember**
-> V1TeamMember teamsV1GetTeamMember(owner, team, user)
+<a name="getTeamMember"></a>
+# **getTeamMember**
+> V1TeamMember getTeamMember(owner, team, user)
 
 Get organization member details
 
@@ -328,7 +328,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.teamsV1GetTeamMember(owner, team, user, callback);
+apiInstance.getTeamMember(owner, team, user, callback);
 ```
 
 ### Parameters
@@ -352,9 +352,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="teamsV1ListTeamMembers"></a>
-# **teamsV1ListTeamMembers**
-> V1ListTeamMembersResponse teamsV1ListTeamMembers(owner, team, opts)
+<a name="listTeamMembers"></a>
+# **listTeamMembers**
+> V1ListTeamMembersResponse listTeamMembers(owner, team, opts)
 
 Get organization members
 
@@ -389,7 +389,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.teamsV1ListTeamMembers(owner, team, opts, callback);
+apiInstance.listTeamMembers(owner, team, opts, callback);
 ```
 
 ### Parameters
@@ -416,9 +416,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="teamsV1ListTeamNames"></a>
-# **teamsV1ListTeamNames**
-> V1ListTeamsResponse teamsV1ListTeamNames(owner, opts)
+<a name="listTeamNames"></a>
+# **listTeamNames**
+> V1ListTeamsResponse listTeamNames(owner, opts)
 
 List organizations names
 
@@ -451,7 +451,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.teamsV1ListTeamNames(owner, opts, callback);
+apiInstance.listTeamNames(owner, opts, callback);
 ```
 
 ### Parameters
@@ -477,9 +477,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="teamsV1ListTeams"></a>
-# **teamsV1ListTeams**
-> V1ListTeamsResponse teamsV1ListTeams(owner, opts)
+<a name="listTeams"></a>
+# **listTeams**
+> V1ListTeamsResponse listTeams(owner, opts)
 
 List organizations
 
@@ -512,7 +512,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.teamsV1ListTeams(owner, opts, callback);
+apiInstance.listTeams(owner, opts, callback);
 ```
 
 ### Parameters
@@ -538,9 +538,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="teamsV1PatchTeam"></a>
-# **teamsV1PatchTeam**
-> V1Team teamsV1PatchTeam(owner, team_name, body)
+<a name="patchTeam"></a>
+# **patchTeam**
+> V1Team patchTeam(owner, team_name, body)
 
 Patch organization
 
@@ -571,7 +571,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.teamsV1PatchTeam(owner, team_name, body, callback);
+apiInstance.patchTeam(owner, team_name, body, callback);
 ```
 
 ### Parameters
@@ -595,9 +595,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="teamsV1PatchTeamMember"></a>
-# **teamsV1PatchTeamMember**
-> V1TeamMember teamsV1PatchTeamMember(owner, team, member_user, body)
+<a name="patchTeamMember"></a>
+# **patchTeamMember**
+> V1TeamMember patchTeamMember(owner, team, member_user, body)
 
 Patch organization member
 
@@ -630,7 +630,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.teamsV1PatchTeamMember(owner, team, member_user, body, callback);
+apiInstance.patchTeamMember(owner, team, member_user, body, callback);
 ```
 
 ### Parameters
@@ -655,9 +655,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="teamsV1UpdateTeam"></a>
-# **teamsV1UpdateTeam**
-> V1Team teamsV1UpdateTeam(owner, team_name, body)
+<a name="updateTeam"></a>
+# **updateTeam**
+> V1Team updateTeam(owner, team_name, body)
 
 Update organization
 
@@ -688,7 +688,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.teamsV1UpdateTeam(owner, team_name, body, callback);
+apiInstance.updateTeam(owner, team_name, body, callback);
 ```
 
 ### Parameters
@@ -712,9 +712,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="teamsV1UpdateTeamMember"></a>
-# **teamsV1UpdateTeamMember**
-> V1TeamMember teamsV1UpdateTeamMember(owner, team, member_user, body)
+<a name="updateTeamMember"></a>
+# **updateTeamMember**
+> V1TeamMember updateTeamMember(owner, team, member_user, body)
 
 Update organization member
 
@@ -747,7 +747,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.teamsV1UpdateTeamMember(owner, team, member_user, body, callback);
+apiInstance.updateTeamMember(owner, team, member_user, body, callback);
 ```
 
 ### Parameters

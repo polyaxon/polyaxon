@@ -4,23 +4,23 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**teams_v1_create_team**](TeamsV1Api.md#teams_v1_create_team) | **POST** /api/v1/orgs/{owner}/teams | Create organization
-[**teams_v1_create_team_member**](TeamsV1Api.md#teams_v1_create_team_member) | **POST** /api/v1/orgs/{owner}/teams/{team}/members | Create organization member
-[**teams_v1_delete_team**](TeamsV1Api.md#teams_v1_delete_team) | **DELETE** /api/v1/orgs/{owner}/teams/{team} | Delete organization
-[**teams_v1_delete_team_member**](TeamsV1Api.md#teams_v1_delete_team_member) | **DELETE** /api/v1/orgs/{owner}/teams/{team}/members/{user} | Delete organization member details
-[**teams_v1_get_team**](TeamsV1Api.md#teams_v1_get_team) | **GET** /api/v1/orgs/{owner}/teams/{team} | Get organization
-[**teams_v1_get_team_member**](TeamsV1Api.md#teams_v1_get_team_member) | **GET** /api/v1/orgs/{owner}/teams/{team}/members/{user} | Get organization member details
-[**teams_v1_list_team_members**](TeamsV1Api.md#teams_v1_list_team_members) | **GET** /api/v1/orgs/{owner}/teams/{team}/members | Get organization members
-[**teams_v1_list_team_names**](TeamsV1Api.md#teams_v1_list_team_names) | **GET** /api/v1/orgs/{owner}/teams/names | List organizations names
-[**teams_v1_list_teams**](TeamsV1Api.md#teams_v1_list_teams) | **GET** /api/v1/orgs/{owner}/teams | List organizations
-[**teams_v1_patch_team**](TeamsV1Api.md#teams_v1_patch_team) | **PATCH** /api/v1/orgs/{owner}/teams/{team.name} | Patch organization
-[**teams_v1_patch_team_member**](TeamsV1Api.md#teams_v1_patch_team_member) | **PATCH** /api/v1/orgs/{owner}/teams/{team}/members/{member.user} | Patch organization member
-[**teams_v1_update_team**](TeamsV1Api.md#teams_v1_update_team) | **PUT** /api/v1/orgs/{owner}/teams/{team.name} | Update organization
-[**teams_v1_update_team_member**](TeamsV1Api.md#teams_v1_update_team_member) | **PUT** /api/v1/orgs/{owner}/teams/{team}/members/{member.user} | Update organization member
+[**create_team**](TeamsV1Api.md#create_team) | **POST** /api/v1/orgs/{owner}/teams | Create organization
+[**create_team_member**](TeamsV1Api.md#create_team_member) | **POST** /api/v1/orgs/{owner}/teams/{team}/members | Create organization member
+[**delete_team**](TeamsV1Api.md#delete_team) | **DELETE** /api/v1/orgs/{owner}/teams/{team} | Delete organization
+[**delete_team_member**](TeamsV1Api.md#delete_team_member) | **DELETE** /api/v1/orgs/{owner}/teams/{team}/members/{user} | Delete organization member details
+[**get_team**](TeamsV1Api.md#get_team) | **GET** /api/v1/orgs/{owner}/teams/{team} | Get organization
+[**get_team_member**](TeamsV1Api.md#get_team_member) | **GET** /api/v1/orgs/{owner}/teams/{team}/members/{user} | Get organization member details
+[**list_team_members**](TeamsV1Api.md#list_team_members) | **GET** /api/v1/orgs/{owner}/teams/{team}/members | Get organization members
+[**list_team_names**](TeamsV1Api.md#list_team_names) | **GET** /api/v1/orgs/{owner}/teams/names | List organizations names
+[**list_teams**](TeamsV1Api.md#list_teams) | **GET** /api/v1/orgs/{owner}/teams | List organizations
+[**patch_team**](TeamsV1Api.md#patch_team) | **PATCH** /api/v1/orgs/{owner}/teams/{team.name} | Patch organization
+[**patch_team_member**](TeamsV1Api.md#patch_team_member) | **PATCH** /api/v1/orgs/{owner}/teams/{team}/members/{member.user} | Patch organization member
+[**update_team**](TeamsV1Api.md#update_team) | **PUT** /api/v1/orgs/{owner}/teams/{team.name} | Update organization
+[**update_team_member**](TeamsV1Api.md#update_team_member) | **PUT** /api/v1/orgs/{owner}/teams/{team}/members/{member.user} | Update organization member
 
 
-# **teams_v1_create_team**
-> V1Team teams_v1_create_team(owner, body)
+# **create_team**
+> V1Team create_team(owner, body)
 
 Create organization
 
@@ -45,10 +45,10 @@ body = polyaxon_sdk.V1Team() # V1Team | Team body
 
 try:
     # Create organization
-    api_response = api_instance.teams_v1_create_team(owner, body)
+    api_response = api_instance.create_team(owner, body)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling TeamsV1Api->teams_v1_create_team: %s\n" % e)
+    print("Exception when calling TeamsV1Api->create_team: %s\n" % e)
 ```
 
 ### Parameters
@@ -73,8 +73,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **teams_v1_create_team_member**
-> V1TeamMember teams_v1_create_team_member(owner, team, body)
+# **create_team_member**
+> V1TeamMember create_team_member(owner, team, body)
 
 Create organization member
 
@@ -100,10 +100,10 @@ body = polyaxon_sdk.V1TeamMember() # V1TeamMember | Team body
 
 try:
     # Create organization member
-    api_response = api_instance.teams_v1_create_team_member(owner, team, body)
+    api_response = api_instance.create_team_member(owner, team, body)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling TeamsV1Api->teams_v1_create_team_member: %s\n" % e)
+    print("Exception when calling TeamsV1Api->create_team_member: %s\n" % e)
 ```
 
 ### Parameters
@@ -129,8 +129,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **teams_v1_delete_team**
-> teams_v1_delete_team(owner, team)
+# **delete_team**
+> delete_team(owner, team)
 
 Delete organization
 
@@ -155,9 +155,9 @@ team = 'team_example' # str | Team under namesapce
 
 try:
     # Delete organization
-    api_instance.teams_v1_delete_team(owner, team)
+    api_instance.delete_team(owner, team)
 except ApiException as e:
-    print("Exception when calling TeamsV1Api->teams_v1_delete_team: %s\n" % e)
+    print("Exception when calling TeamsV1Api->delete_team: %s\n" % e)
 ```
 
 ### Parameters
@@ -182,8 +182,8 @@ void (empty response body)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **teams_v1_delete_team_member**
-> teams_v1_delete_team_member(owner, team, user)
+# **delete_team_member**
+> delete_team_member(owner, team, user)
 
 Delete organization member details
 
@@ -209,9 +209,9 @@ user = 'user_example' # str | Member under team
 
 try:
     # Delete organization member details
-    api_instance.teams_v1_delete_team_member(owner, team, user)
+    api_instance.delete_team_member(owner, team, user)
 except ApiException as e:
-    print("Exception when calling TeamsV1Api->teams_v1_delete_team_member: %s\n" % e)
+    print("Exception when calling TeamsV1Api->delete_team_member: %s\n" % e)
 ```
 
 ### Parameters
@@ -237,8 +237,8 @@ void (empty response body)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **teams_v1_get_team**
-> V1Team teams_v1_get_team(owner, team)
+# **get_team**
+> V1Team get_team(owner, team)
 
 Get organization
 
@@ -263,10 +263,10 @@ team = 'team_example' # str | Team under namesapce
 
 try:
     # Get organization
-    api_response = api_instance.teams_v1_get_team(owner, team)
+    api_response = api_instance.get_team(owner, team)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling TeamsV1Api->teams_v1_get_team: %s\n" % e)
+    print("Exception when calling TeamsV1Api->get_team: %s\n" % e)
 ```
 
 ### Parameters
@@ -291,8 +291,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **teams_v1_get_team_member**
-> V1TeamMember teams_v1_get_team_member(owner, team, user)
+# **get_team_member**
+> V1TeamMember get_team_member(owner, team, user)
 
 Get organization member details
 
@@ -318,10 +318,10 @@ user = 'user_example' # str | Member under team
 
 try:
     # Get organization member details
-    api_response = api_instance.teams_v1_get_team_member(owner, team, user)
+    api_response = api_instance.get_team_member(owner, team, user)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling TeamsV1Api->teams_v1_get_team_member: %s\n" % e)
+    print("Exception when calling TeamsV1Api->get_team_member: %s\n" % e)
 ```
 
 ### Parameters
@@ -347,8 +347,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **teams_v1_list_team_members**
-> V1ListTeamMembersResponse teams_v1_list_team_members(owner, team, offset=offset, limit=limit, sort=sort, query=query)
+# **list_team_members**
+> V1ListTeamMembersResponse list_team_members(owner, team, offset=offset, limit=limit, sort=sort, query=query)
 
 Get organization members
 
@@ -377,10 +377,10 @@ query = 'query_example' # str | Query filter the search search. (optional)
 
 try:
     # Get organization members
-    api_response = api_instance.teams_v1_list_team_members(owner, team, offset=offset, limit=limit, sort=sort, query=query)
+    api_response = api_instance.list_team_members(owner, team, offset=offset, limit=limit, sort=sort, query=query)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling TeamsV1Api->teams_v1_list_team_members: %s\n" % e)
+    print("Exception when calling TeamsV1Api->list_team_members: %s\n" % e)
 ```
 
 ### Parameters
@@ -409,8 +409,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **teams_v1_list_team_names**
-> V1ListTeamsResponse teams_v1_list_team_names(owner, offset=offset, limit=limit, sort=sort, query=query)
+# **list_team_names**
+> V1ListTeamsResponse list_team_names(owner, offset=offset, limit=limit, sort=sort, query=query)
 
 List organizations names
 
@@ -438,10 +438,10 @@ query = 'query_example' # str | Query filter the search search. (optional)
 
 try:
     # List organizations names
-    api_response = api_instance.teams_v1_list_team_names(owner, offset=offset, limit=limit, sort=sort, query=query)
+    api_response = api_instance.list_team_names(owner, offset=offset, limit=limit, sort=sort, query=query)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling TeamsV1Api->teams_v1_list_team_names: %s\n" % e)
+    print("Exception when calling TeamsV1Api->list_team_names: %s\n" % e)
 ```
 
 ### Parameters
@@ -469,8 +469,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **teams_v1_list_teams**
-> V1ListTeamsResponse teams_v1_list_teams(owner, offset=offset, limit=limit, sort=sort, query=query)
+# **list_teams**
+> V1ListTeamsResponse list_teams(owner, offset=offset, limit=limit, sort=sort, query=query)
 
 List organizations
 
@@ -498,10 +498,10 @@ query = 'query_example' # str | Query filter the search search. (optional)
 
 try:
     # List organizations
-    api_response = api_instance.teams_v1_list_teams(owner, offset=offset, limit=limit, sort=sort, query=query)
+    api_response = api_instance.list_teams(owner, offset=offset, limit=limit, sort=sort, query=query)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling TeamsV1Api->teams_v1_list_teams: %s\n" % e)
+    print("Exception when calling TeamsV1Api->list_teams: %s\n" % e)
 ```
 
 ### Parameters
@@ -529,8 +529,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **teams_v1_patch_team**
-> V1Team teams_v1_patch_team(owner, team_name, body)
+# **patch_team**
+> V1Team patch_team(owner, team_name, body)
 
 Patch organization
 
@@ -556,10 +556,10 @@ body = polyaxon_sdk.V1Team() # V1Team | Team body
 
 try:
     # Patch organization
-    api_response = api_instance.teams_v1_patch_team(owner, team_name, body)
+    api_response = api_instance.patch_team(owner, team_name, body)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling TeamsV1Api->teams_v1_patch_team: %s\n" % e)
+    print("Exception when calling TeamsV1Api->patch_team: %s\n" % e)
 ```
 
 ### Parameters
@@ -585,8 +585,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **teams_v1_patch_team_member**
-> V1TeamMember teams_v1_patch_team_member(owner, team, member_user, body)
+# **patch_team_member**
+> V1TeamMember patch_team_member(owner, team, member_user, body)
 
 Patch organization member
 
@@ -613,10 +613,10 @@ body = polyaxon_sdk.V1TeamMember() # V1TeamMember | Team body
 
 try:
     # Patch organization member
-    api_response = api_instance.teams_v1_patch_team_member(owner, team, member_user, body)
+    api_response = api_instance.patch_team_member(owner, team, member_user, body)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling TeamsV1Api->teams_v1_patch_team_member: %s\n" % e)
+    print("Exception when calling TeamsV1Api->patch_team_member: %s\n" % e)
 ```
 
 ### Parameters
@@ -643,8 +643,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **teams_v1_update_team**
-> V1Team teams_v1_update_team(owner, team_name, body)
+# **update_team**
+> V1Team update_team(owner, team_name, body)
 
 Update organization
 
@@ -670,10 +670,10 @@ body = polyaxon_sdk.V1Team() # V1Team | Team body
 
 try:
     # Update organization
-    api_response = api_instance.teams_v1_update_team(owner, team_name, body)
+    api_response = api_instance.update_team(owner, team_name, body)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling TeamsV1Api->teams_v1_update_team: %s\n" % e)
+    print("Exception when calling TeamsV1Api->update_team: %s\n" % e)
 ```
 
 ### Parameters
@@ -699,8 +699,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **teams_v1_update_team_member**
-> V1TeamMember teams_v1_update_team_member(owner, team, member_user, body)
+# **update_team_member**
+> V1TeamMember update_team_member(owner, team, member_user, body)
 
 Update organization member
 
@@ -727,10 +727,10 @@ body = polyaxon_sdk.V1TeamMember() # V1TeamMember | Team body
 
 try:
     # Update organization member
-    api_response = api_instance.teams_v1_update_team_member(owner, team, member_user, body)
+    api_response = api_instance.update_team_member(owner, team, member_user, body)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling TeamsV1Api->teams_v1_update_team_member: %s\n" % e)
+    print("Exception when calling TeamsV1Api->update_team_member: %s\n" % e)
 ```
 
 ### Parameters

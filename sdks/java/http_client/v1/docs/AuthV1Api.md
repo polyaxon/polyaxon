@@ -4,12 +4,12 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**authV1Login**](AuthV1Api.md#authV1Login) | **POST** /api/v1/users/token | List organization level queues names
+[**login**](AuthV1Api.md#login) | **POST** /api/v1/users/token | List organization level queues names
 
 
-<a name="authV1Login"></a>
-# **authV1Login**
-> V1Auth authV1Login(body)
+<a name="login"></a>
+# **login**
+> V1Auth login(body)
 
 List organization level queues names
 
@@ -33,10 +33,10 @@ ApiKey.setApiKey("YOUR API KEY");
 AuthV1Api apiInstance = new AuthV1Api();
 V1CredsBodyRequest body = new V1CredsBodyRequest(); // V1CredsBodyRequest | 
 try {
-    V1Auth result = apiInstance.authV1Login(body);
+    V1Auth result = apiInstance.login(body);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling AuthV1Api#authV1Login");
+    System.err.println("Exception when calling AuthV1Api#login");
     e.printStackTrace();
 }
 ```

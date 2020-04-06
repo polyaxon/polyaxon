@@ -4,18 +4,18 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**searchesV1CreateSearch**](SearchesV1Api.md#searchesV1CreateSearch) | **POST** /api/v1/orgs/{owner}/searches | Create search
-[**searchesV1DeleteSearch**](SearchesV1Api.md#searchesV1DeleteSearch) | **DELETE** /api/v1/orgs/{owner}/searches/{uuid} | Delete search
-[**searchesV1GetSearch**](SearchesV1Api.md#searchesV1GetSearch) | **GET** /api/v1/orgs/{owner}/searches/{uuid} | Get search
-[**searchesV1ListSearchNames**](SearchesV1Api.md#searchesV1ListSearchNames) | **GET** /api/v1/orgs/{owner}/searches/names | List search names
-[**searchesV1ListSearches**](SearchesV1Api.md#searchesV1ListSearches) | **GET** /api/v1/orgs/{owner}/searches | List searches
-[**searchesV1PatchSearch**](SearchesV1Api.md#searchesV1PatchSearch) | **PATCH** /api/v1/orgs/{owner}/searches/{search.uuid} | Patch search
-[**searchesV1UpdateSearch**](SearchesV1Api.md#searchesV1UpdateSearch) | **PUT** /api/v1/orgs/{owner}/searches/{search.uuid} | Update search
+[**createSearch**](SearchesV1Api.md#createSearch) | **POST** /api/v1/orgs/{owner}/searches | Create search
+[**deleteSearch**](SearchesV1Api.md#deleteSearch) | **DELETE** /api/v1/orgs/{owner}/searches/{uuid} | Delete search
+[**getSearch**](SearchesV1Api.md#getSearch) | **GET** /api/v1/orgs/{owner}/searches/{uuid} | Get search
+[**listSearchNames**](SearchesV1Api.md#listSearchNames) | **GET** /api/v1/orgs/{owner}/searches/names | List search names
+[**listSearches**](SearchesV1Api.md#listSearches) | **GET** /api/v1/orgs/{owner}/searches | List searches
+[**patchSearch**](SearchesV1Api.md#patchSearch) | **PATCH** /api/v1/orgs/{owner}/searches/{search.uuid} | Patch search
+[**updateSearch**](SearchesV1Api.md#updateSearch) | **PUT** /api/v1/orgs/{owner}/searches/{search.uuid} | Update search
 
 
-<a name="searchesV1CreateSearch"></a>
-# **searchesV1CreateSearch**
-> V1Search searchesV1CreateSearch(owner, body)
+<a name="createSearch"></a>
+# **createSearch**
+> V1Search createSearch(owner, body)
 
 Create search
 
@@ -44,7 +44,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.searchesV1CreateSearch(owner, body, callback);
+apiInstance.createSearch(owner, body, callback);
 ```
 
 ### Parameters
@@ -67,9 +67,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="searchesV1DeleteSearch"></a>
-# **searchesV1DeleteSearch**
-> searchesV1DeleteSearch(owner, uuid)
+<a name="deleteSearch"></a>
+# **deleteSearch**
+> deleteSearch(owner, uuid)
 
 Delete search
 
@@ -98,7 +98,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully.');
   }
 };
-apiInstance.searchesV1DeleteSearch(owner, uuid, callback);
+apiInstance.deleteSearch(owner, uuid, callback);
 ```
 
 ### Parameters
@@ -121,9 +121,9 @@ null (empty response body)
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="searchesV1GetSearch"></a>
-# **searchesV1GetSearch**
-> V1Search searchesV1GetSearch(owner, uuid)
+<a name="getSearch"></a>
+# **getSearch**
+> V1Search getSearch(owner, uuid)
 
 Get search
 
@@ -152,7 +152,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.searchesV1GetSearch(owner, uuid, callback);
+apiInstance.getSearch(owner, uuid, callback);
 ```
 
 ### Parameters
@@ -175,9 +175,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="searchesV1ListSearchNames"></a>
-# **searchesV1ListSearchNames**
-> V1ListSearchesResponse searchesV1ListSearchNames(owner, opts)
+<a name="listSearchNames"></a>
+# **listSearchNames**
+> V1ListSearchesResponse listSearchNames(owner, opts)
 
 List search names
 
@@ -210,7 +210,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.searchesV1ListSearchNames(owner, opts, callback);
+apiInstance.listSearchNames(owner, opts, callback);
 ```
 
 ### Parameters
@@ -236,9 +236,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="searchesV1ListSearches"></a>
-# **searchesV1ListSearches**
-> V1ListSearchesResponse searchesV1ListSearches(owner, opts)
+<a name="listSearches"></a>
+# **listSearches**
+> V1ListSearchesResponse listSearches(owner, opts)
 
 List searches
 
@@ -271,7 +271,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.searchesV1ListSearches(owner, opts, callback);
+apiInstance.listSearches(owner, opts, callback);
 ```
 
 ### Parameters
@@ -297,9 +297,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="searchesV1PatchSearch"></a>
-# **searchesV1PatchSearch**
-> V1Search searchesV1PatchSearch(owner, search_uuid, body)
+<a name="patchSearch"></a>
+# **patchSearch**
+> V1Search patchSearch(owner, search_uuid, body)
 
 Patch search
 
@@ -330,7 +330,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.searchesV1PatchSearch(owner, search_uuid, body, callback);
+apiInstance.patchSearch(owner, search_uuid, body, callback);
 ```
 
 ### Parameters
@@ -354,9 +354,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="searchesV1UpdateSearch"></a>
-# **searchesV1UpdateSearch**
-> V1Search searchesV1UpdateSearch(owner, search_uuid, body)
+<a name="updateSearch"></a>
+# **updateSearch**
+> V1Search updateSearch(owner, search_uuid, body)
 
 Update search
 
@@ -387,7 +387,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.searchesV1UpdateSearch(owner, search_uuid, body, callback);
+apiInstance.updateSearch(owner, search_uuid, body, callback);
 ```
 
 ### Parameters

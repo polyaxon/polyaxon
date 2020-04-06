@@ -4,18 +4,18 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**hubComponentsV1CreateHubComponent**](HubComponentsV1Api.md#hubComponentsV1CreateHubComponent) | **POST** /api/v1/orgs/{owner}/components | Create hub model
-[**hubComponentsV1DeleteHubComponent**](HubComponentsV1Api.md#hubComponentsV1DeleteHubComponent) | **DELETE** /api/v1/orgs/{owner}/components/{uuid} | Delete hub model
-[**hubComponentsV1GetHubComponent**](HubComponentsV1Api.md#hubComponentsV1GetHubComponent) | **GET** /api/v1/orgs/{owner}/components/{uuid} | Get hub model
-[**hubComponentsV1ListHubComponebtNames**](HubComponentsV1Api.md#hubComponentsV1ListHubComponebtNames) | **GET** /api/v1/orgs/{owner}/components/names | List hub model names
-[**hubComponentsV1ListHubComponents**](HubComponentsV1Api.md#hubComponentsV1ListHubComponents) | **GET** /api/v1/orgs/{owner}/components | List hub models
-[**hubComponentsV1PatchHubComponent**](HubComponentsV1Api.md#hubComponentsV1PatchHubComponent) | **PATCH** /api/v1/orgs/{owner}/components/{component.uuid} | Patch hub model
-[**hubComponentsV1UpdateHubComponent**](HubComponentsV1Api.md#hubComponentsV1UpdateHubComponent) | **PUT** /api/v1/orgs/{owner}/components/{component.uuid} | Update hub model
+[**createHubComponent**](HubComponentsV1Api.md#createHubComponent) | **POST** /api/v1/orgs/{owner}/components | Create hub model
+[**deleteHubComponent**](HubComponentsV1Api.md#deleteHubComponent) | **DELETE** /api/v1/orgs/{owner}/components/{uuid} | Delete hub model
+[**getHubComponent**](HubComponentsV1Api.md#getHubComponent) | **GET** /api/v1/orgs/{owner}/components/{uuid} | Get hub model
+[**listHubComponebtNames**](HubComponentsV1Api.md#listHubComponebtNames) | **GET** /api/v1/orgs/{owner}/components/names | List hub model names
+[**listHubComponents**](HubComponentsV1Api.md#listHubComponents) | **GET** /api/v1/orgs/{owner}/components | List hub models
+[**patchHubComponent**](HubComponentsV1Api.md#patchHubComponent) | **PATCH** /api/v1/orgs/{owner}/components/{component.uuid} | Patch hub model
+[**updateHubComponent**](HubComponentsV1Api.md#updateHubComponent) | **PUT** /api/v1/orgs/{owner}/components/{component.uuid} | Update hub model
 
 
-<a name="hubComponentsV1CreateHubComponent"></a>
-# **hubComponentsV1CreateHubComponent**
-> V1HubComponent hubComponentsV1CreateHubComponent(owner, body)
+<a name="createHubComponent"></a>
+# **createHubComponent**
+> V1HubComponent createHubComponent(owner, body)
 
 Create hub model
 
@@ -44,7 +44,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.hubComponentsV1CreateHubComponent(owner, body, callback);
+apiInstance.createHubComponent(owner, body, callback);
 ```
 
 ### Parameters
@@ -67,9 +67,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="hubComponentsV1DeleteHubComponent"></a>
-# **hubComponentsV1DeleteHubComponent**
-> hubComponentsV1DeleteHubComponent(owner, uuid)
+<a name="deleteHubComponent"></a>
+# **deleteHubComponent**
+> deleteHubComponent(owner, uuid)
 
 Delete hub model
 
@@ -98,7 +98,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully.');
   }
 };
-apiInstance.hubComponentsV1DeleteHubComponent(owner, uuid, callback);
+apiInstance.deleteHubComponent(owner, uuid, callback);
 ```
 
 ### Parameters
@@ -121,9 +121,9 @@ null (empty response body)
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="hubComponentsV1GetHubComponent"></a>
-# **hubComponentsV1GetHubComponent**
-> V1HubComponent hubComponentsV1GetHubComponent(owner, uuid)
+<a name="getHubComponent"></a>
+# **getHubComponent**
+> V1HubComponent getHubComponent(owner, uuid)
 
 Get hub model
 
@@ -152,7 +152,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.hubComponentsV1GetHubComponent(owner, uuid, callback);
+apiInstance.getHubComponent(owner, uuid, callback);
 ```
 
 ### Parameters
@@ -175,9 +175,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="hubComponentsV1ListHubComponebtNames"></a>
-# **hubComponentsV1ListHubComponebtNames**
-> V1ListHubComponentsResponse hubComponentsV1ListHubComponebtNames(owner, opts)
+<a name="listHubComponebtNames"></a>
+# **listHubComponebtNames**
+> V1ListHubComponentsResponse listHubComponebtNames(owner, opts)
 
 List hub model names
 
@@ -210,7 +210,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.hubComponentsV1ListHubComponebtNames(owner, opts, callback);
+apiInstance.listHubComponebtNames(owner, opts, callback);
 ```
 
 ### Parameters
@@ -236,9 +236,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="hubComponentsV1ListHubComponents"></a>
-# **hubComponentsV1ListHubComponents**
-> V1ListHubComponentsResponse hubComponentsV1ListHubComponents(owner, opts)
+<a name="listHubComponents"></a>
+# **listHubComponents**
+> V1ListHubComponentsResponse listHubComponents(owner, opts)
 
 List hub models
 
@@ -271,7 +271,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.hubComponentsV1ListHubComponents(owner, opts, callback);
+apiInstance.listHubComponents(owner, opts, callback);
 ```
 
 ### Parameters
@@ -297,9 +297,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="hubComponentsV1PatchHubComponent"></a>
-# **hubComponentsV1PatchHubComponent**
-> V1HubComponent hubComponentsV1PatchHubComponent(owner, component_uuid, body)
+<a name="patchHubComponent"></a>
+# **patchHubComponent**
+> V1HubComponent patchHubComponent(owner, component_uuid, body)
 
 Patch hub model
 
@@ -330,7 +330,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.hubComponentsV1PatchHubComponent(owner, component_uuid, body, callback);
+apiInstance.patchHubComponent(owner, component_uuid, body, callback);
 ```
 
 ### Parameters
@@ -354,9 +354,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="hubComponentsV1UpdateHubComponent"></a>
-# **hubComponentsV1UpdateHubComponent**
-> V1HubComponent hubComponentsV1UpdateHubComponent(owner, component_uuid, body)
+<a name="updateHubComponent"></a>
+# **updateHubComponent**
+> V1HubComponent updateHubComponent(owner, component_uuid, body)
 
 Update hub model
 
@@ -387,7 +387,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.hubComponentsV1UpdateHubComponent(owner, component_uuid, body, callback);
+apiInstance.updateHubComponent(owner, component_uuid, body, callback);
 ```
 
 ### Parameters

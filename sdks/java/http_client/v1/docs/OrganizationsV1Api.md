@@ -4,24 +4,24 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**organizationsV1CreateOrganization**](OrganizationsV1Api.md#organizationsV1CreateOrganization) | **POST** /api/v1/orgs/create | 
-[**organizationsV1CreateOrganizationMember**](OrganizationsV1Api.md#organizationsV1CreateOrganizationMember) | **POST** /api/v1/orgs/{owner}/members | 
-[**organizationsV1DeleteOrganization**](OrganizationsV1Api.md#organizationsV1DeleteOrganization) | **DELETE** /api/v1/orgs/{owner} | 
-[**organizationsV1DeleteOrganizationMember**](OrganizationsV1Api.md#organizationsV1DeleteOrganizationMember) | **DELETE** /api/v1/orgs/{owner}/members/{user} | 
-[**organizationsV1GetOrganization**](OrganizationsV1Api.md#organizationsV1GetOrganization) | **GET** /api/v1/orgs/{owner} | 
-[**organizationsV1GetOrganizationMember**](OrganizationsV1Api.md#organizationsV1GetOrganizationMember) | **GET** /api/v1/orgs/{owner}/members/{user} | 
-[**organizationsV1ListOrganizationMembers**](OrganizationsV1Api.md#organizationsV1ListOrganizationMembers) | **GET** /api/v1/orgs/{owner}/members | 
-[**organizationsV1ListOrganizationNames**](OrganizationsV1Api.md#organizationsV1ListOrganizationNames) | **GET** /api/v1/orgs/names | Get versions
-[**organizationsV1ListOrganizations**](OrganizationsV1Api.md#organizationsV1ListOrganizations) | **GET** /api/v1/orgs/list | Get log handler
-[**organizationsV1PatchOrganization**](OrganizationsV1Api.md#organizationsV1PatchOrganization) | **PATCH** /api/v1/orgs/{owner} | 
-[**organizationsV1PatchOrganizationMember**](OrganizationsV1Api.md#organizationsV1PatchOrganizationMember) | **PATCH** /api/v1/orgs/{owner}/members/{member.user} | 
-[**organizationsV1UpdateOrganization**](OrganizationsV1Api.md#organizationsV1UpdateOrganization) | **PUT** /api/v1/orgs/{owner} | 
-[**organizationsV1UpdateOrganizationMember**](OrganizationsV1Api.md#organizationsV1UpdateOrganizationMember) | **PUT** /api/v1/orgs/{owner}/members/{member.user} | 
+[**createOrganization**](OrganizationsV1Api.md#createOrganization) | **POST** /api/v1/orgs/create | 
+[**createOrganizationMember**](OrganizationsV1Api.md#createOrganizationMember) | **POST** /api/v1/orgs/{owner}/members | 
+[**deleteOrganization**](OrganizationsV1Api.md#deleteOrganization) | **DELETE** /api/v1/orgs/{owner} | 
+[**deleteOrganizationMember**](OrganizationsV1Api.md#deleteOrganizationMember) | **DELETE** /api/v1/orgs/{owner}/members/{user} | 
+[**getOrganization**](OrganizationsV1Api.md#getOrganization) | **GET** /api/v1/orgs/{owner} | 
+[**getOrganizationMember**](OrganizationsV1Api.md#getOrganizationMember) | **GET** /api/v1/orgs/{owner}/members/{user} | 
+[**listOrganizationMembers**](OrganizationsV1Api.md#listOrganizationMembers) | **GET** /api/v1/orgs/{owner}/members | 
+[**listOrganizationNames**](OrganizationsV1Api.md#listOrganizationNames) | **GET** /api/v1/orgs/names | Get versions
+[**listOrganizations**](OrganizationsV1Api.md#listOrganizations) | **GET** /api/v1/orgs/list | Get log handler
+[**patchOrganization**](OrganizationsV1Api.md#patchOrganization) | **PATCH** /api/v1/orgs/{owner} | 
+[**patchOrganizationMember**](OrganizationsV1Api.md#patchOrganizationMember) | **PATCH** /api/v1/orgs/{owner}/members/{member.user} | 
+[**updateOrganization**](OrganizationsV1Api.md#updateOrganization) | **PUT** /api/v1/orgs/{owner} | 
+[**updateOrganizationMember**](OrganizationsV1Api.md#updateOrganizationMember) | **PUT** /api/v1/orgs/{owner}/members/{member.user} | 
 
 
-<a name="organizationsV1CreateOrganization"></a>
-# **organizationsV1CreateOrganization**
-> V1Organization organizationsV1CreateOrganization(body)
+<a name="createOrganization"></a>
+# **createOrganization**
+> V1Organization createOrganization(body)
 
 
 
@@ -45,10 +45,10 @@ ApiKey.setApiKey("YOUR API KEY");
 OrganizationsV1Api apiInstance = new OrganizationsV1Api();
 V1Organization body = new V1Organization(); // V1Organization | 
 try {
-    V1Organization result = apiInstance.organizationsV1CreateOrganization(body);
+    V1Organization result = apiInstance.createOrganization(body);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling OrganizationsV1Api#organizationsV1CreateOrganization");
+    System.err.println("Exception when calling OrganizationsV1Api#createOrganization");
     e.printStackTrace();
 }
 ```
@@ -72,9 +72,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="organizationsV1CreateOrganizationMember"></a>
-# **organizationsV1CreateOrganizationMember**
-> V1OrganizationMember organizationsV1CreateOrganizationMember(owner, body)
+<a name="createOrganizationMember"></a>
+# **createOrganizationMember**
+> V1OrganizationMember createOrganizationMember(owner, body)
 
 
 
@@ -99,10 +99,10 @@ OrganizationsV1Api apiInstance = new OrganizationsV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
 V1OrganizationMember body = new V1OrganizationMember(); // V1OrganizationMember | Organization body
 try {
-    V1OrganizationMember result = apiInstance.organizationsV1CreateOrganizationMember(owner, body);
+    V1OrganizationMember result = apiInstance.createOrganizationMember(owner, body);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling OrganizationsV1Api#organizationsV1CreateOrganizationMember");
+    System.err.println("Exception when calling OrganizationsV1Api#createOrganizationMember");
     e.printStackTrace();
 }
 ```
@@ -127,9 +127,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="organizationsV1DeleteOrganization"></a>
-# **organizationsV1DeleteOrganization**
-> organizationsV1DeleteOrganization(owner)
+<a name="deleteOrganization"></a>
+# **deleteOrganization**
+> deleteOrganization(owner)
 
 
 
@@ -153,9 +153,9 @@ ApiKey.setApiKey("YOUR API KEY");
 OrganizationsV1Api apiInstance = new OrganizationsV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
 try {
-    apiInstance.organizationsV1DeleteOrganization(owner);
+    apiInstance.deleteOrganization(owner);
 } catch (ApiException e) {
-    System.err.println("Exception when calling OrganizationsV1Api#organizationsV1DeleteOrganization");
+    System.err.println("Exception when calling OrganizationsV1Api#deleteOrganization");
     e.printStackTrace();
 }
 ```
@@ -179,9 +179,9 @@ null (empty response body)
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="organizationsV1DeleteOrganizationMember"></a>
-# **organizationsV1DeleteOrganizationMember**
-> organizationsV1DeleteOrganizationMember(owner, user)
+<a name="deleteOrganizationMember"></a>
+# **deleteOrganizationMember**
+> deleteOrganizationMember(owner, user)
 
 
 
@@ -206,9 +206,9 @@ OrganizationsV1Api apiInstance = new OrganizationsV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
 String user = "user_example"; // String | Memeber under namesapce
 try {
-    apiInstance.organizationsV1DeleteOrganizationMember(owner, user);
+    apiInstance.deleteOrganizationMember(owner, user);
 } catch (ApiException e) {
-    System.err.println("Exception when calling OrganizationsV1Api#organizationsV1DeleteOrganizationMember");
+    System.err.println("Exception when calling OrganizationsV1Api#deleteOrganizationMember");
     e.printStackTrace();
 }
 ```
@@ -233,9 +233,9 @@ null (empty response body)
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="organizationsV1GetOrganization"></a>
-# **organizationsV1GetOrganization**
-> V1Organization organizationsV1GetOrganization(owner)
+<a name="getOrganization"></a>
+# **getOrganization**
+> V1Organization getOrganization(owner)
 
 
 
@@ -259,10 +259,10 @@ ApiKey.setApiKey("YOUR API KEY");
 OrganizationsV1Api apiInstance = new OrganizationsV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
 try {
-    V1Organization result = apiInstance.organizationsV1GetOrganization(owner);
+    V1Organization result = apiInstance.getOrganization(owner);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling OrganizationsV1Api#organizationsV1GetOrganization");
+    System.err.println("Exception when calling OrganizationsV1Api#getOrganization");
     e.printStackTrace();
 }
 ```
@@ -286,9 +286,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="organizationsV1GetOrganizationMember"></a>
-# **organizationsV1GetOrganizationMember**
-> V1OrganizationMember organizationsV1GetOrganizationMember(owner, user)
+<a name="getOrganizationMember"></a>
+# **getOrganizationMember**
+> V1OrganizationMember getOrganizationMember(owner, user)
 
 
 
@@ -313,10 +313,10 @@ OrganizationsV1Api apiInstance = new OrganizationsV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
 String user = "user_example"; // String | Memeber under namesapce
 try {
-    V1OrganizationMember result = apiInstance.organizationsV1GetOrganizationMember(owner, user);
+    V1OrganizationMember result = apiInstance.getOrganizationMember(owner, user);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling OrganizationsV1Api#organizationsV1GetOrganizationMember");
+    System.err.println("Exception when calling OrganizationsV1Api#getOrganizationMember");
     e.printStackTrace();
 }
 ```
@@ -341,9 +341,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="organizationsV1ListOrganizationMembers"></a>
-# **organizationsV1ListOrganizationMembers**
-> V1ListOrganizationMembersResponse organizationsV1ListOrganizationMembers(owner, offset, limit, sort, query)
+<a name="listOrganizationMembers"></a>
+# **listOrganizationMembers**
+> V1ListOrganizationMembersResponse listOrganizationMembers(owner, offset, limit, sort, query)
 
 
 
@@ -371,10 +371,10 @@ Integer limit = 56; // Integer | Limit size.
 String sort = "sort_example"; // String | Sort to order the search.
 String query = "query_example"; // String | Query filter the search search.
 try {
-    V1ListOrganizationMembersResponse result = apiInstance.organizationsV1ListOrganizationMembers(owner, offset, limit, sort, query);
+    V1ListOrganizationMembersResponse result = apiInstance.listOrganizationMembers(owner, offset, limit, sort, query);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling OrganizationsV1Api#organizationsV1ListOrganizationMembers");
+    System.err.println("Exception when calling OrganizationsV1Api#listOrganizationMembers");
     e.printStackTrace();
 }
 ```
@@ -402,9 +402,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="organizationsV1ListOrganizationNames"></a>
-# **organizationsV1ListOrganizationNames**
-> V1ListOrganizationsResponse organizationsV1ListOrganizationNames()
+<a name="listOrganizationNames"></a>
+# **listOrganizationNames**
+> V1ListOrganizationsResponse listOrganizationNames()
 
 Get versions
 
@@ -427,10 +427,10 @@ ApiKey.setApiKey("YOUR API KEY");
 
 OrganizationsV1Api apiInstance = new OrganizationsV1Api();
 try {
-    V1ListOrganizationsResponse result = apiInstance.organizationsV1ListOrganizationNames();
+    V1ListOrganizationsResponse result = apiInstance.listOrganizationNames();
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling OrganizationsV1Api#organizationsV1ListOrganizationNames");
+    System.err.println("Exception when calling OrganizationsV1Api#listOrganizationNames");
     e.printStackTrace();
 }
 ```
@@ -451,9 +451,9 @@ This endpoint does not need any parameter.
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="organizationsV1ListOrganizations"></a>
-# **organizationsV1ListOrganizations**
-> V1ListOrganizationsResponse organizationsV1ListOrganizations()
+<a name="listOrganizations"></a>
+# **listOrganizations**
+> V1ListOrganizationsResponse listOrganizations()
 
 Get log handler
 
@@ -476,10 +476,10 @@ ApiKey.setApiKey("YOUR API KEY");
 
 OrganizationsV1Api apiInstance = new OrganizationsV1Api();
 try {
-    V1ListOrganizationsResponse result = apiInstance.organizationsV1ListOrganizations();
+    V1ListOrganizationsResponse result = apiInstance.listOrganizations();
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling OrganizationsV1Api#organizationsV1ListOrganizations");
+    System.err.println("Exception when calling OrganizationsV1Api#listOrganizations");
     e.printStackTrace();
 }
 ```
@@ -500,9 +500,9 @@ This endpoint does not need any parameter.
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="organizationsV1PatchOrganization"></a>
-# **organizationsV1PatchOrganization**
-> V1Organization organizationsV1PatchOrganization(owner, body)
+<a name="patchOrganization"></a>
+# **patchOrganization**
+> V1Organization patchOrganization(owner, body)
 
 
 
@@ -527,10 +527,10 @@ OrganizationsV1Api apiInstance = new OrganizationsV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
 V1Organization body = new V1Organization(); // V1Organization | Organization body
 try {
-    V1Organization result = apiInstance.organizationsV1PatchOrganization(owner, body);
+    V1Organization result = apiInstance.patchOrganization(owner, body);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling OrganizationsV1Api#organizationsV1PatchOrganization");
+    System.err.println("Exception when calling OrganizationsV1Api#patchOrganization");
     e.printStackTrace();
 }
 ```
@@ -555,9 +555,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="organizationsV1PatchOrganizationMember"></a>
-# **organizationsV1PatchOrganizationMember**
-> V1OrganizationMember organizationsV1PatchOrganizationMember(owner, memberUser, body)
+<a name="patchOrganizationMember"></a>
+# **patchOrganizationMember**
+> V1OrganizationMember patchOrganizationMember(owner, memberUser, body)
 
 
 
@@ -583,10 +583,10 @@ String owner = "owner_example"; // String | Owner of the namespace
 String memberUser = "memberUser_example"; // String | User
 V1OrganizationMember body = new V1OrganizationMember(); // V1OrganizationMember | Organization body
 try {
-    V1OrganizationMember result = apiInstance.organizationsV1PatchOrganizationMember(owner, memberUser, body);
+    V1OrganizationMember result = apiInstance.patchOrganizationMember(owner, memberUser, body);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling OrganizationsV1Api#organizationsV1PatchOrganizationMember");
+    System.err.println("Exception when calling OrganizationsV1Api#patchOrganizationMember");
     e.printStackTrace();
 }
 ```
@@ -612,9 +612,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="organizationsV1UpdateOrganization"></a>
-# **organizationsV1UpdateOrganization**
-> V1Organization organizationsV1UpdateOrganization(owner, body)
+<a name="updateOrganization"></a>
+# **updateOrganization**
+> V1Organization updateOrganization(owner, body)
 
 
 
@@ -639,10 +639,10 @@ OrganizationsV1Api apiInstance = new OrganizationsV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
 V1Organization body = new V1Organization(); // V1Organization | Organization body
 try {
-    V1Organization result = apiInstance.organizationsV1UpdateOrganization(owner, body);
+    V1Organization result = apiInstance.updateOrganization(owner, body);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling OrganizationsV1Api#organizationsV1UpdateOrganization");
+    System.err.println("Exception when calling OrganizationsV1Api#updateOrganization");
     e.printStackTrace();
 }
 ```
@@ -667,9 +667,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="organizationsV1UpdateOrganizationMember"></a>
-# **organizationsV1UpdateOrganizationMember**
-> V1OrganizationMember organizationsV1UpdateOrganizationMember(owner, memberUser, body)
+<a name="updateOrganizationMember"></a>
+# **updateOrganizationMember**
+> V1OrganizationMember updateOrganizationMember(owner, memberUser, body)
 
 
 
@@ -695,10 +695,10 @@ String owner = "owner_example"; // String | Owner of the namespace
 String memberUser = "memberUser_example"; // String | User
 V1OrganizationMember body = new V1OrganizationMember(); // V1OrganizationMember | Organization body
 try {
-    V1OrganizationMember result = apiInstance.organizationsV1UpdateOrganizationMember(owner, memberUser, body);
+    V1OrganizationMember result = apiInstance.updateOrganizationMember(owner, memberUser, body);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling OrganizationsV1Api#organizationsV1UpdateOrganizationMember");
+    System.err.println("Exception when calling OrganizationsV1Api#updateOrganizationMember");
     e.printStackTrace();
 }
 ```

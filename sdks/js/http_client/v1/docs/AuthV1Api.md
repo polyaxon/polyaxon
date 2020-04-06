@@ -4,12 +4,12 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**authV1Login**](AuthV1Api.md#authV1Login) | **POST** /api/v1/users/token | List organization level queues names
+[**login**](AuthV1Api.md#login) | **POST** /api/v1/users/token | List organization level queues names
 
 
-<a name="authV1Login"></a>
-# **authV1Login**
-> V1Auth authV1Login(body)
+<a name="login"></a>
+# **login**
+> V1Auth login(body)
 
 List organization level queues names
 
@@ -36,7 +36,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.authV1Login(body, callback);
+apiInstance.login(body, callback);
 ```
 
 ### Parameters

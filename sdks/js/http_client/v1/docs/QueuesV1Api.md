@@ -4,20 +4,20 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**queuesV1CreateQueue**](QueuesV1Api.md#queuesV1CreateQueue) | **POST** /api/v1/orgs/{owner}/agents/{agent}/queues | Update agent
-[**queuesV1DeleteQueue**](QueuesV1Api.md#queuesV1DeleteQueue) | **DELETE** /api/v1/orgs/{owner}/agents/{agent}/queues/{uuid} | Sync agent
-[**queuesV1GetQueue**](QueuesV1Api.md#queuesV1GetQueue) | **GET** /api/v1/orgs/{owner}/agents/{agent}/queues/{uuid} | Patch agent
-[**queuesV1ListOrganizationQueueNames**](QueuesV1Api.md#queuesV1ListOrganizationQueueNames) | **GET** /api/v1/orgs/{owner}/queues/names | List agents names
-[**queuesV1ListOrganizationQueues**](QueuesV1Api.md#queuesV1ListOrganizationQueues) | **GET** /api/v1/orgs/{owner}/queues | List agents
-[**queuesV1ListQueueNames**](QueuesV1Api.md#queuesV1ListQueueNames) | **GET** /api/v1/orgs/{owner}/agents/{agent}/queues/names | Create agent
-[**queuesV1ListQueues**](QueuesV1Api.md#queuesV1ListQueues) | **GET** /api/v1/orgs/{owner}/agents/{agent}/queues | Get agent
-[**queuesV1PatchQueue**](QueuesV1Api.md#queuesV1PatchQueue) | **PATCH** /api/v1/orgs/{owner}/agents/{queue.agent}/queues/{queue.uuid} | Get State (queues/runs)
-[**queuesV1UpdateQueue**](QueuesV1Api.md#queuesV1UpdateQueue) | **PUT** /api/v1/orgs/{owner}/agents/{queue.agent}/queues/{queue.uuid} | Delete agent
+[**createQueue**](QueuesV1Api.md#createQueue) | **POST** /api/v1/orgs/{owner}/agents/{agent}/queues | Update agent
+[**deleteQueue**](QueuesV1Api.md#deleteQueue) | **DELETE** /api/v1/orgs/{owner}/agents/{agent}/queues/{uuid} | Sync agent
+[**getQueue**](QueuesV1Api.md#getQueue) | **GET** /api/v1/orgs/{owner}/agents/{agent}/queues/{uuid} | Patch agent
+[**listOrganizationQueueNames**](QueuesV1Api.md#listOrganizationQueueNames) | **GET** /api/v1/orgs/{owner}/queues/names | List agents names
+[**listOrganizationQueues**](QueuesV1Api.md#listOrganizationQueues) | **GET** /api/v1/orgs/{owner}/queues | List agents
+[**listQueueNames**](QueuesV1Api.md#listQueueNames) | **GET** /api/v1/orgs/{owner}/agents/{agent}/queues/names | Create agent
+[**listQueues**](QueuesV1Api.md#listQueues) | **GET** /api/v1/orgs/{owner}/agents/{agent}/queues | Get agent
+[**patchQueue**](QueuesV1Api.md#patchQueue) | **PATCH** /api/v1/orgs/{owner}/agents/{queue.agent}/queues/{queue.uuid} | Get State (queues/runs)
+[**updateQueue**](QueuesV1Api.md#updateQueue) | **PUT** /api/v1/orgs/{owner}/agents/{queue.agent}/queues/{queue.uuid} | Delete agent
 
 
-<a name="queuesV1CreateQueue"></a>
-# **queuesV1CreateQueue**
-> V1Agent queuesV1CreateQueue(owner, agent, body)
+<a name="createQueue"></a>
+# **createQueue**
+> V1Agent createQueue(owner, agent, body)
 
 Update agent
 
@@ -48,7 +48,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.queuesV1CreateQueue(owner, agent, body, callback);
+apiInstance.createQueue(owner, agent, body, callback);
 ```
 
 ### Parameters
@@ -72,9 +72,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="queuesV1DeleteQueue"></a>
-# **queuesV1DeleteQueue**
-> queuesV1DeleteQueue(owner, agent, uuid)
+<a name="deleteQueue"></a>
+# **deleteQueue**
+> deleteQueue(owner, agent, uuid)
 
 Sync agent
 
@@ -105,7 +105,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully.');
   }
 };
-apiInstance.queuesV1DeleteQueue(owner, agent, uuid, callback);
+apiInstance.deleteQueue(owner, agent, uuid, callback);
 ```
 
 ### Parameters
@@ -129,9 +129,9 @@ null (empty response body)
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="queuesV1GetQueue"></a>
-# **queuesV1GetQueue**
-> V1Queue queuesV1GetQueue(owner, agent, uuid)
+<a name="getQueue"></a>
+# **getQueue**
+> V1Queue getQueue(owner, agent, uuid)
 
 Patch agent
 
@@ -162,7 +162,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.queuesV1GetQueue(owner, agent, uuid, callback);
+apiInstance.getQueue(owner, agent, uuid, callback);
 ```
 
 ### Parameters
@@ -186,9 +186,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="queuesV1ListOrganizationQueueNames"></a>
-# **queuesV1ListOrganizationQueueNames**
-> V1ListQueuesResponse queuesV1ListOrganizationQueueNames(owner, opts)
+<a name="listOrganizationQueueNames"></a>
+# **listOrganizationQueueNames**
+> V1ListQueuesResponse listOrganizationQueueNames(owner, opts)
 
 List agents names
 
@@ -221,7 +221,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.queuesV1ListOrganizationQueueNames(owner, opts, callback);
+apiInstance.listOrganizationQueueNames(owner, opts, callback);
 ```
 
 ### Parameters
@@ -247,9 +247,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="queuesV1ListOrganizationQueues"></a>
-# **queuesV1ListOrganizationQueues**
-> V1ListQueuesResponse queuesV1ListOrganizationQueues(owner, opts)
+<a name="listOrganizationQueues"></a>
+# **listOrganizationQueues**
+> V1ListQueuesResponse listOrganizationQueues(owner, opts)
 
 List agents
 
@@ -282,7 +282,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.queuesV1ListOrganizationQueues(owner, opts, callback);
+apiInstance.listOrganizationQueues(owner, opts, callback);
 ```
 
 ### Parameters
@@ -308,9 +308,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="queuesV1ListQueueNames"></a>
-# **queuesV1ListQueueNames**
-> V1ListQueuesResponse queuesV1ListQueueNames(owner, agent, opts)
+<a name="listQueueNames"></a>
+# **listQueueNames**
+> V1ListQueuesResponse listQueueNames(owner, agent, opts)
 
 Create agent
 
@@ -345,7 +345,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.queuesV1ListQueueNames(owner, agent, opts, callback);
+apiInstance.listQueueNames(owner, agent, opts, callback);
 ```
 
 ### Parameters
@@ -372,9 +372,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="queuesV1ListQueues"></a>
-# **queuesV1ListQueues**
-> V1ListQueuesResponse queuesV1ListQueues(owner, agent, opts)
+<a name="listQueues"></a>
+# **listQueues**
+> V1ListQueuesResponse listQueues(owner, agent, opts)
 
 Get agent
 
@@ -409,7 +409,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.queuesV1ListQueues(owner, agent, opts, callback);
+apiInstance.listQueues(owner, agent, opts, callback);
 ```
 
 ### Parameters
@@ -436,9 +436,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="queuesV1PatchQueue"></a>
-# **queuesV1PatchQueue**
-> V1Queue queuesV1PatchQueue(owner, queue_agent, queue_uuid, body)
+<a name="patchQueue"></a>
+# **patchQueue**
+> V1Queue patchQueue(owner, queue_agent, queue_uuid, body)
 
 Get State (queues/runs)
 
@@ -471,7 +471,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.queuesV1PatchQueue(owner, queue_agent, queue_uuid, body, callback);
+apiInstance.patchQueue(owner, queue_agent, queue_uuid, body, callback);
 ```
 
 ### Parameters
@@ -496,9 +496,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="queuesV1UpdateQueue"></a>
-# **queuesV1UpdateQueue**
-> V1Queue queuesV1UpdateQueue(owner, queue_agent, queue_uuid, body)
+<a name="updateQueue"></a>
+# **updateQueue**
+> V1Queue updateQueue(owner, queue_agent, queue_uuid, body)
 
 Delete agent
 
@@ -531,7 +531,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.queuesV1UpdateQueue(owner, queue_agent, queue_uuid, body, callback);
+apiInstance.updateQueue(owner, queue_agent, queue_uuid, body, callback);
 ```
 
 ### Parameters

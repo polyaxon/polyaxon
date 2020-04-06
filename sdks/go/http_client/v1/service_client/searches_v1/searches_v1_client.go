@@ -39,41 +39,41 @@ type Client struct {
 
 // ClientService is the interface for Client methods
 type ClientService interface {
-	SearchesV1CreateSearch(params *SearchesV1CreateSearchParams, authInfo runtime.ClientAuthInfoWriter) (*SearchesV1CreateSearchOK, *SearchesV1CreateSearchNoContent, error)
+	CreateSearch(params *CreateSearchParams, authInfo runtime.ClientAuthInfoWriter) (*CreateSearchOK, *CreateSearchNoContent, error)
 
-	SearchesV1DeleteSearch(params *SearchesV1DeleteSearchParams, authInfo runtime.ClientAuthInfoWriter) (*SearchesV1DeleteSearchOK, *SearchesV1DeleteSearchNoContent, error)
+	DeleteSearch(params *DeleteSearchParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteSearchOK, *DeleteSearchNoContent, error)
 
-	SearchesV1GetSearch(params *SearchesV1GetSearchParams, authInfo runtime.ClientAuthInfoWriter) (*SearchesV1GetSearchOK, *SearchesV1GetSearchNoContent, error)
+	GetSearch(params *GetSearchParams, authInfo runtime.ClientAuthInfoWriter) (*GetSearchOK, *GetSearchNoContent, error)
 
-	SearchesV1ListSearchNames(params *SearchesV1ListSearchNamesParams, authInfo runtime.ClientAuthInfoWriter) (*SearchesV1ListSearchNamesOK, *SearchesV1ListSearchNamesNoContent, error)
+	ListSearchNames(params *ListSearchNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListSearchNamesOK, *ListSearchNamesNoContent, error)
 
-	SearchesV1ListSearches(params *SearchesV1ListSearchesParams, authInfo runtime.ClientAuthInfoWriter) (*SearchesV1ListSearchesOK, *SearchesV1ListSearchesNoContent, error)
+	ListSearches(params *ListSearchesParams, authInfo runtime.ClientAuthInfoWriter) (*ListSearchesOK, *ListSearchesNoContent, error)
 
-	SearchesV1PatchSearch(params *SearchesV1PatchSearchParams, authInfo runtime.ClientAuthInfoWriter) (*SearchesV1PatchSearchOK, *SearchesV1PatchSearchNoContent, error)
+	PatchSearch(params *PatchSearchParams, authInfo runtime.ClientAuthInfoWriter) (*PatchSearchOK, *PatchSearchNoContent, error)
 
-	SearchesV1UpdateSearch(params *SearchesV1UpdateSearchParams, authInfo runtime.ClientAuthInfoWriter) (*SearchesV1UpdateSearchOK, *SearchesV1UpdateSearchNoContent, error)
+	UpdateSearch(params *UpdateSearchParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateSearchOK, *UpdateSearchNoContent, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
 
 /*
-  SearchesV1CreateSearch creates search
+  CreateSearch creates search
 */
-func (a *Client) SearchesV1CreateSearch(params *SearchesV1CreateSearchParams, authInfo runtime.ClientAuthInfoWriter) (*SearchesV1CreateSearchOK, *SearchesV1CreateSearchNoContent, error) {
+func (a *Client) CreateSearch(params *CreateSearchParams, authInfo runtime.ClientAuthInfoWriter) (*CreateSearchOK, *CreateSearchNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewSearchesV1CreateSearchParams()
+		params = NewCreateSearchParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "SearchesV1_CreateSearch",
+		ID:                 "CreateSearch",
 		Method:             "POST",
 		PathPattern:        "/api/v1/orgs/{owner}/searches",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &SearchesV1CreateSearchReader{formats: a.formats},
+		Reader:             &CreateSearchReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -82,34 +82,34 @@ func (a *Client) SearchesV1CreateSearch(params *SearchesV1CreateSearchParams, au
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *SearchesV1CreateSearchOK:
+	case *CreateSearchOK:
 		return value, nil, nil
-	case *SearchesV1CreateSearchNoContent:
+	case *CreateSearchNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*SearchesV1CreateSearchDefault)
+	unexpectedSuccess := result.(*CreateSearchDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  SearchesV1DeleteSearch deletes search
+  DeleteSearch deletes search
 */
-func (a *Client) SearchesV1DeleteSearch(params *SearchesV1DeleteSearchParams, authInfo runtime.ClientAuthInfoWriter) (*SearchesV1DeleteSearchOK, *SearchesV1DeleteSearchNoContent, error) {
+func (a *Client) DeleteSearch(params *DeleteSearchParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteSearchOK, *DeleteSearchNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewSearchesV1DeleteSearchParams()
+		params = NewDeleteSearchParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "SearchesV1_DeleteSearch",
+		ID:                 "DeleteSearch",
 		Method:             "DELETE",
 		PathPattern:        "/api/v1/orgs/{owner}/searches/{uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &SearchesV1DeleteSearchReader{formats: a.formats},
+		Reader:             &DeleteSearchReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -118,34 +118,34 @@ func (a *Client) SearchesV1DeleteSearch(params *SearchesV1DeleteSearchParams, au
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *SearchesV1DeleteSearchOK:
+	case *DeleteSearchOK:
 		return value, nil, nil
-	case *SearchesV1DeleteSearchNoContent:
+	case *DeleteSearchNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*SearchesV1DeleteSearchDefault)
+	unexpectedSuccess := result.(*DeleteSearchDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  SearchesV1GetSearch gets search
+  GetSearch gets search
 */
-func (a *Client) SearchesV1GetSearch(params *SearchesV1GetSearchParams, authInfo runtime.ClientAuthInfoWriter) (*SearchesV1GetSearchOK, *SearchesV1GetSearchNoContent, error) {
+func (a *Client) GetSearch(params *GetSearchParams, authInfo runtime.ClientAuthInfoWriter) (*GetSearchOK, *GetSearchNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewSearchesV1GetSearchParams()
+		params = NewGetSearchParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "SearchesV1_GetSearch",
+		ID:                 "GetSearch",
 		Method:             "GET",
 		PathPattern:        "/api/v1/orgs/{owner}/searches/{uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &SearchesV1GetSearchReader{formats: a.formats},
+		Reader:             &GetSearchReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -154,34 +154,34 @@ func (a *Client) SearchesV1GetSearch(params *SearchesV1GetSearchParams, authInfo
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *SearchesV1GetSearchOK:
+	case *GetSearchOK:
 		return value, nil, nil
-	case *SearchesV1GetSearchNoContent:
+	case *GetSearchNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*SearchesV1GetSearchDefault)
+	unexpectedSuccess := result.(*GetSearchDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  SearchesV1ListSearchNames lists search names
+  ListSearchNames lists search names
 */
-func (a *Client) SearchesV1ListSearchNames(params *SearchesV1ListSearchNamesParams, authInfo runtime.ClientAuthInfoWriter) (*SearchesV1ListSearchNamesOK, *SearchesV1ListSearchNamesNoContent, error) {
+func (a *Client) ListSearchNames(params *ListSearchNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListSearchNamesOK, *ListSearchNamesNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewSearchesV1ListSearchNamesParams()
+		params = NewListSearchNamesParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "SearchesV1_ListSearchNames",
+		ID:                 "ListSearchNames",
 		Method:             "GET",
 		PathPattern:        "/api/v1/orgs/{owner}/searches/names",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &SearchesV1ListSearchNamesReader{formats: a.formats},
+		Reader:             &ListSearchNamesReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -190,34 +190,34 @@ func (a *Client) SearchesV1ListSearchNames(params *SearchesV1ListSearchNamesPara
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *SearchesV1ListSearchNamesOK:
+	case *ListSearchNamesOK:
 		return value, nil, nil
-	case *SearchesV1ListSearchNamesNoContent:
+	case *ListSearchNamesNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*SearchesV1ListSearchNamesDefault)
+	unexpectedSuccess := result.(*ListSearchNamesDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  SearchesV1ListSearches lists searches
+  ListSearches lists searches
 */
-func (a *Client) SearchesV1ListSearches(params *SearchesV1ListSearchesParams, authInfo runtime.ClientAuthInfoWriter) (*SearchesV1ListSearchesOK, *SearchesV1ListSearchesNoContent, error) {
+func (a *Client) ListSearches(params *ListSearchesParams, authInfo runtime.ClientAuthInfoWriter) (*ListSearchesOK, *ListSearchesNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewSearchesV1ListSearchesParams()
+		params = NewListSearchesParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "SearchesV1_ListSearches",
+		ID:                 "ListSearches",
 		Method:             "GET",
 		PathPattern:        "/api/v1/orgs/{owner}/searches",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &SearchesV1ListSearchesReader{formats: a.formats},
+		Reader:             &ListSearchesReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -226,34 +226,34 @@ func (a *Client) SearchesV1ListSearches(params *SearchesV1ListSearchesParams, au
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *SearchesV1ListSearchesOK:
+	case *ListSearchesOK:
 		return value, nil, nil
-	case *SearchesV1ListSearchesNoContent:
+	case *ListSearchesNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*SearchesV1ListSearchesDefault)
+	unexpectedSuccess := result.(*ListSearchesDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  SearchesV1PatchSearch patches search
+  PatchSearch patches search
 */
-func (a *Client) SearchesV1PatchSearch(params *SearchesV1PatchSearchParams, authInfo runtime.ClientAuthInfoWriter) (*SearchesV1PatchSearchOK, *SearchesV1PatchSearchNoContent, error) {
+func (a *Client) PatchSearch(params *PatchSearchParams, authInfo runtime.ClientAuthInfoWriter) (*PatchSearchOK, *PatchSearchNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewSearchesV1PatchSearchParams()
+		params = NewPatchSearchParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "SearchesV1_PatchSearch",
+		ID:                 "PatchSearch",
 		Method:             "PATCH",
 		PathPattern:        "/api/v1/orgs/{owner}/searches/{search.uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &SearchesV1PatchSearchReader{formats: a.formats},
+		Reader:             &PatchSearchReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -262,34 +262,34 @@ func (a *Client) SearchesV1PatchSearch(params *SearchesV1PatchSearchParams, auth
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *SearchesV1PatchSearchOK:
+	case *PatchSearchOK:
 		return value, nil, nil
-	case *SearchesV1PatchSearchNoContent:
+	case *PatchSearchNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*SearchesV1PatchSearchDefault)
+	unexpectedSuccess := result.(*PatchSearchDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  SearchesV1UpdateSearch updates search
+  UpdateSearch updates search
 */
-func (a *Client) SearchesV1UpdateSearch(params *SearchesV1UpdateSearchParams, authInfo runtime.ClientAuthInfoWriter) (*SearchesV1UpdateSearchOK, *SearchesV1UpdateSearchNoContent, error) {
+func (a *Client) UpdateSearch(params *UpdateSearchParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateSearchOK, *UpdateSearchNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewSearchesV1UpdateSearchParams()
+		params = NewUpdateSearchParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "SearchesV1_UpdateSearch",
+		ID:                 "UpdateSearch",
 		Method:             "PUT",
 		PathPattern:        "/api/v1/orgs/{owner}/searches/{search.uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &SearchesV1UpdateSearchReader{formats: a.formats},
+		Reader:             &UpdateSearchReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -298,13 +298,13 @@ func (a *Client) SearchesV1UpdateSearch(params *SearchesV1UpdateSearchParams, au
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *SearchesV1UpdateSearchOK:
+	case *UpdateSearchOK:
 		return value, nil, nil
-	case *SearchesV1UpdateSearchNoContent:
+	case *UpdateSearchNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*SearchesV1UpdateSearchDefault)
+	unexpectedSuccess := result.(*UpdateSearchDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 

@@ -4,22 +4,22 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**agentsV1CreateAgent**](AgentsV1Api.md#agentsV1CreateAgent) | **POST** /api/v1/orgs/{owner}/agents | Create run profile
-[**agentsV1CreateAgentStatus**](AgentsV1Api.md#agentsV1CreateAgentStatus) | **POST** /api/v1/orgs/{owner}/agents/{uuid}/statuses | 
-[**agentsV1DeleteAgent**](AgentsV1Api.md#agentsV1DeleteAgent) | **DELETE** /api/v1/orgs/{owner}/agents/{uuid} | Delete run profile
-[**agentsV1GetAgent**](AgentsV1Api.md#agentsV1GetAgent) | **GET** /api/v1/orgs/{owner}/agents/{uuid} | Get run profile
-[**agentsV1GetAgentState**](AgentsV1Api.md#agentsV1GetAgentState) | **GET** /api/v1/orgs/{owner}/agents/{uuid}/state | 
-[**agentsV1GetAgentStatuses**](AgentsV1Api.md#agentsV1GetAgentStatuses) | **GET** /api/v1/orgs/{owner}/agents/{uuid}/statuses | 
-[**agentsV1ListAgentNames**](AgentsV1Api.md#agentsV1ListAgentNames) | **GET** /api/v1/orgs/{owner}/agents/names | List run profiles names
-[**agentsV1ListAgents**](AgentsV1Api.md#agentsV1ListAgents) | **GET** /api/v1/orgs/{owner}/agents | List run profiles
-[**agentsV1PatchAgent**](AgentsV1Api.md#agentsV1PatchAgent) | **PATCH** /api/v1/orgs/{owner}/agents/{agent.uuid} | Patch run profile
-[**agentsV1SyncAgent**](AgentsV1Api.md#agentsV1SyncAgent) | **PATCH** /api/v1/orgs/{owner}/agents/{agent.uuid}/sync | 
-[**agentsV1UpdateAgent**](AgentsV1Api.md#agentsV1UpdateAgent) | **PUT** /api/v1/orgs/{owner}/agents/{agent.uuid} | Update run profile
+[**createAgent**](AgentsV1Api.md#createAgent) | **POST** /api/v1/orgs/{owner}/agents | Create run profile
+[**createAgentStatus**](AgentsV1Api.md#createAgentStatus) | **POST** /api/v1/orgs/{owner}/agents/{uuid}/statuses | 
+[**deleteAgent**](AgentsV1Api.md#deleteAgent) | **DELETE** /api/v1/orgs/{owner}/agents/{uuid} | Delete run profile
+[**getAgent**](AgentsV1Api.md#getAgent) | **GET** /api/v1/orgs/{owner}/agents/{uuid} | Get run profile
+[**getAgentState**](AgentsV1Api.md#getAgentState) | **GET** /api/v1/orgs/{owner}/agents/{uuid}/state | 
+[**getAgentStatuses**](AgentsV1Api.md#getAgentStatuses) | **GET** /api/v1/orgs/{owner}/agents/{uuid}/statuses | 
+[**listAgentNames**](AgentsV1Api.md#listAgentNames) | **GET** /api/v1/orgs/{owner}/agents/names | List run profiles names
+[**listAgents**](AgentsV1Api.md#listAgents) | **GET** /api/v1/orgs/{owner}/agents | List run profiles
+[**patchAgent**](AgentsV1Api.md#patchAgent) | **PATCH** /api/v1/orgs/{owner}/agents/{agent.uuid} | Patch run profile
+[**syncAgent**](AgentsV1Api.md#syncAgent) | **PATCH** /api/v1/orgs/{owner}/agents/{agent.uuid}/sync | 
+[**updateAgent**](AgentsV1Api.md#updateAgent) | **PUT** /api/v1/orgs/{owner}/agents/{agent.uuid} | Update run profile
 
 
-<a name="agentsV1CreateAgent"></a>
-# **agentsV1CreateAgent**
-> V1Agent agentsV1CreateAgent(owner, body)
+<a name="createAgent"></a>
+# **createAgent**
+> V1Agent createAgent(owner, body)
 
 Create run profile
 
@@ -48,7 +48,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.agentsV1CreateAgent(owner, body, callback);
+apiInstance.createAgent(owner, body, callback);
 ```
 
 ### Parameters
@@ -71,9 +71,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="agentsV1CreateAgentStatus"></a>
-# **agentsV1CreateAgentStatus**
-> V1Status agentsV1CreateAgentStatus(owner, uuid, body)
+<a name="createAgentStatus"></a>
+# **createAgentStatus**
+> V1Status createAgentStatus(owner, uuid, body)
 
 
 
@@ -104,7 +104,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.agentsV1CreateAgentStatus(owner, uuid, body, callback);
+apiInstance.createAgentStatus(owner, uuid, body, callback);
 ```
 
 ### Parameters
@@ -128,9 +128,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="agentsV1DeleteAgent"></a>
-# **agentsV1DeleteAgent**
-> agentsV1DeleteAgent(owner, uuid)
+<a name="deleteAgent"></a>
+# **deleteAgent**
+> deleteAgent(owner, uuid)
 
 Delete run profile
 
@@ -159,7 +159,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully.');
   }
 };
-apiInstance.agentsV1DeleteAgent(owner, uuid, callback);
+apiInstance.deleteAgent(owner, uuid, callback);
 ```
 
 ### Parameters
@@ -182,9 +182,9 @@ null (empty response body)
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="agentsV1GetAgent"></a>
-# **agentsV1GetAgent**
-> V1Agent agentsV1GetAgent(owner, uuid)
+<a name="getAgent"></a>
+# **getAgent**
+> V1Agent getAgent(owner, uuid)
 
 Get run profile
 
@@ -213,7 +213,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.agentsV1GetAgent(owner, uuid, callback);
+apiInstance.getAgent(owner, uuid, callback);
 ```
 
 ### Parameters
@@ -236,9 +236,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="agentsV1GetAgentState"></a>
-# **agentsV1GetAgentState**
-> V1AgentStateResponse agentsV1GetAgentState(owner, uuid)
+<a name="getAgentState"></a>
+# **getAgentState**
+> V1AgentStateResponse getAgentState(owner, uuid)
 
 
 
@@ -267,7 +267,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.agentsV1GetAgentState(owner, uuid, callback);
+apiInstance.getAgentState(owner, uuid, callback);
 ```
 
 ### Parameters
@@ -290,9 +290,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="agentsV1GetAgentStatuses"></a>
-# **agentsV1GetAgentStatuses**
-> V1Status agentsV1GetAgentStatuses(owner, uuid)
+<a name="getAgentStatuses"></a>
+# **getAgentStatuses**
+> V1Status getAgentStatuses(owner, uuid)
 
 
 
@@ -321,7 +321,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.agentsV1GetAgentStatuses(owner, uuid, callback);
+apiInstance.getAgentStatuses(owner, uuid, callback);
 ```
 
 ### Parameters
@@ -344,9 +344,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="agentsV1ListAgentNames"></a>
-# **agentsV1ListAgentNames**
-> V1ListAgentsResponse agentsV1ListAgentNames(owner, opts)
+<a name="listAgentNames"></a>
+# **listAgentNames**
+> V1ListAgentsResponse listAgentNames(owner, opts)
 
 List run profiles names
 
@@ -379,7 +379,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.agentsV1ListAgentNames(owner, opts, callback);
+apiInstance.listAgentNames(owner, opts, callback);
 ```
 
 ### Parameters
@@ -405,9 +405,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="agentsV1ListAgents"></a>
-# **agentsV1ListAgents**
-> V1ListAgentsResponse agentsV1ListAgents(owner, opts)
+<a name="listAgents"></a>
+# **listAgents**
+> V1ListAgentsResponse listAgents(owner, opts)
 
 List run profiles
 
@@ -440,7 +440,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.agentsV1ListAgents(owner, opts, callback);
+apiInstance.listAgents(owner, opts, callback);
 ```
 
 ### Parameters
@@ -466,9 +466,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="agentsV1PatchAgent"></a>
-# **agentsV1PatchAgent**
-> V1Agent agentsV1PatchAgent(owner, agent_uuid, body)
+<a name="patchAgent"></a>
+# **patchAgent**
+> V1Agent patchAgent(owner, agent_uuid, body)
 
 Patch run profile
 
@@ -499,7 +499,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.agentsV1PatchAgent(owner, agent_uuid, body, callback);
+apiInstance.patchAgent(owner, agent_uuid, body, callback);
 ```
 
 ### Parameters
@@ -523,9 +523,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="agentsV1SyncAgent"></a>
-# **agentsV1SyncAgent**
-> agentsV1SyncAgent(owner, agent_uuid, body)
+<a name="syncAgent"></a>
+# **syncAgent**
+> syncAgent(owner, agent_uuid, body)
 
 
 
@@ -556,7 +556,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully.');
   }
 };
-apiInstance.agentsV1SyncAgent(owner, agent_uuid, body, callback);
+apiInstance.syncAgent(owner, agent_uuid, body, callback);
 ```
 
 ### Parameters
@@ -580,9 +580,9 @@ null (empty response body)
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="agentsV1UpdateAgent"></a>
-# **agentsV1UpdateAgent**
-> V1Agent agentsV1UpdateAgent(owner, agent_uuid, body)
+<a name="updateAgent"></a>
+# **updateAgent**
+> V1Agent updateAgent(owner, agent_uuid, body)
 
 Update run profile
 
@@ -613,7 +613,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.agentsV1UpdateAgent(owner, agent_uuid, body, callback);
+apiInstance.updateAgent(owner, agent_uuid, body, callback);
 ```
 
 ### Parameters

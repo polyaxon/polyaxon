@@ -4,12 +4,12 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**versions_v1_get_log_handler**](VersionsV1Api.md#versions_v1_get_log_handler) | **GET** /api/v1/log_handler | 
-[**versions_v1_get_versions**](VersionsV1Api.md#versions_v1_get_versions) | **GET** /api/v1/version | Get current user
+[**get_log_handler**](VersionsV1Api.md#get_log_handler) | **GET** /api/v1/log_handler | 
+[**get_versions**](VersionsV1Api.md#get_versions) | **GET** /api/v1/version | Get current user
 
 
-# **versions_v1_get_log_handler**
-> V1LogHandler versions_v1_get_log_handler()
+# **get_log_handler**
+> V1LogHandler get_log_handler()
 
 
 
@@ -31,10 +31,10 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 api_instance = polyaxon_sdk.VersionsV1Api(polyaxon_sdk.ApiClient(configuration))
 
 try:
-    api_response = api_instance.versions_v1_get_log_handler()
+    api_response = api_instance.get_log_handler()
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling VersionsV1Api->versions_v1_get_log_handler: %s\n" % e)
+    print("Exception when calling VersionsV1Api->get_log_handler: %s\n" % e)
 ```
 
 ### Parameters
@@ -55,8 +55,8 @@ This endpoint does not need any parameter.
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **versions_v1_get_versions**
-> V1Versions versions_v1_get_versions()
+# **get_versions**
+> V1Versions get_versions()
 
 Get current user
 
@@ -79,10 +79,10 @@ api_instance = polyaxon_sdk.VersionsV1Api(polyaxon_sdk.ApiClient(configuration))
 
 try:
     # Get current user
-    api_response = api_instance.versions_v1_get_versions()
+    api_response = api_instance.get_versions()
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling VersionsV1Api->versions_v1_get_versions: %s\n" % e)
+    print("Exception when calling VersionsV1Api->get_versions: %s\n" % e)
 ```
 
 ### Parameters

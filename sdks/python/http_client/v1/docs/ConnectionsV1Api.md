@@ -4,17 +4,17 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**connections_v1_create_connection**](ConnectionsV1Api.md#connections_v1_create_connection) | **POST** /api/v1/orgs/{owner}/connections | Create connection
-[**connections_v1_delete_connection**](ConnectionsV1Api.md#connections_v1_delete_connection) | **DELETE** /api/v1/orgs/{owner}/connections/{uuid} | Delete connection
-[**connections_v1_get_connection**](ConnectionsV1Api.md#connections_v1_get_connection) | **GET** /api/v1/orgs/{owner}/connections/{uuid} | Get connection
-[**connections_v1_list_connection_names**](ConnectionsV1Api.md#connections_v1_list_connection_names) | **GET** /api/v1/orgs/{owner}/connections/names | List connections names
-[**connections_v1_list_connections**](ConnectionsV1Api.md#connections_v1_list_connections) | **GET** /api/v1/orgs/{owner}/connections | List connections
-[**connections_v1_patch_connection**](ConnectionsV1Api.md#connections_v1_patch_connection) | **PATCH** /api/v1/orgs/{owner}/connections/{connection.uuid} | Patch connection
-[**connections_v1_update_connection**](ConnectionsV1Api.md#connections_v1_update_connection) | **PUT** /api/v1/orgs/{owner}/connections/{connection.uuid} | Update connection
+[**create_connection**](ConnectionsV1Api.md#create_connection) | **POST** /api/v1/orgs/{owner}/connections | Create connection
+[**delete_connection**](ConnectionsV1Api.md#delete_connection) | **DELETE** /api/v1/orgs/{owner}/connections/{uuid} | Delete connection
+[**get_connection**](ConnectionsV1Api.md#get_connection) | **GET** /api/v1/orgs/{owner}/connections/{uuid} | Get connection
+[**list_connection_names**](ConnectionsV1Api.md#list_connection_names) | **GET** /api/v1/orgs/{owner}/connections/names | List connections names
+[**list_connections**](ConnectionsV1Api.md#list_connections) | **GET** /api/v1/orgs/{owner}/connections | List connections
+[**patch_connection**](ConnectionsV1Api.md#patch_connection) | **PATCH** /api/v1/orgs/{owner}/connections/{connection.uuid} | Patch connection
+[**update_connection**](ConnectionsV1Api.md#update_connection) | **PUT** /api/v1/orgs/{owner}/connections/{connection.uuid} | Update connection
 
 
-# **connections_v1_create_connection**
-> V1ConnectionResponse connections_v1_create_connection(owner, body)
+# **create_connection**
+> V1ConnectionResponse create_connection(owner, body)
 
 Create connection
 
@@ -39,10 +39,10 @@ body = polyaxon_sdk.V1ConnectionResponse() # V1ConnectionResponse | Connection b
 
 try:
     # Create connection
-    api_response = api_instance.connections_v1_create_connection(owner, body)
+    api_response = api_instance.create_connection(owner, body)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling ConnectionsV1Api->connections_v1_create_connection: %s\n" % e)
+    print("Exception when calling ConnectionsV1Api->create_connection: %s\n" % e)
 ```
 
 ### Parameters
@@ -67,8 +67,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **connections_v1_delete_connection**
-> connections_v1_delete_connection(owner, uuid)
+# **delete_connection**
+> delete_connection(owner, uuid)
 
 Delete connection
 
@@ -93,9 +93,9 @@ uuid = 'uuid_example' # str | Uuid identifier of the entity
 
 try:
     # Delete connection
-    api_instance.connections_v1_delete_connection(owner, uuid)
+    api_instance.delete_connection(owner, uuid)
 except ApiException as e:
-    print("Exception when calling ConnectionsV1Api->connections_v1_delete_connection: %s\n" % e)
+    print("Exception when calling ConnectionsV1Api->delete_connection: %s\n" % e)
 ```
 
 ### Parameters
@@ -120,8 +120,8 @@ void (empty response body)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **connections_v1_get_connection**
-> V1ConnectionResponse connections_v1_get_connection(owner, uuid)
+# **get_connection**
+> V1ConnectionResponse get_connection(owner, uuid)
 
 Get connection
 
@@ -146,10 +146,10 @@ uuid = 'uuid_example' # str | Uuid identifier of the entity
 
 try:
     # Get connection
-    api_response = api_instance.connections_v1_get_connection(owner, uuid)
+    api_response = api_instance.get_connection(owner, uuid)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling ConnectionsV1Api->connections_v1_get_connection: %s\n" % e)
+    print("Exception when calling ConnectionsV1Api->get_connection: %s\n" % e)
 ```
 
 ### Parameters
@@ -174,8 +174,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **connections_v1_list_connection_names**
-> V1ListConnectionsResponse connections_v1_list_connection_names(owner, offset=offset, limit=limit, sort=sort, query=query)
+# **list_connection_names**
+> V1ListConnectionsResponse list_connection_names(owner, offset=offset, limit=limit, sort=sort, query=query)
 
 List connections names
 
@@ -203,10 +203,10 @@ query = 'query_example' # str | Query filter the search search. (optional)
 
 try:
     # List connections names
-    api_response = api_instance.connections_v1_list_connection_names(owner, offset=offset, limit=limit, sort=sort, query=query)
+    api_response = api_instance.list_connection_names(owner, offset=offset, limit=limit, sort=sort, query=query)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling ConnectionsV1Api->connections_v1_list_connection_names: %s\n" % e)
+    print("Exception when calling ConnectionsV1Api->list_connection_names: %s\n" % e)
 ```
 
 ### Parameters
@@ -234,8 +234,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **connections_v1_list_connections**
-> V1ListConnectionsResponse connections_v1_list_connections(owner, offset=offset, limit=limit, sort=sort, query=query)
+# **list_connections**
+> V1ListConnectionsResponse list_connections(owner, offset=offset, limit=limit, sort=sort, query=query)
 
 List connections
 
@@ -263,10 +263,10 @@ query = 'query_example' # str | Query filter the search search. (optional)
 
 try:
     # List connections
-    api_response = api_instance.connections_v1_list_connections(owner, offset=offset, limit=limit, sort=sort, query=query)
+    api_response = api_instance.list_connections(owner, offset=offset, limit=limit, sort=sort, query=query)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling ConnectionsV1Api->connections_v1_list_connections: %s\n" % e)
+    print("Exception when calling ConnectionsV1Api->list_connections: %s\n" % e)
 ```
 
 ### Parameters
@@ -294,8 +294,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **connections_v1_patch_connection**
-> V1ConnectionResponse connections_v1_patch_connection(owner, connection_uuid, body)
+# **patch_connection**
+> V1ConnectionResponse patch_connection(owner, connection_uuid, body)
 
 Patch connection
 
@@ -321,10 +321,10 @@ body = polyaxon_sdk.V1ConnectionResponse() # V1ConnectionResponse | Connection b
 
 try:
     # Patch connection
-    api_response = api_instance.connections_v1_patch_connection(owner, connection_uuid, body)
+    api_response = api_instance.patch_connection(owner, connection_uuid, body)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling ConnectionsV1Api->connections_v1_patch_connection: %s\n" % e)
+    print("Exception when calling ConnectionsV1Api->patch_connection: %s\n" % e)
 ```
 
 ### Parameters
@@ -350,8 +350,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **connections_v1_update_connection**
-> V1ConnectionResponse connections_v1_update_connection(owner, connection_uuid, body)
+# **update_connection**
+> V1ConnectionResponse update_connection(owner, connection_uuid, body)
 
 Update connection
 
@@ -377,10 +377,10 @@ body = polyaxon_sdk.V1ConnectionResponse() # V1ConnectionResponse | Connection b
 
 try:
     # Update connection
-    api_response = api_instance.connections_v1_update_connection(owner, connection_uuid, body)
+    api_response = api_instance.update_connection(owner, connection_uuid, body)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling ConnectionsV1Api->connections_v1_update_connection: %s\n" % e)
+    print("Exception when calling ConnectionsV1Api->update_connection: %s\n" % e)
 ```
 
 ### Parameters

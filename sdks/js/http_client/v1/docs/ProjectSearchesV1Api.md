@@ -4,19 +4,19 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**projectSearchesV1CreateProjectSearch**](ProjectSearchesV1Api.md#projectSearchesV1CreateProjectSearch) | **POST** /api/v1/{owner}/{project}/searches | Create project search
-[**projectSearchesV1DeleteProjectSearch**](ProjectSearchesV1Api.md#projectSearchesV1DeleteProjectSearch) | **DELETE** /api/v1/{owner}/{project}/searches/{uuid} | Delete project search
-[**projectSearchesV1GetProjectSearch**](ProjectSearchesV1Api.md#projectSearchesV1GetProjectSearch) | **GET** /api/v1/{owner}/{project}/searches/{uuid} | Get project search
-[**projectSearchesV1ListProjectSearchNames**](ProjectSearchesV1Api.md#projectSearchesV1ListProjectSearchNames) | **GET** /api/v1/{owner}/{project}/searches/names | List project search names
-[**projectSearchesV1ListProjectSearches**](ProjectSearchesV1Api.md#projectSearchesV1ListProjectSearches) | **GET** /api/v1/{owner}/{project}/searches | List project searches
-[**projectSearchesV1PatchProjectSearch**](ProjectSearchesV1Api.md#projectSearchesV1PatchProjectSearch) | **PATCH** /api/v1/{owner}/{project}/searches/{search.uuid} | Patch project search
-[**projectSearchesV1PromoteProjectSearch**](ProjectSearchesV1Api.md#projectSearchesV1PromoteProjectSearch) | **POST** /api/v1/{owner}/{project}/searches/{uuid}/promote | Promote project search
-[**projectSearchesV1UpdateProjectSearch**](ProjectSearchesV1Api.md#projectSearchesV1UpdateProjectSearch) | **PUT** /api/v1/{owner}/{project}/searches/{search.uuid} | Update project search
+[**createProjectSearch**](ProjectSearchesV1Api.md#createProjectSearch) | **POST** /api/v1/{owner}/{project}/searches | Create project search
+[**deleteProjectSearch**](ProjectSearchesV1Api.md#deleteProjectSearch) | **DELETE** /api/v1/{owner}/{project}/searches/{uuid} | Delete project search
+[**getProjectSearch**](ProjectSearchesV1Api.md#getProjectSearch) | **GET** /api/v1/{owner}/{project}/searches/{uuid} | Get project search
+[**listProjectSearchNames**](ProjectSearchesV1Api.md#listProjectSearchNames) | **GET** /api/v1/{owner}/{project}/searches/names | List project search names
+[**listProjectSearches**](ProjectSearchesV1Api.md#listProjectSearches) | **GET** /api/v1/{owner}/{project}/searches | List project searches
+[**patchProjectSearch**](ProjectSearchesV1Api.md#patchProjectSearch) | **PATCH** /api/v1/{owner}/{project}/searches/{search.uuid} | Patch project search
+[**promoteProjectSearch**](ProjectSearchesV1Api.md#promoteProjectSearch) | **POST** /api/v1/{owner}/{project}/searches/{uuid}/promote | Promote project search
+[**updateProjectSearch**](ProjectSearchesV1Api.md#updateProjectSearch) | **PUT** /api/v1/{owner}/{project}/searches/{search.uuid} | Update project search
 
 
-<a name="projectSearchesV1CreateProjectSearch"></a>
-# **projectSearchesV1CreateProjectSearch**
-> V1Search projectSearchesV1CreateProjectSearch(owner, project, body)
+<a name="createProjectSearch"></a>
+# **createProjectSearch**
+> V1Search createProjectSearch(owner, project, body)
 
 Create project search
 
@@ -47,7 +47,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.projectSearchesV1CreateProjectSearch(owner, project, body, callback);
+apiInstance.createProjectSearch(owner, project, body, callback);
 ```
 
 ### Parameters
@@ -71,9 +71,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="projectSearchesV1DeleteProjectSearch"></a>
-# **projectSearchesV1DeleteProjectSearch**
-> projectSearchesV1DeleteProjectSearch(owner, project, uuid)
+<a name="deleteProjectSearch"></a>
+# **deleteProjectSearch**
+> deleteProjectSearch(owner, project, uuid)
 
 Delete project search
 
@@ -104,7 +104,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully.');
   }
 };
-apiInstance.projectSearchesV1DeleteProjectSearch(owner, project, uuid, callback);
+apiInstance.deleteProjectSearch(owner, project, uuid, callback);
 ```
 
 ### Parameters
@@ -128,9 +128,9 @@ null (empty response body)
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="projectSearchesV1GetProjectSearch"></a>
-# **projectSearchesV1GetProjectSearch**
-> V1Search projectSearchesV1GetProjectSearch(owner, project, uuid)
+<a name="getProjectSearch"></a>
+# **getProjectSearch**
+> V1Search getProjectSearch(owner, project, uuid)
 
 Get project search
 
@@ -161,7 +161,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.projectSearchesV1GetProjectSearch(owner, project, uuid, callback);
+apiInstance.getProjectSearch(owner, project, uuid, callback);
 ```
 
 ### Parameters
@@ -185,9 +185,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="projectSearchesV1ListProjectSearchNames"></a>
-# **projectSearchesV1ListProjectSearchNames**
-> V1ListSearchesResponse projectSearchesV1ListProjectSearchNames(owner, project, opts)
+<a name="listProjectSearchNames"></a>
+# **listProjectSearchNames**
+> V1ListSearchesResponse listProjectSearchNames(owner, project, opts)
 
 List project search names
 
@@ -222,7 +222,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.projectSearchesV1ListProjectSearchNames(owner, project, opts, callback);
+apiInstance.listProjectSearchNames(owner, project, opts, callback);
 ```
 
 ### Parameters
@@ -249,9 +249,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="projectSearchesV1ListProjectSearches"></a>
-# **projectSearchesV1ListProjectSearches**
-> V1ListSearchesResponse projectSearchesV1ListProjectSearches(owner, project, opts)
+<a name="listProjectSearches"></a>
+# **listProjectSearches**
+> V1ListSearchesResponse listProjectSearches(owner, project, opts)
 
 List project searches
 
@@ -286,7 +286,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.projectSearchesV1ListProjectSearches(owner, project, opts, callback);
+apiInstance.listProjectSearches(owner, project, opts, callback);
 ```
 
 ### Parameters
@@ -313,9 +313,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="projectSearchesV1PatchProjectSearch"></a>
-# **projectSearchesV1PatchProjectSearch**
-> V1Search projectSearchesV1PatchProjectSearch(owner, project, search_uuid, body)
+<a name="patchProjectSearch"></a>
+# **patchProjectSearch**
+> V1Search patchProjectSearch(owner, project, search_uuid, body)
 
 Patch project search
 
@@ -348,7 +348,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.projectSearchesV1PatchProjectSearch(owner, project, search_uuid, body, callback);
+apiInstance.patchProjectSearch(owner, project, search_uuid, body, callback);
 ```
 
 ### Parameters
@@ -373,9 +373,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="projectSearchesV1PromoteProjectSearch"></a>
-# **projectSearchesV1PromoteProjectSearch**
-> projectSearchesV1PromoteProjectSearch(owner, project, uuid)
+<a name="promoteProjectSearch"></a>
+# **promoteProjectSearch**
+> promoteProjectSearch(owner, project, uuid)
 
 Promote project search
 
@@ -406,7 +406,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully.');
   }
 };
-apiInstance.projectSearchesV1PromoteProjectSearch(owner, project, uuid, callback);
+apiInstance.promoteProjectSearch(owner, project, uuid, callback);
 ```
 
 ### Parameters
@@ -430,9 +430,9 @@ null (empty response body)
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="projectSearchesV1UpdateProjectSearch"></a>
-# **projectSearchesV1UpdateProjectSearch**
-> V1Search projectSearchesV1UpdateProjectSearch(owner, project, search_uuid, body)
+<a name="updateProjectSearch"></a>
+# **updateProjectSearch**
+> V1Search updateProjectSearch(owner, project, search_uuid, body)
 
 Update project search
 
@@ -465,7 +465,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.projectSearchesV1UpdateProjectSearch(owner, project, search_uuid, body, callback);
+apiInstance.updateProjectSearch(owner, project, search_uuid, body, callback);
 ```
 
 ### Parameters

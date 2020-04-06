@@ -39,41 +39,41 @@ type Client struct {
 
 // ClientService is the interface for Client methods
 type ClientService interface {
-	ConnectionsV1CreateConnection(params *ConnectionsV1CreateConnectionParams, authInfo runtime.ClientAuthInfoWriter) (*ConnectionsV1CreateConnectionOK, *ConnectionsV1CreateConnectionNoContent, error)
+	CreateConnection(params *CreateConnectionParams, authInfo runtime.ClientAuthInfoWriter) (*CreateConnectionOK, *CreateConnectionNoContent, error)
 
-	ConnectionsV1DeleteConnection(params *ConnectionsV1DeleteConnectionParams, authInfo runtime.ClientAuthInfoWriter) (*ConnectionsV1DeleteConnectionOK, *ConnectionsV1DeleteConnectionNoContent, error)
+	DeleteConnection(params *DeleteConnectionParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteConnectionOK, *DeleteConnectionNoContent, error)
 
-	ConnectionsV1GetConnection(params *ConnectionsV1GetConnectionParams, authInfo runtime.ClientAuthInfoWriter) (*ConnectionsV1GetConnectionOK, *ConnectionsV1GetConnectionNoContent, error)
+	GetConnection(params *GetConnectionParams, authInfo runtime.ClientAuthInfoWriter) (*GetConnectionOK, *GetConnectionNoContent, error)
 
-	ConnectionsV1ListConnectionNames(params *ConnectionsV1ListConnectionNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ConnectionsV1ListConnectionNamesOK, *ConnectionsV1ListConnectionNamesNoContent, error)
+	ListConnectionNames(params *ListConnectionNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListConnectionNamesOK, *ListConnectionNamesNoContent, error)
 
-	ConnectionsV1ListConnections(params *ConnectionsV1ListConnectionsParams, authInfo runtime.ClientAuthInfoWriter) (*ConnectionsV1ListConnectionsOK, *ConnectionsV1ListConnectionsNoContent, error)
+	ListConnections(params *ListConnectionsParams, authInfo runtime.ClientAuthInfoWriter) (*ListConnectionsOK, *ListConnectionsNoContent, error)
 
-	ConnectionsV1PatchConnection(params *ConnectionsV1PatchConnectionParams, authInfo runtime.ClientAuthInfoWriter) (*ConnectionsV1PatchConnectionOK, *ConnectionsV1PatchConnectionNoContent, error)
+	PatchConnection(params *PatchConnectionParams, authInfo runtime.ClientAuthInfoWriter) (*PatchConnectionOK, *PatchConnectionNoContent, error)
 
-	ConnectionsV1UpdateConnection(params *ConnectionsV1UpdateConnectionParams, authInfo runtime.ClientAuthInfoWriter) (*ConnectionsV1UpdateConnectionOK, *ConnectionsV1UpdateConnectionNoContent, error)
+	UpdateConnection(params *UpdateConnectionParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateConnectionOK, *UpdateConnectionNoContent, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
 
 /*
-  ConnectionsV1CreateConnection creates connection
+  CreateConnection creates connection
 */
-func (a *Client) ConnectionsV1CreateConnection(params *ConnectionsV1CreateConnectionParams, authInfo runtime.ClientAuthInfoWriter) (*ConnectionsV1CreateConnectionOK, *ConnectionsV1CreateConnectionNoContent, error) {
+func (a *Client) CreateConnection(params *CreateConnectionParams, authInfo runtime.ClientAuthInfoWriter) (*CreateConnectionOK, *CreateConnectionNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewConnectionsV1CreateConnectionParams()
+		params = NewCreateConnectionParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "ConnectionsV1_CreateConnection",
+		ID:                 "CreateConnection",
 		Method:             "POST",
 		PathPattern:        "/api/v1/orgs/{owner}/connections",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &ConnectionsV1CreateConnectionReader{formats: a.formats},
+		Reader:             &CreateConnectionReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -82,34 +82,34 @@ func (a *Client) ConnectionsV1CreateConnection(params *ConnectionsV1CreateConnec
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *ConnectionsV1CreateConnectionOK:
+	case *CreateConnectionOK:
 		return value, nil, nil
-	case *ConnectionsV1CreateConnectionNoContent:
+	case *CreateConnectionNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*ConnectionsV1CreateConnectionDefault)
+	unexpectedSuccess := result.(*CreateConnectionDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  ConnectionsV1DeleteConnection deletes connection
+  DeleteConnection deletes connection
 */
-func (a *Client) ConnectionsV1DeleteConnection(params *ConnectionsV1DeleteConnectionParams, authInfo runtime.ClientAuthInfoWriter) (*ConnectionsV1DeleteConnectionOK, *ConnectionsV1DeleteConnectionNoContent, error) {
+func (a *Client) DeleteConnection(params *DeleteConnectionParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteConnectionOK, *DeleteConnectionNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewConnectionsV1DeleteConnectionParams()
+		params = NewDeleteConnectionParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "ConnectionsV1_DeleteConnection",
+		ID:                 "DeleteConnection",
 		Method:             "DELETE",
 		PathPattern:        "/api/v1/orgs/{owner}/connections/{uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &ConnectionsV1DeleteConnectionReader{formats: a.formats},
+		Reader:             &DeleteConnectionReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -118,34 +118,34 @@ func (a *Client) ConnectionsV1DeleteConnection(params *ConnectionsV1DeleteConnec
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *ConnectionsV1DeleteConnectionOK:
+	case *DeleteConnectionOK:
 		return value, nil, nil
-	case *ConnectionsV1DeleteConnectionNoContent:
+	case *DeleteConnectionNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*ConnectionsV1DeleteConnectionDefault)
+	unexpectedSuccess := result.(*DeleteConnectionDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  ConnectionsV1GetConnection gets connection
+  GetConnection gets connection
 */
-func (a *Client) ConnectionsV1GetConnection(params *ConnectionsV1GetConnectionParams, authInfo runtime.ClientAuthInfoWriter) (*ConnectionsV1GetConnectionOK, *ConnectionsV1GetConnectionNoContent, error) {
+func (a *Client) GetConnection(params *GetConnectionParams, authInfo runtime.ClientAuthInfoWriter) (*GetConnectionOK, *GetConnectionNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewConnectionsV1GetConnectionParams()
+		params = NewGetConnectionParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "ConnectionsV1_GetConnection",
+		ID:                 "GetConnection",
 		Method:             "GET",
 		PathPattern:        "/api/v1/orgs/{owner}/connections/{uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &ConnectionsV1GetConnectionReader{formats: a.formats},
+		Reader:             &GetConnectionReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -154,34 +154,34 @@ func (a *Client) ConnectionsV1GetConnection(params *ConnectionsV1GetConnectionPa
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *ConnectionsV1GetConnectionOK:
+	case *GetConnectionOK:
 		return value, nil, nil
-	case *ConnectionsV1GetConnectionNoContent:
+	case *GetConnectionNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*ConnectionsV1GetConnectionDefault)
+	unexpectedSuccess := result.(*GetConnectionDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  ConnectionsV1ListConnectionNames lists connections names
+  ListConnectionNames lists connections names
 */
-func (a *Client) ConnectionsV1ListConnectionNames(params *ConnectionsV1ListConnectionNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ConnectionsV1ListConnectionNamesOK, *ConnectionsV1ListConnectionNamesNoContent, error) {
+func (a *Client) ListConnectionNames(params *ListConnectionNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListConnectionNamesOK, *ListConnectionNamesNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewConnectionsV1ListConnectionNamesParams()
+		params = NewListConnectionNamesParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "ConnectionsV1_ListConnectionNames",
+		ID:                 "ListConnectionNames",
 		Method:             "GET",
 		PathPattern:        "/api/v1/orgs/{owner}/connections/names",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &ConnectionsV1ListConnectionNamesReader{formats: a.formats},
+		Reader:             &ListConnectionNamesReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -190,34 +190,34 @@ func (a *Client) ConnectionsV1ListConnectionNames(params *ConnectionsV1ListConne
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *ConnectionsV1ListConnectionNamesOK:
+	case *ListConnectionNamesOK:
 		return value, nil, nil
-	case *ConnectionsV1ListConnectionNamesNoContent:
+	case *ListConnectionNamesNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*ConnectionsV1ListConnectionNamesDefault)
+	unexpectedSuccess := result.(*ListConnectionNamesDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  ConnectionsV1ListConnections lists connections
+  ListConnections lists connections
 */
-func (a *Client) ConnectionsV1ListConnections(params *ConnectionsV1ListConnectionsParams, authInfo runtime.ClientAuthInfoWriter) (*ConnectionsV1ListConnectionsOK, *ConnectionsV1ListConnectionsNoContent, error) {
+func (a *Client) ListConnections(params *ListConnectionsParams, authInfo runtime.ClientAuthInfoWriter) (*ListConnectionsOK, *ListConnectionsNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewConnectionsV1ListConnectionsParams()
+		params = NewListConnectionsParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "ConnectionsV1_ListConnections",
+		ID:                 "ListConnections",
 		Method:             "GET",
 		PathPattern:        "/api/v1/orgs/{owner}/connections",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &ConnectionsV1ListConnectionsReader{formats: a.formats},
+		Reader:             &ListConnectionsReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -226,34 +226,34 @@ func (a *Client) ConnectionsV1ListConnections(params *ConnectionsV1ListConnectio
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *ConnectionsV1ListConnectionsOK:
+	case *ListConnectionsOK:
 		return value, nil, nil
-	case *ConnectionsV1ListConnectionsNoContent:
+	case *ListConnectionsNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*ConnectionsV1ListConnectionsDefault)
+	unexpectedSuccess := result.(*ListConnectionsDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  ConnectionsV1PatchConnection patches connection
+  PatchConnection patches connection
 */
-func (a *Client) ConnectionsV1PatchConnection(params *ConnectionsV1PatchConnectionParams, authInfo runtime.ClientAuthInfoWriter) (*ConnectionsV1PatchConnectionOK, *ConnectionsV1PatchConnectionNoContent, error) {
+func (a *Client) PatchConnection(params *PatchConnectionParams, authInfo runtime.ClientAuthInfoWriter) (*PatchConnectionOK, *PatchConnectionNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewConnectionsV1PatchConnectionParams()
+		params = NewPatchConnectionParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "ConnectionsV1_PatchConnection",
+		ID:                 "PatchConnection",
 		Method:             "PATCH",
 		PathPattern:        "/api/v1/orgs/{owner}/connections/{connection.uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &ConnectionsV1PatchConnectionReader{formats: a.formats},
+		Reader:             &PatchConnectionReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -262,34 +262,34 @@ func (a *Client) ConnectionsV1PatchConnection(params *ConnectionsV1PatchConnecti
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *ConnectionsV1PatchConnectionOK:
+	case *PatchConnectionOK:
 		return value, nil, nil
-	case *ConnectionsV1PatchConnectionNoContent:
+	case *PatchConnectionNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*ConnectionsV1PatchConnectionDefault)
+	unexpectedSuccess := result.(*PatchConnectionDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  ConnectionsV1UpdateConnection updates connection
+  UpdateConnection updates connection
 */
-func (a *Client) ConnectionsV1UpdateConnection(params *ConnectionsV1UpdateConnectionParams, authInfo runtime.ClientAuthInfoWriter) (*ConnectionsV1UpdateConnectionOK, *ConnectionsV1UpdateConnectionNoContent, error) {
+func (a *Client) UpdateConnection(params *UpdateConnectionParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateConnectionOK, *UpdateConnectionNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewConnectionsV1UpdateConnectionParams()
+		params = NewUpdateConnectionParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "ConnectionsV1_UpdateConnection",
+		ID:                 "UpdateConnection",
 		Method:             "PUT",
 		PathPattern:        "/api/v1/orgs/{owner}/connections/{connection.uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &ConnectionsV1UpdateConnectionReader{formats: a.formats},
+		Reader:             &UpdateConnectionReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -298,13 +298,13 @@ func (a *Client) ConnectionsV1UpdateConnection(params *ConnectionsV1UpdateConnec
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *ConnectionsV1UpdateConnectionOK:
+	case *UpdateConnectionOK:
 		return value, nil, nil
-	case *ConnectionsV1UpdateConnectionNoContent:
+	case *UpdateConnectionNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*ConnectionsV1UpdateConnectionDefault)
+	unexpectedSuccess := result.(*UpdateConnectionDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 

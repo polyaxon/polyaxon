@@ -4,19 +4,19 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**projectSearchesV1CreateProjectSearch**](ProjectSearchesV1Api.md#projectSearchesV1CreateProjectSearch) | **POST** /api/v1/{owner}/{project}/searches | Create project search
-[**projectSearchesV1DeleteProjectSearch**](ProjectSearchesV1Api.md#projectSearchesV1DeleteProjectSearch) | **DELETE** /api/v1/{owner}/{project}/searches/{uuid} | Delete project search
-[**projectSearchesV1GetProjectSearch**](ProjectSearchesV1Api.md#projectSearchesV1GetProjectSearch) | **GET** /api/v1/{owner}/{project}/searches/{uuid} | Get project search
-[**projectSearchesV1ListProjectSearchNames**](ProjectSearchesV1Api.md#projectSearchesV1ListProjectSearchNames) | **GET** /api/v1/{owner}/{project}/searches/names | List project search names
-[**projectSearchesV1ListProjectSearches**](ProjectSearchesV1Api.md#projectSearchesV1ListProjectSearches) | **GET** /api/v1/{owner}/{project}/searches | List project searches
-[**projectSearchesV1PatchProjectSearch**](ProjectSearchesV1Api.md#projectSearchesV1PatchProjectSearch) | **PATCH** /api/v1/{owner}/{project}/searches/{search.uuid} | Patch project search
-[**projectSearchesV1PromoteProjectSearch**](ProjectSearchesV1Api.md#projectSearchesV1PromoteProjectSearch) | **POST** /api/v1/{owner}/{project}/searches/{uuid}/promote | Promote project search
-[**projectSearchesV1UpdateProjectSearch**](ProjectSearchesV1Api.md#projectSearchesV1UpdateProjectSearch) | **PUT** /api/v1/{owner}/{project}/searches/{search.uuid} | Update project search
+[**createProjectSearch**](ProjectSearchesV1Api.md#createProjectSearch) | **POST** /api/v1/{owner}/{project}/searches | Create project search
+[**deleteProjectSearch**](ProjectSearchesV1Api.md#deleteProjectSearch) | **DELETE** /api/v1/{owner}/{project}/searches/{uuid} | Delete project search
+[**getProjectSearch**](ProjectSearchesV1Api.md#getProjectSearch) | **GET** /api/v1/{owner}/{project}/searches/{uuid} | Get project search
+[**listProjectSearchNames**](ProjectSearchesV1Api.md#listProjectSearchNames) | **GET** /api/v1/{owner}/{project}/searches/names | List project search names
+[**listProjectSearches**](ProjectSearchesV1Api.md#listProjectSearches) | **GET** /api/v1/{owner}/{project}/searches | List project searches
+[**patchProjectSearch**](ProjectSearchesV1Api.md#patchProjectSearch) | **PATCH** /api/v1/{owner}/{project}/searches/{search.uuid} | Patch project search
+[**promoteProjectSearch**](ProjectSearchesV1Api.md#promoteProjectSearch) | **POST** /api/v1/{owner}/{project}/searches/{uuid}/promote | Promote project search
+[**updateProjectSearch**](ProjectSearchesV1Api.md#updateProjectSearch) | **PUT** /api/v1/{owner}/{project}/searches/{search.uuid} | Update project search
 
 
-<a name="projectSearchesV1CreateProjectSearch"></a>
-# **projectSearchesV1CreateProjectSearch**
-> V1Search projectSearchesV1CreateProjectSearch(owner, project, body)
+<a name="createProjectSearch"></a>
+# **createProjectSearch**
+> V1Search createProjectSearch(owner, project, body)
 
 Create project search
 
@@ -42,10 +42,10 @@ String owner = "owner_example"; // String | Owner of the namespace
 String project = "project_example"; // String | Project under namesapce
 V1Search body = new V1Search(); // V1Search | Search body
 try {
-    V1Search result = apiInstance.projectSearchesV1CreateProjectSearch(owner, project, body);
+    V1Search result = apiInstance.createProjectSearch(owner, project, body);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling ProjectSearchesV1Api#projectSearchesV1CreateProjectSearch");
+    System.err.println("Exception when calling ProjectSearchesV1Api#createProjectSearch");
     e.printStackTrace();
 }
 ```
@@ -71,9 +71,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="projectSearchesV1DeleteProjectSearch"></a>
-# **projectSearchesV1DeleteProjectSearch**
-> projectSearchesV1DeleteProjectSearch(owner, project, uuid)
+<a name="deleteProjectSearch"></a>
+# **deleteProjectSearch**
+> deleteProjectSearch(owner, project, uuid)
 
 Delete project search
 
@@ -99,9 +99,9 @@ String owner = "owner_example"; // String | Owner of the namespace
 String project = "project_example"; // String | Project
 String uuid = "uuid_example"; // String | Uuid identifier of the entity
 try {
-    apiInstance.projectSearchesV1DeleteProjectSearch(owner, project, uuid);
+    apiInstance.deleteProjectSearch(owner, project, uuid);
 } catch (ApiException e) {
-    System.err.println("Exception when calling ProjectSearchesV1Api#projectSearchesV1DeleteProjectSearch");
+    System.err.println("Exception when calling ProjectSearchesV1Api#deleteProjectSearch");
     e.printStackTrace();
 }
 ```
@@ -127,9 +127,9 @@ null (empty response body)
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="projectSearchesV1GetProjectSearch"></a>
-# **projectSearchesV1GetProjectSearch**
-> V1Search projectSearchesV1GetProjectSearch(owner, project, uuid)
+<a name="getProjectSearch"></a>
+# **getProjectSearch**
+> V1Search getProjectSearch(owner, project, uuid)
 
 Get project search
 
@@ -155,10 +155,10 @@ String owner = "owner_example"; // String | Owner of the namespace
 String project = "project_example"; // String | Project
 String uuid = "uuid_example"; // String | Uuid identifier of the entity
 try {
-    V1Search result = apiInstance.projectSearchesV1GetProjectSearch(owner, project, uuid);
+    V1Search result = apiInstance.getProjectSearch(owner, project, uuid);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling ProjectSearchesV1Api#projectSearchesV1GetProjectSearch");
+    System.err.println("Exception when calling ProjectSearchesV1Api#getProjectSearch");
     e.printStackTrace();
 }
 ```
@@ -184,9 +184,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="projectSearchesV1ListProjectSearchNames"></a>
-# **projectSearchesV1ListProjectSearchNames**
-> V1ListSearchesResponse projectSearchesV1ListProjectSearchNames(owner, project, offset, limit, sort, query)
+<a name="listProjectSearchNames"></a>
+# **listProjectSearchNames**
+> V1ListSearchesResponse listProjectSearchNames(owner, project, offset, limit, sort, query)
 
 List project search names
 
@@ -215,10 +215,10 @@ Integer limit = 56; // Integer | Limit size.
 String sort = "sort_example"; // String | Sort to order the search.
 String query = "query_example"; // String | Query filter the search search.
 try {
-    V1ListSearchesResponse result = apiInstance.projectSearchesV1ListProjectSearchNames(owner, project, offset, limit, sort, query);
+    V1ListSearchesResponse result = apiInstance.listProjectSearchNames(owner, project, offset, limit, sort, query);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling ProjectSearchesV1Api#projectSearchesV1ListProjectSearchNames");
+    System.err.println("Exception when calling ProjectSearchesV1Api#listProjectSearchNames");
     e.printStackTrace();
 }
 ```
@@ -247,9 +247,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="projectSearchesV1ListProjectSearches"></a>
-# **projectSearchesV1ListProjectSearches**
-> V1ListSearchesResponse projectSearchesV1ListProjectSearches(owner, project, offset, limit, sort, query)
+<a name="listProjectSearches"></a>
+# **listProjectSearches**
+> V1ListSearchesResponse listProjectSearches(owner, project, offset, limit, sort, query)
 
 List project searches
 
@@ -278,10 +278,10 @@ Integer limit = 56; // Integer | Limit size.
 String sort = "sort_example"; // String | Sort to order the search.
 String query = "query_example"; // String | Query filter the search search.
 try {
-    V1ListSearchesResponse result = apiInstance.projectSearchesV1ListProjectSearches(owner, project, offset, limit, sort, query);
+    V1ListSearchesResponse result = apiInstance.listProjectSearches(owner, project, offset, limit, sort, query);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling ProjectSearchesV1Api#projectSearchesV1ListProjectSearches");
+    System.err.println("Exception when calling ProjectSearchesV1Api#listProjectSearches");
     e.printStackTrace();
 }
 ```
@@ -310,9 +310,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="projectSearchesV1PatchProjectSearch"></a>
-# **projectSearchesV1PatchProjectSearch**
-> V1Search projectSearchesV1PatchProjectSearch(owner, project, searchUuid, body)
+<a name="patchProjectSearch"></a>
+# **patchProjectSearch**
+> V1Search patchProjectSearch(owner, project, searchUuid, body)
 
 Patch project search
 
@@ -339,10 +339,10 @@ String project = "project_example"; // String | Project under namesapce
 String searchUuid = "searchUuid_example"; // String | UUID
 V1Search body = new V1Search(); // V1Search | Search body
 try {
-    V1Search result = apiInstance.projectSearchesV1PatchProjectSearch(owner, project, searchUuid, body);
+    V1Search result = apiInstance.patchProjectSearch(owner, project, searchUuid, body);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling ProjectSearchesV1Api#projectSearchesV1PatchProjectSearch");
+    System.err.println("Exception when calling ProjectSearchesV1Api#patchProjectSearch");
     e.printStackTrace();
 }
 ```
@@ -369,9 +369,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="projectSearchesV1PromoteProjectSearch"></a>
-# **projectSearchesV1PromoteProjectSearch**
-> projectSearchesV1PromoteProjectSearch(owner, project, uuid)
+<a name="promoteProjectSearch"></a>
+# **promoteProjectSearch**
+> promoteProjectSearch(owner, project, uuid)
 
 Promote project search
 
@@ -397,9 +397,9 @@ String owner = "owner_example"; // String | Owner of the namespace
 String project = "project_example"; // String | Project
 String uuid = "uuid_example"; // String | Uuid identifier of the entity
 try {
-    apiInstance.projectSearchesV1PromoteProjectSearch(owner, project, uuid);
+    apiInstance.promoteProjectSearch(owner, project, uuid);
 } catch (ApiException e) {
-    System.err.println("Exception when calling ProjectSearchesV1Api#projectSearchesV1PromoteProjectSearch");
+    System.err.println("Exception when calling ProjectSearchesV1Api#promoteProjectSearch");
     e.printStackTrace();
 }
 ```
@@ -425,9 +425,9 @@ null (empty response body)
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="projectSearchesV1UpdateProjectSearch"></a>
-# **projectSearchesV1UpdateProjectSearch**
-> V1Search projectSearchesV1UpdateProjectSearch(owner, project, searchUuid, body)
+<a name="updateProjectSearch"></a>
+# **updateProjectSearch**
+> V1Search updateProjectSearch(owner, project, searchUuid, body)
 
 Update project search
 
@@ -454,10 +454,10 @@ String project = "project_example"; // String | Project under namesapce
 String searchUuid = "searchUuid_example"; // String | UUID
 V1Search body = new V1Search(); // V1Search | Search body
 try {
-    V1Search result = apiInstance.projectSearchesV1UpdateProjectSearch(owner, project, searchUuid, body);
+    V1Search result = apiInstance.updateProjectSearch(owner, project, searchUuid, body);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling ProjectSearchesV1Api#projectSearchesV1UpdateProjectSearch");
+    System.err.println("Exception when calling ProjectSearchesV1Api#updateProjectSearch");
     e.printStackTrace();
 }
 ```

@@ -39,41 +39,41 @@ type Client struct {
 
 // ClientService is the interface for Client methods
 type ClientService interface {
-	DashboardsV1CreateDashboard(params *DashboardsV1CreateDashboardParams, authInfo runtime.ClientAuthInfoWriter) (*DashboardsV1CreateDashboardOK, *DashboardsV1CreateDashboardNoContent, error)
+	CreateDashboard(params *CreateDashboardParams, authInfo runtime.ClientAuthInfoWriter) (*CreateDashboardOK, *CreateDashboardNoContent, error)
 
-	DashboardsV1DeleteDashboard(params *DashboardsV1DeleteDashboardParams, authInfo runtime.ClientAuthInfoWriter) (*DashboardsV1DeleteDashboardOK, *DashboardsV1DeleteDashboardNoContent, error)
+	DeleteDashboard(params *DeleteDashboardParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteDashboardOK, *DeleteDashboardNoContent, error)
 
-	DashboardsV1GetDashboard(params *DashboardsV1GetDashboardParams, authInfo runtime.ClientAuthInfoWriter) (*DashboardsV1GetDashboardOK, *DashboardsV1GetDashboardNoContent, error)
+	GetDashboard(params *GetDashboardParams, authInfo runtime.ClientAuthInfoWriter) (*GetDashboardOK, *GetDashboardNoContent, error)
 
-	DashboardsV1ListDashboardNames(params *DashboardsV1ListDashboardNamesParams, authInfo runtime.ClientAuthInfoWriter) (*DashboardsV1ListDashboardNamesOK, *DashboardsV1ListDashboardNamesNoContent, error)
+	ListDashboardNames(params *ListDashboardNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListDashboardNamesOK, *ListDashboardNamesNoContent, error)
 
-	DashboardsV1ListDashboards(params *DashboardsV1ListDashboardsParams, authInfo runtime.ClientAuthInfoWriter) (*DashboardsV1ListDashboardsOK, *DashboardsV1ListDashboardsNoContent, error)
+	ListDashboards(params *ListDashboardsParams, authInfo runtime.ClientAuthInfoWriter) (*ListDashboardsOK, *ListDashboardsNoContent, error)
 
-	DashboardsV1PatchDashboard(params *DashboardsV1PatchDashboardParams, authInfo runtime.ClientAuthInfoWriter) (*DashboardsV1PatchDashboardOK, *DashboardsV1PatchDashboardNoContent, error)
+	PatchDashboard(params *PatchDashboardParams, authInfo runtime.ClientAuthInfoWriter) (*PatchDashboardOK, *PatchDashboardNoContent, error)
 
-	DashboardsV1UpdateDashboard(params *DashboardsV1UpdateDashboardParams, authInfo runtime.ClientAuthInfoWriter) (*DashboardsV1UpdateDashboardOK, *DashboardsV1UpdateDashboardNoContent, error)
+	UpdateDashboard(params *UpdateDashboardParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateDashboardOK, *UpdateDashboardNoContent, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
 
 /*
-  DashboardsV1CreateDashboard dashboards v1 create dashboard API
+  CreateDashboard create dashboard API
 */
-func (a *Client) DashboardsV1CreateDashboard(params *DashboardsV1CreateDashboardParams, authInfo runtime.ClientAuthInfoWriter) (*DashboardsV1CreateDashboardOK, *DashboardsV1CreateDashboardNoContent, error) {
+func (a *Client) CreateDashboard(params *CreateDashboardParams, authInfo runtime.ClientAuthInfoWriter) (*CreateDashboardOK, *CreateDashboardNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewDashboardsV1CreateDashboardParams()
+		params = NewCreateDashboardParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "DashboardsV1_CreateDashboard",
+		ID:                 "CreateDashboard",
 		Method:             "POST",
 		PathPattern:        "/api/v1/orgs/{owner}/dashboards",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &DashboardsV1CreateDashboardReader{formats: a.formats},
+		Reader:             &CreateDashboardReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -82,34 +82,34 @@ func (a *Client) DashboardsV1CreateDashboard(params *DashboardsV1CreateDashboard
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *DashboardsV1CreateDashboardOK:
+	case *CreateDashboardOK:
 		return value, nil, nil
-	case *DashboardsV1CreateDashboardNoContent:
+	case *CreateDashboardNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*DashboardsV1CreateDashboardDefault)
+	unexpectedSuccess := result.(*CreateDashboardDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  DashboardsV1DeleteDashboard dashboards v1 delete dashboard API
+  DeleteDashboard delete dashboard API
 */
-func (a *Client) DashboardsV1DeleteDashboard(params *DashboardsV1DeleteDashboardParams, authInfo runtime.ClientAuthInfoWriter) (*DashboardsV1DeleteDashboardOK, *DashboardsV1DeleteDashboardNoContent, error) {
+func (a *Client) DeleteDashboard(params *DeleteDashboardParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteDashboardOK, *DeleteDashboardNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewDashboardsV1DeleteDashboardParams()
+		params = NewDeleteDashboardParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "DashboardsV1_DeleteDashboard",
+		ID:                 "DeleteDashboard",
 		Method:             "DELETE",
 		PathPattern:        "/api/v1/orgs/{owner}/dashboards/{uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &DashboardsV1DeleteDashboardReader{formats: a.formats},
+		Reader:             &DeleteDashboardReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -118,34 +118,34 @@ func (a *Client) DashboardsV1DeleteDashboard(params *DashboardsV1DeleteDashboard
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *DashboardsV1DeleteDashboardOK:
+	case *DeleteDashboardOK:
 		return value, nil, nil
-	case *DashboardsV1DeleteDashboardNoContent:
+	case *DeleteDashboardNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*DashboardsV1DeleteDashboardDefault)
+	unexpectedSuccess := result.(*DeleteDashboardDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  DashboardsV1GetDashboard dashboards v1 get dashboard API
+  GetDashboard get dashboard API
 */
-func (a *Client) DashboardsV1GetDashboard(params *DashboardsV1GetDashboardParams, authInfo runtime.ClientAuthInfoWriter) (*DashboardsV1GetDashboardOK, *DashboardsV1GetDashboardNoContent, error) {
+func (a *Client) GetDashboard(params *GetDashboardParams, authInfo runtime.ClientAuthInfoWriter) (*GetDashboardOK, *GetDashboardNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewDashboardsV1GetDashboardParams()
+		params = NewGetDashboardParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "DashboardsV1_GetDashboard",
+		ID:                 "GetDashboard",
 		Method:             "GET",
 		PathPattern:        "/api/v1/orgs/{owner}/dashboards/{uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &DashboardsV1GetDashboardReader{formats: a.formats},
+		Reader:             &GetDashboardReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -154,34 +154,34 @@ func (a *Client) DashboardsV1GetDashboard(params *DashboardsV1GetDashboardParams
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *DashboardsV1GetDashboardOK:
+	case *GetDashboardOK:
 		return value, nil, nil
-	case *DashboardsV1GetDashboardNoContent:
+	case *GetDashboardNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*DashboardsV1GetDashboardDefault)
+	unexpectedSuccess := result.(*GetDashboardDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  DashboardsV1ListDashboardNames dashboards v1 list dashboard names API
+  ListDashboardNames list dashboard names API
 */
-func (a *Client) DashboardsV1ListDashboardNames(params *DashboardsV1ListDashboardNamesParams, authInfo runtime.ClientAuthInfoWriter) (*DashboardsV1ListDashboardNamesOK, *DashboardsV1ListDashboardNamesNoContent, error) {
+func (a *Client) ListDashboardNames(params *ListDashboardNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListDashboardNamesOK, *ListDashboardNamesNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewDashboardsV1ListDashboardNamesParams()
+		params = NewListDashboardNamesParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "DashboardsV1_ListDashboardNames",
+		ID:                 "ListDashboardNames",
 		Method:             "GET",
 		PathPattern:        "/api/v1/orgs/{owner}/dashboards/names",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &DashboardsV1ListDashboardNamesReader{formats: a.formats},
+		Reader:             &ListDashboardNamesReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -190,34 +190,34 @@ func (a *Client) DashboardsV1ListDashboardNames(params *DashboardsV1ListDashboar
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *DashboardsV1ListDashboardNamesOK:
+	case *ListDashboardNamesOK:
 		return value, nil, nil
-	case *DashboardsV1ListDashboardNamesNoContent:
+	case *ListDashboardNamesNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*DashboardsV1ListDashboardNamesDefault)
+	unexpectedSuccess := result.(*ListDashboardNamesDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  DashboardsV1ListDashboards dashboards v1 list dashboards API
+  ListDashboards list dashboards API
 */
-func (a *Client) DashboardsV1ListDashboards(params *DashboardsV1ListDashboardsParams, authInfo runtime.ClientAuthInfoWriter) (*DashboardsV1ListDashboardsOK, *DashboardsV1ListDashboardsNoContent, error) {
+func (a *Client) ListDashboards(params *ListDashboardsParams, authInfo runtime.ClientAuthInfoWriter) (*ListDashboardsOK, *ListDashboardsNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewDashboardsV1ListDashboardsParams()
+		params = NewListDashboardsParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "DashboardsV1_ListDashboards",
+		ID:                 "ListDashboards",
 		Method:             "GET",
 		PathPattern:        "/api/v1/orgs/{owner}/dashboards",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &DashboardsV1ListDashboardsReader{formats: a.formats},
+		Reader:             &ListDashboardsReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -226,34 +226,34 @@ func (a *Client) DashboardsV1ListDashboards(params *DashboardsV1ListDashboardsPa
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *DashboardsV1ListDashboardsOK:
+	case *ListDashboardsOK:
 		return value, nil, nil
-	case *DashboardsV1ListDashboardsNoContent:
+	case *ListDashboardsNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*DashboardsV1ListDashboardsDefault)
+	unexpectedSuccess := result.(*ListDashboardsDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  DashboardsV1PatchDashboard dashboards v1 patch dashboard API
+  PatchDashboard patch dashboard API
 */
-func (a *Client) DashboardsV1PatchDashboard(params *DashboardsV1PatchDashboardParams, authInfo runtime.ClientAuthInfoWriter) (*DashboardsV1PatchDashboardOK, *DashboardsV1PatchDashboardNoContent, error) {
+func (a *Client) PatchDashboard(params *PatchDashboardParams, authInfo runtime.ClientAuthInfoWriter) (*PatchDashboardOK, *PatchDashboardNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewDashboardsV1PatchDashboardParams()
+		params = NewPatchDashboardParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "DashboardsV1_PatchDashboard",
+		ID:                 "PatchDashboard",
 		Method:             "PATCH",
 		PathPattern:        "/api/v1/orgs/{owner}/dashboards/{dashboard.uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &DashboardsV1PatchDashboardReader{formats: a.formats},
+		Reader:             &PatchDashboardReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -262,34 +262,34 @@ func (a *Client) DashboardsV1PatchDashboard(params *DashboardsV1PatchDashboardPa
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *DashboardsV1PatchDashboardOK:
+	case *PatchDashboardOK:
 		return value, nil, nil
-	case *DashboardsV1PatchDashboardNoContent:
+	case *PatchDashboardNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*DashboardsV1PatchDashboardDefault)
+	unexpectedSuccess := result.(*PatchDashboardDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  DashboardsV1UpdateDashboard dashboards v1 update dashboard API
+  UpdateDashboard update dashboard API
 */
-func (a *Client) DashboardsV1UpdateDashboard(params *DashboardsV1UpdateDashboardParams, authInfo runtime.ClientAuthInfoWriter) (*DashboardsV1UpdateDashboardOK, *DashboardsV1UpdateDashboardNoContent, error) {
+func (a *Client) UpdateDashboard(params *UpdateDashboardParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateDashboardOK, *UpdateDashboardNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewDashboardsV1UpdateDashboardParams()
+		params = NewUpdateDashboardParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "DashboardsV1_UpdateDashboard",
+		ID:                 "UpdateDashboard",
 		Method:             "PUT",
 		PathPattern:        "/api/v1/orgs/{owner}/dashboards/{dashboard.uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &DashboardsV1UpdateDashboardReader{formats: a.formats},
+		Reader:             &UpdateDashboardReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -298,13 +298,13 @@ func (a *Client) DashboardsV1UpdateDashboard(params *DashboardsV1UpdateDashboard
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *DashboardsV1UpdateDashboardOK:
+	case *UpdateDashboardOK:
 		return value, nil, nil
-	case *DashboardsV1UpdateDashboardNoContent:
+	case *UpdateDashboardNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*DashboardsV1UpdateDashboardDefault)
+	unexpectedSuccess := result.(*UpdateDashboardDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 

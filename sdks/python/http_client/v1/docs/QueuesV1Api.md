@@ -4,19 +4,19 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**queues_v1_create_queue**](QueuesV1Api.md#queues_v1_create_queue) | **POST** /api/v1/orgs/{owner}/agents/{agent}/queues | Update agent
-[**queues_v1_delete_queue**](QueuesV1Api.md#queues_v1_delete_queue) | **DELETE** /api/v1/orgs/{owner}/agents/{agent}/queues/{uuid} | Sync agent
-[**queues_v1_get_queue**](QueuesV1Api.md#queues_v1_get_queue) | **GET** /api/v1/orgs/{owner}/agents/{agent}/queues/{uuid} | Patch agent
-[**queues_v1_list_organization_queue_names**](QueuesV1Api.md#queues_v1_list_organization_queue_names) | **GET** /api/v1/orgs/{owner}/queues/names | List agents names
-[**queues_v1_list_organization_queues**](QueuesV1Api.md#queues_v1_list_organization_queues) | **GET** /api/v1/orgs/{owner}/queues | List agents
-[**queues_v1_list_queue_names**](QueuesV1Api.md#queues_v1_list_queue_names) | **GET** /api/v1/orgs/{owner}/agents/{agent}/queues/names | Create agent
-[**queues_v1_list_queues**](QueuesV1Api.md#queues_v1_list_queues) | **GET** /api/v1/orgs/{owner}/agents/{agent}/queues | Get agent
-[**queues_v1_patch_queue**](QueuesV1Api.md#queues_v1_patch_queue) | **PATCH** /api/v1/orgs/{owner}/agents/{queue.agent}/queues/{queue.uuid} | Get State (queues/runs)
-[**queues_v1_update_queue**](QueuesV1Api.md#queues_v1_update_queue) | **PUT** /api/v1/orgs/{owner}/agents/{queue.agent}/queues/{queue.uuid} | Delete agent
+[**create_queue**](QueuesV1Api.md#create_queue) | **POST** /api/v1/orgs/{owner}/agents/{agent}/queues | Update agent
+[**delete_queue**](QueuesV1Api.md#delete_queue) | **DELETE** /api/v1/orgs/{owner}/agents/{agent}/queues/{uuid} | Sync agent
+[**get_queue**](QueuesV1Api.md#get_queue) | **GET** /api/v1/orgs/{owner}/agents/{agent}/queues/{uuid} | Patch agent
+[**list_organization_queue_names**](QueuesV1Api.md#list_organization_queue_names) | **GET** /api/v1/orgs/{owner}/queues/names | List agents names
+[**list_organization_queues**](QueuesV1Api.md#list_organization_queues) | **GET** /api/v1/orgs/{owner}/queues | List agents
+[**list_queue_names**](QueuesV1Api.md#list_queue_names) | **GET** /api/v1/orgs/{owner}/agents/{agent}/queues/names | Create agent
+[**list_queues**](QueuesV1Api.md#list_queues) | **GET** /api/v1/orgs/{owner}/agents/{agent}/queues | Get agent
+[**patch_queue**](QueuesV1Api.md#patch_queue) | **PATCH** /api/v1/orgs/{owner}/agents/{queue.agent}/queues/{queue.uuid} | Get State (queues/runs)
+[**update_queue**](QueuesV1Api.md#update_queue) | **PUT** /api/v1/orgs/{owner}/agents/{queue.agent}/queues/{queue.uuid} | Delete agent
 
 
-# **queues_v1_create_queue**
-> V1Agent queues_v1_create_queue(owner, agent, body)
+# **create_queue**
+> V1Agent create_queue(owner, agent, body)
 
 Update agent
 
@@ -42,10 +42,10 @@ body = polyaxon_sdk.V1Queue() # V1Queue | Queue body
 
 try:
     # Update agent
-    api_response = api_instance.queues_v1_create_queue(owner, agent, body)
+    api_response = api_instance.create_queue(owner, agent, body)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling QueuesV1Api->queues_v1_create_queue: %s\n" % e)
+    print("Exception when calling QueuesV1Api->create_queue: %s\n" % e)
 ```
 
 ### Parameters
@@ -71,8 +71,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **queues_v1_delete_queue**
-> queues_v1_delete_queue(owner, agent, uuid)
+# **delete_queue**
+> delete_queue(owner, agent, uuid)
 
 Sync agent
 
@@ -98,9 +98,9 @@ uuid = 'uuid_example' # str | Uuid identifier of the entity
 
 try:
     # Sync agent
-    api_instance.queues_v1_delete_queue(owner, agent, uuid)
+    api_instance.delete_queue(owner, agent, uuid)
 except ApiException as e:
-    print("Exception when calling QueuesV1Api->queues_v1_delete_queue: %s\n" % e)
+    print("Exception when calling QueuesV1Api->delete_queue: %s\n" % e)
 ```
 
 ### Parameters
@@ -126,8 +126,8 @@ void (empty response body)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **queues_v1_get_queue**
-> V1Queue queues_v1_get_queue(owner, agent, uuid)
+# **get_queue**
+> V1Queue get_queue(owner, agent, uuid)
 
 Patch agent
 
@@ -153,10 +153,10 @@ uuid = 'uuid_example' # str | Uuid identifier of the entity
 
 try:
     # Patch agent
-    api_response = api_instance.queues_v1_get_queue(owner, agent, uuid)
+    api_response = api_instance.get_queue(owner, agent, uuid)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling QueuesV1Api->queues_v1_get_queue: %s\n" % e)
+    print("Exception when calling QueuesV1Api->get_queue: %s\n" % e)
 ```
 
 ### Parameters
@@ -182,8 +182,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **queues_v1_list_organization_queue_names**
-> V1ListQueuesResponse queues_v1_list_organization_queue_names(owner, offset=offset, limit=limit, sort=sort, query=query)
+# **list_organization_queue_names**
+> V1ListQueuesResponse list_organization_queue_names(owner, offset=offset, limit=limit, sort=sort, query=query)
 
 List agents names
 
@@ -211,10 +211,10 @@ query = 'query_example' # str | Query filter the search search. (optional)
 
 try:
     # List agents names
-    api_response = api_instance.queues_v1_list_organization_queue_names(owner, offset=offset, limit=limit, sort=sort, query=query)
+    api_response = api_instance.list_organization_queue_names(owner, offset=offset, limit=limit, sort=sort, query=query)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling QueuesV1Api->queues_v1_list_organization_queue_names: %s\n" % e)
+    print("Exception when calling QueuesV1Api->list_organization_queue_names: %s\n" % e)
 ```
 
 ### Parameters
@@ -242,8 +242,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **queues_v1_list_organization_queues**
-> V1ListQueuesResponse queues_v1_list_organization_queues(owner, offset=offset, limit=limit, sort=sort, query=query)
+# **list_organization_queues**
+> V1ListQueuesResponse list_organization_queues(owner, offset=offset, limit=limit, sort=sort, query=query)
 
 List agents
 
@@ -271,10 +271,10 @@ query = 'query_example' # str | Query filter the search search. (optional)
 
 try:
     # List agents
-    api_response = api_instance.queues_v1_list_organization_queues(owner, offset=offset, limit=limit, sort=sort, query=query)
+    api_response = api_instance.list_organization_queues(owner, offset=offset, limit=limit, sort=sort, query=query)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling QueuesV1Api->queues_v1_list_organization_queues: %s\n" % e)
+    print("Exception when calling QueuesV1Api->list_organization_queues: %s\n" % e)
 ```
 
 ### Parameters
@@ -302,8 +302,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **queues_v1_list_queue_names**
-> V1ListQueuesResponse queues_v1_list_queue_names(owner, agent, offset=offset, limit=limit, sort=sort, query=query)
+# **list_queue_names**
+> V1ListQueuesResponse list_queue_names(owner, agent, offset=offset, limit=limit, sort=sort, query=query)
 
 Create agent
 
@@ -332,10 +332,10 @@ query = 'query_example' # str | Query filter the search search. (optional)
 
 try:
     # Create agent
-    api_response = api_instance.queues_v1_list_queue_names(owner, agent, offset=offset, limit=limit, sort=sort, query=query)
+    api_response = api_instance.list_queue_names(owner, agent, offset=offset, limit=limit, sort=sort, query=query)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling QueuesV1Api->queues_v1_list_queue_names: %s\n" % e)
+    print("Exception when calling QueuesV1Api->list_queue_names: %s\n" % e)
 ```
 
 ### Parameters
@@ -364,8 +364,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **queues_v1_list_queues**
-> V1ListQueuesResponse queues_v1_list_queues(owner, agent, offset=offset, limit=limit, sort=sort, query=query)
+# **list_queues**
+> V1ListQueuesResponse list_queues(owner, agent, offset=offset, limit=limit, sort=sort, query=query)
 
 Get agent
 
@@ -394,10 +394,10 @@ query = 'query_example' # str | Query filter the search search. (optional)
 
 try:
     # Get agent
-    api_response = api_instance.queues_v1_list_queues(owner, agent, offset=offset, limit=limit, sort=sort, query=query)
+    api_response = api_instance.list_queues(owner, agent, offset=offset, limit=limit, sort=sort, query=query)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling QueuesV1Api->queues_v1_list_queues: %s\n" % e)
+    print("Exception when calling QueuesV1Api->list_queues: %s\n" % e)
 ```
 
 ### Parameters
@@ -426,8 +426,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **queues_v1_patch_queue**
-> V1Queue queues_v1_patch_queue(owner, queue_agent, queue_uuid, body)
+# **patch_queue**
+> V1Queue patch_queue(owner, queue_agent, queue_uuid, body)
 
 Get State (queues/runs)
 
@@ -454,10 +454,10 @@ body = polyaxon_sdk.V1Queue() # V1Queue | Queue body
 
 try:
     # Get State (queues/runs)
-    api_response = api_instance.queues_v1_patch_queue(owner, queue_agent, queue_uuid, body)
+    api_response = api_instance.patch_queue(owner, queue_agent, queue_uuid, body)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling QueuesV1Api->queues_v1_patch_queue: %s\n" % e)
+    print("Exception when calling QueuesV1Api->patch_queue: %s\n" % e)
 ```
 
 ### Parameters
@@ -484,8 +484,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **queues_v1_update_queue**
-> V1Queue queues_v1_update_queue(owner, queue_agent, queue_uuid, body)
+# **update_queue**
+> V1Queue update_queue(owner, queue_agent, queue_uuid, body)
 
 Delete agent
 
@@ -512,10 +512,10 @@ body = polyaxon_sdk.V1Queue() # V1Queue | Queue body
 
 try:
     # Delete agent
-    api_response = api_instance.queues_v1_update_queue(owner, queue_agent, queue_uuid, body)
+    api_response = api_instance.update_queue(owner, queue_agent, queue_uuid, body)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling QueuesV1Api->queues_v1_update_queue: %s\n" % e)
+    print("Exception when calling QueuesV1Api->update_queue: %s\n" % e)
 ```
 
 ### Parameters

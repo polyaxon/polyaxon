@@ -39,41 +39,41 @@ type Client struct {
 
 // ClientService is the interface for Client methods
 type ClientService interface {
-	HubComponentsV1CreateHubComponent(params *HubComponentsV1CreateHubComponentParams, authInfo runtime.ClientAuthInfoWriter) (*HubComponentsV1CreateHubComponentOK, *HubComponentsV1CreateHubComponentNoContent, error)
+	CreateHubComponent(params *CreateHubComponentParams, authInfo runtime.ClientAuthInfoWriter) (*CreateHubComponentOK, *CreateHubComponentNoContent, error)
 
-	HubComponentsV1DeleteHubComponent(params *HubComponentsV1DeleteHubComponentParams, authInfo runtime.ClientAuthInfoWriter) (*HubComponentsV1DeleteHubComponentOK, *HubComponentsV1DeleteHubComponentNoContent, error)
+	DeleteHubComponent(params *DeleteHubComponentParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteHubComponentOK, *DeleteHubComponentNoContent, error)
 
-	HubComponentsV1GetHubComponent(params *HubComponentsV1GetHubComponentParams, authInfo runtime.ClientAuthInfoWriter) (*HubComponentsV1GetHubComponentOK, *HubComponentsV1GetHubComponentNoContent, error)
+	GetHubComponent(params *GetHubComponentParams, authInfo runtime.ClientAuthInfoWriter) (*GetHubComponentOK, *GetHubComponentNoContent, error)
 
-	HubComponentsV1ListHubComponebtNames(params *HubComponentsV1ListHubComponebtNamesParams, authInfo runtime.ClientAuthInfoWriter) (*HubComponentsV1ListHubComponebtNamesOK, *HubComponentsV1ListHubComponebtNamesNoContent, error)
+	ListHubComponebtNames(params *ListHubComponebtNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListHubComponebtNamesOK, *ListHubComponebtNamesNoContent, error)
 
-	HubComponentsV1ListHubComponents(params *HubComponentsV1ListHubComponentsParams, authInfo runtime.ClientAuthInfoWriter) (*HubComponentsV1ListHubComponentsOK, *HubComponentsV1ListHubComponentsNoContent, error)
+	ListHubComponents(params *ListHubComponentsParams, authInfo runtime.ClientAuthInfoWriter) (*ListHubComponentsOK, *ListHubComponentsNoContent, error)
 
-	HubComponentsV1PatchHubComponent(params *HubComponentsV1PatchHubComponentParams, authInfo runtime.ClientAuthInfoWriter) (*HubComponentsV1PatchHubComponentOK, *HubComponentsV1PatchHubComponentNoContent, error)
+	PatchHubComponent(params *PatchHubComponentParams, authInfo runtime.ClientAuthInfoWriter) (*PatchHubComponentOK, *PatchHubComponentNoContent, error)
 
-	HubComponentsV1UpdateHubComponent(params *HubComponentsV1UpdateHubComponentParams, authInfo runtime.ClientAuthInfoWriter) (*HubComponentsV1UpdateHubComponentOK, *HubComponentsV1UpdateHubComponentNoContent, error)
+	UpdateHubComponent(params *UpdateHubComponentParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateHubComponentOK, *UpdateHubComponentNoContent, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
 
 /*
-  HubComponentsV1CreateHubComponent creates hub model
+  CreateHubComponent creates hub model
 */
-func (a *Client) HubComponentsV1CreateHubComponent(params *HubComponentsV1CreateHubComponentParams, authInfo runtime.ClientAuthInfoWriter) (*HubComponentsV1CreateHubComponentOK, *HubComponentsV1CreateHubComponentNoContent, error) {
+func (a *Client) CreateHubComponent(params *CreateHubComponentParams, authInfo runtime.ClientAuthInfoWriter) (*CreateHubComponentOK, *CreateHubComponentNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewHubComponentsV1CreateHubComponentParams()
+		params = NewCreateHubComponentParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "HubComponentsV1_CreateHubComponent",
+		ID:                 "CreateHubComponent",
 		Method:             "POST",
 		PathPattern:        "/api/v1/orgs/{owner}/components",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &HubComponentsV1CreateHubComponentReader{formats: a.formats},
+		Reader:             &CreateHubComponentReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -82,34 +82,34 @@ func (a *Client) HubComponentsV1CreateHubComponent(params *HubComponentsV1Create
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *HubComponentsV1CreateHubComponentOK:
+	case *CreateHubComponentOK:
 		return value, nil, nil
-	case *HubComponentsV1CreateHubComponentNoContent:
+	case *CreateHubComponentNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*HubComponentsV1CreateHubComponentDefault)
+	unexpectedSuccess := result.(*CreateHubComponentDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  HubComponentsV1DeleteHubComponent deletes hub model
+  DeleteHubComponent deletes hub model
 */
-func (a *Client) HubComponentsV1DeleteHubComponent(params *HubComponentsV1DeleteHubComponentParams, authInfo runtime.ClientAuthInfoWriter) (*HubComponentsV1DeleteHubComponentOK, *HubComponentsV1DeleteHubComponentNoContent, error) {
+func (a *Client) DeleteHubComponent(params *DeleteHubComponentParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteHubComponentOK, *DeleteHubComponentNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewHubComponentsV1DeleteHubComponentParams()
+		params = NewDeleteHubComponentParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "HubComponentsV1_DeleteHubComponent",
+		ID:                 "DeleteHubComponent",
 		Method:             "DELETE",
 		PathPattern:        "/api/v1/orgs/{owner}/components/{uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &HubComponentsV1DeleteHubComponentReader{formats: a.formats},
+		Reader:             &DeleteHubComponentReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -118,34 +118,34 @@ func (a *Client) HubComponentsV1DeleteHubComponent(params *HubComponentsV1Delete
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *HubComponentsV1DeleteHubComponentOK:
+	case *DeleteHubComponentOK:
 		return value, nil, nil
-	case *HubComponentsV1DeleteHubComponentNoContent:
+	case *DeleteHubComponentNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*HubComponentsV1DeleteHubComponentDefault)
+	unexpectedSuccess := result.(*DeleteHubComponentDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  HubComponentsV1GetHubComponent gets hub model
+  GetHubComponent gets hub model
 */
-func (a *Client) HubComponentsV1GetHubComponent(params *HubComponentsV1GetHubComponentParams, authInfo runtime.ClientAuthInfoWriter) (*HubComponentsV1GetHubComponentOK, *HubComponentsV1GetHubComponentNoContent, error) {
+func (a *Client) GetHubComponent(params *GetHubComponentParams, authInfo runtime.ClientAuthInfoWriter) (*GetHubComponentOK, *GetHubComponentNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewHubComponentsV1GetHubComponentParams()
+		params = NewGetHubComponentParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "HubComponentsV1_GetHubComponent",
+		ID:                 "GetHubComponent",
 		Method:             "GET",
 		PathPattern:        "/api/v1/orgs/{owner}/components/{uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &HubComponentsV1GetHubComponentReader{formats: a.formats},
+		Reader:             &GetHubComponentReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -154,34 +154,34 @@ func (a *Client) HubComponentsV1GetHubComponent(params *HubComponentsV1GetHubCom
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *HubComponentsV1GetHubComponentOK:
+	case *GetHubComponentOK:
 		return value, nil, nil
-	case *HubComponentsV1GetHubComponentNoContent:
+	case *GetHubComponentNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*HubComponentsV1GetHubComponentDefault)
+	unexpectedSuccess := result.(*GetHubComponentDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  HubComponentsV1ListHubComponebtNames lists hub model names
+  ListHubComponebtNames lists hub model names
 */
-func (a *Client) HubComponentsV1ListHubComponebtNames(params *HubComponentsV1ListHubComponebtNamesParams, authInfo runtime.ClientAuthInfoWriter) (*HubComponentsV1ListHubComponebtNamesOK, *HubComponentsV1ListHubComponebtNamesNoContent, error) {
+func (a *Client) ListHubComponebtNames(params *ListHubComponebtNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListHubComponebtNamesOK, *ListHubComponebtNamesNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewHubComponentsV1ListHubComponebtNamesParams()
+		params = NewListHubComponebtNamesParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "HubComponentsV1_ListHubComponebtNames",
+		ID:                 "ListHubComponebtNames",
 		Method:             "GET",
 		PathPattern:        "/api/v1/orgs/{owner}/components/names",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &HubComponentsV1ListHubComponebtNamesReader{formats: a.formats},
+		Reader:             &ListHubComponebtNamesReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -190,34 +190,34 @@ func (a *Client) HubComponentsV1ListHubComponebtNames(params *HubComponentsV1Lis
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *HubComponentsV1ListHubComponebtNamesOK:
+	case *ListHubComponebtNamesOK:
 		return value, nil, nil
-	case *HubComponentsV1ListHubComponebtNamesNoContent:
+	case *ListHubComponebtNamesNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*HubComponentsV1ListHubComponebtNamesDefault)
+	unexpectedSuccess := result.(*ListHubComponebtNamesDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  HubComponentsV1ListHubComponents lists hub models
+  ListHubComponents lists hub models
 */
-func (a *Client) HubComponentsV1ListHubComponents(params *HubComponentsV1ListHubComponentsParams, authInfo runtime.ClientAuthInfoWriter) (*HubComponentsV1ListHubComponentsOK, *HubComponentsV1ListHubComponentsNoContent, error) {
+func (a *Client) ListHubComponents(params *ListHubComponentsParams, authInfo runtime.ClientAuthInfoWriter) (*ListHubComponentsOK, *ListHubComponentsNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewHubComponentsV1ListHubComponentsParams()
+		params = NewListHubComponentsParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "HubComponentsV1_ListHubComponents",
+		ID:                 "ListHubComponents",
 		Method:             "GET",
 		PathPattern:        "/api/v1/orgs/{owner}/components",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &HubComponentsV1ListHubComponentsReader{formats: a.formats},
+		Reader:             &ListHubComponentsReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -226,34 +226,34 @@ func (a *Client) HubComponentsV1ListHubComponents(params *HubComponentsV1ListHub
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *HubComponentsV1ListHubComponentsOK:
+	case *ListHubComponentsOK:
 		return value, nil, nil
-	case *HubComponentsV1ListHubComponentsNoContent:
+	case *ListHubComponentsNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*HubComponentsV1ListHubComponentsDefault)
+	unexpectedSuccess := result.(*ListHubComponentsDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  HubComponentsV1PatchHubComponent patches hub model
+  PatchHubComponent patches hub model
 */
-func (a *Client) HubComponentsV1PatchHubComponent(params *HubComponentsV1PatchHubComponentParams, authInfo runtime.ClientAuthInfoWriter) (*HubComponentsV1PatchHubComponentOK, *HubComponentsV1PatchHubComponentNoContent, error) {
+func (a *Client) PatchHubComponent(params *PatchHubComponentParams, authInfo runtime.ClientAuthInfoWriter) (*PatchHubComponentOK, *PatchHubComponentNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewHubComponentsV1PatchHubComponentParams()
+		params = NewPatchHubComponentParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "HubComponentsV1_PatchHubComponent",
+		ID:                 "PatchHubComponent",
 		Method:             "PATCH",
 		PathPattern:        "/api/v1/orgs/{owner}/components/{component.uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &HubComponentsV1PatchHubComponentReader{formats: a.formats},
+		Reader:             &PatchHubComponentReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -262,34 +262,34 @@ func (a *Client) HubComponentsV1PatchHubComponent(params *HubComponentsV1PatchHu
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *HubComponentsV1PatchHubComponentOK:
+	case *PatchHubComponentOK:
 		return value, nil, nil
-	case *HubComponentsV1PatchHubComponentNoContent:
+	case *PatchHubComponentNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*HubComponentsV1PatchHubComponentDefault)
+	unexpectedSuccess := result.(*PatchHubComponentDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  HubComponentsV1UpdateHubComponent updates hub model
+  UpdateHubComponent updates hub model
 */
-func (a *Client) HubComponentsV1UpdateHubComponent(params *HubComponentsV1UpdateHubComponentParams, authInfo runtime.ClientAuthInfoWriter) (*HubComponentsV1UpdateHubComponentOK, *HubComponentsV1UpdateHubComponentNoContent, error) {
+func (a *Client) UpdateHubComponent(params *UpdateHubComponentParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateHubComponentOK, *UpdateHubComponentNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewHubComponentsV1UpdateHubComponentParams()
+		params = NewUpdateHubComponentParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "HubComponentsV1_UpdateHubComponent",
+		ID:                 "UpdateHubComponent",
 		Method:             "PUT",
 		PathPattern:        "/api/v1/orgs/{owner}/components/{component.uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &HubComponentsV1UpdateHubComponentReader{formats: a.formats},
+		Reader:             &UpdateHubComponentReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -298,13 +298,13 @@ func (a *Client) HubComponentsV1UpdateHubComponent(params *HubComponentsV1Update
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *HubComponentsV1UpdateHubComponentOK:
+	case *UpdateHubComponentOK:
 		return value, nil, nil
-	case *HubComponentsV1UpdateHubComponentNoContent:
+	case *UpdateHubComponentNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*HubComponentsV1UpdateHubComponentDefault)
+	unexpectedSuccess := result.(*UpdateHubComponentDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 

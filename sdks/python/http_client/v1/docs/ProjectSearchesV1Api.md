@@ -4,18 +4,18 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**project_searches_v1_create_project_search**](ProjectSearchesV1Api.md#project_searches_v1_create_project_search) | **POST** /api/v1/{owner}/{project}/searches | Create project search
-[**project_searches_v1_delete_project_search**](ProjectSearchesV1Api.md#project_searches_v1_delete_project_search) | **DELETE** /api/v1/{owner}/{project}/searches/{uuid} | Delete project search
-[**project_searches_v1_get_project_search**](ProjectSearchesV1Api.md#project_searches_v1_get_project_search) | **GET** /api/v1/{owner}/{project}/searches/{uuid} | Get project search
-[**project_searches_v1_list_project_search_names**](ProjectSearchesV1Api.md#project_searches_v1_list_project_search_names) | **GET** /api/v1/{owner}/{project}/searches/names | List project search names
-[**project_searches_v1_list_project_searches**](ProjectSearchesV1Api.md#project_searches_v1_list_project_searches) | **GET** /api/v1/{owner}/{project}/searches | List project searches
-[**project_searches_v1_patch_project_search**](ProjectSearchesV1Api.md#project_searches_v1_patch_project_search) | **PATCH** /api/v1/{owner}/{project}/searches/{search.uuid} | Patch project search
-[**project_searches_v1_promote_project_search**](ProjectSearchesV1Api.md#project_searches_v1_promote_project_search) | **POST** /api/v1/{owner}/{project}/searches/{uuid}/promote | Promote project search
-[**project_searches_v1_update_project_search**](ProjectSearchesV1Api.md#project_searches_v1_update_project_search) | **PUT** /api/v1/{owner}/{project}/searches/{search.uuid} | Update project search
+[**create_project_search**](ProjectSearchesV1Api.md#create_project_search) | **POST** /api/v1/{owner}/{project}/searches | Create project search
+[**delete_project_search**](ProjectSearchesV1Api.md#delete_project_search) | **DELETE** /api/v1/{owner}/{project}/searches/{uuid} | Delete project search
+[**get_project_search**](ProjectSearchesV1Api.md#get_project_search) | **GET** /api/v1/{owner}/{project}/searches/{uuid} | Get project search
+[**list_project_search_names**](ProjectSearchesV1Api.md#list_project_search_names) | **GET** /api/v1/{owner}/{project}/searches/names | List project search names
+[**list_project_searches**](ProjectSearchesV1Api.md#list_project_searches) | **GET** /api/v1/{owner}/{project}/searches | List project searches
+[**patch_project_search**](ProjectSearchesV1Api.md#patch_project_search) | **PATCH** /api/v1/{owner}/{project}/searches/{search.uuid} | Patch project search
+[**promote_project_search**](ProjectSearchesV1Api.md#promote_project_search) | **POST** /api/v1/{owner}/{project}/searches/{uuid}/promote | Promote project search
+[**update_project_search**](ProjectSearchesV1Api.md#update_project_search) | **PUT** /api/v1/{owner}/{project}/searches/{search.uuid} | Update project search
 
 
-# **project_searches_v1_create_project_search**
-> V1Search project_searches_v1_create_project_search(owner, project, body)
+# **create_project_search**
+> V1Search create_project_search(owner, project, body)
 
 Create project search
 
@@ -41,10 +41,10 @@ body = polyaxon_sdk.V1Search() # V1Search | Search body
 
 try:
     # Create project search
-    api_response = api_instance.project_searches_v1_create_project_search(owner, project, body)
+    api_response = api_instance.create_project_search(owner, project, body)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling ProjectSearchesV1Api->project_searches_v1_create_project_search: %s\n" % e)
+    print("Exception when calling ProjectSearchesV1Api->create_project_search: %s\n" % e)
 ```
 
 ### Parameters
@@ -70,8 +70,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **project_searches_v1_delete_project_search**
-> project_searches_v1_delete_project_search(owner, project, uuid)
+# **delete_project_search**
+> delete_project_search(owner, project, uuid)
 
 Delete project search
 
@@ -97,9 +97,9 @@ uuid = 'uuid_example' # str | Uuid identifier of the entity
 
 try:
     # Delete project search
-    api_instance.project_searches_v1_delete_project_search(owner, project, uuid)
+    api_instance.delete_project_search(owner, project, uuid)
 except ApiException as e:
-    print("Exception when calling ProjectSearchesV1Api->project_searches_v1_delete_project_search: %s\n" % e)
+    print("Exception when calling ProjectSearchesV1Api->delete_project_search: %s\n" % e)
 ```
 
 ### Parameters
@@ -125,8 +125,8 @@ void (empty response body)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **project_searches_v1_get_project_search**
-> V1Search project_searches_v1_get_project_search(owner, project, uuid)
+# **get_project_search**
+> V1Search get_project_search(owner, project, uuid)
 
 Get project search
 
@@ -152,10 +152,10 @@ uuid = 'uuid_example' # str | Uuid identifier of the entity
 
 try:
     # Get project search
-    api_response = api_instance.project_searches_v1_get_project_search(owner, project, uuid)
+    api_response = api_instance.get_project_search(owner, project, uuid)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling ProjectSearchesV1Api->project_searches_v1_get_project_search: %s\n" % e)
+    print("Exception when calling ProjectSearchesV1Api->get_project_search: %s\n" % e)
 ```
 
 ### Parameters
@@ -181,8 +181,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **project_searches_v1_list_project_search_names**
-> V1ListSearchesResponse project_searches_v1_list_project_search_names(owner, project, offset=offset, limit=limit, sort=sort, query=query)
+# **list_project_search_names**
+> V1ListSearchesResponse list_project_search_names(owner, project, offset=offset, limit=limit, sort=sort, query=query)
 
 List project search names
 
@@ -211,10 +211,10 @@ query = 'query_example' # str | Query filter the search search. (optional)
 
 try:
     # List project search names
-    api_response = api_instance.project_searches_v1_list_project_search_names(owner, project, offset=offset, limit=limit, sort=sort, query=query)
+    api_response = api_instance.list_project_search_names(owner, project, offset=offset, limit=limit, sort=sort, query=query)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling ProjectSearchesV1Api->project_searches_v1_list_project_search_names: %s\n" % e)
+    print("Exception when calling ProjectSearchesV1Api->list_project_search_names: %s\n" % e)
 ```
 
 ### Parameters
@@ -243,8 +243,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **project_searches_v1_list_project_searches**
-> V1ListSearchesResponse project_searches_v1_list_project_searches(owner, project, offset=offset, limit=limit, sort=sort, query=query)
+# **list_project_searches**
+> V1ListSearchesResponse list_project_searches(owner, project, offset=offset, limit=limit, sort=sort, query=query)
 
 List project searches
 
@@ -273,10 +273,10 @@ query = 'query_example' # str | Query filter the search search. (optional)
 
 try:
     # List project searches
-    api_response = api_instance.project_searches_v1_list_project_searches(owner, project, offset=offset, limit=limit, sort=sort, query=query)
+    api_response = api_instance.list_project_searches(owner, project, offset=offset, limit=limit, sort=sort, query=query)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling ProjectSearchesV1Api->project_searches_v1_list_project_searches: %s\n" % e)
+    print("Exception when calling ProjectSearchesV1Api->list_project_searches: %s\n" % e)
 ```
 
 ### Parameters
@@ -305,8 +305,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **project_searches_v1_patch_project_search**
-> V1Search project_searches_v1_patch_project_search(owner, project, search_uuid, body)
+# **patch_project_search**
+> V1Search patch_project_search(owner, project, search_uuid, body)
 
 Patch project search
 
@@ -333,10 +333,10 @@ body = polyaxon_sdk.V1Search() # V1Search | Search body
 
 try:
     # Patch project search
-    api_response = api_instance.project_searches_v1_patch_project_search(owner, project, search_uuid, body)
+    api_response = api_instance.patch_project_search(owner, project, search_uuid, body)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling ProjectSearchesV1Api->project_searches_v1_patch_project_search: %s\n" % e)
+    print("Exception when calling ProjectSearchesV1Api->patch_project_search: %s\n" % e)
 ```
 
 ### Parameters
@@ -363,8 +363,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **project_searches_v1_promote_project_search**
-> project_searches_v1_promote_project_search(owner, project, uuid)
+# **promote_project_search**
+> promote_project_search(owner, project, uuid)
 
 Promote project search
 
@@ -390,9 +390,9 @@ uuid = 'uuid_example' # str | Uuid identifier of the entity
 
 try:
     # Promote project search
-    api_instance.project_searches_v1_promote_project_search(owner, project, uuid)
+    api_instance.promote_project_search(owner, project, uuid)
 except ApiException as e:
-    print("Exception when calling ProjectSearchesV1Api->project_searches_v1_promote_project_search: %s\n" % e)
+    print("Exception when calling ProjectSearchesV1Api->promote_project_search: %s\n" % e)
 ```
 
 ### Parameters
@@ -418,8 +418,8 @@ void (empty response body)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **project_searches_v1_update_project_search**
-> V1Search project_searches_v1_update_project_search(owner, project, search_uuid, body)
+# **update_project_search**
+> V1Search update_project_search(owner, project, search_uuid, body)
 
 Update project search
 
@@ -446,10 +446,10 @@ body = polyaxon_sdk.V1Search() # V1Search | Search body
 
 try:
     # Update project search
-    api_response = api_instance.project_searches_v1_update_project_search(owner, project, search_uuid, body)
+    api_response = api_instance.update_project_search(owner, project, search_uuid, body)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling ProjectSearchesV1Api->project_searches_v1_update_project_search: %s\n" % e)
+    print("Exception when calling ProjectSearchesV1Api->update_project_search: %s\n" % e)
 ```
 
 ### Parameters

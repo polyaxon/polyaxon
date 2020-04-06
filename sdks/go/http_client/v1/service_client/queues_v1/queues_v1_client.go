@@ -39,45 +39,45 @@ type Client struct {
 
 // ClientService is the interface for Client methods
 type ClientService interface {
-	QueuesV1CreateQueue(params *QueuesV1CreateQueueParams, authInfo runtime.ClientAuthInfoWriter) (*QueuesV1CreateQueueOK, *QueuesV1CreateQueueNoContent, error)
+	CreateQueue(params *CreateQueueParams, authInfo runtime.ClientAuthInfoWriter) (*CreateQueueOK, *CreateQueueNoContent, error)
 
-	QueuesV1DeleteQueue(params *QueuesV1DeleteQueueParams, authInfo runtime.ClientAuthInfoWriter) (*QueuesV1DeleteQueueOK, *QueuesV1DeleteQueueNoContent, error)
+	DeleteQueue(params *DeleteQueueParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteQueueOK, *DeleteQueueNoContent, error)
 
-	QueuesV1GetQueue(params *QueuesV1GetQueueParams, authInfo runtime.ClientAuthInfoWriter) (*QueuesV1GetQueueOK, *QueuesV1GetQueueNoContent, error)
+	GetQueue(params *GetQueueParams, authInfo runtime.ClientAuthInfoWriter) (*GetQueueOK, *GetQueueNoContent, error)
 
-	QueuesV1ListOrganizationQueueNames(params *QueuesV1ListOrganizationQueueNamesParams, authInfo runtime.ClientAuthInfoWriter) (*QueuesV1ListOrganizationQueueNamesOK, *QueuesV1ListOrganizationQueueNamesNoContent, error)
+	ListOrganizationQueueNames(params *ListOrganizationQueueNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListOrganizationQueueNamesOK, *ListOrganizationQueueNamesNoContent, error)
 
-	QueuesV1ListOrganizationQueues(params *QueuesV1ListOrganizationQueuesParams, authInfo runtime.ClientAuthInfoWriter) (*QueuesV1ListOrganizationQueuesOK, *QueuesV1ListOrganizationQueuesNoContent, error)
+	ListOrganizationQueues(params *ListOrganizationQueuesParams, authInfo runtime.ClientAuthInfoWriter) (*ListOrganizationQueuesOK, *ListOrganizationQueuesNoContent, error)
 
-	QueuesV1ListQueueNames(params *QueuesV1ListQueueNamesParams, authInfo runtime.ClientAuthInfoWriter) (*QueuesV1ListQueueNamesOK, *QueuesV1ListQueueNamesNoContent, error)
+	ListQueueNames(params *ListQueueNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListQueueNamesOK, *ListQueueNamesNoContent, error)
 
-	QueuesV1ListQueues(params *QueuesV1ListQueuesParams, authInfo runtime.ClientAuthInfoWriter) (*QueuesV1ListQueuesOK, *QueuesV1ListQueuesNoContent, error)
+	ListQueues(params *ListQueuesParams, authInfo runtime.ClientAuthInfoWriter) (*ListQueuesOK, *ListQueuesNoContent, error)
 
-	QueuesV1PatchQueue(params *QueuesV1PatchQueueParams, authInfo runtime.ClientAuthInfoWriter) (*QueuesV1PatchQueueOK, *QueuesV1PatchQueueNoContent, error)
+	PatchQueue(params *PatchQueueParams, authInfo runtime.ClientAuthInfoWriter) (*PatchQueueOK, *PatchQueueNoContent, error)
 
-	QueuesV1UpdateQueue(params *QueuesV1UpdateQueueParams, authInfo runtime.ClientAuthInfoWriter) (*QueuesV1UpdateQueueOK, *QueuesV1UpdateQueueNoContent, error)
+	UpdateQueue(params *UpdateQueueParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateQueueOK, *UpdateQueueNoContent, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
 
 /*
-  QueuesV1CreateQueue updates agent
+  CreateQueue updates agent
 */
-func (a *Client) QueuesV1CreateQueue(params *QueuesV1CreateQueueParams, authInfo runtime.ClientAuthInfoWriter) (*QueuesV1CreateQueueOK, *QueuesV1CreateQueueNoContent, error) {
+func (a *Client) CreateQueue(params *CreateQueueParams, authInfo runtime.ClientAuthInfoWriter) (*CreateQueueOK, *CreateQueueNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewQueuesV1CreateQueueParams()
+		params = NewCreateQueueParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "QueuesV1_CreateQueue",
+		ID:                 "CreateQueue",
 		Method:             "POST",
 		PathPattern:        "/api/v1/orgs/{owner}/agents/{agent}/queues",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &QueuesV1CreateQueueReader{formats: a.formats},
+		Reader:             &CreateQueueReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -86,34 +86,34 @@ func (a *Client) QueuesV1CreateQueue(params *QueuesV1CreateQueueParams, authInfo
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *QueuesV1CreateQueueOK:
+	case *CreateQueueOK:
 		return value, nil, nil
-	case *QueuesV1CreateQueueNoContent:
+	case *CreateQueueNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*QueuesV1CreateQueueDefault)
+	unexpectedSuccess := result.(*CreateQueueDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  QueuesV1DeleteQueue syncs agent
+  DeleteQueue syncs agent
 */
-func (a *Client) QueuesV1DeleteQueue(params *QueuesV1DeleteQueueParams, authInfo runtime.ClientAuthInfoWriter) (*QueuesV1DeleteQueueOK, *QueuesV1DeleteQueueNoContent, error) {
+func (a *Client) DeleteQueue(params *DeleteQueueParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteQueueOK, *DeleteQueueNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewQueuesV1DeleteQueueParams()
+		params = NewDeleteQueueParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "QueuesV1_DeleteQueue",
+		ID:                 "DeleteQueue",
 		Method:             "DELETE",
 		PathPattern:        "/api/v1/orgs/{owner}/agents/{agent}/queues/{uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &QueuesV1DeleteQueueReader{formats: a.formats},
+		Reader:             &DeleteQueueReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -122,34 +122,34 @@ func (a *Client) QueuesV1DeleteQueue(params *QueuesV1DeleteQueueParams, authInfo
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *QueuesV1DeleteQueueOK:
+	case *DeleteQueueOK:
 		return value, nil, nil
-	case *QueuesV1DeleteQueueNoContent:
+	case *DeleteQueueNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*QueuesV1DeleteQueueDefault)
+	unexpectedSuccess := result.(*DeleteQueueDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  QueuesV1GetQueue patches agent
+  GetQueue patches agent
 */
-func (a *Client) QueuesV1GetQueue(params *QueuesV1GetQueueParams, authInfo runtime.ClientAuthInfoWriter) (*QueuesV1GetQueueOK, *QueuesV1GetQueueNoContent, error) {
+func (a *Client) GetQueue(params *GetQueueParams, authInfo runtime.ClientAuthInfoWriter) (*GetQueueOK, *GetQueueNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewQueuesV1GetQueueParams()
+		params = NewGetQueueParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "QueuesV1_GetQueue",
+		ID:                 "GetQueue",
 		Method:             "GET",
 		PathPattern:        "/api/v1/orgs/{owner}/agents/{agent}/queues/{uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &QueuesV1GetQueueReader{formats: a.formats},
+		Reader:             &GetQueueReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -158,34 +158,34 @@ func (a *Client) QueuesV1GetQueue(params *QueuesV1GetQueueParams, authInfo runti
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *QueuesV1GetQueueOK:
+	case *GetQueueOK:
 		return value, nil, nil
-	case *QueuesV1GetQueueNoContent:
+	case *GetQueueNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*QueuesV1GetQueueDefault)
+	unexpectedSuccess := result.(*GetQueueDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  QueuesV1ListOrganizationQueueNames lists agents names
+  ListOrganizationQueueNames lists agents names
 */
-func (a *Client) QueuesV1ListOrganizationQueueNames(params *QueuesV1ListOrganizationQueueNamesParams, authInfo runtime.ClientAuthInfoWriter) (*QueuesV1ListOrganizationQueueNamesOK, *QueuesV1ListOrganizationQueueNamesNoContent, error) {
+func (a *Client) ListOrganizationQueueNames(params *ListOrganizationQueueNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListOrganizationQueueNamesOK, *ListOrganizationQueueNamesNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewQueuesV1ListOrganizationQueueNamesParams()
+		params = NewListOrganizationQueueNamesParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "QueuesV1_ListOrganizationQueueNames",
+		ID:                 "ListOrganizationQueueNames",
 		Method:             "GET",
 		PathPattern:        "/api/v1/orgs/{owner}/queues/names",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &QueuesV1ListOrganizationQueueNamesReader{formats: a.formats},
+		Reader:             &ListOrganizationQueueNamesReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -194,34 +194,34 @@ func (a *Client) QueuesV1ListOrganizationQueueNames(params *QueuesV1ListOrganiza
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *QueuesV1ListOrganizationQueueNamesOK:
+	case *ListOrganizationQueueNamesOK:
 		return value, nil, nil
-	case *QueuesV1ListOrganizationQueueNamesNoContent:
+	case *ListOrganizationQueueNamesNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*QueuesV1ListOrganizationQueueNamesDefault)
+	unexpectedSuccess := result.(*ListOrganizationQueueNamesDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  QueuesV1ListOrganizationQueues lists agents
+  ListOrganizationQueues lists agents
 */
-func (a *Client) QueuesV1ListOrganizationQueues(params *QueuesV1ListOrganizationQueuesParams, authInfo runtime.ClientAuthInfoWriter) (*QueuesV1ListOrganizationQueuesOK, *QueuesV1ListOrganizationQueuesNoContent, error) {
+func (a *Client) ListOrganizationQueues(params *ListOrganizationQueuesParams, authInfo runtime.ClientAuthInfoWriter) (*ListOrganizationQueuesOK, *ListOrganizationQueuesNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewQueuesV1ListOrganizationQueuesParams()
+		params = NewListOrganizationQueuesParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "QueuesV1_ListOrganizationQueues",
+		ID:                 "ListOrganizationQueues",
 		Method:             "GET",
 		PathPattern:        "/api/v1/orgs/{owner}/queues",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &QueuesV1ListOrganizationQueuesReader{formats: a.formats},
+		Reader:             &ListOrganizationQueuesReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -230,34 +230,34 @@ func (a *Client) QueuesV1ListOrganizationQueues(params *QueuesV1ListOrganization
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *QueuesV1ListOrganizationQueuesOK:
+	case *ListOrganizationQueuesOK:
 		return value, nil, nil
-	case *QueuesV1ListOrganizationQueuesNoContent:
+	case *ListOrganizationQueuesNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*QueuesV1ListOrganizationQueuesDefault)
+	unexpectedSuccess := result.(*ListOrganizationQueuesDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  QueuesV1ListQueueNames creates agent
+  ListQueueNames creates agent
 */
-func (a *Client) QueuesV1ListQueueNames(params *QueuesV1ListQueueNamesParams, authInfo runtime.ClientAuthInfoWriter) (*QueuesV1ListQueueNamesOK, *QueuesV1ListQueueNamesNoContent, error) {
+func (a *Client) ListQueueNames(params *ListQueueNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListQueueNamesOK, *ListQueueNamesNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewQueuesV1ListQueueNamesParams()
+		params = NewListQueueNamesParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "QueuesV1_ListQueueNames",
+		ID:                 "ListQueueNames",
 		Method:             "GET",
 		PathPattern:        "/api/v1/orgs/{owner}/agents/{agent}/queues/names",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &QueuesV1ListQueueNamesReader{formats: a.formats},
+		Reader:             &ListQueueNamesReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -266,34 +266,34 @@ func (a *Client) QueuesV1ListQueueNames(params *QueuesV1ListQueueNamesParams, au
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *QueuesV1ListQueueNamesOK:
+	case *ListQueueNamesOK:
 		return value, nil, nil
-	case *QueuesV1ListQueueNamesNoContent:
+	case *ListQueueNamesNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*QueuesV1ListQueueNamesDefault)
+	unexpectedSuccess := result.(*ListQueueNamesDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  QueuesV1ListQueues gets agent
+  ListQueues gets agent
 */
-func (a *Client) QueuesV1ListQueues(params *QueuesV1ListQueuesParams, authInfo runtime.ClientAuthInfoWriter) (*QueuesV1ListQueuesOK, *QueuesV1ListQueuesNoContent, error) {
+func (a *Client) ListQueues(params *ListQueuesParams, authInfo runtime.ClientAuthInfoWriter) (*ListQueuesOK, *ListQueuesNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewQueuesV1ListQueuesParams()
+		params = NewListQueuesParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "QueuesV1_ListQueues",
+		ID:                 "ListQueues",
 		Method:             "GET",
 		PathPattern:        "/api/v1/orgs/{owner}/agents/{agent}/queues",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &QueuesV1ListQueuesReader{formats: a.formats},
+		Reader:             &ListQueuesReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -302,34 +302,34 @@ func (a *Client) QueuesV1ListQueues(params *QueuesV1ListQueuesParams, authInfo r
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *QueuesV1ListQueuesOK:
+	case *ListQueuesOK:
 		return value, nil, nil
-	case *QueuesV1ListQueuesNoContent:
+	case *ListQueuesNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*QueuesV1ListQueuesDefault)
+	unexpectedSuccess := result.(*ListQueuesDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  QueuesV1PatchQueue gets state queues runs
+  PatchQueue gets state queues runs
 */
-func (a *Client) QueuesV1PatchQueue(params *QueuesV1PatchQueueParams, authInfo runtime.ClientAuthInfoWriter) (*QueuesV1PatchQueueOK, *QueuesV1PatchQueueNoContent, error) {
+func (a *Client) PatchQueue(params *PatchQueueParams, authInfo runtime.ClientAuthInfoWriter) (*PatchQueueOK, *PatchQueueNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewQueuesV1PatchQueueParams()
+		params = NewPatchQueueParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "QueuesV1_PatchQueue",
+		ID:                 "PatchQueue",
 		Method:             "PATCH",
 		PathPattern:        "/api/v1/orgs/{owner}/agents/{queue.agent}/queues/{queue.uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &QueuesV1PatchQueueReader{formats: a.formats},
+		Reader:             &PatchQueueReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -338,34 +338,34 @@ func (a *Client) QueuesV1PatchQueue(params *QueuesV1PatchQueueParams, authInfo r
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *QueuesV1PatchQueueOK:
+	case *PatchQueueOK:
 		return value, nil, nil
-	case *QueuesV1PatchQueueNoContent:
+	case *PatchQueueNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*QueuesV1PatchQueueDefault)
+	unexpectedSuccess := result.(*PatchQueueDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  QueuesV1UpdateQueue deletes agent
+  UpdateQueue deletes agent
 */
-func (a *Client) QueuesV1UpdateQueue(params *QueuesV1UpdateQueueParams, authInfo runtime.ClientAuthInfoWriter) (*QueuesV1UpdateQueueOK, *QueuesV1UpdateQueueNoContent, error) {
+func (a *Client) UpdateQueue(params *UpdateQueueParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateQueueOK, *UpdateQueueNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewQueuesV1UpdateQueueParams()
+		params = NewUpdateQueueParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "QueuesV1_UpdateQueue",
+		ID:                 "UpdateQueue",
 		Method:             "PUT",
 		PathPattern:        "/api/v1/orgs/{owner}/agents/{queue.agent}/queues/{queue.uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &QueuesV1UpdateQueueReader{formats: a.formats},
+		Reader:             &UpdateQueueReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -374,13 +374,13 @@ func (a *Client) QueuesV1UpdateQueue(params *QueuesV1UpdateQueueParams, authInfo
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *QueuesV1UpdateQueueOK:
+	case *UpdateQueueOK:
 		return value, nil, nil
-	case *QueuesV1UpdateQueueNoContent:
+	case *UpdateQueueNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*QueuesV1UpdateQueueDefault)
+	unexpectedSuccess := result.(*UpdateQueueDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 

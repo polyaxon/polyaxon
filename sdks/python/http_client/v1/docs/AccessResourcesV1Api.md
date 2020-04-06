@@ -4,17 +4,17 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**access_resources_v1_create_access_resource**](AccessResourcesV1Api.md#access_resources_v1_create_access_resource) | **POST** /api/v1/orgs/{owner}/access_resources | Create access resource
-[**access_resources_v1_delete_access_resource**](AccessResourcesV1Api.md#access_resources_v1_delete_access_resource) | **DELETE** /api/v1/orgs/{owner}/access_resources/{uuid} | Delete access resource
-[**access_resources_v1_get_access_resource**](AccessResourcesV1Api.md#access_resources_v1_get_access_resource) | **GET** /api/v1/orgs/{owner}/access_resources/{uuid} | Get access resource
-[**access_resources_v1_list_access_resource_names**](AccessResourcesV1Api.md#access_resources_v1_list_access_resource_names) | **GET** /api/v1/orgs/{owner}/access_resources/names | List access resource names
-[**access_resources_v1_list_access_resources**](AccessResourcesV1Api.md#access_resources_v1_list_access_resources) | **GET** /api/v1/orgs/{owner}/access_resources | List access resources
-[**access_resources_v1_patch_access_resource**](AccessResourcesV1Api.md#access_resources_v1_patch_access_resource) | **PATCH** /api/v1/orgs/{owner}/access_resources/{access_resource.uuid} | Patch access resource
-[**access_resources_v1_update_access_resource**](AccessResourcesV1Api.md#access_resources_v1_update_access_resource) | **PUT** /api/v1/orgs/{owner}/access_resources/{access_resource.uuid} | Update access resource
+[**create_access_resource**](AccessResourcesV1Api.md#create_access_resource) | **POST** /api/v1/orgs/{owner}/access_resources | Create access resource
+[**delete_access_resource**](AccessResourcesV1Api.md#delete_access_resource) | **DELETE** /api/v1/orgs/{owner}/access_resources/{uuid} | Delete access resource
+[**get_access_resource**](AccessResourcesV1Api.md#get_access_resource) | **GET** /api/v1/orgs/{owner}/access_resources/{uuid} | Get access resource
+[**list_access_resource_names**](AccessResourcesV1Api.md#list_access_resource_names) | **GET** /api/v1/orgs/{owner}/access_resources/names | List access resource names
+[**list_access_resources**](AccessResourcesV1Api.md#list_access_resources) | **GET** /api/v1/orgs/{owner}/access_resources | List access resources
+[**patch_access_resource**](AccessResourcesV1Api.md#patch_access_resource) | **PATCH** /api/v1/orgs/{owner}/access_resources/{access_resource.uuid} | Patch access resource
+[**update_access_resource**](AccessResourcesV1Api.md#update_access_resource) | **PUT** /api/v1/orgs/{owner}/access_resources/{access_resource.uuid} | Update access resource
 
 
-# **access_resources_v1_create_access_resource**
-> V1AccessResource access_resources_v1_create_access_resource(owner, body)
+# **create_access_resource**
+> V1AccessResource create_access_resource(owner, body)
 
 Create access resource
 
@@ -39,10 +39,10 @@ body = polyaxon_sdk.V1AccessResource() # V1AccessResource | Artifact store body
 
 try:
     # Create access resource
-    api_response = api_instance.access_resources_v1_create_access_resource(owner, body)
+    api_response = api_instance.create_access_resource(owner, body)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling AccessResourcesV1Api->access_resources_v1_create_access_resource: %s\n" % e)
+    print("Exception when calling AccessResourcesV1Api->create_access_resource: %s\n" % e)
 ```
 
 ### Parameters
@@ -67,8 +67,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **access_resources_v1_delete_access_resource**
-> access_resources_v1_delete_access_resource(owner, uuid)
+# **delete_access_resource**
+> delete_access_resource(owner, uuid)
 
 Delete access resource
 
@@ -93,9 +93,9 @@ uuid = 'uuid_example' # str | Uuid identifier of the entity
 
 try:
     # Delete access resource
-    api_instance.access_resources_v1_delete_access_resource(owner, uuid)
+    api_instance.delete_access_resource(owner, uuid)
 except ApiException as e:
-    print("Exception when calling AccessResourcesV1Api->access_resources_v1_delete_access_resource: %s\n" % e)
+    print("Exception when calling AccessResourcesV1Api->delete_access_resource: %s\n" % e)
 ```
 
 ### Parameters
@@ -120,8 +120,8 @@ void (empty response body)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **access_resources_v1_get_access_resource**
-> V1AccessResource access_resources_v1_get_access_resource(owner, uuid)
+# **get_access_resource**
+> V1AccessResource get_access_resource(owner, uuid)
 
 Get access resource
 
@@ -146,10 +146,10 @@ uuid = 'uuid_example' # str | Uuid identifier of the entity
 
 try:
     # Get access resource
-    api_response = api_instance.access_resources_v1_get_access_resource(owner, uuid)
+    api_response = api_instance.get_access_resource(owner, uuid)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling AccessResourcesV1Api->access_resources_v1_get_access_resource: %s\n" % e)
+    print("Exception when calling AccessResourcesV1Api->get_access_resource: %s\n" % e)
 ```
 
 ### Parameters
@@ -174,8 +174,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **access_resources_v1_list_access_resource_names**
-> V1ListAccessResourcesResponse access_resources_v1_list_access_resource_names(owner, offset=offset, limit=limit, sort=sort, query=query)
+# **list_access_resource_names**
+> V1ListAccessResourcesResponse list_access_resource_names(owner, offset=offset, limit=limit, sort=sort, query=query)
 
 List access resource names
 
@@ -203,10 +203,10 @@ query = 'query_example' # str | Query filter the search search. (optional)
 
 try:
     # List access resource names
-    api_response = api_instance.access_resources_v1_list_access_resource_names(owner, offset=offset, limit=limit, sort=sort, query=query)
+    api_response = api_instance.list_access_resource_names(owner, offset=offset, limit=limit, sort=sort, query=query)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling AccessResourcesV1Api->access_resources_v1_list_access_resource_names: %s\n" % e)
+    print("Exception when calling AccessResourcesV1Api->list_access_resource_names: %s\n" % e)
 ```
 
 ### Parameters
@@ -234,8 +234,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **access_resources_v1_list_access_resources**
-> V1ListAccessResourcesResponse access_resources_v1_list_access_resources(owner, offset=offset, limit=limit, sort=sort, query=query)
+# **list_access_resources**
+> V1ListAccessResourcesResponse list_access_resources(owner, offset=offset, limit=limit, sort=sort, query=query)
 
 List access resources
 
@@ -263,10 +263,10 @@ query = 'query_example' # str | Query filter the search search. (optional)
 
 try:
     # List access resources
-    api_response = api_instance.access_resources_v1_list_access_resources(owner, offset=offset, limit=limit, sort=sort, query=query)
+    api_response = api_instance.list_access_resources(owner, offset=offset, limit=limit, sort=sort, query=query)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling AccessResourcesV1Api->access_resources_v1_list_access_resources: %s\n" % e)
+    print("Exception when calling AccessResourcesV1Api->list_access_resources: %s\n" % e)
 ```
 
 ### Parameters
@@ -294,8 +294,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **access_resources_v1_patch_access_resource**
-> V1AccessResource access_resources_v1_patch_access_resource(owner, access_resource_uuid, body)
+# **patch_access_resource**
+> V1AccessResource patch_access_resource(owner, access_resource_uuid, body)
 
 Patch access resource
 
@@ -321,10 +321,10 @@ body = polyaxon_sdk.V1AccessResource() # V1AccessResource | Artifact store body
 
 try:
     # Patch access resource
-    api_response = api_instance.access_resources_v1_patch_access_resource(owner, access_resource_uuid, body)
+    api_response = api_instance.patch_access_resource(owner, access_resource_uuid, body)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling AccessResourcesV1Api->access_resources_v1_patch_access_resource: %s\n" % e)
+    print("Exception when calling AccessResourcesV1Api->patch_access_resource: %s\n" % e)
 ```
 
 ### Parameters
@@ -350,8 +350,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **access_resources_v1_update_access_resource**
-> V1AccessResource access_resources_v1_update_access_resource(owner, access_resource_uuid, body)
+# **update_access_resource**
+> V1AccessResource update_access_resource(owner, access_resource_uuid, body)
 
 Update access resource
 
@@ -377,10 +377,10 @@ body = polyaxon_sdk.V1AccessResource() # V1AccessResource | Artifact store body
 
 try:
     # Update access resource
-    api_response = api_instance.access_resources_v1_update_access_resource(owner, access_resource_uuid, body)
+    api_response = api_instance.update_access_resource(owner, access_resource_uuid, body)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling AccessResourcesV1Api->access_resources_v1_update_access_resource: %s\n" % e)
+    print("Exception when calling AccessResourcesV1Api->update_access_resource: %s\n" % e)
 ```
 
 ### Parameters

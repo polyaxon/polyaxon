@@ -4,18 +4,18 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**runProfilesV1CreateRunProfile**](RunProfilesV1Api.md#runProfilesV1CreateRunProfile) | **POST** /api/v1/orgs/{owner}/run_profiles | Create hub component
-[**runProfilesV1DeleteRunProfile**](RunProfilesV1Api.md#runProfilesV1DeleteRunProfile) | **DELETE** /api/v1/orgs/{owner}/run_profiles/{uuid} | Delete hub component
-[**runProfilesV1GetRunProfile**](RunProfilesV1Api.md#runProfilesV1GetRunProfile) | **GET** /api/v1/orgs/{owner}/run_profiles/{uuid} | Get hub component
-[**runProfilesV1ListRunProfileNames**](RunProfilesV1Api.md#runProfilesV1ListRunProfileNames) | **GET** /api/v1/orgs/{owner}/run_profiles/names | List hub component names
-[**runProfilesV1ListRunProfiles**](RunProfilesV1Api.md#runProfilesV1ListRunProfiles) | **GET** /api/v1/orgs/{owner}/run_profiles | List hub components
-[**runProfilesV1PatchRunProfile**](RunProfilesV1Api.md#runProfilesV1PatchRunProfile) | **PATCH** /api/v1/orgs/{owner}/run_profiles/{run_profile.uuid} | Patch hub component
-[**runProfilesV1UpdateRunProfile**](RunProfilesV1Api.md#runProfilesV1UpdateRunProfile) | **PUT** /api/v1/orgs/{owner}/run_profiles/{run_profile.uuid} | Update hub component
+[**createRunProfile**](RunProfilesV1Api.md#createRunProfile) | **POST** /api/v1/orgs/{owner}/run_profiles | Create hub component
+[**deleteRunProfile**](RunProfilesV1Api.md#deleteRunProfile) | **DELETE** /api/v1/orgs/{owner}/run_profiles/{uuid} | Delete hub component
+[**getRunProfile**](RunProfilesV1Api.md#getRunProfile) | **GET** /api/v1/orgs/{owner}/run_profiles/{uuid} | Get hub component
+[**listRunProfileNames**](RunProfilesV1Api.md#listRunProfileNames) | **GET** /api/v1/orgs/{owner}/run_profiles/names | List hub component names
+[**listRunProfiles**](RunProfilesV1Api.md#listRunProfiles) | **GET** /api/v1/orgs/{owner}/run_profiles | List hub components
+[**patchRunProfile**](RunProfilesV1Api.md#patchRunProfile) | **PATCH** /api/v1/orgs/{owner}/run_profiles/{run_profile.uuid} | Patch hub component
+[**updateRunProfile**](RunProfilesV1Api.md#updateRunProfile) | **PUT** /api/v1/orgs/{owner}/run_profiles/{run_profile.uuid} | Update hub component
 
 
-<a name="runProfilesV1CreateRunProfile"></a>
-# **runProfilesV1CreateRunProfile**
-> V1RunProfile runProfilesV1CreateRunProfile(owner, body)
+<a name="createRunProfile"></a>
+# **createRunProfile**
+> V1RunProfile createRunProfile(owner, body)
 
 Create hub component
 
@@ -44,7 +44,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.runProfilesV1CreateRunProfile(owner, body, callback);
+apiInstance.createRunProfile(owner, body, callback);
 ```
 
 ### Parameters
@@ -67,9 +67,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="runProfilesV1DeleteRunProfile"></a>
-# **runProfilesV1DeleteRunProfile**
-> runProfilesV1DeleteRunProfile(owner, uuid)
+<a name="deleteRunProfile"></a>
+# **deleteRunProfile**
+> deleteRunProfile(owner, uuid)
 
 Delete hub component
 
@@ -98,7 +98,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully.');
   }
 };
-apiInstance.runProfilesV1DeleteRunProfile(owner, uuid, callback);
+apiInstance.deleteRunProfile(owner, uuid, callback);
 ```
 
 ### Parameters
@@ -121,9 +121,9 @@ null (empty response body)
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="runProfilesV1GetRunProfile"></a>
-# **runProfilesV1GetRunProfile**
-> V1RunProfile runProfilesV1GetRunProfile(owner, uuid)
+<a name="getRunProfile"></a>
+# **getRunProfile**
+> V1RunProfile getRunProfile(owner, uuid)
 
 Get hub component
 
@@ -152,7 +152,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.runProfilesV1GetRunProfile(owner, uuid, callback);
+apiInstance.getRunProfile(owner, uuid, callback);
 ```
 
 ### Parameters
@@ -175,9 +175,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="runProfilesV1ListRunProfileNames"></a>
-# **runProfilesV1ListRunProfileNames**
-> V1ListRunProfilesResponse runProfilesV1ListRunProfileNames(owner, opts)
+<a name="listRunProfileNames"></a>
+# **listRunProfileNames**
+> V1ListRunProfilesResponse listRunProfileNames(owner, opts)
 
 List hub component names
 
@@ -210,7 +210,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.runProfilesV1ListRunProfileNames(owner, opts, callback);
+apiInstance.listRunProfileNames(owner, opts, callback);
 ```
 
 ### Parameters
@@ -236,9 +236,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="runProfilesV1ListRunProfiles"></a>
-# **runProfilesV1ListRunProfiles**
-> V1ListRunProfilesResponse runProfilesV1ListRunProfiles(owner, opts)
+<a name="listRunProfiles"></a>
+# **listRunProfiles**
+> V1ListRunProfilesResponse listRunProfiles(owner, opts)
 
 List hub components
 
@@ -271,7 +271,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.runProfilesV1ListRunProfiles(owner, opts, callback);
+apiInstance.listRunProfiles(owner, opts, callback);
 ```
 
 ### Parameters
@@ -297,9 +297,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="runProfilesV1PatchRunProfile"></a>
-# **runProfilesV1PatchRunProfile**
-> V1RunProfile runProfilesV1PatchRunProfile(owner, run_profile_uuid, body)
+<a name="patchRunProfile"></a>
+# **patchRunProfile**
+> V1RunProfile patchRunProfile(owner, run_profile_uuid, body)
 
 Patch hub component
 
@@ -330,7 +330,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.runProfilesV1PatchRunProfile(owner, run_profile_uuid, body, callback);
+apiInstance.patchRunProfile(owner, run_profile_uuid, body, callback);
 ```
 
 ### Parameters
@@ -354,9 +354,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="runProfilesV1UpdateRunProfile"></a>
-# **runProfilesV1UpdateRunProfile**
-> V1RunProfile runProfilesV1UpdateRunProfile(owner, run_profile_uuid, body)
+<a name="updateRunProfile"></a>
+# **updateRunProfile**
+> V1RunProfile updateRunProfile(owner, run_profile_uuid, body)
 
 Update hub component
 
@@ -387,7 +387,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.runProfilesV1UpdateRunProfile(owner, run_profile_uuid, body, callback);
+apiInstance.updateRunProfile(owner, run_profile_uuid, body, callback);
 ```
 
 ### Parameters

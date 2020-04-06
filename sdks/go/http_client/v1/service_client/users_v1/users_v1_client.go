@@ -39,29 +39,29 @@ type Client struct {
 
 // ClientService is the interface for Client methods
 type ClientService interface {
-	UsersV1GetUser(params *UsersV1GetUserParams, authInfo runtime.ClientAuthInfoWriter) (*UsersV1GetUserOK, *UsersV1GetUserNoContent, error)
+	GetUser(params *GetUserParams, authInfo runtime.ClientAuthInfoWriter) (*GetUserOK, *GetUserNoContent, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
 
 /*
-  UsersV1GetUser logins
+  GetUser logins
 */
-func (a *Client) UsersV1GetUser(params *UsersV1GetUserParams, authInfo runtime.ClientAuthInfoWriter) (*UsersV1GetUserOK, *UsersV1GetUserNoContent, error) {
+func (a *Client) GetUser(params *GetUserParams, authInfo runtime.ClientAuthInfoWriter) (*GetUserOK, *GetUserNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewUsersV1GetUserParams()
+		params = NewGetUserParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "UsersV1_GetUser",
+		ID:                 "GetUser",
 		Method:             "GET",
 		PathPattern:        "/api/v1/users",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &UsersV1GetUserReader{formats: a.formats},
+		Reader:             &GetUserReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -70,13 +70,13 @@ func (a *Client) UsersV1GetUser(params *UsersV1GetUserParams, authInfo runtime.C
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *UsersV1GetUserOK:
+	case *GetUserOK:
 		return value, nil, nil
-	case *UsersV1GetUserNoContent:
+	case *GetUserNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*UsersV1GetUserDefault)
+	unexpectedSuccess := result.(*GetUserDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 

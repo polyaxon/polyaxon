@@ -4,19 +4,19 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**projectDashboardsV1CreateProjectDashboard**](ProjectDashboardsV1Api.md#projectDashboardsV1CreateProjectDashboard) | **POST** /api/v1/{owner}/{project}/dashboards | Create project dashboard
-[**projectDashboardsV1DeleteProjectDashboard**](ProjectDashboardsV1Api.md#projectDashboardsV1DeleteProjectDashboard) | **DELETE** /api/v1/{owner}/{project}/dashboards/{uuid} | Delete project dashboard
-[**projectDashboardsV1GetProjectDashboard**](ProjectDashboardsV1Api.md#projectDashboardsV1GetProjectDashboard) | **GET** /api/v1/{owner}/{project}/dashboards/{uuid} | Get project dashboard
-[**projectDashboardsV1ListProjectDashboardNames**](ProjectDashboardsV1Api.md#projectDashboardsV1ListProjectDashboardNames) | **GET** /api/v1/{owner}/{project}/dashboards/names | List project dashboard
-[**projectDashboardsV1ListProjectDashboards**](ProjectDashboardsV1Api.md#projectDashboardsV1ListProjectDashboards) | **GET** /api/v1/{owner}/{project}/dashboards | List project dashboards
-[**projectDashboardsV1PatchProjectDashboard**](ProjectDashboardsV1Api.md#projectDashboardsV1PatchProjectDashboard) | **PATCH** /api/v1/{owner}/{project}/dashboards/{dashboard.uuid} | Patch project dashboard
-[**projectDashboardsV1PromoteProjectDashboard**](ProjectDashboardsV1Api.md#projectDashboardsV1PromoteProjectDashboard) | **POST** /api/v1/{owner}/{project}/dashboards/{dashboard.uuid}/promote | Promote project dashboard
-[**projectDashboardsV1UpdateProjectDashboard**](ProjectDashboardsV1Api.md#projectDashboardsV1UpdateProjectDashboard) | **PUT** /api/v1/{owner}/{project}/dashboards/{dashboard.uuid} | Update project dashboard
+[**createProjectDashboard**](ProjectDashboardsV1Api.md#createProjectDashboard) | **POST** /api/v1/{owner}/{project}/dashboards | Create project dashboard
+[**deleteProjectDashboard**](ProjectDashboardsV1Api.md#deleteProjectDashboard) | **DELETE** /api/v1/{owner}/{project}/dashboards/{uuid} | Delete project dashboard
+[**getProjectDashboard**](ProjectDashboardsV1Api.md#getProjectDashboard) | **GET** /api/v1/{owner}/{project}/dashboards/{uuid} | Get project dashboard
+[**listProjectDashboardNames**](ProjectDashboardsV1Api.md#listProjectDashboardNames) | **GET** /api/v1/{owner}/{project}/dashboards/names | List project dashboard
+[**listProjectDashboards**](ProjectDashboardsV1Api.md#listProjectDashboards) | **GET** /api/v1/{owner}/{project}/dashboards | List project dashboards
+[**patchProjectDashboard**](ProjectDashboardsV1Api.md#patchProjectDashboard) | **PATCH** /api/v1/{owner}/{project}/dashboards/{dashboard.uuid} | Patch project dashboard
+[**promoteProjectDashboard**](ProjectDashboardsV1Api.md#promoteProjectDashboard) | **POST** /api/v1/{owner}/{project}/dashboards/{dashboard.uuid}/promote | Promote project dashboard
+[**updateProjectDashboard**](ProjectDashboardsV1Api.md#updateProjectDashboard) | **PUT** /api/v1/{owner}/{project}/dashboards/{dashboard.uuid} | Update project dashboard
 
 
-<a name="projectDashboardsV1CreateProjectDashboard"></a>
-# **projectDashboardsV1CreateProjectDashboard**
-> V1Dashboard projectDashboardsV1CreateProjectDashboard(owner, project, body)
+<a name="createProjectDashboard"></a>
+# **createProjectDashboard**
+> V1Dashboard createProjectDashboard(owner, project, body)
 
 Create project dashboard
 
@@ -42,10 +42,10 @@ String owner = "owner_example"; // String | Owner of the namespace
 String project = "project_example"; // String | Project under namesapce
 V1Dashboard body = new V1Dashboard(); // V1Dashboard | Dashboard body
 try {
-    V1Dashboard result = apiInstance.projectDashboardsV1CreateProjectDashboard(owner, project, body);
+    V1Dashboard result = apiInstance.createProjectDashboard(owner, project, body);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling ProjectDashboardsV1Api#projectDashboardsV1CreateProjectDashboard");
+    System.err.println("Exception when calling ProjectDashboardsV1Api#createProjectDashboard");
     e.printStackTrace();
 }
 ```
@@ -71,9 +71,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="projectDashboardsV1DeleteProjectDashboard"></a>
-# **projectDashboardsV1DeleteProjectDashboard**
-> projectDashboardsV1DeleteProjectDashboard(owner, project, uuid)
+<a name="deleteProjectDashboard"></a>
+# **deleteProjectDashboard**
+> deleteProjectDashboard(owner, project, uuid)
 
 Delete project dashboard
 
@@ -99,9 +99,9 @@ String owner = "owner_example"; // String | Owner of the namespace
 String project = "project_example"; // String | Project
 String uuid = "uuid_example"; // String | Uuid identifier of the entity
 try {
-    apiInstance.projectDashboardsV1DeleteProjectDashboard(owner, project, uuid);
+    apiInstance.deleteProjectDashboard(owner, project, uuid);
 } catch (ApiException e) {
-    System.err.println("Exception when calling ProjectDashboardsV1Api#projectDashboardsV1DeleteProjectDashboard");
+    System.err.println("Exception when calling ProjectDashboardsV1Api#deleteProjectDashboard");
     e.printStackTrace();
 }
 ```
@@ -127,9 +127,9 @@ null (empty response body)
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="projectDashboardsV1GetProjectDashboard"></a>
-# **projectDashboardsV1GetProjectDashboard**
-> V1Dashboard projectDashboardsV1GetProjectDashboard(owner, project, uuid)
+<a name="getProjectDashboard"></a>
+# **getProjectDashboard**
+> V1Dashboard getProjectDashboard(owner, project, uuid)
 
 Get project dashboard
 
@@ -155,10 +155,10 @@ String owner = "owner_example"; // String | Owner of the namespace
 String project = "project_example"; // String | Project
 String uuid = "uuid_example"; // String | Uuid identifier of the entity
 try {
-    V1Dashboard result = apiInstance.projectDashboardsV1GetProjectDashboard(owner, project, uuid);
+    V1Dashboard result = apiInstance.getProjectDashboard(owner, project, uuid);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling ProjectDashboardsV1Api#projectDashboardsV1GetProjectDashboard");
+    System.err.println("Exception when calling ProjectDashboardsV1Api#getProjectDashboard");
     e.printStackTrace();
 }
 ```
@@ -184,9 +184,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="projectDashboardsV1ListProjectDashboardNames"></a>
-# **projectDashboardsV1ListProjectDashboardNames**
-> V1ListDashboardsResponse projectDashboardsV1ListProjectDashboardNames(owner, project, offset, limit, sort, query)
+<a name="listProjectDashboardNames"></a>
+# **listProjectDashboardNames**
+> V1ListDashboardsResponse listProjectDashboardNames(owner, project, offset, limit, sort, query)
 
 List project dashboard
 
@@ -215,10 +215,10 @@ Integer limit = 56; // Integer | Limit size.
 String sort = "sort_example"; // String | Sort to order the search.
 String query = "query_example"; // String | Query filter the search search.
 try {
-    V1ListDashboardsResponse result = apiInstance.projectDashboardsV1ListProjectDashboardNames(owner, project, offset, limit, sort, query);
+    V1ListDashboardsResponse result = apiInstance.listProjectDashboardNames(owner, project, offset, limit, sort, query);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling ProjectDashboardsV1Api#projectDashboardsV1ListProjectDashboardNames");
+    System.err.println("Exception when calling ProjectDashboardsV1Api#listProjectDashboardNames");
     e.printStackTrace();
 }
 ```
@@ -247,9 +247,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="projectDashboardsV1ListProjectDashboards"></a>
-# **projectDashboardsV1ListProjectDashboards**
-> V1ListDashboardsResponse projectDashboardsV1ListProjectDashboards(owner, project, offset, limit, sort, query)
+<a name="listProjectDashboards"></a>
+# **listProjectDashboards**
+> V1ListDashboardsResponse listProjectDashboards(owner, project, offset, limit, sort, query)
 
 List project dashboards
 
@@ -278,10 +278,10 @@ Integer limit = 56; // Integer | Limit size.
 String sort = "sort_example"; // String | Sort to order the search.
 String query = "query_example"; // String | Query filter the search search.
 try {
-    V1ListDashboardsResponse result = apiInstance.projectDashboardsV1ListProjectDashboards(owner, project, offset, limit, sort, query);
+    V1ListDashboardsResponse result = apiInstance.listProjectDashboards(owner, project, offset, limit, sort, query);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling ProjectDashboardsV1Api#projectDashboardsV1ListProjectDashboards");
+    System.err.println("Exception when calling ProjectDashboardsV1Api#listProjectDashboards");
     e.printStackTrace();
 }
 ```
@@ -310,9 +310,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="projectDashboardsV1PatchProjectDashboard"></a>
-# **projectDashboardsV1PatchProjectDashboard**
-> V1Dashboard projectDashboardsV1PatchProjectDashboard(owner, project, dashboardUuid, body)
+<a name="patchProjectDashboard"></a>
+# **patchProjectDashboard**
+> V1Dashboard patchProjectDashboard(owner, project, dashboardUuid, body)
 
 Patch project dashboard
 
@@ -339,10 +339,10 @@ String project = "project_example"; // String | Project under namesapce
 String dashboardUuid = "dashboardUuid_example"; // String | UUID
 V1Dashboard body = new V1Dashboard(); // V1Dashboard | Dashboard body
 try {
-    V1Dashboard result = apiInstance.projectDashboardsV1PatchProjectDashboard(owner, project, dashboardUuid, body);
+    V1Dashboard result = apiInstance.patchProjectDashboard(owner, project, dashboardUuid, body);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling ProjectDashboardsV1Api#projectDashboardsV1PatchProjectDashboard");
+    System.err.println("Exception when calling ProjectDashboardsV1Api#patchProjectDashboard");
     e.printStackTrace();
 }
 ```
@@ -369,9 +369,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="projectDashboardsV1PromoteProjectDashboard"></a>
-# **projectDashboardsV1PromoteProjectDashboard**
-> V1Dashboard projectDashboardsV1PromoteProjectDashboard(owner, project, dashboardUuid)
+<a name="promoteProjectDashboard"></a>
+# **promoteProjectDashboard**
+> V1Dashboard promoteProjectDashboard(owner, project, dashboardUuid)
 
 Promote project dashboard
 
@@ -397,10 +397,10 @@ String owner = "owner_example"; // String | Owner of the namespace
 String project = "project_example"; // String | Project under namesapce
 String dashboardUuid = "dashboardUuid_example"; // String | UUID
 try {
-    V1Dashboard result = apiInstance.projectDashboardsV1PromoteProjectDashboard(owner, project, dashboardUuid);
+    V1Dashboard result = apiInstance.promoteProjectDashboard(owner, project, dashboardUuid);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling ProjectDashboardsV1Api#projectDashboardsV1PromoteProjectDashboard");
+    System.err.println("Exception when calling ProjectDashboardsV1Api#promoteProjectDashboard");
     e.printStackTrace();
 }
 ```
@@ -426,9 +426,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="projectDashboardsV1UpdateProjectDashboard"></a>
-# **projectDashboardsV1UpdateProjectDashboard**
-> V1Dashboard projectDashboardsV1UpdateProjectDashboard(owner, project, dashboardUuid, body)
+<a name="updateProjectDashboard"></a>
+# **updateProjectDashboard**
+> V1Dashboard updateProjectDashboard(owner, project, dashboardUuid, body)
 
 Update project dashboard
 
@@ -455,10 +455,10 @@ String project = "project_example"; // String | Project under namesapce
 String dashboardUuid = "dashboardUuid_example"; // String | UUID
 V1Dashboard body = new V1Dashboard(); // V1Dashboard | Dashboard body
 try {
-    V1Dashboard result = apiInstance.projectDashboardsV1UpdateProjectDashboard(owner, project, dashboardUuid, body);
+    V1Dashboard result = apiInstance.updateProjectDashboard(owner, project, dashboardUuid, body);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling ProjectDashboardsV1Api#projectDashboardsV1UpdateProjectDashboard");
+    System.err.println("Exception when calling ProjectDashboardsV1Api#updateProjectDashboard");
     e.printStackTrace();
 }
 ```

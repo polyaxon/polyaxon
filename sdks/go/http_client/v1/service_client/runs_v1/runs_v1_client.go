@@ -41,101 +41,569 @@ type Client struct {
 
 // ClientService is the interface for Client methods
 type ClientService interface {
+	ArchiveRun(params *ArchiveRunParams, authInfo runtime.ClientAuthInfoWriter) (*ArchiveRunOK, *ArchiveRunNoContent, error)
+
+	BookmarkRun(params *BookmarkRunParams, authInfo runtime.ClientAuthInfoWriter) (*BookmarkRunOK, *BookmarkRunNoContent, error)
+
+	BookmarkRuns(params *BookmarkRunsParams, authInfo runtime.ClientAuthInfoWriter) (*BookmarkRunsOK, *BookmarkRunsNoContent, error)
+
+	CollectRunLogs(params *CollectRunLogsParams, authInfo runtime.ClientAuthInfoWriter) (*CollectRunLogsOK, *CollectRunLogsNoContent, error)
+
+	CopyRun(params *CopyRunParams, authInfo runtime.ClientAuthInfoWriter) (*CopyRunOK, *CopyRunNoContent, error)
+
+	CreateRun(params *CreateRunParams, authInfo runtime.ClientAuthInfoWriter) (*CreateRunOK, *CreateRunNoContent, error)
+
+	CreateRunArtifactsLineage(params *CreateRunArtifactsLineageParams, authInfo runtime.ClientAuthInfoWriter) (*CreateRunArtifactsLineageOK, *CreateRunArtifactsLineageNoContent, error)
+
+	CreateRunStatus(params *CreateRunStatusParams, authInfo runtime.ClientAuthInfoWriter) (*CreateRunStatusOK, *CreateRunStatusNoContent, error)
+
+	DeleteRun(params *DeleteRunParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteRunOK, *DeleteRunNoContent, error)
+
+	DeleteRunArtifactLineage(params *DeleteRunArtifactLineageParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteRunArtifactLineageOK, *DeleteRunArtifactLineageNoContent, error)
+
+	DeleteRuns(params *DeleteRunsParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteRunsOK, *DeleteRunsNoContent, error)
+
+	GetMultiRunEvents(params *GetMultiRunEventsParams, authInfo runtime.ClientAuthInfoWriter) (*GetMultiRunEventsOK, *GetMultiRunEventsNoContent, error)
+
+	GetRun(params *GetRunParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunOK, *GetRunNoContent, error)
+
 	GetRunArtifact(params *GetRunArtifactParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunArtifactOK, *GetRunArtifactNoContent, error)
+
+	GetRunArtifactLineage(params *GetRunArtifactLineageParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunArtifactLineageOK, *GetRunArtifactLineageNoContent, error)
 
 	GetRunArtifacts(params *GetRunArtifactsParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunArtifactsOK, *GetRunArtifactsNoContent, error)
 
-	RunsV1ArchiveRun(params *RunsV1ArchiveRunParams, authInfo runtime.ClientAuthInfoWriter) (*RunsV1ArchiveRunOK, *RunsV1ArchiveRunNoContent, error)
+	GetRunArtifactsLineage(params *GetRunArtifactsLineageParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunArtifactsLineageOK, *GetRunArtifactsLineageNoContent, error)
 
-	RunsV1BookmarkRun(params *RunsV1BookmarkRunParams, authInfo runtime.ClientAuthInfoWriter) (*RunsV1BookmarkRunOK, *RunsV1BookmarkRunNoContent, error)
+	GetRunArtifactsLineageNames(params *GetRunArtifactsLineageNamesParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunArtifactsLineageNamesOK, *GetRunArtifactsLineageNamesNoContent, error)
 
-	RunsV1BookmarkRuns(params *RunsV1BookmarkRunsParams, authInfo runtime.ClientAuthInfoWriter) (*RunsV1BookmarkRunsOK, *RunsV1BookmarkRunsNoContent, error)
+	GetRunArtifactsTree(params *GetRunArtifactsTreeParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunArtifactsTreeOK, *GetRunArtifactsTreeNoContent, error)
 
-	RunsV1CollectRunLogs(params *RunsV1CollectRunLogsParams, authInfo runtime.ClientAuthInfoWriter) (*RunsV1CollectRunLogsOK, *RunsV1CollectRunLogsNoContent, error)
+	GetRunEvents(params *GetRunEventsParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunEventsOK, *GetRunEventsNoContent, error)
 
-	RunsV1CopyRun(params *RunsV1CopyRunParams, authInfo runtime.ClientAuthInfoWriter) (*RunsV1CopyRunOK, *RunsV1CopyRunNoContent, error)
+	GetRunLogs(params *GetRunLogsParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunLogsOK, *GetRunLogsNoContent, error)
 
-	RunsV1CreateRun(params *RunsV1CreateRunParams, authInfo runtime.ClientAuthInfoWriter) (*RunsV1CreateRunOK, *RunsV1CreateRunNoContent, error)
+	GetRunNamespace(params *GetRunNamespaceParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunNamespaceOK, *GetRunNamespaceNoContent, error)
 
-	RunsV1CreateRunArtifactsLineage(params *RunsV1CreateRunArtifactsLineageParams, authInfo runtime.ClientAuthInfoWriter) (*RunsV1CreateRunArtifactsLineageOK, *RunsV1CreateRunArtifactsLineageNoContent, error)
+	GetRunResources(params *GetRunResourcesParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunResourcesOK, *GetRunResourcesNoContent, error)
 
-	RunsV1CreateRunStatus(params *RunsV1CreateRunStatusParams, authInfo runtime.ClientAuthInfoWriter) (*RunsV1CreateRunStatusOK, *RunsV1CreateRunStatusNoContent, error)
+	GetRunSettings(params *GetRunSettingsParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunSettingsOK, *GetRunSettingsNoContent, error)
 
-	RunsV1DeleteRun(params *RunsV1DeleteRunParams, authInfo runtime.ClientAuthInfoWriter) (*RunsV1DeleteRunOK, *RunsV1DeleteRunNoContent, error)
+	GetRunStatuses(params *GetRunStatusesParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunStatusesOK, *GetRunStatusesNoContent, error)
 
-	RunsV1DeleteRunArtifactLineage(params *RunsV1DeleteRunArtifactLineageParams, authInfo runtime.ClientAuthInfoWriter) (*RunsV1DeleteRunArtifactLineageOK, *RunsV1DeleteRunArtifactLineageNoContent, error)
+	GetRunsArtifactsLineage(params *GetRunsArtifactsLineageParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunsArtifactsLineageOK, *GetRunsArtifactsLineageNoContent, error)
 
-	RunsV1DeleteRuns(params *RunsV1DeleteRunsParams, authInfo runtime.ClientAuthInfoWriter) (*RunsV1DeleteRunsOK, *RunsV1DeleteRunsNoContent, error)
+	ImpersonateToken(params *ImpersonateTokenParams, authInfo runtime.ClientAuthInfoWriter) (*ImpersonateTokenOK, *ImpersonateTokenNoContent, error)
 
-	RunsV1GetMultiRunEvents(params *RunsV1GetMultiRunEventsParams, authInfo runtime.ClientAuthInfoWriter) (*RunsV1GetMultiRunEventsOK, *RunsV1GetMultiRunEventsNoContent, error)
+	InvalidateRun(params *InvalidateRunParams, authInfo runtime.ClientAuthInfoWriter) (*InvalidateRunOK, *InvalidateRunNoContent, error)
 
-	RunsV1GetRun(params *RunsV1GetRunParams, authInfo runtime.ClientAuthInfoWriter) (*RunsV1GetRunOK, *RunsV1GetRunNoContent, error)
+	InvalidateRuns(params *InvalidateRunsParams, authInfo runtime.ClientAuthInfoWriter) (*InvalidateRunsOK, *InvalidateRunsNoContent, error)
 
-	RunsV1GetRunArtifactLineage(params *RunsV1GetRunArtifactLineageParams, authInfo runtime.ClientAuthInfoWriter) (*RunsV1GetRunArtifactLineageOK, *RunsV1GetRunArtifactLineageNoContent, error)
+	ListArchivedRuns(params *ListArchivedRunsParams, authInfo runtime.ClientAuthInfoWriter) (*ListArchivedRunsOK, *ListArchivedRunsNoContent, error)
 
-	RunsV1GetRunArtifactsLineage(params *RunsV1GetRunArtifactsLineageParams, authInfo runtime.ClientAuthInfoWriter) (*RunsV1GetRunArtifactsLineageOK, *RunsV1GetRunArtifactsLineageNoContent, error)
+	ListBookmarkedRuns(params *ListBookmarkedRunsParams, authInfo runtime.ClientAuthInfoWriter) (*ListBookmarkedRunsOK, *ListBookmarkedRunsNoContent, error)
 
-	RunsV1GetRunArtifactsLineageNames(params *RunsV1GetRunArtifactsLineageNamesParams, authInfo runtime.ClientAuthInfoWriter) (*RunsV1GetRunArtifactsLineageNamesOK, *RunsV1GetRunArtifactsLineageNamesNoContent, error)
+	ListRuns(params *ListRunsParams, authInfo runtime.ClientAuthInfoWriter) (*ListRunsOK, *ListRunsNoContent, error)
 
-	RunsV1GetRunArtifactsTree(params *RunsV1GetRunArtifactsTreeParams, authInfo runtime.ClientAuthInfoWriter) (*RunsV1GetRunArtifactsTreeOK, *RunsV1GetRunArtifactsTreeNoContent, error)
+	ListRunsIo(params *ListRunsIoParams, authInfo runtime.ClientAuthInfoWriter) (*ListRunsIoOK, *ListRunsIoNoContent, error)
 
-	RunsV1GetRunEvents(params *RunsV1GetRunEventsParams, authInfo runtime.ClientAuthInfoWriter) (*RunsV1GetRunEventsOK, *RunsV1GetRunEventsNoContent, error)
+	NotifyRunStatus(params *NotifyRunStatusParams, authInfo runtime.ClientAuthInfoWriter) (*NotifyRunStatusOK, *NotifyRunStatusNoContent, error)
 
-	RunsV1GetRunLogs(params *RunsV1GetRunLogsParams, authInfo runtime.ClientAuthInfoWriter) (*RunsV1GetRunLogsOK, *RunsV1GetRunLogsNoContent, error)
+	PatchRun(params *PatchRunParams, authInfo runtime.ClientAuthInfoWriter) (*PatchRunOK, *PatchRunNoContent, error)
 
-	RunsV1GetRunNamespace(params *RunsV1GetRunNamespaceParams, authInfo runtime.ClientAuthInfoWriter) (*RunsV1GetRunNamespaceOK, *RunsV1GetRunNamespaceNoContent, error)
+	RestartRun(params *RestartRunParams, authInfo runtime.ClientAuthInfoWriter) (*RestartRunOK, *RestartRunNoContent, error)
 
-	RunsV1GetRunResources(params *RunsV1GetRunResourcesParams, authInfo runtime.ClientAuthInfoWriter) (*RunsV1GetRunResourcesOK, *RunsV1GetRunResourcesNoContent, error)
+	RestoreRun(params *RestoreRunParams, authInfo runtime.ClientAuthInfoWriter) (*RestoreRunOK, *RestoreRunNoContent, error)
 
-	RunsV1GetRunSettings(params *RunsV1GetRunSettingsParams, authInfo runtime.ClientAuthInfoWriter) (*RunsV1GetRunSettingsOK, *RunsV1GetRunSettingsNoContent, error)
+	ResumeRun(params *ResumeRunParams, authInfo runtime.ClientAuthInfoWriter) (*ResumeRunOK, *ResumeRunNoContent, error)
 
-	RunsV1GetRunStatuses(params *RunsV1GetRunStatusesParams, authInfo runtime.ClientAuthInfoWriter) (*RunsV1GetRunStatusesOK, *RunsV1GetRunStatusesNoContent, error)
+	StartRunTensorboard(params *StartRunTensorboardParams, authInfo runtime.ClientAuthInfoWriter) (*StartRunTensorboardOK, *StartRunTensorboardNoContent, error)
 
-	RunsV1GetRunsArtifactsLineage(params *RunsV1GetRunsArtifactsLineageParams, authInfo runtime.ClientAuthInfoWriter) (*RunsV1GetRunsArtifactsLineageOK, *RunsV1GetRunsArtifactsLineageNoContent, error)
+	StopRun(params *StopRunParams, authInfo runtime.ClientAuthInfoWriter) (*StopRunOK, *StopRunNoContent, error)
 
-	RunsV1ImpersonateToken(params *RunsV1ImpersonateTokenParams, authInfo runtime.ClientAuthInfoWriter) (*RunsV1ImpersonateTokenOK, *RunsV1ImpersonateTokenNoContent, error)
+	StopRunTensorboard(params *StopRunTensorboardParams, authInfo runtime.ClientAuthInfoWriter) (*StopRunTensorboardOK, *StopRunTensorboardNoContent, error)
 
-	RunsV1InvalidateRun(params *RunsV1InvalidateRunParams, authInfo runtime.ClientAuthInfoWriter) (*RunsV1InvalidateRunOK, *RunsV1InvalidateRunNoContent, error)
+	StopRuns(params *StopRunsParams, authInfo runtime.ClientAuthInfoWriter) (*StopRunsOK, *StopRunsNoContent, error)
 
-	RunsV1InvalidateRuns(params *RunsV1InvalidateRunsParams, authInfo runtime.ClientAuthInfoWriter) (*RunsV1InvalidateRunsOK, *RunsV1InvalidateRunsNoContent, error)
+	TagRuns(params *TagRunsParams, authInfo runtime.ClientAuthInfoWriter) (*TagRunsOK, *TagRunsNoContent, error)
 
-	RunsV1ListArchivedRuns(params *RunsV1ListArchivedRunsParams, authInfo runtime.ClientAuthInfoWriter) (*RunsV1ListArchivedRunsOK, *RunsV1ListArchivedRunsNoContent, error)
+	UnbookmarkRun(params *UnbookmarkRunParams, authInfo runtime.ClientAuthInfoWriter) (*UnbookmarkRunOK, *UnbookmarkRunNoContent, error)
 
-	RunsV1ListBookmarkedRuns(params *RunsV1ListBookmarkedRunsParams, authInfo runtime.ClientAuthInfoWriter) (*RunsV1ListBookmarkedRunsOK, *RunsV1ListBookmarkedRunsNoContent, error)
-
-	RunsV1ListRuns(params *RunsV1ListRunsParams, authInfo runtime.ClientAuthInfoWriter) (*RunsV1ListRunsOK, *RunsV1ListRunsNoContent, error)
-
-	RunsV1ListRunsIo(params *RunsV1ListRunsIoParams, authInfo runtime.ClientAuthInfoWriter) (*RunsV1ListRunsIoOK, *RunsV1ListRunsIoNoContent, error)
-
-	RunsV1NotifyRunStatus(params *RunsV1NotifyRunStatusParams, authInfo runtime.ClientAuthInfoWriter) (*RunsV1NotifyRunStatusOK, *RunsV1NotifyRunStatusNoContent, error)
-
-	RunsV1PatchRun(params *RunsV1PatchRunParams, authInfo runtime.ClientAuthInfoWriter) (*RunsV1PatchRunOK, *RunsV1PatchRunNoContent, error)
-
-	RunsV1RestartRun(params *RunsV1RestartRunParams, authInfo runtime.ClientAuthInfoWriter) (*RunsV1RestartRunOK, *RunsV1RestartRunNoContent, error)
-
-	RunsV1RestoreRun(params *RunsV1RestoreRunParams, authInfo runtime.ClientAuthInfoWriter) (*RunsV1RestoreRunOK, *RunsV1RestoreRunNoContent, error)
-
-	RunsV1ResumeRun(params *RunsV1ResumeRunParams, authInfo runtime.ClientAuthInfoWriter) (*RunsV1ResumeRunOK, *RunsV1ResumeRunNoContent, error)
-
-	RunsV1StartRunTensorboard(params *RunsV1StartRunTensorboardParams, authInfo runtime.ClientAuthInfoWriter) (*RunsV1StartRunTensorboardOK, *RunsV1StartRunTensorboardNoContent, error)
-
-	RunsV1StopRun(params *RunsV1StopRunParams, authInfo runtime.ClientAuthInfoWriter) (*RunsV1StopRunOK, *RunsV1StopRunNoContent, error)
-
-	RunsV1StopRunTensorboard(params *RunsV1StopRunTensorboardParams, authInfo runtime.ClientAuthInfoWriter) (*RunsV1StopRunTensorboardOK, *RunsV1StopRunTensorboardNoContent, error)
-
-	RunsV1StopRuns(params *RunsV1StopRunsParams, authInfo runtime.ClientAuthInfoWriter) (*RunsV1StopRunsOK, *RunsV1StopRunsNoContent, error)
-
-	RunsV1TagRuns(params *RunsV1TagRunsParams, authInfo runtime.ClientAuthInfoWriter) (*RunsV1TagRunsOK, *RunsV1TagRunsNoContent, error)
-
-	RunsV1UnbookmarkRun(params *RunsV1UnbookmarkRunParams, authInfo runtime.ClientAuthInfoWriter) (*RunsV1UnbookmarkRunOK, *RunsV1UnbookmarkRunNoContent, error)
-
-	RunsV1UpdateRun(params *RunsV1UpdateRunParams, authInfo runtime.ClientAuthInfoWriter) (*RunsV1UpdateRunOK, *RunsV1UpdateRunNoContent, error)
+	UpdateRun(params *UpdateRunParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateRunOK, *UpdateRunNoContent, error)
 
 	UploadRunArtifact(params *UploadRunArtifactParams, authInfo runtime.ClientAuthInfoWriter) (*UploadRunArtifactOK, *UploadRunArtifactNoContent, error)
 
 	UploadRunLogs(params *UploadRunLogsParams, authInfo runtime.ClientAuthInfoWriter) (*UploadRunLogsOK, *UploadRunLogsNoContent, error)
 
 	SetTransport(transport runtime.ClientTransport)
+}
+
+/*
+  ArchiveRun archives run
+*/
+func (a *Client) ArchiveRun(params *ArchiveRunParams, authInfo runtime.ClientAuthInfoWriter) (*ArchiveRunOK, *ArchiveRunNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewArchiveRunParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "ArchiveRun",
+		Method:             "POST",
+		PathPattern:        "/api/v1/{owner}/{project}/runs/{uuid}/archive",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &ArchiveRunReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *ArchiveRunOK:
+		return value, nil, nil
+	case *ArchiveRunNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*ArchiveRunDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+  BookmarkRun bookmarks run
+*/
+func (a *Client) BookmarkRun(params *BookmarkRunParams, authInfo runtime.ClientAuthInfoWriter) (*BookmarkRunOK, *BookmarkRunNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewBookmarkRunParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "BookmarkRun",
+		Method:             "POST",
+		PathPattern:        "/api/v1/{owner}/{project}/runs/{uuid}/bookmark",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &BookmarkRunReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *BookmarkRunOK:
+		return value, nil, nil
+	case *BookmarkRunNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*BookmarkRunDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+  BookmarkRuns bookmarks runs
+*/
+func (a *Client) BookmarkRuns(params *BookmarkRunsParams, authInfo runtime.ClientAuthInfoWriter) (*BookmarkRunsOK, *BookmarkRunsNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewBookmarkRunsParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "BookmarkRuns",
+		Method:             "POST",
+		PathPattern:        "/api/v1/{owner}/{project}/runs/bookmark",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &BookmarkRunsReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *BookmarkRunsOK:
+		return value, nil, nil
+	case *BookmarkRunsNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*BookmarkRunsDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+  CollectRunLogs collects run logs
+*/
+func (a *Client) CollectRunLogs(params *CollectRunLogsParams, authInfo runtime.ClientAuthInfoWriter) (*CollectRunLogsOK, *CollectRunLogsNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewCollectRunLogsParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "CollectRunLogs",
+		Method:             "POST",
+		PathPattern:        "/streams/v1/{namespace}/_internal/{owner}/{project}/runs/{uuid}/logs",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &CollectRunLogsReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *CollectRunLogsOK:
+		return value, nil, nil
+	case *CollectRunLogsNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*CollectRunLogsDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+  CopyRun restarts run with copy
+*/
+func (a *Client) CopyRun(params *CopyRunParams, authInfo runtime.ClientAuthInfoWriter) (*CopyRunOK, *CopyRunNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewCopyRunParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "CopyRun",
+		Method:             "POST",
+		PathPattern:        "/api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/copy",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &CopyRunReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *CopyRunOK:
+		return value, nil, nil
+	case *CopyRunNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*CopyRunDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+  CreateRun creates new run
+*/
+func (a *Client) CreateRun(params *CreateRunParams, authInfo runtime.ClientAuthInfoWriter) (*CreateRunOK, *CreateRunNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewCreateRunParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "CreateRun",
+		Method:             "POST",
+		PathPattern:        "/api/v1/{owner}/{project}/runs",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &CreateRunReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *CreateRunOK:
+		return value, nil, nil
+	case *CreateRunNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*CreateRunDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+  CreateRunArtifactsLineage creates bulk run run artifacts lineage
+*/
+func (a *Client) CreateRunArtifactsLineage(params *CreateRunArtifactsLineageParams, authInfo runtime.ClientAuthInfoWriter) (*CreateRunArtifactsLineageOK, *CreateRunArtifactsLineageNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewCreateRunArtifactsLineageParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "CreateRunArtifactsLineage",
+		Method:             "POST",
+		PathPattern:        "/api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &CreateRunArtifactsLineageReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *CreateRunArtifactsLineageOK:
+		return value, nil, nil
+	case *CreateRunArtifactsLineageNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*CreateRunArtifactsLineageDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+  CreateRunStatus creates new run status
+*/
+func (a *Client) CreateRunStatus(params *CreateRunStatusParams, authInfo runtime.ClientAuthInfoWriter) (*CreateRunStatusOK, *CreateRunStatusNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewCreateRunStatusParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "CreateRunStatus",
+		Method:             "POST",
+		PathPattern:        "/api/v1/{owner}/{project}/runs/{uuid}/statuses",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &CreateRunStatusReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *CreateRunStatusOK:
+		return value, nil, nil
+	case *CreateRunStatusNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*CreateRunStatusDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+  DeleteRun deletes run
+*/
+func (a *Client) DeleteRun(params *DeleteRunParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteRunOK, *DeleteRunNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewDeleteRunParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "DeleteRun",
+		Method:             "DELETE",
+		PathPattern:        "/api/v1/{owner}/{project}/runs/{uuid}",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &DeleteRunReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *DeleteRunOK:
+		return value, nil, nil
+	case *DeleteRunNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*DeleteRunDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+  DeleteRunArtifactLineage deletes run artifact lineage
+*/
+func (a *Client) DeleteRunArtifactLineage(params *DeleteRunArtifactLineageParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteRunArtifactLineageOK, *DeleteRunArtifactLineageNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewDeleteRunArtifactLineageParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "DeleteRunArtifactLineage",
+		Method:             "DELETE",
+		PathPattern:        "/api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage/{name}",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &DeleteRunArtifactLineageReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *DeleteRunArtifactLineageOK:
+		return value, nil, nil
+	case *DeleteRunArtifactLineageNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*DeleteRunArtifactLineageDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+  DeleteRuns deletes runs
+*/
+func (a *Client) DeleteRuns(params *DeleteRunsParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteRunsOK, *DeleteRunsNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewDeleteRunsParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "DeleteRuns",
+		Method:             "DELETE",
+		PathPattern:        "/api/v1/{owner}/{project}/runs/delete",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &DeleteRunsReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *DeleteRunsOK:
+		return value, nil, nil
+	case *DeleteRunsNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*DeleteRunsDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+  GetMultiRunEvents gets multi runs events
+*/
+func (a *Client) GetMultiRunEvents(params *GetMultiRunEventsParams, authInfo runtime.ClientAuthInfoWriter) (*GetMultiRunEventsOK, *GetMultiRunEventsNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetMultiRunEventsParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "GetMultiRunEvents",
+		Method:             "GET",
+		PathPattern:        "/streams/v1/{namespace}/{owner}/{project}/runs/multi/events/{kind}",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &GetMultiRunEventsReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *GetMultiRunEventsOK:
+		return value, nil, nil
+	case *GetMultiRunEventsNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*GetMultiRunEventsDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+  GetRun gets run
+*/
+func (a *Client) GetRun(params *GetRunParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunOK, *GetRunNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetRunParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "GetRun",
+		Method:             "GET",
+		PathPattern:        "/api/v1/{owner}/{project}/runs/{uuid}",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &GetRunReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *GetRunOK:
+		return value, nil, nil
+	case *GetRunNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*GetRunDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
@@ -175,6 +643,42 @@ func (a *Client) GetRunArtifact(params *GetRunArtifactParams, authInfo runtime.C
 }
 
 /*
+  GetRunArtifactLineage gets run artifacts lineage
+*/
+func (a *Client) GetRunArtifactLineage(params *GetRunArtifactLineageParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunArtifactLineageOK, *GetRunArtifactLineageNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetRunArtifactLineageParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "GetRunArtifactLineage",
+		Method:             "GET",
+		PathPattern:        "/api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage/{name}",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &GetRunArtifactLineageReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *GetRunArtifactLineageOK:
+		return value, nil, nil
+	case *GetRunArtifactLineageNoContent:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*GetRunArtifactLineageDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
   GetRunArtifacts gets run artifacts
 */
 func (a *Client) GetRunArtifacts(params *GetRunArtifactsParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunArtifactsOK, *GetRunArtifactsNoContent, error) {
@@ -211,527 +715,23 @@ func (a *Client) GetRunArtifacts(params *GetRunArtifactsParams, authInfo runtime
 }
 
 /*
-  RunsV1ArchiveRun archives run
+  GetRunArtifactsLineage gets run artifacts lineage
 */
-func (a *Client) RunsV1ArchiveRun(params *RunsV1ArchiveRunParams, authInfo runtime.ClientAuthInfoWriter) (*RunsV1ArchiveRunOK, *RunsV1ArchiveRunNoContent, error) {
+func (a *Client) GetRunArtifactsLineage(params *GetRunArtifactsLineageParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunArtifactsLineageOK, *GetRunArtifactsLineageNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewRunsV1ArchiveRunParams()
+		params = NewGetRunArtifactsLineageParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "RunsV1_ArchiveRun",
-		Method:             "POST",
-		PathPattern:        "/api/v1/{owner}/{project}/runs/{uuid}/archive",
-		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https"},
-		Params:             params,
-		Reader:             &RunsV1ArchiveRunReader{formats: a.formats},
-		AuthInfo:           authInfo,
-		Context:            params.Context,
-		Client:             params.HTTPClient,
-	})
-	if err != nil {
-		return nil, nil, err
-	}
-	switch value := result.(type) {
-	case *RunsV1ArchiveRunOK:
-		return value, nil, nil
-	case *RunsV1ArchiveRunNoContent:
-		return nil, value, nil
-	}
-	// unexpected success response
-	unexpectedSuccess := result.(*RunsV1ArchiveRunDefault)
-	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
-}
-
-/*
-  RunsV1BookmarkRun bookmarks run
-*/
-func (a *Client) RunsV1BookmarkRun(params *RunsV1BookmarkRunParams, authInfo runtime.ClientAuthInfoWriter) (*RunsV1BookmarkRunOK, *RunsV1BookmarkRunNoContent, error) {
-	// TODO: Validate the params before sending
-	if params == nil {
-		params = NewRunsV1BookmarkRunParams()
-	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "RunsV1_BookmarkRun",
-		Method:             "POST",
-		PathPattern:        "/api/v1/{owner}/{project}/runs/{uuid}/bookmark",
-		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https"},
-		Params:             params,
-		Reader:             &RunsV1BookmarkRunReader{formats: a.formats},
-		AuthInfo:           authInfo,
-		Context:            params.Context,
-		Client:             params.HTTPClient,
-	})
-	if err != nil {
-		return nil, nil, err
-	}
-	switch value := result.(type) {
-	case *RunsV1BookmarkRunOK:
-		return value, nil, nil
-	case *RunsV1BookmarkRunNoContent:
-		return nil, value, nil
-	}
-	// unexpected success response
-	unexpectedSuccess := result.(*RunsV1BookmarkRunDefault)
-	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
-}
-
-/*
-  RunsV1BookmarkRuns bookmarks runs
-*/
-func (a *Client) RunsV1BookmarkRuns(params *RunsV1BookmarkRunsParams, authInfo runtime.ClientAuthInfoWriter) (*RunsV1BookmarkRunsOK, *RunsV1BookmarkRunsNoContent, error) {
-	// TODO: Validate the params before sending
-	if params == nil {
-		params = NewRunsV1BookmarkRunsParams()
-	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "RunsV1_BookmarkRuns",
-		Method:             "POST",
-		PathPattern:        "/api/v1/{owner}/{project}/runs/bookmark",
-		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https"},
-		Params:             params,
-		Reader:             &RunsV1BookmarkRunsReader{formats: a.formats},
-		AuthInfo:           authInfo,
-		Context:            params.Context,
-		Client:             params.HTTPClient,
-	})
-	if err != nil {
-		return nil, nil, err
-	}
-	switch value := result.(type) {
-	case *RunsV1BookmarkRunsOK:
-		return value, nil, nil
-	case *RunsV1BookmarkRunsNoContent:
-		return nil, value, nil
-	}
-	// unexpected success response
-	unexpectedSuccess := result.(*RunsV1BookmarkRunsDefault)
-	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
-}
-
-/*
-  RunsV1CollectRunLogs collects run logs
-*/
-func (a *Client) RunsV1CollectRunLogs(params *RunsV1CollectRunLogsParams, authInfo runtime.ClientAuthInfoWriter) (*RunsV1CollectRunLogsOK, *RunsV1CollectRunLogsNoContent, error) {
-	// TODO: Validate the params before sending
-	if params == nil {
-		params = NewRunsV1CollectRunLogsParams()
-	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "RunsV1_CollectRunLogs",
-		Method:             "POST",
-		PathPattern:        "/streams/v1/{namespace}/_internal/{owner}/{project}/runs/{uuid}/logs",
-		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https"},
-		Params:             params,
-		Reader:             &RunsV1CollectRunLogsReader{formats: a.formats},
-		AuthInfo:           authInfo,
-		Context:            params.Context,
-		Client:             params.HTTPClient,
-	})
-	if err != nil {
-		return nil, nil, err
-	}
-	switch value := result.(type) {
-	case *RunsV1CollectRunLogsOK:
-		return value, nil, nil
-	case *RunsV1CollectRunLogsNoContent:
-		return nil, value, nil
-	}
-	// unexpected success response
-	unexpectedSuccess := result.(*RunsV1CollectRunLogsDefault)
-	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
-}
-
-/*
-  RunsV1CopyRun restarts run with copy
-*/
-func (a *Client) RunsV1CopyRun(params *RunsV1CopyRunParams, authInfo runtime.ClientAuthInfoWriter) (*RunsV1CopyRunOK, *RunsV1CopyRunNoContent, error) {
-	// TODO: Validate the params before sending
-	if params == nil {
-		params = NewRunsV1CopyRunParams()
-	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "RunsV1_CopyRun",
-		Method:             "POST",
-		PathPattern:        "/api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/copy",
-		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https"},
-		Params:             params,
-		Reader:             &RunsV1CopyRunReader{formats: a.formats},
-		AuthInfo:           authInfo,
-		Context:            params.Context,
-		Client:             params.HTTPClient,
-	})
-	if err != nil {
-		return nil, nil, err
-	}
-	switch value := result.(type) {
-	case *RunsV1CopyRunOK:
-		return value, nil, nil
-	case *RunsV1CopyRunNoContent:
-		return nil, value, nil
-	}
-	// unexpected success response
-	unexpectedSuccess := result.(*RunsV1CopyRunDefault)
-	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
-}
-
-/*
-  RunsV1CreateRun creates new run
-*/
-func (a *Client) RunsV1CreateRun(params *RunsV1CreateRunParams, authInfo runtime.ClientAuthInfoWriter) (*RunsV1CreateRunOK, *RunsV1CreateRunNoContent, error) {
-	// TODO: Validate the params before sending
-	if params == nil {
-		params = NewRunsV1CreateRunParams()
-	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "RunsV1_CreateRun",
-		Method:             "POST",
-		PathPattern:        "/api/v1/{owner}/{project}/runs",
-		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https"},
-		Params:             params,
-		Reader:             &RunsV1CreateRunReader{formats: a.formats},
-		AuthInfo:           authInfo,
-		Context:            params.Context,
-		Client:             params.HTTPClient,
-	})
-	if err != nil {
-		return nil, nil, err
-	}
-	switch value := result.(type) {
-	case *RunsV1CreateRunOK:
-		return value, nil, nil
-	case *RunsV1CreateRunNoContent:
-		return nil, value, nil
-	}
-	// unexpected success response
-	unexpectedSuccess := result.(*RunsV1CreateRunDefault)
-	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
-}
-
-/*
-  RunsV1CreateRunArtifactsLineage creates bulk run run artifacts lineage
-*/
-func (a *Client) RunsV1CreateRunArtifactsLineage(params *RunsV1CreateRunArtifactsLineageParams, authInfo runtime.ClientAuthInfoWriter) (*RunsV1CreateRunArtifactsLineageOK, *RunsV1CreateRunArtifactsLineageNoContent, error) {
-	// TODO: Validate the params before sending
-	if params == nil {
-		params = NewRunsV1CreateRunArtifactsLineageParams()
-	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "RunsV1_CreateRunArtifactsLineage",
-		Method:             "POST",
-		PathPattern:        "/api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage",
-		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https"},
-		Params:             params,
-		Reader:             &RunsV1CreateRunArtifactsLineageReader{formats: a.formats},
-		AuthInfo:           authInfo,
-		Context:            params.Context,
-		Client:             params.HTTPClient,
-	})
-	if err != nil {
-		return nil, nil, err
-	}
-	switch value := result.(type) {
-	case *RunsV1CreateRunArtifactsLineageOK:
-		return value, nil, nil
-	case *RunsV1CreateRunArtifactsLineageNoContent:
-		return nil, value, nil
-	}
-	// unexpected success response
-	unexpectedSuccess := result.(*RunsV1CreateRunArtifactsLineageDefault)
-	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
-}
-
-/*
-  RunsV1CreateRunStatus creates new run status
-*/
-func (a *Client) RunsV1CreateRunStatus(params *RunsV1CreateRunStatusParams, authInfo runtime.ClientAuthInfoWriter) (*RunsV1CreateRunStatusOK, *RunsV1CreateRunStatusNoContent, error) {
-	// TODO: Validate the params before sending
-	if params == nil {
-		params = NewRunsV1CreateRunStatusParams()
-	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "RunsV1_CreateRunStatus",
-		Method:             "POST",
-		PathPattern:        "/api/v1/{owner}/{project}/runs/{uuid}/statuses",
-		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https"},
-		Params:             params,
-		Reader:             &RunsV1CreateRunStatusReader{formats: a.formats},
-		AuthInfo:           authInfo,
-		Context:            params.Context,
-		Client:             params.HTTPClient,
-	})
-	if err != nil {
-		return nil, nil, err
-	}
-	switch value := result.(type) {
-	case *RunsV1CreateRunStatusOK:
-		return value, nil, nil
-	case *RunsV1CreateRunStatusNoContent:
-		return nil, value, nil
-	}
-	// unexpected success response
-	unexpectedSuccess := result.(*RunsV1CreateRunStatusDefault)
-	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
-}
-
-/*
-  RunsV1DeleteRun deletes run
-*/
-func (a *Client) RunsV1DeleteRun(params *RunsV1DeleteRunParams, authInfo runtime.ClientAuthInfoWriter) (*RunsV1DeleteRunOK, *RunsV1DeleteRunNoContent, error) {
-	// TODO: Validate the params before sending
-	if params == nil {
-		params = NewRunsV1DeleteRunParams()
-	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "RunsV1_DeleteRun",
-		Method:             "DELETE",
-		PathPattern:        "/api/v1/{owner}/{project}/runs/{uuid}",
-		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https"},
-		Params:             params,
-		Reader:             &RunsV1DeleteRunReader{formats: a.formats},
-		AuthInfo:           authInfo,
-		Context:            params.Context,
-		Client:             params.HTTPClient,
-	})
-	if err != nil {
-		return nil, nil, err
-	}
-	switch value := result.(type) {
-	case *RunsV1DeleteRunOK:
-		return value, nil, nil
-	case *RunsV1DeleteRunNoContent:
-		return nil, value, nil
-	}
-	// unexpected success response
-	unexpectedSuccess := result.(*RunsV1DeleteRunDefault)
-	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
-}
-
-/*
-  RunsV1DeleteRunArtifactLineage deletes run artifact lineage
-*/
-func (a *Client) RunsV1DeleteRunArtifactLineage(params *RunsV1DeleteRunArtifactLineageParams, authInfo runtime.ClientAuthInfoWriter) (*RunsV1DeleteRunArtifactLineageOK, *RunsV1DeleteRunArtifactLineageNoContent, error) {
-	// TODO: Validate the params before sending
-	if params == nil {
-		params = NewRunsV1DeleteRunArtifactLineageParams()
-	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "RunsV1_DeleteRunArtifactLineage",
-		Method:             "DELETE",
-		PathPattern:        "/api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage/{name}",
-		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https"},
-		Params:             params,
-		Reader:             &RunsV1DeleteRunArtifactLineageReader{formats: a.formats},
-		AuthInfo:           authInfo,
-		Context:            params.Context,
-		Client:             params.HTTPClient,
-	})
-	if err != nil {
-		return nil, nil, err
-	}
-	switch value := result.(type) {
-	case *RunsV1DeleteRunArtifactLineageOK:
-		return value, nil, nil
-	case *RunsV1DeleteRunArtifactLineageNoContent:
-		return nil, value, nil
-	}
-	// unexpected success response
-	unexpectedSuccess := result.(*RunsV1DeleteRunArtifactLineageDefault)
-	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
-}
-
-/*
-  RunsV1DeleteRuns deletes runs
-*/
-func (a *Client) RunsV1DeleteRuns(params *RunsV1DeleteRunsParams, authInfo runtime.ClientAuthInfoWriter) (*RunsV1DeleteRunsOK, *RunsV1DeleteRunsNoContent, error) {
-	// TODO: Validate the params before sending
-	if params == nil {
-		params = NewRunsV1DeleteRunsParams()
-	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "RunsV1_DeleteRuns",
-		Method:             "DELETE",
-		PathPattern:        "/api/v1/{owner}/{project}/runs/delete",
-		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https"},
-		Params:             params,
-		Reader:             &RunsV1DeleteRunsReader{formats: a.formats},
-		AuthInfo:           authInfo,
-		Context:            params.Context,
-		Client:             params.HTTPClient,
-	})
-	if err != nil {
-		return nil, nil, err
-	}
-	switch value := result.(type) {
-	case *RunsV1DeleteRunsOK:
-		return value, nil, nil
-	case *RunsV1DeleteRunsNoContent:
-		return nil, value, nil
-	}
-	// unexpected success response
-	unexpectedSuccess := result.(*RunsV1DeleteRunsDefault)
-	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
-}
-
-/*
-  RunsV1GetMultiRunEvents gets multi runs events
-*/
-func (a *Client) RunsV1GetMultiRunEvents(params *RunsV1GetMultiRunEventsParams, authInfo runtime.ClientAuthInfoWriter) (*RunsV1GetMultiRunEventsOK, *RunsV1GetMultiRunEventsNoContent, error) {
-	// TODO: Validate the params before sending
-	if params == nil {
-		params = NewRunsV1GetMultiRunEventsParams()
-	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "RunsV1_GetMultiRunEvents",
-		Method:             "GET",
-		PathPattern:        "/streams/v1/{namespace}/{owner}/{project}/runs/multi/events/{kind}",
-		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https"},
-		Params:             params,
-		Reader:             &RunsV1GetMultiRunEventsReader{formats: a.formats},
-		AuthInfo:           authInfo,
-		Context:            params.Context,
-		Client:             params.HTTPClient,
-	})
-	if err != nil {
-		return nil, nil, err
-	}
-	switch value := result.(type) {
-	case *RunsV1GetMultiRunEventsOK:
-		return value, nil, nil
-	case *RunsV1GetMultiRunEventsNoContent:
-		return nil, value, nil
-	}
-	// unexpected success response
-	unexpectedSuccess := result.(*RunsV1GetMultiRunEventsDefault)
-	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
-}
-
-/*
-  RunsV1GetRun gets run
-*/
-func (a *Client) RunsV1GetRun(params *RunsV1GetRunParams, authInfo runtime.ClientAuthInfoWriter) (*RunsV1GetRunOK, *RunsV1GetRunNoContent, error) {
-	// TODO: Validate the params before sending
-	if params == nil {
-		params = NewRunsV1GetRunParams()
-	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "RunsV1_GetRun",
-		Method:             "GET",
-		PathPattern:        "/api/v1/{owner}/{project}/runs/{uuid}",
-		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https"},
-		Params:             params,
-		Reader:             &RunsV1GetRunReader{formats: a.formats},
-		AuthInfo:           authInfo,
-		Context:            params.Context,
-		Client:             params.HTTPClient,
-	})
-	if err != nil {
-		return nil, nil, err
-	}
-	switch value := result.(type) {
-	case *RunsV1GetRunOK:
-		return value, nil, nil
-	case *RunsV1GetRunNoContent:
-		return nil, value, nil
-	}
-	// unexpected success response
-	unexpectedSuccess := result.(*RunsV1GetRunDefault)
-	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
-}
-
-/*
-  RunsV1GetRunArtifactLineage gets run artifacts lineage
-*/
-func (a *Client) RunsV1GetRunArtifactLineage(params *RunsV1GetRunArtifactLineageParams, authInfo runtime.ClientAuthInfoWriter) (*RunsV1GetRunArtifactLineageOK, *RunsV1GetRunArtifactLineageNoContent, error) {
-	// TODO: Validate the params before sending
-	if params == nil {
-		params = NewRunsV1GetRunArtifactLineageParams()
-	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "RunsV1_GetRunArtifactLineage",
-		Method:             "GET",
-		PathPattern:        "/api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage/{name}",
-		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https"},
-		Params:             params,
-		Reader:             &RunsV1GetRunArtifactLineageReader{formats: a.formats},
-		AuthInfo:           authInfo,
-		Context:            params.Context,
-		Client:             params.HTTPClient,
-	})
-	if err != nil {
-		return nil, nil, err
-	}
-	switch value := result.(type) {
-	case *RunsV1GetRunArtifactLineageOK:
-		return value, nil, nil
-	case *RunsV1GetRunArtifactLineageNoContent:
-		return nil, value, nil
-	}
-	// unexpected success response
-	unexpectedSuccess := result.(*RunsV1GetRunArtifactLineageDefault)
-	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
-}
-
-/*
-  RunsV1GetRunArtifactsLineage gets run artifacts lineage
-*/
-func (a *Client) RunsV1GetRunArtifactsLineage(params *RunsV1GetRunArtifactsLineageParams, authInfo runtime.ClientAuthInfoWriter) (*RunsV1GetRunArtifactsLineageOK, *RunsV1GetRunArtifactsLineageNoContent, error) {
-	// TODO: Validate the params before sending
-	if params == nil {
-		params = NewRunsV1GetRunArtifactsLineageParams()
-	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "RunsV1_GetRunArtifactsLineage",
+		ID:                 "GetRunArtifactsLineage",
 		Method:             "GET",
 		PathPattern:        "/api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &RunsV1GetRunArtifactsLineageReader{formats: a.formats},
+		Reader:             &GetRunArtifactsLineageReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -740,34 +740,34 @@ func (a *Client) RunsV1GetRunArtifactsLineage(params *RunsV1GetRunArtifactsLinea
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *RunsV1GetRunArtifactsLineageOK:
+	case *GetRunArtifactsLineageOK:
 		return value, nil, nil
-	case *RunsV1GetRunArtifactsLineageNoContent:
+	case *GetRunArtifactsLineageNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*RunsV1GetRunArtifactsLineageDefault)
+	unexpectedSuccess := result.(*GetRunArtifactsLineageDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  RunsV1GetRunArtifactsLineageNames gets run artifacts lineage names
+  GetRunArtifactsLineageNames gets run artifacts lineage names
 */
-func (a *Client) RunsV1GetRunArtifactsLineageNames(params *RunsV1GetRunArtifactsLineageNamesParams, authInfo runtime.ClientAuthInfoWriter) (*RunsV1GetRunArtifactsLineageNamesOK, *RunsV1GetRunArtifactsLineageNamesNoContent, error) {
+func (a *Client) GetRunArtifactsLineageNames(params *GetRunArtifactsLineageNamesParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunArtifactsLineageNamesOK, *GetRunArtifactsLineageNamesNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewRunsV1GetRunArtifactsLineageNamesParams()
+		params = NewGetRunArtifactsLineageNamesParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "RunsV1_GetRunArtifactsLineageNames",
+		ID:                 "GetRunArtifactsLineageNames",
 		Method:             "GET",
 		PathPattern:        "/api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage/names",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &RunsV1GetRunArtifactsLineageNamesReader{formats: a.formats},
+		Reader:             &GetRunArtifactsLineageNamesReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -776,34 +776,34 @@ func (a *Client) RunsV1GetRunArtifactsLineageNames(params *RunsV1GetRunArtifacts
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *RunsV1GetRunArtifactsLineageNamesOK:
+	case *GetRunArtifactsLineageNamesOK:
 		return value, nil, nil
-	case *RunsV1GetRunArtifactsLineageNamesNoContent:
+	case *GetRunArtifactsLineageNamesNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*RunsV1GetRunArtifactsLineageNamesDefault)
+	unexpectedSuccess := result.(*GetRunArtifactsLineageNamesDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  RunsV1GetRunArtifactsTree gets run artifacts tree
+  GetRunArtifactsTree gets run artifacts tree
 */
-func (a *Client) RunsV1GetRunArtifactsTree(params *RunsV1GetRunArtifactsTreeParams, authInfo runtime.ClientAuthInfoWriter) (*RunsV1GetRunArtifactsTreeOK, *RunsV1GetRunArtifactsTreeNoContent, error) {
+func (a *Client) GetRunArtifactsTree(params *GetRunArtifactsTreeParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunArtifactsTreeOK, *GetRunArtifactsTreeNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewRunsV1GetRunArtifactsTreeParams()
+		params = NewGetRunArtifactsTreeParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "RunsV1_GetRunArtifactsTree",
+		ID:                 "GetRunArtifactsTree",
 		Method:             "GET",
 		PathPattern:        "/streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/artifacts/tree",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &RunsV1GetRunArtifactsTreeReader{formats: a.formats},
+		Reader:             &GetRunArtifactsTreeReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -812,34 +812,34 @@ func (a *Client) RunsV1GetRunArtifactsTree(params *RunsV1GetRunArtifactsTreePara
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *RunsV1GetRunArtifactsTreeOK:
+	case *GetRunArtifactsTreeOK:
 		return value, nil, nil
-	case *RunsV1GetRunArtifactsTreeNoContent:
+	case *GetRunArtifactsTreeNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*RunsV1GetRunArtifactsTreeDefault)
+	unexpectedSuccess := result.(*GetRunArtifactsTreeDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  RunsV1GetRunEvents gets run events
+  GetRunEvents gets run events
 */
-func (a *Client) RunsV1GetRunEvents(params *RunsV1GetRunEventsParams, authInfo runtime.ClientAuthInfoWriter) (*RunsV1GetRunEventsOK, *RunsV1GetRunEventsNoContent, error) {
+func (a *Client) GetRunEvents(params *GetRunEventsParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunEventsOK, *GetRunEventsNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewRunsV1GetRunEventsParams()
+		params = NewGetRunEventsParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "RunsV1_GetRunEvents",
+		ID:                 "GetRunEvents",
 		Method:             "GET",
 		PathPattern:        "/streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/events/{kind}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &RunsV1GetRunEventsReader{formats: a.formats},
+		Reader:             &GetRunEventsReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -848,34 +848,34 @@ func (a *Client) RunsV1GetRunEvents(params *RunsV1GetRunEventsParams, authInfo r
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *RunsV1GetRunEventsOK:
+	case *GetRunEventsOK:
 		return value, nil, nil
-	case *RunsV1GetRunEventsNoContent:
+	case *GetRunEventsNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*RunsV1GetRunEventsDefault)
+	unexpectedSuccess := result.(*GetRunEventsDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  RunsV1GetRunLogs gets run logs
+  GetRunLogs gets run logs
 */
-func (a *Client) RunsV1GetRunLogs(params *RunsV1GetRunLogsParams, authInfo runtime.ClientAuthInfoWriter) (*RunsV1GetRunLogsOK, *RunsV1GetRunLogsNoContent, error) {
+func (a *Client) GetRunLogs(params *GetRunLogsParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunLogsOK, *GetRunLogsNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewRunsV1GetRunLogsParams()
+		params = NewGetRunLogsParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "RunsV1_GetRunLogs",
+		ID:                 "GetRunLogs",
 		Method:             "GET",
 		PathPattern:        "/streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/logs",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &RunsV1GetRunLogsReader{formats: a.formats},
+		Reader:             &GetRunLogsReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -884,34 +884,34 @@ func (a *Client) RunsV1GetRunLogs(params *RunsV1GetRunLogsParams, authInfo runti
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *RunsV1GetRunLogsOK:
+	case *GetRunLogsOK:
 		return value, nil, nil
-	case *RunsV1GetRunLogsNoContent:
+	case *GetRunLogsNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*RunsV1GetRunLogsDefault)
+	unexpectedSuccess := result.(*GetRunLogsDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  RunsV1GetRunNamespace gets run namespace
+  GetRunNamespace gets run namespace
 */
-func (a *Client) RunsV1GetRunNamespace(params *RunsV1GetRunNamespaceParams, authInfo runtime.ClientAuthInfoWriter) (*RunsV1GetRunNamespaceOK, *RunsV1GetRunNamespaceNoContent, error) {
+func (a *Client) GetRunNamespace(params *GetRunNamespaceParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunNamespaceOK, *GetRunNamespaceNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewRunsV1GetRunNamespaceParams()
+		params = NewGetRunNamespaceParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "RunsV1_GetRunNamespace",
+		ID:                 "GetRunNamespace",
 		Method:             "GET",
 		PathPattern:        "/api/v1/{owner}/{project}/runs/{uuid}/namespace",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &RunsV1GetRunNamespaceReader{formats: a.formats},
+		Reader:             &GetRunNamespaceReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -920,34 +920,34 @@ func (a *Client) RunsV1GetRunNamespace(params *RunsV1GetRunNamespaceParams, auth
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *RunsV1GetRunNamespaceOK:
+	case *GetRunNamespaceOK:
 		return value, nil, nil
-	case *RunsV1GetRunNamespaceNoContent:
+	case *GetRunNamespaceNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*RunsV1GetRunNamespaceDefault)
+	unexpectedSuccess := result.(*GetRunNamespaceDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  RunsV1GetRunResources gets run resources events
+  GetRunResources gets run resources events
 */
-func (a *Client) RunsV1GetRunResources(params *RunsV1GetRunResourcesParams, authInfo runtime.ClientAuthInfoWriter) (*RunsV1GetRunResourcesOK, *RunsV1GetRunResourcesNoContent, error) {
+func (a *Client) GetRunResources(params *GetRunResourcesParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunResourcesOK, *GetRunResourcesNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewRunsV1GetRunResourcesParams()
+		params = NewGetRunResourcesParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "RunsV1_GetRunResources",
+		ID:                 "GetRunResources",
 		Method:             "GET",
 		PathPattern:        "/streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/resources",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &RunsV1GetRunResourcesReader{formats: a.formats},
+		Reader:             &GetRunResourcesReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -956,34 +956,34 @@ func (a *Client) RunsV1GetRunResources(params *RunsV1GetRunResourcesParams, auth
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *RunsV1GetRunResourcesOK:
+	case *GetRunResourcesOK:
 		return value, nil, nil
-	case *RunsV1GetRunResourcesNoContent:
+	case *GetRunResourcesNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*RunsV1GetRunResourcesDefault)
+	unexpectedSuccess := result.(*GetRunResourcesDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  RunsV1GetRunSettings gets run settings
+  GetRunSettings gets run settings
 */
-func (a *Client) RunsV1GetRunSettings(params *RunsV1GetRunSettingsParams, authInfo runtime.ClientAuthInfoWriter) (*RunsV1GetRunSettingsOK, *RunsV1GetRunSettingsNoContent, error) {
+func (a *Client) GetRunSettings(params *GetRunSettingsParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunSettingsOK, *GetRunSettingsNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewRunsV1GetRunSettingsParams()
+		params = NewGetRunSettingsParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "RunsV1_GetRunSettings",
+		ID:                 "GetRunSettings",
 		Method:             "GET",
 		PathPattern:        "/api/v1/{owner}/{project}/runs/{uuid}/settings",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &RunsV1GetRunSettingsReader{formats: a.formats},
+		Reader:             &GetRunSettingsReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -992,34 +992,34 @@ func (a *Client) RunsV1GetRunSettings(params *RunsV1GetRunSettingsParams, authIn
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *RunsV1GetRunSettingsOK:
+	case *GetRunSettingsOK:
 		return value, nil, nil
-	case *RunsV1GetRunSettingsNoContent:
+	case *GetRunSettingsNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*RunsV1GetRunSettingsDefault)
+	unexpectedSuccess := result.(*GetRunSettingsDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  RunsV1GetRunStatuses gets run status
+  GetRunStatuses gets run status
 */
-func (a *Client) RunsV1GetRunStatuses(params *RunsV1GetRunStatusesParams, authInfo runtime.ClientAuthInfoWriter) (*RunsV1GetRunStatusesOK, *RunsV1GetRunStatusesNoContent, error) {
+func (a *Client) GetRunStatuses(params *GetRunStatusesParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunStatusesOK, *GetRunStatusesNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewRunsV1GetRunStatusesParams()
+		params = NewGetRunStatusesParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "RunsV1_GetRunStatuses",
+		ID:                 "GetRunStatuses",
 		Method:             "GET",
 		PathPattern:        "/api/v1/{owner}/{project}/runs/{uuid}/statuses",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &RunsV1GetRunStatusesReader{formats: a.formats},
+		Reader:             &GetRunStatusesReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -1028,34 +1028,34 @@ func (a *Client) RunsV1GetRunStatuses(params *RunsV1GetRunStatusesParams, authIn
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *RunsV1GetRunStatusesOK:
+	case *GetRunStatusesOK:
 		return value, nil, nil
-	case *RunsV1GetRunStatusesNoContent:
+	case *GetRunStatusesNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*RunsV1GetRunStatusesDefault)
+	unexpectedSuccess := result.(*GetRunStatusesDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  RunsV1GetRunsArtifactsLineage gets runs artifacts lineage
+  GetRunsArtifactsLineage gets runs artifacts lineage
 */
-func (a *Client) RunsV1GetRunsArtifactsLineage(params *RunsV1GetRunsArtifactsLineageParams, authInfo runtime.ClientAuthInfoWriter) (*RunsV1GetRunsArtifactsLineageOK, *RunsV1GetRunsArtifactsLineageNoContent, error) {
+func (a *Client) GetRunsArtifactsLineage(params *GetRunsArtifactsLineageParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunsArtifactsLineageOK, *GetRunsArtifactsLineageNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewRunsV1GetRunsArtifactsLineageParams()
+		params = NewGetRunsArtifactsLineageParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "RunsV1_GetRunsArtifactsLineage",
+		ID:                 "GetRunsArtifactsLineage",
 		Method:             "GET",
 		PathPattern:        "/api/v1/{owner}/{project}/runs/artifacts_lineage",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &RunsV1GetRunsArtifactsLineageReader{formats: a.formats},
+		Reader:             &GetRunsArtifactsLineageReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -1064,34 +1064,34 @@ func (a *Client) RunsV1GetRunsArtifactsLineage(params *RunsV1GetRunsArtifactsLin
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *RunsV1GetRunsArtifactsLineageOK:
+	case *GetRunsArtifactsLineageOK:
 		return value, nil, nil
-	case *RunsV1GetRunsArtifactsLineageNoContent:
+	case *GetRunsArtifactsLineageNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*RunsV1GetRunsArtifactsLineageDefault)
+	unexpectedSuccess := result.(*GetRunsArtifactsLineageDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  RunsV1ImpersonateToken impersonates run token
+  ImpersonateToken impersonates run token
 */
-func (a *Client) RunsV1ImpersonateToken(params *RunsV1ImpersonateTokenParams, authInfo runtime.ClientAuthInfoWriter) (*RunsV1ImpersonateTokenOK, *RunsV1ImpersonateTokenNoContent, error) {
+func (a *Client) ImpersonateToken(params *ImpersonateTokenParams, authInfo runtime.ClientAuthInfoWriter) (*ImpersonateTokenOK, *ImpersonateTokenNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewRunsV1ImpersonateTokenParams()
+		params = NewImpersonateTokenParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "RunsV1_ImpersonateToken",
+		ID:                 "ImpersonateToken",
 		Method:             "POST",
 		PathPattern:        "/api/v1/{owner}/{project}/runs/{uuid}/impersonate",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &RunsV1ImpersonateTokenReader{formats: a.formats},
+		Reader:             &ImpersonateTokenReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -1100,34 +1100,34 @@ func (a *Client) RunsV1ImpersonateToken(params *RunsV1ImpersonateTokenParams, au
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *RunsV1ImpersonateTokenOK:
+	case *ImpersonateTokenOK:
 		return value, nil, nil
-	case *RunsV1ImpersonateTokenNoContent:
+	case *ImpersonateTokenNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*RunsV1ImpersonateTokenDefault)
+	unexpectedSuccess := result.(*ImpersonateTokenDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  RunsV1InvalidateRun invalidates run
+  InvalidateRun invalidates run
 */
-func (a *Client) RunsV1InvalidateRun(params *RunsV1InvalidateRunParams, authInfo runtime.ClientAuthInfoWriter) (*RunsV1InvalidateRunOK, *RunsV1InvalidateRunNoContent, error) {
+func (a *Client) InvalidateRun(params *InvalidateRunParams, authInfo runtime.ClientAuthInfoWriter) (*InvalidateRunOK, *InvalidateRunNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewRunsV1InvalidateRunParams()
+		params = NewInvalidateRunParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "RunsV1_InvalidateRun",
+		ID:                 "InvalidateRun",
 		Method:             "POST",
 		PathPattern:        "/api/v1/{owner}/{project}/runs/{uuid}/invalidate",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &RunsV1InvalidateRunReader{formats: a.formats},
+		Reader:             &InvalidateRunReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -1136,34 +1136,34 @@ func (a *Client) RunsV1InvalidateRun(params *RunsV1InvalidateRunParams, authInfo
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *RunsV1InvalidateRunOK:
+	case *InvalidateRunOK:
 		return value, nil, nil
-	case *RunsV1InvalidateRunNoContent:
+	case *InvalidateRunNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*RunsV1InvalidateRunDefault)
+	unexpectedSuccess := result.(*InvalidateRunDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  RunsV1InvalidateRuns invalidates runs
+  InvalidateRuns invalidates runs
 */
-func (a *Client) RunsV1InvalidateRuns(params *RunsV1InvalidateRunsParams, authInfo runtime.ClientAuthInfoWriter) (*RunsV1InvalidateRunsOK, *RunsV1InvalidateRunsNoContent, error) {
+func (a *Client) InvalidateRuns(params *InvalidateRunsParams, authInfo runtime.ClientAuthInfoWriter) (*InvalidateRunsOK, *InvalidateRunsNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewRunsV1InvalidateRunsParams()
+		params = NewInvalidateRunsParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "RunsV1_InvalidateRuns",
+		ID:                 "InvalidateRuns",
 		Method:             "POST",
 		PathPattern:        "/api/v1/{owner}/{project}/runs/invalidate",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &RunsV1InvalidateRunsReader{formats: a.formats},
+		Reader:             &InvalidateRunsReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -1172,34 +1172,34 @@ func (a *Client) RunsV1InvalidateRuns(params *RunsV1InvalidateRunsParams, authIn
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *RunsV1InvalidateRunsOK:
+	case *InvalidateRunsOK:
 		return value, nil, nil
-	case *RunsV1InvalidateRunsNoContent:
+	case *InvalidateRunsNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*RunsV1InvalidateRunsDefault)
+	unexpectedSuccess := result.(*InvalidateRunsDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  RunsV1ListArchivedRuns lists archived runs for user
+  ListArchivedRuns lists archived runs for user
 */
-func (a *Client) RunsV1ListArchivedRuns(params *RunsV1ListArchivedRunsParams, authInfo runtime.ClientAuthInfoWriter) (*RunsV1ListArchivedRunsOK, *RunsV1ListArchivedRunsNoContent, error) {
+func (a *Client) ListArchivedRuns(params *ListArchivedRunsParams, authInfo runtime.ClientAuthInfoWriter) (*ListArchivedRunsOK, *ListArchivedRunsNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewRunsV1ListArchivedRunsParams()
+		params = NewListArchivedRunsParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "RunsV1_ListArchivedRuns",
+		ID:                 "ListArchivedRuns",
 		Method:             "GET",
 		PathPattern:        "/api/v1/archives/{user}/runs",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &RunsV1ListArchivedRunsReader{formats: a.formats},
+		Reader:             &ListArchivedRunsReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -1208,34 +1208,34 @@ func (a *Client) RunsV1ListArchivedRuns(params *RunsV1ListArchivedRunsParams, au
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *RunsV1ListArchivedRunsOK:
+	case *ListArchivedRunsOK:
 		return value, nil, nil
-	case *RunsV1ListArchivedRunsNoContent:
+	case *ListArchivedRunsNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*RunsV1ListArchivedRunsDefault)
+	unexpectedSuccess := result.(*ListArchivedRunsDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  RunsV1ListBookmarkedRuns lists bookmarked runs for user
+  ListBookmarkedRuns lists bookmarked runs for user
 */
-func (a *Client) RunsV1ListBookmarkedRuns(params *RunsV1ListBookmarkedRunsParams, authInfo runtime.ClientAuthInfoWriter) (*RunsV1ListBookmarkedRunsOK, *RunsV1ListBookmarkedRunsNoContent, error) {
+func (a *Client) ListBookmarkedRuns(params *ListBookmarkedRunsParams, authInfo runtime.ClientAuthInfoWriter) (*ListBookmarkedRunsOK, *ListBookmarkedRunsNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewRunsV1ListBookmarkedRunsParams()
+		params = NewListBookmarkedRunsParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "RunsV1_ListBookmarkedRuns",
+		ID:                 "ListBookmarkedRuns",
 		Method:             "GET",
 		PathPattern:        "/api/v1/bookmarks/{user}/runs",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &RunsV1ListBookmarkedRunsReader{formats: a.formats},
+		Reader:             &ListBookmarkedRunsReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -1244,34 +1244,34 @@ func (a *Client) RunsV1ListBookmarkedRuns(params *RunsV1ListBookmarkedRunsParams
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *RunsV1ListBookmarkedRunsOK:
+	case *ListBookmarkedRunsOK:
 		return value, nil, nil
-	case *RunsV1ListBookmarkedRunsNoContent:
+	case *ListBookmarkedRunsNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*RunsV1ListBookmarkedRunsDefault)
+	unexpectedSuccess := result.(*ListBookmarkedRunsDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  RunsV1ListRuns lists runs
+  ListRuns lists runs
 */
-func (a *Client) RunsV1ListRuns(params *RunsV1ListRunsParams, authInfo runtime.ClientAuthInfoWriter) (*RunsV1ListRunsOK, *RunsV1ListRunsNoContent, error) {
+func (a *Client) ListRuns(params *ListRunsParams, authInfo runtime.ClientAuthInfoWriter) (*ListRunsOK, *ListRunsNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewRunsV1ListRunsParams()
+		params = NewListRunsParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "RunsV1_ListRuns",
+		ID:                 "ListRuns",
 		Method:             "GET",
 		PathPattern:        "/api/v1/{owner}/{project}/runs",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &RunsV1ListRunsReader{formats: a.formats},
+		Reader:             &ListRunsReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -1280,34 +1280,34 @@ func (a *Client) RunsV1ListRuns(params *RunsV1ListRunsParams, authInfo runtime.C
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *RunsV1ListRunsOK:
+	case *ListRunsOK:
 		return value, nil, nil
-	case *RunsV1ListRunsNoContent:
+	case *ListRunsNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*RunsV1ListRunsDefault)
+	unexpectedSuccess := result.(*ListRunsDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  RunsV1ListRunsIo lists runs io
+  ListRunsIo lists runs io
 */
-func (a *Client) RunsV1ListRunsIo(params *RunsV1ListRunsIoParams, authInfo runtime.ClientAuthInfoWriter) (*RunsV1ListRunsIoOK, *RunsV1ListRunsIoNoContent, error) {
+func (a *Client) ListRunsIo(params *ListRunsIoParams, authInfo runtime.ClientAuthInfoWriter) (*ListRunsIoOK, *ListRunsIoNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewRunsV1ListRunsIoParams()
+		params = NewListRunsIoParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "RunsV1_ListRunsIo",
+		ID:                 "ListRunsIo",
 		Method:             "GET",
 		PathPattern:        "/api/v1/{owner}/{project}/runs/io",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &RunsV1ListRunsIoReader{formats: a.formats},
+		Reader:             &ListRunsIoReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -1316,34 +1316,34 @@ func (a *Client) RunsV1ListRunsIo(params *RunsV1ListRunsIoParams, authInfo runti
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *RunsV1ListRunsIoOK:
+	case *ListRunsIoOK:
 		return value, nil, nil
-	case *RunsV1ListRunsIoNoContent:
+	case *ListRunsIoNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*RunsV1ListRunsIoDefault)
+	unexpectedSuccess := result.(*ListRunsIoDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  RunsV1NotifyRunStatus notifies run status
+  NotifyRunStatus notifies run status
 */
-func (a *Client) RunsV1NotifyRunStatus(params *RunsV1NotifyRunStatusParams, authInfo runtime.ClientAuthInfoWriter) (*RunsV1NotifyRunStatusOK, *RunsV1NotifyRunStatusNoContent, error) {
+func (a *Client) NotifyRunStatus(params *NotifyRunStatusParams, authInfo runtime.ClientAuthInfoWriter) (*NotifyRunStatusOK, *NotifyRunStatusNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewRunsV1NotifyRunStatusParams()
+		params = NewNotifyRunStatusParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "RunsV1_NotifyRunStatus",
+		ID:                 "NotifyRunStatus",
 		Method:             "POST",
 		PathPattern:        "/streams/v1/{namespace}/{owner}/{project}/runs/{uuid}/notify",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &RunsV1NotifyRunStatusReader{formats: a.formats},
+		Reader:             &NotifyRunStatusReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -1352,34 +1352,34 @@ func (a *Client) RunsV1NotifyRunStatus(params *RunsV1NotifyRunStatusParams, auth
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *RunsV1NotifyRunStatusOK:
+	case *NotifyRunStatusOK:
 		return value, nil, nil
-	case *RunsV1NotifyRunStatusNoContent:
+	case *NotifyRunStatusNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*RunsV1NotifyRunStatusDefault)
+	unexpectedSuccess := result.(*NotifyRunStatusDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  RunsV1PatchRun patches run
+  PatchRun patches run
 */
-func (a *Client) RunsV1PatchRun(params *RunsV1PatchRunParams, authInfo runtime.ClientAuthInfoWriter) (*RunsV1PatchRunOK, *RunsV1PatchRunNoContent, error) {
+func (a *Client) PatchRun(params *PatchRunParams, authInfo runtime.ClientAuthInfoWriter) (*PatchRunOK, *PatchRunNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewRunsV1PatchRunParams()
+		params = NewPatchRunParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "RunsV1_PatchRun",
+		ID:                 "PatchRun",
 		Method:             "PATCH",
 		PathPattern:        "/api/v1/{owner}/{project}/runs/{run.uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &RunsV1PatchRunReader{formats: a.formats},
+		Reader:             &PatchRunReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -1388,34 +1388,34 @@ func (a *Client) RunsV1PatchRun(params *RunsV1PatchRunParams, authInfo runtime.C
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *RunsV1PatchRunOK:
+	case *PatchRunOK:
 		return value, nil, nil
-	case *RunsV1PatchRunNoContent:
+	case *PatchRunNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*RunsV1PatchRunDefault)
+	unexpectedSuccess := result.(*PatchRunDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  RunsV1RestartRun restarts run
+  RestartRun restarts run
 */
-func (a *Client) RunsV1RestartRun(params *RunsV1RestartRunParams, authInfo runtime.ClientAuthInfoWriter) (*RunsV1RestartRunOK, *RunsV1RestartRunNoContent, error) {
+func (a *Client) RestartRun(params *RestartRunParams, authInfo runtime.ClientAuthInfoWriter) (*RestartRunOK, *RestartRunNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewRunsV1RestartRunParams()
+		params = NewRestartRunParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "RunsV1_RestartRun",
+		ID:                 "RestartRun",
 		Method:             "POST",
 		PathPattern:        "/api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/restart",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &RunsV1RestartRunReader{formats: a.formats},
+		Reader:             &RestartRunReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -1424,34 +1424,34 @@ func (a *Client) RunsV1RestartRun(params *RunsV1RestartRunParams, authInfo runti
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *RunsV1RestartRunOK:
+	case *RestartRunOK:
 		return value, nil, nil
-	case *RunsV1RestartRunNoContent:
+	case *RestartRunNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*RunsV1RestartRunDefault)
+	unexpectedSuccess := result.(*RestartRunDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  RunsV1RestoreRun restores run
+  RestoreRun restores run
 */
-func (a *Client) RunsV1RestoreRun(params *RunsV1RestoreRunParams, authInfo runtime.ClientAuthInfoWriter) (*RunsV1RestoreRunOK, *RunsV1RestoreRunNoContent, error) {
+func (a *Client) RestoreRun(params *RestoreRunParams, authInfo runtime.ClientAuthInfoWriter) (*RestoreRunOK, *RestoreRunNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewRunsV1RestoreRunParams()
+		params = NewRestoreRunParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "RunsV1_RestoreRun",
+		ID:                 "RestoreRun",
 		Method:             "POST",
 		PathPattern:        "/api/v1/{owner}/{project}/runs/{uuid}/restore",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &RunsV1RestoreRunReader{formats: a.formats},
+		Reader:             &RestoreRunReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -1460,34 +1460,34 @@ func (a *Client) RunsV1RestoreRun(params *RunsV1RestoreRunParams, authInfo runti
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *RunsV1RestoreRunOK:
+	case *RestoreRunOK:
 		return value, nil, nil
-	case *RunsV1RestoreRunNoContent:
+	case *RestoreRunNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*RunsV1RestoreRunDefault)
+	unexpectedSuccess := result.(*RestoreRunDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  RunsV1ResumeRun resumes run
+  ResumeRun resumes run
 */
-func (a *Client) RunsV1ResumeRun(params *RunsV1ResumeRunParams, authInfo runtime.ClientAuthInfoWriter) (*RunsV1ResumeRunOK, *RunsV1ResumeRunNoContent, error) {
+func (a *Client) ResumeRun(params *ResumeRunParams, authInfo runtime.ClientAuthInfoWriter) (*ResumeRunOK, *ResumeRunNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewRunsV1ResumeRunParams()
+		params = NewResumeRunParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "RunsV1_ResumeRun",
+		ID:                 "ResumeRun",
 		Method:             "POST",
 		PathPattern:        "/api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/resume",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &RunsV1ResumeRunReader{formats: a.formats},
+		Reader:             &ResumeRunReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -1496,34 +1496,34 @@ func (a *Client) RunsV1ResumeRun(params *RunsV1ResumeRunParams, authInfo runtime
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *RunsV1ResumeRunOK:
+	case *ResumeRunOK:
 		return value, nil, nil
-	case *RunsV1ResumeRunNoContent:
+	case *ResumeRunNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*RunsV1ResumeRunDefault)
+	unexpectedSuccess := result.(*ResumeRunDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  RunsV1StartRunTensorboard starts run tensorboard
+  StartRunTensorboard starts run tensorboard
 */
-func (a *Client) RunsV1StartRunTensorboard(params *RunsV1StartRunTensorboardParams, authInfo runtime.ClientAuthInfoWriter) (*RunsV1StartRunTensorboardOK, *RunsV1StartRunTensorboardNoContent, error) {
+func (a *Client) StartRunTensorboard(params *StartRunTensorboardParams, authInfo runtime.ClientAuthInfoWriter) (*StartRunTensorboardOK, *StartRunTensorboardNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewRunsV1StartRunTensorboardParams()
+		params = NewStartRunTensorboardParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "RunsV1_StartRunTensorboard",
+		ID:                 "StartRunTensorboard",
 		Method:             "POST",
 		PathPattern:        "/api/v1/{owner}/{project}/runs/{uuid}/tensorboard/start",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &RunsV1StartRunTensorboardReader{formats: a.formats},
+		Reader:             &StartRunTensorboardReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -1532,34 +1532,34 @@ func (a *Client) RunsV1StartRunTensorboard(params *RunsV1StartRunTensorboardPara
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *RunsV1StartRunTensorboardOK:
+	case *StartRunTensorboardOK:
 		return value, nil, nil
-	case *RunsV1StartRunTensorboardNoContent:
+	case *StartRunTensorboardNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*RunsV1StartRunTensorboardDefault)
+	unexpectedSuccess := result.(*StartRunTensorboardDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  RunsV1StopRun stops run
+  StopRun stops run
 */
-func (a *Client) RunsV1StopRun(params *RunsV1StopRunParams, authInfo runtime.ClientAuthInfoWriter) (*RunsV1StopRunOK, *RunsV1StopRunNoContent, error) {
+func (a *Client) StopRun(params *StopRunParams, authInfo runtime.ClientAuthInfoWriter) (*StopRunOK, *StopRunNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewRunsV1StopRunParams()
+		params = NewStopRunParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "RunsV1_StopRun",
+		ID:                 "StopRun",
 		Method:             "POST",
 		PathPattern:        "/api/v1/{owner}/{project}/runs/{uuid}/stop",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &RunsV1StopRunReader{formats: a.formats},
+		Reader:             &StopRunReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -1568,34 +1568,34 @@ func (a *Client) RunsV1StopRun(params *RunsV1StopRunParams, authInfo runtime.Cli
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *RunsV1StopRunOK:
+	case *StopRunOK:
 		return value, nil, nil
-	case *RunsV1StopRunNoContent:
+	case *StopRunNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*RunsV1StopRunDefault)
+	unexpectedSuccess := result.(*StopRunDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  RunsV1StopRunTensorboard stops run tensorboard
+  StopRunTensorboard stops run tensorboard
 */
-func (a *Client) RunsV1StopRunTensorboard(params *RunsV1StopRunTensorboardParams, authInfo runtime.ClientAuthInfoWriter) (*RunsV1StopRunTensorboardOK, *RunsV1StopRunTensorboardNoContent, error) {
+func (a *Client) StopRunTensorboard(params *StopRunTensorboardParams, authInfo runtime.ClientAuthInfoWriter) (*StopRunTensorboardOK, *StopRunTensorboardNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewRunsV1StopRunTensorboardParams()
+		params = NewStopRunTensorboardParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "RunsV1_StopRunTensorboard",
+		ID:                 "StopRunTensorboard",
 		Method:             "POST",
 		PathPattern:        "/api/v1/{owner}/{project}/runs/{uuid}/tensorboard/stop",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &RunsV1StopRunTensorboardReader{formats: a.formats},
+		Reader:             &StopRunTensorboardReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -1604,34 +1604,34 @@ func (a *Client) RunsV1StopRunTensorboard(params *RunsV1StopRunTensorboardParams
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *RunsV1StopRunTensorboardOK:
+	case *StopRunTensorboardOK:
 		return value, nil, nil
-	case *RunsV1StopRunTensorboardNoContent:
+	case *StopRunTensorboardNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*RunsV1StopRunTensorboardDefault)
+	unexpectedSuccess := result.(*StopRunTensorboardDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  RunsV1StopRuns stops runs
+  StopRuns stops runs
 */
-func (a *Client) RunsV1StopRuns(params *RunsV1StopRunsParams, authInfo runtime.ClientAuthInfoWriter) (*RunsV1StopRunsOK, *RunsV1StopRunsNoContent, error) {
+func (a *Client) StopRuns(params *StopRunsParams, authInfo runtime.ClientAuthInfoWriter) (*StopRunsOK, *StopRunsNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewRunsV1StopRunsParams()
+		params = NewStopRunsParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "RunsV1_StopRuns",
+		ID:                 "StopRuns",
 		Method:             "POST",
 		PathPattern:        "/api/v1/{owner}/{project}/runs/stop",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &RunsV1StopRunsReader{formats: a.formats},
+		Reader:             &StopRunsReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -1640,34 +1640,34 @@ func (a *Client) RunsV1StopRuns(params *RunsV1StopRunsParams, authInfo runtime.C
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *RunsV1StopRunsOK:
+	case *StopRunsOK:
 		return value, nil, nil
-	case *RunsV1StopRunsNoContent:
+	case *StopRunsNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*RunsV1StopRunsDefault)
+	unexpectedSuccess := result.(*StopRunsDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  RunsV1TagRuns tags runs
+  TagRuns tags runs
 */
-func (a *Client) RunsV1TagRuns(params *RunsV1TagRunsParams, authInfo runtime.ClientAuthInfoWriter) (*RunsV1TagRunsOK, *RunsV1TagRunsNoContent, error) {
+func (a *Client) TagRuns(params *TagRunsParams, authInfo runtime.ClientAuthInfoWriter) (*TagRunsOK, *TagRunsNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewRunsV1TagRunsParams()
+		params = NewTagRunsParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "RunsV1_TagRuns",
+		ID:                 "TagRuns",
 		Method:             "POST",
 		PathPattern:        "/api/v1/{owner}/{project}/runs/tag",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &RunsV1TagRunsReader{formats: a.formats},
+		Reader:             &TagRunsReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -1676,34 +1676,34 @@ func (a *Client) RunsV1TagRuns(params *RunsV1TagRunsParams, authInfo runtime.Cli
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *RunsV1TagRunsOK:
+	case *TagRunsOK:
 		return value, nil, nil
-	case *RunsV1TagRunsNoContent:
+	case *TagRunsNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*RunsV1TagRunsDefault)
+	unexpectedSuccess := result.(*TagRunsDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  RunsV1UnbookmarkRun unbookmarks run
+  UnbookmarkRun unbookmarks run
 */
-func (a *Client) RunsV1UnbookmarkRun(params *RunsV1UnbookmarkRunParams, authInfo runtime.ClientAuthInfoWriter) (*RunsV1UnbookmarkRunOK, *RunsV1UnbookmarkRunNoContent, error) {
+func (a *Client) UnbookmarkRun(params *UnbookmarkRunParams, authInfo runtime.ClientAuthInfoWriter) (*UnbookmarkRunOK, *UnbookmarkRunNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewRunsV1UnbookmarkRunParams()
+		params = NewUnbookmarkRunParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "RunsV1_UnbookmarkRun",
+		ID:                 "UnbookmarkRun",
 		Method:             "DELETE",
 		PathPattern:        "/api/v1/{owner}/{project}/runs/{uuid}/unbookmark",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &RunsV1UnbookmarkRunReader{formats: a.formats},
+		Reader:             &UnbookmarkRunReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -1712,34 +1712,34 @@ func (a *Client) RunsV1UnbookmarkRun(params *RunsV1UnbookmarkRunParams, authInfo
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *RunsV1UnbookmarkRunOK:
+	case *UnbookmarkRunOK:
 		return value, nil, nil
-	case *RunsV1UnbookmarkRunNoContent:
+	case *UnbookmarkRunNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*RunsV1UnbookmarkRunDefault)
+	unexpectedSuccess := result.(*UnbookmarkRunDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  RunsV1UpdateRun updates run
+  UpdateRun updates run
 */
-func (a *Client) RunsV1UpdateRun(params *RunsV1UpdateRunParams, authInfo runtime.ClientAuthInfoWriter) (*RunsV1UpdateRunOK, *RunsV1UpdateRunNoContent, error) {
+func (a *Client) UpdateRun(params *UpdateRunParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateRunOK, *UpdateRunNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewRunsV1UpdateRunParams()
+		params = NewUpdateRunParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "RunsV1_UpdateRun",
+		ID:                 "UpdateRun",
 		Method:             "PUT",
 		PathPattern:        "/api/v1/{owner}/{project}/runs/{run.uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &RunsV1UpdateRunReader{formats: a.formats},
+		Reader:             &UpdateRunReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -1748,13 +1748,13 @@ func (a *Client) RunsV1UpdateRun(params *RunsV1UpdateRunParams, authInfo runtime
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *RunsV1UpdateRunOK:
+	case *UpdateRunOK:
 		return value, nil, nil
-	case *RunsV1UpdateRunNoContent:
+	case *UpdateRunNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*RunsV1UpdateRunDefault)
+	unexpectedSuccess := result.(*UpdateRunDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 

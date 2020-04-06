@@ -4,17 +4,17 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**dashboards_v1_create_dashboard**](DashboardsV1Api.md#dashboards_v1_create_dashboard) | **POST** /api/v1/orgs/{owner}/dashboards | 
-[**dashboards_v1_delete_dashboard**](DashboardsV1Api.md#dashboards_v1_delete_dashboard) | **DELETE** /api/v1/orgs/{owner}/dashboards/{uuid} | 
-[**dashboards_v1_get_dashboard**](DashboardsV1Api.md#dashboards_v1_get_dashboard) | **GET** /api/v1/orgs/{owner}/dashboards/{uuid} | 
-[**dashboards_v1_list_dashboard_names**](DashboardsV1Api.md#dashboards_v1_list_dashboard_names) | **GET** /api/v1/orgs/{owner}/dashboards/names | 
-[**dashboards_v1_list_dashboards**](DashboardsV1Api.md#dashboards_v1_list_dashboards) | **GET** /api/v1/orgs/{owner}/dashboards | 
-[**dashboards_v1_patch_dashboard**](DashboardsV1Api.md#dashboards_v1_patch_dashboard) | **PATCH** /api/v1/orgs/{owner}/dashboards/{dashboard.uuid} | 
-[**dashboards_v1_update_dashboard**](DashboardsV1Api.md#dashboards_v1_update_dashboard) | **PUT** /api/v1/orgs/{owner}/dashboards/{dashboard.uuid} | 
+[**create_dashboard**](DashboardsV1Api.md#create_dashboard) | **POST** /api/v1/orgs/{owner}/dashboards | 
+[**delete_dashboard**](DashboardsV1Api.md#delete_dashboard) | **DELETE** /api/v1/orgs/{owner}/dashboards/{uuid} | 
+[**get_dashboard**](DashboardsV1Api.md#get_dashboard) | **GET** /api/v1/orgs/{owner}/dashboards/{uuid} | 
+[**list_dashboard_names**](DashboardsV1Api.md#list_dashboard_names) | **GET** /api/v1/orgs/{owner}/dashboards/names | 
+[**list_dashboards**](DashboardsV1Api.md#list_dashboards) | **GET** /api/v1/orgs/{owner}/dashboards | 
+[**patch_dashboard**](DashboardsV1Api.md#patch_dashboard) | **PATCH** /api/v1/orgs/{owner}/dashboards/{dashboard.uuid} | 
+[**update_dashboard**](DashboardsV1Api.md#update_dashboard) | **PUT** /api/v1/orgs/{owner}/dashboards/{dashboard.uuid} | 
 
 
-# **dashboards_v1_create_dashboard**
-> V1Dashboard dashboards_v1_create_dashboard(owner, body)
+# **create_dashboard**
+> V1Dashboard create_dashboard(owner, body)
 
 
 
@@ -38,10 +38,10 @@ owner = 'owner_example' # str | Owner of the namespace
 body = polyaxon_sdk.V1Dashboard() # V1Dashboard | Dashboard body
 
 try:
-    api_response = api_instance.dashboards_v1_create_dashboard(owner, body)
+    api_response = api_instance.create_dashboard(owner, body)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling DashboardsV1Api->dashboards_v1_create_dashboard: %s\n" % e)
+    print("Exception when calling DashboardsV1Api->create_dashboard: %s\n" % e)
 ```
 
 ### Parameters
@@ -66,8 +66,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **dashboards_v1_delete_dashboard**
-> dashboards_v1_delete_dashboard(owner, uuid)
+# **delete_dashboard**
+> delete_dashboard(owner, uuid)
 
 
 
@@ -91,9 +91,9 @@ owner = 'owner_example' # str | Owner of the namespace
 uuid = 'uuid_example' # str | Uuid identifier of the entity
 
 try:
-    api_instance.dashboards_v1_delete_dashboard(owner, uuid)
+    api_instance.delete_dashboard(owner, uuid)
 except ApiException as e:
-    print("Exception when calling DashboardsV1Api->dashboards_v1_delete_dashboard: %s\n" % e)
+    print("Exception when calling DashboardsV1Api->delete_dashboard: %s\n" % e)
 ```
 
 ### Parameters
@@ -118,8 +118,8 @@ void (empty response body)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **dashboards_v1_get_dashboard**
-> V1Dashboard dashboards_v1_get_dashboard(owner, uuid)
+# **get_dashboard**
+> V1Dashboard get_dashboard(owner, uuid)
 
 
 
@@ -143,10 +143,10 @@ owner = 'owner_example' # str | Owner of the namespace
 uuid = 'uuid_example' # str | Uuid identifier of the entity
 
 try:
-    api_response = api_instance.dashboards_v1_get_dashboard(owner, uuid)
+    api_response = api_instance.get_dashboard(owner, uuid)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling DashboardsV1Api->dashboards_v1_get_dashboard: %s\n" % e)
+    print("Exception when calling DashboardsV1Api->get_dashboard: %s\n" % e)
 ```
 
 ### Parameters
@@ -171,8 +171,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **dashboards_v1_list_dashboard_names**
-> V1ListDashboardsResponse dashboards_v1_list_dashboard_names(owner, offset=offset, limit=limit, sort=sort, query=query)
+# **list_dashboard_names**
+> V1ListDashboardsResponse list_dashboard_names(owner, offset=offset, limit=limit, sort=sort, query=query)
 
 
 
@@ -199,10 +199,10 @@ sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search search. (optional)
 
 try:
-    api_response = api_instance.dashboards_v1_list_dashboard_names(owner, offset=offset, limit=limit, sort=sort, query=query)
+    api_response = api_instance.list_dashboard_names(owner, offset=offset, limit=limit, sort=sort, query=query)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling DashboardsV1Api->dashboards_v1_list_dashboard_names: %s\n" % e)
+    print("Exception when calling DashboardsV1Api->list_dashboard_names: %s\n" % e)
 ```
 
 ### Parameters
@@ -230,8 +230,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **dashboards_v1_list_dashboards**
-> V1ListDashboardsResponse dashboards_v1_list_dashboards(owner, offset=offset, limit=limit, sort=sort, query=query)
+# **list_dashboards**
+> V1ListDashboardsResponse list_dashboards(owner, offset=offset, limit=limit, sort=sort, query=query)
 
 
 
@@ -258,10 +258,10 @@ sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search search. (optional)
 
 try:
-    api_response = api_instance.dashboards_v1_list_dashboards(owner, offset=offset, limit=limit, sort=sort, query=query)
+    api_response = api_instance.list_dashboards(owner, offset=offset, limit=limit, sort=sort, query=query)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling DashboardsV1Api->dashboards_v1_list_dashboards: %s\n" % e)
+    print("Exception when calling DashboardsV1Api->list_dashboards: %s\n" % e)
 ```
 
 ### Parameters
@@ -289,8 +289,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **dashboards_v1_patch_dashboard**
-> V1Dashboard dashboards_v1_patch_dashboard(owner, dashboard_uuid, body)
+# **patch_dashboard**
+> V1Dashboard patch_dashboard(owner, dashboard_uuid, body)
 
 
 
@@ -315,10 +315,10 @@ dashboard_uuid = 'dashboard_uuid_example' # str | UUID
 body = polyaxon_sdk.V1Dashboard() # V1Dashboard | Dashboard body
 
 try:
-    api_response = api_instance.dashboards_v1_patch_dashboard(owner, dashboard_uuid, body)
+    api_response = api_instance.patch_dashboard(owner, dashboard_uuid, body)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling DashboardsV1Api->dashboards_v1_patch_dashboard: %s\n" % e)
+    print("Exception when calling DashboardsV1Api->patch_dashboard: %s\n" % e)
 ```
 
 ### Parameters
@@ -344,8 +344,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **dashboards_v1_update_dashboard**
-> V1Dashboard dashboards_v1_update_dashboard(owner, dashboard_uuid, body)
+# **update_dashboard**
+> V1Dashboard update_dashboard(owner, dashboard_uuid, body)
 
 
 
@@ -370,10 +370,10 @@ dashboard_uuid = 'dashboard_uuid_example' # str | UUID
 body = polyaxon_sdk.V1Dashboard() # V1Dashboard | Dashboard body
 
 try:
-    api_response = api_instance.dashboards_v1_update_dashboard(owner, dashboard_uuid, body)
+    api_response = api_instance.update_dashboard(owner, dashboard_uuid, body)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling DashboardsV1Api->dashboards_v1_update_dashboard: %s\n" % e)
+    print("Exception when calling DashboardsV1Api->update_dashboard: %s\n" % e)
 ```
 
 ### Parameters

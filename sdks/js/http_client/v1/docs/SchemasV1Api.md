@@ -4,12 +4,12 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**schemasV1NoOp**](SchemasV1Api.md#schemasV1NoOp) | **GET** /schemas | List teams names
+[**noOp**](SchemasV1Api.md#noOp) | **GET** /schemas | List teams names
 
 
-<a name="schemasV1NoOp"></a>
-# **schemasV1NoOp**
-> V1Schemas schemasV1NoOp()
+<a name="noOp"></a>
+# **noOp**
+> V1Schemas noOp()
 
 List teams names
 
@@ -33,7 +33,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.schemasV1NoOp(callback);
+apiInstance.noOp(callback);
 ```
 
 ### Parameters

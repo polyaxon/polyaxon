@@ -4,17 +4,17 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**run_profiles_v1_create_run_profile**](RunProfilesV1Api.md#run_profiles_v1_create_run_profile) | **POST** /api/v1/orgs/{owner}/run_profiles | Create hub component
-[**run_profiles_v1_delete_run_profile**](RunProfilesV1Api.md#run_profiles_v1_delete_run_profile) | **DELETE** /api/v1/orgs/{owner}/run_profiles/{uuid} | Delete hub component
-[**run_profiles_v1_get_run_profile**](RunProfilesV1Api.md#run_profiles_v1_get_run_profile) | **GET** /api/v1/orgs/{owner}/run_profiles/{uuid} | Get hub component
-[**run_profiles_v1_list_run_profile_names**](RunProfilesV1Api.md#run_profiles_v1_list_run_profile_names) | **GET** /api/v1/orgs/{owner}/run_profiles/names | List hub component names
-[**run_profiles_v1_list_run_profiles**](RunProfilesV1Api.md#run_profiles_v1_list_run_profiles) | **GET** /api/v1/orgs/{owner}/run_profiles | List hub components
-[**run_profiles_v1_patch_run_profile**](RunProfilesV1Api.md#run_profiles_v1_patch_run_profile) | **PATCH** /api/v1/orgs/{owner}/run_profiles/{run_profile.uuid} | Patch hub component
-[**run_profiles_v1_update_run_profile**](RunProfilesV1Api.md#run_profiles_v1_update_run_profile) | **PUT** /api/v1/orgs/{owner}/run_profiles/{run_profile.uuid} | Update hub component
+[**create_run_profile**](RunProfilesV1Api.md#create_run_profile) | **POST** /api/v1/orgs/{owner}/run_profiles | Create hub component
+[**delete_run_profile**](RunProfilesV1Api.md#delete_run_profile) | **DELETE** /api/v1/orgs/{owner}/run_profiles/{uuid} | Delete hub component
+[**get_run_profile**](RunProfilesV1Api.md#get_run_profile) | **GET** /api/v1/orgs/{owner}/run_profiles/{uuid} | Get hub component
+[**list_run_profile_names**](RunProfilesV1Api.md#list_run_profile_names) | **GET** /api/v1/orgs/{owner}/run_profiles/names | List hub component names
+[**list_run_profiles**](RunProfilesV1Api.md#list_run_profiles) | **GET** /api/v1/orgs/{owner}/run_profiles | List hub components
+[**patch_run_profile**](RunProfilesV1Api.md#patch_run_profile) | **PATCH** /api/v1/orgs/{owner}/run_profiles/{run_profile.uuid} | Patch hub component
+[**update_run_profile**](RunProfilesV1Api.md#update_run_profile) | **PUT** /api/v1/orgs/{owner}/run_profiles/{run_profile.uuid} | Update hub component
 
 
-# **run_profiles_v1_create_run_profile**
-> V1RunProfile run_profiles_v1_create_run_profile(owner, body)
+# **create_run_profile**
+> V1RunProfile create_run_profile(owner, body)
 
 Create hub component
 
@@ -39,10 +39,10 @@ body = polyaxon_sdk.V1RunProfile() # V1RunProfile | Artifact store body
 
 try:
     # Create hub component
-    api_response = api_instance.run_profiles_v1_create_run_profile(owner, body)
+    api_response = api_instance.create_run_profile(owner, body)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling RunProfilesV1Api->run_profiles_v1_create_run_profile: %s\n" % e)
+    print("Exception when calling RunProfilesV1Api->create_run_profile: %s\n" % e)
 ```
 
 ### Parameters
@@ -67,8 +67,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **run_profiles_v1_delete_run_profile**
-> run_profiles_v1_delete_run_profile(owner, uuid)
+# **delete_run_profile**
+> delete_run_profile(owner, uuid)
 
 Delete hub component
 
@@ -93,9 +93,9 @@ uuid = 'uuid_example' # str | Uuid identifier of the entity
 
 try:
     # Delete hub component
-    api_instance.run_profiles_v1_delete_run_profile(owner, uuid)
+    api_instance.delete_run_profile(owner, uuid)
 except ApiException as e:
-    print("Exception when calling RunProfilesV1Api->run_profiles_v1_delete_run_profile: %s\n" % e)
+    print("Exception when calling RunProfilesV1Api->delete_run_profile: %s\n" % e)
 ```
 
 ### Parameters
@@ -120,8 +120,8 @@ void (empty response body)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **run_profiles_v1_get_run_profile**
-> V1RunProfile run_profiles_v1_get_run_profile(owner, uuid)
+# **get_run_profile**
+> V1RunProfile get_run_profile(owner, uuid)
 
 Get hub component
 
@@ -146,10 +146,10 @@ uuid = 'uuid_example' # str | Uuid identifier of the entity
 
 try:
     # Get hub component
-    api_response = api_instance.run_profiles_v1_get_run_profile(owner, uuid)
+    api_response = api_instance.get_run_profile(owner, uuid)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling RunProfilesV1Api->run_profiles_v1_get_run_profile: %s\n" % e)
+    print("Exception when calling RunProfilesV1Api->get_run_profile: %s\n" % e)
 ```
 
 ### Parameters
@@ -174,8 +174,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **run_profiles_v1_list_run_profile_names**
-> V1ListRunProfilesResponse run_profiles_v1_list_run_profile_names(owner, offset=offset, limit=limit, sort=sort, query=query)
+# **list_run_profile_names**
+> V1ListRunProfilesResponse list_run_profile_names(owner, offset=offset, limit=limit, sort=sort, query=query)
 
 List hub component names
 
@@ -203,10 +203,10 @@ query = 'query_example' # str | Query filter the search search. (optional)
 
 try:
     # List hub component names
-    api_response = api_instance.run_profiles_v1_list_run_profile_names(owner, offset=offset, limit=limit, sort=sort, query=query)
+    api_response = api_instance.list_run_profile_names(owner, offset=offset, limit=limit, sort=sort, query=query)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling RunProfilesV1Api->run_profiles_v1_list_run_profile_names: %s\n" % e)
+    print("Exception when calling RunProfilesV1Api->list_run_profile_names: %s\n" % e)
 ```
 
 ### Parameters
@@ -234,8 +234,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **run_profiles_v1_list_run_profiles**
-> V1ListRunProfilesResponse run_profiles_v1_list_run_profiles(owner, offset=offset, limit=limit, sort=sort, query=query)
+# **list_run_profiles**
+> V1ListRunProfilesResponse list_run_profiles(owner, offset=offset, limit=limit, sort=sort, query=query)
 
 List hub components
 
@@ -263,10 +263,10 @@ query = 'query_example' # str | Query filter the search search. (optional)
 
 try:
     # List hub components
-    api_response = api_instance.run_profiles_v1_list_run_profiles(owner, offset=offset, limit=limit, sort=sort, query=query)
+    api_response = api_instance.list_run_profiles(owner, offset=offset, limit=limit, sort=sort, query=query)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling RunProfilesV1Api->run_profiles_v1_list_run_profiles: %s\n" % e)
+    print("Exception when calling RunProfilesV1Api->list_run_profiles: %s\n" % e)
 ```
 
 ### Parameters
@@ -294,8 +294,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **run_profiles_v1_patch_run_profile**
-> V1RunProfile run_profiles_v1_patch_run_profile(owner, run_profile_uuid, body)
+# **patch_run_profile**
+> V1RunProfile patch_run_profile(owner, run_profile_uuid, body)
 
 Patch hub component
 
@@ -321,10 +321,10 @@ body = polyaxon_sdk.V1RunProfile() # V1RunProfile | Artifact store body
 
 try:
     # Patch hub component
-    api_response = api_instance.run_profiles_v1_patch_run_profile(owner, run_profile_uuid, body)
+    api_response = api_instance.patch_run_profile(owner, run_profile_uuid, body)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling RunProfilesV1Api->run_profiles_v1_patch_run_profile: %s\n" % e)
+    print("Exception when calling RunProfilesV1Api->patch_run_profile: %s\n" % e)
 ```
 
 ### Parameters
@@ -350,8 +350,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **run_profiles_v1_update_run_profile**
-> V1RunProfile run_profiles_v1_update_run_profile(owner, run_profile_uuid, body)
+# **update_run_profile**
+> V1RunProfile update_run_profile(owner, run_profile_uuid, body)
 
 Update hub component
 
@@ -377,10 +377,10 @@ body = polyaxon_sdk.V1RunProfile() # V1RunProfile | Artifact store body
 
 try:
     # Update hub component
-    api_response = api_instance.run_profiles_v1_update_run_profile(owner, run_profile_uuid, body)
+    api_response = api_instance.update_run_profile(owner, run_profile_uuid, body)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling RunProfilesV1Api->run_profiles_v1_update_run_profile: %s\n" % e)
+    print("Exception when calling RunProfilesV1Api->update_run_profile: %s\n" % e)
 ```
 
 ### Parameters

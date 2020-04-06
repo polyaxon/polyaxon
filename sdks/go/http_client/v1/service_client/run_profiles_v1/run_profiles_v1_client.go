@@ -39,41 +39,41 @@ type Client struct {
 
 // ClientService is the interface for Client methods
 type ClientService interface {
-	RunProfilesV1CreateRunProfile(params *RunProfilesV1CreateRunProfileParams, authInfo runtime.ClientAuthInfoWriter) (*RunProfilesV1CreateRunProfileOK, *RunProfilesV1CreateRunProfileNoContent, error)
+	CreateRunProfile(params *CreateRunProfileParams, authInfo runtime.ClientAuthInfoWriter) (*CreateRunProfileOK, *CreateRunProfileNoContent, error)
 
-	RunProfilesV1DeleteRunProfile(params *RunProfilesV1DeleteRunProfileParams, authInfo runtime.ClientAuthInfoWriter) (*RunProfilesV1DeleteRunProfileOK, *RunProfilesV1DeleteRunProfileNoContent, error)
+	DeleteRunProfile(params *DeleteRunProfileParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteRunProfileOK, *DeleteRunProfileNoContent, error)
 
-	RunProfilesV1GetRunProfile(params *RunProfilesV1GetRunProfileParams, authInfo runtime.ClientAuthInfoWriter) (*RunProfilesV1GetRunProfileOK, *RunProfilesV1GetRunProfileNoContent, error)
+	GetRunProfile(params *GetRunProfileParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunProfileOK, *GetRunProfileNoContent, error)
 
-	RunProfilesV1ListRunProfileNames(params *RunProfilesV1ListRunProfileNamesParams, authInfo runtime.ClientAuthInfoWriter) (*RunProfilesV1ListRunProfileNamesOK, *RunProfilesV1ListRunProfileNamesNoContent, error)
+	ListRunProfileNames(params *ListRunProfileNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListRunProfileNamesOK, *ListRunProfileNamesNoContent, error)
 
-	RunProfilesV1ListRunProfiles(params *RunProfilesV1ListRunProfilesParams, authInfo runtime.ClientAuthInfoWriter) (*RunProfilesV1ListRunProfilesOK, *RunProfilesV1ListRunProfilesNoContent, error)
+	ListRunProfiles(params *ListRunProfilesParams, authInfo runtime.ClientAuthInfoWriter) (*ListRunProfilesOK, *ListRunProfilesNoContent, error)
 
-	RunProfilesV1PatchRunProfile(params *RunProfilesV1PatchRunProfileParams, authInfo runtime.ClientAuthInfoWriter) (*RunProfilesV1PatchRunProfileOK, *RunProfilesV1PatchRunProfileNoContent, error)
+	PatchRunProfile(params *PatchRunProfileParams, authInfo runtime.ClientAuthInfoWriter) (*PatchRunProfileOK, *PatchRunProfileNoContent, error)
 
-	RunProfilesV1UpdateRunProfile(params *RunProfilesV1UpdateRunProfileParams, authInfo runtime.ClientAuthInfoWriter) (*RunProfilesV1UpdateRunProfileOK, *RunProfilesV1UpdateRunProfileNoContent, error)
+	UpdateRunProfile(params *UpdateRunProfileParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateRunProfileOK, *UpdateRunProfileNoContent, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
 
 /*
-  RunProfilesV1CreateRunProfile creates hub component
+  CreateRunProfile creates hub component
 */
-func (a *Client) RunProfilesV1CreateRunProfile(params *RunProfilesV1CreateRunProfileParams, authInfo runtime.ClientAuthInfoWriter) (*RunProfilesV1CreateRunProfileOK, *RunProfilesV1CreateRunProfileNoContent, error) {
+func (a *Client) CreateRunProfile(params *CreateRunProfileParams, authInfo runtime.ClientAuthInfoWriter) (*CreateRunProfileOK, *CreateRunProfileNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewRunProfilesV1CreateRunProfileParams()
+		params = NewCreateRunProfileParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "RunProfilesV1_CreateRunProfile",
+		ID:                 "CreateRunProfile",
 		Method:             "POST",
 		PathPattern:        "/api/v1/orgs/{owner}/run_profiles",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &RunProfilesV1CreateRunProfileReader{formats: a.formats},
+		Reader:             &CreateRunProfileReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -82,34 +82,34 @@ func (a *Client) RunProfilesV1CreateRunProfile(params *RunProfilesV1CreateRunPro
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *RunProfilesV1CreateRunProfileOK:
+	case *CreateRunProfileOK:
 		return value, nil, nil
-	case *RunProfilesV1CreateRunProfileNoContent:
+	case *CreateRunProfileNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*RunProfilesV1CreateRunProfileDefault)
+	unexpectedSuccess := result.(*CreateRunProfileDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  RunProfilesV1DeleteRunProfile deletes hub component
+  DeleteRunProfile deletes hub component
 */
-func (a *Client) RunProfilesV1DeleteRunProfile(params *RunProfilesV1DeleteRunProfileParams, authInfo runtime.ClientAuthInfoWriter) (*RunProfilesV1DeleteRunProfileOK, *RunProfilesV1DeleteRunProfileNoContent, error) {
+func (a *Client) DeleteRunProfile(params *DeleteRunProfileParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteRunProfileOK, *DeleteRunProfileNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewRunProfilesV1DeleteRunProfileParams()
+		params = NewDeleteRunProfileParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "RunProfilesV1_DeleteRunProfile",
+		ID:                 "DeleteRunProfile",
 		Method:             "DELETE",
 		PathPattern:        "/api/v1/orgs/{owner}/run_profiles/{uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &RunProfilesV1DeleteRunProfileReader{formats: a.formats},
+		Reader:             &DeleteRunProfileReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -118,34 +118,34 @@ func (a *Client) RunProfilesV1DeleteRunProfile(params *RunProfilesV1DeleteRunPro
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *RunProfilesV1DeleteRunProfileOK:
+	case *DeleteRunProfileOK:
 		return value, nil, nil
-	case *RunProfilesV1DeleteRunProfileNoContent:
+	case *DeleteRunProfileNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*RunProfilesV1DeleteRunProfileDefault)
+	unexpectedSuccess := result.(*DeleteRunProfileDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  RunProfilesV1GetRunProfile gets hub component
+  GetRunProfile gets hub component
 */
-func (a *Client) RunProfilesV1GetRunProfile(params *RunProfilesV1GetRunProfileParams, authInfo runtime.ClientAuthInfoWriter) (*RunProfilesV1GetRunProfileOK, *RunProfilesV1GetRunProfileNoContent, error) {
+func (a *Client) GetRunProfile(params *GetRunProfileParams, authInfo runtime.ClientAuthInfoWriter) (*GetRunProfileOK, *GetRunProfileNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewRunProfilesV1GetRunProfileParams()
+		params = NewGetRunProfileParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "RunProfilesV1_GetRunProfile",
+		ID:                 "GetRunProfile",
 		Method:             "GET",
 		PathPattern:        "/api/v1/orgs/{owner}/run_profiles/{uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &RunProfilesV1GetRunProfileReader{formats: a.formats},
+		Reader:             &GetRunProfileReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -154,34 +154,34 @@ func (a *Client) RunProfilesV1GetRunProfile(params *RunProfilesV1GetRunProfilePa
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *RunProfilesV1GetRunProfileOK:
+	case *GetRunProfileOK:
 		return value, nil, nil
-	case *RunProfilesV1GetRunProfileNoContent:
+	case *GetRunProfileNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*RunProfilesV1GetRunProfileDefault)
+	unexpectedSuccess := result.(*GetRunProfileDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  RunProfilesV1ListRunProfileNames lists hub component names
+  ListRunProfileNames lists hub component names
 */
-func (a *Client) RunProfilesV1ListRunProfileNames(params *RunProfilesV1ListRunProfileNamesParams, authInfo runtime.ClientAuthInfoWriter) (*RunProfilesV1ListRunProfileNamesOK, *RunProfilesV1ListRunProfileNamesNoContent, error) {
+func (a *Client) ListRunProfileNames(params *ListRunProfileNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListRunProfileNamesOK, *ListRunProfileNamesNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewRunProfilesV1ListRunProfileNamesParams()
+		params = NewListRunProfileNamesParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "RunProfilesV1_ListRunProfileNames",
+		ID:                 "ListRunProfileNames",
 		Method:             "GET",
 		PathPattern:        "/api/v1/orgs/{owner}/run_profiles/names",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &RunProfilesV1ListRunProfileNamesReader{formats: a.formats},
+		Reader:             &ListRunProfileNamesReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -190,34 +190,34 @@ func (a *Client) RunProfilesV1ListRunProfileNames(params *RunProfilesV1ListRunPr
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *RunProfilesV1ListRunProfileNamesOK:
+	case *ListRunProfileNamesOK:
 		return value, nil, nil
-	case *RunProfilesV1ListRunProfileNamesNoContent:
+	case *ListRunProfileNamesNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*RunProfilesV1ListRunProfileNamesDefault)
+	unexpectedSuccess := result.(*ListRunProfileNamesDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  RunProfilesV1ListRunProfiles lists hub components
+  ListRunProfiles lists hub components
 */
-func (a *Client) RunProfilesV1ListRunProfiles(params *RunProfilesV1ListRunProfilesParams, authInfo runtime.ClientAuthInfoWriter) (*RunProfilesV1ListRunProfilesOK, *RunProfilesV1ListRunProfilesNoContent, error) {
+func (a *Client) ListRunProfiles(params *ListRunProfilesParams, authInfo runtime.ClientAuthInfoWriter) (*ListRunProfilesOK, *ListRunProfilesNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewRunProfilesV1ListRunProfilesParams()
+		params = NewListRunProfilesParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "RunProfilesV1_ListRunProfiles",
+		ID:                 "ListRunProfiles",
 		Method:             "GET",
 		PathPattern:        "/api/v1/orgs/{owner}/run_profiles",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &RunProfilesV1ListRunProfilesReader{formats: a.formats},
+		Reader:             &ListRunProfilesReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -226,34 +226,34 @@ func (a *Client) RunProfilesV1ListRunProfiles(params *RunProfilesV1ListRunProfil
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *RunProfilesV1ListRunProfilesOK:
+	case *ListRunProfilesOK:
 		return value, nil, nil
-	case *RunProfilesV1ListRunProfilesNoContent:
+	case *ListRunProfilesNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*RunProfilesV1ListRunProfilesDefault)
+	unexpectedSuccess := result.(*ListRunProfilesDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  RunProfilesV1PatchRunProfile patches hub component
+  PatchRunProfile patches hub component
 */
-func (a *Client) RunProfilesV1PatchRunProfile(params *RunProfilesV1PatchRunProfileParams, authInfo runtime.ClientAuthInfoWriter) (*RunProfilesV1PatchRunProfileOK, *RunProfilesV1PatchRunProfileNoContent, error) {
+func (a *Client) PatchRunProfile(params *PatchRunProfileParams, authInfo runtime.ClientAuthInfoWriter) (*PatchRunProfileOK, *PatchRunProfileNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewRunProfilesV1PatchRunProfileParams()
+		params = NewPatchRunProfileParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "RunProfilesV1_PatchRunProfile",
+		ID:                 "PatchRunProfile",
 		Method:             "PATCH",
 		PathPattern:        "/api/v1/orgs/{owner}/run_profiles/{run_profile.uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &RunProfilesV1PatchRunProfileReader{formats: a.formats},
+		Reader:             &PatchRunProfileReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -262,34 +262,34 @@ func (a *Client) RunProfilesV1PatchRunProfile(params *RunProfilesV1PatchRunProfi
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *RunProfilesV1PatchRunProfileOK:
+	case *PatchRunProfileOK:
 		return value, nil, nil
-	case *RunProfilesV1PatchRunProfileNoContent:
+	case *PatchRunProfileNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*RunProfilesV1PatchRunProfileDefault)
+	unexpectedSuccess := result.(*PatchRunProfileDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  RunProfilesV1UpdateRunProfile updates hub component
+  UpdateRunProfile updates hub component
 */
-func (a *Client) RunProfilesV1UpdateRunProfile(params *RunProfilesV1UpdateRunProfileParams, authInfo runtime.ClientAuthInfoWriter) (*RunProfilesV1UpdateRunProfileOK, *RunProfilesV1UpdateRunProfileNoContent, error) {
+func (a *Client) UpdateRunProfile(params *UpdateRunProfileParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateRunProfileOK, *UpdateRunProfileNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewRunProfilesV1UpdateRunProfileParams()
+		params = NewUpdateRunProfileParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "RunProfilesV1_UpdateRunProfile",
+		ID:                 "UpdateRunProfile",
 		Method:             "PUT",
 		PathPattern:        "/api/v1/orgs/{owner}/run_profiles/{run_profile.uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &RunProfilesV1UpdateRunProfileReader{formats: a.formats},
+		Reader:             &UpdateRunProfileReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -298,13 +298,13 @@ func (a *Client) RunProfilesV1UpdateRunProfile(params *RunProfilesV1UpdateRunPro
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *RunProfilesV1UpdateRunProfileOK:
+	case *UpdateRunProfileOK:
 		return value, nil, nil
-	case *RunProfilesV1UpdateRunProfileNoContent:
+	case *UpdateRunProfileNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*RunProfilesV1UpdateRunProfileDefault)
+	unexpectedSuccess := result.(*UpdateRunProfileDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 

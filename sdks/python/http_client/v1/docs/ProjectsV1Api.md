@@ -4,32 +4,32 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**projects_v1_archive_project**](ProjectsV1Api.md#projects_v1_archive_project) | **POST** /api/v1/{owner}/{project}/archive | Archive project
-[**projects_v1_bookmark_project**](ProjectsV1Api.md#projects_v1_bookmark_project) | **POST** /api/v1/{owner}/{project}/bookmark | Bookmark project
-[**projects_v1_create_project**](ProjectsV1Api.md#projects_v1_create_project) | **POST** /api/v1/{owner}/projects/create | Create new project
-[**projects_v1_delete_project**](ProjectsV1Api.md#projects_v1_delete_project) | **DELETE** /api/v1/{owner}/{project} | Delete project
-[**projects_v1_disable_project_ci**](ProjectsV1Api.md#projects_v1_disable_project_ci) | **DELETE** /api/v1/{owner}/{project}/ci | Disbale project CI
-[**projects_v1_enable_project_ci**](ProjectsV1Api.md#projects_v1_enable_project_ci) | **POST** /api/v1/{owner}/{project}/ci | Enable project CI
-[**projects_v1_fetch_project_teams**](ProjectsV1Api.md#projects_v1_fetch_project_teams) | **GET** /api/v1/{owner}/{project}/teams | Get project teams
-[**projects_v1_get_project**](ProjectsV1Api.md#projects_v1_get_project) | **GET** /api/v1/{owner}/{project} | Get project
-[**projects_v1_get_project_settings**](ProjectsV1Api.md#projects_v1_get_project_settings) | **GET** /api/v1/{owner}/{project}/settings | Get Project settings
-[**projects_v1_list_archived_projects**](ProjectsV1Api.md#projects_v1_list_archived_projects) | **GET** /api/v1/archives/{user}/projects | List archived projects for user
-[**projects_v1_list_bookmarked_projects**](ProjectsV1Api.md#projects_v1_list_bookmarked_projects) | **GET** /api/v1/bookmarks/{user}/projects | List bookmarked projects for user
-[**projects_v1_list_project_names**](ProjectsV1Api.md#projects_v1_list_project_names) | **GET** /api/v1/{owner}/projects/names | List project names
-[**projects_v1_list_projects**](ProjectsV1Api.md#projects_v1_list_projects) | **GET** /api/v1/{owner}/projects/list | List projects
-[**projects_v1_patch_project**](ProjectsV1Api.md#projects_v1_patch_project) | **PATCH** /api/v1/{owner}/{project.name} | Patch project
-[**projects_v1_patch_project_settings**](ProjectsV1Api.md#projects_v1_patch_project_settings) | **PATCH** /api/v1/{owner}/{project}/settings | Patch project settings
-[**projects_v1_patch_project_teams**](ProjectsV1Api.md#projects_v1_patch_project_teams) | **PATCH** /api/v1/{owner}/{project}/teams | Patch project teams
-[**projects_v1_restore_project**](ProjectsV1Api.md#projects_v1_restore_project) | **POST** /api/v1/{owner}/{project}/restore | Restore project
-[**projects_v1_unbookmark_project**](ProjectsV1Api.md#projects_v1_unbookmark_project) | **DELETE** /api/v1/{owner}/{project}/unbookmark | Unbookmark project
-[**projects_v1_update_project**](ProjectsV1Api.md#projects_v1_update_project) | **PUT** /api/v1/{owner}/{project.name} | Update project
-[**projects_v1_update_project_settings**](ProjectsV1Api.md#projects_v1_update_project_settings) | **PUT** /api/v1/{owner}/{project}/settings | Update project settings
-[**projects_v1_update_project_teams**](ProjectsV1Api.md#projects_v1_update_project_teams) | **PUT** /api/v1/{owner}/{project}/teams | Update project teams
+[**archive_project**](ProjectsV1Api.md#archive_project) | **POST** /api/v1/{owner}/{project}/archive | Archive project
+[**bookmark_project**](ProjectsV1Api.md#bookmark_project) | **POST** /api/v1/{owner}/{project}/bookmark | Bookmark project
+[**create_project**](ProjectsV1Api.md#create_project) | **POST** /api/v1/{owner}/projects/create | Create new project
+[**delete_project**](ProjectsV1Api.md#delete_project) | **DELETE** /api/v1/{owner}/{project} | Delete project
+[**disable_project_ci**](ProjectsV1Api.md#disable_project_ci) | **DELETE** /api/v1/{owner}/{project}/ci | Disbale project CI
+[**enable_project_ci**](ProjectsV1Api.md#enable_project_ci) | **POST** /api/v1/{owner}/{project}/ci | Enable project CI
+[**fetch_project_teams**](ProjectsV1Api.md#fetch_project_teams) | **GET** /api/v1/{owner}/{project}/teams | Get project teams
+[**get_project**](ProjectsV1Api.md#get_project) | **GET** /api/v1/{owner}/{project} | Get project
+[**get_project_settings**](ProjectsV1Api.md#get_project_settings) | **GET** /api/v1/{owner}/{project}/settings | Get Project settings
+[**list_archived_projects**](ProjectsV1Api.md#list_archived_projects) | **GET** /api/v1/archives/{user}/projects | List archived projects for user
+[**list_bookmarked_projects**](ProjectsV1Api.md#list_bookmarked_projects) | **GET** /api/v1/bookmarks/{user}/projects | List bookmarked projects for user
+[**list_project_names**](ProjectsV1Api.md#list_project_names) | **GET** /api/v1/{owner}/projects/names | List project names
+[**list_projects**](ProjectsV1Api.md#list_projects) | **GET** /api/v1/{owner}/projects/list | List projects
+[**patch_project**](ProjectsV1Api.md#patch_project) | **PATCH** /api/v1/{owner}/{project.name} | Patch project
+[**patch_project_settings**](ProjectsV1Api.md#patch_project_settings) | **PATCH** /api/v1/{owner}/{project}/settings | Patch project settings
+[**patch_project_teams**](ProjectsV1Api.md#patch_project_teams) | **PATCH** /api/v1/{owner}/{project}/teams | Patch project teams
+[**restore_project**](ProjectsV1Api.md#restore_project) | **POST** /api/v1/{owner}/{project}/restore | Restore project
+[**unbookmark_project**](ProjectsV1Api.md#unbookmark_project) | **DELETE** /api/v1/{owner}/{project}/unbookmark | Unbookmark project
+[**update_project**](ProjectsV1Api.md#update_project) | **PUT** /api/v1/{owner}/{project.name} | Update project
+[**update_project_settings**](ProjectsV1Api.md#update_project_settings) | **PUT** /api/v1/{owner}/{project}/settings | Update project settings
+[**update_project_teams**](ProjectsV1Api.md#update_project_teams) | **PUT** /api/v1/{owner}/{project}/teams | Update project teams
 [**upload_project_artifact**](ProjectsV1Api.md#upload_project_artifact) | **POST** /api/v1/{owner}/{project}/artifacts/{uuid}/upload | Upload artifact to a store via project access
 
 
-# **projects_v1_archive_project**
-> projects_v1_archive_project(owner, project)
+# **archive_project**
+> archive_project(owner, project)
 
 Archive project
 
@@ -54,9 +54,9 @@ project = 'project_example' # str | Project under namesapce
 
 try:
     # Archive project
-    api_instance.projects_v1_archive_project(owner, project)
+    api_instance.archive_project(owner, project)
 except ApiException as e:
-    print("Exception when calling ProjectsV1Api->projects_v1_archive_project: %s\n" % e)
+    print("Exception when calling ProjectsV1Api->archive_project: %s\n" % e)
 ```
 
 ### Parameters
@@ -81,8 +81,8 @@ void (empty response body)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **projects_v1_bookmark_project**
-> projects_v1_bookmark_project(owner, project)
+# **bookmark_project**
+> bookmark_project(owner, project)
 
 Bookmark project
 
@@ -107,9 +107,9 @@ project = 'project_example' # str | Project under namesapce
 
 try:
     # Bookmark project
-    api_instance.projects_v1_bookmark_project(owner, project)
+    api_instance.bookmark_project(owner, project)
 except ApiException as e:
-    print("Exception when calling ProjectsV1Api->projects_v1_bookmark_project: %s\n" % e)
+    print("Exception when calling ProjectsV1Api->bookmark_project: %s\n" % e)
 ```
 
 ### Parameters
@@ -134,8 +134,8 @@ void (empty response body)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **projects_v1_create_project**
-> V1Project projects_v1_create_project(owner, body)
+# **create_project**
+> V1Project create_project(owner, body)
 
 Create new project
 
@@ -160,10 +160,10 @@ body = polyaxon_sdk.V1Project() # V1Project | Project body
 
 try:
     # Create new project
-    api_response = api_instance.projects_v1_create_project(owner, body)
+    api_response = api_instance.create_project(owner, body)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling ProjectsV1Api->projects_v1_create_project: %s\n" % e)
+    print("Exception when calling ProjectsV1Api->create_project: %s\n" % e)
 ```
 
 ### Parameters
@@ -188,8 +188,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **projects_v1_delete_project**
-> projects_v1_delete_project(owner, project)
+# **delete_project**
+> delete_project(owner, project)
 
 Delete project
 
@@ -214,9 +214,9 @@ project = 'project_example' # str | Project under namesapce
 
 try:
     # Delete project
-    api_instance.projects_v1_delete_project(owner, project)
+    api_instance.delete_project(owner, project)
 except ApiException as e:
-    print("Exception when calling ProjectsV1Api->projects_v1_delete_project: %s\n" % e)
+    print("Exception when calling ProjectsV1Api->delete_project: %s\n" % e)
 ```
 
 ### Parameters
@@ -241,8 +241,8 @@ void (empty response body)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **projects_v1_disable_project_ci**
-> projects_v1_disable_project_ci(owner, project)
+# **disable_project_ci**
+> disable_project_ci(owner, project)
 
 Disbale project CI
 
@@ -267,9 +267,9 @@ project = 'project_example' # str | Project under namesapce
 
 try:
     # Disbale project CI
-    api_instance.projects_v1_disable_project_ci(owner, project)
+    api_instance.disable_project_ci(owner, project)
 except ApiException as e:
-    print("Exception when calling ProjectsV1Api->projects_v1_disable_project_ci: %s\n" % e)
+    print("Exception when calling ProjectsV1Api->disable_project_ci: %s\n" % e)
 ```
 
 ### Parameters
@@ -294,8 +294,8 @@ void (empty response body)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **projects_v1_enable_project_ci**
-> projects_v1_enable_project_ci(owner, project)
+# **enable_project_ci**
+> enable_project_ci(owner, project)
 
 Enable project CI
 
@@ -320,9 +320,9 @@ project = 'project_example' # str | Project under namesapce
 
 try:
     # Enable project CI
-    api_instance.projects_v1_enable_project_ci(owner, project)
+    api_instance.enable_project_ci(owner, project)
 except ApiException as e:
-    print("Exception when calling ProjectsV1Api->projects_v1_enable_project_ci: %s\n" % e)
+    print("Exception when calling ProjectsV1Api->enable_project_ci: %s\n" % e)
 ```
 
 ### Parameters
@@ -347,8 +347,8 @@ void (empty response body)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **projects_v1_fetch_project_teams**
-> V1ProjectTeams projects_v1_fetch_project_teams(owner, project)
+# **fetch_project_teams**
+> V1ProjectTeams fetch_project_teams(owner, project)
 
 Get project teams
 
@@ -373,10 +373,10 @@ project = 'project_example' # str | Project under namesapce
 
 try:
     # Get project teams
-    api_response = api_instance.projects_v1_fetch_project_teams(owner, project)
+    api_response = api_instance.fetch_project_teams(owner, project)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling ProjectsV1Api->projects_v1_fetch_project_teams: %s\n" % e)
+    print("Exception when calling ProjectsV1Api->fetch_project_teams: %s\n" % e)
 ```
 
 ### Parameters
@@ -401,8 +401,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **projects_v1_get_project**
-> V1Project projects_v1_get_project(owner, project)
+# **get_project**
+> V1Project get_project(owner, project)
 
 Get project
 
@@ -427,10 +427,10 @@ project = 'project_example' # str | Project under namesapce
 
 try:
     # Get project
-    api_response = api_instance.projects_v1_get_project(owner, project)
+    api_response = api_instance.get_project(owner, project)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling ProjectsV1Api->projects_v1_get_project: %s\n" % e)
+    print("Exception when calling ProjectsV1Api->get_project: %s\n" % e)
 ```
 
 ### Parameters
@@ -455,8 +455,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **projects_v1_get_project_settings**
-> V1ProjectSettings projects_v1_get_project_settings(owner, project)
+# **get_project_settings**
+> V1ProjectSettings get_project_settings(owner, project)
 
 Get Project settings
 
@@ -481,10 +481,10 @@ project = 'project_example' # str | Project under namesapce
 
 try:
     # Get Project settings
-    api_response = api_instance.projects_v1_get_project_settings(owner, project)
+    api_response = api_instance.get_project_settings(owner, project)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling ProjectsV1Api->projects_v1_get_project_settings: %s\n" % e)
+    print("Exception when calling ProjectsV1Api->get_project_settings: %s\n" % e)
 ```
 
 ### Parameters
@@ -509,8 +509,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **projects_v1_list_archived_projects**
-> V1ListProjectsResponse projects_v1_list_archived_projects(user, offset=offset, limit=limit, sort=sort, query=query)
+# **list_archived_projects**
+> V1ListProjectsResponse list_archived_projects(user, offset=offset, limit=limit, sort=sort, query=query)
 
 List archived projects for user
 
@@ -538,10 +538,10 @@ query = 'query_example' # str | Query filter the search search. (optional)
 
 try:
     # List archived projects for user
-    api_response = api_instance.projects_v1_list_archived_projects(user, offset=offset, limit=limit, sort=sort, query=query)
+    api_response = api_instance.list_archived_projects(user, offset=offset, limit=limit, sort=sort, query=query)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling ProjectsV1Api->projects_v1_list_archived_projects: %s\n" % e)
+    print("Exception when calling ProjectsV1Api->list_archived_projects: %s\n" % e)
 ```
 
 ### Parameters
@@ -569,8 +569,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **projects_v1_list_bookmarked_projects**
-> V1ListProjectsResponse projects_v1_list_bookmarked_projects(user, offset=offset, limit=limit, sort=sort, query=query)
+# **list_bookmarked_projects**
+> V1ListProjectsResponse list_bookmarked_projects(user, offset=offset, limit=limit, sort=sort, query=query)
 
 List bookmarked projects for user
 
@@ -598,10 +598,10 @@ query = 'query_example' # str | Query filter the search search. (optional)
 
 try:
     # List bookmarked projects for user
-    api_response = api_instance.projects_v1_list_bookmarked_projects(user, offset=offset, limit=limit, sort=sort, query=query)
+    api_response = api_instance.list_bookmarked_projects(user, offset=offset, limit=limit, sort=sort, query=query)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling ProjectsV1Api->projects_v1_list_bookmarked_projects: %s\n" % e)
+    print("Exception when calling ProjectsV1Api->list_bookmarked_projects: %s\n" % e)
 ```
 
 ### Parameters
@@ -629,8 +629,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **projects_v1_list_project_names**
-> V1ListProjectsResponse projects_v1_list_project_names(owner, offset=offset, limit=limit, sort=sort, query=query)
+# **list_project_names**
+> V1ListProjectsResponse list_project_names(owner, offset=offset, limit=limit, sort=sort, query=query)
 
 List project names
 
@@ -658,10 +658,10 @@ query = 'query_example' # str | Query filter the search search. (optional)
 
 try:
     # List project names
-    api_response = api_instance.projects_v1_list_project_names(owner, offset=offset, limit=limit, sort=sort, query=query)
+    api_response = api_instance.list_project_names(owner, offset=offset, limit=limit, sort=sort, query=query)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling ProjectsV1Api->projects_v1_list_project_names: %s\n" % e)
+    print("Exception when calling ProjectsV1Api->list_project_names: %s\n" % e)
 ```
 
 ### Parameters
@@ -689,8 +689,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **projects_v1_list_projects**
-> V1ListProjectsResponse projects_v1_list_projects(owner, offset=offset, limit=limit, sort=sort, query=query)
+# **list_projects**
+> V1ListProjectsResponse list_projects(owner, offset=offset, limit=limit, sort=sort, query=query)
 
 List projects
 
@@ -718,10 +718,10 @@ query = 'query_example' # str | Query filter the search search. (optional)
 
 try:
     # List projects
-    api_response = api_instance.projects_v1_list_projects(owner, offset=offset, limit=limit, sort=sort, query=query)
+    api_response = api_instance.list_projects(owner, offset=offset, limit=limit, sort=sort, query=query)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling ProjectsV1Api->projects_v1_list_projects: %s\n" % e)
+    print("Exception when calling ProjectsV1Api->list_projects: %s\n" % e)
 ```
 
 ### Parameters
@@ -749,8 +749,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **projects_v1_patch_project**
-> V1Project projects_v1_patch_project(owner, project_name, body)
+# **patch_project**
+> V1Project patch_project(owner, project_name, body)
 
 Patch project
 
@@ -776,10 +776,10 @@ body = polyaxon_sdk.V1Project() # V1Project | Project body
 
 try:
     # Patch project
-    api_response = api_instance.projects_v1_patch_project(owner, project_name, body)
+    api_response = api_instance.patch_project(owner, project_name, body)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling ProjectsV1Api->projects_v1_patch_project: %s\n" % e)
+    print("Exception when calling ProjectsV1Api->patch_project: %s\n" % e)
 ```
 
 ### Parameters
@@ -805,8 +805,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **projects_v1_patch_project_settings**
-> V1ProjectSettings projects_v1_patch_project_settings(owner, project, body)
+# **patch_project_settings**
+> V1ProjectSettings patch_project_settings(owner, project, body)
 
 Patch project settings
 
@@ -832,10 +832,10 @@ body = polyaxon_sdk.V1ProjectSettings() # V1ProjectSettings | Project settings b
 
 try:
     # Patch project settings
-    api_response = api_instance.projects_v1_patch_project_settings(owner, project, body)
+    api_response = api_instance.patch_project_settings(owner, project, body)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling ProjectsV1Api->projects_v1_patch_project_settings: %s\n" % e)
+    print("Exception when calling ProjectsV1Api->patch_project_settings: %s\n" % e)
 ```
 
 ### Parameters
@@ -861,8 +861,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **projects_v1_patch_project_teams**
-> V1ProjectTeams projects_v1_patch_project_teams(owner, project, body)
+# **patch_project_teams**
+> V1ProjectTeams patch_project_teams(owner, project, body)
 
 Patch project teams
 
@@ -888,10 +888,10 @@ body = polyaxon_sdk.V1ProjectTeams() # V1ProjectTeams | Project settings body
 
 try:
     # Patch project teams
-    api_response = api_instance.projects_v1_patch_project_teams(owner, project, body)
+    api_response = api_instance.patch_project_teams(owner, project, body)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling ProjectsV1Api->projects_v1_patch_project_teams: %s\n" % e)
+    print("Exception when calling ProjectsV1Api->patch_project_teams: %s\n" % e)
 ```
 
 ### Parameters
@@ -917,8 +917,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **projects_v1_restore_project**
-> projects_v1_restore_project(owner, project)
+# **restore_project**
+> restore_project(owner, project)
 
 Restore project
 
@@ -943,9 +943,9 @@ project = 'project_example' # str | Project under namesapce
 
 try:
     # Restore project
-    api_instance.projects_v1_restore_project(owner, project)
+    api_instance.restore_project(owner, project)
 except ApiException as e:
-    print("Exception when calling ProjectsV1Api->projects_v1_restore_project: %s\n" % e)
+    print("Exception when calling ProjectsV1Api->restore_project: %s\n" % e)
 ```
 
 ### Parameters
@@ -970,8 +970,8 @@ void (empty response body)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **projects_v1_unbookmark_project**
-> projects_v1_unbookmark_project(owner, project)
+# **unbookmark_project**
+> unbookmark_project(owner, project)
 
 Unbookmark project
 
@@ -996,9 +996,9 @@ project = 'project_example' # str | Project under namesapce
 
 try:
     # Unbookmark project
-    api_instance.projects_v1_unbookmark_project(owner, project)
+    api_instance.unbookmark_project(owner, project)
 except ApiException as e:
-    print("Exception when calling ProjectsV1Api->projects_v1_unbookmark_project: %s\n" % e)
+    print("Exception when calling ProjectsV1Api->unbookmark_project: %s\n" % e)
 ```
 
 ### Parameters
@@ -1023,8 +1023,8 @@ void (empty response body)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **projects_v1_update_project**
-> V1Project projects_v1_update_project(owner, project_name, body)
+# **update_project**
+> V1Project update_project(owner, project_name, body)
 
 Update project
 
@@ -1050,10 +1050,10 @@ body = polyaxon_sdk.V1Project() # V1Project | Project body
 
 try:
     # Update project
-    api_response = api_instance.projects_v1_update_project(owner, project_name, body)
+    api_response = api_instance.update_project(owner, project_name, body)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling ProjectsV1Api->projects_v1_update_project: %s\n" % e)
+    print("Exception when calling ProjectsV1Api->update_project: %s\n" % e)
 ```
 
 ### Parameters
@@ -1079,8 +1079,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **projects_v1_update_project_settings**
-> V1ProjectSettings projects_v1_update_project_settings(owner, project, body)
+# **update_project_settings**
+> V1ProjectSettings update_project_settings(owner, project, body)
 
 Update project settings
 
@@ -1106,10 +1106,10 @@ body = polyaxon_sdk.V1ProjectSettings() # V1ProjectSettings | Project settings b
 
 try:
     # Update project settings
-    api_response = api_instance.projects_v1_update_project_settings(owner, project, body)
+    api_response = api_instance.update_project_settings(owner, project, body)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling ProjectsV1Api->projects_v1_update_project_settings: %s\n" % e)
+    print("Exception when calling ProjectsV1Api->update_project_settings: %s\n" % e)
 ```
 
 ### Parameters
@@ -1135,8 +1135,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **projects_v1_update_project_teams**
-> V1ProjectTeams projects_v1_update_project_teams(owner, project, body)
+# **update_project_teams**
+> V1ProjectTeams update_project_teams(owner, project, body)
 
 Update project teams
 
@@ -1162,10 +1162,10 @@ body = polyaxon_sdk.V1ProjectTeams() # V1ProjectTeams | Project settings body
 
 try:
     # Update project teams
-    api_response = api_instance.projects_v1_update_project_teams(owner, project, body)
+    api_response = api_instance.update_project_teams(owner, project, body)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling ProjectsV1Api->projects_v1_update_project_teams: %s\n" % e)
+    print("Exception when calling ProjectsV1Api->update_project_teams: %s\n" % e)
 ```
 
 ### Parameters

@@ -4,18 +4,18 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**accessResourcesV1CreateAccessResource**](AccessResourcesV1Api.md#accessResourcesV1CreateAccessResource) | **POST** /api/v1/orgs/{owner}/access_resources | Create access resource
-[**accessResourcesV1DeleteAccessResource**](AccessResourcesV1Api.md#accessResourcesV1DeleteAccessResource) | **DELETE** /api/v1/orgs/{owner}/access_resources/{uuid} | Delete access resource
-[**accessResourcesV1GetAccessResource**](AccessResourcesV1Api.md#accessResourcesV1GetAccessResource) | **GET** /api/v1/orgs/{owner}/access_resources/{uuid} | Get access resource
-[**accessResourcesV1ListAccessResourceNames**](AccessResourcesV1Api.md#accessResourcesV1ListAccessResourceNames) | **GET** /api/v1/orgs/{owner}/access_resources/names | List access resource names
-[**accessResourcesV1ListAccessResources**](AccessResourcesV1Api.md#accessResourcesV1ListAccessResources) | **GET** /api/v1/orgs/{owner}/access_resources | List access resources
-[**accessResourcesV1PatchAccessResource**](AccessResourcesV1Api.md#accessResourcesV1PatchAccessResource) | **PATCH** /api/v1/orgs/{owner}/access_resources/{access_resource.uuid} | Patch access resource
-[**accessResourcesV1UpdateAccessResource**](AccessResourcesV1Api.md#accessResourcesV1UpdateAccessResource) | **PUT** /api/v1/orgs/{owner}/access_resources/{access_resource.uuid} | Update access resource
+[**createAccessResource**](AccessResourcesV1Api.md#createAccessResource) | **POST** /api/v1/orgs/{owner}/access_resources | Create access resource
+[**deleteAccessResource**](AccessResourcesV1Api.md#deleteAccessResource) | **DELETE** /api/v1/orgs/{owner}/access_resources/{uuid} | Delete access resource
+[**getAccessResource**](AccessResourcesV1Api.md#getAccessResource) | **GET** /api/v1/orgs/{owner}/access_resources/{uuid} | Get access resource
+[**listAccessResourceNames**](AccessResourcesV1Api.md#listAccessResourceNames) | **GET** /api/v1/orgs/{owner}/access_resources/names | List access resource names
+[**listAccessResources**](AccessResourcesV1Api.md#listAccessResources) | **GET** /api/v1/orgs/{owner}/access_resources | List access resources
+[**patchAccessResource**](AccessResourcesV1Api.md#patchAccessResource) | **PATCH** /api/v1/orgs/{owner}/access_resources/{access_resource.uuid} | Patch access resource
+[**updateAccessResource**](AccessResourcesV1Api.md#updateAccessResource) | **PUT** /api/v1/orgs/{owner}/access_resources/{access_resource.uuid} | Update access resource
 
 
-<a name="accessResourcesV1CreateAccessResource"></a>
-# **accessResourcesV1CreateAccessResource**
-> V1AccessResource accessResourcesV1CreateAccessResource(owner, body)
+<a name="createAccessResource"></a>
+# **createAccessResource**
+> V1AccessResource createAccessResource(owner, body)
 
 Create access resource
 
@@ -40,10 +40,10 @@ AccessResourcesV1Api apiInstance = new AccessResourcesV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
 V1AccessResource body = new V1AccessResource(); // V1AccessResource | Artifact store body
 try {
-    V1AccessResource result = apiInstance.accessResourcesV1CreateAccessResource(owner, body);
+    V1AccessResource result = apiInstance.createAccessResource(owner, body);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling AccessResourcesV1Api#accessResourcesV1CreateAccessResource");
+    System.err.println("Exception when calling AccessResourcesV1Api#createAccessResource");
     e.printStackTrace();
 }
 ```
@@ -68,9 +68,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="accessResourcesV1DeleteAccessResource"></a>
-# **accessResourcesV1DeleteAccessResource**
-> accessResourcesV1DeleteAccessResource(owner, uuid)
+<a name="deleteAccessResource"></a>
+# **deleteAccessResource**
+> deleteAccessResource(owner, uuid)
 
 Delete access resource
 
@@ -95,9 +95,9 @@ AccessResourcesV1Api apiInstance = new AccessResourcesV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
 String uuid = "uuid_example"; // String | Uuid identifier of the entity
 try {
-    apiInstance.accessResourcesV1DeleteAccessResource(owner, uuid);
+    apiInstance.deleteAccessResource(owner, uuid);
 } catch (ApiException e) {
-    System.err.println("Exception when calling AccessResourcesV1Api#accessResourcesV1DeleteAccessResource");
+    System.err.println("Exception when calling AccessResourcesV1Api#deleteAccessResource");
     e.printStackTrace();
 }
 ```
@@ -122,9 +122,9 @@ null (empty response body)
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="accessResourcesV1GetAccessResource"></a>
-# **accessResourcesV1GetAccessResource**
-> V1AccessResource accessResourcesV1GetAccessResource(owner, uuid)
+<a name="getAccessResource"></a>
+# **getAccessResource**
+> V1AccessResource getAccessResource(owner, uuid)
 
 Get access resource
 
@@ -149,10 +149,10 @@ AccessResourcesV1Api apiInstance = new AccessResourcesV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
 String uuid = "uuid_example"; // String | Uuid identifier of the entity
 try {
-    V1AccessResource result = apiInstance.accessResourcesV1GetAccessResource(owner, uuid);
+    V1AccessResource result = apiInstance.getAccessResource(owner, uuid);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling AccessResourcesV1Api#accessResourcesV1GetAccessResource");
+    System.err.println("Exception when calling AccessResourcesV1Api#getAccessResource");
     e.printStackTrace();
 }
 ```
@@ -177,9 +177,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="accessResourcesV1ListAccessResourceNames"></a>
-# **accessResourcesV1ListAccessResourceNames**
-> V1ListAccessResourcesResponse accessResourcesV1ListAccessResourceNames(owner, offset, limit, sort, query)
+<a name="listAccessResourceNames"></a>
+# **listAccessResourceNames**
+> V1ListAccessResourcesResponse listAccessResourceNames(owner, offset, limit, sort, query)
 
 List access resource names
 
@@ -207,10 +207,10 @@ Integer limit = 56; // Integer | Limit size.
 String sort = "sort_example"; // String | Sort to order the search.
 String query = "query_example"; // String | Query filter the search search.
 try {
-    V1ListAccessResourcesResponse result = apiInstance.accessResourcesV1ListAccessResourceNames(owner, offset, limit, sort, query);
+    V1ListAccessResourcesResponse result = apiInstance.listAccessResourceNames(owner, offset, limit, sort, query);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling AccessResourcesV1Api#accessResourcesV1ListAccessResourceNames");
+    System.err.println("Exception when calling AccessResourcesV1Api#listAccessResourceNames");
     e.printStackTrace();
 }
 ```
@@ -238,9 +238,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="accessResourcesV1ListAccessResources"></a>
-# **accessResourcesV1ListAccessResources**
-> V1ListAccessResourcesResponse accessResourcesV1ListAccessResources(owner, offset, limit, sort, query)
+<a name="listAccessResources"></a>
+# **listAccessResources**
+> V1ListAccessResourcesResponse listAccessResources(owner, offset, limit, sort, query)
 
 List access resources
 
@@ -268,10 +268,10 @@ Integer limit = 56; // Integer | Limit size.
 String sort = "sort_example"; // String | Sort to order the search.
 String query = "query_example"; // String | Query filter the search search.
 try {
-    V1ListAccessResourcesResponse result = apiInstance.accessResourcesV1ListAccessResources(owner, offset, limit, sort, query);
+    V1ListAccessResourcesResponse result = apiInstance.listAccessResources(owner, offset, limit, sort, query);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling AccessResourcesV1Api#accessResourcesV1ListAccessResources");
+    System.err.println("Exception when calling AccessResourcesV1Api#listAccessResources");
     e.printStackTrace();
 }
 ```
@@ -299,9 +299,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="accessResourcesV1PatchAccessResource"></a>
-# **accessResourcesV1PatchAccessResource**
-> V1AccessResource accessResourcesV1PatchAccessResource(owner, accessResourceUuid, body)
+<a name="patchAccessResource"></a>
+# **patchAccessResource**
+> V1AccessResource patchAccessResource(owner, accessResourceUuid, body)
 
 Patch access resource
 
@@ -327,10 +327,10 @@ String owner = "owner_example"; // String | Owner of the namespace
 String accessResourceUuid = "accessResourceUuid_example"; // String | UUID
 V1AccessResource body = new V1AccessResource(); // V1AccessResource | Artifact store body
 try {
-    V1AccessResource result = apiInstance.accessResourcesV1PatchAccessResource(owner, accessResourceUuid, body);
+    V1AccessResource result = apiInstance.patchAccessResource(owner, accessResourceUuid, body);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling AccessResourcesV1Api#accessResourcesV1PatchAccessResource");
+    System.err.println("Exception when calling AccessResourcesV1Api#patchAccessResource");
     e.printStackTrace();
 }
 ```
@@ -356,9 +356,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="accessResourcesV1UpdateAccessResource"></a>
-# **accessResourcesV1UpdateAccessResource**
-> V1AccessResource accessResourcesV1UpdateAccessResource(owner, accessResourceUuid, body)
+<a name="updateAccessResource"></a>
+# **updateAccessResource**
+> V1AccessResource updateAccessResource(owner, accessResourceUuid, body)
 
 Update access resource
 
@@ -384,10 +384,10 @@ String owner = "owner_example"; // String | Owner of the namespace
 String accessResourceUuid = "accessResourceUuid_example"; // String | UUID
 V1AccessResource body = new V1AccessResource(); // V1AccessResource | Artifact store body
 try {
-    V1AccessResource result = apiInstance.accessResourcesV1UpdateAccessResource(owner, accessResourceUuid, body);
+    V1AccessResource result = apiInstance.updateAccessResource(owner, accessResourceUuid, body);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling AccessResourcesV1Api#accessResourcesV1UpdateAccessResource");
+    System.err.println("Exception when calling AccessResourcesV1Api#updateAccessResource");
     e.printStackTrace();
 }
 ```

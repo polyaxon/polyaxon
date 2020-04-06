@@ -4,22 +4,22 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**agentsV1CreateAgent**](AgentsV1Api.md#agentsV1CreateAgent) | **POST** /api/v1/orgs/{owner}/agents | Create run profile
-[**agentsV1CreateAgentStatus**](AgentsV1Api.md#agentsV1CreateAgentStatus) | **POST** /api/v1/orgs/{owner}/agents/{uuid}/statuses | 
-[**agentsV1DeleteAgent**](AgentsV1Api.md#agentsV1DeleteAgent) | **DELETE** /api/v1/orgs/{owner}/agents/{uuid} | Delete run profile
-[**agentsV1GetAgent**](AgentsV1Api.md#agentsV1GetAgent) | **GET** /api/v1/orgs/{owner}/agents/{uuid} | Get run profile
-[**agentsV1GetAgentState**](AgentsV1Api.md#agentsV1GetAgentState) | **GET** /api/v1/orgs/{owner}/agents/{uuid}/state | 
-[**agentsV1GetAgentStatuses**](AgentsV1Api.md#agentsV1GetAgentStatuses) | **GET** /api/v1/orgs/{owner}/agents/{uuid}/statuses | 
-[**agentsV1ListAgentNames**](AgentsV1Api.md#agentsV1ListAgentNames) | **GET** /api/v1/orgs/{owner}/agents/names | List run profiles names
-[**agentsV1ListAgents**](AgentsV1Api.md#agentsV1ListAgents) | **GET** /api/v1/orgs/{owner}/agents | List run profiles
-[**agentsV1PatchAgent**](AgentsV1Api.md#agentsV1PatchAgent) | **PATCH** /api/v1/orgs/{owner}/agents/{agent.uuid} | Patch run profile
-[**agentsV1SyncAgent**](AgentsV1Api.md#agentsV1SyncAgent) | **PATCH** /api/v1/orgs/{owner}/agents/{agent.uuid}/sync | 
-[**agentsV1UpdateAgent**](AgentsV1Api.md#agentsV1UpdateAgent) | **PUT** /api/v1/orgs/{owner}/agents/{agent.uuid} | Update run profile
+[**createAgent**](AgentsV1Api.md#createAgent) | **POST** /api/v1/orgs/{owner}/agents | Create run profile
+[**createAgentStatus**](AgentsV1Api.md#createAgentStatus) | **POST** /api/v1/orgs/{owner}/agents/{uuid}/statuses | 
+[**deleteAgent**](AgentsV1Api.md#deleteAgent) | **DELETE** /api/v1/orgs/{owner}/agents/{uuid} | Delete run profile
+[**getAgent**](AgentsV1Api.md#getAgent) | **GET** /api/v1/orgs/{owner}/agents/{uuid} | Get run profile
+[**getAgentState**](AgentsV1Api.md#getAgentState) | **GET** /api/v1/orgs/{owner}/agents/{uuid}/state | 
+[**getAgentStatuses**](AgentsV1Api.md#getAgentStatuses) | **GET** /api/v1/orgs/{owner}/agents/{uuid}/statuses | 
+[**listAgentNames**](AgentsV1Api.md#listAgentNames) | **GET** /api/v1/orgs/{owner}/agents/names | List run profiles names
+[**listAgents**](AgentsV1Api.md#listAgents) | **GET** /api/v1/orgs/{owner}/agents | List run profiles
+[**patchAgent**](AgentsV1Api.md#patchAgent) | **PATCH** /api/v1/orgs/{owner}/agents/{agent.uuid} | Patch run profile
+[**syncAgent**](AgentsV1Api.md#syncAgent) | **PATCH** /api/v1/orgs/{owner}/agents/{agent.uuid}/sync | 
+[**updateAgent**](AgentsV1Api.md#updateAgent) | **PUT** /api/v1/orgs/{owner}/agents/{agent.uuid} | Update run profile
 
 
-<a name="agentsV1CreateAgent"></a>
-# **agentsV1CreateAgent**
-> V1Agent agentsV1CreateAgent(owner, body)
+<a name="createAgent"></a>
+# **createAgent**
+> V1Agent createAgent(owner, body)
 
 Create run profile
 
@@ -44,10 +44,10 @@ AgentsV1Api apiInstance = new AgentsV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
 V1Agent body = new V1Agent(); // V1Agent | Agent body
 try {
-    V1Agent result = apiInstance.agentsV1CreateAgent(owner, body);
+    V1Agent result = apiInstance.createAgent(owner, body);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling AgentsV1Api#agentsV1CreateAgent");
+    System.err.println("Exception when calling AgentsV1Api#createAgent");
     e.printStackTrace();
 }
 ```
@@ -72,9 +72,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="agentsV1CreateAgentStatus"></a>
-# **agentsV1CreateAgentStatus**
-> V1Status agentsV1CreateAgentStatus(owner, uuid, body)
+<a name="createAgentStatus"></a>
+# **createAgentStatus**
+> V1Status createAgentStatus(owner, uuid, body)
 
 
 
@@ -100,10 +100,10 @@ String owner = "owner_example"; // String | Owner of the namespace
 String uuid = "uuid_example"; // String | Uuid identifier of the entity
 V1AgentStatusBodyRequest body = new V1AgentStatusBodyRequest(); // V1AgentStatusBodyRequest | 
 try {
-    V1Status result = apiInstance.agentsV1CreateAgentStatus(owner, uuid, body);
+    V1Status result = apiInstance.createAgentStatus(owner, uuid, body);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling AgentsV1Api#agentsV1CreateAgentStatus");
+    System.err.println("Exception when calling AgentsV1Api#createAgentStatus");
     e.printStackTrace();
 }
 ```
@@ -129,9 +129,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="agentsV1DeleteAgent"></a>
-# **agentsV1DeleteAgent**
-> agentsV1DeleteAgent(owner, uuid)
+<a name="deleteAgent"></a>
+# **deleteAgent**
+> deleteAgent(owner, uuid)
 
 Delete run profile
 
@@ -156,9 +156,9 @@ AgentsV1Api apiInstance = new AgentsV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
 String uuid = "uuid_example"; // String | Uuid identifier of the entity
 try {
-    apiInstance.agentsV1DeleteAgent(owner, uuid);
+    apiInstance.deleteAgent(owner, uuid);
 } catch (ApiException e) {
-    System.err.println("Exception when calling AgentsV1Api#agentsV1DeleteAgent");
+    System.err.println("Exception when calling AgentsV1Api#deleteAgent");
     e.printStackTrace();
 }
 ```
@@ -183,9 +183,9 @@ null (empty response body)
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="agentsV1GetAgent"></a>
-# **agentsV1GetAgent**
-> V1Agent agentsV1GetAgent(owner, uuid)
+<a name="getAgent"></a>
+# **getAgent**
+> V1Agent getAgent(owner, uuid)
 
 Get run profile
 
@@ -210,10 +210,10 @@ AgentsV1Api apiInstance = new AgentsV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
 String uuid = "uuid_example"; // String | Uuid identifier of the entity
 try {
-    V1Agent result = apiInstance.agentsV1GetAgent(owner, uuid);
+    V1Agent result = apiInstance.getAgent(owner, uuid);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling AgentsV1Api#agentsV1GetAgent");
+    System.err.println("Exception when calling AgentsV1Api#getAgent");
     e.printStackTrace();
 }
 ```
@@ -238,9 +238,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="agentsV1GetAgentState"></a>
-# **agentsV1GetAgentState**
-> V1AgentStateResponse agentsV1GetAgentState(owner, uuid)
+<a name="getAgentState"></a>
+# **getAgentState**
+> V1AgentStateResponse getAgentState(owner, uuid)
 
 
 
@@ -265,10 +265,10 @@ AgentsV1Api apiInstance = new AgentsV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
 String uuid = "uuid_example"; // String | Uuid identifier of the entity
 try {
-    V1AgentStateResponse result = apiInstance.agentsV1GetAgentState(owner, uuid);
+    V1AgentStateResponse result = apiInstance.getAgentState(owner, uuid);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling AgentsV1Api#agentsV1GetAgentState");
+    System.err.println("Exception when calling AgentsV1Api#getAgentState");
     e.printStackTrace();
 }
 ```
@@ -293,9 +293,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="agentsV1GetAgentStatuses"></a>
-# **agentsV1GetAgentStatuses**
-> V1Status agentsV1GetAgentStatuses(owner, uuid)
+<a name="getAgentStatuses"></a>
+# **getAgentStatuses**
+> V1Status getAgentStatuses(owner, uuid)
 
 
 
@@ -320,10 +320,10 @@ AgentsV1Api apiInstance = new AgentsV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
 String uuid = "uuid_example"; // String | Uuid identifier of the entity
 try {
-    V1Status result = apiInstance.agentsV1GetAgentStatuses(owner, uuid);
+    V1Status result = apiInstance.getAgentStatuses(owner, uuid);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling AgentsV1Api#agentsV1GetAgentStatuses");
+    System.err.println("Exception when calling AgentsV1Api#getAgentStatuses");
     e.printStackTrace();
 }
 ```
@@ -348,9 +348,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="agentsV1ListAgentNames"></a>
-# **agentsV1ListAgentNames**
-> V1ListAgentsResponse agentsV1ListAgentNames(owner, offset, limit, sort, query)
+<a name="listAgentNames"></a>
+# **listAgentNames**
+> V1ListAgentsResponse listAgentNames(owner, offset, limit, sort, query)
 
 List run profiles names
 
@@ -378,10 +378,10 @@ Integer limit = 56; // Integer | Limit size.
 String sort = "sort_example"; // String | Sort to order the search.
 String query = "query_example"; // String | Query filter the search search.
 try {
-    V1ListAgentsResponse result = apiInstance.agentsV1ListAgentNames(owner, offset, limit, sort, query);
+    V1ListAgentsResponse result = apiInstance.listAgentNames(owner, offset, limit, sort, query);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling AgentsV1Api#agentsV1ListAgentNames");
+    System.err.println("Exception when calling AgentsV1Api#listAgentNames");
     e.printStackTrace();
 }
 ```
@@ -409,9 +409,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="agentsV1ListAgents"></a>
-# **agentsV1ListAgents**
-> V1ListAgentsResponse agentsV1ListAgents(owner, offset, limit, sort, query)
+<a name="listAgents"></a>
+# **listAgents**
+> V1ListAgentsResponse listAgents(owner, offset, limit, sort, query)
 
 List run profiles
 
@@ -439,10 +439,10 @@ Integer limit = 56; // Integer | Limit size.
 String sort = "sort_example"; // String | Sort to order the search.
 String query = "query_example"; // String | Query filter the search search.
 try {
-    V1ListAgentsResponse result = apiInstance.agentsV1ListAgents(owner, offset, limit, sort, query);
+    V1ListAgentsResponse result = apiInstance.listAgents(owner, offset, limit, sort, query);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling AgentsV1Api#agentsV1ListAgents");
+    System.err.println("Exception when calling AgentsV1Api#listAgents");
     e.printStackTrace();
 }
 ```
@@ -470,9 +470,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="agentsV1PatchAgent"></a>
-# **agentsV1PatchAgent**
-> V1Agent agentsV1PatchAgent(owner, agentUuid, body)
+<a name="patchAgent"></a>
+# **patchAgent**
+> V1Agent patchAgent(owner, agentUuid, body)
 
 Patch run profile
 
@@ -498,10 +498,10 @@ String owner = "owner_example"; // String | Owner of the namespace
 String agentUuid = "agentUuid_example"; // String | UUID
 V1Agent body = new V1Agent(); // V1Agent | Agent body
 try {
-    V1Agent result = apiInstance.agentsV1PatchAgent(owner, agentUuid, body);
+    V1Agent result = apiInstance.patchAgent(owner, agentUuid, body);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling AgentsV1Api#agentsV1PatchAgent");
+    System.err.println("Exception when calling AgentsV1Api#patchAgent");
     e.printStackTrace();
 }
 ```
@@ -527,9 +527,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="agentsV1SyncAgent"></a>
-# **agentsV1SyncAgent**
-> agentsV1SyncAgent(owner, agentUuid, body)
+<a name="syncAgent"></a>
+# **syncAgent**
+> syncAgent(owner, agentUuid, body)
 
 
 
@@ -555,9 +555,9 @@ String owner = "owner_example"; // String | Owner of the namespace
 String agentUuid = "agentUuid_example"; // String | UUID
 V1Agent body = new V1Agent(); // V1Agent | Agent body
 try {
-    apiInstance.agentsV1SyncAgent(owner, agentUuid, body);
+    apiInstance.syncAgent(owner, agentUuid, body);
 } catch (ApiException e) {
-    System.err.println("Exception when calling AgentsV1Api#agentsV1SyncAgent");
+    System.err.println("Exception when calling AgentsV1Api#syncAgent");
     e.printStackTrace();
 }
 ```
@@ -583,9 +583,9 @@ null (empty response body)
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="agentsV1UpdateAgent"></a>
-# **agentsV1UpdateAgent**
-> V1Agent agentsV1UpdateAgent(owner, agentUuid, body)
+<a name="updateAgent"></a>
+# **updateAgent**
+> V1Agent updateAgent(owner, agentUuid, body)
 
 Update run profile
 
@@ -611,10 +611,10 @@ String owner = "owner_example"; // String | Owner of the namespace
 String agentUuid = "agentUuid_example"; // String | UUID
 V1Agent body = new V1Agent(); // V1Agent | Agent body
 try {
-    V1Agent result = apiInstance.agentsV1UpdateAgent(owner, agentUuid, body);
+    V1Agent result = apiInstance.updateAgent(owner, agentUuid, body);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling AgentsV1Api#agentsV1UpdateAgent");
+    System.err.println("Exception when calling AgentsV1Api#updateAgent");
     e.printStackTrace();
 }
 ```

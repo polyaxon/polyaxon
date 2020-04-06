@@ -39,49 +39,49 @@ type Client struct {
 
 // ClientService is the interface for Client methods
 type ClientService interface {
-	AgentsV1CreateAgent(params *AgentsV1CreateAgentParams, authInfo runtime.ClientAuthInfoWriter) (*AgentsV1CreateAgentOK, *AgentsV1CreateAgentNoContent, error)
+	CreateAgent(params *CreateAgentParams, authInfo runtime.ClientAuthInfoWriter) (*CreateAgentOK, *CreateAgentNoContent, error)
 
-	AgentsV1CreateAgentStatus(params *AgentsV1CreateAgentStatusParams, authInfo runtime.ClientAuthInfoWriter) (*AgentsV1CreateAgentStatusOK, *AgentsV1CreateAgentStatusNoContent, error)
+	CreateAgentStatus(params *CreateAgentStatusParams, authInfo runtime.ClientAuthInfoWriter) (*CreateAgentStatusOK, *CreateAgentStatusNoContent, error)
 
-	AgentsV1DeleteAgent(params *AgentsV1DeleteAgentParams, authInfo runtime.ClientAuthInfoWriter) (*AgentsV1DeleteAgentOK, *AgentsV1DeleteAgentNoContent, error)
+	DeleteAgent(params *DeleteAgentParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteAgentOK, *DeleteAgentNoContent, error)
 
-	AgentsV1GetAgent(params *AgentsV1GetAgentParams, authInfo runtime.ClientAuthInfoWriter) (*AgentsV1GetAgentOK, *AgentsV1GetAgentNoContent, error)
+	GetAgent(params *GetAgentParams, authInfo runtime.ClientAuthInfoWriter) (*GetAgentOK, *GetAgentNoContent, error)
 
-	AgentsV1GetAgentState(params *AgentsV1GetAgentStateParams, authInfo runtime.ClientAuthInfoWriter) (*AgentsV1GetAgentStateOK, *AgentsV1GetAgentStateNoContent, error)
+	GetAgentState(params *GetAgentStateParams, authInfo runtime.ClientAuthInfoWriter) (*GetAgentStateOK, *GetAgentStateNoContent, error)
 
-	AgentsV1GetAgentStatuses(params *AgentsV1GetAgentStatusesParams, authInfo runtime.ClientAuthInfoWriter) (*AgentsV1GetAgentStatusesOK, *AgentsV1GetAgentStatusesNoContent, error)
+	GetAgentStatuses(params *GetAgentStatusesParams, authInfo runtime.ClientAuthInfoWriter) (*GetAgentStatusesOK, *GetAgentStatusesNoContent, error)
 
-	AgentsV1ListAgentNames(params *AgentsV1ListAgentNamesParams, authInfo runtime.ClientAuthInfoWriter) (*AgentsV1ListAgentNamesOK, *AgentsV1ListAgentNamesNoContent, error)
+	ListAgentNames(params *ListAgentNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListAgentNamesOK, *ListAgentNamesNoContent, error)
 
-	AgentsV1ListAgents(params *AgentsV1ListAgentsParams, authInfo runtime.ClientAuthInfoWriter) (*AgentsV1ListAgentsOK, *AgentsV1ListAgentsNoContent, error)
+	ListAgents(params *ListAgentsParams, authInfo runtime.ClientAuthInfoWriter) (*ListAgentsOK, *ListAgentsNoContent, error)
 
-	AgentsV1PatchAgent(params *AgentsV1PatchAgentParams, authInfo runtime.ClientAuthInfoWriter) (*AgentsV1PatchAgentOK, *AgentsV1PatchAgentNoContent, error)
+	PatchAgent(params *PatchAgentParams, authInfo runtime.ClientAuthInfoWriter) (*PatchAgentOK, *PatchAgentNoContent, error)
 
-	AgentsV1SyncAgent(params *AgentsV1SyncAgentParams, authInfo runtime.ClientAuthInfoWriter) (*AgentsV1SyncAgentOK, *AgentsV1SyncAgentNoContent, error)
+	SyncAgent(params *SyncAgentParams, authInfo runtime.ClientAuthInfoWriter) (*SyncAgentOK, *SyncAgentNoContent, error)
 
-	AgentsV1UpdateAgent(params *AgentsV1UpdateAgentParams, authInfo runtime.ClientAuthInfoWriter) (*AgentsV1UpdateAgentOK, *AgentsV1UpdateAgentNoContent, error)
+	UpdateAgent(params *UpdateAgentParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateAgentOK, *UpdateAgentNoContent, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
 
 /*
-  AgentsV1CreateAgent creates run profile
+  CreateAgent creates run profile
 */
-func (a *Client) AgentsV1CreateAgent(params *AgentsV1CreateAgentParams, authInfo runtime.ClientAuthInfoWriter) (*AgentsV1CreateAgentOK, *AgentsV1CreateAgentNoContent, error) {
+func (a *Client) CreateAgent(params *CreateAgentParams, authInfo runtime.ClientAuthInfoWriter) (*CreateAgentOK, *CreateAgentNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewAgentsV1CreateAgentParams()
+		params = NewCreateAgentParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "AgentsV1_CreateAgent",
+		ID:                 "CreateAgent",
 		Method:             "POST",
 		PathPattern:        "/api/v1/orgs/{owner}/agents",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &AgentsV1CreateAgentReader{formats: a.formats},
+		Reader:             &CreateAgentReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -90,34 +90,34 @@ func (a *Client) AgentsV1CreateAgent(params *AgentsV1CreateAgentParams, authInfo
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *AgentsV1CreateAgentOK:
+	case *CreateAgentOK:
 		return value, nil, nil
-	case *AgentsV1CreateAgentNoContent:
+	case *CreateAgentNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*AgentsV1CreateAgentDefault)
+	unexpectedSuccess := result.(*CreateAgentDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  AgentsV1CreateAgentStatus agents v1 create agent status API
+  CreateAgentStatus create agent status API
 */
-func (a *Client) AgentsV1CreateAgentStatus(params *AgentsV1CreateAgentStatusParams, authInfo runtime.ClientAuthInfoWriter) (*AgentsV1CreateAgentStatusOK, *AgentsV1CreateAgentStatusNoContent, error) {
+func (a *Client) CreateAgentStatus(params *CreateAgentStatusParams, authInfo runtime.ClientAuthInfoWriter) (*CreateAgentStatusOK, *CreateAgentStatusNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewAgentsV1CreateAgentStatusParams()
+		params = NewCreateAgentStatusParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "AgentsV1_CreateAgentStatus",
+		ID:                 "CreateAgentStatus",
 		Method:             "POST",
 		PathPattern:        "/api/v1/orgs/{owner}/agents/{uuid}/statuses",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &AgentsV1CreateAgentStatusReader{formats: a.formats},
+		Reader:             &CreateAgentStatusReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -126,34 +126,34 @@ func (a *Client) AgentsV1CreateAgentStatus(params *AgentsV1CreateAgentStatusPara
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *AgentsV1CreateAgentStatusOK:
+	case *CreateAgentStatusOK:
 		return value, nil, nil
-	case *AgentsV1CreateAgentStatusNoContent:
+	case *CreateAgentStatusNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*AgentsV1CreateAgentStatusDefault)
+	unexpectedSuccess := result.(*CreateAgentStatusDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  AgentsV1DeleteAgent deletes run profile
+  DeleteAgent deletes run profile
 */
-func (a *Client) AgentsV1DeleteAgent(params *AgentsV1DeleteAgentParams, authInfo runtime.ClientAuthInfoWriter) (*AgentsV1DeleteAgentOK, *AgentsV1DeleteAgentNoContent, error) {
+func (a *Client) DeleteAgent(params *DeleteAgentParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteAgentOK, *DeleteAgentNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewAgentsV1DeleteAgentParams()
+		params = NewDeleteAgentParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "AgentsV1_DeleteAgent",
+		ID:                 "DeleteAgent",
 		Method:             "DELETE",
 		PathPattern:        "/api/v1/orgs/{owner}/agents/{uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &AgentsV1DeleteAgentReader{formats: a.formats},
+		Reader:             &DeleteAgentReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -162,34 +162,34 @@ func (a *Client) AgentsV1DeleteAgent(params *AgentsV1DeleteAgentParams, authInfo
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *AgentsV1DeleteAgentOK:
+	case *DeleteAgentOK:
 		return value, nil, nil
-	case *AgentsV1DeleteAgentNoContent:
+	case *DeleteAgentNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*AgentsV1DeleteAgentDefault)
+	unexpectedSuccess := result.(*DeleteAgentDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  AgentsV1GetAgent gets run profile
+  GetAgent gets run profile
 */
-func (a *Client) AgentsV1GetAgent(params *AgentsV1GetAgentParams, authInfo runtime.ClientAuthInfoWriter) (*AgentsV1GetAgentOK, *AgentsV1GetAgentNoContent, error) {
+func (a *Client) GetAgent(params *GetAgentParams, authInfo runtime.ClientAuthInfoWriter) (*GetAgentOK, *GetAgentNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewAgentsV1GetAgentParams()
+		params = NewGetAgentParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "AgentsV1_GetAgent",
+		ID:                 "GetAgent",
 		Method:             "GET",
 		PathPattern:        "/api/v1/orgs/{owner}/agents/{uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &AgentsV1GetAgentReader{formats: a.formats},
+		Reader:             &GetAgentReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -198,34 +198,34 @@ func (a *Client) AgentsV1GetAgent(params *AgentsV1GetAgentParams, authInfo runti
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *AgentsV1GetAgentOK:
+	case *GetAgentOK:
 		return value, nil, nil
-	case *AgentsV1GetAgentNoContent:
+	case *GetAgentNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*AgentsV1GetAgentDefault)
+	unexpectedSuccess := result.(*GetAgentDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  AgentsV1GetAgentState agents v1 get agent state API
+  GetAgentState get agent state API
 */
-func (a *Client) AgentsV1GetAgentState(params *AgentsV1GetAgentStateParams, authInfo runtime.ClientAuthInfoWriter) (*AgentsV1GetAgentStateOK, *AgentsV1GetAgentStateNoContent, error) {
+func (a *Client) GetAgentState(params *GetAgentStateParams, authInfo runtime.ClientAuthInfoWriter) (*GetAgentStateOK, *GetAgentStateNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewAgentsV1GetAgentStateParams()
+		params = NewGetAgentStateParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "AgentsV1_GetAgentState",
+		ID:                 "GetAgentState",
 		Method:             "GET",
 		PathPattern:        "/api/v1/orgs/{owner}/agents/{uuid}/state",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &AgentsV1GetAgentStateReader{formats: a.formats},
+		Reader:             &GetAgentStateReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -234,34 +234,34 @@ func (a *Client) AgentsV1GetAgentState(params *AgentsV1GetAgentStateParams, auth
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *AgentsV1GetAgentStateOK:
+	case *GetAgentStateOK:
 		return value, nil, nil
-	case *AgentsV1GetAgentStateNoContent:
+	case *GetAgentStateNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*AgentsV1GetAgentStateDefault)
+	unexpectedSuccess := result.(*GetAgentStateDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  AgentsV1GetAgentStatuses agents v1 get agent statuses API
+  GetAgentStatuses get agent statuses API
 */
-func (a *Client) AgentsV1GetAgentStatuses(params *AgentsV1GetAgentStatusesParams, authInfo runtime.ClientAuthInfoWriter) (*AgentsV1GetAgentStatusesOK, *AgentsV1GetAgentStatusesNoContent, error) {
+func (a *Client) GetAgentStatuses(params *GetAgentStatusesParams, authInfo runtime.ClientAuthInfoWriter) (*GetAgentStatusesOK, *GetAgentStatusesNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewAgentsV1GetAgentStatusesParams()
+		params = NewGetAgentStatusesParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "AgentsV1_GetAgentStatuses",
+		ID:                 "GetAgentStatuses",
 		Method:             "GET",
 		PathPattern:        "/api/v1/orgs/{owner}/agents/{uuid}/statuses",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &AgentsV1GetAgentStatusesReader{formats: a.formats},
+		Reader:             &GetAgentStatusesReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -270,34 +270,34 @@ func (a *Client) AgentsV1GetAgentStatuses(params *AgentsV1GetAgentStatusesParams
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *AgentsV1GetAgentStatusesOK:
+	case *GetAgentStatusesOK:
 		return value, nil, nil
-	case *AgentsV1GetAgentStatusesNoContent:
+	case *GetAgentStatusesNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*AgentsV1GetAgentStatusesDefault)
+	unexpectedSuccess := result.(*GetAgentStatusesDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  AgentsV1ListAgentNames lists run profiles names
+  ListAgentNames lists run profiles names
 */
-func (a *Client) AgentsV1ListAgentNames(params *AgentsV1ListAgentNamesParams, authInfo runtime.ClientAuthInfoWriter) (*AgentsV1ListAgentNamesOK, *AgentsV1ListAgentNamesNoContent, error) {
+func (a *Client) ListAgentNames(params *ListAgentNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListAgentNamesOK, *ListAgentNamesNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewAgentsV1ListAgentNamesParams()
+		params = NewListAgentNamesParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "AgentsV1_ListAgentNames",
+		ID:                 "ListAgentNames",
 		Method:             "GET",
 		PathPattern:        "/api/v1/orgs/{owner}/agents/names",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &AgentsV1ListAgentNamesReader{formats: a.formats},
+		Reader:             &ListAgentNamesReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -306,34 +306,34 @@ func (a *Client) AgentsV1ListAgentNames(params *AgentsV1ListAgentNamesParams, au
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *AgentsV1ListAgentNamesOK:
+	case *ListAgentNamesOK:
 		return value, nil, nil
-	case *AgentsV1ListAgentNamesNoContent:
+	case *ListAgentNamesNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*AgentsV1ListAgentNamesDefault)
+	unexpectedSuccess := result.(*ListAgentNamesDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  AgentsV1ListAgents lists run profiles
+  ListAgents lists run profiles
 */
-func (a *Client) AgentsV1ListAgents(params *AgentsV1ListAgentsParams, authInfo runtime.ClientAuthInfoWriter) (*AgentsV1ListAgentsOK, *AgentsV1ListAgentsNoContent, error) {
+func (a *Client) ListAgents(params *ListAgentsParams, authInfo runtime.ClientAuthInfoWriter) (*ListAgentsOK, *ListAgentsNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewAgentsV1ListAgentsParams()
+		params = NewListAgentsParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "AgentsV1_ListAgents",
+		ID:                 "ListAgents",
 		Method:             "GET",
 		PathPattern:        "/api/v1/orgs/{owner}/agents",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &AgentsV1ListAgentsReader{formats: a.formats},
+		Reader:             &ListAgentsReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -342,34 +342,34 @@ func (a *Client) AgentsV1ListAgents(params *AgentsV1ListAgentsParams, authInfo r
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *AgentsV1ListAgentsOK:
+	case *ListAgentsOK:
 		return value, nil, nil
-	case *AgentsV1ListAgentsNoContent:
+	case *ListAgentsNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*AgentsV1ListAgentsDefault)
+	unexpectedSuccess := result.(*ListAgentsDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  AgentsV1PatchAgent patches run profile
+  PatchAgent patches run profile
 */
-func (a *Client) AgentsV1PatchAgent(params *AgentsV1PatchAgentParams, authInfo runtime.ClientAuthInfoWriter) (*AgentsV1PatchAgentOK, *AgentsV1PatchAgentNoContent, error) {
+func (a *Client) PatchAgent(params *PatchAgentParams, authInfo runtime.ClientAuthInfoWriter) (*PatchAgentOK, *PatchAgentNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewAgentsV1PatchAgentParams()
+		params = NewPatchAgentParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "AgentsV1_PatchAgent",
+		ID:                 "PatchAgent",
 		Method:             "PATCH",
 		PathPattern:        "/api/v1/orgs/{owner}/agents/{agent.uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &AgentsV1PatchAgentReader{formats: a.formats},
+		Reader:             &PatchAgentReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -378,34 +378,34 @@ func (a *Client) AgentsV1PatchAgent(params *AgentsV1PatchAgentParams, authInfo r
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *AgentsV1PatchAgentOK:
+	case *PatchAgentOK:
 		return value, nil, nil
-	case *AgentsV1PatchAgentNoContent:
+	case *PatchAgentNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*AgentsV1PatchAgentDefault)
+	unexpectedSuccess := result.(*PatchAgentDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  AgentsV1SyncAgent agents v1 sync agent API
+  SyncAgent sync agent API
 */
-func (a *Client) AgentsV1SyncAgent(params *AgentsV1SyncAgentParams, authInfo runtime.ClientAuthInfoWriter) (*AgentsV1SyncAgentOK, *AgentsV1SyncAgentNoContent, error) {
+func (a *Client) SyncAgent(params *SyncAgentParams, authInfo runtime.ClientAuthInfoWriter) (*SyncAgentOK, *SyncAgentNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewAgentsV1SyncAgentParams()
+		params = NewSyncAgentParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "AgentsV1_SyncAgent",
+		ID:                 "SyncAgent",
 		Method:             "PATCH",
 		PathPattern:        "/api/v1/orgs/{owner}/agents/{agent.uuid}/sync",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &AgentsV1SyncAgentReader{formats: a.formats},
+		Reader:             &SyncAgentReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -414,34 +414,34 @@ func (a *Client) AgentsV1SyncAgent(params *AgentsV1SyncAgentParams, authInfo run
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *AgentsV1SyncAgentOK:
+	case *SyncAgentOK:
 		return value, nil, nil
-	case *AgentsV1SyncAgentNoContent:
+	case *SyncAgentNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*AgentsV1SyncAgentDefault)
+	unexpectedSuccess := result.(*SyncAgentDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  AgentsV1UpdateAgent updates run profile
+  UpdateAgent updates run profile
 */
-func (a *Client) AgentsV1UpdateAgent(params *AgentsV1UpdateAgentParams, authInfo runtime.ClientAuthInfoWriter) (*AgentsV1UpdateAgentOK, *AgentsV1UpdateAgentNoContent, error) {
+func (a *Client) UpdateAgent(params *UpdateAgentParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateAgentOK, *UpdateAgentNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewAgentsV1UpdateAgentParams()
+		params = NewUpdateAgentParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "AgentsV1_UpdateAgent",
+		ID:                 "UpdateAgent",
 		Method:             "PUT",
 		PathPattern:        "/api/v1/orgs/{owner}/agents/{agent.uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &AgentsV1UpdateAgentReader{formats: a.formats},
+		Reader:             &UpdateAgentReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -450,13 +450,13 @@ func (a *Client) AgentsV1UpdateAgent(params *AgentsV1UpdateAgentParams, authInfo
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *AgentsV1UpdateAgentOK:
+	case *UpdateAgentOK:
 		return value, nil, nil
-	case *AgentsV1UpdateAgentNoContent:
+	case *UpdateAgentNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*AgentsV1UpdateAgentDefault)
+	unexpectedSuccess := result.(*UpdateAgentDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 

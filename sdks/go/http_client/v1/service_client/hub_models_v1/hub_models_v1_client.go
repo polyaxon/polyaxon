@@ -39,41 +39,41 @@ type Client struct {
 
 // ClientService is the interface for Client methods
 type ClientService interface {
-	HubModelsV1CreateHubModel(params *HubModelsV1CreateHubModelParams, authInfo runtime.ClientAuthInfoWriter) (*HubModelsV1CreateHubModelOK, *HubModelsV1CreateHubModelNoContent, error)
+	CreateHubModel(params *CreateHubModelParams, authInfo runtime.ClientAuthInfoWriter) (*CreateHubModelOK, *CreateHubModelNoContent, error)
 
-	HubModelsV1DeleteHubModel(params *HubModelsV1DeleteHubModelParams, authInfo runtime.ClientAuthInfoWriter) (*HubModelsV1DeleteHubModelOK, *HubModelsV1DeleteHubModelNoContent, error)
+	DeleteHubModel(params *DeleteHubModelParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteHubModelOK, *DeleteHubModelNoContent, error)
 
-	HubModelsV1GetHubModel(params *HubModelsV1GetHubModelParams, authInfo runtime.ClientAuthInfoWriter) (*HubModelsV1GetHubModelOK, *HubModelsV1GetHubModelNoContent, error)
+	GetHubModel(params *GetHubModelParams, authInfo runtime.ClientAuthInfoWriter) (*GetHubModelOK, *GetHubModelNoContent, error)
 
-	HubModelsV1ListHubModelNames(params *HubModelsV1ListHubModelNamesParams, authInfo runtime.ClientAuthInfoWriter) (*HubModelsV1ListHubModelNamesOK, *HubModelsV1ListHubModelNamesNoContent, error)
+	ListHubModelNames(params *ListHubModelNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListHubModelNamesOK, *ListHubModelNamesNoContent, error)
 
-	HubModelsV1ListHubModels(params *HubModelsV1ListHubModelsParams, authInfo runtime.ClientAuthInfoWriter) (*HubModelsV1ListHubModelsOK, *HubModelsV1ListHubModelsNoContent, error)
+	ListHubModels(params *ListHubModelsParams, authInfo runtime.ClientAuthInfoWriter) (*ListHubModelsOK, *ListHubModelsNoContent, error)
 
-	HubModelsV1PatchHubModel(params *HubModelsV1PatchHubModelParams, authInfo runtime.ClientAuthInfoWriter) (*HubModelsV1PatchHubModelOK, *HubModelsV1PatchHubModelNoContent, error)
+	PatchHubModel(params *PatchHubModelParams, authInfo runtime.ClientAuthInfoWriter) (*PatchHubModelOK, *PatchHubModelNoContent, error)
 
-	HubModelsV1UpdateHubModel(params *HubModelsV1UpdateHubModelParams, authInfo runtime.ClientAuthInfoWriter) (*HubModelsV1UpdateHubModelOK, *HubModelsV1UpdateHubModelNoContent, error)
+	UpdateHubModel(params *UpdateHubModelParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateHubModelOK, *UpdateHubModelNoContent, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
 
 /*
-  HubModelsV1CreateHubModel creates dashboard
+  CreateHubModel creates dashboard
 */
-func (a *Client) HubModelsV1CreateHubModel(params *HubModelsV1CreateHubModelParams, authInfo runtime.ClientAuthInfoWriter) (*HubModelsV1CreateHubModelOK, *HubModelsV1CreateHubModelNoContent, error) {
+func (a *Client) CreateHubModel(params *CreateHubModelParams, authInfo runtime.ClientAuthInfoWriter) (*CreateHubModelOK, *CreateHubModelNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewHubModelsV1CreateHubModelParams()
+		params = NewCreateHubModelParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "HubModelsV1_CreateHubModel",
+		ID:                 "CreateHubModel",
 		Method:             "POST",
 		PathPattern:        "/api/v1/orgs/{owner}/models",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &HubModelsV1CreateHubModelReader{formats: a.formats},
+		Reader:             &CreateHubModelReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -82,34 +82,34 @@ func (a *Client) HubModelsV1CreateHubModel(params *HubModelsV1CreateHubModelPara
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *HubModelsV1CreateHubModelOK:
+	case *CreateHubModelOK:
 		return value, nil, nil
-	case *HubModelsV1CreateHubModelNoContent:
+	case *CreateHubModelNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*HubModelsV1CreateHubModelDefault)
+	unexpectedSuccess := result.(*CreateHubModelDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  HubModelsV1DeleteHubModel deletes dashboard
+  DeleteHubModel deletes dashboard
 */
-func (a *Client) HubModelsV1DeleteHubModel(params *HubModelsV1DeleteHubModelParams, authInfo runtime.ClientAuthInfoWriter) (*HubModelsV1DeleteHubModelOK, *HubModelsV1DeleteHubModelNoContent, error) {
+func (a *Client) DeleteHubModel(params *DeleteHubModelParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteHubModelOK, *DeleteHubModelNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewHubModelsV1DeleteHubModelParams()
+		params = NewDeleteHubModelParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "HubModelsV1_DeleteHubModel",
+		ID:                 "DeleteHubModel",
 		Method:             "DELETE",
 		PathPattern:        "/api/v1/orgs/{owner}/models/{uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &HubModelsV1DeleteHubModelReader{formats: a.formats},
+		Reader:             &DeleteHubModelReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -118,34 +118,34 @@ func (a *Client) HubModelsV1DeleteHubModel(params *HubModelsV1DeleteHubModelPara
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *HubModelsV1DeleteHubModelOK:
+	case *DeleteHubModelOK:
 		return value, nil, nil
-	case *HubModelsV1DeleteHubModelNoContent:
+	case *DeleteHubModelNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*HubModelsV1DeleteHubModelDefault)
+	unexpectedSuccess := result.(*DeleteHubModelDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  HubModelsV1GetHubModel gets dashboard
+  GetHubModel gets dashboard
 */
-func (a *Client) HubModelsV1GetHubModel(params *HubModelsV1GetHubModelParams, authInfo runtime.ClientAuthInfoWriter) (*HubModelsV1GetHubModelOK, *HubModelsV1GetHubModelNoContent, error) {
+func (a *Client) GetHubModel(params *GetHubModelParams, authInfo runtime.ClientAuthInfoWriter) (*GetHubModelOK, *GetHubModelNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewHubModelsV1GetHubModelParams()
+		params = NewGetHubModelParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "HubModelsV1_GetHubModel",
+		ID:                 "GetHubModel",
 		Method:             "GET",
 		PathPattern:        "/api/v1/orgs/{owner}/models/{uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &HubModelsV1GetHubModelReader{formats: a.formats},
+		Reader:             &GetHubModelReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -154,34 +154,34 @@ func (a *Client) HubModelsV1GetHubModel(params *HubModelsV1GetHubModelParams, au
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *HubModelsV1GetHubModelOK:
+	case *GetHubModelOK:
 		return value, nil, nil
-	case *HubModelsV1GetHubModelNoContent:
+	case *GetHubModelNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*HubModelsV1GetHubModelDefault)
+	unexpectedSuccess := result.(*GetHubModelDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  HubModelsV1ListHubModelNames lists dashboard names
+  ListHubModelNames lists dashboard names
 */
-func (a *Client) HubModelsV1ListHubModelNames(params *HubModelsV1ListHubModelNamesParams, authInfo runtime.ClientAuthInfoWriter) (*HubModelsV1ListHubModelNamesOK, *HubModelsV1ListHubModelNamesNoContent, error) {
+func (a *Client) ListHubModelNames(params *ListHubModelNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListHubModelNamesOK, *ListHubModelNamesNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewHubModelsV1ListHubModelNamesParams()
+		params = NewListHubModelNamesParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "HubModelsV1_ListHubModelNames",
+		ID:                 "ListHubModelNames",
 		Method:             "GET",
 		PathPattern:        "/api/v1/orgs/{owner}/models/names",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &HubModelsV1ListHubModelNamesReader{formats: a.formats},
+		Reader:             &ListHubModelNamesReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -190,34 +190,34 @@ func (a *Client) HubModelsV1ListHubModelNames(params *HubModelsV1ListHubModelNam
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *HubModelsV1ListHubModelNamesOK:
+	case *ListHubModelNamesOK:
 		return value, nil, nil
-	case *HubModelsV1ListHubModelNamesNoContent:
+	case *ListHubModelNamesNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*HubModelsV1ListHubModelNamesDefault)
+	unexpectedSuccess := result.(*ListHubModelNamesDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  HubModelsV1ListHubModels lists dashboards
+  ListHubModels lists dashboards
 */
-func (a *Client) HubModelsV1ListHubModels(params *HubModelsV1ListHubModelsParams, authInfo runtime.ClientAuthInfoWriter) (*HubModelsV1ListHubModelsOK, *HubModelsV1ListHubModelsNoContent, error) {
+func (a *Client) ListHubModels(params *ListHubModelsParams, authInfo runtime.ClientAuthInfoWriter) (*ListHubModelsOK, *ListHubModelsNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewHubModelsV1ListHubModelsParams()
+		params = NewListHubModelsParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "HubModelsV1_ListHubModels",
+		ID:                 "ListHubModels",
 		Method:             "GET",
 		PathPattern:        "/api/v1/orgs/{owner}/models",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &HubModelsV1ListHubModelsReader{formats: a.formats},
+		Reader:             &ListHubModelsReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -226,34 +226,34 @@ func (a *Client) HubModelsV1ListHubModels(params *HubModelsV1ListHubModelsParams
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *HubModelsV1ListHubModelsOK:
+	case *ListHubModelsOK:
 		return value, nil, nil
-	case *HubModelsV1ListHubModelsNoContent:
+	case *ListHubModelsNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*HubModelsV1ListHubModelsDefault)
+	unexpectedSuccess := result.(*ListHubModelsDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  HubModelsV1PatchHubModel patches dashboard
+  PatchHubModel patches dashboard
 */
-func (a *Client) HubModelsV1PatchHubModel(params *HubModelsV1PatchHubModelParams, authInfo runtime.ClientAuthInfoWriter) (*HubModelsV1PatchHubModelOK, *HubModelsV1PatchHubModelNoContent, error) {
+func (a *Client) PatchHubModel(params *PatchHubModelParams, authInfo runtime.ClientAuthInfoWriter) (*PatchHubModelOK, *PatchHubModelNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewHubModelsV1PatchHubModelParams()
+		params = NewPatchHubModelParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "HubModelsV1_PatchHubModel",
+		ID:                 "PatchHubModel",
 		Method:             "PATCH",
 		PathPattern:        "/api/v1/orgs/{owner}/models/{model.uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &HubModelsV1PatchHubModelReader{formats: a.formats},
+		Reader:             &PatchHubModelReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -262,34 +262,34 @@ func (a *Client) HubModelsV1PatchHubModel(params *HubModelsV1PatchHubModelParams
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *HubModelsV1PatchHubModelOK:
+	case *PatchHubModelOK:
 		return value, nil, nil
-	case *HubModelsV1PatchHubModelNoContent:
+	case *PatchHubModelNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*HubModelsV1PatchHubModelDefault)
+	unexpectedSuccess := result.(*PatchHubModelDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
-  HubModelsV1UpdateHubModel updates dashboard
+  UpdateHubModel updates dashboard
 */
-func (a *Client) HubModelsV1UpdateHubModel(params *HubModelsV1UpdateHubModelParams, authInfo runtime.ClientAuthInfoWriter) (*HubModelsV1UpdateHubModelOK, *HubModelsV1UpdateHubModelNoContent, error) {
+func (a *Client) UpdateHubModel(params *UpdateHubModelParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateHubModelOK, *UpdateHubModelNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewHubModelsV1UpdateHubModelParams()
+		params = NewUpdateHubModelParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "HubModelsV1_UpdateHubModel",
+		ID:                 "UpdateHubModel",
 		Method:             "PUT",
 		PathPattern:        "/api/v1/orgs/{owner}/models/{model.uuid}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &HubModelsV1UpdateHubModelReader{formats: a.formats},
+		Reader:             &UpdateHubModelReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -298,13 +298,13 @@ func (a *Client) HubModelsV1UpdateHubModel(params *HubModelsV1UpdateHubModelPara
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *HubModelsV1UpdateHubModelOK:
+	case *UpdateHubModelOK:
 		return value, nil, nil
-	case *HubModelsV1UpdateHubModelNoContent:
+	case *UpdateHubModelNoContent:
 		return nil, value, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*HubModelsV1UpdateHubModelDefault)
+	unexpectedSuccess := result.(*UpdateHubModelDefault)
 	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 

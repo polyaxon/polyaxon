@@ -4,18 +4,18 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**dashboardsV1CreateDashboard**](DashboardsV1Api.md#dashboardsV1CreateDashboard) | **POST** /api/v1/orgs/{owner}/dashboards | 
-[**dashboardsV1DeleteDashboard**](DashboardsV1Api.md#dashboardsV1DeleteDashboard) | **DELETE** /api/v1/orgs/{owner}/dashboards/{uuid} | 
-[**dashboardsV1GetDashboard**](DashboardsV1Api.md#dashboardsV1GetDashboard) | **GET** /api/v1/orgs/{owner}/dashboards/{uuid} | 
-[**dashboardsV1ListDashboardNames**](DashboardsV1Api.md#dashboardsV1ListDashboardNames) | **GET** /api/v1/orgs/{owner}/dashboards/names | 
-[**dashboardsV1ListDashboards**](DashboardsV1Api.md#dashboardsV1ListDashboards) | **GET** /api/v1/orgs/{owner}/dashboards | 
-[**dashboardsV1PatchDashboard**](DashboardsV1Api.md#dashboardsV1PatchDashboard) | **PATCH** /api/v1/orgs/{owner}/dashboards/{dashboard.uuid} | 
-[**dashboardsV1UpdateDashboard**](DashboardsV1Api.md#dashboardsV1UpdateDashboard) | **PUT** /api/v1/orgs/{owner}/dashboards/{dashboard.uuid} | 
+[**createDashboard**](DashboardsV1Api.md#createDashboard) | **POST** /api/v1/orgs/{owner}/dashboards | 
+[**deleteDashboard**](DashboardsV1Api.md#deleteDashboard) | **DELETE** /api/v1/orgs/{owner}/dashboards/{uuid} | 
+[**getDashboard**](DashboardsV1Api.md#getDashboard) | **GET** /api/v1/orgs/{owner}/dashboards/{uuid} | 
+[**listDashboardNames**](DashboardsV1Api.md#listDashboardNames) | **GET** /api/v1/orgs/{owner}/dashboards/names | 
+[**listDashboards**](DashboardsV1Api.md#listDashboards) | **GET** /api/v1/orgs/{owner}/dashboards | 
+[**patchDashboard**](DashboardsV1Api.md#patchDashboard) | **PATCH** /api/v1/orgs/{owner}/dashboards/{dashboard.uuid} | 
+[**updateDashboard**](DashboardsV1Api.md#updateDashboard) | **PUT** /api/v1/orgs/{owner}/dashboards/{dashboard.uuid} | 
 
 
-<a name="dashboardsV1CreateDashboard"></a>
-# **dashboardsV1CreateDashboard**
-> V1Dashboard dashboardsV1CreateDashboard(owner, body)
+<a name="createDashboard"></a>
+# **createDashboard**
+> V1Dashboard createDashboard(owner, body)
 
 
 
@@ -40,10 +40,10 @@ DashboardsV1Api apiInstance = new DashboardsV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
 V1Dashboard body = new V1Dashboard(); // V1Dashboard | Dashboard body
 try {
-    V1Dashboard result = apiInstance.dashboardsV1CreateDashboard(owner, body);
+    V1Dashboard result = apiInstance.createDashboard(owner, body);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling DashboardsV1Api#dashboardsV1CreateDashboard");
+    System.err.println("Exception when calling DashboardsV1Api#createDashboard");
     e.printStackTrace();
 }
 ```
@@ -68,9 +68,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="dashboardsV1DeleteDashboard"></a>
-# **dashboardsV1DeleteDashboard**
-> dashboardsV1DeleteDashboard(owner, uuid)
+<a name="deleteDashboard"></a>
+# **deleteDashboard**
+> deleteDashboard(owner, uuid)
 
 
 
@@ -95,9 +95,9 @@ DashboardsV1Api apiInstance = new DashboardsV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
 String uuid = "uuid_example"; // String | Uuid identifier of the entity
 try {
-    apiInstance.dashboardsV1DeleteDashboard(owner, uuid);
+    apiInstance.deleteDashboard(owner, uuid);
 } catch (ApiException e) {
-    System.err.println("Exception when calling DashboardsV1Api#dashboardsV1DeleteDashboard");
+    System.err.println("Exception when calling DashboardsV1Api#deleteDashboard");
     e.printStackTrace();
 }
 ```
@@ -122,9 +122,9 @@ null (empty response body)
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="dashboardsV1GetDashboard"></a>
-# **dashboardsV1GetDashboard**
-> V1Dashboard dashboardsV1GetDashboard(owner, uuid)
+<a name="getDashboard"></a>
+# **getDashboard**
+> V1Dashboard getDashboard(owner, uuid)
 
 
 
@@ -149,10 +149,10 @@ DashboardsV1Api apiInstance = new DashboardsV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
 String uuid = "uuid_example"; // String | Uuid identifier of the entity
 try {
-    V1Dashboard result = apiInstance.dashboardsV1GetDashboard(owner, uuid);
+    V1Dashboard result = apiInstance.getDashboard(owner, uuid);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling DashboardsV1Api#dashboardsV1GetDashboard");
+    System.err.println("Exception when calling DashboardsV1Api#getDashboard");
     e.printStackTrace();
 }
 ```
@@ -177,9 +177,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="dashboardsV1ListDashboardNames"></a>
-# **dashboardsV1ListDashboardNames**
-> V1ListDashboardsResponse dashboardsV1ListDashboardNames(owner, offset, limit, sort, query)
+<a name="listDashboardNames"></a>
+# **listDashboardNames**
+> V1ListDashboardsResponse listDashboardNames(owner, offset, limit, sort, query)
 
 
 
@@ -207,10 +207,10 @@ Integer limit = 56; // Integer | Limit size.
 String sort = "sort_example"; // String | Sort to order the search.
 String query = "query_example"; // String | Query filter the search search.
 try {
-    V1ListDashboardsResponse result = apiInstance.dashboardsV1ListDashboardNames(owner, offset, limit, sort, query);
+    V1ListDashboardsResponse result = apiInstance.listDashboardNames(owner, offset, limit, sort, query);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling DashboardsV1Api#dashboardsV1ListDashboardNames");
+    System.err.println("Exception when calling DashboardsV1Api#listDashboardNames");
     e.printStackTrace();
 }
 ```
@@ -238,9 +238,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="dashboardsV1ListDashboards"></a>
-# **dashboardsV1ListDashboards**
-> V1ListDashboardsResponse dashboardsV1ListDashboards(owner, offset, limit, sort, query)
+<a name="listDashboards"></a>
+# **listDashboards**
+> V1ListDashboardsResponse listDashboards(owner, offset, limit, sort, query)
 
 
 
@@ -268,10 +268,10 @@ Integer limit = 56; // Integer | Limit size.
 String sort = "sort_example"; // String | Sort to order the search.
 String query = "query_example"; // String | Query filter the search search.
 try {
-    V1ListDashboardsResponse result = apiInstance.dashboardsV1ListDashboards(owner, offset, limit, sort, query);
+    V1ListDashboardsResponse result = apiInstance.listDashboards(owner, offset, limit, sort, query);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling DashboardsV1Api#dashboardsV1ListDashboards");
+    System.err.println("Exception when calling DashboardsV1Api#listDashboards");
     e.printStackTrace();
 }
 ```
@@ -299,9 +299,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="dashboardsV1PatchDashboard"></a>
-# **dashboardsV1PatchDashboard**
-> V1Dashboard dashboardsV1PatchDashboard(owner, dashboardUuid, body)
+<a name="patchDashboard"></a>
+# **patchDashboard**
+> V1Dashboard patchDashboard(owner, dashboardUuid, body)
 
 
 
@@ -327,10 +327,10 @@ String owner = "owner_example"; // String | Owner of the namespace
 String dashboardUuid = "dashboardUuid_example"; // String | UUID
 V1Dashboard body = new V1Dashboard(); // V1Dashboard | Dashboard body
 try {
-    V1Dashboard result = apiInstance.dashboardsV1PatchDashboard(owner, dashboardUuid, body);
+    V1Dashboard result = apiInstance.patchDashboard(owner, dashboardUuid, body);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling DashboardsV1Api#dashboardsV1PatchDashboard");
+    System.err.println("Exception when calling DashboardsV1Api#patchDashboard");
     e.printStackTrace();
 }
 ```
@@ -356,9 +356,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="dashboardsV1UpdateDashboard"></a>
-# **dashboardsV1UpdateDashboard**
-> V1Dashboard dashboardsV1UpdateDashboard(owner, dashboardUuid, body)
+<a name="updateDashboard"></a>
+# **updateDashboard**
+> V1Dashboard updateDashboard(owner, dashboardUuid, body)
 
 
 
@@ -384,10 +384,10 @@ String owner = "owner_example"; // String | Owner of the namespace
 String dashboardUuid = "dashboardUuid_example"; // String | UUID
 V1Dashboard body = new V1Dashboard(); // V1Dashboard | Dashboard body
 try {
-    V1Dashboard result = apiInstance.dashboardsV1UpdateDashboard(owner, dashboardUuid, body);
+    V1Dashboard result = apiInstance.updateDashboard(owner, dashboardUuid, body);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling DashboardsV1Api#dashboardsV1UpdateDashboard");
+    System.err.println("Exception when calling DashboardsV1Api#updateDashboard");
     e.printStackTrace();
 }
 ```

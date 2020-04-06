@@ -4,12 +4,12 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**usersV1GetUser**](UsersV1Api.md#usersV1GetUser) | **GET** /api/v1/users | Login
+[**getUser**](UsersV1Api.md#getUser) | **GET** /api/v1/users | Login
 
 
-<a name="usersV1GetUser"></a>
-# **usersV1GetUser**
-> V1User usersV1GetUser()
+<a name="getUser"></a>
+# **getUser**
+> V1User getUser()
 
 Login
 
@@ -32,10 +32,10 @@ ApiKey.setApiKey("YOUR API KEY");
 
 UsersV1Api apiInstance = new UsersV1Api();
 try {
-    V1User result = apiInstance.usersV1GetUser();
+    V1User result = apiInstance.getUser();
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling UsersV1Api#usersV1GetUser");
+    System.err.println("Exception when calling UsersV1Api#getUser");
     e.printStackTrace();
 }
 ```
