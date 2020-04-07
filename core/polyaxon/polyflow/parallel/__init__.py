@@ -15,21 +15,20 @@
 # limitations under the License.
 
 from polyaxon.polyflow.parallel.bayes import (
-    V1Bayes,
-    BayesSchema,
-    UtilityFunctionConfig,
     AcquisitionFunctions,
+    BayesSchema,
     GaussianProcessConfig,
     GaussianProcessesKernels,
+    UtilityFunctionConfig,
+    V1Bayes,
 )
-from polyaxon.polyflow.parallel.grid_search import V1GridSearch, GridSearchSchema
-from polyaxon.polyflow.parallel.hyperband import V1Hyperband, HyperbandSchema
+from polyaxon.polyflow.parallel.grid_search import GridSearchSchema, V1GridSearch
+from polyaxon.polyflow.parallel.hyperband import HyperbandSchema, V1Hyperband
 from polyaxon.polyflow.parallel.hyperopt import HyperoptSchema, V1Hyperopt
-from polyaxon.polyflow.parallel.random_search import V1RandomSearch, RandomSearchSchema
-
+from polyaxon.polyflow.parallel.iterative import IterativeSchema, V1Iterative
+from polyaxon.polyflow.parallel.mapping import MappingSchema, V1Mapping
+from polyaxon.polyflow.parallel.random_search import RandomSearchSchema, V1RandomSearch
 from polyaxon.schemas.base import BaseOneOfSchema
-from polyaxon.polyflow.parallel.iterative import V1Iterative, IterativeSchema
-from polyaxon.polyflow.parallel.mapping import V1Mapping, MappingSchema
 
 
 class ParallelSchema(BaseOneOfSchema):

@@ -16,6 +16,6 @@
 
 from polyaxon.polyflow.references.dag import DagReferenceSchema, V1DagReference
 from polyaxon.polyflow.references.hub import HubReferenceSchema, V1HubReference
+from polyaxon.polyflow.references.mixin import RefMixin
 from polyaxon.polyflow.references.path import PathReferenceSchema, V1PathReference
 from polyaxon.polyflow.references.url import UrlReferenceSchema, V1UrlReference
-from polyaxon.polyflow.references.mixin import RefMixin

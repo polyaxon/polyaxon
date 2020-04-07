@@ -16,12 +16,12 @@
 
 from polyaxon.polyflow import V1RunKind
 from polyaxon.polypod.compiler.converters.base import BaseConverter, ConverterAbstract
+from polyaxon.polypod.compiler.converters.job import JobConverter, PlatformJobConverter
 from polyaxon.polypod.compiler.converters.kubeflow import (
     MPIJobConverter,
     PytorchJobConverter,
     TfJobConverter,
 )
-from polyaxon.polypod.compiler.converters.job import JobConverter, PlatformJobConverter
 from polyaxon.polypod.compiler.converters.kubeflow.mpi_job import (
     PlatformMPIJobConverter,
 )
@@ -31,8 +31,8 @@ from polyaxon.polypod.compiler.converters.kubeflow.pytroch_job import (
 from polyaxon.polypod.compiler.converters.kubeflow.tf_job import PlatformTfJobConverter
 from polyaxon.polypod.compiler.converters.notifier import NotifierConverter
 from polyaxon.polypod.compiler.converters.service import (
-    ServiceConverter,
     PlatformServiceConverter,
+    ServiceConverter,
 )
 
 CORE_CONVERTERS = {

@@ -14,4 +14,4 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from polyaxon.polyflow.io.io import IOSchema, V1IO
+from polyaxon.polyflow.io.io import V1IO, IOSchema

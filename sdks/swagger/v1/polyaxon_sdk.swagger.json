@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "Polyaxon SDKs and REST API specification.",
-    "version": "1.0.73",
+    "version": "1.0.74",
     "contact": {
       "name": "Polyaxon sdk",
       "url": "https://github.com/polyaxon/polyaxon",
@@ -7935,11 +7935,11 @@
           },
           {
             "name": "body",
-            "description": "Uuids of the entities",
+            "description": "Data",
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/v1Uuids"
+              "$ref": "#/definitions/v1EntitiesTags"
             }
           }
         ],
@@ -12471,6 +12471,23 @@
         }
       },
       "title": "All Schemas message"
+    },
+    "v1EntitiesTags": {
+      "type": "object",
+      "properties": {
+        "uuids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
     },
     "v1EntityNotificationBody": {
       "type": "object",

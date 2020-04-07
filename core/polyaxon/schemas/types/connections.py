@@ -30,7 +30,7 @@ from polyaxon.connections.schemas import (
     V1HostPathConnection,
 )
 from polyaxon.schemas.base import BaseCamelSchema, BaseConfig
-from polyaxon.schemas.types import V1K8sResourceType
+from polyaxon.schemas.types.k8s_resources import V1K8sResourceType
 
 
 class ConnectionTypeSchema(BaseCamelSchema):

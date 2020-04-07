@@ -14,10 +14,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import polyaxon_sdk
+
 from marshmallow import fields
 
-from polyaxon.schemas.base import BaseConfig, BaseCamelSchema
-import polyaxon_sdk
+from polyaxon.schemas.base import BaseCamelSchema, BaseConfig
 
 
 class TerminationSchema(BaseCamelSchema):

@@ -14,16 +14,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from polyaxon.schemas.types.dockerfile import V1DockerfileType, DockerfileTypeSchema
-from polyaxon.schemas.types.artifacts import V1ArtifactsType, ArtifactsTypeSchema
-from polyaxon.schemas.types.auth import V1AuthType, AuthTypeSchema
+from polyaxon.schemas.types.artifacts import ArtifactsTypeSchema, V1ArtifactsType
+from polyaxon.schemas.types.auth import AuthTypeSchema, V1AuthType
+from polyaxon.schemas.types.connections import ConnectionTypeSchema, V1ConnectionType
+from polyaxon.schemas.types.dockerfile import DockerfileTypeSchema, V1DockerfileType
+from polyaxon.schemas.types.gcs import GcsTypeSchema, V1GcsType
+from polyaxon.schemas.types.git import GitTypeSchema, V1GitType
 from polyaxon.schemas.types.k8s_resources import (
-    V1K8sResourceType,
     K8sResourceTypeSchema,
+    V1K8sResourceType,
 )
-from polyaxon.schemas.types.connections import V1ConnectionType, ConnectionTypeSchema
-from polyaxon.schemas.types.gcs import V1GcsType, GcsTypeSchema
-from polyaxon.schemas.types.git import V1GitType, GitTypeSchema
-from polyaxon.schemas.types.s3 import V1S3Type, S3TypeSchema
-from polyaxon.schemas.types.uri import V1UriType, UriTypeSchema
+from polyaxon.schemas.types.s3 import S3TypeSchema, V1S3Type
+from polyaxon.schemas.types.uri import UriTypeSchema, V1UriType
 from polyaxon.schemas.types.wasb import V1WasbType, WasbTypeSchema

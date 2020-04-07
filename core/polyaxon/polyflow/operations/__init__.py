@@ -14,8 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from polyaxon.polyflow.operations.operation import OperationSchema, V1Operation
 from polyaxon.polyflow.operations.compiled_operation import (
     CompiledOperationSchema,
     V1CompiledOperation,
 )
+from polyaxon.polyflow.operations.operation import OperationSchema, V1Operation

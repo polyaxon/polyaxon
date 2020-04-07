@@ -1,7 +1,7 @@
 # swagger-java-client
 
 Polyaxon SDKs and REST API specification.
-- API version: 1.0.73
+- API version: 1.0.74
 
 Polyaxon SDKs and REST API specification.
 
@@ -343,6 +343,7 @@ Class | Method | HTTP request | Description
  - [V1DiffStoppingPolicy](docs/V1DiffStoppingPolicy.md)
  - [V1DockerfileType](docs/V1DockerfileType.md)
  - [V1EarlyStopping](docs/V1EarlyStopping.md)
+ - [V1EntitiesTags](docs/V1EntitiesTags.md)
  - [V1EntityNotificationBody](docs/V1EntityNotificationBody.md)
  - [V1EntityStatusBodyRequest](docs/V1EntityStatusBodyRequest.md)
  - [V1Environment](docs/V1Environment.md)

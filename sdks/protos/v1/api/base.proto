@@ -89,6 +89,11 @@ message Uuids {
     repeated string uuids = 1;
 }
 
+message EntitiesTags {
+    repeated string uuids = 1;
+    repeated string tags = 2;
+}
+
 // Request to act on multiple entities under project
 message ProjectResourceUuidsBodyRequest {
     // Owner of the namespace
@@ -99,6 +104,18 @@ message ProjectResourceUuidsBodyRequest {
 
     // Uuids of the entities
     Uuids uuids = 3;
+}
+
+// Request to tag multiple entities under project
+message ProjectTagResourceUuidsBodyRequest {
+    // Owner of the namespace
+    string owner = 1;
+
+    // Project under namesapce
+    string project = 2;
+
+    // Data
+    EntitiesTags data = 3;
 }
 
 // Request data to get/delete project resource entity

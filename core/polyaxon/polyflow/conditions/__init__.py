@@ -14,9 +14,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from polyaxon.polyflow.conditions.io import IoCondSchema, V1IoCond
+from polyaxon.polyflow.conditions.status import StatusCondSchema, V1StatusCond
 from polyaxon.schemas.base import BaseOneOfSchema
-from polyaxon.polyflow.conditions.io import V1IoCond, IoCondSchema
-from polyaxon.polyflow.conditions.status import V1StatusCond, StatusCondSchema
 
 
 class ConditionSchema(BaseOneOfSchema):

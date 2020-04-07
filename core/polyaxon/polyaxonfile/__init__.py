@@ -16,16 +16,16 @@
 
 from polyaxon.polyaxonfile.check import check_polyaxonfile
 from polyaxon.polyaxonfile.manager import (
-    PolyaxonFile,
-    DEFAULT_POLYAXON_FILE_NAME,
     DEFAULT_POLYAXON_FILE_EXTENSION,
+    DEFAULT_POLYAXON_FILE_NAME,
+    PolyaxonFile,
 )
 from polyaxon.polyaxonfile.params import parse_params
 from polyaxon.polyaxonfile.specs import (
-    spec_kinds,
     BaseSpecification,
-    OperationSpecification,
-    ComponentSpecification,
     CompiledOperationSpecification,
+    ComponentSpecification,
+    OperationSpecification,
     get_specification,
+    spec_kinds,
 )

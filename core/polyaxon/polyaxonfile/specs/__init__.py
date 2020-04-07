@@ -14,14 +14,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from polyaxon.config_reader import reader
 from polyaxon.polyaxonfile.specs import kinds as spec_kinds
 from polyaxon.polyaxonfile.specs.base import BaseSpecification
-from polyaxon.polyaxonfile.specs.operation import OperationSpecification
-from polyaxon.polyaxonfile.specs.component import ComponentSpecification
-from polyaxon.config_reader import reader
 from polyaxon.polyaxonfile.specs.compiled_operation import (
     CompiledOperationSpecification,
 )
+from polyaxon.polyaxonfile.specs.component import ComponentSpecification
+from polyaxon.polyaxonfile.specs.operation import OperationSpecification
 
 SPECIFICATION_BY_KIND = {
     spec_kinds.OPERATION: OperationSpecification,

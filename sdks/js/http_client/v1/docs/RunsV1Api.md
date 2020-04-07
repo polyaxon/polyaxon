@@ -2616,7 +2616,7 @@ var owner = "owner_example"; // String | Owner of the namespace
 
 var project = "project_example"; // String | Project under namesapce
 
-var body = new PolyaxonSdk.V1Uuids(); // V1Uuids | Uuids of the entities
+var body = new PolyaxonSdk.V1EntitiesTags(); // V1EntitiesTags | Data
 
 
 var callback = function(error, data, response) {
@@ -2635,7 +2635,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace | 
  **project** | **String**| Project under namesapce | 
- **body** | [**V1Uuids**](V1Uuids.md)| Uuids of the entities | 
+ **body** | [**V1EntitiesTags**](V1EntitiesTags.md)| Data | 
 
 ### Return type
 

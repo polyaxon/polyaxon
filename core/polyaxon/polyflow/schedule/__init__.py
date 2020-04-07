@@ -14,20 +14,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from polyaxon.schemas.base import BaseOneOfSchema
-from polyaxon.polyflow.schedule.cron import V1CronSchedule, CronScheduleSchema
+from polyaxon.polyflow.schedule.cron import CronScheduleSchema, V1CronSchedule
 from polyaxon.polyflow.schedule.execute import (
-    V1ExactTimeSchedule,
     ExactTimeScheduleSchema,
+    V1ExactTimeSchedule,
 )
 from polyaxon.polyflow.schedule.interval import (
-    V1IntervalSchedule,
     IntervalScheduleSchema,
+    V1IntervalSchedule,
 )
 from polyaxon.polyflow.schedule.repeatable import (
-    V1RepeatableSchedule,
     RepeatableScheduleSchema,
+    V1RepeatableSchedule,
 )
+from polyaxon.schemas.base import BaseOneOfSchema
 
 
 class ScheduleSchema(BaseOneOfSchema):

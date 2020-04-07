@@ -2558,7 +2558,7 @@ ApiKey.setApiKey("YOUR API KEY");
 RunsV1Api apiInstance = new RunsV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
 String project = "project_example"; // String | Project under namesapce
-V1Uuids body = new V1Uuids(); // V1Uuids | Uuids of the entities
+V1EntitiesTags body = new V1EntitiesTags(); // V1EntitiesTags | Data
 try {
     apiInstance.tagRuns(owner, project, body);
 } catch (ApiException e) {
@@ -2573,7 +2573,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
  **project** | **String**| Project under namesapce |
- **body** | [**V1Uuids**](V1Uuids.md)| Uuids of the entities |
+ **body** | [**V1EntitiesTags**](V1EntitiesTags.md)| Data |
 
 ### Return type
 

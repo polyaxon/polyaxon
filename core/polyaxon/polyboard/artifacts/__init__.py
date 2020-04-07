@@ -15,7 +15,4 @@
 # limitations under the License.
 
 from polyaxon.polyboard.artifacts.kinds import V1ArtifactKind
-from polyaxon.polyboard.artifacts.schemas import (
-    RunArtifactSchema,
-    V1RunArtifact,
-)
+from polyaxon.polyboard.artifacts.schemas import RunArtifactSchema, V1RunArtifact

@@ -2513,7 +2513,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
 owner = 'owner_example' # str | Owner of the namespace
 project = 'project_example' # str | Project under namesapce
-body = polyaxon_sdk.V1Uuids() # V1Uuids | Uuids of the entities
+body = polyaxon_sdk.V1EntitiesTags() # V1EntitiesTags | Data
 
 try:
     # Tag runs
@@ -2528,7 +2528,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **str**| Owner of the namespace | 
  **project** | **str**| Project under namesapce | 
- **body** | [**V1Uuids**](V1Uuids.md)| Uuids of the entities | 
+ **body** | [**V1EntitiesTags**](V1EntitiesTags.md)| Data | 
 
 ### Return type
 

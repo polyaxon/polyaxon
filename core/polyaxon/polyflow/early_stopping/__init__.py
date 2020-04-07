@@ -14,24 +14,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from polyaxon.schemas.base import BaseOneOfSchema
 from polyaxon.polyflow.early_stopping.policies import (
-    FailureEarlyStoppingSchema,
-    MetricEarlyStoppingSchema,
-    V1MetricEarlyStopping,
-    V1FailureEarlyStopping,
-    MedianStoppingPolicySchema,
-    V1MedianStoppingPolicy,
     DiffStoppingPolicySchema,
-    V1DiffStoppingPolicy,
-    TruncationStoppingPolicySchema,
-    V1TruncationStoppingPolicy,
-    StoppingPolicySchema,
-    MetricEarlyStoppingSchema,
-    V1MetricEarlyStopping,
     FailureEarlyStoppingSchema,
+    MedianStoppingPolicySchema,
+    MetricEarlyStoppingSchema,
+    StoppingPolicySchema,
+    TruncationStoppingPolicySchema,
+    V1DiffStoppingPolicy,
     V1FailureEarlyStopping,
+    V1MedianStoppingPolicy,
+    V1MetricEarlyStopping,
+    V1TruncationStoppingPolicy,
 )
+from polyaxon.schemas.base import BaseOneOfSchema
 
 
 class EarlyStoppingSchema(BaseOneOfSchema):

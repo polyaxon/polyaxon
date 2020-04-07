@@ -46,7 +46,7 @@ import "v1/schemas/all.proto";
 option (grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger) = {
 	info: {
 		title: "Polyaxon sdk";
-		version: "1.0.73";
+		version: "1.0.74";
 		contact: {
 			name: "Polyaxon sdk";
 			url: "https://github.com/polyaxon/polyaxon";
@@ -185,10 +185,10 @@ service RunsV1 {
     }
 
     // Tag runs
-    rpc TagRuns(ProjectResourceUuidsBodyRequest) returns (google.protobuf.Empty) {
+    rpc TagRuns(ProjectTagResourceUuidsBodyRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/api/v1/{owner}/{project}/runs/tag"
-            body: "uuids"
+            body: "data"
         };
     }
 

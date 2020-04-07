@@ -15,16 +15,16 @@
 # limitations under the License.
 from polyaxon.env_vars.getters.agent import get_agent_info
 from polyaxon.env_vars.getters.project import (
-    get_project_info,
     get_project_full_name,
+    get_project_info,
     get_project_or_local,
 )
 from polyaxon.env_vars.getters.run import (
-    get_project_run_or_local,
-    get_run_or_local,
     get_collect_artifact,
     get_collect_resources,
     get_log_level,
+    get_project_run_or_local,
     get_run_info,
+    get_run_or_local,
 )
 from polyaxon.env_vars.getters.user import get_username_or_local

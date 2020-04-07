@@ -15,8 +15,8 @@
 # limitations under the License.
 
 from polyaxon.containers.containers import (
-    get_sidecar_resources,
-    get_init_resources,
-    V1PolyaxonSidecarContainer,
     V1PolyaxonInitContainer,
+    V1PolyaxonSidecarContainer,
+    get_init_resources,
+    get_sidecar_resources,
 )

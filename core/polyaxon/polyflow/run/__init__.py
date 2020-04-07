@@ -14,27 +14,27 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from polyaxon.polyflow.run.job import V1Job, JobSchema
-from polyaxon.polyflow.run.notifier import V1Notifier, NotifierSchema
+from polyaxon.polyflow.run.dag import DagSchema, V1Dag
+from polyaxon.polyflow.run.dask import DaskSchema, V1Dask
+from polyaxon.polyflow.run.flink import FlinkSchema, V1Flink
+from polyaxon.polyflow.run.job import JobSchema, V1Job
+from polyaxon.polyflow.run.kinds import V1CloningKind, V1PipelineKind, V1RunKind
+from polyaxon.polyflow.run.kubeflow.clean_pod_policy import V1CleanPodPolicy
+from polyaxon.polyflow.run.kubeflow.mpi_job import MPIJobSchema, V1MPIJob
+from polyaxon.polyflow.run.kubeflow.pytorch_job import PytorchJobSchema, V1PytorchJob
+from polyaxon.polyflow.run.kubeflow.replica import KFReplicaSchema, V1KFReplica
+from polyaxon.polyflow.run.kubeflow.tf_job import TFJobSchema, V1TFJob
+from polyaxon.polyflow.run.notifier import NotifierSchema, V1Notifier
 from polyaxon.polyflow.run.ray import RaySchema, V1Ray
 from polyaxon.polyflow.run.service import ServiceSchema, V1Service
-from polyaxon.schemas.base import BaseOneOfSchema
-from polyaxon.polyflow.run.dag import V1Dag, DagSchema
-from polyaxon.polyflow.run.dask import V1Dask, DaskSchema
-from polyaxon.polyflow.run.flink import V1Flink, FlinkSchema
-from polyaxon.polyflow.run.kubeflow.replica import KFReplicaSchema, V1KFReplica
-from polyaxon.polyflow.run.kubeflow.mpi_job import V1MPIJob, MPIJobSchema
-from polyaxon.polyflow.run.kubeflow.clean_pod_policy import V1CleanPodPolicy
-from polyaxon.polyflow.run.kubeflow.pytorch_job import V1PytorchJob, PytorchJobSchema
-from polyaxon.polyflow.run.kubeflow.tf_job import V1TFJob, TFJobSchema
-from polyaxon.polyflow.run.spark.replica import V1SparkReplica, SparkReplicaSchema
+from polyaxon.polyflow.run.spark.replica import SparkReplicaSchema, V1SparkReplica
 from polyaxon.polyflow.run.spark.spark import (
-    V1Spark,
     SparkSchema,
-    V1SparkType,
+    V1Spark,
     V1SparkDeploy,
+    V1SparkType,
 )
-from polyaxon.polyflow.run.kinds import V1RunKind, V1CloningKind, V1PipelineKind
+from polyaxon.schemas.base import BaseOneOfSchema
 
 
 class RunSchema(BaseOneOfSchema):

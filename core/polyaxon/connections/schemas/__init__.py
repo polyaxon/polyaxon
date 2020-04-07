@@ -15,20 +15,20 @@
 # limitations under the License.
 from polyaxon.connections.schemas.connections import (
     BucketConnectionSchema,
-    V1BucketConnection,
     ClaimConnectionSchema,
-    V1ClaimConnection,
-    HostPathConnectionSchema,
-    V1HostPathConnection,
-    HostConnectionSchema,
-    V1HostConnection,
-    GitConnectionSchema,
-    V1GitConnection,
-    validate_connection,
     ConnectionSchema,
+    GitConnectionSchema,
+    HostConnectionSchema,
+    HostPathConnectionSchema,
+    V1BucketConnection,
+    V1ClaimConnection,
+    V1GitConnection,
+    V1HostConnection,
+    V1HostPathConnection,
+    validate_connection,
 )
 from polyaxon.connections.schemas.k8s_resources import (
-    validate_k8s_resource,
-    V1K8sResourceSchema,
     K8sResourceSchema,
+    V1K8sResourceSchema,
+    validate_k8s_resource,
 )

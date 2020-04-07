@@ -77,10 +77,10 @@ for the tag runs operation typically these are written to a http.Request
 type TagRunsParams struct {
 
 	/*Body
-	  Uuids of the entities
+	  Data
 
 	*/
-	Body *service_model.V1Uuids
+	Body *service_model.V1EntitiesTags
 	/*Owner
 	  Owner of the namespace
 
@@ -131,13 +131,13 @@ func (o *TagRunsParams) SetHTTPClient(client *http.Client) {
 }
 
 // WithBody adds the body to the tag runs params
-func (o *TagRunsParams) WithBody(body *service_model.V1Uuids) *TagRunsParams {
+func (o *TagRunsParams) WithBody(body *service_model.V1EntitiesTags) *TagRunsParams {
 	o.SetBody(body)
 	return o
 }
 
 // SetBody adds the body to the tag runs params
-func (o *TagRunsParams) SetBody(body *service_model.V1Uuids) {
+func (o *TagRunsParams) SetBody(body *service_model.V1EntitiesTags) {
 	o.Body = body
 }
 

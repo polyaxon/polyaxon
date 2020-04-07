@@ -14,21 +14,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from polyaxon.client import RunClient
-from polyaxon.logger import logger
-from polyaxon.sidecar.logging import sync_logs
-from polyaxon.sidecar.outputs import sync_artifacts, sync_summaries
-
 import time
 
 from kubernetes.client.rest import ApiException
 
+from polyaxon.client import RunClient
+from polyaxon.env_vars.getters import get_run_info
 from polyaxon.exceptions import PolyaxonClientException, PolyaxonContainerException
 from polyaxon.k8s.manager import K8SManager
 from polyaxon.k8s.monitor import is_pod_running
+from polyaxon.logger import logger
 from polyaxon.settings import CLIENT_CONFIG
 from polyaxon.sidecar.intervals import get_sync_interval
-from polyaxon.env_vars.getters import get_run_info
+from polyaxon.sidecar.logging import sync_logs
+from polyaxon.sidecar.outputs import sync_artifacts, sync_summaries
 
 
 def start_sidecar(
