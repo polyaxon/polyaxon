@@ -267,6 +267,7 @@ class GCSService(GCPService, StoreMixin):
 
         if workers:
             futures.wait(future_results)
+            self.close_pool(pool=pool)
 
     def download_dir(
         self, blob, local_path, bucket_name=None, use_basename=True, workers=0
@@ -328,6 +329,7 @@ class GCSService(GCPService, StoreMixin):
 
         if workers:
             futures.wait(future_results)
+            self.close_pool(pool=pool)
 
     def delete(self, key, bucket_name=None, workers=0):
         if not bucket_name:
@@ -360,6 +362,7 @@ class GCSService(GCPService, StoreMixin):
 
         if workers:
             futures.wait(future_results)
+            self.close_pool(pool=pool)
 
     def delete_file(self, key, bucket_name=None):
         if not bucket_name:

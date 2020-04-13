@@ -124,6 +124,7 @@ class LocalStore(StoreMixin):
 
         if workers:
             futures.wait(future_results)
+            self.close_pool(pool=pool)
 
     def download_dir(
         self, path_from, local_path, use_basename=True, workers=0, **kwargs

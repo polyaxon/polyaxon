@@ -464,6 +464,7 @@ class S3Service(AWSService, StoreMixin):
                 )
         if workers:
             futures.wait(future_results)
+            self.close_pool(pool=pool)
 
     def download_dir(
         self,
@@ -530,6 +531,7 @@ class S3Service(AWSService, StoreMixin):
 
         if workers:
             futures.wait(future_results)
+            self.close_pool(pool=pool)
 
     def delete(self, key, bucket_name=None, workers=0):
         if not bucket_name:
@@ -562,6 +564,7 @@ class S3Service(AWSService, StoreMixin):
             )
         if workers:
             futures.wait(future_results)
+            self.close_pool(pool=pool)
 
     def delete_file(self, key, bucket_name=None):
         if not bucket_name:

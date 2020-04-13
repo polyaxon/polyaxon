@@ -62,3 +62,7 @@ class StoreMixin:
         else:
             fn(**kwargs)
         return future_results
+
+    def close_pool(self, pool: Optional[futures.ThreadPoolExecutor]):
+        if pool:
+            pool.shutdown(wait=True)

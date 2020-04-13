@@ -265,6 +265,7 @@ class AzureBlobStoreService(AzureService, StoreMixin):
 
         if workers:
             futures.wait(future_results)
+            self.close_pool(pool=pool)
 
     def download_file(self, blob, local_path, container_name=None, use_basename=True):
         """
@@ -353,6 +354,7 @@ class AzureBlobStoreService(AzureService, StoreMixin):
             )
         if workers:
             futures.wait(future_results)
+            self.close_pool(pool=pool)
 
     def delete(self, blob, container_name=None, workers=0):
         if not container_name:
@@ -386,6 +388,7 @@ class AzureBlobStoreService(AzureService, StoreMixin):
 
         if workers:
             futures.wait(future_results)
+            self.close_pool(pool=pool)
 
     def delete_file(self, blob, container_name=None):
         """
