@@ -52,7 +52,7 @@ message Project {
     google.protobuf.Timestamp updated_at = 9;
 
     // Optional flag to tell if this project is public
-    string is_public = 10;
+    bool is_public = 10;
 
     // Optional flag to tell if this project is deleted
     bool deleted = 11;

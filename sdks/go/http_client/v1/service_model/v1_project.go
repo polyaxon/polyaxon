@@ -45,7 +45,7 @@ type V1Project struct {
 	Description string `json:"description,omitempty"`
 
 	// Optional flag to tell if this project is public
-	IsPublic string `json:"is_public,omitempty"`
+	IsPublic bool `json:"is_public,omitempty"`
 
 	// Required name
 	Name string `json:"name,omitempty"`

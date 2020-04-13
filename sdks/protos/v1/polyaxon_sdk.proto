@@ -48,7 +48,7 @@ option (grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger) = {
 		title: "Polyaxon sdk";
 version
 :
-"1.0.76"
+"1.0.77"
 ;
 contact:{
 name:"Polyaxon sdk";

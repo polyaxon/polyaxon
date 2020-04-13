@@ -13,7 +13,7 @@ Name | Type | Description | Notes
 **tags** | **List&lt;String&gt;** |  |  [optional]
 **createdAt** | [**OffsetDateTime**](OffsetDateTime.md) |  |  [optional]
 **updatedAt** | [**OffsetDateTime**](OffsetDateTime.md) |  |  [optional]
-**isPublic** | **String** |  |  [optional]
+**isPublic** | **Boolean** |  |  [optional]
 **deleted** | **Boolean** |  |  [optional]
 **bookmarked** | **Boolean** |  |  [optional]
 **readme** | **String** |  |  [optional]

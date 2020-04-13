@@ -12,7 +12,7 @@ Name | Type | Description | Notes
 **tags** | **list[str]** |  | [optional] 
 **created_at** | **datetime** |  | [optional] 
 **updated_at** | **datetime** |  | [optional] 
-**is_public** | **str** |  | [optional] 
+**is_public** | **bool** |  | [optional] 
 **deleted** | **bool** |  | [optional] 
 **bookmarked** | **bool** |  | [optional] 
 **readme** | **str** |  | [optional] 
