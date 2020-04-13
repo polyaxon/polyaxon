@@ -59,7 +59,7 @@ def sync_summaries(last_check: Optional[datetime], run_uuid: str, client: RunCli
     if summaries:
         client.log_artifact_lineage(summaries)
     if last_values:
-        client.log_outputs(**last_values)
+        client.log_outputs(**last_values, async_req=False)
 
 
 def sync_events_summaries(
