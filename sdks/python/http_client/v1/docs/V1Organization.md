@@ -6,7 +6,7 @@ Name | Type | Description | Notes
 **user** | **str** |  | [optional] 
 **user_email** | **str** |  | [optional] 
 **name** | **str** |  | [optional] 
-**is_public** | **str** |  | [optional] 
+**is_public** | **bool** |  | [optional] 
 **created_at** | **datetime** |  | [optional] 
 **updated_at** | **datetime** |  | [optional] 
 

@@ -32,7 +32,7 @@ message Organization {
     string name = 3;
 
     // Optional flag to tell if this organization is public
-    string is_public = 4;
+    bool is_public = 4;
 
     // Optional time when the entity was created
     google.protobuf.Timestamp created_at = 5;

@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "Polyaxon SDKs and REST API specification.",
-    "version": "1.0.75",
+    "version": "1.0.76",
     "contact": {
       "name": "Polyaxon sdk",
       "url": "https://github.com/polyaxon/polyaxon",
@@ -14730,7 +14730,8 @@
           "title": "Name"
         },
         "is_public": {
-          "type": "string",
+          "type": "boolean",
+          "format": "boolean",
           "title": "Optional flag to tell if this organization is public"
         },
         "created_at": {

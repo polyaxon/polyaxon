@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 **user** | **String** |  |  [optional]
 **userEmail** | **String** |  |  [optional]
 **name** | **String** |  |  [optional]
-**isPublic** | **String** |  |  [optional]
+**isPublic** | **Boolean** |  |  [optional]
 **createdAt** | [**OffsetDateTime**](OffsetDateTime.md) |  |  [optional]
 **updatedAt** | [**OffsetDateTime**](OffsetDateTime.md) |  |  [optional]
 

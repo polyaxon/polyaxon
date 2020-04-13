@@ -36,7 +36,7 @@ type V1Organization struct {
 	CreatedAt strfmt.DateTime `json:"created_at,omitempty"`
 
 	// Optional flag to tell if this organization is public
-	IsPublic string `json:"is_public,omitempty"`
+	IsPublic bool `json:"is_public,omitempty"`
 
 	// Name
 	Name string `json:"name,omitempty"`

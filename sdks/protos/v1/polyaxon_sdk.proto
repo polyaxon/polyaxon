@@ -46,51 +46,54 @@ import "v1/schemas/all.proto";
 option (grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger) = {
 	info: {
 		title: "Polyaxon sdk";
-		version: "1.0.75";
-		contact: {
-			name: "Polyaxon sdk";
-			url: "https://github.com/polyaxon/polyaxon";
-			email: "contact@polyaxon.com";
-        };
-    };
-    schemes: HTTP;
-	schemes: HTTPS;
-    consumes: "application/json";
-    produces: "application/json";
-    security_definitions: {
-		security: {
-			key: "ApiKey";
-			value: {
-				type: TYPE_API_KEY;
-				in: IN_HEADER;
-				name: "Authorization";
-			}
-        }
-    };
-	security: {
-		security_requirement: {
-			key: "ApiKey";
-			value: {};
-        }
-	};
-    responses: {
-		key: "204";
-		value: {
-            description: "No content.";
-		}
-	}
-    responses: {
-		key: "403";
-		value: {
-			description: "You don't have permission to access the resource.";
-		}
-	}
-    responses: {
-		key: "404";
-		value: {
-			description: "Resource does not exist.";
-		}
-	}
+version
+:
+"1.0.76"
+;
+contact:{
+name:"Polyaxon sdk";
+url:"https://github.com/polyaxon/polyaxon";
+email:"contact@polyaxon.com";
+};
+};
+schemes:HTTP;
+schemes:HTTPS;
+consumes:"application/json";
+produces:"application/json";
+security_definitions:{
+security:{
+key:"ApiKey";
+value:{
+type:TYPE_API_KEY;
+in:IN_HEADER;
+name:"Authorization";
+}
+}
+};
+security:{
+security_requirement:{
+key:"ApiKey";
+value:{};
+}
+};
+responses:{
+key:"204";
+value:{
+description:"No content.";
+}
+}
+responses:{
+key:"403";
+value:{
+description:"You don't have permission to access the resource.";
+}
+}
+responses:{
+key:"404";
+value:{
+description:"Resource does not exist.";
+}
+}
 };
 
 
