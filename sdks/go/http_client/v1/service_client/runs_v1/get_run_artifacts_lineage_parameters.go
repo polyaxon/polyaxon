@@ -80,13 +80,18 @@ type GetRunArtifactsLineageParams struct {
 
 	*/
 	Limit *int32
+	/*Offset
+	  Pagination offset.
+
+	*/
+	Offset *int32
 	/*Owner
 	  Owner of the namespace
 
 	*/
 	Owner string
 	/*Project
-	  Project where the run will be assigned
+	  Project under namesapce
 
 	*/
 	Project string
@@ -101,7 +106,7 @@ type GetRunArtifactsLineageParams struct {
 	*/
 	Sort *string
 	/*UUID
-	  Uuid identifier of the entity
+	  Entity uuid
 
 	*/
 	UUID string
@@ -153,6 +158,17 @@ func (o *GetRunArtifactsLineageParams) WithLimit(limit *int32) *GetRunArtifactsL
 // SetLimit adds the limit to the get run artifacts lineage params
 func (o *GetRunArtifactsLineageParams) SetLimit(limit *int32) {
 	o.Limit = limit
+}
+
+// WithOffset adds the offset to the get run artifacts lineage params
+func (o *GetRunArtifactsLineageParams) WithOffset(offset *int32) *GetRunArtifactsLineageParams {
+	o.SetOffset(offset)
+	return o
+}
+
+// SetOffset adds the offset to the get run artifacts lineage params
+func (o *GetRunArtifactsLineageParams) SetOffset(offset *int32) {
+	o.Offset = offset
 }
 
 // WithOwner adds the owner to the get run artifacts lineage params
@@ -228,6 +244,22 @@ func (o *GetRunArtifactsLineageParams) WriteToRequest(r runtime.ClientRequest, r
 		qLimit := swag.FormatInt32(qrLimit)
 		if qLimit != "" {
 			if err := r.SetQueryParam("limit", qLimit); err != nil {
+				return err
+			}
+		}
+
+	}
+
+	if o.Offset != nil {
+
+		// query param offset
+		var qrOffset int32
+		if o.Offset != nil {
+			qrOffset = *o.Offset
+		}
+		qOffset := swag.FormatInt32(qrOffset)
+		if qOffset != "" {
+			if err := r.SetQueryParam("offset", qOffset); err != nil {
 				return err
 			}
 		}

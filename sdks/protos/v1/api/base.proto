@@ -242,6 +242,30 @@ message AgentResourceListRequest {
     string query = 6;
 }
 
+// Request list data with owner/project/enitity namespace
+message EntityResourceListRequest {
+    // Owner of the namespace
+    string owner = 1;
+
+    // Project under namesapce
+    string project = 2;
+
+    // Entity uuid
+    string uuid = 3;
+
+    // Pagination offset
+    int32 offset = 4;
+
+    // Limit size
+    int32 limit = 5;
+
+     // Sort to order the search
+    string sort = 6;
+
+     // Query filter the search search
+    string query = 7;
+}
+
 // Artifact tree response
 message ArtifactTree {
     map<string, int64> files = 1;

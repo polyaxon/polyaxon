@@ -1039,11 +1039,12 @@ var apiInstance = new PolyaxonSdk.RunsV1Api();
 
 var owner = "owner_example"; // String | Owner of the namespace
 
-var project = "project_example"; // String | Project where the run will be assigned
+var project = "project_example"; // String | Project under namesapce
 
-var uuid = "uuid_example"; // String | Uuid identifier of the entity
+var uuid = "uuid_example"; // String | Entity uuid
 
 var opts = { 
+  'offset': 56, // Number | Pagination offset.
   'limit': 56, // Number | Limit size.
   'sort': "sort_example", // String | Sort to order the search.
   'query': "query_example" // String | Query filter the search search.
@@ -1064,8 +1065,9 @@ apiInstance.getRunArtifactsLineage(owner, project, uuid, opts, callback);
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace | 
- **project** | **String**| Project where the run will be assigned | 
- **uuid** | **String**| Uuid identifier of the entity | 
+ **project** | **String**| Project under namesapce | 
+ **uuid** | **String**| Entity uuid | 
+ **offset** | **Number**| Pagination offset. | [optional] 
  **limit** | **Number**| Limit size. | [optional] 
  **sort** | **String**| Sort to order the search. | [optional] 
  **query** | **String**| Query filter the search search. | [optional] 
@@ -1104,11 +1106,12 @@ var apiInstance = new PolyaxonSdk.RunsV1Api();
 
 var owner = "owner_example"; // String | Owner of the namespace
 
-var project = "project_example"; // String | Project where the run will be assigned
+var project = "project_example"; // String | Project under namesapce
 
-var uuid = "uuid_example"; // String | Uuid identifier of the entity
+var uuid = "uuid_example"; // String | Entity uuid
 
 var opts = { 
+  'offset': 56, // Number | Pagination offset.
   'limit': 56, // Number | Limit size.
   'sort': "sort_example", // String | Sort to order the search.
   'query': "query_example" // String | Query filter the search search.
@@ -1129,8 +1132,9 @@ apiInstance.getRunArtifactsLineageNames(owner, project, uuid, opts, callback);
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace | 
- **project** | **String**| Project where the run will be assigned | 
- **uuid** | **String**| Uuid identifier of the entity | 
+ **project** | **String**| Project under namesapce | 
+ **uuid** | **String**| Entity uuid | 
+ **offset** | **Number**| Pagination offset. | [optional] 
  **limit** | **Number**| Limit size. | [optional] 
  **sort** | **String**| Sort to order the search. | [optional] 
  **query** | **String**| Query filter the search search. | [optional] 
@@ -1586,7 +1590,7 @@ Name | Type | Description  | Notes
 
 <a name="getRunsArtifactsLineage"></a>
 # **getRunsArtifactsLineage**
-> getRunsArtifactsLineage(owner, project)
+> V1ListRunArtifactsResponse getRunsArtifactsLineage(owner, project, opts)
 
 Get runs artifacts lineage
 
@@ -1607,15 +1611,21 @@ var owner = "owner_example"; // String | Owner of the namespace
 
 var project = "project_example"; // String | Project under namesapce
 
+var opts = { 
+  'offset': 56, // Number | Pagination offset.
+  'limit': 56, // Number | Limit size.
+  'sort': "sort_example", // String | Sort to order the search.
+  'query': "query_example" // String | Query filter the search search.
+};
 
 var callback = function(error, data, response) {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully.');
+    console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.getRunsArtifactsLineage(owner, project, callback);
+apiInstance.getRunsArtifactsLineage(owner, project, opts, callback);
 ```
 
 ### Parameters
@@ -1624,10 +1634,14 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace | 
  **project** | **String**| Project under namesapce | 
+ **offset** | **Number**| Pagination offset. | [optional] 
+ **limit** | **Number**| Limit size. | [optional] 
+ **sort** | **String**| Sort to order the search. | [optional] 
+ **query** | **String**| Query filter the search search. | [optional] 
 
 ### Return type
 
-null (empty response body)
+[**V1ListRunArtifactsResponse**](V1ListRunArtifactsResponse.md)
 
 ### Authorization
 

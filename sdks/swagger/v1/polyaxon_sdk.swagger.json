@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "Polyaxon SDKs and REST API specification.",
-    "version": "1.0.74",
+    "version": "1.0.75",
     "contact": {
       "name": "Polyaxon sdk",
       "url": "https://github.com/polyaxon/polyaxon",
@@ -7540,7 +7540,10 @@
         "operationId": "GetRunsArtifactsLineage",
         "responses": {
           "200": {
-            "description": "A successful response."
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ListRunArtifactsResponse"
+            }
           },
           "204": {
             "description": "No content.",
@@ -7574,6 +7577,36 @@
             "description": "Project under namesapce",
             "in": "path",
             "required": true,
+            "type": "string"
+          },
+          {
+            "name": "offset",
+            "description": "Pagination offset.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "limit",
+            "description": "Limit size.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "sort",
+            "description": "Sort to order the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "query",
+            "description": "Query filter the search search.",
+            "in": "query",
+            "required": false,
             "type": "string"
           }
         ],
@@ -8286,17 +8319,25 @@
           },
           {
             "name": "project",
-            "description": "Project where the run will be assigned",
+            "description": "Project under namesapce",
             "in": "path",
             "required": true,
             "type": "string"
           },
           {
             "name": "uuid",
-            "description": "Uuid identifier of the entity",
+            "description": "Entity uuid",
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "offset",
+            "description": "Pagination offset.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
           },
           {
             "name": "limit",
@@ -8428,17 +8469,25 @@
           },
           {
             "name": "project",
-            "description": "Project where the run will be assigned",
+            "description": "Project under namesapce",
             "in": "path",
             "required": true,
             "type": "string"
           },
           {
             "name": "uuid",
-            "description": "Uuid identifier of the entity",
+            "description": "Entity uuid",
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "offset",
+            "description": "Pagination offset.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
           },
           {
             "name": "limit",

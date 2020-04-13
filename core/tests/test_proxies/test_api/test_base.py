@@ -65,6 +65,8 @@ location / {
 
 
 error_page 500 502 503 504 /50x.html;
+error_page 401 403 /permission.html;
+error_page 404 /404.html;
 
 
 location /static/ {

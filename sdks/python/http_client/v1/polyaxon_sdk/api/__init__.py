@@ -16,6 +16,8 @@
 
 from __future__ import absolute_import
 
+# flake8: noqa
+
 # import apis into api package
 from polyaxon_sdk.api.access_resources_v1_api import AccessResourcesV1Api
 from polyaxon_sdk.api.agents_v1_api import AgentsV1Api
@@ -37,5 +39,3 @@ from polyaxon_sdk.api.searches_v1_api import SearchesV1Api
 from polyaxon_sdk.api.teams_v1_api import TeamsV1Api
 from polyaxon_sdk.api.users_v1_api import UsersV1Api
 from polyaxon_sdk.api.versions_v1_api import VersionsV1Api
-
-# flake8: noqa

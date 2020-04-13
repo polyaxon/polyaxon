@@ -169,27 +169,6 @@ message RunArtifactBodyRequest {
     RunArtifact artifact = 4;
 }
 
-// Request data to search run artifact entity
-message RunArtifactSearchRequest {
-    // Owner of the namespace
-    string owner = 1;
-
-    // Project where the run will be assigned
-    string project = 2;
-
-    // Uuid identifier of the entity
-    string uuid = 3;
-
-     // Limit size
-     int32 limit = 4;
-
-     // Sort to order the search
-    string sort = 5;
-
-     // Query filter the search search
-    string query = 6;
-}
-
 // Request data to post/pach/get/delete run artifact lineage
 message RunArtifactLineageRequest {
     // namespace

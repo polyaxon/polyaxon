@@ -976,7 +976,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_run_artifacts_lineage**
-> V1ListRunArtifactsResponse get_run_artifacts_lineage(owner, project, uuid, limit=limit, sort=sort, query=query)
+> V1ListRunArtifactsResponse get_run_artifacts_lineage(owner, project, uuid, offset=offset, limit=limit, sort=sort, query=query)
 
 Get run artifacts lineage
 
@@ -997,15 +997,16 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
 owner = 'owner_example' # str | Owner of the namespace
-project = 'project_example' # str | Project where the run will be assigned
-uuid = 'uuid_example' # str | Uuid identifier of the entity
+project = 'project_example' # str | Project under namesapce
+uuid = 'uuid_example' # str | Entity uuid
+offset = 56 # int | Pagination offset. (optional)
 limit = 56 # int | Limit size. (optional)
 sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search search. (optional)
 
 try:
     # Get run artifacts lineage
-    api_response = api_instance.get_run_artifacts_lineage(owner, project, uuid, limit=limit, sort=sort, query=query)
+    api_response = api_instance.get_run_artifacts_lineage(owner, project, uuid, offset=offset, limit=limit, sort=sort, query=query)
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling RunsV1Api->get_run_artifacts_lineage: %s\n" % e)
@@ -1016,8 +1017,9 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **str**| Owner of the namespace | 
- **project** | **str**| Project where the run will be assigned | 
- **uuid** | **str**| Uuid identifier of the entity | 
+ **project** | **str**| Project under namesapce | 
+ **uuid** | **str**| Entity uuid | 
+ **offset** | **int**| Pagination offset. | [optional] 
  **limit** | **int**| Limit size. | [optional] 
  **sort** | **str**| Sort to order the search. | [optional] 
  **query** | **str**| Query filter the search search. | [optional] 
@@ -1038,7 +1040,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_run_artifacts_lineage_names**
-> V1ListRunArtifactsResponse get_run_artifacts_lineage_names(owner, project, uuid, limit=limit, sort=sort, query=query)
+> V1ListRunArtifactsResponse get_run_artifacts_lineage_names(owner, project, uuid, offset=offset, limit=limit, sort=sort, query=query)
 
 Get run artifacts lineage names
 
@@ -1059,15 +1061,16 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
 owner = 'owner_example' # str | Owner of the namespace
-project = 'project_example' # str | Project where the run will be assigned
-uuid = 'uuid_example' # str | Uuid identifier of the entity
+project = 'project_example' # str | Project under namesapce
+uuid = 'uuid_example' # str | Entity uuid
+offset = 56 # int | Pagination offset. (optional)
 limit = 56 # int | Limit size. (optional)
 sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search search. (optional)
 
 try:
     # Get run artifacts lineage names
-    api_response = api_instance.get_run_artifacts_lineage_names(owner, project, uuid, limit=limit, sort=sort, query=query)
+    api_response = api_instance.get_run_artifacts_lineage_names(owner, project, uuid, offset=offset, limit=limit, sort=sort, query=query)
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling RunsV1Api->get_run_artifacts_lineage_names: %s\n" % e)
@@ -1078,8 +1081,9 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **str**| Owner of the namespace | 
- **project** | **str**| Project where the run will be assigned | 
- **uuid** | **str**| Uuid identifier of the entity | 
+ **project** | **str**| Project under namesapce | 
+ **uuid** | **str**| Entity uuid | 
+ **offset** | **int**| Pagination offset. | [optional] 
  **limit** | **int**| Limit size. | [optional] 
  **sort** | **str**| Sort to order the search. | [optional] 
  **query** | **str**| Query filter the search search. | [optional] 
@@ -1516,7 +1520,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_runs_artifacts_lineage**
-> get_runs_artifacts_lineage(owner, project)
+> V1ListRunArtifactsResponse get_runs_artifacts_lineage(owner, project, offset=offset, limit=limit, sort=sort, query=query)
 
 Get runs artifacts lineage
 
@@ -1538,10 +1542,15 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
 owner = 'owner_example' # str | Owner of the namespace
 project = 'project_example' # str | Project under namesapce
+offset = 56 # int | Pagination offset. (optional)
+limit = 56 # int | Limit size. (optional)
+sort = 'sort_example' # str | Sort to order the search. (optional)
+query = 'query_example' # str | Query filter the search search. (optional)
 
 try:
     # Get runs artifacts lineage
-    api_instance.get_runs_artifacts_lineage(owner, project)
+    api_response = api_instance.get_runs_artifacts_lineage(owner, project, offset=offset, limit=limit, sort=sort, query=query)
+    pprint(api_response)
 except ApiException as e:
     print("Exception when calling RunsV1Api->get_runs_artifacts_lineage: %s\n" % e)
 ```
@@ -1552,10 +1561,14 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **str**| Owner of the namespace | 
  **project** | **str**| Project under namesapce | 
+ **offset** | **int**| Pagination offset. | [optional] 
+ **limit** | **int**| Limit size. | [optional] 
+ **sort** | **str**| Sort to order the search. | [optional] 
+ **query** | **str**| Query filter the search search. | [optional] 
 
 ### Return type
 
-void (empty response body)
+[**V1ListRunArtifactsResponse**](V1ListRunArtifactsResponse.md)
 
 ### Authorization
 

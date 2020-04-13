@@ -1,6 +1,6 @@
 {
   "name": "@polyaxon/sdk",
-  "version": "1.0.74",
+  "version": "1.0.75",
   "description": "swagger client for @polyaxon/sdk",
   "author": "Swagger Codegen Contributors",
   "keywords": [

@@ -993,7 +993,7 @@ Name | Type | Description  | Notes
 
 <a name="getRunArtifactsLineage"></a>
 # **getRunArtifactsLineage**
-> V1ListRunArtifactsResponse getRunArtifactsLineage(owner, project, uuid, limit, sort, query)
+> V1ListRunArtifactsResponse getRunArtifactsLineage(owner, project, uuid, offset, limit, sort, query)
 
 Get run artifacts lineage
 
@@ -1016,13 +1016,14 @@ ApiKey.setApiKey("YOUR API KEY");
 
 RunsV1Api apiInstance = new RunsV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
-String project = "project_example"; // String | Project where the run will be assigned
-String uuid = "uuid_example"; // String | Uuid identifier of the entity
+String project = "project_example"; // String | Project under namesapce
+String uuid = "uuid_example"; // String | Entity uuid
+Integer offset = 56; // Integer | Pagination offset.
 Integer limit = 56; // Integer | Limit size.
 String sort = "sort_example"; // String | Sort to order the search.
 String query = "query_example"; // String | Query filter the search search.
 try {
-    V1ListRunArtifactsResponse result = apiInstance.getRunArtifactsLineage(owner, project, uuid, limit, sort, query);
+    V1ListRunArtifactsResponse result = apiInstance.getRunArtifactsLineage(owner, project, uuid, offset, limit, sort, query);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling RunsV1Api#getRunArtifactsLineage");
@@ -1035,8 +1036,9 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
- **project** | **String**| Project where the run will be assigned |
- **uuid** | **String**| Uuid identifier of the entity |
+ **project** | **String**| Project under namesapce |
+ **uuid** | **String**| Entity uuid |
+ **offset** | **Integer**| Pagination offset. | [optional]
  **limit** | **Integer**| Limit size. | [optional]
  **sort** | **String**| Sort to order the search. | [optional]
  **query** | **String**| Query filter the search search. | [optional]
@@ -1056,7 +1058,7 @@ Name | Type | Description  | Notes
 
 <a name="getRunArtifactsLineageNames"></a>
 # **getRunArtifactsLineageNames**
-> V1ListRunArtifactsResponse getRunArtifactsLineageNames(owner, project, uuid, limit, sort, query)
+> V1ListRunArtifactsResponse getRunArtifactsLineageNames(owner, project, uuid, offset, limit, sort, query)
 
 Get run artifacts lineage names
 
@@ -1079,13 +1081,14 @@ ApiKey.setApiKey("YOUR API KEY");
 
 RunsV1Api apiInstance = new RunsV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
-String project = "project_example"; // String | Project where the run will be assigned
-String uuid = "uuid_example"; // String | Uuid identifier of the entity
+String project = "project_example"; // String | Project under namesapce
+String uuid = "uuid_example"; // String | Entity uuid
+Integer offset = 56; // Integer | Pagination offset.
 Integer limit = 56; // Integer | Limit size.
 String sort = "sort_example"; // String | Sort to order the search.
 String query = "query_example"; // String | Query filter the search search.
 try {
-    V1ListRunArtifactsResponse result = apiInstance.getRunArtifactsLineageNames(owner, project, uuid, limit, sort, query);
+    V1ListRunArtifactsResponse result = apiInstance.getRunArtifactsLineageNames(owner, project, uuid, offset, limit, sort, query);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling RunsV1Api#getRunArtifactsLineageNames");
@@ -1098,8 +1101,9 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
- **project** | **String**| Project where the run will be assigned |
- **uuid** | **String**| Uuid identifier of the entity |
+ **project** | **String**| Project under namesapce |
+ **uuid** | **String**| Entity uuid |
+ **offset** | **Integer**| Pagination offset. | [optional]
  **limit** | **Integer**| Limit size. | [optional]
  **sort** | **String**| Sort to order the search. | [optional]
  **query** | **String**| Query filter the search search. | [optional]
@@ -1542,7 +1546,7 @@ Name | Type | Description  | Notes
 
 <a name="getRunsArtifactsLineage"></a>
 # **getRunsArtifactsLineage**
-> getRunsArtifactsLineage(owner, project)
+> V1ListRunArtifactsResponse getRunsArtifactsLineage(owner, project, offset, limit, sort, query)
 
 Get runs artifacts lineage
 
@@ -1566,8 +1570,13 @@ ApiKey.setApiKey("YOUR API KEY");
 RunsV1Api apiInstance = new RunsV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
 String project = "project_example"; // String | Project under namesapce
+Integer offset = 56; // Integer | Pagination offset.
+Integer limit = 56; // Integer | Limit size.
+String sort = "sort_example"; // String | Sort to order the search.
+String query = "query_example"; // String | Query filter the search search.
 try {
-    apiInstance.getRunsArtifactsLineage(owner, project);
+    V1ListRunArtifactsResponse result = apiInstance.getRunsArtifactsLineage(owner, project, offset, limit, sort, query);
+    System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling RunsV1Api#getRunsArtifactsLineage");
     e.printStackTrace();
@@ -1580,10 +1589,14 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
  **project** | **String**| Project under namesapce |
+ **offset** | **Integer**| Pagination offset. | [optional]
+ **limit** | **Integer**| Limit size. | [optional]
+ **sort** | **String**| Sort to order the search. | [optional]
+ **query** | **String**| Query filter the search search. | [optional]
 
 ### Return type
 
-null (empty response body)
+[**V1ListRunArtifactsResponse**](V1ListRunArtifactsResponse.md)
 
 ### Authorization
 

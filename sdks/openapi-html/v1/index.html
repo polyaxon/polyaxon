@@ -10,7 +10,7 @@
     <h1>Polyaxon SDKs and REST API specification.</h1>
     <p class="sw-info">
         
-        Version: <span class="sw-info-version">1.0.74</span>
+        Version: <span class="sw-info-version">1.0.75</span>
     </p>
     <p><p>Polyaxon SDKs and REST API specification.</p>
     </p>
@@ -26505,6 +26505,66 @@
                                                     <span class="json-property-required"></span>
                                             </td>
                                         </tr>
+                                        <tr>
+                                            <td>
+                                                offset
+                                            </td>
+                                            <td><p>Pagination offset.</p>
+                                        </td>
+                                            <td>query</td>
+                                            <td>
+                                        <span class="json-property-type">integer</span>    <span class="json-property-format">(int32)</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                            </td>
+                                            <td>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                limit
+                                            </td>
+                                            <td><p>Limit size.</p>
+                                        </td>
+                                            <td>query</td>
+                                            <td>
+                                        <span class="json-property-type">integer</span>    <span class="json-property-format">(int32)</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                            </td>
+                                            <td>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                sort
+                                            </td>
+                                            <td><p>Sort to order the search.</p>
+                                        </td>
+                                            <td>query</td>
+                                            <td>
+                                        <span class="json-property-type">string</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                            </td>
+                                            <td>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                query
+                                            </td>
+                                            <td><p>Query filter the search search.</p>
+                                        </td>
+                                            <td>query</td>
+                                            <td>
+                                        <span class="json-property-type">string</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                            </td>
+                                            <td>
+                                            </td>
+                                        </tr>
                                 </tbody>
                             </table>
                         </section>
@@ -26529,7 +26589,11 @@
                                             <div class="row">
                                                 
                                                 <div class="col-md-6 sw-response-model">
-                                            </div>
+                                                <div  class="panel panel-definition">
+                                                    <div class="panel-body">
+                                                                <a class="json-schema-ref" href="#/definitions/v1ListRunArtifactsResponse">v1ListRunArtifactsResponse</a>
+                                                    </div>
+                                                </div></div>
                                             
                                             </div>                </dd>
                                     <dt class="sw-response-204">
@@ -29078,7 +29142,7 @@
                                             <td>
                                                 project
                                             </td>
-                                            <td><p>Project where the run will be assigned</p>
+                                            <td><p>Project under namesapce</p>
                                         </td>
                                             <td>path</td>
                                             <td>
@@ -29094,7 +29158,7 @@
                                             <td>
                                                 uuid
                                             </td>
-                                            <td><p>Uuid identifier of the entity</p>
+                                            <td><p>Entity uuid</p>
                                         </td>
                                             <td>path</td>
                                             <td>
@@ -29104,6 +29168,21 @@
                                             </td>
                                             <td>
                                                     <span class="json-property-required"></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                offset
+                                            </td>
+                                            <td><p>Pagination offset.</p>
+                                        </td>
+                                            <td>query</td>
+                                            <td>
+                                        <span class="json-property-type">integer</span>    <span class="json-property-format">(int32)</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                            </td>
+                                            <td>
                                             </td>
                                         </tr>
                                         <tr>
@@ -29523,7 +29602,7 @@
                                             <td>
                                                 project
                                             </td>
-                                            <td><p>Project where the run will be assigned</p>
+                                            <td><p>Project under namesapce</p>
                                         </td>
                                             <td>path</td>
                                             <td>
@@ -29539,7 +29618,7 @@
                                             <td>
                                                 uuid
                                             </td>
-                                            <td><p>Uuid identifier of the entity</p>
+                                            <td><p>Entity uuid</p>
                                         </td>
                                             <td>path</td>
                                             <td>
@@ -29549,6 +29628,21 @@
                                             </td>
                                             <td>
                                                     <span class="json-property-required"></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                offset
+                                            </td>
+                                            <td><p>Pagination offset.</p>
+                                        </td>
+                                            <td>query</td>
+                                            <td>
+                                        <span class="json-property-type">integer</span>    <span class="json-property-format">(int32)</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                            </td>
+                                            <td>
                                             </td>
                                         </tr>
                                         <tr>

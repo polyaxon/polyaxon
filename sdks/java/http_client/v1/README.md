@@ -1,7 +1,7 @@
 # swagger-java-client
 
 Polyaxon SDKs and REST API specification.
-- API version: 1.0.74
+- API version: 1.0.75
 
 Polyaxon SDKs and REST API specification.
 

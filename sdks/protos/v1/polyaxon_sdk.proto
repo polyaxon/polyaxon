@@ -46,7 +46,7 @@ import "v1/schemas/all.proto";
 option (grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger) = {
 	info: {
 		title: "Polyaxon sdk";
-		version: "1.0.74";
+		version: "1.0.75";
 		contact: {
 			name: "Polyaxon sdk";
 			url: "https://github.com/polyaxon/polyaxon";
@@ -320,21 +320,21 @@ service RunsV1 {
     }
 
     // Get run artifacts lineage
-    rpc GetRunArtifactsLineage(RunArtifactSearchRequest) returns (ListRunArtifactsResponse) {
+    rpc GetRunArtifactsLineage(EntityResourceListRequest) returns (ListRunArtifactsResponse) {
         option (google.api.http) = {
             get: "/api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage"
         };
     }
 
     // Get runs artifacts lineage
-    rpc GetRunsArtifactsLineage(ProjectResourceRequest) returns (google.protobuf.Empty) {
+    rpc GetRunsArtifactsLineage(ProjectResourceListRequest) returns (ListRunArtifactsResponse) {
         option (google.api.http) = {
             get: "/api/v1/{owner}/{project}/runs/artifacts_lineage"
         };
     }
 
     // Get run artifacts lineage names
-    rpc GetRunArtifactsLineageNames(RunArtifactSearchRequest) returns (ListRunArtifactsResponse) {
+    rpc GetRunArtifactsLineageNames(EntityResourceListRequest) returns (ListRunArtifactsResponse) {
         option (google.api.http) = {
             get: "/api/v1/{owner}/{project}/runs/{uuid}/artifacts_lineage/names"
         };
