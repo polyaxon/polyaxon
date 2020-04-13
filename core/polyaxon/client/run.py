@@ -341,45 +341,45 @@ class RunClient:
 
     @check_no_op
     @check_offline
-    def set_description(self, description):
-        self._update({"description": description})
+    def set_description(self, description, async_req=True):
+        self._update({"description": description}, async_req=async_req)
         self._run_data.description = description
 
     @check_no_op
     @check_offline
-    def set_name(self, name):
-        self._update({"name": name})
+    def set_name(self, name, async_req=True):
+        self._update({"name": name}, async_req=async_req)
         self._run_data.name = name
 
     @check_no_op
     @check_offline
-    def log_inputs(self, reset=False, **inputs):
+    def log_inputs(self, reset=False, async_req=True, **inputs):
         patch_dict = {"inputs": inputs}
         if reset is False:
             patch_dict["merge"] = True
             self._run_data.inputs = inputs
         else:
             self._run_data.inputs.update(inputs)
-        self._update(patch_dict)
+        self._update(patch_dict, async_req=async_req)
 
     @check_no_op
     @check_offline
-    def log_outputs(self, reset=False, **outputs):
+    def log_outputs(self, reset=False, async_req=True, **outputs):
         patch_dict = {"outputs": outputs}
         if reset is False:
             patch_dict["merge"] = True
             self._run_data.outputs = outputs
         else:
             self._run_data.inputs.update(outputs)
-        self._update(patch_dict)
+        self._update(patch_dict, async_req=async_req)
 
     @check_no_op
     @check_offline
-    def log_tags(self, tags, reset=False):
+    def log_tags(self, tags, reset=False, async_req=True):
         patch_dict = {"tags": validate_tags(tags)}
         if reset is False:
             patch_dict["merge"] = True
-        self._update(patch_dict)
+        self._update(patch_dict, async_req=async_req)
 
     @check_no_op
     @check_offline
