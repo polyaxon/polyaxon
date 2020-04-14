@@ -57,6 +57,7 @@ class Run(RunClient):
         client=None,
         track_code=True,
         track_env=False,
+        refresh_data=True,
     ):
         super().__init__(
             owner=owner, project=project, run_uuid=run_uuid, client=client,
@@ -86,7 +87,7 @@ class Run(RunClient):
         if settings.CLIENT_CONFIG.is_offline:
             return
 
-        if self._run_uuid:
+        if self._run_uuid and refresh_data:
             self.refresh_data()
 
         # Track run env
@@ -116,36 +117,45 @@ class Run(RunClient):
 
     @check_no_op
     def create(self, name=None, tags=None, description=None, content=None):
-        run = polyaxon_sdk.V1Run()
+        operation = polyaxon_sdk.V1OperationBody()
         if name:
-            run.name = name
+            operation.name = name
         if tags:
-            run.tags = tags
+            operation.tags = tags
         if description:
-            run.description = description
+            operation.description = description
         if content:
             try:
                 specification = OperationSpecification.read(content)
             except Exception as e:
                 raise PolyaxonClientException("Client error: %s" % e) from e
-            run.content = specification.to_dict(dump=True)
+            operation.content = specification.to_dict(dump=True)
         else:
-            run.is_managed = False
+            operation.is_managed = False
 
         if self.client:
             try:
                 run = self.client.runs_v1.create_run(
-                    owner=self.owner, project=self.project, body=run
+                    owner=self.owner, project=self.project, body=operation
                 )
             except (ApiException, HTTPError) as e:
                 raise PolyaxonClientException("Client error: %s" % e) from e
             if not run:
                 raise PolyaxonClientException("Could not create a run.")
+        else:
+            run = polyaxon_sdk.V1Run(
+                name=operation.name,
+                tags=operation.tags,
+                description=operation.description,
+                content=operation.content,
+                is_managed=operation.is_managed,
+            )
 
         self._run = run
         self._run_uuid = run.uuid
 
-        self.set_run_event_logger()
+        if self.artifacts_path:
+            self.set_run_event_logger()
 
         if self.track_code:
             self.log_code_ref()
