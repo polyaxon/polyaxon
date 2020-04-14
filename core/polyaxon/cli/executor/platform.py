@@ -50,7 +50,12 @@ def run(
 ):
     def create_run():
         click.echo("Creating a run.")
-        body = V1OperationBody(content=op_spec.to_dict(dump=True))
+        body = V1OperationBody(
+            name=name,
+            description=description,
+            tags=tags,
+            content=op_spec.to_dict(dump=True)
+        )
         try:
             polyaxon_client = PolyaxonClient()
             response = polyaxon_client.runs_v1.create_run(owner, project_name, body)
