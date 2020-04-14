@@ -67,8 +67,8 @@ class ProjectClient:
     @check_no_op
     @check_offline
     def create(self, data: polyaxon_sdk.V1Project()):
-        self._project = data.name
         self._project_data = self.client.projects_v1.create_project(self.owner, data)
+        self._project = self._project_data.name
         return self._project_data
 
     @check_no_op
